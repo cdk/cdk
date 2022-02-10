@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class LabelContainer {
 
-    private List<String>          labelMap     = null;
+    private List<String>          labelMap;
     private int                   labelCounter = 0;
     private static LabelContainer instance     = null;
 

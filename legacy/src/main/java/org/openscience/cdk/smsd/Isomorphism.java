@@ -154,12 +154,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public final class Isomorphism extends AbstractMCS implements Serializable {
 
     static final long                   serialVersionUID       = 10278639972837495L;
-    private List<Map<Integer, Integer>> allMCS                 = null;
-    private Map<Integer, Integer>       firstSolution          = null;
-    private List<Map<IAtom, IAtom>>     allAtomMCS             = null;
-    private Map<IAtom, IAtom>           firstAtomMCS           = null;
-    private List<Map<IBond, IBond>>     allBondMCS             = null;
-    private Map<IBond, IBond>           firstBondMCS           = null;
+    private List<Map<Integer, Integer>> allMCS;
+    private Map<Integer, Integer>       firstSolution;
+    private List<Map<IAtom, IAtom>>     allAtomMCS;
+    private Map<IAtom, IAtom>           firstAtomMCS;
+    private List<Map<IBond, IBond>>     allBondMCS;
+    private Map<IBond, IBond>           firstBondMCS;
     private MolHandler                  rMol                   = null;
     private IQueryAtomContainer         queryMol               = null;
     private MolHandler                  pMol                   = null;
@@ -324,7 +324,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private synchronized void cdkMCSAlgorithm() {
-        CDKMCSHandler mcs = null;
+        CDKMCSHandler mcs;
         mcs = new CDKMCSHandler();
 
         if (queryMol == null) {
@@ -345,7 +345,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private synchronized void cdkSubgraphAlgorithm() {
-        CDKSubGraphHandler mcs = null;
+        CDKSubGraphHandler mcs;
         mcs = new CDKSubGraphHandler();
 
         if (queryMol == null) {
@@ -367,7 +367,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private synchronized void mcsPlusAlgorithm() {
-        MCSPlusHandler mcs = null;
+        MCSPlusHandler mcs;
         mcs = new MCSPlusHandler();
 
         if (queryMol == null) {
@@ -387,7 +387,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private void vfLibMCS() {
-        VFlibMCSHandler mcs = null;
+        VFlibMCSHandler mcs;
         mcs = new VFlibMCSHandler();
         if (queryMol == null) {
             mcs.set(rMol, pMol);
@@ -405,7 +405,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private void subStructureHandler() {
-        VFlibSubStructureHandler subGraphTurboSearch = null;
+        VFlibSubStructureHandler subGraphTurboSearch;
         subGraphTurboSearch = new VFlibSubStructureHandler();
         if (queryMol == null) {
             subGraphTurboSearch.set(rMol, pMol);
@@ -423,7 +423,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private void turboSubStructureHandler() {
-        VFlibTurboHandler subGraphTurboSearch = null;
+        VFlibTurboHandler subGraphTurboSearch;
         subGraphTurboSearch = new VFlibTurboHandler();
         if (queryMol == null) {
             subGraphTurboSearch.set(rMol, pMol);
@@ -441,7 +441,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private void singleMapping() {
-        SingleMappingHandler mcs = null;
+        SingleMappingHandler mcs;
 
         mcs = new SingleMappingHandler(removeHydrogen);
         if (queryMol == null) {
@@ -732,8 +732,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     public double getTanimotoAtomSimilarity() throws IOException {
         int decimalPlaces = 4;
-        int rAtomCount = 0;
-        int pAtomCount = 0;
+        int rAtomCount;
+        int pAtomCount;
         double tanimotoAtom = 0.0;
 
         if (getFirstMapping() != null && !getFirstMapping().isEmpty()) {
@@ -755,8 +755,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     public double getTanimotoBondSimilarity() throws IOException {
         int decimalPlaces = 4;
-        int rBondCount = 0;
-        int pBondCount = 0;
+        int rBondCount;
+        int pBondCount;
         double tanimotoAtom = 0.0;
 
         if (getFirstBondMap() != null && !getFirstBondMap().isEmpty()) {
@@ -821,7 +821,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         IAtomContainer reactant = getReactantMolecule();
         IAtomContainer product = getProductMolecule();
 
-        float mappingSize = 0;
+        float mappingSize;
         if (firstSolution != null && !firstSolution.isEmpty()) {
             mappingSize = firstSolution.size();
         } else {
@@ -848,8 +848,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     @Override
     public double getEuclideanDistance() throws IOException {
         int decimalPlaces = 4;
-        double source = 0;
-        double target = 0;
+        double source;
+        double target;
         double euclidean = -1;
 
         if (getFirstMapping() != null || !getFirstMapping().isEmpty()) {

@@ -90,8 +90,8 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
             return -1;
         else {
             // 2. Atom count equal, compare molecular weight (heavy atoms only)
-            double mw1 = 0;
-            double mw2 = 0;
+            double mw1;
+            double mw2;
             try {
                 mw1 = getMolecularWeight(atomContainer1);
                 mw2 = getMolecularWeight(atomContainer2);

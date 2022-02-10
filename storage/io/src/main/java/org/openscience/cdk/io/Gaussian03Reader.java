@@ -219,7 +219,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             if ((line == null) || (line.contains("-----"))) {
                 break;
             }
-            int atomicNumber = 0;
+            int atomicNumber;
             StringReader sr = new StringReader(line);
             StreamTokenizer token = new StreamTokenizer(sr);
             token.nextToken();
@@ -241,9 +241,9 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             token.nextToken();
 
             // ignore third token
-            double x = 0.0;
-            double y = 0.0;
-            double z = 0.0;
+            double x;
+            double y;
+            double z;
             if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
                 x = token.nval;
             } else {
@@ -259,7 +259,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             } else {
                 throw new IOException("Error reading coordinates");
             }
-            String symbol = "Du";
+            String symbol;
             symbol = PeriodicTable.getSymbol(atomicNumber);
             IAtom atom = model.getBuilder().newInstance(IAtom.class, symbol);
             atom.setPoint3d(new Point3d(x, y, z));
@@ -292,7 +292,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
 
                 tokenizer.nextToken(); // ignore the symbol
 
-                double charge = 0.0;
+                double charge;
                 if (tokenizer.nextToken() == StreamTokenizer.TT_NUMBER) {
                     charge = tokenizer.nval;
                     logger.debug("Found charge for atom " + atomCounter + ": " + charge);

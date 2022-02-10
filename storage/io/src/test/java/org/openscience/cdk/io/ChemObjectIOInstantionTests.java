@@ -87,7 +87,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
     public void testInstantion() {
         loadFormats();
 
-        IChemFormat format = null;
+        IChemFormat format;
         for (IChemFormat iChemFormat : formats) {
             format = iChemFormat;
             if (format.getReaderClassName() != null) {

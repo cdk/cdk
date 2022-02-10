@@ -196,7 +196,7 @@ public class RssWriter extends DefaultChemObjectWriter {
                     inchiElement.appendChild(new Text((String) inchimap.get(chemObject)));
                     itemElement.appendChild(inchiElement);
                 }
-                Element root = null;
+                Element root;
                 Convertor convertor = new Convertor(true, null);
                 object = iChemObject;
                 if (object instanceof ICrystal) {

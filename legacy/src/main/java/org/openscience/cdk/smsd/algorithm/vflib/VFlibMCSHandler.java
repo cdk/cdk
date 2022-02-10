@@ -211,8 +211,8 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     private void searchVFMCSMappings() {
         //        System.out.println("searchVFMCSMappings ");
-        IQuery query = null;
-        IMapper mapper = null;
+        IQuery query;
+        IMapper mapper;
 
         if (queryMol == null) {
             countR = getReactantMol().getAtomCount()
@@ -259,7 +259,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         boolean ropFlag = true;
         for (Map<Integer, Integer> firstPassMappings : allMCSCopy) {
             Map<Integer, Integer> tMapping = new TreeMap<>(firstPassMappings);
-            McGregor mgit = null;
+            McGregor mgit;
             if (queryMol != null) {
                 mgit = new McGregor(queryMol, mol2, mappings, isBondMatchFlag());
             } else {
@@ -297,10 +297,10 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                 counter = 0;
             }
             for (Map.Entry<INode, IAtom> mapping : solution.entrySet()) {
-                IAtom qAtom = null;
-                IAtom tAtom = null;
-                Integer qIndex = 0;
-                Integer tIndex = 0;
+                IAtom qAtom;
+                IAtom tAtom;
+                Integer qIndex;
+                Integer tIndex;
 
                 if (rONP) {
                     qAtom = query.getAtom(mapping.getKey());
@@ -346,10 +346,10 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             Map<IAtom, IAtom> atomatomMapping = new HashMap<>();
             Map<Integer, Integer> indexindexMapping = new TreeMap<>();
             for (int index = 0; index < mapping.size(); index += 2) {
-                IAtom qAtom = null;
-                IAtom tAtom = null;
-                Integer qIndex = 0;
-                Integer tIndex = 0;
+                IAtom qAtom;
+                IAtom tAtom;
+                Integer qIndex;
+                Integer tIndex;
 
                 if (ronp) {
                     qAtom = getReactantMol().getAtom(mapping.get(index));

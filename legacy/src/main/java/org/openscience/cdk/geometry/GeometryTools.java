@@ -1372,8 +1372,8 @@ public class GeometryTools {
         List<IAtom> connectedAtoms;
         double sum = 0;
         double n = 0;
-        double distance1 = 0;
-        double distance2 = 0;
+        double distance1;
+        double distance2;
         setVisitedFlagsToFalse(firstAtomContainer);
         setVisitedFlagsToFalse(secondAtomContainer);
         while (firstAtoms.hasNext()) {
@@ -1542,10 +1542,10 @@ public class GeometryTools {
             Map<Integer, Integer> mappedAtoms, boolean hetAtomOnly, boolean Coords3d) {
         //logger.debug("**** GT getAllAtomRMSD ****");
         double sum = 0;
-        double RMSD = 0;
+        double RMSD;
         Iterator<Integer> firstAtoms = mappedAtoms.keySet().iterator();
-        int firstAtomNumber = 0;
-        int secondAtomNumber = 0;
+        int firstAtomNumber;
+        int secondAtomNumber;
         int n = 0;
         while (firstAtoms.hasNext()) {
             firstAtomNumber = firstAtoms.next();

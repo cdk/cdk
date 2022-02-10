@@ -248,15 +248,15 @@ public class MM2BasedParameterSetReader {
      * @exception  Exception  Description of the Exception
      */
     private void setAtomTypes(IChemObjectBuilder builder) throws Exception {
-        String name = "";
-        String rootType = "";
-        int an = 0;
+        String name;
+        String rootType;
+        int an;
         int rl = 255;
         int gl = 20;
         int bl = 147;
-        int maxbond = 0;
+        int maxbond;
 
-        double mass = 0.0;
+        double mass;
         st.nextToken();
         String sid = st.nextToken();
         rootType = st.nextToken();

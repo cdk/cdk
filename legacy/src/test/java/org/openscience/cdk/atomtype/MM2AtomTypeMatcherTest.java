@@ -75,7 +75,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
             att.assignAtomTypePropertiesToAtom(testMolecule);
             for (int i = 0; i < testMolecule.getAtomCount(); i++) {
                 logger.debug("atomNr:" + i);
-                IAtomType matched = null;
+                IAtomType matched;
                 matched = atm.findMatchingAtomType(testMolecule, testMolecule.getAtom(i));
                 logger.debug("Found AtomType: ", matched);
                 AtomTypeManipulator.configure(testMolecule.getAtom(i), matched);

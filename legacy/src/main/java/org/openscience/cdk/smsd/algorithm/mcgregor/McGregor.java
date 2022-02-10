@@ -52,21 +52,21 @@ import org.openscience.cdk.smsd.helper.BinaryTree;
 @Deprecated
 public final class McGregor {
 
-    private              IAtomContainer       source        = null;
-    private              IAtomContainer       target        = null;
+    private              IAtomContainer       source;
+    private              IAtomContainer       target;
     private              BinaryTree           last          = null;
     private              BinaryTree           first         = null;
-    private              Stack<List<Integer>> bestArcs      = null;
-    private              List<Integer>        modifiedARCS  = null;
-    private              int                  bestarcsleft  = 0;
-    private              int                  globalMCSSize = 0;
-    private              List<List<Integer>>  mappings      = null;
+    private              Stack<List<Integer>> bestArcs;
+    private              List<Integer>        modifiedARCS;
+    private              int                  bestarcsleft;
+    private              int                  globalMCSSize;
+    private              List<List<Integer>>  mappings;
     /* This should be more or equal to all the atom types */
     private static final String[]             SIGNS         = {"$1", "$2", "$3", "$4", "$5", "$6", "$7", "$8", "$9", "$10", "$11",
                                                                "$12", "$13", "$15", "$16", "$17", "$18", "$19", "$20", "$21", "$22", "$23", "$24", "$25", "$26", "$27",
                                                                "$28", "$29", "$30", "$31", "$32", "$33", "$34", "$35", "$36", "$37", "$38", "$39", "$40", "$41", "$42",
                                                                "$43", "$44", "$45", "$46", "$47", "$48", "$49", "$50", "$51", "$52", "$53", "$54", "$55"};
-    private              boolean              newMatrix     = false;
+    private              boolean              newMatrix;
     private              boolean              bondMatch     = false;
 
     /**
@@ -246,7 +246,7 @@ public final class McGregor {
         int cliqueSize = cliqueVector.size();
         int vecSize = compGraphNodes.size();
 
-        int cliqueNumber = 0;
+        int cliqueNumber;
 
         for (Integer integer : cliqueVector) {
             //go through all clique nodes

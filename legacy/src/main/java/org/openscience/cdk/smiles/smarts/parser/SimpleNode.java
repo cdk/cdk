@@ -56,7 +56,7 @@ class SimpleNode implements Node, Cloneable {
      */
     @Override
     public Object clone() {
-        Constructor constructor = null;
+        Constructor constructor;
         Node clone = null;
         try {
             constructor = this.getClass().getConstructor(new Class[]{SMARTSParser.class, Integer.TYPE});

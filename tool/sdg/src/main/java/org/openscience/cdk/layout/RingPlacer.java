@@ -186,14 +186,14 @@ public class RingPlacer {
      */
     public IAtomContainer placeRingSubstituents(IRingSet rs, double bondLength) {
         logger.debug("RingPlacer.placeRingSubstituents() start");
-        IRing ring = null;
-        IAtom atom = null;
-        IRingSet rings = null;
+        IRing ring;
+        IAtom atom;
+        IRingSet rings;
         IAtomContainer unplacedPartners = rs.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer sharedAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer primaryAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer treatedAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
-        Point2d centerOfRingGravity = null;
+        Point2d centerOfRingGravity;
         for (int j = 0; j < rs.getAtomContainerCount(); j++) {
             ring = (IRing) rs.getAtomContainer(j); /*
                                                     * Get the j-th Ring in
@@ -269,7 +269,7 @@ public class RingPlacer {
         Vector2d bondAtom2Vector = new Vector2d(bondAtom2.getPoint2d());
 
         Point2d midPoint   = getMidPoint(bondAtom1Vector, bondAtom2Vector);
-        Point2d ringCenter = null;
+        Point2d ringCenter;
         double  radius     = getNativeRingRadius(ring, bondLength);
         double  offset     = 0;
 
@@ -472,7 +472,7 @@ public class RingPlacer {
 
         double startAngle;
 
-        int direction = 1;
+        int direction;
         // if bond is vertical
         if (xDiff == 0) {
             logger.debug("placeFusedRing->Bond is vertical");
@@ -616,8 +616,8 @@ public class RingPlacer {
      * @param   rs  The ringset to be checked
      */
     public void checkAndMarkPlaced(IRingSet rs) {
-        IRing ring = null;
-        boolean allPlaced = true;
+        IRing ring;
+        boolean allPlaced;
         boolean ringsetPlaced = true;
         for (int i = 0; i < rs.getAtomContainerCount(); i++) {
             ring = (IRing) rs.getAtomContainer(i);

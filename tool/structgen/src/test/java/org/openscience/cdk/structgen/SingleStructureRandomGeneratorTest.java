@@ -69,7 +69,7 @@ public class SingleStructureRandomGeneratorTest {
          * carbon-only molecule until we have a proper hydrogen count
          * configurator
          */
-        double bondCount = 0;
+        double bondCount;
         org.openscience.cdk.interfaces.IAtom atom;
         for (int f = 0; f < mol.getAtomCount(); f++) {
             atom = mol.getAtom(f);

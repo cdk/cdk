@@ -125,7 +125,7 @@ import static org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
  */
 public class MDLV2000Reader extends DefaultChemObjectReader {
 
-    BufferedReader                   input            = null;
+    BufferedReader                   input;
     private static final ILoggingTool      logger           = LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
 
     private BooleanIOSetting optForce3d;
@@ -315,7 +315,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         int linecount = 0;
         String title = null;
-        String program = null;
+        String program;
         String remark = null;
         String line = "";
 
@@ -874,7 +874,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         if (isQuery && bond.getClass() != QueryBond.class) {
             IBond.Order order = bond.getOrder();
-            Expr expr = null;
+            Expr expr;
             if (bond.isAromatic()) {
                 expr = new Expr(Expr.Type.IS_AROMATIC);
             } else {
@@ -2163,7 +2163,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     for (int i = 1; i <= infoCount; i++) {
                         int atomNumber = Integer.parseInt(st.nextToken().trim());
                         int rad = Integer.parseInt(st.nextToken().trim());
-                        MDLV2000Writer.SPIN_MULTIPLICITY spin = MDLV2000Writer.SPIN_MULTIPLICITY.None;
+                        MDLV2000Writer.SPIN_MULTIPLICITY spin;
                         if (rad > 0) {
                             IAtom radical = container.getAtom(atomNumber - 1);
                             spin = MDLV2000Writer.SPIN_MULTIPLICITY.ofValue(rad);

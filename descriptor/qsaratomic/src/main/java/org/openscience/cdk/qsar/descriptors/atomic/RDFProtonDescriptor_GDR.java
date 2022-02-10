@@ -237,11 +237,11 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 
         // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
         List<IAtom> atomsInSecondSphere = mol.getConnectedAtomsList(neighbour0);
-        List<IAtom> atomsInThirdSphere = null;
-        List<IAtom> atomsInFourthSphere = null;
-        List<IAtom> atomsInFifthSphere = null;
-        List<IAtom> atomsInSixthSphere = null;
-        List<IAtom> atomsInSeventhSphere = null;
+        List<IAtom> atomsInThirdSphere;
+        List<IAtom> atomsInFourthSphere;
+        List<IAtom> atomsInFifthSphere;
+        List<IAtom> atomsInSixthSphere;
+        List<IAtom> atomsInSeventhSphere;
 
         // SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS DURING DETECTION
         ArrayList<Integer> singles = new ArrayList<>(); // list of any bond not rotatable
@@ -381,7 +381,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
         //Variables
         double[] values; // for storage of results of other methods
         double sum;
-        double smooth = -20;
+        double smooth;
         double partial;
         int position;
         double limitInf;
@@ -406,7 +406,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
             partial = 0;
             IBond theDoubleBond;
             smooth = -1.15;
-            int goodPosition = 0;
+            int goodPosition;
             IBond goodBond;
             for (int c = 0; c < gdr_desc_length; c++) {
             	double ghd = limitInf + (limitSup - limitInf) * ((double)c / gdr_desc_length);

@@ -314,7 +314,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             } else {
                 throw new IOException("Error reading z coordinate");
             }
-            String symbol = "Du";
+            String symbol;
             symbol = PeriodicTable.getSymbol(atomicNumber);
             IAtom atom = model.getBuilder().newInstance(IAtom.class, symbol);
             atom.setPoint3d(new Point3d(x, y, z));

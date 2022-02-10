@@ -139,7 +139,7 @@ public class XYZReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) {
         IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
 
-        int number_of_atoms = 0;
+        int number_of_atoms;
         StringTokenizer tokenizer;
 
         try {
@@ -171,7 +171,7 @@ public class XYZReader extends DefaultChemObjectReader {
                         logger.debug("Found and set comment: ", comment);
                         i--; // a comment line does not count as an atom
                     } else {
-                        double x = 0.0f, y = 0.0f, z = 0.0f;
+                        double x, y, z;
                         double charge = 0.0f;
                         tokenizer = new StringTokenizer(line, "\t ,;");
                         int fields = tokenizer.countTokens();

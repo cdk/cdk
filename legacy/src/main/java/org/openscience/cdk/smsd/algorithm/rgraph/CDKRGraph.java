@@ -106,7 +106,7 @@ public class CDKRGraph {
     // each node keeping track of its
     // neighbors.
 
-    private List<CDKRNode> graph            = null;
+    private List<CDKRNode> graph;
     // maximal number of iterations before
     // search break
     private int            maxIteration     = -1;
@@ -117,7 +117,7 @@ public class CDKRGraph {
     private BitSet         sourceBitSet     = null;
     private BitSet         targetBitSet     = null;
     // current solution list
-    private List<BitSet>   solutionList     = null;
+    private List<BitSet>   solutionList;
     // flag to define if we want to get all possible 'mappings'
     private boolean        findAllMap       = false;
     // flag to define if we want to get all possible 'structures'
@@ -125,7 +125,7 @@ public class CDKRGraph {
     // working variables
     private boolean        stop             = false;
     private int            nbIteration      = 0;
-    private BitSet         graphBitSet      = null;
+    private BitSet         graphBitSet;
 
     // -1 for infinite search and one min is 1
 
@@ -253,10 +253,10 @@ public class CDKRGraph {
      * @param  forbiden   node forbidden (set of node incompatible with the current solution)
      */
     private void parseRec(BitSet traversed, BitSet extension, BitSet forbidden) throws CDKException {
-        BitSet newTraversed = null;
-        BitSet newExtension = null;
-        BitSet newForbidden = null;
-        BitSet potentialNode = null;
+        BitSet newTraversed;
+        BitSet newExtension;
+        BitSet newForbidden;
+        BitSet potentialNode;
 
         checkTimeOut();
 
@@ -531,7 +531,7 @@ public class CDKRGraph {
      */
     public BitSet projectG1(BitSet set) {
         BitSet projection = new BitSet(getFirstGraphSize());
-        CDKRNode xNode = null;
+        CDKRNode xNode;
 
         for (int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1)) {
             xNode = getGraph().get(x);
@@ -547,7 +547,7 @@ public class CDKRGraph {
      */
     public BitSet projectG2(BitSet set) {
         BitSet projection = new BitSet(getSecondGraphSize());
-        CDKRNode xNode = null;
+        CDKRNode xNode;
 
         for (int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1)) {
             xNode = getGraph().get(x);

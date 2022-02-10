@@ -272,8 +272,8 @@ final class BeamToCDK {
             int v = e.other(u);
 
             // find a directional bond for either end
-            Edge first  = null;
-            Edge second = null;
+            Edge first;
+            Edge second;
 
             // if either atom is not incident to a directional label there
             // is no configuration
@@ -362,8 +362,8 @@ final class BeamToCDK {
                     int vPos = Arrays.binarySearch(nbrs, 0, 3, v);
                     int uPos = Arrays.binarySearch(nbrs, 3, 6, u);
 
-                    int uhi = 0, ulo = 0;
-                    int vhi = 0, vlo = 0;
+                    int uhi, ulo;
+                    int vhi, vlo;
 
                     uhi = nbrs[(vPos + 1) % 3];
                     ulo = nbrs[(vPos + 2) % 3];

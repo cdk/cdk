@@ -771,8 +771,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
         for (IBond bond : mol.bonds()) {
-            IPseudoAtom rGroup = null;
-            IAtom partner = null;
+            IPseudoAtom rGroup;
+            IAtom partner;
             if (bond.getBegin() instanceof IPseudoAtom) {
                 rGroup = (IPseudoAtom) bond.getBegin();
                 partner = bond.getEnd();
@@ -881,7 +881,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void testHas2DCoordinates_With000() throws Exception {
         String filenameMol = "with000coordinate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
-        IAtomContainer molOne = null;
+        IAtomContainer molOne;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());
         reader.close();

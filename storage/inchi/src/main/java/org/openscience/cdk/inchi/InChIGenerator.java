@@ -369,10 +369,10 @@ public class InChIGenerator {
                         .getStereo();
 
                 IBond stereoBond = dbStereo.getStereoBond();
-                InchiAtom at0 = null;
-                InchiAtom at1 = null;
-                InchiAtom at2 = null;
-                InchiAtom at3 = null;
+                InchiAtom at0;
+                InchiAtom at1;
+                InchiAtom at2;
+                InchiAtom at3;
                 // TODO: I should check for two atom bonds... or maybe that should happen when you
                 //    create a double bond stereochemistry
                 if (stereoBond.contains(surroundingBonds[0].getBegin())) {
@@ -393,7 +393,7 @@ public class InChIGenerator {
                     at2 = atomMap.get(surroundingBonds[1].getEnd());
                     at3 = atomMap.get(surroundingBonds[1].getBegin());
                 }
-                InchiStereoParity p = InchiStereoParity.UNKNOWN;
+                InchiStereoParity p;
                 if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER) {
                     p = InchiStereoParity.ODD;
                 } else if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE) {
@@ -471,7 +471,7 @@ public class InChIGenerator {
                     }
                 }
 
-                InchiStereoParity parity = InchiStereoParity.UNKNOWN;
+                InchiStereoParity parity;
                 if (winding == Stereo.ANTI_CLOCKWISE)
                     parity = InchiStereoParity.ODD;
                 else if (winding == Stereo.CLOCKWISE)

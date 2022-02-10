@@ -85,7 +85,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
-        String name = null;
+        String name;
         IAtomContainer thisMol = som.getAtomContainer(0);
         name = ((String) thisMol.getProperty("SMIdbNAME")).toString();
         Assert.assertEquals("benzene", name);

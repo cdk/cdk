@@ -290,7 +290,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testTetraDehydroDecaline() throws Exception {
-        boolean isAromatic = false;
+        boolean isAromatic;
         //boolean testResults[] = {true, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -299,7 +299,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
         IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
         RingSetManipulator.markAromaticRings(rs);
-        IRing r = null;
+        IRing r;
         int aromacount = 0;
         for (IAtomContainer container : rs.atomContainers()) {
             r = (IRing) container;
@@ -365,7 +365,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testPorphyrine() throws Exception {
-        boolean isAromatic = false;
+        boolean isAromatic;
         boolean[] testResults = {false, false, false, false, false, true, true, true, true, true, false, true, true,
                 true, false, true, true, false, false, true, true, false, false, false, true, true, false, false,
                 false, true, true, false, false, false, false, true, true, true, true, false, false, false};
@@ -418,7 +418,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testBug716259() throws Exception {
-        IAtomContainer molecule = null;
+        IAtomContainer molecule;
         //boolean isAromatic = false;
         boolean[] testResults = {true, true, true, true, true, true, true, true, true, true, false, false, false,
                 false, false, false, false, false, false};

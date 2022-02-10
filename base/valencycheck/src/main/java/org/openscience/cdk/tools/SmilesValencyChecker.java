@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
 
-    private String                atomTypeList = null;
+    private String                atomTypeList;
     protected AtomTypeFactory     structgenATF;
     protected static ILoggingTool logger       = LoggingToolFactory.createLoggingTool(SmilesValencyChecker.class);
 
@@ -88,7 +88,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      */
     public boolean saturate(IBond[] bonds, IAtomContainer atomContainer) throws CDKException {
         logger.debug("Saturating bond set of size: ", bonds.length);
-        boolean bondsAreFullySaturated = false;
+        boolean bondsAreFullySaturated;
         if (bonds.length > 0) {
             IBond bond = bonds[0];
 

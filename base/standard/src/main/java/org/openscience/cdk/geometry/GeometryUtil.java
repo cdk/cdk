@@ -1461,8 +1461,8 @@ public final class GeometryUtil {
         List<IAtom> connectedAtoms;
         double sum = 0;
         double n = 0;
-        double distance1 = 0;
-        double distance2 = 0;
+        double distance1;
+        double distance2;
         setVisitedFlagsToFalse(firstAtomContainer);
         setVisitedFlagsToFalse(secondAtomContainer);
         while (firstAtoms.hasNext()) {

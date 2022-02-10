@@ -51,7 +51,7 @@ public class QueryChemObject implements IChemObject {
     /**
      * String representing the identifier for this atom type with null as default.
      */
-    private String                    identifier = (String) CDKConstants.UNSET;
+    private String                    identifier;
 
     /**
      *  You will frequently have to use some flags on a IChemObject. For example, if

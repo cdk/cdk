@@ -1837,13 +1837,13 @@ public class StructureDiagramGenerator {
         logger.debug("Start of handleAliphatics");
 
         int safetyCounter = 0;
-        IAtomContainer unplacedAtoms = null;
-        IAtomContainer placedAtoms = null;
-        IAtomContainer longestUnplacedChain = null;
-        IAtom atom = null;
+        IAtomContainer unplacedAtoms;
+        IAtomContainer placedAtoms;
+        IAtomContainer longestUnplacedChain;
+        IAtom atom;
 
-        Vector2d direction = null;
-        Vector2d startVector = null;
+        Vector2d direction;
+        Vector2d startVector;
         boolean done;
         do {
             safetyCounter++;
@@ -2102,7 +2102,7 @@ public class StructureDiagramGenerator {
      * @return an IAtomContainer with the atoms of the bond and the bond itself
      */
     private IAtomContainer placeFirstBond(IBond bond, Vector2d bondVector) {
-        IAtomContainer sharedAtoms = null;
+        IAtomContainer sharedAtoms;
 
         bondVector.normalize();
         logger.debug("placeFirstBondOfFirstRing->bondVector.length():" + bondVector.length());
@@ -2174,7 +2174,7 @@ public class StructureDiagramGenerator {
      * @return the ring system the given atom is part of
      */
     private IRingSet getRingSystemOfAtom(List ringSystems, IAtom ringAtom) {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         for (Object ringSystem : ringSystems) {
             ringSet = (IRingSet) ringSystem;
             if (ringSet.contains(ringAtom)) {
@@ -2188,7 +2188,7 @@ public class StructureDiagramGenerator {
      * Set all the atoms in unplaced rings to be unplaced
      */
     private void resetUnplacedRings() {
-        IRing ring = null;
+        IRing ring;
         if (sssr == null) {
             return;
         }

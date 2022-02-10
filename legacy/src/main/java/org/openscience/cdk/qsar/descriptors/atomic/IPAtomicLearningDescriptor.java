@@ -111,7 +111,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
-        double value = 0;
+        double value;
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
         String originalAtomtypeName = atom.getAtomTypeName();
         Integer originalNeighborCount = atom.getFormalNeighbourCount();

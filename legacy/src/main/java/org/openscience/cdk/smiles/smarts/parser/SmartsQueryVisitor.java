@@ -349,7 +349,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTSmarts node, Object data) {
-        SMARTSAtom atom = null;
+        SMARTSAtom atom;
         SMARTSBond bond = null;
 
         ASTAtom first = (ASTAtom) node.jjtGetChild(0);
@@ -683,7 +683,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTExplicitAtom node, Object data) {
-        IQueryAtom atom = null;
+        IQueryAtom atom;
         String symbol = node.getSymbol();
         if ("*".equals(symbol)) {
             atom = new AnyAtom(builder);

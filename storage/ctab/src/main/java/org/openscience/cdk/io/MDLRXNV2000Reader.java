@@ -66,7 +66,7 @@ import java.util.StringTokenizer;
  */
 public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
-    BufferedReader              input  = null;
+    BufferedReader              input;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
 
     /**
@@ -200,9 +200,9 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             throw new CDKException("Error while reading header of RXN file", exception);
         }
 
-        int numReactans = 0;
-        int numProducts = 0;
-        int agentCount = 0;
+        int numReactans;
+        int numProducts;
+        int agentCount;
         try {
             String countsLine = input.readLine();
             /*

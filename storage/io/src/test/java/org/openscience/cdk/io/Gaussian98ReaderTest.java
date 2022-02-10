@@ -36,11 +36,11 @@ public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testNMRReading() throws Exception {
-        IAtomContainer atomContainer = null;
+        IAtomContainer atomContainer;
         //boolean foundOneShieldingEntry = false;
         //Double shielding = null;
-        Object object = null;
-        int shieldingCounter = 0;
+        Object object;
+        int shieldingCounter;
         String filename = "g98ReaderNMRTest.log";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(ins));

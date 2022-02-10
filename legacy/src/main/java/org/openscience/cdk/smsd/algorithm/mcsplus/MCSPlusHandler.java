@@ -97,7 +97,7 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
      */
     @Override
     public synchronized void searchMCS(boolean shouldMatchBonds) {
-        List<List<Integer>> mappings = null;
+        List<List<Integer>> mappings;
         try {
             if (source.getAtomCount() >= target.getAtomCount()) {
                 mappings = new MCSPlus().getOverlaps(source, target, shouldMatchBonds);
@@ -152,8 +152,8 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
                     int iIndex = map.getKey();
                     int jIndex = map.getValue();
 
-                    IAtom sourceAtom = null;
-                    IAtom targetAtom = null;
+                    IAtom sourceAtom;
+                    IAtom targetAtom;
 
                     sourceAtom = source.getAtom(iIndex);
                     targetAtom = target.getAtom(jIndex);

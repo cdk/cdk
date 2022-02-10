@@ -166,7 +166,7 @@ final class StandardSgroupGenerator {
         int numSgroupAtoms = sgroupAtoms.size();
         int numSgroupBonds = 0;
 
-        Color color = null;
+        Color color;
         Color refcolor = null;
 
         for (IAtom atom : sgroupAtoms) {
@@ -819,10 +819,10 @@ final class StandardSgroupGenerator {
                     bounds.add(childBounds);
             }
 
-            Point2d b1p1 = brackets.get(0).getFirstPoint();
-            Point2d b1p2 = brackets.get(0).getSecondPoint();
-            Point2d b2p1 = brackets.get(1).getFirstPoint();
-            Point2d b2p2 = brackets.get(1).getSecondPoint();
+            Point2d b1p1;
+            Point2d b1p2;
+            Point2d b2p1;
+            Point2d b2p2;
 
             double margin = 5*(parameters.get(BasicSceneGenerator.Margin.class)/scale);
 

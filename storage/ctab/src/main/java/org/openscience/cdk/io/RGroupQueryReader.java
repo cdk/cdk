@@ -84,7 +84,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
         String  occurence;
     }
 
-    BufferedReader              input  = null;
+    BufferedReader              input;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReader.class);
 
     /**
@@ -181,7 +181,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
         String line = "";
         int lineCount = 0;
         String eol = "\n";
-        StringTokenizer strTk = null;
+        StringTokenizer strTk;
         /* Variable to capture the LOG line(s) */
         Map<Integer, RGroupLogic> logicDefinitions = new HashMap<>();
 
@@ -227,7 +227,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     strTk.nextToken();
                     strTk.nextToken();
                     strTk.nextToken();
-                    RGroupLogic log = null;
+                    RGroupLogic log;
 
                     log = new RGroupLogic();
                     int rgroupNumber = Integer.valueOf(strTk.nextToken());

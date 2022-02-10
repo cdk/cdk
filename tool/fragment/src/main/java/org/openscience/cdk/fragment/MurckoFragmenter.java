@@ -85,9 +85,9 @@ public class MurckoFragmenter implements IFragmenter {
     Map<Long, IAtomContainer>   frameMap             = new HashMap<>();
     Map<Long, IAtomContainer>   ringMap              = new HashMap<>();
 
-    boolean                     singleFrameworkOnly  = false;
+    boolean                     singleFrameworkOnly;
     boolean                     ringFragments        = true;
-    int                         minimumFragmentSize  = 5;
+    int                         minimumFragmentSize;
 
     /**
      * Instantiate Murcko fragmenter.

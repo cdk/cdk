@@ -264,7 +264,7 @@ public final class InChITautomerGenerator {
         Stack<IAtom> atomStack = new Stack<>();
         IAtomContainer inchiMolGraph = inputMolecule.getBuilder().newInstance(IAtomContainer.class);
         boolean pop = false;
-        boolean push = true;
+        boolean push;
         while (match.find()) {
             String group = match.group();
             push = true;
@@ -272,7 +272,7 @@ public final class InChITautomerGenerator {
                 if (group.matches("[0-9]*")) {
                     IAtom atom = inchiAtomsByPosition.get(Integer.valueOf(group));
                     if (!inchiMolGraph.contains(atom)) inchiMolGraph.addAtom(atom);
-                    IAtom prevAtom = null;
+                    IAtom prevAtom;
                     if (atomStack.size() != 0) {
                         if (pop) {
                             prevAtom = atomStack.pop();
@@ -362,7 +362,7 @@ public final class InChITautomerGenerator {
     private int parseMobileHydrogens(List<Integer> mobHydrAttachPositions, String inputInchi) {
 
         int totalMobHydrCount = 0;
-        String hydrogens = "";
+        String hydrogens;
         String inchi = inputInchi;
         if (inchi.contains("/h")) {
             hydrogens = inchi.substring(inchi.indexOf("/h") + 2);

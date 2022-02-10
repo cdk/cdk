@@ -36,8 +36,8 @@ package org.openscience.cdk.isomorphism.mcss;
  */
 public class RMap {
 
-    int id1 = 0;
-    int id2 = 0;
+    int id1;
+    int id2;
 
     /**
      *  Constructor for the RMap.

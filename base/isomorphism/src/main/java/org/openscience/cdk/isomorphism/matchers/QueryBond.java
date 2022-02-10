@@ -48,12 +48,12 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     /**
      * Number of atoms contained by this object.
      */
-    protected int               atomCount = 0;
+    protected int               atomCount;
 
     /**
      * A list of atoms participating in this query bond.
      */
-    protected IAtom[]           atoms     = null;
+    protected IAtom[]           atoms;
 
     /**
      * A descriptor the stereochemical orientation of this query bond.

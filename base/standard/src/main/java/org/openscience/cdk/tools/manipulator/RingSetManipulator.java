@@ -74,7 +74,7 @@ public class RingSetManipulator {
     public static IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
         IRingSet largestRingSet = null;
         int atomNumber = 0;
-        IAtomContainer container = null;
+        IAtomContainer container;
         for (IRingSet ringSystem : ringSystems) {
             container = RingSetManipulator.getAllInOneContainer(ringSystem);
             if (atomNumber < container.getAtomCount()) {

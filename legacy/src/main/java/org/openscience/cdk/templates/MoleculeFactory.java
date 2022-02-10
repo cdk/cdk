@@ -1236,10 +1236,10 @@ public class MoleculeFactory {
     }
 
     public static IAtomContainer loadMolecule(String inFile) {
-        ChemFile chemFile = null;
-        IChemSequence chemSequence = null;
-        IChemModel chemModel = null;
-        IAtomContainerSet setOfMolecules = null;
+        ChemFile chemFile;
+        IChemSequence chemSequence;
+        IChemModel chemModel;
+        IAtomContainerSet setOfMolecules;
         IAtomContainer molecule = null;
         try (FileInputStream fis = new FileInputStream(inFile);
              MDLReader mr = new MDLReader(fis)) {

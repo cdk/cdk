@@ -55,7 +55,7 @@ public class VicinitySamplerTest extends CDKTestCase {
         Isotopes.getInstance().configureAtoms(mol);
         addImplicitHydrogens(mol);
 
-        IAtomContainer temp = null;
+        IAtomContainer temp;
         List structures = VicinitySampler.sample(mol);
         Assert.assertEquals(37, structures.size());
         for (Object structure : structures) {
@@ -76,7 +76,7 @@ public class VicinitySamplerTest extends CDKTestCase {
         Isotopes.getInstance().configureAtoms(mol);
         addImplicitHydrogens(mol);
 
-        IAtomContainer temp = null;
+        IAtomContainer temp;
         List structures = VicinitySampler.sample(mol);
         Assert.assertEquals(1, structures.size());
         for (Object structure : structures) {

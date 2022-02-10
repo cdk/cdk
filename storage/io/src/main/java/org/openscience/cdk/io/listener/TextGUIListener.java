@@ -51,7 +51,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
     private BufferedReader in;
     private PrintWriter    out;
 
-    private Importance     level = Importance.HIGH;
+    private Importance     level;
 
     public TextGUIListener(Importance level) {
         this.level = level;

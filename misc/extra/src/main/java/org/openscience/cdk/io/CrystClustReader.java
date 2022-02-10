@@ -110,7 +110,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) throws CDKException {
         IChemSequence seq = file.getBuilder().newInstance(IChemSequence.class);
         IChemModel model = file.getBuilder().newInstance(IChemModel.class);
-        ICrystal crystal = null;
+        ICrystal crystal;
 
         int lineNumber = 0;
         Vector3d a, b, c;

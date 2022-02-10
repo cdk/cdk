@@ -44,10 +44,10 @@ public class TargetProcessor {
     private final String[]      signArray;
     //number of remaining molecule A bonds after the clique search, which are
     //neighbors of the MCS
-    private int           neighborBondNumB = 0;
+    private int           neighborBondNumB;
     //number of remaining molecule A bonds after the clique search, which aren't
     //neighbors
-    private int           setBondNumB      = 0;
+    private int           setBondNumB;
     private final List<Integer> iBondNeighborsB;
     private final List<String>  cBondNeighborsB;
     private final int           newNeighborNumA;

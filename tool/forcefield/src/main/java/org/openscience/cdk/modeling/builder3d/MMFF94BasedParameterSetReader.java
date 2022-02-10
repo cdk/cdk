@@ -177,16 +177,16 @@ public class MMFF94BasedParameterSetReader {
      * @throws Exception Description of the Exception
      */
     private void setAtomTypes(IChemObjectBuilder builder) throws Exception {
-        String name = "";
-        String rootType = "";
+        String name;
+        String rootType;
         //int an = 0;
         int rl = 255;
         int gl = 20;
         int bl = 147;
-        int maxbond = 0;
-        int atomNr = 0;
+        int maxbond;
+        int atomNr;
 
-        double mass = 0.0;
+        double mass;
         st.nextToken();
         String sid = st.nextToken();
         rootType = st.nextToken();
@@ -333,7 +333,7 @@ public class MMFF94BasedParameterSetReader {
      * @throws Exception Description of the Exception
      */
     private void setTorsion() throws Exception {
-        List data = null;
+        List data;
         st.nextToken();
         String scode = st.nextToken(); // String scode
         String sid1 = st.nextToken();

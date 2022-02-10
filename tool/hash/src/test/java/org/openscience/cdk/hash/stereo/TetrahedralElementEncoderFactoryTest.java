@@ -173,7 +173,7 @@ public class TetrahedralElementEncoderFactoryTest {
         if (encoder instanceof MultiStereoEncoder) {
             return getGeometricParity(extractEncoders(encoder).get(0));
         } else if (encoder instanceof GeometryEncoder) {
-            Field field = null;
+            Field field;
             try {
                 field = encoder.getClass().getDeclaredField("geometric");
                 field.setAccessible(true);
@@ -187,7 +187,7 @@ public class TetrahedralElementEncoderFactoryTest {
 
     private static List<StereoEncoder> extractEncoders(StereoEncoder encoder) {
         if (encoder instanceof MultiStereoEncoder) {
-            Field field = null;
+            Field field;
             try {
                 field = encoder.getClass().getDeclaredField("encoders");
                 field.setAccessible(true);

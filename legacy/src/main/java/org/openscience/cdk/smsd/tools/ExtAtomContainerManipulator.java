@@ -226,7 +226,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     public static IAtomContainer removeHydrogensExceptSingleAndPreserveAtomID(IAtomContainer atomContainer) {
         Map<IAtom, IAtom> map = new HashMap<>(); // maps original atoms to clones.
         List<IAtom> remove = new ArrayList<>(); // lists removed Hs.
-        IAtomContainer mol = null;
+        IAtomContainer mol;
         if (atomContainer.getBondCount() > 0) {
             // Clone atoms except those to be removed.
             mol = atomContainer.getBuilder().newInstance(IAtomContainer.class);

@@ -85,7 +85,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
 
         // now serialize to MDL RXN
         StringWriter writer = new StringWriter(10000);
-        String file = "";
+        String file;
         MDLRXNWriter mdlWriter = new MDLRXNWriter(writer);
         mdlWriter.write(reaction);
         mdlWriter.close();
@@ -123,7 +123,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
 
         // now serialize to MDL RXN
         StringWriter writer = new StringWriter(10000);
-        String file = "";
+        String file;
         MDLRXNWriter mdlWriter = new MDLRXNWriter(writer);
         mdlWriter.write(reactionSet);
         mdlWriter.close();
@@ -177,7 +177,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
 
         // now serialize to MDL RXN
         StringWriter writer = new StringWriter(10000);
-        String file = "";
+        String file;
         MDLRXNWriter mdlWriter = new MDLRXNWriter(writer);
         mdlWriter.write(reactionSet);
         mdlWriter.close();

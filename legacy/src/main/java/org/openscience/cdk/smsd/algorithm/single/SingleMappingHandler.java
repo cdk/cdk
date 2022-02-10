@@ -59,7 +59,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
     private IAtomContainer                     source         = null;
     private IQueryAtomContainer                smartSource    = null;
     private IAtomContainer                     target         = null;
-    private boolean                            removeHydrogen = false;
+    private boolean                            removeHydrogen;
 
     /**
      *

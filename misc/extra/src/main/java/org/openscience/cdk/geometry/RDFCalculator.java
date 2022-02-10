@@ -132,8 +132,8 @@ public class RDFCalculator {
 
         // this we need always
         double[] rdf = new double[length];
-        double distance = 0.0;
-        int index = 0;
+        double distance;
+        int index;
 
         Point3d atomPoint = atom.getPoint3d();
         for (IAtom atomInContainer : container.atoms()) {

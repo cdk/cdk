@@ -198,7 +198,7 @@ public class ChemModelManipulator {
      * ChemModel is best suited to contain added Atom's and Bond's.
      */
     public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IAtom atom) {
-        IAtomContainer result = null;
+        IAtomContainer result;
         if (chemModel.getMoleculeSet() != null) {
             IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
             result = MoleculeSetManipulator.getRelevantAtomContainer(moleculeSet, atom);
@@ -228,7 +228,7 @@ public class ChemModelManipulator {
      * @return           The IAtomContainer object found, null if none is found.
      */
     public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IBond bond) {
-        IAtomContainer result = null;
+        IAtomContainer result;
         if (chemModel.getMoleculeSet() != null) {
             IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
             result = MoleculeSetManipulator.getRelevantAtomContainer(moleculeSet, bond);

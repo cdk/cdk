@@ -347,7 +347,7 @@ final class MacroCycleLayout {
         public int compareTo(MacroScore o) {
             if (o == null)
                 return -1;
-            int cmp = 0;
+            int cmp;
             cmp = -Integer.compare(this.nRingClick, o.nRingClick);
             if (cmp != 0)
                 return cmp;

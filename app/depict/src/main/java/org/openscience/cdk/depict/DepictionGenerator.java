@@ -280,7 +280,7 @@ public final class DepictionGenerator {
     }
 
     private <T extends IGeneratorParameter<S>, S, U extends S> void setParam(Class<T> key, U val) {
-        T param = null;
+        T param;
         try {
             param = key.newInstance();
             param.setValue(val);

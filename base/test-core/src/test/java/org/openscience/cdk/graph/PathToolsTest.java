@@ -93,10 +93,10 @@ public class PathToolsTest extends CDKTestCase {
 
     @Test
     public void testGetShortestPath_IAtomContainer_IAtom_IAtom() throws Exception {
-        IAtomContainer atomContainer = null;
-        IAtom start = null;
-        IAtom end = null;
-        List<IAtom> path = null;
+        IAtomContainer atomContainer;
+        IAtom start;
+        IAtom end;
+        List<IAtom> path;
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         atomContainer = sp.parseSmiles("CCCC");
         start = atomContainer.getAtom(0);
@@ -137,9 +137,9 @@ public class PathToolsTest extends CDKTestCase {
 
     @Test
     public void testGetPathsOfLength_IAtomContainer_IAtom_int() throws Exception {
-        IAtomContainer atomContainer = null;
-        IAtom start = null;
-        List<List<IAtom>> paths = null;
+        IAtomContainer atomContainer;
+        IAtom start;
+        List<List<IAtom>> paths;
         atomContainer = sp.parseSmiles("c1cc2ccccc2cc1");
         start = atomContainer.getAtom(0);
         paths = PathTools.getPathsOfLength(atomContainer, start, 1);

@@ -97,7 +97,7 @@ public class RGraph {
     // an RGraph is a list of RGraph nodes
     // each node keeping track of its
     // neighbors.
-    List<RNode>  graph            = null;
+    List<RNode>  graph;
 
     // maximal number of iterations before
     // search break
@@ -112,7 +112,7 @@ public class RGraph {
     BitSet       c2               = null;
 
     // current solution list
-    List<BitSet> solutionList     = null;
+    List<BitSet> solutionList;
 
     // flag to define if we want to get all possible 'mappings'
     boolean      findAllMap       = false;
@@ -123,7 +123,7 @@ public class RGraph {
     // working variables
     boolean      stop             = false;
     int          nbIteration      = 0;
-    BitSet       graphBitSet      = null;
+    BitSet       graphBitSet;
 
     private long timeout          = -1;
     private long start;
@@ -239,10 +239,10 @@ public class RGraph {
      * @param  forbiden   node forbidden (set of node incompatible with the current solution)
      */
     private void parseRec(BitSet traversed, BitSet extension, BitSet forbidden) {
-        BitSet newTraversed = null;
-        BitSet newExtension = null;
-        BitSet newForbidden = null;
-        BitSet potentialNode = null;
+        BitSet newTraversed;
+        BitSet newExtension;
+        BitSet newForbidden;
+        BitSet potentialNode;
 
         // Test whether the timeout is reached. Stop searching.
         if (this.timeout > -1 && (System.currentTimeMillis() - this.start) > this.timeout) {
@@ -522,7 +522,7 @@ public class RGraph {
      */
     public BitSet projectG1(BitSet set) {
         BitSet projection = new BitSet(firstGraphSize);
-        RNode xNode = null;
+        RNode xNode;
 
         for (int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1)) {
             xNode = graph.get(x);
@@ -538,7 +538,7 @@ public class RGraph {
      */
     public BitSet projectG2(BitSet set) {
         BitSet projection = new BitSet(secondGraphSize);
-        RNode xNode = null;
+        RNode xNode;
 
         for (int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1)) {
             xNode = graph.get(x);

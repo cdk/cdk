@@ -252,7 +252,7 @@ public class BayesianTest {
         model1.setNoteOrigin(dummyOrigin);
         model1.setNoteComments(dummyComments);
 
-        Bayesian model2 = null;
+        Bayesian model2;
         try {
             model2 = Bayesian.deserialise(model1.serialise());
         } catch (IOException ex) {

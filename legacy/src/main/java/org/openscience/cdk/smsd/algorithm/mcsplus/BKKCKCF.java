@@ -47,14 +47,14 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @Deprecated
 public class BKKCKCF {
 
-    private List<List<Integer>> maxCliquesSet      = null;
+    private List<List<Integer>> maxCliquesSet;
     /***********************************************************************/
-    private List<Integer>       cEdges             = null;
-    private List<Integer>       dEdges             = null;
-    private int                 bestCliqueSize     = 0;
-    private List<Integer>       compGraphNodes     = null;
-    private double              dEdgeIterationSize = 0;
-    private double              cEdgeIterationSize = 0;
+    private List<Integer>       cEdges;
+    private List<Integer>       dEdges;
+    private int                 bestCliqueSize;
+    private List<Integer>       compGraphNodes;
+    private double              dEdgeIterationSize;
+    private double              cEdgeIterationSize;
 
     /**
      * Creates index new instance of Bron Kerbosch Cazals Karande Koch Clique Finder
@@ -248,7 +248,7 @@ public class BKKCKCF {
     private void copyVertex(List<Integer> neighbourVertex, Stack<Integer> pCopyNIntersec, Stack<Integer> pCopy,
             List<Integer> qCopyNIntersec, List<Integer> qCopy, List<Integer> xCopyNIntersec,
             List<Integer> xCopy, List<Integer> yCopyNIntersec, List<Integer> yCopy) {
-        int nElement = -1;
+        int nElement;
         int nSize = neighbourVertex.size();
 
         for (int sec = 0; sec < nSize; sec += 2) {
@@ -385,7 +385,7 @@ public class BKKCKCF {
          * neighbourVertex[u]: set of neighbours of vertex u in Graph G
          */
 
-        List<Integer> neighbourVertex = new ArrayList<>();
+        List<Integer> neighbourVertex;
 
         int index = 0;
         while (vertex.get(index) != 0) {

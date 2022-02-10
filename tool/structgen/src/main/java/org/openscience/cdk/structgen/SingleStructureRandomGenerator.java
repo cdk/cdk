@@ -69,7 +69,7 @@ public class SingleStructureRandomGenerator {
 
     IAtomContainer    atomContainer;
     SaturationChecker satCheck;
-    Random            random = null;
+    Random            random;
 
     /**
      * Constructor for the SingleStructureRandomGenerator object.

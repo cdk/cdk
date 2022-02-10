@@ -269,7 +269,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testTetraDehydroDecaline() throws Exception {
-        boolean isAromatic = false;
+        boolean isAromatic;
         //boolean testResults[] = {true, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -279,7 +279,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
                 DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
         RingSetManipulator.markAromaticRings(rs);
-        IRing r = null;
+        IRing r;
         int aromacount = 0;
         for (IAtomContainer container : rs.atomContainers()) {
             r = (IRing) container;
@@ -345,7 +345,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testPorphyrine() throws Exception {
-        boolean isAromatic = false;
+        boolean isAromatic;
         boolean[] testResults = {false, false, false, false, false, true, true, true, true, true, false, true, true,
                 true, false, true, true, false, false, true, true, false, false, false, true, true, false, false,
                 false, true, true, false, false, false, false, true, true, true, true, false, false, false};

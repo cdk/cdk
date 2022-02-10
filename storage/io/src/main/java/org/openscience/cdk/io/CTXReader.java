@@ -125,7 +125,7 @@ public class CTXReader extends DefaultChemObjectReader {
             String line = input.readLine();
             while (input.ready() && line != null) {
                 logger.debug((lineNumber++) + ": ", line);
-                String command = null;
+                String command;
                 if (isCommand(line)) {
                     command = getCommand(line);
                     int lineCount = getContentLinesCount(line);

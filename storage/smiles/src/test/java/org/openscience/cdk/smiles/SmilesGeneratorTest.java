@@ -448,7 +448,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testPartitioning() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         Atom sodium = new Atom("Na");
@@ -468,7 +468,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug791091() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         molecule.addAtom(new Atom("C"));
@@ -491,7 +491,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug590236() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
         molecule.addAtom(new Atom("C"));
@@ -511,7 +511,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSFBug956923_aromatic() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator().aromatic();
         Atom sp2CarbonWithOneHydrogen = new Atom("C");
@@ -537,7 +537,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
     @Test
     public void testSFBug956923_nonAromatic() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         Atom sp2CarbonWithOneHydrogen = new Atom("C");
@@ -579,7 +579,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(mol);
         AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(mol);
         SmilesGenerator sg = SmilesGenerator.unique();
-        String smiles = "";
+        String smiles;
         String oldSmiles = sg.create(mol);
         while (acap.hasNext()) {
             smiles = sg.create(new AtomContainer(acap.next()));
@@ -609,7 +609,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(mol);
         AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(mol);
         SmilesGenerator sg = SmilesGenerator.unique();
-        String smiles = "";
+        String smiles;
         String oldSmiles = sg.create(mol);
         while (acbp.hasNext()) {
             smiles = sg.create(new AtomContainer(acbp.next()));
@@ -625,7 +625,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
          * carbon-only molecule until we have a proper hydrogen count
          * configurator
          */
-        double bondCount = 0;
+        double bondCount;
         org.openscience.cdk.interfaces.IAtom atom;
         for (int f = 0; f < mol.getAtomCount(); f++) {
             atom = mol.getAtom(f);
@@ -646,7 +646,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     public void testPseudoAtom() throws Exception {
         IAtom atom = new PseudoAtom("Star");
         SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(atom);
         addImplicitHydrogens(molecule);

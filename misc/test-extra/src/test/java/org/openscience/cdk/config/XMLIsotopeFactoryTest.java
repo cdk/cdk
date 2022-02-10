@@ -261,7 +261,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
         File tmpFile = File.createTempFile(prefix, suffix);
         FileOutputStream out = new FileOutputStream(tmpFile);
         byte[] buf = new byte[4096];
-        int i = 0;
+        int i;
         while ((i = in.read(buf)) != -1) {
             if (toReplace != null && replaceWith != null && i >= toReplace.length()
                 && new String(buf).contains(toReplace)) {

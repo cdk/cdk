@@ -67,12 +67,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
-    private              List<Map<IAtom, IAtom>>     allAtomMCS     = null;
-    private              Map<IAtom, IAtom>           atomsMCS       = null;
-    private              List<Map<IAtom, IAtom>>     allAtomMCSCopy = null;
-    private              Map<Integer, Integer>       firstMCS       = null;
-    private              List<Map<Integer, Integer>> allMCS         = null;
-    private              List<Map<Integer, Integer>> allMCSCopy     = null;
+    private              List<Map<IAtom, IAtom>>     allAtomMCS;
+    private              Map<IAtom, IAtom>           atomsMCS;
+    private              List<Map<IAtom, IAtom>>     allAtomMCSCopy;
+    private              Map<Integer, Integer>       firstMCS;
+    private              List<Map<Integer, Integer>> allMCS;
+    private              List<Map<Integer, Integer>> allMCSCopy;
     private              IQueryAtomContainer         queryMol       = null;
     private              IAtomContainer              mol1           = null;
     private              IAtomContainer              mol2           = null;
@@ -189,8 +189,8 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
     private void searchVFMappings() {
         //        System.out.println("searchVFMappings ");
-        IQuery query = null;
-        IMapper mapper = null;
+        IQuery query;
+        IMapper mapper;
         vfLibSolutions = new HashMap<>();
         if (queryMol != null) {
             query = new QueryCompiler(queryMol).compile();
@@ -252,8 +252,8 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
             counter = 0;
         }
         for (Map.Entry<INode, IAtom> mapping : vfLibSolutions.entrySet()) {
-            IAtom qAtom = null;
-            IAtom tAtom = null;
+            IAtom qAtom;
+            IAtom tAtom;
             if (ronp) {
                 qAtom = query.getAtom(mapping.getKey());
                 tAtom = mapping.getValue();
@@ -298,8 +298,8 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
             Map<IAtom, IAtom> atomatomMapping = new HashMap<>();
             Map<Integer, Integer> indexindexMapping = new TreeMap<>();
             for (int index = 0; index < mapping.size(); index += 2) {
-                IAtom qAtom = null;
-                IAtom tAtom = null;
+                IAtom qAtom;
+                IAtom tAtom;
 
                 qAtom = getReactantMol().getAtom(mapping.get(index));
                 tAtom = getProductMol().getAtom(mapping.get(index + 1));

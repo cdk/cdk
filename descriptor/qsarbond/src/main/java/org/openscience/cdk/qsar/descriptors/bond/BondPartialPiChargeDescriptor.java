@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 
-    private GasteigerPEPEPartialCharges pepe          = null;
+    private GasteigerPEPEPartialCharges pepe;
     /**Number of maximum iterations*/
     private int                         maxIterations = -1;
     /**Number of maximum resonance structures*/

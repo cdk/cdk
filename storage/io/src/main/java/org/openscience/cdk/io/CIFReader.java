@@ -160,7 +160,7 @@ public class CIFReader extends DefaultChemObjectReader {
             } else {
 
                 /* determine CIF command */
-                String command = "";
+                String command;
                 int spaceIndex = line.indexOf(' ');
                 if (spaceIndex != -1) {
                     // everything upto space is command

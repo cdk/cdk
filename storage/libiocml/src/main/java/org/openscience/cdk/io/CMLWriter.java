@@ -270,7 +270,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
         Document doc = new Document(root);
         try {
-            Serializer serializer = null;
+            Serializer serializer;
             if (xmlDeclaration.isSet()) {
                 serializer = new Serializer(output, "ISO-8859-1");
             } else {

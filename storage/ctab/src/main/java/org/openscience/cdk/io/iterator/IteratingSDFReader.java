@@ -304,7 +304,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     private void readDataBlockInto(IAtomContainer m) throws IOException {
-        String dataHeader = null;
+        String dataHeader;
         StringBuilder sb = new StringBuilder();
         currentLine = input.readLine();
         while (currentLine != null) {

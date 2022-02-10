@@ -394,8 +394,8 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
      */
     @Test
     public void testChebi() throws Exception {
-        IAtomContainer searchmol = null;
-        IAtomContainer findmol = null;
+        IAtomContainer searchmol;
+        IAtomContainer findmol;
         String filename = "chebisearch.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);

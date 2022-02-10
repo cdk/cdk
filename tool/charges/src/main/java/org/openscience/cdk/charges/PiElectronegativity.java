@@ -37,13 +37,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class PiElectronegativity {
 
-    private GasteigerMarsiliPartialCharges peoe  = null;
-    private GasteigerPEPEPartialCharges    pepe  = null;
+    private GasteigerMarsiliPartialCharges peoe;
+    private GasteigerPEPEPartialCharges    pepe;
 
     /**Number of maximum iterations*/
-    private int                            maxI  = 6;
+    private int                            maxI;
     /**Number of maximum resonance structures*/
-    private int                            maxRS = 50;
+    private int                            maxRS;
 
     private IAtomContainer                 molPi;
     private IAtomContainer                 acOldP;

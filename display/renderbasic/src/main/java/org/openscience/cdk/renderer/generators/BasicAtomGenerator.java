@@ -320,7 +320,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         } else if (model.get(CompactAtom.class)) {
             return this.generateCompactElement(atom, model);
         } else {
-            int alignment = 0;
+            int alignment;
             if (atom.getAtomicNumber() == IElement.C) {
                 alignment = GeometryUtil.getBestAlignmentForLabel(atomContainer, atom);
             } else {

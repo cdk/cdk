@@ -54,7 +54,7 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
  */
 public class Mopac7Reader extends DefaultChemObjectReader {
 
-    BufferedReader          input        = null;
+    BufferedReader          input;
     private static final String[] parameters   = {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
             "IONIZATION POTENTIAL", "ELECTRONIC ENERGY", "CORE-CORE REPULSION", "MOLECULAR WEIGHT", "EHOMO", "ELUMO"};
     private static final String[] units        = {"", "EV", "KJ", "", "EV", "EV", "", "EV", "EV"};
@@ -213,7 +213,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
         Object filledLevelsProp = mol.getProperty(filledLevels);
         //mol.getProperties().remove(filledLevels);
         if (filledLevelsProp == null) return;
-        int nFilledLevels = 0;
+        int nFilledLevels;
         try {
             nFilledLevels = Integer.parseInt(filledLevelsProp.toString());
         } catch (NumberFormatException exception) {

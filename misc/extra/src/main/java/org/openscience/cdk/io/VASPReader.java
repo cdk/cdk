@@ -147,7 +147,7 @@ public class VASPReader extends DefaultChemObjectReader {
 
     private IChemSequence readChemSequence(IChemSequence sequence) throws CDKException, IOException {
         IChemModel chemModel = sequence.getBuilder().newInstance(IChemModel.class);
-        ICrystal crystal = null;
+        ICrystal crystal;
 
         // Get the info line (first token of the first line)
         inputBuffer.mark(255);
@@ -241,7 +241,7 @@ public class VASPReader extends DefaultChemObjectReader {
             crystal.setB(new Vector3d(rprim[1][0] * acell[1], rprim[1][1] * acell[1], rprim[1][2] * acell[1]));
             crystal.setC(new Vector3d(rprim[2][0] * acell[2], rprim[2][1] * acell[2], rprim[2][2] * acell[2]));
             for (int i = 0; i < atomType.length; i++) {
-                String symbol = "Du";
+                String symbol;
                 try {
                     symbol = Isotopes.getInstance().getElement(atomType[i]).getSymbol();
                 } catch (Exception exception) {

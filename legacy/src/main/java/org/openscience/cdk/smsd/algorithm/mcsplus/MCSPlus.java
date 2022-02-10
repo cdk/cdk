@@ -87,7 +87,7 @@ public class MCSPlus {
      */
     protected List<List<Integer>> getOverlaps(IAtomContainer ac1, IAtomContainer ac2, boolean shouldMatchBonds)
             throws CDKException {
-        Stack<List<Integer>> maxCliqueSet = null;
+        Stack<List<Integer>> maxCliqueSet;
         List<List<Integer>> mappings = new ArrayList<>();
         try {
             GenerateCompatibilityGraph gcg = new GenerateCompatibilityGraph(ac1, ac2, shouldMatchBonds);

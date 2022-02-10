@@ -145,7 +145,7 @@ public class FixBondOrdersTool {
      * @throws CDKException
      */
     public IAtomContainer kekuliseAromaticRings(IAtomContainer molecule) throws CDKException {
-        IAtomContainer mNew = null;
+        IAtomContainer mNew;
         try {
             mNew = molecule.clone();
         } catch (Exception e) {
@@ -167,8 +167,8 @@ public class FixBondOrdersTool {
         }
 
         //We need to establish which rings share bonds and set up sets of such interdependant rings
-        List<Integer[]> rBondsArray = null;
-        List<List<Integer>> ringGroups = null;
+        List<Integer[]> rBondsArray;
+        List<List<Integer>> ringGroups;
 
         //Start by getting a list (same dimensions and ordering as ringset) of all the ring bond numbers in the reduced ring set
         rBondsArray = getRingSystem(mNew, ringSet);
@@ -183,14 +183,14 @@ public class FixBondOrdersTool {
             setAllRingBondsSingleOrder(ringGroup, ringSet);
 
             //Set up  lists of atoms, bonds and atom pairs for this ringGroup
-            List<Integer> atomNos = null;
+            List<Integer> atomNos;
             atomNos = getAtomNosForRingGroup(mNew, ringGroup, ringSet);
 
-            List<Integer> bondNos = null;
+            List<Integer> bondNos;
             bondNos = getBondNosForRingGroup(mNew, ringGroup, ringSet);
 
             //Array of same dimensions as bondNos (cols in Matrix)
-            List<Integer[]> atomNoPairs = null;
+            List<Integer[]> atomNoPairs;
             atomNoPairs = getAtomNoPairsForRingGroup(mNew, bondNos);
 
             //Set up ajacency Matrix
@@ -210,7 +210,7 @@ public class FixBondOrdersTool {
             }
 
             //Array of same dimensions as atomNos (rows in Matrix)
-            List<Integer> freeValencies = null;
+            List<Integer> freeValencies;
             freeValencies = getFreeValenciesForRingGroup(mNew, atomNos, M, ringSet);
 
             //Array of "answers"

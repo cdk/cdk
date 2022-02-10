@@ -147,7 +147,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         for (int i = 0; i < ac.getBondCount(); i++)
             oldBondAromaticity[i] = ac.getBond(i).getFlag(CDKConstants.ISAROMATIC);
 
-        IAtomContainerSet setHI = null;
+        IAtomContainerSet setHI;
 
         /* 0: remove charge, and possible flag ac */
         for (int j = 0; j < ac.getAtomCount(); j++) {
@@ -363,7 +363,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 /* difference of electronegativity 1 lower */
                 double max1 = Math.max(electronegativity[0], electronegativity[1]);
                 double min1 = Math.min(electronegativity[0], electronegativity[1]);
-                double DX = 1.0;
+                double DX;
                 if (electronegativity[0] < electronegativity[1])
                     DX = gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 3];
                 else
@@ -418,7 +418,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 for (int i = 0; i < ac.getAtomCount(); i++)
                     if (iSet.getAtomContainer(k).getAtom(i).getFlag(ISCHANGEDFC)) {
                         double charge = ac.getAtom(i).getCharge();
-                        double chargeT = 0.0;
+                        double chargeT;
                         chargeT = charge + gasteigerFactors[k][STEP_SIZE * i + i + 5];
                         logger.debug("i<|" + ac.getAtom(i).getSymbol() + ", " + chargeT + "=c:" + charge + "+g: "
                                 + gasteigerFactors[k][STEP_SIZE * i + i + 5]);
@@ -600,7 +600,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
             List<IAtom> atoms = ac.getConnectedAtomsList(ac.getAtom(atom1));
             for (IAtom atom : atoms) {
-                double covalentradius = 0;
+                double covalentradius;
                 String symbol = atom.getSymbol();
                 IAtomType type = factory.getAtomType(symbol);
                 covalentradius = type.getCovalentRadius();
@@ -696,7 +696,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         //a,b,c,denom,chi,q
         double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0)
                 .getAtomCount() * (STEP_SIZE + 1))];
-        String AtomSymbol = "";
+        String AtomSymbol;
         double[] factors = new double[]{0.0, 0.0, 0.0};
         for (int k = 1; k < setAc.getAtomContainerCount(); k++) {
             IAtomContainer ac = setAc.getAtomContainer(k);
@@ -791,7 +791,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         //a,b,c,denom,chi,q
         double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0)
                 .getAtomCount() * (STEP_SIZE + 1))];
-        String AtomSymbol = "";
+        String AtomSymbol;
         double[] factors = new double[]{0.0, 0.0, 0.0};
         for (int k = 1; k < setAc.getAtomContainerCount(); k++) {
             IAtomContainer ac = setAc.getAtomContainer(k);

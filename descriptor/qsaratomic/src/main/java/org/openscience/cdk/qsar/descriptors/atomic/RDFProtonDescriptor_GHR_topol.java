@@ -158,7 +158,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
     }
 
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) {
-        IAtomContainer varAtomContainer = null;
+        IAtomContainer varAtomContainer;
         try {
             varAtomContainer = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
@@ -233,11 +233,11 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
 
         // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
         List<IAtom> atomsInSecondSphere = mol.getConnectedAtomsList(neighbour0);
-        List<IAtom> atomsInThirdSphere = null;
-        List<IAtom> atomsInFourthSphere = null;
-        List<IAtom> atomsInFifthSphere = null;
-        List<IAtom> atomsInSixthSphere = null;
-        List<IAtom> atomsInSeventhSphere = null;
+        List<IAtom> atomsInThirdSphere;
+        List<IAtom> atomsInFourthSphere;
+        List<IAtom> atomsInFifthSphere;
+        List<IAtom> atomsInSixthSphere;
+        List<IAtom> atomsInSeventhSphere;
 
         // SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS DURING DETECTION
         ArrayList<Integer> singles = new ArrayList<>(); // list of any bond not rotatable
@@ -383,7 +383,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         //Variables
         double distance;
         double sum;
-        double smooth = -20;
+        double smooth;
         double partial;
         int position;
         double limitInf = 1.4;

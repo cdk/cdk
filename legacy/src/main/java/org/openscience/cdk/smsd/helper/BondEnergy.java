@@ -39,10 +39,10 @@ import org.openscience.cdk.interfaces.IBond.Order;
 @Deprecated
 public class BondEnergy {
 
-    private String      symbol1   = "";
-    private String      symbol2   = "";
-    private IBond.Order bondOrder = null;
-    private int         energy    = -1;
+    private String      symbol1;
+    private String      symbol2;
+    private IBond.Order bondOrder;
+    private int         energy;
 
     /**
      * Creates a new bond energy for the given elements and

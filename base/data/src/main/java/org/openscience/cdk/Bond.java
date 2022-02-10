@@ -69,12 +69,12 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /**
      * Number of atoms contained by this object.
      */
-    protected int             atomCount        = 0;
+    protected int             atomCount;
 
     /**
      * A list of atoms participating in this bond.
      */
-    protected IAtom[]         atoms            = null;
+    protected IAtom[]         atoms;
 
     /**
      * A descriptor the stereochemical orientation of this bond.

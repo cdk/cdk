@@ -230,7 +230,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         double bondOrderSum = ac.getBondOrderSum(atom);
         Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
         double max = 0;
-        double current = 0;
+        double current;
         for (IAtomType atomType : atomTypes) {
             current = hcount + bondOrderSum;
             if (atomType.getBondOrderSum() - current > max) {
@@ -435,12 +435,12 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
          * newSaturate(atomContainer); } public void oldSaturate(AtomContainer
          * atomContainer) throws CDKException {
          */
-        IAtom partner = null;
-        IAtom atom = null;
-        List<IAtom> partners = null;
-        IAtomType[] atomTypes1 = null;
-        IAtomType[] atomTypes2 = null;
-        IBond bond = null;
+        IAtom partner;
+        IAtom atom;
+        List<IAtom> partners;
+        IAtomType[] atomTypes1;
+        IAtomType[] atomTypes2;
+        IBond bond;
         for (int i = 1; i < 4; i++) {
             // handle atoms with degree 1 first and then proceed to higher order
             for (int f = 0; f < atomContainer.getAtomCount(); f++) {
@@ -520,8 +520,8 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         IRingSet rs = Cycles.sssr(atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer))
                 .toRingSet();
         List<IRingSet> ringSets = RingPartitioner.partitionRings(rs);
-        IAtomContainer ac = null;
-        IAtom atom = null;
+        IAtomContainer ac;
+        IAtom atom;
         int[] temp;
         for (IRingSet ringSet : ringSets) {
             rs = ringSet;

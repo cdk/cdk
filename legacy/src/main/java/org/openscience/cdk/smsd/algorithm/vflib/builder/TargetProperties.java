@@ -42,11 +42,11 @@ import org.openscience.cdk.interfaces.IBond;
 @Deprecated
 public class TargetProperties implements java.io.Serializable {
 
-    private Map<IAtom, Integer>     connectedTargetAtomCountMap = null;
-    private Map<IAtom, List<IAtom>> connectedTargetAtomListMap  = null;
-    private IBond[][]               map                         = null;
-    private Map<IAtom, Integer>     atoms                       = null;
-    private Map<Integer, IAtom>     atomsIndex                  = null;
+    private Map<IAtom, Integer>     connectedTargetAtomCountMap;
+    private Map<IAtom, List<IAtom>> connectedTargetAtomListMap;
+    private IBond[][]               map;
+    private Map<IAtom, Integer>     atoms;
+    private Map<Integer, IAtom>     atomsIndex;
 
     /**
      * @param atom

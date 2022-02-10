@@ -231,7 +231,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        String s = null;
+        String s;
         for (int f = 0; f < 23; f++) {
             s = hcg.getHOSECode(mol, mol.getAtom(f), 1);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
@@ -256,7 +256,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
                 "CCC(//)", "CC(//)", "CC(//)", "CC(//)", "CC(//)", "CCO(//)", "CC(//)", "CCO(//)", "CCO(//)", "CC(//)",
                 "O(//)", "CC(//)", "CCC(//)", "CCC(//)", "CCC(//)"};
 
-        String s = null;
+        String s;
         HOSECodeGenerator hcg = new HOSECodeGenerator();
         for (int f = 0; f < startData.length; f++) {
             s = hcg.makeBremserCompliant(startData[f]);
@@ -420,7 +420,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        String s = null;
+        String s;
         for (int f = 0; f < mol.getAtomCount(); f++) {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.cdkLegacy().apply(mol);
@@ -450,7 +450,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(molecule);
         //display(molecule);
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        String s = null;
+        String s;
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.println(f + "|" + s + "| -> " + result[f]);
@@ -464,15 +464,15 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug655169() throws Exception {
-        IAtomContainer molecule = null;
-        HOSECodeGenerator hcg = null;
+        IAtomContainer molecule;
+        HOSECodeGenerator hcg;
         String[] result = {"C-4;C(=C/Y/)", "C-3;=CC(Y,//)", "C-3;=CY(C,//)", "Br-1;C(=C/C/)"};
 
         molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         hcg = new HOSECodeGenerator();
-        String s = null;
+        String s;
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
@@ -504,8 +504,8 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug795480() throws Exception {
-        IAtomContainer molecule = null;
-        HOSECodeGenerator hcg = null;
+        IAtomContainer molecule;
+        HOSECodeGenerator hcg;
         String[] result = {"C-4-;C(=C/Y'+4'/)", "C-3;=CC-(Y'+4',//)", "C-3;=CY'+4'(C-,//)", "Br-1'+4';C(=C/C-/)"};
 
         molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
@@ -515,7 +515,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         molecule.getAtom(0).setFormalCharge(-1);
         molecule.getAtom(3).setFormalCharge(+4);
         hcg = new HOSECodeGenerator();
-        String s = null;
+        String s;
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);

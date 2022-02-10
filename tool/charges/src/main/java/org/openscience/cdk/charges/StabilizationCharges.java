@@ -106,7 +106,7 @@ public class StabilizationCharges {
             }
         }
         /* logarithm */
-        double value = 0.0;
+        double value;
         double sum = 0.0;
         Iterator<Integer> itDist = distance1.iterator();
         for (double suM : result1) {

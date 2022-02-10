@@ -208,7 +208,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
 
         IRingSet rs = Cycles.sssr(ac).toRingSet();
-        IRingSet atomRingSet = null;
+        IRingSet atomRingSet;
         if (checkAromaticity) {
             try {
                 Aromaticity.cdkLegacy().apply(ac);
@@ -219,15 +219,15 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         double xlogP = 0;
         //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String symbol = "";
-        int bondCount = 0;
+        int bondCount;
         int atomCount = ac.getAtomCount();
-        int hsCount = 0;
+        int hsCount;
         double xlogPOld = 0;
-        IBond.Order maxBondOrder = IBond.Order.SINGLE;
+        IBond.Order maxBondOrder;
         List<Integer> hBondAcceptors = new ArrayList<>();
         List<Integer> hBondDonors = new ArrayList<>();
         int checkAminoAcid = 1;//if 0 no check, if >1 check
-        IAtom atomi = null;
+        IAtom atomi;
         for (int i = 0; i < atomCount; i++) {
             atomi = ac.getAtom(i);
             //			Problem fused ring systems
@@ -1201,7 +1201,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
     private int getPiSystemsCount(IAtomContainer ac, IAtom atom) {
         List neighbours = ac.getConnectedAtomsList(atom);
         int picounter = 0;
-        List bonds = null;
+        List bonds;
         for (Object value : neighbours) {
             IAtom neighbour = (IAtom) value;
             bonds = ac.getConnectedBondsList(neighbour);
@@ -1232,7 +1232,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      */
     private boolean getPresenceOfHydroxy(IAtomContainer ac, IAtom atom) {
         IAtom neighbour0 = ac.getConnectedAtomsList(atom).get(0);
-        List first = null;
+        List first;
         if (neighbour0.getAtomicNumber() == IElement.C) {
             first = ac.getConnectedAtomsList(neighbour0);
             for (Object o : first) {
@@ -1260,8 +1260,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      */
     private boolean getPresenceOfNitro(IAtomContainer ac, IAtom atom) {
         List neighbours = ac.getConnectedAtomsList(atom);
-        List second = null;
-        IBond bond = null;
+        List second;
+        IBond bond;
         //int counter = 0;
         for (Object value : neighbours) {
             IAtom neighbour = (IAtom) value;
@@ -1311,8 +1311,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      */
     private int getPresenceOfCarbonil(IAtomContainer ac, IAtom atom) {
         List neighbours = ac.getConnectedAtomsList(atom);
-        List second = null;
-        IBond bond = null;
+        List second;
+        IBond bond;
         int counter = 0;
         for (Object value : neighbours) {
             IAtom neighbour = (IAtom) value;
@@ -1342,8 +1342,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      */
     private boolean getIfCarbonIsHydrophobic(IAtomContainer ac, IAtom atom) {
         List first = ac.getConnectedAtomsList(atom);
-        List second = null;
-        List third = null;
+        List second;
+        List third;
         //org.openscience.cdk.interfaces.IAtom[] fourth = null;
         if (first.size() > 0) {
             for (Object item : first) {

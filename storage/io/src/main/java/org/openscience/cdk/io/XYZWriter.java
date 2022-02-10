@@ -138,7 +138,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     */
     public void writeMolecule(IAtomContainer mol) throws IOException {
 
-        String st = "";
+        String st;
         boolean writecharge = true;
 
         try {

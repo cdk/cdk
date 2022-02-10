@@ -71,7 +71,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
 
     boolean                                  firstLineisMolecule = false;
 
-    BufferedReader                           input               = null;
+    BufferedReader                           input;
     private static final ILoggingTool              logger              = LoggingToolFactory
                                                                          .createLoggingTool(Mol2Reader.class);
 
@@ -240,7 +240,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
      * @return The Reaction that was read from the MDL file.
      */
     private IAtomContainer readMolecule(IAtomContainer molecule) throws CDKException {
-        AtomTypeFactory atFactory = null;
+        AtomTypeFactory atFactory;
         try {
             atFactory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml",
                     molecule.getBuilder());
@@ -251,8 +251,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
             throw new CDKException(error, exception);
         }
         try {
-            int atomCount = 0;
-            int bondCount = 0;
+            int atomCount;
+            int bondCount;
 
             String line;
             while (true) {

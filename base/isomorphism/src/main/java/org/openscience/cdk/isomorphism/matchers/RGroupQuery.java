@@ -260,7 +260,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
             // Clone the root to get a scaffold to plug the substitutes into.
             IAtomContainer root = this.getRootStructure();
-            IAtomContainer rootClone = null;
+            IAtomContainer rootClone;
             try {
                 rootClone = root.clone();
             } catch (CloneNotSupportedException e) {
@@ -278,7 +278,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                     IAtom rAtom = this.getRgroupQueryAtoms(rNum).get(pos);
                     if (substitute != null) {
 
-                        IAtomContainer rgrpClone = null;
+                        IAtomContainer rgrpClone;
                         try {
                             rgrpClone = substitute.getGroup().clone();
                         } catch (CloneNotSupportedException e) {
@@ -296,7 +296,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                                 //Check how R# is attached to bond
                                 int whichAtomInBond = 0;
                                 if (bond.getEnd().equals(rAtom)) whichAtomInBond = 1;
-                                IAtom subsAt = null;
+                                IAtom subsAt;
                                 if (apo == 0)
                                     subsAt = substitute.getFirstAttachmentPoint();
                                 else

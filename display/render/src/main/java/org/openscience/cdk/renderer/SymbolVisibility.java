@@ -94,7 +94,7 @@ public abstract class SymbolVisibility {
      */
     private static final class IupacVisibility extends SymbolVisibility {
 
-        private boolean terminal = false;
+        private boolean terminal;
 
         private IupacVisibility(boolean terminal) {
             this.terminal = terminal;

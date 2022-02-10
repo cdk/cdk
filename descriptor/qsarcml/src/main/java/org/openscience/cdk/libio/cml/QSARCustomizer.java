@@ -81,7 +81,7 @@ public class QSARCustomizer implements ICMLCustomizer {
     }
 
     private Element createScalar(IDescriptorResult value) {
-        Element scalar = null;
+        Element scalar;
         if (value instanceof DoubleResult) {
             scalar = new CMLScalar();
             scalar.addAttribute(new Attribute("dataType", "xsd:double"));

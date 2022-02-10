@@ -196,9 +196,9 @@ public class ProteinPocketFinder {
         // 2. Step Grid points inaccessible to solvent are assigend a value of -1
         // set grid points around (r_atom+r_solv) to -1
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(protein);
-        Point3d gridPoint = null;
-        int checkGridPoints = 0;
-        double vdWRadius = 0;
+        Point3d gridPoint;
+        int checkGridPoints;
+        double vdWRadius;
         int[] dim = gridGenerator.getDim();
         //int proteinAtomCount = 0;//Debugging
         int[] minMax = {0, 0, 0, 0, 0, 0};
@@ -501,8 +501,8 @@ public class ProteinPocketFinder {
         }
         //int gridPoints = 0;//Debugging
         List<Point3d> line = new ArrayList<>();
-        int pspEvent = 0;
-        int m = 0;
+        int pspEvent;
+        int m;
         for (int j = dimM; j >= 1; j--) {// z
             line.clear();
             pspEvent = 0;
@@ -550,8 +550,8 @@ public class ProteinPocketFinder {
             dimL = dimM;
         }
         List<Point3d> line = new ArrayList<>();
-        int pspEvent = 0;
-        int m = 0;
+        int pspEvent;
+        int m;
         for (int j = dimM; j >= 1; j--) {// z
             line.clear();
             pspEvent = 0;
@@ -601,8 +601,8 @@ public class ProteinPocketFinder {
             dimM = dimL;
         }
         List<Point3d> line = new ArrayList<>();
-        int pspEvent = 0;
-        int l = 0;
+        int pspEvent;
+        int l;
         for (int j = dimL; j >= 1; j--) {// z
             line.clear();
             pspEvent = 0;
@@ -652,8 +652,8 @@ public class ProteinPocketFinder {
             dimM = dimL;
         }
         List<Point3d> line = new ArrayList<>();
-        int pspEvent = 0;
-        int l = 0;
+        int pspEvent;
+        int l;
         for (int j = dimL; j >= 1; j--) {// z
             line.clear();
             pspEvent = 0;
@@ -698,7 +698,7 @@ public class ProteinPocketFinder {
         //		logger.debug.print("	diagonalAxisScanX");
         //int gridPoints = 0;//Debugging
         List<Point3d> line = new ArrayList<>();
-        int pspEvent = 0;
+        int pspEvent;
         for (int k = 0; k <= dimK; k++) {
             line.clear();
             pspEvent = 0;
@@ -738,7 +738,7 @@ public class ProteinPocketFinder {
     public void axisScanY(int dimK, int dimL, int dimM) {
         // z,x,y
         List<Point3d> line = new ArrayList<>();
-        int pspEvent = 0;
+        int pspEvent;
         for (int k = 0; k <= dimK; k++) {
             line.clear();
             pspEvent = 0;
@@ -778,7 +778,7 @@ public class ProteinPocketFinder {
     public void axisScanZ(int dimK, int dimL, int dimM) {
         // x,y,z
         List<Point3d> line = new ArrayList<>();
-        int pspEvent = 0;
+        int pspEvent;
         for (int k = 0; k <= dimK; k++) {
             line.clear();
             pspEvent = 0;

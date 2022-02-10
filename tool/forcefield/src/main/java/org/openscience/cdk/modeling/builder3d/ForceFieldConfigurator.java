@@ -121,7 +121,7 @@ public class ForceFieldConfigurator {
      */
     public void setForceFieldConfigurator(String ffname, IChemObjectBuilder builder) throws CDKException {
         ffname = ffname.toLowerCase();
-        boolean check = false;
+        boolean check;
 
         if (ffname == ffName && parameterSet != null) {
         } else {
@@ -226,7 +226,7 @@ public class ForceFieldConfigurator {
      * @exception  NoSuchAtomTypeException  atomType is not known.
      */
     private IAtomType getAtomType(String ID) throws NoSuchAtomTypeException {
-        IAtomType at = null;
+        IAtomType at;
         for (IAtomType atomType : atomTypes) {
             at = atomType;
             if (at.getAtomTypeName().equals(ID)) {
@@ -243,13 +243,13 @@ public class ForceFieldConfigurator {
      *@exception  CDKException  Problems detecting aromaticity or making hose codes.
      */
     public IRingSet assignAtomTyps(IAtomContainer molecule) throws CDKException {
-        IAtom atom = null;
-        String hoseCode = "";
+        IAtom atom;
+        String hoseCode;
         HOSECodeGenerator hcg = new HOSECodeGenerator();
         int NumberOfRingAtoms = 0;
-        IRingSet ringSetA = null;
+        IRingSet ringSetA;
         IRingSet ringSetMolecule = Cycles.sssr(molecule).toRingSet();
-        boolean isInHeteroRing = false;
+        boolean isInHeteroRing;
         try {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.cdkLegacy().apply(molecule);
@@ -352,10 +352,10 @@ public class ForceFieldConfigurator {
      * @return       the assigned atom
      */
     private IAtom setAtom(IAtom atom, String ID) throws NoSuchAtomTypeException {
-        IAtomType at = null;
-        String key = "";
-        List<?> data = null;
-        Double value = null;
+        IAtomType at;
+        String key;
+        List<?> data;
+        Double value;
 
         at = getAtomType(ID);
         if (atom.getSymbol() == null) {
@@ -404,11 +404,11 @@ public class ForceFieldConfigurator {
      */
     public IAtom configureMM2BasedAtom(IAtom atom, String hoseCode, boolean hetRing) throws NoSuchAtomTypeException {
         //logger.debug("CONFIGURE MM2 ATOM");
-        List<Pattern> atomTypePattern = null;
+        List<Pattern> atomTypePattern;
         MM2BasedAtomTypePattern atp = new MM2BasedAtomTypePattern();
         atomTypePattern = atp.getAtomTypePatterns();
-        Double d_tmp = null;
-        Pattern p = null;
+        Double d_tmp;
+        Pattern p;
         String ID = "";
         boolean atomTypeFlag = false;
 
@@ -564,15 +564,15 @@ public class ForceFieldConfigurator {
     public IAtom configureMMFF94BasedAtom(IAtom atom, String hoseCode, boolean isInHetRing)
             throws NoSuchAtomTypeException {
         //logger.debug("****** Configure MMFF94 AtomType ******");
-        List<Pattern> atomTypePattern = null;
+        List<Pattern> atomTypePattern;
         MMFF94BasedAtomTypePattern atp = new MMFF94BasedAtomTypePattern();
         atomTypePattern = atp.getAtomTypePatterns();
-        Pattern p = null;
-        Pattern p2 = null;
+        Pattern p;
+        Pattern p2;
         String ID = "";
         boolean atomTypeFlag = false;
-        Matcher mat = null;
-        Matcher mat2 = null;
+        Matcher mat;
+        Matcher mat2;
         hoseCode = removeAromaticityFlagsFromHoseCode(hoseCode);
 
         String[] ids = {"C", "Csp2", "C=", "Csp", "CO2M", "CNN+", "C%", "CIM+", "CR4R", "CR3R", "CE4R", "Car", "C5A",

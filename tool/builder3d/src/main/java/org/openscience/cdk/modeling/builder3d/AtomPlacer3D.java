@@ -121,12 +121,12 @@ public class AtomPlacer3D {
      */
     public void placeAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain) throws CDKException {
         //logger.debug("******** Place aliphatic Chain *********");
-        int[] first = new int[2];
+        int[] first;
         int counter = 1;
-        int nextAtomNr = 0;
-        String id1 = "";
-        String id2 = "";
-        String id3 = "";
+        int nextAtomNr;
+        String id1;
+        String id2;
+        String id3;
         first = findHeavyAtomsInChain(molecule, chain);
         distances = new double[first[1]];
         firstAtoms = new int[first[1]];
@@ -136,7 +136,7 @@ public class AtomPlacer3D {
         thirdAtoms = new int[first[1]];
         firstAtoms[0] = first[0];
         molecule.getAtom(firstAtoms[0]).setFlag(CDKConstants.VISITED, true);
-        int hybridisation = 0;
+        int hybridisation;
         for (int i = 0; i < chain.getAtomCount(); i++) {
             if (isHeavyAtom(chain.getAtom(i))) {
                 if (!chain.getAtom(i).getFlag(CDKConstants.VISITED)) {
@@ -210,7 +210,7 @@ public class AtomPlacer3D {
      */
 
     public void zmatrixChainToCartesian(IAtomContainer molecule, boolean flagBranched) {
-        Point3d result = null;
+        Point3d result;
         for (int index = 0; index < distances.length; index++) {
             if (index == 0) {
                 result = new Point3d(0d, 0d, 0d);
@@ -232,7 +232,7 @@ public class AtomPlacer3D {
                 n1.cross(cd, bc);
                 n1.normalize();
 
-                Vector3d n2 = null;
+                Vector3d n2;
                 if (index == 3 && flagBranched) {
                     n2 = AtomTetrahedralLigandPlacer3D.rotate(n1, bc, DIHEDRAL_BRANCHED_CHAIN);
                 } else {
@@ -325,7 +325,7 @@ public class AtomPlacer3D {
      * @return                The distanceValue value from the force field parameter set
      */
     public double getBondLengthValue(String id1, String id2) {
-        String dkey = "";
+        String dkey;
         if (pSet.containsKey(("bond" + id1 + ";" + id2))) {
             dkey = "bond" + id1 + ";" + id2;
         } else if (pSet.containsKey(("bond" + id2 + ";" + id1))) {
@@ -347,7 +347,7 @@ public class AtomPlacer3D {
      * @return                The angleKey value
      */
     public double getAngleValue(String id1, String id2, String id3) {
-        String akey = "";
+        String akey;
         if (pSet.containsKey(("angle" + id1 + ";" + id2 + ";" + id3))) {
             akey = "angle" + id1 + ";" + id2 + ";" + id3;
         } else if (pSet.containsKey(("angle" + id3 + ";" + id2 + ";" + id1))) {
@@ -553,7 +553,7 @@ public class AtomPlacer3D {
 
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
         IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
-        IAtom connectedAtom = null;
+        IAtom connectedAtom;
         for (IBond bond : bonds) {
             connectedAtom = bond.getOther(atom);
             if (isPlacedHeavyAtom(connectedAtom)) {

@@ -194,7 +194,7 @@ public class FiguerasSSSRFinder {
         /* Initialize a path Vector for each node */
         //Vector pfad1,pfad2;
         List<List<IAtom>> path = new ArrayList<>(OKatoms);
-        List<IAtom> intersection = new ArrayList<>();
+        List<IAtom> intersection;
         List<IAtom> ring = new ArrayList<>();
         for (final IAtom atom : molecule.atoms()) {
             path.add(new ArrayList<>());

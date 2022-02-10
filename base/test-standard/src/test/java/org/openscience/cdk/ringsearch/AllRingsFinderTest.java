@@ -68,7 +68,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
     @Test
     public void testFindAllRings_IAtomContainer() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
         //display(molecule);
@@ -83,7 +83,7 @@ public class AllRingsFinderTest extends CDKTestCase {
      */
     @Test
     public void testBondsWithinRing() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
         //display(molecule);
@@ -133,7 +133,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
     @Test
     public void testPorphyrine() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
 
         String filename = "porphyrin.mol";
@@ -152,7 +152,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testBigRingSystem() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_994);
 
         String filename = "ring_03419.mol";
@@ -170,7 +170,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
     @Test
     public void testCholoylCoA() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
 
         String filename = "choloylcoa.mol";
@@ -187,7 +187,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
     @Test
     public void testAzulene() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
 
         String filename = "azulene.mol";
@@ -207,7 +207,7 @@ public class AllRingsFinderTest extends CDKTestCase {
      */
     @Test
     public void testBigMoleculeWithIsolatedRings() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
 
         String filename = "isolated_ringsystems.cml";
@@ -302,7 +302,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
     @Test
     public void testBigRingSystem_MaxRingSize6_03419() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         String filename = "ring_03419.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -317,7 +317,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
     @Test
     public void testBigRingSystem_MaxRingSize4_fourRing5x10() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         String filename = "four-ring-5x10.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -333,7 +333,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
     @Test
     public void testBigRingSystem_MaxRingSize6_fourRing5x10() throws Exception {
-        IRingSet ringSet = null;
+        IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         String filename = "four-ring-5x10.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);

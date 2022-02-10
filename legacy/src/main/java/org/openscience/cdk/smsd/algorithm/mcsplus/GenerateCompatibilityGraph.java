@@ -172,8 +172,8 @@ public final class GenerateCompatibilityGraph {
     protected int compatibilityGraphNodes() throws IOException {
 
         compGraphNodes.clear();
-        List<IAtom> basicAtomVecA = null;
-        List<IAtom> basicAtomVecB = null;
+        List<IAtom> basicAtomVecA;
+        List<IAtom> basicAtomVecB;
         IAtomContainer reactant = source;
         IAtomContainer product = target;
 
@@ -224,8 +224,8 @@ public final class GenerateCompatibilityGraph {
                 // if element atomCont !=jIndex and atoms on the adjacent sides of the bonds are not equal
                 if (a != b && indexA != indexB && indexAPlus1 != indexBPlus1) {
 
-                    IBond reactantBond = null;
-                    IBond productBond = null;
+                    IBond reactantBond;
+                    IBond productBond;
 
                     reactantBond = source.getBond(source.getAtom(indexA), source.getAtom(indexB));
                     productBond = target.getBond(target.getAtom(indexAPlus1), target.getAtom(indexBPlus1));
@@ -310,8 +310,8 @@ public final class GenerateCompatibilityGraph {
                 // if element atomCont !=jIndex and atoms on the adjacent sides of the bonds are not equal
                 if ((a != b) && (indexA != indexB) && (indexAPlus1 != indexBPlus1)) {
 
-                    IBond reactantBond = null;
-                    IBond productBond = null;
+                    IBond reactantBond;
+                    IBond productBond;
 
                     reactantBond = source.getBond(source.getAtom(indexA), source.getAtom(indexB));
                     productBond = target.getBond(target.getAtom(indexAPlus1), target.getAtom(indexBPlus1));

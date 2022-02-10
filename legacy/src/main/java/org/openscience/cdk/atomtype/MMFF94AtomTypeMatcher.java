@@ -53,7 +53,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 
     IBond.Order                 maxBondOrder  = IBond.Order.SINGLE;
     private AtomTypeFactory     factory       = null;
-    AtomTypeTools               atomTypeTools = null;
+    AtomTypeTools               atomTypeTools;
 
     String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "CO2M", "CNN+", "C%", "CIM+", "CR4R",
             "CR3R", "CE4R", "Car", "C5A", "C5B", "C5", "HC", "HO", "HN", "HOCO", "HN=C", "HN2", "HOCC", "HOH", "HOS",
@@ -122,12 +122,12 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
         if (atom instanceof IPseudoAtom) {
             return factory.getAtomTypes("DU")[0];
         }
-        Pattern p1 = null;
-        Pattern p2 = null;
+        Pattern p1;
+        Pattern p2;
         String ID = "";
         boolean atomTypeFlag = false;
-        Matcher mat1 = null;
-        Matcher mat2 = null;
+        Matcher mat1;
+        Matcher mat2;
         IBond.Order tmpMaxBondOrder;
         maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         for (int j = 0; j < atomTypeIds.length; j++) {

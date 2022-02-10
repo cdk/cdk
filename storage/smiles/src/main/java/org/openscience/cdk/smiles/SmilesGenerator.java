@@ -881,7 +881,7 @@ public final class SmilesGenerator {
                         }
                         break;
                     case ExtAttachOrdering: {
-                        IAtom       beg   = null;
+                        IAtom       beg;
                         List<IAtom> ends  = new ArrayList<>();
                         if (sgroup.getAtoms().size() != 1)
                             throw new IllegalArgumentException("Attach ordering in inconsistent state!");

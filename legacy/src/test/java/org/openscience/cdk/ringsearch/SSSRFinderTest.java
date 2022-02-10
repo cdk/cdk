@@ -131,8 +131,8 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test
     public void testProblem1() throws Exception {
-        IAtomContainer molecule = null;
-        IRing ring = null;
+        IAtomContainer molecule;
+        IRing ring;
         String filename = "figueras-test-sep3D.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -169,8 +169,8 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test
     public void testProblem2() throws Exception {
-        IAtomContainer molecule = null;
-        IRing ring = null;
+        IAtomContainer molecule;
+        IRing ring;
         String filename = "figueras-test-buried.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -189,8 +189,8 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test
     public void testProblem3() throws Exception {
-        IAtomContainer molecule = null;
-        IRing ring = null;
+        IAtomContainer molecule;
+        IRing ring;
         String filename = "figueras-test-inring.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -212,7 +212,7 @@ public class SSSRFinderTest extends CDKTestCase {
      */
     @Test
     public void testBug891021() throws Exception {
-        IAtomContainer molecule = null;
+        IAtomContainer molecule;
         String filename = "too.many.rings.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -290,7 +290,7 @@ public class SSSRFinderTest extends CDKTestCase {
      * @return bucky ball molecule
      */
     private IAtomContainer createBuckyBall() throws Exception {
-        IAtomContainer molecule = null;
+        IAtomContainer molecule;
         String filename = "buckyball.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

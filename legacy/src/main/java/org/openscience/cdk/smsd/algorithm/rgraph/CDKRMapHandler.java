@@ -337,7 +337,7 @@ public class CDKRMapHandler {
         if (rMapList == null) {
             return (null);
         }
-        List<List<CDKRMap>> result = null;
+        List<List<CDKRMap>> result;
         if (rMapList.size() == 1) {
             result = makeAtomsMapOfBondsMapSingleBond(rMapList, graph1, graph2);
         } else {
@@ -421,10 +421,10 @@ public class CDKRMapHandler {
         for (IBond qbond : sourceGraph.bonds()) {
             if (bondMap.containsKey(qbond)) {
                 IBond tbond = bondMap.get(qbond);
-                CDKRMap map00 = null;
-                CDKRMap map01 = null;
-                CDKRMap map10 = null;
-                CDKRMap map11 = null;
+                CDKRMap map00;
+                CDKRMap map01;
+                CDKRMap map10;
+                CDKRMap map11;
 
                 if ((qbond.getBegin().getSymbol().equals(tbond.getBegin().getSymbol()))
                         && (qbond.getEnd().getSymbol().equals(tbond.getEnd().getSymbol()))) {

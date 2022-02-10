@@ -186,8 +186,8 @@ public class ForceFieldConfiguratorTest {
         String smiles = "C(=O)(NO)N";
         String[] originalAtomTypes = {"C.sp2", "O.sp2", "N.amide", "O.sp3", "N.amide"};
         String[] expectedAtomTypes = {"C=", "O=", "NC=O", "O", "N2OX"};
-        IAtomContainer molecule = null;
-        String[] ffAtomTypes = null;
+        IAtomContainer molecule;
+        String[] ffAtomTypes;
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser smilesParser = new SmilesParser(builder);

@@ -67,9 +67,9 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
     public void testSearchMCS() {
         try {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-            IAtomContainer target = null;
+            IAtomContainer target;
             target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = null;
+            IAtomContainer queryac;
             queryac = sp.parseSmiles("Nc1ccccc1");
             MCSPlusHandler smsd1 = new MCSPlusHandler();
             MolHandler mol1 = new MolHandler(queryac, true, true);

@@ -45,7 +45,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase {
     public void testTwentyRandomStructures() {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         RandomGenerator rg = new RandomGenerator(molecule);
-        IAtomContainer result = null;
+        IAtomContainer result;
         for (int f = 0; f < 50; f++) {
             result = rg.proposeStructure();
             Assert.assertEquals(molecule.getAtomCount(), result.getAtomCount());

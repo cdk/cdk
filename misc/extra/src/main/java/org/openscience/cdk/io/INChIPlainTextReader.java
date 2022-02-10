@@ -152,7 +152,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile cf) throws CDKException {
         // have to do stuff here
         try {
-            String line = null;
+            String line;
             while ((line = input.readLine()) != null) {
                 if (line.startsWith("INChI=") || line.startsWith("InChI=")) {
                     // ok, the fun starts

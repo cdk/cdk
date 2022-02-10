@@ -3713,7 +3713,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         IAtomContainer ac = atomP.getBuilder().newInstance(IAtomContainer.class);
         ac.addAtom(atomP);
-        IAtomType type = null;
+        IAtomType type;
         for (IAtom atom : ac.atoms()) {
             type = CDKAtomTypeMatcher.getInstance(ac.getBuilder()).findMatchingAtomType(ac, atom);
             Assert.assertNotNull(type);

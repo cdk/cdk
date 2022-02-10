@@ -77,8 +77,8 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @Deprecated
 public class VFMCSMapper implements IMapper {
 
-    private IQuery                  query          = null;
-    private List<Map<INode, IAtom>> maps           = null;
+    private IQuery                  query;
+    private List<Map<INode, IAtom>> maps;
     private int                     currentMCSSize = -1;
     private static TimeManager      timeManager    = null;
 

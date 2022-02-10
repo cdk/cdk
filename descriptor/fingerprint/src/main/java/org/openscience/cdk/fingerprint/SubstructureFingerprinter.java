@@ -410,7 +410,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         keys.clear();
         for (String key : smarts) {
             QueryAtomContainer qmol = new QueryAtomContainer(null);
-            SmartsPattern ptrn = null;
+            SmartsPattern ptrn;
             ptrn = SmartsPattern.create(key);
             ptrn.setPrepare(false); // prepare is done once
             keys.add(new Key(key, ptrn));

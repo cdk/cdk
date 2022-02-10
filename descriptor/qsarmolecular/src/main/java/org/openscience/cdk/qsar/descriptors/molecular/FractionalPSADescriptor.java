@@ -113,7 +113,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
             mol = mol.clone();
         } catch (CloneNotSupportedException ex) {
         }
-        double polar = 0, weight = 0;
+        double polar, weight = 0;
         try {
             // type & assign implicit hydrogens
             IChemObjectBuilder builder = mol.getBuilder();

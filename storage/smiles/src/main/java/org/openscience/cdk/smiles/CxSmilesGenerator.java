@@ -332,7 +332,7 @@ public class CxSmilesGenerator {
             polysgroups.sort(new Comparator<CxPolymerSgroup>() {
                 @Override
                 public int compare(CxPolymerSgroup a, CxPolymerSgroup b) {
-                    int cmp = 0;
+                    int cmp;
                     cmp = a.type.compareTo(b.type);
                     if (cmp != 0) return cmp;
                     cmp = CxSmilesGenerator.compare(comp, a.atoms, b.atoms);
@@ -369,7 +369,7 @@ public class CxSmilesGenerator {
             datasgroups.sort(new Comparator<CxDataSgroup>() {
                 @Override
                 public int compare(CxDataSgroup a, CxDataSgroup b) {
-                    int cmp = 0;
+                    int cmp;
                     cmp = a.field.compareTo(b.field);
                     if (cmp != 0) return cmp;
                     cmp = a.value.compareTo(b.value);

@@ -290,13 +290,13 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         indexCreated = false;
         long now = System.currentTimeMillis();
         int recordLength = 1000;
-        int maxRecords = 1;
+        int maxRecords;
         int maxRecordLength = 0;
         maxRecords = (int) raFile.length() / recordLength;
         if (maxRecords == 0) maxRecords = 1;
         index = new long[maxRecords][3];
 
-        String s = null;
+        String s;
         long start = 0;
         long end = 0;
         raFile.seek(0);
@@ -507,7 +507,7 @@ class RecordReaderEvent extends ReaderEvent {
      *
      */
     private static final long serialVersionUID = 572155905623474487L;
-    protected int             record           = 0;
+    protected int             record;
 
     public RecordReaderEvent(Object source, int record) {
         super(source);

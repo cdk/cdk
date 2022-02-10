@@ -233,7 +233,7 @@ public final class Permutation {
         Arrays.fill(p, true);
 
         StringBuilder sb = new StringBuilder();
-        int j = 0;
+        int j;
         for (int i = 0; i < n; i++) {
             if (p[i]) {
                 sb.append('(');

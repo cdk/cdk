@@ -65,7 +65,7 @@ import java.util.StringTokenizer;
 @Deprecated
 public class MDLRXNReader extends DefaultChemObjectReader {
 
-    BufferedReader              input  = null;
+    BufferedReader              input;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReader.class);
 
     /**
@@ -301,8 +301,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             throw new CDKException("Error while reading header of RXN file", exception);
         }
 
-        int reactantCount = 0;
-        int productCount = 0;
+        int reactantCount;
+        int productCount;
         int agentCount = 0; // optional
         try {
             String countsLine = input.readLine();
@@ -336,7 +336,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             for (int i = 1; i <= reactantCount; i++) {
                 StringBuilder molFile = new StringBuilder();
                 input.readLine(); // announceMDLFileLine
-                String molFileLine = "";
+                String molFileLine;
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
@@ -364,7 +364,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             for (int i = 1; i <= productCount; i++) {
                 StringBuilder molFile = new StringBuilder();
                 input.readLine(); // String announceMDLFileLine =
-                String molFileLine = "";
+                String molFileLine;
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
@@ -392,7 +392,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             for (int i = 1; i <= agentCount; i++) {
                 StringBuilder molFile = new StringBuilder();
                 input.readLine(); // String announceMDLFileLine =
-                String molFileLine = "";
+                String molFileLine;
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);

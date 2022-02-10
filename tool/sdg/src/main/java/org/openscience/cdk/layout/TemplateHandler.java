@@ -118,7 +118,7 @@ public final class TemplateHandler {
      * template filename to org/openscience/cdk/layout/templates/template.list
      */
     public void loadTemplates(IChemObjectBuilder builder) {
-        String line = null;
+        String line;
         try {
             InputStream ins = this.getClass().getClassLoader()
                                   .getResourceAsStream("org/openscience/cdk/layout/templates/templates.list");

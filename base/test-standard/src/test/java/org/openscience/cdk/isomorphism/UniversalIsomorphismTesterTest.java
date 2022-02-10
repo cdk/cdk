@@ -181,8 +181,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         String queryfile = "decalin.mol";
         IAtomContainer mol = new AtomContainer();
         IAtomContainer temp = new AtomContainer();
-        QueryAtomContainer query1 = null;
-        QueryAtomContainer query2 = null;
+        QueryAtomContainer query1;
+        QueryAtomContainer query2;
 
         InputStream ins = this.getClass().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

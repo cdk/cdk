@@ -64,7 +64,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
     private BufferedReader           input;
     private static final ILoggingTool      logger           = LoggingToolFactory
                                                               .createLoggingTool(IteratingSMILESReader.class);
-    private SmilesParser             sp               = null;
+    private SmilesParser             sp;
 
     private boolean                  nextAvailableIsKnown;
     private boolean                  hasNext;

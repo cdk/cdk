@@ -303,7 +303,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
     }
 
     private IChemFile parseCMLString(String cmlString) throws Exception {
-        IChemFile chemFile = null;
+        IChemFile chemFile;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
         chemFile = reader.read(new org.openscience.cdk.ChemFile());
         return chemFile;

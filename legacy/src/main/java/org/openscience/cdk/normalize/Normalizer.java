@@ -87,7 +87,7 @@ public class Normalizer {
                     replacestring = replace.getFirstChild().getNextSibling().getNodeValue();
                 }
                 IAtomContainer replaceStructure = sp.parseSmiles(replacestring);
-                List<RMap> l = null;
+                List<RMap> l;
                 UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
                 while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
                     List<RMap> l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);

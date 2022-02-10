@@ -91,13 +91,13 @@ public class OverlapResolver {
     public double displace(IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds) {
         double bondLength = GeometryUtil.getBondLengthAverage(ac);
 
-        OverlapPair op = null;
-        IAtom a1 = null, a2 = null;
-        Vector2d v1 = null, v2 = null;
+        OverlapPair op;
+        IAtom a1, a2;
+        Vector2d v1, v2;
         int steps = 0;
-        int p = 0;
-        double overlapScore = 0;
-        double choice = 0;
+        int p;
+        double overlapScore;
+        double choice;
         logger.debug("We are here because of an overlap situation.");
         //logger.debug("Overlap score: " + overlapScore);
 
@@ -160,7 +160,7 @@ public class OverlapResolver {
      *@return                   The overlapScore value
      */
     public double getOverlapScore(IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds) {
-        double overlapScore = 0;
+        double overlapScore;
         overlapScore = getAtomOverlapScore(ac, overlappingAtoms);
         //overlapScore += getBondOverlapScore(ac, overlappingBonds);
         return overlapScore;
@@ -177,11 +177,11 @@ public class OverlapResolver {
      */
     public double getAtomOverlapScore(IAtomContainer ac, Vector overlappingAtoms) {
         overlappingAtoms.removeAllElements();
-        IAtom atom1 = null;
-        IAtom atom2 = null;
-        Point2d p1 = null;
-        Point2d p2 = null;
-        double distance = 0;
+        IAtom atom1;
+        IAtom atom2;
+        Point2d p1;
+        Point2d p2;
+        double distance;
         double overlapScore = 0;
         double bondLength = GeometryUtil.getBondLengthAverage(ac);
         double overlapCutoff = bondLength / 4;
@@ -215,8 +215,8 @@ public class OverlapResolver {
     public double getBondOverlapScore(IAtomContainer ac, Vector overlappingBonds) {
         overlappingBonds.removeAllElements();
         double overlapScore = 0;
-        IBond bond1 = null;
-        IBond bond2 = null;
+        IBond bond1;
+        IBond bond2;
         double bondLength = GeometryUtil.getBondLengthAverage(ac);
         double overlapCutoff = bondLength / 2;
         for (int f = 0; f < ac.getBondCount(); f++) {
@@ -243,8 +243,8 @@ public class OverlapResolver {
      *@return        Description of the Return Value
      */
     public boolean areIntersected(IBond bond1, IBond bond2) {
-        double x1 = 0, x2 = 0, x3 = 0, x4 = 0;
-        double y1 = 0, y2 = 0, y3 = 0, y4 = 0;
+        double x1, x2, x3, x4;
+        double y1, y2, y3, y4;
         //Point2D.Double p1 = null, p2 = null, p3 = null, p4 = null;
 
         x1 = bond1.getBegin().getPoint2d().x;
@@ -275,8 +275,8 @@ public class OverlapResolver {
      */
     public class OverlapPair {
 
-        IChemObject chemObject1 = null;
-        IChemObject chemObject2 = null;
+        IChemObject chemObject1;
+        IChemObject chemObject2;
 
         /**
          * Constructor for the OverlapPair object.

@@ -68,15 +68,15 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 @Deprecated
 public class ChemicalFilters {
 
-    private List<Map<Integer, Integer>> allMCS        = null;
-    private Map<Integer, Integer>       firstSolution = null;
-    private List<Map<IAtom, IAtom>>     allAtomMCS    = null;
-    private Map<IAtom, IAtom>           firstAtomMCS  = null;
-    private List<Double>                stereoScore   = null;
-    private List<Integer>               fragmentSize  = null;
-    private List<Double>                bEnergies     = null;
-    private IAtomContainer              rMol          = null;
-    private IAtomContainer              pMol          = null;
+    private List<Map<Integer, Integer>> allMCS;
+    private Map<Integer, Integer>       firstSolution;
+    private List<Map<IAtom, IAtom>>     allAtomMCS;
+    private Map<IAtom, IAtom>           firstAtomMCS;
+    private List<Double>                stereoScore;
+    private List<Integer>               fragmentSize;
+    private List<Double>                bEnergies;
+    private IAtomContainer              rMol;
+    private IAtomContainer              pMol;
 
     /**
      * This class has all the three chemical filters supported by the SMSD.
@@ -699,7 +699,7 @@ public class ChemicalFilters {
     }
 
     private double getRingMatchScore(List<Object> list) {
-        double lScore = 0;
+        double lScore;
         List<IAtom> listMap = (List<IAtom>) list.get(0);
         IAtomContainer ac = (IAtomContainer) list.get(1);
         HanserRingFinder ringFinder = new HanserRingFinder();
@@ -798,7 +798,7 @@ public class ChemicalFilters {
     }
 
     private int getfragmentCount(IAtomContainer molecule) {
-        boolean fragmentFlag = true;
+        boolean fragmentFlag;
         IAtomContainerSet fragmentMolSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         int countFrag = 0;
         if (molecule.getAtomCount() > 0) {
@@ -843,7 +843,7 @@ public class ChemicalFilters {
      *              and 0 for any other bond type.
      */
     public static int convertBondOrder(IBond bond) {
-        int value = 0;
+        int value;
         switch (bond.getOrder()) {
             case QUADRUPLE:
                 value = 4;
@@ -868,7 +868,7 @@ public class ChemicalFilters {
      * @param bond
      */
     public static int convertBondStereo(IBond bond) {
-        int value = 0;
+        int value;
         switch (bond.getStereo()) {
             case UP:
                 value = 1;

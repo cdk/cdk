@@ -302,7 +302,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
                 StringWriter sw = new StringWriter();
                 writer.write("$MOL");
                 writer.write('\n');
-                MDLV2000Writer mdlwriter = null;
+                MDLV2000Writer mdlwriter;
                 try {
                     mdlwriter = new MDLV2000Writer(sw);
                 } catch (Exception ex) {
@@ -326,7 +326,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      * @return     The String to be written into the connectiontable
      */
     private String formatMDLInt(int i, int l) {
-        String s = "", fs = "";
+        String s, fs = "";
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setParseIntegerOnly(true);
         nf.setMinimumIntegerDigits(1);

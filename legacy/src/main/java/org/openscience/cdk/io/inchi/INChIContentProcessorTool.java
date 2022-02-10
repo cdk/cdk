@@ -93,7 +93,7 @@ public class INChIContentProcessorTool {
     public void processConnections(String bondsEncoding, IAtomContainer container, int source) {
         logger.debug("Parsing bond data: ", bondsEncoding);
 
-        IBond bondToAdd = null;
+        IBond bondToAdd;
         /* Fixme: treatment of branching is too limited! */
         String remainder = bondsEncoding;
         while (remainder.length() > 0) {

@@ -230,7 +230,7 @@ public class PDBReader extends DefaultChemObjectReader {
         String cRead = "";
         char chain = 'A'; // To ensure stringent name giving of monomers
         IStrand oStrand;
-        int lineLength = 0;
+        int lineLength;
 
         boolean isProteinStructure = false;
 
@@ -410,7 +410,7 @@ public class PDBReader extends DefaultChemObjectReader {
                         } else {
                             int lineIndex = 6;
                             int atomFromNumber = -1;
-                            int atomToNumber = -1;
+                            int atomToNumber;
                             IAtomContainer molecule = (isProteinStructure) ? oBP : molecularStructure;
                             while (lineIndex + 5 <= cRead.length()) {
                                 String part = cRead.substring(lineIndex, lineIndex + 5).trim();

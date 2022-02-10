@@ -34,7 +34,7 @@ public class AtomContainerPermutorTest extends CDKTestCase {
     public void testAtomPermutation() {
         AtomContainer ac = new org.openscience.cdk.AtomContainer();
         AtomContainer result;
-        String atoms = "";
+        String atoms;
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("N"));
         ac.addAtom(new Atom("P"));
@@ -63,7 +63,7 @@ public class AtomContainerPermutorTest extends CDKTestCase {
     public void testBondPermutation() {
         AtomContainer ac = new org.openscience.cdk.AtomContainer();
         AtomContainer result;
-        String bonds = "";
+        String bonds;
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("N"));
         ac.addAtom(new Atom("P"));

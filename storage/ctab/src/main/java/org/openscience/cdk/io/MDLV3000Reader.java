@@ -80,7 +80,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private BooleanIOSetting optStereoPerc;
     private BooleanIOSetting optStereo0d;
 
-    BufferedReader input = null;
+    BufferedReader input;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
 
     private final Pattern keyValueTuple;
@@ -454,8 +454,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         logger.info("Reading ATOM block");
 
         int RGroupCounter = 1;
-        int Rnumber = 0;
-        String[] rGroup = null;
+        int Rnumber;
+        String[] rGroup;
 
         boolean foundEND = false;
         while (isReady() && !foundEND) {
@@ -885,7 +885,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     public String readLine() throws CDKException {
-        String line = null;
+        String line;
         try {
             line = input.readLine();
             lineNumber++;

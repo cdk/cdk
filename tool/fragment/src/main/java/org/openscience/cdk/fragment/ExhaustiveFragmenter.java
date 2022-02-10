@@ -59,7 +59,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     Map<String, IAtomContainer> fragMap;
     SmilesGenerator             smilesGenerator;
     String[]                    fragments             = null;
-    int                         minFragSize           = 6;
+    int                         minFragSize;
     private static final ILoggingTool logger                = LoggingToolFactory
                                                               .createLoggingTool(ExhaustiveFragmenter.class);
 

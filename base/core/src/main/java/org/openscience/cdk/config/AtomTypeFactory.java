@@ -95,7 +95,7 @@ public class AtomTypeFactory {
     private static final ILoggingTool                 logger                = LoggingToolFactory
                                                                               .createLoggingTool(AtomTypeFactory.class);
     private static Map<String, AtomTypeFactory> tables                = null;
-    private Map<String,IAtomType>               atomTypes             = null;
+    private Map<String,IAtomType>               atomTypes;
 
     /**
      * Private constructor for the AtomTypeFactory singleton.

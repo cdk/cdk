@@ -84,7 +84,7 @@ public final class Canon {
     private final long[] labelling, symmetry;
 
     /** Only compute the symmetry classes. */
-    private boolean symOnly = false;
+    private boolean symOnly;
 
     /**
      * Create a canon labelling for the graph (g) with the specified
@@ -501,7 +501,7 @@ public final class Canon {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(Canon.class.getResourceAsStream("primes.dat")))) {
             int[] primes = new int[N_PRIMES];
             int i = 0;
-            String line = null;
+            String line;
             while ((line = br.readLine()) != null) {
                 primes[i++] = Integer.parseInt(line);
             }

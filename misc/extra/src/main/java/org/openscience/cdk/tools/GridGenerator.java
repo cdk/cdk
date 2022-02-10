@@ -269,7 +269,7 @@ public class GridGenerator {
      */
     public void writeGridInPmeshFormat(String outPutFileName, double cutOff) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + ".pmesh"))) {
-            boolean negative = false;
+            boolean negative;
             if (cutOff < 0) {
                 negative = true;
             } else {

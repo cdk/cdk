@@ -63,7 +63,7 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
 
         IAtomType atomType = null;
         try {
-            String fragment = "";
+            String fragment;
             int NumHAtoms = atom.getImplicitHydrogenCount() != null ?
                             atom.getImplicitHydrogenCount() : 0;
             int NumSingleBonds2 = NumHAtoms;

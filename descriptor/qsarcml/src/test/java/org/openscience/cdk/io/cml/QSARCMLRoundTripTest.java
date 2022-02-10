@@ -66,11 +66,11 @@ public class QSARCMLRoundTripTest {
 
     // See also CMLRoundTripTool
     public static IAtomContainer roundTripMolecule(Convertor convertor, IAtomContainer mol) throws Exception {
-        String cmlString = "<!-- failed -->";
+        String cmlString;
         Element cmlDOM = convertor.cdkAtomContainerToCMLMolecule(mol);
         cmlString = cmlDOM.toXML();
 
-        IAtomContainer roundTrippedMol = null;
+        IAtomContainer roundTrippedMol;
         logger.debug("CML string: ", cmlString);
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
@@ -97,7 +97,7 @@ public class QSARCMLRoundTripTest {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
-        DescriptorValue originalValue = null;
+        DescriptorValue originalValue;
         originalValue = descriptor.calculate(molecule);
         molecule.setProperty(originalValue.getSpecification(), originalValue);
         IAtomContainer roundTrippedMol = roundTripMolecule(convertor, molecule);

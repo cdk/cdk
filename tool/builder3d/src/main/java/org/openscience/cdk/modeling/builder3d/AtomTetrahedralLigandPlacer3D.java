@@ -87,9 +87,9 @@ public class AtomTetrahedralLigandPlacer3D {
      * @cdk.keyword           3D model
      */
     public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer) throws CDKException {
-        IAtom refAtom = null;
+        IAtom refAtom;
         IAtom atomC = null;
-        int nwanted = 0;
+        int nwanted;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             refAtom = atomContainer.getAtom(i);
             if (refAtom.getAtomicNumber() != IElement.H && hasUnsetNeighbour(refAtom, atomContainer)) {
@@ -678,7 +678,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *@exception  Exception  Description of the Exception
      */
     private double getDistanceValue(String id1, String id2) {
-        String dkey = "";
+        String dkey;
         if (pSet.containsKey(("bond" + id1 + ";" + id2))) {
             dkey = "bond" + id1 + ";" + id2;
         } else if (pSet.containsKey(("bond" + id2 + ";" + id1))) {
@@ -699,7 +699,7 @@ public class AtomTetrahedralLigandPlacer3D {
      * @return                The angleKey value
      */
     public double getAngleValue(String id1, String id2, String id3) {
-        String akey = "";
+        String akey;
         if (pSet.containsKey(("angle" + id1 + ";" + id2 + ";" + id3))) {
             akey = "angle" + id1 + ";" + id2 + ";" + id3;
         } else if (pSet.containsKey(("angle" + id3 + ";" + id2 + ";" + id1))) {
@@ -742,7 +742,7 @@ public class AtomTetrahedralLigandPlacer3D {
         Vector3d b = new Vector3d((atomB.x - atomA.x), (atomB.y - atomA.y), (atomB.z - atomA.z));
         Vector3d c = new Vector3d((atomC.x - atomA.x), (atomC.y - atomA.y), (atomC.z - atomA.z));
         Vector3d n1 = new Vector3d();
-        Vector3d n2 = null;
+        Vector3d n2;
         n1.cross(b, c);
         n1.normalize();
 
@@ -752,7 +752,7 @@ public class AtomTetrahedralLigandPlacer3D {
                 n1.normalize();
             }
         }
-        double dotProduct = 0;
+        double dotProduct;
         for (int i = 0; i < branchPoints.length; i++) {
             n2 = new Vector3d(branchPoints[0].x, branchPoints[0].y, branchPoints[0].z);
             dotProduct = n1.dot(n2);
@@ -817,7 +817,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
         List bonds = ac.getConnectedBondsList(atom);
         IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
-        IAtom connectedAtom = null;
+        IAtom connectedAtom;
         for (Object bond : bonds) {
             connectedAtom = ((IBond) bond).getOther(atom);
             if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {

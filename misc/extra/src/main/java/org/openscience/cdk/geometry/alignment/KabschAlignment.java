@@ -322,12 +322,12 @@ public class KabschAlignment {
             tR[2][1] += p1[i].z * p2[i].y * wts[i];
             tR[2][2] += p1[i].z * p2[i].z * wts[i];
         }
-        double[][] R = new double[3][3];
+        double[][] R;
         tmp = new Matrix(tR);
         R = tmp.transpose().getArray();
 
         // now get the RtR (=R'R) matrix
-        double[][] RtR = new double[3][3];
+        double[][] RtR;
         Matrix jamaR = new Matrix(R);
         tmp = tmp.times(jamaR);
         RtR = tmp.getArray();

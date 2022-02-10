@@ -55,7 +55,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  */
 public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
 
-    private GasteigerMarsiliPartialCharges peoe = null;
+    private GasteigerMarsiliPartialCharges peoe;
     /**Number of maximum iterations*/
     private int maxIterations;
 

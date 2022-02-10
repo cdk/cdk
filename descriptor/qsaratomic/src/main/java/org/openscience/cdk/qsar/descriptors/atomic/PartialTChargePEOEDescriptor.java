@@ -67,8 +67,8 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[]          NAMES         = {"pepeT"};
 
-    private GasteigerMarsiliPartialCharges peoe          = null;
-    private GasteigerPEPEPartialCharges    pepe          = null;
+    private GasteigerMarsiliPartialCharges peoe;
+    private GasteigerPEPEPartialCharges    pepe;
 
     /**Number of maximum iterations*/
     private int                            maxIterations = -1;

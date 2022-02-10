@@ -136,8 +136,8 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
         double deoc;
 
         IAtom[] atoms = null;
-        int atom1 = 0;
-        int atom2 = 0;
+        int atom1;
+        int atom2;
 
         double[] q_old = new double[ac.getAtomCount()];
         for (int i = 0; i < q_old.length; i++)

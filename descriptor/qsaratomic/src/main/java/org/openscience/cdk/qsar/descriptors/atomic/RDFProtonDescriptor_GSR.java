@@ -377,7 +377,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         //Variables
         double[] values; // for storage of results of other methods
         double sum;
-        double smooth = -20;
+        double smooth;
         double partial;
         int position;
         double limitInf;
@@ -391,7 +391,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         Vector3d bA = new Vector3d();
         Vector3d bB = new Vector3d();
         Point3d middlePoint = new Point3d();
-        double angle = 0;
+        double angle;
 
         if (singles.size() > 0) {
             double dist0;
@@ -399,7 +399,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
             IAtom singleBondAtom0;
             IAtom singleBondAtom1;
             position = 0;
-            IBond theSingleBond = null;
+            IBond theSingleBond;
             limitInf = 0;
             limitSup = Math.PI / 2;
             smooth = -1.15;

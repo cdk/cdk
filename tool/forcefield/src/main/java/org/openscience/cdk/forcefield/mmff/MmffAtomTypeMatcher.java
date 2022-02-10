@@ -225,7 +225,7 @@ final class MmffAtomTypeMatcher {
         List<AtomTypePattern> matchers = new ArrayList<>();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(smaIn));
-        String line = null;
+        String line;
         while ((line = br.readLine()) != null) {
             if (skipLine(line)) continue;
             String[] cols = line.split(" ");
@@ -256,7 +256,7 @@ final class MmffAtomTypeMatcher {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(hdefIn));
         br.readLine(); // header
-        String line = null;
+        String line;
         while ((line = br.readLine()) != null) {
             String[] cols = line.split("\t");
             hdefs.put(cols[0].trim(), cols[3].trim());

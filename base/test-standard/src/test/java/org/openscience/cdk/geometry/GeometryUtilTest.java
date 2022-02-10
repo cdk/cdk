@@ -120,7 +120,7 @@ public class GeometryUtilTest extends CDKTestCase {
     public void testHas2DCoordinates_With000() throws CDKException {
         String filenameMol = "with000coordinate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
-        IAtomContainer molOne = null;
+        IAtomContainer molOne;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());
         Assert.assertTrue(GeometryUtil.has2DCoordinates(molOne));

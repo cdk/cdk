@@ -57,7 +57,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[]          NAMES = {"partialSigmaCharge"};
 
-    private GasteigerMarsiliPartialCharges peoe  = null;
+    private GasteigerMarsiliPartialCharges peoe;
     /**Number of maximum iterations*/
     private int                            maxIterations;
 

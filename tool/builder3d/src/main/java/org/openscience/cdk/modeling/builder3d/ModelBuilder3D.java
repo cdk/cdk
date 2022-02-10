@@ -193,8 +193,8 @@ public class ModelBuilder3D {
         //Assing Atoms to Rings,Aliphatic and Atomtype
         IRingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
         List ringSystems = null;
-        IRingSet largestRingSet = null;
-        int numberOfRingAtoms = 0;
+        IRingSet largestRingSet;
+        int numberOfRingAtoms;
 
         if (ringSetMolecule.getAtomContainerCount() > 0) {
             if (templateHandler == null) {
@@ -215,7 +215,7 @@ public class ModelBuilder3D {
             largestRingSet = null;
         } else {
             //logger.debug("****** Start of handling aliphatic molecule ******");
-            IAtomContainer ac = null;
+            IAtomContainer ac;
 
             ac = atomPlacer.getInitialLongestChain(molecule);
             setAtomsToUnVisited(molecule);
@@ -266,9 +266,9 @@ public class ModelBuilder3D {
             AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException, IOException,
             CloneNotSupportedException {
         //logger.debug("****** LAYOUT MOLECULE MAIN *******");
-        IAtomContainer ac = null;
+        IAtomContainer ac;
         int safetyCounter = 0;
-        IAtom atom = null;
+        IAtom atom;
         //Place rest Chains/Atoms
         do {
             safetyCounter++;
@@ -459,7 +459,7 @@ public class ModelBuilder3D {
     private void searchAndPlaceBranches(IAtomContainer molecule, IAtomContainer chain, AtomPlacer3D ap3d,
             AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
         //logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
-        List atoms = null;
+        List atoms;
         IAtomContainer branchAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < chain.getAtomCount(); i++) {
@@ -498,8 +498,8 @@ public class ModelBuilder3D {
     private void placeLinearChains3D(IAtomContainer molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d,
             AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
         //logger.debug("****** PLACE LINEAR CHAINS ******");
-        IAtom dihPlacedAtom = null;
-        IAtom thirdPlacedAtom = null;
+        IAtom dihPlacedAtom;
+        IAtom thirdPlacedAtom;
         IAtomContainer longestUnplacedChain = molecule.getBuilder().newInstance(IAtomContainer.class);
         if (startAtoms.getAtomCount() == 0) {
             //no branch points ->linear chain

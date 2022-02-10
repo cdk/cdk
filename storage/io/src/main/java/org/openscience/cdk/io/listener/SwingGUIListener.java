@@ -45,8 +45,8 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  */
 public class SwingGUIListener implements IReaderListener, IWriterListener {
 
-    private Component  frame = null;
-    private Importance level = Importance.HIGH;
+    private Component  frame;
+    private Importance level;
 
     /**
      * 0 = ask no questions

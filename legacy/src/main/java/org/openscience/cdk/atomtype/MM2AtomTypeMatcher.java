@@ -51,7 +51,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
     IBond.Order                 maxBondOrder  = IBond.Order.SINGLE;
     private AtomTypeFactory     factory       = null;
-    AtomTypeTools               atomTypeTools = null;
+    AtomTypeTools               atomTypeTools;
 
     String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "HC", "O", "O=", "N", "Nsp2", "Nsp", "F",
             "CL", "BR", "I", "S", "S+", ">SN", "SO2", "Sthi", "SI", "LP", "HO", "CR3R", "HN", "HOCO", "P", "B", "BTET",
@@ -127,11 +127,11 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
             return factory.getAtomTypes("DU")[0];
         }
 
-        Pattern p1 = null;
+        Pattern p1;
         String ID = "";
         boolean atomTypeFlag = false;
-        Matcher mat1 = null;
-        IBond.Order tmpMaxBondOrder = IBond.Order.SINGLE;
+        Matcher mat1;
+        IBond.Order tmpMaxBondOrder;
         maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         logger.debug("Atom maxBond" + maxBondOrder + " ChemicalGroupConstant " + atomChemicalGroupConstant);
         for (int j = 0; j < atomTypeIds.length; j++) {

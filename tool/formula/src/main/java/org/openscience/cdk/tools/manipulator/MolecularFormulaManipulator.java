@@ -692,7 +692,7 @@ public class MolecularFormulaManipulator {
                                         boolean setMajor) {
         Elements elem = null;
         int mass = 0;
-        int count = 0;
+        int count;
         if (iter.nextIf('[')) {
             mass = iter.nextUInt();
             if (mass < 0)

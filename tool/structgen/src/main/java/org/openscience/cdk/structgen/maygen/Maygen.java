@@ -281,7 +281,7 @@ public class Maygen {
      * @return int[]
      */
     public int[] permuteArray(int[] array, int i, int j) {
-        int temp = 0;
+        int temp;
         temp = array[i];
         array[i] = array[j];
         array[j] = temp;
@@ -641,7 +641,7 @@ public class Maygen {
         int i = 0;
         int[] partition = new int[sizePart + 1];
         int localSize = symbols.size();
-        int next = 0;
+        int next;
         int index = 0;
         int[] result;
         while (i < localSize) {
@@ -916,7 +916,7 @@ public class Maygen {
      * @return int[]
      */
     public int[] descendingSort(int[] array, int index0, int index1) {
-        int temp = 0;
+        int temp;
         for (int i = index0; i < index1; i++) {
             for (int j = i + 1; j < index1; j++) {
                 if (array[i] < array[j]) {
@@ -938,7 +938,7 @@ public class Maygen {
      */
     public int[] descendingSortWithPartition(int[] array, int[] partition) {
         int i = 0;
-        int p = 0;
+        int p;
         int limit = findZeros(partition);
         for (int i1 = 0; i1 < limit; i1++) {
             p = partition[i1];
@@ -1356,7 +1356,7 @@ public class Maygen {
     public boolean descendingOrderCheck(int[] partition, int[] array) {
         boolean check = true;
         int i = 0;
-        int value = 0;
+        int value;
         int limit = findZeros(partition);
         for (int s = 0; s < limit; s++) {
             value = partition[s];
@@ -1748,8 +1748,8 @@ public class Maygen {
                 a[j][0] = 1;
             }
         } else if (callHydrogenDistributor) {
-            int limit = 0;
-            int hydrogen = 0;
+            int limit;
+            int hydrogen;
             for (int i = 0; i < index; i++) {
                 hydrogen = hydrogens[i];
                 limit = localHIndex + hydrogen;
@@ -1775,7 +1775,7 @@ public class Maygen {
     public void findR(int[] indices, int[] initialPartition, int[] r) {
         int block = 0;
         int index = 0;
-        int part = 0;
+        int part;
         int rowIndex = indices[0];
         int limit = findZeros(initialPartition);
         for (int i = 0; i < limit; i++) {
@@ -2437,10 +2437,10 @@ public class Maygen {
         ys[0] = new int[size];
         zs[0] = new int[size];
         int limit = findZeros(initialPartition);
-        int value = 0;
+        int value;
         int index = 0;
-        int y = 0;
-        int z = 0;
+        int y;
+        int z;
         for (int i = 0; i < limit; i++) {
             value = initialPartition[i];
             y = findY(i, initialPartition);
@@ -2778,7 +2778,7 @@ public class Maygen {
             z[0] = z[0] - 1;
         }
         clearFormers(false, y[0], partitionList, formerPermutations);
-        boolean test = true;
+        boolean test;
         for (int i = y[0]; i <= z[0]; i++) {
             test =
                     rowCanonicalTest(
@@ -3109,7 +3109,7 @@ public class Maygen {
      */
     public int[] getCyclesList(int[] max, int[] non, int index, int[] values) {
         int i = 0;
-        int permutationIndex = 0;
+        int permutationIndex;
         while (i < max.length && max[i] != 0) {
             if (max[i] != non[i]) {
                 permutationIndex = findMatch(max, non, max[i], i);
@@ -3335,8 +3335,8 @@ public class Maygen {
      */
     public void orderDegreeSymbols(
             int[] degree, String[] symbol, int index0, int index1, int[] hydrogens) {
-        int temp = 0;
-        int temp2 = 0;
+        int temp;
+        int temp2;
         for (int i = index0; i < index1; i++) {
             for (int j = i + 1; j < index1; j++) {
                 if (degree[i] > degree[j]) {
@@ -3792,7 +3792,7 @@ public class Maygen {
      */
     public IAtomContainer buildContainer4SDF(String[] symbols) throws CloneNotSupportedException {
         IAtomContainer ac = this.builder.newAtomContainer();
-        String symbol = null;
+        String symbol;
         for (String s : symbols) {
             symbol = s.split(NUMBERS_FROM_0_TO_9)[0];
             IAtom atom = builder.newAtom();
@@ -3836,7 +3836,7 @@ public class Maygen {
         }
         mat[matrixSize - 2][matrixSize - 1] = 1;
         count.incrementAndGet();
-        String symbol = "";
+        String symbol;
         if (oxygen == 0) {
             symbol = "S";
         } else {

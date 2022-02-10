@@ -247,7 +247,7 @@ final class ReactionDepiction extends Depiction {
 
         // compound the zoom, fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
-        double mainCompOffset = 0;
+        double mainCompOffset;
 
         // shift product x-offset to make room for the arrow / side components
         mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
@@ -402,7 +402,7 @@ final class ReactionDepiction extends Depiction {
 
         // compound the zoom, fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
-        double mainCompOffset = 0;
+        double mainCompOffset;
 
         // shift product x-offset to make room for the arrow / side components
         mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;

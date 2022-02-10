@@ -180,7 +180,7 @@ final class IdentityTemplateLibrary {
             }
         }
 
-        String smi = null;
+        String smi;
         try {
             smi = smigen.create(mol, ordering);
         } finally {
@@ -432,7 +432,7 @@ final class IdentityTemplateLibrary {
      */
     static IdentityTemplateLibrary load(InputStream in) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        String line = null;
+        String line;
         IdentityTemplateLibrary library = new IdentityTemplateLibrary();
         while ((line = br.readLine()) != null) {
             // skip comments

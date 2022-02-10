@@ -129,7 +129,7 @@ public class TemplateExtractor {
 
     public void PartitionRingsFromComplexRing(String dataFile) {
         IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
-        IAtomContainer m = null;
+        IAtomContainer m;
         try (BufferedReader fin = new BufferedReader(new FileReader(dataFile));
              IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
             while (imdl.hasNext()) {
@@ -151,9 +151,9 @@ public class TemplateExtractor {
     public void extractUniqueRingSystemsFromFile(String dataFile) {
         System.out.println("****** EXTRACT UNIQUE RING SYSTEMS ******");
         System.out.println("From file:" + dataFile);
-        IAtomContainer m = null;
+        IAtomContainer m;
         // RingPartitioner ringPartitioner=new RingPartitioner();
-        List<IRingSet> ringSystems = null;
+        List<IRingSet> ringSystems;
 
         HashMap<String, String> hashRingSystems = new HashMap<>();
         SmilesGenerator smilesGenerator = new SmilesGenerator();
@@ -161,9 +161,9 @@ public class TemplateExtractor {
         int counterRings = 0;
         int counterMolecules = 0;
         int counterUniqueRings = 0;
-        IRingSet ringSet = null;
-        String key = "";
-        IAtomContainer ac = null;
+        IRingSet ringSet;
+        String key;
+        IAtomContainer ac;
 
         String molfile = dataFile + "_UniqueRings";
 
@@ -273,7 +273,7 @@ public class TemplateExtractor {
 
     public void makeCanonicalSmileFromRingSystems(String dataFileIn, String dataFileOut) {
         System.out.println("Start make SMILES...");
-        IAtomContainer m = null;
+        IAtomContainer m;
         IteratingSDFReader imdl = null;
         // QueryAtomContainer query=null;
         List<String> data = new ArrayList<>();
@@ -339,10 +339,10 @@ public class TemplateExtractor {
         HybridizationFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DEFAULT_SIZE,
                 HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH);
         fingerPrinter.setHashPseudoAtoms(true);
-        IAtomContainer m = null;
+        IAtomContainer m;
         IteratingSDFReader imdl = null;
         //QueryAtomContainer query=null;
-        IAtomContainer query = null;
+        IAtomContainer query;
         List<IBitFingerprint> data = new ArrayList<>();
         ILoggingTool logger = LoggingToolFactory.createLoggingTool(getClass());
         try {

@@ -82,7 +82,7 @@ final class CxSmilesParser {
             } else {
                 iter.pos--; // push back
                 int beg = iter.pos;
-                int rollback = beg;
+                int rollback;
                 while (iter.hasNext()) {
 
                     if (iter.pos == beg && iter.curr() == '_' &&

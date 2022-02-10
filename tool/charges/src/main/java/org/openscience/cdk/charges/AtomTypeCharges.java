@@ -88,12 +88,12 @@ public class AtomTypeCharges implements IChargeCalculator {
      *@exception  CDKException  Description of the Exception
      */
     private IAtomContainer setInitialCharges(IAtomContainer ac) throws CDKException {
-        Matcher matOC = null;
-        Matcher matOP = null;
-        Matcher matOS = null;
-        Matcher mat_p = null;
-        Matcher mat_n = null;
-        String hoseCode = "";
+        Matcher matOC;
+        Matcher matOP;
+        Matcher matOS;
+        Matcher mat_p;
+        Matcher mat_n;
+        String hoseCode;
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
             try {

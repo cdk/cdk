@@ -183,8 +183,8 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
 
     private void searchVFMappings() {
         //        System.out.println("searchVFMappings ");
-        IQuery query = null;
-        IMapper mapper = null;
+        IQuery query;
+        IMapper mapper;
         vfLibSolutions = new ArrayList<>();
         if (queryMol != null) {
             query = new QueryCompiler(queryMol).compile();
@@ -231,8 +231,8 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
                 counter = 0;
             }
             for (Map.Entry<INode, IAtom> mapping : solution.entrySet()) {
-                IAtom qAtom = null;
-                IAtom tAtom = null;
+                IAtom qAtom;
+                IAtom tAtom;
                 if (ronp) {
                     qAtom = query.getAtom(mapping.getKey());
                     tAtom = mapping.getValue();

@@ -55,7 +55,7 @@ import java.util.List;
 public class MoleculeBuilder {
 
     /** The molecule which is worked upon throughout the class and returned at the end */
-    private IAtomContainer currentMolecule = null;
+    private IAtomContainer currentMolecule;
     private IAtom          endOfChain;
 
     public MoleculeBuilder(IChemObjectBuilder builder) {

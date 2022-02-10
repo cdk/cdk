@@ -111,14 +111,14 @@ public class AtomPlacer {
      */
     public void distributePartners(IAtom atom, IAtomContainer placedNeighbours, Point2d sharedAtomsCenter,
             IAtomContainer unplacedNeighbours, double bondLength) {
-        double occupiedAngle = 0;
+        double occupiedAngle;
         //double smallestDistance = Double.MAX_VALUE;
         //IAtom[] nearestAtoms = new IAtom[2];
-        IAtom[] sortedAtoms = null;
-        double startAngle = 0.0;
-        double addAngle = 0.0;
-        double radius = 0.0;
-        double remainingAngle = 0.0;
+        IAtom[] sortedAtoms;
+        double startAngle;
+        double addAngle;
+        double radius;
+        double remainingAngle;
         /*
          * calculate the direction away from the already placed partners of atom
          */
@@ -258,7 +258,7 @@ public class AtomPlacer {
                 logger.debug(exc);
             }
         }
-        IAtom startAtom = null;
+        IAtom startAtom;
 
         if (angle1 > angle3) {
             if (angle1 - angle3 < Math.PI) {
@@ -368,10 +368,10 @@ public class AtomPlacer {
         //        }
         logger.debug("Placing linear chain of length " + atomContainer.getAtomCount());
         Vector2d bondVector = initialBondVector;
-        IAtom atom = null;
-        Point2d atomPoint = null;
-        IAtom nextAtom = null;
-        IBond prevBond = null, currBond = null;
+        IAtom atom;
+        Point2d atomPoint;
+        IAtom nextAtom;
+        IBond prevBond = null, currBond;
         for (int f = 0; f < atomContainer.getAtomCount() - 1; f++) {
             atom = atomContainer.getAtom(f);
             nextAtom = atomContainer.getAtom(f + 1);
@@ -581,8 +581,8 @@ public class AtomPlacer {
         int maxPathLength = 0;
         int bestStartAtom = -1;
         int bestEndAtom = -1;
-        IAtom atom = null;
-        IAtom startAtom = null;
+        IAtom atom;
+        IAtom startAtom;
         //IAtom endAtom = null;
         for (int f = 0; f < apsp.length; f++) {
             atom = molecule.getAtom(f);
@@ -630,7 +630,7 @@ public class AtomPlacer {
         int longest = 0;
         int longestPathLength = 0;
         int maxDegreeSum = 0;
-        int degreeSum = 0;
+        int degreeSum;
         IAtomContainer[] pathes = new IAtomContainer[molecule.getAtomCount()];
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             molecule.getAtom(f).setFlag(CDKConstants.VISITED, false);
@@ -675,8 +675,8 @@ public class AtomPlacer {
      */
     static public void breadthFirstSearch(IAtomContainer ac, List<IAtom> sphere, IAtomContainer[] pathes)
             throws CDKException {
-        IAtom atom = null;
-        IAtom nextAtom = null;
+        IAtom atom;
+        IAtom nextAtom;
         int atomNr;
         int nextAtomNr;
         //IAtomContainer path = null;

@@ -401,7 +401,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
         // Variables
         double sum;
-        double smooth = -20;
+        double smooth;
         double partial;
         int position;
         double limitInf;
@@ -415,7 +415,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
         Vector3d aB = new Vector3d();
         Vector3d bA = new Vector3d();
         Vector3d bB = new Vector3d();
-        double angle = 0;
+        double angle;
 
         if (bondsInCycloex.size() > 0) {
             IAtom cycloexBondAtom0;
@@ -426,7 +426,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
             position = 0;
             smooth = -2.86;
             angle = 0;
-            int yaCounter = 0;
+            int yaCounter;
             List<IAtom> connAtoms;
             for (int c = 0; c < G3R_DESC_LENGTH; c++) {
             	double g3r = limitSup * ((double)c / G3R_DESC_LENGTH);

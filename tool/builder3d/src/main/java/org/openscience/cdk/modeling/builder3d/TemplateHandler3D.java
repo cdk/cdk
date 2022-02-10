@@ -139,7 +139,7 @@ public class TemplateHandler3D {
     public IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
         IRingSet       largestRingSet = null;
         int            atomNumber     = 0;
-        IAtomContainer container      = null;
+        IAtomContainer container;
         for (IRingSet ringSystem : ringSystems) {
             container = getAllInOneContainer(ringSystem);
             if (atomNumber < container.getAtomCount()) {

@@ -1353,7 +1353,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * @return The String to be written into the connectiontable
      */
     protected static String formatMDLFloat(float fl) {
-        String s = "", fs = "";
+        String s, fs = "";
         int l;
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setMinimumIntegerDigits(1);

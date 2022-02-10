@@ -644,7 +644,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      */
     @Test
     public void testBug1727373() throws Exception {
-        IAtomContainer molecule = null;
+        IAtomContainer molecule;
         String filename = "carbocations.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);

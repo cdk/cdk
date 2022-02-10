@@ -476,7 +476,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
     private static Point2d[] coords2D(GeometricParity parity) {
         if (parity instanceof Tetrahedral2DParity) {
-            Field field = null;
+            Field field;
             try {
                 field = parity.getClass().getDeclaredField("coordinates");
                 field.setAccessible(true);
@@ -490,7 +490,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
     private static Point3d[] coords3D(GeometricParity parity) {
         if (parity instanceof Tetrahedral3DParity) {
-            Field field = null;
+            Field field;
             try {
                 field = parity.getClass().getDeclaredField("coordinates");
                 field.setAccessible(true);
@@ -504,7 +504,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
     private static GeometricParity getGeometricParity(StereoEncoder encoder) {
         if (encoder instanceof GeometryEncoder) {
-            Field field = null;
+            Field field;
             try {
                 field = encoder.getClass().getDeclaredField("geometric");
                 field.setAccessible(true);
@@ -518,7 +518,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
     private static List<StereoEncoder> extractEncoders(StereoEncoder encoder) {
         if (encoder instanceof MultiStereoEncoder) {
-            Field field = null;
+            Field field;
             try {
                 field = encoder.getClass().getDeclaredField("encoders");
                 field.setAccessible(true);

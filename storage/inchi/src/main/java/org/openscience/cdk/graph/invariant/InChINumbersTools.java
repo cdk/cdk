@@ -109,7 +109,7 @@ public class InChINumbersTools {
 
         int index;
         long[] numbers = new long[container.getAtomCount()];
-        int[] first = null;
+        int[] first;
         int label = 1;
 
         if ((index = aux.indexOf("/R:")) >= 0) { // reconnected metal numbers

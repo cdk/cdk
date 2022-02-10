@@ -60,7 +60,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[]       NAMES = {"pepe"};
 
-    private GasteigerPEPEPartialCharges pepe          = null;
+    private GasteigerPEPEPartialCharges pepe;
     /**Number of maximum iterations*/
     private int                         maxIterations = -1;
     /**Number of maximum resonance structures*/
