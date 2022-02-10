@@ -40,12 +40,12 @@ import org.openscience.cdk.tools.SaturationChecker;
  */
 public class CrossoverMachine {
 
-    PartialFilledStructureMerger pfsm;
+    final PartialFilledStructureMerger pfsm;
 
     /** selects a partitioning mode*/
-    int                          splitMode                = 2;
+    final int                          splitMode                = 2;
     /** selects a partitioning scale*/
-    int                          numatoms                 = 5;
+    final int                          numatoms                 = 5;
     /** Indicates that <code>crossover</code> is using SPLIT_MODE_RADNDOM mode. */
     public static final int      SPLIT_MODE_RADNDOM       = 0;
     /** Indicates that <code>crossover</code> is using SPLIT_MODE_DEPTH_FIRST mode. */

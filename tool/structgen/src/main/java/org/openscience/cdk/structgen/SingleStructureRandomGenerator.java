@@ -65,10 +65,10 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class SingleStructureRandomGenerator {
 
-    ILoggingTool      logger = LoggingToolFactory.createLoggingTool(SingleStructureRandomGenerator.class);
+    final ILoggingTool      logger = LoggingToolFactory.createLoggingTool(SingleStructureRandomGenerator.class);
 
     IAtomContainer    atomContainer;
-    SaturationChecker satCheck;
+    final SaturationChecker satCheck;
     Random            random;
 
     /**

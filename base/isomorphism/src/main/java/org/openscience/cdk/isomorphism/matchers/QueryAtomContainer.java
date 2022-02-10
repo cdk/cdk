@@ -125,7 +125,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Internal list of atom parities.
      */
-    protected List<IStereoElement> stereoElements;
+    protected final List<IStereoElement> stereoElements;
 
     /**
      *  Constructs an empty AtomContainer.

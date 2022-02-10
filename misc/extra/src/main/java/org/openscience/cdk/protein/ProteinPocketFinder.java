@@ -80,8 +80,8 @@ public class ProteinPocketFinder {
     IBioPolymer                protein         = null;
     String                     vanDerWaalsFile = "org/openscience/cdk/config/data/pdb_atomtypes.xml";
     double[][][]               grid            = null;
-    GridGenerator              gridGenerator   = new GridGenerator();
-    Map<String, Integer>       visited         = new Hashtable<>();
+    final GridGenerator              gridGenerator   = new GridGenerator();
+    final Map<String, Integer>       visited         = new Hashtable<>();
     List<List<Point3d>>        pockets         = new ArrayList<>();
 
     /**

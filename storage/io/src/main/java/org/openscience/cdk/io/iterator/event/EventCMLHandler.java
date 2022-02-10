@@ -62,7 +62,7 @@ public class EventCMLHandler extends CMLHandler {
     private IBond.Stereo                 bond_stereo;
     private String                       bond_id;
 
-    protected static ILoggingTool        logger        = LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
+    protected static final ILoggingTool        logger        = LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
 
     private final DefaultEventChemObjectReader eventReader;
 

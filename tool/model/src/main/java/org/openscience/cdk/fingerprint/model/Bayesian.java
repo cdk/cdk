@@ -95,12 +95,12 @@ public class Bayesian {
 
     // incoming hash codes: actual values, and subsumed values are {#active,#total}
     private int                    numActive    = 0;
-    protected Map<Integer, int[]>  inHash       = new HashMap<>();
-    protected ArrayList<int[]>     training     = new ArrayList<>();
-    protected ArrayList<Boolean>   activity     = new ArrayList<>();
+    protected final Map<Integer, int[]>  inHash       = new HashMap<>();
+    protected final ArrayList<int[]>     training     = new ArrayList<>();
+    protected final ArrayList<Boolean>   activity     = new ArrayList<>();
 
     // built model: contributions for each hash code
-    protected Map<Integer, Double> contribs     = new HashMap<>();
+    protected final Map<Integer, Double> contribs     = new HashMap<>();
     protected double               lowThresh    = 0, highThresh = 0;
     protected double               range        = 0, invRange = 0;                            // cached to speed up scaling calibration
 

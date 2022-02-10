@@ -40,7 +40,7 @@ public class DebugAtomContainerSet extends AtomContainerSet implements IAtomCont
 
     private static final long serialVersionUID = -8358480615782437454L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainerSet.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainerSet.class);
 
     /** {@inheritDoc} */
     @Override

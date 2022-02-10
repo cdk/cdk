@@ -376,8 +376,8 @@ public class CxSmilesParserTest {
      */
     private static class AprxDoubleArray extends BaseMatcher<double[]> {
 
-        double[] expected;
-        double epsilon = 0.01;
+        final double[] expected;
+        final double epsilon = 0.01;
 
         public AprxDoubleArray(double ... expected) {
             this.expected = expected;

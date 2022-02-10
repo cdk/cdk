@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the PartialPiChargeDescriptorTest object

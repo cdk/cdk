@@ -35,7 +35,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable {
 
     private static final long             serialVersionUID = 4382025930031432321L;
 
-    Hashtable<String, HOSECodeShiftRange> ht;
+    final Hashtable<String, HOSECodeShiftRange> ht;
 
     public BremserOneSphereHOSECodePredictor() {
         ht = new Hashtable<>(700);
@@ -67,14 +67,14 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable {
 
         private static final long serialVersionUID = 1649047314594679297L;
 
-        String                    code;
-        double                    shift;
-        double                    confidenceLimit;
-        String                    multiplicity;
-        double                    maxShift;
-        double                    minShift;
-        int                       fourSphereCount;
-        int                       lineCount;
+        final String                    code;
+        final double                    shift;
+        final double                    confidenceLimit;
+        final String                    multiplicity;
+        final double                    maxShift;
+        final double                    minShift;
+        final int                       fourSphereCount;
+        final int                       lineCount;
 
         HOSECodeShiftRange(String c, double s, double conf, String m, double ma, double mi, int f, int l) {
             code = c;

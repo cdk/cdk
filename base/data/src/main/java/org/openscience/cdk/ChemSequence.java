@@ -64,7 +64,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *  Amount by which the chemModels array grows when elements are added and
      *  the array is not large enough for that.
      */
-    protected int             growArraySize    = 4;
+    protected final int             growArraySize    = 4;
 
     /**
      *  Constructs an empty ChemSequence.

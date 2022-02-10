@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the PartialTChargePEOEDescriptorTest object

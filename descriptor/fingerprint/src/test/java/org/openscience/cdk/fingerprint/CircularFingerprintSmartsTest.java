@@ -48,7 +48,7 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 	private static final ILoggingTool logger = LoggingToolFactory
 			.createLoggingTool(CircularFingerprintSmartsTest.class);
 
-	public static SmilesParser parser = new SmilesParser(
+	public static final SmilesParser parser = new SmilesParser(
 			SilentChemObjectBuilder.getInstance());
 
 	@Test

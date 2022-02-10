@@ -159,7 +159,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         int dimensions = 0; // 0D (undef/no coordinates), 2D, 3D
         boolean chiral;
         Map<Integer,Integer> stereoflags = null;
-        Map<IAtom,Integer> stereo0d = new HashMap<>();
+        final Map<IAtom,Integer> stereo0d = new HashMap<>();
     }
 
     public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {

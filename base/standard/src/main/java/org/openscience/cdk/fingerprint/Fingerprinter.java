@@ -308,7 +308,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         private final List<IBond> bpath = new ArrayList<>();
         private final int maxDepth;
         private final int fpsize;
-        public StringBuilder buffer = new StringBuilder();
+        public final StringBuilder buffer = new StringBuilder();
 
         public State(IAtomContainer mol, BitSet fp, int fpsize, int maxDepth) {
             this.mol = mol;

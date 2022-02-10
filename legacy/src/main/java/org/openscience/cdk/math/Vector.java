@@ -43,9 +43,9 @@ public class Vector {
 
     // Attention! Variables are unprotected
     /** The content of this vector */
-    public double[]            vector;
+    public final double[]            vector;
     /** The size of this vector */
-    public int                 size;
+    public final int                 size;
 
     /**
      * Constructs a Vector with "size" elements

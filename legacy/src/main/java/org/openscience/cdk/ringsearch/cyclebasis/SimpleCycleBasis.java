@@ -758,16 +758,16 @@ public class SimpleCycleBasis {
 
         private static final long serialVersionUID = 857337988734567429L;
         // graph to aux. graph
-        HashMap                   vertexMap0       = new HashMap();
-        HashMap                   vertexMap1       = new HashMap();
+        final HashMap                   vertexMap0       = new HashMap();
+        final HashMap                   vertexMap1       = new HashMap();
 
-        HashMap                   auxVertexMap     = new HashMap();
+        final HashMap                   auxVertexMap     = new HashMap();
 
         // aux. edge to edge
-        Map                       auxEdgeMap       = new HashMap();
+        final Map                       auxEdgeMap       = new HashMap();
 
-        Graph                     g;
-        boolean[]                 u;
+        final Graph                     g;
+        final boolean[]                 u;
 
         AuxiliaryGraph(Graph graph, boolean[] u) {
             g = graph;

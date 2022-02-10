@@ -53,7 +53,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class TanimotoTest extends CDKTestCase {
 
-    boolean standAlone = false;
+    final boolean standAlone = false;
 
     @Test
     public void testTanimoto1() throws java.lang.Exception {

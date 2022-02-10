@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class HOSECodeGeneratorTest extends CDKTestCase {
 
-    static boolean standAlone = false;
+    static final boolean standAlone = false;
 
     /**
      * @cdk.bug 968852

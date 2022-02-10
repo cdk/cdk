@@ -101,7 +101,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * Amount by which the bond and atom arrays grow when elements are added and
      * the arrays are not large enough for that.
      */
-    protected int growArraySize = 10;
+    protected final int growArraySize = 10;
 
     /**
      * Internal array of atoms.

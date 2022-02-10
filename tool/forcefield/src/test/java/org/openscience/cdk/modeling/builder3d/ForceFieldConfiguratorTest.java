@@ -52,7 +52,7 @@ import org.junit.Test;
  */
 public class ForceFieldConfiguratorTest {
 
-    ForceFieldConfigurator forceFieldConfigurator = new ForceFieldConfigurator();
+    final ForceFieldConfigurator forceFieldConfigurator = new ForceFieldConfigurator();
 
     /**
      * @cdk.bug : ArrayIndexOutOfBoundsException because of wrong for loop

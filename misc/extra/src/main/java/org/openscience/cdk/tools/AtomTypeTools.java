@@ -54,7 +54,7 @@ public class AtomTypeTools {
     public static final int PYRIMIDINE_RING = 12;
     public static final int BENZENE_RING = 5;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
-    HOSECodeGenerator hcg = null;
+    HOSECodeGenerator hcg;
     SmilesGenerator   sg  = null;
 
     /**
@@ -88,8 +88,8 @@ public class AtomTypeTools {
 
         //logger.debug("assignAtomTypePropertiesToAtom Start ...");
         logger.debug("assignAtomTypePropertiesToAtom Start ...");
-        String hoseCode = "";
-        IRingSet ringSetA = null;
+        String hoseCode;
+        IRingSet ringSetA;
         IRingSet ringSetMolecule = Cycles.sssr(molecule).toRingSet();
         logger.debug(ringSetMolecule);
 

@@ -49,7 +49,7 @@ public class HOSECodeAnalyser {
             return elementList;
         }
 
-        String currentSymbol = null;
+        String currentSymbol;
         for (int f = 0; f < code.length(); f++) {
             char currentChar = code.charAt(f);
             if (currentChar >= 'A' && currentChar <= 'Z') {

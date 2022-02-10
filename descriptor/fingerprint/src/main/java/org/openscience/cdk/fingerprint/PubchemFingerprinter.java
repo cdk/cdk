@@ -147,7 +147,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
     static class CountElements {
 
-        int[] counts = new int[120];
+        final int[] counts = new int[120];
 
         public CountElements(IAtomContainer m) {
             for (int i = 0; i < m.getAtomCount(); i++)
@@ -166,7 +166,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
     static class CountRings {
 
         int[][]  sssr = {};
-        IRingSet ringSet;
+        final IRingSet ringSet;
 
         public CountRings(IAtomContainer m) {
             ringSet = Cycles.sssr(m).toRingSet();

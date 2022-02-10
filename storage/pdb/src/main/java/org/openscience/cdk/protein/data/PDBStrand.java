@@ -46,7 +46,7 @@ public class PDBStrand extends Strand {
 
     private static final long serialVersionUID = 8278569309787734236L;
 
-    List<String>              sequentialListOfMonomers;
+    final List<String>              sequentialListOfMonomers;
 
     /**
      * Constructs a new Polymer to store the Monomers.

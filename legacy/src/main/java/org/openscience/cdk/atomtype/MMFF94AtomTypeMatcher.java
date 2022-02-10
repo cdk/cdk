@@ -55,7 +55,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
     private AtomTypeFactory     factory       = null;
     AtomTypeTools               atomTypeTools;
 
-    String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "CO2M", "CNN+", "C%", "CIM+", "CR4R",
+    final String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "CO2M", "CNN+", "C%", "CIM+", "CR4R",
             "CR3R", "CE4R", "Car", "C5A", "C5B", "C5", "HC", "HO", "HN", "HOCO", "HN=C", "HN2", "HOCC", "HOH", "HOS",
             "HN+", "HO+", "HO=+", "HP", "O", "O=", "OX", "OM", "O+", "O=+", "OH2", "Oar", "N", "N=C", "NC=C", "NSP",
             "=N=", "NAZT", "N+", "N2OX", "N3OX", "NC#N", "NO3", "N=O", "NC=O", "NSO", "N+=", "NCN+", "NGD+", "NR%",

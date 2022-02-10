@@ -64,7 +64,7 @@ public class IsotopePatternRule implements IRule {
 
     private IsotopePattern           pattern;
 
-    IsotopePatternGenerator          isotopeGe;
+    final IsotopePatternGenerator          isotopeGe;
 
     private final IsotopePatternSimilarity is;
 

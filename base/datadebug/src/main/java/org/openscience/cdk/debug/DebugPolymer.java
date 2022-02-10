@@ -50,7 +50,7 @@ public class DebugPolymer extends Polymer implements IPolymer {
 
     private static final long serialVersionUID = -1459933635059023539L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     /** {@inheritDoc} */
     @Override

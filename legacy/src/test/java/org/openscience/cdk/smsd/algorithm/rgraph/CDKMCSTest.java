@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class CDKMCSTest extends CDKTestCase {
 
-    boolean standAlone = false;
+    final boolean standAlone = false;
 
     @Test
     public void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {

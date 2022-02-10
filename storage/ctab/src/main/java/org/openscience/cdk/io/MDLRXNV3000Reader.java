@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
-    BufferedReader              input  = null;
+    BufferedReader              input;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
 
     public MDLRXNV3000Reader(Reader in) {
@@ -157,7 +157,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
 
     private String readLine() throws CDKException {
-        String line = null;
+        String line;
         try {
             line = input.readLine();
             logger.debug("read line: " + line);
@@ -232,7 +232,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 logger.error(error);
                 throw new CDKException(error);
             }
-            String molFileLine = "";
+            String molFileLine;
             while ((molFileLine = readLine()) != null) {
                 molFile.append(molFileLine).append('\n');
                 if (molFileLine.endsWith("END CTAB"))

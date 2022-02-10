@@ -42,8 +42,8 @@ public class CMLErrorHandler implements ErrorHandler {
 
     private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(CMLErrorHandler.class);
 
-    public boolean              reportErrors  = true;
-    public boolean              abortOnErrors = false;
+    public final boolean              reportErrors  = true;
+    public final boolean              abortOnErrors = false;
 
     /**
      * Constructor a SAX2 ErrorHandler that uses the cdk.tools.LoggingTool

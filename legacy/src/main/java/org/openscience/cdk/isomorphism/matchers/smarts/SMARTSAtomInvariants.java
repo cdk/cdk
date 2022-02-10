@@ -62,7 +62,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 final class SMARTSAtomInvariants {
 
     /** Property key to index the class by. */
-    static String                KEY = "SMARTS.INVARIANTS";
+    static final String                KEY = "SMARTS.INVARIANTS";
 
     /** the molecule which this atom belongs. */
     private final IAtomContainer target;

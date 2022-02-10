@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class BondDiscretePartitionRefinerTest extends CDKTestCase {
 
-    public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     @Test
     public void defaultConstructorTest() {

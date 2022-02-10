@@ -50,7 +50,7 @@ import static org.openscience.cdk.ringsearch.AllRingsFinder.Threshold.PubChem_99
  */
 public class AllRingsFinderTest extends CDKTestCase {
 
-    boolean standAlone = false;
+    final boolean standAlone = false;
 
     public AllRingsFinderTest() {
         super();

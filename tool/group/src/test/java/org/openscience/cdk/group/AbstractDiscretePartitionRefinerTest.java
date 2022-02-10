@@ -15,7 +15,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
 
     public class Graph {
 
-        public int     vertexCount;
+        public final int     vertexCount;
         public int[][] connectionTable;
 
         public Graph(int vertexCount) {
@@ -25,7 +25,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
 
     public class MockRefiner extends AbstractDiscretePartitionRefiner {
 
-        public Graph graph;
+        public final Graph graph;
 
         public MockRefiner(Graph graph) {
             super();

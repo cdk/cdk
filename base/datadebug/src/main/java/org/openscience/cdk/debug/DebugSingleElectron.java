@@ -40,7 +40,7 @@ public class DebugSingleElectron extends SingleElectron implements ISingleElectr
 
     private static final long serialVersionUID = -2895377834940311825L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugSingleElectron.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugSingleElectron.class);
 
     public DebugSingleElectron() {
         super();

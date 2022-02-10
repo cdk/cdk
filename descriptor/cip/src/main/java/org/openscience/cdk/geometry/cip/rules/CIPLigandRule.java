@@ -39,7 +39,7 @@ import org.openscience.cdk.geometry.cip.ILigand;
  */
 public class CIPLigandRule implements ISequenceSubRule<ILigand> {
 
-    CombinedAtomicMassNumberRule numberRule = new CombinedAtomicMassNumberRule();
+    final CombinedAtomicMassNumberRule numberRule = new CombinedAtomicMassNumberRule();
 
     /** {@inheritDoc} */
     @Override

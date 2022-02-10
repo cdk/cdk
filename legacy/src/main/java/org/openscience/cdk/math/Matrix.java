@@ -37,10 +37,10 @@ public class Matrix {
 
     // Attention! Variables are unprotected
     /** the content of this matrix **/
-    public double[][] matrix;
+    public final double[][] matrix;
 
     /** the number of rows of this matrix */
-    public int        rows;
+    public final int        rows;
     /** the number of columns of this matrix */
     public int        columns;
 

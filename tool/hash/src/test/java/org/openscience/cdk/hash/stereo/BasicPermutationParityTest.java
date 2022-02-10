@@ -34,7 +34,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class BasicPermutationParityTest {
 
-    BasicPermutationParity permutationParity = new BasicPermutationParity(new int[]{0, 1, 2, 3});
+    final BasicPermutationParity permutationParity = new BasicPermutationParity(new int[]{0, 1, 2, 3});
 
     @Test(expected = NullPointerException.class)
     public void testConstruction_Null() {

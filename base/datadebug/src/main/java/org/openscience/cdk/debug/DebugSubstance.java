@@ -41,7 +41,7 @@ public class DebugSubstance extends AtomContainerSet implements ISubstance {
 
     private static final long serialVersionUID = 7729610512495602788L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugSubstance.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugSubstance.class);
 
     /** {@inheritDoc} */
     @Override

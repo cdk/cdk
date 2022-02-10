@@ -66,7 +66,7 @@ import java.util.List;
  */
 public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
-    boolean                            standAlone = false;
+    final boolean                            standAlone = false;
     private UniversalIsomorphismTester uiTester;
 
     @Before

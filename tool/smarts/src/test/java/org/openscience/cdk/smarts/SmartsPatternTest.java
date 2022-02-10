@@ -44,7 +44,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class SmartsPatternTest {
 
-    IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+    final IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
 
     @Test
     public void isotopes() throws Exception {

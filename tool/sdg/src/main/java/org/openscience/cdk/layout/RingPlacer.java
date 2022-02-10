@@ -68,9 +68,9 @@ public class RingPlacer {
 
     private AtomPlacer atomPlacer = new AtomPlacer();
 
-    static int FUSED   = 0;
-    static int BRIDGED = 1;
-    static int SPIRO   = 2;
+    static final int FUSED   = 0;
+    static final int BRIDGED = 1;
+    static final int SPIRO   = 2;
 
     /**
      * Default ring start angles. Map contains pairs: ring size with start angle.

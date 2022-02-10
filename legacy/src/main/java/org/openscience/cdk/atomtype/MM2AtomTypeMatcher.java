@@ -53,7 +53,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
     private AtomTypeFactory     factory       = null;
     AtomTypeTools               atomTypeTools;
 
-    String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "HC", "O", "O=", "N", "Nsp2", "Nsp", "F",
+    final String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "HC", "O", "O=", "N", "Nsp2", "Nsp", "F",
             "CL", "BR", "I", "S", "S+", ">SN", "SO2", "Sthi", "SI", "LP", "HO", "CR3R", "HN", "HOCO", "P", "B", "BTET",
             "HN2", "C.", "C+", "GE", "SN", "PB", "SE", "TE", "D", "-N=", "CE3R", "N+", "NPYL", "Oar", "Sthi", "N2OX",
             "HS", "=N=", "NO2", "OM", "HN+", "OR", "Car", "HE", "NE", "AR", "KR", "XE", "MG+2", "PTET", "FE+2", "FE+3",

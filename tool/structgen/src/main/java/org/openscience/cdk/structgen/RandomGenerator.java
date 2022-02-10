@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class RandomGenerator {
 
-    ILoggingTool           logger            = LoggingToolFactory.createLoggingTool(RandomGenerator.class);
+    final ILoggingTool           logger            = LoggingToolFactory.createLoggingTool(RandomGenerator.class);
 
     private IAtomContainer proposedStructure = null;
     private IAtomContainer molecule          = null;

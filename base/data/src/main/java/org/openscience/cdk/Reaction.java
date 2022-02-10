@@ -61,7 +61,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     private static final long   serialVersionUID = -554752558363533678L;
 
-    protected int               growArraySize    = 3;
+    protected final int               growArraySize    = 3;
 
     protected IAtomContainerSet reactants;
     protected IAtomContainerSet products;

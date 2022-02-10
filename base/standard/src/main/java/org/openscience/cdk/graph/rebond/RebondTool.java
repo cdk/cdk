@@ -124,7 +124,7 @@ public class RebondTool {
 
     class TupleAtom implements Bspt.Tuple {
 
-        IAtom atom;
+        final IAtom atom;
 
         TupleAtom(IAtom atom) {
             this.atom = atom;

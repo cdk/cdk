@@ -117,9 +117,12 @@ import Jama.Matrix;
  */
 public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    static ILoggingTool logger = LoggingToolFactory.createLoggingTool(WHIMDescriptor.class);
-    String              type   = "";
-    Map<String, Double> hashatwt, hashvdw, hasheneg, hashpol;
+    static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(WHIMDescriptor.class);
+    String              type;
+    final Map<String, Double> hashatwt;
+    final Map<String, Double> hashvdw;
+    final Map<String, Double> hasheneg;
+    final Map<String, Double> hashpol;
 
     public WHIMDescriptor() {
         this.type = "unity"; // default weighting scheme

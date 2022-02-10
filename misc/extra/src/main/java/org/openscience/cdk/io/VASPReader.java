@@ -68,8 +68,8 @@ public class VASPReader extends DefaultChemObjectReader {
     // VASP VARIABLES
     int                         natom   = 1;
     int                         ntype   = 1;
-    double[] acell = new double[3];
-    double[][]                  rprim   = new double[3][3];
+    final double[] acell = new double[3];
+    final double[][]                  rprim   = new double[3][3];
     String                      info    = "";
     String                      line;
     String[]                    anames;                                                          //size is ntype. Contains the names of the atoms

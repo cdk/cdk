@@ -144,7 +144,7 @@ public final class Smarts {
         }
     }
 
-    public static ThreadLocal<SmartsError> lastError = new ThreadLocal<>();
+    public static final ThreadLocal<SmartsError> lastError = new ThreadLocal<>();
 
     private static void setErrorMesg(String sma, int pos, String str) {
         lastError.set(new SmartsError(sma, pos, str));
@@ -186,8 +186,8 @@ public final class Smarts {
     }
 
     private static final class LocalNbrs {
-        List<IBond> bonds = new ArrayList<>(4);
-        boolean     isFirst;
+        final List<IBond> bonds = new ArrayList<>(4);
+        final boolean     isFirst;
 
         LocalNbrs(boolean first) {
             this.isFirst = first;

@@ -148,17 +148,17 @@ public final class DepictionGenerator {
      * Magic value for indicating automatic parameters. These can
      * be overridden by a caller.
      */
-    public static double AUTOMATIC = -1;
+    public static final double AUTOMATIC = -1;
 
     /**
      * Default margin for vector graphics formats.
      */
-    public static double DEFAULT_MM_MARGIN = 0.56;
+    public static final double DEFAULT_MM_MARGIN = 0.56;
 
     /**
      * Default margin for raster graphics formats.
      */
-    public static double DEFAULT_PX_MARGIN = 4;
+    public static final double DEFAULT_PX_MARGIN = 4;
 
     /**
      * The dimensions (width x height) of the depiction.

@@ -40,7 +40,7 @@ public class DebugReactionSet extends ReactionSet implements IReactionSet {
 
     private static final long serialVersionUID = 1620489912540131959L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReactionSet.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReactionSet.class);
 
     /** {@inheritDoc} */
     @Override

@@ -192,7 +192,7 @@ public class SMARTSQueryTool {
 
     // a simplistic cache to store parsed SMARTS queries
     private int                      MAX_ENTRIES     = 20;
-    Map<String, QueryAtomContainer>  cache           = new LinkedHashMap<String, QueryAtomContainer>(MAX_ENTRIES + 1,
+    final Map<String, QueryAtomContainer>  cache           = new LinkedHashMap<String, QueryAtomContainer>(MAX_ENTRIES + 1,
                                                              .75F, true) {
 
                                                          @Override

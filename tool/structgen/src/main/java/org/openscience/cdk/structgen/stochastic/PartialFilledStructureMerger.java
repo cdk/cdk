@@ -50,7 +50,7 @@ public class PartialFilledStructureMerger {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PartialFilledStructureMerger.class);
 
-    SaturationChecker    satCheck;
+    final SaturationChecker    satCheck;
 
     /**
      * Constructor for the PartialFilledStructureMerger object.

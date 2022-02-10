@@ -537,7 +537,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
     }
 
     private static final class FreqMap<T> {
-        Map<T, Counter> map = new HashMap<>();
+        final Map<T, Counter> map = new HashMap<>();
 
         public FreqMap() {
         }

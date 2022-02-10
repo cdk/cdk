@@ -47,7 +47,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class CIPSMILESTest extends CDKTestCase {
 
-    static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test
     public void test() throws Exception {

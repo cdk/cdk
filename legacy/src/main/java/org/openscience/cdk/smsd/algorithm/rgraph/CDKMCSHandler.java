@@ -57,10 +57,10 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     private IAtomContainer              source;
     private IAtomContainer              target;
     private boolean                     rOnPFlag     = false;
-    private List<Map<IAtom, IAtom>>     allAtomMCS   = null;
-    private Map<IAtom, IAtom>           firstAtomMCS = null;
-    private Map<Integer, Integer>       firstMCS     = null;
-    private List<Map<Integer, Integer>> allMCS       = null;
+    private List<Map<IAtom, IAtom>>     allAtomMCS;
+    private Map<IAtom, IAtom>           firstAtomMCS;
+    private Map<Integer, Integer>       firstMCS;
+    private List<Map<Integer, Integer>> allMCS;
 
     //~--- constructors -------------------------------------------------------
     /*
@@ -211,8 +211,8 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                 int iIndex = solutions.getKey();
                 int jIndex = solutions.getValue();
 
-                IAtom sourceAtom = null;
-                IAtom targetAtom = null;
+                IAtom sourceAtom;
+                IAtom targetAtom;
 
                 sourceAtom = source.getAtom(iIndex);
                 targetAtom = target.getAtom(jIndex);

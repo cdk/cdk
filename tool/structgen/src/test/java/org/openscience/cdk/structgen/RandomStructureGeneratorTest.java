@@ -34,7 +34,7 @@ import java.util.Vector;
  */
 public class RandomStructureGeneratorTest extends CDKTestCase {
 
-    public boolean debug      = false;
+    public final boolean debug      = false;
     boolean        standAlone = false;
 
     public void setStandAlone(boolean standAlone) {

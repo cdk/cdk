@@ -74,7 +74,7 @@ public class MassToFormulaTool {
     private final IChemObjectBuilder    builder;
 
     /** */
-    AtomTypeFactory               factory;
+    final AtomTypeFactory               factory;
 
     /** matrix to follow for the permutations.*/
     private int[][]               matrix_Base;

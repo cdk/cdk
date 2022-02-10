@@ -43,7 +43,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class AtomRefinableTest {
     
-    public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     
     @Test
     public void getVertexCount() {

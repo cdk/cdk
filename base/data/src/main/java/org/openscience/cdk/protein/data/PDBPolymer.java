@@ -49,8 +49,8 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
 
     private static final long serialVersionUID = 4173552834313952358L;
 
-    List<String>              sequentialListOfMonomers;
-    List<IPDBStructure>       secondaryStructures;
+    final List<String>              sequentialListOfMonomers;
+    final List<IPDBStructure>       secondaryStructures;
 
     /**
      * Constructs a new Polymer to store the {@link IMonomer}s.

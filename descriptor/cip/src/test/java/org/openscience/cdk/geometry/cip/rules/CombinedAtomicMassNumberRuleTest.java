@@ -41,7 +41,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
 
-    static SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IAtomContainer molecule;
 
     @BeforeClass

@@ -124,10 +124,10 @@ final class AbbreviationLabel {
             insert(SYMBOL_TRIE, str, 0);
     }
 
-    static int STYLE_NORMAL    = 0;
-    static int STYLE_SUBSCRIPT = -1;
-    static int STYLE_SUPSCRIPT = +1;
-    static int STYLE_ITALIC    = 2;
+    static final int STYLE_NORMAL    = 0;
+    static final int STYLE_SUBSCRIPT = -1;
+    static final int STYLE_SUPSCRIPT = +1;
+    static final int STYLE_ITALIC    = 2;
 
     /**
      * A small class to help describe which parts of a string
@@ -449,6 +449,6 @@ final class AbbreviationLabel {
      */
     private static final class Trie {
         String token;
-        Trie[] children = new Trie[128];
+        final Trie[] children = new Trie[128];
     }
 }

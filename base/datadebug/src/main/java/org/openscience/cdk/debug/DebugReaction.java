@@ -41,7 +41,7 @@ public class DebugReaction extends Reaction implements IReaction {
 
     private static final long serialVersionUID = -8958358842308217875L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReaction.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReaction.class);
 
     public DebugReaction() {
         super();

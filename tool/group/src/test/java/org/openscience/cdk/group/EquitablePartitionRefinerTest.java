@@ -45,7 +45,7 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
 
     public class MockRefinable implements Refinable {
 
-        public int[][] connections;
+        public final int[][] connections;
 
         public MockRefinable(int[][] connections) {
             this.connections = connections;

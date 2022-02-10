@@ -37,8 +37,8 @@ import org.openscience.cdk.interfaces.IElement;
  */
 class CombinedAtomicMassNumberRule implements ISequenceSubRule<ILigand> {
 
-    MassNumberRule   massNumberRule   = new MassNumberRule();
-    AtomicNumberRule atomicNumberRule = new AtomicNumberRule();
+    final MassNumberRule   massNumberRule   = new MassNumberRule();
+    final AtomicNumberRule atomicNumberRule = new AtomicNumberRule();
 
     /** {@inheritDoc} */
     @Override

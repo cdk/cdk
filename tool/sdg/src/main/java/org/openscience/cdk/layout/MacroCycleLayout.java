@@ -53,7 +53,7 @@ final class MacroCycleLayout {
     private static final IdentityTemplateLibrary TEMPLATES            = IdentityTemplateLibrary.loadFromResource("macro.smi");
 
     // Hint for placing substituents
-    public static  String                  MACROCYCLE_ATOM_HINT = "layout.macrocycle.atom.hint";
+    public static final String                  MACROCYCLE_ATOM_HINT = "layout.macrocycle.atom.hint";
 
     // (counter)clockwise
     private static final int CW  = -1;

@@ -106,7 +106,7 @@ public class InChIGenerator {
 
     protected InchiOptions options;
 
-    protected InchiInput input;
+    protected final InchiInput input;
 
     protected InchiOutput output;
 

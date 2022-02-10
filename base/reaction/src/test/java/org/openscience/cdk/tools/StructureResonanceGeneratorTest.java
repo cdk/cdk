@@ -62,7 +62,7 @@ import java.util.List;
 public class StructureResonanceGeneratorTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
     /**
      * Constructor of the StructureResonanceGeneratorTest.

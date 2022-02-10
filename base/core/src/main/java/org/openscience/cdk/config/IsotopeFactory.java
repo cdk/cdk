@@ -47,7 +47,7 @@ public abstract class IsotopeFactory {
     private final List<IIsotope>[] isotopes = new List[256];
     @SuppressWarnings("unchecked")
     private final IIsotope[] majorIsotope = new IIsotope[256];
-    protected static ILoggingTool  logger        = LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
+    protected static final ILoggingTool  logger        = LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
 
     /**
      *  Returns the number of isotopes defined by this class.

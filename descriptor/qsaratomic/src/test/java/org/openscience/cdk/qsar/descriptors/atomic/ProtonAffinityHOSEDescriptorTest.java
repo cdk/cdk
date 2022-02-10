@@ -39,8 +39,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 
-    ProtonAffinityHOSEDescriptor            descriptor;
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    final ProtonAffinityHOSEDescriptor            descriptor;
+    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**

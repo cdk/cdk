@@ -39,9 +39,9 @@ final class Congestion {
     // lower bound on scores
     private static final double MIN_SCORE = 0.00001;
 
-    double[][] contribution;
+    final double[][] contribution;
     double     score;
-    IAtom[]    atoms;
+    final IAtom[]    atoms;
 
     Congestion(IAtomContainer mol, int[][] adjList) {
         final int numAtoms = mol.getAtomCount();

@@ -108,9 +108,9 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
 
     public static final class FP {
 
-        public int   hashCode;
-        public int   iteration;
-        public int[] atoms;
+        public final int   hashCode;
+        public final int   iteration;
+        public final int[] atoms;
 
         public FP(int hashCode, int iteration, int[] atoms) {
             this.hashCode = hashCode;

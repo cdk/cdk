@@ -39,7 +39,7 @@ public class DebugReactionScheme extends ReactionScheme implements IReactionSche
 
     private static final long serialVersionUID = 705803374163613819L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReactionScheme.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReactionScheme.class);
 
     /** {@inheritDoc} */
     @Override

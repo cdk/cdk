@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 class MassNumberRule implements ISequenceSubRule<ILigand> {
 
-    ILoggingTool   logger = LoggingToolFactory.createLoggingTool(MassNumberRule.class);
+    final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(MassNumberRule.class);
     IsotopeFactory factory;
 
     /** {@inheritDoc} */

@@ -74,7 +74,7 @@ public class LineElement implements IRenderingElement {
     public enum LineType {
         SINGLE(1), DOUBLE(2), TRIPLE(3), QUADRUPLE(4);
 
-        int n;
+        final int n;
 
         LineType(int n) {
             this.n = n;

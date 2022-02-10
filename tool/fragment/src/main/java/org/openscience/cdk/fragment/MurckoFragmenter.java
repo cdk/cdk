@@ -79,11 +79,11 @@ public class MurckoFragmenter implements IFragmenter {
     private static final String IS_LINKER_ATOM       = "linker";
     private static final String IS_CONNECTED_TO_RING = "rcon";
 
-    MoleculeHashGenerator       generator;
-    SmilesGenerator             smigen;
+    final MoleculeHashGenerator       generator;
+    final SmilesGenerator             smigen;
 
-    Map<Long, IAtomContainer>   frameMap             = new HashMap<>();
-    Map<Long, IAtomContainer>   ringMap              = new HashMap<>();
+    final Map<Long, IAtomContainer>   frameMap             = new HashMap<>();
+    final Map<Long, IAtomContainer>   ringMap              = new HashMap<>();
 
     boolean                     singleFrameworkOnly;
     boolean                     ringFragments        = true;

@@ -56,8 +56,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     private static final int    DEFAULT_MIN_FRAG_SIZE = 6;
 
-    Map<String, IAtomContainer> fragMap;
-    SmilesGenerator             smilesGenerator;
+    final Map<String, IAtomContainer> fragMap;
+    final SmilesGenerator             smilesGenerator;
     String[]                    fragments             = null;
     int                         minFragSize;
     private static final ILoggingTool logger                = LoggingToolFactory

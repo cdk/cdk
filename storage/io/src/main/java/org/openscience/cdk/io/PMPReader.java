@@ -87,9 +87,9 @@ public class PMPReader extends DefaultChemObjectReader {
     private final Map<Integer, Double>  bondOrders   = new Hashtable<>();
 
     /* Often used patterns */
-    Pattern                       objHeader;
-    Pattern                       objCommand;
-    Pattern                       atomTypePattern;
+    final Pattern                       objHeader;
+    final Pattern                       objCommand;
+    final Pattern                       atomTypePattern;
 
     int                           lineNumber;
     int                           bondCounter  = 0;

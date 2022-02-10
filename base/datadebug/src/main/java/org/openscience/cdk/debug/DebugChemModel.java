@@ -43,7 +43,7 @@ public class DebugChemModel extends ChemModel implements IChemModel {
 
     private static final long serialVersionUID = -920209300005079592L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemModel.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemModel.class);
 
     /** {@inheritDoc} */
     @Override

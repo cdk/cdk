@@ -39,7 +39,7 @@ public class DebugChemObject extends ChemObject implements IChemObject {
 
     private static final long serialVersionUID = -8547443535884526365L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemObject.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemObject.class);
 
     public DebugChemObject(IChemObject object) {
         super(object);

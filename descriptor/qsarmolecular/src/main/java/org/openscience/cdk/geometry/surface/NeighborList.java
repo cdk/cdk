@@ -44,9 +44,9 @@ import java.util.Objects;
  */
 public class NeighborList {
 
-    Map<Key, List<Integer>> boxes;
-    double                  boxSize;
-    IAtom[]                 atoms;
+    final Map<Key, List<Integer>> boxes;
+    final double                  boxSize;
+    final IAtom[]                 atoms;
 
     /**
      * Custom key class for looking up items in the map.

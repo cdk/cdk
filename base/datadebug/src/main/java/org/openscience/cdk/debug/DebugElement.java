@@ -39,7 +39,7 @@ public class DebugElement extends Element implements IElement {
 
     private static final long serialVersionUID = -8520499563841667066L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugElement.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugElement.class);
 
     public DebugElement() {
         super();

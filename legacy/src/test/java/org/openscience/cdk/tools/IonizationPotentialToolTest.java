@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class IonizationPotentialToolTest extends CDKTestCase {
 
-    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**
      * Constructor of the IonizationPotentialToolTest.

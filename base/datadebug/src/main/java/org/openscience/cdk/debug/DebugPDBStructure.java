@@ -33,7 +33,7 @@ public class DebugPDBStructure extends PDBStructure {
 
     private static final long serialVersionUID = 1934748703085969097L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     /** {@inheritDoc} */
     @Override

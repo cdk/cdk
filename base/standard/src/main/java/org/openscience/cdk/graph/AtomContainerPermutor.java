@@ -43,7 +43,7 @@ public abstract class AtomContainerPermutor extends Permutor implements Iterator
     /**
      * The atom container that is permuted at each step.
      */
-    protected IAtomContainer atomContainer;
+    protected final IAtomContainer atomContainer;
 
     /**
      * Start the permutor off with an initial atom container, and the size of

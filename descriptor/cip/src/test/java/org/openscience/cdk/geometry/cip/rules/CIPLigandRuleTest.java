@@ -42,7 +42,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class CIPLigandRuleTest extends CDKTestCase {
 
-    static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test
     public void testCBrIFCl() throws Exception {

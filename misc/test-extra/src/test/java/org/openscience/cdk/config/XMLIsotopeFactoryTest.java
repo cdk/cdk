@@ -50,7 +50,7 @@ import org.xml.sax.SAXParseException;
  */
 public class XMLIsotopeFactoryTest extends CDKTestCase {
 
-    boolean standAlone = false;
+    final boolean standAlone = false;
 
     final static AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
 

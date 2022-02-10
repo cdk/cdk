@@ -103,7 +103,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     /** static objects, shared between tests - difficult to locate bugs. */
     @Deprecated
-    protected static IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
+    protected static final IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
             new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
 
     protected static IChemObject[] acceptableChemObjects() {
@@ -125,7 +125,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     @SuppressWarnings("rawtypes")
-    protected static Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
+    protected static final Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
             IReaction.class, IRGroupQuery.class          };
 
     /**

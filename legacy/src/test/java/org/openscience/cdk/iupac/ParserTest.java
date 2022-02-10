@@ -39,7 +39,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  */
 public class ParserTest extends CDKTestCase {
 
-    IsomorphismTester comparer = new IsomorphismTester();
+    final IsomorphismTester comparer = new IsomorphismTester();
 
     // Add test methods here, they have to start with 'test' name.
     // for example:

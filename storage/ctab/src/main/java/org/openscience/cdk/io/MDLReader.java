@@ -88,7 +88,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class MDLReader extends DefaultChemObjectReader {
 
-    BufferedReader               input          = null;
+    BufferedReader               input;
     private static final ILoggingTool  logger         = LoggingToolFactory.createLoggingTool(MDLReader.class);
 
     private BooleanIOSetting     forceReadAs3DCoords;
@@ -310,18 +310,18 @@ public class MDLReader extends DefaultChemObjectReader {
     private IAtomContainer readMolecule(IAtomContainer molecule) throws CDKException {
         logger.debug("Reading new molecule");
         int linecount = 0;
-        int atoms = 0;
-        int bonds = 0;
-        int atom1 = 0;
-        int atom2 = 0;
-        int order = 0;
+        int atoms;
+        int bonds;
+        int atom1;
+        int atom2;
+        int order;
         IBond.Stereo stereo = (IBond.Stereo) CDKConstants.UNSET;
         int RGroupCounter = 1;
-        int Rnumber = 0;
-        String[] rGroup = null;
-        double x = 0.0;
-        double y = 0.0;
-        double z = 0.0;
+        int Rnumber;
+        String[] rGroup;
+        double x;
+        double y;
+        double z;
         double totalX = 0.0;
         double totalY = 0.0;
         double totalZ = 0.0;

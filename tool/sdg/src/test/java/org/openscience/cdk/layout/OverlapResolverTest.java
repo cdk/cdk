@@ -127,7 +127,7 @@ public class OverlapResolverTest extends CDKTestCase {
      */
     @Test
     public void testResolveOverlap4() throws Exception {
-        double overlapScore = 0;
+        double overlapScore;
         logger.debug("Test case with atom clash");
         String filename = "overlaptest.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -150,7 +150,7 @@ public class OverlapResolverTest extends CDKTestCase {
      */
     @Test
     public void testResolveOverlap5() throws Exception {
-        double overlapScore = 0;
+        double overlapScore;
         logger.debug("Test case with atom clash");
         IAtomContainer atomContainer = new SmilesParser(DefaultChemObjectBuilder.getInstance())
                 .parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");

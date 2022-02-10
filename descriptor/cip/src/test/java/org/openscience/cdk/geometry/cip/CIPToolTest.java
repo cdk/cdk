@@ -64,7 +64,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class CIPToolTest extends CDKTestCase {
 
-    static SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IAtomContainer molecule;
     static ILigand[]      ligands;
 

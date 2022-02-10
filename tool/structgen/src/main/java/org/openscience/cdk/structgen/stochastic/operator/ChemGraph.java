@@ -36,7 +36,7 @@ import org.openscience.cdk.math.RandomNumbersTool;
 public class ChemGraph {
 
     /* Number of atoms in this structure */
-    protected int           dim;
+    protected final int           dim;
     /* Number of atoms needed to form subgraph */
     protected int           numAtoms;
     protected double[][]    contab;

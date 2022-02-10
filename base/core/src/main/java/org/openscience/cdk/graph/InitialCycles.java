@@ -491,8 +491,8 @@ final class InitialCycles {
     static abstract class Cycle implements Comparable<Cycle> {
 
         private final int[] path;
-        ShortestPaths paths;
-        BitSet        edgeVector;
+        final ShortestPaths paths;
+        final BitSet        edgeVector;
 
         Cycle(final ShortestPaths paths, final int[] path) {
             this.path = path;
@@ -574,7 +574,9 @@ final class InitialCycles {
      */
     class EvenCycle extends Cycle {
 
-        int p, q, y;
+        final int p;
+        final int q;
+        final int y;
 
         EvenCycle(ShortestPaths paths, int[] pathToP, int y, int[] pathToQ) {
             super(paths, join(pathToP, y, pathToQ));
@@ -621,7 +623,8 @@ final class InitialCycles {
      */
     class OddCycle extends Cycle {
 
-        int y, z;
+        final int y;
+        final int z;
 
         OddCycle(ShortestPaths paths, int[] pathToY, int[] pathToZ) {
             super(paths, join(pathToY, pathToZ));

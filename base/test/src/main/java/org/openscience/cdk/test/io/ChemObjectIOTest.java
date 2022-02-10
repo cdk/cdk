@@ -46,7 +46,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     // FIXME add IRgroupQuery.class
-    protected static Class<?>[] acceptableChemObjectClasses = {
+    protected static final Class<?>[] acceptableChemObjectClasses = {
             IChemFile.class,
             IChemModel.class,
             IAtomContainer.class,

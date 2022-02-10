@@ -31,7 +31,7 @@ import java.util.List;
  */
 public abstract class AbstractDifferenceList implements IDifferenceList {
 
-    protected List<IDifference> differences;
+    protected final List<IDifference> differences;
 
     protected AbstractDifferenceList() {
         differences = new ArrayList<>();

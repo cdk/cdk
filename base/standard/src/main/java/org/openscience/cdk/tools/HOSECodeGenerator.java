@@ -101,12 +101,12 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *  Delimiters used to separate spheres in the output string. Bremser uses the
      *  sequence"(//)" for the first four spheres.
      */
-    protected String[]          sphereDelimiters     = {"(", "/", "/", ")", "/", "/", "/", "/", "/", "/", "/", "/"};
+    protected final String[]          sphereDelimiters     = {"(", "/", "/", ")", "/", "/", "/", "/", "/", "/", "/", "/"};
     /**
      *  The bond symbols used for bond orders "single", "double", "triple" and
      *  "aromatic"
      */
-    protected String[] bondSymbols = {"", "", "=", "%", "*"};
+    protected final String[] bondSymbols = {"", "", "=", "%", "*"};
 
     protected String            centerCode           = null;
 
@@ -678,11 +678,11 @@ public class HOSECodeGenerator implements java.io.Serializable {
      */
     class TreeNode {
 
-        String         symbol;
-        TreeNode       source;
-        IAtom          atom;
-        double         bondType;
-        int            degree;
+        final String         symbol;
+        final TreeNode       source;
+        final IAtom          atom;
+        final double         bondType;
+        final int            degree;
         long           score;
         int            ranking;
         int            sortOrder;

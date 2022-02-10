@@ -49,7 +49,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
 
     private String                atomTypeList;
     protected AtomTypeFactory     structgenATF;
-    protected static ILoggingTool logger       = LoggingToolFactory.createLoggingTool(SmilesValencyChecker.class);
+    protected static final ILoggingTool logger       = LoggingToolFactory.createLoggingTool(SmilesValencyChecker.class);
 
     public SmilesValencyChecker() {
         this("org/openscience/cdk/dict/data/cdk-atom-types.owl");

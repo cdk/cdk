@@ -39,7 +39,7 @@ public class DebugElectronContainer extends ElectronContainer implements IElectr
 
     private static final long serialVersionUID = 5309193617982266230L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugElectronContainer.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugElectronContainer.class);
 
     /** {@inheritDoc} */
     @Override

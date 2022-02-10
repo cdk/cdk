@@ -99,7 +99,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
     AtomicProperties ap;                                                                           // needed to retrieve electronegativities
 
-    public int[] frags = new int[121];                                               // counts of each type of fragment in the molecule
+    public final int[] frags = new int[121];                                               // counts of each type of fragment in the molecule
     public int[] alogpfrag;                                                                    // alogp fragments for each atom (used to see which atoms have missing fragments)
     final static double[] FRAGVAL = new double[121];                                             // coefficients for alogp model
 
@@ -2096,7 +2096,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
         }
 
-        double[] ret = new double[0];
+        double[] ret;
         try {
             ret = calculate(container, fragment, rs);
         } catch (CDKException e) {
