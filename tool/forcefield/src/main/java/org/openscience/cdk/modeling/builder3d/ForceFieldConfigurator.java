@@ -370,7 +370,7 @@ public class ForceFieldConfigurator {
         if (parameterSet.containsKey(key)) {
             data = (List) parameterSet.get(key);
             value = (Double) data.get(0);
-            atom.setCharge(value.doubleValue());
+            atom.setCharge(value);
         }
         Object color = at.getProperty("org.openscience.cdk.renderer.color");
         if (color != null) {
@@ -503,7 +503,7 @@ public class ForceFieldConfigurator {
                 } else if (j == 43) {
                     //h thiol
                     d_tmp = (Double) atom.getProperty("MAX_BOND_ORDER");
-                    if (d_tmp.doubleValue() > 1) {
+                    if (d_tmp > 1) {
                         ID = ids[4];
                     }
                 } else if (j == 20) {

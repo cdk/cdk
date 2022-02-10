@@ -111,7 +111,7 @@ public class StabilizationCharges {
         Iterator<Integer> itDist = distance1.iterator();
         for (double suM : result1) {
             if (suM < 0) suM = -1 * suM;
-            sum += suM * Math.pow(0.67, itDist.next().intValue());
+            sum += suM * Math.pow(0.67, itDist.next());
         }
         value = sum;
 

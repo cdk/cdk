@@ -69,10 +69,9 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainerSet moleculeSet = new AtomContainerSet();
         moleculeSet = reader.read(moleculeSet);
         Assert.assertEquals(5.06, Double
-                .valueOf(moleculeSet.getAtomContainer(0).getProperty("focusSupport").toString()).doubleValue(), 0.01);
+                .valueOf(moleculeSet.getAtomContainer(0).getProperty("focusSupport").toString()), 0.01);
         Assert.assertEquals(1.74,
-                Double.valueOf(moleculeSet.getAtomContainer(0).getProperty("complementSupport").toString())
-                        .doubleValue(), 0.01);
+                Double.valueOf(moleculeSet.getAtomContainer(0).getProperty("complementSupport").toString()), 0.01);
     }
 
 }

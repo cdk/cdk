@@ -317,13 +317,13 @@ public class MassToFormulaTool {
                  * Find max occurence given a mass for a element with minimal
                  * elements
                  */
-                int occurence = getMaxOccurence(mass, elem_Pos.get(possChan).intValue(), value_In, isotopes_TO);
+                int occurence = getMaxOccurence(mass, elem_Pos.get(possChan), value_In, isotopes_TO);
 
                 /* at least one */
                 if (occurence == 0) break;
 
-                int maxx = mfRange.getIsotopeCountMax(isotopes_TO.get(elem_Pos.get(possChan).intValue()));
-                int minn = mfRange.getIsotopeCountMin(isotopes_TO.get(elem_Pos.get(possChan).intValue()));
+                int maxx = mfRange.getIsotopeCountMax(isotopes_TO.get(elem_Pos.get(possChan)));
+                int minn = mfRange.getIsotopeCountMin(isotopes_TO.get(elem_Pos.get(possChan)));
 
                 /* restriction of the number of max and min number for a element */
                 if (occurence < minn | maxx < occurence) {
@@ -334,20 +334,20 @@ public class MassToFormulaTool {
 
                     if (possChan < elem_Pos.size() - 1) {
                         /* Means that is possible to fit the next */
-                        if (maxx < occurence) value_In[elem_Pos.get(possChan).intValue()] = maxx;
+                        if (maxx < occurence) value_In[elem_Pos.get(possChan)] = maxx;
                         possChan++;
 
                     } else {
                         boolean foundZ = false;
                         for (int z = possChan - 1; z >= 0; z--) {
-                            if (value_In[elem_Pos.get(z).intValue()] != 1) {
+                            if (value_In[elem_Pos.get(z)] != 1) {
                                 possChan = z;
                                 foundZ = true;
-                                int newValue = value_In[elem_Pos.get(possChan).intValue()] - 1;
+                                int newValue = value_In[elem_Pos.get(possChan)] - 1;
 
-                                value_In[elem_Pos.get(possChan).intValue()] = newValue;
+                                value_In[elem_Pos.get(possChan)] = newValue;
                                 for (int j = possChan + 1; j < elem_Pos.size(); j++) {
-                                    int p = elem_Pos.get(j).intValue();
+                                    int p = elem_Pos.get(j);
                                     value_In[p] = 1;
                                 }
                                 possChan++;
@@ -362,7 +362,7 @@ public class MassToFormulaTool {
                 } /* final not occurrence */
 
                 /* set the occurrence into the matrix */
-                value_In[elem_Pos.get(possChan).intValue()] = occurence;
+                value_In[elem_Pos.get(possChan)] = occurence;
 
                 double massT = calculateMassT(isotopes_TO, value_In);
                 double diff_new = Math.abs(mass - (massT));
@@ -388,14 +388,14 @@ public class MassToFormulaTool {
                 } else {
                     boolean foundZ = false;
                     for (int z = possChan - 1; z >= 0; z--) {
-                        if (value_In[elem_Pos.get(z).intValue()] != 1) {
+                        if (value_In[elem_Pos.get(z)] != 1) {
                             possChan = z;
                             foundZ = true;
-                            int newValue = value_In[elem_Pos.get(possChan).intValue()] - 1;
+                            int newValue = value_In[elem_Pos.get(possChan)] - 1;
 
-                            value_In[elem_Pos.get(possChan).intValue()] = newValue;
+                            value_In[elem_Pos.get(possChan)] = newValue;
                             for (int j = possChan + 1; j < elem_Pos.size(); j++) {
-                                int p = elem_Pos.get(j).intValue();
+                                int p = elem_Pos.get(j);
                                 value_In[p] = 1;
                             }
                             possChan++;

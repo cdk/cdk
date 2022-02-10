@@ -761,7 +761,7 @@ public class SimpleCycleBasis {
     }
 
     private int getEdgeIndex(Edge edge) {
-        return ((Integer) edgeIndexMap.get(edge)).intValue();
+        return (Integer) edgeIndexMap.get(edge);
     }
 
     private class AuxiliaryGraph extends SimpleGraph {
@@ -1030,8 +1030,8 @@ public class SimpleCycleBasis {
 
         boolean[][] incidMatr = getCycleEdgeIncidenceMatrix();
         for (boolean[] booleans : incidMatr) {
-            for (int j = 0; j < booleans.length; j++) {
-                System.out.print(booleans[j] ? 1 : 0);
+            for (boolean aBoolean : booleans) {
+                System.out.print(aBoolean ? 1 : 0);
             }
             System.out.println();
         }

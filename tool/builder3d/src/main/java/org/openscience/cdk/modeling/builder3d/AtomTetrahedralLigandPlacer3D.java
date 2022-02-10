@@ -688,7 +688,7 @@ public class AtomTetrahedralLigandPlacer3D {
             //			logger.debug("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take default bond length:" + DEFAULT_BOND_LENGTH_H);
             return DEFAULT_BOND_LENGTH_H;
         }
-        return ((Double) (((List) pSet.get(dkey)).get(0))).doubleValue();
+        return (Double) (((List) pSet.get(dkey)).get(0));
     }
 
     /**
@@ -718,7 +718,7 @@ public class AtomTetrahedralLigandPlacer3D {
                     + TETRAHEDRAL_ANGLE);
             return TETRAHEDRAL_ANGLE;
         }
-        return ((Double) (((List) pSet.get(akey)).get(0))).doubleValue();
+        return (Double) (((List) pSet.get(akey)).get(0));
     }
 
     /**

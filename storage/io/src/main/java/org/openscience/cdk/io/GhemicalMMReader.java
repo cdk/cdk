@@ -212,9 +212,9 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             line = input.readLine();
                             StringTokenizer atomInfoFields = new StringTokenizer(line);
                             int atomID = Integer.parseInt(atomInfoFields.nextToken());
-                            double x = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
-                            double y = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
-                            double z = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
+                            double x = Double.valueOf(atomInfoFields.nextToken());
+                            double y = Double.valueOf(atomInfoFields.nextToken());
+                            double z = Double.valueOf(atomInfoFields.nextToken());
                             atomxs[atomID] = x;
                             atomys[atomID] = y;
                             atomzs[atomID] = z;
@@ -230,7 +230,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             line = input.readLine();
                             StringTokenizer atomInfoFields = new StringTokenizer(line);
                             int atomID = Integer.parseInt(atomInfoFields.nextToken());
-                            double charge = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
+                            double charge = Double.valueOf(atomInfoFields.nextToken());
                             atomcharges[atomID] = charge;
                         }
                     } catch (IOException | NumberFormatException exception) {

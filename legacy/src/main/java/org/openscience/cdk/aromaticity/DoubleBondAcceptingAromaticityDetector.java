@@ -157,7 +157,7 @@ public class DoubleBondAcceptingAromaticityDetector {
                     IAtomType type = factory.getAtomType(ringAtom.getAtomTypeName());
                     Object property = type.getProperty(CDKConstants.PI_BOND_COUNT);
                     if (property != null && property instanceof Integer) {
-                        electronCount += ((Integer) property).intValue();
+                        electronCount += (Integer) property;
                     }
                 }
             } else if (ringAtom.getHybridization() != null && ringAtom.getHybridization() == Hybridization.SP3

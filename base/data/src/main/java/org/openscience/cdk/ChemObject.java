@@ -310,7 +310,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
         ChemObject clone = (ChemObject) super.clone();
 
         // clone the flags
-        clone.flags = getFlagValue().shortValue();
+        clone.flags = getFlagValue();
 
         // clone the properties - using the HashMap copy constructor
         // this doesn't deep clone the keys/values but this wasn't happening

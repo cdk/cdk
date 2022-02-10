@@ -156,10 +156,10 @@ public class McGregorChecks {
 
         int correspondingAtom = 0;
         for (int a = 0; a < mappedAtomsSize; a++) {
-            if ((molecule == 1) && (mappedAtoms.get(a * 2 + 0).intValue() == atomFromOtherMolecule)) {
+            if ((molecule == 1) && (mappedAtoms.get(a * 2 + 0) == atomFromOtherMolecule)) {
                 correspondingAtom = mappedAtoms.get(a * 2 + 1);
             }
-            if ((molecule == 2) && (mappedAtoms.get(a * 2 + 1).intValue() == atomFromOtherMolecule)) {
+            if ((molecule == 2) && (mappedAtoms.get(a * 2 + 1) == atomFromOtherMolecule)) {
                 correspondingAtom = mappedAtoms.get(a * 2 + 0);
             }
         }

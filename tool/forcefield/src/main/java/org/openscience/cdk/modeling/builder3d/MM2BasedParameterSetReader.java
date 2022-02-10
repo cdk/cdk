@@ -97,7 +97,7 @@ public class MM2BasedParameterSetReader {
         String svalue = st.nextToken();
         if (sid.equals(">bontunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
@@ -105,7 +105,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">bond-cubic")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -114,7 +114,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">bond-quartic")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -123,7 +123,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">angleunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -132,7 +132,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">angle-sextic")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -141,7 +141,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">strbndunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -150,7 +150,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">opbendunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -159,7 +159,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">torsionunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -204,7 +204,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">c-expterm")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -213,7 +213,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">vdw-14-scale")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -222,7 +222,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">chg-14-scale")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -231,7 +231,7 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">dielectric")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, value1);
@@ -266,7 +266,7 @@ public class MM2BasedParameterSetReader {
         String smaxbond = st.nextToken();
 
         try {
-            mass = new Double(sam).doubleValue();
+            mass = new Double(sam);
             an = Integer.parseInt(san);
             maxbond = Integer.parseInt(smaxbond);
 
@@ -298,8 +298,8 @@ public class MM2BasedParameterSetReader {
         String sradius = st.nextToken();
         String sepsi = st.nextToken();
         try {
-            double epsi = new Double(sepsi).doubleValue();
-            double radius = new Double(sradius).doubleValue();
+            double epsi = new Double(sepsi);
+            double radius = new Double(sradius);
             data.add(radius);
             data.add(epsi);
 
@@ -324,8 +324,8 @@ public class MM2BasedParameterSetReader {
         String value1 = st.nextToken();
         String value2 = st.nextToken();
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
             data.add(va1);
             data.add(va2);
 
@@ -350,8 +350,8 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
             data.add(va1);
             data.add(va2);
 
@@ -376,8 +376,8 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
             data.add(va1);
             data.add(va2);
 
@@ -402,8 +402,8 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
             data.add(va1);
             data.add(va2);
 
@@ -431,10 +431,10 @@ public class MM2BasedParameterSetReader {
         String value4 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            double va4 = new Double(value4).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            double va4 = new Double(value4);
             data.add(va1);
             data.add(va2);
             data.add(va3);
@@ -473,10 +473,10 @@ public class MM2BasedParameterSetReader {
         String value4 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            double va4 = new Double(value4).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            double va4 = new Double(value4);
             data.add(va1);
             data.add(va2);
             data.add(va3);
@@ -506,10 +506,10 @@ public class MM2BasedParameterSetReader {
         String value4 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            double va4 = new Double(value4).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            double va4 = new Double(value4);
             data.add(va1);
             data.add(va2);
             data.add(va3);
@@ -534,7 +534,7 @@ public class MM2BasedParameterSetReader {
         String value1 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
+            double va1 = new Double(value1);
             data.add(va1);
         } catch (NumberFormatException nfe) {
             throw new IOException("setStrBnd: Malformed Number");
@@ -556,7 +556,7 @@ public class MM2BasedParameterSetReader {
         String value1 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
+            double va1 = new Double(value1);
             data.add(va1);
             key = "opbend" + sid1 + ";" + sid2;
             if (parameterSet.containsKey(key)) {
@@ -595,9 +595,9 @@ public class MM2BasedParameterSetReader {
         st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
             data.add(va1);
             data.add(va2);
             data.add(va3);
@@ -639,9 +639,9 @@ public class MM2BasedParameterSetReader {
         st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
             data.add(va1);
             data.add(va2);
             data.add(va3);
@@ -665,7 +665,7 @@ public class MM2BasedParameterSetReader {
         String value1 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
+            double va1 = new Double(value1);
             data.add(va1);
         } catch (NumberFormatException nfe) {
             throw new IOException("setCharge: Malformed Number due to " + nfe.toString());
@@ -688,8 +688,8 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
             data.add(va1);
             data.add(va2);
 
@@ -714,8 +714,8 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
             data.add(va1);
             data.add(va2);
 
@@ -740,9 +740,9 @@ public class MM2BasedParameterSetReader {
         String value3 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
             data.add(va1);
             data.add(va2);
             data.add(va3);
@@ -768,8 +768,8 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
             data.add(va1);
             data.add(va2);
 

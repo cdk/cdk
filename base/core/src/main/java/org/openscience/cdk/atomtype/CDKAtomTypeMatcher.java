@@ -2587,7 +2587,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         // confirm single electron count
         if (type.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT) != null) {
             int count = countSingleElectrons(container, atom);
-            if (count != type.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT, Integer.class).intValue())
+            if (count != type.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT, Integer.class))
                 return false;
         }
 

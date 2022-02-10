@@ -142,7 +142,7 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
                     final IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
 
                     if (majorIsotope != null && majorIsotope.getExactMass() != null) {
-                        mw += majorIsotope.getExactMass().doubleValue();
+                        mw += majorIsotope.getExactMass();
                     }
                 }
             }

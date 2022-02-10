@@ -121,7 +121,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
         ipc.assignInductivePartialCharges(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             Assert.assertEquals(testResult[i],
-                    ((Double) mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
+                    (Double) mol.getAtom(i).getProperty("InductivePartialCharge"), 0.1);
             //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
         }
     }
@@ -169,7 +169,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
         ipc.assignInductivePartialCharges(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             Assert.assertEquals(testResult[i],
-                    ((Double) mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
+                    (Double) mol.getAtom(i).getProperty("InductivePartialCharge"), 0.1);
             //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
         }
     }

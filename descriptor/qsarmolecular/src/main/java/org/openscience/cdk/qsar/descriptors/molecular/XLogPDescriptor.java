@@ -836,7 +836,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         for (Integer hBondAcceptor : hBondAcceptors) {
             for (Integer hBondDonor : hBondDonors) {
                 if (checkRingLink(rs, ac, ac.getAtom(hBondAcceptor))
-                        || checkRingLink(rs, ac, ac.getAtom(hBondDonor.intValue()))) {
+                        || checkRingLink(rs, ac, ac.getAtom(hBondDonor))) {
                     int dist = apsp.from(ac.getAtom(hBondAcceptor)).distanceTo(ac.getAtom(hBondDonor));
                     //					//logger.debug(" Acc:"+checkRingLink(rs,ac,atoms[((Integer)hBondAcceptors.get(i)).intValue()])
                     //					+" S:"+atoms[((Integer)hBondAcceptors.get(i)).intValue()].getSymbol()
@@ -846,7 +846,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                     //					+" Nr:"+((Integer)hBondDonors.get(j)).intValue()
                     //					+" i:"+i+" j:"+j+" path:"+path.size());
                     if (checkRingLink(rs, ac, ac.getAtom(hBondAcceptor))
-                            && checkRingLink(rs, ac, ac.getAtom(hBondDonor.intValue()))) {
+                            && checkRingLink(rs, ac, ac.getAtom(hBondDonor))) {
                         if (dist == 3 && pairCheck[hBondAcceptor][hBondDonor] == 0) {
                             xlogP += 0.429;
                             pairCheck[hBondAcceptor][hBondDonor] = 1;

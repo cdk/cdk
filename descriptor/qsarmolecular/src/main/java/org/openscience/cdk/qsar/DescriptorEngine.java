@@ -555,7 +555,7 @@ public class DescriptorEngine {
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
-                    if (jarEntry.toString().indexOf(".class,") != -1) {
+                    if (jarEntry.toString().contains(".class,")) {
                         String className = jarEntry.toString().replace('/', '.').replaceAll(".class,", "");
                         if (className.indexOf('$') != -1) continue;
 

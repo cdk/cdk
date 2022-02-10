@@ -84,7 +84,7 @@ public class ChemGraph {
             }
             while (adjSet.size() > 0) {
                 int adjIndex = RandomNumbersTool.randomInt(0, adjSet.size() - 1);
-                recursiveDFT(((Integer) adjSet.get(adjIndex)).intValue());
+                recursiveDFT((Integer) adjSet.get(adjIndex));
                 adjSet.remove(adjIndex);
             }
 
@@ -106,7 +106,7 @@ public class ChemGraph {
         visited[seedAtom] = true;
 
         while (!atomQueue.isEmpty() && (subGraph.size() < numAtoms)) {
-            int foreAtom = ((Integer) atomQueue.get(0)).intValue();
+            int foreAtom = (Integer) atomQueue.get(0);
             subGraph.add(foreAtom);
             atomQueue.remove(0);
             travIndex++;
@@ -120,7 +120,7 @@ public class ChemGraph {
             while (adjSet.size() > 0) {
                 int adjIndex = RandomNumbersTool.randomInt(0, adjSet.size() - 1);
                 atomQueue.add((Integer) adjSet.get(adjIndex));
-                visited[((Integer) adjSet.get(adjIndex)).intValue()] = true;
+                visited[(Integer) adjSet.get(adjIndex)] = true;
                 adjSet.remove(adjIndex);
             }
 

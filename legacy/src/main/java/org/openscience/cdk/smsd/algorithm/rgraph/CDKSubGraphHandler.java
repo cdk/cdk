@@ -182,8 +182,8 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
                 TreeMap<Integer, Integer> atomMappings = new TreeMap<>();
                 for (Map.Entry<Integer, Integer> solutions : finalSolution.entrySet()) {
 
-                    int iIndex = solutions.getKey().intValue();
-                    int jIndex = solutions.getValue().intValue();
+                    int iIndex = solutions.getKey();
+                    int jIndex = solutions.getValue();
 
                     if (rOnPFlag) {
                         atomMappings.put(iIndex, jIndex);
@@ -210,8 +210,8 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
             Map<IAtom, IAtom> atomMappings = new HashMap<>();
             for (Map.Entry<Integer, Integer> solutions : finalSolution.entrySet()) {
 
-                int iIndex = solutions.getKey().intValue();
-                int jIndex = solutions.getValue().intValue();
+                int iIndex = solutions.getKey();
+                int jIndex = solutions.getValue();
 
                 IAtom sourceAtom = null;
                 IAtom targetAtom = null;

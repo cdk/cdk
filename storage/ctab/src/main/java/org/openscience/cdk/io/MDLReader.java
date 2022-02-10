@@ -371,9 +371,9 @@ public class MDLReader extends DefaultChemObjectReader {
                     throw new CDKException("This file must be read with the MDLV3000Reader.");
                 }
             }
-            atoms = Integer.valueOf(line.substring(0, 3).trim()).intValue();
+            atoms = Integer.valueOf(line.substring(0, 3).trim());
             logger.debug("Atomcount: " + atoms);
-            bonds = Integer.valueOf(line.substring(3, 6).trim()).intValue();
+            bonds = Integer.valueOf(line.substring(3, 6).trim());
             logger.debug("Bondcount: " + bonds);
 
             // read ATOM block
@@ -387,9 +387,9 @@ public class MDLReader extends DefaultChemObjectReader {
                             trailingSpaceMatcher.end());
                     line = trailingSpaceMatcher.replaceAll("");
                 }
-                x = new Double(line.substring(0, 10).trim()).doubleValue();
-                y = new Double(line.substring(10, 20).trim()).doubleValue();
-                z = new Double(line.substring(20, 30).trim()).doubleValue();
+                x = new Double(line.substring(0, 10).trim());
+                y = new Double(line.substring(10, 20).trim());
+                z = new Double(line.substring(20, 30).trim());
                 // *all* values should be zero, not just the sum
                 totalX += Math.abs(x);
                 totalY += Math.abs(y);
@@ -535,9 +535,9 @@ public class MDLReader extends DefaultChemObjectReader {
             for (int f = 0; f < bonds; f++) {
                 line = input.readLine();
                 linecount++;
-                atom1 = java.lang.Integer.valueOf(line.substring(0, 3).trim()).intValue();
-                atom2 = java.lang.Integer.valueOf(line.substring(3, 6).trim()).intValue();
-                order = java.lang.Integer.valueOf(line.substring(6, 9).trim()).intValue();
+                atom1 = Integer.valueOf(line.substring(0, 3).trim());
+                atom2 = Integer.valueOf(line.substring(3, 6).trim());
+                order = Integer.valueOf(line.substring(6, 9).trim());
                 if (line.length() > 12) {
                     int mdlStereo = Integer.valueOf(line.substring(9, 12).trim());
                     if (mdlStereo == 1) {

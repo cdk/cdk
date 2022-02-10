@@ -336,7 +336,7 @@ public class AtomPlacer3D {
                                + " take default bond length: " + DEFAULT_BOND_LENGTH);
             return DEFAULT_BOND_LENGTH;
         }
-        return ((Double) (pSet.get(dkey).get(0))).doubleValue();
+        return (Double) (pSet.get(dkey).get(0));
     }
 
     /**
@@ -365,7 +365,7 @@ public class AtomPlacer3D {
             //logger.debug("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
             return -1;
         }
-        return ((Double) (pSet.get(akey).get(0))).doubleValue();
+        return (Double) (pSet.get(akey).get(0));
     }
 
     /**

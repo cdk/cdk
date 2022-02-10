@@ -187,12 +187,12 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 StringTokenizer tokenizer = new StringTokenizer(command);
                 try {
                     tokenizer.nextToken();
-                    reactantCount = Integer.valueOf(tokenizer.nextToken()).intValue();
+                    reactantCount = Integer.valueOf(tokenizer.nextToken());
                     logger.info("Expecting " + reactantCount + " reactants in file");
-                    productCount = Integer.valueOf(tokenizer.nextToken()).intValue();
+                    productCount = Integer.valueOf(tokenizer.nextToken());
                     logger.info("Expecting " + productCount + " products in file");
                     if (tokenizer.hasMoreTokens()) {
-                        agentCount = Integer.valueOf(tokenizer.nextToken()).intValue();
+                        agentCount = Integer.valueOf(tokenizer.nextToken());
                         logger.info("Expecting " + agentCount + " products in file");
                         if (mode == Mode.STRICT && agentCount > 0)
                             throw new CDKException("RXN files uses agent count extension");

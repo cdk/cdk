@@ -234,7 +234,7 @@ public class ChemicalFilters {
                 //                System.out.println("Sorted Map key " + I + " Sorted Value: " + stereoScoreMap.get(I));
                 //                System.out.println("Stereo MCS " + allStereoMCS.get(I) + " Stereo Value: "
                 //                        + stereoScoreMap.get(I));
-                if (higestStereoScore == stereoScoreMap.get(i).doubleValue()) {
+                if (higestStereoScore == stereoScoreMap.get(i)) {
                     //|| secondhigestStereoScore == stereoScoreMap.get(I).doubleValue()) {
                     addSolution(counter, i, allStereoAtomMCS, allStereoMCS, stereoScoreMap, energyScoreMap,
                             fragmentScoreMap);
@@ -285,7 +285,7 @@ public class ChemicalFilters {
         }
         int counter = 0;
         for (Map.Entry<Integer, Integer> map : fragmentScoreMap.entrySet()) {
-            if (minFragmentScore == map.getValue().intValue()) {
+            if (minFragmentScore == map.getValue()) {
                 addSolution(counter, map.getKey(), allFragmentAtomMCS, allFragmentMCS, stereoScoreMap, energyScoreMap,
                         fragmentScoreMap);
                 counter++;
@@ -331,7 +331,7 @@ public class ChemicalFilters {
 
         double lowestEnergyScore = 99999999.99;
         for (Integer key : energySelectionMap.keySet()) {
-            lowestEnergyScore = energySelectionMap.get(key).doubleValue();
+            lowestEnergyScore = energySelectionMap.get(key);
             flag = true;
             clear();
             break;
@@ -339,7 +339,7 @@ public class ChemicalFilters {
 
         int counter = 0;
         for (Map.Entry<Integer, Double> map : energySelectionMap.entrySet()) {
-            if (lowestEnergyScore == map.getValue().doubleValue()) {
+            if (lowestEnergyScore == map.getValue()) {
                 addSolution(counter, map.getKey(), allEnergyAtomMCS, allEnergyMCS, stereoScoreMap, energySelectionMap,
                         fragmentScoreMap);
                 counter++;

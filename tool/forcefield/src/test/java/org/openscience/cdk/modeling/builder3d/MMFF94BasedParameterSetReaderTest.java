@@ -78,11 +78,11 @@ public class MMFF94BasedParameterSetReaderTest {
         String sbci = "0.0000";
         String bondkey = "bond" + sid1 + ";" + sid2;
         List<Double> bonddata = new ArrayList<>();
-        bonddata.add((Double) (new Double(slen).doubleValue()));
-        bonddata.add((Double) (new Double(sk2).doubleValue()));
-        bonddata.add((Double) (new Double(sk3).doubleValue()));
-        bonddata.add((Double) (new Double(sk4).doubleValue()));
-        bonddata.add((Double) (new Double(sbci).doubleValue()));
+        bonddata.add((Double) (new Double(slen)));
+        bonddata.add((Double) (new Double(sk2)));
+        bonddata.add((Double) (new Double(sk3)));
+        bonddata.add((Double) (new Double(sk4)));
+        bonddata.add((Double) (new Double(sbci)));
 
         //strbnd
         //		scode = "0";
@@ -93,8 +93,8 @@ public class MMFF94BasedParameterSetReaderTest {
         String value2 = "14.82507";
         String strbndkey = "strbnd" + sid1 + ";" + sid2 + ";" + sid3;
         List<Double> strbnddata = new ArrayList<>();
-        strbnddata.add((Double) (new Double(value1).doubleValue()));
-        strbnddata.add((Double) (new Double(value2).doubleValue()));
+        strbnddata.add((Double) (new Double(value1)));
+        strbnddata.add((Double) (new Double(value2)));
 
         //angle
         //      scode = "0";
@@ -107,10 +107,10 @@ public class MMFF94BasedParameterSetReaderTest {
         String value4 = "0";
         String anglekey = "angle" + sid1 + ";" + sid2 + ";" + sid3;
         List<Double> angledata = new ArrayList<>();
-        angledata.add((Double) (new Double(value1).doubleValue()));
-        angledata.add((Double) (new Double(value2).doubleValue()));
-        angledata.add((Double) (new Double(value3).doubleValue()));
-        angledata.add((Double) (new Double(value4).doubleValue()));
+        angledata.add((Double) (new Double(value1)));
+        angledata.add((Double) (new Double(value2)));
+        angledata.add((Double) (new Double(value3)));
+        angledata.add((Double) (new Double(value4)));
 
         //torsion
         //	    scode = "0";
@@ -125,11 +125,11 @@ public class MMFF94BasedParameterSetReaderTest {
         String value5 = "0.000";
         String torsionkey = "torsion" + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
         List<Double> torsiondata = new ArrayList<>();
-        torsiondata.add((Double) (new Double(value1).doubleValue()));
-        torsiondata.add((Double) (new Double(value2).doubleValue()));
-        torsiondata.add((Double) (new Double(value3).doubleValue()));
-        torsiondata.add((Double) (new Double(value4).doubleValue()));
-        torsiondata.add((Double) (new Double(value5).doubleValue()));
+        torsiondata.add((Double) (new Double(value1)));
+        torsiondata.add((Double) (new Double(value2)));
+        torsiondata.add((Double) (new Double(value3)));
+        torsiondata.add((Double) (new Double(value4)));
+        torsiondata.add((Double) (new Double(value5)));
 
         //opbend
         //      scode = "0";
@@ -140,7 +140,7 @@ public class MMFF94BasedParameterSetReaderTest {
         value1 = "10.86681780";
         String opbendkey = "opbend" + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
         List<Double> opbenddata = new ArrayList<>();
-        opbenddata.add((Double) (new Double(value1).doubleValue()));
+        opbenddata.add((Double) (new Double(value1)));
 
         //TODO data lines testing
 

@@ -154,7 +154,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
             firstAtomNeighboors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(a1));
             for (Object firstAtomNeighboor : firstAtomNeighboors) {
                 bond1 = atomContainer.indexOf(atomContainer.getBond(atomContainer.getAtom(a1), (IAtom) firstAtomNeighboor));
-                if (!singlePaths.contains(new Double(bond1))) {
+                if (!singlePaths.contains(bond1)) {
                     singlePaths.add(bond1);
                     java.util.Collections.sort(singlePaths);
                 }
@@ -162,7 +162,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
                 for (Object secondAtomNeighboor : secondAtomNeighboors) {
                     bond2 = atomContainer.indexOf(atomContainer.getBond((IAtom) firstAtomNeighboor,
                             (IAtom) secondAtomNeighboor));
-                    if (!singlePaths.contains(new Double(bond2))) {
+                    if (!singlePaths.contains(bond2)) {
                         singlePaths.add(bond2);
                     }
                     sorterFirst[0] = bond1;

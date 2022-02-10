@@ -118,7 +118,7 @@ public class MinimalPathIterator implements Iterator {
                 Edge edge = (Edge) o;
                 Object opposite = edge.oppositeVertex(vertex);
                 if (distanceMap.get(opposite) != null) {
-                    if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
+                    if ((Integer) distanceMap.get(opposite) + 1 == distance) {
                         shortestPathGraph.addVertex(opposite);
                         shortestPathGraph.addEdge(vertex, opposite);
                     }
