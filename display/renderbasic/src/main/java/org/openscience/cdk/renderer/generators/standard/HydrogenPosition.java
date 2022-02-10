@@ -211,7 +211,7 @@ enum HydrogenPosition {
     /**
      * Comparator to prioritise {@link OffsetExtent}s.
      */
-    private static enum ExtentPriority implements Comparator<Map.Entry<HydrogenPosition, OffsetExtent>> {
+    private enum ExtentPriority implements Comparator<Map.Entry<HydrogenPosition, OffsetExtent>> {
         INSTANCE;
 
         @Override

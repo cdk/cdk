@@ -403,7 +403,7 @@ final class StereoMatch implements Predicate<int[]> {
     }
 
     // could be moved into the IStereoElement to allow faster introspection
-    private static enum Type {
+    private enum Type {
         Tetrahedral, Geometric
     }
 }

@@ -74,7 +74,7 @@ public class MMElementRule implements IRule {
 
     /** A enumeration of the possible mass range
      * according the rules. */
-    public static enum RangeMass {
+    public enum RangeMass {
         /** IMolecularFormula from a metabolite with a mass lower than 500 Da. */
         Minus500,
         /** IMolecularFormula from a metabolite with a mass lower than 1000 Da. */
@@ -87,7 +87,7 @@ public class MMElementRule implements IRule {
 
     /** A enumeration of the possible databases
      * according the rules. */
-    public static enum Database {
+    public enum Database {
         /** Wiley mass spectral database. */
         WILEY,
         /** Dictionary of Natural Products Online mass spectral database. */

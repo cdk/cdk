@@ -76,7 +76,7 @@ public class LineElement implements IRenderingElement {
 
         int n;
 
-        private LineType(int n) {
+        LineType(int n) {
             this.n = n;
         }
 

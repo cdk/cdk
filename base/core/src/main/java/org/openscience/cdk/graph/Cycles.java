@@ -861,7 +861,7 @@ public final class Cycles {
     }
 
     /** Interbank enumeration of cycle finders. */
-    private static enum CycleComputation implements CycleFinder {
+    private enum CycleComputation implements CycleFinder {
         MCB {
 
             /** {@inheritDoc} */

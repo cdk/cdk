@@ -138,7 +138,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     /**
      * Enumeration of highlight style.
      */
-    public static enum HighlightStyle {
+    public enum HighlightStyle {
 
         /**
          * Ignore highlight hints.

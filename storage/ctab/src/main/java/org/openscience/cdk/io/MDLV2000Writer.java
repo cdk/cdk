@@ -145,7 +145,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // the corresponding number of single electrons
         private final int singleElectrons;
 
-        private SPIN_MULTIPLICITY(int value, int singleElectrons) {
+        SPIN_MULTIPLICITY(int value, int singleElectrons) {
             this.value = value;
             this.singleElectrons = singleElectrons;
         }

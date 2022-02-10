@@ -81,7 +81,7 @@ public final class GeometryUtil {
      * @see GeometryUtil#get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      * @see GeometryUtil#get3DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    public static enum CoordinateCoverage {
+    public enum CoordinateCoverage {
 
         /**
          * All atoms have coordinates.
