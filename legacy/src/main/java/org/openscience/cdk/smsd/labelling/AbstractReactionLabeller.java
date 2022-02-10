@@ -132,7 +132,7 @@ public class AbstractReactionLabeller {
             }
 
         };
-        Collections.sort(map, mappingSorter);
+        map.sort(mappingSorter);
         int mappingIndex = 0;
         for (IMapping mapping : map) {
             mapping.getChemObject(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING, mappingIndex);

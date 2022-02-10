@@ -80,7 +80,7 @@ public class AtomicNumberRuleTest extends CDKTestCase {
         ligands.add(ligand3);
         ligands.add(ligand4);
 
-        Collections.sort(ligands, new AtomicNumberRule());
+        ligands.sort(new AtomicNumberRule());
         Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
         Assert.assertEquals("Cl", ligands.get(1).getLigandAtom().getSymbol());
         Assert.assertEquals("Br", ligands.get(2).getLigandAtom().getSymbol());

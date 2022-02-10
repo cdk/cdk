@@ -319,11 +319,11 @@ final class StandardSgroupGenerator {
 
         // generate child brackets first
         sgroups = new ArrayList<>(sgroups);
-        Collections.sort(sgroups, new Comparator<Sgroup>() {
+        sgroups.sort(new Comparator<Sgroup>() {
             @Override
             public int compare(Sgroup o1, Sgroup o2) {
                 return Integer.compare(getTotalChildCount(children, o1),
-                                       getTotalChildCount(children, o2));
+                        getTotalChildCount(children, o2));
             }
         });
 

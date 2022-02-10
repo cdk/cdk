@@ -80,7 +80,7 @@ public class MassNumberRuleTest extends CDKTestCase {
         ligands.add(ligand3);
         ligands.add(ligand4);
 
-        Collections.sort(ligands, new MassNumberRule());
+        ligands.sort(new MassNumberRule());
         Assert.assertNotNull(ligands.get(0));
         Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
         Assert.assertEquals("H", ligands.get(1).getLigandAtom().getSymbol());

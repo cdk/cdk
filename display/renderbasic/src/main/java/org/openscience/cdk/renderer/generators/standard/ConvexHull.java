@@ -171,8 +171,8 @@ final class ConvexHull {
 
         if (points.size() <= 3) return new ArrayList<>(points);
 
-        Collections.sort(points, new CompareYThenX());
-        Collections.sort(points, new PolarComparator(points.get(0)));
+        points.sort(new CompareYThenX());
+        points.sort(new PolarComparator(points.get(0)));
 
         Deque<Point2D> hull = new ArrayDeque<>();
 

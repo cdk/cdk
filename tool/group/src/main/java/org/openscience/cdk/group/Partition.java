@@ -387,7 +387,7 @@ public class Partition {
      * Sort the cells in increasing order.
      */
     public void order() {
-        Collections.sort(cells, new Comparator<SortedSet<Integer>>() {
+        cells.sort(new Comparator<SortedSet<Integer>>() {
 
             @Override
             public int compare(SortedSet<Integer> cellA, SortedSet<Integer> cellB) {

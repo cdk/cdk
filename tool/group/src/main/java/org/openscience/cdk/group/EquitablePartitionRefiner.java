@@ -166,7 +166,7 @@ class EquitablePartitionRefiner {
             if (splitOrder == SplitOrder.REVERSE) {
                 Collections.sort(invariantKeys);
             } else {
-                Collections.sort(invariantKeys, Collections.reverseOrder());
+                invariantKeys.sort(Collections.reverseOrder());
             }
             for (Invariant h : invariantKeys) {
                 SortedSet<Integer> setH = invariants.get(h);

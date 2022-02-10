@@ -211,7 +211,7 @@ public class AtomContainerSetManipulator {
      */
     public static void sort(IAtomContainerSet atomContainerSet) {
         List<IAtomContainer> atomContainerList = AtomContainerSetManipulator.getAllAtomContainers(atomContainerSet);
-        Collections.sort(atomContainerList, new AtomContainerComparator());
+        atomContainerList.sort(new AtomContainerComparator());
         atomContainerSet.removeAllAtomContainers();
         for (Object anAtomContainerList : atomContainerList)
             atomContainerSet.addAtomContainer((IAtomContainer) anAtomContainerList);

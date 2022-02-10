@@ -2221,7 +2221,7 @@ public class SmilesParserTest extends CDKTestCase {
         List<IStereoElement<?,?>> stereoElements = new ArrayList<>();
         mol.stereoElements().forEach(stereoElements::add);
 
-        Collections.sort(stereoElements, new Comparator<IStereoElement>() {
+        stereoElements.sort(new Comparator<IStereoElement>() {
 
             @Override
             public int compare(IStereoElement o1, IStereoElement o2) {

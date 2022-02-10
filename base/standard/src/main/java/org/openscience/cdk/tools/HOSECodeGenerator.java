@@ -358,7 +358,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 throw new CDKException("Error in HOSECodeGenerator->breadthFirstSearch.", exc);
             }
         }
-        Collections.sort(sphereNodes, new TreeNodeComparator());
+        sphereNodes.sort(new TreeNodeComparator());
         nextSphere(sphereNodes);
     }
 
@@ -409,7 +409,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 }
             }
         }
-        Collections.sort(nextSphereNodes, new TreeNodeComparator());
+        nextSphereNodes.sort(new TreeNodeComparator());
         if (sphere < maxSphere) {
             sphere++;
             nextSphere(nextSphereNodes);

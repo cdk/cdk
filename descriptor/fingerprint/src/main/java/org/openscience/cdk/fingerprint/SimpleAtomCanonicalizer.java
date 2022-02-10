@@ -55,7 +55,7 @@ public class SimpleAtomCanonicalizer {
         for (IAtom atom : container.atoms()) {
             canonicalizedVertexList.add(atom);
         }
-        Collections.sort(canonicalizedVertexList, new SimpleAtomComparator());
+        canonicalizedVertexList.sort(new SimpleAtomComparator());
         return canonicalizedVertexList;
     }
 }

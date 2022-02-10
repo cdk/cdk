@@ -171,7 +171,7 @@ public class CanonicalLabeler {
      * @cdk.todo    can this be done in one loop?
      */
     private void sortArrayList(List<InvPair> v) {
-        Collections.sort(v, new Comparator<InvPair>() {
+        v.sort(new Comparator<InvPair>() {
 
             @Override
             public int compare(InvPair o1, InvPair o2) {
@@ -180,7 +180,7 @@ public class CanonicalLabeler {
                 return 0;
             }
         });
-        Collections.sort(v, new Comparator<InvPair>() {
+        v.sort(new Comparator<InvPair>() {
 
             @Override
             public int compare(InvPair o1, InvPair o2) {

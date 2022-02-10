@@ -1598,7 +1598,7 @@ final class StandardBondGenerator {
 
         final List<IAtomContainer> rings = AtomContainerSetManipulator.getAllAtomContainers(smallest);
 
-        Collections.sort(rings, new RingBondOffsetComparator(container));
+        rings.sort(new RingBondOffsetComparator(container));
 
         final Map<IBond, IAtomContainer> ringMap = new HashMap<>();
 

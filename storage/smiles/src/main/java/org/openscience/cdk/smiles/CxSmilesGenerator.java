@@ -133,8 +133,8 @@ public class CxSmilesGenerator {
 
             List<List<Integer>> fragGroupCpy = new ArrayList<>(state.fragGroups);
             for (List<Integer> idxs : fragGroupCpy)
-                Collections.sort(idxs, compComp);
-            Collections.sort(fragGroupCpy, new Comparator<List<Integer>>() {
+                idxs.sort(compComp);
+            fragGroupCpy.sort(new Comparator<List<Integer>>() {
                 @Override
                 public int compare(List<Integer> a, List<Integer> b) {
                     return CxSmilesGenerator.compare(compComp, a, b);
@@ -331,11 +331,11 @@ public class CxSmilesGenerator {
             for (CxSgroup polysgroup : state.mysgroups) {
                 if (polysgroup instanceof CxPolymerSgroup) {
                     polysgroups.add((CxPolymerSgroup) polysgroup);
-                    Collections.sort(polysgroup.atoms, comp);
+                    polysgroup.atoms.sort(comp);
                 }
             }
 
-            Collections.sort(polysgroups, new Comparator<CxPolymerSgroup>() {
+            polysgroups.sort(new Comparator<CxPolymerSgroup>() {
                 @Override
                 public int compare(CxPolymerSgroup a, CxPolymerSgroup b) {
                     int cmp = 0;
@@ -368,11 +368,11 @@ public class CxSmilesGenerator {
             for (CxSgroup datasgroup : state.mysgroups) {
                 if (datasgroup instanceof CxDataSgroup) {
                     datasgroups.add((CxDataSgroup)datasgroup);
-                    Collections.sort(datasgroup.atoms, comp);
+                    datasgroup.atoms.sort(comp);
                 }
             }
 
-            Collections.sort(datasgroups, new Comparator<CxDataSgroup>() {
+            datasgroups.sort(new Comparator<CxDataSgroup>() {
                 @Override
                 public int compare(CxDataSgroup a, CxDataSgroup b) {
                     int cmp = 0;
@@ -450,7 +450,7 @@ public class CxSmilesGenerator {
                 sb.append('^');
                 sb.append(e.getKey().ordinal() + 1);
                 sb.append(':');
-                Collections.sort(e.getValue(), comp);
+                e.getValue().sort(comp);
                 appendIntegers(ordering, ',', sb, e.getValue());
             }
         }

@@ -125,7 +125,7 @@ public class RingSetManipulator {
         for (IAtomContainer atomContainer : ringSet.atomContainers()) {
             ringList.add((IRing) atomContainer);
         }
-        Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
+        ringList.sort(new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
         ringSet.removeAllAtomContainers();
         for (IAtomContainer aRingList : ringList)
             ringSet.addAtomContainer(aRingList);

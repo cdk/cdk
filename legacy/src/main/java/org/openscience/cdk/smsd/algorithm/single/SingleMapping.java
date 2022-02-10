@@ -219,7 +219,7 @@ public class SingleMapping {
 
     private <K, V extends Comparable<V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
+        list.sort(new Comparator<Map.Entry<K, V>>() {
 
             @Override
             public int compare(Map.Entry<K, V> object1, Map.Entry<K, V> object2) {

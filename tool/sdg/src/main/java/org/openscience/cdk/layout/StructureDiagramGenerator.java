@@ -653,7 +653,7 @@ public class StructureDiagramGenerator {
 
                 // large => small (e.g. salt will appear on the right)
                 List<IAtomContainer> fragList = toList(frags);
-                Collections.sort(fragList, LARGEST_FIRST_COMPARATOR);
+                fragList.sort(LARGEST_FIRST_COMPARATOR);
                 generateFragmentCoordinates(molecule, fragList);
 
                 // don't call set molecule as it wipes x,y coordinates!
@@ -781,7 +781,7 @@ public class StructureDiagramGenerator {
             // We got our ring systems now choose the best one based on size and
             // number of heteroatoms
             RingPlacer.countHetero(ringSystems);
-            Collections.sort(ringSystems, RingPlacer.RING_COMPARATOR);
+            ringSystems.sort(RingPlacer.RING_COMPARATOR);
 
             int respect = layoutRingSet(firstBondVector, ringSystems.get(0));
 
@@ -1509,8 +1509,8 @@ public class StructureDiagramGenerator {
             };
 
             // greedy selection
-            Collections.sort(posFrags, comparator);
-            Collections.sort(negFrags, comparator);
+            posFrags.sort(comparator);
+            negFrags.sort(comparator);
 
             for (IAtomContainer posFrag : posFrags)
                 cations.addAll(selectIons(posFrag, +1));
@@ -2474,15 +2474,15 @@ public class StructureDiagramGenerator {
                 }
             }
 
-            Collections.sort(bonds, new Comparator<IBond>() {
+            bonds.sort(new Comparator<IBond>() {
                 @Override
                 public int compare(IBond a, IBond b) {
                     int atype = getPositionalRingBondPref(a, mol);
                     int btype = getPositionalRingBondPref(b, mol);
                     if (atype != btype)
                         return Integer.compare(atype, btype);
-                    int aord  = a.getOrder().numeric();
-                    int bord  = b.getOrder().numeric();
+                    int aord = a.getOrder().numeric();
+                    int bord = b.getOrder().numeric();
                     if (aord > 0 && bord > 0) {
                         return Integer.compare(aord, bord);
                     }

@@ -78,7 +78,7 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
         ligands.add(ligand3);
         ligands.add(ligand4);
 
-        Collections.sort(ligands, new CombinedAtomicMassNumberRule());
+        ligands.sort(new CombinedAtomicMassNumberRule());
         Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
         Assert.assertEquals("C", ligands.get(1).getLigandAtom().getSymbol());
         Assert.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());

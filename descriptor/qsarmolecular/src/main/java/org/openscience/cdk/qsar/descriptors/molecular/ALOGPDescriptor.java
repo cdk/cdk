@@ -938,7 +938,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         } else { // sameringsatomscount==3
             // arbitrarily assign atoms: (no way to decide consistently)
             // but to match VEGA we choose to but hetero atoms in the ring
-            Collections.sort(nbors, new Comparator<IAtom>() {
+            nbors.sort(new Comparator<IAtom>() {
                 @Override
                 public int compare(IAtom a, IAtom b) {
                     return -Boolean.compare(isHetero(a), isHetero(b));

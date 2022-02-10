@@ -247,7 +247,7 @@ final class LayoutRefiner {
         }
 
         // sort the pairs to attempt consistent overlap resolution (order independent)
-        Collections.sort(pairs, new Comparator<AtomPair>() {
+        pairs.sort(new Comparator<AtomPair>() {
             @Override
             public int compare(AtomPair a, AtomPair b) {
                 int a1 = atoms[a.fst].getProperty(AtomPlacer.PRIORITY);
@@ -259,16 +259,14 @@ final class LayoutRefiner {
                 if (a1 < a2) {
                     amin = a1;
                     amax = a2;
-                }
-                else {
+                } else {
                     amin = a2;
                     amax = a1;
                 }
                 if (b1 < b2) {
                     bmin = b1;
                     bmax = b2;
-                }
-                else {
+                } else {
                     bmin = b2;
                     bmax = b1;
                 }

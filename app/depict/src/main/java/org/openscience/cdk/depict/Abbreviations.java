@@ -310,7 +310,7 @@ public class Abbreviations implements Iterable<String> {
             frags.addAll(makeCut(cut, mol, atmidx, adjlist));
         }
 
-        Collections.sort(frags, new Comparator<IAtomContainer>() {
+        frags.sort(new Comparator<IAtomContainer>() {
             @Override
             public int compare(IAtomContainer a, IAtomContainer b) {
                 return -Integer.compare(a.getBondCount(), b.getBondCount());
@@ -527,7 +527,7 @@ public class Abbreviations implements Iterable<String> {
             sb.append(newSymbol(attach.getAtomicNumber(), hcount, newbonds.size() == 0));
             String prev  = null;
             int    count = 0;
-            Collections.sort(nbrSymbols, new Comparator<String>() {
+            nbrSymbols.sort(new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
                     int cmp = Integer.compare(o1.length(), o2.length());

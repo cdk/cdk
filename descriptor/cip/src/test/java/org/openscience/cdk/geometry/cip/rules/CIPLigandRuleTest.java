@@ -65,7 +65,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ligands.add(ligandBr);
         ligands.add(ligandF);
         ligands.add(ligandCl);
-        Collections.sort(ligands, new CIPLigandRule());
+        ligands.sort(new CIPLigandRule());
 
         Assert.assertEquals("F", ligands.get(0).getLigandAtom().getSymbol());
         Assert.assertEquals("Cl", ligands.get(1).getLigandAtom().getSymbol());
@@ -101,7 +101,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 2));
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 0));
 
-        Collections.sort(ligands, new CIPLigandRule());
+        ligands.sort(new CIPLigandRule());
         Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
         Assert.assertEquals("C", ligands.get(1).getLigandAtom().getSymbol());
         Assert.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());

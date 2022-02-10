@@ -2606,25 +2606,24 @@ public final class Smarts {
         }
 
         private void sort(List<IBond> bonds, final IBond prev) {
-            Collections.sort(bonds,
-                             new Comparator<IBond>() {
-                                 @Override
-                                 public int compare(IBond a, IBond b) {
-                                     if (a == prev)
-                                         return -1;
-                                     if (b == prev)
-                                         return +1;
-                                     if (isRingClose(a) && !isRingClose(b))
-                                         return -1;
-                                     if (!isRingClose(a) && isRingClose(b))
-                                         return +1;
-                                     if (isRingOpen(a) && !isRingOpen(b))
-                                         return -1;
-                                     if (!isRingOpen(a) && isRingOpen(b))
-                                         return +1;
-                                     return 0;
-                                 }
-                             });
+            bonds.sort(new Comparator<IBond>() {
+                @Override
+                public int compare(IBond a, IBond b) {
+                    if (a == prev)
+                        return -1;
+                    if (b == prev)
+                        return +1;
+                    if (isRingClose(a) && !isRingClose(b))
+                        return -1;
+                    if (!isRingClose(a) && isRingClose(b))
+                        return +1;
+                    if (isRingOpen(a) && !isRingOpen(b))
+                        return -1;
+                    if (!isRingOpen(a) && isRingOpen(b))
+                        return +1;
+                    return 0;
+                }
+            });
         }
 
         private void generateRecurAtom(StringBuilder sb,
