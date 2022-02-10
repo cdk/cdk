@@ -122,9 +122,7 @@ public class ElectronImpactSDBReaction extends ReactionEngine implements IReacti
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IBond> bonds = reactant.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bondi = bonds.next();
+        for (IBond bondi : reactant.bonds()) {
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE
@@ -170,9 +168,7 @@ public class ElectronImpactSDBReaction extends ReactionEngine implements IReacti
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IBond> bonds = reactant.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bondi = bonds.next();
+        for (IBond bondi : reactant.bonds()) {
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getOrder() == IBond.Order.SINGLE

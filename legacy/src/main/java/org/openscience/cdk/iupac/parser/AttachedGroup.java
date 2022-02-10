@@ -93,9 +93,7 @@ public class AttachedGroup {
     public String toString() {
         String returnString = name + ": ";
 
-        Iterator<Token> locationsIterator = locations.iterator();
-        while (locationsIterator.hasNext()) {
-            Token locationToken = locationsIterator.next();
+        for (Token locationToken : locations) {
             returnString += locationToken.image + " ";
         }
 

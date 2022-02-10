@@ -89,9 +89,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
         // add H's in case they're not present
         try {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-            Iterator<IAtom> atoms = molecule.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+            for (IAtom atom : molecule.atoms()) {
                 IAtomType type = matcher.findMatchingAtomType(molecule, atom);
                 AtomTypeManipulator.configure(atom, type);
             }

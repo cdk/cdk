@@ -456,12 +456,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      * @return   The IAtomContainer with the flags removed
      */
     private IAtomContainer removingFlagsAromaticity(IAtomContainer ac) {
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext())
-            atoms.next().setFlag(CDKConstants.ISAROMATIC, false);
-        Iterator<IBond> bonds = ac.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setFlag(CDKConstants.ISAROMATIC, false);
+        for (IAtom iAtom : ac.atoms()) iAtom.setFlag(CDKConstants.ISAROMATIC, false);
+        for (IBond iBond : ac.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, false);
         return ac;
     }
 

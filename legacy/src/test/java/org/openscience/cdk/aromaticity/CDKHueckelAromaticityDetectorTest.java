@@ -128,9 +128,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
 
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            Assert.assertTrue(atoms.next().getFlag(CDKConstants.ISAROMATIC));
+        for (IAtom iAtom : mol.atoms()) {
+            Assert.assertTrue(iAtom.getFlag(CDKConstants.ISAROMATIC));
         }
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
@@ -156,9 +155,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
 
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            Assert.assertTrue(atoms.next().getFlag(CDKConstants.ISAROMATIC));
+        for (IAtom iAtom : mol.atoms()) {
+            Assert.assertTrue(iAtom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -172,9 +170,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testPyridineOxide_SP2() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makePyridineOxide();
-        Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setOrder(Order.SINGLE);
+        for (IBond iBond : molecule.bonds()) iBond.setOrder(Order.SINGLE);
         for (int i = 0; i < 6; i++) {
             molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
         }
@@ -305,9 +301,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         RingSetManipulator.markAromaticRings(rs);
         IRing r = null;
         int aromacount = 0;
-        Iterator<IAtomContainer> rings = rs.atomContainers().iterator();
-        while (rings.hasNext()) {
-            r = (IRing) rings.next();
+        for (IAtomContainer container : rs.atomContainers()) {
+            r = (IRing) container;
             isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
 
             if (isAromatic) aromacount++;

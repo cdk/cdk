@@ -90,9 +90,8 @@ public class SimpleCycle extends UndirectedSubgraph {
      */
     public double weight() {
         double result = 0;
-        Iterator edgeIterator = edgeSet().iterator();
-        while (edgeIterator.hasNext()) {
-            result += ((Edge) edgeIterator.next()).getWeight();
+        for (Object o : edgeSet()) {
+            result += ((Edge) o).getWeight();
         }
         return result;
     }

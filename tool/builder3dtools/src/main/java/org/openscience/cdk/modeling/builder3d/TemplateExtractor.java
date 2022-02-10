@@ -194,10 +194,8 @@ public class TemplateExtractor {
                     for (IRingSet ringSystem : ringSystems) {
                         ringSet = ringSystem;
                         ac = builder.newInstance(IAtomContainer.class);
-                        Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet)
-                                                                                .iterator();
-                        while (containers.hasNext()) {
-                            ac.add(containers.next());
+                        for (IAtomContainer container : RingSetManipulator.getAllAtomContainers(ringSet)) {
+                            ac.add(container);
                         }
                         counterRings = counterRings + 1;
                         // Only connection is important

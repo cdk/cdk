@@ -380,9 +380,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(molecule);
         Assert.assertEquals(129, molecule.getAtomCount());
         Assert.assertEquals(135, molecule.getBondCount());
-        Iterator<IAtom> atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             Assert.assertNotNull(atom.getAtomTypeName());
         }
     }

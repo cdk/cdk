@@ -78,9 +78,7 @@ public class GaussiansCalculationTest {
 
             IChemSequence chemSequence = chemFile.getChemSequence(0);
             IChemModel chemModel = chemSequence.getChemModel(0);
-            Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
-            while (containers.hasNext()) {
-                IAtomContainer atomContainer = containers.next();
+            for (IAtomContainer atomContainer : ChemModelManipulator.getAllAtomContainers(chemModel)) {
                 IAtom[] atoms = AtomContainerManipulator.getAtomArray(atomContainer);
 
                 GaussiansBasis basis = new SimpleBasisSet(atoms);

@@ -76,10 +76,8 @@ public class BiconnectivityInspector {
         if (biconnectedSets == null) {
             biconnectedSets = new ArrayList();
 
-            Iterator connectedSets = new ConnectivityInspector(graph).connectedSets().iterator();
-
-            while (connectedSets.hasNext()) {
-                Set connectedSet = (Set) connectedSets.next();
+            for (Object value : new ConnectivityInspector(graph).connectedSets()) {
+                Set connectedSet = (Set) value;
                 if (connectedSet.size() == 1) {
                     continue;
                 }
@@ -119,10 +117,9 @@ public class BiconnectivityInspector {
 
                     dfsVertices.add(currentVertex);
 
-                    Iterator edges = subgraph.edgesOf(currentVertex).iterator();
-                    while (edges.hasNext()) {
+                    for (Object o : subgraph.edgesOf(currentVertex)) {
                         // find a neighbour vertex of the current vertex
-                        Edge edge = (Edge) edges.next();
+                        Edge edge = (Edge) o;
 
                         if (!treeEdges.contains(edge)) {
 

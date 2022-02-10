@@ -109,21 +109,19 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolChargeIDQueryAtom(container.getAtom(i)));
         }
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond   = bonds.next();
-            int   index1 = container.indexOf(bond.getBegin());
-            int   index2 = container.indexOf(bond.getEnd());
+        for (IBond bond : container.bonds()) {
+            int index1 = container.indexOf(bond.getBegin());
+            int index2 = container.indexOf(bond.getEnd());
             if (bond.isAromatic()) {
                 QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                Expr.Type.IS_AROMATIC);
+                        queryContainer.getAtom(index2),
+                        Expr.Type.IS_AROMATIC);
                 queryContainer.addBond(qbond);
             } else {
                 QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                Expr.Type.ORDER,
-                                                bond.getOrder().numeric());
+                        queryContainer.getAtom(index2),
+                        Expr.Type.ORDER,
+                        bond.getOrder().numeric());
                 qbond.setOrder(bond.getOrder()); // backwards compatibility
                 queryContainer.addBond(qbond);
             }

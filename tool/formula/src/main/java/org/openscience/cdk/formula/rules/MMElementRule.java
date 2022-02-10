@@ -168,9 +168,7 @@ public class MMElementRule implements IRule {
     public double validate(IMolecularFormula formula) throws CDKException {
         logger.info("Start validation of ", formula);
         double isValid = 1.0;
-        Iterator<IElement> itElem = MolecularFormulaManipulator.elements(formula).iterator();
-        while (itElem.hasNext()) {
-            IElement element = itElem.next();
+        for (IElement element : MolecularFormulaManipulator.elements(formula)) {
             int occur = MolecularFormulaManipulator.getElementCount(formula, element);
             if (occur > hashMap.get(element.getSymbol())) {
                 isValid = 0.0;

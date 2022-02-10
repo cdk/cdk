@@ -123,16 +123,12 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == 0
                     && reactant.getConnectedSingleElectronsCount(atomi) == 0
                     && reactant.getConnectedLonePairsList(atomi).size() > 0) {
 
-                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-                while (bondis.hasNext()) {
-                    IBond bondi = bondis.next();
+                for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
                         IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 1
@@ -174,15 +170,11 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFormalCharge() == 0 && reactant.getConnectedSingleElectronsCount(atomi) == 0
                     && reactant.getConnectedLonePairsList(atomi).size() > 0) {
 
-                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-                while (bondis.hasNext()) {
-                    IBond bondi = bondis.next();
+                for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
                     if (bondi.getOrder() == IBond.Order.SINGLE) {
                         IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFormalCharge() == 1 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {

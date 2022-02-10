@@ -223,9 +223,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
         // SET ISINRING FLAGS FOR BONDS
         //		org.openscience.cdk.interfaces.IBond[] bondsInContainer = varAtomContainer.getBonds();
 
-        Iterator<IBond> bondsInContainer = varAtomContainer.bonds().iterator();
-        while (bondsInContainer.hasNext()) {
-            IBond bond = bondsInContainer.next();
+        for (IBond bond : varAtomContainer.bonds()) {
             ringsWithThisBond = varRingSet.getRings(bond);
             if (ringsWithThisBond.getAtomContainerCount() > 0) {
                 bond.setFlag(CDKConstants.ISINRING, true);

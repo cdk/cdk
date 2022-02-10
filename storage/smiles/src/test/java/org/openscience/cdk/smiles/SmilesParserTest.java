@@ -461,9 +461,7 @@ public class SmilesParserTest extends CDKTestCase {
         String smiles = "n12:n:n:n:c:2:c:c:c:c:1";
         IAtomContainer molecule = loadExact(smiles);
         assertAtomTypesPerceived(molecule);
-        Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext())
-            assertTrue(bonds.next().getFlag(CDKConstants.ISAROMATIC));
+        for (IBond iBond : molecule.bonds()) assertTrue(iBond.getFlag(CDKConstants.ISAROMATIC));
     }
 
     /**
@@ -933,9 +931,7 @@ public class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles(smiles);
         Assert.assertEquals(5, mol.getAtomCount());
         // each atom should have 1 implicit hydrogen, and two neighbors
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atomi = atoms.next();
+        for (IAtom atomi : mol.atoms()) {
             Assert.assertEquals(1, atomi.getImplicitHydrogenCount().intValue());
             Assert.assertEquals(2, mol.getConnectedBondsCount(atomi));
         }
@@ -1207,9 +1203,8 @@ public class SmilesParserTest extends CDKTestCase {
         IAtom nitrogen = mol.getAtom(3);
         // the second atom
         Assert.assertEquals("N", nitrogen.getSymbol());
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            Assert.assertEquals(IAtomType.Hybridization.SP2, atoms.next().getHybridization());
+        for (IAtom iAtom : mol.atoms()) {
+            Assert.assertEquals(IAtomType.Hybridization.SP2, iAtom.getHybridization());
         }
     }
 
@@ -1523,9 +1518,7 @@ public class SmilesParserTest extends CDKTestCase {
         atomtype(mol);
         Aromaticity.cdkLegacy().apply(mol);
         assertAtomTypesPerceived(mol);
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
@@ -1764,9 +1757,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertAtomTypesPerceived(mol);
         Assert.assertEquals(9, mol.getAtomCount());
 
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
@@ -1783,9 +1774,7 @@ public class SmilesParserTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(mol);
         assertAtomTypesPerceived(mol);
         Assert.assertEquals(9, mol.getAtomCount());
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }

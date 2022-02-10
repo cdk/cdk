@@ -179,9 +179,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         String elemCounts = "";
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(crystal);
         List<IElement> asortedElements = MolecularFormulaManipulator.elements(formula);
-        Iterator<IElement> elements = asortedElements.iterator();
-        while (elements.hasNext()) {
-            IElement element = elements.next();
+        for (IElement element : asortedElements) {
             String symbol = element.getSymbol();
             elemNames += symbol + "    ".substring(symbol.length());
             String countS = Integer.valueOf(MolecularFormulaManipulator.getElementCount(formula, element)).toString();

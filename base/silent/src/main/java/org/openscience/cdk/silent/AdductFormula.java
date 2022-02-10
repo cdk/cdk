@@ -132,9 +132,8 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     @Override
     public Integer getCharge() {
         Integer charge = 0;
-        Iterator<IMolecularFormula> componentIterator = components.iterator();
-        while (componentIterator.hasNext()) {
-            charge += componentIterator.next().getCharge();
+        for (IMolecularFormula component : components) {
+            charge += component.getCharge();
         }
         return charge;
     }
@@ -150,9 +149,8 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     @Override
     public int getIsotopeCount(IIsotope isotope) {
         int count = 0;
-        Iterator<IMolecularFormula> componentIterator = components.iterator();
-        while (componentIterator.hasNext()) {
-            count += componentIterator.next().getIsotopeCount(isotope);
+        for (IMolecularFormula component : components) {
+            count += component.getIsotopeCount(isotope);
         }
         return count;
     }
@@ -192,11 +190,8 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      */
     private List<IIsotope> isotopesList() {
         List<IIsotope> isotopes = new ArrayList<>();
-        Iterator<IMolecularFormula> componentIterator = components.iterator();
-        while (componentIterator.hasNext()) {
-            Iterator<IIsotope> compIsotopes = componentIterator.next().isotopes().iterator();
-            while (compIsotopes.hasNext()) {
-                IIsotope isotope = compIsotopes.next();
+        for (IMolecularFormula component : components) {
+            for (IIsotope isotope : component.isotopes()) {
                 if (!isotopes.contains(isotope)) {
                     isotopes.add(isotope);
                 }

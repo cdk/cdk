@@ -174,10 +174,7 @@ public class HuLuIndexTool {
                     valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtom(j).getImplicitHydrogenCount();
             }
 
-            Iterator<IBond> bonds = atomContainer.bonds().iterator();
-            while (bonds.hasNext()) {
-                IBond bond = bonds.next();
-
+            for (IBond bond : atomContainer.bonds()) {
                 headAtom = bond.getBegin();
                 endAtom = bond.getEnd();
 

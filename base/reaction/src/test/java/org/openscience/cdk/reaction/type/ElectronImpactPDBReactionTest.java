@@ -98,9 +98,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         reactant.addBond(5, 6, IBond.Order.SINGLE);
         addExplicitHydrogens(reactant);
 
-        Iterator<IBond> bonds = reactant.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : reactant.bonds()) {
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.DOUBLE && atom1.getAtomicNumber() == IElement.C && atom2.getAtomicNumber() == IElement.C) {

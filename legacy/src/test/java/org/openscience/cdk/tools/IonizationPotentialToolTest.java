@@ -71,9 +71,7 @@ public class IonizationPotentialToolTest extends CDKTestCase {
         lpcheck.saturate(molecule);
 
         List<Double> carbonIPs = new ArrayList<>();
-        Iterator<IAtom> atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getAtomicNumber() == IElement.H) continue;
             carbonIPs.add(IonizationPotentialTool.predictIP(molecule, atom));
         }

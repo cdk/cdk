@@ -839,9 +839,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws Exception {
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             IAtomType type = matcher.findMatchingAtomType(container, atom);
             Assert.assertNotNull(type);
             AtomTypeManipulator.configure(atom, type);

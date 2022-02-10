@@ -423,9 +423,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         paramList.add(param);
 
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
-        Iterator<IReactionProcess> itReaction = sRG.getReactions().iterator();
-        while (itReaction.hasNext()) {
-            IReactionProcess reaction = itReaction.next();
+        for (IReactionProcess reaction : sRG.getReactions()) {
             reaction.setParameterList(paramList);
         }
 

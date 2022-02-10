@@ -146,10 +146,9 @@ public class SimpleCycleBasis {
         while (!vertexQueue.isEmpty()) {
             currentVertex = vertexQueue.removeFirst();
 
-            Iterator edges = subgraph.edgesOf(currentVertex).iterator();
-            while (edges.hasNext()) {
+            for (Object o : subgraph.edgesOf(currentVertex)) {
                 // find a neighbour vertex of the current vertex
-                Edge edge = (Edge) edges.next();
+                Edge edge = (Edge) o;
 
                 if (!visitedEdges.contains(edge)) {
 
@@ -260,18 +259,14 @@ public class SimpleCycleBasis {
 
             SimpleCycle shortestCycle = cycles.get(i);
 
-            Iterator vertexIterator = graph.vertexSet().iterator();
-            while (vertexIterator.hasNext()) {
-                Object vertex = vertexIterator.next();
-
+            for (Object vertex : graph.vertexSet()) {
                 // check if the vertex is incident to an edge with u[edge] == 1
                 boolean shouldSearchCycle = false;
 
                 Collection incidentEdges = graph.edgesOf(vertex);
 
-                Iterator edgeIterator = incidentEdges.iterator();
-                while (edgeIterator.hasNext()) {
-                    Edge edge = (Edge) edgeIterator.next();
+                for (Object incidentEdge : incidentEdges) {
+                    Edge edge = (Edge) incidentEdge;
                     int index = getEdgeIndex(edge);
                     if (u[index]) {
                         shouldSearchCycle = true;
@@ -292,7 +287,7 @@ public class SimpleCycleBasis {
 
                     Object v = vertex;
 
-                    edgeIterator = auxPath.iterator();
+                    Iterator edgeIterator = auxPath.iterator();
                     while (edgeIterator.hasNext()) {
                         Edge auxEdge = (Edge) edgeIterator.next();
 
@@ -530,10 +525,7 @@ public class SimpleCycleBasis {
             // Construct auxiliary graph gu
             AuxiliaryGraph gu = new AuxiliaryGraph(graph, u);
 
-            Iterator vertexIterator = graph.vertexSet().iterator();
-            while (vertexIterator.hasNext()) {
-                Object vertex = vertexIterator.next();
-
+            for (Object vertex : graph.vertexSet()) {
                 Collection incidentEdges = graph.edgesOf(vertex);
 
                 // check if the vertex is incident to an edge with u[edge] == 1
@@ -555,13 +547,12 @@ public class SimpleCycleBasis {
 
                     // Search for shortest paths
 
-                    for (Iterator minPaths = new MinimalPathIterator(gu, auxVertex0, auxVertex1); minPaths.hasNext();) {
+                    for (Iterator minPaths = new MinimalPathIterator(gu, auxVertex0, auxVertex1); minPaths.hasNext(); ) {
                         List auxPath = (List) minPaths.next();
                         List edgesOfNewCycle = new ArrayList(auxPath.size());
 
-                        Iterator edgeIterator = auxPath.iterator();
-                        while (edgeIterator.hasNext()) {
-                            Edge auxEdge = (Edge) edgeIterator.next();
+                        for (Object o : auxPath) {
+                            Edge auxEdge = (Edge) o;
 
                             // Get the edge corresponding to the aux. edge
                             Edge e = (Edge) gu.edge(auxEdge);
@@ -652,9 +643,8 @@ public class SimpleCycleBasis {
 
                         Collection incidentEdges = graph.edgesOf(vertex);
 
-                        Iterator edgeIterator = incidentEdges.iterator();
-                        while (edgeIterator.hasNext()) {
-                            Edge edge = (Edge) edgeIterator.next();
+                        for (Object incidentEdge : incidentEdges) {
+                            Edge edge = (Edge) incidentEdge;
                             int index = getEdgeIndex(edge);
                             if (u[i][index] || u[j][index]) {
                                 shouldSearchCycle = true;

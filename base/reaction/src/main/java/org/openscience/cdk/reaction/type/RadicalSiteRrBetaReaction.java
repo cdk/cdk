@@ -144,26 +144,20 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
                 hcg.getSpheres(reactant, atomi, 2, true);
                 List<IAtom> atom1s = hcg.getNodesInSphere(2);
 
                 hcg.getSpheres(reactant, atomi, 3, true);
-                Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
-                while (atomls.hasNext()) {
-                    IAtom atoml = atomls.next();
+                for (IAtom atoml : hcg.getNodesInSphere(3)) {
                     if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
                             && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
                             && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
-                        Iterator<IAtom> atomRs = reactant.getConnectedAtomsList(atoml).iterator();
-                        while (atomRs.hasNext()) {
-                            IAtom atomR = atomRs.next();
+                        for (IAtom atomR : reactant.getConnectedAtomsList(atoml)) {
                             if (atom1s.contains(atomR)) continue;
                             if (reactant.getBond(atomR, atoml).getFlag(CDKConstants.REACTIVE_CENTER)
                                     && atomR.getFlag(CDKConstants.REACTIVE_CENTER)
@@ -209,25 +203,19 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
                 hcg.getSpheres(reactant, atomi, 2, true);
                 List<IAtom> atom1s = hcg.getNodesInSphere(2);
 
                 hcg.getSpheres(reactant, atomi, 3, true);
-                Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
-                while (atomls.hasNext()) {
-                    IAtom atoml = atomls.next();
+                for (IAtom atoml : hcg.getNodesInSphere(3)) {
                     if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
                             && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
-                        Iterator<IAtom> atomRs = reactant.getConnectedAtomsList(atoml).iterator();
-                        while (atomRs.hasNext()) {
-                            IAtom atomR = atomRs.next();
+                        for (IAtom atomR : reactant.getConnectedAtomsList(atoml)) {
                             if (atom1s.contains(atomR)) continue;
                             if ((atomR.getFormalCharge() == CDKConstants.UNSET ? 0 : atomR.getFormalCharge()) == 0) {
 

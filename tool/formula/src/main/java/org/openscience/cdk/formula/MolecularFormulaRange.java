@@ -194,9 +194,7 @@ public class MolecularFormulaRange implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
 
         MolecularFormulaRange clone = new MolecularFormulaRange();
-        Iterator<IIsotope> iterIso = this.isotopes().iterator();
-        while (iterIso.hasNext()) {
-            IIsotope isotope = iterIso.next();
+        for (IIsotope isotope : this.isotopes()) {
             clone.addIsotope((IIsotope) isotope.clone(), getIsotopeCountMin(isotope), getIsotopeCountMax(isotope));
         }
         return clone;

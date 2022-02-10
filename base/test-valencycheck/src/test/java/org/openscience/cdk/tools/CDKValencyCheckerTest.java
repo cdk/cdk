@@ -276,9 +276,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 
     private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             IAtomType type = matcher.findMatchingAtomType(container, atom);
             if (type != null) AtomTypeManipulator.configure(atom, type);
         }

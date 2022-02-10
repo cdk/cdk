@@ -92,9 +92,7 @@ public class SSSRFinderTest extends CDKTestCase {
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
-        Iterator atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
         Assert.assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
@@ -107,9 +105,7 @@ public class SSSRFinderTest extends CDKTestCase {
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
-        Iterator atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
         Assert.assertEquals("All ring atoms in 2-ethyl cyclopentane were not marked as being in a ring", 5, count);

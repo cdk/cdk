@@ -182,9 +182,7 @@ public class DescriptorEngine {
                 }
                 logger.debug("Calculated molecular descriptors...");
             } else if (descriptor instanceof IAtomicDescriptor) {
-                Iterator atoms = molecule.atoms().iterator();
-                while (atoms.hasNext()) {
-                    IAtom atom = (IAtom) atoms.next();
+                for (IAtom atom : molecule.atoms()) {
                     DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
                     if (value.getException() == null)
                         atom.setProperty(speclist.get(i), value);
@@ -195,9 +193,7 @@ public class DescriptorEngine {
                 }
                 logger.debug("Calculated atomic descriptors...");
             } else if (descriptor instanceof IBondDescriptor) {
-                Iterator bonds = molecule.bonds().iterator();
-                while (bonds.hasNext()) {
-                    IBond bond = (IBond) bonds.next();
+                for (IBond bond : molecule.bonds()) {
                     DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bond, molecule);
                     if (value.getException() == null)
                         bond.setProperty(speclist.get(i), value);

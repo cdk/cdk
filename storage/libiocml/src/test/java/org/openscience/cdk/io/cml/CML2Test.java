@@ -121,9 +121,7 @@ public class CML2Test extends CDKTestCase {
         Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
         Assert.assertTrue(!GeometryUtil.has2DCoordinates(mol));
 
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            org.openscience.cdk.interfaces.IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.Na) Assert.assertEquals(+1, atom.getFormalCharge().intValue());
         }
     }
@@ -155,9 +153,7 @@ public class CML2Test extends CDKTestCase {
         Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
         Assert.assertTrue(!GeometryUtil.has2DCoordinates(mol));
 
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            org.openscience.cdk.interfaces.IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.N) Assert.assertEquals(+1, atom.getFormalCharge().intValue());
         }
     }

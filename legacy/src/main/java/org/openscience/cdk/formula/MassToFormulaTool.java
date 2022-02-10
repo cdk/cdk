@@ -116,16 +116,12 @@ public class MassToFormulaTool {
      */
     public void setRestrictions(List<IRule> rulesNew) throws CDKException {
 
-        Iterator<IRule> itRules = rulesNew.iterator();
-        while (itRules.hasNext()) {
-            IRule rule = itRules.next();
+        for (IRule rule : rulesNew) {
             if (rule instanceof ElementRule) {
                 mfRange = (MolecularFormulaRange) ((Object[]) rule.getParameters())[0];
 
                 //removing the rule
-                Iterator<IRule> oldRuleIt = rules.iterator();
-                while (oldRuleIt.hasNext()) {
-                    IRule oldRule = oldRuleIt.next();
+                for (IRule oldRule : rules) {
                     if (oldRule instanceof ElementRule) {
                         rules.remove(oldRule);
                         rules.add(rule);
@@ -137,9 +133,7 @@ public class MassToFormulaTool {
                 this.charge = (Double) ((Object[]) rule.getParameters())[0];
 
                 //removing the rule
-                Iterator<IRule> oldRuleIt = rules.iterator();
-                while (oldRuleIt.hasNext()) {
-                    IRule oldRule = oldRuleIt.next();
+                for (IRule oldRule : rules) {
                     if (oldRule instanceof ChargeRule) {
                         rules.remove(oldRule);
                         rules.add(rule);
@@ -149,9 +143,7 @@ public class MassToFormulaTool {
             } else if (rule instanceof ToleranceRangeRule) {
                 this.tolerance = (Double) ((Object[]) rule.getParameters())[1];
                 //removing the rule
-                Iterator<IRule> oldRuleIt = rules.iterator();
-                while (oldRuleIt.hasNext()) {
-                    IRule oldRule = oldRuleIt.next();
+                for (IRule oldRule : rules) {
                     if (oldRule instanceof ToleranceRangeRule) {
                         rules.remove(oldRule);
                         rules.add(rule);
@@ -265,9 +257,7 @@ public class MassToFormulaTool {
 
         // put IIsotope into a list
         List<IIsotope> isotopes_TO = new ArrayList<>();
-        Iterator<IIsotope> isIt = mfRange.isotopes().iterator();
-        while (isIt.hasNext())
-            isotopes_TO.add(isIt.next());
+        for (IIsotope iIsotope : mfRange.isotopes()) isotopes_TO.add(iIsotope);
 
         isotopes_TO = orderList(isotopes_TO);
 
@@ -421,9 +411,7 @@ public class MassToFormulaTool {
     private List<IIsotope> orderList(List<IIsotope> isotopes_TO) {
         List<IIsotope> newOrderList = new ArrayList<>();
         for (String symbol : orderElements) {
-            Iterator<IIsotope> itIso = isotopes_TO.iterator();
-            while (itIso.hasNext()) {
-                IIsotope isotopeToCo = itIso.next();
+            for (IIsotope isotopeToCo : isotopes_TO) {
                 if (isotopeToCo.getSymbol().equals(symbol)) {
                     newOrderList.add(isotopeToCo);
                 }
@@ -504,9 +492,7 @@ public class MassToFormulaTool {
         for (String orderElement : orderElements) {
             IElement element = builder.newInstance(IElement.class, orderElement);
             if (MolecularFormulaManipulator.containsElement(formula, element)) {
-                Iterator<IIsotope> isotopes = MolecularFormulaManipulator.getIsotopes(formula, element).iterator();
-                while (isotopes.hasNext()) {
-                    IIsotope isotope = isotopes.next();
+                for (IIsotope isotope : MolecularFormulaManipulator.getIsotopes(formula, element)) {
                     new_formula.addIsotope(isotope, formula.getIsotopeCount(isotope));
                 }
             }

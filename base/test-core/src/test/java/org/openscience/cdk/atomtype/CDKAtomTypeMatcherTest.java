@@ -2449,9 +2449,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     public void testPyridineOxideCharged_SP2() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.plus.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.minus"};
         IAtomContainer molecule = TestMoleculeFactory.makePyridineOxide();
-        Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setOrder(Order.SINGLE);
+        for (IBond iBond : molecule.bonds()) iBond.setOrder(Order.SINGLE);
         for (int i = 0; i < 6; i++) {
             molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
         }

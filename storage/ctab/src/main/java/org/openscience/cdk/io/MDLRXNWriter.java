@@ -267,9 +267,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             //write sdfields, if any
             if (rdFields != null) {
                 Set<String> set = rdFields.keySet();
-                Iterator<String> iterator = set.iterator();
-                while (iterator.hasNext()) {
-                    Object element = iterator.next();
+                for (Object element : set) {
                     writer.write("> <" + element + ">");
                     writer.write('\n');
                     writer.write(rdFields.get(element).toString());

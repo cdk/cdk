@@ -102,9 +102,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
         lpcheck.saturate(reactant);
 
-        Iterator<IAtom> atoms = reactant.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : reactant.atoms()) {
             if (reactant.getConnectedLonePairsCount(atom) > 0) {
                 atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
             }

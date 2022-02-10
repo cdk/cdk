@@ -209,9 +209,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         IRing ring;
         IRingSet ringsWithThisBond;
         // SET ISINRING FLAGS FOR BONDS
-        Iterator<IBond> bondsInContainer = varAtomContainer.bonds().iterator();
-        while (bondsInContainer.hasNext()) {
-            IBond bond = bondsInContainer.next();
+        for (IBond bond : varAtomContainer.bonds()) {
             ringsWithThisBond = varRingSet.getRings(bond);
             if (ringsWithThisBond.getAtomContainerCount() > 0) {
                 bond.setFlag(CDKConstants.ISINRING, true);

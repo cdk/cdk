@@ -376,9 +376,7 @@ public class AtomPlacer3D {
      * author:    steinbeck,cho
      */
     public IAtom getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(IAtomContainer molecule) {
-        Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : molecule.bonds()) {
             if (bond.getBegin().getFlag(CDKConstants.ISPLACED) && !(bond.getEnd().getFlag(CDKConstants.ISPLACED))) {
                 if (isAliphaticHeavyAtom(bond.getEnd())) {
                     return bond.getEnd();
@@ -415,9 +413,7 @@ public class AtomPlacer3D {
      * author: steinbeck,cho
      */
     public IAtom getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(IAtomContainer molecule) {
-        Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : molecule.bonds()) {
             IAtom atom0 = bond.getBegin();
             IAtom atom1 = bond.getEnd();
             if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
@@ -441,9 +437,7 @@ public class AtomPlacer3D {
      * @return          The nextPlacedHeavyAtomWithUnplacedRingNeighbour value
      */
     public IAtom getNextPlacedHeavyAtomWithUnplacedRingNeighbour(IAtomContainer molecule) {
-        Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : molecule.bonds()) {
             IAtom atom0 = bond.getBegin();
             IAtom atom1 = bond.getEnd();
             if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {

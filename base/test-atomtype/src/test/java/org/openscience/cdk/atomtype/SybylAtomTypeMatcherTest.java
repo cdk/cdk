@@ -243,9 +243,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     private void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws Exception {
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             atom.setAtomTypeName(null);
             IAtomType matched = matcher.findMatchingAtomType(container, atom);
             if (matched != null) AtomTypeManipulator.configure(atom, matched);

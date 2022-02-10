@@ -112,9 +112,7 @@ public class GeometryTools {
     public static void translateAllPositive(IAtomContainer atomCon) {
         double minX = Double.MAX_VALUE;
         double minY = Double.MAX_VALUE;
-        Iterator<IAtom> atoms = atomCon.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : atomCon.atoms()) {
             if (atom.getPoint2d() != null) {
                 if (atom.getPoint2d().x < minX) {
                     minX = atom.getPoint2d().x;
@@ -372,9 +370,7 @@ public class GeometryTools {
     public static void translate2DCentreOfMassTo(IAtomContainer atomCon, Point2d p) {
         Point2d com = get2DCentreOfMass(atomCon);
         Vector2d translation = new Vector2d(p.x - com.x, p.y - com.y);
-        Iterator<IAtom> atoms = atomCon.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : atomCon.atoms()) {
             if (atom.getPoint2d() != null) {
                 atom.getPoint2d().add(translation);
             }
@@ -459,9 +455,7 @@ public class GeometryTools {
 
         double totalmass = 0.0;
 
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom a = atoms.next();
+        for (IAtom a : ac.atoms()) {
             Double mass = a.getExactMass();
             if (mass == null) return null;
             totalmass += mass;
@@ -483,9 +477,7 @@ public class GeometryTools {
         double centerX = 0;
         double centerY = 0;
         double counter = 0;
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             if (atom.getPoint2d() != null) {
                 centerX += atom.getPoint2d().x;
                 centerY += atom.getPoint2d().y;
@@ -507,9 +499,7 @@ public class GeometryTools {
     public static void translate2DCenterTo(IAtomContainer container, Point2d p) {
         Point2d com = get2DCenter(container);
         Vector2d translation = new Vector2d(p.x - com.x, p.y - com.y);
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             if (atom.getPoint2d() != null) {
                 atom.getPoint2d().add(translation);
             }
@@ -533,9 +523,7 @@ public class GeometryTools {
 
         double totalmass = 0.0;
 
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom a = atoms.next();
+        for (IAtom a : ac.atoms()) {
             Double mass = a.getExactMass();
             // some sanity checking
             if (a.getPoint3d() == null) return null;
@@ -562,9 +550,7 @@ public class GeometryTools {
         double centerY = 0;
         double centerZ = 0;
         double counter = 0;
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : ac.atoms()) {
             if (atom.getPoint3d() != null) {
                 centerX += atom.getPoint3d().x;
                 centerY += atom.getPoint3d().y;
@@ -803,9 +789,7 @@ public class GeometryTools {
 
         double smallestMouseDistance = -1;
         double mouseDistance;
-        Iterator<IBond> bonds = atomCon.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond currentBond = bonds.next();
+        for (IBond currentBond : atomCon.bonds()) {
             bondCenter = get2DCenter(currentBond.atoms());
             mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
             if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
@@ -832,9 +816,7 @@ public class GeometryTools {
 
         double smallestMouseDistance = -1;
         double mouseDistance;
-        Iterator<IBond> bonds = atomCon.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond currentBond = bonds.next();
+        for (IBond currentBond : atomCon.bonds()) {
             bondCenter = get2DCenter(currentBond.atoms());
             mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
             if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
@@ -1684,9 +1666,8 @@ public class GeometryTools {
      */
     public static boolean has3DCoordinates(IChemModel chemModel) {
         List<IAtomContainer> acs = ChemModelManipulator.getAllAtomContainers(chemModel);
-        Iterator<IAtomContainer> it = acs.iterator();
-        while (it.hasNext()) {
-            if (!has3DCoordinates(it.next())) {
+        for (IAtomContainer ac : acs) {
+            if (!has3DCoordinates(ac)) {
                 return false;
             }
         }

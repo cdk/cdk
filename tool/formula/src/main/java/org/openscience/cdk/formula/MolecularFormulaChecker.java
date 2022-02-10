@@ -86,9 +86,8 @@ public class MolecularFormulaChecker {
         IMolecularFormula formulaWith = isValid(formula);
         Map<Object, Object> properties = formulaWith.getProperties();
 
-        Iterator<IRule> iterRules = rules.iterator();
-        while (iterRules.hasNext()) {
-            result *= (Double) properties.get(iterRules.next().getClass());
+        for (IRule rule : rules) {
+            result *= (Double) properties.get(rule.getClass());
         }
         return result;
     }

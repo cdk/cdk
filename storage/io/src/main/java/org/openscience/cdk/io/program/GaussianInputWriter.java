@@ -200,9 +200,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
 
         // then come all the atoms.
         // Loop through the atoms and write them out:
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom a = atoms.next();
+        for (IAtom a : mol.atoms()) {
             String st = a.getSymbol();
 
             // export Eucledian coordinates (indicated by the 0)

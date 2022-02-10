@@ -61,9 +61,8 @@ public class RingSetManipulator {
      */
     public static IAtomContainer getAllInOneContainer(IRingSet ringSet) {
         IAtomContainer resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
-        Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
-        while (containers.hasNext()) {
-            resultContainer.add(containers.next());
+        for (IAtomContainer container : RingSetManipulator.getAllAtomContainers(ringSet)) {
+            resultContainer.add(container);
         }
         return resultContainer;
     }

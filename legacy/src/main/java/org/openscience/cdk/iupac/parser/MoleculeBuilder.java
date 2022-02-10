@@ -105,13 +105,8 @@ public class MoleculeBuilder {
      * @see #addFunGroup
      */
     private void buildFunGroups(List<AttachedGroup> attachedGroups) {
-        Iterator<AttachedGroup> groupsIterator = attachedGroups.iterator();
-        while (groupsIterator.hasNext()) {
-            AttachedGroup attachedGroup = groupsIterator.next();
-
-            Iterator<Token> locationsIterator = attachedGroup.getLocations().iterator();
-            while (locationsIterator.hasNext()) {
-                Token locationToken = locationsIterator.next();
+        for (AttachedGroup attachedGroup : attachedGroups) {
+            for (Token locationToken : attachedGroup.getLocations()) {
                 addFunGroup(attachedGroup.getName(), Integer.parseInt(locationToken.image) - 1);
             }
         }
@@ -392,14 +387,8 @@ public class MoleculeBuilder {
      * @param attachedSubstituents A vector of AttachedGroup's representing substituents.
      */
     private void addHeads(List<AttachedGroup> attachedSubstituents) {
-        Iterator<AttachedGroup> substituentsIterator = attachedSubstituents.iterator();
-        while (substituentsIterator.hasNext()) {
-            AttachedGroup attachedSubstituent = substituentsIterator.next();
-
-            Iterator<Token> locationsIterator = attachedSubstituent.getLocations().iterator();
-            while (locationsIterator.hasNext()) {
-                Token locationToken = locationsIterator.next();
-
+        for (AttachedGroup attachedSubstituent : attachedSubstituents) {
+            for (Token locationToken : attachedSubstituent.getLocations()) {
                 int joinLocation = Integer.parseInt(locationToken.image) - 1;
                 IAtom connectingAtom;
 
@@ -450,9 +439,7 @@ public class MoleculeBuilder {
 
         //Add the hydrogens to create a balanced molecule
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(currentMolecule.getBuilder());
-        Iterator<IAtom> atoms = currentMolecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : currentMolecule.atoms()) {
             IAtomType type = matcher.findMatchingAtomType(currentMolecule, atom);
             AtomTypeManipulator.configure(atom, type);
         }

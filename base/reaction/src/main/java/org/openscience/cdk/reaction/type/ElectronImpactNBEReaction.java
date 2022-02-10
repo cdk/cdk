@@ -126,9 +126,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IAtom> atoms = reactant.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : reactant.atoms()) {
             if (atom.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedLonePairsCount(atom) > 0
                     && reactant.getConnectedSingleElectronsCount(atom) == 0) {
 
@@ -156,9 +154,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IAtom> atoms = reactant.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : reactant.atoms()) {
             if (reactant.getConnectedLonePairsCount(atom) > 0 && reactant.getConnectedSingleElectronsCount(atom) == 0)
                 atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
 

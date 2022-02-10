@@ -362,9 +362,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 
         matcher.setRingSet(getRings());
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.C) {
                 Assert.assertTrue(testAtom("SaaCH", atom));
             }

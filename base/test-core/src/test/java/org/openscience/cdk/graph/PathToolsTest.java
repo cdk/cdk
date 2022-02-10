@@ -83,13 +83,11 @@ public class PathToolsTest extends CDKTestCase {
         PathTools.resetFlags(atomContainer);
 
         // now assume that no VISITED is set
-        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            Assert.assertNull(atoms.next().getProperty(CDKConstants.VISITED));
+        for (IAtom iAtom : atomContainer.atoms()) {
+            Assert.assertNull(iAtom.getProperty(CDKConstants.VISITED));
         }
-        Iterator<IBond> bonds = atomContainer.bonds().iterator();
-        while (bonds.hasNext()) {
-            Assert.assertNull(bonds.next().getProperty(CDKConstants.VISITED));
+        for (IBond iBond : atomContainer.bonds()) {
+            Assert.assertNull(iBond.getProperty(CDKConstants.VISITED));
         }
     }
 

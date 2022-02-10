@@ -227,9 +227,8 @@ public class RssWriter extends DefaultChemObjectWriter {
                 itemElement.appendChild(root);
                 if (multiMap.get(chemObject) != null) {
                     Collection coll = (Collection) multiMap.get(chemObject);
-                    Iterator iterator = coll.iterator();
-                    while (iterator.hasNext()) {
-                        itemElement.appendChild((Element) iterator.next());
+                    for (Object o : coll) {
+                        itemElement.appendChild((Element) o);
                     }
                 }
                 rdfElement.appendChild(itemElement);

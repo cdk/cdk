@@ -123,9 +123,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IBond> bondis = reactant.bonds().iterator();
-        while (bondis.hasNext()) {
-            IBond bondi = bondis.next();
+        for (IBond bondi : reactant.bonds()) {
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && atom1.getFlag(CDKConstants.REACTIVE_CENTER)
@@ -169,9 +167,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IBond> bondis = reactant.bonds().iterator();
-        while (bondis.hasNext()) {
-            IBond bond = bondis.next();
+        for (IBond bond : reactant.bonds()) {
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if ((atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0

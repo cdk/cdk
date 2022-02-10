@@ -178,9 +178,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
                     String buf = "";
                     int ncon = 0;
-                    Iterator<IBond> bonds = mol.bonds().iterator();
-                    while (bonds.hasNext()) {
-                        IBond bond = bonds.next();
+                    for (IBond bond : mol.bonds()) {
                         if (bond.contains(atom)) {
                             // current atom is in the bond so lets get the connected atom
                             IAtom connectedAtom = bond.getOther(atom);

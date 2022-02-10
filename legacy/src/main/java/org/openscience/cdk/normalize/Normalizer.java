@@ -92,17 +92,13 @@ public class Normalizer {
                 UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
                 while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
                     List<RMap> l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
-                    Iterator<RMap> bondit = l.iterator();
-                    while (bondit.hasNext()) {
-                        RMap rmap = bondit.next();
+                    for (RMap rmap : l) {
                         IBond acbond = ac.getBond(rmap.getId1());
                         IBond replacebond = replacementStructure.getBond(rmap.getId2());
                         acbond.setOrder(replacebond.getOrder());
                         change = true;
                     }
-                    Iterator<RMap> atomit = l2.iterator();
-                    while (atomit.hasNext()) {
-                        RMap rmap = atomit.next();
+                    for (RMap rmap : l2) {
                         IAtom acatom = ac.getAtom(rmap.getId1());
                         IAtom replaceatom = replacementStructure.getAtom(rmap.getId2());
                         acatom.setFormalCharge(replaceatom.getFormalCharge());

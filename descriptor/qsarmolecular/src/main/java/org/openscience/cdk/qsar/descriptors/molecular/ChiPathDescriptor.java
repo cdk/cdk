@@ -119,9 +119,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = localAtomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : localAtomContainer.atoms()) {
             IAtomType type;
             try {
                 type = matcher.findMatchingAtomType(localAtomContainer, atom);

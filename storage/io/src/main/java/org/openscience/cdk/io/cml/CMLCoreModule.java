@@ -1627,9 +1627,7 @@ public class CMLCoreModule implements ICMLModule {
                 if (currentBond.getID() != null) {
                     Map<String, String> currentBondProperties = bondCustomProperty.get(currentBond.getID());
                     if (currentBondProperties != null) {
-                        Iterator<String> keys = currentBondProperties.keySet().iterator();
-                        while (keys.hasNext()) {
-                            String key = keys.next();
+                        for (String key : currentBondProperties.keySet()) {
                             currentBond.setProperty(key, currentBondProperties.get(key));
                         }
                         bondCustomProperty.remove(currentBond.getID());

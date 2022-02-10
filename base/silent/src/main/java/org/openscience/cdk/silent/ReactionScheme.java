@@ -125,9 +125,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
         if (getProperties() != null) {
             Map<Object, Object> properties = getProperties();
             Map<Object, Object> clonedHashtable = new HashMap<>();
-            Iterator<Object> keys = properties.keySet().iterator();
-            while (keys.hasNext()) {
-                Object key = keys.next();
+            for (Object key : properties.keySet()) {
                 Object value = properties.get(key);
                 clonedHashtable.put(key, value);
             }

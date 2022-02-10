@@ -167,9 +167,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
                         "Error during aromaticity detection: " + e.getMessage()));
             }
         }
-        Iterator bonds = ac.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+        for (IBond bond : ac.bonds()) {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 aromaticBondsCount += 1;
             }

@@ -77,9 +77,7 @@ public class AminoAcids {
             total += acid.getBondCount();
             LOGGER.debug("total #bonds: ", total);
 
-            Iterator<IBond> bonds = acid.bonds().iterator();
-            while (bonds.hasNext()) {
-                IBond bond = bonds.next();
+            for (IBond bond : acid.bonds()) {
                 info[counter][0] = counter;
                 info[counter][1] = acid.indexOf(bond.getBegin());
                 info[counter][2] = acid.indexOf(bond.getEnd());
@@ -136,9 +134,7 @@ public class AminoAcids {
                 // convert into an AminoAcid
                 AminoAcid aminoAcid = new AminoAcid();
                 Iterator<IAtom> atoms = ac.atoms().iterator();
-                Iterator<Object> props = ac.getProperties().keySet().iterator();
-                while (props.hasNext()) {
-                    Object next = props.next();
+                for (Object next : ac.getProperties().keySet()) {
                     LOGGER.debug("Prop class: " + next.getClass().getName());
                     LOGGER.debug("Prop: " + next.toString());
                     if (next instanceof DictRef) {
@@ -168,9 +164,7 @@ public class AminoAcids {
                         aminoAcid.addAtom(atom);
                     }
                 }
-                Iterator<IBond> bonds = ac.bonds().iterator();
-                while (bonds.hasNext()) {
-                    IBond bond = bonds.next();
+                for (IBond bond : ac.bonds()) {
                     aminoAcid.addBond(bond);
                 }
                 AminoAcidManipulator.removeAcidicOxygen(aminoAcid);

@@ -176,10 +176,8 @@ public class SSSRFinder {
 
         IRingSet ringSet = container.getBuilder().newInstance(IRingSet.class);
 
-        Iterator cycleIterator = cycles.iterator();
-
-        while (cycleIterator.hasNext()) {
-            SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
+        for (Object o : cycles) {
+            SimpleCycle cycle = (SimpleCycle) o;
 
             IRing ring = container.getBuilder().newInstance(IRing.class);
 

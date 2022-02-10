@@ -1952,9 +1952,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addBond(b3);
 
         Assert.assertEquals(3, acetone.getBondCount());
-        Iterator<IBond> bonds = acetone.bonds().iterator();
-        while (bonds.hasNext())
-            Assert.assertNotNull(bonds.next());
+        for (IBond iBond : acetone.bonds()) Assert.assertNotNull(iBond);
         Assert.assertEquals(b1, acetone.getBond(0));
         Assert.assertEquals(b2, acetone.getBond(1));
         Assert.assertEquals(b3, acetone.getBond(2));
@@ -2098,9 +2096,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addBond(1, 2, IBond.Order.SINGLE);
 
         Assert.assertEquals(3, acetone.getBondCount());
-        Iterator<IBond> bonds = acetone.bonds().iterator();
-        while (bonds.hasNext())
-            Assert.assertNotNull(bonds.next());
+        for (IBond iBond : acetone.bonds()) Assert.assertNotNull(iBond);
 
         Assert.assertEquals(c1, acetone.getBond(0).getBegin());
         Assert.assertEquals(c2, acetone.getBond(0).getEnd());
@@ -2130,9 +2126,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.NONE);
 
         Assert.assertEquals(3, acetone.getBondCount());
-        Iterator<IBond> bonds = acetone.bonds().iterator();
-        while (bonds.hasNext())
-            Assert.assertNotNull(bonds.next());
+        for (IBond iBond : acetone.bonds()) Assert.assertNotNull(iBond);
 
         Assert.assertEquals(c1, acetone.getBond(0).getBegin());
         Assert.assertEquals(c2, acetone.getBond(0).getEnd());

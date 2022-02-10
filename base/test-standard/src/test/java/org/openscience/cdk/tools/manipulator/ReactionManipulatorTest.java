@@ -183,12 +183,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
     @Test
     public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
         ReactionManipulator.setAtomProperties(reaction, "test", "ok");
-        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
-        while (atomContainers.hasNext()) {
-            IAtomContainer container = atomContainers.next();
-            Iterator<IAtom> atoms = container.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+        for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
+            for (IAtom atom : container.atoms()) {
                 Assert.assertNotNull(atom.getProperty("test"));
                 Assert.assertEquals("ok", atom.getProperty("test"));
             }
@@ -205,9 +201,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetRelevantAtomContainer_IReaction_IAtom() {
-        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
-        while (atomContainers.hasNext()) {
-            IAtomContainer container = atomContainers.next();
+        for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             IAtom anAtom = container.getAtom(0);
             Assert.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, anAtom));
         }
@@ -215,9 +209,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetRelevantAtomContainer_IReaction_IBond() {
-        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
-        while (atomContainers.hasNext()) {
-            IAtomContainer container = atomContainers.next();
+        for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             IBond aBond = container.getBond(0);
             Assert.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, aBond));
         }

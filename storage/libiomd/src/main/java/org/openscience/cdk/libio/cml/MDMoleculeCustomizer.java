@@ -82,9 +82,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
 
             //Residues
             if (mdmol.getResidues().size() > 0) {
-                Iterator it = mdmol.getResidues().iterator();
-                while (it.hasNext()) {
-                    Residue residue = (Residue) it.next();
+                for (Residue residue : mdmol.getResidues()) {
                     int number = residue.getNumber();
 
                     CMLMolecule resMol = new CMLMolecule();
@@ -120,9 +118,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
 
             //Chargegroups
             if (mdmol.getChargeGroups().size() > 0) {
-                Iterator it = mdmol.getChargeGroups().iterator();
-                while (it.hasNext()) {
-                    ChargeGroup chargeGroup = (ChargeGroup) it.next();
+                for (ChargeGroup chargeGroup : mdmol.getChargeGroups()) {
                     int number = chargeGroup.getNumber();
 
                     //FIXME: persist the ChargeGroup

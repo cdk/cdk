@@ -361,9 +361,7 @@ public class MolecularFormula implements IMolecularFormula {
     @Override
     public void setProperties(Map<Object, Object> properties) {
 
-        Iterator<Object> keys = properties.keySet().iterator();
-        while (keys.hasNext()) {
-            Object key = keys.next();
+        for (Object key : properties.keySet()) {
             lazyProperties().put(key, properties.get(key));
         }
     }

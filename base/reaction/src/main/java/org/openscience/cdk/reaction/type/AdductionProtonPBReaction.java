@@ -130,10 +130,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 
         if (AtomContainerManipulator.getTotalCharge(reactant) != 0) return setOfReactions;
 
-        Iterator<IBond> bondis = reactant.bonds().iterator();
-        while (bondis.hasNext()) {
-            IBond bondi = bondis.next();
-
+        for (IBond bondi : reactant.bonds()) {
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
                     && ((bondi.getOrder() == IBond.Order.DOUBLE) || (bondi.getOrder() == IBond.Order.TRIPLE))
                     && bondi.getBegin().getFlag(CDKConstants.REACTIVE_CENTER)
@@ -196,10 +193,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
         if (AtomContainerManipulator.getTotalCharge(reactant) != 0) return;
 
-        Iterator<IBond> bondis = reactant.bonds().iterator();
-        while (bondis.hasNext()) {
-            IBond bondi = bondis.next();
-
+        for (IBond bondi : reactant.bonds()) {
             if (((bondi.getOrder() == IBond.Order.DOUBLE) || (bondi.getOrder() == IBond.Order.TRIPLE))) {
                 int chargeAtom0 = bondi.getBegin().getFormalCharge() == null ? 0 : bondi.getBegin().getFormalCharge();
                 int chargeAtom1 = bondi.getEnd().getFormalCharge() == null ? 0 : bondi.getEnd().getFormalCharge();

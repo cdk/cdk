@@ -211,9 +211,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         Assert.assertEquals(3, rules.size());
 
-        Iterator<IRule> ruleIt = rules.iterator();
-        while (ruleIt.hasNext()) {
-            IRule ruleA = ruleIt.next();
+        for (IRule ruleA : rules) {
             if (ruleA instanceof ElementRule) {
                 Assert.assertEquals(1, ruleA.getParameters().length);
                 Object[] objects = ruleA.getParameters();
@@ -249,9 +247,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         List<IRule> rules = mfTool.getRestrictions();
         Assert.assertNotNull(rules);
 
-        Iterator<IRule> ruleIt = rules.iterator();
-        while (ruleIt.hasNext()) {
-            IRule ruleA = ruleIt.next();
+        for (IRule ruleA : rules) {
             if (ruleA instanceof ChargeRule) {
                 Assert.assertEquals(1, ruleA.getParameters().length);
                 Object[] objects = ruleA.getParameters();
@@ -288,9 +284,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         List<IRule> rules = mfTool.getRestrictions();
         Assert.assertNotNull(rules);
 
-        Iterator<IRule> ruleIt = rules.iterator();
-        while (ruleIt.hasNext()) {
-            IRule ruleA = ruleIt.next();
+        for (IRule ruleA : rules) {
             if (ruleA instanceof ToleranceRangeRule) {
                 Assert.assertEquals(2, ruleA.getParameters().length);
                 Object[] objects = ruleA.getParameters();

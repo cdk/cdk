@@ -157,10 +157,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
                     if (crystal != null) {
                         write(crystal);
                     } else {
-                        Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model)
-                                .iterator();
-                        while (containers.hasNext()) {
-                            writeMolecule(model.getBuilder().newInstance(IAtomContainer.class, containers.next()));
+                        for (IAtomContainer container : ChemModelManipulator.getAllAtomContainers(model)) {
+                            writeMolecule(model.getBuilder().newInstance(IAtomContainer.class, container));
                         }
                     }
                 }
@@ -310,9 +308,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
             writer.write('\n');
 
             // before saving the atoms, we need to create cartesian coordinates
-            Iterator<IAtom> atoms = crystal.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+            for (IAtom atom : crystal.atoms()) {
                 //            	logger.debug("PDBWriter: atom -> " + atom);
                 // if it got 3D coordinates, use that. If not, try fractional coordinates
                 if (atom.getPoint3d() == null && atom.getFractionalPoint3d() != null) {
