@@ -503,7 +503,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     rGroup = element.split("^R");
                     if (rGroup.length > 1) {
                         try {
-                            Rnumber = Integer.valueOf(rGroup[(rGroup.length - 1)]);
+                            Rnumber = Integer.parseInt(rGroup[(rGroup.length - 1)]);
                             RGroupCounter = Rnumber;
                         } catch (Exception ex) {
                             Rnumber = RGroupCounter;

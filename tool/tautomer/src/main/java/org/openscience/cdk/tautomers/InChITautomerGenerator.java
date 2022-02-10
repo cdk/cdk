@@ -226,7 +226,7 @@ public final class InChITautomerGenerator {
             if (!elementSymbol.equals("H")) {
                 int elementCnt = 1;
                 if (!(elementSymbol.length() == symbolAndCount.length())) {
-                    elementCnt = Integer.valueOf(symbolAndCount.substring(elementSymbol.length()));
+                    elementCnt = Integer.parseInt(symbolAndCount.substring(elementSymbol.length()));
                 }
 
                 for (int i = 0; i < elementCnt; i++) {
@@ -391,7 +391,7 @@ public final class InChITautomerGenerator {
                  */
                 while (subMatch.find()) {
                     if (!subMatch.group().equals("")) {
-                        mobHCount += Integer.valueOf(subMatch.group());
+                        mobHCount += Integer.parseInt(subMatch.group());
                     }
                 }
                 totalMobHydrCount += mobHCount;
@@ -428,7 +428,7 @@ public final class InChITautomerGenerator {
         while (atomsToRemove) {
             ATOMS: for (IAtom atom : skeleton.atoms()) {
                 atomRemoved = false;
-                int position = Integer.valueOf(atom.getID());
+                int position = Integer.parseInt(atom.getID());
                 if (!mobHydrAttachPositions.contains(position)
                         && atom.getHybridization().equals(IAtomType.Hybridization.SP3)) {
                     skeleton.removeAtomOnly(atom);

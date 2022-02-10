@@ -333,7 +333,7 @@ public class Maygen {
                 String[] info2 = info[0].split(NUMBERS_FROM_0_TO_9, 2);
                 if (info2.length == 1) return 1;
                 else {
-                    return Integer.valueOf(info2[1]);
+                    return Integer.parseInt(info2[1]);
                 }
             }
         } else {
@@ -745,7 +745,7 @@ public class Maygen {
             else info = atom.split(NUMBERS_FROM_0_TO_9, 2);
             symbol = info[0].split("\\(")[0];
             if (setElement && info[0].contains("(")) {
-                valence = Integer.valueOf(info[0].split("\\(")[1]);
+                valence = Integer.parseInt(info[0].split("\\(")[1]);
             } else {
                 valence = valences.get(symbol);
             }
@@ -781,7 +781,7 @@ public class Maygen {
                 hydrogens = atomOccurrence(info);
             } else {
                 if (setElement) {
-                    nonHydrogen = Integer.valueOf(info[1].split("\\)")[0]);
+                    nonHydrogen = Integer.parseInt(info[1].split("\\)")[0]);
                 } else {
                     nonHydrogen = valences.get(symbol);
                 }
@@ -2229,7 +2229,7 @@ public class Maygen {
             String[] info = atoms[0].split(NUMBERS_FROM_0_TO_9, 2);
             if (atoms[0].contains("(")) {
                 info2 = info[1].split("\\)");
-                if (info2[1].equals("2") && Integer.valueOf(info2[0]) > 3) {
+                if (info2[1].equals("2") && Integer.parseInt(info2[0]) > 3) {
                     check = false;
                 }
             } else {

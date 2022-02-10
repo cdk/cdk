@@ -145,7 +145,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
     public static boolean isValidRgroupQueryLabel(String Rxx) {
         Matcher matcher = validLabelPattern.matcher(Rxx);
         if (matcher.find()) {
-            int groupNumber = Integer.valueOf(Rxx.substring(1));
+            int groupNumber = Integer.parseInt(Rxx.substring(1));
             if (groupNumber >= 1 && groupNumber <= 32) {
                 return true;
             }
@@ -160,7 +160,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
         for (IAtom rgp : allRgroupAtoms) {
             if (RGroupQuery.isValidRgroupQueryLabel(((IPseudoAtom) rgp).getLabel())) {
-                int groupNum = Integer.valueOf(((IPseudoAtom) rgp).getLabel().substring(1));
+                int groupNum = Integer.parseInt(((IPseudoAtom) rgp).getLabel().substring(1));
                 if (rGroupDefinitions == null || rGroupDefinitions.get(groupNum) == null
                         || rGroupDefinitions.get(groupNum).getRGroups() == null
                         || rGroupDefinitions.get(groupNum).getRGroups().size() == 0) {
@@ -179,7 +179,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 if (rootAtom instanceof IPseudoAtom && rootAtom.getSymbol().startsWith("R")) {
                     IPseudoAtom pseudo = (IPseudoAtom) rootAtom;
                     if (pseudo.getLabel().length() > 1) {
-                        int rootAtomRgrpNumber = Integer.valueOf(pseudo.getLabel().substring(1));
+                        int rootAtomRgrpNumber = Integer.parseInt(pseudo.getLabel().substring(1));
                         if (rootAtomRgrpNumber == rgpNum) {
                             represented = true;
                             break rootLoop;

@@ -64,7 +64,7 @@ public class InChINumbersTools {
         String numberStringAux = aux.substring(0, aux.indexOf('/'));
         int i = 1;
         for (String numberString : numberStringAux.split("[,;]"))
-            numbers[Integer.valueOf(numberString) - 1] = i++;
+            numbers[Integer.parseInt(numberString) - 1] = i++;
     }
 
     /**

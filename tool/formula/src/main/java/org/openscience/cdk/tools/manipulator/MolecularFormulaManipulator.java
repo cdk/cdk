@@ -1367,12 +1367,12 @@ public class MolecularFormulaManipulator {
                 if (f == thisFormula.length() - 1
                         || (thisFormula.charAt(f + 1) >= 'A' && thisFormula.charAt(f + 1) <= 'Z')) {
                     int posit = eleSymb.indexOf(recentElementSymbol);
-                    int count = Integer.valueOf(recentElementCountString);
+                    int count = Integer.parseInt(recentElementCountString);
                     if (posit == -1) {
                         eleSymb.add(recentElementSymbol);
                         eleCount.add(count);
                     } else {
-                        int countP = Integer.valueOf(recentElementCountString);
+                        int countP = Integer.parseInt(recentElementCountString);
                         if (countP == 0) countP = 1;
                         int countA = eleCount.get(posit);
                         if (countA == 0) countA = 1;
@@ -1434,7 +1434,7 @@ public class MolecularFormulaManipulator {
                     multipliedformula += thisChar;
         	}
         }
-        finalformula += muliplier(multipliedformula, multiple.isEmpty() ? 1:Integer.valueOf(multiple)) + formulaEnd;
+        finalformula += muliplier(multipliedformula, multiple.isEmpty() ? 1:Integer.parseInt(multiple)) + formulaEnd;
 
         if (finalformula.contains("("))
         	return breakExtractor(finalformula);
@@ -1467,7 +1467,7 @@ public class MolecularFormulaManipulator {
                 recentCompound += thisChar;
             }
         }
-        return muliplier(recentCompound, Integer.valueOf(recentCompoundCount));
+        return muliplier(recentCompound, Integer.parseInt(recentCompoundCount));
     }
 
     /**

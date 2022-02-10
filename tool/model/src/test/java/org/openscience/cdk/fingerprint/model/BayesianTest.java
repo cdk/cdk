@@ -392,7 +392,7 @@ public class BayesianTest {
                 row++;
 
                 String stractv = (String) mol.getProperties().get(actvField);
-                int active = stractv.equals("true") ? 1 : stractv.equals("false") ? 0 : Integer.valueOf(stractv);
+                int active = stractv.equals("true") ? 1 : stractv.equals("false") ? 0 : Integer.parseInt(stractv);
                 if (active != 0 && active != 1) throw new CDKException("Activity field not found or invalid");
 
                 model.addMolecule(mol, active == 1);

@@ -209,11 +209,11 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
              * this line contains the number of reactants and products
              */
             StringTokenizer tokenizer = new StringTokenizer(countsLine);
-            numReactans = Integer.valueOf(tokenizer.nextToken());
+            numReactans = Integer.parseInt(tokenizer.nextToken());
             logger.info("Expecting " + numReactans + " reactants in file");
-            numProducts = Integer.valueOf(tokenizer.nextToken());
+            numProducts = Integer.parseInt(tokenizer.nextToken());
             if (tokenizer.hasMoreTokens()) {
-                agentCount = Integer.valueOf(tokenizer.nextToken());
+                agentCount = Integer.parseInt(tokenizer.nextToken());
                 // ChemAxon extension, technically BIOVIA now support this but
                 // not documented yet
                 if (mode == Mode.STRICT && agentCount > 0)

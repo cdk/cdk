@@ -230,9 +230,9 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     RGroupLogic log;
 
                     log = new RGroupLogic();
-                    int rgroupNumber = Integer.valueOf(strTk.nextToken());
+                    int rgroupNumber = Integer.parseInt(strTk.nextToken());
                     String tok = strTk.nextToken();
-                    log.rgoupNumberRequired = tok.equals("0") ? 0 : Integer.valueOf(tok);
+                    log.rgoupNumberRequired = tok.equals("0") ? 0 : Integer.parseInt(tok);
                     log.restH = strTk.nextToken().equals("1") ? true : false;
                     tok = "";
                     while (strTk.hasMoreTokens()) {
@@ -260,15 +260,15 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     StringTokenizer stAAL = new StringTokenizer(line);
                     stAAL.nextToken();
                     stAAL.nextToken();
-                    int pos = Integer.valueOf(stAAL.nextToken());
+                    int pos = Integer.parseInt(stAAL.nextToken());
                     IAtom rGroup = root.getAtom(pos - 1);
                     stAAL.nextToken();
                     Map<Integer, IBond> bondMap = new HashMap<>();
                     while (stAAL.hasMoreTokens()) {
-                        pos = Integer.valueOf(stAAL.nextToken());
+                        pos = Integer.parseInt(stAAL.nextToken());
                         IAtom partner = root.getAtom(pos - 1);
                         IBond bond = root.getBond(rGroup, partner);
-                        int order = Integer.valueOf(stAAL.nextToken());
+                        int order = Integer.parseInt(stAAL.nextToken());
                         bondMap.put(order, bond);
                         logger.info("AAL " + order + " " + ((IPseudoAtom) rGroup).getLabel() + "-"
                                 + partner.getSymbol());
@@ -319,7 +319,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                 if (atom instanceof IPseudoAtom) {
                     IPseudoAtom rGroup = (IPseudoAtom) atom;
                     if (RGroupQuery.isValidRgroupQueryLabel(rGroup.getLabel())) {
-                        int rgroupNum = Integer.valueOf(rGroup.getLabel().substring(1));
+                        int rgroupNum = Integer.parseInt(rGroup.getLabel().substring(1));
                         RGroupList rgroupList = new RGroupList(rgroupNum);
                         if (!rGroupDefinitions.containsKey(rgroupNum)) {
                             logger.info("Define Rgroup R" + rgroupNum);
@@ -350,7 +350,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                 line = input.readLine();
                 ++lineCount;
                 logger.info("line for num is " + line);
-                int rgroupNum = Integer.valueOf(line.trim());
+                int rgroupNum = Integer.parseInt(line.trim());
                 line = input.readLine();
                 ++lineCount;
 
@@ -381,8 +381,8 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                             stAPO.nextToken();
                             stAPO.nextToken();
                             while (stAPO.hasMoreTokens()) {
-                                int pos = Integer.valueOf(stAPO.nextToken());
-                                int apo = Integer.valueOf(stAPO.nextToken());
+                                int pos = Integer.parseInt(stAPO.nextToken());
+                                int apo = Integer.parseInt(stAPO.nextToken());
                                 IAtom at = group.getAtom(pos - 1);
                                 switch (apo) {
                                     case 1:

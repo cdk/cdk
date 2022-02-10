@@ -205,21 +205,21 @@ public class RGroupList implements IRGroupList {
             do {
                 //Number: "n"
                 if (match("^\\d+$", cond)) {
-                    if (Integer.valueOf(cond) < 0) // not allowed
+                    if (Integer.parseInt(cond) < 0) // not allowed
                         return false;
                     break;
                 }
                 //Range: "n-m"
                 if (match("^\\d+-\\d+$", cond)) {
-                    int from = Integer.valueOf(cond.substring(0, cond.indexOf('-')));
-                    int to = Integer.valueOf(cond.substring(cond.indexOf('-') + 1, cond.length()));
+                    int from = Integer.parseInt(cond.substring(0, cond.indexOf('-')));
+                    int to = Integer.parseInt(cond.substring(cond.indexOf('-') + 1, cond.length()));
                     if (from < 0 || to < 0 || to < from) // not allowed
                         return false;
                     break;
                 }
                 //Smaller than: "<n"
                 if (match("^<\\d+$", cond)) {
-                    int n = Integer.valueOf(cond.substring(cond.indexOf('<') + 1, cond.length()));
+                    int n = Integer.parseInt(cond.substring(cond.indexOf('<') + 1, cond.length()));
                     if (n == 0) // not allowed
                         return false;
                     break;
@@ -276,23 +276,23 @@ public class RGroupList implements IRGroupList {
             while (st.hasMoreTokens() && !addVal) {
                 String cond = st.nextToken().trim().replaceAll(" ", "");
                 if (match("^\\d+$", cond)) { // n
-                    if (Integer.valueOf(cond) == val) addVal = true;
+                    if (Integer.parseInt(cond) == val) addVal = true;
                 }
                 if (match("^\\d+-\\d+$", cond)) { // n-m
-                    int from = Integer.valueOf(cond.substring(0, cond.indexOf('-')));
-                    int to = Integer.valueOf(cond.substring(cond.indexOf('-') + 1, cond.length()));
+                    int from = Integer.parseInt(cond.substring(0, cond.indexOf('-')));
+                    int to = Integer.parseInt(cond.substring(cond.indexOf('-') + 1, cond.length()));
                     if (val >= from && val <= to) {
                         addVal = true;
                     }
                 }
                 if (match("^>\\d+$", cond)) { // <n
-                    int n = Integer.valueOf(cond.substring(cond.indexOf('>') + 1, cond.length()));
+                    int n = Integer.parseInt(cond.substring(cond.indexOf('>') + 1, cond.length()));
                     if (val > n) {
                         addVal = true;
                     }
                 }
                 if (match("^<\\d+$", cond)) { // >n
-                    int n = Integer.valueOf(cond.substring(cond.indexOf('<') + 1, cond.length()));
+                    int n = Integer.parseInt(cond.substring(cond.indexOf('<') + 1, cond.length()));
                     if (val < n) {
                         addVal = true;
                     }

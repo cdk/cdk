@@ -370,9 +370,9 @@ public class MDLReader extends DefaultChemObjectReader {
                     throw new CDKException("This file must be read with the MDLV3000Reader.");
                 }
             }
-            atoms = Integer.valueOf(line.substring(0, 3).trim());
+            atoms = Integer.parseInt(line.substring(0, 3).trim());
             logger.debug("Atomcount: " + atoms);
-            bonds = Integer.valueOf(line.substring(3, 6).trim());
+            bonds = Integer.parseInt(line.substring(3, 6).trim());
             logger.debug("Bondcount: " + bonds);
 
             // read ATOM block
@@ -532,11 +532,11 @@ public class MDLReader extends DefaultChemObjectReader {
             for (int f = 0; f < bonds; f++) {
                 line = input.readLine();
                 linecount++;
-                atom1 = Integer.valueOf(line.substring(0, 3).trim());
-                atom2 = Integer.valueOf(line.substring(3, 6).trim());
-                order = Integer.valueOf(line.substring(6, 9).trim());
+                atom1 = Integer.parseInt(line.substring(0, 3).trim());
+                atom2 = Integer.parseInt(line.substring(3, 6).trim());
+                order = Integer.parseInt(line.substring(6, 9).trim());
                 if (line.length() > 12) {
-                    int mdlStereo = Integer.valueOf(line.substring(9, 12).trim());
+                    int mdlStereo = Integer.parseInt(line.substring(9, 12).trim());
                     if (mdlStereo == 1) {
                         // MDL up bond
                         stereo = IBond.Stereo.UP;

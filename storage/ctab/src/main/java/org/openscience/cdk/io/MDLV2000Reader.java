@@ -2212,7 +2212,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 //Process the R group numbers as defined in RGP line.
                 while (st.hasMoreTokens()) {
                     Integer position = Integer.valueOf(st.nextToken());
-                    int rNumber = Integer.valueOf(st.nextToken());
+                    int rNumber = Integer.parseInt(st.nextToken());
                     // the container may have already had atoms before the new atoms were read
                     int index = container.getAtomCount() - nAtoms + position - 1;
                     IPseudoAtom pseudoAtom = (IPseudoAtom) container.getAtom(index);

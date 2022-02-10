@@ -564,7 +564,7 @@ public class Bayesian {
                                                 .equals("FCFP6") ? CircularFingerprinter.CLASS_FCFP6 : 0;
         if (classType == 0) throw new IOException("Unknown fingerprint type: " + bits[0]);
 
-        int folding = Integer.valueOf(bits[1]);
+        int folding = Integer.parseInt(bits[1]);
         if (folding > 0) for (int f = folding; f > 0; f = f >> 1)
             if ((f & 1) == 1 && f != 1) {
                 folding = -1;
@@ -586,18 +586,18 @@ public class Bayesian {
 
             Matcher m = PTN_HASHLINE.matcher(line);
             if (m.find()) {
-                int hash = Integer.valueOf(m.group(1));
+                int hash = Integer.parseInt(m.group(1));
                 double c = Double.valueOf(m.group(2));
                 model.contribs.put(hash, c);
             } else if (line.startsWith("training:size=")) {
                 try {
-                    model.trainingSize = Integer.valueOf(line.substring(14));
+                    model.trainingSize = Integer.parseInt(line.substring(14));
                 } catch (NumberFormatException ex) {
                     throw new IOException("Invalid training info line: " + line);
                 }
             } else if (line.startsWith("training:actives=")) {
                 try {
-                    model.trainingActives = Integer.valueOf(line.substring(17));
+                    model.trainingActives = Integer.parseInt(line.substring(17));
                 } catch (NumberFormatException ex) {
                     throw new IOException("Invalid training info line: " + line);
                 }
