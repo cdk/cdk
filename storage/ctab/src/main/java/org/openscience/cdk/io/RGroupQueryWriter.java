@@ -310,7 +310,6 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
             writer.flush();
 
         } catch (IOException e) {
-            e.printStackTrace();
             throw new CDKException("Unexpected exception when writing RGFile" + LSEP + e.getMessage());
         }
 

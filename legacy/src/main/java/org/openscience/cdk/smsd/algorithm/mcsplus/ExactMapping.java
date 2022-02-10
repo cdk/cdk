@@ -79,7 +79,6 @@ public class ExactMapping {
             mappings.add(cliqueList);
         } catch (Exception e) {
             System.err.println("Error in FinalMapping List: " + e.getCause());
-            e.printStackTrace();
             System.exit(1);
         }
         return mappings;

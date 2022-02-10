@@ -201,7 +201,8 @@ public class Mol2Writer extends DefaultChemObjectWriter {
                 try {
                     sybylType = matcher.findMatchingAtomType(mol, atom);
                 } catch (CDKException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(Mol2Writer.class)
+                                      .warn("Atom Type Error:", e);
                 }
                 if (sybylType != null) {
                     writer.write(sybylType.getAtomTypeName());
@@ -244,7 +245,8 @@ public class Mol2Writer extends DefaultChemObjectWriter {
                         sybylBondOrder = "am";
                     }
                 } catch (CDKException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(Mol2Writer.class)
+                                      .warn("Atom Type Error:", e);
                 }
 
                 writer.write((counter + 1) + " " + (mol.indexOf(bond.getBegin()) + 1) + " "

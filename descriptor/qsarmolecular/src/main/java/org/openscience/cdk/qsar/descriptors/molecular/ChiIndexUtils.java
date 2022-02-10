@@ -35,6 +35,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.qsar.AtomValenceTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Utility methods for chi index calculations.
@@ -70,7 +71,8 @@ class ChiIndexUtils {
                 // we get the list of bond mappings
                 subgraphMaps = universalIsomorphismTester.getSubgraphMaps(atomContainer, query);
             } catch (CDKException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(ChiIndexUtils.class)
+                                  .warn("Unexpected Error:", e);
             }
             if (subgraphMaps == null) continue;
             if (subgraphMaps.size() == 0) continue;

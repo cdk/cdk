@@ -291,7 +291,8 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                     }
                 }
             } catch (CDKException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(IPAtomicHOSEDescriptor.class)
+                                  .warn("Unexpected Error:", e);
             }
             return 0;
         }
@@ -314,7 +315,8 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                     hoseVSenergy.put(values.get(0), Double.valueOf(values.get(1)));
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(IPAtomicHOSEDescriptor.class)
+                                  .warn("Unexpected Error:", e);
             }
             return hoseVSenergy;
         }

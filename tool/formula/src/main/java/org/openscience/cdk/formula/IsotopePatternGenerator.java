@@ -119,7 +119,8 @@ public class IsotopePatternGenerator {
                 isoFactory = Isotopes.getInstance();
                 builder = molFor.getBuilder();
             } catch (Exception e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class)
+                                  .warn("Unexpected error:", e);
             }
         }
         String mf = MolecularFormulaManipulator.getString(molFor, true);

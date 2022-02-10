@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Determines the EState atom types.
@@ -143,7 +144,8 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
             if (atom.getFlag(CDKConstants.ISAROMATIC)) atomType.setFlag(CDKConstants.ISAROMATIC, true);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(EStateAtomTypeMatcher.class)
+                              .warn("Unexpected Exception:", e);
         }
 
         return atomType;

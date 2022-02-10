@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -102,7 +103,8 @@ public class MoleculeSanityCheck {
             AllRingsFinder arf = new AllRingsFinder();
             ringSet = arf.findAllRings(mol);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MoleculeSanityCheck.class)
+                              .warn("Unexpected Error:", e);
         }
 
         try {
@@ -135,7 +137,8 @@ public class MoleculeSanityCheck {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MoleculeSanityCheck.class)
+                              .warn("Unexpected Error:", e);
         }
     }
 }

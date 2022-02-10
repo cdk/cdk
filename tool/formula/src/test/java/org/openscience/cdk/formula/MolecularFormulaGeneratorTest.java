@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -175,7 +176,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 try {
                     Thread.sleep(5);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(MolecularFormulaCheckerTest.class)
+                                      .warn("Thread Interrupted:", e);
+                    Thread.currentThread().interrupt();
                 }
                 gen.cancel();
             }

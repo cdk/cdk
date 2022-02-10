@@ -410,7 +410,8 @@ public class TemplateExtractor {
         try {
             imdl.close();
         } catch (Exception exc2) {
-            exc2.printStackTrace();
+            LoggingToolFactory.createLoggingTool(TemplateExtractor.class)
+                              .warn("Unexpected Exception:", exc2);
         }
         logger.info("...ready with:" + moleculeCounter + " molecules\nWrite data...of data vector:" + data.size()
                 + " fingerprintCounter:" + fingerprintCounter);
@@ -487,9 +488,8 @@ public class TemplateExtractor {
             new TemplateExtractor().makeFingerprintFromRingSystems(args[0], args[1], Boolean.valueOf(args[2]),
                     Boolean.valueOf(args[3]));
         } catch (Exception e) {
-            System.out.println(usage);
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(TemplateExtractor.class)
+                              .warn("Unexpected Exception:", e);
         }
     }
 

@@ -38,6 +38,7 @@ import org.openscience.cdk.Element;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -66,7 +67,8 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
                     "org/openscience/cdk/io/cml/data/cml25b1.xsd");
             tmpCMLSchema = copyFileToTmp("cml2.5.b1", ".xsd", in, null, null);
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(XMLIsotopeFactoryTest.class)
+                              .warn("Unexpected Error:", e);
         }
     }
 

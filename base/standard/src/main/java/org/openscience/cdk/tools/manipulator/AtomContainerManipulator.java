@@ -54,6 +54,7 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -805,7 +806,8 @@ public class AtomContainerManipulator {
                 try {
                     clone = org.getBond(i).clone();
                 } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(AtomContainerManipulator.class)
+                                      .warn("Unexpected Error:", e);
                 }
                 assert clone != null;
                 clone.setAtoms(new IAtom[]{map.get(bond.getBegin()), map.get(bond.getEnd())});
@@ -838,7 +840,8 @@ public class AtomContainerManipulator {
         try {
             clonedAtom = atom.clone();
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(AtomContainerManipulator.class)
+                              .warn("Unexpected Error:", e);
         }
         mol.addAtom(clonedAtom);
         map.put(atom, clonedAtom);
@@ -1306,7 +1309,8 @@ public class AtomContainerManipulator {
                 try {
                     a = atom.clone();
                 } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(AtomContainerManipulator.class)
+                                      .warn("Unexpected Error:", e);
                 }
                 a.setImplicitHydrogenCount(0);
                 mol.addAtom(a);
@@ -1340,7 +1344,8 @@ public class AtomContainerManipulator {
                 try {
                     clone = ac.getBond(i).clone();
                 } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(AtomContainerManipulator.class)
+                                      .warn("Unexpected Error:", e);
                 }
                 clone.setAtoms(new IAtom[]{map.get(atom0), map.get(atom1)});
                 mol.addBond(clone);

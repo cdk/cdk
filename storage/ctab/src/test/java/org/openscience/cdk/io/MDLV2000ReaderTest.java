@@ -1958,7 +1958,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(dataSgroup.getValue(SgroupKey.Data),
                        CoreMatchers.is("33%"));
         } catch (IOException | CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class)
+                              .warn("Read Error:", e);
         }
     }
 

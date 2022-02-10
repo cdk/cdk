@@ -140,7 +140,6 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
             } catch (IOException | IllegalArgumentException | CDKException exception) {
                 logger.error("Error while reading next molecule: ", exception.getMessage());
                 logger.debug(exception);
-                exception.printStackTrace();
                 hasNext = false;
             }
             if (!hasNext) nextMolecule = null;

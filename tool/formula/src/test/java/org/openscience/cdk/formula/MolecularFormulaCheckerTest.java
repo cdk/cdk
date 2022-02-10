@@ -33,6 +33,7 @@ import org.openscience.cdk.formula.rules.MMElementRule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Checks the functionality of the MolecularFormulaChecker.
@@ -54,7 +55,8 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         try {
             ifac = Isotopes.getInstance();
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MolecularFormulaCheckerTest.class)
+                              .warn("Unexpected Error:", e);
         }
     }
 

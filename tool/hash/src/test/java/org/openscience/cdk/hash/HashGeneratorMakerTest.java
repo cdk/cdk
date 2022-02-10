@@ -26,6 +26,7 @@ package org.openscience.cdk.hash;
 
 import org.junit.Test;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
@@ -222,7 +223,8 @@ public class HashGeneratorMakerTest {
                 return getEncoders((ConjugatedAtomEncoder) o2);
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(HashGeneratorMakerTest.class)
+                              .warn("Unexpected Error:", e);
         }
         return Collections.emptyList();
     }
@@ -233,7 +235,8 @@ public class HashGeneratorMakerTest {
             field.setAccessible(true);
             return (List<AtomEncoder>) field.get(conjugated);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(HashGeneratorMakerTest.class)
+                              .warn("Unexpected Error:", e);
         }
         return Collections.emptyList();
     }

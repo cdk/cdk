@@ -36,6 +36,7 @@ import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -210,7 +211,8 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         try {
             addExplicitHydrogens(molecule);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
         IAtom atom = molecule.getAtom(0);
         molecule.addSingleElectron(new SingleElectron(atom));
@@ -219,7 +221,8 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
         try {
             addExplicitHydrogens(molecule);
@@ -246,7 +249,8 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         try {
             addExplicitHydrogens(molecule1);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         /* [C*] */

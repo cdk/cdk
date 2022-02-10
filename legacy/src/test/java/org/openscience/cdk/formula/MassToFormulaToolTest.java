@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -60,7 +61,8 @@ public class MassToFormulaToolTest extends CDKTestCase {
         try {
             ifac = Isotopes.getInstance();
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MassToFormulaToolTest.class)
+                              .warn("Unexpected Error:", e);
         }
     }
 

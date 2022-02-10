@@ -1344,8 +1344,8 @@ public class GeometryTools {
                 firstAC = secondAC.clone();
                 secondAC = tmp.clone();
             } catch (CloneNotSupportedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(GeometryTools.class)
+                                  .warn("Unexpected Error:", e);
             }
         }
     }

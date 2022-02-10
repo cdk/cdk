@@ -36,6 +36,7 @@ import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -122,7 +123,8 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
         try {
             addExplicitHydrogens(molecule);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         molecule.getAtom(3).setFormalCharge(0);
@@ -132,7 +134,8 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
         setOfReactants.addAtomContainer(molecule);
         return setOfReactants;
@@ -162,7 +165,8 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
         try {
             addExplicitHydrogens(molecule);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         molecule.getAtom(0).setFormalCharge(0);
@@ -172,7 +176,8 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
         setOfProducts.addAtomContainer(molecule);
         return setOfProducts;

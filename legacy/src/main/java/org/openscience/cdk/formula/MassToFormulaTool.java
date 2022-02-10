@@ -176,7 +176,8 @@ public class MassToFormulaTool {
         try {
             callDefaultRestrictions();
         } catch (CDKException | IOException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MassToFormulaTool.class)
+                              .warn("Unexpected Error:", e);
         }
     }
 

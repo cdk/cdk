@@ -36,6 +36,7 @@ import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -164,7 +165,8 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
             addExplicitHydrogens(reactant);
             makeSureAtomTypesAreRecognized(reactant);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         setOfReactants.addAtomContainer(reactant);

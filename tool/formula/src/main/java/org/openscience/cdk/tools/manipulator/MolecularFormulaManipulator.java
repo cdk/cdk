@@ -872,7 +872,8 @@ public class MolecularFormulaManipulator {
                     mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(MolecularFormulaManipulator.class)
+                                  .warn("Unexpected Error:", e);
             }
         }
         return mass;

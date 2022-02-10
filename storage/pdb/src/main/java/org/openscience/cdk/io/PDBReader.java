@@ -479,7 +479,6 @@ public class PDBReader extends DefaultChemObjectReader {
             logger.error("          1         2         3         4         5         6         7         ");
             logger.error("  error: " + e.getMessage());
             logger.debug(e);
-            e.printStackTrace();
         }
 
         // try to close the Input

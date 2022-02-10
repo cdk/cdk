@@ -28,6 +28,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * A memory-efficient data structure to store conformers for a single molecule.
@@ -206,7 +207,8 @@ public class ConformerContainer implements List<IAtomContainer> {
                 }
                 ret[index++] = conf;
             } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(ConformerContainer.class)
+                                  .warn("Could not clone:", e);
             }
         }
         return ret;

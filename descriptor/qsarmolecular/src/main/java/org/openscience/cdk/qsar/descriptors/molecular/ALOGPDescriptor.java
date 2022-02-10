@@ -2100,7 +2100,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         try {
             ret = calculate(container, fragment, rs);
         } catch (CDKException e) {
-            e.printStackTrace();
             return getDummyDescriptorValue(new CDKException(e.getMessage()));
         }
 

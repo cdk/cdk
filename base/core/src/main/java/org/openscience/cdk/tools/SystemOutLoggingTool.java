@@ -153,7 +153,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
             } catch (Exception ioException) {
                 error("Serious error in LoggingTool while printing exception " + "stack trace: ",
                         ioException.getMessage());
-                ioException.printStackTrace();
             }
             Throwable cause = problem.getCause();
             if (cause != null) {

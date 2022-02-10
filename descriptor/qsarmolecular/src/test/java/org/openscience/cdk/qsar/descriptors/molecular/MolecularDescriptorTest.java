@@ -48,6 +48,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -109,7 +110,8 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         try {
             mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MolecularDescriptorTest.class)
+                              .warn("Unexpected Error:", e);
             Assert.fail("Error in generating the test molecule");
         }
 

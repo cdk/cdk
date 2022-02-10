@@ -17,6 +17,8 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
+import org.openscience.cdk.tools.LoggingToolFactory;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -62,7 +64,8 @@ class SimpleNode implements Node, Cloneable {
             constructor = this.getClass().getConstructor(new Class[]{SMARTSParser.class, Integer.TYPE});
             clone = (Node) constructor.newInstance(new Object[]{parser, id});
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            ex.printStackTrace();
+            LoggingToolFactory.createLoggingTool(SimpleNode.class)
+                              .warn("Unexpected Error:", ex);
         }
 
         clone.jjtSetParent(parent);

@@ -67,7 +67,8 @@ public class ReactionEngine {
             if (entry.getMechanism() != null && !entry.getMechanism().isEmpty())
                 extractMechanism(entry);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(ReactionEngine.class)
+                              .warn("Unexpected Error:", e);
         }
 
     }

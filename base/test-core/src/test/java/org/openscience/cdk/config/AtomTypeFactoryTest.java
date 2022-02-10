@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -64,7 +65,8 @@ public class AtomTypeFactoryTest extends CDKTestCase {
                     "org/openscience/cdk/io/cml/data/cml25b1.xsd");
             tmpCMLSchema = copyFileToTmp("cml2.5.b1", ".xsd", in, null, null);
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(AtomTypeFactoryTest.class)
+                              .warn("Unexpected Error:", e);
         }
     }
 

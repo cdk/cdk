@@ -56,6 +56,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -688,7 +689,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
                 layout(molecule);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LoggingToolFactory.createLoggingTool(StructureDiagramGeneratorTest.class)
+                              .warn("Unexpected Error:", ex);
             fail("Test failed trying to layout bridged ring systems.");
         }
     }

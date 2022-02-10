@@ -50,6 +50,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.test.io.ChemObjectWriterTest;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
@@ -368,7 +369,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
             sdfw.write(TestMoleculeFactory.make123Triazole());
         } catch (IOException | CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(SDFWriterTest.class)
+                              .warn("Unexpected Error:", e);
         }
         String sdf = sw.toString();
         for (String mol : sdf.split("\\$\\$\\$\\$", 2)) {
@@ -398,7 +400,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
                             "ThisIsAVeryLongFieldThatShouldBeWrapped");
             sdfw.write(mol);
         } catch (IOException | CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(SDFWriterTest.class)
+                              .warn("Unexpected Error:", e);
         }
         String sdf = sw.toString();
         assertThat(sdf,

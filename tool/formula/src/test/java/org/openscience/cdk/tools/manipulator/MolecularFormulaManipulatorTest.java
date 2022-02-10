@@ -41,6 +41,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,7 +74,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         try {
             ifac = Isotopes.getInstance();
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MolecularFormulaManipulatorTest.class)
+                              .warn("Unexpected Error:", e);
         }
     }
 
