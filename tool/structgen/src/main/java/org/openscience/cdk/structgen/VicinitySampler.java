@@ -57,7 +57,7 @@ public class VicinitySampler {
      */
     public static List<IAtomContainer> sample(IAtomContainer ac) {
         LOGGER.debug("RandomGenerator->mutate() Start");
-        List<IAtomContainer> structures = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> structures = new ArrayList<>();
 
         int nrOfAtoms = ac.getAtomCount();
         double a11 = 0, a12 = 0, a22 = 0, a21 = 0;

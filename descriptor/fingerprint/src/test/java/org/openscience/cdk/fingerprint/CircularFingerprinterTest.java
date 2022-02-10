@@ -190,7 +190,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
         ZipInputStream zip = new ZipInputStream(in);
 
         // stream the contents form the zipfile: these are all short
-        HashMap<String, byte[]> content = new HashMap<String, byte[]>();
+        HashMap<String, byte[]> content = new HashMap<>();
         while (true) {
             ZipEntry ze = zip.getNextEntry();
             if (ze == null) break;
@@ -232,7 +232,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     private CircularFingerprinter.FP[] parseValidation(byte[] raw) throws Exception {
         InputStream in = new ByteArrayInputStream(raw);
         BufferedReader rdr = new BufferedReader(new InputStreamReader(in));
-        ArrayList<CircularFingerprinter.FP> list = new ArrayList<CircularFingerprinter.FP>();
+        ArrayList<CircularFingerprinter.FP> list = new ArrayList<>();
 
         while (true) {
             String line = rdr.readLine();

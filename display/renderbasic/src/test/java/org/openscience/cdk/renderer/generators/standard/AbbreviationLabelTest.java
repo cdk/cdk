@@ -250,22 +250,22 @@ public class AbbreviationLabelTest {
     @Test
     public void het() {
         // 'Het' not 'He'lium and 't'erts
-        assertFalse(AbbreviationLabel.parse("Het", new ArrayList<String>()));
+        assertFalse(AbbreviationLabel.parse("Het", new ArrayList<>()));
     }
 
     @Test
     public void parseChargeOnly() {
-        assertFalse(AbbreviationLabel.parse("+", new ArrayList<String>()));
+        assertFalse(AbbreviationLabel.parse("+", new ArrayList<>()));
     }
 
     @Test
     public void parseNumberOnly() {
-        assertFalse(AbbreviationLabel.parse("1", new ArrayList<String>()));
+        assertFalse(AbbreviationLabel.parse("1", new ArrayList<>()));
     }
 
     @Test
     public void nonAsciiLabel() {
         // phenyl
-        assertFalse(AbbreviationLabel.parse("苯基", new ArrayList<String>()));
+        assertFalse(AbbreviationLabel.parse("苯基", new ArrayList<>()));
     }
 }

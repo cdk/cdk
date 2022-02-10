@@ -129,7 +129,7 @@ public final class RelevantCycles {
      * @return cycles which were independent
      */
     private List<Cycle> independent(final Collection<Cycle> cycles) {
-        final List<Cycle> independent = new ArrayList<Cycle>(cycles.size());
+        final List<Cycle> independent = new ArrayList<>(cycles.size());
         for (final Cycle cycle : cycles) {
             if (basis.isIndependent(cycle)) independent.add(cycle);
         }

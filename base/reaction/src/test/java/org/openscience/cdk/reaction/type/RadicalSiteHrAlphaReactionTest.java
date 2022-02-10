@@ -85,7 +85,7 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
         /* initiate */
         makeSureAtomTypesAreRecognized(molecule);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -198,7 +198,7 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
         molecule.getAtom(6).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -233,7 +233,7 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

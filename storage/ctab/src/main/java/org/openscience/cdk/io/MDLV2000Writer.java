@@ -479,7 +479,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     line.append("R# ");
                     if (rgroups == null) {
                         // we use a tree map to ensure the output order is always the same
-                        rgroups = new TreeMap<Integer, Integer>();
+                        rgroups = new TreeMap<>();
                     }
                     rgroups.put(f + 1, Integer.parseInt(matcher.group(1)));
 
@@ -495,7 +495,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     // to use an alias.
                     if (label.length() > 3) {
 
-                        if (aliases == null) aliases = new TreeMap<Integer, String>();
+                        if (aliases == null) aliases = new TreeMap<>();
 
                         aliases.put(f + 1, label); // atom index to alias
 
@@ -692,7 +692,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
         // write radical information
         if (container.getSingleElectronCount() > 0) {
-            Map<Integer, SPIN_MULTIPLICITY> atomIndexSpinMap = new LinkedHashMap<Integer, SPIN_MULTIPLICITY>();
+            Map<Integer, SPIN_MULTIPLICITY> atomIndexSpinMap = new LinkedHashMap<>();
             for (int i = 0; i < container.getAtomCount(); i++) {
                 IAtom atom = container.getAtom(i);
                 int eCount = container.getConnectedSingleElectronsCount(atom);
@@ -1288,7 +1288,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     private <T> List<List<T>> wrap(Collection<T> set, int lim) {
         List<List<T>> wrapped = new ArrayList<>();
-        List<T> list = new ArrayList<T>(set);
+        List<T> list = new ArrayList<>(set);
         if (set.size() <= lim) {
             if (!list.isEmpty())
              wrapped.add(list);

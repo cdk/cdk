@@ -68,7 +68,7 @@ public class MolecularFormula implements IMolecularFormula {
      *  Constructs an empty MolecularFormula.
      */
     public MolecularFormula() {
-        isotopes = new HashMap<IIsotope, Integer>();
+        isotopes = new HashMap<>();
     }
 
     /**
@@ -266,7 +266,7 @@ public class MolecularFormula implements IMolecularFormula {
      */
     private Map<Object, Object> lazyProperties() {
         if (properties == null) {
-            properties = new Hashtable<Object, Object>();
+            properties = new Hashtable<>();
         }
         return properties;
     }

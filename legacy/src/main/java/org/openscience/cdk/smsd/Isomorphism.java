@@ -191,12 +191,12 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      */
     public Isomorphism(Algorithm algorithmType, boolean bondTypeFlag) {
         this.algorithmType = algorithmType;
-        firstSolution = new TreeMap<Integer, Integer>();
-        allMCS = new ArrayList<Map<Integer, Integer>>();
-        allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
-        firstAtomMCS = new HashMap<IAtom, IAtom>();
-        allBondMCS = new ArrayList<Map<IBond, IBond>>();
-        firstBondMCS = new HashMap<IBond, IBond>();
+        firstSolution = new TreeMap<>();
+        allMCS = new ArrayList<>();
+        allAtomMCS = new ArrayList<>();
+        firstAtomMCS = new HashMap<>();
+        allBondMCS = new ArrayList<>();
+        firstBondMCS = new HashMap<>();
 
         setTime(bondTypeFlag);
         setMatchBonds(bondTypeFlag);
@@ -255,7 +255,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      */
     public static List<Map<IBond, IBond>> makeBondMapsOfAtomMaps(IAtomContainer ac1, IAtomContainer ac2,
             List<Map<IAtom, IAtom>> mappings) {
-        List<Map<IBond, IBond>> bondMaps = new ArrayList<Map<IBond, IBond>>();
+        List<Map<IBond, IBond>> bondMaps = new ArrayList<>();
         for (Map<IAtom, IAtom> mapping : mappings) {
             bondMaps.add(makeBondMapOfAtomMap(ac1, ac2, mapping));
         }
@@ -272,7 +272,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      */
     public static Map<IBond, IBond> makeBondMapOfAtomMap(IAtomContainer ac1, IAtomContainer ac2,
             Map<IAtom, IAtom> mapping) {
-        Map<IBond, IBond> maps = new HashMap<IBond, IBond>();
+        Map<IBond, IBond> maps = new HashMap<>();
 
         for (Map.Entry<IAtom, IAtom> mapS : mapping.entrySet()) {
             IAtom indexI = mapS.getKey();

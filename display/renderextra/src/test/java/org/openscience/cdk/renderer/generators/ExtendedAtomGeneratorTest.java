@@ -254,7 +254,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     @Override
     public void atomColorerTest() {
         IAtomContainer cnop = makeSNOPSquare();
-        final Map<String, Color> colorMap = new HashMap<String, Color>();
+        final Map<String, Color> colorMap = new HashMap<>();
         colorMap.put("S", Color.YELLOW);
         colorMap.put("N", Color.BLUE);
         colorMap.put("O", Color.RED);

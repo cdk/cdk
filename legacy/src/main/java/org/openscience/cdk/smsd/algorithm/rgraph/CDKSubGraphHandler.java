@@ -68,10 +68,10 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
      */
     public CDKSubGraphHandler() {
 
-        this.allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
-        this.firstAtomMCS = new HashMap<IAtom, IAtom>();
-        this.firstMCS = new TreeMap<Integer, Integer>();
-        this.allMCS = new ArrayList<Map<Integer, Integer>>();
+        this.allAtomMCS = new ArrayList<>();
+        this.firstAtomMCS = new HashMap<>();
+        this.firstMCS = new TreeMap<>();
+        this.allMCS = new ArrayList<>();
     }
 
     /** {@inheritDoc}
@@ -143,7 +143,7 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
      */
     protected IAtomContainerSet getUncommon(IAtomContainer mol, IAtomContainer mcss, boolean shouldMatchBonds)
             throws CDKException {
-        ArrayList<Integer> atomSerialsToDelete = new ArrayList<Integer>();
+        ArrayList<Integer> atomSerialsToDelete = new ArrayList<>();
 
         List<List<CDKRMap>> matches = CDKMCS.getSubgraphAtomsMaps(mol, mcss, shouldMatchBonds);
         List<CDKRMap> mapList = matches.get(0);
@@ -154,7 +154,7 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
         // at this point we have the serial numbers of the bonds to delete
         // we should get the actual bonds rather than delete by serial numbers
-        ArrayList<IAtom> atomsToDelete = new ArrayList<IAtom>();
+        ArrayList<IAtom> atomsToDelete = new ArrayList<>();
         for (Integer serial : atomSerialsToDelete) {
             atomsToDelete.add(mol.getAtom(serial));
         }
@@ -179,7 +179,7 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
             List<Map<Integer, Integer>> sol = FinalMappings.getInstance().getFinalMapping();
             int counter = 0;
             for (Map<Integer, Integer> finalSolution : sol) {
-                TreeMap<Integer, Integer> atomMappings = new TreeMap<Integer, Integer>();
+                TreeMap<Integer, Integer> atomMappings = new TreeMap<>();
                 for (Map.Entry<Integer, Integer> solutions : finalSolution.entrySet()) {
 
                     int iIndex = solutions.getKey().intValue();
@@ -207,7 +207,7 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
         int counter = 0;
         for (Map<Integer, Integer> finalSolution : sol) {
-            Map<IAtom, IAtom> atomMappings = new HashMap<IAtom, IAtom>();
+            Map<IAtom, IAtom> atomMappings = new HashMap<>();
             for (Map.Entry<Integer, Integer> solutions : finalSolution.entrySet()) {
 
                 int iIndex = solutions.getKey().intValue();
@@ -228,14 +228,14 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
     private synchronized void setFirstMapping() {
 
         if (!allMCS.isEmpty()) {
-            firstMCS = new TreeMap<Integer, Integer>(allMCS.get(0));
+            firstMCS = new TreeMap<>(allMCS.get(0));
         }
 
     }
 
     private synchronized void setFirstAtomMapping() {
         if (!allAtomMCS.isEmpty()) {
-            firstAtomMCS = new HashMap<IAtom, IAtom>(allAtomMCS.get(0));
+            firstAtomMCS = new HashMap<>(allAtomMCS.get(0));
         }
 
     }

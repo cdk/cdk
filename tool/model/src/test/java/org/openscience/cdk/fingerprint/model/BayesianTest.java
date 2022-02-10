@@ -275,8 +275,8 @@ public class BayesianTest {
             throws CDKException {
         writeln("[" + sdfile + "] comparing confusion matrix");
 
-        ArrayList<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
-        ArrayList<Boolean> activities = new ArrayList<Boolean>();
+        ArrayList<IAtomContainer> molecules = new ArrayList<>();
+        ArrayList<Boolean> activities = new ArrayList<>();
         Bayesian model = new Bayesian(CircularFingerprinter.CLASS_ECFP6, 1024);
 
         try {

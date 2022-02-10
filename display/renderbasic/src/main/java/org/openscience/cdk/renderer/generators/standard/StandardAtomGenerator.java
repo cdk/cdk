@@ -425,7 +425,7 @@ final class StandardAtomGenerator {
             chargeAdjunct = chargeAdjunct.translate(nudgeX, 0);
         }
 
-        final List<TextOutline> adjuncts = new ArrayList<TextOutline>(4);
+        final List<TextOutline> adjuncts = new ArrayList<>(4);
 
         if (hydrogens > 0) adjuncts.add(hydrogenAdjunct);
         if (hydrogens > 1) adjuncts.add(hydrogenCount);

@@ -219,7 +219,7 @@ final class IdentityTemplateLibrary {
                 points[ordering[i]] = point;
             }
 
-            return new SimpleEntry<String, Point2d[]>(smiles, points);
+            return new SimpleEntry<>(smiles, points);
 
         } catch (CDKException e) {
             logger.warn("Could not encode container as SMILES: ", e);
@@ -239,7 +239,7 @@ final class IdentityTemplateLibrary {
     static Entry<String, Point2d[]> decodeEntry(String str) {
         final int i = str.indexOf(' ');
         if (i < 0) throw new IllegalArgumentException();
-        return new SimpleEntry<String, Point2d[]>(str.substring(0, i), decodeCoordinates(str.substring(i + 1)));
+        return new SimpleEntry<>(str.substring(0, i), decodeCoordinates(str.substring(i + 1)));
     }
 
     /**

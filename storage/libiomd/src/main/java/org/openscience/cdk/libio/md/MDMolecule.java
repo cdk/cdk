@@ -66,7 +66,7 @@ public class MDMolecule extends AtomContainer {
      * @param residue Residue to add
      */
     public void addResidue(Residue residue) {
-        if (residues == null) residues = new ArrayList<Residue>();
+        if (residues == null) residues = new ArrayList<>();
 
         //Check if exists
         if (residues.contains(residue)) {
@@ -91,7 +91,7 @@ public class MDMolecule extends AtomContainer {
      * @param chargeGroup {@link ChargeGroup} to add
      */
     public void addChargeGroup(ChargeGroup chargeGroup) {
-        if (chargeGroups == null) chargeGroups = new ArrayList<ChargeGroup>();
+        if (chargeGroups == null) chargeGroups = new ArrayList<>();
 
         //Check if exists
         if (chargeGroups.contains(chargeGroup)) {

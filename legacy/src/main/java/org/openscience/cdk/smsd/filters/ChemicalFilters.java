@@ -106,9 +106,9 @@ public class ChemicalFilters {
         this.pMol = targetMol;
         this.rMol = sourceMol;
 
-        stereoScore = new ArrayList<Double>();
-        fragmentSize = new ArrayList<Integer>();
-        bEnergies = new ArrayList<Double>();
+        stereoScore = new ArrayList<>();
+        fragmentSize = new ArrayList<>();
+        bEnergies = new ArrayList<>();
 
     }
 
@@ -195,12 +195,12 @@ public class ChemicalFilters {
 
         //        System.out.println("\n\n\n\nSort By ResultsByStereoAndBondMatch");
 
-        Map<Integer, Map<Integer, Integer>> allStereoMCS = new HashMap<Integer, Map<Integer, Integer>>();
-        Map<Integer, Map<IAtom, IAtom>> allStereoAtomMCS = new HashMap<Integer, Map<IAtom, IAtom>>();
+        Map<Integer, Map<Integer, Integer>> allStereoMCS = new HashMap<>();
+        Map<Integer, Map<IAtom, IAtom>> allStereoAtomMCS = new HashMap<>();
 
-        Map<Integer, Integer> fragmentScoreMap = new TreeMap<Integer, Integer>();
-        Map<Integer, Double> energyScoreMap = new TreeMap<Integer, Double>();
-        Map<Integer, Double> stereoScoreMap = new HashMap<Integer, Double>();
+        Map<Integer, Integer> fragmentScoreMap = new TreeMap<>();
+        Map<Integer, Double> energyScoreMap = new TreeMap<>();
+        Map<Integer, Double> stereoScoreMap = new HashMap<>();
 
         initializeMaps(allStereoMCS, allStereoAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
 
@@ -260,12 +260,12 @@ public class ChemicalFilters {
     public synchronized void sortResultsByFragments() {
 
         //        System.out.println("\nSort By Fragment");
-        Map<Integer, Map<Integer, Integer>> allFragmentMCS = new TreeMap<Integer, Map<Integer, Integer>>();
-        Map<Integer, Map<IAtom, IAtom>> allFragmentAtomMCS = new TreeMap<Integer, Map<IAtom, IAtom>>();
+        Map<Integer, Map<Integer, Integer>> allFragmentMCS = new TreeMap<>();
+        Map<Integer, Map<IAtom, IAtom>> allFragmentAtomMCS = new TreeMap<>();
 
-        Map<Integer, Double> stereoScoreMap = new TreeMap<Integer, Double>();
-        Map<Integer, Double> energyScoreMap = new TreeMap<Integer, Double>();
-        Map<Integer, Integer> fragmentScoreMap = new TreeMap<Integer, Integer>();
+        Map<Integer, Double> stereoScoreMap = new TreeMap<>();
+        Map<Integer, Double> energyScoreMap = new TreeMap<>();
+        Map<Integer, Integer> fragmentScoreMap = new TreeMap<>();
 
         initializeMaps(allFragmentMCS, allFragmentAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
 
@@ -311,12 +311,12 @@ public class ChemicalFilters {
     public synchronized void sortResultsByEnergies() throws CDKException {
 
         //        System.out.println("\nSort By Energies");
-        Map<Integer, Map<Integer, Integer>> allEnergyMCS = new TreeMap<Integer, Map<Integer, Integer>>();
-        Map<Integer, Map<IAtom, IAtom>> allEnergyAtomMCS = new TreeMap<Integer, Map<IAtom, IAtom>>();
+        Map<Integer, Map<Integer, Integer>> allEnergyMCS = new TreeMap<>();
+        Map<Integer, Map<IAtom, IAtom>> allEnergyAtomMCS = new TreeMap<>();
 
-        Map<Integer, Double> stereoScoreMap = new TreeMap<Integer, Double>();
-        Map<Integer, Integer> fragmentScoreMap = new TreeMap<Integer, Integer>();
-        Map<Integer, Double> energySelectionMap = new TreeMap<Integer, Double>();
+        Map<Integer, Double> stereoScoreMap = new TreeMap<>();
+        Map<Integer, Integer> fragmentScoreMap = new TreeMap<>();
+        Map<Integer, Double> energySelectionMap = new TreeMap<>();
 
         initializeMaps(allEnergyMCS, allEnergyAtomMCS, stereoScoreMap, fragmentScoreMap, energySelectionMap);
 
@@ -361,7 +361,7 @@ public class ChemicalFilters {
     private Map<IBond, IBond> makeBondMapsOfAtomMaps(IAtomContainer ac1, IAtomContainer ac2,
             Map<Integer, Integer> mappings) {
 
-        Map<IBond, IBond> maps = new HashMap<IBond, IBond>();
+        Map<IBond, IBond> maps = new HashMap<>();
 
         for (IAtom atoms : ac1.atoms()) {
 
@@ -456,7 +456,7 @@ public class ChemicalFilters {
     }
 
     static Map<Integer, Double> sortMapByValueInAccendingOrder(Map<Integer, Double> map) {
-        List<Map.Entry<Integer, Double>> list = new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
+        List<Map.Entry<Integer, Double>> list = new LinkedList<>(map.entrySet());
         // Sort the list using an annonymous inner class implementing Comparator for the compare method
         Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
 
@@ -468,7 +468,7 @@ public class ChemicalFilters {
             }
         });
         // logger.info(list);
-        Map<Integer, Double> result = new LinkedHashMap<Integer, Double>();
+        Map<Integer, Double> result = new LinkedHashMap<>();
         for (Iterator<Map.Entry<Integer, Double>> it = list.iterator(); it.hasNext();) {
             Map.Entry<Integer, Double> entry = it.next();
             result.put(entry.getKey(), entry.getValue());
@@ -477,7 +477,7 @@ public class ChemicalFilters {
     }
 
     static Map<Integer, Double> sortMapByValueInDecendingOrder(Map<Integer, Double> map) {
-        List<Map.Entry<Integer, Double>> list = new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
+        List<Map.Entry<Integer, Double>> list = new LinkedList<>(map.entrySet());
         // Sort the list using an annonymous inner class implementing Comparator for the compare method
         Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
 
@@ -489,7 +489,7 @@ public class ChemicalFilters {
             }
         });
         // logger.info(list);
-        Map<Integer, Double> result = new LinkedHashMap<Integer, Double>();
+        Map<Integer, Double> result = new LinkedHashMap<>();
         for (Iterator<Map.Entry<Integer, Double>> it = list.iterator(); it.hasNext();) {
             Map.Entry<Integer, Double> entry = it.next();
             result.put(entry.getKey(), entry.getValue());
@@ -524,14 +524,14 @@ public class ChemicalFilters {
     private List<Object> getMappedFragment(IAtomContainer molecule, Collection<IAtom> atomsMCS)
             throws CloneNotSupportedException {
         IAtomContainer subgraphContainer = molecule.getBuilder().newInstance(IAtomContainer.class, molecule);
-        List<IAtom> list = new ArrayList<IAtom>(atomsMCS.size());
+        List<IAtom> list = new ArrayList<>(atomsMCS.size());
         for (IAtom atom : atomsMCS) {
             int post = molecule.indexOf(atom);
             //            System.out.println("Atom to be removed " + post);
             list.add(subgraphContainer.getAtom(post));
         }
 
-        List<IAtom> rlist = new ArrayList<IAtom>();
+        List<IAtom> rlist = new ArrayList<>();
         for (IAtom atoms : subgraphContainer.atoms()) {
             if (!list.contains(atoms)) {
                 rlist.add(atoms);
@@ -541,7 +541,7 @@ public class ChemicalFilters {
         for (IAtom atoms : rlist) {
             subgraphContainer.removeAtom(atoms);
         }
-        List<Object> l = new ArrayList<Object>();
+        List<Object> l = new ArrayList<>();
         l.add(list);
         l.add(subgraphContainer);
         return l;

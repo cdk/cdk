@@ -75,7 +75,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     }
 
     public ConformerContainer() {
-        coordinates = new ArrayList<Point3d[]>();
+        coordinates = new ArrayList<>();
     }
 
     /**
@@ -94,7 +94,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     public ConformerContainer(IAtomContainer atomContainer) {
         this.atomContainer = atomContainer;
         title = (String) atomContainer.getTitle();
-        coordinates = new ArrayList<Point3d[]>();
+        coordinates = new ArrayList<>();
         coordinates.add(getCoordinateList(atomContainer));
     }
 
@@ -119,7 +119,7 @@ public class ConformerContainer implements List<IAtomContainer> {
         }
 
         this.atomContainer = atomContainers[0];
-        coordinates = new ArrayList<Point3d[]>();
+        coordinates = new ArrayList<>();
         for (IAtomContainer container : atomContainers) {
             coordinates.add(getCoordinateList(container));
         }

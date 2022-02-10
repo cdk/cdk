@@ -35,7 +35,7 @@ public class AttachedGroup {
     /** The name of the group */
     private String      name      = "";
     /** The collection of locations the group is attached to */
-    private List<Token> locations = new ArrayList<Token>();
+    private List<Token> locations = new ArrayList<>();
     /** The length of the substituent chain */
     private int         length    = 0;
 

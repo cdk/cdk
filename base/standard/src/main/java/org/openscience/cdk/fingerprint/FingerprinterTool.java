@@ -87,7 +87,7 @@ public class FingerprinterTool {
      * @see #differences(java.util.BitSet, java.util.BitSet)
      */
     public static List<Integer> listDifferences(BitSet bs1, BitSet bs2) {
-        List<Integer> l = new ArrayList<Integer>();
+        List<Integer> l = new ArrayList<>();
         LOGGER.debug("Listing bit positions set in bs2 but not in bs1");
         for (int f = 0; f < bs2.size(); f++) {
             if (bs2.get(f) && !bs1.get(f)) {
@@ -111,7 +111,7 @@ public class FingerprinterTool {
         BitSet u = (BitSet) s.clone();
         u.xor(t);
 
-        Set<Integer> differences = new TreeSet<Integer>();
+        Set<Integer> differences = new TreeSet<>();
 
         for (int i = u.nextSetBit(0); i >= 0; i = u.nextSetBit(i + 1)) {
             differences.add(i);

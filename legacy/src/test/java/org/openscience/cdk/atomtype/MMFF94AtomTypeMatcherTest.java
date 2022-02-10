@@ -62,7 +62,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     private static IAtomContainer       testMolecule    = null;
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+    private static Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @BeforeClass
     public static void setUpTestMolecule() throws Exception {

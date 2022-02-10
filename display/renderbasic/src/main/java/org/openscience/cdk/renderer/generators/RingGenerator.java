@@ -124,7 +124,7 @@ public class RingGenerator extends BasicBondGenerator {
      * Make a generator for ring elements.
      */
     public RingGenerator() {
-        this.painted_rings = new HashSet<IRing>();
+        this.painted_rings = new HashSet<>();
     }
 
     /** {@inheritDoc} */
@@ -191,7 +191,7 @@ public class RingGenerator extends BasicBondGenerator {
         // Allocate ArrayList with sufficient space for everything.
         // Note that the number should ideally be the same as the number of entries
         // that we add here, though this is *only* an efficiency consideration.
-        List<IGeneratorParameter<?>> pars = new ArrayList<IGeneratorParameter<?>>(superPars.size() + 3);
+        List<IGeneratorParameter<?>> pars = new ArrayList<>(superPars.size() + 3);
 
         pars.addAll(superPars);
         pars.add(cdkStyleAromaticity);

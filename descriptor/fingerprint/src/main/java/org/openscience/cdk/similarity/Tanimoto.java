@@ -150,7 +150,7 @@ public class Tanimoto {
      * @return The Tanimoto coefficient
      */                         
     public static float calculate(Map<String, Integer> features1, Map<String, Integer> features2) {
-        Set<String> common = new TreeSet<String>(features1.keySet());
+        Set<String> common = new TreeSet<>(features1.keySet());
         common.retainAll(features2.keySet());
         double xy = 0., x = 0., y = 0.;
         for (String s : common) {

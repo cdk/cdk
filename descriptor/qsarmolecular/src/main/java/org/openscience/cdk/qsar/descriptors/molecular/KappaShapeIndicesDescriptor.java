@@ -141,9 +141,9 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
         double kier2;
         double kier3;
         double atomsCount = atomContainer.getAtomCount();
-        ArrayList<Double> singlePaths = new ArrayList<Double>();
-        ArrayList<String> doublePaths = new ArrayList<String>();
-        ArrayList<String> triplePaths = new ArrayList<String>();
+        ArrayList<Double> singlePaths = new ArrayList<>();
+        ArrayList<String> doublePaths = new ArrayList<>();
+        ArrayList<String> triplePaths = new ArrayList<>();
         double[] sorterFirst = new double[2];
         double[] sorterSecond = new double[3];
         String tmpbond2;

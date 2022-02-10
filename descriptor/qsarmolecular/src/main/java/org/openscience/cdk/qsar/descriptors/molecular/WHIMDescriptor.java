@@ -126,10 +126,10 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
 
         // set up the values from TOD98
 
-        this.hashatwt = new HashMap<String, Double>();
-        this.hashvdw = new HashMap<String, Double>();
-        this.hasheneg = new HashMap<String, Double>();
-        this.hashpol = new HashMap<String, Double>();
+        this.hashatwt = new HashMap<>();
+        this.hashvdw = new HashMap<>();
+        this.hasheneg = new HashMap<>();
+        this.hashpol = new HashMap<>();
 
         this.hashatwt.put("H", new Double(0.084));
         this.hashatwt.put("B", new Double(0.900));

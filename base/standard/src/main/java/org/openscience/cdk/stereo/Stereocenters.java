@@ -413,8 +413,8 @@ public final class Stereocenters {
 
         for (int[] isolated : ringSearch.isolated()) {
 
-            List<StereoElement> potential = new ArrayList<StereoElement>();
-            List<StereoElement> trueCentres = new ArrayList<StereoElement>();
+            List<StereoElement> potential = new ArrayList<>();
+            List<StereoElement> trueCentres = new ArrayList<>();
             BitSet cyclic = new BitSet();
 
             for (int v : isolated) {
@@ -432,7 +432,7 @@ public final class Stereocenters {
                 continue;
             }
 
-            List<StereoElement> paraElements = new ArrayList<StereoElement>();
+            List<StereoElement> paraElements = new ArrayList<>();
             for (StereoElement element : potential) {
                 if (element.type == Type.Tetracoordinate) {
 

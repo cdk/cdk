@@ -117,7 +117,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         makeSureAtomTypesAreRecognized(reactant);
 
         IReactionProcess type = new ElectronImpactNBEReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -217,7 +217,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new ElectronImpactNBEReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -287,7 +287,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         IReactionProcess type = new ElectronImpactNBEReaction();
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -354,7 +354,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         IReactionProcess type = new ElectronImpactNBEReaction();
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -406,7 +406,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         /* manually put the reactive center */
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -438,7 +438,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

@@ -118,7 +118,7 @@ public class CIPToolTest extends CDKTestCase {
 
     @Test
     public void testGetCIPChirality_ILigancyFourChirality() {
-        List<IAtom> ligandAtoms = new ArrayList<IAtom>();
+        List<IAtom> ligandAtoms = new ArrayList<>();
         for (ILigand ligand : ligands)
             ligandAtoms.add(ligand.getLigandAtom());
         ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
@@ -130,7 +130,7 @@ public class CIPToolTest extends CDKTestCase {
     @Test
     public void testGetCIPChirality_Anti_ILigancyFourChirality() {
         ILigand[] antiLigands = new ILigand[]{ligands[0], ligands[1], ligands[3], ligands[2]};
-        List<IAtom> ligandAtoms = new ArrayList<IAtom>();
+        List<IAtom> ligandAtoms = new ArrayList<>();
         for (ILigand ligand : antiLigands)
             ligandAtoms.add(ligand.getLigandAtom());
 

@@ -81,7 +81,7 @@ public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
         int charge = atom.getFormalCharge();
         int hcount = atom.getImplicitHydrogenCount();
 
-        List<IAtomType> matchingTypes = new ArrayList<IAtomType>();
+        List<IAtomType> matchingTypes = new ArrayList<>();
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
         for (IAtomType type : types) {
             logger.debug("   ... matching atom ", atom, " vs ", type);

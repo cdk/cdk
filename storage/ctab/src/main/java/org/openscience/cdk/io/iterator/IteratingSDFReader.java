@@ -113,8 +113,8 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     private static String  SDF_DATA_HEADER      = "> ";
 
     // map of MDL formats to their readers
-    private final Map<IChemFormat, ISimpleChemObjectReader> readerMap            = new HashMap<IChemFormat, ISimpleChemObjectReader>(
-                                                                                         5);
+    private final Map<IChemFormat, ISimpleChemObjectReader> readerMap            = new HashMap<>(
+            5);
 
     /**
      * Constructs a new IteratingMDLReader that can read Molecule from a given Reader.

@@ -167,7 +167,7 @@ public class OWLReact extends Dictionary {
                     dataType = paramSubt2.get(k).getAttributeValue("dataType");
                     dataType = dataType.substring(dataType.indexOf(':') + 1, dataType.length());
                 }
-                List<String> pp = new ArrayList<String>();
+                List<String> pp = new ArrayList<>();
                 pp.add(paramClass);
                 pp.add(needsToSet);
                 pp.add(dataType);

@@ -219,7 +219,7 @@ public abstract class StereoElementFactory {
             centers.checkSymmetry();
         }
 
-        List<IStereoElement> elements = new ArrayList<IStereoElement>();
+        List<IStereoElement> elements = new ArrayList<>();
 
         // projection recognition (note no action in constructors)
         FischerRecognition fischerRecon = new FischerRecognition(container, graph, bondMap, centers);

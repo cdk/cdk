@@ -331,8 +331,8 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
         double lambda = 1;
         double n = 0;
 
-        List<Integer> v1 = new ArrayList<Integer>();
-        List<Integer> v2 = new ArrayList<Integer>();
+        List<Integer> v1 = new ArrayList<>();
+        List<Integer> v2 = new ArrayList<>();
         for (int i = 0; i < codemat.length; i++) {
             if (codemat[i][0] == type1) v1.add(codemat[i][1]);
             if (codemat[i][0] == type2) v2.add(codemat[i][1]);

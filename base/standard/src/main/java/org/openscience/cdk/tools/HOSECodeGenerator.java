@@ -142,9 +142,9 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *  Constructor for the HOSECodeGenerator.
      */
     public HOSECodeGenerator() {
-        sphereNodes = new ArrayList<TreeNode>();
-        sphereNodesWithAtoms = new ArrayList<IAtom>();
-        nextSphereNodes = new ArrayList<TreeNode>();
+        sphereNodes = new ArrayList<>();
+        sphereNodesWithAtoms = new ArrayList<>();
+        nextSphereNodes = new ArrayList<>();
         HOSECode = new StringBuffer();
     }
 
@@ -381,7 +381,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         IAtom toNode = null;
         List<IAtom> conAtoms = null;
         TreeNode treeNode = null;
-        nextSphereNodes = new ArrayList<TreeNode>();
+        nextSphereNodes = new ArrayList<>();
         IBond bond = null;
         for (int i = 0; i < sphereNodes.size(); i++) {
             treeNode = (TreeNode) sphereNodes.get(i);
@@ -713,7 +713,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
             this.bondType = bondType;
             ranking = 0;
             sortOrder = 1;
-            childs = new ArrayList<TreeNode>();
+            childs = new ArrayList<>();
         }
 
         public IAtom getAtom() {
@@ -762,7 +762,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
 
     public List<IAtom> getNodesInSphere(int sphereNumber) {
         sphereNodes = spheres[sphereNumber - 1];
-        List<IAtom> atoms = new ArrayList<IAtom>();
+        List<IAtom> atoms = new ArrayList<>();
         for (int g = 0; g < sphereNodes.size(); g++) {
             atoms.add(((TreeNode) sphereNodes.get(g)).atom);
         }

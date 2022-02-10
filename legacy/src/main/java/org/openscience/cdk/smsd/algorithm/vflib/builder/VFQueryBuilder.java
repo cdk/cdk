@@ -80,9 +80,9 @@ public class VFQueryBuilder implements IQuery {
      * Constructor for VF Query Builder
      */
     public VFQueryBuilder() {
-        nodesList = new ArrayList<INode>();
-        edgesList = new ArrayList<IEdge>();
-        nodeBondMap = new HashMap<INode, IAtom>();
+        nodesList = new ArrayList<>();
+        edgesList = new ArrayList<>();
+        nodeBondMap = new HashMap<>();
     }
 
     /** {@inheritDoc} */

@@ -51,8 +51,8 @@ public class MolecularFormulaRange implements Cloneable {
      *  Constructs an empty MolecularFormulaExpand.
      */
     public MolecularFormulaRange() {
-        isotopesMax = new HashMap<IIsotope, Integer>();
-        isotopesMin = new HashMap<IIsotope, Integer>();
+        isotopesMax = new HashMap<>();
+        isotopesMin = new HashMap<>();
     }
 
     /**

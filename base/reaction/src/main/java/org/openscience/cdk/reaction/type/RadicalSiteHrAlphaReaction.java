@@ -163,11 +163,11 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
                             if (reactant.getBond(atomh, atoml).getFlag(CDKConstants.REACTIVE_CENTER)
                                     && atomh.getFlag(CDKConstants.REACTIVE_CENTER) && atomh.getAtomicNumber() == IElement.H) {
 
-                                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                ArrayList<IAtom> atomList = new ArrayList<>();
                                 atomList.add(atomh);
                                 atomList.add(atomi);
                                 atomList.add(atoml);
-                                ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                ArrayList<IBond> bondList = new ArrayList<>();
                                 bondList.add(reactant.getBond(atomh, atoml));
 
                                 IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(

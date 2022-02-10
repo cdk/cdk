@@ -140,10 +140,10 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 0)
                             if (reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
-                                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                ArrayList<IAtom> atomList = new ArrayList<>();
                                 atomList.add(atomj);
                                 atomList.add(atomi);
-                                ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                ArrayList<IBond> bondList = new ArrayList<>();
                                 bondList.add(bondi);
 
                                 IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(

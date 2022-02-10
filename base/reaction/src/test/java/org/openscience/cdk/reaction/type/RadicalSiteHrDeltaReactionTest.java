@@ -84,7 +84,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
         IAtomContainerSet setOfReactants = getExampleReactants();
         /* initiate */
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -120,7 +120,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
         molecule.getAtom(7).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(6).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -236,7 +236,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
         molecule.getAtom(7).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(6).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -269,7 +269,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

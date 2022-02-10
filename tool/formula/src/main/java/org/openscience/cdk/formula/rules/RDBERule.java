@@ -171,11 +171,11 @@ public class RDBERule implements IRule {
      * @see           #createTable()
      */
     public List<Double> getRDBEValue(IMolecularFormula formula) {
-        List<Double> RDBEList = new ArrayList<Double>();
+        List<Double> RDBEList = new ArrayList<>();
         // The number of combinations with repetition
         // (v+n-1)!/[n!(v-1)!]
         int nE = 0; // number of elements to change
-        List<Integer> nV = new ArrayList<Integer>(); // number of valence changing
+        List<Integer> nV = new ArrayList<>(); // number of valence changing
         for (Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();) {
             IIsotope isotope = it.next();
             int[] valence = getOxidationState(formula.getBuilder().newInstance(IAtom.class, isotope.getSymbol()));
@@ -240,7 +240,7 @@ public class RDBERule implements IRule {
      */
     private void createTable() {
         if (oxidationStateTable == null) {
-            oxidationStateTable = new HashMap<String, int[]>();
+            oxidationStateTable = new HashMap<>();
             oxidationStateTable.put("H", new int[]{1});
             //            oxidationStateTable.put("Li", 1);
             //            oxidationStateTable.put("Be", 2);

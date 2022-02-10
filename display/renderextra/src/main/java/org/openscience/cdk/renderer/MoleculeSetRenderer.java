@@ -289,7 +289,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> imp
     /** {@inheritDoc} */
     @Override
     public List<IGenerator<IAtomContainerSet>> getGenerators() {
-        return new ArrayList<IGenerator<IAtomContainerSet>>(generators);
+        return new ArrayList<>(generators);
     }
 
 }

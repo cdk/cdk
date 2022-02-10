@@ -241,7 +241,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         }
 
         // all pairs
-        ArrayList<Integer> x = new ArrayList<Integer>();
+        ArrayList<Integer> x = new ArrayList<>();
         for (int i = 0; i < container.getAtomCount(); i++) {
             if (container.getAtom(i).getAtomicNumber() != IElement.H) x.add(i);
         }

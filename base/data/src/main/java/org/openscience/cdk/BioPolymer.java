@@ -65,7 +65,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     public BioPolymer() {
         super();
         // Strand stuff
-        strands = new Hashtable<String, IStrand>();
+        strands = new Hashtable<>();
     }
 
     /**
@@ -190,7 +190,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     @Override
     public Collection<String> getMonomerNames() {
         Iterator<String> keys = strands.keySet().iterator();
-        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+        Map<String, IMonomer> monomers = new Hashtable<>();
 
         if (!keys.hasNext()) // no strands
             return super.getMonomerNames();

@@ -158,11 +158,11 @@ public class CDKRMapHandlerTest {
      */
     @Test
     public void testSetMappings() {
-        Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> map = new TreeMap<>();
         map.put(0, 0);
         map.put(1, 1);
 
-        List<Map<Integer, Integer>> mappings = new ArrayList<Map<Integer, Integer>>();
+        List<Map<Integer, Integer>> mappings = new ArrayList<>();
         mappings.add(map);
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.setMappings(mappings);

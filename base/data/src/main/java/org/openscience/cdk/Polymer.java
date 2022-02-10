@@ -67,7 +67,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
      */
     public Polymer() {
         super();
-        monomers = new Hashtable<String, IMonomer>();
+        monomers = new Hashtable<>();
     }
 
     /**
@@ -158,7 +158,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     public IPolymer clone() throws CloneNotSupportedException {
         Polymer clone = (Polymer) super.clone();
         clone.removeAllElements();
-        clone.monomers = new Hashtable<String, IMonomer>();
+        clone.monomers = new Hashtable<>();
         for (String monomerName : getMonomerNames()) {
             Monomer monomerClone = (Monomer) getMonomer(monomerName).clone();
             for (IAtom atomInMonomer : monomerClone.atoms()) {
@@ -170,9 +170,9 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         // we need this mapping to correctly clone bonds, single/paired electrons
         // and stereo elements
         // - the expected size stop the map be resized - method from Google Guava
-        Map<IAtom, IAtom> atomMap = new HashMap<IAtom, IAtom>(atomCount >= 3 ? atomCount + atomCount / 3
+        Map<IAtom, IAtom> atomMap = new HashMap<>(atomCount >= 3 ? atomCount + atomCount / 3
                 : atomCount + 1);
-        Map<IBond, IBond> bondMap = new HashMap<IBond, IBond>(bondCount >= 3 ? bondCount + bondCount / 3
+        Map<IBond, IBond> bondMap = new HashMap<>(bondCount >= 3 ? bondCount + bondCount / 3
                 : bondCount + 1);
 
         // now consider atoms that are not associated with any monomer

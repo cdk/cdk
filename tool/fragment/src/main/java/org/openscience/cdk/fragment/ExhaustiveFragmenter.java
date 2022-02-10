@@ -77,7 +77,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     public ExhaustiveFragmenter(int minFragSize) {
         this.minFragSize = minFragSize;
-        fragMap = new HashMap<String, IAtomContainer>();
+        fragMap = new HashMap<>();
         smilesGenerator = SmilesGenerator.unique().aromatic();
     }
 
@@ -103,7 +103,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     private List<IAtomContainer> run(IAtomContainer atomContainer) throws CDKException {
 
-        ArrayList<IAtomContainer> fragments = new ArrayList<IAtomContainer>();
+        ArrayList<IAtomContainer> fragments = new ArrayList<>();
 
         if (atomContainer.getBondCount() < 3) return fragments;
         List<IBond> splitableBonds = getSplitableBonds(atomContainer);
@@ -130,7 +130,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         }
 
         // try and partition the fragments
-        List<IAtomContainer> tmp = new ArrayList<IAtomContainer>(fragments);
+        List<IAtomContainer> tmp = new ArrayList<>(fragments);
         for (IAtomContainer fragment : fragments) {
             if (fragment.getBondCount() < 3 || fragment.getAtomCount() < minFragSize) continue;
             if (getSplitableBonds(fragment).size() == 0) continue;
@@ -153,7 +153,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 }
             }
         }
-        fragments = new ArrayList<IAtomContainer>(tmp);
+        fragments = new ArrayList<>(tmp);
         return fragments;
     }
 
@@ -163,7 +163,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         IRingSet allRings = spanningTree.getAllRings();
 
         // find the splitable bonds
-        ArrayList<IBond> splitableBonds = new ArrayList<IBond>();
+        ArrayList<IBond> splitableBonds = new ArrayList<>();
 
         for (IBond bond : atomContainer.bonds()) {
             boolean isInRing = false;
@@ -193,7 +193,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     @Override
     public String[] getFragments() {
-        return (new ArrayList<String>(fragMap.keySet())).toArray(new String[0]);
+        return (new ArrayList<>(fragMap.keySet())).toArray(new String[0]);
     }
 
     /**
@@ -203,7 +203,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     @Override
     public IAtomContainer[] getFragmentsAsContainers() {
-        return (new ArrayList<IAtomContainer>(fragMap.values())).toArray(new IAtomContainer[0]);
+        return (new ArrayList<>(fragMap.values())).toArray(new IAtomContainer[0]);
     }
 
 }

@@ -267,7 +267,7 @@ public class RGroupList implements IRGroupList {
     @Override
     public List<Integer> matchOccurence(int maxAttachments) {
 
-        List<Integer> validValues = new ArrayList<Integer>();
+        List<Integer> validValues = new ArrayList<>();
 
         for (int val = 0; val <= maxAttachments; val++) {
             boolean addVal = false;

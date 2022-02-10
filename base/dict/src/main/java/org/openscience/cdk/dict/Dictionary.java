@@ -54,7 +54,7 @@ public class Dictionary {
     private String             ownNS = null;
 
     public Dictionary() {
-        entries = new Hashtable<String, Entry>();
+        entries = new Hashtable<>();
     }
 
     public static Dictionary unmarshal(Reader reader) {

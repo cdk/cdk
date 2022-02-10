@@ -42,7 +42,7 @@ public abstract class DefaultRandomAccessChemObjectReader implements IRandomAcce
     /**
      * Holder of reader event listeners.
      */
-    private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>();
+    private List<IChemObjectIOListener> listenerList = new ArrayList<>();
 
     public void addChemObjectIOListener(IChemObjectIOListener listener) {
         listenerList.add(listener);

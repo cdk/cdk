@@ -85,7 +85,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      */
     public TPSADescriptor() {
         if (map == null) {
-            map = new HashMap<String,Double>();
+            map = new HashMap<>();
             // contributions:
             // every contribution is given by an atom profile;
             // positions in atom profile strings are: symbol, max-bond-order, bond-order-sum,
@@ -224,7 +224,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
-        List<String> profiles = new ArrayList<String>();
+        List<String> profiles = new ArrayList<>();
 
         // calculate the set of all rings
         IRingSet rs;

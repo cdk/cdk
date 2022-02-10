@@ -47,7 +47,7 @@ public class AbstractReactionLabeller {
     private Map<IAtom, IAtom> atomAtomMap(IReaction reaction, IReaction clone, Map<IAtomContainer, int[]> permutationMap) {
         // create a Map of corresponding atoms for molecules
         // (key: original Atom, value: clone Atom)
-        Map<IAtom, IAtom> atomAtom = new Hashtable<IAtom, IAtom>();
+        Map<IAtom, IAtom> atomAtom = new Hashtable<>();
         IAtomContainerSet reactants = reaction.getReactants();
         IAtomContainerSet clonedReactants = clone.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); ++i) {
@@ -84,7 +84,7 @@ public class AbstractReactionLabeller {
     private List<IMapping> cloneMappings(IReaction reaction, Map<IAtom, IAtom> atomAtomMap) {
         // clone the mappings
         int numberOfMappings = reaction.getMappingCount();
-        List<IMapping> map = new ArrayList<IMapping>();
+        List<IMapping> map = new ArrayList<>();
         for (int mappingIndex = 0; mappingIndex < numberOfMappings; mappingIndex++) {
             IMapping mapping = reaction.getMapping(mappingIndex);
             IChemObject keyChemObj0 = mapping.getChemObject(0);
@@ -106,7 +106,7 @@ public class AbstractReactionLabeller {
             Map<IAtomContainer, int[]> permutationMap) {
 
         // make a lookup for the indices of the atoms in the copy
-        final Map<IChemObject, Integer> indexMap = new HashMap<IChemObject, Integer>();
+        final Map<IChemObject, Integer> indexMap = new HashMap<>();
         List<IAtomContainer> all = ReactionManipulator.getAllAtomContainers(copyOfReaction);
         int globalIndex = 0;
         for (IAtomContainer ac : all) {
@@ -147,7 +147,7 @@ public class AbstractReactionLabeller {
         System.out.println("labelling");
         IReaction canonReaction = new Reaction();
 
-        Map<IAtomContainer, int[]> permutationMap = new HashMap<IAtomContainer, int[]>();
+        Map<IAtomContainer, int[]> permutationMap = new HashMap<>();
 
         IAtomContainerSet canonicalProducts = DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainerSet.class);

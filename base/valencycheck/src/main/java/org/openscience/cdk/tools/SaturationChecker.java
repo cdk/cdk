@@ -585,7 +585,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     }
 
     public int calculateNumberOfImplicitHydrogens(IAtom atom) throws CDKException {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         return this.calculateNumberOfImplicitHydrogens(atom, 0, 0, bonds, false);
     }
 

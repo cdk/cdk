@@ -150,7 +150,7 @@ public class DynamicFactoryTest {
         factory.register(ICDKObject.class, DynamicFactoryTestMock.class);
 
         Iterator<?> it = factory.suggest(ICDKObject.class);
-        List<Object> list = new ArrayList<Object>(5);
+        List<Object> list = new ArrayList<>(5);
         while (it.hasNext()) {
             list.add(it.next());
         }

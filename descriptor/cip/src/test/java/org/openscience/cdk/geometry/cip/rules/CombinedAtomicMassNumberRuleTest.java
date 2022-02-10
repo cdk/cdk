@@ -72,7 +72,7 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
         ILigand ligand3 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ILigand ligand4 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
-        List<ILigand> ligands = new ArrayList<ILigand>();
+        List<ILigand> ligands = new ArrayList<>();
         ligands.add(ligand1);
         ligands.add(ligand2);
         ligands.add(ligand3);

@@ -95,7 +95,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -166,7 +166,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -201,7 +201,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         IAtomContainerSet setOfReactants = getExampleReactants();
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -249,7 +249,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -285,7 +285,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

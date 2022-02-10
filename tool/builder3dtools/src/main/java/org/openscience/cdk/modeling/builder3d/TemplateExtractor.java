@@ -157,7 +157,7 @@ public class TemplateExtractor {
         // RingPartitioner ringPartitioner=new RingPartitioner();
         List<IRingSet> ringSystems = null;
 
-        HashMap<String, String> hashRingSystems = new HashMap<String, String>();
+        HashMap<String, String> hashRingSystems = new HashMap<>();
         SmilesGenerator smilesGenerator = new SmilesGenerator();
 
         int counterRings = 0;
@@ -279,7 +279,7 @@ public class TemplateExtractor {
         IAtomContainer m = null;
         IteratingSDFReader imdl = null;
         // QueryAtomContainer query=null;
-        List<String> data = new ArrayList<String>();
+        List<String> data = new ArrayList<>();
         SmilesGenerator smiles = new SmilesGenerator();
         try {
             System.out.println("Start...");
@@ -346,7 +346,7 @@ public class TemplateExtractor {
         IteratingSDFReader imdl = null;
         //QueryAtomContainer query=null;
         IAtomContainer query = null;
-        List<IBitFingerprint> data = new ArrayList<IBitFingerprint>();
+        List<IBitFingerprint> data = new ArrayList<>();
         ILoggingTool logger = LoggingToolFactory.createLoggingTool(getClass());
         try {
             logger.info("Read data file in ...");
@@ -423,7 +423,7 @@ public class TemplateExtractor {
 
     public void makeFingerprintFromRingSystems(String dataFileIn, String dataFileOut, boolean anyAtom,
             boolean anyAtomAnyBond) throws Exception {
-        Map<String, Integer> timings = new HashMap<String, Integer>();
+        Map<String, Integer> timings = new HashMap<>();
 
         System.out.println("Start make fingerprint from file:" + dataFileIn + " ...");
         BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));

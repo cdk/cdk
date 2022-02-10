@@ -62,7 +62,7 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      */
     public PeriodicTablePositionDescriptor() {
         if (periodicTable == null) {
-            periodicTable = new Hashtable<String, Integer>();
+            periodicTable = new Hashtable<>();
             periodicTable.put("H", 1);
             periodicTable.put("Li", 2);
             periodicTable.put("Be", 2);

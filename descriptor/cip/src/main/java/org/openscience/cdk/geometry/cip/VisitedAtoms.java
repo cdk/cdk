@@ -45,7 +45,7 @@ public class VisitedAtoms {
      * Creates a new empty list of visited {@link IAtom}s.
      */
     public VisitedAtoms() {
-        visitedItems = new ArrayList<IAtom>();
+        visitedItems = new ArrayList<>();
     }
 
     /**

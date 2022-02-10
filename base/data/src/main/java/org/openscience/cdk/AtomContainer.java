@@ -150,7 +150,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         this.lonePairs = new ILonePair[this.lonePairCount];
         this.singleElectrons = new ISingleElectron[this.singleElectronCount];
 
-        stereoElements = new HashSet<IStereoElement>(atomCount / 2);
+        stereoElements = new HashSet<>(atomCount / 2);
 
         for (IStereoElement element : container.stereoElements()) {
             addStereoElement(element);
@@ -194,7 +194,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         bonds = new IBond[bondCount];
         lonePairs = new ILonePair[lpCount];
         singleElectrons = new ISingleElectron[seCount];
-        stereoElements = new HashSet<IStereoElement>(atomCount / 2);
+        stereoElements = new HashSet<>(atomCount / 2);
     }
 
     /**
@@ -210,7 +210,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
-        this.stereoElements = new HashSet<IStereoElement>();
+        this.stereoElements = new HashSet<>();
         this.stereoElements.addAll(elements);
     }
 
@@ -1425,17 +1425,17 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         // remove existing elements - we need to set the stereo elements list as list.clone() doesn't
         // work as expected and will also remove all elements from the original
-        clone.setStereoElements(new ArrayList<IStereoElement>(stereoElements.size()));
+        clone.setStereoElements(new ArrayList<>(stereoElements.size()));
         clone.removeAllElements();
 
         // create a mapping of the original atoms/bonds to the cloned atoms/bonds
         // we need this mapping to correctly clone bonds, single/paired electrons
         // and stereo elements
         // - the expected size stop the map be resized - method from Google Guava
-        Map<IAtom, IAtom> atomMap = new HashMap<IAtom, IAtom>(atomCount >= 3 ? atomCount + atomCount / 3
-                                                                             : atomCount + 1);
-        Map<IBond, IBond> bondMap = new HashMap<IBond, IBond>(bondCount >= 3 ? bondCount + bondCount / 3
-                                                                             : bondCount + 1);
+        Map<IAtom, IAtom> atomMap = new HashMap<>(atomCount >= 3 ? atomCount + atomCount / 3
+                : atomCount + 1);
+        Map<IBond, IBond> bondMap = new HashMap<>(bondCount >= 3 ? bondCount + bondCount / 3
+                : bondCount + 1);
 
         // clone atoms
         IAtom[] atoms = new IAtom[this.atomCount];

@@ -61,7 +61,7 @@ final class GreedyBasis {
      * @see org.openscience.cdk.graph.InitialCycles#numberOfEdges()
      */
     GreedyBasis(final int n, final int m) {
-        this.basis = new ArrayList<Cycle>(n);
+        this.basis = new ArrayList<>(n);
         this.edgesOfBasis = new BitSet(m);
         this.m = m;
     }

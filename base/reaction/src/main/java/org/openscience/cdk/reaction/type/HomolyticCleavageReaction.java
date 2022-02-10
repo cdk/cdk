@@ -135,10 +135,10 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
                     && reactant.getConnectedSingleElectronsCount(atom1) == 0
                     && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
 
-                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                ArrayList<IAtom> atomList = new ArrayList<>();
                 atomList.add(atom1);
                 atomList.add(atom2);
-                ArrayList<IBond> bondList = new ArrayList<IBond>();
+                ArrayList<IBond> bondList = new ArrayList<>();
                 bondList.add(bondi);
                 IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
                 moleculeSet.addAtomContainer(reactant);

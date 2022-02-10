@@ -402,14 +402,14 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IsotopeFactory ifac = Isotopes.getInstance();
         ifac.configureAtoms(mol1);
 
-        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(1),
                 mol1.getBond(3)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         String smiles1 = sg.create(mol1);
         Assert.assertNotNull(smiles1);
         Assert.assertEquals("S\\C(\\F)=C(/F)\\S", smiles1);
 
-        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(1),
                 mol1.getBond(3)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
 
@@ -427,7 +427,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol1.getAtom(mol1.getAtomCount() - 1).setImplicitHydrogenCount(0);
         mol1.addBond(5, 7, IBond.Order.SINGLE);
 
-        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(0),
                 mol1.getBond(3)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
 
@@ -435,7 +435,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         Assert.assertNotNull(smiles1);
         Assert.assertEquals("S(/C(/F)=C(/F)\\S[H])[H]", smiles1);
 
-        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(0),
                 mol1.getBond(3)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
 

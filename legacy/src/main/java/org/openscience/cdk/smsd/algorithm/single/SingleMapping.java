@@ -76,8 +76,8 @@ public class SingleMapping {
     protected List<Map<IAtom, IAtom>> getOverLaps(IAtomContainer source, IAtomContainer target, boolean removeHydrogen)
             throws CDKException {
 
-        mappings = new ArrayList<Map<IAtom, IAtom>>();
-        connectedBondOrder = new TreeMap<Integer, Double>();
+        mappings = new ArrayList<>();
+        connectedBondOrder = new TreeMap<>();
         this.source = source;
         this.target = target;
 
@@ -102,8 +102,8 @@ public class SingleMapping {
      */
     protected List<Map<IAtom, IAtom>> getOverLaps(IQueryAtomContainer source, IAtomContainer target,
             boolean removeHydrogen) throws CDKException {
-        mappings = new ArrayList<Map<IAtom, IAtom>>();
-        connectedBondOrder = new TreeMap<Integer, Double>();
+        mappings = new ArrayList<>();
+        connectedBondOrder = new TreeMap<>();
         this.source = source;
         this.target = target;
 
@@ -125,7 +125,7 @@ public class SingleMapping {
             IQueryAtom smartAtom = (IQueryAtom) sourceAtom;
             if ((removeHydrogen && smartAtom.getAtomicNumber() != IElement.H) || (!removeHydrogen)) {
                 for (IAtom targetAtom : target.atoms()) {
-                    Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
+                    Map<IAtom, IAtom> mapAtoms = new HashMap<>();
                     if (smartAtom.matches(targetAtom)) {
                         mapAtoms.put(sourceAtom, targetAtom);
                         List<IBond> bonds = target.getConnectedBondsList(targetAtom);
@@ -154,7 +154,7 @@ public class SingleMapping {
         for (IAtom sourceAtom : source.atoms()) {
             if ((removeHydrogen && sourceAtom.getAtomicNumber() != IElement.H) || (!removeHydrogen)) {
                 for (IAtom targetAtom : target.atoms()) {
-                    Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
+                    Map<IAtom, IAtom> mapAtoms = new HashMap<>();
                     if (sourceAtom.getAtomicNumber().equals(targetAtom.getAtomicNumber())) {
                         mapAtoms.put(sourceAtom, targetAtom);
                         List<IBond> bonds = target.getConnectedBondsList(targetAtom);
@@ -183,7 +183,7 @@ public class SingleMapping {
         for (IAtom targetAtom : target.atoms()) {
             if ((removeHydrogen && targetAtom.getAtomicNumber() != IElement.H) || (!removeHydrogen)) {
                 for (IAtom sourceAtoms : source.atoms()) {
-                    Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
+                    Map<IAtom, IAtom> mapAtoms = new HashMap<>();
 
                     if (targetAtom.getAtomicNumber().equals(sourceAtoms.getAtomicNumber())) {
                         mapAtoms.put(sourceAtoms, targetAtom);
@@ -208,7 +208,7 @@ public class SingleMapping {
     }
 
     private void postFilter() {
-        List<Map<IAtom, IAtom>> sortedMap = new ArrayList<Map<IAtom, IAtom>>();
+        List<Map<IAtom, IAtom>> sortedMap = new ArrayList<>();
         connectedBondOrder = sortByValue(connectedBondOrder);
         for (Integer key : connectedBondOrder.keySet()) {
             Map<IAtom, IAtom> mapToBeMoved = mappings.get(key);
@@ -218,7 +218,7 @@ public class SingleMapping {
     }
 
     private <K, V extends Comparable<V>> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
+        List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
 
             @Override
@@ -226,7 +226,7 @@ public class SingleMapping {
                 return object1.getValue().compareTo(object2.getValue());
             }
         });
-        Map<K, V> result = new LinkedHashMap<K, V>();
+        Map<K, V> result = new LinkedHashMap<>();
         for (Map.Entry<K, V> entry : list) {
             result.put(entry.getKey(), entry.getValue());
         }

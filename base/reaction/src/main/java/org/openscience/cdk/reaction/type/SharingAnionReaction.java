@@ -138,10 +138,10 @@ public class SharingAnionReaction extends ReactionEngine implements IReactionPro
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 1
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
-                            ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                            ArrayList<IAtom> atomList = new ArrayList<>();
                             atomList.add(atomi);
                             atomList.add(atomj);
-                            ArrayList<IBond> bondList = new ArrayList<IBond>();
+                            ArrayList<IBond> bondList = new ArrayList<>();
                             bondList.add(bondi);
 
                             IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);

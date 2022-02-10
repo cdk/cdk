@@ -56,7 +56,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *  @see #MolecularFormulaSet(IMolecularFormula)
      */
     public MolecularFormulaSet() {
-        components = new ArrayList<IMolecularFormula>();
+        components = new ArrayList<>();
     }
 
     /**
@@ -68,7 +68,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *  @see             #MolecularFormulaSet()
      */
     public MolecularFormulaSet(IMolecularFormula formula) {
-        components = new ArrayList<IMolecularFormula>();
+        components = new ArrayList<>();
         components.add(0, formula);
     }
 

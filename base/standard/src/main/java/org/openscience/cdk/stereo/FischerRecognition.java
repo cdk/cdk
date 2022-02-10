@@ -127,7 +127,7 @@ final class FischerRecognition {
             return Collections.emptyList();
 
         // build atom index and only recognize 2D depictions
-        Map<IAtom,Integer> atomToIndex = new HashMap<IAtom, Integer>();
+        Map<IAtom,Integer> atomToIndex = new HashMap<>();
         for (IAtom atom : container.atoms()) {
             if (atom.getPoint2d() == null)
                 return Collections.emptyList();
@@ -136,7 +136,7 @@ final class FischerRecognition {
         
         RingSearch ringSearch = new RingSearch(container, graph);
         
-        final List<IStereoElement> elements = new ArrayList<IStereoElement>(5);
+        final List<IStereoElement> elements = new ArrayList<>(5);
 
         for (int v = 0; v < container.getAtomCount(); v++) {
 

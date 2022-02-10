@@ -205,7 +205,7 @@ public class MassToFormulaTool {
      */
     private void callDefaultRestrictions() throws CDKException, IOException {
 
-        List<IRule> rules1 = new ArrayList<IRule>();
+        List<IRule> rules1 = new ArrayList<>();
         IsotopeFactory ifac = Isotopes.getInstance();
 
         // restriction for occurrence elements
@@ -266,7 +266,7 @@ public class MassToFormulaTool {
         int numberElements = mfRange.getIsotopeCount();
 
         // put IIsotope into a list
-        List<IIsotope> isotopes_TO = new ArrayList<IIsotope>();
+        List<IIsotope> isotopes_TO = new ArrayList<>();
         Iterator<IIsotope> isIt = mfRange.isotopes().iterator();
         while (isIt.hasNext())
             isotopes_TO.add(isIt.next());
@@ -286,7 +286,7 @@ public class MassToFormulaTool {
 
             /* find number of element to combine */
             int count_E = 0;
-            ArrayList<Integer> elem_Pos = new ArrayList<Integer>();
+            ArrayList<Integer> elem_Pos = new ArrayList<>();
             for (int j = 0; j < matrix[1].length; j++)
                 if (value_In[j] != 0) {
                     count_E++;
@@ -421,7 +421,7 @@ public class MassToFormulaTool {
      * @return             The list of IIsotope ordered
      */
     private List<IIsotope> orderList(List<IIsotope> isotopes_TO) {
-        List<IIsotope> newOrderList = new ArrayList<IIsotope>();
+        List<IIsotope> newOrderList = new ArrayList<>();
         for (int i = 0; i < orderElements.length; i++) {
             String symbol = orderElements[i];
             Iterator<IIsotope> itIso = isotopes_TO.iterator();
@@ -550,7 +550,7 @@ public class MassToFormulaTool {
             double valueMin = 100;
             int i_final = 0;
             solutions_new = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
-            List<Integer> listI = new ArrayList<Integer>();
+            List<Integer> listI = new ArrayList<>();
             for (int j = 0; j < formulaSet.size(); j++) {
                 for (int i = 0; i < formulaSet.size(); i++) {
                     if (listI.contains(i)) continue;

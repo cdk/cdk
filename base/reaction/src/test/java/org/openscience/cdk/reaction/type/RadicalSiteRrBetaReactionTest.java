@@ -88,7 +88,7 @@ public class RadicalSiteRrBetaReactionTest extends ReactionProcessTest {
         molecule.getAtom(4).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -215,7 +215,7 @@ public class RadicalSiteRrBetaReactionTest extends ReactionProcessTest {
         molecule.getAtom(4).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -255,7 +255,7 @@ public class RadicalSiteRrBetaReactionTest extends ReactionProcessTest {
         molecule.getAtom(4).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

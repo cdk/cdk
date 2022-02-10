@@ -215,7 +215,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
     }
 
     private List order3(IAtomContainer container) {
-        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        List<List<Integer>> ret = new ArrayList<>();
 
         IRingSet rings = Cycles.sssr(container).toRingSet();
 
@@ -223,7 +223,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         for (int i = 0; i < nring; i++) {
             IAtomContainer ring = rings.getAtomContainer(i);
             if (ring.getAtomCount() == 3) {
-                List<Integer> tmp = new ArrayList<Integer>();
+                List<Integer> tmp = new ArrayList<>();
                 Iterator<IAtom> iter = ring.atoms().iterator();
                 while (iter.hasNext()) {
                     IAtom atom = iter.next();

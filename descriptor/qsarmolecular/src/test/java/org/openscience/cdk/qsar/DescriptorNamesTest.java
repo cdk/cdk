@@ -66,7 +66,7 @@ public class DescriptorNamesTest extends CDKTestCase {
         engine.process(ac);
 
         int ncalc = 0;
-        List<String> descNames = new ArrayList<String>();
+        List<String> descNames = new ArrayList<>();
         for (IImplementationSpecification spec : specs) {
             DescriptorValue value = (DescriptorValue) ac.getProperty(spec);
             if (value == null) Assert.fail(spec.getImplementationTitle() + " was not calculated.");
@@ -75,8 +75,8 @@ public class DescriptorNamesTest extends CDKTestCase {
             descNames.addAll(Arrays.asList(names));
         }
 
-        List<String> dups = new ArrayList<String>();
-        Set<String> uniqueNames = new HashSet<String>();
+        List<String> dups = new ArrayList<>();
+        Set<String> uniqueNames = new HashSet<>();
         for (String name : descNames) {
             if (!uniqueNames.add(name)) dups.add(name);
         }

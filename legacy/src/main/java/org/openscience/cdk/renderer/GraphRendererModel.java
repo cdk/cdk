@@ -48,8 +48,8 @@ public class GraphRendererModel {
     private String          xtitle      = "X title";                 // Title of the x axis
     private String          ytitle      = "Y title";                 // Title of the y axis
 
-    private List<IFunction> functions   = new ArrayList<IFunction>();
-    private List<Color>     colors      = new ArrayList<Color>();
+    private List<IFunction> functions   = new ArrayList<>();
+    private List<Color>     colors      = new ArrayList<>();
 
     /** Paints the function normal */
     public final static int NORMAL      = 0;

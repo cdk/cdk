@@ -81,9 +81,9 @@ public class FiguerasSSSRFinder {
         //full set of atoms in the structure and on to store the numbers
         //of the nodes that have been trimmed away.
         //Furhter there is a Vector nodesN2 to store the number of N2 nodes
-        List<IAtom> fullSet = new ArrayList<IAtom>();
-        List<IAtom> trimSet = new ArrayList<IAtom>();
-        List<IAtom> nodesN2 = new ArrayList<IAtom>();
+        List<IAtom> fullSet = new ArrayList<>();
+        List<IAtom> trimSet = new ArrayList<>();
+        List<IAtom> nodesN2 = new ArrayList<>();
 
         initPath(molecule);
         logger.debug("molecule.getAtomCount(): " + molecule.getAtomCount());
@@ -194,11 +194,11 @@ public class FiguerasSSSRFinder {
         Queue queue = new Queue();
         /* Initialize a path Vector for each node */
         //Vector pfad1,pfad2;
-        List<List<IAtom>> path = new ArrayList<List<IAtom>>(OKatoms);
-        List<IAtom> intersection = new ArrayList<IAtom>();
-        List<IAtom> ring = new ArrayList<IAtom>();
+        List<List<IAtom>> path = new ArrayList<>(OKatoms);
+        List<IAtom> intersection = new ArrayList<>();
+        List<IAtom> ring = new ArrayList<>();
         for (final IAtom atom : molecule.atoms()) {
-            path.add(new ArrayList<IAtom>());
+            path.add(new ArrayList<>());
             atom.getProperty(PATH, List.class).clear();
         }
         // Initialize the queue with nodes attached to rootNode
@@ -236,7 +236,7 @@ public class FiguerasSSSRFinder {
                         // if path[mNumber] is null
                         // update the path[mNumber]
                         //pfad2 = (Vector)node.getProperty(PATH);
-                        mAtom.setProperty(PATH, new ArrayList<IAtom>((List<IAtom>) node.getProperty(PATH)));
+                        mAtom.setProperty(PATH, new ArrayList<>((List<IAtom>) node.getProperty(PATH)));
                         ((List<IAtom>) mAtom.getProperty(PATH)).add(mAtom);
                         //pfad1 = (Vector)mAtom.getProperty(PATH);
                         // now push the node m onto the queue
@@ -338,7 +338,7 @@ public class FiguerasSSSRFinder {
         // FIXME: the JavaDoc does not describe what happens: that vec1 gets to be the union!
         // jm: pretty sure retainAll would do the trick here but don't want to change the
         //     functionality as item only present in list1 are not removed (i.e. not union)
-        List<IAtom> is = new ArrayList<IAtom>(list1);
+        List<IAtom> is = new ArrayList<>(list1);
         for (int f = list2.size() - 1; f > -1; f--) {
             if (!list1.contains(list2.get(f))) is.add(list2.get(f));
         }

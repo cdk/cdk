@@ -243,11 +243,11 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         List<IAtom> atomsInSeventhSphere = null;
 
         // SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS DURING DETECTION
-        ArrayList<Integer> singles = new ArrayList<Integer>(); // list of any bond not rotatable
-        ArrayList<Integer> doubles = new ArrayList<Integer>(); // list with only double bonds
-        ArrayList<Integer> atoms = new ArrayList<Integer>(); // list with all the atoms in spheres
+        ArrayList<Integer> singles = new ArrayList<>(); // list of any bond not rotatable
+        ArrayList<Integer> doubles = new ArrayList<>(); // list with only double bonds
+        ArrayList<Integer> atoms = new ArrayList<>(); // list with all the atoms in spheres
         //atoms.add( Integer.valueOf( mol.indexOf(neighboors[0]) ) );
-        ArrayList<Integer> bondsInCycloex = new ArrayList<Integer>(); // list for bonds in cycloexane-like rings
+        ArrayList<Integer> bondsInCycloex = new ArrayList<>(); // list for bonds in cycloexane-like rings
 
         // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
         IBond secondBond; // (remember that first bond is proton bond)

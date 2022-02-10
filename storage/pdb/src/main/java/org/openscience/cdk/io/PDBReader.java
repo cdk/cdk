@@ -234,9 +234,9 @@ public class PDBReader extends DefaultChemObjectReader {
 
         boolean isProteinStructure = false;
 
-        atomNumberMap = new Hashtable<Integer, IAtom>();
+        atomNumberMap = new Hashtable<>();
         if (readConnect.isSet()) {
-            bondsFromConnectRecords = new ArrayList<IBond>();
+            bondsFromConnectRecords = new ArrayList<>();
         }
 
         // do the reading of the Input

@@ -50,8 +50,8 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     /**
      * Holder of reader event listeners.
      */
-    private List<IChemObjectIOListener> listeners = new ArrayList<IChemObjectIOListener>(2);
-    private SettingManager<IOSetting>   settings  = new SettingManager<IOSetting>();
+    private List<IChemObjectIOListener> listeners = new ArrayList<>(2);
+    private SettingManager<IOSetting>   settings  = new SettingManager<>();
 
     /**
      *{@inheritDoc}

@@ -34,12 +34,12 @@ public class IntegerArrayResult extends IntegerArrayResultType {
 
     public IntegerArrayResult() {
         super(0);
-        this.array = new ArrayList<Integer>();
+        this.array = new ArrayList<>();
     }
 
     public IntegerArrayResult(int size) {
         super(size);
-        this.array = new ArrayList<Integer>(size);
+        this.array = new ArrayList<>(size);
     }
 
     public void add(int value) {

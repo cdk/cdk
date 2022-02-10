@@ -96,7 +96,7 @@ public class AtomRefinableTest {
     }
     
     private Set<Integer> set(int... elements) {
-        Set<Integer> block = new HashSet<Integer>();
+        Set<Integer> block = new HashSet<>();
         for (int element : elements) {
             block.add(element);
         }

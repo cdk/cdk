@@ -55,10 +55,10 @@ enum HydrogenPosition {
      * right unless the element is listed here. This allows us to correctly
      * displayed H2O not OH2 and CH4 not H4C.
      */
-    private static final Set<Elements> PREFIXED_H         = new HashSet<Elements>(Arrays.asList(Elements.Oxygen,
-                                                                  Elements.Sulfur, Elements.Selenium,
-                                                                  Elements.Tellurium, Elements.Fluorine,
-                                                                  Elements.Chlorine, Elements.Bromine, Elements.Iodine));
+    private static final Set<Elements> PREFIXED_H         = new HashSet<>(Arrays.asList(Elements.Oxygen,
+            Elements.Sulfur, Elements.Selenium,
+            Elements.Tellurium, Elements.Fluorine,
+            Elements.Chlorine, Elements.Bromine, Elements.Iodine));
 
     /**
      * When an atom has a single bond, the position is left or right depending
@@ -135,7 +135,7 @@ enum HydrogenPosition {
         double[] extents = VecmathUtil.extents(vectors);
         Arrays.sort(extents);
 
-        Map<HydrogenPosition, OffsetExtent> extentMap = new HashMap<HydrogenPosition, OffsetExtent>();
+        Map<HydrogenPosition, OffsetExtent> extentMap = new HashMap<>();
 
         for (int i = 0; i < extents.length; i++) {
             final double before = extents[i];

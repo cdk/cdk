@@ -237,7 +237,7 @@ public class PharmacophoreUtils {
 
         // ltes get the children of the container
         // these will be either group or pharmacophore elems
-        List<PharmacophoreQuery> ret = new ArrayList<PharmacophoreQuery>();
+        List<PharmacophoreQuery> ret = new ArrayList<>();
 
         // get global group defs
         HashMap<String, String> groups = getGroupDefinitions(root);
@@ -256,7 +256,7 @@ public class PharmacophoreUtils {
      * this wont recurse through sub elements that may contain group elements
      */
     private static HashMap<String, String> getGroupDefinitions(Element e) {
-        HashMap<String, String> groups = new HashMap<String, String>();
+        HashMap<String, String> groups = new HashMap<>();
         Elements children = e.getChildElements();
         for (int i = 0; i < children.size(); i++) {
             Element child = children.get(i);

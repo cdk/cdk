@@ -38,7 +38,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable {
     Hashtable<String, HOSECodeShiftRange> ht;
 
     public BremserOneSphereHOSECodePredictor() {
-        ht = new Hashtable<String, HOSECodeShiftRange>(700);
+        ht = new Hashtable<>(700);
         prepareHashTable();
     }
 

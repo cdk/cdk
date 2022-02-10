@@ -50,7 +50,7 @@ public abstract class AbstractFontManager implements IFontManager {
      * Call this in subclasses with the super() constructor.
      */
     public AbstractFontManager() {
-        this.zoomToFontSizeMap = new TreeMap<Double, Integer>();
+        this.zoomToFontSizeMap = new TreeMap<>();
     }
 
     /**

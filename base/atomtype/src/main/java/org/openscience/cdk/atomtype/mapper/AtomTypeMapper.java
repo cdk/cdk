@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class AtomTypeMapper {
 
-    private static Map<String, AtomTypeMapper> mappers = new HashMap<String, AtomTypeMapper>();
+    private static Map<String, AtomTypeMapper> mappers = new HashMap<>();
 
     private String                             mappingFile;
 

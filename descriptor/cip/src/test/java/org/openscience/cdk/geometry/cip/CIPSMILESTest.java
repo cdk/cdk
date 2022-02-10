@@ -258,7 +258,7 @@ public class CIPSMILESTest extends CDKTestCase {
      */
     CIP_CHIRALITY label(IAtomContainer container) {
 
-        List<IStereoElement> elements = new ArrayList<IStereoElement>();
+        List<IStereoElement> elements = new ArrayList<>();
 
         for (IStereoElement element : container.stereoElements()) {
             elements.add(element);

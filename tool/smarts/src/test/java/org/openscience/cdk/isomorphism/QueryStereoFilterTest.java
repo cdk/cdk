@@ -158,7 +158,7 @@ public class QueryStereoFilterTest {
         target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
                 target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{0, 1, 2, 3, 4}));
-        target.setStereoElements(new ArrayList<IStereoElement>(1));
+        target.setStereoElements(new ArrayList<>(1));
         target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
                 target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{0, 1, 2, 3, 4}));
@@ -262,7 +262,7 @@ public class QueryStereoFilterTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.setStereoElements(new ArrayList<IStereoElement>(1));
+        target.setStereoElements(new ArrayList<>(1));
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -276,7 +276,7 @@ public class QueryStereoFilterTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.setStereoElements(new ArrayList<IStereoElement>(1));
+        target.setStereoElements(new ArrayList<>(1));
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -290,7 +290,7 @@ public class QueryStereoFilterTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.setStereoElements(new ArrayList<IStereoElement>(1));
+        target.setStereoElements(new ArrayList<>(1));
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -304,7 +304,7 @@ public class QueryStereoFilterTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.setStereoElements(new ArrayList<IStereoElement>(1));
+        target.setStereoElements(new ArrayList<>(1));
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -318,7 +318,7 @@ public class QueryStereoFilterTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.setStereoElements(new ArrayList<IStereoElement>(1));
+        target.setStereoElements(new ArrayList<>(1));
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -332,7 +332,7 @@ public class QueryStereoFilterTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.setStereoElements(new ArrayList<IStereoElement>(1));
+        target.setStereoElements(new ArrayList<>(1));
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -346,7 +346,7 @@ public class QueryStereoFilterTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.setStereoElements(new ArrayList<IStereoElement>(1));
+        target.setStereoElements(new ArrayList<>(1));
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
                 target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));

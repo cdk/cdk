@@ -108,7 +108,7 @@ public class RingSetManipulator {
      * @return A list of IAtomContainer objects corresponding to individual rings
      */
     public static List<IAtomContainer> getAllAtomContainers(IRingSet set) {
-        List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> atomContainerList = new ArrayList<>();
         for (IAtomContainer atomContainer : set.atomContainers()) {
             atomContainerList.add(atomContainer);
         }
@@ -121,7 +121,7 @@ public class RingSetManipulator {
      * @param ringSet The collection of rings
      */
     public static void sort(IRingSet ringSet) {
-        List<IRing> ringList = new ArrayList<IRing>();
+        List<IRing> ringList = new ArrayList<>();
         for (IAtomContainer atomContainer : ringSet.atomContainers()) {
             ringList.add((IRing) atomContainer);
         }

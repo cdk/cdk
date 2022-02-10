@@ -111,7 +111,7 @@ public class VFMapper implements IMapper {
     public VFMapper(IQuery query) {
         setTimeManager(new TimeManager());
         this.query = query;
-        this.maps = new ArrayList<Map<INode, IAtom>>();
+        this.maps = new ArrayList<>();
     }
 
     /**
@@ -122,7 +122,7 @@ public class VFMapper implements IMapper {
     public VFMapper(IAtomContainer queryMolecule, boolean bondMatcher) {
         setTimeManager(new TimeManager());
         this.query = new QueryCompiler(queryMolecule, bondMatcher).compile();
-        this.maps = new ArrayList<Map<INode, IAtom>>();
+        this.maps = new ArrayList<>();
     }
 
     /** {@inheritDoc}
@@ -141,7 +141,7 @@ public class VFMapper implements IMapper {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
         mapAll(state);
-        return new ArrayList<Map<INode, IAtom>>(maps);
+        return new ArrayList<>(maps);
     }
 
     /** {@inheritDoc}
@@ -154,7 +154,7 @@ public class VFMapper implements IMapper {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
         mapFirst(state);
-        return maps.isEmpty() ? new HashMap<INode, IAtom>() : maps.get(0);
+        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
     }
 
     /** {@inheritDoc} */
@@ -184,7 +184,7 @@ public class VFMapper implements IMapper {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
         mapAll(state);
-        return new ArrayList<Map<INode, IAtom>>(maps);
+        return new ArrayList<>(maps);
     }
 
     /** {@inheritDoc}
@@ -197,7 +197,7 @@ public class VFMapper implements IMapper {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
         mapFirst(state);
-        return maps.isEmpty() ? new HashMap<INode, IAtom>() : maps.get(0);
+        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
     }
 
     /** {@inheritDoc}

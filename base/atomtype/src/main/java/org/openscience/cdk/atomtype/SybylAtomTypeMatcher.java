@@ -54,8 +54,8 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     private CDKAtomTypeMatcher                                   cdkMatcher;
     private AtomTypeMapper                                       mapper;
 
-    private static Map<IChemObjectBuilder, SybylAtomTypeMatcher> factories            = new Hashtable<IChemObjectBuilder, SybylAtomTypeMatcher>(
-                                                                                              1);
+    private static Map<IChemObjectBuilder, SybylAtomTypeMatcher> factories            = new Hashtable<>(
+            1);
 
     private SybylAtomTypeMatcher(IChemObjectBuilder builder) {
         InputStream stream = this.getClass().getClassLoader().getResourceAsStream(SYBYL_ATOM_TYPE_LIST);

@@ -78,8 +78,8 @@ public class MMFF94BasedParameterSetReader {
      * Constructor for the MM2BasedParameterSetReader object
      */
     public MMFF94BasedParameterSetReader() {
-        parameterSet = new Hashtable<String, Object>();
-        atomTypes = new Vector<IAtomType>();
+        parameterSet = new Hashtable<>();
+        atomTypes = new Vector<>();
     }
 
     public Map<String, Object> getParamterSet() {

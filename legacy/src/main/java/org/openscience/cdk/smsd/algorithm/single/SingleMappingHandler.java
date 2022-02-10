@@ -68,10 +68,10 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
     public SingleMappingHandler(boolean removeH) {
 
         this.removeHydrogen = removeH;
-        allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
-        atomsMCS = new HashMap<IAtom, IAtom>();
-        firstMCS = new TreeMap<Integer, Integer>();
-        allMCS = new ArrayList<Map<Integer, Integer>>();
+        allAtomMCS = new ArrayList<>();
+        atomsMCS = new HashMap<>();
+        firstMCS = new TreeMap<>();
+        allMCS = new ArrayList<>();
 
     }
 
@@ -133,7 +133,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         try {
             int counter = 0;
             for (Map<IAtom, IAtom> solution : mappings) {
-                Map<Integer, Integer> atomMappings = new TreeMap<Integer, Integer>();
+                Map<Integer, Integer> atomMappings = new TreeMap<>();
                 for (Map.Entry<IAtom, IAtom> map : solution.entrySet()) {
                     IAtom sourceAtom = map.getKey();
                     IAtom targetAtom = map.getValue();
@@ -151,7 +151,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         try {
             int counter = 0;
             for (Map<IAtom, IAtom> solution : mappings) {
-                Map<IAtom, IAtom> atomMappings = new HashMap<IAtom, IAtom>();
+                Map<IAtom, IAtom> atomMappings = new HashMap<>();
                 for (Map.Entry<IAtom, IAtom> map : solution.entrySet()) {
 
                     IAtom sourceAtom = map.getKey();
@@ -167,14 +167,14 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
 
     private synchronized void setFirstMapping() {
         if (allMCS.size() > 0) {
-            firstMCS = new TreeMap<Integer, Integer>(allMCS.iterator().next());
+            firstMCS = new TreeMap<>(allMCS.iterator().next());
         }
 
     }
 
     private synchronized void setFirstAtomMapping() {
         if (allAtomMCS.size() > 0) {
-            atomsMCS = new HashMap<IAtom, IAtom>(allAtomMCS.iterator().next());
+            atomsMCS = new HashMap<>(allAtomMCS.iterator().next());
         }
     }
 

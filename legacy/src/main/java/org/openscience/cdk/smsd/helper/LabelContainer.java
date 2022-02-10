@@ -45,7 +45,7 @@ public class LabelContainer {
     protected LabelContainer() {
 
         // System.err.println("List Initialized");
-        labelMap = new ArrayList<String>();
+        labelMap = new ArrayList<>();
         labelMap.add(labelCounter++, "X");
         labelMap.add(labelCounter++, "R");
     }

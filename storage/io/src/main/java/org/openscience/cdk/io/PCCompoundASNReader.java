@@ -142,7 +142,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet moleculeSet = file.getBuilder().newInstance(IAtomContainerSet.class);
         molecule = file.getBuilder().newInstance(IAtomContainer.class);
-        atomIDs = new HashMap<String, IAtom>();
+        atomIDs = new HashMap<>();
 
         String line = input.readLine();
         while (input.ready() && line != null) {

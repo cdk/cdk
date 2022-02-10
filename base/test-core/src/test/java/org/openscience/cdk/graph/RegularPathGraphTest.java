@@ -60,7 +60,7 @@ public class RegularPathGraphTest {
         int ord = 3;
         int[][] k3 = completeGraphOfSize(ord);
         RegularPathGraph pg = new RegularPathGraph(k3, identity(3), ord);
-        List<int[]> cycles = new ArrayList<int[]>();
+        List<int[]> cycles = new ArrayList<>();
         pg.remove(0, cycles);
         assertThat(cycles.size(), is(0));
         pg.remove(0, cycles);
@@ -84,11 +84,11 @@ public class RegularPathGraphTest {
         assertThat(pg.degree(0), is(2));
         assertThat(pg.degree(1), is(1));
         assertThat(pg.degree(2), is(0));
-        pg.remove(0, new ArrayList<int[]>(0));
+        pg.remove(0, new ArrayList<>(0));
         assertThat(pg.degree(0), is(0));
         assertThat(pg.degree(1), is(2));
         assertThat(pg.degree(2), is(0));
-        pg.remove(1, new ArrayList<int[]>(0));
+        pg.remove(1, new ArrayList<>(0));
         assertThat(pg.degree(0), is(0));
         assertThat(pg.degree(1), is(0));
         assertThat(pg.degree(2), is(0));
@@ -100,7 +100,7 @@ public class RegularPathGraphTest {
         int ord = 3;
         int[][] k3 = completeGraphOfSize(ord);
         RegularPathGraph pg = new RegularPathGraph(k3, identity(3), ord);
-        List<int[]> cycles = new ArrayList<int[]>();
+        List<int[]> cycles = new ArrayList<>();
         for (int v = 0; v < ord; v++)
             pg.remove(v, cycles);
         assertThat(cycles.size(), is(1));
@@ -112,7 +112,7 @@ public class RegularPathGraphTest {
         int ord = 8;
         int[][] k8 = completeGraphOfSize(ord);
         RegularPathGraph pg = new RegularPathGraph(k8, identity(8), ord);
-        List<int[]> cycles = new ArrayList<int[]>();
+        List<int[]> cycles = new ArrayList<>();
         for (int v = 0; v < ord; v++)
             pg.remove(v, cycles);
         assertThat(cycles.size(), is(8018));

@@ -60,7 +60,7 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
     /** {@inheritDoc} */
     @Override
     public void startDocument() {
-        atomTypeMappings = new Hashtable<String, String>();
+        atomTypeMappings = new Hashtable<>();
     }
 
     /** {@inheritDoc} */

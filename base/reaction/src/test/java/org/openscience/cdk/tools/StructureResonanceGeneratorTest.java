@@ -185,7 +185,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         Assert.assertEquals(6, reactionList.size());
 
         // put only one reaction more.
-        List<IReactionProcess> newReactionList = new ArrayList<IReactionProcess>();
+        List<IReactionProcess> newReactionList = new ArrayList<>();
 
         IReactionProcess reaction = new HyperconjugationReaction();
         newReactionList.add(reaction);
@@ -423,7 +423,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -1036,7 +1036,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         // put only one reaction more.
-        List<IReactionProcess> newReactionList = new ArrayList<IReactionProcess>();
+        List<IReactionProcess> newReactionList = new ArrayList<>();
         IReactionProcess reaction = new PiBondingMovementReaction();
         newReactionList.add(reaction);
 

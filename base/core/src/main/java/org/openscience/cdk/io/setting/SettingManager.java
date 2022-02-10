@@ -81,7 +81,7 @@ public class SettingManager<T extends ISetting> {
     /**
      * Settings are stored in a map of name -> instance.
      */
-    private Map<String, T>       settings    = new HashMap<String, T>(3);
+    private Map<String, T>       settings    = new HashMap<>(3);
 
     /**
      * Generate a simple key for the given name. This method normalises the name by

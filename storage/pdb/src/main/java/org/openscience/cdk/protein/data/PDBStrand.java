@@ -53,7 +53,7 @@ public class PDBStrand extends Strand {
      */
     public PDBStrand() {
         super();
-        sequentialListOfMonomers = new ArrayList<String>();
+        sequentialListOfMonomers = new ArrayList<>();
     }
 
     /**
@@ -77,7 +77,7 @@ public class PDBStrand extends Strand {
      */
     public Collection<String> getMonomerNamesInSequentialOrder() {
         // don't return the original
-        return new ArrayList<String>(sequentialListOfMonomers);
+        return new ArrayList<>(sequentialListOfMonomers);
     }
 
     @Override

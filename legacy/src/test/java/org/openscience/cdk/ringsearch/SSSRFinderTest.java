@@ -329,7 +329,7 @@ public class SSSRFinderTest extends CDKTestCase {
      */
     static boolean checkForDuplicateRingsInSet(IRingSet ringset) {
         // Make a list of rings
-        List<IAtomContainer> ringList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> ringList = new ArrayList<>();
         for (IAtomContainer atCont : ringset.atomContainers()) {
             ringList.add(atCont);
         }

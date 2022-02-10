@@ -358,7 +358,7 @@ public class SMARTSQueryTool {
             // lets get the query atom
             IQueryAtom queryAtom = (IQueryAtom) query.getAtom(0);
 
-            mappings = new ArrayList<int[]>();
+            mappings = new ArrayList<>();
             for (int i = 0; i < atomContainer.getAtomCount(); i++) {
                 if (queryAtom.matches(atomContainer.getAtom(i))) {
                     mappings.add(new int[]{i});
@@ -396,7 +396,7 @@ public class SMARTSQueryTool {
      * @return A List of List of atom indices in the target molecule
      */
     public List<List<Integer>> getMatchingAtoms() {
-        List<List<Integer>> matched = new ArrayList<List<Integer>>(mappings.size());
+        List<List<Integer>> matched = new ArrayList<>(mappings.size());
         for (int[] mapping : mappings)
             matched.add(toList(mapping));
         return matched;
@@ -410,7 +410,7 @@ public class SMARTSQueryTool {
      * @return A List of List of atom indices in the target molecule
      */
     public List<List<Integer>> getUniqueMatchingAtoms() {
-        List<List<Integer>> matched = new ArrayList<List<Integer>>(mappings.size());
+        List<List<Integer>> matched = new ArrayList<>(mappings.size());
         Set<BitSet> atomSets = new HashSet<>(2*mappings.size());
         for (int[] mapping : mappings) {
             BitSet atomSet = new BitSet();
@@ -459,11 +459,11 @@ public class SMARTSQueryTool {
 
     private List<Set<Integer>> matchedAtoms(List<List<RMap>> bondMapping, IAtomContainer atomContainer) {
 
-        List<Set<Integer>> atomMapping = new ArrayList<Set<Integer>>();
+        List<Set<Integer>> atomMapping = new ArrayList<>();
         // loop over each mapping
         for (List<RMap> mapping : bondMapping) {
 
-            Set<Integer> tmp = new TreeSet<Integer>();
+            Set<Integer> tmp = new TreeSet<>();
             IAtom atom1 = null;
             IAtom atom2 = null;
             // loop over this mapping
@@ -486,7 +486,7 @@ public class SMARTSQueryTool {
 
             // If there is only one bond, check if it matches both ways.
             if (mapping.size() == 1 && atom1.getAtomicNumber().equals(atom2.getAtomicNumber())) {
-                atomMapping.add(new TreeSet<Integer>(tmp));
+                atomMapping.add(new TreeSet<>(tmp));
             }
         }
 

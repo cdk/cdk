@@ -224,7 +224,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        List<String> basisOptions = new ArrayList<String>();
+        List<String> basisOptions = new ArrayList<>();
         basisOptions.add("6-31g");
         basisOptions.add("6-31g*");
         basisOptions.add("6-31g(d)");
@@ -233,14 +233,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         basis = new OptionIOSetting("Basis", IOSetting.Importance.MEDIUM, "Which basis set do you want to use?",
                 basisOptions, "6-31g");
 
-        List<String> methodOptions = new ArrayList<String>();
+        List<String> methodOptions = new ArrayList<>();
         methodOptions.add("rb3lyp");
         methodOptions.add("b3lyp");
         methodOptions.add("rhf");
         method = new OptionIOSetting("Method", IOSetting.Importance.MEDIUM, "Which method do you want to use?",
                 methodOptions, "b3lyp");
 
-        List<String> commandOptions = new ArrayList<String>();
+        List<String> commandOptions = new ArrayList<>();
         commandOptions.add("energy calculation");
         commandOptions.add("geometry optimization");
         commandOptions.add("IR frequency calculation");

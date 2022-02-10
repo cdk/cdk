@@ -60,7 +60,7 @@ public class DictionaryDatabase {
 
     public DictionaryDatabase() {
         // read dictionaries distributed with CDK
-        dictionaries = new Hashtable<String, Dictionary>();
+        dictionaries = new Hashtable<>();
         for (int i = 0; i < dictionaryNames.length; i++) {
             String name = dictionaryNames[i];
             String type = dictionaryTypes[i];

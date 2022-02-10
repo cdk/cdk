@@ -158,7 +158,7 @@ public class MolecularFormulaManipulator {
      */
     public static List<IIsotope> getIsotopes(IMolecularFormula formula, IElement element) {
 
-        List<IIsotope> isotopeList = new ArrayList<IIsotope>();
+        List<IIsotope> isotopeList = new ArrayList<>();
         for (IIsotope isotope : formula.isotopes()) {
             if (isotope.getAtomicNumber().equals(element.getAtomicNumber())) isotopeList.add(isotope);
 
@@ -175,8 +175,8 @@ public class MolecularFormulaManipulator {
      */
     public static List<IElement> elements(IMolecularFormula formula) {
 
-        List<IElement> elementList = new ArrayList<IElement>();
-        List<String> stringList = new ArrayList<String>();
+        List<IElement> elementList = new ArrayList<>();
+        List<String> stringList = new ArrayList<>();
         for (IIsotope isotope : formula.isotopes()) {
             if (!stringList.contains(isotope.getSymbol())) {
                 elementList.add(isotope);
@@ -391,7 +391,7 @@ public class MolecularFormulaManipulator {
     }
 
     public static List<IIsotope> putInOrder(String[] orderElements, IMolecularFormula formula) {
-        List<IIsotope> isotopesList = new ArrayList<IIsotope>();
+        List<IIsotope> isotopesList = new ArrayList<>();
         for (String orderElement : orderElements) {
             IElement element = formula.getBuilder().newInstance(IElement.class, orderElement);
             if (containsElement(formula, element)) {
@@ -423,7 +423,7 @@ public class MolecularFormulaManipulator {
     public static String getHillString(IMolecularFormula formula) {
         StringBuffer hillString = new StringBuffer();
 
-        Map<String, Integer> hillMap = new TreeMap<String, Integer>();
+        Map<String, Integer> hillMap = new TreeMap<>();
         for (IIsotope isotope : formula.isotopes()) {
             String symbol = isotope.getSymbol();
             if (hillMap.containsKey(symbol))
@@ -1296,7 +1296,7 @@ public class MolecularFormulaManipulator {
      * @cdk.keyword    hydrogen, removal
      */
     public static List<IElement> getHeavyElements(IMolecularFormula formula) {
-        List<IElement> newEle = new ArrayList<IElement>();
+        List<IElement> newEle = new ArrayList<>();
         for (IElement element : elements(formula)) {
             if (element.getAtomicNumber() != IElement.H) {
                 newEle.add(element);
@@ -1322,7 +1322,7 @@ public class MolecularFormulaManipulator {
         }
         if (!formula.contains(".")) return breakExtractor(formula);
 
-        List<String> listMF = new ArrayList<String>();
+        List<String> listMF = new ArrayList<>();
         while (newFormula.contains(".")) {
             int pos = newFormula.indexOf('.');
             String thisFormula = newFormula.substring(0, pos);
@@ -1349,8 +1349,8 @@ public class MolecularFormulaManipulator {
         String recentElementSymbol = "";
         String recentElementCountString = "0";
 
-        List<String> eleSymb = new ArrayList<String>();
-        List<Integer> eleCount = new ArrayList<Integer>();
+        List<String> eleSymb = new ArrayList<>();
+        List<Integer> eleCount = new ArrayList<>();
         for (int i = 0; i < listMF.size(); i++) {
             String thisFormula = listMF.get(i);
             for (int f = 0; f < thisFormula.length(); f++) {

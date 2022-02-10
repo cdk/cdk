@@ -114,7 +114,7 @@ public class ReactionEngine {
     private void initiateParameterMap2(EntryReact entry) {
         List<List<String>> paramDic = entry.getParameterClass();
 
-        paramsMap2 = new ArrayList<IParameterReact>();
+        paramsMap2 = new ArrayList<>();
         for (Iterator<List<String>> it = paramDic.iterator(); it.hasNext();) {
             List<String> param = it.next();
             String paramName = "org.openscience.cdk.reaction.type.parameters." + param.get(0);

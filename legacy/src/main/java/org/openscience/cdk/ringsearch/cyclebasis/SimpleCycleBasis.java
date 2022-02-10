@@ -77,7 +77,7 @@ public class SimpleCycleBasis {
     }
 
     public SimpleCycleBasis(UndirectedGraph graph) {
-        this.cycles = new ArrayList<SimpleCycle>();
+        this.cycles = new ArrayList<>();
         this.edgeList = new ArrayList();
         this.graph = graph;
 

@@ -78,7 +78,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         String filename = "fingerprints_from_modelbuilder3d.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         List<IBitFingerprint> data = new TemplateExtractor().makeFingerprintsFromSdf(true, false,
-                new HashMap<String, Integer>(), new BufferedReader(new InputStreamReader(ins)), 10);
+                new HashMap<>(), new BufferedReader(new InputStreamReader(ins)), 10);
         QueryChemObject obj = new QueryChemObject(DefaultChemObjectBuilder.getInstance());
         obj.getBuilder();
         for (int i = 0; i < data.size(); i++) {
@@ -104,7 +104,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         String filename = "fingerprints_from_modelbuilder3d.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         List<IBitFingerprint> data = new TemplateExtractor().makeFingerprintsFromSdf(true, true,
-                                                                                     new HashMap<String, Integer>(), new BufferedReader(new InputStreamReader(ins)), 10);
+                new HashMap<>(), new BufferedReader(new InputStreamReader(ins)), 10);
         QueryChemObject obj = new QueryChemObject(DefaultChemObjectBuilder.getInstance());
         obj.getBuilder();
         for (int i = 0; i < data.size(); i++) {

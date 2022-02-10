@@ -51,7 +51,7 @@ public class SimpleAtomCanonicalizer {
      */
     public Collection<IAtom> canonicalizeAtoms(IAtomContainer container) {
 
-        List<IAtom> canonicalizedVertexList = new ArrayList<IAtom>();
+        List<IAtom> canonicalizedVertexList = new ArrayList<>();
         for (IAtom atom : container.atoms()) {
             canonicalizedVertexList.add(atom);
         }

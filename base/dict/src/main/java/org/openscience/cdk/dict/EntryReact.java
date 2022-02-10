@@ -56,11 +56,11 @@ public class EntryReact extends Entry {
      */
     public EntryReact(String identifier, String term) {
         super(identifier, term);
-        this.representations = new ArrayList<String>();
-        this.parameters = new HashMap<String, String>();
-        this.parametersValue = new ArrayList<String>();
-        this.reactionExample = new ArrayList<String>();
-        this.parameterClass = new ArrayList<List<String>>();
+        this.representations = new ArrayList<>();
+        this.parameters = new HashMap<>();
+        this.parametersValue = new ArrayList<>();
+        this.reactionExample = new ArrayList<>();
+        this.parameterClass = new ArrayList<>();
     }
 
     /**

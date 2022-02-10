@@ -92,7 +92,7 @@ public class LingoFingerprinter extends AbstractFingerprinter implements IFinger
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
         aromaticity.apply(atomContainer);
         final String smiles = replaceDigits(gen.create(atomContainer));
-        final Map<String, Integer> map = new HashMap<String, Integer>();
+        final Map<String, Integer> map = new HashMap<>();
         for (int i = 0, l = smiles.length() - n + 1; i < l; i++) {
             String subsmi = smiles.substring(i, i + n);
             Integer count = map.get(subsmi);

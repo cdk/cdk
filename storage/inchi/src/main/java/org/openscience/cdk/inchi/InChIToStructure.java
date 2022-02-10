@@ -168,7 +168,7 @@ public class InChIToStructure {
         //molecule = new AtomContainer();
         molecule = builder.newInstance(IAtomContainer.class);
 
-        Map<InchiAtom, IAtom> inchiCdkAtomMap = new HashMap<InchiAtom, IAtom>();
+        Map<InchiAtom, IAtom> inchiCdkAtomMap = new HashMap<>();
 
         List<InchiAtom> atoms = input.getAtoms();
         for (int i = 0; i < atoms.size(); i++) {

@@ -187,7 +187,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
 
         ShortestPathWalker walker = new ShortestPathWalker(container);
         // convert paths to hashes
-        List<Integer> paths = new ArrayList<Integer>();
+        List<Integer> paths = new ArrayList<>();
         int patternIndex = 0;
 
         for (String s : walker.paths()) {
@@ -210,7 +210,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
         /*
          * Check for the charges
          */
-        List<String> l = new ArrayList<String>();
+        List<String> l = new ArrayList<>();
         for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
             IAtom atom = it.next();
             int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
@@ -223,7 +223,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
         paths.add(patternIndex, toHashCode);
         patternIndex++;
 
-        l = new ArrayList<String>();
+        l = new ArrayList<>();
         /*
          * atom stereo parity
          */

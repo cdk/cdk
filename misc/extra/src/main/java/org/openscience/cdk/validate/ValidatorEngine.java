@@ -59,7 +59,7 @@ public class ValidatorEngine implements IValidator {
     private static ILoggingTool     logger = LoggingToolFactory.createLoggingTool(ValidatorEngine.class);
 
     public ValidatorEngine() {
-        validators = new Hashtable<String, IValidator>();
+        validators = new Hashtable<>();
     }
 
     public void addValidator(IValidator validator) {

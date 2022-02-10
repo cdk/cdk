@@ -271,7 +271,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
         Assert.assertNotNull(ipr);
         Assert.assertFalse(ipr.isSetParameter());
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

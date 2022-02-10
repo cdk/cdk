@@ -102,7 +102,7 @@ public class Convertor {
     }
 
     public void registerCustomizer(ICMLCustomizer customizer) {
-        if (customizers == null) customizers = new HashMap<String, ICMLCustomizer>();
+        if (customizers == null) customizers = new HashMap<>();
 
         if (!customizers.containsKey(customizer.getClass().getName())) {
             customizers.put(customizer.getClass().getName(), customizer);
@@ -411,7 +411,7 @@ public class Convertor {
         while (iter.hasNext()) {
             Object key = iter.next();
             IStrand strand = mapS.get(key);
-            List<String> monomerNames = new ArrayList<String>(strand.getMonomerNames());
+            List<String> monomerNames = new ArrayList<>(strand.getMonomerNames());
             Collections.sort(monomerNames);
             for (String name : monomerNames) {
                 IMonomer monomer = strand.getMonomer(name);

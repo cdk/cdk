@@ -133,7 +133,7 @@ public class AbsoluteSMILESTest {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         SmilesGenerator sg = SmilesGenerator.absolute();
 
-        Set<String> output = new HashSet<String>();
+        Set<String> output = new HashSet<>();
 
         for (String input : inputs)
             output.add(sg.create(sp.parseSmiles(input)));

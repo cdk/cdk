@@ -235,7 +235,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     }
 
     private MaccsKey[] readKeyDef(final IChemObjectBuilder builder) throws IOException, CDKException {
-        List<MaccsKey> keys = new ArrayList<MaccsKey>(166);
+        List<MaccsKey> keys = new ArrayList<>(166);
         BufferedReader reader = new BufferedReader(new InputStreamReader(getClass()
                 .getResourceAsStream(KEY_DEFINITIONS)));
 

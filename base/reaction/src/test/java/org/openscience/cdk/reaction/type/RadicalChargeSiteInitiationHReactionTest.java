@@ -82,7 +82,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 
         IAtomContainerSet setOfReactants = getExampleReactants();
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -127,7 +127,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -168,7 +168,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -209,7 +209,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

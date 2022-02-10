@@ -235,7 +235,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom2, oMono2, oStrand2);
-        Map<String, IStrand> strands = new Hashtable<String, IStrand>();
+        Map<String, IStrand> strands = new Hashtable<>();
         strands.put("A", oStrand1);
         strands.put("B", oStrand2);
 
@@ -276,7 +276,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom2, oMono2, oStrand2);
-        Map<String, IStrand> strands = new Hashtable<String, IStrand>();
+        Map<String, IStrand> strands = new Hashtable<>();
         strands.put("A", oStrand1);
         strands.put("B", oStrand2);
 

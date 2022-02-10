@@ -169,11 +169,11 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
                                     && atomR.getFlag(CDKConstants.REACTIVE_CENTER)
                                     && (atomR.getFormalCharge() == CDKConstants.UNSET ? 0 : atomR.getFormalCharge()) == 0) {
 
-                                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                ArrayList<IAtom> atomList = new ArrayList<>();
                                 atomList.add(atomR);
                                 atomList.add(atomi);
                                 atomList.add(atoml);
-                                ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                ArrayList<IBond> bondList = new ArrayList<>();
                                 bondList.add(reactant.getBond(atomR, atoml));
 
                                 IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(

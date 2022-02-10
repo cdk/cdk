@@ -223,7 +223,7 @@ public class GeometryUtilTest extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filenameMolOne);
         IAtomContainer molOne;
         IAtomContainer molTwo;
-        Map<Integer, Integer> mappedAtoms = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> mappedAtoms = new HashMap<>();
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());
 

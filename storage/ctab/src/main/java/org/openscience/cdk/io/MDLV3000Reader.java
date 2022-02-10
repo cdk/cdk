@@ -769,7 +769,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 logger.warn("Skipping external index: " + externalIndexString);
 
                 // the rest are key=value fields
-                Map<String, String> options = new Hashtable<String, String>();
+                Map<String, String> options = new Hashtable<>();
                 if (command.indexOf('=') != -1) {
                     options = parseOptions(exhaustStringTokenizer(tokenizer));
                 }
@@ -845,7 +845,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     private Map<String, String> parseOptions(String string) throws CDKException {
-        Map<String, String> keyValueTuples = new Hashtable<String, String>();
+        Map<String, String> keyValueTuples = new Hashtable<>();
         while (string.length() >= 3) {
             logger.debug("Matching remaining option string: " + string);
             Matcher tuple1Matcher = keyValueTuple2.matcher(string);

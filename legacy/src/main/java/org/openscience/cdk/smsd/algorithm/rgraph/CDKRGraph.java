@@ -133,8 +133,8 @@ public class CDKRGraph {
      * Constructor for the CDKRGraph object and creates an empty CDKRGraph.
      */
     public CDKRGraph() {
-        graph = new ArrayList<CDKRNode>();
-        solutionList = new ArrayList<BitSet>();
+        graph = new ArrayList<>();
+        solutionList = new ArrayList<>();
         graphBitSet = new BitSet();
     }
 
@@ -464,7 +464,7 @@ public class CDKRGraph {
      * @return      the CDKRMap list
      */
     public List<CDKRMap> bitSetToRMap(BitSet set) {
-        List<CDKRMap> rMapList = new ArrayList<CDKRMap>();
+        List<CDKRMap> rMapList = new ArrayList<>();
 
         for (int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1)) {
             CDKRNode xNode = getGraph().get(x);

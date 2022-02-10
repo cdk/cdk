@@ -132,8 +132,8 @@ public class RGraph {
      * Constructor for the RGraph object and creates an empty RGraph.
      */
     public RGraph() {
-        graph = new ArrayList<RNode>();
-        solutionList = new ArrayList<BitSet>();
+        graph = new ArrayList<>();
+        solutionList = new ArrayList<>();
         graphBitSet = new BitSet();
     }
 
@@ -455,7 +455,7 @@ public class RGraph {
      * @return      the RMap list
      */
     public List<RMap> bitSetToRMap(BitSet set) {
-        List<RMap> rMapList = new ArrayList<RMap>();
+        List<RMap> rMapList = new ArrayList<>();
 
         for (int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1)) {
             RNode xNode = graph.get(x);

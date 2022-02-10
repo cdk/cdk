@@ -137,7 +137,7 @@ public class ElectronImpactSDBReaction extends ReactionEngine implements IReacti
                 /**/
                 for (int j = 0; j < 2; j++) {
 
-                    ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                    ArrayList<IAtom> atomList = new ArrayList<>();
                     if (j == 0) {
                         atomList.add(atom1);
                         atomList.add(atom2);
@@ -145,7 +145,7 @@ public class ElectronImpactSDBReaction extends ReactionEngine implements IReacti
                         atomList.add(atom2);
                         atomList.add(atom1);
                     }
-                    ArrayList<IBond> bondList = new ArrayList<IBond>();
+                    ArrayList<IBond> bondList = new ArrayList<>();
                     bondList.add(bondi);
 
                     IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);

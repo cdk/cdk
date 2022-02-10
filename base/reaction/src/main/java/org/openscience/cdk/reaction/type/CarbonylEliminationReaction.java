@@ -148,10 +148,10 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
                                     IAtom atomk = bondj.getOther(atomj);
                                     if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getFormalCharge() == 0) {
 
-                                        ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                        ArrayList<IAtom> atomList = new ArrayList<>();
                                         atomList.add(atomk);
                                         atomList.add(atomj);
-                                        ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                        ArrayList<IBond> bondList = new ArrayList<>();
                                         bondList.add(bondj);
 
                                         IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(

@@ -78,7 +78,7 @@ final class EdmondsMaximumMatching {
      * Map stores the bridges of the blossom - indexed by with support
      * vertices.
      */
-    private final Map<Integer, Tuple> bridges = new HashMap<Integer, Tuple>();
+    private final Map<Integer, Tuple> bridges = new HashMap<>();
 
     /** Temporary array to fill with path information. */
     private final int[]               path;
@@ -105,7 +105,7 @@ final class EdmondsMaximumMatching {
         this.even = new int[graph.length];
         this.odd = new int[graph.length];
 
-        this.queue = new LinkedList<Integer>();
+        this.queue = new LinkedList<>();
         this.dsf = new DisjointSetForest(graph.length);
 
         // tmp storage of paths in the algorithm

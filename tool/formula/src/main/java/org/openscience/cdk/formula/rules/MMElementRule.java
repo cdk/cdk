@@ -188,7 +188,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getDNP_500() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 29);
         map.put("H", 72);
@@ -210,7 +210,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getDNP_1000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 66);
         map.put("H", 126);
@@ -232,7 +232,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getDNP_2000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 115);
         map.put("H", 236);
@@ -254,7 +254,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getDNP_3000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 162);
         map.put("H", 208);
@@ -276,7 +276,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getWisley_500() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 39);
         map.put("H", 72);
@@ -299,7 +299,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getWisley_1000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 78);
         map.put("H", 126);
@@ -322,7 +322,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getWisley_2000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 156);
         map.put("H", 180);

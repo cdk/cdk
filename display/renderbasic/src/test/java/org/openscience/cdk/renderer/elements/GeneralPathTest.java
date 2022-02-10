@@ -34,7 +34,7 @@ public class GeneralPathTest extends AbstractElementTest {
 
     @BeforeClass
     public static void setup() {
-        IRenderingElement element = new GeneralPath(new ArrayList<PathElement>(), Color.black);
+        IRenderingElement element = new GeneralPath(new ArrayList<>(), Color.black);
         setRenderingElement(element);
     }
 

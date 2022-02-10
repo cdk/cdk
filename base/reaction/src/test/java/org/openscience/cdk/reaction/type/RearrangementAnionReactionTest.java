@@ -118,7 +118,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
         /* initiate */
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -160,7 +160,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -200,7 +200,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -236,7 +236,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         molecule.addLonePair(new LonePair(molecule.getAtom(0)));
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -301,7 +301,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         /* initiate */
         makeSureAtomTypesAreRecognized(molecule);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

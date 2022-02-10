@@ -42,7 +42,7 @@ public class Vibration {
     /**
      * List of atom vectors of type double[3]
      */
-    private List<double[]> atomVectors = new ArrayList<double[]>();
+    private List<double[]> atomVectors = new ArrayList<>();
 
     /**
      * Create a vibration identified by the label.

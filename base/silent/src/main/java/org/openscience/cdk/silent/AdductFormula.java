@@ -64,7 +64,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *  @see #AdductFormula(IMolecularFormula)
      */
     public AdductFormula() {
-        components = new ArrayList<IMolecularFormula>();
+        components = new ArrayList<>();
     }
 
     /**
@@ -76,7 +76,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *  @see             #AdductFormula()
      */
     public AdductFormula(IMolecularFormula formula) {
-        components = new ArrayList<IMolecularFormula>();
+        components = new ArrayList<>();
         components.add(0, formula);
     }
 
@@ -192,7 +192,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @return    A List with the isotopes in this adduct formula
      */
     private List<IIsotope> isotopesList() {
-        List<IIsotope> isotopes = new ArrayList<IIsotope>();
+        List<IIsotope> isotopes = new ArrayList<>();
         Iterator<IMolecularFormula> componentIterator = components.iterator();
         while (componentIterator.hasNext()) {
             Iterator<IIsotope> compIsotopes = componentIterator.next().isotopes().iterator();

@@ -75,7 +75,7 @@ public class RingPlacer {
     /**
      * Default ring start angles. Map contains pairs: ring size with start angle.
      */
-    public static final Map<Integer, Double> defaultAngles = new HashMap<Integer, Double>();
+    public static final Map<Integer, Double> defaultAngles = new HashMap<>();
 
     static {
         defaultAngles.put(3, Math.PI * (0.1666667));
@@ -88,7 +88,7 @@ public class RingPlacer {
     /**
      * Suggested ring start angles for JChempaint, different due to Y inversion of canvas.
      */
-    public static final Map<Integer, Double> jcpAngles = new HashMap<Integer, Double>();
+    public static final Map<Integer, Double> jcpAngles = new HashMap<>();
 
     static {
         jcpAngles.put(3, Math.PI * (0.5));
@@ -167,7 +167,7 @@ public class RingPlacer {
          * Store all atoms to draw in consecutive order relative to the chosen
          * bond.
          */
-        Vector<IAtom> atomsToDraw = new Vector<IAtom>();
+        Vector<IAtom> atomsToDraw = new Vector<>();
         IAtom currentAtom = startAtom;
         IBond currentBond = (IBond) bonds.get(0);
         for (int i = 0; i < ring.getBondCount(); i++) {

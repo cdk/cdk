@@ -214,7 +214,7 @@ public class BondEnergies {
     protected BondEnergies() {
 
         int key = 1;
-        bondEngergies = Collections.synchronizedSortedMap(new TreeMap<Integer, BondEnergy>());
+        bondEngergies = Collections.synchronizedSortedMap(new TreeMap<>());
 
         //      =========Hydrogen Block==============
         key = setHydrogenBlock(key);

@@ -59,7 +59,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      */
     public Orbit(String label, int height) {
         this.label = label;
-        this.atomIndices = new ArrayList<Integer>();
+        this.atomIndices = new ArrayList<>();
         this.height = height;
     }
 

@@ -442,7 +442,7 @@ public class CxSmilesGenerator {
             for (Map.Entry<Integer, CxSmilesState.Radical> e : state.atomRads.entrySet()) {
                 List<Integer> idxs = radinv.get(e.getValue());
                 if (idxs == null)
-                    radinv.put(e.getValue(), idxs = new ArrayList<Integer>());
+                    radinv.put(e.getValue(), idxs = new ArrayList<>());
                 idxs.add(e.getKey());
             }
             for (Map.Entry<CxSmilesState.Radical, List<Integer>> e : radinv.entrySet()) {

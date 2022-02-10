@@ -114,7 +114,7 @@ public class IsotopePatternRule implements IRule {
         if (pattern == null)
             params[0] = null;
         else {
-            List<double[]> params0 = new ArrayList<double[]>();
+            List<double[]> params0 = new ArrayList<>();
             for (IsotopeContainer isotope : pattern.getIsotopes()) {
                 params0.add(new double[] { isotope.getMass(), isotope.getIntensity() });
             }

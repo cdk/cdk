@@ -77,8 +77,8 @@ public class StabilizationCharges {
 
         final int positionStart = atomContainer.indexOf(atom);
 
-        List<Double> result1 = new ArrayList<Double>();
-        List<Integer> distance1 = new ArrayList<Integer>();
+        List<Double> result1 = new ArrayList<>();
+        List<Integer> distance1 = new ArrayList<>();
 
         resonanceS.removeAtomContainer(0);// the first is the initial structure
         for (Iterator<IAtomContainer> itA = resonanceS.atomContainers().iterator(); itA.hasNext();) {

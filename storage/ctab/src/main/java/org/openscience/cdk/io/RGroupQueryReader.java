@@ -184,7 +184,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
         String eol = "\n";
         StringTokenizer strTk = null;
         /* Variable to capture the LOG line(s) */
-        Map<Integer, RGroupLogic> logicDefinitions = new HashMap<Integer, RGroupLogic>();
+        Map<Integer, RGroupLogic> logicDefinitions = new HashMap<>();
 
         /*
          * Variable to captures attachment order for Rgroups. Contains: - pseudo
@@ -192,7 +192,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
          * order "integer" (1,2,3) for the Rgroup The order is based on the atom
          * block, unless there is an AAL line for the pseudo atom.
          */
-        Map<IAtom, Map<Integer, IBond>> attachmentPoints = new HashMap<IAtom, Map<Integer, IBond>>();
+        Map<IAtom, Map<Integer, IBond>> attachmentPoints = new HashMap<>();
 
         try {
             // Process the Header block_________________________________________
@@ -264,7 +264,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     int pos = Integer.valueOf(stAAL.nextToken());
                     IAtom rGroup = root.getAtom(pos - 1);
                     stAAL.nextToken();
-                    Map<Integer, IBond> bondMap = new HashMap<Integer, IBond>();
+                    Map<Integer, IBond> bondMap = new HashMap<>();
                     while (stAAL.hasMoreTokens()) {
                         pos = Integer.valueOf(stAAL.nextToken());
                         IAtom partner = root.getAtom(pos - 1);
@@ -288,7 +288,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                             !attachmentPoints.containsKey(rGroup)) {
                         //Order reflects the order of atoms in the Atom Block
                         int order = 0;
-                        Map<Integer, IBond> bondMap = new HashMap<Integer, IBond>();
+                        Map<Integer, IBond> bondMap = new HashMap<>();
                         for (IAtom atom2 : root.atoms()) {
                             if (!atom.equals(atom2)) {
                                 for (IBond bond : root.bonds()) {
@@ -314,7 +314,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
             //__________________________________________________________________
 
             //Set up the RgroupLists, one for each unique R# (# = 1..32 max)
-            Map<Integer, IRGroupList> rGroupDefinitions = new HashMap<Integer, IRGroupList>();
+            Map<Integer, IRGroupList> rGroupDefinitions = new HashMap<>();
 
             for (IAtom atom : root.atoms()) {
                 if (atom instanceof IPseudoAtom) {

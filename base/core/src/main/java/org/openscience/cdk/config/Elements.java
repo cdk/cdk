@@ -199,7 +199,7 @@ public enum Elements {
     /**
      * Lookup elements by symbol / name.
      */
-    static final Map<String, Elements> SYMBOL_MAP = new HashMap<String, Elements>(400);
+    static final Map<String, Elements> SYMBOL_MAP = new HashMap<>(400);
 
     static {
         // index elements

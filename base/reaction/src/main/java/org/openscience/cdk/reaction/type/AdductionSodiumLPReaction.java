@@ -138,7 +138,7 @@ public class AdductionSodiumLPReaction extends ReactionEngine implements IReacti
                     && reactant.getConnectedLonePairsCount(atomi) > 0
                     && reactant.getConnectedSingleElectronsCount(atomi) == 0) {
 
-                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                ArrayList<IAtom> atomList = new ArrayList<>();
                 atomList.add(atomi);
                 IAtom atomH = reactant.getBuilder().newInstance(IAtom.class, "Na");
                 atomH.setFormalCharge(1);

@@ -76,7 +76,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     /** {@inheritDoc} */
     @Override
     public void startDocument() {
-        atomTypes = new ArrayList<IAtomType>();
+        atomTypes = new ArrayList<>();
         currentAtomType = null;
     }
 

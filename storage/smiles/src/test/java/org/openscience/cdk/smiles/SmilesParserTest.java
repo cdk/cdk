@@ -2727,7 +2727,7 @@ public class SmilesParserTest extends CDKTestCase {
     }
 
     static void atomtype(IAtomContainer container) throws Exception {
-        Set<IAtom> aromatic = new HashSet<IAtom>();
+        Set<IAtom> aromatic = new HashSet<>();
         for (IAtom atom : container.atoms()) {
             if (atom.getFlag(CDKConstants.ISAROMATIC)) aromatic.add(atom);
         }

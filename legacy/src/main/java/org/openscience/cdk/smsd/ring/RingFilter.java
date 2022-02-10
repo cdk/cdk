@@ -95,7 +95,7 @@ public class RingFilter {
 
     public void filterAtoms(IAtomContainer molecule, Collection<IAtom> atoms) {
         this.mol = molecule;
-        List<List<IAtom>> rings = new ArrayList<List<IAtom>>(ringFinder.findRings(molecule));
+        List<List<IAtom>> rings = new ArrayList<>(ringFinder.findRings(molecule));
         Collections.sort(rings, comparator);
 
         for (List<IAtom> ring : rings) {

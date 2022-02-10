@@ -987,7 +987,7 @@ public final class Cycles {
             int[][] graph = GraphUtil.toAdjList(molecule, bondMap);
             RingSearch ringSearch = new RingSearch(molecule, graph);
 
-            List<int[]> walks = new ArrayList<int[]>(6);
+            List<int[]> walks = new ArrayList<>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
             // the vertices in the subset 'isolated'
@@ -1015,7 +1015,7 @@ public final class Cycles {
 
             RingSearch ringSearch = new RingSearch(molecule, graph);
 
-            List<int[]> walks = new ArrayList<int[]>(6);
+            List<int[]> walks = new ArrayList<>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
             // the vertices in the subset 'isolated'
@@ -1153,7 +1153,7 @@ public final class Cycles {
 
             if (this.predefinedLength < length) length = this.predefinedLength;
 
-            List<int[]> walks = new ArrayList<int[]>(6);
+            List<int[]> walks = new ArrayList<>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
             // the vertices in the subset 'isolated'

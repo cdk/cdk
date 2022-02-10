@@ -195,7 +195,7 @@ public class BondManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetMaximumBondOrder_List() {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
         bonds.add(bond);
@@ -210,7 +210,7 @@ public class BondManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetMaximumBondOrder_Iterator() {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
         bonds.add(bond);
@@ -277,7 +277,7 @@ public class BondManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetMinimumBondOrder_List() {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.DOUBLE);
         bonds.add(bond);
@@ -292,7 +292,7 @@ public class BondManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetMinimumBondOrder_Iterator() {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.DOUBLE);
         bonds.add(bond);
@@ -307,7 +307,7 @@ public class BondManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetMinimumBondOrder_HigherOrders() {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.QUINTUPLE);
         bonds.add(bond);
@@ -319,7 +319,7 @@ public class BondManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetSingleBondEquivalentSum_List() {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
         bonds.add(bond);
@@ -335,7 +335,7 @@ public class BondManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetSingleBondEquivalentSum_Iterator() {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
         bonds.add(bond);

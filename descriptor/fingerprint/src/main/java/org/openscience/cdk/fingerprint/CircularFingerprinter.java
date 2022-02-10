@@ -133,7 +133,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private boolean[]      resolvedChiral;
     private int[][]        atomGroup;
     private CRC32          crc            = new CRC32();        // recycled for each CRC calculation
-    private ArrayList<FP>  fplist         = new ArrayList<FP>();
+    private ArrayList<FP>  fplist         = new ArrayList<>();
 
     // summary information about the molecule, for quick access
     private boolean[]      amask;                               // true for all heavy atoms, i.e. hydrogens and non-elements are excluded
@@ -321,7 +321,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         calculate(mol);
 
         // extract a convenient {hash:count} datastructure
-        final Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        final Map<Integer, Integer> map = new TreeMap<>();
         for (FP fp : fplist) {
             if (map.containsKey(fp.hashCode))
                 map.put(fp.hashCode, map.get(fp.hashCode) + 1);
@@ -621,7 +621,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
 
         markRingBlocks();
 
-        ArrayList<int[]> rings = new ArrayList<int[]>();
+        ArrayList<int[]> rings = new ArrayList<>();
         for (int rsz = 3; rsz <= 7; rsz++) {
             int[] path = new int[rsz];
             for (int n = 0; n < na; n++)
@@ -806,7 +806,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                 piAtom[mol.indexOf(bond.getEnd())] = true;
             }
 
-        ArrayList<int[]> maybe = new ArrayList<int[]>(); // rings which may yet be aromatic
+        ArrayList<int[]> maybe = new ArrayList<>(); // rings which may yet be aromatic
         for (int[] r : smallRings)
             if (r.length == 6) {
                 boolean consider = true;

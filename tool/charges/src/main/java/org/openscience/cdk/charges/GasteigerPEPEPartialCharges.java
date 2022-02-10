@@ -171,7 +171,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                                                                              * bonding
                                                                              */
         List<IReactionProcess> reactionList1 = gR1.getReactions();
-        List<IParameterReact> paramList1 = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList1 = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList1.add(param);
@@ -198,7 +198,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                                                                              */
         gR2.setMaximalStructures(MX_RESON);
         List<IReactionProcess> reactionList2 = gR2.getReactions();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact paramA = new SetReactionCenter();
         paramA.setParameter(Boolean.TRUE);
         paramList.add(paramA);
@@ -551,7 +551,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
         setOfReactants.addAtomContainer(ac);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -567,7 +567,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 mol.getBond(k).getEnd().setFlag(CDKConstants.REACTIVE_CENTER, false);
             }
             setOfM2.addAtomContainer(mol);
-            List<IParameterReact> paramList2 = new ArrayList<IParameterReact>();
+            List<IParameterReact> paramList2 = new ArrayList<>();
             IParameterReact param2 = new SetReactionCenter();
             param2.setParameter(Boolean.FALSE);
             paramList2.add(param);

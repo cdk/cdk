@@ -79,7 +79,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     public static CDKAtomTypeMatcher getInstance(IChemObjectBuilder builder, int mode) {
         synchronized (LOCK) {
             if (!factories.containsKey(mode))
-                factories.put(mode, new Hashtable<IChemObjectBuilder, CDKAtomTypeMatcher>(1));
+                factories.put(mode, new Hashtable<>(1));
             if (!factories.get(mode).containsKey(builder))
                 factories.get(mode).put(builder, new CDKAtomTypeMatcher(builder, mode));
             return factories.get(mode).get(builder);
@@ -96,7 +96,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	// cache the ring information
     	if (searcher == null) searcher = new RingSearch(atomContainer);
     	// cache atom bonds
-    	Map<IAtom, List<IBond>> connectedBonds = new HashMap<IAtom,List<IBond>>(atomContainer.getAtomCount());
+    	Map<IAtom, List<IBond>> connectedBonds = new HashMap<>(atomContainer.getAtomCount());
     	for (IBond bond : atomContainer.bonds()) {
     		for (IAtom atom : bond.atoms()) {
     			List<IBond> atomBonds = connectedBonds.get(atom);
@@ -1117,7 +1117,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
      * @return the bond list only with heavy bonds
      */
     private List<IBond> heavyBonds(final List<IBond> bonds) {
-        final List<IBond> heavy = new ArrayList<IBond>(bonds.size());
+        final List<IBond> heavy = new ArrayList<>(bonds.size());
         for (final IBond bond : bonds) {
             if (!(bond.getBegin().getAtomicNumber() == IElement.H && bond.getEnd().getAtomicNumber() == IElement.H)) {
                 heavy.add(bond);

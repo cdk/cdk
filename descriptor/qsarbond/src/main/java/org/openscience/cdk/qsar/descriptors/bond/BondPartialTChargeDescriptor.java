@@ -190,7 +190,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 
             try {
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
-                List<Double> peoeBond = new ArrayList<Double>();
+                List<Double> peoeBond = new ArrayList<>();
                 for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext();) {
                     IBond bondi = it.next();
                     double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());

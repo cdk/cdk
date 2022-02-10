@@ -66,7 +66,7 @@ public class IdentityTemplateLibraryTest {
     public void encodeEntry() {
         String smiles = "CO";
         Point2d[] points = new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
-        String encoded = IdentityTemplateLibrary.encodeEntry(new SimpleEntry<String, Point2d[]>(smiles, points));
+        String encoded = IdentityTemplateLibrary.encodeEntry(new SimpleEntry<>(smiles, points));
         Map.Entry<String, Point2d[]> entry = IdentityTemplateLibrary.decodeEntry(encoded);
         assertThat(encoded, is("CO |(12.5,5.5,;4.0,2.0,)|"));
     }

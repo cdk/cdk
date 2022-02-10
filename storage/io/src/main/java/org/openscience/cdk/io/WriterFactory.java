@@ -60,7 +60,7 @@ public class WriterFactory {
      * Constructs a ChemObjectIOInstantionTests.
      */
     public WriterFactory() {
-        registeredReaders = new HashMap<String, Class<IChemObjectWriter>>();
+        registeredReaders = new HashMap<>();
     }
 
     public void registerWriter(Class<?> writer) {
@@ -83,7 +83,7 @@ public class WriterFactory {
         if (formats == null) loadFormats();
 
         Iterator<IChemFormat> iter = formats.iterator();
-        List<IChemFormat> matches = new ArrayList<IChemFormat>();
+        List<IChemFormat> matches = new ArrayList<>();
         while (iter.hasNext()) {
             IChemFormat format = (IChemFormat) iter.next();
             if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
@@ -100,7 +100,7 @@ public class WriterFactory {
 
     private void loadFormats() {
         if (formats == null) {
-            formats = new ArrayList<IChemFormat>();
+            formats = new ArrayList<>();
             try {
                 logger.debug("Starting loading Formats...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()

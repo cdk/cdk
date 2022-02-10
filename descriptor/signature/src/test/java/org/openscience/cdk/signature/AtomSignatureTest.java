@@ -172,7 +172,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
     }
 
     public void allEqualAtHeightTest(IAtomContainer molecule, int height) {
-        Map<String, Integer> sigfreq = new HashMap<String, Integer>();
+        Map<String, Integer> sigfreq = new HashMap<>();
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             AtomSignature atomSignature = new AtomSignature(i, height, molecule);
             String canonicalSignature = atomSignature.toCanonicalString();

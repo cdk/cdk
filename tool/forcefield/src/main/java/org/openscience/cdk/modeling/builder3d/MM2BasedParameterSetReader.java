@@ -66,8 +66,8 @@ public class MM2BasedParameterSetReader {
      * Constructor for the MM2BasedParameterSetReader object.
      */
     public MM2BasedParameterSetReader() {
-        parameterSet = new Hashtable<String, Object>();
-        atomTypes = new ArrayList<IAtomType>();
+        parameterSet = new Hashtable<>();
+        atomTypes = new ArrayList<>();
     }
 
     public Map<String, Object> getParamterSet() {

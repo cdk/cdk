@@ -132,7 +132,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
             if (atom.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedLonePairsCount(atom) > 0
                     && reactant.getConnectedSingleElectronsCount(atom) == 0) {
 
-                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                ArrayList<IAtom> atomList = new ArrayList<>();
                 atomList.add(atom);
                 IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
                 moleculeSet.addAtomContainer(reactant);

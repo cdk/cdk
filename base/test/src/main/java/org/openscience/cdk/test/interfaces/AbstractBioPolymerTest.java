@@ -197,7 +197,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom2, oMono2, oStrand2);
-        Map<String, IStrand> strands = new Hashtable<String, IStrand>();
+        Map<String, IStrand> strands = new Hashtable<>();
         strands.put("A", oStrand1);
         strands.put("B", oStrand2);
 
@@ -236,7 +236,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom2, oMono2, oStrand2);
-        Map<String, IStrand> strands = new Hashtable<String, IStrand>();
+        Map<String, IStrand> strands = new Hashtable<>();
         strands.put("A", oStrand1);
         strands.put("B", oStrand2);
 

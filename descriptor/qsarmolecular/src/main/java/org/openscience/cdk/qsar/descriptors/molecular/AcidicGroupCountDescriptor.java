@@ -53,7 +53,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
             "[$([NH](S(=O)=O)C(F)(F)F)]", "[$(n1nnnc1)]"};
     private final static String[] NAMES          = {"nAcid"};
 
-    private List<SmartsPattern> tools  = new ArrayList<SmartsPattern>();
+    private List<SmartsPattern> tools  = new ArrayList<>();
     private boolean               checkAromaticity;
 
     /**

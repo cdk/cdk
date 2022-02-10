@@ -62,7 +62,7 @@ public class PostFilter {
             finalMappings.set(removeRedundantMapping(mappings));
             mappings.clear();
         } else {
-            finalMappings.set(new ArrayList<Map<Integer, Integer>>());
+            finalMappings.set(new ArrayList<>());
         }
         return finalMappings.getFinalMapping();
     }
@@ -82,7 +82,7 @@ public class PostFilter {
      * @return
      */
     private static List<Map<Integer, Integer>> removeRedundantMapping(List<List<Integer>> mappingOrg) {
-        List<Map<Integer, Integer>> nonRedundantMapping = new ArrayList<Map<Integer, Integer>>();
+        List<Map<Integer, Integer>> nonRedundantMapping = new ArrayList<>();
         for (List<Integer> mapping : mappingOrg) {
             Map<Integer, Integer> newMap = getMappingMapFromList(mapping);
             if (!hasMap(newMap, nonRedundantMapping)) {
@@ -93,7 +93,7 @@ public class PostFilter {
     }
 
     private static Map<Integer, Integer> getMappingMapFromList(List<Integer> list) {
-        Map<Integer, Integer> newMap = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> newMap = new TreeMap<>();
         for (int index = 0; index < list.size(); index += 2) {
             newMap.put(list.get(index), list.get(index + 1));
         }

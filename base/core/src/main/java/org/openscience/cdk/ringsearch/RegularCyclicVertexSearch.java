@@ -42,10 +42,10 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     private long           cyclic;
 
     /* cycle systems as they are discovered */
-    private List<Long>     cycles = new ArrayList<Long>(1);
+    private List<Long>     cycles = new ArrayList<>(1);
 
     /* indicates if the 'cycle' at 'i' in 'cycles' is fused */
-    private List<Boolean>  fused  = new ArrayList<Boolean>(1);
+    private List<Boolean>  fused  = new ArrayList<>(1);
 
     /* set of visited vertices */
     private long           visited;
@@ -326,7 +326,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      */
     @Override
     public int[][] isolated() {
-        List<int[]> isolated = new ArrayList<int[]>(cycles.size());
+        List<int[]> isolated = new ArrayList<>(cycles.size());
         for (int i = 0; i < cycles.size(); i++) {
             if (!fused.get(i)) isolated.add(toArray(cycles.get(i)));
         }
@@ -338,7 +338,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      */
     @Override
     public int[][] fused() {
-        List<int[]> fused = new ArrayList<int[]>(cycles.size());
+        List<int[]> fused = new ArrayList<>(cycles.size());
         for (int i = 0; i < cycles.size(); i++) {
             if (this.fused.get(i)) fused.add(toArray(cycles.get(i)));
         }

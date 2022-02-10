@@ -40,7 +40,7 @@ public class ChemModelRendererTest {
 
     @Test
     public void testConstructor() {
-        List<IGenerator<IAtomContainer>> generators = new ArrayList<IGenerator<IAtomContainer>>();
+        List<IGenerator<IAtomContainer>> generators = new ArrayList<>();
         generators.add(new BasicSceneGenerator());
         generators.add(new BasicAtomGenerator());
         generators.add(new BasicBondGenerator());

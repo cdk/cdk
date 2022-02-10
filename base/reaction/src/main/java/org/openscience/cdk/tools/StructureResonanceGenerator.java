@@ -74,7 +74,7 @@ public class StructureResonanceGenerator {
 
     private ILoggingTool           logger        = LoggingToolFactory
                                                          .createLoggingTool(StructureResonanceGenerator.class);
-    private List<IReactionProcess> reactionsList = new ArrayList<IReactionProcess>();
+    private List<IReactionProcess> reactionsList = new ArrayList<>();
     /**Generate resonance structure without looking at the symmetry*/
     private boolean                lookingSymmetry;
     /** TODO: REACT: some time takes too much time. At the moment fixed to 50 structures*/
@@ -159,7 +159,7 @@ public class StructureResonanceGenerator {
     }
 
     private void callDefaultReactions() {
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -173,7 +173,7 @@ public class StructureResonanceGenerator {
         reactionsList.add(type);
 
         type = new PiBondingMovementReaction();
-        List<IParameterReact> paramList2 = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList2 = new ArrayList<>();
         IParameterReact param2 = new SetReactionCenter();
         param2.setParameter(Boolean.FALSE);
         paramList2.add(param2);
@@ -270,7 +270,7 @@ public class StructureResonanceGenerator {
         if (setOfMol.getAtomContainerCount() == 0) return setOfCont;
 
         /* extraction of all bonds which has been produced a changes of order */
-        List<IBond> bondList = new ArrayList<IBond>();
+        List<IBond> bondList = new ArrayList<>();
         for (int i = 1; i < setOfMol.getAtomContainerCount(); i++) {
             IAtomContainer mol = setOfMol.getAtomContainer(i);
             for (int j = 0; j < mol.getBondCount(); j++) {
@@ -290,7 +290,7 @@ public class StructureResonanceGenerator {
         int maxGroup = 1;
 
         /* Analysis if the bond are linked together */
-        List<IBond> newBondList = new ArrayList<IBond>();
+        List<IBond> newBondList = new ArrayList<>();
         newBondList.add(bondList.get(0));
 
         int pos = 0;

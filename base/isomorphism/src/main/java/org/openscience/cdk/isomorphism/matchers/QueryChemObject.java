@@ -79,7 +79,7 @@ public class QueryChemObject implements IChemObject {
      */
     private List<IChemObjectListener> lazyChemObjectListeners() {
         if (chemObjectListeners == null) {
-            chemObjectListeners = new ArrayList<IChemObjectListener>();
+            chemObjectListeners = new ArrayList<>();
         }
         return chemObjectListeners;
     }
@@ -174,7 +174,7 @@ public class QueryChemObject implements IChemObject {
      */
     private Map<Object, Object> lazyProperties() {
         if (properties == null) {
-            properties = new HashMap<Object, Object>();
+            properties = new HashMap<>();
         }
         return properties;
     }

@@ -422,7 +422,7 @@ public class BondTools {
         }
         if (differentAtoms != atoms.size()) {
             long[] morgannumbers = MorganNumbersTools.getMorganNumbers(container);
-            List<String> differentSymbols = new ArrayList<String>();
+            List<String> differentSymbols = new ArrayList<>();
             for (IAtom atom : atoms) {
                 if (!differentSymbols.contains(atom.getSymbol())) {
                     differentSymbols.add(atom.getSymbol());
@@ -442,7 +442,7 @@ public class BondTools {
             List<Long>[] symbolsMorganNumbers = new ArrayList[symbolsWithDifferentMorganNumbers.length];
             for (int i = 0; i < symbolsWithDifferentMorganNumbers.length; i++) {
                 symbolsWithDifferentMorganNumbers[i] = true;
-                symbolsMorganNumbers[i] = new ArrayList<Long>();
+                symbolsMorganNumbers[i] = new ArrayList<>();
             }
             for (IAtom atom : atoms) {
                 int elementNumber = differentSymbols.indexOf(atom.getSymbol());
@@ -511,7 +511,7 @@ public class BondTools {
      */
     public static boolean stereosAreOpposite(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
-        TreeMap<Double, Integer> hm = new TreeMap<Double, Integer>();
+        TreeMap<Double, Integer> hm = new TreeMap<>();
         for (int i = 1; i < atoms.size(); i++) {
             hm.put(giveAngle(atom, atoms.get(0), atoms.get(i)), i);
         }

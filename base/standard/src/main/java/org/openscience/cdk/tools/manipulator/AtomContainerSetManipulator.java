@@ -97,7 +97,7 @@ public class AtomContainerSetManipulator {
      * @return A list of individual IAtomContainer's
      */
     public static List<IAtomContainer> getAllAtomContainers(IAtomContainerSet set) {
-        List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> atomContainerList = new ArrayList<>();
         for (IAtomContainer atomContainer : set.atomContainers()) {
             atomContainerList.add(atomContainer);
         }
@@ -145,7 +145,7 @@ public class AtomContainerSetManipulator {
     }
 
     public static List<String> getAllIDs(IAtomContainerSet set) {
-        List<String> idList = new ArrayList<String>();
+        List<String> idList = new ArrayList<>();
         if (set != null) {
             if (set.getID() != null) idList.add(set.getID());
             for (int i = 0; i < set.getAtomContainerCount(); i++) {
@@ -188,7 +188,7 @@ public class AtomContainerSetManipulator {
      * @return a list of individual ChemObject's
      */
     public static List<IChemObject> getAllChemObjects(IAtomContainerSet set) {
-        ArrayList<IChemObject> list = new ArrayList<IChemObject>();
+        ArrayList<IChemObject> list = new ArrayList<>();
         list.add(set);
         for (IAtomContainer atomContainer : set.atomContainers()) {
             list.add(atomContainer);

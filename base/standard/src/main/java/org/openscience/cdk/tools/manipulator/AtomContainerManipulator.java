@@ -610,8 +610,8 @@ public class AtomContainerManipulator {
      * @cdk.keyword hydrogens, adding
      */
     public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
-        List<IAtom> hydrogens = new ArrayList<IAtom>();
-        List<IBond> newBonds = new ArrayList<IBond>();
+        List<IAtom> hydrogens = new ArrayList<>();
+        List<IBond> newBonds = new ArrayList<>();
 
         // store a single explicit hydrogen of each original neighbor
         Map<IAtom, IAtom> hNeighbor = new HashMap<>(2*atomContainer.getAtomCount());
@@ -697,7 +697,7 @@ public class AtomContainerManipulator {
     }
 
     public static List<String> getAllIDs(IAtomContainer mol) {
-        List<String> idList = new ArrayList<String>();
+        List<String> idList = new ArrayList<>();
         if (mol != null) {
             if (mol.getID() != null) idList.add(mol.getID());
             for (IAtom atom : mol.atoms()) {
@@ -721,8 +721,8 @@ public class AtomContainerManipulator {
      */
     public static IAtomContainer removeNonChiralHydrogens(IAtomContainer org) {
 
-        Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>(); // maps original atoms to clones.
-        List<IAtom> remove = new ArrayList<IAtom>(); // lists removed Hs.
+        Map<IAtom, IAtom> map = new HashMap<>(); // maps original atoms to clones.
+        List<IAtom> remove = new ArrayList<>(); // lists removed Hs.
 
         // Clone atoms except those to be removed.
         IAtomContainer cpy = org.getBuilder().newInstance(IAtomContainer.class);
@@ -910,8 +910,8 @@ public class AtomContainerManipulator {
         int nCpyAtoms = 0;
         int nCpyBonds = 0;
 
-        final Set<IAtom> hydrogens        = new HashSet<IAtom>(nOrgAtoms);
-        final Set<IBond> bondsToHydrogens = new HashSet<IBond>();
+        final Set<IAtom> hydrogens        = new HashSet<>(nOrgAtoms);
+        final Set<IBond> bondsToHydrogens = new HashSet<>();
         final IAtom[] cpyAtoms = new IAtom[nOrgAtoms];
 
         // filter the original container atoms for those that can/can't
@@ -949,7 +949,7 @@ public class AtomContainerManipulator {
         if (nCpyBonds != cpyBonds.length)
             throw new IllegalArgumentException("number of removed bonds was less than the number of removed hydrogens");
 
-        List<IStereoElement> elements = new ArrayList<IStereoElement>();
+        List<IStereoElement> elements = new ArrayList<>();
 
         for (IStereoElement se : org.stereoElements()) {
             if (se instanceof ITetrahedralChirality) {
@@ -1112,7 +1112,7 @@ public class AtomContainerManipulator {
         // methods
 
         if (org.getSingleElectronCount() > 0) {
-            Set<ISingleElectron> remove = new HashSet<ISingleElectron>();
+            Set<ISingleElectron> remove = new HashSet<>();
             for (ISingleElectron se : org.singleElectrons()) {
                 if (hydrogens.contains(se.getAtom())) remove.add(se);
             }
@@ -1122,7 +1122,7 @@ public class AtomContainerManipulator {
         }
 
         if (org.getLonePairCount() > 0) {
-            Set<ILonePair> remove = new HashSet<ILonePair>();
+            Set<ILonePair> remove = new HashSet<>();
             for (ILonePair lp : org.lonePairs()) {
                 if (hydrogens.contains(lp.getAtom())) remove.add(lp);
             }
@@ -1290,9 +1290,9 @@ public class AtomContainerManipulator {
      */
     @Deprecated
     private static IAtomContainer removeHydrogens(IAtomContainer ac, List<IAtom> preserve) {
-        Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>();
+        Map<IAtom, IAtom> map = new HashMap<>();
         // maps original atoms to clones.
-        List<IAtom> remove = new ArrayList<IAtom>();
+        List<IAtom> remove = new ArrayList<>();
         // lists removed Hs.
 
         // Clone atoms except those to be removed.
@@ -1593,7 +1593,7 @@ public class AtomContainerManipulator {
      * @cdk.keyword    hydrogens, removal
      */
     public static List<IAtom> getHeavyAtoms(IAtomContainer container) {
-        List<IAtom> newAc = new ArrayList<IAtom>();
+        List<IAtom> newAc = new ArrayList<>();
         for (int f = 0; f < container.getAtomCount(); f++) {
             if (container.getAtom(f).getAtomicNumber() != IElement.H) {
                 newAc.add(container.getAtom(f));

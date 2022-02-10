@@ -110,7 +110,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         List<IAtom> rGroupQueryAtoms = null;
 
         if (rootStructure != null) {
-            rGroupQueryAtoms = new ArrayList<IAtom>();
+            rGroupQueryAtoms = new ArrayList<>();
 
             for (int i = 0; i < rootStructure.getAtomCount(); i++) {
                 IAtom atom = rootStructure.getAtom(i);
@@ -202,21 +202,21 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         }
 
         //result = a list of concrete atom containers that are valid interpretations of the RGroup query
-        List<IAtomContainer> result = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> result = new ArrayList<>();
 
         //rGroupNumbers = list holding each R# number for this RGroup query
-        List<Integer> rGroupNumbers = new ArrayList<Integer>();
+        List<Integer> rGroupNumbers = new ArrayList<>();
 
         //distributions  = a list of valid distributions, that is a one/zero representation
         //                 indicating which atom in an atom series belonging to a particular
         //                 R# group is present (1) or absent (0).
-        List<Integer[]> distributions = new ArrayList<Integer[]>();
+        List<Integer[]> distributions = new ArrayList<>();
 
         List<List<IRGroup>> substitutes = new ArrayList<>();
 
         //Valid occurrences for each R# group
-        List<List<Integer>> occurrences = new ArrayList<List<Integer>>();
-        List<Integer> occurIndexes = new ArrayList<Integer>();
+        List<List<Integer>> occurrences = new ArrayList<>();
+        List<Integer> occurIndexes = new ArrayList<>();
 
         //Build up each R# group data before recursively finding configurations.
         Iterator<Integer> rGroupNumItr = rGroupDefinitions.keySet().iterator();
@@ -391,7 +391,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 for (int j = 0; j < candidate.length; j++) {
                     candidate[j] = 0;
                 }
-                List<Integer[]> rgrpDistributions = new ArrayList<Integer[]>();
+                List<Integer[]> rgrpDistributions = new ArrayList<>();
                 findDistributions(occurrence, candidate, rgrpDistributions, 0);
 
                 for (Integer[] distribution : rgrpDistributions) {
@@ -576,7 +576,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
     @Override
     public List<IAtomContainer> getSubstituents() {
-        List<IAtomContainer> substitutes = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> substitutes = new ArrayList<>();
         for (Integer r : rGroupDefinitions.keySet()) {
             for (IRGroup rgrp : rGroupDefinitions.get(r).getRGroups()) {
                 IAtomContainer subst = rgrp.getGroup();

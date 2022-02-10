@@ -131,7 +131,7 @@ public class SSSRFinder {
             return null;
         }
 
-        List<IRingSet> equivalenceClasses = new ArrayList<IRingSet>();
+        List<IRingSet> equivalenceClasses = new ArrayList<>();
         for (Object o : cycleBasis().equivalenceClasses()) {
             equivalenceClasses.add(toRingSet(atomContainer, (Collection) o));
         }

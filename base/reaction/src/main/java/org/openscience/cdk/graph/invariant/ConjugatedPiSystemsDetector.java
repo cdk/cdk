@@ -81,7 +81,7 @@ public class ConjugatedPiSystemsDetector {
                 continue;
             }
             IAtomContainer piSystem = ac.getBuilder().newInstance(IAtomContainer.class);
-            Stack<IAtom> stack = new Stack<IAtom>();
+            Stack<IAtom> stack = new Stack<>();
 
             piSystem.addAtom(firstAtom);
             stack.push(firstAtom);

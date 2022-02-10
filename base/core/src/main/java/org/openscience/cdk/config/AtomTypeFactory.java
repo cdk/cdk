@@ -103,7 +103,7 @@ public class AtomTypeFactory {
      *
      */
     private AtomTypeFactory(String configFile, IChemObjectBuilder builder) {
-        atomTypes = new HashMap<String,IAtomType>(100);
+        atomTypes = new HashMap<>(100);
         readConfiguration(configFile, builder);
     }
 
@@ -112,7 +112,7 @@ public class AtomTypeFactory {
      *
      */
     private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) {
-        atomTypes = new HashMap<String,IAtomType>(100);
+        atomTypes = new HashMap<>(100);
         readConfiguration(ins, format, builder);
     }
 
@@ -159,7 +159,7 @@ public class AtomTypeFactory {
      */
     public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) {
         if (tables == null) {
-            tables = new Hashtable<String, AtomTypeFactory>();
+            tables = new Hashtable<>();
         }
         if (!(tables.containsKey(configFile))) {
             tables.put(configFile, new AtomTypeFactory(configFile, builder));
@@ -243,7 +243,7 @@ public class AtomTypeFactory {
             }
         } else {
             logger.debug("AtomTypeConfigurator was null!");
-            atomTypes = new HashMap<String,IAtomType>();
+            atomTypes = new HashMap<>();
         }
     }
 
@@ -279,7 +279,7 @@ public class AtomTypeFactory {
      */
     public IAtomType[] getAtomTypes(String symbol) {
         logger.debug("Request for atomtype for symbol ", symbol);
-        List<IAtomType> atomList = new ArrayList<IAtomType>();
+        List<IAtomType> atomList = new ArrayList<>();
         for (IAtomType atomType : atomTypes.values()) {
             if (Objects.equals(atomType.getSymbol(), symbol)) {
                 atomList.add(atomType);

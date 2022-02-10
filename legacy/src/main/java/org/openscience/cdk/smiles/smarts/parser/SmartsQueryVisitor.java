@@ -110,7 +110,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
      * Maintain order of neighboring atoms - required for atom-based
      * stereochemistry.
      */
-    private Map<IAtom, List<IAtom>>             neighbors      = new HashMap<IAtom, List<IAtom>>();
+    private Map<IAtom, List<IAtom>>             neighbors      = new HashMap<>();
 
     /**
      * Lookup of atom indices.
@@ -121,12 +121,12 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
      * Stores the directional '/' or '\' bonds. Speeds up looking for double
      * bond configurations.
      */
-    private List<IBond>                         stereoBonds    = new ArrayList<IBond>();
+    private List<IBond>                         stereoBonds    = new ArrayList<>();
 
     /**
      * Stores the double bonds in the query.
      */
-    private List<IBond>                         doubleBonds    = new ArrayList<IBond>();
+    private List<IBond>                         doubleBonds    = new ArrayList<>();
 
     public SmartsQueryVisitor(IChemObjectBuilder builder) {
         this.builder = builder;
@@ -374,7 +374,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         query.addAtom(atom);
 
         if (tetrahedral.get(query.getAtomCount() - 1)) {
-            List<IAtom> localNeighbors = new ArrayList<IAtom>(query.getConnectedAtomsList(atom));
+            List<IAtom> localNeighbors = new ArrayList<>(query.getConnectedAtomsList(atom));
             localNeighbors.add(atom);
             neighbors.put(atom, localNeighbors);
         }
@@ -397,7 +397,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                     neighbors.get(atom).add(newAtom);
                 }
                 if (tetrahedral.get(query.getAtomCount() - 1)) {
-                    List<IAtom> localNeighbors = new ArrayList<IAtom>(query.getConnectedAtomsList(newAtom));
+                    List<IAtom> localNeighbors = new ArrayList<>(query.getConnectedAtomsList(newAtom));
                     localNeighbors.add(newAtom);
                     neighbors.put(newAtom, localNeighbors);
                 }

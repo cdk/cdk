@@ -98,7 +98,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
         /* initiate */
         IReactionProcess type = new ElectronImpactSDBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

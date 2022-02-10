@@ -116,7 +116,7 @@ public class CanonicalLabeler {
         Iterator<IAtom> atoms = atomContainer.atoms().iterator();
         IAtom a;
         StringBuffer inv;
-        List<InvPair> vect = new ArrayList<InvPair>();
+        List<InvPair> vect = new ArrayList<>();
         while (atoms.hasNext()) {
             a = (IAtom) atoms.next();
             inv = new StringBuffer();

@@ -151,7 +151,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     }
 
     private Stack<Position> getUnusedPositions(IAtomContainer container, IAtom atom) {
-        Stack<Position> unused = new Stack<Position>();
+        Stack<Position> unused = new Stack<>();
         for (Position p : Position.values()) {
             unused.add(p);
         }
@@ -203,7 +203,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        List<IGeneratorParameter<?>> parameters = new ArrayList<IGeneratorParameter<?>>();
+        List<IGeneratorParameter<?>> parameters = new ArrayList<>();
         parameters.add(showImplicitHydrogens);
         parameters.add(showAtomTypeNames);
         parameters.addAll(super.getParameters());

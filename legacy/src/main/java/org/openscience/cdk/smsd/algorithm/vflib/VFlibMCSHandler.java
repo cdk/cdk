@@ -88,12 +88,12 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * Constructor for an extended VF Algorithm for the MCS search
      */
     public VFlibMCSHandler() {
-        allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
-        allAtomMCSCopy = new ArrayList<Map<IAtom, IAtom>>();
-        atomsMCS = new HashMap<IAtom, IAtom>();
-        firstMCS = new TreeMap<Integer, Integer>();
-        allMCS = new ArrayList<Map<Integer, Integer>>();
-        allMCSCopy = new ArrayList<Map<Integer, Integer>>();
+        allAtomMCS = new ArrayList<>();
+        allAtomMCSCopy = new ArrayList<>();
+        atomsMCS = new HashMap<>();
+        firstMCS = new TreeMap<>();
+        allMCS = new ArrayList<>();
+        allMCSCopy = new ArrayList<>();
     }
 
     /**
@@ -195,7 +195,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     }
 
     private int checkCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule) {
-        ArrayList<String> atoms = new ArrayList<String>();
+        ArrayList<String> atoms = new ArrayList<>();
         for (int i = 0; i < reactantMolecule.getAtomCount(); i++) {
             atoms.add(reactantMolecule.getAtom(i).getSymbol());
 
@@ -222,7 +222,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             countP = getProductMol().getAtomCount()
                     + AtomContainerManipulator.getSingleBondEquivalentSum(getProductMol());
         }
-        vfLibSolutions = new ArrayList<Map<INode, IAtom>>();
+        vfLibSolutions = new ArrayList<>();
         if (queryMol != null) {
             query = new QueryCompiler(queryMol).compile();
             mapper = new VFMCSMapper(query);
@@ -257,10 +257,10 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     }
 
     private void searchMcGregorMapping() throws CDKException, IOException {
-        List<List<Integer>> mappings = new ArrayList<List<Integer>>();
+        List<List<Integer>> mappings = new ArrayList<>();
         boolean ropFlag = true;
         for (Map<Integer, Integer> firstPassMappings : allMCSCopy) {
-            Map<Integer, Integer> tMapping = new TreeMap<Integer, Integer>(firstPassMappings);
+            Map<Integer, Integer> tMapping = new TreeMap<>(firstPassMappings);
             McGregor mgit = null;
             if (queryMol != null) {
                 mgit = new McGregor(queryMol, mol2, mappings, isBondMatchFlag());
@@ -290,8 +290,8 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     private void setVFMappings(boolean rONP, IQuery query) {
         int counter = 0;
         for (Map<INode, IAtom> solution : vfLibSolutions) {
-            Map<IAtom, IAtom> atomatomMapping = new HashMap<IAtom, IAtom>();
-            Map<Integer, Integer> indexindexMapping = new TreeMap<Integer, Integer>();
+            Map<IAtom, IAtom> atomatomMapping = new HashMap<>();
+            Map<Integer, Integer> indexindexMapping = new TreeMap<>();
             if (solution.size() > vfMCSSize) {
                 this.vfMCSSize = solution.size();
                 allAtomMCSCopy.clear();
@@ -345,8 +345,8 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                 allMCS.clear();
                 counter = 0;
             }
-            Map<IAtom, IAtom> atomatomMapping = new HashMap<IAtom, IAtom>();
-            Map<Integer, Integer> indexindexMapping = new TreeMap<Integer, Integer>();
+            Map<IAtom, IAtom> atomatomMapping = new HashMap<>();
+            Map<Integer, Integer> indexindexMapping = new TreeMap<>();
             for (int index = 0; index < mapping.size(); index += 2) {
                 IAtom qAtom = null;
                 IAtom tAtom = null;

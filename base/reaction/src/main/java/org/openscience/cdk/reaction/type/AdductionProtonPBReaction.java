@@ -149,7 +149,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
                     /**/
                     for (int j = 0; j < 2; j++) {
 
-                        ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                        ArrayList<IAtom> atomList = new ArrayList<>();
                         if (j == 0) {
                             atomList.add(bondi.getBegin());
                             atomList.add(bondi.getEnd());
@@ -161,7 +161,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
                         atomH.setFormalCharge(1);
                         atomList.add(atomH);
 
-                        ArrayList<IBond> bondList = new ArrayList<IBond>();
+                        ArrayList<IBond> bondList = new ArrayList<>();
                         bondList.add(bondi);
 
                         IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);

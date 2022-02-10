@@ -300,7 +300,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         Assume.assumeTrue(runSlowTests());
 
         boolean notCalculatedResults = false;
-        List<IAtomContainer> inputList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> inputList = new ArrayList<>();
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //generate the input molecules. This are molecules without x, y, z coordinats
@@ -318,7 +318,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         // Generate 2D coordinates for the input molecules with the Structure Diagram Generator
 
         StructureDiagramGenerator str;
-        List<IAtomContainer> resultList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> resultList = new ArrayList<>();
         for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
             IAtomContainer molecules = iter.next();
             str = new StructureDiagramGenerator();

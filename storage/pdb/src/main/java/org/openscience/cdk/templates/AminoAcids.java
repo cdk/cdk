@@ -204,7 +204,7 @@ public class AminoAcids {
      */
     public static Map<String, IAminoAcid> getHashMapBySingleCharCode() {
         IAminoAcid[] monomers = createAAs();
-        HashMap<String, IAminoAcid> map = new HashMap<String, IAminoAcid>();
+        HashMap<String, IAminoAcid> map = new HashMap<>();
         for (int i = 0; i < monomers.length; i++) {
             map.put((String) monomers[i].getProperty(RESIDUE_NAME_SHORT), monomers[i]);
         }
@@ -217,7 +217,7 @@ public class AminoAcids {
      */
     public static Map<String, IAminoAcid> getHashMapByThreeLetterCode() {
         AminoAcid[] monomers = createAAs();
-        Map<String, IAminoAcid> map = new HashMap<String, IAminoAcid>();
+        Map<String, IAminoAcid> map = new HashMap<>();
         for (int i = 0; i < monomers.length; i++) {
             map.put((String) monomers[i].getProperty(RESIDUE_NAME), monomers[i]);
         }

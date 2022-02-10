@@ -367,7 +367,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         IRingSet connectedRings = ringSet.getConnectedRings(leftCyclohexane);
 
         // Iterate over the connectedRings and fail if any duplicate is found
-        List<IRing> foundRings = new ArrayList<IRing>();
+        List<IRing> foundRings = new ArrayList<>();
         for (IAtomContainer container : connectedRings.atomContainers()) {
             IRing connectedRing = (IRing) container;
             if (foundRings.contains(connectedRing)) Assert.fail("The list of connected rings contains duplicates.");

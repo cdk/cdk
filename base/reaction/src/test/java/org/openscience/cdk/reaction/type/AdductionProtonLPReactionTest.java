@@ -94,7 +94,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         IReactionProcess type = new AdductionProtonLPReaction();
 
         /* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -131,7 +131,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         setOfReactants.getAtomContainer(0).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
         /* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -172,7 +172,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -209,7 +209,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         IReactionProcess type = new AdductionProtonLPReaction();
 
         /* automatic looking for active center */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

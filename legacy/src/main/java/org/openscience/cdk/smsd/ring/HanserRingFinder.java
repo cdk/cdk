@@ -85,7 +85,7 @@ public class HanserRingFinder implements RingFinder {
     private List<List<IAtom>> rings;
 
     public HanserRingFinder() {
-        rings = new ArrayList<List<IAtom>>();
+        rings = new ArrayList<>();
     }
 
     /**

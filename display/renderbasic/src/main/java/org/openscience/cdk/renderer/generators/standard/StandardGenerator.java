@@ -599,7 +599,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
                 final Vector2d vector = newAttachPointAnnotationVector(atom,
                                                                        container.getConnectedBondsList(atom),
-                                                                       new ArrayList<Vector2d>());
+                        new ArrayList<>());
 
                 final TextOutline outline = generateAnnotation(atom.getPoint2d(),
                                                                Integer.toString(attachNum),
@@ -884,7 +884,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     static Vector2d newAtomAnnotationVector(IAtom atom, List<IBond> bonds, List<Vector2d> auxVectors) {
 
-        final List<Vector2d> vectors = new ArrayList<Vector2d>(bonds.size());
+        final List<Vector2d> vectors = new ArrayList<>(bonds.size());
         for (IBond bond : bonds)
             vectors.add(VecmathUtil.newUnitVector(atom, bond));
 
@@ -931,8 +931,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 // (i.e. non-stereo sigma bonds) and use those. This gives good
                 // placement for fused conjugated rings
 
-                List<Vector2d> plainVectors = new ArrayList<Vector2d>();
-                List<Vector2d> wedgeVectors = new ArrayList<Vector2d>();
+                List<Vector2d> plainVectors = new ArrayList<>();
+                List<Vector2d> wedgeVectors = new ArrayList<>();
 
                 for (IBond bond : bonds) {
                     if (isPlainBond(bond)) plainVectors.add(VecmathUtil.newUnitVector(atom, bond));

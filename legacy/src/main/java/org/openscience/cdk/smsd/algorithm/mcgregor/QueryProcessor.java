@@ -222,7 +222,7 @@ public class QueryProcessor {
     private int searchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule,
             List<Integer> mappedAtomsOrg) {
 
-        List<Integer> mappedAtoms = new ArrayList<Integer>(mappedAtomsOrg);
+        List<Integer> mappedAtoms = new ArrayList<>(mappedAtomsOrg);
 
         int correspondingAtom = 0;
         for (int a = 0; a < mappedAtomsSize; a++) {

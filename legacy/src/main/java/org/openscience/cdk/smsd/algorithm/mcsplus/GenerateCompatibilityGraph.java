@@ -79,10 +79,10 @@ public final class GenerateCompatibilityGraph {
         setMatchBond(shouldMatchBonds);
         this.source = source;
         this.target = target;
-        compGraphNodes = new ArrayList<Integer>();
-        compGraphNodesCZero = new ArrayList<Integer>();
-        cEdges = new ArrayList<Integer>();
-        dEdges = new ArrayList<Integer>();
+        compGraphNodes = new ArrayList<>();
+        compGraphNodesCZero = new ArrayList<>();
+        cEdges = new ArrayList<>();
+        dEdges = new ArrayList<>();
         compatibilityGraphNodes();
         compatibilityGraph();
 
@@ -102,11 +102,11 @@ public final class GenerateCompatibilityGraph {
     }
 
     private List<List<Integer>> labelAtoms(IAtomContainer atomCont) {
-        List<List<Integer>> labelList = new ArrayList<List<Integer>>();
+        List<List<Integer>> labelList = new ArrayList<>();
 
         for (int i = 0; i < atomCont.getAtomCount(); i++) {
             LabelContainer labelContainer = LabelContainer.getInstance();
-            ArrayList<Integer> label = new ArrayList<Integer>(7);
+            ArrayList<Integer> label = new ArrayList<>(7);
             //            label.setSize(7);
 
             for (int a = 0; a < 7; a++) {
@@ -156,7 +156,7 @@ public final class GenerateCompatibilityGraph {
 
     private List<IAtom> reduceAtomSet(IAtomContainer atomCont) {
 
-        List<IAtom> basicAtoms = new ArrayList<IAtom>();
+        List<IAtom> basicAtoms = new ArrayList<>();
         for (IAtom atom : atomCont.atoms()) {
             basicAtoms.add(atom);
         }
@@ -210,8 +210,8 @@ public final class GenerateCompatibilityGraph {
     protected int compatibilityGraph() throws IOException {
         int compGraphNodesListSize = compGraphNodes.size();
 
-        cEdges = new ArrayList<Integer>(); //Initialize the cEdges List
-        dEdges = new ArrayList<Integer>(); //Initialize the dEdges List
+        cEdges = new ArrayList<>(); //Initialize the cEdges List
+        dEdges = new ArrayList<>(); //Initialize the dEdges List
 
         for (int a = 0; a < compGraphNodesListSize; a += 3) {
             int indexA = compGraphNodes.get(a);
@@ -259,8 +259,8 @@ public final class GenerateCompatibilityGraph {
     protected Integer compatibilityGraphNodesIfCEdgeIsZero() throws IOException {
 
         int countNodes = 1;
-        List<String> map = new ArrayList<String>();
-        compGraphNodesCZero = new ArrayList<Integer>(); //Initialize the compGraphNodesCZero List
+        List<String> map = new ArrayList<>();
+        compGraphNodesCZero = new ArrayList<>(); //Initialize the compGraphNodesCZero List
         LabelContainer labelContainer = LabelContainer.getInstance();
         compGraphNodes.clear();
 
@@ -297,8 +297,8 @@ public final class GenerateCompatibilityGraph {
     protected int compatibilityGraphCEdgeZero() throws IOException {
 
         int compGraphNodesCZeroListSize = compGraphNodesCZero.size();
-        cEdges = new ArrayList<Integer>(); //Initialize the cEdges List
-        dEdges = new ArrayList<Integer>(); //Initialize the dEdges List
+        cEdges = new ArrayList<>(); //Initialize the cEdges List
+        dEdges = new ArrayList<>(); //Initialize the dEdges List
 
         for (int a = 0; a < compGraphNodesCZeroListSize; a += 4) {
             int indexA = compGraphNodesCZero.get(a);

@@ -155,11 +155,11 @@ public class HyperconjugationReaction extends ReactionEngine implements IReactio
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
                                                     .getFormalCharge()) == 0 && atomk.getAtomicNumber() == IElement.H) {
 
-                                        ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                        ArrayList<IAtom> atomList = new ArrayList<>();
                                         atomList.add(atomi);
                                         atomList.add(atomj);
                                         atomList.add(atomk);
-                                        ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                        ArrayList<IBond> bondList = new ArrayList<>();
                                         bondList.add(bondi);
                                         bondList.add(bondj);
 

@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+    private static Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     static {
         // do not complain about a few non-tested atom types

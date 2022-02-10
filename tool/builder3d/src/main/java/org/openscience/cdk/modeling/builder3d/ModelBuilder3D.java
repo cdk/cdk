@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class ModelBuilder3D {
 
-    private static Map<String, ModelBuilder3D> memyselfandi    = new HashMap<String, ModelBuilder3D>();
+    private static Map<String, ModelBuilder3D> memyselfandi    = new HashMap<>();
 
     private TemplateHandler3D                  templateHandler = null;
 

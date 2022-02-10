@@ -160,7 +160,7 @@ public final class InChITautomerGenerator {
                 atom.setImplicitHydrogenCount(0);
         }
 
-        List<IAtomContainer> tautomers = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> tautomers = new ArrayList<>();
         if (!inchi.contains("(H")) { //No mobile H atoms according to InChI, so bail out.
             tautomers.add(mol);
             return tautomers;
@@ -181,7 +181,7 @@ public final class InChITautomerGenerator {
             mapInputMoleculeToInchiMolgraph(inchiMolGraph, mol);
         }
 
-        List<Integer> mobHydrAttachPositions = new ArrayList<Integer>();
+        List<Integer> mobHydrAttachPositions = new ArrayList<>();
         int totalMobHydrCount = parseMobileHydrogens(mobHydrAttachPositions, inchi);
 
         tautomers = constructTautomers(mol, mobHydrAttachPositions, totalMobHydrCount);
@@ -199,7 +199,7 @@ public final class InChITautomerGenerator {
      */
     private Map<Integer, IAtom> getElementsByPosition(String inputInchi, IAtomContainer inputMolecule)
             throws CDKException {
-        Map<Integer, IAtom> inchiAtomsByPosition = new HashMap<Integer, IAtom>();
+        Map<Integer, IAtom> inchiAtomsByPosition = new HashMap<>();
         int position = 0;
         String inchi = inputInchi;
 
@@ -261,7 +261,7 @@ public final class InChITautomerGenerator {
         String connections = inchi.substring(1, inchi.indexOf('/'));
         Pattern connectionPattern = Pattern.compile("(-|\\(|\\)|,|([0-9])*)");
         Matcher match = connectionPattern.matcher(connections);
-        Stack<IAtom> atomStack = new Stack<IAtom>();
+        Stack<IAtom> atomStack = new Stack<>();
         IAtomContainer inchiMolGraph = inputMolecule.getBuilder().newInstance(IAtomContainer.class);
         boolean pop = false;
         boolean push = true;
@@ -417,13 +417,13 @@ public final class InChITautomerGenerator {
      */
     private List<IAtomContainer> constructTautomers(IAtomContainer inputMolecule, List<Integer> mobHydrAttachPositions,
             int totalMobHydrCount) throws CloneNotSupportedException {
-        List<IAtomContainer> tautomers = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> tautomers = new ArrayList<>();
 
         //Tautomeric skeleton generation
         IAtomContainer skeleton = (IAtomContainer) inputMolecule.clone();
 
         boolean atomsToRemove = true;
-        List<IAtom> removedAtoms = new ArrayList<IAtom>();
+        List<IAtom> removedAtoms = new ArrayList<>();
         boolean atomRemoved = false;
         while (atomsToRemove) {
             ATOMS: for (IAtom atom : skeleton.atoms()) {
@@ -498,18 +498,18 @@ public final class InChITautomerGenerator {
        
 
         // Make combinations for mobile Hydrogen attachments
-        List<List<Integer>> combinations = new ArrayList<List<Integer>>();
-        combineHydrogenPositions(new ArrayList<Integer>(), combinations, skeleton, totalMobHydrCount,
+        List<List<Integer>> combinations = new ArrayList<>();
+        combineHydrogenPositions(new ArrayList<>(), combinations, skeleton, totalMobHydrCount,
                 mobHydrAttachPositions);
 
-        Stack<Object> solutions = new Stack<Object>();
+        Stack<Object> solutions = new Stack<>();
         for (List<Integer> hPositions : combinations) {
             IAtomContainer tautomerSkeleton = (IAtomContainer) skeleton.clone();
             for (Integer hPos : hPositions) {
                 IAtom atom = findAtomByPosition(tautomerSkeleton, hPos);
                 atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() + 1);
             }
-            List<IAtom> atomsInNeedOfFix = new ArrayList<IAtom>();
+            List<IAtom> atomsInNeedOfFix = new ArrayList<>();
             for (IAtom atom : tautomerSkeleton.atoms()) {
                 if (atom.getValency() - atom.getFormalCharge() != atom.getImplicitHydrogenCount()
                         + getConnectivity(atom, tautomerSkeleton)) atomsInNeedOfFix.add(atom);
@@ -612,7 +612,7 @@ public final class InChITautomerGenerator {
                 }
             }
         } else {
-            List<Integer> addList = new ArrayList<Integer>(taken.size());
+            List<Integer> addList = new ArrayList<>(taken.size());
             addList.addAll(taken);
             Collections.sort(addList);
             if (!combinations.contains(addList)) {
@@ -667,7 +667,7 @@ public final class InChITautomerGenerator {
                         }
                     }
                     if (validDoubleBondConfig) {
-                        dblBondPositions = new ArrayList<Integer>();
+                        dblBondPositions = new ArrayList<>();
                         for (int idx = 0; idx < container.getBondCount(); idx++) {
                             if (container.getBond(idx).getOrder().equals(IBond.Order.DOUBLE))
                                 dblBondPositions.add(idx);

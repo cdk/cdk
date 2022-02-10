@@ -70,8 +70,8 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
 
         int n = container.getAtomCount();
 
-        List<StereoEncoder> encoders = new ArrayList<StereoEncoder>();
-        Map<IAtom, Integer> elevation = new HashMap<IAtom, Integer>(10);
+        List<StereoEncoder> encoders = new ArrayList<>();
+        Map<IAtom, Integer> elevation = new HashMap<>(10);
 
         ATOMS: for (int i = 0; i < n; i++) {
 

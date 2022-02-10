@@ -103,7 +103,7 @@ final class MmffAtomTypeMatcher {
     String[] symbolicTypes(final IAtomContainer container) {
         EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(container);
         int[][] graph = GraphUtil.toAdjList(container, bonds);
-        return symbolicTypes(container, graph, bonds, new HashSet<IBond>());
+        return symbolicTypes(container, graph, bonds, new HashSet<>());
     }
 
     /**
@@ -222,7 +222,7 @@ final class MmffAtomTypeMatcher {
      */
     static AtomTypePattern[] loadPatterns(InputStream smaIn) throws IOException {
 
-        List<AtomTypePattern> matchers = new ArrayList<AtomTypePattern>();
+        List<AtomTypePattern> matchers = new ArrayList<>();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(smaIn));
         String line = null;
@@ -252,7 +252,7 @@ final class MmffAtomTypeMatcher {
     private Map<String, String> loadHydrogenDefinitions(InputStream hdefIn) throws IOException {
 
         // maps of symbolic atom types to hydrogen atom types and internal types
-        final Map<String, String> hdefs = new HashMap<String, String>(200);
+        final Map<String, String> hdefs = new HashMap<>(200);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(hdefIn));
         br.readLine(); // header
@@ -320,7 +320,7 @@ final class MmffAtomTypeMatcher {
          * @return indices of atoms that matched this type
          */
         private Set<Integer> matches(IAtomContainer container) {
-            Set<Integer> matchedIdx = new HashSet<Integer>();
+            Set<Integer> matchedIdx = new HashSet<>();
             for (int[] mapping : pattern.matchAll(container)) {
                 matchedIdx.add(mapping[0]);
             }

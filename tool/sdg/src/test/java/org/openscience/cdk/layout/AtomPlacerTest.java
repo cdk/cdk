@@ -49,7 +49,7 @@ public class AtomPlacerTest extends CDKTestCase {
 
     @Test
     public void emptyAtomsListTest() {
-        List<IAtom> atoms = new ArrayList<IAtom>();
+        List<IAtom> atoms = new ArrayList<>();
         // switch on debugging, to see if NPE is thrown
         AtomPlacer placer = new AtomPlacer();
         boolean npeThrown = false;
@@ -63,7 +63,7 @@ public class AtomPlacerTest extends CDKTestCase {
 
     @Test
     public void triangleTest() {
-        List<IAtom> atoms = new ArrayList<IAtom>();
+        List<IAtom> atoms = new ArrayList<>();
         atoms.add(new Atom("C"));
         atoms.add(new Atom("C"));
         atoms.add(new Atom("C"));

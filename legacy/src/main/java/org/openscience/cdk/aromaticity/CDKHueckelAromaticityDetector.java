@@ -89,7 +89,7 @@ public class CDKHueckelAromaticityDetector {
             bonds.next().setFlag(CDKConstants.ISINRING, true);
 
         // disregard all atoms we know that cannot be aromatic anyway
-        Set<IAtom> disregard = new HashSet<IAtom>();
+        Set<IAtom> disregard = new HashSet<>();
         for (IAtom atom : ringSystems.atoms())
             if (!atomIsPotentiallyAromatic(atom)) disregard.add(atom);
 

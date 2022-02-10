@@ -141,7 +141,7 @@ public class DynamicFactory {
     /**
      * conversion map of primitives to their boxed equivalents
      */
-    private static final Map<Class<?>, Class<?>>  BOXED_EQUIVALENT  = new HashMap<Class<?>, Class<?>>(20);
+    private static final Map<Class<?>, Class<?>>  BOXED_EQUIVALENT  = new HashMap<>(20);
 
     // populates the primitive conversion map
     static {
@@ -193,7 +193,7 @@ public class DynamicFactory {
 
         // double for the cache to account for subclass constructor caching
         // (e.g. Atom(Atom) -> Atom(Element)
-        cache = new HashMap<ConstructorKey, Creator<?>>(size * 2);
+        cache = new HashMap<>(size * 2);
         lookup = new ConstructorLookup(size);
 
     }
@@ -399,9 +399,9 @@ public class DynamicFactory {
      */
     private <T> Creator<T> register(ConstructorKey key, Constructor<T> constructor, CreationModifier<T> modifier) {
 
-        Creator<T> creator = new ReflectionCreator<T>(constructor);
+        Creator<T> creator = new ReflectionCreator<>(constructor);
 
-        if (modifier != null) creator = new ModifiedCreator<T>(creator, modifier);
+        if (modifier != null) creator = new ModifiedCreator<>(creator, modifier);
 
         return register(key, creator);
     }
@@ -629,7 +629,7 @@ public class DynamicFactory {
             //                 will throw an exception (see. below) - wrapping
             //                 has no harm as the params never get used
             //
-            return new ArrayWrapCreator<T>(creator);
+            return new ArrayWrapCreator<>(creator);
         }
 
         LOGGER.debug("no instance handler found for ", key);
@@ -659,7 +659,7 @@ public class DynamicFactory {
      * @return set of implementation classes (empty if none found)
      */
     public <T extends ICDKObject> Set<Class<?>> implementorsOf(Class<T> intf) {
-        Set<Class<?>> implementations = new HashSet<Class<?>>(5);
+        Set<Class<?>> implementations = new HashSet<>(5);
         for (ConstructorKey key : lookup.getConstructors(intf)) {
             implementations.add(get(key).getDeclaringClass());
         }
@@ -712,7 +712,7 @@ public class DynamicFactory {
     private static class ConstructorLookup {
 
         private final Map<Class<?>, Map<Integer, Set<ConstructorKey>>> keys;
-        private final Set<ConstructorKey>                              EMPTY_KEY_SET = new HashSet<ConstructorKey>(0);
+        private final Set<ConstructorKey>                              EMPTY_KEY_SET = new HashSet<>(0);
 
         /**
          * Create a new lookup with an expected number of entries.
@@ -720,7 +720,7 @@ public class DynamicFactory {
          * @param n size
          */
         public ConstructorLookup(int n) {
-            keys = new HashMap<Class<?>, Map<Integer, Set<ConstructorKey>>>(n);
+            keys = new HashMap<>(n);
         }
 
         /**
@@ -732,7 +732,7 @@ public class DynamicFactory {
         public void put(Class<?> intf, ConstructorKey key) {
 
             if (!keys.containsKey(intf)) {
-                keys.put(intf, new HashMap<Integer, Set<ConstructorKey>>());
+                keys.put(intf, new HashMap<>());
             }
 
             Map<Integer, Set<ConstructorKey>> map = keys.get(intf);
@@ -740,7 +740,7 @@ public class DynamicFactory {
             int n = key.n();
 
             if (!map.containsKey(n)) {
-                map.put(n, new HashSet<ConstructorKey>(5)); // few constructors per class
+                map.put(n, new HashSet<>(5)); // few constructors per class
             }
 
             map.get(n).add(key);
@@ -756,7 +756,7 @@ public class DynamicFactory {
         private Set<ConstructorKey> getConstructors(Class<?> intf) {
 
             Map<Integer, Set<ConstructorKey>> candidates = keys.get(intf);
-            Set<ConstructorKey> keys = new TreeSet<ConstructorKey>();
+            Set<ConstructorKey> keys = new TreeSet<>();
 
             if (candidates != null) {
                 for (Map.Entry<Integer, Set<ConstructorKey>> e : candidates.entrySet()) {

@@ -95,12 +95,12 @@ public class Bayesian {
 
     // incoming hash codes: actual values, and subsumed values are {#active,#total}
     private int                    numActive    = 0;
-    protected Map<Integer, int[]>  inHash       = new HashMap<Integer, int[]>();
-    protected ArrayList<int[]>     training     = new ArrayList<int[]>();
-    protected ArrayList<Boolean>   activity     = new ArrayList<Boolean>();
+    protected Map<Integer, int[]>  inHash       = new HashMap<>();
+    protected ArrayList<int[]>     training     = new ArrayList<>();
+    protected ArrayList<Boolean>   activity     = new ArrayList<>();
 
     // built model: contributions for each hash code
-    protected Map<Integer, Double> contribs     = new HashMap<Integer, Double>();
+    protected Map<Integer, Double> contribs     = new HashMap<>();
     protected double               lowThresh    = 0, highThresh = 0;
     protected double               range        = 0, invRange = 0;                            // cached to speed up scaling calibration
 
@@ -194,7 +194,7 @@ public class Bayesian {
 
         // gather all of the (folded) fingerprints into a sorted set
         final int AND_BITS = folding - 1; // e.g. 1024/0x400 -> 1023/0x3FF: chop off higher order bits
-        Set<Integer> hashset = new TreeSet<Integer>();
+        Set<Integer> hashset = new TreeSet<>();
         for (int n = circ.getFPCount() - 1; n >= 0; n--) {
             int code = circ.getFP(n).hashCode;
             if (folding > 0) code &= AND_BITS;
@@ -279,7 +279,7 @@ public class Bayesian {
 
         // gather all of the (folded) fingerprints (eliminating duplicates)
         final int AND_BITS = folding - 1; // e.g. 1024/0x400 -> 1023/0x3FF: chop off higher order bits
-        Set<Integer> hashset = new HashSet<Integer>();
+        Set<Integer> hashset = new HashSet<>();
         for (int n = circ.getFPCount() - 1; n >= 0; n--) {
             int code = circ.getFP(n).hashCode;
             if (folding > 0) code &= AND_BITS;
@@ -491,7 +491,7 @@ public class Bayesian {
         buff.append("Bayesian!(" + fpname + "," + folding + "," + lowThresh + "," + highThresh + ")\n");
 
         // primary payload: the bit contributions
-        Set<Integer> sorted = new TreeSet<Integer>();
+        Set<Integer> sorted = new TreeSet<>();
         for (Integer hash : contribs.keySet())
             sorted.add(hash);
         for (Integer hash : sorted) {
@@ -696,7 +696,7 @@ public class Bayesian {
     private Map<Integer, Double> buildPartial(final int order[], int seg, int div) {
         final int sz = training.size();
         int na = 0, nt = 0;
-        final Map<Integer, int[]> ih = new HashMap<Integer, int[]>();
+        final Map<Integer, int[]> ih = new HashMap<>();
         for (int n = 0; n < sz; n++)
             if (n % div != seg) {
                 final boolean active = activity.get(order[n]);
@@ -711,7 +711,7 @@ public class Bayesian {
                 }
             }
 
-        Map<Integer, Double> segContribs = new HashMap<Integer, Double>();
+        Map<Integer, Double> segContribs = new HashMap<>();
 
         final double invSz = 1.0 / nt;
         final double P_AT = na * invSz;

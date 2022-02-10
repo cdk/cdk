@@ -90,7 +90,7 @@ public class PathEdge {
 
     public PathEdge splice(PathEdge other) {
         IAtom intersection = getIntersection(other.atoms);
-        List<IAtom> newAtoms = new ArrayList<IAtom>(atoms);
+        List<IAtom> newAtoms = new ArrayList<>(atoms);
 
         if (atoms.get(0).equals(intersection)) {
             Collections.reverse(newAtoms);

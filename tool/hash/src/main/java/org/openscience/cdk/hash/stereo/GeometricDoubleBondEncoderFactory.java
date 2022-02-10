@@ -66,7 +66,7 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 
-        List<StereoEncoder> encoders = new ArrayList<StereoEncoder>(5);
+        List<StereoEncoder> encoders = new ArrayList<>(5);
 
         for (IBond bond : container.bonds()) {
 

@@ -223,8 +223,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * is atom Hydrogen then its not removed.
      */
     public static IAtomContainer removeHydrogensAndPreserveAtomID(IAtomContainer atomContainer) {
-        Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>(); // maps original atoms to clones.
-        List<IAtom> remove = new ArrayList<IAtom>(); // lists removed Hs.
+        Map<IAtom, IAtom> map = new HashMap<>(); // maps original atoms to clones.
+        List<IAtom> remove = new ArrayList<>(); // lists removed Hs.
         IAtomContainer mol = null;
         if (atomContainer.getBondCount() > 0) {
             // Clone atoms except those to be removed.

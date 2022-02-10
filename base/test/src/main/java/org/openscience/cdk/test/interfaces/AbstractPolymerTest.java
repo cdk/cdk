@@ -120,7 +120,7 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oPolymer.addAtom(oAtom1);
         oPolymer.addAtom(oAtom2, oMono1);
         oPolymer.addAtom(oAtom3, oMono2);
-        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+        Map<String, IMonomer> monomers = new Hashtable<>();
         //IMonomer oMon = getBuilder().newMonomer();
         monomers.put("TRP279", oMono1);
         monomers.put("HOH", oMono2);

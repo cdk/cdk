@@ -46,7 +46,7 @@ public class DictDBReactTest extends CDKTestCase {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("reaction-processes");
         Entry[] entries = dict.getEntries();
-        List<String> idList = new ArrayList<String>();
+        List<String> idList = new ArrayList<>();
         idList.add(entries[0].getID());
         for (int i = 1; i < entries.length; i++) {
             //    		System.out.println(entries[i].getID());

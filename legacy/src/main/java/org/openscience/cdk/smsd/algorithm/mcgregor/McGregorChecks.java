@@ -152,7 +152,7 @@ public class McGregorChecks {
     protected static int searchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule,
             List<Integer> mappedAtomsOrg) {
 
-        List<Integer> mappedAtoms = new ArrayList<Integer>(mappedAtomsOrg);
+        List<Integer> mappedAtoms = new ArrayList<>(mappedAtomsOrg);
 
         int correspondingAtom = 0;
         for (int a = 0; a < mappedAtomsSize; a++) {
@@ -213,7 +213,7 @@ public class McGregorChecks {
     protected static List<Integer> removeRecurringMappings(List<Integer> atomMapping) {
 
         boolean exist = true;
-        List<Integer> tempMap = new ArrayList<Integer>();
+        List<Integer> tempMap = new ArrayList<>();
         int tempCounter = 0;
         int atomMappingSize = atomMapping.size();
         for (int x = 0; x < atomMappingSize; x += 2) {
@@ -290,7 +290,7 @@ public class McGregorChecks {
      * @return
      */
     protected static List<String> generateCSetCopy(int bondNumber, List<String> cSet) {
-        List<String> cTabCopy = new ArrayList<String>();
+        List<String> cTabCopy = new ArrayList<>();
         for (int a = 0; a < bondNumber; a++) {
             cTabCopy.add(cSet.get(a * 4 + 0));
             cTabCopy.add(cSet.get(a * 4 + 1));
@@ -307,7 +307,7 @@ public class McGregorChecks {
      * @throws IOException
      */
     protected static List<String> generateCTabCopy(IAtomContainer atomContainer) throws IOException {
-        List<String> cTabCopy = new ArrayList<String>();
+        List<String> cTabCopy = new ArrayList<>();
         for (int a = 0; a < atomContainer.getBondCount(); a++) {
             String atomI = atomContainer.getBond(a).getBegin().getSymbol();
             String atomJ = atomContainer.getBond(a).getEnd().getSymbol();
@@ -605,7 +605,7 @@ public class McGregorChecks {
     }
 
     static List<Integer> markUnMappedAtoms(boolean flag, IAtomContainer container, Map<Integer, Integer> presentMapping) {
-        List<Integer> unmappedMolAtoms = new ArrayList<Integer>();
+        List<Integer> unmappedMolAtoms = new ArrayList<>();
 
         int unmappedNum = 0;
         boolean atomIsUnmapped = true;
@@ -627,7 +627,7 @@ public class McGregorChecks {
 
     static List<Integer> markUnMappedAtoms(boolean flag, IAtomContainer container, List<Integer> mappedAtoms,
             int cliqueSize) {
-        List<Integer> unmappedMolAtoms = new ArrayList<Integer>();
+        List<Integer> unmappedMolAtoms = new ArrayList<>();
         int unmappedNum = 0;
         boolean atomIsUnmapped = true;
         for (int a = 0; a < container.getAtomCount(); a++) {

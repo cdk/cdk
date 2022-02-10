@@ -225,7 +225,7 @@ public class PartitionTest extends CDKTestCase {
     @Test
     public void addCell_CollectionTest() {
         Partition p = new Partition();
-        List<Integer> cell = new ArrayList<Integer>();
+        List<Integer> cell = new ArrayList<>();
         cell.add(0);
         cell.add(1);
         cell.add(2);
@@ -249,7 +249,7 @@ public class PartitionTest extends CDKTestCase {
     public void insertCellTest() {
         int[][] cellData = new int[][]{{0}, {2}, {3}};
         Partition p = new Partition(cellData);
-        SortedSet<Integer> cell = new TreeSet<Integer>();
+        SortedSet<Integer> cell = new TreeSet<>();
         cell.add(1);
         p.insertCell(1, cell);
         Assert.assertTrue(p.isDiscrete());

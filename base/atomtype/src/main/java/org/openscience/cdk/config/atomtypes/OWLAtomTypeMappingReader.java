@@ -118,7 +118,7 @@ public class OWLAtomTypeMappingReader {
             logger.error("SAXException: ", saxe.getMessage());
             logger.debug(saxe);
         }
-        return mappings == null ? new HashMap<String, String>() : mappings;
+        return mappings == null ? new HashMap<>() : mappings;
     }
 
 }

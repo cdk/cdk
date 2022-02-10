@@ -111,7 +111,7 @@ public abstract class IsotopeFactory {
      * @return         An array of all isotopes
      */
     public IIsotope[] getIsotopes() {
-        List<IIsotope> list = new ArrayList<IIsotope>();
+        List<IIsotope> list = new ArrayList<>();
         for (List<IIsotope> isotopes : this.isotopes) {
             if (isotopes == null) continue;
             for (IIsotope isotope : isotopes) {

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class IsotopePattern {
 
-    private List<IsotopeContainer> isotopeCList = new ArrayList<IsotopeContainer>();
+    private List<IsotopeContainer> isotopeCList = new ArrayList<>();
 
     private int                    monoIsotopePosition;
 

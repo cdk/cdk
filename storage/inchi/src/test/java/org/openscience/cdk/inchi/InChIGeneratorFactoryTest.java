@@ -110,7 +110,7 @@ public class InChIGeneratorFactoryTest {
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
-        List<INCHI_OPTION> options = new ArrayList<INCHI_OPTION>();
+        List<INCHI_OPTION> options = new ArrayList<>();
         options.add(INCHI_OPTION.FixedH);
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, options);
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
@@ -154,7 +154,7 @@ public class InChIGeneratorFactoryTest {
     @Test
     public void testGetInChIToStructure_String_IChemObjectBuilder_List() throws CDKException {
         InChIToStructure parser = InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
-                DefaultChemObjectBuilder.getInstance(), new ArrayList<String>());
+                DefaultChemObjectBuilder.getInstance(), new ArrayList<>());
         Assert.assertNotNull(parser);
     }
 

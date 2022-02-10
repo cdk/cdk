@@ -261,7 +261,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction> implements IRe
     /** {@inheritDoc} */
     @Override
     public List<IGenerator<IReaction>> getGenerators() {
-        return new ArrayList<IGenerator<IReaction>>(generators);
+        return new ArrayList<>(generators);
     }
 
 }

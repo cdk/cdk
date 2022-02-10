@@ -262,7 +262,7 @@ public class CMLCoreModule implements ICMLModule {
      */
     protected void newFormulaData() {
         formulaCounter = 0;
-        formula = new ArrayList<String>();
+        formula = new ArrayList<>();
     }
 
     /**
@@ -270,33 +270,33 @@ public class CMLCoreModule implements ICMLModule {
      */
     protected void newAtomData() {
         atomCounter = 0;
-        elsym = new ArrayList<String>();
-        elid = new ArrayList<String>();
-        eltitles = new ArrayList<String>();
-        formalCharges = new ArrayList<String>();
-        partialCharges = new ArrayList<String>();
-        isotope = new ArrayList<String>();
-        atomicNumbers = new ArrayList<String>();
-        exactMasses = new ArrayList<String>();
-        x3 = new ArrayList<String>();
-        y3 = new ArrayList<String>();
-        z3 = new ArrayList<String>();
-        x2 = new ArrayList<String>();
-        y2 = new ArrayList<String>();
-        xfract = new ArrayList<String>();
-        yfract = new ArrayList<String>();
-        zfract = new ArrayList<String>();
-        hCounts = new ArrayList<String>();
-        atomParities = new ArrayList<String>();
-        parityARef1 = new ArrayList<String>();
-        parityARef2 = new ArrayList<String>();
-        parityARef3 = new ArrayList<String>();
-        parityARef4 = new ArrayList<String>();
-        atomAromaticities = new ArrayList<String>();
-        atomDictRefs = new ArrayList<String>();
-        spinMultiplicities = new ArrayList<String>();
-        occupancies = new ArrayList<String>();
-        atomCustomProperty = new HashMap<Integer, List<String>>();
+        elsym = new ArrayList<>();
+        elid = new ArrayList<>();
+        eltitles = new ArrayList<>();
+        formalCharges = new ArrayList<>();
+        partialCharges = new ArrayList<>();
+        isotope = new ArrayList<>();
+        atomicNumbers = new ArrayList<>();
+        exactMasses = new ArrayList<>();
+        x3 = new ArrayList<>();
+        y3 = new ArrayList<>();
+        z3 = new ArrayList<>();
+        x2 = new ArrayList<>();
+        y2 = new ArrayList<>();
+        xfract = new ArrayList<>();
+        yfract = new ArrayList<>();
+        zfract = new ArrayList<>();
+        hCounts = new ArrayList<>();
+        atomParities = new ArrayList<>();
+        parityARef1 = new ArrayList<>();
+        parityARef2 = new ArrayList<>();
+        parityARef3 = new ArrayList<>();
+        parityARef4 = new ArrayList<>();
+        atomAromaticities = new ArrayList<>();
+        atomDictRefs = new ArrayList<>();
+        spinMultiplicities = new ArrayList<>();
+        occupancies = new ArrayList<>();
+        atomCustomProperty = new HashMap<>();
     }
 
     /**
@@ -304,15 +304,15 @@ public class CMLCoreModule implements ICMLModule {
      */
     protected void newBondData() {
         bondCounter = 0;
-        bondid = new ArrayList<String>();
-        bondARef1 = new ArrayList<String>();
-        bondARef2 = new ArrayList<String>();
-        order = new ArrayList<String>();
-        bondStereo = new ArrayList<String>();
-        bondCustomProperty = new Hashtable<String, Map<String, String>>();
-        bondDictRefs = new ArrayList<String>();
-        bondElid = new ArrayList<String>();
-        bondAromaticity = new ArrayList<Boolean>();
+        bondid = new ArrayList<>();
+        bondARef1 = new ArrayList<>();
+        bondARef2 = new ArrayList<>();
+        order = new ArrayList<>();
+        bondStereo = new ArrayList<>();
+        bondCustomProperty = new Hashtable<>();
+        bondDictRefs = new ArrayList<>();
+        bondElid = new ArrayList<>();
+        bondAromaticity = new ArrayList<>();
     }
 
     /**
@@ -335,8 +335,8 @@ public class CMLCoreModule implements ICMLModule {
         currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
         currentMoleculeSet = currentChemFile.getBuilder().newInstance(IAtomContainerSet.class);
         currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
-        atomEnumeration = new HashMap<String, IAtom>();
-        moleculeCustomProperty = new ArrayList<String>();
+        atomEnumeration = new HashMap<>();
+        moleculeCustomProperty = new ArrayList<>();
 
         newMolecule();
         BUILTIN = "";
@@ -1057,7 +1057,7 @@ public class CMLCoreModule implements ICMLModule {
                 } else {
                     Map<String, String> bp = bondCustomProperty.get(bondid.get(bondid.size() - 1));
                     if (bp == null) {
-                        bp = new Hashtable<String, String>();
+                        bp = new Hashtable<>();
                         bondCustomProperty.put(bondid.get(bondid.size() - 1), bp);
                     }
                     bp.put(elementTitle, cData.trim());
@@ -1073,7 +1073,7 @@ public class CMLCoreModule implements ICMLModule {
                     exactMasses.add(cData.trim());
                 } else {
                     if (atomCustomProperty.get(Integer.valueOf(atomCounter - 1)) == null)
-                        atomCustomProperty.put(Integer.valueOf(atomCounter - 1), new ArrayList<String>());
+                        atomCustomProperty.put(Integer.valueOf(atomCounter - 1), new ArrayList<>());
                     atomCustomProperty.get(Integer.valueOf(atomCounter - 1)).add(elementTitle);
                     atomCustomProperty.get(Integer.valueOf(atomCounter - 1)).add(cData.trim());
                 }

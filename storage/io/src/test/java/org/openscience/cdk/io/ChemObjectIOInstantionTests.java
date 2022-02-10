@@ -51,7 +51,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
 
     private void loadFormats() {
         if (formats == null) {
-            formats = new ArrayList<IChemFormat>();
+            formats = new ArrayList<>();
             try {
                 logger.debug("Starting loading Formats...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()

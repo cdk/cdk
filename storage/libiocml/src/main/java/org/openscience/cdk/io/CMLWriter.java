@@ -155,7 +155,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     public void registerCustomizer(ICMLCustomizer customizer) {
-        if (customizers == null) customizers = new ArrayList<ICMLCustomizer>();
+        if (customizers == null) customizers = new ArrayList<>();
 
         customizers.add(customizer);
         logger.info("Loaded Customizer: ", customizer.getClass().getName());

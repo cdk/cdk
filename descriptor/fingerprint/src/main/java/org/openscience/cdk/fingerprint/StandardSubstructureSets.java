@@ -59,7 +59,7 @@ public class StandardSubstructureSets {
         InputStream ins = StandardSubstructureSets.class.getClassLoader().getResourceAsStream(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 
-        List<String> tmp = new ArrayList<String>();
+        List<String> tmp = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
             if (line.startsWith("#") || line.trim().length() == 0) continue;

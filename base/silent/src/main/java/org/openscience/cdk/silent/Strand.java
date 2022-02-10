@@ -66,7 +66,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     public Strand() {
         super();
         // Stand stuff
-        monomers = new Hashtable<String, IMonomer>();
+        monomers = new Hashtable<>();
         Monomer oMonomer = new Monomer();
         oMonomer.setMonomerName("");
         oMonomer.setMonomerType("UNKNOWN");

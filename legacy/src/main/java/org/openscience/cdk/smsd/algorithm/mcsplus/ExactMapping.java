@@ -47,8 +47,8 @@ public class ExactMapping {
      */
     private static List<Integer> extractCliqueMapping(List<Integer> compGraphNodes, List<Integer> cliqueListOrg) {
 
-        List<Integer> cliqueMapping = new ArrayList<Integer>();
-        List<Integer> cliqueList = new ArrayList<Integer>(cliqueListOrg);
+        List<Integer> cliqueMapping = new ArrayList<>();
+        List<Integer> cliqueList = new ArrayList<>(cliqueListOrg);
         int cliqueSize = cliqueList.size();
         int vecSize = compGraphNodes.size();
         //        System.out.println("VEC  SIZE " + vec_size);

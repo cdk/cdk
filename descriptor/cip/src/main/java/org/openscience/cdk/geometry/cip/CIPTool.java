@@ -343,7 +343,7 @@ public class CIPTool {
         VisitedAtoms visitedAtoms = ligand.getVisitedAtoms();
         List<IBond> bonds = container.getConnectedBondsList(ligandAtom);
         // duplicate ligands according to bond order, following the CIP rules
-        List<ILigand> ligands = new ArrayList<ILigand>();
+        List<ILigand> ligands = new ArrayList<>();
         for (IBond bond : bonds) {
             if (bond.contains(centralAtom)) {
                 if (Order.SINGLE == bond.getOrder()) continue;

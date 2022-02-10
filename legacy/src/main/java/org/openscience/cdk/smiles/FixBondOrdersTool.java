@@ -214,7 +214,7 @@ public class FixBondOrdersTool {
             freeValencies = getFreeValenciesForRingGroup(mNew, atomNos, M, ringSet);
 
             //Array of "answers"
-            List<Integer> bondOrders = new ArrayList<Integer>();
+            List<Integer> bondOrders = new ArrayList<>();
             for (int j = 0; j < bondNos.size(); j++) {
                 bondOrders.add(0);
             }
@@ -271,7 +271,7 @@ public class FixBondOrdersTool {
 
     private List<Integer[]> getRingSystem(IAtomContainer mol, IRingSet ringSet) {
         List<Integer[]> bondsArray;
-        bondsArray = new ArrayList<Integer[]>();
+        bondsArray = new ArrayList<>();
         for (int r = 0; r < ringSet.getAtomContainerCount(); ++r) {
             IRing ring = (IRing) ringSet.getAtomContainer(r);
             Integer[] bondNumbers = new Integer[ring.getBondCount()];
@@ -291,7 +291,7 @@ public class FixBondOrdersTool {
      */
     private List<List<Integer>> assignRingGroups(List<Integer[]> rBondsArray) {
         List<List<Integer>> ringGroups;
-        ringGroups = new ArrayList<List<Integer>>();
+        ringGroups = new ArrayList<>();
         for (int i = 0; i < rBondsArray.size() - 1; i++) { //for each ring except the last in rBondsArray
             for (int j = 0; j < rBondsArray.get(i).length; j++) { //for each bond in each ring
 
@@ -302,7 +302,7 @@ public class FixBondOrdersTool {
                         //Is there a bond in common? Then add both rings
                         if (Objects.equals(rBondsArray.get(i)[j], rBondsArray.get(k)[l])) {
                             if (i != k) {
-                                ringGroups.add(new ArrayList<Integer>());
+                                ringGroups.add(new ArrayList<>());
                                 ringGroups.get(ringGroups.size() - 1).add(i);
                                 ringGroups.get(ringGroups.size() - 1).add(k);
                             }
@@ -323,7 +323,7 @@ public class FixBondOrdersTool {
                 }
             }
             if (!found) {
-                ringGroups.add(new ArrayList<Integer>());
+                ringGroups.add(new ArrayList<>());
                 ringGroups.get(ringGroups.size() - 1).add(i);
             }
         }
@@ -377,7 +377,7 @@ public class FixBondOrdersTool {
      * @return List of atom numbers for each set
      */
     private List<Integer> getAtomNosForRingGroup(IAtomContainer molecule, List<Integer> ringGroup, IRingSet ringSet) {
-        List<Integer> atc = new ArrayList<Integer>();
+        List<Integer> atc = new ArrayList<>();
         for (Integer i : ringGroup) {
             for (IAtom atom : ringSet.getAtomContainer(i).atoms()) {
                 if (atc.size() > 0) {
@@ -401,7 +401,7 @@ public class FixBondOrdersTool {
      * @return List of bond numbers for each set
      */
     private List<Integer> getBondNosForRingGroup(IAtomContainer molecule, List<Integer> ringGroup, IRingSet ringSet) {
-        List<Integer> btc = new ArrayList<Integer>();
+        List<Integer> btc = new ArrayList<>();
         for (Integer i : ringGroup) {
             for (IBond bond : ringSet.getAtomContainer(i).bonds()) {
                 if (btc.size() > 0) {
@@ -424,7 +424,7 @@ public class FixBondOrdersTool {
      * @return List of atom pairs
      */
     private List<Integer[]> getAtomNoPairsForRingGroup(IAtomContainer molecule, List<Integer> bondsToCheck) {
-        List<Integer[]> aptc = new ArrayList<Integer[]>();
+        List<Integer[]> aptc = new ArrayList<>();
         for (Integer i : bondsToCheck) {
             Integer[] aps = new Integer[2];
             aps[0] = molecule.indexOf(molecule.getBond(i).getBegin());
@@ -444,7 +444,7 @@ public class FixBondOrdersTool {
      */
     private List<Integer> getFreeValenciesForRingGroup(IAtomContainer molecule, List<Integer> atomsToCheck, Matrix M,
             IRingSet rs) {
-        List<Integer> fvtc = new ArrayList<Integer>();
+        List<Integer> fvtc = new ArrayList<>();
         for (int i = 0; i < atomsToCheck.size(); i++) {
             int j = atomsToCheck.get(i);
 
@@ -510,8 +510,8 @@ public class FixBondOrdersTool {
             List<Integer[]> atomNoPairs, List<Integer> bondOrder) {
 
         // Look for bonds that need to be a certain order
-        List<Integer> solved = new ArrayList<Integer>();
-        List<Integer> solvedRow = new ArrayList<Integer>();
+        List<Integer> solved = new ArrayList<>();
+        List<Integer> solvedRow = new ArrayList<>();
         for (int j = 0; j < atomNos.size(); j++) {
 
             // Count no.of bonds for this atom

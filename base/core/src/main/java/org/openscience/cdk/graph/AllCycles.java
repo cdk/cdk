@@ -79,7 +79,7 @@ import java.util.List;
 public final class AllCycles {
 
     /** All simple cycles. */
-    private final List<int[]> cycles = new ArrayList<int[]>();
+    private final List<int[]> cycles = new ArrayList<>();
 
     /** Indicates whether the perception completed. */
     private final boolean     completed;

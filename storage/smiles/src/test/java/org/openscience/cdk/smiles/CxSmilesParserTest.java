@@ -211,7 +211,7 @@ public class CxSmilesParserTest {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|SgD::cdk&#58;ReactionConditions:Heat&#10;Hv|", state), is(not(-1)));
         assertThat(state.mysgroups,
-                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<Integer>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
+                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
     }
 
     @Test public void unescape() {

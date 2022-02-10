@@ -226,8 +226,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         int hsCount = 0;
         double xlogPOld = 0;
         IBond.Order maxBondOrder = IBond.Order.SINGLE;
-        List<Integer> hBondAcceptors = new ArrayList<Integer>();
-        List<Integer> hBondDonors = new ArrayList<Integer>();
+        List<Integer> hBondAcceptors = new ArrayList<>();
+        List<Integer> hBondDonors = new ArrayList<>();
         int checkAminoAcid = 1;//if 0 no check, if >1 check
         IAtom atomi = null;
         for (int i = 0; i < atomCount; i++) {

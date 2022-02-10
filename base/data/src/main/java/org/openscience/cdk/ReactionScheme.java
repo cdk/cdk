@@ -54,7 +54,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
     /**  Constructs an empty ReactionScheme.
      */
     public ReactionScheme() {
-        reactionScheme = new ArrayList<IReactionScheme>();
+        reactionScheme = new ArrayList<>();
     }
 
     /**
@@ -125,7 +125,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
         // clone the properties
         if (getProperties() != null) {
             Map<Object, Object> properties = getProperties();
-            Map<Object, Object> clonedHashtable = new HashMap<Object, Object>();
+            Map<Object, Object> clonedHashtable = new HashMap<>();
             Iterator<Object> keys = properties.keySet().iterator();
             while (keys.hasNext()) {
                 Object key = keys.next();

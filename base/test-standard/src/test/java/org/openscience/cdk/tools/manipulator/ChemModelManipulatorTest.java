@@ -293,7 +293,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         IDCreator.createIDs(chemModel);
         List<String> allIDs = ChemModelManipulator.getAllIDs(chemModel);
         Assert.assertEquals(16, ChemModelManipulator.getAllIDs(chemModel).size());
-        Set<String> uniq = new HashSet<String>(allIDs);
+        Set<String> uniq = new HashSet<>(allIDs);
         Assert.assertEquals(10, uniq.size());
     }
 

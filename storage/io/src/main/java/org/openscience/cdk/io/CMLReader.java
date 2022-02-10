@@ -68,7 +68,7 @@ public class CMLReader extends DefaultChemObjectReader {
     private InputStream             input;
     private String                  url;
 
-    private Map<String, ICMLModule> userConventions = new HashMap<String, ICMLModule>();
+    private Map<String, ICMLModule> userConventions = new HashMap<>();
 
     private static ILoggingTool     logger          = LoggingToolFactory.createLoggingTool(CMLReader.class);
 

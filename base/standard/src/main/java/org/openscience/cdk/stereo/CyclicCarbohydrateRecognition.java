@@ -105,7 +105,7 @@ final class CyclicCarbohydrateRecognition {
         if (!projections.contains(Projection.Haworth) && !projections.contains(Projection.Chair))
             return Collections.emptyList();
 
-        List<IStereoElement> elements = new ArrayList<IStereoElement>();
+        List<IStereoElement> elements = new ArrayList<>();
 
         RingSearch ringSearch = new RingSearch(container, graph);
         for (int[] isolated : ringSearch.isolated()) {
@@ -248,7 +248,7 @@ final class CyclicCarbohydrateRecognition {
      */
     private List<ITetrahedralChirality> newTetrahedralCenters(int[] cycle, int[] above, int[] below, WoundProjection type) {
 
-        List<ITetrahedralChirality> centers = new ArrayList<ITetrahedralChirality>(cycle.length);
+        List<ITetrahedralChirality> centers = new ArrayList<>(cycle.length);
 
         for (int i = 1; i <= cycle.length; i++) {
             final int prev = cycle[i - 1];
@@ -488,7 +488,7 @@ final class CyclicCarbohydrateRecognition {
 
         private final Projection projection;
         private final Stereo     winding;
-        private final static Map<Key, WoundProjection> map = new HashMap<Key, WoundProjection>();
+        private final static Map<Key, WoundProjection> map = new HashMap<>();
 
         static {
             // Haworth |V| = 5

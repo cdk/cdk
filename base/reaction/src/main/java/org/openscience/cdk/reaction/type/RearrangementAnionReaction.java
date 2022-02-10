@@ -153,11 +153,11 @@ public class RearrangementAnionReaction extends ReactionEngine implements IReact
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
                                                     .getFormalCharge()) >= 0) {
 
-                                        ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                        ArrayList<IAtom> atomList = new ArrayList<>();
                                         atomList.add(atomi);
                                         atomList.add(atomj);
                                         atomList.add(atomk);
-                                        ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                        ArrayList<IBond> bondList = new ArrayList<>();
                                         bondList.add(bondi);
                                         bondList.add(bondj);
 

@@ -168,7 +168,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         Assert.assertEquals(3, rules.size());
 
         // put one rule more.
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule4 = new IsotopePatternRule();
         myRules.add(rule4);
@@ -192,7 +192,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         Assert.assertEquals(3, rules.size());
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -234,7 +234,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule2 = new ChargeRule();
         Object[] params = new Object[1];
@@ -272,7 +272,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule3 = new ToleranceRangeRule();
         Object[] params = new Object[2];
@@ -380,7 +380,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         mf1.addIsotope(h, 13);
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -429,7 +429,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         mf1.addIsotope(oxy, 2);
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -467,7 +467,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testMiddleMass() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -519,7 +519,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testHighMass() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -553,7 +553,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testFoundMF() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -599,7 +599,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testFoundMF2() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -642,7 +642,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testFragment() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -694,7 +694,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testCompoundWith7Elements() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -754,7 +754,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testDifferentIsotopes() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -799,7 +799,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testFixedFormulaRange() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -830,7 +830,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     public void testFixedFormulaRange2() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -885,7 +885,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
@@ -934,7 +934,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
-        List<IRule> myRules = new ArrayList<IRule>();
+        List<IRule> myRules = new ArrayList<>();
 
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];

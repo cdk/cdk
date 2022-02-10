@@ -123,7 +123,7 @@ public class IsotopeReader {
      *         occurred.
      */
     public List<IIsotope> readIsotopes() {
-        List<IIsotope> isotopes = new ArrayList<IIsotope>();
+        List<IIsotope> isotopes = new ArrayList<>();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

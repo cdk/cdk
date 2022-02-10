@@ -124,7 +124,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         // clone the atoms and place in a map
-        Map<IAtom, IAtom> mapping = new HashMap<IAtom, IAtom>();
+        Map<IAtom, IAtom> mapping = new HashMap<>();
         IAtom c1clone = (IAtom) c1.clone();
         mapping.put(c1, c1clone);
         IAtom o2clone = (IAtom) o2.clone();

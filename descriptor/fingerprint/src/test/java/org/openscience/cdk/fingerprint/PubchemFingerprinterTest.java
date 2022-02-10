@@ -309,7 +309,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         // now lets run some threads
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        List<FpRunner> tasks = new ArrayList<FpRunner>();
+        List<FpRunner> tasks = new ArrayList<>();
         tasks.add(new FpRunner(mol1));
         tasks.add(new FpRunner(mol2));
         List<Future<BitSet>> ret = executor.invokeAll(tasks);

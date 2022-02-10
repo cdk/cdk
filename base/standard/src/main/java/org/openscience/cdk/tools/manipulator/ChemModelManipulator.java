@@ -307,7 +307,7 @@ public class ChemModelManipulator {
      * @return           A List of all ChemObjects inside.
      */
     public static List<IChemObject> getAllChemObjects(IChemModel chemModel) {
-        List<IChemObject> list = new ArrayList<IChemObject>();
+        List<IChemObject> list = new ArrayList<>();
         // list.add(chemModel); // only add ChemObjects contained within
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
@@ -333,7 +333,7 @@ public class ChemModelManipulator {
     }
 
     public static List<String> getAllIDs(IChemModel chemModel) {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         if (chemModel.getID() != null) list.add(chemModel.getID());
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {

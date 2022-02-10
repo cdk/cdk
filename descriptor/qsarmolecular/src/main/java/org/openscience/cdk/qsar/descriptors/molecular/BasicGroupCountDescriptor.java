@@ -51,7 +51,7 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     private final static String[] SMARTS_STRINGS = {"[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]",
             "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]", "[$(N=C-N)]", "[$(N-C=N)]"};
     private final static String[] NAMES          = {"nBase"};
-    private List<SmartsPattern> tools            = new ArrayList<SmartsPattern>();
+    private List<SmartsPattern> tools            = new ArrayList<>();
 
     /**
      * Creates a new {@link BasicGroupCountDescriptor}.

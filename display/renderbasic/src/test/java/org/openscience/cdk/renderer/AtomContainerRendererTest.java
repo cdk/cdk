@@ -83,7 +83,7 @@ public class AtomContainerRendererTest {
     public void testSquareMolecule() {
         IAtomContainer square = makeSquare();
 
-        List<IGenerator<IAtomContainer>> generators = new ArrayList<IGenerator<IAtomContainer>>();
+        List<IGenerator<IAtomContainer>> generators = new ArrayList<>();
         generators.add(new BasicSceneGenerator());
         generators.add(new BasicBondGenerator());
         BasicAtomGenerator atomGenerator = new BasicAtomGenerator();

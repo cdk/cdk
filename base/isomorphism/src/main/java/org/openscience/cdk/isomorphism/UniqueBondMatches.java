@@ -89,7 +89,7 @@ final class UniqueBondMatches implements Predicate<int[]> {
      * @return a bit set of the mapped vertices (values in array)
      */
     private Set<Tuple> toEdgeSet(int[] mapping) {
-        Set<Tuple> edges = new HashSet<Tuple>(mapping.length * 2);
+        Set<Tuple> edges = new HashSet<>(mapping.length * 2);
         for (int u = 0; u < g.length; u++) {
             for (int v : g[u]) {
                 edges.add(new Tuple(mapping[u], mapping[v]));

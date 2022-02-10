@@ -165,7 +165,7 @@ public class IonizationPotentialTool {
      * @return           True, if it belongs
      */
     private static boolean familyBond(IAtomContainer container, IBond bond) {
-        List<String> normalAt = new ArrayList<String>();
+        List<String> normalAt = new ArrayList<>();
         normalAt.add("C");
         normalAt.add("H");
 
@@ -465,7 +465,7 @@ public class IonizationPotentialTool {
         setOfReactants.addAtomContainer(container);
 
         atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

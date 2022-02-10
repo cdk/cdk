@@ -217,7 +217,7 @@ public class InChIGenerator {
             }
         }
 
-        Map<IAtom, InchiAtom> atomMap = new HashMap<IAtom, InchiAtom>();
+        Map<IAtom, InchiAtom> atomMap = new HashMap<>();
         atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
@@ -489,7 +489,7 @@ public class InChIGenerator {
     }
 
     private static List<IBond> onlySingleBonded(List<IBond> bonds) {
-        List<IBond> filtered = new ArrayList<IBond>();
+        List<IBond> filtered = new ArrayList<>();
         for (IBond bond : bonds) {
             if (bond.getOrder() == IBond.Order.SINGLE) filtered.add(bond);
         }

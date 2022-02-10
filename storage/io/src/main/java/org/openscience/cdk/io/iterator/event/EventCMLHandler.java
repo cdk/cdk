@@ -122,7 +122,7 @@ public class EventCMLHandler extends CMLHandler {
         logger.debug("START:" + objectType);
         if (objectType.equals("Molecule")) {
             currentMolecule = builder.newInstance(IAtomContainer.class);
-            atomEnumeration = new Hashtable<String, Integer>();
+            atomEnumeration = new Hashtable<>();
         } else if (objectType.equals("Atom")) {
             currentAtom = builder.newInstance(IAtom.class, "H");
             logger.debug("Atom # " + numberOfAtoms);

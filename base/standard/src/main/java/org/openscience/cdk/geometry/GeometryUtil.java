@@ -1345,7 +1345,7 @@ public final class GeometryUtil {
         if (originalPoint == null) {
             throw new CDKException("No point3d, but findClosestInSpace is working on point3ds");
         }
-        Map<Double, IAtom> atomsByDistance = new TreeMap<Double, IAtom>();
+        Map<Double, IAtom> atomsByDistance = new TreeMap<>();
         for (IAtom atom : container.atoms()) {
             if (!atom.equals(startAtom)) {
                 if (atom.getPoint3d() == null) {
@@ -1358,7 +1358,7 @@ public final class GeometryUtil {
         // FIXME: should there not be some sort here??
         Set<Double> keySet = atomsByDistance.keySet();
         Iterator<Double> keyIter = keySet.iterator();
-        List<IAtom> returnValue = new ArrayList<IAtom>();
+        List<IAtom> returnValue = new ArrayList<>();
         int i = 0;
         while (keyIter.hasNext() && i < max) {
             returnValue.add(atomsByDistance.get(keyIter.next()));

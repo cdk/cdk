@@ -46,7 +46,7 @@ public class PharmacophoreQuery extends QueryAtomContainer {
     public PharmacophoreQuery() {
         // builder should be injected but this is difficult as this class is create in static methods
         super(DefaultChemObjectBuilder.getInstance());
-        exclusionVolumes = new ArrayList<Object>();
+        exclusionVolumes = new ArrayList<>();
     }
 
     /**

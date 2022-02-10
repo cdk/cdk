@@ -446,7 +446,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         // init SMARTS invariants (connectivity, degree, etc)
         SmartsPattern.prepare(atomContainer);
 
-        final Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        final Map<Integer, Integer> map = new TreeMap<>();
         for (int i = 0; i < keys.size(); i++) {
             Pattern ptrn = keys.get(i).pattern;
             map.put(i,

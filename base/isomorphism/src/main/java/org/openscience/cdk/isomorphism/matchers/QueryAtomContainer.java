@@ -152,7 +152,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         this.lonePairs = new ILonePair[this.lonePairCount];
         this.singleElectrons = new ISingleElectron[this.singleElectronCount];
 
-        stereoElements = new ArrayList<IStereoElement>(atomCount / 2);
+        stereoElements = new ArrayList<>(atomCount / 2);
 
         for (int f = 0; f < container.getAtomCount(); f++) {
             atoms[f] = container.getAtom(f);
@@ -193,7 +193,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         bonds = new IBond[bondCount];
         lonePairs = new ILonePair[lpCount];
         singleElectrons = new ISingleElectron[seCount];
-        stereoElements = new ArrayList<IStereoElement>(atomCount / 2);
+        stereoElements = new ArrayList<>(atomCount / 2);
     }
 
     /** {@inheritDoc} */
@@ -763,7 +763,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<IAtom> getConnectedAtomsList(IAtom atom) {
-        List<IAtom> atomsList = new ArrayList<IAtom>();
+        List<IAtom> atomsList = new ArrayList<>();
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) atomsList.add(bonds[i].getOther(atom));
         }
@@ -778,7 +778,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<IBond> getConnectedBondsList(IAtom atom) {
-        List<IBond> bondsList = new ArrayList<IBond>();
+        List<IBond> bondsList = new ArrayList<>();
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) bondsList.add(bonds[i]);
         }
@@ -796,7 +796,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
-        List<ILonePair> lps = new ArrayList<ILonePair>();
+        List<ILonePair> lps = new ArrayList<>();
         for (int i = 0; i < lonePairCount; i++) {
             if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
         }
@@ -811,7 +811,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
-        List<ISingleElectron> lps = new ArrayList<ISingleElectron>();
+        List<ISingleElectron> lps = new ArrayList<>();
         for (int i = 0; i < singleElectronCount; i++) {
             if (singleElectrons[i].contains(atom)) lps.add(singleElectrons[i]);
         }
@@ -826,7 +826,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
-        List<IElectronContainer> lps = new ArrayList<IElectronContainer>();
+        List<IElectronContainer> lps = new ArrayList<>();
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) lps.add(bonds[i]);
         }

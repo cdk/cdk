@@ -58,9 +58,9 @@ public class RendererModel implements Serializable, Cloneable {
     /* If true, the class will notify its listeners of changes */
     private boolean                            notification         = true;
 
-    private transient List<ICDKChangeListener> listeners            = new ArrayList<ICDKChangeListener>();
+    private transient List<ICDKChangeListener> listeners            = new ArrayList<>();
 
-    private Map<IAtom, String>                 toolTipTextMap       = new HashMap<IAtom, String>();
+    private Map<IAtom, String>                 toolTipTextMap       = new HashMap<>();
 
     private IAtom                              highlightedAtom      = null;
 
@@ -72,7 +72,7 @@ public class RendererModel implements Serializable, Cloneable {
 
     private IChemObjectSelection               selection;
 
-    private Map<IAtom, IAtom>                  merge                = new HashMap<IAtom, IAtom>();
+    private Map<IAtom, IAtom>                  merge                = new HashMap<>();
 
     /**
      * Color of a selection.
@@ -120,7 +120,7 @@ public class RendererModel implements Serializable, Cloneable {
         /** {@inheritDoc} */
         @Override
         public Map<IChemObject, Color> getDefault() {
-            return new Hashtable<IChemObject, Color>();
+            return new Hashtable<>();
         }
     }
 
@@ -166,7 +166,7 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * A map of {@link IGeneratorParameter} class names to instances.
      */
-    private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<String, IGeneratorParameter<?>>();
+    private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<>();
 
     /**
      * Construct a renderer model with no parameters. To put parameters into
@@ -189,7 +189,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @return a new List with {@link IGeneratorParameter}s
      */
     public List<IGeneratorParameter<?>> getRenderingParameters() {
-        List<IGeneratorParameter<?>> parameters = new ArrayList<IGeneratorParameter<?>>();
+        List<IGeneratorParameter<?>> parameters = new ArrayList<>();
         parameters.addAll(renderingParameters.values());
         return parameters;
     }
@@ -384,7 +384,7 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void addCDKChangeListener(ICDKChangeListener listener) {
         if (listeners == null) {
-            listeners = new ArrayList<ICDKChangeListener>();
+            listeners = new ArrayList<>();
         }
         if (!listeners.contains(listener)) {
             listeners.add(listener);

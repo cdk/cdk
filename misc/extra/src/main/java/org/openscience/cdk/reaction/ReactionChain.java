@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IReaction;
  */
 public class ReactionChain extends ReactionSet {
 
-    HashMap<IReaction, Integer> hashMapChain     = new HashMap<IReaction, Integer>();
+    HashMap<IReaction, Integer> hashMapChain     = new HashMap<>();
     /**
      * Determines if a de-serialized object is compatible with this class.
      *

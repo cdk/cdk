@@ -50,7 +50,7 @@ public class BitMatrixTest {
     @Test
     public void swap_basic() {
         BitMatrix m = new BitMatrix(0, 4);
-        List<BitSet> rows = new ArrayList<BitSet>();
+        List<BitSet> rows = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             BitSet row = new BitSet();
             rows.add(row);
@@ -69,7 +69,7 @@ public class BitMatrixTest {
     @Test
     public void swap() {
         BitMatrix m = new BitMatrix(0, 100);
-        List<BitSet> rows = new ArrayList<BitSet>();
+        List<BitSet> rows = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             BitSet row = new BitSet();
             rows.add(row);

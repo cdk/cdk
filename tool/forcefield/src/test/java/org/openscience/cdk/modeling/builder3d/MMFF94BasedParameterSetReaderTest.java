@@ -49,7 +49,7 @@ public class MMFF94BasedParameterSetReaderTest {
     public void testreadParameterSets() throws Exception {
         MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader();
         mmff94bpsr.readParameterSets(DefaultChemObjectBuilder.getInstance());
-        Map<String, Object> parameterSet = new Hashtable<String, Object>();
+        Map<String, Object> parameterSet = new Hashtable<>();
         parameterSet = mmff94bpsr.getParamterSet();
 
         //test atom type
@@ -77,7 +77,7 @@ public class MMFF94BasedParameterSetReaderTest {
         String sk4 = "715.009";
         String sbci = "0.0000";
         String bondkey = "bond" + sid1 + ";" + sid2;
-        List<Double> bonddata = new ArrayList<Double>();
+        List<Double> bonddata = new ArrayList<>();
         bonddata.add((Double) (new Double(slen).doubleValue()));
         bonddata.add((Double) (new Double(sk2).doubleValue()));
         bonddata.add((Double) (new Double(sk3).doubleValue()));
@@ -92,7 +92,7 @@ public class MMFF94BasedParameterSetReaderTest {
         String value1 = "14.82507";
         String value2 = "14.82507";
         String strbndkey = "strbnd" + sid1 + ";" + sid2 + ";" + sid3;
-        List<Double> strbnddata = new ArrayList<Double>();
+        List<Double> strbnddata = new ArrayList<>();
         strbnddata.add((Double) (new Double(value1).doubleValue()));
         strbnddata.add((Double) (new Double(value2).doubleValue()));
 
@@ -106,7 +106,7 @@ public class MMFF94BasedParameterSetReaderTest {
         String value3 = "-34.5494";
         String value4 = "0";
         String anglekey = "angle" + sid1 + ";" + sid2 + ";" + sid3;
-        List<Double> angledata = new ArrayList<Double>();
+        List<Double> angledata = new ArrayList<>();
         angledata.add((Double) (new Double(value1).doubleValue()));
         angledata.add((Double) (new Double(value2).doubleValue()));
         angledata.add((Double) (new Double(value3).doubleValue()));
@@ -124,7 +124,7 @@ public class MMFF94BasedParameterSetReaderTest {
         value4 = "0.000";
         String value5 = "0.000";
         String torsionkey = "torsion" + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
-        List<Double> torsiondata = new ArrayList<Double>();
+        List<Double> torsiondata = new ArrayList<>();
         torsiondata.add((Double) (new Double(value1).doubleValue()));
         torsiondata.add((Double) (new Double(value2).doubleValue()));
         torsiondata.add((Double) (new Double(value3).doubleValue()));
@@ -139,7 +139,7 @@ public class MMFF94BasedParameterSetReaderTest {
         sid4 = "CR4R";
         value1 = "10.86681780";
         String opbendkey = "opbend" + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
-        List<Double> opbenddata = new ArrayList<Double>();
+        List<Double> opbenddata = new ArrayList<>();
         opbenddata.add((Double) (new Double(value1).doubleValue()));
 
         //TODO data lines testing

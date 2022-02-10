@@ -380,7 +380,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      * A list of properties used by CDK algorithms which must never be
      * serialized into the SD file format.
      */
-    private static List<String> cdkInternalProperties = new ArrayList<String>();
+    private static List<String> cdkInternalProperties = new ArrayList<>();
 
     static {
         cdkInternalProperties.add(InvPair.CANONICAL_LABEL);

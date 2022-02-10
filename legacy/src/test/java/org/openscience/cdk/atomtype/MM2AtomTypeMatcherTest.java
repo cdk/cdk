@@ -58,7 +58,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
                                                                 .createLoggingTool(MM2AtomTypeMatcherTest.class);
     private static IAtomContainer       testMolecule    = null;
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+    private static Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @BeforeClass
     public static void setUp() throws Exception {

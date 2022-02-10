@@ -61,7 +61,7 @@ public class PathToolsTest extends CDKTestCase {
     public void testBreadthFirstTargetSearch_IAtomContainer_List_IAtom_int_int() {
         org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtom(0);
         org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtom(8);
-        List<IAtom> sphere = new ArrayList<IAtom>();
+        List<IAtom> sphere = new ArrayList<>();
         sphere.add(atom1);
         int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
         //logger.debug("PathLengthTest->length: " + length);
@@ -309,7 +309,7 @@ public class PathToolsTest extends CDKTestCase {
         atomContainer = sp.parseSmiles("CCCC");
         PathTools.resetFlags(atomContainer);
         start = atomContainer.getAtom(0);
-        List<IAtom> sphere = new ArrayList<IAtom>();
+        List<IAtom> sphere = new ArrayList<>();
         sphere.add(start);
         IAtomContainer result = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         PathTools.breadthFirstSearch(atomContainer, sphere, result);
@@ -323,7 +323,7 @@ public class PathToolsTest extends CDKTestCase {
         atomContainer = sp.parseSmiles("CCCC");
         PathTools.resetFlags(atomContainer);
         start = atomContainer.getAtom(0);
-        List<IAtom> sphere = new ArrayList<IAtom>();
+        List<IAtom> sphere = new ArrayList<>();
         sphere.add(start);
         IAtomContainer result = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 1);

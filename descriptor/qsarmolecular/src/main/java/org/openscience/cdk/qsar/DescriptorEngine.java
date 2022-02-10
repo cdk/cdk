@@ -83,8 +83,8 @@ public class DescriptorEngine {
     private static String                      rdfNS       = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
     private Dictionary                         dict        = null;
-    private List<String>                       classNames  = new ArrayList<String>(200);
-    private List<IDescriptor>                  descriptors = new ArrayList<IDescriptor>(200);
+    private List<String>                       classNames  = new ArrayList<>(200);
+    private List<IDescriptor>                  descriptors = new ArrayList<>(200);
     private List<IImplementationSpecification> speclist    = null;
     private static ILoggingTool                logger      = LoggingToolFactory
                                                                    .createLoggingTool(DescriptorEngine.class);
@@ -318,7 +318,7 @@ public class DescriptorEngine {
             logger.error("Cannot determine specification for id: ", identifier);
             return new String[0];
         }
-        List<String> dictClasses = new ArrayList<String>();
+        List<String> dictClasses = new ArrayList<>();
 
         for (Entry dictEntry : dictEntries) {
             if (!dictEntry.getClassName().equals("Descriptor")) continue;
@@ -503,12 +503,12 @@ public class DescriptorEngine {
      * @return An array containing the unique dictionary classes.
      */
     public String[] getAvailableDictionaryClasses() {
-        List<String> classList = new ArrayList<String>();
+        List<String> classList = new ArrayList<>();
         for (IImplementationSpecification spec : speclist) {
             String[] tmp = getDictionaryClass(spec);
             if (tmp != null) classList.addAll(Arrays.asList(tmp));
         }
-        Set<String> uniqueClasses = new HashSet<String>(classList);
+        Set<String> uniqueClasses = new HashSet<>(classList);
         return (String[]) uniqueClasses.toArray(new String[]{});
     }
 
@@ -548,7 +548,7 @@ public class DescriptorEngine {
             jars = jarFileNames;
         }
 
-        List<String> classlist = new ArrayList<String>();
+        List<String> classlist = new ArrayList<>();
         for (int i = 0; i < jars.length; i++) {
             logger.debug("Looking in " + jars[i]);
             try (JarFile jarFile = new JarFile(jars[i])) {
@@ -623,7 +623,7 @@ public class DescriptorEngine {
             jars = jarFileNames;
         }
 
-        ArrayList<String> classlist = new ArrayList<String>();
+        ArrayList<String> classlist = new ArrayList<>();
 
         for (String jar : jars) {
             logger.debug("Looking in " + jar);
@@ -649,7 +649,7 @@ public class DescriptorEngine {
     }
 
     public List<IDescriptor> instantiateDescriptors(List<String> descriptorClassNames) {
-        List<IDescriptor> descriptors = new ArrayList<IDescriptor>();
+        List<IDescriptor> descriptors = new ArrayList<>();
         ClassLoader classLoader = getClass().getClassLoader();
         for (String descriptorName : descriptorClassNames) {
             try {
@@ -687,7 +687,7 @@ public class DescriptorEngine {
     }
 
     public List<IImplementationSpecification> initializeSpecifications(List<IDescriptor> descriptors) {
-        List<IImplementationSpecification> speclist = new ArrayList<IImplementationSpecification>();
+        List<IImplementationSpecification> speclist = new ArrayList<>();
         for (IDescriptor descriptor : descriptors) {
             speclist.add(descriptor.getSpecification());
         }

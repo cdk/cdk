@@ -60,7 +60,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
         Assert.assertEquals(-1, rule.compare(ligandCl, ligandBr));
         Assert.assertEquals(-1, rule.compare(ligandBr, ligandI));
 
-        List<ILigand> ligands = new ArrayList<ILigand>();
+        List<ILigand> ligands = new ArrayList<>();
         ligands.add(ligandI);
         ligands.add(ligandBr);
         ligands.add(ligandF);
@@ -94,7 +94,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
     @Test
     public void testOrder() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
-        List<ILigand> ligands = new ArrayList<ILigand>();
+        List<ILigand> ligands = new ArrayList<>();
         VisitedAtoms visitedAtoms = new VisitedAtoms();
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 4));
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 3));

@@ -159,7 +159,7 @@ public class PharmacophoreUtilityTest {
     }
 
     private IAtom[] getAtoms(IBond bond) {
-        ArrayList<IAtom> alist = new ArrayList<IAtom>();
+        ArrayList<IAtom> alist = new ArrayList<>();
         for (IAtom iAtom : bond.atoms()) {
             alist.add(iAtom);
         }

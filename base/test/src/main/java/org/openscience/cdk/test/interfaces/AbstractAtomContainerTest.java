@@ -599,7 +599,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertThat("empty container had stereo elements", container.stereoElements().iterator().hasNext(),
                 is(false));
 
-        List<IStereoElement> dbElements = new ArrayList<IStereoElement>();
+        List<IStereoElement> dbElements = new ArrayList<>();
         dbElements.add(new DoubleBondStereochemistry(bond, new IBond[]{b1, b2},
                 IDoubleBondStereochemistry.Conformation.TOGETHER));
         container.setAtoms(new IAtom[]{atom, a1, a2, a3, a4});
@@ -619,7 +619,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                 is(dbElements.get(0).getCarriers()));
         assertThat("container had more then one stereo element", first.hasNext(), is(false));
 
-        List<IStereoElement> tetrahedralElements = new ArrayList<IStereoElement>();
+        List<IStereoElement> tetrahedralElements = new ArrayList<>();
         tetrahedralElements.add(new TetrahedralChirality(atom, new IAtom[]{a1, a2, a3, a4}, ITetrahedralChirality.Stereo.CLOCKWISE));
         container.setStereoElements(tetrahedralElements);
         Iterator<IStereoElement> second = container.stereoElements().iterator();

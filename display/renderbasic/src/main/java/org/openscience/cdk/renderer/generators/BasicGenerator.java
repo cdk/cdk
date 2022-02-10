@@ -69,7 +69,7 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        ArrayList<IGeneratorParameter<?>> list = new ArrayList<IGeneratorParameter<?>>();
+        ArrayList<IGeneratorParameter<?>> list = new ArrayList<>();
         list.addAll(this.atomGenerator.getParameters());
         list.addAll(this.bondGenerator.getParameters());
         list.addAll(this.sceneGenerator.getParameters());

@@ -143,7 +143,7 @@ public class DeduceBondSystemTool {
 
         if (ringSet == null) throw new CDKException("failure in AllRingsFinder.findAllRings");
 
-        List<List<List<String>>> MasterList = new ArrayList<List<List<String>>>();
+        List<List<List<String>>> MasterList = new ArrayList<>();
 
         //this.counter=0;// counter which keeps track of all current possibilities for placing double bonds
 
@@ -277,17 +277,17 @@ public class DeduceBondSystemTool {
             //logger.debug(num[j]);
         }
 
-        List<String> al1 = new ArrayList<String>();
-        List<String> al2 = new ArrayList<String>();
-        List<String> al3 = new ArrayList<String>();
-        List<String> al4 = new ArrayList<String>();
-        List<String> al5 = new ArrayList<String>();
+        List<String> al1 = new ArrayList<>();
+        List<String> al2 = new ArrayList<>();
+        List<String> al3 = new ArrayList<>();
+        List<String> al4 = new ArrayList<>();
+        List<String> al5 = new ArrayList<>();
 
-        List<String> al6 = new ArrayList<String>();
-        List<String> al7 = new ArrayList<String>();
-        List<String> al8 = new ArrayList<String>();
-        List<String> al9 = new ArrayList<String>();
-        List<String> al10 = new ArrayList<String>();
+        List<String> al6 = new ArrayList<>();
+        List<String> al7 = new ArrayList<>();
+        List<String> al8 = new ArrayList<>();
+        List<String> al9 = new ArrayList<>();
+        List<String> al10 = new ArrayList<>();
 
         al1.add(num[1] + "-" + num[2]);
         al1.add(num[3] + "-" + num[4]);
@@ -310,7 +310,7 @@ public class DeduceBondSystemTool {
         al9.add(num[3] + "-" + num[4]);
         al10.add(num[4] + "-" + num[0]);
 
-        List<List<String>> mal = new ArrayList<List<String>>();
+        List<List<String>> mal = new ArrayList<>();
 
         mal.add(al1);
         mal.add(al2);
@@ -345,8 +345,8 @@ public class DeduceBondSystemTool {
             num[j] = m.indexOf(r.getAtom(j));
         }
 
-        List<String> al1 = new ArrayList<String>();
-        List<String> al2 = new ArrayList<String>();
+        List<String> al1 = new ArrayList<>();
+        List<String> al2 = new ArrayList<>();
 
         al1.add(num[0] + "-" + num[1]);
         al1.add(num[2] + "-" + num[3]);
@@ -356,24 +356,24 @@ public class DeduceBondSystemTool {
         al2.add(num[3] + "-" + num[4]);
         al2.add(num[5] + "-" + num[0]);
 
-        List<String> al3 = new ArrayList<String>();
-        List<String> al4 = new ArrayList<String>();
-        List<String> al5 = new ArrayList<String>();
-        List<String> al6 = new ArrayList<String>();
-        List<String> al7 = new ArrayList<String>();
-        List<String> al8 = new ArrayList<String>();
-        List<String> al9 = new ArrayList<String>();
-        List<String> al10 = new ArrayList<String>();
-        List<String> al11 = new ArrayList<String>();
+        List<String> al3 = new ArrayList<>();
+        List<String> al4 = new ArrayList<>();
+        List<String> al5 = new ArrayList<>();
+        List<String> al6 = new ArrayList<>();
+        List<String> al7 = new ArrayList<>();
+        List<String> al8 = new ArrayList<>();
+        List<String> al9 = new ArrayList<>();
+        List<String> al10 = new ArrayList<>();
+        List<String> al11 = new ArrayList<>();
 
-        List<String> al12 = new ArrayList<String>();
-        List<String> al13 = new ArrayList<String>();
-        List<String> al14 = new ArrayList<String>();
-        List<String> al15 = new ArrayList<String>();
-        List<String> al16 = new ArrayList<String>();
-        List<String> al17 = new ArrayList<String>();
+        List<String> al12 = new ArrayList<>();
+        List<String> al13 = new ArrayList<>();
+        List<String> al14 = new ArrayList<>();
+        List<String> al15 = new ArrayList<>();
+        List<String> al16 = new ArrayList<>();
+        List<String> al17 = new ArrayList<>();
 
-        List<String> al18 = new ArrayList<String>();
+        List<String> al18 = new ArrayList<>();
 
         al3.add(num[0] + "-" + num[1]);
         al3.add(num[2] + "-" + num[3]);
@@ -409,7 +409,7 @@ public class DeduceBondSystemTool {
         al16.add(num[4] + "-" + num[5]);
         al17.add(num[5] + "-" + num[0]);
 
-        List<List<String>> mal = new ArrayList<List<String>>();
+        List<List<String>> mal = new ArrayList<>();
 
         mal.add(al1);
         mal.add(al2);
@@ -449,11 +449,11 @@ public class DeduceBondSystemTool {
             num[j] = m.indexOf(r.getAtom(j));
         }
 
-        List<String> al1 = new ArrayList<String>();
-        List<String> al2 = new ArrayList<String>();
-        List<String> al3 = new ArrayList<String>();
-        List<String> al4 = new ArrayList<String>();
-        List<String> al5 = new ArrayList<String>();
+        List<String> al1 = new ArrayList<>();
+        List<String> al2 = new ArrayList<>();
+        List<String> al3 = new ArrayList<>();
+        List<String> al4 = new ArrayList<>();
+        List<String> al5 = new ArrayList<>();
 
         al1.add(num[0] + "-" + num[1]);
         al1.add(num[2] + "-" + num[3]);
@@ -475,7 +475,7 @@ public class DeduceBondSystemTool {
         al5.add(num[4] + "-" + num[5]);
         al5.add(num[6] + "-" + num[0]);
 
-        List<List<String>> mal = new ArrayList<List<String>>();
+        List<List<String>> mal = new ArrayList<>();
 
         mal.add(al1);
         mal.add(al2);
@@ -809,7 +809,7 @@ public class DeduceBondSystemTool {
      * @param ringSet  The IRingSet to store
      */
     private void storeRingSystem(IAtomContainer mol, IRingSet ringSet) {
-        listOfRings = new ArrayList<Integer[]>(); // this is a list of int arrays
+        listOfRings = new ArrayList<>(); // this is a list of int arrays
         for (int r = 0; r < ringSet.getAtomContainerCount(); ++r) {
             IRing ring = (IRing) ringSet.getAtomContainer(r);
             Integer[] bondNumbers = new Integer[ring.getBondCount()];

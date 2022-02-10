@@ -133,12 +133,12 @@ public class ChemicalFiltersTest {
     @Test
     public void testSortMapByValueInAccendingOrder() {
 
-        Map<Integer, Double> map = new TreeMap<Integer, Double>();
+        Map<Integer, Double> map = new TreeMap<>();
         map.put(1, 3.0);
         map.put(2, 2.0);
         map.put(3, 1.0);
         map.put(4, 4.0);
-        Map<Integer, Double> expResult = new TreeMap<Integer, Double>();
+        Map<Integer, Double> expResult = new TreeMap<>();
         expResult.put(3, 1.0);
         expResult.put(2, 2.0);
         expResult.put(1, 3.0);
@@ -153,12 +153,12 @@ public class ChemicalFiltersTest {
      */
     @Test
     public void testSortMapByValueInDecendingOrder() {
-        Map<Integer, Double> map = new TreeMap<Integer, Double>();
+        Map<Integer, Double> map = new TreeMap<>();
         map.put(1, 3.0);
         map.put(2, 2.0);
         map.put(3, 1.0);
         map.put(4, 4.0);
-        Map<Integer, Double> expResult = new TreeMap<Integer, Double>();
+        Map<Integer, Double> expResult = new TreeMap<>();
         expResult.put(4, 4.0);
         expResult.put(1, 3.0);
         expResult.put(2, 2.0);

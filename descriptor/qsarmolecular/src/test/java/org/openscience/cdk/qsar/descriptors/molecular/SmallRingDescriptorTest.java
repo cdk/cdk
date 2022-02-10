@@ -89,7 +89,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
         ZipInputStream zip = new ZipInputStream(in);
 
         // stream the contents form the zipfile: these are all short
-        HashMap<String, byte[]> content = new HashMap<String, byte[]>();
+        HashMap<String, byte[]> content = new HashMap<>();
         while (true) {
             ZipEntry ze = zip.getNextEntry();
             if (ze == null) break;

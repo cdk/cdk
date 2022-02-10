@@ -90,10 +90,10 @@ public class TargetProperties implements java.io.Serializable {
      */
     public TargetProperties(IAtomContainer container) {
         int i = 0;
-        atoms = new HashMap<IAtom, Integer>();
-        atomsIndex = new HashMap<Integer, IAtom>();
-        connectedTargetAtomCountMap = new HashMap<IAtom, Integer>();
-        connectedTargetAtomListMap = new HashMap<IAtom, List<IAtom>>();
+        atoms = new HashMap<>();
+        atomsIndex = new HashMap<>();
+        connectedTargetAtomCountMap = new HashMap<>();
+        connectedTargetAtomListMap = new HashMap<>();
         map = new IBond[container.getAtomCount()][container.getAtomCount()];
         for (IAtom atom : container.atoms()) {
             int count = container.getConnectedBondsCount(atom);
@@ -102,7 +102,7 @@ public class TargetProperties implements java.io.Serializable {
             if (list != null) {
                 connectedTargetAtomListMap.put(atom, list);
             } else {
-                connectedTargetAtomListMap.put(atom, new ArrayList<IAtom>());
+                connectedTargetAtomListMap.put(atom, new ArrayList<>());
             }
             atoms.put(atom, i);
             atomsIndex.put(i, atom);

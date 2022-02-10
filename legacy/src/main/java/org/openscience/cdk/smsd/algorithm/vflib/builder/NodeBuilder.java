@@ -51,8 +51,8 @@ public class NodeBuilder implements INode {
      * @param matcher
      */
     protected NodeBuilder(VFAtomMatcher matcher) {
-        edgesList = new ArrayList<IEdge>();
-        neighborsList = new ArrayList<INode>();
+        edgesList = new ArrayList<>();
+        neighborsList = new ArrayList<>();
         this.matcher = matcher;
     }
 

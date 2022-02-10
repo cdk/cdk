@@ -47,7 +47,7 @@ public class AtomContainerPrinter {
         int i = 0;
         List<String> edgeStrings = null;
         if (sortEdges) {
-            edgeStrings = new ArrayList<String>();
+            edgeStrings = new ArrayList<>();
         }
         for (IBond bond : atomContainer.bonds()) {
             int a0 = atomContainer.indexOf(bond.getBegin());

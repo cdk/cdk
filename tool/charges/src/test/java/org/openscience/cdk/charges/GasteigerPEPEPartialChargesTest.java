@@ -95,13 +95,13 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         lpcheck.saturate(mol1);
 
-        List<Boolean> oldBondOrders = new ArrayList<Boolean>();
+        List<Boolean> oldBondOrders = new ArrayList<>();
         for (int i = 0; i < mol1.getBondCount(); i++)
             oldBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
 
         peoe.calculateCharges(mol1);
 
-        List<Boolean> newBondOrders = new ArrayList<Boolean>();
+        List<Boolean> newBondOrders = new ArrayList<>();
         for (int i = 0; i < mol1.getBondCount(); i++)
             newBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
 

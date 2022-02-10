@@ -38,10 +38,10 @@ public class ValidationReport {
      * Constructs a new empty ValidationReport.
      */
     public ValidationReport() {
-        errors = new ArrayList<ValidationTest>();
-        warnings = new ArrayList<ValidationTest>();
-        oks = new ArrayList<ValidationTest>();
-        cdkErrors = new ArrayList<ValidationTest>();
+        errors = new ArrayList<>();
+        warnings = new ArrayList<>();
+        oks = new ArrayList<>();
+        cdkErrors = new ArrayList<>();
     }
 
     /**

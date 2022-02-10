@@ -60,8 +60,8 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
     private static final Color               FOREST_GREEN        = new Color(0x228B22);
 
     // The atom color look-up table.
-    private static final Map<Integer, Color> ATOM_COLORS_MASSNUM = new HashMap<Integer, Color>();
-    private static final Map<String, Color>  ATOM_COLORS_SYMBOL  = new HashMap<String, Color>();
+    private static final Map<Integer, Color> ATOM_COLORS_MASSNUM = new HashMap<>();
+    private static final Map<String, Color>  ATOM_COLORS_SYMBOL  = new HashMap<>();
 
     // Build table.
     static {

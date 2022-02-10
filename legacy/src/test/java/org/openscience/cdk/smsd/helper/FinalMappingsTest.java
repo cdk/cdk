@@ -73,7 +73,7 @@ public class FinalMappingsTest {
      */
     @Test
     public void testAdd() {
-        Map<Integer, Integer> mapping = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping = new TreeMap<>();
         mapping.put(1, 1);
         mapping.put(2, 2);
         mapping.put(3, 3);
@@ -88,16 +88,16 @@ public class FinalMappingsTest {
      */
     @Test
     public void testSet() {
-        Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
         mapping1.put(3, 3);
-        Map<Integer, Integer> mapping2 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping2 = new TreeMap<>();
         mapping2.put(1, 2);
         mapping2.put(2, 1);
         mapping2.put(3, 3);
 
-        List<Map<Integer, Integer>> mappings = new ArrayList<Map<Integer, Integer>>(2);
+        List<Map<Integer, Integer>> mappings = new ArrayList<>(2);
         mappings.add(mapping1);
         mappings.add(mapping2);
         FinalMappings instance = new FinalMappings();
@@ -111,16 +111,16 @@ public class FinalMappingsTest {
      */
     @Test
     public void testGetIterator() {
-        Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
         mapping1.put(3, 3);
-        Map<Integer, Integer> mapping2 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping2 = new TreeMap<>();
         mapping2.put(1, 2);
         mapping2.put(2, 1);
         mapping2.put(3, 3);
 
-        List<Map<Integer, Integer>> mappings = new ArrayList<Map<Integer, Integer>>(2);
+        List<Map<Integer, Integer>> mappings = new ArrayList<>(2);
         mappings.add(mapping1);
         mappings.add(mapping2);
         FinalMappings instance = new FinalMappings();
@@ -135,16 +135,16 @@ public class FinalMappingsTest {
      */
     @Test
     public void testClear() {
-        Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
         mapping1.put(3, 3);
-        Map<Integer, Integer> mapping2 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping2 = new TreeMap<>();
         mapping2.put(1, 2);
         mapping2.put(2, 1);
         mapping2.put(3, 3);
 
-        List<Map<Integer, Integer>> mappings = new ArrayList<Map<Integer, Integer>>(2);
+        List<Map<Integer, Integer>> mappings = new ArrayList<>(2);
         mappings.add(mapping1);
         mappings.add(mapping2);
         FinalMappings instance = new FinalMappings();
@@ -159,16 +159,16 @@ public class FinalMappingsTest {
      */
     @Test
     public void testGetFinalMapping() {
-        Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
         mapping1.put(3, 3);
-        Map<Integer, Integer> mapping2 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping2 = new TreeMap<>();
         mapping2.put(1, 2);
         mapping2.put(2, 1);
         mapping2.put(3, 3);
 
-        List<Map<Integer, Integer>> mappings = new ArrayList<Map<Integer, Integer>>(2);
+        List<Map<Integer, Integer>> mappings = new ArrayList<>(2);
         mappings.add(mapping1);
         mappings.add(mapping2);
         FinalMappings instance = new FinalMappings();
@@ -184,16 +184,16 @@ public class FinalMappingsTest {
      */
     @Test
     public void testGetSize() {
-        Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
         mapping1.put(3, 3);
-        Map<Integer, Integer> mapping2 = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> mapping2 = new TreeMap<>();
         mapping2.put(1, 2);
         mapping2.put(2, 1);
         mapping2.put(3, 3);
 
-        List<Map<Integer, Integer>> mappings = new ArrayList<Map<Integer, Integer>>(2);
+        List<Map<Integer, Integer>> mappings = new ArrayList<>(2);
         mappings.add(mapping1);
         mappings.add(mapping2);
         FinalMappings instance = new FinalMappings();

@@ -66,7 +66,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     @Test
     public void testMolecularFormulaChecker_List() {
 
-        Assert.assertNotNull(new MolecularFormulaChecker(new ArrayList<IRule>()));
+        Assert.assertNotNull(new MolecularFormulaChecker(new ArrayList<>()));
     }
 
     /**
@@ -77,7 +77,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     @Test
     public void testGetRules() {
 
-        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(new ArrayList<IRule>());
+        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(new ArrayList<>());
 
         Assert.assertNotNull(MFChecker.getRules());
     }
@@ -94,7 +94,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         formula.addIsotope(ifac.getMajorIsotope("C"), 1);
         formula.addIsotope(ifac.getMajorIsotope("H"), 100);
 
-        List<IRule> rules = new ArrayList<IRule>();
+        List<IRule> rules = new ArrayList<>();
         rules.add(new MMElementRule());
 
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
@@ -115,7 +115,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         formula.addIsotope(ifac.getMajorIsotope("C"), 1);
         formula.addIsotope(ifac.getMajorIsotope("H"), 100);
 
-        List<IRule> rules = new ArrayList<IRule>();
+        List<IRule> rules = new ArrayList<>();
         rules.add(new MMElementRule());
 
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
@@ -141,7 +141,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         formula.addIsotope(ifac.getMajorIsotope("H"), 100);
         formula.setCharge(0);
 
-        List<IRule> rules = new ArrayList<IRule>();
+        List<IRule> rules = new ArrayList<>();
         rules.add(new MMElementRule());
         rules.add(new ChargeRule());
 
@@ -164,7 +164,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         formula.addIsotope(ifac.getMajorIsotope("H"), 100);
         formula.setCharge(0);
 
-        List<IRule> rules = new ArrayList<IRule>();
+        List<IRule> rules = new ArrayList<>();
         rules.add(new MMElementRule());
         rules.add(new ChargeRule());
 
@@ -190,7 +190,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         formula.addIsotope(ifac.getMajorIsotope("H"), 4);
         formula.setCharge(0);
 
-        List<IRule> rules = new ArrayList<IRule>();
+        List<IRule> rules = new ArrayList<>();
         rules.add(new MMElementRule());
         rules.add(new ChargeRule());
 
@@ -213,7 +213,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         formula.addIsotope(ifac.getMajorIsotope("H"), 4);
         formula.setCharge(0);
 
-        List<IRule> rules = new ArrayList<IRule>();
+        List<IRule> rules = new ArrayList<>();
         rules.add(new MMElementRule());
         rules.add(new ChargeRule());
 

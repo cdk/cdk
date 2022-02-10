@@ -57,8 +57,8 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
      */
     public PDBPolymer() {
         super();
-        sequentialListOfMonomers = new ArrayList<String>();
-        secondaryStructures = new ArrayList<IPDBStructure>();
+        sequentialListOfMonomers = new ArrayList<>();
+        secondaryStructures = new ArrayList<>();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
     @Override
     public Collection<IPDBStructure> getStructures() {
         //		don't return the original
-        return new ArrayList<IPDBStructure>(secondaryStructures);
+        return new ArrayList<>(secondaryStructures);
     }
 
     /**
@@ -118,7 +118,7 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
      */
     public Collection<String> getMonomerNamesInSequentialOrder() {
         // don't return the original
-        return new ArrayList<String>(sequentialListOfMonomers);
+        return new ArrayList<>(sequentialListOfMonomers);
     }
 
     /**

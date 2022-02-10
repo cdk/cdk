@@ -95,7 +95,7 @@ public class VFLibTest extends CDKTestCase {
         IState state = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState newState = state.nextState(match);
-        List<Match> candidates = new ArrayList<Match>();
+        List<Match> candidates = new ArrayList<>();
 
         while (newState.hasNextCandidate()) {
             candidates.add(newState.nextCandidate());
@@ -111,7 +111,7 @@ public class VFLibTest extends CDKTestCase {
         IState state1 = state0.nextState(match0);
         Match match1 = new Match(benzeneQuery.getNode(1), benzene.getAtom(1));
         IState state2 = state1.nextState(match1);
-        List<Match> candidates = new ArrayList<Match>();
+        List<Match> candidates = new ArrayList<>();
 
         while (state2.hasNextCandidate()) {
             candidates.add(state2.nextCandidate());
@@ -144,7 +144,7 @@ public class VFLibTest extends CDKTestCase {
         IState state2 = state1.nextState(match1);
         Match match2 = new Match(benzeneQuery.getNode(2), benzene.getAtom(2));
         IState state3 = state2.nextState(match2);
-        List<Match> candidates = new ArrayList<Match>();
+        List<Match> candidates = new ArrayList<>();
 
         while (state3.hasNextCandidate()) {
             candidates.add(state3.nextCandidate());

@@ -45,7 +45,7 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
      * light).
      */
     static {
-        colorMap = new HashMap<String, Color>();
+        colorMap = new HashMap<>();
 
         colorMap.put("C", new Color(144, 144, 144));
         colorMap.put("H", new Color(144, 144, 144));

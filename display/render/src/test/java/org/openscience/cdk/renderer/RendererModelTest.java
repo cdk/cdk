@@ -224,7 +224,7 @@ public class RendererModelTest {
         Assert.assertNotNull(params);
         Assert.assertEquals(nDefaultParams + 1, params.size()); // the registered one + defaults
 
-        List<Class<?>> paramClasses = new ArrayList<Class<?>>();
+        List<Class<?>> paramClasses = new ArrayList<>();
         for (IGeneratorParameter<?> param : params)
             paramClasses.add(param.getClass());
 
@@ -253,7 +253,7 @@ public class RendererModelTest {
 
     @Test
     public void testToolTipFunctionality() {
-        Map<IAtom, String> tips = new HashMap<IAtom, String>();
+        Map<IAtom, String> tips = new HashMap<>();
         IAtom anonAtom = new Atom();
         tips.put(anonAtom, "Repelsteeltje");
         RendererModel model = new RendererModel();

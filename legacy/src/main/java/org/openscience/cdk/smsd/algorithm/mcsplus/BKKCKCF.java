@@ -83,7 +83,7 @@ public class BKKCKCF {
 
         //Initialization maxCliquesSet
 
-        maxCliquesSet = new ArrayList<List<Integer>>();
+        maxCliquesSet = new ArrayList<>();
 
         init();
 
@@ -99,7 +99,7 @@ public class BKKCKCF {
          * vertex: stored all the vertices for the Graph G vertex[G] nodes of
          * vector compGraphNodes are stored in vertex
          */
-        List<Integer> vertex = new ArrayList<Integer>(); //Initialization of ArrayList vertex
+        List<Integer> vertex = new ArrayList<>(); //Initialization of ArrayList vertex
 
         int vertexCount = compGraphNodes.size() / 3;
 
@@ -117,7 +117,7 @@ public class BKKCKCF {
          * processedVertex: is index set of vertices which have already been
          * used
          */
-        List<Integer> processedVertex = new ArrayList<Integer>();
+        List<Integer> processedVertex = new ArrayList<>();
         /*
          * Let processedVertex be the set of Nodes already been used in the
          * initialization
@@ -130,7 +130,7 @@ public class BKKCKCF {
 
     private int enumerateCliques(List<Integer> vertexOfCurrentClique, Stack<Integer> potentialCVertex,
             List<Integer> potentialDVertex, List<Integer> excludedVertex, List<Integer> excludedCVertex) {
-        List<Integer> potentialVertex = new ArrayList<Integer>();//Defined as potentialCVertex' in the paper
+        List<Integer> potentialVertex = new ArrayList<>();//Defined as potentialCVertex' in the paper
         for (Integer i : potentialCVertex) {
             potentialVertex.add(i);
         }
@@ -161,7 +161,7 @@ public class BKKCKCF {
 
     private List<Integer> findNeighbors(int centralNode) {
 
-        List<Integer> neighborVertex = new ArrayList<Integer>();
+        List<Integer> neighborVertex = new ArrayList<>();
 
         for (int a = 0; a < cEdgeIterationSize; a++) {
             if (cEdges.get(a * 2 + 0) == centralNode) {
@@ -194,7 +194,7 @@ public class BKKCKCF {
     }
 
     protected Stack<List<Integer>> getMaxCliqueSet() {
-        Stack<List<Integer>> solution = new Stack<List<Integer>>();
+        Stack<List<Integer>> solution = new Stack<>();
         solution.addAll(maxCliquesSet);
         return solution;
     }
@@ -203,18 +203,18 @@ public class BKKCKCF {
             Stack<Integer> potentialCVertex, List<Integer> potentialDVertex, List<Integer> excludedVertex,
             List<Integer> excludedCVertex) {
         int index = 0;
-        List<Integer> neighbourVertex = new ArrayList<Integer>(); ////Initialization ArrayList neighbourVertex
+        List<Integer> neighbourVertex = new ArrayList<>(); ////Initialization ArrayList neighbourVertex
 
         while (potentialVertex.get(index) != 0) {
             int potentialVertexIndex = potentialVertex.get(index);
 
             potentialCVertex.removeElement(potentialVertexIndex);
 
-            List<Integer> rCopy = new ArrayList<Integer>(vertexOfCurrentClique);
-            Stack<Integer> pCopy = new Stack<Integer>();
-            List<Integer> qCopy = new ArrayList<Integer>(potentialDVertex);
-            List<Integer> xCopy = new ArrayList<Integer>(excludedVertex);
-            List<Integer> yCopy = new ArrayList<Integer>(excludedCVertex);
+            List<Integer> rCopy = new ArrayList<>(vertexOfCurrentClique);
+            Stack<Integer> pCopy = new Stack<>();
+            List<Integer> qCopy = new ArrayList<>(potentialDVertex);
+            List<Integer> xCopy = new ArrayList<>(excludedVertex);
+            List<Integer> yCopy = new ArrayList<>(excludedCVertex);
 
             neighbourVertex.clear();
 
@@ -229,10 +229,10 @@ public class BKKCKCF {
             neighbourVertex = findNeighbors(potentialVertexIndex);
             groupNeighbors(index, pCopy, qCopy, xCopy, yCopy, neighbourVertex, potentialDVertex, potentialVertex,
                     excludedVertex, excludedCVertex);
-            Stack<Integer> pCopyNIntersec = new Stack<Integer>();
-            List<Integer> qCopyNIntersec = new ArrayList<Integer>();
-            List<Integer> xCopyNIntersec = new ArrayList<Integer>();
-            List<Integer> yCopyNIntersec = new ArrayList<Integer>();
+            Stack<Integer> pCopyNIntersec = new Stack<>();
+            List<Integer> qCopyNIntersec = new ArrayList<>();
+            List<Integer> xCopyNIntersec = new ArrayList<>();
+            List<Integer> yCopyNIntersec = new ArrayList<>();
 
             copyVertex(neighbourVertex, pCopyNIntersec, pCopy, qCopyNIntersec, qCopy, xCopyNIntersec,
                     xCopy, yCopyNIntersec, yCopy);
@@ -354,38 +354,38 @@ public class BKKCKCF {
          * vertexOfCurrentClique: set of vertices belonging to the current
          * clique
          */
-        List<Integer> vertexOfCurrentClique = new ArrayList<Integer>();
+        List<Integer> vertexOfCurrentClique = new ArrayList<>();
         /*
          * potentialCVertex: is index set of vertices which <index>can</index>
          * be addedto vertexOfCurrentClique, because they are neighbours of
          * vertex u via <i>c-edges</i>
          */
-        Stack<Integer> potentialCVertex = new Stack<Integer>();
+        Stack<Integer> potentialCVertex = new Stack<>();
         /*
          * potentialDVertex: is index set of vertices which
          * <index>cannot</index> be added tovertexOfCurrentClique, because they
          * are neighbours of vertex u via <i>d-edges</i>
          */
 
-        List<Integer> potentialDVertex = new ArrayList<Integer>();
+        List<Integer> potentialDVertex = new ArrayList<>();
         /*
          * excludedVertex: set of vertices which are not allowed to be added to
          * vertexOfCurrentClique
          */
-        List<Integer> excludedVertex = new ArrayList<Integer>();
+        List<Integer> excludedVertex = new ArrayList<>();
 
         /*
          * excludedCVertex: set of vertices which are not allowed to be added to
          * C
          */
 
-        List<Integer> excludedCVertex = new ArrayList<Integer>();
+        List<Integer> excludedCVertex = new ArrayList<>();
 
         /*
          * neighbourVertex[u]: set of neighbours of vertex u in Graph G
          */
 
-        List<Integer> neighbourVertex = new ArrayList<Integer>();
+        List<Integer> neighbourVertex = new ArrayList<>();
 
         int index = 0;
         while (vertex.get(index) != 0) {

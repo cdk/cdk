@@ -1326,7 +1326,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     count  = readMolfileInt(line, 10);
                     Collection<IAtom> parentAtomList = sgroup.getValue(SgroupKey.CtabParentAtomList);
                     if (parentAtomList == null) {
-                        sgroup.putValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
+                        sgroup.putValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<>());
                     }
                     for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4) {
                         index = readMolfileInt(line, st) - 1;
@@ -2453,7 +2453,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         LEGACY_ATOM_LIST;
 
         /** Index of 'M XXX' properties for quick lookup. */
-        private static final Map<String, PropertyKey> mSuffix = new HashMap<String, PropertyKey>(60);
+        private static final Map<String, PropertyKey> mSuffix = new HashMap<>(60);
 
         private static Pattern LEGACY_ATOM_LIST_PATTERN = Pattern.compile("^[0-9 ][0-9 ][0-9 ] [T|F]");
         static {

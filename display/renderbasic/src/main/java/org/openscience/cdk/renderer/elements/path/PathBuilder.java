@@ -65,7 +65,7 @@ public class PathBuilder {
      * @param color the color of the path
      */
     public PathBuilder(Color color) {
-        elements = new ArrayList<PathElement>();
+        elements = new ArrayList<>();
         this.color = color;
     }
 

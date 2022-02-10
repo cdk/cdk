@@ -133,7 +133,7 @@ public class AtomPlacer {
         if (Math.abs(occupiedDirection.length()) < 0.001)
             occupiedDirection = new Vector2d(0, 1);
         logger.debug("distributePartners->occupiedDirection.lenght(): " + occupiedDirection.length());
-        List<IAtom> atomsToDraw = new ArrayList<IAtom>();
+        List<IAtom> atomsToDraw = new ArrayList<>();
 
         logger.debug("Number of shared atoms: ", placedNeighbours.getAtomCount());
 
@@ -638,7 +638,7 @@ public class AtomPlacer {
             pathes[f].addAtom(startAtom);
 
         }
-        List<IAtom> startSphere = new ArrayList<IAtom>();
+        List<IAtom> startSphere = new ArrayList<>();
         startSphere.add(startAtom);
         breadthFirstSearch(molecule, startSphere, pathes);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -680,7 +680,7 @@ public class AtomPlacer {
         int atomNr;
         int nextAtomNr;
         //IAtomContainer path = null;
-        List<IAtom> newSphere = new ArrayList<IAtom>();
+        List<IAtom> newSphere = new ArrayList<>();
         logger.debug("Start of breadthFirstSearch");
 
         for (int f = 0; f < sphere.size(); f++) {

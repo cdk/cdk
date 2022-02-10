@@ -60,7 +60,7 @@ public class CMLHandler extends DefaultHandler {
      **/
     public CMLHandler(IChemFile chemFile) {
         conv = new CMLCoreModule(chemFile);
-        userConventions = new Hashtable<String, ICMLModule>();
+        userConventions = new Hashtable<>();
         xpath = new CMLStack();
         conventionStack = new CMLStack();
         moduleStack = new CMLModuleStack();

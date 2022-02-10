@@ -83,7 +83,7 @@ public class IsotopeHandler extends DefaultHandler {
     /** {@inheritDoc} */
     @Override
     public void startDocument() {
-        isotopes = new ArrayList<IIsotope>();
+        isotopes = new ArrayList<>();
     }
 
     /** {@inheritDoc} */

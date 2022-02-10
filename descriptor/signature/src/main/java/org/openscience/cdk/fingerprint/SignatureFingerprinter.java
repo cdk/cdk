@@ -75,7 +75,7 @@ public class SignatureFingerprinter extends AbstractFingerprinter implements IFi
 
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new HashMap<>();
         for (IAtom atom : atomContainer.atoms()) {
             String signature = new AtomSignature(atom, signatureDepth, atomContainer).toCanonicalString();
             if (map.containsKey(signature)) {

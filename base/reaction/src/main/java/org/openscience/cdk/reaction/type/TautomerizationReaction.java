@@ -162,12 +162,12 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
                                                 if (atoml.getFlag(CDKConstants.REACTIVE_CENTER)
                                                         && atoml.getAtomicNumber() == IElement.H) {
 
-                                                    ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                                    ArrayList<IAtom> atomList = new ArrayList<>();
                                                     atomList.add(atomi);
                                                     atomList.add(atomj);
                                                     atomList.add(atomk);
                                                     atomList.add(atoml);
-                                                    ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                                    ArrayList<IBond> bondList = new ArrayList<>();
                                                     bondList.add(bondi);
                                                     bondList.add(bondj);
                                                     bondList.add(bondk);
