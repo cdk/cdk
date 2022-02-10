@@ -59,7 +59,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     private IReactionProcess   reaction;
     private Dictionary         dictionary;
     private String             entryString = "";
-    private IChemObjectBuilder builder     = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder builder     = SilentChemObjectBuilder.getInstance();
 
     private static final SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical |  SmiFlavor.CxRadical);
 

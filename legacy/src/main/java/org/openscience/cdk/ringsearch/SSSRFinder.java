@@ -59,7 +59,7 @@ import java.util.List;
 @Deprecated
 public class SSSRFinder {
 
-    private IAtomContainer atomContainer;
+    private final IAtomContainer atomContainer;
     private CycleBasis     cycleBasis;
 
     /**

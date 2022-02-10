@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class CrystClustReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReader.class);
 
     public CrystClustReader() {}
 

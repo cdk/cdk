@@ -73,7 +73,7 @@ import java.util.TreeMap;
  */
 public final class GeometryUtil {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GeometryUtil.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(GeometryUtil.class);
 
     /**
      * Provides the coverage of coordinates for this molecule.

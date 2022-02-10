@@ -39,16 +39,16 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 @Deprecated
 public class QueryProcessor {
 
-    private List<String>  cTab1Copy;
-    private List<String>  cTab2Copy;
-    private String[]      signs;
+    private final List<String>  cTab1Copy;
+    private final List<String>  cTab2Copy;
+    private final String[]      signs;
     private int           neighborBondNumA = 0; //number of remaining molecule A bonds after the clique search, which are neighbors of the MCS_1
     private int           setBondNumA      = 0; //number of remaining molecule A bonds after the clique search, which aren't neighbors
-    private List<Integer> iBondNeighborsA;
-    private List<String>  cBondNeighborsA;
-    private int           newNeighborNumA;
-    private List<Integer> newINeighborsA;
-    private List<String>  newCNeighborsA;
+    private final List<Integer> iBondNeighborsA;
+    private final List<String>  cBondNeighborsA;
+    private final int           newNeighborNumA;
+    private final List<Integer> newINeighborsA;
+    private final List<String>  newCNeighborsA;
 
     /**
      * Query molecule

@@ -69,7 +69,7 @@ import java.util.Iterator;
  **/
 public class ElectronImpactSDBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ElectronImpactSDBReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ElectronImpactSDBReaction.class);
 
     /**
      * Constructor of the ElectronImpactSDBReaction object.

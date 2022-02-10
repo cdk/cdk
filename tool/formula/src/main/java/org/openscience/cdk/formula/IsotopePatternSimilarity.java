@@ -15,7 +15,7 @@ public class IsotopePatternSimilarity {
 
     private double        tolerance_ppm = 1;
 
-    private static double massE         = 0.0005485;
+    private static final double massE         = 0.0005485;
 
     /**
      *  Constructor for the IsotopePatternSimilarity object.

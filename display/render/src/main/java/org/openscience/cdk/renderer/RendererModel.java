@@ -72,7 +72,7 @@ public class RendererModel implements Serializable, Cloneable {
 
     private IChemObjectSelection               selection;
 
-    private Map<IAtom, IAtom>                  merge                = new HashMap<>();
+    private final Map<IAtom, IAtom>                  merge                = new HashMap<>();
 
     /**
      * Color of a selection.
@@ -98,7 +98,7 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    private IGeneratorParameter<Color> externalHighlightColor = new ExternalHighlightColor();
+    private final IGeneratorParameter<Color> externalHighlightColor = new ExternalHighlightColor();
 
     /**
      * Padding between molecules in a grid or row.
@@ -124,7 +124,7 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    private IGeneratorParameter<Map<IChemObject, Color>> colorHash           = new ColorHash();
+    private final IGeneratorParameter<Map<IChemObject, Color>> colorHash           = new ColorHash();
 
     /**
      * Size of title font relative compared to atom symbols
@@ -166,7 +166,7 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * A map of {@link IGeneratorParameter} class names to instances.
      */
-    private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<>();
+    private final Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<>();
 
     /**
      * Construct a renderer model with no parameters. To put parameters into

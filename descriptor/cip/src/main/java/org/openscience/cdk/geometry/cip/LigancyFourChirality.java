@@ -45,9 +45,9 @@ import java.util.Objects;
  */
 class LigancyFourChirality {
 
-    private IAtom                        chiralAtom;
-    private ILigand[]                    ligands;
-    private ITetrahedralChirality.Stereo stereo;
+    private final IAtom                        chiralAtom;
+    private final ILigand[]                    ligands;
+    private final ITetrahedralChirality.Stereo stereo;
 
     /**
      * Creates a new data model for chirality for the CIP rules.

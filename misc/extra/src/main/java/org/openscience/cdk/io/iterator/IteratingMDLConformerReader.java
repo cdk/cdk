@@ -48,7 +48,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class IteratingMDLConformerReader implements Iterator {
 
-    private IteratingSDFReader imdlr;
+    private final IteratingSDFReader imdlr;
     private ConformerContainer container;
     private IAtomContainer     lastMol     = null;
 

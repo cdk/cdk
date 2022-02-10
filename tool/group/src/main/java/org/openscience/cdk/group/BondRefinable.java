@@ -54,7 +54,7 @@ class BondRefinable implements Refinable {
     /**
      * Specialised option to allow generating automorphisms that ignore the bond order.
      */
-    private boolean ignoreBondOrders;
+    private final boolean ignoreBondOrders;
     
     public BondRefinable(IAtomContainer atomContainer) {
         this(atomContainer, false);

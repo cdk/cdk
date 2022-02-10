@@ -39,8 +39,8 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
     implements IStereoElement<F, C> {
 
     private int     value;
-    private F       focus;
-    private List<C> carriers;
+    private final F       focus;
+    private final List<C> carriers;
     private IChemObjectBuilder builder;
 
     protected static int numCarriers(int cfg) {

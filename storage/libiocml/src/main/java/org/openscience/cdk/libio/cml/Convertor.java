@@ -81,12 +81,12 @@ public class Convertor {
 
     public final static String          NS_CML           = "http://www.xml-cml.org/schema";
 
-    private static ILoggingTool         logger           = LoggingToolFactory.createLoggingTool(Convertor.class);
+    private static final ILoggingTool         logger           = LoggingToolFactory.createLoggingTool(Convertor.class);
 
     private final static String         CUSTOMIZERS_LIST = "libio-cml-customizers.set";
     private Map<String, ICMLCustomizer> customizers      = null;
 
-    private boolean                     useCMLIDs;
+    private final boolean                     useCMLIDs;
     private String                      prefix;
 
     /**

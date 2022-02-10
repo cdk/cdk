@@ -48,7 +48,7 @@ import java.util.Random;
  */
 public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {

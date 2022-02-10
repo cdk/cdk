@@ -104,7 +104,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  */
 public class ReactionRenderer extends AbstractRenderer<IReaction> implements IRenderer<IReaction> {
 
-    private IRenderer<IAtomContainerSet> moleculeSetRenderer;
+    private final IRenderer<IAtomContainerSet> moleculeSetRenderer;
 
     /**
      * A renderer that generates diagrams using the specified

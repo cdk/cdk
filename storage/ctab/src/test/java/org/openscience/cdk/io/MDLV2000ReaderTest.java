@@ -104,7 +104,7 @@ import static org.mockito.Mockito.verify;
  */
 public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class);
 
     @BeforeClass
     public static void setup() {

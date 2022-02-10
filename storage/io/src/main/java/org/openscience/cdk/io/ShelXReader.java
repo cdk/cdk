@@ -69,7 +69,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class ShelXReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReader.class);
 
     /**
      * Create an ShelX file reader.

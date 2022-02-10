@@ -82,7 +82,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 @Deprecated
 public class HanserRingFinder implements RingFinder {
 
-    private List<List<IAtom>> rings;
+    private final List<List<IAtom>> rings;
 
     public HanserRingFinder() {
         rings = new ArrayList<>();

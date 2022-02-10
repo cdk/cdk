@@ -52,9 +52,9 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
     private static final String CHARGE_CACHE = "mmff.qsar.charge.cache";
 
-    private Mmff mmff;
+    private final Mmff mmff;
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(getClass());
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(getClass());
 
     /**
      * Constructor for the PartialTChargeMMFF94Descriptor object

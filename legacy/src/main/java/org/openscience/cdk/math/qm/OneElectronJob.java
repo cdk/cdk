@@ -39,10 +39,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class OneElectronJob {
 
-    private Orbitals            orbitals;
+    private final Orbitals            orbitals;
     private Vector              E;
 
-    private static ILoggingTool log = LoggingToolFactory.createLoggingTool(OneElectronJob.class);
+    private static final ILoggingTool log = LoggingToolFactory.createLoggingTool(OneElectronJob.class);
 
     /**
      * Constructs a one electron job

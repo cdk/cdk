@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcher.class);
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcher.class);
 
     IBond.Order                 maxBondOrder  = IBond.Order.SINGLE;
     private AtomTypeFactory     factory       = null;

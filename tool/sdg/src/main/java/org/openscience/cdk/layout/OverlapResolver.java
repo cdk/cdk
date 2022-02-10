@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class OverlapResolver {
 
-    private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(OverlapResolver.class);
+    private static final ILoggingTool logger   = LoggingToolFactory.createLoggingTool(OverlapResolver.class);
 
     int                         maxSteps = 10000;
 

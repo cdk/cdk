@@ -75,7 +75,7 @@ import java.util.Iterator;
  **/
 public class AdductionSodiumLPReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AdductionSodiumLPReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AdductionSodiumLPReaction.class);
 
     /**
      * Constructor of the AdductionSodiumLPReaction object.

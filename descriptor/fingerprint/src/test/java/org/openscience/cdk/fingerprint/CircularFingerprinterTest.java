@@ -74,7 +74,7 @@ import javax.vecmath.Point3d;
  */
 public class CircularFingerprinterTest extends CDKTestCase {
 
-    private static ILoggingTool   logger     = LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
+    private static final ILoggingTool   logger     = LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
 
     private static IAtomContainer trivialMol = null;
     static {

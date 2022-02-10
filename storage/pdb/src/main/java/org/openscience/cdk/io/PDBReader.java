@@ -91,7 +91,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class PDBReader extends DefaultChemObjectReader {
 
-    private static ILoggingTool    logger            = LoggingToolFactory.createLoggingTool(PDBReader.class);
+    private static final ILoggingTool    logger            = LoggingToolFactory.createLoggingTool(PDBReader.class);
     private BufferedReader         _oInput;                                                                  // The internal used BufferedReader
     private BooleanIOSetting       useRebondTool;
     private BooleanIOSetting       readConnect;

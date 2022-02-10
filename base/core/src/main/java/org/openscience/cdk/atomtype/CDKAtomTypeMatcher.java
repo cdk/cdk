@@ -60,12 +60,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     public final static int                                                  REQUIRE_NOTHING            = 1;
     public final static int                                                  REQUIRE_EXPLICIT_HYDROGENS = 2;
 
-    private AtomTypeFactory                                                  factory;
-    private int                                                              mode;
+    private final AtomTypeFactory                                                  factory;
+    private final int                                                              mode;
     
     private final static Object                                              LOCK                       = new Object();
 
-    private static Map<Integer, Map<IChemObjectBuilder, CDKAtomTypeMatcher>> factories                  = new ConcurrentHashMap<>(5);
+    private static final Map<Integer, Map<IChemObjectBuilder, CDKAtomTypeMatcher>> factories                  = new ConcurrentHashMap<>(5);
 
     private CDKAtomTypeMatcher(IChemObjectBuilder builder, int mode) {
         factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl", builder);

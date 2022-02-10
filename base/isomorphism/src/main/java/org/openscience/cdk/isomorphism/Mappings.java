@@ -163,7 +163,8 @@ public final class Mappings implements Iterable<int[]> {
     private final Iterable<int[]> iterable;
 
     /** Query and target structures. */
-    private IAtomContainer        query, target;
+    private final IAtomContainer        query;
+    private final IAtomContainer target;
 
     /**
      * Create a fluent mappings instance for the provided query / target and an

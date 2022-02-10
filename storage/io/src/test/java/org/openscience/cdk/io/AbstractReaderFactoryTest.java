@@ -49,7 +49,7 @@ import java.io.InputStream;
  */
 public class AbstractReaderFactoryTest {
 
-    private ReaderFactory factory = new ReaderFactory();
+    private final ReaderFactory factory = new ReaderFactory();
 
     void expectReader(String filename, IResourceFormat expectedFormat, int expectedAtomCount, int expectedBondCount)
             throws Exception {

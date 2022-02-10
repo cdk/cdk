@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     boolean                     standAlone = false;
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
+    private static final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {

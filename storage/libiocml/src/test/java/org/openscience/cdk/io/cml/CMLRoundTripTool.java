@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class CMLRoundTripTool extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
 
     /**
      * Convert a Molecule to CML and back to a Molecule again.

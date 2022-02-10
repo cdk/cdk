@@ -59,8 +59,8 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
 
     private Reader             primarySource;
     private XMLStreamReader    parser;
-    private PubChemXMLHelper   parserHelper;
-    private IChemObjectBuilder builder;
+    private final PubChemXMLHelper   parserHelper;
+    private final IChemObjectBuilder builder;
     private final XMLInputFactory xmlfact;
 
     private boolean            nextAvailableIsKnown;

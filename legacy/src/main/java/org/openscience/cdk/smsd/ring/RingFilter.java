@@ -70,9 +70,9 @@ import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
 @Deprecated
 public class RingFilter {
 
-    private RingFinder          ringFinder;
-    private Comparator<List<?>> comparator;
-    private AtomMatcher         filter;
+    private final RingFinder          ringFinder;
+    private final Comparator<List<?>> comparator;
+    private final AtomMatcher         filter;
     private IAtomContainer      mol;
 
     public RingFilter(AtomMatcher filter, RingFinder finder) {

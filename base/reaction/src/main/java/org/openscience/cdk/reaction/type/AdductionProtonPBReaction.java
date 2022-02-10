@@ -75,7 +75,7 @@ import java.util.Iterator;
  **/
 public class AdductionProtonPBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AdductionProtonPBReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AdductionProtonPBReaction.class);
 
     /**
      * Constructor of the AdductionProtonPBReaction object.

@@ -121,7 +121,7 @@ import java.util.Arrays;
  */
 public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
 
     // the number of negative & positive eigenvalues
     // to return for each class of BCUT descriptor

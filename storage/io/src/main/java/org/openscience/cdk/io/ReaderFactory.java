@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class ReaderFactory {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(ReaderFactory.class);
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(ReaderFactory.class);
     private FormatFactory       formatFactory = null;
     private int                 headerLength  = 8192;
 

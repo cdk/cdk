@@ -72,9 +72,9 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 @Deprecated
 public class VFQueryBuilder implements IQuery {
 
-    private List<INode>       nodesList;
-    private List<IEdge>       edgesList;
-    private Map<INode, IAtom> nodeBondMap;
+    private final List<INode>       nodesList;
+    private final List<IEdge>       edgesList;
+    private final Map<INode, IAtom> nodeBondMap;
 
     /**
      * Constructor for VF Query Builder

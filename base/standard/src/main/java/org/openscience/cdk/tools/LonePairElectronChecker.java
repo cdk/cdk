@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class LonePairElectronChecker {
 
-    private static ILoggingTool    logger = LoggingToolFactory.createLoggingTool(LonePairElectronChecker.class);
+    private static final ILoggingTool    logger = LoggingToolFactory.createLoggingTool(LonePairElectronChecker.class);
     private static AtomTypeFactory factory;
 
     private void createAtomTypeFactory(IChemObjectBuilder builder) {

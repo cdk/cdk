@@ -57,7 +57,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
     }
 
-    private IGeneratorParameter<Boolean> showImplicitHydrogens = new ShowImplicitHydrogens();
+    private final IGeneratorParameter<Boolean> showImplicitHydrogens = new ShowImplicitHydrogens();
 
     /** Boolean that indicates if atom type names should be given instead
      * of element symbols. */
@@ -70,7 +70,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
     }
 
-    private ShowAtomTypeNames showAtomTypeNames = new ShowAtomTypeNames();
+    private final ShowAtomTypeNames showAtomTypeNames = new ShowAtomTypeNames();
 
     /** {@inheritDoc} */
     @Override

@@ -54,7 +54,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {

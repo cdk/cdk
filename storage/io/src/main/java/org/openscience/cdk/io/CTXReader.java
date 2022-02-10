@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 public class CTXReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CTXReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CTXReader.class);
 
     private IChemFile           file;
 

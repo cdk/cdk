@@ -56,7 +56,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  */
 public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private Polarizability pol;
+    private final Polarizability pol;
 
     /**
      *  Constructor for the EffectiveAtomPolarizabilityDescriptor object

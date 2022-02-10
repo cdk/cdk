@@ -79,7 +79,7 @@ import java.util.List;
  **/
 public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RadicalSiteRrGammaReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RadicalSiteRrGammaReaction.class);
 
     /**
      * Constructor of the RadicalSiteRrGammaReaction object

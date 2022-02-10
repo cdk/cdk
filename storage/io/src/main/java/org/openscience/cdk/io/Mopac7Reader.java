@@ -55,11 +55,11 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
 public class Mopac7Reader extends DefaultChemObjectReader {
 
     BufferedReader          input        = null;
-    private static String[] parameters   = {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
+    private static final String[] parameters   = {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
             "IONIZATION POTENTIAL", "ELECTRONIC ENERGY", "CORE-CORE REPULSION", "MOLECULAR WEIGHT", "EHOMO", "ELUMO"};
-    private static String[] units        = {"", "EV", "KJ", "", "EV", "EV", "", "EV", "EV"};
-    private static String   eigenvalues  = "EIGENVALUES";
-    private static String   filledLevels = "NO. OF FILLED LEVELS";
+    private static final String[] units        = {"", "EV", "KJ", "", "EV", "EV", "", "EV", "EV"};
+    private static final String   eigenvalues  = "EIGENVALUES";
+    private static final String   filledLevels = "NO. OF FILLED LEVELS";
 
     /**
      * Constructs a new Mopac7reader that can read a molecule from a given {@link Reader}.

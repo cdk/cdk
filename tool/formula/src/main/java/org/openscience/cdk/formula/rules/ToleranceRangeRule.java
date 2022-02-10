@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class ToleranceRangeRule implements IRule {
 
-    private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(ToleranceRangeRule.class);
+    private static final ILoggingTool logger    = LoggingToolFactory.createLoggingTool(ToleranceRangeRule.class);
 
     private double              mass      = 0.0;
 

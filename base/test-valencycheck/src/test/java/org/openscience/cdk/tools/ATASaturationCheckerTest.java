@@ -52,8 +52,8 @@ public class ATASaturationCheckerTest extends CDKTestCase {
 
     SaturationChecker                      satcheck   = null;
     boolean                                standAlone = false;
-    private static SmilesParser            sp         = new SmilesParser(SilentChemObjectBuilder.getInstance());
-    private AtomTypeAwareSaturationChecker atasc      = new AtomTypeAwareSaturationChecker();
+    private static final SmilesParser            sp         = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private final AtomTypeAwareSaturationChecker atasc      = new AtomTypeAwareSaturationChecker();
 
     @Before
     public void setUp() throws Exception {

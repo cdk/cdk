@@ -56,7 +56,7 @@ import java.util.Iterator;
  */
 public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReaderTest.class);
 
     @BeforeClass
     public static void setup() {

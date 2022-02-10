@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class QueryAtom extends QueryChemObject implements IQueryAtom {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(QueryAtom.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(QueryAtom.class);
 
     /**
      * The partial charge of the atom.

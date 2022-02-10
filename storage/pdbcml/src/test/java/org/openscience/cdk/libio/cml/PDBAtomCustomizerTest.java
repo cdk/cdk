@@ -18,7 +18,7 @@ import java.io.StringWriter;
  */
 public class PDBAtomCustomizerTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PDBAtomCustomizerTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PDBAtomCustomizerTest.class);
 
     @Test
     public void testPDBAtomCustomization() throws Exception {

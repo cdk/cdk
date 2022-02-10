@@ -29,10 +29,10 @@ import java.util.List;
  */
 public class ValidationReport {
 
-    private List<ValidationTest> errors;
-    private List<ValidationTest> warnings;
-    private List<ValidationTest> oks;
-    private List<ValidationTest> cdkErrors;
+    private final List<ValidationTest> errors;
+    private final List<ValidationTest> warnings;
+    private final List<ValidationTest> oks;
+    private final List<ValidationTest> cdkErrors;
 
     /**
      * Constructs a new empty ValidationReport.

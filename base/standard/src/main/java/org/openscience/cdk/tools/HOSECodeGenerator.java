@@ -58,7 +58,7 @@ import org.openscience.cdk.smiles.InvPair;
  */
 public class HOSECodeGenerator implements java.io.Serializable {
 
-    private static ILoggingTool logger               = LoggingToolFactory.createLoggingTool(HOSECodeGenerator.class);
+    private static final ILoggingTool logger               = LoggingToolFactory.createLoggingTool(HOSECodeGenerator.class);
 
     private static final long   serialVersionUID     = -4353471818831864513L;
 
@@ -116,7 +116,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
 
     boolean                     debug                = false;
 
-    private IAtomContainer      acold                = null;
+    private final IAtomContainer      acold                = null;
     private IRingSet            soar                 = null;
 
     /**

@@ -73,7 +73,7 @@ import java.util.Iterator;
  **/
 public class HyperconjugationReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HyperconjugationReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(HyperconjugationReaction.class);
 
     /**
      * Constructor of the HyperconjugationReaction object

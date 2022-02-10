@@ -136,7 +136,7 @@ import java.util.Set;
  */
 public class PharmacophoreMatcher {
 
-    private ILoggingTool                  logger                = LoggingToolFactory
+    private final ILoggingTool                  logger                = LoggingToolFactory
                                                                         .createLoggingTool(PharmacophoreMatcher.class);
     private PharmacophoreQuery            pharmacophoreQuery    = null;
     private IAtomContainer                pharmacophoreMolecule = null;

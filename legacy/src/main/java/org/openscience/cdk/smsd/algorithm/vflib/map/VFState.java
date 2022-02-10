@@ -76,12 +76,12 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IState;
 @Deprecated
 public class VFState implements IState {
 
-    private List<Match>       candidates;
-    private IQuery            query;
-    private TargetProperties  target;
-    private List<INode>       queryPath;
-    private List<IAtom>       targetPath;
-    private Map<INode, IAtom> map;
+    private final List<Match>       candidates;
+    private final IQuery            query;
+    private final TargetProperties  target;
+    private final List<INode>       queryPath;
+    private final List<IAtom>       targetPath;
+    private final Map<INode, IAtom> map;
 
     /**
      * Initialise the VFState with query and target

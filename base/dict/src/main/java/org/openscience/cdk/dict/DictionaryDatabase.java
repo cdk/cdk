@@ -49,14 +49,14 @@ public class DictionaryDatabase {
 
     public final static String      DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
 
-    private ILoggingTool            logger              = LoggingToolFactory
+    private final ILoggingTool            logger              = LoggingToolFactory
                                                                 .createLoggingTool(DictionaryDatabase.class);
 
-    private String[]                dictionaryNames     = {"chemical", "elements", "descriptor-algorithms",
+    private final String[]                dictionaryNames     = {"chemical", "elements", "descriptor-algorithms",
             "reaction-processes"                        };
-    private String[]                dictionaryTypes     = {"xml", "owl", "owl", "owl_React"};
+    private final String[]                dictionaryTypes     = {"xml", "owl", "owl", "owl_React"};
 
-    private Map<String, Dictionary> dictionaries;
+    private final Map<String, Dictionary> dictionaries;
 
     public DictionaryDatabase() {
         // read dictionaries distributed with CDK

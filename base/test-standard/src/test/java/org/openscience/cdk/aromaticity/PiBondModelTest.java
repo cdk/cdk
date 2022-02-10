@@ -44,7 +44,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class PiBondModelTest {
 
-    private static ElectronDonation model = ElectronDonation.piBonds();
+    private static final ElectronDonation model = ElectronDonation.piBonds();
 
     @Test
     public void benzene() throws Exception {

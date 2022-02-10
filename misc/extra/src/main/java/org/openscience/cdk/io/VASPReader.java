@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class VASPReader extends DefaultChemObjectReader {
 
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(VASPReader.class);
+    private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(VASPReader.class);
 
     // This variable is used to parse the input file
     protected StringTokenizer   st      = new StringTokenizer("", "");                            ;

@@ -100,7 +100,7 @@ public class LoggingTool implements ILoggingTool {
 
     private Logger log4jLogger;
     private static ILoggingTool logger;
-    private String              classname;
+    private final String              classname;
 
     private int                 stackLength;                 // NOPMD
 

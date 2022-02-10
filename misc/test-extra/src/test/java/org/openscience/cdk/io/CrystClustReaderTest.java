@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReaderTest.class);
 
     @BeforeClass
     public static void setup() {

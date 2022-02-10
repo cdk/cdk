@@ -94,7 +94,7 @@ public class MoleculeSignature extends AbstractGraphSignature {
     /**
      * The molecule to use when making atom signatures
      */
-    private IAtomContainer molecule;
+    private final IAtomContainer molecule;
 
     /**
      * Creates a signature that represents this molecule.

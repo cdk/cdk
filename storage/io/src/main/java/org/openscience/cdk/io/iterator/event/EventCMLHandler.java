@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 */
 public class EventCMLHandler extends CMLHandler {
 
-    private IChemObjectBuilder           builder;
+    private final IChemObjectBuilder           builder;
     private IAtomContainer               currentMolecule;
     private IAtom                        currentAtom;
 
@@ -64,7 +64,7 @@ public class EventCMLHandler extends CMLHandler {
 
     protected static ILoggingTool        logger        = LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
 
-    private DefaultEventChemObjectReader eventReader;
+    private final DefaultEventChemObjectReader eventReader;
 
     /**
     * Constructs an iterating-abled CDO. After reading one molecule it

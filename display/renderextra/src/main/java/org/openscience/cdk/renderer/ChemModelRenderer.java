@@ -108,7 +108,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
 
     private IRenderer<IAtomContainerSet> moleculeSetRenderer;
 
-    private IRenderer<IReactionSet>      reactionSetRenderer;
+    private final IRenderer<IReactionSet>      reactionSetRenderer;
 
     /**
      * A renderer that generates diagrams using the specified

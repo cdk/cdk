@@ -114,7 +114,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting     indent;
     private BooleanIOSetting     xmlDeclaration;
 
-    private static ILoggingTool  logger      = LoggingToolFactory.createLoggingTool(CMLWriter.class);
+    private static final ILoggingTool  logger      = LoggingToolFactory.createLoggingTool(CMLWriter.class);
 
     private List<ICMLCustomizer> customizers = null;
 

@@ -36,10 +36,10 @@ import org.openscience.cdk.math.Vector;
  */
 public class Orbitals {
 
-    private int    count_basis;
+    private final int    count_basis;
     private int    count_orbitals;
     private Matrix C;
-    private IBasis basis;
+    private final IBasis basis;
     private int    count_electrons = 1;
 
     /**

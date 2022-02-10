@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class GhemicalMMReader extends DefaultChemObjectReader {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GhemicalMMReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(GhemicalMMReader.class);
     private BufferedReader      input  = null;
 
     public GhemicalMMReader(Reader input) {

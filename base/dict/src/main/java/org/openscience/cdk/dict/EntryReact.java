@@ -41,11 +41,11 @@ import java.util.List;
 public class EntryReact extends Entry {
 
     private List<String>            reactionInfo;
-    private List<String>            representations;
-    private HashMap<String, String> parameters;
-    private List<String>            parametersValue;
-    private List<String>            reactionExample;
-    private List<List<String>>      parameterClass;
+    private final List<String>            representations;
+    private final HashMap<String, String> parameters;
+    private final List<String>            parametersValue;
+    private final List<String>            reactionExample;
+    private final List<List<String>>      parameterClass;
     private String                  mechanism;
 
     /**

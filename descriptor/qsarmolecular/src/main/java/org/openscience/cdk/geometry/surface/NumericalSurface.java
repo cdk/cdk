@@ -60,7 +60,7 @@ import java.util.Map;
  */
 public class NumericalSurface {
 
-    private static ILoggingTool logger         = LoggingToolFactory.createLoggingTool(NumericalSurface.class);
+    private static final ILoggingTool logger         = LoggingToolFactory.createLoggingTool(NumericalSurface.class);
     double          solventRadius  = 1.4;
     int             tesslevel      = 4;
     IAtom[]         atoms;

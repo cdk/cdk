@@ -75,7 +75,7 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
 
     private static final String[] NAMES   = {"indAtomSoftness"};
 
-    private static ILoggingTool   logger  = LoggingToolFactory
+    private static final ILoggingTool   logger  = LoggingToolFactory
                                                   .createLoggingTool(InductiveAtomicSoftnessDescriptor.class);
     private AtomTypeFactory       factory = null;
 

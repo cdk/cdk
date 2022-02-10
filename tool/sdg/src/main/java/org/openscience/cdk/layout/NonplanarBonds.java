@@ -484,9 +484,9 @@ final class NonplanarBonds {
     }
 
 
-    private static int SPIRO_REJECT = 0;
-    private static int SPIRO_ACCEPT = 1;
-    private static int SPIRO_MIRROR = 2;
+    private static final int SPIRO_REJECT = 0;
+    private static final int SPIRO_ACCEPT = 1;
+    private static final int SPIRO_MIRROR = 2;
 
     /**
      * This is complicated, we have a set of bonds and the rings they belong to. We move the bonds around such that

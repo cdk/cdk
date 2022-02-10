@@ -55,7 +55,7 @@ public class MolecularFormula implements IMolecularFormula {
      */
     private static final long      serialVersionUID = -2011407700837295287L;
 
-    private Map<IIsotope, Integer> isotopes;
+    private final Map<IIsotope, Integer> isotopes;
     /**
      *  The partial charge of the molecularFormula. The default value is Double.NaN.
      */

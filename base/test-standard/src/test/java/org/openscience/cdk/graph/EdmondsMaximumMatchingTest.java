@@ -46,8 +46,8 @@ import static org.junit.Assert.assertTrue;
  */
 public final class EdmondsMaximumMatchingTest {
 
-    private IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    private SmilesParser       smipar = new SmilesParser(bldr);
+    private final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+    private final SmilesParser       smipar = new SmilesParser(bldr);
 
     @Test
     public void benzene() throws Exception {

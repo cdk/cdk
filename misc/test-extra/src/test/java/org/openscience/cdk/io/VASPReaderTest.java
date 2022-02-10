@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class VASPReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(VASPReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(VASPReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {

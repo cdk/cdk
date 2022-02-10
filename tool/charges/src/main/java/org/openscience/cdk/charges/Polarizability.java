@@ -51,7 +51,7 @@ import java.util.List;
  */
 public class Polarizability {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(Polarizability.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Polarizability.class);
 
     /**
      * Constructor for the Polarizability object.

@@ -112,7 +112,7 @@ import java.util.stream.StreamSupport;
 @Deprecated
 public class SMARTSQueryTool {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);
     private String              smarts;
     private IAtomContainer      atomContainer = null;
     private QueryAtomContainer  query         = null;
@@ -188,7 +188,7 @@ public class SMARTSQueryTool {
      * the molecules being tests are known to all have the same aromaticity
      * model.
      */
-    private boolean                  skipAromaticity = false;
+    private final boolean                  skipAromaticity = false;
 
     // a simplistic cache to store parsed SMARTS queries
     private int                      MAX_ENTRIES     = 20;

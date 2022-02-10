@@ -53,7 +53,7 @@ public class InductivePartialCharges implements IChargeCalculator {
     private static double[]     pauling;
     private IsotopeFactory      ifac    = null;
     private AtomTypeFactory     factory = null;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
+    private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
 
     /**
      *  Constructor for the InductivePartialCharges object.

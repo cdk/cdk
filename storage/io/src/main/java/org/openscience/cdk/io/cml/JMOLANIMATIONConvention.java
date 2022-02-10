@@ -43,7 +43,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
 
     private int                 current;
     private String              frame_energy;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(JMOLANIMATIONConvention.class);
+    private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(JMOLANIMATIONConvention.class);
 
     public JMOLANIMATIONConvention(IChemFile chemFile) {
         super(chemFile);

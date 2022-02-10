@@ -288,7 +288,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         class FpRunner implements Callable<BitSet> {
 
-            IAtomContainer mol;
+            final IAtomContainer mol;
 
             FpRunner(IAtomContainer mol) {
                 this.mol = mol;

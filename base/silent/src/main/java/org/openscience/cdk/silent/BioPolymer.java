@@ -57,7 +57,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      */
     private static final long    serialVersionUID = -5001873073769634393L;
 
-    private Map<String, IStrand> strands;                                 // the list of all the contained Strands.
+    private final Map<String, IStrand> strands;                                 // the list of all the contained Strands.
 
     /**
      * Constructs a new Polymer to store the Strands.

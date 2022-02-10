@@ -78,7 +78,7 @@ import java.util.Iterator;
  **/
 public class HeterolyticCleavagePBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HeterolyticCleavagePBReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(HeterolyticCleavagePBReaction.class);
 
     /**
      * Constructor of the HeterolyticCleavagePBReaction object.

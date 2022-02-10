@@ -56,7 +56,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     private static final long       serialVersionUID = -811384981700039389L;
 
     /**  Internal List of IMolecularFormula. */
-    private List<IMolecularFormula> components;
+    private final List<IMolecularFormula> components;
 
     /**
      *  Constructs an empty AdductFormula.

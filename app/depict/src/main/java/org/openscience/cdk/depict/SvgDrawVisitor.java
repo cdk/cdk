@@ -71,7 +71,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
     private int             indentLvl     = 0;
     private AffineTransform transform     = null;
     private RendererModel   model         = null;
-    private NumberFormat    decimalFormat = new DecimalFormat(".##", new DecimalFormatSymbols(Locale.ROOT));
+    private final NumberFormat    decimalFormat = new DecimalFormat(".##", new DecimalFormatSymbols(Locale.ROOT));
 
     private boolean defaultsWritten    = false;
     private Color   defaultStroke      = null;

@@ -381,7 +381,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         }
     }
 
-    private List<Key> keys = new ArrayList<>();
+    private final List<Key> keys = new ArrayList<>();
 
     /**
      * Set up the fingerprinter to use a user-defined set of fragments.

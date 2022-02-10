@@ -58,7 +58,7 @@ import org.junit.Test;
 
 public class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
 
     public SmallRingDescriptorTest() {}
 

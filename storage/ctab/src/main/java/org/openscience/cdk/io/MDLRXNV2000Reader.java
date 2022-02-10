@@ -67,7 +67,7 @@ import java.util.StringTokenizer;
 public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
     BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.

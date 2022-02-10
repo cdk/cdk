@@ -55,10 +55,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class MM2BasedParameterSetReader {
 
-    private String              configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
+    private final String              configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
     private InputStream         ins        = null;
-    private Map<String, Object> parameterSet;
-    private List<IAtomType>     atomTypes;
+    private final Map<String, Object> parameterSet;
+    private final List<IAtomType>     atomTypes;
     private StringTokenizer     st;
     private String              key        = "";
 

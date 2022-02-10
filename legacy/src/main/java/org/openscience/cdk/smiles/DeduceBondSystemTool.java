@@ -70,8 +70,8 @@ import java.util.List;
 @Deprecated
 public class DeduceBondSystemTool {
 
-    private AllRingsFinder      allRingsFinder;
-    private static ILoggingTool logger      = LoggingToolFactory.createLoggingTool(DeduceBondSystemTool.class);
+    private final AllRingsFinder      allRingsFinder;
+    private static final ILoggingTool logger      = LoggingToolFactory.createLoggingTool(DeduceBondSystemTool.class);
 
     private List<Integer[]>     listOfRings = null;
 

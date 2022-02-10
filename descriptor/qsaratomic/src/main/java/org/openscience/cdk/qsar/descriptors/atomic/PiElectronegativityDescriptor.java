@@ -66,7 +66,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
     private boolean               lpeChecker      = true;
 
     private static final String[] NAMES = {"elecPiA"};
-    private PiElectronegativity   electronegativity;
+    private final PiElectronegativity   electronegativity;
 
     /**
      *  Constructor for the PiElectronegativityDescriptor object

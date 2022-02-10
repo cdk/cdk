@@ -71,7 +71,7 @@ import java.util.Iterator;
  **/
 public class SharingAnionReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingAnionReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingAnionReaction.class);
 
     /**
      * Constructor of the SharingAnionReaction object.

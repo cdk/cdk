@@ -33,7 +33,7 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class OptionIOSetting extends IOSetting {
 
-    private List<String> settings;
+    private final List<String> settings;
 
     /**
      * OptionIOSetting is IOSetting for which the value must be

@@ -46,7 +46,12 @@ final class DoubleBond2DParity extends GeometricParity {
     //   l = r
     //  /     \
     // l2      r2
-    private Point2d             l, r, l1, r1, l2, r2;
+    private final Point2d             l;
+    private final Point2d r;
+    private final Point2d l1;
+    private final Point2d r1;
+    private final Point2d l2;
+    private final Point2d r2;
 
     /* the area below which we return unspecified parity */
     private static final double THRESHOLD = 0.1;

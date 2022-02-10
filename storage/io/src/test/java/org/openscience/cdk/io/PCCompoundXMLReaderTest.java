@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundXMLReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundXMLReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {

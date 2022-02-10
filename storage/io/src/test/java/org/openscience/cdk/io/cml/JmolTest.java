@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class JmolTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(JmolTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(JmolTest.class);
 
     /**
      * Now come the actual tests...

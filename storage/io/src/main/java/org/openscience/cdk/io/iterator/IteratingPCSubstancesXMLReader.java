@@ -58,7 +58,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
 
     private Reader           primarySource;
     private XMLStreamReader  parser;
-    private PubChemXMLHelper parserHelper;
+    private final PubChemXMLHelper parserHelper;
     private final XMLInputFactory xmlfact;
 
 

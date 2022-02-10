@@ -13,7 +13,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class SimpleAtomComparatorTest {
 
-    private IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
     @Test
     public void testCompare_NullHybridization() throws Exception {

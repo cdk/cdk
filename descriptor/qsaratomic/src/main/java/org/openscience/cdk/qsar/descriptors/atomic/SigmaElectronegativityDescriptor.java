@@ -62,7 +62,7 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
 
     private static final String[] NAMES = {"elecSigmA"};
 
-    private Electronegativity     electronegativity;
+    private final Electronegativity     electronegativity;
 
     /**
      *  Constructor for the SigmaElectronegativityDescriptor object

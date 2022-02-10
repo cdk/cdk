@@ -50,7 +50,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 public class Dictionary {
 
-    private Map<String, Entry> entries;
+    private final Map<String, Entry> entries;
     private String             ownNS = null;
 
     public Dictionary() {

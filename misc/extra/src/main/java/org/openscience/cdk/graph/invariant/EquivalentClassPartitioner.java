@@ -53,8 +53,8 @@ public class EquivalentClassPartitioner {
     private int[][]             apspMatrix;
     private int                 layerNumber;
     private int                 nodeNumber;
-    private static double       LOST   = 0.000000000001;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EquivalentClassPartitioner.class);
+    private static final double       LOST   = 0.000000000001;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(EquivalentClassPartitioner.class);
 
     /**
      * Constructor for the TopologicalEquivalentClass object.

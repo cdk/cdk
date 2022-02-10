@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class ChargeRule implements IRule {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ChargeRule.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ChargeRule.class);
 
     private double              charge = 0.0;
 

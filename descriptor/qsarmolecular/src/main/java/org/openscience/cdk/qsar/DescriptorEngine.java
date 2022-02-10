@@ -80,13 +80,13 @@ import java.util.jar.JarFile;
  */
 public class DescriptorEngine {
 
-    private static String                      rdfNS       = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    private static final String                      rdfNS       = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
     private Dictionary                         dict        = null;
     private List<String>                       classNames  = new ArrayList<>(200);
     private List<IDescriptor>                  descriptors = new ArrayList<>(200);
     private List<IImplementationSpecification> speclist    = null;
-    private static ILoggingTool                logger      = LoggingToolFactory
+    private static final ILoggingTool                logger      = LoggingToolFactory
                                                                    .createLoggingTool(DescriptorEngine.class);
     private final IChemObjectBuilder           builder;
 

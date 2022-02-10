@@ -45,7 +45,7 @@ import static org.hamcrest.collection.IsIn.isIn;
  */
 public class CircularFingerprintSmartsTest extends CDKTestCase {
 
-	private static ILoggingTool logger = LoggingToolFactory
+	private static final ILoggingTool logger = LoggingToolFactory
 			.createLoggingTool(CircularFingerprintSmartsTest.class);
 
 	public static SmilesParser parser = new SmilesParser(

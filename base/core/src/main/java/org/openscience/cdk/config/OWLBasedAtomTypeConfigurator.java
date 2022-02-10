@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private InputStream         ins    = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLBasedAtomTypeConfigurator.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLBasedAtomTypeConfigurator.class);
 
     public OWLBasedAtomTypeConfigurator() {}
 

@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIPlainTextReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIPlainTextReaderTest.class);
 
     @BeforeClass
     public static void setup() {

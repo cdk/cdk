@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
+    private static final ILoggingTool logger   = LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
 
     IAtomContainer              molecule = null;
     Map<String, IAtom>          atomIDs  = null;

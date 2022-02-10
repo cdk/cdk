@@ -42,10 +42,10 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     private long           cyclic;
 
     /* cycle systems as they are discovered */
-    private List<Long>     cycles = new ArrayList<>(1);
+    private final List<Long>     cycles = new ArrayList<>(1);
 
     /* indicates if the 'cycle' at 'i' in 'cycles' is fused */
-    private List<Boolean>  fused  = new ArrayList<>(1);
+    private final List<Boolean>  fused  = new ArrayList<>(1);
 
     /* set of visited vertices */
     private long           visited;

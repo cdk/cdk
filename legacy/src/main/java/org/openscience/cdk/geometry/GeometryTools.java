@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 @Deprecated
 public class GeometryTools {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GeometryTools.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(GeometryTools.class);
 
     /**
      * Provides the coverage of coordinates for this molecule.

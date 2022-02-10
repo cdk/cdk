@@ -51,8 +51,8 @@ import org.xml.sax.helpers.DefaultHandler;
 @Deprecated
 public class INChIHandler extends DefaultHandler {
 
-    private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
-    private INChIContentProcessorTool inchiTool;
+    private static final ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
+    private final INChIContentProcessorTool inchiTool;
 
     private ChemFile                  chemFile;
     private ChemSequence              chemSequence;

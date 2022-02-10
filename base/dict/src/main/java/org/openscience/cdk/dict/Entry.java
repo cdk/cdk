@@ -42,7 +42,7 @@ public class Entry {
     private String       className;
     private String       label;
     private String       identifier;
-    private List<String> descriptorInfo;
+    private final List<String> descriptorInfo;
     private String       definition;
     private String       description;
     private Object       rawContent;

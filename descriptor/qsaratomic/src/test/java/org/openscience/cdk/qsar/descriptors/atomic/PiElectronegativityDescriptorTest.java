@@ -41,8 +41,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 
-    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
-    private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
+    private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the PiElectronegativityDescriptorTest object

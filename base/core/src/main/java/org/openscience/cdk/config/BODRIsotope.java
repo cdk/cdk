@@ -40,11 +40,11 @@ import org.openscience.cdk.interfaces.IIsotope;
  */
 final class BODRIsotope implements IIsotope {
 
-    private String  element;
-    private Integer atomicNumber;
-    private Double  naturalAbundance;
-    private Double  exactMass;
-    private Integer massNumber;
+    private final String  element;
+    private final Integer atomicNumber;
+    private final Double  naturalAbundance;
+    private final Double  exactMass;
+    private final Integer massNumber;
 
     protected BODRIsotope(String element, Integer atomicNumber, Integer massNumber, Double exactMass,
             Double naturalAbundance) {

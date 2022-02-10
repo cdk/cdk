@@ -67,7 +67,7 @@ public class RDBERule implements IRule {
 
     private static Map<String, int[]> oxidationStateTable = null;
 
-    private static ILoggingTool       logger              = LoggingToolFactory.createLoggingTool(RDBERule.class);
+    private static final ILoggingTool       logger              = LoggingToolFactory.createLoggingTool(RDBERule.class);
     private double                    min                 = -0.5;
     private double                    max                 = 30;
 
@@ -283,9 +283,10 @@ public class RDBERule implements IRule {
 
     public class Combinations {
 
-        private Object[] inArray;
-        private int      n, m;
-        private int[]    index;
+        private final Object[] inArray;
+        private final int      n;
+        private final int m;
+        private final int[]    index;
         private boolean  hasMore = true;
 
         /**

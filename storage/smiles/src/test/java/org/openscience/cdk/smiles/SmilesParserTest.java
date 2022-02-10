@@ -81,7 +81,7 @@ import static org.junit.Assert.fail;
  */
 public class SmilesParserTest extends CDKTestCase {
 
-    private static SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test(timeout = 1000)
     public void testSingleOrDoubleFlag() throws Exception {

@@ -53,7 +53,7 @@ public class AtomTypeTools {
     public static final int PYRIDINE_RING   = 10;
     public static final int PYRIMIDINE_RING = 12;
     public static final int BENZENE_RING = 5;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
     HOSECodeGenerator hcg = null;
     SmilesGenerator   sg  = null;
 

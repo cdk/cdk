@@ -59,7 +59,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
 
     private static final String[] NAMES = {"stabilPlusC"};
 
-    private StabilizationCharges stabil;
+    private final StabilizationCharges stabil;
 
     /**
      *  Constructor for the StabilizationPlusChargeDescriptor object

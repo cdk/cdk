@@ -62,7 +62,7 @@ public class RingGenerator extends BasicBondGenerator {
         }
     }
 
-    private IGeneratorParameter<Boolean> showAromaticity = new ShowAromaticity();
+    private final IGeneratorParameter<Boolean> showAromaticity = new ShowAromaticity();
 
     /**
      * Depicts aromaticity of rings in the original CDK style.
@@ -78,7 +78,7 @@ public class RingGenerator extends BasicBondGenerator {
     }
 
     /** If true, the aromatic ring is indicated by light gray inner bonds */
-    private IGeneratorParameter<Boolean> cdkStyleAromaticity = new CDKStyleAromaticity();
+    private final IGeneratorParameter<Boolean> cdkStyleAromaticity = new CDKStyleAromaticity();
 
     /**
      * The maximum ring size for which an aromatic ring should be drawn.
@@ -97,7 +97,7 @@ public class RingGenerator extends BasicBondGenerator {
         }
     }
 
-    private IGeneratorParameter<Integer> maxDrawableAromaticRing = new MaxDrawableAromaticRing();
+    private final IGeneratorParameter<Integer> maxDrawableAromaticRing = new MaxDrawableAromaticRing();
 
     /**
      * The proportion of a ring bounds to use to draw the ring.
@@ -112,13 +112,13 @@ public class RingGenerator extends BasicBondGenerator {
         }
     }
 
-    private IGeneratorParameter<Double> ringProportion = new RingProportion();
+    private final IGeneratorParameter<Double> ringProportion = new RingProportion();
 
     /**
      * The rings that have already been painted - that is, a ring element
      * has been generated for it.
      */
-    private Set<IRing>                  painted_rings;
+    private final Set<IRing>                  painted_rings;
 
     /**
      * Make a generator for ring elements.

@@ -81,7 +81,7 @@ public class TemplateHandler3D {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 
-    private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+    private final UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 
     private TemplateHandler3D() {
     }

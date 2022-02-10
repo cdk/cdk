@@ -57,7 +57,7 @@ public class RendererModelTest {
     public void testGetRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -84,7 +84,7 @@ public class RendererModelTest {
     public void testHasParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -112,7 +112,7 @@ public class RendererModelTest {
     public void testReturningTheRealParamaterValue() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -143,7 +143,7 @@ public class RendererModelTest {
     public void testSetRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -172,7 +172,7 @@ public class RendererModelTest {
     public void testGetDefaultRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -199,7 +199,7 @@ public class RendererModelTest {
     public void testGetRenderingParameters() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {

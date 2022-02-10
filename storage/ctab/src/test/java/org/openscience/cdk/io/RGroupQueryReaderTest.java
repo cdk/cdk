@@ -62,7 +62,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
     public RGroupQueryReaderTest() {}
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReaderTest.class);
 
     @BeforeClass
     public static void setup() {

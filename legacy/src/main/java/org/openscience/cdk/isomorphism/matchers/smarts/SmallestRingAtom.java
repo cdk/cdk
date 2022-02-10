@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public final class SmallestRingAtom extends SMARTSAtom {
 
     /** Ring size to check. */
-    private int ringSize;
+    private final int ringSize;
 
     /**
      * Creates a matcher for specified ring size.

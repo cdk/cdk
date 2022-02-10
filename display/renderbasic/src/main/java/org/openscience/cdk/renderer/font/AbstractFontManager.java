@@ -36,7 +36,7 @@ public abstract class AbstractFontManager implements IFontManager {
     private IFontManager.FontStyle fontStyle;
 
     /** The mapping between zoom levels and font sizes */
-    private Map<Double, Integer>   zoomToFontSizeMap;
+    private final Map<Double, Integer>   zoomToFontSizeMap;
 
     // these two values track the font position if it falls
     // off the end of the array so that font and scale are always in synch

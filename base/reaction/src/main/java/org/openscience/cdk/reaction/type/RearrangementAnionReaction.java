@@ -74,7 +74,7 @@ import java.util.Iterator;
  **/
 public class RearrangementAnionReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RearrangementAnionReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RearrangementAnionReaction.class);
 
     /**
      * Constructor of the RearrangementAnionReaction object

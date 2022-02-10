@@ -43,7 +43,7 @@ import java.io.InputStream;
  */
 public class RandomAccessTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
 
     @Test
     public void test() throws Exception {

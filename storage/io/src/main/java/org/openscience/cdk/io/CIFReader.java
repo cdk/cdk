@@ -59,7 +59,7 @@ import java.util.StringTokenizer;
 public class CIFReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(CIFReader.class);
+    private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(CIFReader.class);
 
     private ICrystal            crystal = null;
     // cell parameters

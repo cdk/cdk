@@ -60,7 +60,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class MDLReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLReaderTest.class);
 
     @BeforeClass
     public static void setup() {

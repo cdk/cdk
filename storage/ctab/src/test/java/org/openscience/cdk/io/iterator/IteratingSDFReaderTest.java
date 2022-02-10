@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class IteratingSDFReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSDFReaderTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSDFReaderTest.class);
 
     @Test
     public void testSDF() throws Exception {

@@ -64,7 +64,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {

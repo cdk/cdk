@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 
     IPAtomicHOSEDescriptor  descriptor;
-    private SmilesParser    sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    private final SmilesParser    sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**

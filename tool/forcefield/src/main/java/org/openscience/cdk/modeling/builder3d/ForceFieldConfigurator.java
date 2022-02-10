@@ -68,7 +68,7 @@ public class ForceFieldConfigurator {
     private MM2BasedParameterSetReader    mm2          = null;
     private MMFF94BasedParameterSetReader mmff94       = null;
     private InputStream                   ins          = null;
-    private String[]                      fftypes      = {"mm2", "mmff94"};
+    private final String[]                      fftypes      = {"mm2", "mmff94"};
 
     /**
      *Constructor for the ForceFieldConfigurator object

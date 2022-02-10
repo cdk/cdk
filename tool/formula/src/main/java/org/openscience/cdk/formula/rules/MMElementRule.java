@@ -70,7 +70,7 @@ public class MMElementRule implements IRule {
 
     private HashMap<String, Integer> hashMap;
 
-    private static ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(MMElementRule.class);
+    private static final ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(MMElementRule.class);
 
     /** A enumeration of the possible mass range
      * according the rules. */

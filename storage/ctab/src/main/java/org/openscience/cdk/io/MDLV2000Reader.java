@@ -126,7 +126,7 @@ import static org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
 public class MDLV2000Reader extends DefaultChemObjectReader {
 
     BufferedReader                   input            = null;
-    private static ILoggingTool      logger           = LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
+    private static final ILoggingTool      logger           = LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
 
     private BooleanIOSetting optForce3d;
     private BooleanIOSetting optHydIso;
@@ -2455,7 +2455,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         /** Index of 'M XXX' properties for quick lookup. */
         private static final Map<String, PropertyKey> mSuffix = new HashMap<>(60);
 
-        private static Pattern LEGACY_ATOM_LIST_PATTERN = Pattern.compile("^[0-9 ][0-9 ][0-9 ] [T|F]");
+        private static final Pattern LEGACY_ATOM_LIST_PATTERN = Pattern.compile("^[0-9 ][0-9 ][0-9 ] [T|F]");
         static {
             for (PropertyKey p : values()) {
                 if (p.name().charAt(0) == 'M') mSuffix.put(p.name().substring(2, 5), p);

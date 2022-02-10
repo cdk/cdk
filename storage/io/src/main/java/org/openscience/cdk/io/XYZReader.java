@@ -61,7 +61,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class XYZReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReader.class);
 
     /**
      * Construct a new reader from a Reader type object.

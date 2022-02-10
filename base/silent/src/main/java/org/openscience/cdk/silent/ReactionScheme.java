@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 public class ReactionScheme extends ReactionSet implements IReactionScheme {
 
     /** A List of reaction schemes*/
-    private List<IReactionScheme> reactionScheme;
+    private final List<IReactionScheme> reactionScheme;
     /**
      * Determines if a de-serialized object is compatible with this class.
      *

@@ -59,7 +59,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
     /**Number of maximum iterations*/
     private int maxIterations = 6;
 
-    private Electronegativity electronegativity;
+    private final Electronegativity electronegativity;
 
     private static final String[] NAMES = {"elecSigB"};
 

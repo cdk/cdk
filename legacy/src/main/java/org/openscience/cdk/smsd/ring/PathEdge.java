@@ -66,7 +66,7 @@ import org.openscience.cdk.interfaces.IAtom;
 @Deprecated
 public class PathEdge {
 
-    private List<IAtom> atoms;
+    private final List<IAtom> atoms;
 
     public PathEdge(List<IAtom> atoms) {
         this.atoms = atoms;

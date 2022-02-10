@@ -48,8 +48,8 @@ import org.xml.sax.XMLReader;
 public class OWLAtomTypeReader {
 
     private XMLReader           parser;
-    private Reader              input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
+    private final Reader              input;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
 
     /**
      * Instantiates the XML based AtomTypeReader.

@@ -69,7 +69,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         Assert.assertNotNull("The IChemObjectIO.getFormat method returned null.", format);
     }
 
-    private static IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
+    private static final IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
             new Reaction()                               };
 
     @Test
@@ -85,7 +85,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted);
     }
 
-    private static IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
+    private static final IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
             new DebugAtomContainer(), new DebugReaction()   };
 
     @Test

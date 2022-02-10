@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class AtomContainerComparator implements Comparator<IAtomContainer> {
 
     /** Configure LoggingTool */
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomContainerComparator.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomContainerComparator.class);
 
     /** Creates a new instance of AtomContainerComparator */
     public AtomContainerComparator() {}

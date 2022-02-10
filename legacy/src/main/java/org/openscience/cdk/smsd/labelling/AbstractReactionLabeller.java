@@ -33,7 +33,7 @@ public class AbstractReactionLabeller {
     /**
      * A nasty hack necessary to get around a bug in the CDK
      */
-    private boolean fixAtomMappingCastType = false;
+    private final boolean fixAtomMappingCastType = false;
 
     private void fixAtomMapping(IAtomContainer canonicalForm) {
         for (IAtom a : canonicalForm.atoms()) {

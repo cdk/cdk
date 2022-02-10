@@ -44,8 +44,8 @@ import org.openscience.cdk.smarts.SmartsPattern;
  */
 public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
-    private String smarts;
-    private SmartsPattern[] compiledSmarts;
+    private final String smarts;
+    private final SmartsPattern[] compiledSmarts;
     private String symbol;
 
     /**

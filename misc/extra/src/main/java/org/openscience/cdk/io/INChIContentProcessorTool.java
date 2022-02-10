@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 final class INChIContentProcessorTool {
 
-        private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class); ;
+        private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class); ;
 
         public INChIContentProcessorTool() {}
 

@@ -49,14 +49,14 @@ import java.io.*;
  */
 public class SMILESWriter extends DefaultChemObjectWriter {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESWriter.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESWriter.class);
     private BufferedWriter writer;
     private BooleanIOSetting aromSetting;
     private BooleanIOSetting titleSetting;
     private IntegerIOSetting flavorSetting;
-    private int flav = SmiFlavor.Default;
+    private final int flav = SmiFlavor.Default;
     private SmilesGenerator smigen = new SmilesGenerator(flav);
-    private StringBuilder buffer = new StringBuilder();
+    private final StringBuilder buffer = new StringBuilder();
 
     /**
      * Constructs a new SMILESWriter that can write a list of SMILES to a Writer

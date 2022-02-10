@@ -51,7 +51,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TemplateHandlerTest extends CDKTestCase {
 
     public boolean                           standAlone = false;
-    private static ILoggingTool              logger     = LoggingToolFactory
+    private static final ILoggingTool              logger     = LoggingToolFactory
                                                                 .createLoggingTool(TemplateHandlerTest.class);
 
     private static SmilesParser              sp         = null;

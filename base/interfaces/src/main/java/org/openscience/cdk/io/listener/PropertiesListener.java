@@ -47,7 +47,7 @@ import java.util.Properties;
  */
 public class PropertiesListener implements IReaderListener, IWriterListener {
 
-    private Properties  props;
+    private final Properties  props;
     private PrintWriter out;
 
     public PropertiesListener(Properties props) {

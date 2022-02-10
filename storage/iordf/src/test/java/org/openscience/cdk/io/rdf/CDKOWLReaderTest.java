@@ -39,7 +39,7 @@ import java.io.InputStreamReader;
  */
 public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKOWLReaderTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKOWLReaderTest.class);
 
     @BeforeClass
     public static void setup() {

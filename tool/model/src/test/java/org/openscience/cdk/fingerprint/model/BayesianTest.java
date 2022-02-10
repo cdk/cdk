@@ -55,7 +55,7 @@ import java.util.Map;
  */
 public class BayesianTest {
 
-    private static ILoggingTool logger          = LoggingToolFactory.createLoggingTool(BayesianTest.class);
+    private static final ILoggingTool logger          = LoggingToolFactory.createLoggingTool(BayesianTest.class);
 
     private final String        REF_MOLECULE    = "\n\n\n"
                                                         + " 18 19  0  0  0  0  0  0  0  0999 V2000\n"

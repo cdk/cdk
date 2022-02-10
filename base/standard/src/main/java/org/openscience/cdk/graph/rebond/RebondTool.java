@@ -50,8 +50,8 @@ import java.util.Iterator;
 public class RebondTool {
 
     private double maxCovalentRadius;
-    private double minBondDistance;
-    private double bondTolerance;
+    private final double minBondDistance;
+    private final double bondTolerance;
 
     private Bspt   bspt;
 

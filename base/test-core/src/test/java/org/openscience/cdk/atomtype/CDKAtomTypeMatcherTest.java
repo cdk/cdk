@@ -64,7 +64,7 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<>();
+    private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @Test
     public void testGetInstance_IChemObjectBuilder() throws Exception {

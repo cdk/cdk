@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.IReaction;
  */
 public class CDKDictionaryReferences {
 
-    private static String prefix = DictionaryDatabase.DICTREFPROPERTYNAME;
+    private static final String prefix = DictionaryDatabase.DICTREFPROPERTYNAME;
 
     public static void makeReferencesExplicit(IChemObject object) {
         if (object instanceof IAtom) {

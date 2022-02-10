@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader           input;
-    private static ILoggingTool      logger           = LoggingToolFactory
+    private static final ILoggingTool      logger           = LoggingToolFactory
                                                               .createLoggingTool(IteratingSMILESReader.class);
     private SmilesParser             sp               = null;
 

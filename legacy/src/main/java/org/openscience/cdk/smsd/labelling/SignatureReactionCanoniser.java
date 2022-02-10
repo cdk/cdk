@@ -12,7 +12,7 @@ import org.openscience.cdk.interfaces.IReaction;
 @Deprecated
 public class SignatureReactionCanoniser extends AbstractReactionLabeller implements ICanonicalReactionLabeller {
 
-    private MoleculeSignatureLabellingAdaptor labeller = new MoleculeSignatureLabellingAdaptor();
+    private final MoleculeSignatureLabellingAdaptor labeller = new MoleculeSignatureLabellingAdaptor();
 
     /**
      * {@inheritDoc}

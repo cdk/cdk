@@ -58,15 +58,15 @@ import org.openscience.cdk.graph.BiconnectivityInspector;
 public class CycleBasis {
 
     //private List cycles = new Vector();
-    private List<SimpleCycle>      mulitEdgeCycles = new ArrayList<>();
-    private List<Edge>             multiEdgeList   = new ArrayList<>();
+    private final List<SimpleCycle>      mulitEdgeCycles = new ArrayList<>();
+    private final List<Edge>             multiEdgeList   = new ArrayList<>();
 
     private SimpleCycleBasis       cachedCycleBasis;
 
     //private List edgeList = new Vector();
     //private List multiEdgeList = new Vector();
-    private UndirectedGraph        baseGraph;
-    private List<SimpleCycleBasis> subgraphBases   = new ArrayList<>();
+    private final UndirectedGraph        baseGraph;
+    private final List<SimpleCycleBasis> subgraphBases   = new ArrayList<>();
 
     /**
      * Constructs a minimum cycle basis of a graph.

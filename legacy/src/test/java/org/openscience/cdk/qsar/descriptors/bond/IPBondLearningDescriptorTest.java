@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class IPBondLearningDescriptorTest extends CDKTestCase {
 
     private IPBondLearningDescriptor descriptor;
-    private LonePairElectronChecker  lpcheck = new LonePairElectronChecker();
+    private final LonePairElectronChecker  lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the IPBondLearningDescriptorTest object

@@ -42,10 +42,10 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     private final BitSet  cyclic;
 
     /* cycle systems as they are discovered */
-    private List<BitSet>  cycles = new ArrayList<>(1);
+    private final List<BitSet>  cycles = new ArrayList<>(1);
 
     /* indicates if the 'cycle' at 'i' in 'cycles' is fused */
-    private List<Boolean> fused  = new ArrayList<>(1);
+    private final List<Boolean> fused  = new ArrayList<>(1);
 
     /* set of visited vertices */
     private BitSet        visited;

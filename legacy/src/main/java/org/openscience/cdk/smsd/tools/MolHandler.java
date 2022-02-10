@@ -57,7 +57,7 @@ public class MolHandler {
     private IAtomContainer             atomContainer  = null;
     private boolean                    removeHydrogen = false;
     private final ILoggingTool         logger         = LoggingToolFactory.createLoggingTool(MolHandler.class);
-    private ICanonicalMoleculeLabeller canonLabeler   = new CanonicalLabellingAdaptor();
+    private final ICanonicalMoleculeLabeller canonLabeler   = new CanonicalLabellingAdaptor();
 
     /**
      * Creates a new instance of MolHandler

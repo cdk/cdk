@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
     BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
 
     public MDLRXNV3000Reader(Reader in) {
         this(in, Mode.RELAXED);

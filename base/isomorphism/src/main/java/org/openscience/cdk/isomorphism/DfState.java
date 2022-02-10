@@ -97,7 +97,7 @@ final class DfState implements Iterable<int[]> {
     }
 
     private int          sptr;
-    private StackFrame[] stack;
+    private final StackFrame[] stack;
 
     DfState(IAtomContainer query) {
 

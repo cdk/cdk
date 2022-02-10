@@ -56,8 +56,8 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  */
 public class PubChemXMLHelper {
 
-    private IChemObjectBuilder builder;
-    private IsotopeFactory     factory;
+    private final IChemObjectBuilder builder;
+    private final IsotopeFactory     factory;
 
     /**
      * @throws java.io.IOException if there is error in getting the {@link IsotopeFactory}

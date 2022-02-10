@@ -107,9 +107,9 @@ final class AbbreviationLabel {
                                                              "T", "TBS", "TBDMS", "Trt", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS", "TMS", "Tos", "Tol", "Tosyl", "Tr", "Troc",
                                                              "Vinyl", "Voc", "Z"};
 
-    private static Trie PREFIX_TRIE = new Trie();
-    private static Trie ITAL_PREFIX_TRIE = new Trie();
-    private static Trie SYMBOL_TRIE = new Trie();
+    private static final Trie PREFIX_TRIE = new Trie();
+    private static final Trie ITAL_PREFIX_TRIE = new Trie();
+    private static final Trie SYMBOL_TRIE = new Trie();
 
     // build the tries on class init
     static {

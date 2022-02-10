@@ -52,8 +52,9 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 @Deprecated
 public class MinimalPathIterator implements Iterator {
 
-    private Object        sourceVertex, targetVertex;
-    private Graph         g;
+    private final Object        sourceVertex;
+    private final Object targetVertex;
+    private final Graph         g;
     private DirectedGraph shortestPathGraph;
 
     private Stack         edgeIteratorStack;

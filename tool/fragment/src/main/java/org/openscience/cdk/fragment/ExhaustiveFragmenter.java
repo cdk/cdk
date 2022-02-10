@@ -60,7 +60,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     SmilesGenerator             smilesGenerator;
     String[]                    fragments             = null;
     int                         minFragSize           = 6;
-    private static ILoggingTool logger                = LoggingToolFactory
+    private static final ILoggingTool logger                = LoggingToolFactory
                                                               .createLoggingTool(ExhaustiveFragmenter.class);
 
     /**

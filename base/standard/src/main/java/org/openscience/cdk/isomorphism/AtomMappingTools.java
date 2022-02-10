@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class AtomMappingTools {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMappingTools.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMappingTools.class);
 
     /**
      * Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest

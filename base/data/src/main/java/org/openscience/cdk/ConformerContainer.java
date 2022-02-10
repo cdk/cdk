@@ -61,7 +61,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     private IAtomContainer  atomContainer = null;
     private String          title         = null;
-    private List<Point3d[]> coordinates;
+    private final List<Point3d[]> coordinates;
 
     private Point3d[] getCoordinateList(IAtomContainer atomContainer) {
 

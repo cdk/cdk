@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<>();
+    private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @Test
     public void testFile3() throws Exception {

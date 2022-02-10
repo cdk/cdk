@@ -57,20 +57,20 @@ public class MMFF94BasedParameterSetReader {
     private final ILoggingTool  LOG            = LoggingToolFactory
                                                        .createLoggingTool(MMFF94BasedParameterSetReader.class);
 
-    private String              configFile     = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
+    private final String              configFile     = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
     private InputStream         ins            = null;
-    private Map<String, Object> parameterSet;
-    private List<IAtomType>     atomTypes;
+    private final Map<String, Object> parameterSet;
+    private final List<IAtomType>     atomTypes;
     private StringTokenizer     st;
     private String              key            = "";
     private String              sid;
 
-    private String              configFilevdW  = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
+    private final String              configFilevdW  = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
     private InputStream         insvdW         = null;
     private StringTokenizer     stvdW;
     private String              sidvdW;
 
-    private String              configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
+    private final String              configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
     private InputStream         insDFSB;
     private StringTokenizer     stDFSB;
 

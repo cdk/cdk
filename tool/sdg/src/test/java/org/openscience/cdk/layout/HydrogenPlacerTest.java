@@ -43,7 +43,7 @@ import static org.junit.Assert.assertNotNull;
 public class HydrogenPlacerTest extends CDKTestCase {
 
     public boolean       standAlone = false;
-    private ILoggingTool logger     = LoggingToolFactory.createLoggingTool(HydrogenPlacerTest.class);
+    private final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(HydrogenPlacerTest.class);
 
     @Test(expected = IllegalArgumentException.class)
     public void testAtomWithoutCoordinates() {

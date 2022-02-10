@@ -29,7 +29,7 @@ public class BooleanResult extends BooleanResultType {
 
     private static final long serialVersionUID = 3746767816253035856L;
 
-    private boolean           value;
+    private final boolean           value;
 
     public BooleanResult(boolean value) {
         this.value = value;

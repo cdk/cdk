@@ -32,7 +32,7 @@ import org.junit.Test;
 public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 
     protected IBitFingerprint                bitsetFP;
-    private Class<? extends IBitFingerprint> C;
+    private final Class<? extends IBitFingerprint> C;
 
     public AbstractBitFingerprintTest(Class<? extends IBitFingerprint> C) throws Exception {
         this.C = C;

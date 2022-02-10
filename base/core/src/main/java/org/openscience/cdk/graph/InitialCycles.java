@@ -490,7 +490,7 @@ final class InitialCycles {
      */
     static abstract class Cycle implements Comparable<Cycle> {
 
-        private int[] path;
+        private final int[] path;
         ShortestPaths paths;
         BitSet        edgeVector;
 

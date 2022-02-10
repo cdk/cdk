@@ -68,7 +68,7 @@ public class CIPTool {
      */
     public static final int      HYDROGEN = -1;
 
-    private static CIPLigandRule cipRule  = new CIPLigandRule();
+    private static final CIPLigandRule cipRule  = new CIPLigandRule();
 
     /**
      * Enumeration with the two tetrahedral chiralities defined by the CIP schema.

@@ -35,10 +35,10 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class Ligand implements ILigand {
 
-    private IAtomContainer container;
-    private IAtom          centralAtom;
-    private IAtom          ligandAtom;
-    private VisitedAtoms   visitedAtoms;
+    private final IAtomContainer container;
+    private final IAtom          centralAtom;
+    private final IAtom          ligandAtom;
+    private final VisitedAtoms   visitedAtoms;
 
     public Ligand(IAtomContainer container, VisitedAtoms visitedAtoms, IAtom centralAtom, IAtom ligandAtom) {
         this.container = container;

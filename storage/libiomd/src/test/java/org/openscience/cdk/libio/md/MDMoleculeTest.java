@@ -55,7 +55,7 @@ import org.xmlcml.cml.element.CMLAtom;
  */
 public class MDMoleculeTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDMoleculeTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDMoleculeTest.class);
 
     /**
      * @cdk.bug 1748257

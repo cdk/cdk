@@ -37,7 +37,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     private int level = ILoggingTool.WARN;
 
     /** Name of the class for which this {@link ILoggingTool} is reporting. */
-    private String              classname;
+    private final String              classname;
 
     /** Length of the stack to print for reported {@link Exception}s. */
     private int                 stackLength;

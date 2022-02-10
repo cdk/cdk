@@ -56,13 +56,13 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
-    private static ILoggingTool         logger          = LoggingToolFactory
+    private static final ILoggingTool         logger          = LoggingToolFactory
                                                                 .createLoggingTool(MMFF94AtomTypeMatcherTest.class);
     private final IChemObjectBuilder    builder         = DefaultChemObjectBuilder.getInstance();
 
     private static IAtomContainer       testMolecule    = null;
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<>();
+    private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @BeforeClass
     public static void setUpTestMolecule() throws Exception {

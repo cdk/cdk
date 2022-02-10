@@ -74,7 +74,7 @@ import java.util.Iterator;
  **/
 public class PiBondingMovementReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PiBondingMovementReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PiBondingMovementReaction.class);
 
     /**
      * Constructor of the PiBondingMovementReaction object

@@ -46,10 +46,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class MolecularFormulaChecker {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class);
 
     /** List of IRules to be applied in the validation.*/
-    private List<IRule>  rules;
+    private final List<IRule>  rules;
 
     /**
      * Construct an instance of MolecularFormulaChecker. It must be initialized

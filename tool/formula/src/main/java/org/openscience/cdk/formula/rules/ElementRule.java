@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class ElementRule implements IRule {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ElementRule.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ElementRule.class);
 
     private MolecularFormulaRange mfRange;
 

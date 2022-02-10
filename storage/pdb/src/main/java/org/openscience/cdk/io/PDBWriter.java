@@ -64,11 +64,11 @@ public class PDBWriter extends DefaultChemObjectWriter {
     public final String      POSITION_FORMAT  = "%8.3f";
     public final String      RESIDUE_FORMAT   = "%s";
 
-    private BooleanIOSetting writeAsHET;
-    private BooleanIOSetting useElementSymbolAsAtomName;
-    private BooleanIOSetting writeCONECTRecords;
-    private BooleanIOSetting writeTERRecord;
-    private BooleanIOSetting writeENDRecord;
+    private final BooleanIOSetting writeAsHET;
+    private final BooleanIOSetting useElementSymbolAsAtomName;
+    private final BooleanIOSetting writeCONECTRecords;
+    private final BooleanIOSetting writeTERRecord;
+    private final BooleanIOSetting writeENDRecord;
 
     private BufferedWriter   writer;
 

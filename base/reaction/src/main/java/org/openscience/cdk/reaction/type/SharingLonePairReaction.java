@@ -71,7 +71,7 @@ import java.util.Iterator;
  **/
 public class SharingLonePairReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingLonePairReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingLonePairReaction.class);
 
     /**
      * Constructor of the SharingLonePairReaction object.

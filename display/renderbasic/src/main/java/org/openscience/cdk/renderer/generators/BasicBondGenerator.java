@@ -76,7 +76,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
-    private IGeneratorParameter<Double> bondWidth = new BondWidth();
+    private final IGeneratorParameter<Double> bondWidth = new BondWidth();
 
     /**
      * The gap between double and triple bond lines on the screen.
@@ -91,7 +91,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
-    private IGeneratorParameter<Double> bondDistance = new BondDistance();
+    private final IGeneratorParameter<Double> bondDistance = new BondDistance();
 
     /**
      * The color to draw bonds if not other color is given.
@@ -106,7 +106,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
-    private IGeneratorParameter<Color> defaultBondColor = new DefaultBondColor();
+    private final IGeneratorParameter<Color> defaultBondColor = new DefaultBondColor();
 
     /**
      * The width on screen of the fat end of a wedge bond.
@@ -121,7 +121,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
-    private IGeneratorParameter<Double> wedgeWidth = new WedgeWidth();
+    private final IGeneratorParameter<Double> wedgeWidth = new WedgeWidth();
 
     /**
      * The proportion to move in towards the ring center.
@@ -136,9 +136,9 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
-    private IGeneratorParameter<Double> ringCenterProportion = new TowardsRingCenterProportion();
+    private final IGeneratorParameter<Double> ringCenterProportion = new TowardsRingCenterProportion();
 
-    private ILoggingTool                logger               = LoggingToolFactory
+    private final ILoggingTool                logger               = LoggingToolFactory
                                                                      .createLoggingTool(BasicBondGenerator.class);
 
     /**
@@ -160,12 +160,12 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     /**
      * The ideal ring size for the given center proportion.
      */
-    private int                         IDEAL_RINGSIZE       = 6;
+    private final int                         IDEAL_RINGSIZE       = 6;
 
     /**
      * The minimum ring size factor to ensure a minimum gap.
      */
-    private double                      MIN_RINGSIZE_FACTOR  = 2.5;
+    private final double                      MIN_RINGSIZE_FACTOR  = 2.5;
 
     /**
      * An empty constructor necessary for reflection.

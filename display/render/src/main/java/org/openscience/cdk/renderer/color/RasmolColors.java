@@ -38,7 +38,7 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
 
     private final static Color        DEFAULT          = new Color(255, 20, 147);
 
-    private static Map<String, Color> colorMap;
+    private static final Map<String, Color> colorMap;
 
     /*
      * Color map with RasMol/Chime Color RGB Values. Excepted H and C (too

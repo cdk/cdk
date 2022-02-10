@@ -167,7 +167,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     private List<Double>                stereoScore            = null;
     private List<Integer>               fragmentSize           = null;
     private List<Double>                bEnergies              = null;
-    private Algorithm                   algorithmType;
+    private final Algorithm                   algorithmType;
     private boolean                     removeHydrogen         = false;
     private final static ILoggingTool   LOGGER                 = LoggingToolFactory
                                                                        .createLoggingTool(Isomorphism.class);

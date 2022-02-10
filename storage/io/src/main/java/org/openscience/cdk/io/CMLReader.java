@@ -68,9 +68,9 @@ public class CMLReader extends DefaultChemObjectReader {
     private InputStream             input;
     private String                  url;
 
-    private Map<String, ICMLModule> userConventions = new HashMap<>();
+    private final Map<String, ICMLModule> userConventions = new HashMap<>();
 
-    private static ILoggingTool     logger          = LoggingToolFactory.createLoggingTool(CMLReader.class);
+    private static final ILoggingTool     logger          = LoggingToolFactory.createLoggingTool(CMLReader.class);
 
     /**
      * Reads CML from an java.io.InputStream, for example the FileInputStream.

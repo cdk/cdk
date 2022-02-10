@@ -73,7 +73,7 @@ import java.util.Iterator;
  **/
 public class RadicalChargeSiteInitiationReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory
+    private static final ILoggingTool logger = LoggingToolFactory
                                                .createLoggingTool(RadicalChargeSiteInitiationReaction.class);
 
     /**

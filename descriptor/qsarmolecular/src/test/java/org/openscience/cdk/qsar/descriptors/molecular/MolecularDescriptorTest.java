@@ -58,8 +58,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularDescriptor> {
 
-    private static DictionaryDatabase dictDB = new DictionaryDatabase();
-    private static Dictionary         dict   = dictDB.getDictionary("descriptor-algorithms");
+    private static final DictionaryDatabase dictDB = new DictionaryDatabase();
+    private static final Dictionary         dict   = dictDB.getDictionary("descriptor-algorithms");
 
     public MolecularDescriptorTest() {}
 

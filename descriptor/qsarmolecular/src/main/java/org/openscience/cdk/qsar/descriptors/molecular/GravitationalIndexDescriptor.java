@@ -82,7 +82,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
 
     private class pair {
 

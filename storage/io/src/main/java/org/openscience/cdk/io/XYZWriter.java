@@ -53,8 +53,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class XYZWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZWriter.class);
-    private FormatStringBuffer  fsb;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZWriter.class);
+    private final FormatStringBuffer  fsb;
 
     /**
     * Constructor.

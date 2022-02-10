@@ -29,7 +29,7 @@ public class IntegerArrayResultType implements IDescriptorResult {
 
     private static final long serialVersionUID = 1492674654677531635L;
 
-    private int               size;
+    private final int               size;
 
     public IntegerArrayResultType(int size) {
         this.size = size;

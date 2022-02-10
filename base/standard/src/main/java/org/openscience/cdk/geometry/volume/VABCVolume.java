@@ -48,7 +48,7 @@ public class VABCVolume {
      * paper are imprecise.
      */
     @SuppressWarnings("serial")
-    private static Map<String, Double> bondiiVolumes = new HashMap<String, Double>() {
+    private static final Map<String, Double> bondiiVolumes = new HashMap<String, Double>() {
 
                                                          {
                                                              put("H", 7.2382293504);

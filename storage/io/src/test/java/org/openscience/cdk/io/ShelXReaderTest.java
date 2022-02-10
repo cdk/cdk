@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class ShelXReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {

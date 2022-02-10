@@ -44,14 +44,14 @@ import org.xml.sax.helpers.DefaultHandler;
 public class CMLHandler extends DefaultHandler {
 
     private ICMLModule              conv;
-    private static ILoggingTool     logger = LoggingToolFactory.createLoggingTool(CMLHandler.class);
-    private boolean                 debug  = true;
+    private static final ILoggingTool     logger = LoggingToolFactory.createLoggingTool(CMLHandler.class);
+    private final boolean                 debug  = true;
 
-    private Map<String, ICMLModule> userConventions;
+    private final Map<String, ICMLModule> userConventions;
 
-    private CMLStack                xpath;
-    private CMLStack                conventionStack;
-    private CMLModuleStack          moduleStack;
+    private final CMLStack                xpath;
+    private final CMLStack                conventionStack;
+    private final CMLModuleStack          moduleStack;
 
     /**
      * Constructor for the CMLHandler.

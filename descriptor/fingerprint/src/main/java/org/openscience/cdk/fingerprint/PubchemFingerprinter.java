@@ -99,9 +99,9 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
      */
     public static final int FP_SIZE = 881;
 
-    private byte[]          m_bits;
+    private final byte[]          m_bits;
 
-    private Map<String,SmartsPattern> cache = new HashMap<>();
+    private final Map<String,SmartsPattern> cache = new HashMap<>();
 
     public PubchemFingerprinter(IChemObjectBuilder builder) {
         m_bits = new byte[(FP_SIZE + 7) >> 3];
@@ -295,7 +295,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
     class CountSubstructures {
 
-        private IAtomContainer mol;
+        private final IAtomContainer mol;
 
         public CountSubstructures(IAtomContainer m) {
             mol = m;
@@ -388,7 +388,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
         return base64Encode(pack);
     }
 
-    private static String BASE64_LUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz0123456789+/=";
+    private static final String BASE64_LUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz0123456789+/=";
 
     // based on NCBI C implementation
     private static String base64Encode(byte[] data) {

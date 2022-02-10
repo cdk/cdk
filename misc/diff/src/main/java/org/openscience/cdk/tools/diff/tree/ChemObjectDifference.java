@@ -31,7 +31,7 @@ import java.util.Iterator;
  */
 public class ChemObjectDifference extends AbstractDifferenceList implements IDifferenceList {
 
-    private String name;
+    private final String name;
 
     public ChemObjectDifference(String name) {
         this.name = name;

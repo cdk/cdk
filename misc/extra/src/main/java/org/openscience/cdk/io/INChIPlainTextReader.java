@@ -69,7 +69,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 public class INChIPlainTextReader extends DefaultChemObjectReader {
 
     private BufferedReader            input;
-    private INChIContentProcessorTool inchiTool;
+    private final INChIContentProcessorTool inchiTool;
 
     /**
      * Construct a INChI reader from a Reader object.

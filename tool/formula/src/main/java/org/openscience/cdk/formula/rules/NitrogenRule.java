@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class NitrogenRule implements IRule {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(NitrogenRule.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(NitrogenRule.class);
 
     /**
      *  Constructor for the NitrogenRule object.

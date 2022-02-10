@@ -377,7 +377,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     class SAXValidityErrorHandler implements ErrorHandler {
 
-        private String atomTypeList;
+        private final String atomTypeList;
 
         public SAXValidityErrorHandler(String atomTypeList) {
             this.atomTypeList = atomTypeList;

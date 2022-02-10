@@ -90,7 +90,7 @@ import java.util.regex.Pattern;
 
 public class Bayesian {
 
-    private int                    classType;
+    private final int                    classType;
     private int                    folding      = 0;
 
     // incoming hash codes: actual values, and subsumed values are {#active,#total}

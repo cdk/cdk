@@ -72,11 +72,11 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  */
 public class StructureResonanceGenerator {
 
-    private ILoggingTool           logger        = LoggingToolFactory
+    private final ILoggingTool           logger        = LoggingToolFactory
                                                          .createLoggingTool(StructureResonanceGenerator.class);
     private List<IReactionProcess> reactionsList = new ArrayList<>();
     /**Generate resonance structure without looking at the symmetry*/
-    private boolean                lookingSymmetry;
+    private final boolean                lookingSymmetry;
     /** TODO: REACT: some time takes too much time. At the moment fixed to 50 structures*/
     private int                    maxStructures = 50;
 

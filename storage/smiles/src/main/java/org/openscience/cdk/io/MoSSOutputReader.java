@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class MoSSOutputReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoSSOutputReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoSSOutputReader.class);
 
     /**
      * Create a reader for MoSS output files from a {@link Reader}.

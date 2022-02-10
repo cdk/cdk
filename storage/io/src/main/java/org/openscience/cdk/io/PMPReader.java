@@ -73,18 +73,18 @@ public class PMPReader extends DefaultChemObjectReader {
 
     private BufferedReader        input;
 
-    private static ILoggingTool   logger       = LoggingToolFactory.createLoggingTool(PMPReader.class);
+    private static final ILoggingTool   logger       = LoggingToolFactory.createLoggingTool(PMPReader.class);
 
     /* Keep a copy of the PMP model */
     private IAtomContainer        modelStructure;
     private IChemObject           chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
-    private Map<Integer, Integer> atomids      = new Hashtable<>();
-    private Map<Integer, Integer> atomGivenIds = new Hashtable<>();
-    private Map<Integer, Integer> bondids      = new Hashtable<>();
-    private Map<Integer, Integer> bondAtomOnes = new Hashtable<>();
-    private Map<Integer, Integer> bondAtomTwos = new Hashtable<>();
-    private Map<Integer, Double>  bondOrders   = new Hashtable<>();
+    private final Map<Integer, Integer> atomids      = new Hashtable<>();
+    private final Map<Integer, Integer> atomGivenIds = new Hashtable<>();
+    private final Map<Integer, Integer> bondids      = new Hashtable<>();
+    private final Map<Integer, Integer> bondAtomOnes = new Hashtable<>();
+    private final Map<Integer, Integer> bondAtomTwos = new Hashtable<>();
+    private final Map<Integer, Double>  bondOrders   = new Hashtable<>();
 
     /* Often used patterns */
     Pattern                       objHeader;
@@ -93,7 +93,7 @@ public class PMPReader extends DefaultChemObjectReader {
 
     int                           lineNumber;
     int                           bondCounter  = 0;
-    private RebondTool            rebonder;
+    private final RebondTool            rebonder;
 
     /*
      * construct a new reader from a Reader type object

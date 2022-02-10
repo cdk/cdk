@@ -57,7 +57,7 @@ public class AtomTypeHandler extends DefaultHandler {
     private final int                 SCALAR_PIBONDCOUNT           = 13;
     private final int                 SCALAR_LONEPAIRCOUNT         = 14;
 
-    private static ILoggingTool       logger                       = LoggingToolFactory
+    private static final ILoggingTool       logger                       = LoggingToolFactory
                                                                            .createLoggingTool(AtomTypeHandler.class);
     private String                    currentChars;
     private List<IAtomType>           atomTypes;

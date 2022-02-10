@@ -134,9 +134,9 @@ public final class Smarts {
 
 
     private static final class SmartsError {
-        private String str;
-        private int    pos;
-        private String mesg;
+        private final String str;
+        private final int    pos;
+        private final String mesg;
 
         public SmartsError(String str, int pos, String mesg) {
             this.str = str;
@@ -197,18 +197,18 @@ public final class Smarts {
 
     private static final class Parser {
         public  String         error;
-        private String         str;
-        private IAtomContainer mol;
-        private int            flav;
+        private final String         str;
+        private final IAtomContainer mol;
+        private final int            flav;
         private int            pos;
 
         private IAtom     prev;
         private QueryBond bond;
-        private Deque<IAtom>            stack   = new ArrayDeque<>();
-        private IBond[] rings = new IBond[100];
-        private Map<IAtom, LocalNbrs>   local   = new HashMap<>();
-        private Set<IAtom>              astereo = new HashSet<>();
-        private Set<IBond>              bstereo = new HashSet<>();
+        private final Deque<IAtom>            stack   = new ArrayDeque<>();
+        private final IBond[] rings = new IBond[100];
+        private final Map<IAtom, LocalNbrs>   local   = new HashMap<>();
+        private final Set<IAtom>              astereo = new HashSet<>();
+        private final Set<IBond>              bstereo = new HashSet<>();
         private int numRingOpens;
         private ReactionRole role = ReactionRole.None;
         private int numComponents;

@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class JChemPaintTest extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(JChemPaintTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(JChemPaintTest.class);
 
     /**
      * This one tests a CML2 file.

@@ -57,7 +57,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
     private static IChemObjectBuilder      builder;
     private static LonePairElectronChecker lpcheck;
 
-    private static ILoggingTool            logger = LoggingToolFactory
+    private static final ILoggingTool            logger = LoggingToolFactory
                                                           .createLoggingTool(ConjugatedPiSystemsDetectorTest.class);
 
     @BeforeClass

@@ -14,7 +14,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class IsotopeContainerTest extends CDKTestCase {
 
-    private static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  Constructor for the IsotopeContainerTest object.

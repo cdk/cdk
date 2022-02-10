@@ -41,7 +41,7 @@ class BondDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefiner
     /**
      * Specialised option to allow generating automorphisms that ignore the bond order.
      */
-    private boolean ignoreBondOrders;
+    private final boolean ignoreBondOrders;
 
     /**
      * Make a bond partition refiner that takes bond-orders into account.

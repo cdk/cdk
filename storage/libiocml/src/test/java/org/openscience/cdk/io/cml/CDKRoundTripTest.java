@@ -43,9 +43,9 @@ import org.openscience.cdk.tools.diff.AtomDiff;
  */
 public class CDKRoundTripTest extends CDKTestCase {
 
-    private static IChemObjectBuilder builder   = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder   = SilentChemObjectBuilder.getInstance();
 
-    private static Convertor          convertor = new Convertor(false, "");
+    private static final Convertor          convertor = new Convertor(false, "");
 
     @Test
     public void testIElement_Symbol() throws Exception {

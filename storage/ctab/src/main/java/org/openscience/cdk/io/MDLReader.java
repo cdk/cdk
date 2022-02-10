@@ -90,7 +90,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class MDLReader extends DefaultChemObjectReader {
 
     BufferedReader               input          = null;
-    private static ILoggingTool  logger         = LoggingToolFactory.createLoggingTool(MDLReader.class);
+    private static final ILoggingTool  logger         = LoggingToolFactory.createLoggingTool(MDLReader.class);
 
     private BooleanIOSetting     forceReadAs3DCoords;
     private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");

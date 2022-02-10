@@ -16,7 +16,7 @@ import org.openscience.cdk.interfaces.IBond;
 @Deprecated
 public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAtomContainer> {
 
-    private IAtomContainer original;
+    private final IAtomContainer original;
 
     public AtomContainerAtomPermutor(IAtomContainer atomContainer) {
         super(atomContainer.getAtomCount());

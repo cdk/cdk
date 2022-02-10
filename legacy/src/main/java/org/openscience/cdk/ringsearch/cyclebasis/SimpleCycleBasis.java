@@ -61,9 +61,9 @@ import org._3pq.jgrapht.graph.Subgraph;
 @Deprecated
 public class SimpleCycleBasis {
 
-    private List              edgeList;
-    private List<SimpleCycle> cycles;
-    private UndirectedGraph   graph;
+    private final List              edgeList;
+    private final List<SimpleCycle> cycles;
+    private final UndirectedGraph   graph;
 
     private boolean           isMinimized = false;
     private HashMap           edgeIndexMap;
@@ -855,19 +855,19 @@ public class SimpleCycleBasis {
         private static final long serialVersionUID = 5930876716644738726L;
 
         // graph to aux. graph
-        private HashMap           vertexMap00      = new HashMap();
-        private HashMap           vertexMap01      = new HashMap();
-        private HashMap           vertexMap10      = new HashMap();
-        private HashMap           vertexMap11      = new HashMap();
+        private final HashMap           vertexMap00      = new HashMap();
+        private final HashMap           vertexMap01      = new HashMap();
+        private final HashMap           vertexMap10      = new HashMap();
+        private final HashMap           vertexMap11      = new HashMap();
 
-        private HashMap           auxVertexMap     = new HashMap();
+        private final HashMap           auxVertexMap     = new HashMap();
 
         // aux. edge to edge
-        private Map               auxEdgeMap       = new HashMap();
+        private final Map               auxEdgeMap       = new HashMap();
 
-        private Graph             g;
-        private boolean[]         ui;
-        private boolean[]         uj;
+        private final Graph             g;
+        private final boolean[]         ui;
+        private final boolean[]         uj;
 
         AuxiliaryGraph2(Graph graph, boolean[] ui, boolean[] uj) {
             g = graph;

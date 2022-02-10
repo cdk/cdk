@@ -61,7 +61,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(Mol2ReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Mol2ReaderTest.class);
 
     @BeforeClass
     public static void setup() {

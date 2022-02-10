@@ -73,7 +73,7 @@ import java.util.Iterator;
  **/
 public class CarbonylEliminationReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CarbonylEliminationReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CarbonylEliminationReaction.class);
 
     /**
      * Constructor of the CarbonylEliminationReaction object.

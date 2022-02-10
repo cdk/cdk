@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {

@@ -81,10 +81,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private BooleanIOSetting optStereo0d;
 
     BufferedReader input = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
 
-    private Pattern keyValueTuple;
-    private Pattern keyValueTuple2;
+    private final Pattern keyValueTuple;
+    private final Pattern keyValueTuple2;
 
     private int lineNumber;
 

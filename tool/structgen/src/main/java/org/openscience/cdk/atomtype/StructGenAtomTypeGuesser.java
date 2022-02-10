@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 
     private static AtomTypeFactory factory = null;
-    private static ILoggingTool    logger  = LoggingToolFactory.createLoggingTool(StructGenAtomTypeGuesser.class);
+    private static final ILoggingTool    logger  = LoggingToolFactory.createLoggingTool(StructGenAtomTypeGuesser.class);
 
     /**
      * Constructor for the StructGenMatcher object.

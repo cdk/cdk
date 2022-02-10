@@ -92,7 +92,7 @@ public class AtomTypeFactory {
     private final static String                 XML_EXTENSION         = "xml";
     private final static String                 OWL_EXTENSION         = "owl";
 
-    private static ILoggingTool                 logger                = LoggingToolFactory
+    private static final ILoggingTool                 logger                = LoggingToolFactory
                                                                               .createLoggingTool(AtomTypeFactory.class);
     private static Map<String, AtomTypeFactory> tables                = null;
     private Map<String,IAtomType>               atomTypes             = null;

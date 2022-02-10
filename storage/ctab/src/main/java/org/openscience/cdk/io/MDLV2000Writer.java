@@ -128,7 +128,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
 
     // regular expression to capture R groups with attached numbers
-    private Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
+    private final Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
 
     /**
      * Enumeration of all valid radical values.

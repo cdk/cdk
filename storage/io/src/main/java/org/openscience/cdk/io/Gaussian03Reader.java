@@ -71,7 +71,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 public class Gaussian03Reader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(Gaussian03Reader.class); ;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Gaussian03Reader.class); ;
 
     public Gaussian03Reader(Reader reader) {
         input = new BufferedReader(reader);

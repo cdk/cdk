@@ -44,7 +44,7 @@ public class Partition {
     /**
      * The subsets of the partition, known as cells.
      */
-    private List<SortedSet<Integer>> cells;
+    private final List<SortedSet<Integer>> cells;
 
     /**
      * Creates a new, empty partition with no cells.

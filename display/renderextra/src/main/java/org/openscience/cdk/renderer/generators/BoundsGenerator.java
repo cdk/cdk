@@ -55,7 +55,7 @@ public class BoundsGenerator implements IGenerator<IReaction> {
         }
     }
 
-    private IGeneratorParameter<Color> boundsColor = new BoundsColor();
+    private final IGeneratorParameter<Color> boundsColor = new BoundsColor();
 
     public BoundsGenerator() {}
 

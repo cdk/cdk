@@ -12,7 +12,7 @@ import org.openscience.cdk.interfaces.IReaction;
 @Deprecated
 public class SmilesReactionCanoniser extends AbstractReactionLabeller implements ICanonicalReactionLabeller {
 
-    private CanonicalLabellingAdaptor labeller = new CanonicalLabellingAdaptor();
+    private final CanonicalLabellingAdaptor labeller = new CanonicalLabellingAdaptor();
 
     /**
      * {@inheritDoc}

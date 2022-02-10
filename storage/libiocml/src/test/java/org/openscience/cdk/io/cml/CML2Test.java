@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CML2Test extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CML2Test.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CML2Test.class);
 
     @Test
     public void testFile3() throws Exception {

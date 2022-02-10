@@ -379,7 +379,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      */
     private static class BondMap {
 
-        private Map<IAtom, List<IBond>> bonds;
+        private final Map<IAtom, List<IBond>> bonds;
 
         /**
          * Create new bond map for the specified number of atoms.

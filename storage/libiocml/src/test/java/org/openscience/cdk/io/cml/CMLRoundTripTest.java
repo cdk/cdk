@@ -68,7 +68,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CMLRoundTripTest extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTest.class);
     private static Convertor    convertor;
 
     @BeforeClass

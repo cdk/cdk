@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class CDK {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDK.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDK.class);
     private static final String RESOURCE_LOCATION = "/build.props";
     private static volatile String version;
 

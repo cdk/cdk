@@ -493,7 +493,7 @@ public final class TripletShortCycles {
     private static class Path implements Comparable<Path> {
 
         /** Path of vertices. */
-        private int[] vertices;
+        private final int[] vertices;
 
         /**
          * Create a new path from the given vertices.

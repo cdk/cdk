@@ -40,7 +40,7 @@ public class DisjointSetForest {
      * set is stored as the negated size of the set - ie a set of size
      * 5 with a root element 2 will mean forest[2] = -5.
      */
-    private int[] forest;
+    private final int[] forest;
 
     /**
      * Initialize a disjoint set forest with a number of elements.

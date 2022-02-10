@@ -72,7 +72,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
     boolean                                  firstLineisMolecule = false;
 
     BufferedReader                           input               = null;
-    private static ILoggingTool              logger              = LoggingToolFactory
+    private static final ILoggingTool              logger              = LoggingToolFactory
                                                                          .createLoggingTool(Mol2Reader.class);
 
     // helper function for immutable map of String -> String, JDK 9+ has Map.of()

@@ -52,7 +52,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class IteratingSMILESReaderTest extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
 
     @Test
     public void testSMILESFileWithNames() throws Exception {

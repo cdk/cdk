@@ -86,7 +86,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
     }
 
     BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReader.class);
 
     /**
      * Default constructor, input not set.

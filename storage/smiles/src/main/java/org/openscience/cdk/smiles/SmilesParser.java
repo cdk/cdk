@@ -129,7 +129,7 @@ import java.util.Set;
  */
 public final class SmilesParser {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmilesParser.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmilesParser.class);
 
     /**
      * The builder determines which CDK domain objects to create.

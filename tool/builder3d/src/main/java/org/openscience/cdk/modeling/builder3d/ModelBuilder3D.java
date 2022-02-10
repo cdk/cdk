@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class ModelBuilder3D {
 
-    private static Map<String, ModelBuilder3D> memyselfandi    = new HashMap<>();
+    private static final Map<String, ModelBuilder3D> memyselfandi    = new HashMap<>();
 
     private TemplateHandler3D                  templateHandler = null;
 
@@ -84,7 +84,7 @@ public class ModelBuilder3D {
 
     String                                     forceFieldName  = "mm2";
 
-    private static ILoggingTool                logger          = LoggingToolFactory
+    private static final ILoggingTool                logger          = LoggingToolFactory
                                                                        .createLoggingTool(ModelBuilder3D.class);
 
     /**

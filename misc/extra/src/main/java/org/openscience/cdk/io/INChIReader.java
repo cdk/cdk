@@ -73,7 +73,7 @@ public class INChIReader extends DefaultChemObjectReader {
     private XMLReader           parser;
     private InputStream         input;
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReader.class);
 
     /**
      * Construct a INChI reader from a InputStream object.
@@ -221,15 +221,15 @@ public class INChIReader extends DefaultChemObjectReader {
 
     private static final class INChIHandler extends DefaultHandler {
 
-        private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
-        private INChIContentProcessorTool inchiTool;
+        private static final ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
+        private final INChIContentProcessorTool inchiTool;
 
         private IChemFile         chemFile;
         private IChemSequence     chemSequence;
         private IChemModel        chemModel;
         private IAtomContainerSet setOfMolecules;
         private IAtomContainer    tautomer;
-        private IChemObjectBuilder builder;
+        private final IChemObjectBuilder builder;
 
         /** Used to store all chars between two tags */
         private String                    currentChars;

@@ -58,9 +58,9 @@ import java.util.stream.Collectors;
  */
 public class FormatFactory {
 
-    private int                      headerLength;
+    private final int                      headerLength;
 
-    private List<IChemFormatMatcher> formats = new ArrayList<>(100);
+    private final List<IChemFormatMatcher> formats = new ArrayList<>(100);
     private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(FormatFactory.class);
 
     /**

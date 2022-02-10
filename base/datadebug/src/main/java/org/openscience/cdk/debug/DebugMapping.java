@@ -40,7 +40,7 @@ public class DebugMapping extends Mapping implements IMapping {
 
     private static final long   serialVersionUID = -3785399530153469835L;
 
-    private static ILoggingTool logger           = LoggingToolFactory.createLoggingTool(DebugMapping.class);
+    private static final ILoggingTool logger           = LoggingToolFactory.createLoggingTool(DebugMapping.class);
 
     public DebugMapping(IChemObject objectOne, IChemObject objectTwo) {
         super(objectOne, objectTwo);

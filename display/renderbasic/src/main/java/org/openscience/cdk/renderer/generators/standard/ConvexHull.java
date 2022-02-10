@@ -271,7 +271,7 @@ final class ConvexHull {
      */
     static final class PolarComparator implements Comparator<Point2D> {
 
-        private Point2D reference;
+        private final Point2D reference;
 
         PolarComparator(Point2D reference) {
             this.reference = reference;

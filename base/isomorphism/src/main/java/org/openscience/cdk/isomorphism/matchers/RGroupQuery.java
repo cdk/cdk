@@ -76,7 +76,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
     private static final long               serialVersionUID = -1656116487614720605L;
 
-    private static ILoggingTool             logger           = LoggingToolFactory.createLoggingTool(RGroupQuery.class);
+    private static final ILoggingTool             logger           = LoggingToolFactory.createLoggingTool(RGroupQuery.class);
 
     /**
      * The root structure (or scaffold) to which R-groups r attached.
@@ -135,7 +135,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         return getRgroupQueryAtoms(null);
     }
 
-    private static Pattern validLabelPattern = Pattern.compile("^R\\d+$");
+    private static final Pattern validLabelPattern = Pattern.compile("^R\\d+$");
 
     /**
      * Validates a Pseudo atom's label to be valid RGroup query label (R1..R32).

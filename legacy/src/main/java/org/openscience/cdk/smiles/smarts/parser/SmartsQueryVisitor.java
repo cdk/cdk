@@ -110,23 +110,23 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
      * Maintain order of neighboring atoms - required for atom-based
      * stereochemistry.
      */
-    private Map<IAtom, List<IAtom>>             neighbors      = new HashMap<>();
+    private final Map<IAtom, List<IAtom>>             neighbors      = new HashMap<>();
 
     /**
      * Lookup of atom indices.
      */
-    private BitSet                              tetrahedral    = new BitSet();
+    private final BitSet                              tetrahedral    = new BitSet();
 
     /**
      * Stores the directional '/' or '\' bonds. Speeds up looking for double
      * bond configurations.
      */
-    private List<IBond>                         stereoBonds    = new ArrayList<>();
+    private final List<IBond>                         stereoBonds    = new ArrayList<>();
 
     /**
      * Stores the double bonds in the query.
      */
-    private List<IBond>                         doubleBonds    = new ArrayList<>();
+    private final List<IBond>                         doubleBonds    = new ArrayList<>();
 
     public SmartsQueryVisitor(IChemObjectBuilder builder) {
         this.builder = builder;

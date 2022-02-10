@@ -45,9 +45,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class IPMolecularLearningDescriptorTest extends CDKTestCase {
 
     IPMolecularLearningDescriptor descriptor;
-    private SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
-    private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    private final SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
+    private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the IPMolecularLearningDescriptorTest object

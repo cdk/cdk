@@ -44,7 +44,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {

@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class PartialFilledStructureMerger {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(PartialFilledStructureMerger.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PartialFilledStructureMerger.class);
 
     SaturationChecker    satCheck;
 

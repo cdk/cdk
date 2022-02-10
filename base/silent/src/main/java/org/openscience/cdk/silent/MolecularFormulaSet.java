@@ -48,7 +48,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     private static final long       serialVersionUID = -2043178712150212550L;
 
     /**  Internal List of IMolecularFormula. */
-    private List<IMolecularFormula> components;
+    private final List<IMolecularFormula> components;
 
     /**
      *  Constructs an empty MolecularFormulaSet.

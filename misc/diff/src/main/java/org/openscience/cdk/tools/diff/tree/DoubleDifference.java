@@ -29,9 +29,9 @@ public class DoubleDifference implements IDifference {
 
     private final static double ERROR = 0.000000001;
 
-    private String              name;
-    private Double              first;
-    private Double              second;
+    private final String              name;
+    private final Double              first;
+    private final Double              second;
 
     private DoubleDifference(String name, Double first, Double second) {
         this.name = name;

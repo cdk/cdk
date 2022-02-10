@@ -72,7 +72,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKSourceCodeWriter.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKSourceCodeWriter.class);
 
     private BooleanIOSetting    write2DCoordinates;
     private BooleanIOSetting    write3DCoordinates;

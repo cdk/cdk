@@ -62,7 +62,7 @@ public class RingPlacer {
     static final   String       SNAP_HINT = "sdg.snap.bridged";
     public static final double RAD_30 = Math.toRadians(-30);
     final static   boolean      debug     = false;
-    private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(RingPlacer.class);
+    private static final ILoggingTool logger    = LoggingToolFactory.createLoggingTool(RingPlacer.class);
 
     private IAtomContainer molecule;
 

@@ -45,7 +45,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class ExocyclicAtomTypeModelTest {
 
-    private static ElectronDonation model = ElectronDonation.cdkAllowingExocyclic();
+    private static final ElectronDonation model = ElectronDonation.cdkAllowingExocyclic();
 
     @Test
     public void benzene() throws Exception {

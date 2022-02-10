@@ -46,7 +46,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
         }
     }
 
-    private IGeneratorParameter<Boolean> showReactionBoxes = new ShowReactionBoxes();
+    private final IGeneratorParameter<Boolean> showReactionBoxes = new ShowReactionBoxes();
 
     /** Double which indicates how wide the arrow head is in screen pixels. */
     public static class ArrowHeadWidth extends AbstractGeneratorParameter<Double> {
@@ -58,7 +58,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
         }
     }
 
-    private IGeneratorParameter<Double> arrowHeadWidth = new ArrowHeadWidth();
+    private final IGeneratorParameter<Double> arrowHeadWidth = new ArrowHeadWidth();
 
     /** {@inheritDoc} */
     @Override

@@ -54,7 +54,7 @@ import java.io.StringWriter;
  */
 public class QSARCMLRoundTripTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(QSARCMLRoundTripTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(QSARCMLRoundTripTest.class);
 
     private static Convertor    convertor;
 

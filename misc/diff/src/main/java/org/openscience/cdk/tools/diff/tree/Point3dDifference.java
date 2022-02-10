@@ -30,7 +30,7 @@ import java.util.Iterator;
  */
 public class Point3dDifference extends AbstractDifferenceList implements IDifferenceList {
 
-    private String name;
+    private final String name;
 
     private Point3dDifference(String name) {
         this.name = name;

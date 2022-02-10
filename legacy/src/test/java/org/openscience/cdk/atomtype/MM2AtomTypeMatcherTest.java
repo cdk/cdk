@@ -54,11 +54,11 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 @Category(SlowTest.class)
 public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
-    private static ILoggingTool         logger          = LoggingToolFactory
+    private static final ILoggingTool         logger          = LoggingToolFactory
                                                                 .createLoggingTool(MM2AtomTypeMatcherTest.class);
     private static IAtomContainer       testMolecule    = null;
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<>();
+    private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @BeforeClass
     public static void setUp() throws Exception {

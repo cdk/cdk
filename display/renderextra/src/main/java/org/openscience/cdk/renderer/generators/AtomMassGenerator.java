@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class AtomMassGenerator extends BasicAtomGenerator {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMassGenerator.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMassGenerator.class);
 
     /**
      * Returns true if the mass number of this element is set and not

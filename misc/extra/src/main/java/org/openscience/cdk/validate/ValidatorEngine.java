@@ -55,8 +55,8 @@ import java.util.Map;
  */
 public class ValidatorEngine implements IValidator {
 
-    private Map<String, IValidator> validators;
-    private static ILoggingTool     logger = LoggingToolFactory.createLoggingTool(ValidatorEngine.class);
+    private final Map<String, IValidator> validators;
+    private static final ILoggingTool     logger = LoggingToolFactory.createLoggingTool(ValidatorEngine.class);
 
     public ValidatorEngine() {
         validators = new Hashtable<>();

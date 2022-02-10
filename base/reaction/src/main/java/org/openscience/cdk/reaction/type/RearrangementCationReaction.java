@@ -73,7 +73,7 @@ import java.util.Iterator;
  **/
 public class RearrangementCationReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RearrangementCationReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RearrangementCationReaction.class);
 
     /**
      * Constructor of the RearrangementCharge2Reaction object

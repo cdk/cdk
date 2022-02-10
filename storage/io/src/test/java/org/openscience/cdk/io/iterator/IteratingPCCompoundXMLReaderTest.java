@@ -39,7 +39,7 @@ import java.io.InputStreamReader;
  */
 public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundXMLReaderTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundXMLReaderTest.class);
 
     @Test
     public void testList() throws Exception {

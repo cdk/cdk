@@ -70,7 +70,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class CML2WriterTest extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CML2WriterTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CML2WriterTest.class);
 
     @Test
     public void testCMLWriterBenzene() throws Exception {

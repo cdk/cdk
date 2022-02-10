@@ -50,11 +50,11 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     private final static String                                  SYBYL_ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/sybyl-atom-types.owl";
     private final static String                                  CDK_TO_SYBYL_MAP     = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
 
-    private AtomTypeFactory                                      factory;
-    private CDKAtomTypeMatcher                                   cdkMatcher;
-    private AtomTypeMapper                                       mapper;
+    private final AtomTypeFactory                                      factory;
+    private final CDKAtomTypeMatcher                                   cdkMatcher;
+    private final AtomTypeMapper                                       mapper;
 
-    private static Map<IChemObjectBuilder, SybylAtomTypeMatcher> factories            = new Hashtable<>(
+    private static final Map<IChemObjectBuilder, SybylAtomTypeMatcher> factories            = new Hashtable<>(
             1);
 
     private SybylAtomTypeMatcher(IChemObjectBuilder builder) {

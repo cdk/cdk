@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class TestMoleculeFactory {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(TestMoleculeFactory.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(TestMoleculeFactory.class);
     
     private static IAtomContainer newAtomContainer() {
         return DefaultChemObjectBuilder.getInstance().newAtomContainer();

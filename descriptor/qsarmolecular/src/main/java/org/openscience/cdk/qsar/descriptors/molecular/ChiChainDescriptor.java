@@ -83,7 +83,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class ChiChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
     private SmilesParser          sp;
 
     private static final String[] NAMES  = {"SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7", "VCH-3", "VCH-4", "VCH-5",

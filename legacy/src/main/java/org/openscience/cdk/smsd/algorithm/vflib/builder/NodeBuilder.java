@@ -42,9 +42,9 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 @Deprecated
 public class NodeBuilder implements INode {
 
-    private List<INode>   neighborsList;
-    private List<IEdge>   edgesList;
-    private VFAtomMatcher matcher;
+    private final List<INode>   neighborsList;
+    private final List<IEdge>   edgesList;
+    private final VFAtomMatcher matcher;
 
     /**
      * Construct a node for a query atom

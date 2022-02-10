@@ -76,9 +76,9 @@ public class FixBondOrdersTool {
 
     private static class Matrix {
 
-        private int[] mArray;
-        private int   rowCount;
-        private int   columnCount;
+        private final int[] mArray;
+        private final int   rowCount;
+        private final int   columnCount;
 
         public Matrix(Integer rows, Integer cols) {
 

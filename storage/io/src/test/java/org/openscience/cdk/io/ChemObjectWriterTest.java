@@ -49,7 +49,7 @@ public abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.C
         ChemObjectWriterTest.chemObjectIO = aChemObjectWriter;
     }
 
-    private static IChemObject[] allChemObjectsTypes = {new ChemFile(), new ChemModel(), new Reaction(),
+    private static final IChemObject[] allChemObjectsTypes = {new ChemFile(), new ChemModel(), new Reaction(),
             new AtomContainerSet(), new AtomContainer()};
 
     /**

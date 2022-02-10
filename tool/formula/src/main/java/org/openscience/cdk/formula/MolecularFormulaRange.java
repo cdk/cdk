@@ -44,8 +44,8 @@ import org.openscience.cdk.interfaces.IIsotope;
  */
 public class MolecularFormulaRange implements Cloneable {
 
-    private Map<IIsotope, Integer> isotopesMax;
-    private Map<IIsotope, Integer> isotopesMin;
+    private final Map<IIsotope, Integer> isotopesMax;
+    private final Map<IIsotope, Integer> isotopesMin;
 
     /**
      *  Constructs an empty MolecularFormulaExpand.

@@ -30,7 +30,7 @@ public class IntegerArrayResult extends IntegerArrayResultType {
 
     private static final long serialVersionUID = 4077762427385735922L;
 
-    private List<Integer>     array;
+    private final List<Integer>     array;
 
     public IntegerArrayResult() {
         super(0);

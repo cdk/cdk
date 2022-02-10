@@ -35,11 +35,11 @@ import java.util.Map;
  */
 public class AtomTypeMapper {
 
-    private static Map<String, AtomTypeMapper> mappers = new HashMap<>();
+    private static final Map<String, AtomTypeMapper> mappers = new HashMap<>();
 
-    private String                             mappingFile;
+    private final String                             mappingFile;
 
-    private Map<String, String>                mappings;
+    private final Map<String, String>                mappings;
 
     private AtomTypeMapper(String mappingFile) {
         this.mappingFile = mappingFile;

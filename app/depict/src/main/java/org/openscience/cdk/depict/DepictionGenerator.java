@@ -213,7 +213,7 @@ public final class DepictionGenerator {
     /**
      * Object that should be highlighted
      */
-    private Map<IChemObject, Color> highlight = new HashMap<>();
+    private final Map<IChemObject, Color> highlight = new HashMap<>();
 
     /**
      * Create a depiction generator using the standard sans-serif

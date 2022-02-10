@@ -29,7 +29,7 @@ import java.util.Iterator;
  */
 public class BooleanArrayDifference extends AbstractDifferenceList implements IDifferenceList {
 
-    private String name;
+    private final String name;
 
     private BooleanArrayDifference(String name) {
         this.name = name;

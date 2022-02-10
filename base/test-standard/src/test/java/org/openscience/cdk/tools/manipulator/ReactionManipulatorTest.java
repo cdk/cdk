@@ -58,7 +58,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ReactionManipulatorTest extends CDKTestCase {
 
     private IReaction          reaction;
-    private IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
     public ReactionManipulatorTest() {
         super();

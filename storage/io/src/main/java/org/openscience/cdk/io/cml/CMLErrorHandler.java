@@ -40,7 +40,7 @@ import org.xml.sax.SAXParseException;
  **/
 public class CMLErrorHandler implements ErrorHandler {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(CMLErrorHandler.class);
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(CMLErrorHandler.class);
 
     public boolean              reportErrors  = true;
     public boolean              abortOnErrors = false;

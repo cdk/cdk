@@ -48,7 +48,7 @@ import java.io.IOException;
 @Deprecated
 public class MoleculeFactory {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
 
     public static IAtomContainer makeAlphaPinene() {
         IAtomContainer mol = new AtomContainer();

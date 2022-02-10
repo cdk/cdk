@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class BPolDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(BPolDescriptor.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(BPolDescriptor.class);
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[]       polarizabilities;
     private static final String[] NAMES  = {"bpol"};

@@ -47,19 +47,19 @@ enum MmffParamSet {
     /**
      * Bond charge increments.
      */
-    private Map<BondKey, BigDecimal> bcis = new HashMap<>();
+    private final Map<BondKey, BigDecimal> bcis = new HashMap<>();
 
     /**
      * Atom type properties.
      */
-    private MmffProp[] properties = new MmffProp[MAX_MMFF_ATOMTYPE + 1];
+    private final MmffProp[] properties = new MmffProp[MAX_MMFF_ATOMTYPE + 1];
 
-    private Map<String, Integer> typeMap = new HashMap<>();
+    private final Map<String, Integer> typeMap = new HashMap<>();
 
     /**
      * Symbolic formal charges - some are varible and assigned in code.
      */
-    private Map<String, BigDecimal> fCharges = new HashMap<>();
+    private final Map<String, BigDecimal> fCharges = new HashMap<>();
 
     MmffParamSet() {
         try (InputStream in = getClass().getResourceAsStream("MMFFCHG.PAR")) {

@@ -59,8 +59,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReader.class);
-    private IChemObjectBuilder  builder;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReader.class);
+    private final IChemObjectBuilder  builder;
 
     private boolean             nextAvailableIsKnown;
     private boolean             hasNext;

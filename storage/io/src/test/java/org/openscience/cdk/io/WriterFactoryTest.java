@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class WriterFactoryTest extends CDKTestCase {
 
-    private WriterFactory factory = new WriterFactory();
+    private final WriterFactory factory = new WriterFactory();
 
     @Test
     public void testFormatCount() {

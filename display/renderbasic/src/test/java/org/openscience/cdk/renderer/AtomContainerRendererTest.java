@@ -51,9 +51,9 @@ import org.openscience.cdk.renderer.generators.IGenerator;
  */
 public class AtomContainerRendererTest {
 
-    private IChemObjectBuilder        builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder        builder = SilentChemObjectBuilder.getInstance();
 
-    private StructureDiagramGenerator sdg     = new StructureDiagramGenerator();
+    private final StructureDiagramGenerator sdg     = new StructureDiagramGenerator();
 
     public IAtomContainer layout(IAtomContainer molecule) {
         sdg.setMolecule(molecule);

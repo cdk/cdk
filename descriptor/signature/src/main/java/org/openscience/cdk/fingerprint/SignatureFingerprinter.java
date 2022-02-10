@@ -42,7 +42,7 @@ import org.openscience.cdk.signature.AtomSignature;
  */
 public class SignatureFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
-    private int signatureDepth;
+    private final int signatureDepth;
 
     /**
      * Initialize the fingerprinter with a default signature depth of 1.

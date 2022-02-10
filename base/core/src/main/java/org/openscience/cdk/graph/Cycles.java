@@ -1198,7 +1198,8 @@ public final class Cycles {
      */
     private static final class Fallback implements CycleFinder {
 
-        private CycleFinder primary, auxiliary;
+        private final CycleFinder primary;
+        private final CycleFinder auxiliary;
 
         /**
          * Create a fallback for two cycle finders.
@@ -1240,7 +1241,7 @@ public final class Cycles {
      */
     private static final class Unchorded implements CycleFinder {
 
-        private CycleFinder primary;
+        private final CycleFinder primary;
 
         /**
          * Filter any cycles produced by the {@code primary} cycle finder and

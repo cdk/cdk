@@ -45,7 +45,7 @@ import java.util.List;
  */
 public class ElementUtility implements IDrawVisitor {
 
-    private List<IRenderingElement> elements         = new ArrayList<>();
+    private final List<IRenderingElement> elements         = new ArrayList<>();
 
     private AffineTransform         transform;
 

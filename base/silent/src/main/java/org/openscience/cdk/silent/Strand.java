@@ -54,7 +54,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     private static final long     serialVersionUID = 4200943086350928356L;
 
     /** The list of all Monomers in the Strand.*/
-    private Map<String, IMonomer> monomers;
+    private final Map<String, IMonomer> monomers;
     /** The name of this strand (e.g. A, B). */
     private String                strandName;
     /** The type of this strand (e.g. PEPTIDE, DNA, RNA). */

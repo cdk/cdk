@@ -177,7 +177,8 @@ public class LogicalOperatorAtom extends SMARTSAtom {
     private static class Conjunction extends LogicalOperatorAtom {
 
         /** left and right of the operator. */
-        private SMARTSAtom left, right;
+        private final SMARTSAtom left;
+        private final SMARTSAtom right;
 
         /**
          * Create a disjunction of {@code left} or {@code right}.
@@ -226,7 +227,8 @@ public class LogicalOperatorAtom extends SMARTSAtom {
     private static class Disjunction extends LogicalOperatorAtom {
 
         /** left and right of the operator. */
-        private SMARTSAtom left, right;
+        private final SMARTSAtom left;
+        private final SMARTSAtom right;
 
         /**
          * Create a disjunction of {@code left} or {@code right}.
@@ -276,10 +278,10 @@ public class LogicalOperatorAtom extends SMARTSAtom {
     private static class Negation extends LogicalOperatorAtom {
 
         /** Expression to negate. */
-        private SMARTSAtom expression;
+        private final SMARTSAtom expression;
 
         /** Is the expression chiral - if so, always true! */
-        private boolean    chiral;
+        private final boolean    chiral;
 
         /**
          * Create a negation of {@code expression}.

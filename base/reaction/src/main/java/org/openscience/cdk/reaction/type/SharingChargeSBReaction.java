@@ -73,7 +73,7 @@ import java.util.Iterator;
  **/
 public class SharingChargeSBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingChargeSBReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingChargeSBReaction.class);
 
     /**
      * Constructor of the SharingChargeSBReaction object.

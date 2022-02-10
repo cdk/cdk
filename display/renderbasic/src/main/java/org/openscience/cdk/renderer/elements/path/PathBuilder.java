@@ -47,7 +47,7 @@ import org.openscience.cdk.renderer.elements.GeneralPath;
 public class PathBuilder {
 
     /** The path that is being built */
-    private List<PathElement> elements;
+    private final List<PathElement> elements;
 
     /** The color of the path */
     private Color             color;

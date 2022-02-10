@@ -29,7 +29,7 @@ import javax.swing.JComponent;
  */
 public class SwingEventRelay implements IViewEventRelay {
 
-    private JComponent component;
+    private final JComponent component;
 
     public SwingEventRelay(JComponent painter) {
         component = painter;

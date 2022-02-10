@@ -124,10 +124,10 @@ public final class Stereocenters {
     private final EdgeToBondMap   bondMap;
 
     /** the type of stereo center - indexed by atom. */
-    private Stereocenter[]  stereocenters;
+    private final Stereocenter[]  stereocenters;
 
     /** the stereo elements - indexed by atom. */
-    private StereoElement[] elements;
+    private final StereoElement[] elements;
 
     /** basic cycle information (i.e. is atom/bond cyclic) and cycle systems. */
     private final RingSearch      ringSearch;

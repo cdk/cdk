@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class ReaderFactoryTest extends AbstractReaderFactoryTest {
 
-    private ReaderFactory factory = new ReaderFactory();
+    private final ReaderFactory factory = new ReaderFactory();
 
     @Test
     public void testCreateReader_IChemFormat() {

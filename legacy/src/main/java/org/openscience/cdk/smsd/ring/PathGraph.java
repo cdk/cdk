@@ -68,9 +68,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 @Deprecated
 public class PathGraph {
 
-    private List<PathEdge> edges;
-    private List<IAtom>    atoms;
-    private IAtomContainer mol;
+    private final List<PathEdge> edges;
+    private final List<IAtom>    atoms;
+    private final IAtomContainer mol;
 
     public PathGraph(IAtomContainer molecule) {
         edges = new ArrayList<>();

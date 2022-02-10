@@ -93,7 +93,7 @@ import java.util.List;
  */
 public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ALOGPDescriptor.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ALOGPDescriptor.class);
 
     IAtomContainer atomContainer;
     IRingSet       rs;

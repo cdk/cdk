@@ -39,13 +39,13 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 public class BasicGenerator implements IGenerator<IAtomContainer> {
 
     /** Holder for various parameters, such as background color */
-    private BasicSceneGenerator sceneGenerator;
+    private final BasicSceneGenerator sceneGenerator;
 
     /** Generates elements for each atom in a container */
-    private BasicAtomGenerator  atomGenerator;
+    private final BasicAtomGenerator  atomGenerator;
 
     /** Generates elements for each bond in a container */
-    private BasicBondGenerator  bondGenerator;
+    private final BasicBondGenerator  bondGenerator;
 
     /**
      * Make a basic generator that creates elements for atoms and bonds.

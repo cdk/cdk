@@ -78,7 +78,7 @@ import java.util.Iterator;
  **/
 public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RadicalSiteHrAlphaReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RadicalSiteHrAlphaReaction.class);
 
     /**
      * Constructor of the RadicalSiteHrAlphaReaction object

@@ -94,8 +94,8 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
     /**
      * The default length of created fingerprints.
      */
-    private int                 fingerprintLength;
-    private static ILoggingTool logger           = LoggingToolFactory
+    private final int                 fingerprintLength;
+    private static final ILoggingTool logger           = LoggingToolFactory
                                                          .createLoggingTool(ShortestPathFingerprinter.class);
 
     /**

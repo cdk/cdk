@@ -50,7 +50,7 @@ public class OverlapResolverTest extends CDKTestCase {
      *  Description of the Field
      */
     public boolean              standAlone = false;
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(OverlapResolverTest.class);
+    private static final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(OverlapResolverTest.class);
     StructureDiagramGenerator   sdg        = null;
 
     /**

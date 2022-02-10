@@ -60,7 +60,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class BiconnectivityInspector {
 
     private List            biconnectedSets;
-    private UndirectedGraph graph;
+    private final UndirectedGraph graph;
 
     /**
      * Creates a biconnectivity inspector for the specified undirected graph.

@@ -47,7 +47,7 @@ import java.io.InputStream;
  */
 public class ExtraReaderFactoryTest {
 
-    private ReaderFactory factory = new ReaderFactory();
+    private final ReaderFactory factory = new ReaderFactory();
 
     void expectReader(String filename,
                       IResourceFormat expectedFormat)

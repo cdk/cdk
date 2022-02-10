@@ -78,7 +78,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class);
     private SmilesParser          sp;
 
     private static final String[] NAMES  = {"SC-3", "SC-4", "SC-5", "SC-6", "VC-3", "VC-4", "VC-5", "VC-6"};

@@ -40,7 +40,7 @@ import org.xml.sax.InputSource;
  **/
 public class CMLResolver implements EntityResolver {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLResolver.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLResolver.class);
 
     public CMLResolver() {}
 

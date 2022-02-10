@@ -32,7 +32,7 @@ public class AWTFontManager extends AbstractFontManager {
 
     private HashMap<Integer, Font> fontSizeToFontMap;
 
-    private int                    minFontSize;
+    private final int                    minFontSize;
 
     private Font                   currentFont;
 

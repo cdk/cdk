@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class ReactionEngine {
 
-    private static ILoggingTool    logger = LoggingToolFactory.createLoggingTool(ReactionEngine.class);
+    private static final ILoggingTool    logger = LoggingToolFactory.createLoggingTool(ReactionEngine.class);
 
     private Dictionary             dictionary;
     public HashMap<String, Object> paramsMap;

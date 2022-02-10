@@ -57,7 +57,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 public class XMLIsotopeFactory extends IsotopeFactory {
 
     private static XMLIsotopeFactory ifac  = null;
-    private boolean                  debug = false;
+    private final boolean                  debug = false;
 
     /**
      * Private constructor for the IsotopeFactory object.

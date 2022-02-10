@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MMFF94AtomTypeMatcher.class);
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MMFF94AtomTypeMatcher.class);
 
     IBond.Order                 maxBondOrder  = IBond.Order.SINGLE;
     private AtomTypeFactory     factory       = null;

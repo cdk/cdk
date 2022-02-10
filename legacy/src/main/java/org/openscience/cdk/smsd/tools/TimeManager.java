@@ -37,8 +37,8 @@ import java.util.TimeZone;
 @Deprecated
 public class TimeManager {
 
-    private double           startTime;
-    private SimpleDateFormat dateFormat;
+    private final double           startTime;
+    private final SimpleDateFormat dateFormat;
 
     /**
      * Constructor for storing execution time

@@ -103,7 +103,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  */
 public class ReactionSetRenderer extends AbstractRenderer<IReactionSet> implements IRenderer<IReactionSet> {
 
-    private IRenderer<IReaction> reactionRenderer;
+    private final IRenderer<IReaction> reactionRenderer;
 
     /**
      * A renderer that generates diagrams using the specified

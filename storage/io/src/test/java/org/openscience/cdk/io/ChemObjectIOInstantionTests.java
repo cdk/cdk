@@ -44,7 +44,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
 
     private final static String      IO_FORMATS_LIST = "io-formats.set";
 
-    private static ILoggingTool      logger          = LoggingToolFactory
+    private static final ILoggingTool      logger          = LoggingToolFactory
                                                              .createLoggingTool(ChemObjectIOInstantionTests.class);
 
     private static List<IChemFormat> formats         = null;

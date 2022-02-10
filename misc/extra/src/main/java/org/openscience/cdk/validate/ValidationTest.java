@@ -34,9 +34,9 @@ import org.openscience.cdk.interfaces.IChemObject;
 public class ValidationTest {
 
     /** IChemObject which has the error. */
-    private IChemObject object;
+    private final IChemObject object;
     /** String representation of the found error. */
-    private String      error;
+    private final String      error;
     /** Multiline String with details on the error. */
     private String      details;
 

@@ -63,7 +63,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** The default atom color. */
-    private IGeneratorParameter<Color> atomColor = new AtomColor();
+    private final IGeneratorParameter<Color> atomColor = new AtomColor();
 
     /** {@link IAtomColorer} used to draw elements. */
     public static class AtomColorer extends AbstractGeneratorParameter<IAtomColorer> {
@@ -77,7 +77,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** Converter between atoms and colors. */
-    private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
+    private final IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
 
     /** Boolean property that triggers atoms to be colored by type
      *  when set to true. */
@@ -92,7 +92,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** If true, colors atoms by their type. */
-    private IGeneratorParameter<Boolean> colorByType = new ColorByType();
+    private final IGeneratorParameter<Boolean> colorByType = new ColorByType();
 
     /** Boolean property that triggers explicit hydrogens to be
      *  drawn if set to true. */
@@ -107,7 +107,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** If true, explicit hydrogens are displayed. */
-    private IGeneratorParameter<Boolean> showExplicitHydrogens = new ShowExplicitHydrogens();
+    private final IGeneratorParameter<Boolean> showExplicitHydrogens = new ShowExplicitHydrogens();
 
     /** Magic number with unknown units that defines the radius
      *  around an atom, e.g. used for highlighting atoms. */
@@ -122,7 +122,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** The atom radius on screen. */
-    private IGeneratorParameter<Double> atomRadius = new AtomRadius();
+    private final IGeneratorParameter<Double> atomRadius = new AtomRadius();
 
     /** Boolean parameters that will cause atoms to be drawn as
      *  filled shapes when set to true. The actual used shape used
@@ -138,7 +138,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** If true, atoms are displayed as 'compact' symbols, not text. */
-    private IGeneratorParameter<Boolean> isCompact = new CompactAtom();
+    private final IGeneratorParameter<Boolean> isCompact = new CompactAtom();
 
     /** Determines whether structures should be drawn as Kekule structures, thus
      * giving each carbon element explicitly, instead of not displaying the
@@ -159,7 +159,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * giving each carbon element explicitly, instead of not displaying the
      * element symbol. Example C-C-C instead of /\.
      */
-    private IGeneratorParameter<Boolean> isKekule = new KekuleStructure();
+    private final IGeneratorParameter<Boolean> isKekule = new KekuleStructure();
 
     /**
      * When atoms are selected or in compact mode, they will
@@ -184,7 +184,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** The compact shape used to display atoms when isCompact is true. */
-    private IGeneratorParameter<Shape> compactShape = new CompactShape();
+    private final IGeneratorParameter<Shape> compactShape = new CompactShape();
 
     /** Boolean parameters that will show carbons with only one
      * (non-hydrogen) neighbor to be drawn with an element symbol.
@@ -205,7 +205,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * Determines whether methyl carbons' symbols should be drawn explicit for
      * methyl carbons. Example C/\C instead of /\.
      */
-    private IGeneratorParameter<Boolean> showEndCarbons = new ShowEndCarbons();
+    private final IGeneratorParameter<Boolean> showEndCarbons = new ShowEndCarbons();
 
     /**
      * An empty constructor necessary for reflection.

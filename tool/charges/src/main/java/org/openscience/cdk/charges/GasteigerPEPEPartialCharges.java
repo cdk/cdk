@@ -74,15 +74,15 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     private int                 STEP_SIZE     = 5;
     private AtomTypeFactory     factory;
     /** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
-    private static int          ISCHANGEDFC   = 0x1;
+    private static final int          ISCHANGEDFC   = 0x1;
 
     /** Corresponds an empirical influence between the electrostatic potential and
      * the neighbours.*/
-    private double              fE            = 1.1;                                                                     /* 1.1 */
+    private final double              fE            = 1.1;                                                                     /* 1.1 */
     /** Scale factor which makes same heavy for all structures*/
-    private double              fS            = 0.37;
+    private final double              fS            = 0.37;
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(GasteigerPEPEPartialCharges.class);
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(GasteigerPEPEPartialCharges.class);
 
     /**
      *  Constructor for the GasteigerPEPEPartialCharges object.

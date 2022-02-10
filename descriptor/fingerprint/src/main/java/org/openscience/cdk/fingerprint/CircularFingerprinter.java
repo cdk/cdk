@@ -132,8 +132,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private int[]          identity;
     private boolean[]      resolvedChiral;
     private int[][]        atomGroup;
-    private CRC32          crc            = new CRC32();        // recycled for each CRC calculation
-    private ArrayList<FP>  fplist         = new ArrayList<>();
+    private final CRC32          crc            = new CRC32();        // recycled for each CRC calculation
+    private final ArrayList<FP>  fplist         = new ArrayList<>();
 
     // summary information about the molecule, for quick access
     private boolean[]      amask;                               // true for all heavy atoms, i.e. hydrogens and non-elements are excluded
@@ -155,7 +155,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private boolean[]      tetrazole;                                           // special flag for being in a tetrazole (C1=NN=NN1) ring
 
     // ------------ options -------------------
-    private int     classType, atomClass;
+    private final int     classType;
+    private int atomClass;
     private boolean optPerceiveStereo = false;
 
     // ------------ public methods ------------

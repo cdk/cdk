@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class BasicValidator extends AbstractValidator {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(BasicValidator.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(BasicValidator.class);
 
     public BasicValidator() {}
 

@@ -76,7 +76,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting writeAgents;
 
     private BufferedWriter      writer;
-    private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(MDLRXNWriter.class);
+    private static final ILoggingTool logger   = LoggingToolFactory.createLoggingTool(MDLRXNWriter.class);
     private int                 reactionNumber;
     public Map<String, Object>  rdFields = null;
 

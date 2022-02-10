@@ -64,7 +64,7 @@ public class AtomPlacer {
     private static final double ANGLE_120 = Math.toRadians(120);
     public final static boolean debug = true;
     public static final String PRIORITY = "Weight";
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
 
     /**
      *  The molecule to be laid out. To be assigned from outside

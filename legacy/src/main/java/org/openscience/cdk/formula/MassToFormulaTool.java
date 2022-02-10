@@ -70,9 +70,9 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulator;
 @Deprecated
 public class MassToFormulaTool {
 
-    private ILoggingTool          logger = LoggingToolFactory.createLoggingTool(MassToFormulaTool.class);
+    private final ILoggingTool          logger = LoggingToolFactory.createLoggingTool(MassToFormulaTool.class);
 
-    private IChemObjectBuilder    builder;
+    private final IChemObjectBuilder    builder;
 
     /** */
     AtomTypeFactory               factory;
@@ -81,7 +81,7 @@ public class MassToFormulaTool {
     private int[][]               matrix_Base;
 
     /** Array listing the order of the elements to be shown according probability occurrence.*/
-    private String[]              orderElements;
+    private final String[]              orderElements;
 
     /** A List with all rules to be applied. see IRule.*/
     private List<IRule>           rules;

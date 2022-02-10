@@ -132,8 +132,8 @@ public class StructureDiagramGenerator {
     private IRingSet       sssr;
     private final double bondLength = DEFAULT_BOND_LENGTH;
     private Vector2d firstBondVector;
-    private RingPlacer       ringPlacer          = new RingPlacer();
-    private AtomPlacer       atomPlacer          = new AtomPlacer();
+    private final RingPlacer       ringPlacer          = new RingPlacer();
+    private final AtomPlacer       atomPlacer          = new AtomPlacer();
     private MacroCycleLayout macroPlacer         = null;
     private List<IRingSet>   ringSystems         = null;
     private Set<IAtom>       afix                = null;

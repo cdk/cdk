@@ -114,11 +114,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool          logger    = LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
+    private static final ILoggingTool          logger    = LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
     private        Map<String, Double[]> taeParams = new HashMap<>();
-    private        int                   ndesc     = 147;
+    private final int                   ndesc     = 147;
 
-    private Map<String, String> nametrans = new HashMap<>();
+    private final Map<String, String> nametrans = new HashMap<>();
 
     private List<IMonomer> getMonomers(IBioPolymer iBioPolymer) {
         List<IMonomer> monomList = new ArrayList<>();

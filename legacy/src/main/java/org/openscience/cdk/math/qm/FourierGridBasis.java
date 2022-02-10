@@ -38,13 +38,13 @@ import org.openscience.cdk.math.Vector;
  */
 public class FourierGridBasis implements IBasis {
 
-    private int       N;
-    private double    minx;
-    private double    maxx;
-    private double    dx;
-    private IFunction potential;
-    private double    Tl;
-    private int       N2;
+    private final int       N;
+    private final double    minx;
+    private final double    maxx;
+    private final double    dx;
+    private final IFunction potential;
+    private final double    Tl;
+    private final int       N2;
 
     public FourierGridBasis(int N, double minx, double maxx, IFunction potential) {
         this.N = N;

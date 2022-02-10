@@ -68,7 +68,7 @@ import static org.junit.Assert.assertTrue;
 public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     boolean                     standAlone = false;
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
+    private static final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {
