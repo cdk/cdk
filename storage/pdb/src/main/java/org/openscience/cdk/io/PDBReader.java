@@ -269,7 +269,7 @@ public class PDBReader extends DefaultChemObjectReader {
                             oObj = oAtom.getChainID();
                             if (oObj != null) {
                                 // cResidue = cResidue.append(((String)oObj).trim());
-                                cResidue = cResidue.append(String.valueOf(chain));
+                                cResidue = cResidue.append(chain);
                             }
                             oObj = oAtom.getResSeq();
                             if (oObj != null) {

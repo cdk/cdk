@@ -172,9 +172,9 @@ public class HINWriter extends DefaultChemObjectWriter {
                     chrg = atom.getCharge();
                     Point3d point = atom.getPoint3d();
 
-                    line = line + Integer.toString(i + 1) + " - " + sym + " ** - " + Double.toString(chrg) + " "
-                            + Double.toString(point.x) + " " + Double.toString(point.y) + " "
-                            + Double.toString(point.z) + " ";
+                    line = line + (i + 1) + " - " + sym + " ** - " + chrg + " "
+                            + point.x + " " + point.y + " "
+                            + point.z + " ";
 
                     String buf = "";
                     int ncon = 0;
@@ -196,11 +196,11 @@ public class HINWriter extends DefaultChemObjectWriter {
                             else if (bondOrder == IBond.Order.TRIPLE)
                                 bondType = "t";
                             else if (bond.getFlag(CDKConstants.ISAROMATIC)) bondType = "a";
-                            buf = buf + Integer.toString(serial + 1) + " " + bondType + " ";
+                            buf = buf + (serial + 1) + " " + bondType + " ";
                             ncon++;
                         }
                     }
-                    line = line + " " + Integer.toString(ncon) + " " + buf;
+                    line = line + " " + ncon + " " + buf;
                     writer.write(line, 0, line.length());
                     writer.write('\n');
                     i++;

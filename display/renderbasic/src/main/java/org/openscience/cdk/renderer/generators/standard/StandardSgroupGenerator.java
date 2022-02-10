@@ -532,7 +532,7 @@ final class StandardSgroupGenerator {
                 case CtabComponent:
                     Integer compNum = sgroup.getValue(SgroupKey.CtabComponentNumber);
                     if (compNum != null)
-                        subscript = "c" + Integer.toString(compNum);
+                        subscript = "c" + compNum;
                     else
                         subscript = "c";
                     break;
