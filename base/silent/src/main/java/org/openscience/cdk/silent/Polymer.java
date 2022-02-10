@@ -142,7 +142,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
 
     @Override
     public String toString() {
-        StringBuffer stringContent = new StringBuffer();
+        StringBuilder stringContent = new StringBuilder();
         stringContent.append("Polymer(");
         stringContent.append(this.hashCode()).append(", ");
         stringContent.append(super.toString());

@@ -152,7 +152,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
 
     @Override
     public String toString() {
-        StringBuffer stringContent = new StringBuffer(32);
+        StringBuilder stringContent = new StringBuilder(32);
         stringContent.append("AminoAcid(");
         stringContent.append(this.hashCode());
         if (nTerminus != null) {

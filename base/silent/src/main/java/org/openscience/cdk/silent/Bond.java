@@ -589,7 +589,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public String toString() {
-        StringBuffer resultString = new StringBuffer(32);
+        StringBuilder resultString = new StringBuilder(32);
         resultString.append("Bond(").append(this.hashCode());
         if (getOrder() != null) {
             resultString.append(", #O:").append(getOrder());

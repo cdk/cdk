@@ -33,7 +33,7 @@ public class AtomContainerPrinter {
     }
 
     public static String toString(IAtomContainer atomContainer, Permutation permutation, boolean sortEdges) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         int atomCount = atomContainer.getAtomCount();
         IAtom[] pAtoms = new IAtom[atomCount];
         for (int i = 0; i < atomCount; i++) {

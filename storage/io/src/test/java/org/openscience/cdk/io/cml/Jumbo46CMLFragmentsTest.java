@@ -252,7 +252,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testCrystal() throws Exception {
-        StringBuffer cmlStringB = new StringBuffer("  <molecule id=\"m1\">\n");
+        StringBuilder cmlStringB = new StringBuilder("  <molecule id=\"m1\">\n");
         cmlStringB.append("    <crystal z=\"4\">\n");
         cmlStringB
                 .append("      <scalar id=\"sc1\" title=\"a\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");

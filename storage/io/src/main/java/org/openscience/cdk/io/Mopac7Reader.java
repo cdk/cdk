@@ -102,7 +102,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     /** {@inheritDoc} */
     public <T extends IChemObject> T read(T object) throws CDKException {
         final String[] expected_columns = {"NO.", "ATOM", "X", "Y", "Z"};
-        StringBuffer eigenvalues = new StringBuffer();
+        StringBuilder eigenvalues = new StringBuilder();
         if (object instanceof IAtomContainer) {
             IAtomContainer container = (IAtomContainer) object;
             try {

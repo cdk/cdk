@@ -105,7 +105,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
                 boolean endMoleculeFound = false;
                 boolean startMoleculeFound = false;
 
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                 while (!startMoleculeFound && currentLine != null) {
                     int depthDiff = countBrackets(currentLine);
                     depth += depthDiff;
@@ -186,7 +186,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     }
 
     private String getCommand(String line) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int i = 0;
         boolean foundBracket = false;
         while (i < line.length() && !foundBracket) {

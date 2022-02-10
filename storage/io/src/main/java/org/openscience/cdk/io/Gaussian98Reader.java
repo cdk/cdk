@@ -467,7 +467,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @return Description of the Return Value
      */
     private String parseLevelOfTheory(String line) {
-        StringBuffer summary = new StringBuffer();
+        StringBuilder summary = new StringBuilder();
         summary.append(line);
         try {
 

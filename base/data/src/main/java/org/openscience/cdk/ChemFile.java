@@ -190,7 +190,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      */
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("ChemFile(#S=");
         buffer.append(chemSequenceCount);
         if (chemSequenceCount > 0) {

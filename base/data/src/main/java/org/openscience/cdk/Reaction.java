@@ -476,7 +476,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     @Override
     public String toString() {
-        StringBuffer description = new StringBuffer(64);
+        StringBuilder description = new StringBuilder(64);
         description.append("Reaction(");
         description.append(getID());
         description.append(", #M:").append(mappingCount);

@@ -337,7 +337,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                     // atom type has a one letter code
                     atype = atype.substring(0, 1);
                 } else {
-                    StringBuffer sb2 = new StringBuffer();
+                    StringBuilder sb2 = new StringBuilder();
                     sb2.append(atype.charAt(1));
                     atype = atype.substring(0, 1) + sb2.toString().toLowerCase();
                 }

@@ -278,7 +278,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
             soar = Cycles.sssr(ac).toRingSet();
         }
         boolean[] bool = new boolean[1000];
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < soar.getRings(root).getAtomContainerCount(); i++) {
             if (((IRing) soar.getRings(root).getAtomContainer(i)).getAtomCount() < bool.length)
                 bool[((IRing) soar.getRings(root).getAtomContainer(i)).getAtomCount()] = true;
@@ -495,16 +495,16 @@ public class HOSECodeGenerator implements java.io.Serializable {
             return sphereDelimiters[sphere - 1];
         }
         TreeNode treeNode = null;
-        StringBuffer code = new StringBuffer();
+        StringBuilder code = new StringBuilder();
         /*
          * append the tree node code to the HOSECode in their now determined
          * order, using commas to separate nodes from different branches
          */
         IAtom branch = sphereNodes.get(0).source.atom;
-        StringBuffer tempCode = null;
+        StringBuilder tempCode = null;
         for (TreeNode sphereNode : sphereNodes) {
             treeNode = sphereNode;
-            tempCode = new StringBuffer();
+            tempCode = new StringBuilder();
             if (!treeNode.source.stopper && !treeNode.source.atom.equals(branch)) {
                 branch = treeNode.source.atom;
                 code.append(',');

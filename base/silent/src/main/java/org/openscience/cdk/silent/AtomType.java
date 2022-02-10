@@ -366,7 +366,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 
     @Override
     public String toString() {
-        StringBuffer resultString = new StringBuffer(64);
+        StringBuilder resultString = new StringBuilder(64);
         resultString.append("AtomType(").append(hashCode());
         if (getAtomTypeName() != null) {
             resultString.append(", N:").append(getAtomTypeName());

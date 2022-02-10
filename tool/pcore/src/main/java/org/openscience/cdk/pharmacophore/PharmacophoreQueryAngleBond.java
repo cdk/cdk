@@ -125,7 +125,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("AC::").append(getAtom(0)).append("::").append(getAtom(1)).append("::").append(getAtom(2));
         sb.append("::[").append(getLower()).append(" - ").append(getUpper()).append("] ");
         return sb.toString();

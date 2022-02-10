@@ -187,7 +187,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
             String terRecordName = "TER";
 
             // Loop through the atoms and write them out:
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             Iterator<IAtom> atoms = molecule.atoms().iterator();
             FormatStringBuffer fsb = new FormatStringBuffer("");
             String[] connectRecords = null;
@@ -239,7 +239,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                 if (connectRecords != null && writeCONECTRecords.isSet()) {
                     List<IAtom> neighbours = molecule.getConnectedAtomsList(atom);
                     if (neighbours.size() != 0) {
-                        StringBuffer connectBuffer = new StringBuffer("CONECT");
+                        StringBuilder connectBuffer = new StringBuilder("CONECT");
                         connectBuffer.append(String.format("%5d", atomNumber));
                         for (IAtom neighbour : neighbours) {
                             int neighbourNumber = molecule.indexOf(neighbour) + 1;

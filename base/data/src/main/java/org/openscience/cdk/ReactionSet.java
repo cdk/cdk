@@ -195,7 +195,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer(32);
+        StringBuilder buffer = new StringBuilder(32);
         buffer.append("ReactionSet(");
         buffer.append(this.hashCode());
         buffer.append(", R=").append(getReactionCount()).append(", ");

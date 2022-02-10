@@ -262,7 +262,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 
     @Override
     public String toString() {
-        StringBuffer stringContent = new StringBuffer();
+        StringBuilder stringContent = new StringBuilder();
         stringContent.append("BioPolymer(");
         stringContent.append(this.hashCode()).append(", ");
         stringContent.append(super.toString());

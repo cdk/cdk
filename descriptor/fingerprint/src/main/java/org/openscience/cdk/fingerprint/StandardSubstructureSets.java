@@ -64,7 +64,7 @@ public class StandardSubstructureSets {
         while ((line = reader.readLine()) != null) {
             if (line.startsWith("#") || line.trim().length() == 0) continue;
             String[] toks = line.split(":");
-            StringBuffer s = new StringBuffer();
+            StringBuilder s = new StringBuilder();
             for (int i = 1; i < toks.length - 1; i++)
                 s.append(toks[i] + ":");
             s.append(toks[toks.length - 1]);

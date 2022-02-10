@@ -115,11 +115,11 @@ public class CanonicalLabeler {
     private List<InvPair> createInvarLabel(IAtomContainer atomContainer) {
         Iterator<IAtom> atoms = atomContainer.atoms().iterator();
         IAtom a;
-        StringBuffer inv;
+        StringBuilder inv;
         List<InvPair> vect = new ArrayList<>();
         while (atoms.hasNext()) {
             a = (IAtom) atoms.next();
-            inv = new StringBuffer();
+            inv = new StringBuilder();
             inv.append(atomContainer.getConnectedAtomsList(a).size()
                     + (a.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : a.getImplicitHydrogenCount())); //Num connections
             inv.append(atomContainer.getConnectedAtomsList(a).size()); //Num of non H bonds

@@ -432,7 +432,7 @@ public class CIFReader extends DefaultChemObjectReader {
     }
 
     private String extractFirstLetters(String value) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < value.length(); i++) {
             if (Character.isDigit(value.charAt(i))) {
                 break;

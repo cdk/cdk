@@ -46,7 +46,7 @@ public class ChemObjectDifference extends AbstractDifferenceList implements IDif
     public String toString() {
         if (differences.size() == 0) return "";
 
-        StringBuffer diffBuffer = new StringBuffer();
+        StringBuilder diffBuffer = new StringBuilder();
         diffBuffer.append(this.name).append('{');
         Iterator<IDifference> children = getChildren().iterator();
         while (children.hasNext()) {

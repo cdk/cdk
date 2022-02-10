@@ -69,7 +69,7 @@ public class Point3dDifference extends AbstractDifferenceList implements IDiffer
     public String toString() {
         if (differences.size() == 0) return "";
 
-        StringBuffer diffBuffer = new StringBuffer();
+        StringBuilder diffBuffer = new StringBuilder();
         diffBuffer.append(this.name).append('{');
         Iterator<IDifference> children = getChildren().iterator();
         while (children.hasNext()) {

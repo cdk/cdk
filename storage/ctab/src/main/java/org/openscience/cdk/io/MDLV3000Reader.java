@@ -875,7 +875,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     public String exhaustStringTokenizer(StringTokenizer tokenizer) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(' ');
         while (tokenizer.hasMoreTokens()) {
             buffer.append(tokenizer.nextToken());

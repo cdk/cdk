@@ -128,7 +128,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      */
     @Override
     public String toString() {
-        StringBuffer stringContent = new StringBuffer();
+        StringBuilder stringContent = new StringBuilder();
         stringContent.append("SingleElectron(");
         stringContent.append(this.hashCode());
         if (atom != null) {

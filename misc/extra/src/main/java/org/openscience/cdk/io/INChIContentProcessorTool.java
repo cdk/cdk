@@ -137,7 +137,7 @@ final class INChIContentProcessorTool {
         private String chopBranch(String remainder) {
             boolean doChop = false;
             int branchLevel = 0;
-            StringBuffer choppedString = new StringBuffer();
+            StringBuilder choppedString = new StringBuilder();
             for (int i = 0; i < remainder.length(); i++) {
                 char currentChar = remainder.charAt(i);
                 if (currentChar == '(') {

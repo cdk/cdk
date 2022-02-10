@@ -99,7 +99,7 @@ public class QSARCustomizer implements ICMLCustomizer {
             scalar = new CMLArray();
             scalar.addAttribute(new Attribute("dataType", "xsd:int"));
             scalar.addAttribute(new Attribute("size", "" + result.length()));
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             for (int i = 0; i < result.length(); i++) {
                 buffer.append(result.get(i) + " ");
             }
@@ -109,7 +109,7 @@ public class QSARCustomizer implements ICMLCustomizer {
             scalar = new CMLArray();
             scalar.addAttribute(new Attribute("dataType", "xsd:double"));
             scalar.addAttribute(new Attribute("size", "" + result.length()));
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             for (int i = 0; i < result.length(); i++) {
                 buffer.append(result.get(i) + " ");
             }

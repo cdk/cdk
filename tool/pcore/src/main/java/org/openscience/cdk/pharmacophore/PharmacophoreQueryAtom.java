@@ -125,7 +125,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      */
     @Override
     public String toString() {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append(getSymbol()).append(" [").append(getSmarts()).append(']');
         return s.toString();
     }

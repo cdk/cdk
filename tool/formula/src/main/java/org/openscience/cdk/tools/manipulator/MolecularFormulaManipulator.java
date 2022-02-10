@@ -421,7 +421,7 @@ public class MolecularFormulaManipulator {
      */
     @Deprecated
     public static String getHillString(IMolecularFormula formula) {
-        StringBuffer hillString = new StringBuffer();
+        StringBuilder hillString = new StringBuilder();
 
         Map<String, Integer> hillMap = new TreeMap<>();
         for (IIsotope isotope : formula.isotopes()) {

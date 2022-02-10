@@ -402,7 +402,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     }
 
     private String getCommand(String line) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int i = 0;
         boolean foundBracket = false;
         while (i < line.length() && !foundBracket) {
@@ -418,7 +418,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     }
 
     private String getValue(String line) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int i = 0;
         boolean foundComma = false;
         boolean preWS = true;
@@ -438,7 +438,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     }
 
     private String getQuotedValue(String line) throws Exception {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int i = 0;
         //    	logger.debug("QV line: " + line);
         boolean startQuoteFound = false;

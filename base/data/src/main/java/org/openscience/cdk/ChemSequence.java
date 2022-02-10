@@ -188,7 +188,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer(32);
+        StringBuilder buffer = new StringBuilder(32);
         buffer.append("ChemSequence(#M=");
         buffer.append(chemModelCount);
         if (chemModelCount > 0) {

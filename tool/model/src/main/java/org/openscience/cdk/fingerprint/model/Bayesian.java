@@ -476,7 +476,7 @@ public class Bayesian {
      * @return serialised model
      */
     public String serialise() {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
 
         String fpname = classType == CircularFingerprinter.CLASS_ECFP0 ? "ECFP0"
                 : classType == CircularFingerprinter.CLASS_ECFP2 ? "ECFP2"

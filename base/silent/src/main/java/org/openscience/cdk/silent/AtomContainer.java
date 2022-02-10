@@ -1311,7 +1311,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public String toString() {
-        StringBuffer stringContent = new StringBuffer(64);
+        StringBuilder stringContent = new StringBuilder(64);
         stringContent.append("AtomContainer(");
         stringContent.append(this.hashCode());
         if (getAtomCount() > 0) {

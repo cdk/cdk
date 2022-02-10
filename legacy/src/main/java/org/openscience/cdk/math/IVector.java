@@ -168,7 +168,7 @@ public class IVector {
     @Override
     public String toString() {
         int i;
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
         str.append("[ ");
         for (i = 0; i < (size - 1); i++)
             str.append(realvector[i] + "+i*" + imagvector[i] + " ");

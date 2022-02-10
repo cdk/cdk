@@ -236,7 +236,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 
     @Override
     public String toString() {
-        StringBuffer stringContent = new StringBuffer(32);
+        StringBuilder stringContent = new StringBuilder(32);
         stringContent.append("Strand(");
         stringContent.append(this.hashCode());
         if (getStrandName() != null) {
