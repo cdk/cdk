@@ -38,5 +38,5 @@ public interface IChemObjectListener {
      *
      * @param event  a ChemObjectChangeEvent object
      */
-    public void stateChanged(IChemObjectChangeEvent event);
+    void stateChanged(IChemObjectChangeEvent event);
 }

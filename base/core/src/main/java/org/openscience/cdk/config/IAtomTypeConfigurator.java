@@ -39,7 +39,7 @@ public interface IAtomTypeConfigurator {
      *
      * @param ins InputStream from which the atom type definitions are to be read
      */
-    public void setInputStream(InputStream ins);
+    void setInputStream(InputStream ins);
 
     /**
      * Reads a set of configured AtomType's into a List.
@@ -49,6 +49,6 @@ public interface IAtomTypeConfigurator {
      * @return A List containing the AtomTypes extracted from the InputStream
      * @throws IOException when something went wrong with reading the data
      */
-    public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException;
+    List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException;
 
 }

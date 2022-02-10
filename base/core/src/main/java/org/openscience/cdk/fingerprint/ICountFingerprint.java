@@ -42,7 +42,7 @@ public interface ICountFingerprint extends Serializable {
      *
      * @return the size of the fingerprint.
      */
-    public long size();
+    long size();
 
     /**
      * Returns the number of bins that are populated. This number is typically smaller
@@ -51,7 +51,7 @@ public interface ICountFingerprint extends Serializable {
      * @return the number of populated bins
      * @see    #size()
      */
-    public int numOfPopulatedbins();
+    int numOfPopulatedbins();
 
     /**
      * Returns the count value for the bin with the given index.
@@ -59,7 +59,7 @@ public interface ICountFingerprint extends Serializable {
      * @param index the index of the bin to return the number of hits for.
      * @return the count for the bin with given index.
      */
-    public int getCount(int index);
+    int getCount(int index);
 
     /**
      * Returns the hash corresponding to the given index in the fingerprint.
@@ -67,14 +67,14 @@ public interface ICountFingerprint extends Serializable {
      * @param index the index of the bin to return the hash for.
      * @return the hash for the bin with the given index.
      */
-    public int getHash(int index);
+    int getHash(int index);
 
     /**
      * Merge all from <code>fp</code> into the current fingerprint.
      *
      * @param fp to be merged
      */
-    public void merge(ICountFingerprint fp);
+    void merge(ICountFingerprint fp);
 
     /**
      * Changes behaviour, if true is given the count fingerprint will
@@ -82,7 +82,7 @@ public interface ICountFingerprint extends Serializable {
      *
      * @param behaveAsBitFingerprint
      */
-    public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint);
+    void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint);
 
     /**
      * Whether the fingerprint contains the given hash.
@@ -90,7 +90,7 @@ public interface ICountFingerprint extends Serializable {
      * @param hash
      * @return true if the fingerprint contains the given hash, otherwise false.
      */
-    public boolean hasHash(int hash);
+    boolean hasHash(int hash);
 
     /**
      * Get the number of times a certain hash exists in the fingerprint.
@@ -98,5 +98,5 @@ public interface ICountFingerprint extends Serializable {
      * @param hash
      * @return the number associated with the given hash
      */
-    public int getCountForHash(int hash);
+    int getCountForHash(int hash);
 }

@@ -38,7 +38,7 @@ public interface IMolecularDescriptor extends IDescriptor {
      * @return An object of {@link DescriptorValue} that contain the
      *         calculated value as well as specification details
      */
-    public DescriptorValue calculate(IAtomContainer container);
+    DescriptorValue calculate(IAtomContainer container);
 
     /**
      * Returns the specific type of the DescriptorResult object.
@@ -55,6 +55,6 @@ public interface IMolecularDescriptor extends IDescriptor {
      * @return an object that implements the {@link IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link DescriptorValue} object
      */
-    public IDescriptorResult getDescriptorResultType();
+    IDescriptorResult getDescriptorResultType();
 
 }

@@ -1073,7 +1073,7 @@ public class DynamicFactory {
      * implements. This interface is constructor injectable allowing us to test
      * the registration using this method.
      */
-    public static interface InterfaceProvider {
+    public interface InterfaceProvider {
 
         /**
          * Access the interfaces for a given class.
@@ -1081,7 +1081,7 @@ public class DynamicFactory {
          * @param c the class to access the interfaces of
          * @return a set of interfaces
          */
-        public Class<?>[] getInterfaces(Class<?> c);
+        Class<?>[] getInterfaces(Class<?> c);
     }
 
     /**
@@ -1090,9 +1090,9 @@ public class DynamicFactory {
      *
      * @param <T> instance instance to be modified
      */
-    public static interface CreationModifier<T> {
+    public interface CreationModifier<T> {
 
-        public void modify(T instance);
+        void modify(T instance);
     }
 
     /**
@@ -1144,7 +1144,7 @@ public class DynamicFactory {
      *
      * @param <T> the type of object that will be created
      */
-    public static interface Creator<T> {
+    public interface Creator<T> {
 
         /**
          * Create a new instance with the provided object parameters.
@@ -1157,7 +1157,7 @@ public class DynamicFactory {
          *                                   accessed (e.g. private)
          * @throws InstantiationException    thrown if class is abstract
          */
-        public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
+        T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
                 InstantiationException;
 
         /**
@@ -1165,7 +1165,7 @@ public class DynamicFactory {
          *
          * @return the implementation class to be created
          */
-        public Class<T> getDeclaringClass();
+        Class<T> getDeclaringClass();
     }
 
     /**

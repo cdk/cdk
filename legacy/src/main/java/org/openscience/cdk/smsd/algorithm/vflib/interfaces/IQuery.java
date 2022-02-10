@@ -64,34 +64,34 @@ public interface IQuery {
      * Returns nodes of the query.
      * @return node Iterable.
      */
-    public Iterable<INode> nodes();
+    Iterable<INode> nodes();
 
     /**
      * Returns a node of the query mol at a given position.
      * @param index at position.
      * @return node.
      */
-    public INode getNode(int index);
+    INode getNode(int index);
 
     /**
      * Returns edges of the query.
      * @return edge Iterable.
      */
-    public Iterable<IEdge> edges();
+    Iterable<IEdge> edges();
 
     /**
      * Returns an edge of the query mol at a given position.
      * @param index at position.
      * @return edge
      */
-    public IEdge getEdge(int index);
+    IEdge getEdge(int index);
 
     /**
      * Returns an atom associated with this node.
      * @param node get Atom of this node.
      * @return atom of this node
      */
-    public IAtom getAtom(INode node);
+    IAtom getAtom(INode node);
 
     /**
      * Returns an edge associated between two nodes.
@@ -100,17 +100,17 @@ public interface IQuery {
      * @param target and target.
      * @return IEdge egde between source and target.
      */
-    public IEdge getEdge(INode source, INode target);
+    IEdge getEdge(INode source, INode target);
 
     /**
      * Returns edge count.
      * @return edge count.
      */
-    public int countEdges();
+    int countEdges();
 
     /**
      * Returns node count.
      * @return node count.
      */
-    public int countNodes();
+    int countNodes();
 }

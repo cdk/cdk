@@ -20,6 +20,6 @@ public interface ITestObjectBuilder {
      * Returns a clean new test object.
      * @return a new test object
      */
-    public IChemObject newTestObject();
+    IChemObject newTestObject();
 
 }

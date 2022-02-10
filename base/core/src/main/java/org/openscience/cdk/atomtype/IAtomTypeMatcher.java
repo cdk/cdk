@@ -47,7 +47,7 @@ public interface IAtomTypeMatcher {
      * @throws           CDKException when something went wrong with going through
      *                   the AtomType's
      */
-    public IAtomType findMatchingAtomType(IAtomContainer container, IAtom atom) throws CDKException;
+    IAtomType findMatchingAtomType(IAtomContainer container, IAtom atom) throws CDKException;
 
     /**
      * Method that assigns atom types to atoms in the given atom container.
@@ -57,6 +57,6 @@ public interface IAtomTypeMatcher {
      * @throws           CDKException when something went wrong with going through
      *                   the AtomType's
      */
-    public IAtomType[] findMatchingAtomTypes(IAtomContainer container) throws CDKException;
+    IAtomType[] findMatchingAtomTypes(IAtomContainer container) throws CDKException;
 
 }

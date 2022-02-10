@@ -47,7 +47,7 @@ public interface IPDBPolymer extends IBioPolymer {
      *
      * @param oAtom  The atom to add
      */
-    public void addAtom(IPDBAtom oAtom);
+    void addAtom(IPDBAtom oAtom);
 
     /**
      * Adds the atom to a specified Strand and a specified Monomer.
@@ -56,25 +56,25 @@ public interface IPDBPolymer extends IBioPolymer {
      * @param oMonomer The monomer the atom belongs to
      * @param oStrand  The strand the atom belongs to
      */
-    public void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand);
+    void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 
     /**
      * Adds the PDBStructure structure a this PDBPolymer.
      *
      * @param structure  The PDBStructure to add
      */
-    public void addStructure(IPDBStructure structure);
+    void addStructure(IPDBStructure structure);
 
     /**
      * Returns a Collection containing the PDBStructure in the PDBPolymer.
      *
      * @return Collection containing the PDBStructure in the PDBPolymer
      */
-    public Collection<IPDBStructure> getStructures();
+    Collection<IPDBStructure> getStructures();
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public IPDBPolymer clone() throws CloneNotSupportedException;
+    IPDBPolymer clone() throws CloneNotSupportedException;
 }

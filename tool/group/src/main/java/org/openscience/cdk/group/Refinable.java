@@ -43,14 +43,14 @@ public interface Refinable {
      * @param vertexIndex the element to compare
      * @return the size of the intersection between the neighbours and the block
      */
-    public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex);
+    Invariant neighboursInBlock(Set<Integer> block, int vertexIndex);
     
     /**
      * Get the number of vertices in the graph to be refined.
      *
      * @return a count of the vertices in the underlying graph
      */
-    public int getVertexCount();
+    int getVertexCount();
     
     /**
      * Get the connectivity between two vertices as an integer, to allow
@@ -61,7 +61,7 @@ public interface Refinable {
      * @param vertexJ a vertex of the graph
      * @return the multiplicity of the edge (0, 1, 2, 3, ...)
      */
-    public int getConnectivity(int vertexI, int vertexJ);
+    int getConnectivity(int vertexI, int vertexJ);
     
     /**
      * Get an initial partition of the vertices of the refinable - 
@@ -69,6 +69,6 @@ public interface Refinable {
      *  
      * @return a partition of the vertices
      */
-    public Partition getInitialPartition();
+    Partition getInitialPartition();
 
 }

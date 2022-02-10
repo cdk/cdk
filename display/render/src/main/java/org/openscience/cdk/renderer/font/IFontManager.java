@@ -30,7 +30,7 @@ public interface IFontManager {
     /**
      * Style of the font to use to draw text.
      */
-    public enum FontStyle {
+    enum FontStyle {
         /** Regular font style. */
         NORMAL,
         /** Bold font style. */
@@ -42,20 +42,20 @@ public interface IFontManager {
      *
      * @param zoom a real number in the range (0.0, INF)
      */
-    public void setFontForZoom(double zoom);
+    void setFontForZoom(double zoom);
 
     /**
      * Set the font style.
      *
      * @param fontStyle an {@link FontStyle} type
      */
-    public void setFontStyle(IFontManager.FontStyle fontStyle);
+    void setFontStyle(IFontManager.FontStyle fontStyle);
 
     /**
      * Set the font name ('Arial', 'Times New Roman') and so on.
      *
      * @param fontName name of the font to use
      */
-    public void setFontName(String fontName);
+    void setFontName(String fontName);
 
 }

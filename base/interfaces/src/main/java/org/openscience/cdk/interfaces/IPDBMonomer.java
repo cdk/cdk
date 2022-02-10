@@ -36,46 +36,46 @@ public interface IPDBMonomer extends IMonomer {
      *
      * @param newICode  the I code of this monomer
      */
-    public void setICode(String newICode);
+    void setICode(String newICode);
 
     /**
      * Gets the ICode of this monomer.
      *
      * @return the ICode of this monomer
      */
-    public String getICode();
+    String getICode();
 
     /**
      * Sets the Chain ID of this monomer.
      *
      * @param newChainID  the Chain ID of this monomer
      */
-    public void setChainID(String newChainID);
+    void setChainID(String newChainID);
 
     /**
      * Gets the Chain ID of this monomer.
      *
      * @return the Chain ID of this monomer
      */
-    public String getChainID();
+    String getChainID();
 
     /**
      * Gets the sequence identifier of this monomer.
      *
      * @return  the sequence identifier of this monomer
      */
-    public String getResSeq();
+    String getResSeq();
 
     /**
      * Sets the sequence identifier of this monomer.
      *
      * @param newResSeq  the new sequence identifier of this monomer
      */
-    public void setResSeq(String newResSeq);
+    void setResSeq(String newResSeq);
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public IPDBMonomer clone() throws CloneNotSupportedException;
+    IPDBMonomer clone() throws CloneNotSupportedException;
 }

@@ -39,8 +39,8 @@ import org.openscience.cdk.exception.CDKException;
  */
 public interface IValencyChecker {
 
-    public boolean isSaturated(IAtomContainer ac) throws CDKException;
+    boolean isSaturated(IAtomContainer ac) throws CDKException;
 
-    public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException;
+    boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException;
 
 }

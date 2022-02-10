@@ -64,17 +64,17 @@ public interface IEdge {
      * Returns source Node.
      * @return source node.
      */
-    public INode getSource();
+    INode getSource();
 
     /**
      * Returns target Node.
      * @return target Node.
      */
-    public INode getTarget();
+    INode getTarget();
 
     /**
      * Returns bond matcher.
      * @return Query Bond.
      */
-    public VFBondMatcher getBondMatcher();
+    VFBondMatcher getBondMatcher();
 }

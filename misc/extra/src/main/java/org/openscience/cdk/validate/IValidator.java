@@ -44,36 +44,36 @@ import org.openscience.cdk.interfaces.IReactionSet;
  */
 public interface IValidator {
 
-    public ValidationReport validateAtom(IAtom subject);
+    ValidationReport validateAtom(IAtom subject);
 
-    public ValidationReport validateAtomContainer(IAtomContainer subject);
+    ValidationReport validateAtomContainer(IAtomContainer subject);
 
-    public ValidationReport validateAtomType(IAtomType subject);
+    ValidationReport validateAtomType(IAtomType subject);
 
-    public ValidationReport validateBond(IBond subject);
+    ValidationReport validateBond(IBond subject);
 
-    public ValidationReport validateChemFile(IChemFile subject);
+    ValidationReport validateChemFile(IChemFile subject);
 
-    public ValidationReport validateChemModel(IChemModel subject);
+    ValidationReport validateChemModel(IChemModel subject);
 
-    public ValidationReport validateChemObject(IChemObject object);
+    ValidationReport validateChemObject(IChemObject object);
 
-    public ValidationReport validateChemSequence(IChemSequence subject);
+    ValidationReport validateChemSequence(IChemSequence subject);
 
-    public ValidationReport validateCrystal(ICrystal subject);
+    ValidationReport validateCrystal(ICrystal subject);
 
-    public ValidationReport validateElectronContainer(IElectronContainer subject);
+    ValidationReport validateElectronContainer(IElectronContainer subject);
 
-    public ValidationReport validateElement(IElement subject);
+    ValidationReport validateElement(IElement subject);
 
-    public ValidationReport validateIsotope(IIsotope subject);
+    ValidationReport validateIsotope(IIsotope subject);
 
-    public ValidationReport validateMolecule(IAtomContainer subject);
+    ValidationReport validateMolecule(IAtomContainer subject);
 
-    public ValidationReport validateReaction(IReaction subject);
+    ValidationReport validateReaction(IReaction subject);
 
-    public ValidationReport validateMoleculeSet(IAtomContainerSet subject);
+    ValidationReport validateMoleculeSet(IAtomContainerSet subject);
 
-    public ValidationReport validateReactionSet(IReactionSet subject);
+    ValidationReport validateReactionSet(IReactionSet subject);
 
 }

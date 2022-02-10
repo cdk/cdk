@@ -41,6 +41,6 @@ public interface AtomHashGenerator {
      * @param container a molecule
      * @return atomic hash codes
      */
-    public long[] generate(IAtomContainer container);
+    long[] generate(IAtomContainer container);
 
 }

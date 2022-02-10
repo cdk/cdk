@@ -45,7 +45,7 @@ public interface IPolymer extends IAtomContainer {
      * @param oAtom  The atom to add
      */
     @Override
-    public void addAtom(IAtom oAtom);
+    void addAtom(IAtom oAtom);
 
     /**
      * Adds the atom oAtom to a specified Monomer.
@@ -53,14 +53,14 @@ public interface IPolymer extends IAtomContainer {
      * @param oAtom  The atom to add
      * @param oMonomer  The monomer the atom belongs to
      */
-    public void addAtom(IAtom oAtom, IMonomer oMonomer);
+    void addAtom(IAtom oAtom, IMonomer oMonomer);
 
     /**
      * Return the number of monomers present in the Polymer.
      *
      * @return number of monomers
      */
-    public int getMonomerCount();
+    int getMonomerCount();
 
     /**
      * Retrieve a Monomer object by specifying its name.
@@ -68,7 +68,7 @@ public interface IPolymer extends IAtomContainer {
      * @param cName  The name of the monomer to look for
      * @return The Monomer object which was asked for
      */
-    public IMonomer getMonomer(String cName);
+    IMonomer getMonomer(String cName);
 
     /**
      * Returns a collection of the names of all <code>Monomer</code>s in this
@@ -76,18 +76,18 @@ public interface IPolymer extends IAtomContainer {
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
-    public Collection<String> getMonomerNames();
+    Collection<String> getMonomerNames();
 
     /**
      * Removes a particular monomer, specified by its name.
      *
      * @param name The name of the monomer to be removed
      */
-    public void removeMonomer(String name);
+    void removeMonomer(String name);
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public IPolymer clone() throws CloneNotSupportedException;
+    IPolymer clone() throws CloneNotSupportedException;
 }

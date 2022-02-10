@@ -37,7 +37,7 @@ public interface IChemObjectReaderErrorHandler {
      *
      * @param message Error found while reading.
      */
-    public void handleError(String message);
+    void handleError(String message);
 
     /**
      * Method that should react on an error message send by an
@@ -46,7 +46,7 @@ public interface IChemObjectReaderErrorHandler {
      * @param message   Error found while reading.
      * @param exception Exception thrown while reading.
      */
-    public void handleError(String message, Exception exception);
+    void handleError(String message, Exception exception);
 
     /**
      * Method that should react on an error message send by an
@@ -57,7 +57,7 @@ public interface IChemObjectReaderErrorHandler {
      * @param colStart Start column in the file where the error is found.
      * @param colEnd   End column in the file where the error is found.
      */
-    public void handleError(String message, int row, int colStart, int colEnd);
+    void handleError(String message, int row, int colStart, int colEnd);
 
     /**
      * Method that should react on an error message send by an
@@ -68,6 +68,6 @@ public interface IChemObjectReaderErrorHandler {
      * @param colStart Start column in the file where the error is found.
      * @param colEnd   End column in the file where the error is found.
      */
-    public void handleError(String message, int row, int colStart, int colEnd, Exception exception);
+    void handleError(String message, int row, int colStart, int colEnd, Exception exception);
 
 }

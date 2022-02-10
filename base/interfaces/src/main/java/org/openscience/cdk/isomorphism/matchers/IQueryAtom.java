@@ -35,5 +35,5 @@ public interface IQueryAtom extends IAtom {
      * @param atom IAtom to match against
      * @return     true, if this IQueryAtom matches the given IAtom
      */
-    public boolean matches(IAtom atom);
+    boolean matches(IAtom atom);
 }

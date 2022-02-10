@@ -43,7 +43,7 @@ public interface IReaction extends IChemObject {
     /**
      * Permissible reaction directions.
      */
-    public enum Direction {
+    enum Direction {
         /** Reaction equilibrium which is (almost) fully on the product side. Often denoted with a forward arrow. */
         FORWARD,
         /** Reaction equilibrium which is (almost) fully on the reactant side. Often denoted with a backward arrow. */
@@ -57,14 +57,14 @@ public interface IReaction extends IChemObject {
      *
      * @return The number of reactants in this reaction
      */
-    public int getReactantCount();
+    int getReactantCount();
 
     /**
      * Returns the number of products in this reaction.
      *
      * @return The number of products in this reaction
      */
-    public int getProductCount();
+    int getProductCount();
 
     /**
      * Returns a IAtomContaineSet containing the reactants in this reaction.
@@ -72,7 +72,7 @@ public interface IReaction extends IChemObject {
      * @return A IAtomContaineSet containing the reactants in this reaction
      * @see    #setReactants
      */
-    public IAtomContainerSet getReactants();
+    IAtomContainerSet getReactants();
 
     /**
      * Assigns a IAtomContaineSet to the reactants in this reaction.
@@ -81,7 +81,7 @@ public interface IReaction extends IChemObject {
      * @param  reactants The new set of reactants
      * @see              #getReactants
      */
-    public void setReactants(IAtomContainerSet reactants);
+    void setReactants(IAtomContainerSet reactants);
 
     /**
      * Returns a IAtomContaineSet containing the products of this reaction.
@@ -89,7 +89,7 @@ public interface IReaction extends IChemObject {
      * @return A IAtomContaineSet containing the products in this reaction
      * @see    #setProducts
      */
-    public IAtomContainerSet getProducts();
+    IAtomContainerSet getProducts();
 
     /**
      * Assigns a IAtomContaineSet to the products of this reaction.
@@ -98,7 +98,7 @@ public interface IReaction extends IChemObject {
      * @param products The new set of products
      * @see            #getProducts
      */
-    public void setProducts(IAtomContainerSet products);
+    void setProducts(IAtomContainerSet products);
 
     /**
      * Returns a IAtomContaineSet containing the agents in this reaction.
@@ -106,7 +106,7 @@ public interface IReaction extends IChemObject {
      * @return A IAtomContaineSet containing the agents in this reaction
      * @see    #addAgent
      */
-    public IAtomContainerSet getAgents();
+    IAtomContainerSet getAgents();
 
     /**
      * Returns the mappings between the reactant and the product side.
@@ -114,7 +114,7 @@ public interface IReaction extends IChemObject {
      * @return An {@link Iterable} to the Mappings.
      * @see    #addMapping
      */
-    public Iterable<IMapping> mappings();
+    Iterable<IMapping> mappings();
 
     /**
      * Adds a reactant to this reaction.
@@ -122,7 +122,7 @@ public interface IReaction extends IChemObject {
      * @param reactant   Molecule added as reactant to this reaction
      * @see   #getReactants
      */
-    public void addReactant(IAtomContainer reactant);
+    void addReactant(IAtomContainer reactant);
 
     /**
      * Adds an agent to this reaction.
@@ -130,7 +130,7 @@ public interface IReaction extends IChemObject {
      * @param agent   Molecule added as agent to this reaction
      * @see   #getAgents
      */
-    public void addAgent(IAtomContainer agent);
+    void addAgent(IAtomContainer agent);
 
     /**
      * Adds a reactant to this reaction with a stoichiometry coefficient.
@@ -139,7 +139,7 @@ public interface IReaction extends IChemObject {
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getReactants
      */
-    public void addReactant(IAtomContainer reactant, Double coefficient);
+    void addReactant(IAtomContainer reactant, Double coefficient);
 
     /**
      * Adds a product to this reaction.
@@ -147,7 +147,7 @@ public interface IReaction extends IChemObject {
      * @param product    Molecule added as product to this reaction
      * @see   #getProducts
      */
-    public void addProduct(IAtomContainer product);
+    void addProduct(IAtomContainer product);
 
     /**
      * Adds a product to this reaction.
@@ -156,7 +156,7 @@ public interface IReaction extends IChemObject {
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getProducts
      */
-    public void addProduct(IAtomContainer product, Double coefficient);
+    void addProduct(IAtomContainer product, Double coefficient);
 
     /**
      * Returns the stoichiometry coefficient of the given reactant.
@@ -165,7 +165,7 @@ public interface IReaction extends IChemObject {
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setReactantCoefficient
      */
-    public Double getReactantCoefficient(IAtomContainer reactant);
+    Double getReactantCoefficient(IAtomContainer reactant);
 
     /**
      * Returns the stoichiometry coefficient of the given product.
@@ -174,7 +174,7 @@ public interface IReaction extends IChemObject {
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setProductCoefficient
      */
-    public Double getProductCoefficient(IAtomContainer product);
+    Double getProductCoefficient(IAtomContainer product);
 
     /**
      * Sets the coefficient of a a reactant to a given value.
@@ -184,7 +184,7 @@ public interface IReaction extends IChemObject {
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getReactantCoefficient
      */
-    public boolean setReactantCoefficient(IAtomContainer reactant, Double coefficient);
+    boolean setReactantCoefficient(IAtomContainer reactant, Double coefficient);
 
     /**
      * Sets the coefficient of a a product to a given value.
@@ -194,7 +194,7 @@ public interface IReaction extends IChemObject {
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getProductCoefficient
      */
-    public boolean setProductCoefficient(IAtomContainer product, Double coefficient);
+    boolean setProductCoefficient(IAtomContainer product, Double coefficient);
 
     /**
      * Returns an array of double with the stoichiometric coefficients
@@ -203,7 +203,7 @@ public interface IReaction extends IChemObject {
      * @return An array of double's containing the coefficients of the reactants
      * @see    #setReactantCoefficients
      */
-    public Double[] getReactantCoefficients();
+    Double[] getReactantCoefficients();
 
     /**
      * Returns an array of double with the stoichiometric coefficients
@@ -212,7 +212,7 @@ public interface IReaction extends IChemObject {
      * @return An array of double's containing the coefficients of the products
      * @see    #setProductCoefficients
      */
-    public Double[] getProductCoefficients();
+    Double[] getProductCoefficients();
 
     /**
      * Sets the coefficients of the reactants.
@@ -221,7 +221,7 @@ public interface IReaction extends IChemObject {
      * @return  true if coefficients have been set.
      * @see     #getReactantCoefficients
      */
-    public boolean setReactantCoefficients(Double[] coefficients);
+    boolean setReactantCoefficients(Double[] coefficients);
 
     /**
      * Sets the coefficient of the products.
@@ -230,7 +230,7 @@ public interface IReaction extends IChemObject {
      * @return  true if coefficients have been set.
      * @see     #getProductCoefficients
      */
-    public boolean setProductCoefficients(Double[] coefficients);
+    boolean setProductCoefficients(Double[] coefficients);
 
     /**
      * Sets the direction of the reaction.
@@ -238,7 +238,7 @@ public interface IReaction extends IChemObject {
      * @param direction The new reaction direction
      * @see   #getDirection
      */
-    public void setDirection(IReaction.Direction direction);
+    void setDirection(IReaction.Direction direction);
 
     /**
      * Returns the {@link IReaction.Direction} of the reaction.
@@ -246,7 +246,7 @@ public interface IReaction extends IChemObject {
      * @return The direction of this reaction (FORWARD, BACKWARD or BIDIRECTIONAL).
      * @see    #setDirection(Direction)
      */
-    public IReaction.Direction getDirection();
+    IReaction.Direction getDirection();
 
     /**
      * Adds a mapping between the reactant and product side to this
@@ -255,7 +255,7 @@ public interface IReaction extends IChemObject {
      * @param mapping Mapping to add.
      * @see   #mappings
      */
-    public void addMapping(IMapping mapping);
+    void addMapping(IMapping mapping);
 
     /**
      * Removes a mapping between the reactant and product side to this
@@ -264,7 +264,7 @@ public interface IReaction extends IChemObject {
      * @param  pos  Position of the Mapping to remove.
      * @see   #mappings
      */
-    public void removeMapping(int pos);
+    void removeMapping(int pos);
 
     /**
      * Retrieves a mapping between the reactant and product side to this
@@ -273,7 +273,7 @@ public interface IReaction extends IChemObject {
      * @param pos Position of Mapping to get.
      * @return the mapping identified by the specified position
      */
-    public IMapping getMapping(int pos);
+    IMapping getMapping(int pos);
 
     /**
      * Get the number of mappings between the reactant and product side to this
@@ -281,6 +281,6 @@ public interface IReaction extends IChemObject {
      *
      * @return Number of stored Mappings.
      */
-    public int getMappingCount();
+    int getMappingCount();
 
 }

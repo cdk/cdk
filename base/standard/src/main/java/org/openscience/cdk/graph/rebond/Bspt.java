@@ -332,7 +332,7 @@ public final class Bspt {
 
     public interface Tuple {
 
-        public double getDimValue(int dim);
+        double getDimValue(int dim);
     }
 
     interface Element {

@@ -35,6 +35,6 @@ public interface IQueryBond extends IBond {
      * @param bond IBond to match against
      * @return     true, if this IQueryBond matches the given IBond
      */
-    public boolean matches(IBond bond);
+    boolean matches(IBond bond);
 
 }

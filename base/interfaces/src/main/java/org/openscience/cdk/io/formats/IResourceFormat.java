@@ -38,29 +38,29 @@ public interface IResourceFormat {
     /**
      * Returns a one-lined format name of the format.
      */
-    public String getFormatName();
+    String getFormatName();
 
     /**
      * Returns the preferred resource name extension.
      */
-    public String getPreferredNameExtension();
+    String getPreferredNameExtension();
 
     /**
      * Returns an array of common resource name extensions.
      */
-    public String[] getNameExtensions();
+    String[] getNameExtensions();
 
     /**
      * Returns the accepted MIME type for this format.
      *
      * @return null if no MIME type has been accepted on
      */
-    public String getMIMEType();
+    String getMIMEType();
 
     /**
      * Indicates if the format is an XML-based language.
      *
      * @return if the format is XML-based.
      */
-    public boolean isXMLBased();
+    boolean isXMLBased();
 }

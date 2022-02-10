@@ -63,5 +63,5 @@ public interface IQueryCompiler {
      * Parse and build a query graph from the query moleucle.
      * @return compile the query molecule and build the graph.
      */
-    public IQuery compile();
+    IQuery compile();
 }

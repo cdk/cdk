@@ -43,6 +43,6 @@ public interface IRDFWeightFunction {
      * @param atom  First atom.
      * @param atom2 Second atom.
      */
-    public double calculate(IAtom atom, IAtom atom2);
+    double calculate(IAtom atom, IAtom atom2);
 
 }

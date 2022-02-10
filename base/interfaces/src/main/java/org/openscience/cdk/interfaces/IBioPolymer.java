@@ -48,7 +48,7 @@ public interface IBioPolymer extends IPolymer {
      * @param oAtom  The atom to add
      */
     @Override
-    public void addAtom(IAtom oAtom);
+    void addAtom(IAtom oAtom);
 
     /**
      * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
@@ -57,7 +57,7 @@ public interface IBioPolymer extends IPolymer {
      * @param oAtom   The atom to add
      * @param oStrand The strand the atom belongs to
      */
-    public void addAtom(IAtom oAtom, IStrand oStrand);
+    void addAtom(IAtom oAtom, IStrand oStrand);
 
     /**
      * Adds the atom to a specified Strand and a specified Monomer.
@@ -66,7 +66,7 @@ public interface IBioPolymer extends IPolymer {
      * @param oMonomer The monomer the atom belongs to
      * @param oStrand  The strand the atom belongs to
      */
-    public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand);
+    void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 
     /**
      * Return the number of monomers present in BioPolymer.
@@ -74,7 +74,7 @@ public interface IBioPolymer extends IPolymer {
      * @return number of monomers
      */
     @Override
-    public int getMonomerCount();
+    int getMonomerCount();
 
     /**
      * Retrieve a <code>Monomer</code> object by specifying its name.
@@ -87,7 +87,7 @@ public interface IBioPolymer extends IPolymer {
      * @param  strandName The name of the strand to look for
      * @return            The Monomer object which was asked for
      */
-    public IMonomer getMonomer(String monName, String strandName);
+    IMonomer getMonomer(String monName, String strandName);
 
     /**
      * Returns a collection of the names of all <code>Monomer</code>s in this
@@ -96,14 +96,14 @@ public interface IBioPolymer extends IPolymer {
      * @return a <code>Collection</code> of all the monomer names.
      */
     @Override
-    public Collection<String> getMonomerNames();
+    Collection<String> getMonomerNames();
 
     /**
      * Return the number of strands present in the BioPolymer.
      *
      * @return number of strands
      */
-    public int getStrandCount();
+    int getStrandCount();
 
     /**
      * Retrieve a Monomer object by specifying its name.
@@ -111,7 +111,7 @@ public interface IBioPolymer extends IPolymer {
      * @param cName  The name of the monomer to look for
      * @return The Monomer object which was asked for
      */
-    public IStrand getStrand(String cName);
+    IStrand getStrand(String cName);
 
     /**
      * Returns a collection of the names of all <code>Strand</code>s in this
@@ -119,25 +119,25 @@ public interface IBioPolymer extends IPolymer {
      *
      * @return a <code>Collection</code> of all the strand names.
      */
-    public Collection<String> getStrandNames();
+    Collection<String> getStrandNames();
 
     /**
      * Removes a particular strand, specified by its name.
      *
      * @param name  The name of the strand to remove
      */
-    public void removeStrand(String name);
+    void removeStrand(String name);
 
     /**
      * Returns a Map containing the strands in the Polymer.
      *
      * @return hashtable containing the strands in the Polymer
      */
-    public Map<String, IStrand> getStrands();
+    Map<String, IStrand> getStrands();
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public IBioPolymer clone() throws CloneNotSupportedException;
+    IBioPolymer clone() throws CloneNotSupportedException;
 }

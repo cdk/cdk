@@ -40,14 +40,14 @@ public interface ILigand {
      *
      * @return the IAtomContainer
      */
-    public IAtomContainer getAtomContainer();
+    IAtomContainer getAtomContainer();
 
     /**
      * The central {@link IAtom} to which this ligand is connected via one {@link IBond}.
      *
      * @return the central atom
      */
-    public IAtom getCentralAtom();
+    IAtom getCentralAtom();
 
     /**
      * {@link IAtom} of the ligand that is connected to the central {@link IAtom} via
@@ -55,14 +55,14 @@ public interface ILigand {
      *
      * @return the ligand atom
      */
-    public IAtom getLigandAtom();
+    IAtom getLigandAtom();
 
     /**
      * Returns a list of visitedAtoms.
      *
      * @return a {@link VisitedAtoms} list with visited atoms
      */
-    public VisitedAtoms getVisitedAtoms();
+    VisitedAtoms getVisitedAtoms();
 
     /**
      * Returns a true if the atom has been visited before.
@@ -71,6 +71,6 @@ public interface ILigand {
      * @return true if the {@link IAtom} is the chiral atom, or part of the
      *              ligand
      */
-    public boolean isVisited(IAtom atom);
+    boolean isVisited(IAtom atom);
 
 }

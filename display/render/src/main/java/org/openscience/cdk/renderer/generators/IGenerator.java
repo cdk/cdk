@@ -44,7 +44,7 @@ public interface IGenerator<T extends IChemObject> {
      *
      * @return a {@link List} of {@link IGeneratorParameter}s
      */
-    public List<IGeneratorParameter<?>> getParameters();
+    List<IGeneratorParameter<?>> getParameters();
 
     /**
      * Converts a {@link IChemObject} from the chemical data model into
@@ -54,6 +54,6 @@ public interface IGenerator<T extends IChemObject> {
      * @param model  the rendering parameters
      * @return       a drawable chemical depiction component
      */
-    public IRenderingElement generate(T object, RendererModel model);
+    IRenderingElement generate(T object, RendererModel model);
 
 }

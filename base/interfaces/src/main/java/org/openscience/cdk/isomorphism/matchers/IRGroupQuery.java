@@ -51,55 +51,55 @@ public interface IRGroupQuery extends IChemObject {
      * @param rootStructure the root structure (or scaffold) container
      *
      */
-    public void setRootStructure(IAtomContainer rootStructure);
+    void setRootStructure(IAtomContainer rootStructure);
 
     /**
      * Getter for the root structure of this R-Group.
      * @see #setRootStructure
      * @return the root structure (or scaffold) container
      */
-    public IAtomContainer getRootStructure();
+    IAtomContainer getRootStructure();
 
     /**
      * Setter for root attachment points = bonds that connect R pseudo-atoms to the scaffold.
      * @see #getRootAttachmentPoints()
      * @param rootAttachmentPoints Map with per R-group pseudo atom another map with an Integer and an IBond, the integer indicating 1st or 2nd attachment.
      */
-    public void setRootAttachmentPoints(Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints);
+    void setRootAttachmentPoints(Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints);
 
     /**
      * Getter for root attachment points = bonds that connect R pseudo-atoms to the scaffold.
      * @see #setRootAttachmentPoints(Map)
      * @return Map with per R-group pseudo atom another map with an Integer and an IBond, the integer indicating 1st or 2nd attachment.
      */
-    public Map<IAtom, Map<Integer, IBond>> getRootAttachmentPoints();
+    Map<IAtom, Map<Integer, IBond>> getRootAttachmentPoints();
 
     /**
      * Setter for the R-group definitions (substituents).
      * @see #getRGroupDefinitions
      * @param rGroupDefinitions map with an Integer and an RGroupList (substituent list), the Integer being the R-Group number (1..32).
      */
-    public void setRGroupDefinitions(Map<Integer, IRGroupList> rGroupDefinitions);
+    void setRGroupDefinitions(Map<Integer, IRGroupList> rGroupDefinitions);
 
     /**
      * Getter for the R-group definitions (substituents).
      * @see #setRGroupDefinitions
      * @return rGroupDefinitions Map with an Integer and an RGroupList (substituent list), the Integer being the R-Group number (1..32).
      */
-    public Map<Integer, IRGroupList> getRGroupDefinitions();
+    Map<Integer, IRGroupList> getRGroupDefinitions();
 
     /**
      * Return the total number of atom containers (count the root plus all substituents).
      * @return count.
      */
-    public int getAtomContainerCount();
+    int getAtomContainerCount();
 
     /**
      * Return all the substituent atom containers, in other words the atom containers
      * defined in this RGroupQuery except for the root structure.
      * @return list with all substituents
      */
-    public List<IAtomContainer> getSubstituents();
+    List<IAtomContainer> getSubstituents();
 
     /**
      * Checks validity of the RGroupQuery.
@@ -108,7 +108,7 @@ public interface IRGroupQuery extends IChemObject {
      * In file terms: $RGP blocks must be defined for each R-group number.
      * @return true when valid
      */
-    public boolean areSubstituentsDefined();
+    boolean areSubstituentsDefined();
 
     /**
      * Checks validity of RGroupQuery.
@@ -116,7 +116,7 @@ public interface IRGroupQuery extends IChemObject {
      * R# atoms in the root block.
      * @return true when valid
      */
-    public boolean areRootAtomsDefined();
+    boolean areRootAtomsDefined();
 
     /**
      * Produces all combinations of the root structure (scaffold) with the R-groups
@@ -125,6 +125,6 @@ public interface IRGroupQuery extends IChemObject {
      *         R-groups substituted.
      * @throws Exception
      */
-    public List<IAtomContainer> getAllConfigurations() throws Exception;
+    List<IAtomContainer> getAllConfigurations() throws Exception;
 
 }

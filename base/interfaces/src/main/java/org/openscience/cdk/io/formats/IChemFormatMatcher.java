@@ -47,14 +47,14 @@ public interface IChemFormatMatcher extends IChemFormat {
     MatchResult matches(List<String> lines);
 
     /** Convenience method for indicating a format did not match. */
-    static MatchResult NO_MATCH = new MatchResult(false, null, Integer.MAX_VALUE);
+    MatchResult NO_MATCH = new MatchResult(false, null, Integer.MAX_VALUE);
 
     /**
      * Simple class holds whether a format matcher matched, when it matched and
      * what the format was. The result is comparable to be prioritised (lower
      * match position being favoured).
      */
-    static final class MatchResult implements Comparable<MatchResult> {
+    final class MatchResult implements Comparable<MatchResult> {
 
         /** Did the format match. */
         private final boolean     matched;

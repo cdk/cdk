@@ -46,7 +46,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @param  formula  The molecularFormula to be added to this chemObject
      * @return the new molecular formula
      */
-    public IMolecularFormula add(IMolecularFormula formula);
+    IMolecularFormula add(IMolecularFormula formula);
 
     /**
      *  Adds an Isotope to this MolecularFormula one time.
@@ -55,7 +55,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @see             #addIsotope(IIsotope, int)
      * @return the new molecular formula
      */
-    public IMolecularFormula addIsotope(IIsotope isotope);
+    IMolecularFormula addIsotope(IIsotope isotope);
 
     /**
      *  Adds an Isotope to this MolecularFormula in a number of occurrences.
@@ -65,7 +65,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @see             #addIsotope(IIsotope)
      * @return the new molecular formula
      */
-    public IMolecularFormula addIsotope(IIsotope isotope, int count);
+    IMolecularFormula addIsotope(IIsotope isotope, int count);
 
     /**
      *  Checks a set of Nodes for the occurrence of the isotope in the
@@ -75,14 +75,14 @@ public interface IMolecularFormula extends ICDKObject {
      * @return                   The occurrence of this isotope in this IMolecularFormula
      * @see                      #getIsotopeCount()
      */
-    public int getIsotopeCount(IIsotope isotope);
+    int getIsotopeCount(IIsotope isotope);
 
     /**
      *  Returns an {@link Iterable} for looping over all isotopes in this IMolecularFormula.
      *
      * @return    An {@link Iterable} with the isotopes in this IMolecularFormula
      */
-    public Iterable<IIsotope> isotopes();
+    Iterable<IIsotope> isotopes();
 
     /**
      *  Checks a set of Nodes for the number of different isotopes in the
@@ -91,7 +91,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @return        The the number of different isotopes in this IMolecularFormula
      * @see           #getIsotopeCount(IIsotope)
      */
-    public int getIsotopeCount();
+    int getIsotopeCount();
 
     /**
      *  True, if the MolecularFormula contains the given IIsotope object. Not
@@ -101,19 +101,19 @@ public interface IMolecularFormula extends ICDKObject {
      * @param  isotope  The IIsotope this IMolecularFormula is searched for
      * @return          True, if the IMolecularFormula contains the given isotope object
      */
-    public boolean contains(IIsotope isotope);
+    boolean contains(IIsotope isotope);
 
     /**
      *  Removes the given isotope from the MolecularFormula.
      *
      * @param isotope  The IIsotope to be removed
      */
-    public void removeIsotope(IIsotope isotope);
+    void removeIsotope(IIsotope isotope);
 
     /**
      * Removes all isotopes of this molecular formula.
      */
-    public void removeAllIsotopes();
+    void removeAllIsotopes();
 
     /**
      * Sets the charge of this IMolecularFormula, since there is no atom
@@ -144,7 +144,7 @@ public interface IMolecularFormula extends ICDKObject {
      *
      * @see    #getCharge
      */
-    public void setCharge(Integer charge);
+    void setCharge(Integer charge);
 
     /**
      * Access the charge of this IMolecularFormula. If the charge
@@ -154,14 +154,14 @@ public interface IMolecularFormula extends ICDKObject {
      *
      * @see    #setCharge
      */
-    public Integer getCharge();
+    Integer getCharge();
 
     /**
      * Clones this MolecularFormula object and its content.
      *
      * @return    The cloned object
      */
-    public Object clone() throws CloneNotSupportedException;
+    Object clone() throws CloneNotSupportedException;
 
     /**
      *  Sets a property for a IChemObject. I should
@@ -173,7 +173,7 @@ public interface IMolecularFormula extends ICDKObject {
      *@see                 #getProperty
      *@see                 #removeProperty
      */
-    public void setProperty(Object description, Object property);
+    void setProperty(Object description, Object property);
 
     /**
      *  Removes a property for a IChemObject. I should
@@ -184,7 +184,7 @@ public interface IMolecularFormula extends ICDKObject {
      *@see                 #setProperty
      *@see                 #getProperty
      */
-    public void removeProperty(Object description);
+    void removeProperty(Object description);
 
     /**
      * Returns a property for the IChemObject - the object is automatically
@@ -220,7 +220,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @see                 #getProperty(Object, Class)
      * @see                 #removeProperty
      */
-    public <T> T getProperty(Object description);
+    <T> T getProperty(Object description);
 
     /**
      * Access a property of the given description and cast the specified class.
@@ -251,7 +251,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @see #getProperty(Object)
      * @see #getProperties()
      */
-    public <T> T getProperty(Object description, Class<T> c);
+    <T> T getProperty(Object description, Class<T> c);
 
     /**
      *  Returns a Map with the IChemObject's properties.I should
@@ -260,7 +260,7 @@ public interface IMolecularFormula extends ICDKObject {
      *@return    The object's properties as an Hashtable
      *@see       #setProperties
      */
-    public Map<Object, Object> getProperties();
+    Map<Object, Object> getProperties();
 
     /**
      *  Sets the properties of this object.I should
@@ -269,6 +269,6 @@ public interface IMolecularFormula extends ICDKObject {
      *@param  properties  a Hashtable specifying the property values
      *@see                #getProperties
      */
-    public void setProperties(Map<Object, Object> properties);
+    void setProperties(Map<Object, Object> properties);
 
 }

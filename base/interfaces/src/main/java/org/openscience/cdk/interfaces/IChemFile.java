@@ -35,7 +35,7 @@ public interface IChemFile extends IChemObject {
      * @param  chemSequence  The chemSequence to be added to this container
      * @see                  #chemSequences
      */
-    public void addChemSequence(IChemSequence chemSequence);
+    void addChemSequence(IChemSequence chemSequence);
 
     /**
      * Removes the IChemSequence at the given position from this container.
@@ -43,7 +43,7 @@ public interface IChemFile extends IChemObject {
      * @param  pos Position of the IChemSequence to remove
      * @see        #chemSequences
      */
-    public void removeChemSequence(int pos);
+    void removeChemSequence(int pos);
 
     /**
      *  Returns the {@link Iterable} to ChemSequences of this container.
@@ -51,7 +51,7 @@ public interface IChemFile extends IChemObject {
      *@return    The {@link Iterable} to ChemSequences of this container
      *@see       #addChemSequence
      */
-    public Iterable<IChemSequence> chemSequences();
+    Iterable<IChemSequence> chemSequences();
 
     /**
      * Returns the ChemSequence at position <code>number</code> in the container.
@@ -60,13 +60,13 @@ public interface IChemFile extends IChemObject {
      * @return         The ChemSequence at position <code>number</code>.
      * @see            #addChemSequence
      */
-    public IChemSequence getChemSequence(int number);
+    IChemSequence getChemSequence(int number);
 
     /**
      * Returns the number of ChemSequences in this Container.
      *
      * @return    The number of ChemSequences in this Container
      */
-    public int getChemSequenceCount();
+    int getChemSequenceCount();
 
 }

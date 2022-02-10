@@ -37,14 +37,14 @@ public interface IChemSequence extends IChemObject {
      * @param  chemModel The chemModel to be added to this container
      * @see              #getChemModel
      */
-    public void addChemModel(IChemModel chemModel);
+    void addChemModel(IChemModel chemModel);
 
     /**
      * Remove a ChemModel from this ChemSequence.
      *
      * @param  pos  The position of the ChemModel to be removed.
      */
-    public void removeChemModel(int pos);
+    void removeChemModel(int pos);
 
     /**
      * Returns an Iterable to ChemModels in this container.
@@ -52,7 +52,7 @@ public interface IChemSequence extends IChemObject {
      * @return    The Iterable to ChemModels in this container
      * @see       #addChemModel
      */
-    public Iterable<IChemModel> chemModels();
+    Iterable<IChemModel> chemModels();
 
     /**
      * Returns the ChemModel at position <code>number</code> in the
@@ -62,13 +62,13 @@ public interface IChemSequence extends IChemObject {
      * @return         The ChemModel at position <code>number</code>.
      * @see            #addChemModel
      */
-    public IChemModel getChemModel(int number);
+    IChemModel getChemModel(int number);
 
     /**
      * Returns the number of ChemModels in this Container.
      *
      * @return    The number of ChemModels in this Container
      */
-    public int getChemModelCount();
+    int getChemModelCount();
 
 }

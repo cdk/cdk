@@ -86,14 +86,14 @@ public class PermutationGroup {
          *
          * @param p a permutation in the full group
          */
-        public void applyTo(Permutation p);
+        void applyTo(Permutation p);
 
         /**
          * Check to see if the backtracker is finished.
          *
          * @return true if complete
          */
-        public boolean isFinished();
+        boolean isFinished();
     }
 
     /**

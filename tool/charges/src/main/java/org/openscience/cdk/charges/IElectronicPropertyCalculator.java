@@ -31,6 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public interface IElectronicPropertyCalculator {
 
-    public void calculateCharges(IAtomContainer container) throws CDKException;
+    void calculateCharges(IAtomContainer container) throws CDKException;
 
 }

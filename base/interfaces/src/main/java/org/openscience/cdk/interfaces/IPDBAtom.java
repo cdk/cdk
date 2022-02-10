@@ -37,7 +37,7 @@ public interface IPDBAtom extends IAtom {
      *
      * @return a String with all information
      */
-    public String getRecord();
+    String getRecord();
 
     /**
      * Set one entire line from the PDB entry file which describe the IPDBAtom.
@@ -45,173 +45,173 @@ public interface IPDBAtom extends IAtom {
      *
      * @param newRecord A String with all information
      */
-    public void setRecord(String newRecord);
+    void setRecord(String newRecord);
 
     /**
      * get the Temperature factor of this atom.
      *
      * @return the Temperature factor of this atom
      */
-    public Double getTempFactor();
+    Double getTempFactor();
 
     /**
      * set the Temperature factor of this atom.
      *
      * @param newTempFactor  the Temperature factor of this atom
      */
-    public void setTempFactor(Double newTempFactor);
+    void setTempFactor(Double newTempFactor);
 
     /**
      * get the Residue name of this atom.
      *
      * @return the Residue name of this atom
      */
-    public String getResName();
+    String getResName();
 
     /**
      * set the Residue name of this atom.
      *
      * @param newResName  the Residue name of this atom
      */
-    public void setResName(String newResName);
+    void setResName(String newResName);
 
     /**
      * get Code for insertion of residues of this atom.
      *
      * @return the Code for insertion of residues of this atom
      */
-    public String getICode();
+    String getICode();
 
     /**
      * set the Code for insertion of residues of this atom.
      *
      * @param newICode  the Code for insertion of residues of this atom
      */
-    public void setICode(String newICode);
+    void setICode(String newICode);
 
     /**
      * get the Atom name of this atom.
      *
      * @return the Atom name of this atom
      */
-    public String getName();
+    String getName();
 
     /**
      * set the Atom name of this atom.
      *
      * @param newName  the Atom name of this atom
      */
-    public void setName(String newName);
+    void setName(String newName);
 
     /**
      * get the Chain identifier of this atom.
      *
      * @return the Chain identifier of this atom
      */
-    public String getChainID();
+    String getChainID();
 
     /**
      * set the Chain identifier of this atom.
      *
      * @param newChainID  the Chain identifier of this atom
      */
-    public void setChainID(String newChainID);
+    void setChainID(String newChainID);
 
     /**
      * get the Alternate location indicator of this atom.
      *
      * @return the Alternate location indicator of this atom
      */
-    public String getAltLoc();
+    String getAltLoc();
 
     /**
      * set the Alternate location indicator of this atom.
      *
      * @param newAltLoc  the Alternate location indicator of this atom
      */
-    public void setAltLoc(String newAltLoc);
+    void setAltLoc(String newAltLoc);
 
     /**
      * get the Segment identifier, left-justified of this atom.
      *
      * @return the Segment identifier, left-justified of this atom
      */
-    public String getSegID();
+    String getSegID();
 
     /**
      * set the Segment identifier, left-justified of this atom.
      *
      * @param newSegID  the Segment identifier, left-justified of this atom
      */
-    public void setSegID(String newSegID);
+    void setSegID(String newSegID);
 
     /**
      * get the Atom serial number of this atom.
      *
      * @return the Atom serial number of this atom
      */
-    public Integer getSerial();
+    Integer getSerial();
 
     /**
      * set the Atom serial number of this atom.
      *
      * @param newSerial  the Atom serial number of this atom
      */
-    public void setSerial(Integer newSerial);
+    void setSerial(Integer newSerial);
 
     /**
      * get the Residue sequence number of this atom.
      *
      * @return the Residue sequence number of this atom
      */
-    public String getResSeq();
+    String getResSeq();
 
     /**
      * set the Residue sequence number of this atom.
      *
      * @param newResSeq  the Residue sequence number of this atom
      */
-    public void setResSeq(String newResSeq);
+    void setResSeq(String newResSeq);
 
     /**
      * Returns true of this atom is a PDB OXT atom.
      *
      * @return true if this atom is a PDB OXT atom.
      */
-    public Boolean getOxt();
+    Boolean getOxt();
 
     /**
      * Change the state of this atom in being the PDB OXT atom.
      *
      * @param newOxt new boolean indicating whether this atom is a PDB OXT atom.
      */
-    public void setOxt(Boolean newOxt);
+    void setOxt(Boolean newOxt);
 
     /**
      * Determine whether this is a heteroatom or not.
      * @return true if the atom is a heteroatom, otherwise false
      */
-    public Boolean getHetAtom();
+    Boolean getHetAtom();
 
     /**
      * Mark the atom as a heteroatom.
      *
      * @param newHetAtom if true, the atom will be marked as a heteroatom
      */
-    public void setHetAtom(Boolean newHetAtom);
+    void setHetAtom(Boolean newHetAtom);
 
     /**
      * get the Occupancy of this atom.
      *
      * @return the Occupancy of this atom
      */
-    public Double getOccupancy();
+    Double getOccupancy();
 
     /**
      * set the Occupancy of this atom.
      *
      * @param newOccupancy  the Occupancy of this atom
      */
-    public void setOccupancy(Double newOccupancy);
+    void setOccupancy(Double newOccupancy);
 
 }

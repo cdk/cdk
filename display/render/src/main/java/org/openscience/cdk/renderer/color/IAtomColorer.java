@@ -35,7 +35,7 @@ public interface IAtomColorer {
      * @param atom  the atom whose color is desired
      * @return the color of the specified atom
      */
-    public Color getAtomColor(IAtom atom);
+    Color getAtomColor(IAtom atom);
 
     /**
      * Returns the color for a certain atom type, and uses the
@@ -44,5 +44,5 @@ public interface IAtomColorer {
      * @param defaultColor the color to use if the atom type of this atom cannot be identified
      * @return the color of the specified atom
      */
-    public Color getAtomColor(IAtom atom, Color defaultColor);
+    Color getAtomColor(IAtom atom, Color defaultColor);
 }

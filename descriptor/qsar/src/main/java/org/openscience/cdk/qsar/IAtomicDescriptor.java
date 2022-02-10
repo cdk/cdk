@@ -38,6 +38,6 @@ public interface IAtomicDescriptor extends IDescriptor {
      * @return              An object of {@link DescriptorValue} that contain the
      *                      calculated value as well as specification details
      */
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container);
+    DescriptorValue calculate(IAtom atom, IAtomContainer container);
 
 }
