@@ -25,7 +25,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.renderer.elements.path.PathElement;
 
 /**
  * @cdk.module test-renderbasic

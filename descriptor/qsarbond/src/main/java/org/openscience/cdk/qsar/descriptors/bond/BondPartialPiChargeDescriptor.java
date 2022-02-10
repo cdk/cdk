@@ -31,8 +31,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.Iterator;
-
 /**
  *  The calculation of bond-pi Partial charge is calculated
  *  determining the difference the Partial Pi Charge on atoms

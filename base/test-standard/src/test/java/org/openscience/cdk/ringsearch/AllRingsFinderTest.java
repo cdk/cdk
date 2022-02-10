@@ -19,7 +19,6 @@
 package org.openscience.cdk.ringsearch;
 
 import java.io.InputStream;
-import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Assume;

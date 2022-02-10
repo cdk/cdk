@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -27,7 +27,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.interfaces.AbstractChemObjectTest;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * TestCase for the IChemObject class.

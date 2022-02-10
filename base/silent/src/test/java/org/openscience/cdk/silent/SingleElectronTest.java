@@ -23,10 +23,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.test.interfaces.AbstractSingleElectronTest;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link SingleElectron}.

@@ -21,7 +21,6 @@
 
 package org.openscience.cdk.smarts;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;

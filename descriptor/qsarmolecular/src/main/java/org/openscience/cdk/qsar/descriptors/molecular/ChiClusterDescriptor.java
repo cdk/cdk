@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;

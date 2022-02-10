@@ -5,8 +5,6 @@
  */
 package org.openscience.cdk.test.interfaces;
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReaction;

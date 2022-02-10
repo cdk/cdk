@@ -23,7 +23,6 @@
 
 package org.openscience.cdk.smarts;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;

@@ -42,7 +42,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;

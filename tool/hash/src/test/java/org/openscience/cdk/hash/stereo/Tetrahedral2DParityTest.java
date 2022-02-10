@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.hash.stereo.GeometricParity;
 import org.openscience.cdk.hash.stereo.Tetrahedral2DParity;

@@ -31,8 +31,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.Iterator;
-
 /**
  * This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
  *

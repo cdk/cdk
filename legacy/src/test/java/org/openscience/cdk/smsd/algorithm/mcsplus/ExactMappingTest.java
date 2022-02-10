@@ -25,7 +25,6 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;

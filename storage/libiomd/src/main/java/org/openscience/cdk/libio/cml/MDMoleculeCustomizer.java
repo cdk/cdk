@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import java.util.Iterator;
-
 import nu.xom.Attribute;
 
 import org.openscience.cdk.exception.CDKException;

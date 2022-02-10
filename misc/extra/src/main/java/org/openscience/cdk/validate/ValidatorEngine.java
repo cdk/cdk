@@ -37,7 +37,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
 
 /**

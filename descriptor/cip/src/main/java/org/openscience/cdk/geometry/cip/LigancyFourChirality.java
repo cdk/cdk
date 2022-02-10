@@ -28,8 +28,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
-import java.util.Objects;
-
 /**
  * Stereochemistry specification for quadrivalent atoms to be used for the CIP algorithm only.
  *

@@ -19,7 +19,6 @@
 package org.openscience.cdk.geometry;
 
 import java.io.InputStream;
-import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;

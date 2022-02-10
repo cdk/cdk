@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 

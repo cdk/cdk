@@ -21,9 +21,6 @@ package org.openscience.cdk.pharmacophore;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.smarts.SmartsPattern;
 
 /**

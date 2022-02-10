@@ -40,8 +40,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import java.util.Iterator;
-
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
  * to the charges.

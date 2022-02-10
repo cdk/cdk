@@ -32,8 +32,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.test.interfaces.AbstractChemModelTest;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the ChemModel class.

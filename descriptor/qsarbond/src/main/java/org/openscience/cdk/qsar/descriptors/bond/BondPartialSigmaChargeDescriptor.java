@@ -27,8 +27,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
-import java.util.Iterator;
-
 /**
  *  The calculation of bond-sigma Partial charge is calculated
  *  determining the difference the Partial Sigma Charge on atoms

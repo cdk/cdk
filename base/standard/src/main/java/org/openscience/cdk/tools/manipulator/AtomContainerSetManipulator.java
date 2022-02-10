@@ -23,7 +23,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.openscience.cdk.graph.ConnectivityChecker;

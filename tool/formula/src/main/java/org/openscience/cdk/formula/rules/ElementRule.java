@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.formula.rules;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.interfaces.IElement;

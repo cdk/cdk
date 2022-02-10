@@ -11,7 +11,6 @@
 
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;

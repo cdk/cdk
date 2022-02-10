@@ -24,7 +24,6 @@ package org.openscience.cdk.io.cml;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;

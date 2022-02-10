@@ -24,7 +24,6 @@
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.smiles.CxSmilesState.CxDataSgroup;
 import org.openscience.cdk.smiles.CxSmilesState.CxPolymerSgroup;
 import org.openscience.cdk.smiles.CxSmilesState.CxSgroup;
@@ -32,16 +31,11 @@ import org.openscience.cdk.smiles.CxSmilesState.CxSgroup;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class CxSmilesGenerator {

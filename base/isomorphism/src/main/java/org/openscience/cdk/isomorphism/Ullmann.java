@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 import java.util.Iterator;
-import java.util.Map;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 

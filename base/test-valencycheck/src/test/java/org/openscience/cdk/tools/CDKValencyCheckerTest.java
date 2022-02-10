@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;

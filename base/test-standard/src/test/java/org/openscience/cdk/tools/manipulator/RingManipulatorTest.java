@@ -31,8 +31,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.test.CDKTestCase;
 
-import java.util.Iterator;
-
 /**
  * @cdk.module test-standard
  */

@@ -37,7 +37,6 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
-import java.util.Map;
 import java.util.Objects;
 
 /**

@@ -31,8 +31,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.Iterator;
-
 /**
  * Tests the DeAromatizationTool.
  *

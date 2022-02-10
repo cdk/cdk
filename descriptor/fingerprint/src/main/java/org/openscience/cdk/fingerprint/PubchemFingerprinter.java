@@ -35,7 +35,6 @@ import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 
-import java.io.IOException;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;

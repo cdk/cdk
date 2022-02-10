@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.smiles.smarts.parser;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;

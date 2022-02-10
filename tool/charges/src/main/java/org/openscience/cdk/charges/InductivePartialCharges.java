@@ -19,7 +19,6 @@
 package org.openscience.cdk.charges;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 

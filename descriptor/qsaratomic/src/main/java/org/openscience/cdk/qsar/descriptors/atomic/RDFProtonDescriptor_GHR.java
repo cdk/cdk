@@ -20,7 +20,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Point3d;

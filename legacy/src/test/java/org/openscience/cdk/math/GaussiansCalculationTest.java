@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Iterator;
 
 import org.openscience.cdk.exception.CDKException;
 

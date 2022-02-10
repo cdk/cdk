@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.util.Iterator;
-
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;

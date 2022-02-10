@@ -29,7 +29,6 @@ import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;

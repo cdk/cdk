@@ -33,8 +33,6 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.Iterator;
-
 /**
  * Collection of methods for the calculation of topological indices of a
  * molecular graph.
