@@ -1014,7 +1014,7 @@ public final class SmilesGenerator {
                                                      final int flavor) {
         return new Comparator<IAtom>() {
 
-            final int unbox(Integer x) {
+            int unbox(Integer x) {
                 return x != null ? x : 0;
             }
 
