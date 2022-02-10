@@ -2198,7 +2198,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     AtomContainerManipulator.replaceAtomByAtom(container, prevAtom, pseudoAtom);
                 } catch (NumberFormatException exception) {
-                    String error = "Error (" + exception.toString() + ") while parsing line " + linecount + ": " + line
+                    String error = "Error (" + exception + ") while parsing line " + linecount + ": " + line
                             + " in property block.";
                     logger.error(error);
                     handleError("NumberFormatException in group information", linecount, 4, 7, exception);

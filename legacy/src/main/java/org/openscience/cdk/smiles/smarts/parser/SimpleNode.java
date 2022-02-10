@@ -152,7 +152,7 @@ class SimpleNode implements Node, Cloneable {
     }
 
     public String toString(String prefix) {
-        return prefix + toString();
+        return prefix + this;
     }
 
     /*

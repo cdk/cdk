@@ -112,7 +112,7 @@ public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
         StringBuilder s = new StringBuilder();
         s.append("InverseSymbolSetQueryAtom(");
         s.append(this.hashCode() + ", ");
-        s.append(symbols.toString());
+        s.append(symbols);
         s.append(')');
         return s.toString();
     }

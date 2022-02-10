@@ -289,7 +289,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         if (sb.toString().isEmpty())
             return "";
         else
-            return "-" + sb.toString();
+            return "-" + sb;
     }
 
     private String createChargeCode(IAtom atom) {

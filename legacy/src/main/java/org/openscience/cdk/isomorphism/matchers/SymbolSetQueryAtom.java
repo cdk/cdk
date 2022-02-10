@@ -111,7 +111,7 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
         StringBuilder s = new StringBuilder();
         s.append("SymbolSetQueryAtom(");
         s.append(this.hashCode() + ", ");
-        s.append(symbols.toString());
+        s.append(symbols);
         s.append(')');
         return s.toString();
     }

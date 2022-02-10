@@ -528,8 +528,8 @@ final class SvgDrawVisitor implements IDrawVisitor {
     @Override
     public String toString() {
         if (defaultsWritten)
-            return sb.toString() + "  </g>\n</svg>\n";
-        return sb.toString() + "</svg>\n";
+            return sb + "  </g>\n</svg>\n";
+        return sb + "</svg>\n";
     }
 
     private static final class Counter {

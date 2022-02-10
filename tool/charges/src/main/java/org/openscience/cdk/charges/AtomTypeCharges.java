@@ -99,7 +99,7 @@ public class AtomTypeCharges implements IChargeCalculator {
             try {
                 hoseCode = hcg.getHOSECode(ac, ac.getAtom(i), 3);
             } catch (CDKException ex1) {
-                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.toString(), ex1);
+                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1, ex1);
             }
             hoseCode = removeAromaticityFlagsFromHoseCode(hoseCode);
 

@@ -196,7 +196,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                 buffer.setLength(0);
                 buffer.append(hetatmRecordName);
                 fsb.reset(SERIAL_FORMAT).format(atomNumber);
-                buffer.append(fsb.toString());
+                buffer.append(fsb);
                 buffer.append(' ');
                 IAtom atom = atoms.next();
                 String name;
@@ -210,16 +210,16 @@ public class PDBWriter extends DefaultChemObjectWriter {
                     }
                 }
                 fsb.reset(ATOM_NAME_FORMAT).format(name);
-                buffer.append(fsb.toString());
+                buffer.append(fsb);
                 fsb.reset(RESIDUE_FORMAT).format(residueName);
                 buffer.append(fsb).append("     0    ");
                 Point3d position = atom.getPoint3d();
                 fsb.reset(POSITION_FORMAT).format(position.x);
-                buffer.append(fsb.toString());
+                buffer.append(fsb);
                 fsb.reset(POSITION_FORMAT).format(position.y);
-                buffer.append(fsb.toString());
+                buffer.append(fsb);
                 fsb.reset(POSITION_FORMAT).format(position.z);
-                buffer.append(fsb.toString());
+                buffer.append(fsb);
 
                 buffer.append("  1.00  0.00           ") // occupancy + temperature factor
                       .append(atom.getSymbol());
@@ -294,7 +294,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
             final String ANGLE_FORMAT = "%3.3f";
             FormatStringBuffer fsb = new FormatStringBuffer("");
             fsb.reset(LENGTH_FORMAT).format(ucParams[0]);
-            writer.write("CRYST1 " + fsb.toString());
+            writer.write("CRYST1 " + fsb);
             fsb.reset(LENGTH_FORMAT).format(ucParams[1]);
             writer.write(fsb.toString());
             fsb.reset(LENGTH_FORMAT).format(ucParams[2]);

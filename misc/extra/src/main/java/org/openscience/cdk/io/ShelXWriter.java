@@ -220,7 +220,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         try {
             writer.write(s);
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e);
         }
     }
 
@@ -229,7 +229,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             writer.write(s);
             writer.write('\n');
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e);
         }
     }
 

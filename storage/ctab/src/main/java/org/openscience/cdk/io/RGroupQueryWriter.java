@@ -244,7 +244,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
                                 }
                             }
                         }
-                        rootBlock.append(aalLine.toString()).append(LSEP);
+                        rootBlock.append(aalLine).append(LSEP);
                     }
                 }
             }

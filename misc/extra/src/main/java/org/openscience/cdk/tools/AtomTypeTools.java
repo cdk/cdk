@@ -98,7 +98,7 @@ public class AtomTypeTools {
                 Aromaticity.cdkLegacy().apply(molecule);
             } catch (Exception cdk1) {
                 //logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
-                logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+                logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1);
             }
         }
 
@@ -127,7 +127,7 @@ public class AtomTypeTools {
                 hoseCode = removeAromaticityFlagsFromHoseCode(hoseCode);
                 atom2.setProperty(CDKConstants.SPHERICAL_MATCHER, hoseCode);
             } catch (CDKException ex1) {
-                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.toString(), ex1);
+                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1, ex1);
             }
         }
         return ringSetMolecule;

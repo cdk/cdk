@@ -290,7 +290,7 @@ public class LoggingTool implements ILoggingTool {
                 if (obj == null) {
                     result.append("null");
                 } else {
-                    result.append(obj.toString());
+                    result.append(obj);
                 }
             }
             debugString(result.toString());

@@ -166,7 +166,7 @@ public class XYZReader extends DefaultChemObjectReader {
                         if (comment == null) {
                             comment = "";
                         }
-                        comment = comment.toString() + line.substring(1).trim();
+                        comment = comment + line.substring(1).trim();
                         m.setProperty(CDKConstants.COMMENT, comment);
                         logger.debug("Found and set comment: ", comment);
                         i--; // a comment line does not count as an atom

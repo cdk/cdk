@@ -353,7 +353,7 @@ public class MurckoFragmenter implements IFragmenter {
         try {
             clone = atomContainer.clone();
         } catch (CloneNotSupportedException exception) {
-            throw new CDKException("Error in clone" + exception.toString(), exception);
+            throw new CDKException("Error in clone" + exception, exception);
         }
         List<IAtom> atomsToDelete = new ArrayList<>();
         for (IAtom atom : clone.atoms()) {

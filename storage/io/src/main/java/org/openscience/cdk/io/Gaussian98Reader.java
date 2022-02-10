@@ -154,7 +154,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             try {
                 file = readChemFile(file);
             } catch (IOException exception) {
-                throw new CDKException("Error while reading file: " + exception.toString(), exception);
+                throw new CDKException("Error while reading file: " + exception, exception);
             }
             return (T) file;
         } else {
@@ -479,7 +479,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             logger.debug("syntax problem while parsing summary of g98 section: ");
             logger.debug(exc);
         }
-        logger.debug("parseLoT(): " + summary.toString());
+        logger.debug("parseLoT(): " + summary);
         StringTokenizer st1 = new StringTokenizer(summary.toString(), "\\");
 
         // Must contain at least 6 tokens

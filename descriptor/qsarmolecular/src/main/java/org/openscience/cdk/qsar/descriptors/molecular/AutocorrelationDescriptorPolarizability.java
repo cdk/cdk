@@ -67,7 +67,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
             try {
                 polars[i] = polar.calculateGHEffectiveAtomPolarizability(container, atom, false, dmat);
             } catch (Exception ex1) {
-                throw new CDKException("Problems with assign Polarizability due to " + ex1.toString(), ex1);
+                throw new CDKException("Problems with assign Polarizability due to " + ex1, ex1);
             }
         }
 

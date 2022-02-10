@@ -523,7 +523,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 stereoBonds.add(bond);
                 break;
             default:
-                logger.error("Un parsed bond: " + node.toString());
+                logger.error("Un parsed bond: " + node);
                 break;
         }
         return bond;

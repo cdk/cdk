@@ -269,7 +269,7 @@ public class TemplateExtractor {
               MDLV2000Writer mdlw = new MDLV2000Writer(fout)) {
             mdlw.write(som);
         } catch (CDKException | IOException ex2) {
-            System.out.println("IOError:cannot write file due to:" + ex2.toString());
+            System.out.println("IOError:cannot write file due to:" + ex2);
         }
     }
 
@@ -441,7 +441,7 @@ public class TemplateExtractor {
             }
         }
         System.out.println("\nFingerprints:" + data.size() + " are written...ready");
-        System.out.println("\nComputing time statistics:\n" + timings.toString());
+        System.out.println("\nComputing time statistics:\n" + timings);
         try {
             fout.close();
         } catch (Exception exc5) {

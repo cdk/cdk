@@ -735,7 +735,7 @@ public class RingPlacer {
                 //				logger.debug(connectedRing.toString(molecule));
                 final IAtomContainer sharedAtoms = AtomContainerManipulator.getIntersection(ring, connectedRing);
                 final int numSharedAtoms = sharedAtoms.getAtomCount();
-                logger.debug("placeConnectedRings-> connectedRing: " + (ring.toString()));
+                logger.debug("placeConnectedRings-> connectedRing: " + (ring));
                 if ((numSharedAtoms == 2 && handleType == FUSED) ||
                     (numSharedAtoms == 1 && handleType == SPIRO) ||
                     (numSharedAtoms > 2  && handleType == BRIDGED)) {

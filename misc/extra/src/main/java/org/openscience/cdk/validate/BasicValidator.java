@@ -249,7 +249,7 @@ public class BasicValidator extends AbstractValidator {
         } catch (Exception exception) {
             logger.error("Error while performing atom bos validation");
             logger.debug(exception);
-            maxBO.setDetails("Error while performing atom bos validation: " + exception.toString());
+            maxBO.setDetails("Error while performing atom bos validation: " + exception);
             report.addCDKError(maxBO);
         }
         return report;

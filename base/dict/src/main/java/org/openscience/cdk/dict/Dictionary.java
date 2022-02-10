@@ -86,7 +86,7 @@ public class Dictionary {
             parser.parse(new InputSource(reader));
             dict = handler.getDictionary();
         } catch (IOException e) {
-            logger.error("IOException: " + e.toString());
+            logger.error("IOException: " + e);
             logger.debug(e);
         } catch (SAXException saxe) {
             logger.error("SAXException: " + saxe.getClass().getName());

@@ -328,7 +328,7 @@ public class AtomTypeFactory {
                     logger.warn("Taking first atom type, but other may exist");
                     atomType = types[0];
                 } else {
-                    String message = "Could not configure atom with unknown ID: " + atom.toString() + " + (id="
+                    String message = "Could not configure atom with unknown ID: " + atom + " + (id="
                             + atom.getAtomTypeName() + ")";
                     logger.warn(message);
                     throw new CDKException(message);

@@ -463,9 +463,9 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     public static void main(String[] args) throws Exception {
         BigInteger bi = new BigInteger("0");
         bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
-        System.err.println(bi.toString());
+        System.err.println(bi);
         bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
-        System.err.println(bi.toString());
+        System.err.println(bi);
         //        ShortestPathFingerprinter fpt = new ShortestPathFingerprinter();
         //        fpt.standAlone = true;
         //        fpt.testFingerprinter();

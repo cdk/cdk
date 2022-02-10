@@ -74,7 +74,7 @@ public class AtomContainerPrinter {
             }
         }
         Collections.sort(edges);
-        sb.append(edges.toString());
+        sb.append(edges);
         return sb.toString();
     }
 

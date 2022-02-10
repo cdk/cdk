@@ -330,7 +330,7 @@ public class MM2BasedParameterSetReader {
             data.add(va2);
 
         } catch (NumberFormatException nfe) {
-            throw new IOException("VdWaalsTable.ReadvdWaalsPR:Malformed Number due to" + nfe.toString());
+            throw new IOException("VdWaalsTable.ReadvdWaalsPR:Malformed Number due to" + nfe);
         }
         key = "vdwpr" + sid1 + ";" + sid2;
         parameterSet.put(key, data);
@@ -668,7 +668,7 @@ public class MM2BasedParameterSetReader {
             double va1 = new Double(value1);
             data.add(va1);
         } catch (NumberFormatException nfe) {
-            throw new IOException("setCharge: Malformed Number due to " + nfe.toString());
+            throw new IOException("setCharge: Malformed Number due to " + nfe);
         }
         key = "charge" + sid1;
         parameterSet.put(key, data);
@@ -871,7 +871,7 @@ public class MM2BasedParameterSetReader {
             }// end while
             ins.close();
         } catch (IOException e) {
-            throw new IOException("There was a problem parsing the mm2 forcefield due to:" + e.toString());
+            throw new IOException("There was a problem parsing the mm2 forcefield due to:" + e);
         }
     }
 

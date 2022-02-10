@@ -148,7 +148,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                     try {
                         readCoordinates(model);
                     } catch (IOException exception) {
-                        throw new CDKException("Error while reading coordinates: " + exception.toString(), exception);
+                        throw new CDKException("Error while reading coordinates: " + exception, exception);
                     }
                     break;
                 }
@@ -197,7 +197,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 fireFrameRead();
             }
         } catch (IOException exception) {
-            throw new CDKException("Error while reading general structure: " + exception.toString(), exception);
+            throw new CDKException("Error while reading general structure: " + exception, exception);
         }
         return sequence;
     }

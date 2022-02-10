@@ -140,7 +140,7 @@ public class ForceFieldConfigurator {
                 try {
                     this.setMM2Parameters(builder);
                 } catch (Exception ex1) {
-                    throw new CDKException("Problems with set MM2Parameters due to " + ex1.toString(), ex1);
+                    throw new CDKException("Problems with set MM2Parameters due to " + ex1, ex1);
                 }
             } else if (ffName.equals("mmff94") || !check) {
                 //logger.debug("ForceFieldConfigurator: open Force Field mmff94");
@@ -154,7 +154,7 @@ public class ForceFieldConfigurator {
                 try {
                     this.setMMFF94Parameters(builder);
                 } catch (Exception ex2) {
-                    throw new CDKException("Problems with set MM2Parameters due to" + ex2.toString(), ex2);
+                    throw new CDKException("Problems with set MM2Parameters due to" + ex2, ex2);
                 }
             }
         }
@@ -187,7 +187,7 @@ public class ForceFieldConfigurator {
             if (mm2 == null) mm2 = new MM2BasedParameterSetReader();
             mm2.readParameterSets(builder);
         } catch (Exception ex1) {
-            throw new CDKException("Problem within readParameterSets due to:" + ex1.toString(), ex1);
+            throw new CDKException("Problem within readParameterSets due to:" + ex1, ex1);
         }
         parameterSet = mm2.getParamterSet();
         atomTypes = mm2.getAtomTypes();
@@ -283,13 +283,13 @@ public class ForceFieldConfigurator {
                 hoseCode = hcg.getHOSECode(molecule, atom, 3);
                 //logger.debug("HOSECODE GENERATION: ATOM "+i+" HoseCode: "+hoseCode+" ");
             } catch (CDKException ex1) {
-                System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
-                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.toString(), ex1);
+                System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1);
+                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1, ex1);
             }
             try {
                 configureAtom(atom, hoseCode, isInHeteroRing);
             } catch (CDKException ex2) {
-                System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
+                System.out.println("Could not final configure atom " + i + " due to " + ex2);
                 throw new CDKException("Could not final configure atom due to problems with force field", ex2);
             }
         }

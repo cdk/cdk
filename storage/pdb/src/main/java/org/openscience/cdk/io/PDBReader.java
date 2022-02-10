@@ -387,7 +387,7 @@ public class PDBReader extends DefaultChemObjectReader {
                             comment = "";
                         }
                         if (lineLength > 12) {
-                            comment = comment.toString() + cRead.substring(11).trim()
+                            comment = comment + cRead.substring(11).trim()
                                     + "\n";
                             oFile.setProperty(CDKConstants.COMMENT, comment);
                         } else {

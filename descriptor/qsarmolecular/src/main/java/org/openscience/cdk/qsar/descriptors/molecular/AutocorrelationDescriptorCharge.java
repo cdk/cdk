@@ -60,7 +60,7 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
                 charges[i] = atom.getCharge();
             }
         } catch (Exception ex1) {
-            throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
+            throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1, ex1);
         }
 
         return charges;

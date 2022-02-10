@@ -133,7 +133,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
         stringContent.append(this.hashCode());
         if (atom != null) {
             stringContent.append(", ");
-            stringContent.append(atom.toString());
+            stringContent.append(atom);
         }
         stringContent.append(')');
         return stringContent.toString();

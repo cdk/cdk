@@ -166,7 +166,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
                         this.out.println("Answer is not a number.");
                     } catch (CDKException exception) {
                         this.out.println();
-                        this.out.println(exception.toString());
+                        this.out.println(exception);
                     }
                 }
             }

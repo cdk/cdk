@@ -136,7 +136,7 @@ public class AminoAcids {
                 Iterator<IAtom> atoms = ac.atoms().iterator();
                 for (Object next : ac.getProperties().keySet()) {
                     LOGGER.debug("Prop class: " + next.getClass().getName());
-                    LOGGER.debug("Prop: " + next.toString());
+                    LOGGER.debug("Prop: " + next);
                     if (next instanceof DictRef) {
                         DictRef dictRef = (DictRef) next;
                         // logger.debug("DictRef type: " + dictRef.getType());

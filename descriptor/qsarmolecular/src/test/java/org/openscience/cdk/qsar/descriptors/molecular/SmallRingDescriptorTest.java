@@ -161,7 +161,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
                 MDLV2000Writer wtr = new MDLV2000Writer(str);
                 wtr.write(mol);
                 wtr.close();
-                error += "\nMolecule:\n" + str.toString();
+                error += "\nMolecule:\n" + str;
                 throw new CDKException(error);
             }
         }

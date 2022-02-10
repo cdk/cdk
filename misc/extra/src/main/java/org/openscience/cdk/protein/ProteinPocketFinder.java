@@ -299,7 +299,7 @@ public class ProteinPocketFinder {
         try {
             assignProteinToGrid();
         } catch (Exception ex1) {
-            logger.error("Problems with assignProteinToGrid due to:" + ex1.toString());
+            logger.error("Problems with assignProteinToGrid due to:" + ex1);
         }
         // 3. Step scan allong x,y,z axis and the diagonals, if PSP event add +1
         // to grid cell
@@ -817,13 +817,13 @@ public class ProteinPocketFinder {
         try {
             atf = AtomTypeFactory.getInstance(vanDerWaalsFile, atoms[0].getBuilder());
         } catch (Exception ex1) {
-            System.out.println("Problem with AtomTypeFactory due to:" + ex1.toString());
+            System.out.println("Problem with AtomTypeFactory due to:" + ex1);
         }
         for (IAtom atom : atoms) {
             try {
                 atf.configure(atom);
             } catch (Exception ex2) {
-                logger.error("Problem with atf.configure due to:" + ex2.toString());
+                logger.error("Problem with atf.configure due to:" + ex2);
             }
         }
 

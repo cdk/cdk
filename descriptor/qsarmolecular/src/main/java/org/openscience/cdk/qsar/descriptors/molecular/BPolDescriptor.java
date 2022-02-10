@@ -171,7 +171,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
             logger.debug(ex1);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), getDescriptorNames(), new CDKException("Problems with IsotopeFactory due to "
-                    + ex1.toString(), ex1));
+                    + ex1, ex1));
         }
     }
 
