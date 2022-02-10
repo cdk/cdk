@@ -108,7 +108,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *  The bond symbols used for bond orders "single", "double", "triple" and
      *  "aromatic"
      */
-    protected String            bondSymbols[]        = {"", "", "=", "%", "*"};
+    protected String[] bondSymbols = {"", "", "=", "%", "*"};
 
     protected String            centerCode           = null;
 

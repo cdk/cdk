@@ -104,6 +104,6 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    public void characters(char chars[], int start, int length) {}
+    public void characters(char[] chars, int start, int length) {}
 
 }

@@ -392,7 +392,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
     // based on NCBI C implementation
     private static String base64Encode(byte[] data) {
-        char c64[] = new char[data.length * 4 / 3 + 5];
+        char[] c64 = new char[data.length * 4 / 3 + 5];
         for (int i = 0, k = 0; i < data.length; i += 3, k += 4) {
             c64[k + 0] = (char) (data[i] >> 2);
             c64[k + 1] = (char) ((data[i] & 0x03) << 4);
@@ -459,7 +459,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
         return b64;
     }
 
-    static final int BITCOUNT[] = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4,
+    static final int[] BITCOUNT = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4,
             3, 4, 4, 5, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
             1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 2, 3, 3, 4,
             3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 1, 2, 2, 3, 2, 3, 3, 4,
@@ -468,7 +468,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
             3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 4, 5, 5, 6,
             5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8};
 
-    static final int MASK[]     = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
+    static final int[] MASK = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
 
     /*
      * Section 1: Hierarchic Element Counts - These bs test for the presence or

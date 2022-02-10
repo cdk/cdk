@@ -205,7 +205,7 @@ public final class Smarts {
         private IAtom     prev;
         private QueryBond bond;
         private Deque<IAtom>            stack   = new ArrayDeque<>();
-        private IBond                   rings[] = new IBond[100];
+        private IBond[] rings = new IBond[100];
         private Map<IAtom, LocalNbrs>   local   = new HashMap<>();
         private Set<IAtom>              astereo = new HashSet<>();
         private Set<IBond>              bstereo = new HashSet<>();

@@ -38,7 +38,7 @@ public class ZMatrixToolsTest extends CDKTestCase {
         double[] angles = {0, 0, 120, 120, 110, 110, 110};
         int[] third_atoms = {0, 0, 0, 2, 1, 1, 1};
         double[] dihedrals = {0, 0, 0, 180, 0, 120, -120};
-        Point3d points[] = ZMatrixTools.zmatrixToCartesian(distances, first_atoms, angles, second_atoms, dihedrals,
+        Point3d[] points = ZMatrixTools.zmatrixToCartesian(distances, first_atoms, angles, second_atoms, dihedrals,
                 third_atoms);
         Assert.assertEquals(-0.5500, points[2].x, 0.0001);
         Assert.assertEquals(-1.3664, points[5].y, 0.0001);

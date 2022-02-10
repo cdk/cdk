@@ -45,7 +45,7 @@ public interface ICMLModule {
 
     void endElement(CMLStack xpath, String uri, String local, String raw);
 
-    void characterData(CMLStack xpath, char ch[], int start, int length);
+    void characterData(CMLStack xpath, char[] ch, int start, int length);
 
     IChemFile returnChemFile();
 

@@ -225,7 +225,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testIndole() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeIndole();
-        boolean testResults[] = {true, true, true, true, true, true, true, true, true};
+        boolean[] testResults = {true, true, true, true, true, true, true, true, true};
         //boolean isAromatic = false;
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Expected the molecule to be aromatic.",
@@ -242,7 +242,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testPyrrole() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makePyrrole();
-        boolean testResults[] = {true, true, true, true, true};
+        boolean[] testResults = {true, true, true, true, true};
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Expected the molecule to be aromatic.",
                 DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule));
@@ -325,7 +325,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testSFBug956923() throws Exception {
-        boolean testResults[] = {false, false, false, false, false, false, false, false};
+        boolean[] testResults = {false, false, false, false, false, false, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = sp.parseSmiles("O=C1C=CC=CC=C1"); // tropone
@@ -351,7 +351,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testPorphyrine() throws Exception {
         boolean isAromatic = false;
-        boolean testResults[] = {false, false, false, false, false, true, true, true, true, true, false, true, true,
+        boolean[] testResults = {false, false, false, false, false, true, true, true, true, true, false, true, true,
                 true, false, true, true, false, false, true, true, false, false, false, true, true, false, false,
                 false, true, true, false, false, false, false, true, true, true, true, false, false, false};
 

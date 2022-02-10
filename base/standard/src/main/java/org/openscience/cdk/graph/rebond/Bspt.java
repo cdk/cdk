@@ -240,7 +240,7 @@ public final class Bspt {
         double  distance;
         double  distance2;
         Tuple   center;
-        double  centerValues[];
+        double[] centerValues;
         double  foundDistance2; // the dist squared of a found Element;
 
         // when set, only the hemisphere sphere .GT. or .EQ. the point

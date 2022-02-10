@@ -130,7 +130,7 @@ final class FreeHepWrapper {
             } else {
                 nl = "\n";
             }
-            String split[] = result.split(nl,2);
+            String[] split = result.split(nl,2);
             if( split.length > 1 && split[0].startsWith("%!PS-") ) {
                 String boundingBox;
                 if( this.dim != null ) {

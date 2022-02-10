@@ -338,7 +338,7 @@ final class CDKToBeam {
         IAtom[] ligands = tc.getLigands();
 
         int u = indices.get(tc.getChiralAtom());
-        int vs[] = new int[]{indices.get(ligands[0]), indices.get(ligands[1]), indices.get(ligands[2]),
+        int[] vs = new int[]{indices.get(ligands[0]), indices.get(ligands[1]), indices.get(ligands[2]),
                 indices.get(ligands[3])};
 
         gb.tetrahedral(u).lookingFrom(vs[0]).neighbors(vs[1], vs[2], vs[3])
@@ -358,7 +358,7 @@ final class CDKToBeam {
         IAtom[] ligands = et.peripherals();
 
         int u = indices.get(et.focus());
-        int vs[] = new int[]{indices.get(ligands[0]), indices.get(ligands[1]), indices.get(ligands[2]),
+        int[] vs = new int[]{indices.get(ligands[0]), indices.get(ligands[1]), indices.get(ligands[2]),
                 indices.get(ligands[3])};
 
         gb.extendedTetrahedral(u).lookingFrom(vs[0]).neighbors(vs[1], vs[2], vs[3])

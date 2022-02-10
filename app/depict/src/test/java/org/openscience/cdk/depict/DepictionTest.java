@@ -40,7 +40,7 @@ public class DepictionTest {
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
         String eps = dg.depict(ac).toPsStr();
         String nl = System.getProperty("line.separator");
-        String lines[] = eps.split(nl,3);
+        String[] lines = eps.split(nl,3);
         assertEquals("%!PS-Adobe-3.0", lines[0]);
         assertEquals("%%Creator: FreeHEP Graphics2D Driver", lines[1]);
     }
@@ -52,7 +52,7 @@ public class DepictionTest {
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
         String eps = dg.depict(ac).toEpsStr();
         String nl = System.getProperty("line.separator");
-        String lines[] = eps.split(nl,3);
+        String[] lines = eps.split(nl,3);
         assertEquals("%!PS-Adobe-3.0 EPSF-3.0", lines[0]);
         assertEquals("%%BoundingBox: 0 0 28 35", lines[1]);
     }
@@ -64,7 +64,7 @@ public class DepictionTest {
         IAtomContainer ac = sp.parseSmiles("C1CCCCC1CCCCC");
         String eps = dg.depict(ac).toEpsStr();
         String nl = System.getProperty("line.separator");
-        String lines[] = eps.split(nl,3);
+        String[] lines = eps.split(nl,3);
         assertEquals("%!PS-Adobe-3.0 EPSF-3.0", lines[0]);
         assertEquals("%%BoundingBox: 0 0 92 33", lines[1]);
     }
@@ -76,7 +76,7 @@ public class DepictionTest {
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
         String svg = dg.depict(ac).toSvgStr();
         String nl = System.getProperty("line.separator");
-        String lines[] = svg.split(nl,3);
+        String[] lines = svg.split(nl,3);
         assertEquals("<?xml version='1.0' encoding='UTF-8'?>", lines[0]);
         assertEquals("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">", lines[1]);
     }

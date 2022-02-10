@@ -76,7 +76,7 @@ public class CMLHandler extends DefaultHandler {
      * @param ch        characters to handle
      */
     @Override
-    public void characters(char ch[], int start, int length) {
+    public void characters(char[] ch, int start, int length) {
         if (debug) logger.debug(new String(ch, start, length));
         conv.characterData(xpath, ch, start, length);
     }

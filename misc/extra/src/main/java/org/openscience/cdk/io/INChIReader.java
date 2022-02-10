@@ -325,7 +325,7 @@ public class INChIReader extends DefaultChemObjectReader {
          * @param ch        characters to handle
          */
         @Override
-        public void characters(char ch[], int start, int length) {
+        public void characters(char[] ch, int start, int length) {
             logger.debug("character data");
             currentChars += new String(ch, start, length);
         }

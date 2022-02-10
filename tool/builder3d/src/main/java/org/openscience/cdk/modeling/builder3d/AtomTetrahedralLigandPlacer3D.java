@@ -188,7 +188,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
     public Point3d[] get3DCoordinatesForLigands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
             IAtom atomC, int nwanted, double length, double angle) throws CDKException {
-        Point3d newPoints[] = new Point3d[1];
+        Point3d[] newPoints = new Point3d[1];
 
         if (noCoords.getAtomCount() == 0 && withCoords.getAtomCount() == 0) {
             return newPoints;
@@ -259,7 +259,7 @@ public class AtomTetrahedralLigandPlacer3D {
     public Point3d[] get3DCoordinatesForSP2Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
             IAtom atomC, double length, double angle) {
         //logger.debug(" SP2 Ligands start");
-        Point3d newPoints[] = new Point3d[1];
+        Point3d[] newPoints = new Point3d[1];
         if (angle < 0) {
             angle = SP2_ANGLE;
         }
@@ -294,7 +294,7 @@ public class AtomTetrahedralLigandPlacer3D {
     public Point3d[] get3DCoordinatesForSP3Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
             IAtom atomC, int nwanted, double length, double angle) {
         //logger.debug("SP3 Ligands start ");
-        Point3d newPoints[] = new Point3d[0];
+        Point3d[] newPoints = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         int nwithCoords = withCoords.getAtomCount();
         if (angle < 0) {
@@ -333,7 +333,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *@return          Point3d[] nwanted points (or zero if failed)
      */
     public Point3d[] calculate3DCoordinates0(Point3d aPoint, int nwanted, double length) {
-        Point3d points[] = new Point3d[0];
+        Point3d[] points = new Point3d[0];
         if (nwanted == 1) {
             points = new Point3d[1];
             points[0] = new Point3d(aPoint);
@@ -385,7 +385,7 @@ public class AtomTetrahedralLigandPlacer3D {
      */
     public Point3d[] calculate3DCoordinates1(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
             double length, double angle) {
-        Point3d points[] = new Point3d[nwanted];
+        Point3d[] points = new Point3d[nwanted];
         // BA vector
         Vector3d ba = new Vector3d(aPoint);
         ba.sub(bPoint);
@@ -452,7 +452,7 @@ public class AtomTetrahedralLigandPlacer3D {
     public Point3d[] calculate3DCoordinates2(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
             double length, double angle) {
         //logger.debug("3DCoordinates2");
-        Point3d newPoints[] = new Point3d[0];
+        Point3d[] newPoints = new Point3d[0];
         double ang2 = angle / 2.0;
 
         Vector3d ba = new Vector3d(aPoint);
@@ -602,7 +602,7 @@ public class AtomTetrahedralLigandPlacer3D {
             double angle) {
         //logger.debug("3DCoordinatesSP_2");
         Vector3d ca = new Vector3d();
-        Point3d newPoints[] = new Point3d[2];
+        Point3d[] newPoints = new Point3d[2];
         Vector3d ba = new Vector3d(bPoint);
         ba.sub(aPoint);
 

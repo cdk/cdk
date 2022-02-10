@@ -110,7 +110,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     }
 
     @Override
-    public void characterData(CMLStack xpath, char ch[], int start, int length) {
+    public void characterData(CMLStack xpath, char[] ch, int start, int length) {
         if (current == ENERGY) {
             frame_energy = new String(ch, start, length);
         } else {

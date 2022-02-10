@@ -182,7 +182,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    public void characters(char chars[], int start, int length) {
+    public void characters(char[] chars, int start, int length) {
         logger.debug("character data");
         currentChars += new String(chars, start, length);
     }

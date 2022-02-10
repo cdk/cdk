@@ -1047,7 +1047,7 @@ public class MolecularFormulaManipulator {
      * @cdk.keyword double bond equivalent
      */
     public static double getDBE(IMolecularFormula formula) throws CDKException {
-        int valencies[] = new int[5];
+        int[] valencies = new int[5];
         IAtomContainer ac = getAtomContainer(formula);
         AtomTypeFactory factory = AtomTypeFactory.getInstance(
                 "org/openscience/cdk/config/data/structgen_atomtypes.xml", ac.getBuilder());

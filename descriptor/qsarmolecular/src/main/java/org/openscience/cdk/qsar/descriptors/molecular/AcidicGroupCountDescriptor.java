@@ -96,7 +96,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     /** {@inheritDoc} */
     @Override
     public Object[] getParameters() {
-        Object params[] = new Object[1];
+        Object[] params = new Object[1];
         params[0] = this.checkAromaticity;
         return (params);
     }

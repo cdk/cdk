@@ -75,7 +75,7 @@ public class PathTools {
      * @param costMatrix edge cost matrix
      * @return the topological distance matrix
      */
-    public static int[][] computeFloydAPSP(int costMatrix[][]) {
+    public static int[][] computeFloydAPSP(int[][] costMatrix) {
         int nrow = costMatrix.length;
         int[][] distMatrix = new int[nrow][nrow];
         //logger.debug("Matrix size: " + n);
@@ -114,7 +114,7 @@ public class PathTools {
      * @param costMatrix edge cost matrix
      * @return the topological distance matrix
      */
-    public static int[][] computeFloydAPSP(double costMatrix[][]) {
+    public static int[][] computeFloydAPSP(double[][] costMatrix) {
         int nrow = costMatrix.length;
         int[][] distMatrix = new int[nrow][nrow];
         //logger.debug("Matrix size: " + n);

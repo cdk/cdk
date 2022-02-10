@@ -522,7 +522,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         List<IRingSet> ringSets = RingPartitioner.partitionRings(rs);
         IAtomContainer ac = null;
         IAtom atom = null;
-        int temp[];
+        int[] temp;
         for (IRingSet ringSet : ringSets) {
             rs = ringSet;
             List<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(rs);

@@ -175,7 +175,7 @@ public class AtomTools {
      */
     public static Point3d[] calculate3DCoordinatesForLigands(IAtomContainer atomContainer, IAtom refAtom, int nwanted,
             double length, double angle) {
-        Point3d newPoints[] = new Point3d[0];
+        Point3d[] newPoints = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         // get ligands
         List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(refAtom);
@@ -294,7 +294,7 @@ public class AtomTools {
      */
     public static Point3d[] calculate3DCoordinates1(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
             double length, double angle) {
-        Point3d points[] = new Point3d[nwanted];
+        Point3d[] points = new Point3d[nwanted];
         // BA vector
         Vector3d ba = new Vector3d(aPoint);
         ba.sub(bPoint);
@@ -360,7 +360,7 @@ public class AtomTools {
      */
     public static Point3d[] calculate3DCoordinates2(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
             double length, double angle) {
-        Point3d newPoints[] = new Point3d[0];
+        Point3d[] newPoints = new Point3d[0];
         double ang2 = angle / 2.0;
 
         Vector3d ba = new Vector3d(aPoint);

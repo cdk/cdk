@@ -59,7 +59,7 @@ public class MDLMolConvention extends CMLCoreModule {
     }
 
     @Override
-    public void characterData(CMLStack xpath, char ch[], int start, int length) {
+    public void characterData(CMLStack xpath, char[] ch, int start, int length) {
         String s = new String(ch, start, length).trim();
         if (xpath.toString().endsWith("string/") && BUILTIN.equals("stereo")) {
             stereoGiven = true;

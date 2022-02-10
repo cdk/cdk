@@ -693,7 +693,7 @@ public class Bayesian {
 
     // generates a contribution model based on all the training set for which (n%div)!=seg; e.g. for 5-fold, it would use the 80% of the training set
     // that is not implied by the current skein
-    private Map<Integer, Double> buildPartial(final int order[], int seg, int div) {
+    private Map<Integer, Double> buildPartial(final int[] order, int seg, int div) {
         final int sz = training.size();
         int na = 0, nt = 0;
         final Map<Integer, int[]> ih = new HashMap<>();
@@ -727,7 +727,7 @@ public class Bayesian {
     }
 
     // using contributions build from some partial section of the training set, uses that to estimate for an untrained entry
-    private double estimatePartial(final int order[], int N, Map<Integer, Double> segContrib) {
+    private double estimatePartial(final int[] order, int N, Map<Integer, Double> segContrib) {
         double val = 0;
         for (int h : training.get(order[N])) {
             Double c = segContrib.get(h);

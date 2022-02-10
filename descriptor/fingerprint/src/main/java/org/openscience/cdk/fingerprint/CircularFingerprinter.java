@@ -647,11 +647,12 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         final int na = mol.getAtomCount();
         ringBlock = new int[na];
 
-        boolean visited[] = new boolean[na];
+        boolean[] visited = new boolean[na];
         for (int n = 0; n < na; n++)
             visited[n] = !amask[n]; // skip hydrogens
 
-        int path[] = new int[na + 1], plen = 0;
+        int[] path = new int[na + 1];
+        int plen = 0;
         while (true) {
             int last, current;
 
@@ -727,7 +728,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                         break;
                     }
                 if (!fnd) {
-                    int newPath[] = new int[capacity];
+                    int[] newPath = new int[capacity];
                     for (int i = 0; i < psize; i++)
                         newPath[i] = path[i];
                     newPath[psize] = adj;
@@ -767,7 +768,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         int fm = (first - 1 + psize) % psize, fp = (first + 1) % psize;
         boolean flip = path[fm] < path[fp];
         if (first != 0 || flip) {
-            int newPath[] = new int[psize];
+            int[] newPath = new int[psize];
             for (int n = 0; n < psize; n++)
                 newPath[n] = path[(first + (flip ? psize - n : n)) % psize];
             path = newPath;

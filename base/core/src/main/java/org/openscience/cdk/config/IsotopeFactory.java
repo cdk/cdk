@@ -44,9 +44,9 @@ public abstract class IsotopeFactory {
 
     public static final IIsotope[] EMPTY_ISOTOPE_ARRAY = new IIsotope[0];
     @SuppressWarnings("unchecked")
-    private List<IIsotope> isotopes[]      = new List[256];
+    private List<IIsotope>[] isotopes = new List[256];
     @SuppressWarnings("unchecked")
-    private IIsotope        majorIsotope[] = new IIsotope[256];
+    private IIsotope[] majorIsotope = new IIsotope[256];
     protected static ILoggingTool  logger        = LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
 
     /**

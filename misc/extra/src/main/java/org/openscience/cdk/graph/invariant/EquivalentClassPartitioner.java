@@ -100,7 +100,7 @@ public class EquivalentClassPartitioner {
      * @return an array contains the automorphism partition of the molecule
      */
     public int[] getTopoEquivClassbyHuXu(IAtomContainer atomContainer) throws NoSuchAtomException {
-        double nodeSequence[] = prepareNode(atomContainer);
+        double[] nodeSequence = prepareNode(atomContainer);
         nodeMatrix = buildNodeMatrix(nodeSequence);
         bondMatrix = buildBondMatrix();
         weight = buildWeightMatrix(nodeMatrix, bondMatrix);
@@ -116,7 +116,7 @@ public class EquivalentClassPartitioner {
      * @return an array of node identifier
      */
     public double[] prepareNode(IAtomContainer atomContainer) {
-        double nodeSequence[] = new double[atomContainer.getAtomCount()];
+        double[] nodeSequence = new double[atomContainer.getAtomCount()];
         int i = 0;
         for (IAtom atom : atomContainer.atoms()) {
             String symbol = atom.getSymbol();
@@ -374,7 +374,7 @@ public class EquivalentClassPartitioner {
      */
     public int checkDiffNumber(double[] weight) {
         // Count the number of different weight
-        double category[] = new double[weight.length];
+        double[] category = new double[weight.length];
         int i, j;
         int count = 1;
         double t;
@@ -400,8 +400,8 @@ public class EquivalentClassPartitioner {
      * @return an array contains the automorphism partition
      */
     public int[] getEquivalentClass(double[] weight) {
-        double category[] = new double[weight.length];
-        int equivalentClass[] = new int[weight.length];
+        double[] category = new double[weight.length];
+        int[] equivalentClass = new int[weight.length];
         int i, j;
         int count = 1;
         double t;
@@ -445,7 +445,7 @@ public class EquivalentClassPartitioner {
      */
     public int[] findTopoEquivClass(double[] weight) {
         int trialCount, i;
-        int equivalentClass[] = new int[weight.length];
+        int[] equivalentClass = new int[weight.length];
         int count = checkDiffNumber(weight);
         trialCount = count;
         if (count == nodeNumber) {

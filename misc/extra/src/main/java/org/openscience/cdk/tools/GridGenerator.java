@@ -153,7 +153,7 @@ public class GridGenerator {
     /**
      * Method initialise the given grid points with a value.
      */
-    public double[][][] initializeGrid(double grid[][][], double value) {
+    public double[][][] initializeGrid(double[][][] grid, double value) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 for (int k = 0; k < grid[0][0].length; k++) {

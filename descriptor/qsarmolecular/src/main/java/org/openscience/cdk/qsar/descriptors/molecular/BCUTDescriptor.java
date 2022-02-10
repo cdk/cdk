@@ -184,7 +184,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      */
     @Override
     public Object[] getParameters() {
-        Object params[] = new Object[3];
+        Object[] params = new Object[3];
         params[0] = this.nhigh;
         params[1] = this.nlow;
         params[2] = this.checkAromaticity;
