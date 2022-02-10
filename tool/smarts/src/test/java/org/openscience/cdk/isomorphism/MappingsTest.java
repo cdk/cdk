@@ -106,7 +106,7 @@ public class MappingsTest {
         Iterable<String> strings = ms.map(f);
         Iterator<String> stringIt = strings.iterator();
 
-        verify(f, atMost(0)).apply(ArgumentMatchers.<int[]> any());
+        verify(f, atMost(0)).apply(ArgumentMatchers.any());
 
         assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p1"));
@@ -118,7 +118,7 @@ public class MappingsTest {
         assertThat(stringIt.next(), is("p4"));
         assertFalse(stringIt.hasNext());
 
-        verify(f, atMost(4)).apply(ArgumentMatchers.<int[]> any());
+        verify(f, atMost(4)).apply(ArgumentMatchers.any());
     }
 
     @Test

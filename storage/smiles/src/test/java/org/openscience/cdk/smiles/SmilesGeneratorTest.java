@@ -1353,7 +1353,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     static void define(IAtomContainer container, IStereoElement... elements) {
-        container.setStereoElements(Arrays.<IStereoElement>asList(elements));
+        container.setStereoElements(Arrays.asList(elements));
     }
 
     static String canon(String smi) throws Exception {

@@ -342,7 +342,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     public void testPropertyOutput_none() throws CDKException, IOException {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         StringWriter sw = new StringWriter();
-        SDFWriter sdf = new SDFWriter(sw, Collections.<String> emptySet());
+        SDFWriter sdf = new SDFWriter(sw, Collections.emptySet());
         adenine.setProperty("one", "a");
         adenine.setProperty("two", "b");
         sdf.write(adenine);

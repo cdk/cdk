@@ -659,7 +659,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     IAtom readAtomFast(String line, IChemObjectBuilder builder, int lineNum) throws CDKException, IOException {
-        return readAtomFast(line, builder, Collections.<IAtom,Integer>emptyMap(), lineNum, false);
+        return readAtomFast(line, builder, Collections.emptyMap(), lineNum, false);
     }
 
     /**

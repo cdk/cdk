@@ -143,7 +143,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
     @Override
     protected List<Map.Entry<String, String>> getParameters() {
-        return Arrays.<Map.Entry<String,String>>asList(
+        return Arrays.asList(
             new SimpleImmutableEntry<>("searchDepth", Integer.toString(searchDepth)),
             new SimpleImmutableEntry<>("pathLimit", Integer.toString(pathLimit)),
             new SimpleImmutableEntry<>("hashPseudoAtoms", Boolean.toString(hashPseudoAtoms))

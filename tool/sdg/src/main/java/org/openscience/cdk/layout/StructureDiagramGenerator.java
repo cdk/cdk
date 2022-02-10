@@ -403,7 +403,7 @@ public class StructureDiagramGenerator {
     }
 
     public void setMolecule(IAtomContainer mol, boolean clone) {
-        setMolecule(mol, clone, Collections.<IAtom>emptySet(), Collections.<IBond>emptySet());
+        setMolecule(mol, clone, Collections.emptySet(), Collections.emptySet());
     }
 
     /**

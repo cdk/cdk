@@ -217,7 +217,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             case CLASS_FCFP4: type = "FCFP4"; break;
             case CLASS_FCFP6: type = "FCFP6"; break;
         }
-        return Arrays.<Map.Entry<String, String>>asList(
+        return Arrays.asList(
             new AbstractMap.SimpleImmutableEntry<>("classType", type),
             new AbstractMap.SimpleImmutableEntry<>("perceiveStereochemistry",
                                                    Boolean.toString(optPerceiveStereo))

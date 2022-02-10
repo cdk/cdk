@@ -72,7 +72,7 @@ public class TetrahedralElementEncoderFactoryTest {
         when(tc.getChiralAtom()).thenReturn(c1);
         when(tc.getLigands()).thenReturn(new IAtom[]{o2, n3, c4, h5});
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(tc));
+        when(container.stereoElements()).thenReturn(Collections.singleton(tc));
 
         StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container, new int[0][0]); // graph not used
 
@@ -101,7 +101,7 @@ public class TetrahedralElementEncoderFactoryTest {
         when(tc.getLigands()).thenReturn(new IAtom[]{o2, n3, c4, c1 // <-- represents implicit H
                 });
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(tc));
+        when(container.stereoElements()).thenReturn(Collections.singleton(tc));
 
         StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container, new int[0][0]); // graph not used
 
@@ -130,7 +130,7 @@ public class TetrahedralElementEncoderFactoryTest {
         when(tc.getLigands()).thenReturn(new IAtom[]{c1, // <-- represents implicit H
                 o2, n3, c4,});
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(tc));
+        when(container.stereoElements()).thenReturn(Collections.singleton(tc));
 
         StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container, new int[0][0]); // graph not used
 
@@ -161,7 +161,7 @@ public class TetrahedralElementEncoderFactoryTest {
         when(tc.getLigands()).thenReturn(new IAtom[]{o2, c1, // <-- represents implicit H
                 n3, c4,});
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(tc));
+        when(container.stereoElements()).thenReturn(Collections.singleton(tc));
 
         StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container, new int[0][0]); // graph not used
 

@@ -398,7 +398,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
          */
         public List<IBond> bonds(IAtom a) {
             List<IBond> bs = bonds.get(a);
-            return bs != null ? bs : Collections.<IBond> emptyList();
+            return bs != null ? bs : Collections.emptyList();
         }
 
         /**

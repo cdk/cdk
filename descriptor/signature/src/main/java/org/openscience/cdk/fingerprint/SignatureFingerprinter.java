@@ -63,7 +63,7 @@ public class SignatureFingerprinter extends AbstractFingerprinter implements IFi
 
     @Override
     protected List<Map.Entry<String, String>> getParameters() {
-        return Collections.<Map.Entry<String,String>>singletonList(
+        return Collections.singletonList(
             new AbstractMap.SimpleImmutableEntry<>("signatureDepth", Integer.toString(signatureDepth))
         );
     }

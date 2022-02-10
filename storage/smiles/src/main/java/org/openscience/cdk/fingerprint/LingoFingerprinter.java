@@ -78,7 +78,7 @@ public class LingoFingerprinter extends AbstractFingerprinter implements IFinger
 
     @Override
     protected List<Map.Entry<String, String>> getParameters() {
-        return Collections.<Map.Entry<String,String>>singletonList(
+        return Collections.singletonList(
             new AbstractMap.SimpleImmutableEntry<>("ngramLength", Integer.toString(n))
         );
     }

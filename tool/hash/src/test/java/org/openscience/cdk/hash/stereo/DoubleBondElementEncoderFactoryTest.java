@@ -81,7 +81,7 @@ public class DoubleBondElementEncoderFactoryTest {
         when(dbs.getStereoBond()).thenReturn(stereoBond);
         when(dbs.getBonds()).thenReturn(new IBond[]{left, right});
         when(dbs.getStereo()).thenReturn(IDoubleBondStereochemistry.Conformation.OPPOSITE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(dbs));
+        when(container.stereoElements()).thenReturn(Collections.singleton(dbs));
 
         StereoEncoder encoder = new DoubleBondElementEncoderFactory().create(container, new int[][]{{1, 2}, {0, 3},
                 {0}, {1}});
@@ -120,7 +120,7 @@ public class DoubleBondElementEncoderFactoryTest {
         when(dbs.getStereoBond()).thenReturn(stereoBond);
         when(dbs.getBonds()).thenReturn(new IBond[]{left, right});
         when(dbs.getStereo()).thenReturn(IDoubleBondStereochemistry.Conformation.TOGETHER);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(dbs));
+        when(container.stereoElements()).thenReturn(Collections.singleton(dbs));
 
         StereoEncoder encoder = new DoubleBondElementEncoderFactory().create(container, new int[][]{{1, 2}, {0, 3},
                 {0}, {1}});

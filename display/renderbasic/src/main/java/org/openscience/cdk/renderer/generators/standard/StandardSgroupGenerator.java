@@ -618,7 +618,7 @@ final class StandardSgroupGenerator {
 
         // first we need to pair the brackets with the bonds
         Map<SgroupBracket, IBond> pairs = crossingBonds.size() == brackets.size() ? bracketBondPairs(brackets, crossingBonds)
-                                                                                  : Collections.<SgroupBracket, IBond>emptyMap();
+                                                                                  : Collections.emptyMap();
 
         // override bracket layout around single atoms to bring them in closer
         if (atoms.size() == 1 &&

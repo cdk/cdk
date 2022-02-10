@@ -468,7 +468,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         for (int i = 0; i < this.stereo.size(); i++) {
             IStereoElement se = stereo.get(i);
             if (se.contains(org)) {
-                Map<IAtom, IAtom> amap = Collections.<IAtom,IAtom>singletonMap(org, rep);
+                Map<IAtom, IAtom> amap = Collections.singletonMap(org, rep);
                 Map<IBond, IBond> bmap = Collections.emptyMap();
                 this.stereo.set(i, se.map(amap, bmap));
             }

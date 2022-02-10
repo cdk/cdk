@@ -1026,7 +1026,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.read(molecule);
         reader.close();
         IAtom atom = molecule.getAtom(55);
-        org.hamcrest.MatcherAssert.assertThat(atom, CoreMatchers.<IAtom>instanceOf(IPseudoAtom.class));
+        org.hamcrest.MatcherAssert.assertThat(atom, CoreMatchers.instanceOf(IPseudoAtom.class));
         Assert.assertEquals("R", ((IPseudoAtom)atom).getLabel());
     }
 
@@ -1846,7 +1846,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
             IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
             QueryAtom           queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
@@ -1860,7 +1860,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
             IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
             QueryAtom           queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
@@ -1875,7 +1875,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
             IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
             QueryAtom           queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
@@ -1890,7 +1890,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
             IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
             QueryAtom           queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
@@ -1929,7 +1929,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
             IAtomContainer mol   = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             IAtom          deref = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
         }
     }
 
@@ -1949,15 +1949,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 }
             }
             assertNotNull(dataSgroup);
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldName),
+            assertThat(dataSgroup.getValue(SgroupKey.DataFieldName),
                        CoreMatchers.is("WEIGHT_PERCENT"));
             // note it looks like MDL/Accelys/BIOVIA simply omit units/format
             // but check we pass it okay
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldUnits),
+            assertThat(dataSgroup.getValue(SgroupKey.DataFieldUnits),
                        CoreMatchers.is("%"));
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldFormat),
+            assertThat(dataSgroup.getValue(SgroupKey.DataFieldFormat),
                        CoreMatchers.is("N"));
-            assertThat(dataSgroup.<String>getValue(SgroupKey.Data),
+            assertThat(dataSgroup.getValue(SgroupKey.Data),
                        CoreMatchers.is("33%"));
         } catch (IOException | CDKException e) {
             e.printStackTrace();

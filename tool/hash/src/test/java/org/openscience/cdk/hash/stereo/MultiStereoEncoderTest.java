@@ -44,7 +44,7 @@ public class MultiStereoEncoderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstruction_Empty() {
-        new MultiStereoEncoder(Collections.<StereoEncoder> emptyList());
+        new MultiStereoEncoder(Collections.emptyList());
     }
 
     @Test
