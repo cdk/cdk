@@ -70,12 +70,12 @@ public class CMLResolver implements EntityResolver {
     public InputSource resolveEntity(String publicId, String systemId) {
         logger.debug("CMLResolver: resolving ", publicId, ", ", systemId);
         systemId = systemId.toLowerCase();
-        if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) || (systemId.indexOf("cml.dtd") != -1)
-                || (systemId.indexOf("cml1_0.dtd") != -1)) {
+        if ((systemId.contains("cml-1999-05-15.dtd")) || (systemId.contains("cml.dtd"))
+                || (systemId.contains("cml1_0.dtd"))) {
             logger.info("File has CML 1.0 DTD");
             return getCMLType("cml1_0.dtd");
-        } else if ((systemId.indexOf("cml-2001-04-06.dtd") != -1) || (systemId.indexOf("cml1_0_1.dtd") != -1)
-                || (systemId.indexOf("cml_1_0_1.dtd") != -1)) {
+        } else if ((systemId.contains("cml-2001-04-06.dtd")) || (systemId.contains("cml1_0_1.dtd"))
+                || (systemId.contains("cml_1_0_1.dtd"))) {
             logger.info("File has CML 1.0.1 DTD");
             return getCMLType("cml1_0_1.dtd");
         } else {

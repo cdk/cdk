@@ -76,7 +76,7 @@ public class GamessFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("GAMESS execution script") >= 0 || line.indexOf("GAMESS VERSION") >= 0) {
+        if (line.contains("GAMESS execution script") || line.contains("GAMESS VERSION")) {
             return true;
         }
         return false;

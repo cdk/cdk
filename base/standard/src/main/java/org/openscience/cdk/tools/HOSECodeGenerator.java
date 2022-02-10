@@ -385,7 +385,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         IBond bond = null;
         for (TreeNode sphereNode : sphereNodes) {
             treeNode = (TreeNode) sphereNode;
-            if (!("&;#:,".indexOf(treeNode.symbol) >= 0)) {
+            if (!("&;#:,".contains(treeNode.symbol))) {
                 node = treeNode.atom;
                 if (node.getAtomicNumber() == IElement.H) continue;
 

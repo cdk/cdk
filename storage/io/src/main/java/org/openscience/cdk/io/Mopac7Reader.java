@@ -108,8 +108,8 @@ public class Mopac7Reader extends DefaultChemObjectReader {
             try {
                 String line = input.readLine();
                 while (line != null) {
-                    if (line.indexOf("****  MAX. NUMBER OF ATOMS ALLOWED") > -1) throw new CDKException(line);
-                    if (line.indexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"") > -1) throw new CDKException(line);
+                    if (line.contains("****  MAX. NUMBER OF ATOMS ALLOWED")) throw new CDKException(line);
+                    if (line.contains("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"")) throw new CDKException(line);
                     if ("CARTESIAN COORDINATES".equals(line.trim())) {
 
                         IAtomContainer atomcontainer = ((IAtomContainer) object);
@@ -171,7 +171,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 
                         }
 
-                    } else if (line.indexOf(Mopac7Reader.eigenvalues) >= 0) {
+                    } else if (line.contains(Mopac7Reader.eigenvalues)) {
                         line = input.readLine();
                         line = input.readLine();
                         while (!line.trim().equals("")) {
@@ -181,7 +181,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
                         container.setProperty(Mopac7Reader.eigenvalues, eigenvalues.toString());
                     } else
                         for (int i = 0; i < parameters.length; i++)
-                            if (line.indexOf(parameters[i]) >= 0) {
+                            if (line.contains(parameters[i])) {
                                 String value = line.substring(line.lastIndexOf('=') + 1).trim();
 
                                 /*

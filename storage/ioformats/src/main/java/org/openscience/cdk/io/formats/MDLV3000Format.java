@@ -74,7 +74,7 @@ public class MDLV3000Format extends SimpleChemFormatMatcher implements IChemForm
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && (line.indexOf("v3000") >= 0 || line.indexOf("V3000") >= 0)) {
+        if (lineNumber == 4 && (line.contains("v3000") || line.contains("V3000"))) {
             return true;
         }
         return false;

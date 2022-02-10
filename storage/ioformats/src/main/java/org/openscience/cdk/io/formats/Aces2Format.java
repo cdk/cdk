@@ -74,7 +74,7 @@ public class Aces2Format extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("ACES2") >= 0) {
+        if (line.contains("ACES2")) {
             return true;
         }
         return false;

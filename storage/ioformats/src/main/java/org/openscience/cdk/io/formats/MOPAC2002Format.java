@@ -74,7 +74,7 @@ public class MOPAC2002Format extends SimpleChemFormatMatcher implements IChemFor
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("MOPAC2002") >= 0) {
+        if (line.contains("MOPAC2002")) {
             return true;
         }
         return false;

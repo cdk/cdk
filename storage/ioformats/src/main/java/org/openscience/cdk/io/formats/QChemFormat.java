@@ -76,7 +76,7 @@ public class QChemFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Welcome to Q-Chem") != -1) {
+        if (line.contains("Welcome to Q-Chem")) {
             return true;
         }
         return false;

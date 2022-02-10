@@ -85,7 +85,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testCMLWriterBenzene()");
         logger.debug(writer.toString());
         logger.debug("******************************");
-        Assert.assertTrue(writer.toString().indexOf("</molecule>") != -1);
+        Assert.assertTrue(writer.toString().contains("</molecule>"));
     }
 
     /**
@@ -106,7 +106,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testHydrogenCount()");
         logger.debug(writer.toString());
         logger.debug("******************************");
-        Assert.assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
+        Assert.assertTrue(writer.toString().contains("hydrogenCount=\"4\""));
     }
 
     @Test
@@ -143,7 +143,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testMAssNumber()");
         logger.debug(writer.toString());
         logger.debug("******************************");
-        Assert.assertTrue(writer.toString().indexOf("isotopeNumber=\"12\"") != -1);
+        Assert.assertTrue(writer.toString().contains("isotopeNumber=\"12\""));
     }
 
     /**
@@ -166,7 +166,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testHydrogenCount_2()");
         logger.debug(writer.toString());
         logger.debug("******************************");
-        Assert.assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
+        Assert.assertTrue(writer.toString().contains("hydrogenCount=\"4\""));
     }
 
     @Test
@@ -187,8 +187,8 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testCMLCrystal()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("</crystal>") != -1); // the cystal info has to be present
-        Assert.assertTrue(cmlContent.indexOf("<atom") != -1); // an Atom has to be present
+        Assert.assertTrue(cmlContent.contains("</crystal>")); // the cystal info has to be present
+        Assert.assertTrue(cmlContent.contains("<atom")); // an Atom has to be present
     }
 
     @Test
@@ -214,10 +214,10 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"reaction1") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"react") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"product") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"agent") != -1);
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"reaction1"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"react"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"product"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"agent"));
     }
 
     @Test
@@ -256,13 +256,13 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs1") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+        Assert.assertTrue(cmlContent.contains("<reactionScheme id=\"rs0"));
+        Assert.assertTrue(cmlContent.contains("<reactionScheme id=\"rs1"));
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"r1"));
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"r2"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"A"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"B"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"C"));
     }
 
     @Test
@@ -298,12 +298,12 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+        Assert.assertTrue(cmlContent.contains("<reactionScheme id=\"rs0"));
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"r1"));
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"r2"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"A"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"B"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"C"));
     }
 
     @Test
@@ -346,13 +346,13 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<formula concise=") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+        Assert.assertTrue(cmlContent.contains("<reactionScheme id=\"rs0"));
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"r1"));
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"r2"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"A"));
+        Assert.assertTrue(cmlContent.contains("<formula concise="));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"B"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"C"));
     }
 
     @Test
@@ -389,13 +389,13 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<scalar dictRef=\"cdk:molecularProperty") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+        Assert.assertTrue(cmlContent.contains("<reactionScheme id=\"rs0"));
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"r1"));
+        Assert.assertTrue(cmlContent.contains("<reaction id=\"r2"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"A"));
+        Assert.assertTrue(cmlContent.contains("<scalar dictRef=\"cdk:molecularProperty"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"B"));
+        Assert.assertTrue(cmlContent.contains("<molecule id=\"C"));
     }
 
     @Test
@@ -411,7 +411,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<list convention=\"cdk:model\" id=\"cm0") != -1);
+        Assert.assertTrue(cmlContent.contains("<list convention=\"cdk:model\" id=\"cm0"));
     }
 
     @Test
@@ -427,7 +427,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<moleculeList convention=\"cdk:moleculeSet\" id=\"ms0") != -1);
+        Assert.assertTrue(cmlContent.contains("<moleculeList convention=\"cdk:moleculeSet\" id=\"ms0"));
     }
 
     @Test
@@ -443,7 +443,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<scalar dictRef=\"cdk:reactionProperty") != -1);
+        Assert.assertTrue(cmlContent.contains("<scalar dictRef=\"cdk:reactionProperty"));
     }
 
     /**

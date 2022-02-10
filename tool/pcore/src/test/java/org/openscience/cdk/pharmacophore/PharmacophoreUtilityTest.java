@@ -149,9 +149,9 @@ public class PharmacophoreUtilityTest {
         int ndist = 0;
         int nangle = 0;
         for (String line : lines) {
-            if (line.indexOf("</pharmacophore>") != -1) ndef++;
-            if (line.indexOf("</distanceConstraint>") != -1) ndist++;
-            if (line.indexOf("</angleConstraint>") != -1) nangle++;
+            if (line.contains("</pharmacophore>")) ndef++;
+            if (line.contains("</distanceConstraint>")) ndist++;
+            if (line.contains("</angleConstraint>")) nangle++;
         }
         Assert.assertEquals(2, ndef);
         Assert.assertEquals(5, ndist);

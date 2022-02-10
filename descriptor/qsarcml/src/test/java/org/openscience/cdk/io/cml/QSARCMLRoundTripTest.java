@@ -138,8 +138,8 @@ public class QSARCMLRoundTripTest {
         logger.debug("****************************** testQSARCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<property") != -1 && cmlContent.indexOf("xmlns:qsar") != -1);
-        Assert.assertTrue(cmlContent.indexOf("#weight\"") != -1);
+        Assert.assertTrue(cmlContent.contains("<property") && cmlContent.contains("xmlns:qsar"));
+        Assert.assertTrue(cmlContent.contains("#weight\""));
     }
 
 }

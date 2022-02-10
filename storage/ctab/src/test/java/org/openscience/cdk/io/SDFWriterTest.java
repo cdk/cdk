@@ -133,8 +133,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("<foo>") != -1);
-        Assert.assertTrue(writer.toString().indexOf("bar") != -1);
+        Assert.assertTrue(writer.toString().contains("<foo>"));
+        Assert.assertTrue(writer.toString().contains("bar"));
     }
 
     @Test
@@ -149,7 +149,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().indexOf(InvPair.CANONICAL_LABEL) == -1);
+        Assert.assertTrue(!writer.toString().contains(InvPair.CANONICAL_LABEL));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
+        Assert.assertTrue(writer.toString().contains("$$$$"));
     }
 
     @Test
@@ -180,7 +180,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
+        Assert.assertTrue(writer.toString().contains("$$$$"));
     }
 
     @Test
@@ -199,11 +199,11 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molecule);
 
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("foo") != -1);
-        Assert.assertTrue(writer.toString().indexOf("bar") != -1);
-        Assert.assertTrue(writer.toString().indexOf("toys") != -1);
-        Assert.assertTrue(writer.toString().indexOf("r-us") != -1);
-        Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
+        Assert.assertTrue(writer.toString().contains("foo"));
+        Assert.assertTrue(writer.toString().contains("bar"));
+        Assert.assertTrue(writer.toString().contains("toys"));
+        Assert.assertTrue(writer.toString().contains("r-us"));
+        Assert.assertTrue(writer.toString().contains("$$$$"));
     }
 
     @Test

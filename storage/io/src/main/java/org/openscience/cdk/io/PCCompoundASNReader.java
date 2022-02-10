@@ -201,11 +201,11 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         String line = input.readLine();
         URN urn = null;
         while (input.ready() && line != null) {
-            if (line.indexOf("urn") != -1) {
+            if (line.contains("urn")) {
                 urn = extractURN();
-            } else if (line.indexOf("value") != -1) {
+            } else if (line.contains("value")) {
                 logger.debug("Found a prop value line: " + line);
-                if (line.indexOf(" sval") != -1) {
+                if (line.contains(" sval")) {
                     logger.debug("Label: " + urn.label);
                     logger.debug("Name: " + urn.name);
                     if ("InChI".equals(urn.label)) {
@@ -229,9 +229,9 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         URN urn = new URN();
         String line = input.readLine();
         while (input.ready() && line != null) {
-            if (line.indexOf("name") != -1) {
+            if (line.contains("name")) {
                 urn.name = getQuotedValue(line.substring(line.indexOf("name") + 4));
-            } else if (line.indexOf("label") != -1) {
+            } else if (line.contains("label")) {
                 urn.label = getQuotedValue(line.substring(line.indexOf("label") + 4));
             } else if (line.indexOf('}') != -1 && line.indexOf('\"') == -1) {
                 // ok, don't return if it also has a "

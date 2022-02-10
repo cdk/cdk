@@ -185,7 +185,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
 
         // Find first set of coordinates by skipping all before "Standard orientation"
         while (input.ready() && (line != null)) {
-            if (line.indexOf("Standard orientation:") >= 0) {
+            if (line.contains("Standard orientation:")) {
 
                 // Found a set of coordinates
                 model = chemFile.getBuilder().newInstance(IChemModel.class);
@@ -205,7 +205,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                     lastRoute = line;
                     modelCounter = 0;
 
-                } else if (line.indexOf("Standard orientation:") >= 0) {
+                } else if (line.contains("Standard orientation:")) {
 
                     // Found a set of coordinates
                     // Add current frame to file and create a new one.
@@ -218,22 +218,22 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                     model = chemFile.getBuilder().newInstance(IChemModel.class);
                     modelCounter++;
                     readCoordinates(model);
-                } else if (line.indexOf("SCF Done:") >= 0) {
+                } else if (line.contains("SCF Done:")) {
 
                     // Found an energy
                     model.setProperty(CDKConstants.REMARK, line.trim());
-                } else if (line.indexOf("Harmonic frequencies") >= 0) {
+                } else if (line.contains("Harmonic frequencies")) {
 
                     // Found a set of vibrations
                     // readFrequencies(frame);
-                } else if (line.indexOf("Total atomic charges") >= 0) {
+                } else if (line.contains("Total atomic charges")) {
                     readPartialCharges(model);
-                } else if (line.indexOf("Magnetic shielding") >= 0) {
+                } else if (line.contains("Magnetic shielding")) {
 
                     // Found NMR data
                     readNMRData(model, line);
 
-                } else if (line.indexOf("GINC") >= 0) {
+                } else if (line.contains("GINC")) {
 
                     // Found calculation level of theory
                     levelOfTheory = parseLevelOfTheory(line);
@@ -271,7 +271,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         line = input.readLine();
         while (input.ready()) {
             line = input.readLine();
-            if ((line == null) || (line.indexOf("-----") >= 0)) {
+            if ((line == null) || (line.contains("-----"))) {
                 break;
             }
             int atomicNumber;
@@ -345,7 +345,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         while (input.ready()) {
             line = input.readLine();
             logger.debug("Read charge block line: " + line);
-            if ((line == null) || (line.indexOf("Sum of Mulliken charges") >= 0)) {
+            if ((line == null) || (line.contains("Sum of Mulliken charges"))) {
                 logger.debug("End of charge block found");
                 break;
             }
@@ -420,9 +420,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         IAtomContainer ac = containers.get(0);
         // Determine label for properties
         String label;
-        if (labelLine.indexOf("Diamagnetic") >= 0) {
+        if (labelLine.contains("Diamagnetic")) {
             label = "Diamagnetic Magnetic shielding (Isotropic)";
-        } else if (labelLine.indexOf("Paramagnetic") >= 0) {
+        } else if (labelLine.contains("Paramagnetic")) {
             label = "Paramagnetic Magnetic shielding (Isotropic)";
         } else {
             label = "Magnetic shielding (Isotropic)";
@@ -431,7 +431,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         for (int i = 0; i < atomCount; ++i) {
             try {
                 String line = input.readLine().trim();
-                while (line.indexOf("Isotropic") < 0) {
+                while (!line.contains("Isotropic")) {
                     if (line == null) {
                         return;
                     }

@@ -461,7 +461,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         molecule.addAtom(hydroxyl);
         addImplicitHydrogens(molecule);
         smiles = sg.create(molecule);
-        Assert.assertTrue(smiles.indexOf(".") != -1);
+        Assert.assertTrue(smiles.contains("."));
     }
 
     /**
@@ -937,7 +937,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);
-        Assert.assertTrue(smiles.indexOf("[nH]") >= 0);
+        Assert.assertTrue(smiles.contains("[nH]"));
     }
 
     @Test
@@ -948,7 +948,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(mol);
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);
-        Assert.assertTrue(smiles.indexOf("[nH]") >= 0);
+        Assert.assertTrue(smiles.contains("[nH]"));
     }
 
     /**
@@ -1013,11 +1013,11 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String genSmiles = smilesGenerator.create(cdkMol);
 
         // check that we have the appropriate ring closure symbols
-        Assert.assertTrue("There were'nt any % ring closures in the output", genSmiles.indexOf("%") >= 0);
-        Assert.assertTrue(genSmiles.indexOf("%10") >= 0);
-        Assert.assertTrue(genSmiles.indexOf("%11") >= 0);
-        Assert.assertTrue(genSmiles.indexOf("%12") >= 0);
-        Assert.assertTrue(genSmiles.indexOf("%13") >= 0);
+        Assert.assertTrue("There were'nt any % ring closures in the output", genSmiles.contains("%"));
+        Assert.assertTrue(genSmiles.contains("%10"));
+        Assert.assertTrue(genSmiles.contains("%11"));
+        Assert.assertTrue(genSmiles.contains("%12"));
+        Assert.assertTrue(genSmiles.contains("%13"));
 
         // check that we can read in the SMILES we got
         IAtomContainer cdkRoundTripMol = smilesParser.parseSmiles(genSmiles);
@@ -1047,7 +1047,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles(smiles);
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String genSmiles = smilesGenerator.create(mol);
-        Assert.assertTrue("Generated SMILES should not have explicit H: " + genSmiles, genSmiles.indexOf("H") == -1);
+        Assert.assertTrue("Generated SMILES should not have explicit H: " + genSmiles, !genSmiles.contains("H"));
     }
 
     /**

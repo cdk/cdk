@@ -256,8 +256,8 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element element = classifications.get(i);
                     Attribute attr = element.getAttribute("resource", rdfNS);
-                    if ((attr.getValue().indexOf("molecularDescriptor") != -1)
-                            || (attr.getValue().indexOf("atomicDescriptor") != -1)) {
+                    if ((attr.getValue().contains("molecularDescriptor"))
+                            || (attr.getValue().contains("atomicDescriptor"))) {
                         String[] tmp = attr.getValue().split("#");
                         return tmp[1];
                     }
@@ -328,8 +328,8 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element element = classifications.get(i);
                     Attribute attr = element.getAttribute("resource", rdfNS);
-                    if ((attr.getValue().indexOf("molecularDescriptor") >= 0)
-                            || (attr.getValue().indexOf("atomicDescriptor") >= 0)) {
+                    if ((attr.getValue().contains("molecularDescriptor"))
+                            || (attr.getValue().contains("atomicDescriptor"))) {
                         continue;
                     }
                     String[] tmp = attr.getValue().split("#");
@@ -629,10 +629,10 @@ public class DescriptorEngine {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
                     if (jarEntry.toString().endsWith(".class")) {
                         String tmp = jarEntry.toString().replace('/', '.').replaceAll("\\.class", "");
-                        if (!(tmp.indexOf(packageName) != -1)) continue;
+                        if (!(tmp.contains(packageName))) continue;
                         if (tmp.indexOf('$') != -1) continue;
-                        if (tmp.indexOf("Test") != -1) continue;
-                        if (tmp.indexOf("ChiIndexUtils") != -1) continue;
+                        if (tmp.contains("Test")) continue;
+                        if (tmp.contains("ChiIndexUtils")) continue;
                         if (!classlist.contains(tmp)) classlist.add(tmp);
                     }
                 }

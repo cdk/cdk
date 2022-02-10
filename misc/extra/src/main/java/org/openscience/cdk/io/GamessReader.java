@@ -225,7 +225,7 @@ public class GamessReader extends DefaultChemObjectReader {
              * There are 2 types of coordinate sets: - bohr coordinates sets (if
              * statement) - angstr???m coordinates sets (else statement)
              */
-            if (currentReadLine.indexOf("COORDINATES (BOHR)") >= 0) {
+            if (currentReadLine.contains("COORDINATES (BOHR)")) {
 
                 /*
                  * The following line do no contain data, so it is ignored.
@@ -234,7 +234,7 @@ public class GamessReader extends DefaultChemObjectReader {
                 moleculeSet.addAtomContainer(this.readCoordinates(file.getBuilder().newInstance(IAtomContainer.class),
                         GamessReader.BOHR_UNIT));
                 //break; //<- stops when the first set of coordinates is found.
-            } else if (currentReadLine.indexOf(" COORDINATES OF ALL ATOMS ARE (ANGS)") >= 0) {
+            } else if (currentReadLine.contains(" COORDINATES OF ALL ATOMS ARE (ANGS)")) {
 
                 /*
                  * The following 2 lines do no contain data, so it are ignored.

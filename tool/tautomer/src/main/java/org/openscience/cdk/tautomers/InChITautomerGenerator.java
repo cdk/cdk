@@ -364,7 +364,7 @@ public final class InChITautomerGenerator {
         int totalMobHydrCount = 0;
         String hydrogens = "";
         String inchi = inputInchi;
-        if (inchi.indexOf("/h") != -1) {
+        if (inchi.contains("/h")) {
             hydrogens = inchi.substring(inchi.indexOf("/h") + 2);
             if (hydrogens.indexOf('/') != -1) {
                 hydrogens = hydrogens.substring(0, hydrogens.indexOf('/'));

@@ -74,7 +74,7 @@ public class SpartanFormat extends SimpleChemFormatMatcher implements IChemForma
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Spartan") != -1 && line.indexOf("Quantum Mechanics Program") != -1) {
+        if (line.contains("Spartan") && line.contains("Quantum Mechanics Program")) {
             return true;
         }
         return false;

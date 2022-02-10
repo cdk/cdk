@@ -74,7 +74,7 @@ public class DaltonFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("DALTON") >= 0) {
+        if (line.contains("DALTON")) {
             return true;
         }
         return false;

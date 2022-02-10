@@ -76,7 +76,7 @@ public class INChIFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("<INChI") != -1) {
+        if (line.contains("<INChI")) {
             return true;
         }
         return false;

@@ -141,7 +141,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
 
             // Find first set of coordinates
             while (input.ready() && (line != null)) {
-                if (line.indexOf("Standard orientation:") >= 0) {
+                if (line.contains("Standard orientation:")) {
 
                     // Found a set of coordinates
                     model = sequence.getBuilder().newInstance(IChemModel.class);
@@ -158,33 +158,33 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 // Read all other data
                 line = input.readLine();
                 while (input.ready() && (line != null)) {
-                    if (line.indexOf("Standard orientation:") >= 0) {
+                    if (line.contains("Standard orientation:")) {
                         // Found a set of coordinates
                         // Add current frame to file and create a new one.
                         sequence.addChemModel(model);
                         fireFrameRead();
                         model = sequence.getBuilder().newInstance(IChemModel.class);
                         readCoordinates(model);
-                    } else if (line.indexOf("SCF Done:") >= 0) {
+                    } else if (line.contains("SCF Done:")) {
                         // Found an energy
                         model.setProperty("org.openscience.cdk.io.Gaussian03Reaer:SCF Done", line.trim());
-                    } else if (line.indexOf("Harmonic frequencies") >= 0) {
+                    } else if (line.contains("Harmonic frequencies")) {
                         // Found a set of vibrations
                         //                        try {
                         //                            readFrequencies(model);
                         //                        } catch (IOException exception) {
                         //                            throw new CDKException("Error while reading frequencies: " + exception.toString(), exception);
                         //                        }
-                    } else if (line.indexOf("Mulliken atomic charges") >= 0) {
+                    } else if (line.contains("Mulliken atomic charges")) {
                         readPartialCharges(model);
-                    } else if (line.indexOf("Magnetic shielding") >= 0) {
+                    } else if (line.contains("Magnetic shielding")) {
                         // Found NMR data
                         //                        try {
                         //                            readNMRData(model, line);
                         //                        } catch (IOException exception) {
                         //                            throw new CDKException("Error while reading NMR data: " + exception.toString(), exception);
                         //                        }
-                    } else if (line.indexOf("GINC") >= 0) {
+                    } else if (line.contains("GINC")) {
                         // Found calculation level of theory
                         //levelOfTheory = parseLevelOfTheory(line);
                         // FIXME: is doing anything with it?
@@ -216,7 +216,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         line = input.readLine();
         while (input.ready()) {
             line = input.readLine();
-            if ((line == null) || (line.indexOf("-----") >= 0)) {
+            if ((line == null) || (line.contains("-----"))) {
                 break;
             }
             int atomicNumber = 0;
@@ -281,7 +281,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         while (input.ready()) {
             line = input.readLine();
             logger.debug("Read charge block line: " + line);
-            if ((line == null) || (line.indexOf("Sum of Mulliken charges") >= 0)) {
+            if ((line == null) || (line.contains("Sum of Mulliken charges"))) {
                 logger.debug("End of charge block found");
                 break;
             }

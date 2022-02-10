@@ -74,7 +74,7 @@ public class ABINITFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("natom") >= 0 || line.indexOf("ABINIT") >= 0) {
+        if (line.contains("natom") || line.contains("ABINIT")) {
             return true;
         }
         return false;
