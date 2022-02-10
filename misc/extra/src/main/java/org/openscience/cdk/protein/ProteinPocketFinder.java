@@ -334,8 +334,8 @@ public class ProteinPocketFinder {
         List<List<Point3d>> sortPockets = new ArrayList<>(pockets.size());
         for (int i = 0; i < pockets.size(); i++) {
             pocket = pockets.get(i);
-            if (hashPockets.containsKey(Integer.valueOf(pocket.size()))) {
-                List<Integer> tmp = hashPockets.get(Integer.valueOf(pocket.size()));
+            if (hashPockets.containsKey(pocket.size())) {
+                List<Integer> tmp = hashPockets.get(pocket.size());
                 tmp.add(i);
                 hashPockets.put(pocket.size(), tmp);
             } else {

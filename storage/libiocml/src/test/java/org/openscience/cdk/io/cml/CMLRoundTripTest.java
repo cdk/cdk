@@ -341,7 +341,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     public void testMassNumber() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
-        atom.setMassNumber(new Integer(12));
+        atom.setMassNumber(12);
         mol.addAtom(atom);
         Assert.assertEquals(12, atom.getMassNumber().intValue());
 

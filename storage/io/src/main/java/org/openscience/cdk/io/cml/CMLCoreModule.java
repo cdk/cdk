@@ -1072,10 +1072,10 @@ public class CMLCoreModule implements ICMLModule {
                 } else if (DICTREF.equals("cdk:isotopicMass")) {
                     exactMasses.add(cData.trim());
                 } else {
-                    if (atomCustomProperty.get(Integer.valueOf(atomCounter - 1)) == null)
-                        atomCustomProperty.put(Integer.valueOf(atomCounter - 1), new ArrayList<>());
-                    atomCustomProperty.get(Integer.valueOf(atomCounter - 1)).add(elementTitle);
-                    atomCustomProperty.get(Integer.valueOf(atomCounter - 1)).add(cData.trim());
+                    if (atomCustomProperty.get(atomCounter - 1) == null)
+                        atomCustomProperty.put(atomCounter - 1, new ArrayList<>());
+                    atomCustomProperty.get(atomCounter - 1).add(elementTitle);
+                    atomCustomProperty.get(atomCounter - 1).add(cData.trim());
                 }
             } else if (xpath.endsWith("molecule", "scalar")) {
                 if (DICTREF.equals("pdb:id")) {
@@ -1501,8 +1501,8 @@ public class CMLCoreModule implements ICMLModule {
                 if (exactMasses.get(i) != null) currentAtom.setExactMass(Double.parseDouble(exactMasses.get(i)));
             }
 
-            if (atomCustomProperty.get(Integer.valueOf(i)) != null) {
-                Iterator<String> it = atomCustomProperty.get(Integer.valueOf(i)).iterator();
+            if (atomCustomProperty.get(i) != null) {
+                Iterator<String> it = atomCustomProperty.get(i).iterator();
                 while (it.hasNext()) {
                     currentAtom.setProperty(it.next(), it.next());
                 }

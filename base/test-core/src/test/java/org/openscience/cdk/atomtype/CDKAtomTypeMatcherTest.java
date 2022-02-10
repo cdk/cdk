@@ -3680,7 +3680,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes = {"O.minus"};
 
         // option one: Integer.valueOf()
-        atom.setFormalCharge(Integer.valueOf(-1));
+        atom.setFormalCharge(-1);
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         // option one: autoboxing
@@ -3688,7 +3688,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         // option one: new Integer()
-        atom.setFormalCharge(new Integer(-1));
+        atom.setFormalCharge(-1);
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 

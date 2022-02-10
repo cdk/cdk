@@ -124,7 +124,7 @@ public class InvPair implements java.io.Serializable {
     }
 
     public void commit() {
-        atom.setProperty(CANONICAL_LABEL, Long.valueOf(curr));
+        atom.setProperty(CANONICAL_LABEL, curr);
     }
 
     /**

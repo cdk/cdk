@@ -494,19 +494,19 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
     private void checkAndStore(int bondToStore, IBond.Order bondOrder, ArrayList<Integer> singleVec,
             ArrayList<Integer> doubleVec, ArrayList<Integer> cycloexVec, int a1, ArrayList<Integer> atomVec,
             int sphere, boolean isBondInCycloex) {
-        if (!atomVec.contains(Integer.valueOf(a1))) {
+        if (!atomVec.contains(a1)) {
             if (sphere < 6) atomVec.add(a1);
         }
-        if (!cycloexVec.contains(Integer.valueOf(bondToStore))) {
+        if (!cycloexVec.contains(bondToStore)) {
             if (isBondInCycloex) {
                 cycloexVec.add(bondToStore);
             }
         }
         if (bondOrder == IBond.Order.DOUBLE) {
-            if (!doubleVec.contains(Integer.valueOf(bondToStore))) doubleVec.add(bondToStore);
+            if (!doubleVec.contains(bondToStore)) doubleVec.add(bondToStore);
         }
         if (bondOrder == IBond.Order.SINGLE) {
-            if (!singleVec.contains(Integer.valueOf(bondToStore))) singleVec.add(bondToStore);
+            if (!singleVec.contains(bondToStore)) singleVec.add(bondToStore);
         }
     }
 

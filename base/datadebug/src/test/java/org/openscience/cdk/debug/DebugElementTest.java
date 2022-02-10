@@ -90,8 +90,8 @@ public class DebugElementTest extends AbstractElementTest {
 
     @Test
     public void compareAtomicNumber() {
-        DebugElement e1 = new DebugElement("H", new Integer(1));
-        DebugElement e2 = new DebugElement("H", new Integer(1));
+        DebugElement e1 = new DebugElement("H", 1);
+        DebugElement e2 = new DebugElement("H", 1);
         Assert.assertTrue(e1.compare(e2));
     }
 

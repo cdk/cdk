@@ -49,7 +49,7 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
     public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException,
             java.lang.Exception {
         IAtomicDescriptor descriptor = new IsProtonInAromaticSystemDescriptor();
-        Object[] params = {new Boolean(true)};
+        Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br");

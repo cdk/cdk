@@ -104,8 +104,8 @@ public class InductivePartialCharges implements IChargeCalculator {
                 ElEn[a + (s * atoms.length)] = ElEn[a + ((s - 1) * atoms.length)]
                         + (pChInch[a + (s * atoms.length)] / getAtomicSoftnessCore(ac, a));
                 if (s == 9) {
-                    atoms[a].setProperty("InductivePartialCharge", new Double(pCh[a + (s * atoms.length)]));
-                    atoms[a].setProperty("EffectiveAtomicElectronegativity", new Double(ElEn[a + (s * atoms.length)]));
+                    atoms[a].setProperty("InductivePartialCharge", pCh[a + (s * atoms.length)]);
+                    atoms[a].setProperty("EffectiveAtomicElectronegativity", ElEn[a + (s * atoms.length)]);
                 }
                 //tmp1 = pCh[a + (s * atoms.length)];
                 //tmp2 = ElEn[a + (s * atoms.length)];

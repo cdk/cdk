@@ -165,8 +165,8 @@ public class ElementTest extends AbstractElementTest {
 
     @Test
     public void compareAtomicNumber() {
-        Element e1 = new Element("H", new Integer(1));
-        Element e2 = new Element("H", new Integer(1));
+        Element e1 = new Element("H", 1);
+        Element e2 = new Element("H", 1);
         Assert.assertTrue(e1.compare(e2));
     }
 

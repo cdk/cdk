@@ -87,11 +87,11 @@ public class CrossoverMachine {
                  * and blueAtoms.
                  */
                 for (int i = 0; i < dim; i++)
-                    redAtoms.add(Integer.valueOf(i));
+                    redAtoms.add(i);
                 for (int i = 0; i < (dim - numatoms); i++) {
                     int ranInt = RandomNumbersTool.randomInt(0, redAtoms.size() - 1);
                     redAtoms.remove(Integer.valueOf(ranInt));
-                    blueAtoms.add(Integer.valueOf(ranInt));
+                    blueAtoms.add(ranInt);
                 }
 
             } else {
@@ -106,7 +106,7 @@ public class CrossoverMachine {
                 }
 
                 for (int i = 0; i < dim; i++) {
-                    Integer element = Integer.valueOf(i);
+                    Integer element = i;
                     if (!(redAtoms.contains(element))) {
                         blueAtoms.add(element);
                     }

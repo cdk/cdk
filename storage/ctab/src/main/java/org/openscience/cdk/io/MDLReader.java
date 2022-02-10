@@ -503,11 +503,11 @@ public class MDLReader extends DefaultChemObjectReader {
                 //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
                 if (line.length() >= 78) {
                     double shift = Double.parseDouble(line.substring(69, 80).trim());
-                    atom.setProperty("first shift", new Double(shift));
+                    atom.setProperty("first shift", shift);
                 }
                 if (line.length() >= 87) {
                     double shift = Double.parseDouble(line.substring(79, 87).trim());
-                    atom.setProperty("second shift", new Double(shift));
+                    atom.setProperty("second shift", shift);
                 }
 
                 molecule.addAtom(atom);

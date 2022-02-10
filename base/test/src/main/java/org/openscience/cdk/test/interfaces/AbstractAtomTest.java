@@ -187,11 +187,11 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     @Test
     public void testClone_HydrogenCount() throws Exception {
         IAtom atom = (IAtom) newChemObject();
-        atom.setImplicitHydrogenCount(Integer.valueOf(3));
+        atom.setImplicitHydrogenCount(3);
         IAtom clone = (IAtom) atom.clone();
 
         // test cloning
-        atom.setImplicitHydrogenCount(Integer.valueOf(4));
+        atom.setImplicitHydrogenCount(4);
         Assert.assertEquals(3, clone.getImplicitHydrogenCount().intValue());
     }
 

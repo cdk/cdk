@@ -755,7 +755,7 @@ public class SimpleCycleBasis {
     private HashMap createEdgeIndexMap(List edgeList) {
         HashMap map = new HashMap();
         for (int i = 0; i < edgeList.size(); i++) {
-            map.put(edgeList.get(i), Integer.valueOf(i));
+            map.put(edgeList.get(i), i);
         }
         return map;
     }

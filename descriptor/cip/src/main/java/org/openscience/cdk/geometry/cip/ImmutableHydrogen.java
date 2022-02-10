@@ -338,7 +338,7 @@ class ImmutableHydrogen implements IAtom {
      */
     @Override
     public Integer getMassNumber() {
-        return Integer.valueOf(1);
+        return 1;
     }
 
     /**
@@ -385,7 +385,7 @@ class ImmutableHydrogen implements IAtom {
      */
     @Override
     public Integer getAtomicNumber() {
-        return Integer.valueOf(1);
+        return 1;
     }
 
     /**

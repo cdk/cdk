@@ -134,7 +134,7 @@ public class CML2WriterTest extends CDKTestCase {
         StringWriter writer = new StringWriter();
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
-        atom.setMassNumber(new Integer(12));
+        atom.setMassNumber(12);
         mol.addAtom(atom);
         CMLWriter cmlWriter = new CMLWriter(writer);
 

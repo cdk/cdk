@@ -261,8 +261,8 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
                 tAtom = query.getAtom(mapping.getKey());
                 qAtom = mapping.getValue();
             }
-            Integer qIndex = Integer.valueOf(getReactantMol().indexOf(qAtom));
-            Integer tIndex = Integer.valueOf(getProductMol().indexOf(tAtom));
+            Integer qIndex = getReactantMol().indexOf(qAtom);
+            Integer tIndex = getProductMol().indexOf(tAtom);
             if (qIndex != null && tIndex != null) {
                 atomatomMapping.put(qAtom, tAtom);
                 indexindexMapping.put(qIndex, tIndex);

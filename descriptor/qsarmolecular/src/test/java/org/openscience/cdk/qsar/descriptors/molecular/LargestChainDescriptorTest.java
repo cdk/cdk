@@ -27,7 +27,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test1LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccccc1"); // benzol
@@ -37,7 +37,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test2LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CC=Cc1ccccc1");
@@ -47,7 +47,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test3LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CC=CCc2ccc(Cc1ccncc1C=C)cc2");
@@ -57,7 +57,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test4LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC=CNCC");
@@ -67,7 +67,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test5LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=C[NH2+]CC");
@@ -77,7 +77,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test6LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCNOC");
@@ -87,7 +87,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test7LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O");
@@ -97,7 +97,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testSingleCAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C");
@@ -107,7 +107,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testSingleOAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O");
@@ -117,7 +117,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test8LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Cc1nn(c(c1)N)c1nc2c(s1)cccc2");
@@ -126,7 +126,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test9LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Nc1c(cn[nH]1)C#N");
@@ -135,7 +135,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test10LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("OCc1ccccc1CN");
@@ -144,7 +144,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void test11LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(true)};
+        Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("COc1ccc(cc1)c1noc(c1)Cn1nc(C)c(c(c1=O)C#N)C");

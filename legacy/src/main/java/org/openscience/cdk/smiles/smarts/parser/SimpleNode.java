@@ -60,7 +60,7 @@ class SimpleNode implements Node, Cloneable {
         Node clone = null;
         try {
             constructor = this.getClass().getConstructor(new Class[]{SMARTSParser.class, Integer.TYPE});
-            clone = (Node) constructor.newInstance(new Object[]{parser, Integer.valueOf(id)});
+            clone = (Node) constructor.newInstance(new Object[]{parser, id});
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }

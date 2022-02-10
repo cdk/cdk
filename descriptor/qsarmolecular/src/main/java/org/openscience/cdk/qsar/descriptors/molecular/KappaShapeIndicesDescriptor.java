@@ -178,7 +178,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
                     for (Object thirdAtomNeighboor : thirdAtomNeighboors) {
                         bond3 = atomContainer.indexOf(atomContainer.getBond((IAtom) secondAtomNeighboor,
                                 (IAtom) thirdAtomNeighboor));
-                        if (!singlePaths.contains(new Double(bond3))) {
+                        if (!singlePaths.contains(bond3)) {
                             singlePaths.add(bond3);
                         }
                         sorterSecond[0] = bond1;

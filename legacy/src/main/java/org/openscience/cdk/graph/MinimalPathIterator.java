@@ -112,7 +112,7 @@ public class MinimalPathIterator implements Iterator {
             shortestPathGraph.addVertex(vertex);
 
             int distance = iter.level;
-            distanceMap.put(vertex, Integer.valueOf(distance));
+            distanceMap.put(vertex, distance);
 
             for (Object o : g.edgesOf(vertex)) {
                 Edge edge = (Edge) o;

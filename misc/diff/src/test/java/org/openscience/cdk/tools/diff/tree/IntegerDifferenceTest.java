@@ -70,8 +70,8 @@ public class IntegerDifferenceTest {
 
     @Test
     public void testRefs() {
-        Integer x = new Integer(1);
-        Integer y = new Integer(1);
+        Integer x = 1;
+        Integer y = 1;
         IDifference diff = IntegerDifference.construct("foo", x, y);
         Assert.assertNull(diff);
     }

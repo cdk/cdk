@@ -46,7 +46,7 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testHBondDonorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true)};
+        Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Oc1ccccc1"); //
