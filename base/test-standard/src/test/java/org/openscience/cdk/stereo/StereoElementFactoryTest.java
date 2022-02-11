@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -626,11 +627,10 @@ public class StereoElementFactoryTest {
         m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN); // CH-OH
         m.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.UP);  // CH-CH2
         m.addBond(1, 3, IBond.Order.SINGLE); // CH-Cl
-
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         Assert.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
         factory.withStrictMode();
-        Assert.assertNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
+        Assert.assertNull(factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m)));
     }
 
     @Test
@@ -650,10 +650,83 @@ public class StereoElementFactoryTest {
         Assert.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
     }
 
+    // see http://efficientbits.blogspot.com/2019/09/rules-for-interpreting-updown-wedge.html
+    @Test
+    public void okWedgePatternWithThreeNeighbors2() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("wedge_okay_d3.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            mdlr.getSetting("AddStereoElements").setSetting("false");
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            int numStereo = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements())
+                numStereo++;
+            assertEquals(0, numStereo);
+            StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
+            Assert.assertEquals(1, stereoFactory.createAll().size());
+            stereoFactory.withStrictMode();
+            Assert.assertEquals(1, stereoFactory.createAll().size());
+        }
+    }
+
+    @Test
+    public void badWedgePatternWithThreeNeighbors2() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("wedge_bad_d3.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            mdlr.getSetting("AddStereoElements").setSetting("false");
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            int numStereo = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements())
+                numStereo++;
+            assertEquals(0, numStereo);
+            StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
+            Assert.assertEquals(1, stereoFactory.createAll().size());
+            stereoFactory.withStrictMode();
+            Assert.assertEquals(0, stereoFactory.createAll().size());
+        }
+    }
+
+    @Test
+    public void badWedgePatternWithThreeNeighbors180() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("wedge_180_bad_d3.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            mdlr.getSetting("AddStereoElements").setSetting("false");
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            int numStereo = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements())
+                numStereo++;
+            assertEquals(0, numStereo);
+            StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
+            Assert.assertEquals(1, stereoFactory.createAll().size());
+            stereoFactory.withStrictMode();
+            Assert.assertEquals(0, stereoFactory.createAll().size());
+        }
+    }
+
+    @Test
+    public void okWedgePatternWithThreeNeighbors180() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("wedge_180_okay_d3.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            mdlr.getSetting("AddStereoElements").setSetting("false");
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            int numStereo = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements())
+                numStereo++;
+            assertEquals(0, numStereo);
+            StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
+            Assert.assertEquals(1, stereoFactory.createAll().size());
+            stereoFactory.withStrictMode();
+            Assert.assertEquals(1, stereoFactory.createAll().size());
+        }
+    }
+
     @Test
     public void badWedgePatternWithFourNeighbors() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        try (InputStream in = getClass().getResourceAsStream("bad-wedges-4nbors.mol");
+        try (InputStream in = getClass().getResourceAsStream("wedge_bad_d4.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             mdlr.getSetting("AddStereoElements").setSetting("false");
             IAtomContainer mol = mdlr.read(builder.newAtomContainer());
