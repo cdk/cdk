@@ -96,7 +96,7 @@ public abstract class StereoElementFactory {
     /** A bond map for fast access to bond labels between two atom indices. */
     protected final EdgeToBondMap bondMap;
 
-    
+
     protected final Set<Projection> projections = EnumSet.noneOf(Projection.class);
 
     protected boolean strict;
@@ -460,14 +460,14 @@ public abstract class StereoElementFactory {
 
     /**
      * Indicate that stereochemistry drawn as a certain projection should be
-     * interpreted. 
+     * interpreted.
      *
      * <pre>{@code
-     * StereoElementFactory factory = 
+     * StereoElementFactory factory =
      *   StereoElementFactory.using2DCoordinates(container)
      *                       .interpretProjections(Projection.Fischer, Projection.Haworth);
      * }</pre>
-     * 
+     *
      * @param projections types of projection
      * @return self
      * @see org.openscience.cdk.stereo.Projection
@@ -661,19 +661,69 @@ public abstract class StereoElementFactory {
         // check some obvious stereo chemistry errors, see the InChI
         // technical manual "Definition of 2D drawing correctness"
         private boolean verifyWedgePattern(IAtom focus, int n, List<IBond> bonds) {
+            bonds.sort(GeometryUtil.polarBondComparator(focus));
             if (n == 3) {
-                // no sort needed
-                int ref = 0;
-                for (IBond bond : bonds) {
-                    int curr = elevationOf(focus, bond);
-                    if (!isOkay(ref, curr)) {
-                        logger.error("Badly drawn stereochemistry with 3 neighbours, up/down bonds should not be mixed!");
-                        return false;
-                    } else
-                        ref = curr;
+                double angle = getMaxSweep(focus, bonds);
+                double delta = angle - Math.PI;
+                double threshold = 0.01;
+                // largest angle between 2 neighbours is > 180 => wedges should
+                // alternate
+                if (delta > threshold) {
+                    int ref = 0;
+                    for (IBond bond : bonds) {
+                        int curr = elevationOf(focus, bond);
+                        if (!isOkay(ref, curr)) {
+                            logger.error("Invalid wedge pattern, up/down bonds should be mixed when there is an acute angle!");
+                            return false;
+                        } else
+                            ref = curr;
+                        ref = -ref;
+                    }
+                }
+                // larges angle between 2 neighbours is < 180 => all wedges
+                // should be the same
+                else if (delta < -threshold) {
+                    int ref = 0;
+                    for (IBond bond : bonds) {
+                        int curr = elevationOf(focus, bond);
+                        if (!isOkay(ref, curr)) {
+                            logger.error("Invalid wedge pattern, up/down bonds should be same when there is not an acute angle!");
+                            return false;
+                        } else
+                            ref = curr;
+                    }
+                } else {
+                    // 180-degrees, check where the wedge is
+                    if (bonds.size() != 3)
+                        throw new IllegalArgumentException("3 bonds only!");
+                    Vector2d v1 = toUnitVector(focus, bonds.get(0).getOther(focus));
+                    Vector2d v2 = toUnitVector(focus, bonds.get(1).getOther(focus));
+                    Vector2d v3 = toUnitVector(focus, bonds.get(2).getOther(focus));
+                    String ambiuousStereoMesg = "Ambiguous stereochemistry - 3 neighbours and two";
+                    if (Math.abs(signedAngle(v1,v2) - Math.PI) < threshold) {
+                        if (elevationOf(focus, bonds.get(0)) == 0 &&
+                            elevationOf(focus, bonds.get(1)) == 0 &&
+                            elevationOf(focus, bonds.get(2)) != 0) {
+                            logger.error(ambiuousStereoMesg);
+                            return false;
+                        }
+                    } else if (Math.abs(signedAngle(v2,v3) - Math.PI) < threshold) {
+                        if (elevationOf(focus, bonds.get(0)) != 0 &&
+                            elevationOf(focus, bonds.get(1)) == 0 &&
+                            elevationOf(focus, bonds.get(2)) == 0) {
+                            logger.error(ambiuousStereoMesg);
+                            return false;
+                        }
+                    } else if (Math.abs(signedAngle(v3,v1) - Math.PI) < threshold) {
+                        if (elevationOf(focus, bonds.get(0)) == 0 &&
+                            elevationOf(focus, bonds.get(1)) != 0 &&
+                            elevationOf(focus, bonds.get(2)) == 0) {
+                            logger.error(ambiuousStereoMesg);
+                            return false;
+                        }
+                    }
                 }
             } else { // n == 4
-                bonds.sort(GeometryUtil.polarBondComparator(focus));
                 int ref = 0;
                 for (IBond bond : bonds) {
                     int curr = elevationOf(focus, bond);
@@ -690,6 +740,26 @@ public abstract class StereoElementFactory {
                 }
             }
             return true;
+        }
+
+        private double signedAngle(Vector2d a, Vector2d b) {
+            double angle = Math.atan2(a.x*b.y-a.y*b.x, a.x*b.x+a.y*b.y);
+            return angle >= 0 ? (2*Math.PI)-angle : -angle;
+        }
+
+        private double max(double a, double b, double c) {
+            return Math.max(a, Math.max(b, c));
+        }
+
+        private double getMaxSweep(IAtom atom, List<IBond> bonds) {
+            if (bonds.size() != 3)
+                throw new IllegalArgumentException("3 bonds only!");
+            Vector2d v1 = toUnitVector(atom, bonds.get(0).getOther(atom));
+            Vector2d v2 = toUnitVector(atom, bonds.get(1).getOther(atom));
+            Vector2d v3 = toUnitVector(atom, bonds.get(2).getOther(atom));
+            return max(signedAngle(v1, v2),
+                       signedAngle(v2, v3),
+                       signedAngle(v3, v1));
         }
 
         private static boolean isWedged(IBond bond) {
@@ -1049,6 +1119,12 @@ public abstract class StereoElementFactory {
             return new Point2d(v2d);
         }
 
+        private Vector2d toUnitVector(IAtom from, IAtom to) {
+            if (from.equals(to))
+                return new Vector2d(0, 0);
+            return new Vector2d(toUnitVector(from.getPoint2d(), to.getPoint2d()));
+        }
+
         /**
          * Compute the signed volume of the tetrahedron from the planar points
          * and elevations.
@@ -1292,7 +1368,7 @@ public abstract class StereoElementFactory {
             IAtom focus = container.getAtom(v);
 
             if (hasUnspecifiedParity(focus)) return null;
-            
+
             if (container.getConnectedBondsCount(focus) != 2)
         	    return null;
 
