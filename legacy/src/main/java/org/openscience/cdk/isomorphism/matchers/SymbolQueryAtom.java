@@ -21,6 +21,8 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
+import java.util.Objects;
+
 /**
  * @cdk.module  isomorphism
  * @cdk.githash
@@ -47,7 +49,7 @@ public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
     @Override
     public boolean matches(IAtom atom) {
         if (ID != null && HCount == 0)
-            return this.getSymbol() != (atom.getSymbol());
+            return !Objects.equals(this.getSymbol(), atom.getSymbol());
         else if (ID == null && HCount != 0) {
             return (this.getImplicitHydrogenCount() == HCount);
         } else

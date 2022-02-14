@@ -123,7 +123,7 @@ public class ForceFieldConfigurator {
         ffname = ffname.toLowerCase();
         boolean check;
 
-        if (ffname == ffName && parameterSet != null) {
+        if (ffname.equals(ffName) && parameterSet != null) {
         } else {
             check = this.checkForceFieldType(ffname);
             ffName = ffname;
