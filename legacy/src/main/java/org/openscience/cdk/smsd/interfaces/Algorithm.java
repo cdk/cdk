@@ -94,14 +94,4 @@ public enum Algorithm {
     public String description() {
         return this.description;
     }
-
-    /**
-     * Compares algorithm types.
-     * @param <status>
-     * @param obj
-     * @return status
-     */
-    public <status> int compareTo(Algorithm obj) {
-        return 0;
-    }
 }
