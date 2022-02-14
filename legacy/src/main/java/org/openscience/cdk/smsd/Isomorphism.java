@@ -748,7 +748,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
             }
             double matchCount = getFirstMapping().size();
             tanimotoAtom = (matchCount) / (rAtomCount + pAtomCount - matchCount);
-            BigDecimal tan = new BigDecimal(tanimotoAtom);
+            BigDecimal tan = BigDecimal.valueOf(tanimotoAtom);
             tan = tan.setScale(decimalPlaces, RoundingMode.HALF_UP);
             tanimotoAtom = tan.doubleValue();
         }
@@ -767,7 +767,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
             double matchCount = getFirstBondMap().size();
             tanimotoAtom = (matchCount) / (rBondCount + pBondCount - matchCount);
-            BigDecimal tan = new BigDecimal(tanimotoAtom);
+            BigDecimal tan = BigDecimal.valueOf(tanimotoAtom);
             tan = tan.setScale(decimalPlaces, RoundingMode.HALF_UP);
             tanimotoAtom = tan.doubleValue();
         }
@@ -864,7 +864,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
             }
             double common = getFirstMapping().size();
             euclidean = Math.sqrt(source + target - 2 * common);
-            BigDecimal dist = new BigDecimal(euclidean);
+            BigDecimal dist = BigDecimal.valueOf(euclidean);
             dist = dist.setScale(decimalPlaces, RoundingMode.HALF_UP);
             euclidean = dist.doubleValue();
         }
