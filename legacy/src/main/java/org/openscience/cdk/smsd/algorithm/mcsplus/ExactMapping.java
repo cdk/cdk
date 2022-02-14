@@ -26,6 +26,7 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class handles MCS between two identical molecules.
@@ -54,7 +55,7 @@ public class ExactMapping {
         //        System.out.println("VEC  SIZE " + vec_size);
         for (Integer integer : cliqueList) {
             for (int b = 0; b < vecSize; b += 3) {
-                if (integer == compGraphNodes.get(b + 2)) {
+                if (Objects.equals(integer, compGraphNodes.get(b + 2))) {
                     cliqueMapping.add(compGraphNodes.get(b));
                     cliqueMapping.add(compGraphNodes.get(b + 1));
                 }
