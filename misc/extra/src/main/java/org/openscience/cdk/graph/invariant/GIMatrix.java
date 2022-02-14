@@ -23,6 +23,9 @@ import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
 import org.openscience.cdk.graph.invariant.exception.IndexOutOfBoundsException;
 import org.openscience.cdk.graph.invariant.exception.MatrixNotInvertibleException;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * This class is intended to provide the user an efficient way of implementing matrix of double number and
  * using normal operations (linear operations, addition, subtraction, multiplication, inversion, concatenation)
@@ -321,18 +324,30 @@ public class GIMatrix {
     /**
      * Verifies if two given matrix are equal or not. The matrix must be of the same size and dimensions,
      * otherwise an exception will be thrown.
-     * @param matrix the Matrix object to be compared to
+     * @param obj the Matrix object to be compared to
      * @return true if both matrix are equal element to element
-     * @exception BadMatrixFormatException if the given matrix doesn't have the same dimensions as this one
      */
-    public boolean equals(GIMatrix matrix) throws BadMatrixFormatException {
-        if ((height() != matrix.height()) || (width() != matrix.width())) throw new BadMatrixFormatException();
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof GIMatrix))
+            return false;
+        GIMatrix matrix = (GIMatrix) obj;
+        if ((height() != matrix.height()) || (width() != matrix.width()))
+            throw new RuntimeException(new BadMatrixFormatException());
+        // return false?
         double[][] temp = matrix.getArrayValue();
         for (int i = 0; i < m; i++)
             for (int j = 0; j < n; j++)
                 if (!(array[i][j] == temp[i][j])) return false;
         return true;
     } // method equals(Matrix)
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(m, n);
+        result = 31 * result + Arrays.hashCode(array);
+        return result;
+    }
 
     /**
      * Verifies if the matrix is square, that is if it has an equal number of lines and columns.
