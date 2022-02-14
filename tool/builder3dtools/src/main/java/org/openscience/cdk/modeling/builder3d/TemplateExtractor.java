@@ -367,13 +367,9 @@ public class TemplateExtractor {
             }
             try {
                 long time = -System.currentTimeMillis();
-                if (anyAtom || anyAtomAnyBond) {
-                    data.add(fingerPrinter.getBitFingerprint(query));
-                    fingerprintCounter = fingerprintCounter + 1;
-                } else {
-                    data.add(fingerPrinter.getBitFingerprint(query));
-                    fingerprintCounter = fingerprintCounter + 1;
-                }
+                // query fp for anyAtom is probably not useful
+                data.add(fingerPrinter.getBitFingerprint(query));
+                fingerprintCounter = fingerprintCounter + 1;
                 time += System.currentTimeMillis();
                 // store the time
                 String bin = Integer.toString((int) Math.floor(time / 10));

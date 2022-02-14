@@ -185,8 +185,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         if (sg.equals("P1")) {
             writeln("1");
         } else {
-            // duno
-            writeln("1");
+            throw new IllegalStateException("Unknown asymmetric units for SpaceGroup=" + sg);
         }
 
         // output atoms
