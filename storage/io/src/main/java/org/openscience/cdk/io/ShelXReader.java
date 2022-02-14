@@ -256,7 +256,6 @@ public class ShelXReader extends DefaultChemObjectReader {
             } else if (command.equalsIgnoreCase("FRAG")) {
             } else if (command.equalsIgnoreCase("FEND")) {
             } else if (command.equalsIgnoreCase("EXYZ")) {
-            } else if (command.equalsIgnoreCase("EXTI")) {
             } else if (command.equalsIgnoreCase("EADP")) {
             } else if (command.equalsIgnoreCase("EQIV")) {
 
