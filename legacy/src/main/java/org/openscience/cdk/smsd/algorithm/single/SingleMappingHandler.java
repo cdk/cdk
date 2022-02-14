@@ -129,7 +129,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
      *
      * Set the mappings
      */
-    private void setAllMapping(List<Map<IAtom, IAtom>> mappings) {
+    private synchronized void setAllMapping(List<Map<IAtom, IAtom>> mappings) {
         try {
             int counter = 0;
             for (Map<IAtom, IAtom> solution : mappings) {
@@ -180,7 +180,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
 
     /** {@inheritDoc} */
     @Override
-    public List<Map<Integer, Integer>> getAllMapping() {
+    public synchronized List<Map<Integer, Integer>> getAllMapping() {
         return Collections.unmodifiableList(allMCS);
     }
 
