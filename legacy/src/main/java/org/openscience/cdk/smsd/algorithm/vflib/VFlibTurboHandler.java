@@ -103,10 +103,7 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
     private boolean mcgregorFlag() {
         int commonAtomCount = checkCommonAtomCount(getReactantMol(), getProductMol());
-        if (commonAtomCount > vfMCSSize && commonAtomCount > vfMCSSize) {
-            return true;
-        }
-        return false;
+        return commonAtomCount > vfMCSSize;
     }
 
     /** {@inheritDoc}
