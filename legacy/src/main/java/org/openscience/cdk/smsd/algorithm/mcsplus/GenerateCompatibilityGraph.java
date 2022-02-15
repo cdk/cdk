@@ -345,6 +345,9 @@ public final class GenerateCompatibilityGraph {
     private static boolean isMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
             boolean shouldMatchBonds) {
 
+        if (bondA1 == null)
+            return false;
+
         //Bond Matcher
         BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
         //Atom Matcher

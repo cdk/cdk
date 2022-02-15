@@ -257,8 +257,8 @@ public class PubChemXMLHelper {
                 }
             }
         }
-        if (urnLabel != null & sval != null) {
-            String property = urnLabel + (urnName == null ? "" : " (" + urnName + ")");
+        if (sval != null) {
+            String property = urnLabel + (urnName != null ? " (" + urnName + ")" : "");
             molecule.setProperty(property, sval);
         }
     }
