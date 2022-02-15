@@ -329,11 +329,11 @@ public class ChemicalFilters {
         boolean flag = false;
 
         double lowestEnergyScore = 99999999.99;
-        for (Integer key : energySelectionMap.keySet()) {
+        if (energySelectionMap.size() > 0) {
+            Integer key = energySelectionMap.keySet().iterator().next();
             lowestEnergyScore = energySelectionMap.get(key);
             flag = true;
             clear();
-            break;
         }
 
         int counter = 0;

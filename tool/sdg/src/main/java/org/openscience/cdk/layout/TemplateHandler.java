@@ -54,6 +54,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -330,8 +331,9 @@ public final class TemplateHandler {
      */
     public static TemplateHandler createFromSubstructure(Pattern ptrn, Iterable<IAtomContainer> mols) {
         for (IAtomContainer mol : mols) {
-            for (IAtomContainer template : ptrn.matchAll(mol).toSubstructures())
-                return createSingleton(template);
+            Iterator<IAtomContainer> matched = ptrn.matchAll(mol).toSubstructures().iterator();
+            if (matched.hasNext())
+                return createSingleton(matched.next());
         }
         throw new IllegalArgumentException("Pattern does not match any provided molecules");
     }
@@ -345,8 +347,9 @@ public final class TemplateHandler {
      * @return new template handler
      */
     public static TemplateHandler createFromSubstructure(Pattern ptrn, IAtomContainer mol) {
-        for (IAtomContainer template : ptrn.matchAll(mol).toSubstructures())
-            return createSingleton(template);
+        Iterator<IAtomContainer> matched = ptrn.matchAll(mol).toSubstructures().iterator();
+        if (matched.hasNext())
+            return createSingleton(matched.next());
         throw new IllegalArgumentException("Pattern does not match any provided molecules");
     }
 
