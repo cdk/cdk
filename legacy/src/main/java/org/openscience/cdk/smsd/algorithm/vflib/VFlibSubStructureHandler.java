@@ -102,10 +102,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
 
     private boolean mcgregorFlag() {
         int commonAtomCount = checkCommonAtomCount(getReactantMol(), getProductMol());
-        if (commonAtomCount > vfMCSSize && commonAtomCount > vfMCSSize) {
-            return true;
-        }
-        return false;
+        return commonAtomCount > vfMCSSize;
     }
 
     /** {@inheritDoc}
