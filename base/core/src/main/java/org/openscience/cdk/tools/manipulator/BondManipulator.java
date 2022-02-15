@@ -250,7 +250,6 @@ public class BondManipulator {
             return secondOrder;
         }
         if (secondOrder == Order.UNSET) {
-            if (firstOrder == Order.UNSET) throw new IllegalArgumentException("Both bond orders are unset");
             return firstOrder;
         }
 

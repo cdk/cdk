@@ -306,8 +306,8 @@ public class BasicValidator extends AbstractValidator {
                 boolean foundMatchingAtomType = false;
                 for (IAtomType type : atomTypes) {
                     if (Objects.equals(atom.getFormalCharge(), type.getFormalCharge())) {
-                        foundMatchingAtomType = true;
                         if (bos == type.getBondOrderSum()) {
+                            foundMatchingAtomType = true;
                             // skip this atom type
                         } else {
                             failedOn = type;
