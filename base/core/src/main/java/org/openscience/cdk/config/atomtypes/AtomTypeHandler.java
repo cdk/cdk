@@ -113,7 +113,7 @@ public class AtomTypeHandler extends DefaultHandler {
         if ("atomType".equals(local)) {
             atomTypes.add(atomType);
         } else if ("scalar".equals(local)) {
-            currentChars.trim();
+            currentChars = currentChars.trim();
             try {
                 if (scalarType == SCALAR_BONDORDERSUM) {
                     atomType.setBondOrderSum(Double.parseDouble(currentChars));

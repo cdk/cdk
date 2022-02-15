@@ -404,7 +404,7 @@ public class PDBReader extends DefaultChemObjectReader {
                      * should be dealt with in the same way..?
                      */
                     else if (readConnect.isSet() && "CONECT".equalsIgnoreCase(cCol)) {
-                        cRead.trim();
+                        cRead = cRead.trim();
                         if (cRead.length() < 16) {
                             logger.debug("Skipping unexpected empty CONECT line! : ", cRead);
                         } else {
