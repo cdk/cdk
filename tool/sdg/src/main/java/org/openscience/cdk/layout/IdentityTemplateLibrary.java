@@ -351,7 +351,7 @@ final class IdentityTemplateLibrary {
 
             // find the points in the library
             List<Point2d[]> templatePoints = templateMap.get(smiles);
-            if (templatePoints != null && templatePoints.size() > 0) {
+            if (templatePoints != null && !templatePoints.isEmpty()) {
                 Point2d[] points = templatePoints.get(0);
                 // set the points
                 for (int i = 0; i < n; i++) {
