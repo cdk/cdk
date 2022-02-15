@@ -192,7 +192,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
 
     /** {@inheritDoc} */
     @Override
-    public List<Map<IAtom, IAtom>> getAllAtomMapping() {
+    public synchronized List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return Collections.unmodifiableList(allAtomMCS);
     }
 
