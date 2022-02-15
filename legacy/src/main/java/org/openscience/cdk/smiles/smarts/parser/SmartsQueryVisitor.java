@@ -148,9 +148,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
     public Object visit(ASTAtom node, Object data) {
         IQueryAtom atom = (IQueryAtom) node.jjtGetChild(0).jjtAccept(this, data);
-        for (int i = 1; i < node.jjtGetNumChildren(); i++) { // if there are ring identifiers
+        if (node.jjtGetNumChildren() > 1) // if there are ring identifiers
             throw new IllegalStateException();
-        }
         return atom;
     }
 

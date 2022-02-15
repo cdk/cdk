@@ -350,7 +350,9 @@ final class IdentityTemplateLibrary {
             String smiles = cansmi(container, ordering);
 
             // find the points in the library
-            for (Point2d[] points : templateMap.getOrDefault(smiles, Collections.emptyList())) {
+            List<Point2d[]> templatePoints = templateMap.get(smiles);
+            if (templatePoints != null && templatePoints.size() > 0) {
+                Point2d[] points = templatePoints.get(0);
                 // set the points
                 for (int i = 0; i < n; i++) {
                     container.getAtom(i).setPoint2d(new Point2d(points[ordering[i]]));
