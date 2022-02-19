@@ -29,10 +29,8 @@ import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.ICountFingerprint;
 import org.openscience.cdk.fingerprint.IntArrayFingerprint;
 
-import java.util.AbstractMap;
 import java.util.BitSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -222,12 +220,6 @@ public class Tanimoto {
         return ((double) xy / union);
     }
 
-    private static Map.Entry<Integer,Integer> getHashCount(ICountFingerprint fp, int i)
-    {
-        return i < fp.numOfPopulatedbins()
-                ? new AbstractMap.SimpleImmutableEntry<>(fp.getHash(i), fp.getCount(i))
-                : null;
-    }
 
     /**
      * Calculates Tanimoto distance for two count fingerprints using method 2 {@cdk.cite Grant06}.
