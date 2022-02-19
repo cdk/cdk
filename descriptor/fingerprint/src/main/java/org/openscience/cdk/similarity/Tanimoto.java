@@ -29,8 +29,10 @@ import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.ICountFingerprint;
 import org.openscience.cdk.fingerprint.IntArrayFingerprint;
 
+import java.util.AbstractMap;
 import java.util.BitSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -220,6 +222,13 @@ public class Tanimoto {
         return ((double) xy / union);
     }
 
+    private static Map.Entry<Integer,Integer> getHashCount(ICountFingerprint fp, int i)
+    {
+        return i < fp.numOfPopulatedbins()
+                ? new AbstractMap.SimpleImmutableEntry<>(fp.getHash(i), fp.getCount(i))
+                : null;
+    }
+
     /**
      * Calculates Tanimoto distance for two count fingerprints using method 2 {@cdk.cite Grant06}.
      *
@@ -231,29 +240,30 @@ public class Tanimoto {
 
         long maxSum = 0, minSum = 0;
         int i = 0, j = 0;
-        while (i < fp1.numOfPopulatedbins() || j < fp2.numOfPopulatedbins()) {
-            Integer hash1 = i < fp1.numOfPopulatedbins() ? fp1.getHash(i) : null;
-            Integer hash2 = j < fp2.numOfPopulatedbins() ? fp2.getHash(j) : null;
-            Integer count1 = i < fp1.numOfPopulatedbins() ? fp1.getCount(i) : null;
-            Integer count2 = j < fp2.numOfPopulatedbins() ? fp2.getCount(j) : null;
+        while (i < fp1.numOfPopulatedbins() && j < fp2.numOfPopulatedbins()) {
+            int hash1 = fp1.getHash(i);
+            int count1 = fp1.getCount(i);
+            int hash2 = fp2.getHash(j);
+            int count2 = fp2.getCount(j);
 
-            if (count2 == null || (hash1 != null && hash1 < hash2)) {
+            if (hash1 < hash2) {
                 maxSum += count1;
                 i++;
-                continue;
-            }
-            if (count1 == null || (hash2 != null && hash1 > hash2)) {
+            } else if (hash1 > hash2) {
                 maxSum += count2;
                 j++;
-                continue;
-            }
-
-            if (hash1.equals(hash2)) {
+            } else {
                 maxSum += Math.max(count1, count2);
                 minSum += Math.min(count1, count2);
                 i++;
                 j++;
             }
+        }
+        for (;i < fp1.numOfPopulatedbins(); i++) {
+            maxSum += fp1.getCount(i);
+        }
+        for (;j < fp2.numOfPopulatedbins(); j++) {
+            maxSum += fp2.getCount(i);
         }
         return ((double) minSum) / maxSum;
     }

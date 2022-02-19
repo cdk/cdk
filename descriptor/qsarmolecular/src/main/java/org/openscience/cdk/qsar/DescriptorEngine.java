@@ -240,7 +240,7 @@ public class DescriptorEngine {
 
         for (Entry dictEntry : dictEntries) {
             if (!dictEntry.getClassName().equals("Descriptor")) continue;
-            if (dictEntry.getID().equals(specRef.toLowerCase())) {
+            if (dictEntry.getID().equalsIgnoreCase(specRef)) {
                 Element rawElement = (Element) dictEntry.getRawContent();
                 // assert(rawElement != null);
                 // We're not fully Java 1.5 yet, so commented it out now. If it is
