@@ -202,35 +202,30 @@ public class RGroupList implements IRGroupList {
         StringTokenizer st = new StringTokenizer(occ, ",");
         while (st.hasMoreTokens()) {
             String cond = st.nextToken().trim().replaceAll(" ", "");
-            do {
-                //Number: "n"
-                if (match("^\\d+$", cond)) {
-                    if (Integer.parseInt(cond) < 0) // not allowed
-                        return false;
-                    break;
-                }
-                //Range: "n-m"
-                if (match("^\\d+-\\d+$", cond)) {
-                    int from = Integer.parseInt(cond.substring(0, cond.indexOf('-')));
-                    int to = Integer.parseInt(cond.substring(cond.indexOf('-') + 1, cond.length()));
-                    if (from < 0 || to < 0 || to < from) // not allowed
-                        return false;
-                    break;
-                }
-                //Smaller than: "<n"
-                if (match("^<\\d+$", cond)) {
-                    int n = Integer.parseInt(cond.substring(cond.indexOf('<') + 1, cond.length()));
-                    if (n == 0) // not allowed
-                        return false;
-                    break;
-                }
-                //Greater than: ">n"
-                if (match("^>\\d+$", cond)) {
-                    break;
-                }
-
+            //Number: "n"
+            if (match("^\\d+$", cond)) {
+                if (Integer.parseInt(cond) < 0) // not allowed
+                    return false;
+            }
+            //Range: "n-m"
+            else if (match("^\\d+-\\d+$", cond)) {
+                int from = Integer.parseInt(cond.substring(0, cond.indexOf('-')));
+                int to = Integer.parseInt(cond.substring(cond.indexOf('-') + 1));
+                if (from < 0 || to < 0 || to < from) // not allowed
+                    return false;
+            }
+            //Smaller than: "<n"
+            else if (match("^<\\d+$", cond)) {
+                int n = Integer.parseInt(cond.substring(cond.indexOf('<') + 1));
+                if (n == 0) // not allowed
+                    return false;
+            }
+            //Greater than: ">n"
+            else if (match("^>\\d+$", cond)) {
+                // no-op?
+            }
+            else
                 return false;
-            } while (1 == 0);
         }
 
         return true;
