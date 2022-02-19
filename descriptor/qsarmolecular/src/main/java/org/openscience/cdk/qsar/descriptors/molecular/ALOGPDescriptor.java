@@ -1369,13 +1369,15 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (fragment[i].equals("SsNH2")) {
             IAtom ca0 = null;
-            //Find which neigbpur is not the hydrogen atom
+            //Find which neighbour is not the hydrogen atom
             for (IAtom nbor : nbors) {
                 if (nbor.getAtomicNumber() != 1) {
                     ca0 = nbor;
                     break;
                 }
             }
+            if (ca0 == null)
+                throw new IllegalStateException("SsNH2 should have a non-hydrogen neighbour");
             if (ca0.getFlag(CDKConstants.ISAROMATIC) || ca0.getAtomicNumber() != IElement.C) {
                 frags[69]++;
                 alogpfrag[i] = 69;

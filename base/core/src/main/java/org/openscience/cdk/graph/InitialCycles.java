@@ -677,7 +677,9 @@ final class InitialCycles {
         @Override
         public boolean equals(Object o) {
             Edge that = (Edge) o;
-            return (this.v == that.v && this.w == that.w) || (this.v == that.w && this.w == that.v);
+            return that != null &&
+                    ((this.v == that.v && this.w == that.w) ||
+                     (this.v == that.w && this.w == that.v));
         }
 
         @Override

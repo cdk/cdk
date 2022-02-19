@@ -1308,13 +1308,12 @@ public class AtomContainerManipulator {
                 IAtom a = null;
                 try {
                     a = atom.clone();
+                    a.setImplicitHydrogenCount(0);
+                    mol.addAtom(a);
+                    map.put(atom, a);
                 } catch (CloneNotSupportedException e) {
-                    LoggingToolFactory.createLoggingTool(AtomContainerManipulator.class)
-                                      .warn("Unexpected Error:", e);
+                    throw new IllegalStateException("Could nod clone atom", e);
                 }
-                a.setImplicitHydrogenCount(0);
-                mol.addAtom(a);
-                map.put(atom, a);
             } else {
                 remove.add(atom);
                 // maintain list of removed H.
@@ -1343,12 +1342,11 @@ public class AtomContainerManipulator {
                 IBond clone = null;
                 try {
                     clone = ac.getBond(i).clone();
+                    clone.setAtoms(new IAtom[]{map.get(atom0), map.get(atom1)});
+                    mol.addBond(clone);
                 } catch (CloneNotSupportedException e) {
-                    LoggingToolFactory.createLoggingTool(AtomContainerManipulator.class)
-                                      .warn("Unexpected Error:", e);
+                    throw new IllegalStateException("Could nod clone bond", e);
                 }
-                clone.setAtoms(new IAtom[]{map.get(atom0), map.get(atom1)});
-                mol.addBond(clone);
             }
         }
 

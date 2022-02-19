@@ -132,14 +132,8 @@ final class FreeHepWrapper {
             }
             String[] split = result.split(nl,2);
             if( split.length > 1 && split[0].startsWith("%!PS-") ) {
-                String boundingBox;
-                if( this.dim != null ) {
-                    boundingBox = "%%BoundingBox: 0 0 " +
-                        dim.width + " " + dim.height + nl;
-                } else {
-                    boundingBox = "";
-                }
-                if(!split[0].contains("EPS") && !boundingBox.equals("")) {
+                String boundingBox = "%%BoundingBox: 0 0 " + dim.width + " " + dim.height + nl;
+                if(!split[0].contains("EPS")) {
                     split[0] += " EPSF-3.0";
                 }
                 // EGFF96 (p. 379):

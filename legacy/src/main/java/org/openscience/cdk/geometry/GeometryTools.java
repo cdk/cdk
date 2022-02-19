@@ -368,6 +368,8 @@ public class GeometryTools {
      */
     public static void translate2DCentreOfMassTo(IAtomContainer atomCon, Point2d p) {
         Point2d com = get2DCentreOfMass(atomCon);
+        if (com == null)
+            throw new IllegalArgumentException("Null centre of mass, due to unset exact mass?");
         Vector2d translation = new Vector2d(p.x - com.x, p.y - com.y);
         for (IAtom atom : atomCon.atoms()) {
             if (atom.getPoint2d() != null) {
