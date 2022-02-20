@@ -17,8 +17,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import org.openscience.cdk.tools.LoggingToolFactory;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
