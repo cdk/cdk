@@ -192,8 +192,12 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
     private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
         IReaction reaction = builder.newInstance(IReaction.class);
         try {
-            if (input.readLine().equals("$RXN")) // first line should be $RXN
-                throw new CDKException("Expected $RXN");
+            // first line should be $RXN
+            String header = input.readLine();
+            if (header == null)
+                return null; // empty file
+            if (!header.equals("$RXN"))
+                throw new CDKException("Expected $RXN but got " + header);
             if (input.readLine() == null) // second line
                 throw new CDKException(UNEXPECTED_END_OF_INPUT);
             if (input.readLine() == null) // third line
