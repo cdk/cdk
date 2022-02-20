@@ -299,11 +299,14 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 return null; // empty file
             if (!header.equals("$RXN"))
                 throw new CDKException("Expected $RXN but got " + header);
-            if (input.readLine() == null) // second line
+            String blank = input.readLine();
+            if (blank == null) // second line
                 throw new CDKException(UNEXPECTED_END_OF_INPUT);
-            if (input.readLine() == null) // third line
+            blank = input.readLine();
+            if (blank == null) // third line
                 throw new CDKException(UNEXPECTED_END_OF_INPUT);
-            if (input.readLine() == null) // fourth line
+            blank = input.readLine();
+            if (blank == null) // fourth line
                 throw new CDKException(UNEXPECTED_END_OF_INPUT);
         } catch (IOException exception) {
             logger.debug(exception);
@@ -344,8 +347,9 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         try {
             for (int i = 1; i <= reactantCount; i++) {
                 StringBuilder molFile = new StringBuilder();
-                if (input.readLine() == null) // announceMDLFileLine
-                    throw new CDKException(UNEXPECTED_END_OF_INPUT);
+                String molTag = input.readLine();
+                if (molTag == null || !molTag.equals("$MDL") && !molTag.equals("$MOL"))
+                    throw new CDKException("Expected $MOL/$MDL tag, got=" + molTag);
                 String molFileLine;
                 do {
                     molFileLine = input.readLine();
@@ -373,8 +377,9 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         try {
             for (int i = 1; i <= productCount; i++) {
                 StringBuilder molFile = new StringBuilder();
-                if (input.readLine() == null) // String announceMDLFileLine =
-                    throw new CDKException(UNEXPECTED_END_OF_INPUT);
+                String molTag = input.readLine();
+                if (molTag == null || !molTag.equals("$MDL") && !molTag.equals("$MOL"))
+                    throw new CDKException("Expected $MOL/$MDL tag, got=" + molTag);
                 String molFileLine;
                 do {
                     molFileLine = input.readLine();
@@ -402,8 +407,9 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         try {
             for (int i = 1; i <= agentCount; i++) {
                 StringBuilder molFile = new StringBuilder();
-                if (input.readLine() == null) // String announceMDLFileLine =
-                    throw new CDKException(UNEXPECTED_END_OF_INPUT);
+                String molTag = input.readLine();
+                if (molTag == null || !molTag.equals("$MDL") && !molTag.equals("$MOL"))
+                    throw new CDKException("Expected $MOL/$MDL tag, got=" + molTag);
                 String molFileLine;
                 do {
                     molFileLine = input.readLine();
