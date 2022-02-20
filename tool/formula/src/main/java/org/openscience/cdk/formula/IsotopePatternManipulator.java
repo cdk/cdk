@@ -33,6 +33,8 @@ public class IsotopePatternManipulator {
                 isoHighest = isoContainer;
             }
         }
+        if (isoHighest == null)
+            throw new IllegalStateException("No isotope had the largest abundance");
         /* Normalize */
         IsotopePattern isoNormalized = new IsotopePattern();
         for (IsotopeContainer isoContainer : isotopeP.getIsotopes()) {

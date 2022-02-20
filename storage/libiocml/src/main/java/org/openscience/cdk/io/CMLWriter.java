@@ -241,7 +241,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         }
 
         // now convert the object
-        Element root = null;
+        Element root;
         if (object instanceof IPDBPolymer) {
             root = convertor.cdkPDBPolymerToCMLMolecule((IPDBPolymer) object);
         } else if (object instanceof ICrystal) {
@@ -264,7 +264,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             root = convertor.cdkChemModelToCMLList((IChemModel) object);
         } else if (object instanceof IAtomContainer) {
             root = convertor.cdkAtomContainerToCMLMolecule((IAtomContainer) object);
-        } else if (object instanceof IChemFile) {
+        } else { // instanceof IChemFile (checked above)
             root = convertor.cdkChemFileToCMLList((IChemFile) object);
         }
 

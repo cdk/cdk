@@ -197,7 +197,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
                 write(" ");
             }
             write("     ");
-            String elemID = null;
+            String elemID = "?"; // avoid null for undef element here
             for (int elemidx = 0; elemidx < asortedElements.size(); elemidx++) {
                 IElement elem = asortedElements.get(elemidx);
                 if (elem.getSymbol().equals(symbol)) {

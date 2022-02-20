@@ -74,6 +74,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static java.util.Comparator.comparingInt;
@@ -1925,8 +1926,11 @@ public class StructureDiagramGenerator {
             IAtom ringAttachmentAtom = getRingAtom(nextRingAttachmentBond);
             IAtom chainAttachmentAtom = getOtherBondAtom(ringAttachmentAtom, nextRingAttachmentBond);
 
+            Objects.requireNonNull(ringAttachmentAtom, "No unplaced ring atom!");
+
             // Get ring system which ringAttachmentAtom is part of
             IRingSet nextRingSystem = getRingSystemOfAtom(ringSystems, ringAttachmentAtom);
+            assert nextRingSystem != null;
 
             // Get all rings of nextRingSytem as one IAtomContainer
             IAtomContainer ringSystem = RingSetManipulator.getAllInOneContainer(nextRingSystem);

@@ -845,17 +845,11 @@ public class Bayesian {
 
     // convenience functions	
     private double[] resize(final double[] arr, int sz) {
-        double[] ret = new double[sz];
-        for (int n = (arr == null ? 0 : Math.min(sz, arr.length)) - 1; n >= 0; n--)
-            ret[n] = arr[n];
-        return ret;
+        return Arrays.copyOf(arr, sz);
     }
 
     private float[] resize(final float[] arr, int sz) {
-        float[] ret = new float[sz];
-        for (int n = (arr == null ? 0 : Math.min(sz, arr.length)) - 1; n >= 0; n--)
-            ret[n] = arr[n];
-        return ret;
+        return Arrays.copyOf(arr, sz);
     }
 
     private double[] reverse(double[] arr) {

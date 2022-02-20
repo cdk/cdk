@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
@@ -718,28 +719,17 @@ public class HOSECodeGenerator implements java.io.Serializable {
             return atom;
         }
 
-        /**
-         *  A TreeNode is equal to another TreeNode if it
-         *  stands for the same atom object.
-         *
-         *@param  o  The object that we compare this TreeNode to
-         *@return    True, if the this TreeNode's atom object equals the one of the other TreeNode
-         */
         @Override
         public boolean equals(Object o) {
-            try {
-                if (this.atom.equals(((TreeNode) o).atom)) {
-                    return true;
-                }
-            } catch (Exception exc) {
-                /*
-                 * we do nothing here because anything that could seriously
-                 * happen here is the we got something which is not a TreeNode
-                 * and then got a class cast exception. Thus we can just wait
-                 * until the end of the method returns a "false"
-                 */
-            }
-            return false;
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            TreeNode treeNode = (TreeNode) o;
+            return Objects.equals(atom, treeNode.atom);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(atom);
         }
 
         @Override
