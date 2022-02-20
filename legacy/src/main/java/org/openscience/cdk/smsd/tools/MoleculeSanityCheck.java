@@ -98,13 +98,14 @@ public class MoleculeSanityCheck {
     public static void configure(IAtomContainer mol) {
         // need to find rings and aromaticity again since added H's
 
-        IRingSet ringSet = null;
+        final IRingSet ringSet;
         try {
             AllRingsFinder arf = new AllRingsFinder();
             ringSet = arf.findAllRings(mol);
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(MoleculeSanityCheck.class)
-                              .warn("Unexpected Error:", e);
+                              .error("Could not find all rings in molecule:", e);
+            return;
         }
 
         try {
@@ -123,14 +124,11 @@ public class MoleculeSanityCheck {
 
             for (int i = 0; i < mol.getAtomCount(); i++) {
                 mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
-                jloop: for (int j = 0; j < ringSet.getAtomContainerCount(); j++) {
-                    //logger.debug(i+"\t"+j);
-                    IRing ring = (IRing) ringSet.getAtomContainer(j);
+                for (IAtomContainer ring : ringSet.atomContainers()) {
                     if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
-                        continue jloop;
+                        continue;
                     }
                     boolean haveatom = ring.contains(mol.getAtom(i));
-                    //logger.debug("haveatom="+haveatom);
                     if (haveatom && ring.getAtomCount() == 6) {
                         mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
                     }

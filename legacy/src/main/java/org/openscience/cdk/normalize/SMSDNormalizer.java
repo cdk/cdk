@@ -240,21 +240,19 @@ public class SMSDNormalizer extends AtomContainerManipulator {
                     IAtom clonedAtom = null;
                     try {
                         clonedAtom = atom.clone();
+                        //added by Asad to preserve the Atom ID for atom mapping without Hydrogen
+                        clonedAtom.setID(atom.getID());
+                        clonedAtom.setFlags(atom.getFlags());
+                        int countH = 0;
+                        if (atom.getImplicitHydrogenCount() != null) {
+                            countH = atom.getImplicitHydrogenCount();
+                        }
+                        clonedAtom.setImplicitHydrogenCount(countH);
+                        mol.addAtom(clonedAtom);
+                        map.put(atom, clonedAtom);
                     } catch (CloneNotSupportedException e) {
-                        LoggingToolFactory.createLoggingTool(SMSDNormalizer.class)
-                                          .warn("Unexpected Error:", e);
+                        throw new IllegalStateException("Atom could not be cloned", e);
                     }
-                    //added by Asad to preserve the Atom ID for atom mapping without Hydrogen
-                    clonedAtom.setID(atom.getID());
-                    clonedAtom.setFlags(atom.getFlags());
-                    int countH = 0;
-                    if (atom.getImplicitHydrogenCount() != null) {
-                        countH = atom.getImplicitHydrogenCount();
-                    }
-                    clonedAtom.setImplicitHydrogenCount(countH);
-                    mol.addAtom(clonedAtom);
-                    map.put(atom, clonedAtom);
-
                 } else {
                     remove.add(atom); // maintain list of removed H.
                 }

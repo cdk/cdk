@@ -710,9 +710,9 @@ public class ChemicalFilters {
             rRings = ringFinder.getRingSet(ac);
         } catch (CDKException ex) {
             Logger.getLogger(ChemicalFilters.class.getName()).log(Level.SEVERE, null, ex);
+            return 0d;
         }
         RingSetManipulator.sort(rRings);
-        //        System.out.println("Ring length " + );
         lScore = getRingMatch(rRings, listMap);
         return lScore;
     }

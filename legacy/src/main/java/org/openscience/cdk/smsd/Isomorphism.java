@@ -738,7 +738,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         int pAtomCount;
         double tanimotoAtom = 0.0;
 
-        if (getFirstMapping() != null && !getFirstMapping().isEmpty()) {
+        Map<Integer, Integer> firstMapping = getFirstMapping();
+        if (firstMapping != null && !firstMapping.isEmpty()) {
             if (!removeHydrogen) {
                 rAtomCount = getReactantMolecule().getAtomCount();
                 pAtomCount = getProductMolecule().getAtomCount();
@@ -746,7 +747,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                 rAtomCount = getReactantMolecule().getAtomCount() - getHCount(getReactantMolecule());
                 pAtomCount = getProductMolecule().getAtomCount() - getHCount(getProductMolecule());
             }
-            double matchCount = getFirstMapping().size();
+            double matchCount = firstMapping.size();
             tanimotoAtom = (matchCount) / (rAtomCount + pAtomCount - matchCount);
             BigDecimal tan = BigDecimal.valueOf(tanimotoAtom);
             tan = tan.setScale(decimalPlaces, RoundingMode.HALF_UP);
@@ -854,7 +855,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         double target;
         double euclidean = -1;
 
-        if (getFirstMapping() != null || !getFirstMapping().isEmpty()) {
+        Map<Integer, Integer> firstMapping = getFirstMapping();
+        if (firstMapping != null || !firstMapping.isEmpty()) {
             if (!removeHydrogen) {
                 source = getReactantMolecule().getAtomCount();
                 target = getProductMolecule().getAtomCount();
@@ -862,7 +864,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                 source = getReactantMolecule().getAtomCount() - getHCount(getReactantMolecule());
                 target = getProductMolecule().getAtomCount() - getHCount(getProductMolecule());
             }
-            double common = getFirstMapping().size();
+            double common = firstMapping.size();
             euclidean = Math.sqrt(source + target - 2 * common);
             BigDecimal dist = BigDecimal.valueOf(euclidean);
             dist = dist.setScale(decimalPlaces, RoundingMode.HALF_UP);
