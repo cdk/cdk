@@ -96,16 +96,15 @@ public class CDKRMap {
     /**
      *  The equals method.
      *
-     * @param  obj  The object to compare.
+     * @param  o  The object to check.
      * @return    true=if both ids equal, else false.
      */
     @Override
-    public boolean equals(Object obj) {
-        if (((CDKRMap) obj).getId1() == getId1() && ((CDKRMap) obj).getId2() == getId2()) {
-            return (true);
-        } else {
-            return (false);
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CDKRMap cdkrMap = (CDKRMap) o;
+        return id1 == cdkrMap.id1 && id2 == cdkrMap.id2;
     }
 
     /**
