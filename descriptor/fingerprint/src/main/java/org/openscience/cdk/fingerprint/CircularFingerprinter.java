@@ -523,24 +523,26 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private void considerNewFP(FP newFP) {
         //wr("CONSIDER:"+newFP.iteration+",hash="+newFP.hashCode); //foo
         int hit = -1;
-        FP fp = null;
+        FP hitFp = null;
         for (int n = 0; n < fplist.size(); n++) {
-            fp = fplist.get(n);
+            FP fp = fplist.get(n);
             boolean equal = fp.atoms.length == newFP.atoms.length;
             for (int i = fp.atoms.length - 1; equal && i >= 0; i--)
                 if (fp.atoms[i] != newFP.atoms[i]) equal = false;
             if (equal) {
                 hit = n;
+                hitFp = fp;
                 break;
             }
         }
-        if (hit < 0) {
+        if (hitFp == null) {
             fplist.add(newFP);
             return;
         }
 
         // if the preexisting fingerprint is from an earlier iteration, or has a lower hashcode, discard
-        if (fp.iteration < newFP.iteration || fp.hashCode < newFP.hashCode) return;
+        if (hitFp.iteration < newFP.iteration || hitFp.hashCode < newFP.hashCode)
+            return;
         fplist.set(hit, newFP);
     }
 
