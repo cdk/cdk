@@ -70,61 +70,45 @@ public class TemplateExtractor {
     public TemplateExtractor() {}
 
     public void cleanDataSet(String dataFile) {
-        IteratingSDFReader imdl = null;
         IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
-        try {
-            System.out.println("Start clean dataset...");
-            BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-            imdl = new IteratingSDFReader(fin, builder);
+        System.out.println("Start clean dataset...");
+        try (BufferedReader fin = new BufferedReader(new FileReader(dataFile));
+             IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)){
             System.out.print("Read File in..");
-        } catch (Exception exc) {
-            System.out.println("Could not read Molecules from file " + dataFile + " due to: " + exc.getMessage());
-            return;
-        }
-        System.out.println("READY");
-        int c = 0;
-        while (imdl.hasNext()) {
-            c++;
-            if (c % 1000 == 0) {
-                System.out.println("...");
-            }
-            IAtomContainer m = builder.newInstance(IAtomContainer.class);
-            m = imdl.next();
-            if (m.getAtomCount() > 2) {
-                if (m.getAtom(0).getPoint3d() != null) {
-                    som.addAtomContainer(m);
+            System.out.println("READY");
+            int c = 0;
+            while (imdl.hasNext()) {
+                c++;
+                if (c % 1000 == 0) {
+                    System.out.println("...");
+                }
+                IAtomContainer m = builder.newInstance(IAtomContainer.class);
+                m = imdl.next();
+                if (m.getAtomCount() > 2) {
+                    if (m.getAtom(0).getPoint3d() != null) {
+                        som.addAtomContainer(m);
+                    }
                 }
             }
+            System.out.println(som.getAtomContainerCount() + " Templates are read in");
+            writeChemModel(som, dataFile, "_CLEAN");
+        } catch (Exception exc) {
+            System.out.println("Could not read Molecules from file " + dataFile + " due to: " + exc.getMessage());
         }
-        try {
-            imdl.close();
-        } catch (Exception exc1) {
-            System.out.println("Could not close Reader due to: " + exc1.getMessage());
-        }
-        System.out.println(som.getAtomContainerCount() + " Templates are read in");
-        writeChemModel(som, dataFile, "_CLEAN");
     }
 
     public void ReadNCISdfFileAsTemplate(String dataFile) {
-        IteratingSDFReader imdl = null;
         IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
-        try {
-            System.out.println("Start...");
-            BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-            imdl = new IteratingSDFReader(fin, builder);
+        System.out.println("Start...");
+        try (BufferedReader fin = new BufferedReader(new FileReader(dataFile));
+             IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
             System.out.print("Read File in..");
+            System.out.println("READY");
+            while (imdl.hasNext()) {
+                som.addAtomContainer(imdl.next());
+            }
         } catch (Exception exc) {
             System.out.println("Could not read Molecules from file " + dataFile + " due to: " + exc.getMessage());
-            return;
-        }
-        System.out.println("READY");
-        while (imdl.hasNext()) {
-            som.addAtomContainer(imdl.next());
-        }
-        try {
-            imdl.close();
-        } catch (Exception exc1) {
-            System.out.println("Could not close Reader due to: " + exc1.getMessage());
         }
         System.out.println(som.getAtomContainerCount() + " Templates are read in");
     }
@@ -275,66 +259,40 @@ public class TemplateExtractor {
 
     public void makeCanonicalSmileFromRingSystems(String dataFileIn, String dataFileOut) {
         System.out.println("Start make SMILES...");
-        IAtomContainer m;
-        IteratingSDFReader imdl = null;
-        // QueryAtomContainer query=null;
         List<String> data = new ArrayList<>();
         SmilesGenerator smiles = new SmilesGenerator();
-        try {
-            System.out.println("Start...");
-            BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
-            imdl = new IteratingSDFReader(fin, builder);
-            // fin.close();
+        System.out.println("Start...");
+        try (BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
+             IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
             System.out.println("Read File in..");
+            while (imdl.hasNext()) {
+                IAtomContainer m = imdl.next();
+                try {
+                    data.add(smiles.create(builder.newInstance(IAtomContainer.class, m)));
+                } catch (IllegalArgumentException | CDKException exc1) {
+                    System.out.println("Could not create smile due to: " + exc1.getMessage());
+                }
+            }
         } catch (Exception exc) {
             System.out.println("Could not read Molecules from file " + dataFileIn + " due to: " + exc.getMessage());
             return;
         }
-        while (imdl.hasNext()) {
-            m = imdl.next();
-            /*
-             * try{ HueckelAromaticityDetector.detectAromaticity(m);
-             * }catch(Exception ex1){ System.out.println("Could not find
-             * aromaticity due to:"+ex1); }
-             */
-            // query=QueryAtomContainerCreator.createAnyAtomContainer(m,true);
-            // System.out.println("String:"+smiles.createSMILES(new
-            // Molecule(m)));
-            try {
-
-                data.add(smiles.create(builder.newInstance(IAtomContainer.class, m)));
-            } catch (IllegalArgumentException | CDKException exc1) {
-                System.out.println("Could not create smile due to: " + exc1.getMessage());
-            }
-        }
-        try {
-            imdl.close();
-        } catch (Exception exc2) {
-        }
 
         System.out.print("...ready\nWrite data...");
-        BufferedWriter fout = null;
-        try {
-            fout = new BufferedWriter(new FileWriter(dataFileOut));
+        try (BufferedWriter fout = new BufferedWriter(new FileWriter(dataFileOut))) {
+            for (String datum : data) {
+                try {
+                    fout.write(datum);
+                    fout.write('\n');
+                } catch (Exception ignored) {
+                }
+            }
         } catch (Exception exc3) {
             System.out.println("Could not write smile in file " + dataFileOut + " due to: " + exc3.getMessage());
             return;
         }
-        for (String datum : data) {
-            // System.out.println("write:"+(String)data.get(i));
-            try {
-
-                fout.write(datum);
-                fout.write('\n');
-            } catch (Exception exc4) {
-            }
-        }
         System.out.println("number of smiles:" + data.size());
         System.out.println("...ready");
-        try {
-            fout.close();
-        } catch (Exception exc5) {
-        }
     }
 
     public List<IBitFingerprint> makeFingerprintsFromSdf(boolean anyAtom, boolean anyAtomAnyBond,
