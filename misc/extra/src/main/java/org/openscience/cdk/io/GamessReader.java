@@ -107,6 +107,7 @@ public class GamessReader extends DefaultChemObjectReader {
      * Boolean constant used to specify that the coordinates are given in &Aring;ngstrom units.
      */
     public static final boolean ANGSTROM_UNIT    = false;
+    public static final String UNEXPECTED_END_OF_INPUT = "Unexpected end of input!";
 
     /**
      * The "BufferedReader" object used to read data from the "file system" file.
@@ -230,7 +231,8 @@ public class GamessReader extends DefaultChemObjectReader {
                 /*
                  * The following line do no contain data, so it is ignored.
                  */
-                this.input.readLine();
+                if (this.input.readLine() == null)
+                    throw new IOException(UNEXPECTED_END_OF_INPUT);
                 moleculeSet.addAtomContainer(this.readCoordinates(file.getBuilder().newInstance(IAtomContainer.class),
                         GamessReader.BOHR_UNIT));
                 //break; //<- stops when the first set of coordinates is found.
@@ -239,8 +241,10 @@ public class GamessReader extends DefaultChemObjectReader {
                 /*
                  * The following 2 lines do no contain data, so it are ignored.
                  */
-                this.input.readLine();
-                this.input.readLine();
+                if (this.input.readLine() == null)
+                    throw new IOException(UNEXPECTED_END_OF_INPUT);
+                if (this.input.readLine() == null)
+                    throw new IOException(UNEXPECTED_END_OF_INPUT);
 
                 moleculeSet.addAtomContainer(this.readCoordinates(file.getBuilder().newInstance(IAtomContainer.class),
                         GamessReader.ANGSTROM_UNIT));

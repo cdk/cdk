@@ -146,7 +146,9 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
         }
         try {
             BufferedReader breader = new BufferedReader(new InputStreamReader(ins));
-            breader.readLine(); // throw away the header
+            String header = breader.readLine(); // throw away the header
+            if (header == null)
+                throw new IllegalStateException("Expected a header");
             for (int i = 0; i < 60; i++) {
                 String line = breader.readLine();
                 String[] components = line.split(",");

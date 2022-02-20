@@ -65,6 +65,7 @@ import java.util.StringTokenizer;
 @Deprecated
 public class MDLRXNReader extends DefaultChemObjectReader {
 
+    public static final String UNEXPECTED_END_OF_INPUT = "Unexpected end of input";
     BufferedReader              input;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReader.class);
 
@@ -292,10 +293,15 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         int linecount = 0;
         IReaction reaction = builder.newInstance(IReaction.class);
         try {
-            input.readLine(); // first line should be $RXN
-            input.readLine(); // second line
-            input.readLine(); // third line
-            input.readLine(); // fourth line
+            // first line should be $RXN
+            if (!input.readLine().equals("$RXN"))
+                throw new CDKException("Expected $RXN");
+            if (input.readLine() == null) // second line
+                throw new CDKException(UNEXPECTED_END_OF_INPUT);
+            if (input.readLine() == null) // third line
+                throw new CDKException(UNEXPECTED_END_OF_INPUT);
+            if (input.readLine() == null) // fourth line
+                throw new CDKException(UNEXPECTED_END_OF_INPUT);
         } catch (IOException exception) {
             logger.debug(exception);
             throw new CDKException("Error while reading header of RXN file", exception);
@@ -335,7 +341,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         try {
             for (int i = 1; i <= reactantCount; i++) {
                 StringBuilder molFile = new StringBuilder();
-                input.readLine(); // announceMDLFileLine
+                if (input.readLine() == null) // announceMDLFileLine
+                    throw new CDKException(UNEXPECTED_END_OF_INPUT);
                 String molFileLine;
                 do {
                     molFileLine = input.readLine();
@@ -363,7 +370,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         try {
             for (int i = 1; i <= productCount; i++) {
                 StringBuilder molFile = new StringBuilder();
-                input.readLine(); // String announceMDLFileLine =
+                if (input.readLine() == null) // String announceMDLFileLine =
+                    throw new CDKException(UNEXPECTED_END_OF_INPUT);
                 String molFileLine;
                 do {
                     molFileLine = input.readLine();
@@ -391,7 +399,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         try {
             for (int i = 1; i <= agentCount; i++) {
                 StringBuilder molFile = new StringBuilder();
-                input.readLine(); // String announceMDLFileLine =
+                if (input.readLine() == null) // String announceMDLFileLine =
+                    throw new CDKException(UNEXPECTED_END_OF_INPUT);
                 String molFileLine;
                 do {
                     molFileLine = input.readLine();

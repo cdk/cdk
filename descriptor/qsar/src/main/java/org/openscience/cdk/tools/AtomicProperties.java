@@ -50,7 +50,8 @@ public class AtomicProperties {
         String configFile = "org/openscience/cdk/config/data/whim_weights.txt";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
-        bufferedReader.readLine(); // header
+        if (bufferedReader.readLine() == null) // header
+            throw new IOException("Expected header, but reached end of input");
 
         String Line;
         while (true) {
