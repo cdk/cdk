@@ -198,11 +198,14 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                 return null; // empty file
             if (!header.equals("$RXN"))
                 throw new CDKException("Expected $RXN but got " + header);
-            if (input.readLine() == null) // second line
+            String blank = input.readLine();
+            if (blank == null) // second line
                 throw new CDKException(UNEXPECTED_END_OF_INPUT);
-            if (input.readLine() == null) // third line
+            blank = input.readLine();
+            if (blank == null) // third line
                 throw new CDKException(UNEXPECTED_END_OF_INPUT);
-            if (input.readLine() == null) // fourth line
+            blank = input.readLine();
+            if (blank == null) // fourth line
                 throw new CDKException(UNEXPECTED_END_OF_INPUT);
         } catch (IOException exception) {
             logger.debug(exception);

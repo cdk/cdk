@@ -126,7 +126,8 @@ public class Mopac7Reader extends DefaultChemObjectReader {
                         if (okCols < expected_columns.length) continue;
                         //if (!"    NO.       ATOM         X         Y         Z".equals(line)) continue;
 
-                        if (input.readLine() == null) //reads blank line
+                        String blank = input.readLine();
+                        if (blank == null) //reads blank line
                             throw new IllegalArgumentException("Blank line expected, but reached end of input");
                         int atomIndex = 0;
                         while (!line.trim().isEmpty()) {
