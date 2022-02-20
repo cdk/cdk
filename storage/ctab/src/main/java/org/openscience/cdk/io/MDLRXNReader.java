@@ -294,8 +294,11 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         IReaction reaction = builder.newInstance(IReaction.class);
         try {
             // first line should be $RXN
-            if (!input.readLine().equals("$RXN"))
-                throw new CDKException("Expected $RXN");
+            String header = input.readLine();
+            if (header == null)
+                return null; // empty file
+            if (!header.equals("$RXN"))
+                throw new CDKException("Expected $RXN but got " + header);
             if (input.readLine() == null) // second line
                 throw new CDKException(UNEXPECTED_END_OF_INPUT);
             if (input.readLine() == null) // third line
