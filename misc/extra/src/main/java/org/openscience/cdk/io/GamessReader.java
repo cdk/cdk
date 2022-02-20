@@ -231,7 +231,8 @@ public class GamessReader extends DefaultChemObjectReader {
                 /*
                  * The following line do no contain data, so it is ignored.
                  */
-                if (this.input.readLine() == null)
+                String blank = this.input.readLine();
+                if (blank == null)
                     throw new IOException(UNEXPECTED_END_OF_INPUT);
                 moleculeSet.addAtomContainer(this.readCoordinates(file.getBuilder().newInstance(IAtomContainer.class),
                         GamessReader.BOHR_UNIT));
@@ -241,9 +242,11 @@ public class GamessReader extends DefaultChemObjectReader {
                 /*
                  * The following 2 lines do no contain data, so it are ignored.
                  */
-                if (this.input.readLine() == null)
+                String blank = this.input.readLine();
+                if (blank == null)
                     throw new IOException(UNEXPECTED_END_OF_INPUT);
-                if (this.input.readLine() == null)
+                blank = this.input.readLine();
+                if (blank == null)
                     throw new IOException(UNEXPECTED_END_OF_INPUT);
 
                 moleculeSet.addAtomContainer(this.readCoordinates(file.getBuilder().newInstance(IAtomContainer.class),
