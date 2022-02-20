@@ -140,8 +140,10 @@ public class CTXReader extends DefaultChemObjectReader {
                     } else {
                         // skip lines
                         logger.warn("Dropping block: ", command);
-                        for (int i = 0; i < lineCount; i++)
-                            input.readLine();
+                        for (int i = 0; i < lineCount; i++) {
+                            if (input.readLine() == null)
+                                throw new CDKException("End of input while skipping lines!");
+                        }
                     }
                 } else {
                     logger.warn("Unexpected content at line: ", lineNumber);

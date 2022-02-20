@@ -255,8 +255,9 @@ final class MmffAtomTypeMatcher {
         final Map<String, String> hdefs = new HashMap<>(200);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(hdefIn));
-        br.readLine(); // header
-        String line;
+        String line = br.readLine(); // header
+        if (line == null)
+            throw new IOException("End of input, expected header");
         while ((line = br.readLine()) != null) {
             String[] cols = line.split("\t");
             hdefs.put(cols[0].trim(), cols[3].trim());

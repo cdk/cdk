@@ -66,6 +66,7 @@ import java.util.StringTokenizer;
  */
 public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
+    public static final String UNEXPECTED_END_OF_INPUT = "Unexpected end of input";
     BufferedReader              input;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
 
@@ -191,10 +192,14 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
     private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
         IReaction reaction = builder.newInstance(IReaction.class);
         try {
-            input.readLine(); // first line should be $RXN
-            input.readLine(); // second line
-            input.readLine(); // third line
-            input.readLine(); // fourth line
+            if (input.readLine().equals("$RXN")) // first line should be $RXN
+                throw new CDKException("Expected $RXN");
+            if (input.readLine() == null) // second line
+                throw new CDKException(UNEXPECTED_END_OF_INPUT);
+            if (input.readLine() == null) // third line
+                throw new CDKException(UNEXPECTED_END_OF_INPUT);
+            if (input.readLine() == null) // fourth line
+                throw new CDKException(UNEXPECTED_END_OF_INPUT);
         } catch (IOException exception) {
             logger.debug(exception);
             throw new CDKException("Error while reading header of RXN file", exception);
