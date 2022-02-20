@@ -492,6 +492,8 @@ public final class InChITautomerGenerator {
 
         for (int hPosition : mobHydrAttachPositions) {
             IAtom atom = findAtomByPosition(skeleton, hPosition);
+            if (atom == null)
+                throw new IllegalStateException("Could not find H atom at position=" + hPosition);
             atom.setImplicitHydrogenCount(0);
         }
 
@@ -507,6 +509,8 @@ public final class InChITautomerGenerator {
             IAtomContainer tautomerSkeleton = skeleton.clone();
             for (Integer hPos : hPositions) {
                 IAtom atom = findAtomByPosition(tautomerSkeleton, hPos);
+                if (atom == null)
+                    throw new IllegalStateException("Could not find H atom at position=" + hPos);
                 atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() + 1);
             }
             List<IAtom> atomsInNeedOfFix = new ArrayList<>();
@@ -601,6 +605,8 @@ public final class InChITautomerGenerator {
             for (int i = 0; i < mobHydrAttachPositions.size(); i++) {
                 int pos = mobHydrAttachPositions.get(i);
                 IAtom atom = findAtomByPosition(skeleton, pos);
+                if (atom == null)
+                    throw new IllegalStateException("Could not find H atom at position=" + pos);
                 int conn = getConnectivity(atom, skeleton);
                 int hCnt = 0;
                 for (int t : taken)

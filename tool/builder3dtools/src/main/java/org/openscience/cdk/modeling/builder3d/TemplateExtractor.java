@@ -79,6 +79,7 @@ public class TemplateExtractor {
             System.out.print("Read File in..");
         } catch (Exception exc) {
             System.out.println("Could not read Molecules from file " + dataFile + " due to: " + exc.getMessage());
+            return;
         }
         System.out.println("READY");
         int c = 0;
@@ -114,6 +115,7 @@ public class TemplateExtractor {
             System.out.print("Read File in..");
         } catch (Exception exc) {
             System.out.println("Could not read Molecules from file " + dataFile + " due to: " + exc.getMessage());
+            return;
         }
         System.out.println("READY");
         while (imdl.hasNext()) {
@@ -286,6 +288,7 @@ public class TemplateExtractor {
             System.out.println("Read File in..");
         } catch (Exception exc) {
             System.out.println("Could not read Molecules from file " + dataFileIn + " due to: " + exc.getMessage());
+            return;
         }
         while (imdl.hasNext()) {
             m = imdl.next();
@@ -315,6 +318,7 @@ public class TemplateExtractor {
             fout = new BufferedWriter(new FileWriter(dataFileOut));
         } catch (Exception exc3) {
             System.out.println("Could not write smile in file " + dataFileOut + " due to: " + exc3.getMessage());
+            return;
         }
         for (String datum : data) {
             // System.out.println("write:"+(String)data.get(i));
@@ -427,6 +431,7 @@ public class TemplateExtractor {
             fout = new BufferedWriter(new FileWriter(dataFileOut));
         } catch (Exception exc3) {
             System.out.println("Could not write Fingerprint in file " + dataFileOut + " due to: " + exc3.getMessage());
+            return;
         }
         for (IBitFingerprint datum : data) {
             try {

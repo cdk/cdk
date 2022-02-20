@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -111,7 +112,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
                     depth += depthDiff;
                     if (depthDiff > 0 && depth == 3) {
                         String command = getCommand(currentLine);
-                        if (command.equals("compound")) {
+                        if (Objects.equals(command, "compound")) {
                             startMoleculeFound = true;
                             buffer.append("PC-Compound ::= {\n");
                         }
