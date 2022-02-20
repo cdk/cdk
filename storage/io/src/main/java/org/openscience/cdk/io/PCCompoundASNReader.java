@@ -162,6 +162,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private void processBlock(String line) throws Exception {
         String command = getCommand(line);
+        if (command == null)
+            return;
         if (command.equals("atoms")) {
             // parse frame by frame
             logger.debug("ASN atoms found");
@@ -205,7 +207,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
                 urn = extractURN();
             } else if (line.contains("value")) {
                 logger.debug("Found a prop value line: " + line);
-                if (line.contains(" sval")) {
+                if (line.contains(" sval") && urn != null) {
                     logger.debug("Label: " + urn.label);
                     logger.debug("Name: " + urn.name);
                     if ("InChI".equals(urn.label)) {
@@ -288,6 +290,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private void processAtomBlockBlock(String line) throws Exception {
         String command = getCommand(line);
+        if (command == null)
+            return;
         if (command.equals("aid")) {
             // assume this is the first block in the atom block
             logger.debug("ASN atoms aid found");
@@ -304,6 +308,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private void processBondBlockBlock(String line) throws Exception {
         String command = getCommand(line);
+        if (command == null)
+            return;
         if (command.equals("aid1")) {
             // assume this is the first block in the atom block
             logger.debug("ASN bonds aid1 found");
