@@ -856,7 +856,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         double euclidean = -1;
 
         Map<Integer, Integer> firstMapping = getFirstMapping();
-        if (firstMapping != null || !firstMapping.isEmpty()) {
+        if (firstMapping != null && !firstMapping.isEmpty()) {
             if (!removeHydrogen) {
                 source = getReactantMolecule().getAtomCount();
                 target = getProductMolecule().getAtomCount();
