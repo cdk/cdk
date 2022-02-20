@@ -2099,6 +2099,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             linecount++;
             if (line == null) {
                 handleError("The expected property block is missing!", linecount, 0, 0);
+                return;
             }
             if (line.startsWith("M  END")) break;
 

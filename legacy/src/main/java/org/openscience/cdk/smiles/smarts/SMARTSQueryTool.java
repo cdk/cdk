@@ -483,7 +483,8 @@ public class SMARTSQueryTool {
             if (tmp.size() == query.getAtomCount()) atomMapping.add(tmp);
 
             // If there is only one bond, check if it matches both ways.
-            if (mapping.size() == 1 && atom1.getAtomicNumber().equals(atom2.getAtomicNumber())) {
+            if (mapping.size() == 1 &&
+                    Objects.equals(atom1.getAtomicNumber(), atom2.getAtomicNumber())) {
                 atomMapping.add(new TreeSet<>(tmp));
             }
         }

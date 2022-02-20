@@ -58,23 +58,19 @@ class SimpleNode implements Node, Cloneable {
      */
     @Override
     public Object clone() {
-        Constructor constructor;
-        Node clone = null;
         try {
-            constructor = this.getClass().getConstructor(new Class[]{SMARTSParser.class, Integer.TYPE});
-            clone = (Node) constructor.newInstance(new Object[]{parser, id});
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            LoggingToolFactory.createLoggingTool(SimpleNode.class)
-                              .warn("Unexpected Error:", ex);
-        }
-
-        clone.jjtSetParent(parent);
-        if (this.jjtGetNumChildren() > 0) {
-            for (int i = 0; i < children.length; i++) {
-                clone.jjtAddChild((Node) ((SimpleNode) children[i]).clone(), i);
+            Constructor<?> constructor = this.getClass().getConstructor(new Class[]{SMARTSParser.class, Integer.TYPE});
+            Node clone = (Node) constructor.newInstance(new Object[]{parser, id});
+            clone.jjtSetParent(parent);
+            if (this.jjtGetNumChildren() > 0) {
+                for (int i = 0; i < children.length; i++) {
+                    clone.jjtAddChild((Node) ((SimpleNode) children[i]).clone(), i);
+                }
             }
+            return clone;
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            throw new IllegalStateException("Node could not be cloned", ex);
         }
-        return clone;
     }
 
     @Override

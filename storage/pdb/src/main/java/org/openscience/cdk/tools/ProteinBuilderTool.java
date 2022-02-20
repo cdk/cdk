@@ -152,15 +152,17 @@ public class ProteinBuilderTool {
                 previousAA = aminoAcid;
             }
         }
-        // add the last oxygen of the protein
-        IAtom oxygen = builder.newInstance(IAtom.class, "O");
-        // ... to amino acid
-        previousAA.addAtom(oxygen);
-        IBond bond = builder.newInstance(IBond.class, oxygen, previousAA.getCTerminus(), IBond.Order.SINGLE);
-        previousAA.addBond(bond);
-        // ... and to protein
-        protein.addAtom(oxygen, previousAA, strand);
-        protein.addBond(bond);
+        if (previousAA != null) {
+            // add the last oxygen of the protein
+            IAtom oxygen = builder.newInstance(IAtom.class, "O");
+            // ... to amino acid
+            previousAA.addAtom(oxygen);
+            IBond bond = builder.newInstance(IBond.class, oxygen, previousAA.getCTerminus(), IBond.Order.SINGLE);
+            previousAA.addBond(bond);
+            // ... and to protein
+            protein.addAtom(oxygen, previousAA, strand);
+            protein.addBond(bond);
+        }
         return protein;
     }
 

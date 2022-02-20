@@ -816,17 +816,16 @@ public class ProteinPocketFinder {
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(protein);
         try {
             atf = AtomTypeFactory.getInstance(vanDerWaalsFile, atoms[0].getBuilder());
+            for (IAtom atom : atoms) {
+                try {
+                    atf.configure(atom);
+                } catch (Exception ex2) {
+                    logger.error("Problem with atf.configure due to:" + ex2);
+                }
+            }
         } catch (Exception ex1) {
             System.out.println("Problem with AtomTypeFactory due to:" + ex1);
         }
-        for (IAtom atom : atoms) {
-            try {
-                atf.configure(atom);
-            } catch (Exception ex2) {
-                logger.error("Problem with atf.configure due to:" + ex2);
-            }
-        }
-
     }
 
     /**

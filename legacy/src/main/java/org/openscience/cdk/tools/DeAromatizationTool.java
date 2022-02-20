@@ -24,6 +24,7 @@
 package org.openscience.cdk.tools;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Element;
@@ -107,6 +108,7 @@ public class DeAromatizationTool {
                 int count = 0;
                 while (done != 2) {
                     bond = getNextBond(atom, bond, ring);
+                    Objects.requireNonNull(bond, "Bond not connected to atom!");
                     if (bond.getBegin().equals(atom))
                         atom = bond.getEnd();
                     else
@@ -125,7 +127,9 @@ public class DeAromatizationTool {
 
     private static IBond getNextBond(IAtom atom, IBond bond, IRing ring) {
         List<IBond> bonds = ring.getConnectedBondsList(atom);
-        for (IBond iBond : bonds) if (!iBond.equals(bond)) return iBond;
+        for (IBond iBond : bonds)
+            if (!iBond.equals(bond))
+                return iBond;
         return null;
     }
 
