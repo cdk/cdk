@@ -73,9 +73,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     @Override
     public Object clone() {
         Orbit orbit = new Orbit(this.label, this.height);
-        for (Integer i : this.atomIndices) {
-            orbit.atomIndices.add(Integer.valueOf(i));
-        }
+        orbit.atomIndices.addAll(this.atomIndices);
         return orbit;
     }
 

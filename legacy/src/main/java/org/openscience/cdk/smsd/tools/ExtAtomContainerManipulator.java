@@ -477,13 +477,13 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
     private static void setHydrogenCount(IAtomContainer container, int index, IAtom[] atoms) {
         if (container.getAtom(index).getImplicitHydrogenCount() != null) {
-            atoms[index].setImplicitHydrogenCount(Integer.valueOf(container.getAtom(index).getImplicitHydrogenCount()));
+            atoms[index].setImplicitHydrogenCount(container.getAtom(index).getImplicitHydrogenCount());
         }
     }
 
     private static void setCharge(IAtomContainer container, int index, IAtom[] atoms) {
         if (container.getAtom(index).getCharge() != null) {
-            atoms[index].setCharge(new Double(container.getAtom(index).getCharge()));
+            atoms[index].setCharge(container.getAtom(index).getCharge());
         }
     }
 }
