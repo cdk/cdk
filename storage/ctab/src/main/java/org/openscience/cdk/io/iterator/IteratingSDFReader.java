@@ -380,7 +380,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     @Override
     public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
-            hasNext();
+            hasNext = hasNext();
         }
         nextAvailableIsKnown = false;
         if (!hasNext) {

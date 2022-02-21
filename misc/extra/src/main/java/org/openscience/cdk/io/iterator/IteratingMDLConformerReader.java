@@ -96,9 +96,11 @@ public class IteratingMDLConformerReader implements Iterator {
 
     @Override
     public Object next() {
-        if (!nextIsKnown) hasNext();
+        if (!nextIsKnown)
+            hasNext = hasNext();
         nextIsKnown = false;
-        if (!hasNext) throw new NoSuchElementException();
+        if (!hasNext)
+            throw new NoSuchElementException();
 
         return container; //To change body of implemented methods use File | Settings | File Templates.
     }

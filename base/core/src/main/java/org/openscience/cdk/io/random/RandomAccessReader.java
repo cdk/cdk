@@ -180,7 +180,9 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
 
     protected synchronized void saveIndex(File file) throws Exception {
         if (records == 0) {
-            file.delete();
+            if (!file.delete())
+                LoggingToolFactory.createLoggingTool(RandomAccessReader.class)
+                                  .warn("Could not delete index file.");
             return;
         }
         try (FileWriter out = new FileWriter(file)) {

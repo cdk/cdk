@@ -166,7 +166,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     @Override
     public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
-            hasNext();
+            hasNext = hasNext();
         }
         nextAvailableIsKnown = false;
         if (!hasNext) {

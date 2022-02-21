@@ -141,7 +141,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     @Override
     public IChemModel next() {
         if (!nextAvailableIsKnown) {
-            hasNext();
+            hasNext = hasNext();
         }
         nextAvailableIsKnown = false;
         if (!hasNext) {
