@@ -621,7 +621,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                 int scx = (int) (childx + (childBounds.getWidth() * 0.75));
                 int scy = (int) (childy + (childBounds.getHeight() / 3));
                 Font font = this.graphics.getFont(); // TODO : move to font manager
-                Font subscriptFont = font.deriveFont(font.getStyle(), font.getSize() - 2.0);
+                Font subscriptFont = font.deriveFont(font.getStyle(), font.getSize() - 2f);
                 this.graphics.setFont(subscriptFont);
                 this.graphics.drawString(child.subscript, scx, scy);
             }
