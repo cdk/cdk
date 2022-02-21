@@ -100,7 +100,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable {
         String s = "The carbon NMR chemical shift prediction of this module \n";
         s += "is based on the 651 1-sphere HOSE-Code table published by W. Bremser in:\n";
         s += "W. Bremser, \"Expectation Ranges of 13C NMR Chemical Shifts\", \n";
-        s += "Mag. Res. Chem., Vol. 23, No. 4, 1985, 271-275.\n";
+        s += "Mag. Res. Chem., Vol. 23, No. 4, 1985, 271-275. (https://doi.org/10.1002/mrc.1260230413)\n";
         s += "It is important to understand, that these values are indeed not more than expectation ranges.\n";
         return s;
     }
@@ -133,7 +133,9 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable {
         ht.put("=C=N(//)", new HOSECodeShiftRange("=C=N(//)", 197.4, 28.2, "S", 227.6, 186.7, 15, 15));
         ht.put("=C=S(//)", new HOSECodeShiftRange("=C=S(//)", 269.1, 5.0, "S", 269.1, 269.1, 1, 1));
         ht.put("=CC$C$(//)", new HOSECodeShiftRange("=CC$C$(//)", 111.1, 28.4, "S", 153.7, 80.5, 130, 289));
-        ht.put("=CC$C(//)", new HOSECodeShiftRange("=CC$C(//)", 126.9, 32.3, "S", 187.4, 63.1, 1243, 3017));
+        // duplicate key - the original paper had duplicate HOSE codes with different values, it is not known if this
+        //                 was a bug in their implementation or an error in the preparation of the manuscript
+        //ht.put("=CC$C(//)", new HOSECodeShiftRange("=CC$C(//)", 126.9, 32.3, "S", 187.4, 63.1, 1243, 3017));
         ht.put("=CC$O(//)", new HOSECodeShiftRange("=CC$O(//)", 148.5, 25.4, "S", 201.0, 118.0, 207, 409));
         ht.put("=CC$N$$(//)", new HOSECodeShiftRange("=CC$N$$(//)", 130.5, 36.0, "S", 143.3, 120.9, 4, 4));
         ht.put("=CC$N(//)", new HOSECodeShiftRange("=CC$N(//)", 129.8, 29.0, "S", 161.4, 90.2, 257, 546));
@@ -145,7 +147,8 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable {
         ht.put("=CC$X(//)", new HOSECodeShiftRange("=CC$X(//)", 131.3, 28.0, "S", 188.0, 87.4, 73, 164));
         ht.put("=CC$Y(//)", new HOSECodeShiftRange("=CC$Y(//)", 116.1, 23.9, "S", 134.8, 89.1, 30, 43));
         ht.put("=CC$I(//)", new HOSECodeShiftRange("=CC$I(//)", 88.6, 32.8, "S", 105.7, 72.7, 5, 5));
-        ht.put("=CC$(//)", new HOSECodeShiftRange("=CC$(//)", 119.6, 25.2, "D", 166.9, 63.5, 1159, 3433));
+        // duplicate key see above
+        //ht.put("=CC$(//)", new HOSECodeShiftRange("=CC$(//)", 119.6, 25.2, "D", 166.9, 63.5, 1159, 3433));
         ht.put("=CCC(//)", new HOSECodeShiftRange("=CCC(//)", 136.2, 34.9, "S", 238.3, 39.4, 3854, 10753));
         ht.put("=CC$CC(//)", new HOSECodeShiftRange("=CC$CC(//)", 124.6, 17.4, "*", 135.8, 112.4, 5, 15));
         ht.put("=CC$C(//)", new HOSECodeShiftRange("=CC$C(//)", 113.5, 21.5, "S", 121.1, 107.3, 2, 3));
@@ -720,7 +723,8 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable {
         ht.put("P$XXX(//)", new HOSECodeShiftRange("P$XXX(//)", 89.0, 5.0, "S", 89.0, 89.0, 1, 1));
         ht.put("P$X(//)", new HOSECodeShiftRange("P$X(//)", 35.3, 13.1, "T", 45.6, 33.0, 3, 6));
         ht.put("P$(//)", new HOSECodeShiftRange("P$(//)", 14.2, 6.5, "Q", 20.7, 4.3, 29, 65));
-        ht.put("PP(//)", new HOSECodeShiftRange("PP(//)", 33.3, 5.0, "D", 33.3, 33.3, 1, 1));
+        // duplicate key see above
+        //ht.put("PP(//)", new HOSECodeShiftRange("PP(//)", 33.3, 5.0, "D", 33.3, 33.3, 1, 1));
         ht.put("PPQ(//)", new HOSECodeShiftRange("PPQ(//)", 17.6, 5.0, "D", 17.6, 17.6, 1, 1));
         ht.put("PP(//)", new HOSECodeShiftRange("PP(//)", 35.9, 32.9, "T", 53.9, 13.8, 6, 8));
         ht.put("PQ(//)", new HOSECodeShiftRange("PQ(//)", 16.0, 18.6, "T", 23.4, 7.8, 4, 6));
