@@ -72,9 +72,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword R-group
  * @author Mark Rijnbeek
  */
-public class RGroupQuery extends QueryChemObject implements IChemObject, Serializable, IRGroupQuery {
-
-    private static final long               serialVersionUID = -1656116487614720605L;
+public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroupQuery {
 
     private static final ILoggingTool             logger           = LoggingToolFactory.createLoggingTool(RGroupQuery.class);
 
