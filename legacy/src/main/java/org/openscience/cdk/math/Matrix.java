@@ -284,13 +284,13 @@ public class Matrix {
     /**
      * Diagonalize this matrix with the Jacobi algorithm.
      *
-     * @param nrot Count of max. rotations
+     * @param maxNumRot Count of max. rotations
      * @return Matrix m, with m^t * this * m = diagonal
      *
      * @cdk.keyword Jacobi algorithm
      * @cdk.keyword diagonalization
      */
-    public Matrix diagonalize(int nrot) {
+    public Matrix diagonalize(int maxNumRot) {
         Matrix m = duplicate();
         if (m.rows != m.columns)
 
@@ -321,7 +321,7 @@ public class Matrix {
             z[ip] = 0.0;
         }
 
-        nrot = 0;
+        int nrot = 0;
         for (i = 1; i <= 50; i++) {
             sm = 0.0;
             for (ip = 0; ip < n - 1; ip++) {
@@ -336,6 +336,9 @@ public class Matrix {
                 tresh = 0.2 * sm / (n * n);
             else
                 tresh = 0.0;
+
+            if (nrot > maxNumRot)
+                break;
 
             for (ip = 0; ip < n - 1; ip++) {
                 for (iq = ip + 1; iq < n; iq++) {
