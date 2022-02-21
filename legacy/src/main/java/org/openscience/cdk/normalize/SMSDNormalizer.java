@@ -478,19 +478,19 @@ public class SMSDNormalizer extends AtomContainerManipulator {
 
     private static void setHydrogenCount(IAtomContainer container, int index, IAtom[] atoms) {
         if (container.getAtom(index).getImplicitHydrogenCount() != null) {
-            atoms[index].setImplicitHydrogenCount(Integer.valueOf(container.getAtom(index).getImplicitHydrogenCount()));
+            atoms[index].setImplicitHydrogenCount(container.getAtom(index).getImplicitHydrogenCount());
         }
     }
 
     private static void setCharge(IAtomContainer container, int index, IAtom[] atoms) {
         if (container.getAtom(index).getCharge() != null) {
-            atoms[index].setCharge(new Double(container.getAtom(index).getCharge()));
+            atoms[index].setCharge(container.getAtom(index).getCharge());
         }
     }
 
     private static void setStereoParity(IAtomContainer container, int index, IAtom[] atoms) {
         if (container.getAtom(index).getStereoParity() != null) {
-            atoms[index].setStereoParity(Integer.valueOf(container.getAtom(index).getStereoParity()));
+            atoms[index].setStereoParity(container.getAtom(index).getStereoParity());
         }
     }
 }
