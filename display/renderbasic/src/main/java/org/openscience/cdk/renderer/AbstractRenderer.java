@@ -427,8 +427,8 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         double margin = rendererModel.getParameter(Margin.class).getValue();
         int width = (int) ((scale * zoom * modelWidth) + (2 * margin));
         int height = (int) ((scale * zoom * modelHeight) + (2 * margin));
-        int xCoord = (int) (screenCoord.x - width / 2);
-        int yCoord = (int) (screenCoord.y - height / 2);
+        int xCoord = (int) (screenCoord.x - (width / 2.0));
+        int yCoord = (int) (screenCoord.y - (height / 2.0));
 
         return new Rectangle(xCoord, yCoord, width, height);
     }

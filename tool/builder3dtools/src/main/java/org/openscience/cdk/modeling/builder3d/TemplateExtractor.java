@@ -334,7 +334,7 @@ public class TemplateExtractor {
                 fingerprintCounter = fingerprintCounter + 1;
                 time += System.currentTimeMillis();
                 // store the time
-                String bin = Integer.toString((int) Math.floor(time / 10));
+                String bin = Integer.toString((int) Math.floor(time / 10.0));
                 if (timings.containsKey(bin)) {
                     timings.put(bin, (timings.get(bin)) + 1);
                 } else {

@@ -241,7 +241,7 @@ public abstract class IsotopeFactory {
         IIsotope major = getMajorIsotope(elem);
         if (major == null) {
             logger.warn("No major isotope for elem" + elem);
-            return 2*elem;
+            return 2.0*elem;
         }
         return major.getExactMass();
     }

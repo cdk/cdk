@@ -73,10 +73,10 @@ public class BKKCKCF {
         this.dEdges = dEdgesOrg;
         bestCliqueSize = 0;
         //Orignal assignment as per paper
-        dEdgeIterationSize = dEdges.size() / 2;
+        dEdgeIterationSize = dEdges.size() / 2.0;
 
         //Orignal assignment as per paper
-        cEdgeIterationSize = cEdges.size() / 2;
+        cEdgeIterationSize = cEdges.size() / 2.0;
 
         //reset Degdes and Cedges if required
         //        setEdges();

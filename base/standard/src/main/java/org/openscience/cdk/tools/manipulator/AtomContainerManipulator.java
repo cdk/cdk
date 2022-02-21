@@ -472,7 +472,8 @@ public class AtomContainerManipulator {
                     abundance *= hAbundance;
                 nImplH += atom.getImplicitHydrogenCount();
             }
-            return abundance / Math.pow(100, nImplH + atomContainer.getAtomCount());
+            int acount = atomContainer.getAtomCount();
+            return abundance / Math.pow(100, (double)nImplH + acount);
         } catch (IOException e) {
             throw new RuntimeException("Isotopes definitions could not be loaded", e);
         }
