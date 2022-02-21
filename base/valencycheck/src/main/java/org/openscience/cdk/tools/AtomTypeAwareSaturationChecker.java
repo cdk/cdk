@@ -89,7 +89,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
                     else {
                         decideBondOrder(atomContainer, bestGuess[0]);
                         double satAtoms = ((bestGuess[1] * 1.0) / atomContainer.getAtomCount()) * 10000;
-                        satAtoms = Math.round(satAtoms) / 100;
+                        satAtoms = Math.round(satAtoms) / 100.0;
                         //						System.out.println("Staring on bond "+bestGuess[0]+
                         //								" gives "+satAtoms+"% saturated atoms.");
                         logger.warn("Can't find any solution where all atoms " + "are saturated. A best guess gives "

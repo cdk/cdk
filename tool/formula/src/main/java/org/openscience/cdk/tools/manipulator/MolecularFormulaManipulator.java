@@ -1060,7 +1060,7 @@ public class MolecularFormulaManipulator {
             //			valencies[(int) (types[0].getBondOrderSum() + ac.getAtom(f).getFormalCharge())]++;
             valencies[types[0].getBondOrderSum().intValue()]++;
         }
-        return 1 + (valencies[4]) + (valencies[3] / 2) - (valencies[1] / 2);
+        return 1 + (valencies[4]) + (valencies[3] / 2.0) - (valencies[1] / 2.0);
     }
 
     /**

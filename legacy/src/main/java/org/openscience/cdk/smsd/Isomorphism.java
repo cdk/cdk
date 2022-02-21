@@ -861,8 +861,10 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                 source = getReactantMolecule().getAtomCount();
                 target = getProductMolecule().getAtomCount();
             } else {
-                source = getReactantMolecule().getAtomCount() - getHCount(getReactantMolecule());
-                target = getProductMolecule().getAtomCount() - getHCount(getProductMolecule());
+                source = getReactantMolecule().getAtomCount() -
+                           (double)getHCount(getReactantMolecule());
+                target = getProductMolecule().getAtomCount() -
+                           (double)getHCount(getProductMolecule());
             }
             double common = firstMapping.size();
             euclidean = Math.sqrt(source + target - 2 * common);

@@ -1021,7 +1021,7 @@ public class StructureDiagramGenerator {
         // only apply if 50% of the bonds are pointing the same 'wrapped'
         // direction, max=0 means already aligned
         if (max != 0 && dirhist[max]/(double)mol.getBondCount() > 0.5)
-            GeometryUtil.rotate(mol, pivot, Math.toRadians(60-max));
+            GeometryUtil.rotate(mol, pivot, Math.toRadians(60.0-max));
 
         double maxWidth = minmax[2] - minmax[0];
         double begWidth = maxWidth;

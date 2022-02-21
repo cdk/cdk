@@ -111,7 +111,7 @@ final class SeedGenerator extends AbstractHashGenerator implements AtomHashGener
 
         int n = container.getAtomCount();
         int m = n - suppressed.count(); // number of non-suppressed vertices
-        int seed = m > 1 ? 9803 % m : 1;
+        long seed = m > 1 ? 9803 % m : 1;
 
         long[] hashes = new long[n];
 

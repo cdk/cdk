@@ -487,7 +487,7 @@ public class RingPlacer {
                 sharedAtomsCenter.add(ringCenterVector);
             }
 
-            double theta = Math.PI-(2 * Math.PI / (degree / 2));
+            double theta = Math.PI-(2 * Math.PI / (degree / 2.0));
             rotate(ringCenterVector, theta);
         }
 
