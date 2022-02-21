@@ -676,10 +676,11 @@ final class InitialCycles {
 
         @Override
         public boolean equals(Object o) {
+            if (!(o instanceof Edge))
+                return false;
             Edge that = (Edge) o;
-            return that != null &&
-                    ((this.v == that.v && this.w == that.w) ||
-                     (this.v == that.w && this.w == that.v));
+            return ((this.v == that.v && this.w == that.w) ||
+                    (this.v == that.w && this.w == that.v));
         }
 
         @Override
