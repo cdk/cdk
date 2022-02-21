@@ -184,7 +184,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
     @Override
     public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
-            hasNext();
+            hasNext = hasNext();
         }
         nextAvailableIsKnown = false;
         if (!hasNext) {
