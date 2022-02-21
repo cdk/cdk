@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.geometry.volume;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,30 +44,30 @@ import org.openscience.cdk.interfaces.IRingSet;
  */
 public class VABCVolume {
 
+    private static Map<String,Double> loadVolumes() {
+        Map<String,Double> map = new HashMap<>();
+        map.put("H", 7.2382293504);
+        map.put("C", 20.5795259250667);
+        map.put("N", 15.5985308577667);
+        map.put("O", 14.7102267005611);
+        map.put("Cl", 22.4492971208333);
+        map.put("Br", 26.5218483279667);
+        map.put("F", 13.3057882007064);
+        map.put("I", 32.5150310206656);
+        map.put("S", 24.4290240576);
+        map.put("P", 24.4290240576);
+        map.put("As", 26.5218483279667);
+        map.put("B", 40.48); // value missing from spreadsheet; taken from paper
+        map.put("Se", 28.7309115245333);
+        map.put("Si", 38.7923854248);
+        return Collections.unmodifiableMap(map);
+    }
+
     /**
      * Values are taken from the spreadsheet where possible. The values in the
      * paper are imprecise.
      */
-    @SuppressWarnings("serial")
-    private static final Map<String, Double> bondiiVolumes = new HashMap<String, Double>() {
-
-                                                         {
-                                                             put("H", 7.2382293504);
-                                                             put("C", 20.5795259250667);
-                                                             put("N", 15.5985308577667);
-                                                             put("O", 14.7102267005611);
-                                                             put("Cl", 22.4492971208333);
-                                                             put("Br", 26.5218483279667);
-                                                             put("F", 13.3057882007064);
-                                                             put("I", 32.5150310206656);
-                                                             put("S", 24.4290240576);
-                                                             put("P", 24.4290240576);
-                                                             put("As", 26.5218483279667);
-                                                             put("B", 40.48); // value missing from spreadsheet; taken from paper
-                                                             put("Se", 28.7309115245333);
-                                                             put("Si", 38.7923854248);
-                                                         }
-                                                     };
+    private static final Map<String, Double> bondiiVolumes = loadVolumes();
 
     private static AtomTypeFactory     atomTypeList  = null;
 
