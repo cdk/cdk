@@ -116,7 +116,8 @@ final class SeedGenerator extends AbstractHashGenerator implements AtomHashGener
         long[] hashes = new long[n];
 
         for (int i = 0; i < n; i++) {
-            hashes[i] = distribute(seed * encoder.encode(container.getAtom(i), container));
+            int atomHash = encoder.encode(container.getAtom(i), container);
+            hashes[i] = distribute((seed * atomHash) & 0x7fffffff);
         }
         return hashes;
     }
