@@ -200,11 +200,11 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
     }
 
     /**
-     * Access the singleton instance of this SilentChemObjectBuilder.
+     * Access the singleton instance of this DebugChemObjectBuilder.
      * <pre>{@code
      *
      * // get the builder instance
-     * IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+     * IChemObjectBuilder builder = DebugChemObjectBuilder.getInstance();
      *
      * // using the builder...
      * // create an IAtom using the default constructor
@@ -214,7 +214,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
      * IAtom c1 = builder.newInstance(IAtom.class, "C");
      * }</pre>
      *
-     * @return a SilentChemObjectBuilder instance
+     * @return a DebugChemObjectBuilder instance
      */
     public static IChemObjectBuilder getInstance() {
         return Holder.INSTANCE;
