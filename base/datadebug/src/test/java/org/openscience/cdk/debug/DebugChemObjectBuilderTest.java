@@ -42,7 +42,7 @@ public class DebugChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
         Object builder = DebugChemObjectBuilder.getInstance();
         Assert.assertNotNull(builder);
         Assert.assertTrue(builder instanceof IChemObjectBuilder);
-        Assert.assertTrue(builder instanceof DebugChemObjectBuilder);
+        Assert.assertTrue(builder.getClass().getName().contains("DebugChemObjectBuilder"));
     }
 
 }
