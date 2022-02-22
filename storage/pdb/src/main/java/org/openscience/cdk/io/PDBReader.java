@@ -501,22 +501,21 @@ public class PDBReader extends DefaultChemObjectReader {
         IAtom secondAtom = atomNumberMap.get(bondedAtomNo);
         if (firstAtom == null) {
             logger.error("Could not find bond start atom in map with serial id: ", bondAtomNo);
-        }
-        if (secondAtom == null) {
+        } else if (secondAtom == null) {
             logger.error("Could not find bond target atom in map with serial id: ", bondAtomNo);
-        }
-        IBond bond = firstAtom.getBuilder().newInstance(IBond.class, firstAtom, secondAtom, IBond.Order.SINGLE);
-        for (IBond bondsFromConnectRecord : bondsFromConnectRecords) {
-            IBond existingBond = bondsFromConnectRecord;
-            IAtom a = existingBond.getBegin();
-            IAtom b = existingBond.getEnd();
-            if ((a.equals(firstAtom) && b.equals(secondAtom)) || (b.equals(firstAtom) && a.equals(secondAtom))) {
-                // already stored
-                return;
+        } else {
+            IBond bond = firstAtom.getBuilder().newInstance(IBond.class, firstAtom, secondAtom, IBond.Order.SINGLE);
+            for (IBond bondsFromConnectRecord : bondsFromConnectRecords) {
+                IAtom a = bondsFromConnectRecord.getBegin();
+                IAtom b = bondsFromConnectRecord.getEnd();
+                if ((a.equals(firstAtom) && b.equals(secondAtom)) || (b.equals(firstAtom) && a.equals(secondAtom))) {
+                    // already stored
+                    return;
+                }
             }
+            bondsFromConnectRecords.add(bond);
+            molecule.addBond(bond);
         }
-        bondsFromConnectRecords.add(bond);
-        molecule.addBond(bond);
     }
 
     private boolean createBondsWithRebondTool(IAtomContainer molecule) {
