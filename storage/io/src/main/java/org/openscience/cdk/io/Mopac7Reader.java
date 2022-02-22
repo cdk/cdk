@@ -113,7 +113,8 @@ public class Mopac7Reader extends DefaultChemObjectReader {
                     if ("CARTESIAN COORDINATES".equals(line.trim())) {
 
                         IAtomContainer atomcontainer = ((IAtomContainer) object);
-                        if (input.readLine() == null) //reads blank line
+                        line = input.readLine();
+                        if (line == null) //reads blank line
                             throw new IllegalArgumentException("Blank line expected, but reached end of input");
                         line = input.readLine();
 

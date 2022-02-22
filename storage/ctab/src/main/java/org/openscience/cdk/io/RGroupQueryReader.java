@@ -203,7 +203,8 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
 
             for (int i = 1; i <= 3; i++) {
                 lineCount++;
-                if (input.readLine() == null) {
+                line = input.readLine();
+                if (line == null) {
                     throw new CDKException("RGFile invalid, empty/null header line at #" + lineCount);
                 }
                 //optional: parse header info here (not implemented)
