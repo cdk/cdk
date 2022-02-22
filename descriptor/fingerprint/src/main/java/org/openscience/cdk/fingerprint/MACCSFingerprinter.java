@@ -74,15 +74,22 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
 
     private static final String KEY_DEFINITIONS = "data/maccs.txt";
 
-    private volatile MaccsKey[] keys            = null;
+    private final MaccsKey[] keys;
 
-    public MACCSFingerprinter() {}
+    public MACCSFingerprinter() {
+        try {
+            keys = readKeyDef(null);
+        } catch (IOException | CDKException e) {
+            logger.debug(e);
+            throw new IllegalStateException("Could not initialize the MACCS keys", e);
+        }
+    }
 
     public MACCSFingerprinter(IChemObjectBuilder builder) {
         try {
             keys = readKeyDef(builder);
         } catch (IOException | CDKException e) {
-            logger.debug(e);
+            throw new IllegalStateException("Could not initialize the MACCS keys", e);
         }
     }
 
@@ -90,7 +97,6 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
 
-        MaccsKey[] keys = keys(container.getBuilder());
         BitSet fp = new BitSet(keys.length);
 
         // init SMARTS invariants (connectivity, degree, etc)
@@ -275,31 +281,6 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         throw new UnsupportedOperationException();
-    }
-
-    private final Object lock = new Object();
-
-    /**
-     * Access MACCS keys definitions.
-     *
-     * @return array of MACCS keys.
-     * @throws CDKException maccs keys could not be loaded
-     */
-    private MaccsKey[] keys(final IChemObjectBuilder builder) throws CDKException {
-        MaccsKey[] result = keys;
-        if (result == null) {
-            synchronized (lock) {
-                result = keys;
-                if (result == null) {
-                    try {
-                        keys = result = readKeyDef(builder);
-                    } catch (IOException e) {
-                        throw new CDKException("could not read MACCS definitions", e);
-                    }
-                }
-            }
-        }
-        return result;
     }
 
     /**

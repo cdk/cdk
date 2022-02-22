@@ -47,7 +47,7 @@ class RoundRobinFormulaGenerator implements IFormulaGenerator {
     /**
      * is used to estimate which part of the search space is already traversed
      */
-    protected volatile int[] lastDecomposition;
+    protected int[] lastDecomposition;
     /**
      * a flag indicating if the algorithm is done or should be canceled.
      * This flag have to be volatile to allow other threads to cancel the enumeration procedure.
@@ -200,7 +200,7 @@ class RangeMassDecomposer {
      * the same ERT tables. However, as soon as an ERT table is written it is synchronized around all threads. After
      * writing an ERT table it is never changed, so additional locking is not necessary.
      */
-    private volatile int[][][] ERTs;
+    private int[][][] ERTs;
 
     /**
      * @param allowedIsotopes array of the elements of the alphabet

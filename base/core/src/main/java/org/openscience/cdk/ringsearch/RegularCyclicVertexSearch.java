@@ -54,7 +54,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     private long[]         state;
 
     /** Vertex colors - which component does each vertex belong. */
-    private volatile int[] colors;
+    private int[] colors;
 
     private int numCycles = 0;
 
@@ -226,9 +226,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
         }
         return -1;
     }
-
-    /** Synchronisation lock. */
-    private final Object lock = new Object();
 
     /**
      * Lazily build an indexed lookup of vertex color. The vertex color
