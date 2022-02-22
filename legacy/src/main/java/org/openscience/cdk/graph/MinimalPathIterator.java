@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 
@@ -230,7 +231,7 @@ public class MinimalPathIterator implements Iterator {
             next = null;
             return result;
         } else {
-            return null;
+            throw new NoSuchElementException();
         }
     }
 
