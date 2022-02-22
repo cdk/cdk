@@ -1,7 +1,5 @@
-[![Build Status](https://travis-ci.org/cdk/cdk.svg?branch=master)](https://travis-ci.org/cdk/cdk)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk) <br />
-![Java8 build](https://github.com/cdk/cdk/workflows/Java8%20build/badge.svg)
-![Java 11 build](https://github.com/cdk/cdk/workflows/Java%2011%20build/badge.svg)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk) [![build](https://github.com/cdk/cdk/actions/workflows/maven.yml/badge.svg)](https://github.com/cdk/cdk/actions/workflows/maven.yml) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=cdk_cdk&metric=bugs)](https://sonarcloud.io/summary/new_code?id=cdk_cdk)
+
 
 # The Chemistry Development Kit (CDK)
  
