@@ -42,7 +42,7 @@ public class SilentChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
         Object builder = SilentChemObjectBuilder.getInstance();
         Assert.assertNotNull(builder);
         Assert.assertTrue(builder instanceof IChemObjectBuilder);
-        Assert.assertTrue(builder instanceof SilentChemObjectBuilder);
+        Assert.assertTrue(builder.getClass().getName().contains("SilentChemObjectBuilder"));
     }
 
 }

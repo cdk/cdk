@@ -87,91 +87,124 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
-    private static volatile IChemObjectBuilder instance = null;
-    private static final Object                LOCK     = new Object();
-    private final DynamicFactory               factory  = new DynamicFactory(200);
+    private enum Holder implements IChemObjectBuilder {
 
-    private DebugChemObjectBuilder() {
+        INSTANCE;
+
+        private final DynamicFactory factory = new DynamicFactory(200);
 
         // self reference required for stereo-elements
         final IChemObjectBuilder self = this;
 
-        // elements
-        factory.register(IAtom.class, DebugAtom.class);
-        factory.register(IPseudoAtom.class, DebugPseudoAtom.class);
-        factory.register(IElement.class, DebugElement.class);
-        factory.register(IAtomType.class, DebugAtomType.class);
-        factory.register(IFragmentAtom.class, DebugFragmentAtom.class);
-        factory.register(IPDBAtom.class, DebugPDBAtom.class);
-        factory.register(IIsotope.class, DebugIsotope.class);
+        Holder() {
+            // elements
+            factory.register(IAtom.class, DebugAtom.class);
+            factory.register(IPseudoAtom.class, DebugPseudoAtom.class);
+            factory.register(IElement.class, DebugElement.class);
+            factory.register(IAtomType.class, DebugAtomType.class);
+            factory.register(IFragmentAtom.class, DebugFragmentAtom.class);
+            factory.register(IPDBAtom.class, DebugPDBAtom.class);
+            factory.register(IIsotope.class, DebugIsotope.class);
 
-        // electron containers
-        factory.register(IBond.class, DebugBond.class);
-        factory.register(IElectronContainer.class, DebugElectronContainer.class);
-        factory.register(ISingleElectron.class, DebugSingleElectron.class);
-        factory.register(ILonePair.class, DebugLonePair.class);
+            // electron containers
+            factory.register(IBond.class, DebugBond.class);
+            factory.register(IElectronContainer.class, DebugElectronContainer.class);
+            factory.register(ISingleElectron.class, DebugSingleElectron.class);
+            factory.register(ILonePair.class, DebugLonePair.class);
 
-        // atom containers
-        factory.register(IAtomContainer.class, DebugAtomContainer.class);
-        factory.register(IRing.class, DebugRing.class);
-        factory.register(ICrystal.class, DebugCrystal.class);
-        factory.register(IPolymer.class, DebugPolymer.class);
-        factory.register(IPDBPolymer.class, DebugPDBPolymer.class);
-        factory.register(IMonomer.class, DebugMonomer.class);
-        factory.register(IPDBMonomer.class, DebugPDBMonomer.class);
-        factory.register(IBioPolymer.class, DebugBioPolymer.class);
-        factory.register(IPDBStructure.class, DebugPDBStructure.class);
-        factory.register(IAminoAcid.class, DebugAminoAcid.class);
-        factory.register(IStrand.class, DebugStrand.class);
+            // atom containers
+            factory.register(IAtomContainer.class, DebugAtomContainer.class);
+            factory.register(IRing.class, DebugRing.class);
+            factory.register(ICrystal.class, DebugCrystal.class);
+            factory.register(IPolymer.class, DebugPolymer.class);
+            factory.register(IPDBPolymer.class, DebugPDBPolymer.class);
+            factory.register(IMonomer.class, DebugMonomer.class);
+            factory.register(IPDBMonomer.class, DebugPDBMonomer.class);
+            factory.register(IBioPolymer.class, DebugBioPolymer.class);
+            factory.register(IPDBStructure.class, DebugPDBStructure.class);
+            factory.register(IAminoAcid.class, DebugAminoAcid.class);
+            factory.register(IStrand.class, DebugStrand.class);
 
-        // reactions
-        factory.register(IReaction.class, DebugReaction.class);
-        factory.register(IReactionScheme.class, DebugReactionScheme.class);
+            // reactions
+            factory.register(IReaction.class, DebugReaction.class);
+            factory.register(IReactionScheme.class, DebugReactionScheme.class);
 
-        // formula
-        factory.register(IMolecularFormula.class, DebugMolecularFormula.class);
-        factory.register(IAdductFormula.class, DebugAdductFormula.class);
+            // formula
+            factory.register(IMolecularFormula.class, DebugMolecularFormula.class);
+            factory.register(IAdductFormula.class, DebugAdductFormula.class);
 
-        // chem object sets
-        factory.register(IAtomContainerSet.class, DebugAtomContainerSet.class);
-        factory.register(IMolecularFormulaSet.class, DebugMolecularFormulaSet.class);
-        factory.register(IReactionSet.class, DebugReactionSet.class);
-        factory.register(IRingSet.class, DebugRingSet.class);
-        factory.register(IChemModel.class, DebugChemModel.class);
-        factory.register(IChemFile.class, DebugChemFile.class);
-        factory.register(IChemSequence.class, DebugChemSequence.class);
-        factory.register(ISubstance.class, DebugSubstance.class);
+            // chem object sets
+            factory.register(IAtomContainerSet.class, DebugAtomContainerSet.class);
+            factory.register(IMolecularFormulaSet.class, DebugMolecularFormulaSet.class);
+            factory.register(IReactionSet.class, DebugReactionSet.class);
+            factory.register(IRingSet.class, DebugRingSet.class);
+            factory.register(IChemModel.class, DebugChemModel.class);
+            factory.register(IChemFile.class, DebugChemFile.class);
+            factory.register(IChemSequence.class, DebugChemSequence.class);
+            factory.register(ISubstance.class, DebugSubstance.class);
 
-        // stereo components (requires some modification after instantiation)
-        factory.register(ITetrahedralChirality.class, TetrahedralChirality.class,
-                new DynamicFactory.CreationModifier<TetrahedralChirality>() {
+            // stereo components (requires some modification after instantiation)
+            factory.register(ITetrahedralChirality.class, TetrahedralChirality.class,
+                    new DynamicFactory.CreationModifier<TetrahedralChirality>() {
 
-                    @Override
-                    public void modify(TetrahedralChirality instance) {
-                        instance.setBuilder(self);
-                    }
-                });
-        factory.register(IDoubleBondStereochemistry.class, DoubleBondStereochemistry.class,
-                new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
+                        @Override
+                        public void modify(TetrahedralChirality instance) {
+                            instance.setBuilder(self);
+                        }
+                    });
+            factory.register(IDoubleBondStereochemistry.class, DoubleBondStereochemistry.class,
+                    new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
 
-                    @Override
-                    public void modify(DoubleBondStereochemistry instance) {
-                        instance.setBuilder(self);
-                    }
-                });
+                        @Override
+                        public void modify(DoubleBondStereochemistry instance) {
+                            instance.setBuilder(self);
+                        }
+                    });
 
-        // miscellaneous
-        factory.register(IMapping.class, DebugMapping.class);
-        factory.register(IChemObject.class, DebugChemObject.class);
+            // miscellaneous
+            factory.register(IMapping.class, DebugMapping.class);
+            factory.register(IChemObject.class, DebugChemObject.class);
+        }
 
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException {
+            return factory.ofClass(clazz, params);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public IAtom newAtom() {
+            return new DebugAtom();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public IBond newBond() {
+            return new DebugBond();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public IAtomContainer newAtomContainer() {
+            return new DebugAtomContainer(0, 0, 0, 0);
+        }
     }
 
     /**
-     * Access the singleton instance of this DebugChemObjectBuilder. 
+     * Access the singleton instance of this SilentChemObjectBuilder.
      * <pre>{@code
      *
      * // get the builder instance
-     * IChemObjectBuilder builder = DebugChemObjectBuilder.getInstance();
+     * IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
      *
      * // using the builder...
      * // create an IAtom using the default constructor
@@ -181,27 +214,19 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
      * IAtom c1 = builder.newInstance(IAtom.class, "C");
      * }</pre>
      *
-     * @return a DebugChemObjectBuilder instance
+     * @return a SilentChemObjectBuilder instance
      */
     public static IChemObjectBuilder getInstance() {
-        IChemObjectBuilder result = instance;
-        if (result == null) {
-            result = instance;
-            synchronized (LOCK) {
-                if (result == null) {
-                    instance = result = new DebugChemObjectBuilder();
-                }
-            }
-        }
-        return result;
+        return Holder.INSTANCE;
     }
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) {
-        return factory.ofClass(clazz, params);
+    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params)
+            throws IllegalArgumentException {
+        return Holder.INSTANCE.newInstance(clazz, params);
     }
 
     /**
@@ -209,7 +234,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
      */
     @Override
     public IAtom newAtom() {
-        return new DebugAtom();
+        return Holder.INSTANCE.newAtom();
     }
 
     /**
@@ -217,7 +242,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
      */
     @Override
     public IBond newBond() {
-        return new DebugBond();
+        return Holder.INSTANCE.newBond();
     }
 
     /**
@@ -225,6 +250,6 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
      */
     @Override
     public IAtomContainer newAtomContainer() {
-        return new DebugAtomContainer();
+        return Holder.INSTANCE.newAtomContainer();
     }
 }

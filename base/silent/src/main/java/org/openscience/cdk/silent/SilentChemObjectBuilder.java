@@ -112,96 +112,132 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
         }
     }
 
-    private static final boolean CDK_LEGACY_AC
-        = getSystemProp("CdkUseLegacyAtomContainer", false);
+    private static final boolean CDK_LEGACY_AC  = getSystemProp("CdkUseLegacyAtomContainer", false);
 
-    private static volatile IChemObjectBuilder instance = null;
-    private static final Object                LOCK     = new Object();
-    private final DynamicFactory               factory  = new DynamicFactory(200);
+    private enum Holder implements IChemObjectBuilder {
 
-    private SilentChemObjectBuilder() {
+        INSTANCE;
+
+        private final DynamicFactory factory = new DynamicFactory(200);
 
         // self reference required for stereo-elements
         final IChemObjectBuilder self = this;
 
-        // elements
-        factory.register(IAtom.class, Atom.class);
-        factory.register(IPseudoAtom.class, PseudoAtom.class);
-        factory.register(IElement.class, Element.class);
-        factory.register(IAtomType.class, AtomType.class);
-        factory.register(IFragmentAtom.class, FragmentAtom.class);
-        factory.register(IPDBAtom.class, PDBAtom.class);
-        factory.register(IIsotope.class, Isotope.class);
+        Holder() {
+            // elements
+            factory.register(IAtom.class, Atom.class);
+            factory.register(IPseudoAtom.class, PseudoAtom.class);
+            factory.register(IElement.class, Element.class);
+            factory.register(IAtomType.class, AtomType.class);
+            factory.register(IFragmentAtom.class, FragmentAtom.class);
+            factory.register(IPDBAtom.class, PDBAtom.class);
+            factory.register(IIsotope.class, Isotope.class);
 
-        // electron containers
-        factory.register(IBond.class, Bond.class);
-        factory.register(IElectronContainer.class, ElectronContainer.class);
-        factory.register(ISingleElectron.class, SingleElectron.class);
-        factory.register(ILonePair.class, LonePair.class);
+            // electron containers
+            factory.register(IBond.class, Bond.class);
+            factory.register(IElectronContainer.class, ElectronContainer.class);
+            factory.register(ISingleElectron.class, SingleElectron.class);
+            factory.register(ILonePair.class, LonePair.class);
 
-        // atom containers
-        if (CDK_LEGACY_AC) {
-            System.err.println("[WARN] Using the old AtomContainer implementation.");
-            factory.register(IAtomContainer.class, AtomContainer.class);
-        } else {
-            factory.register(IAtomContainer.class, AtomContainer2.class);
+            // atom containers
+            if (CDK_LEGACY_AC) {
+                System.err.println("[WARN] Using the old AtomContainer implementation.");
+                factory.register(IAtomContainer.class, AtomContainer.class);
+            } else {
+                factory.register(IAtomContainer.class, AtomContainer2.class);
+            }
+
+            factory.register(IRing.class, Ring.class);
+            factory.register(ICrystal.class, Crystal.class);
+            factory.register(IPolymer.class, Polymer.class);
+            factory.register(IPDBPolymer.class, PDBPolymer.class);
+            factory.register(IMonomer.class, Monomer.class);
+            factory.register(IPDBMonomer.class, PDBMonomer.class);
+            factory.register(IBioPolymer.class, BioPolymer.class);
+            factory.register(IPDBStructure.class, PDBStructure.class);
+            factory.register(IAminoAcid.class, AminoAcid.class);
+            factory.register(IStrand.class, Strand.class);
+
+            // reactions
+            factory.register(IReaction.class, Reaction.class);
+            factory.register(IReactionScheme.class, ReactionScheme.class);
+
+            // formula
+            factory.register(IMolecularFormula.class, MolecularFormula.class);
+            factory.register(IAdductFormula.class, AdductFormula.class);
+
+            // chem object sets
+            factory.register(IAtomContainerSet.class, AtomContainerSet.class);
+            factory.register(IMolecularFormulaSet.class, MolecularFormulaSet.class);
+            factory.register(IReactionSet.class, ReactionSet.class);
+            factory.register(IRingSet.class, RingSet.class);
+            factory.register(IChemModel.class, ChemModel.class);
+            factory.register(IChemFile.class, ChemFile.class);
+            factory.register(IChemSequence.class, ChemSequence.class);
+            factory.register(ISubstance.class, Substance.class);
+
+            // stereo components (requires some modification after instantiation)
+            factory.register(ITetrahedralChirality.class, TetrahedralChirality.class,
+                    new DynamicFactory.CreationModifier<TetrahedralChirality>() {
+
+                        @Override
+                        public void modify(TetrahedralChirality instance) {
+                            instance.setBuilder(self);
+                        }
+                    });
+            factory.register(IDoubleBondStereochemistry.class, DoubleBondStereochemistry.class,
+                    new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
+
+                        @Override
+                        public void modify(DoubleBondStereochemistry instance) {
+                            instance.setBuilder(self);
+                        }
+                    });
+
+            // miscellaneous
+            factory.register(IMapping.class, Mapping.class);
+            factory.register(IChemObject.class, ChemObject.class);
         }
 
-        factory.register(IRing.class, Ring.class);
-        factory.register(ICrystal.class, Crystal.class);
-        factory.register(IPolymer.class, Polymer.class);
-        factory.register(IPDBPolymer.class, PDBPolymer.class);
-        factory.register(IMonomer.class, Monomer.class);
-        factory.register(IPDBMonomer.class, PDBMonomer.class);
-        factory.register(IBioPolymer.class, BioPolymer.class);
-        factory.register(IPDBStructure.class, PDBStructure.class);
-        factory.register(IAminoAcid.class, AminoAcid.class);
-        factory.register(IStrand.class, Strand.class);
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException {
+            return factory.ofClass(clazz, params);
+        }
 
-        // reactions
-        factory.register(IReaction.class, Reaction.class);
-        factory.register(IReactionScheme.class, ReactionScheme.class);
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public IAtom newAtom() {
+            return new Atom();
+        }
 
-        // formula
-        factory.register(IMolecularFormula.class, MolecularFormula.class);
-        factory.register(IAdductFormula.class, AdductFormula.class);
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public IBond newBond() {
+            return new Bond();
+        }
 
-        // chem object sets
-        factory.register(IAtomContainerSet.class, AtomContainerSet.class);
-        factory.register(IMolecularFormulaSet.class, MolecularFormulaSet.class);
-        factory.register(IReactionSet.class, ReactionSet.class);
-        factory.register(IRingSet.class, RingSet.class);
-        factory.register(IChemModel.class, ChemModel.class);
-        factory.register(IChemFile.class, ChemFile.class);
-        factory.register(IChemSequence.class, ChemSequence.class);
-        factory.register(ISubstance.class, Substance.class);
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public IAtomContainer newAtomContainer() {
+            if (CDK_LEGACY_AC)
+                return new AtomContainer(0, 0, 0, 0);
+            else
+                return new AtomContainer2(0, 0, 0, 0);
 
-        // stereo components (requires some modification after instantiation)
-        factory.register(ITetrahedralChirality.class, TetrahedralChirality.class,
-                new DynamicFactory.CreationModifier<TetrahedralChirality>() {
-
-                    @Override
-                    public void modify(TetrahedralChirality instance) {
-                        instance.setBuilder(self);
-                    }
-                });
-        factory.register(IDoubleBondStereochemistry.class, DoubleBondStereochemistry.class,
-                new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
-
-                    @Override
-                    public void modify(DoubleBondStereochemistry instance) {
-                        instance.setBuilder(self);
-                    }
-                });
-
-        // miscellaneous
-        factory.register(IMapping.class, Mapping.class);
-        factory.register(IChemObject.class, ChemObject.class);
-
+        }
     }
 
     /**
-     * Access the singleton instance of this SilentChemObjectBuilder. 
+     * Access the singleton instance of this SilentChemObjectBuilder.
      * <pre>{@code
      *
      * // get the builder instance
@@ -218,24 +254,16 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
      * @return a SilentChemObjectBuilder instance
      */
     public static IChemObjectBuilder getInstance() {
-        IChemObjectBuilder result = instance;
-        if (result == null) {
-            synchronized (LOCK) {
-                result = instance;
-                if (result == null) {
-                    instance = result = new SilentChemObjectBuilder();
-                }
-            }
-        }
-        return result;
+        return Holder.INSTANCE;
     }
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException {
-        return factory.ofClass(clazz, params);
+    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params)
+            throws IllegalArgumentException {
+        return Holder.INSTANCE.newInstance(clazz, params);
     }
 
     /**
@@ -243,7 +271,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
      */
     @Override
     public IAtom newAtom() {
-        return new Atom();
+        return Holder.INSTANCE.newAtom();
     }
 
     /**
@@ -251,7 +279,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
      */
     @Override
     public IBond newBond() {
-        return new Bond();
+        return Holder.INSTANCE.newBond();
     }
 
     /**
@@ -259,10 +287,6 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
      */
     @Override
     public IAtomContainer newAtomContainer() {
-        if (CDK_LEGACY_AC)
-            return new AtomContainer(0,0,0,0);
-        else
-            return new AtomContainer2(0,0,0,0);
-
+        return Holder.INSTANCE.newAtomContainer();
     }
 }

@@ -46,7 +46,7 @@ public class PDBStructureTest extends AbstractPDBStructureTest {
     @Test
     public void testGetBuilder() {
         PDBStructure structure = new PDBStructure();
-        Assert.assertTrue(structure.getBuilder() instanceof SilentChemObjectBuilder);
+        Assert.assertTrue(structure.getBuilder().getClass().getName().contains("SilentChemObjectBuilder"));
     }
 
     @Test

@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
@@ -32,13 +33,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class ChiIndexUtilsTest extends CDKTestCase {
 
-    DefaultChemObjectBuilder builder;
+    IChemObjectBuilder builder;
 
     public ChiIndexUtilsTest() {}
 
     @Before
     public void setup() {
-        builder = (DefaultChemObjectBuilder) DefaultChemObjectBuilder.getInstance();
+        builder = DefaultChemObjectBuilder.getInstance();
     }
 
     @Test
