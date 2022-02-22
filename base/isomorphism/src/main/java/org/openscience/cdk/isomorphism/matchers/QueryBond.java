@@ -19,6 +19,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -230,6 +231,8 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
 
         @Override
         public IAtom next() {
+            if (pointer >= atomCount)
+                throw new NoSuchElementException();
             ++pointer;
             return atoms[pointer - 1];
         }

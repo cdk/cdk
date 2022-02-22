@@ -33,6 +33,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Internals of the DF ("Depth-First" {@cdk.cite Jeliazkova18}) substructure
@@ -415,7 +416,7 @@ final class DfState implements Iterable<int[]> {
             @Override
             public int[] next() {
                 if (!hasNext())
-                    return new int[0];
+                    throw new NoSuchElementException();
                 hasNext = false;
                 return lstate.amap;
             }

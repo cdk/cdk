@@ -30,6 +30,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.StringReader;
+import java.util.NoSuchElementException;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -423,7 +424,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
             return readRecord(currentRecord + 1);
         } catch (Exception x) {
             logger.error(x);
-            return null;
+            throw new NoSuchElementException();
         }
     }
 

@@ -26,6 +26,7 @@ package org.openscience.cdk.isomorphism;
 
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Given a (subgraph-)isomorphism state this class can lazily iterate over the
@@ -70,6 +71,8 @@ final class StateStream implements Iterator<int[]> {
     /**{@inheritDoc} */
     @Override
     public int[] next() {
+        if (next == null)
+            throw new NoSuchElementException();
         int[] ret = next;
         next = findNext();
         return ret;
