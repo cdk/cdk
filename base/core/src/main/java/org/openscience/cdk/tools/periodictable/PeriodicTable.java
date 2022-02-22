@@ -47,10 +47,7 @@ import static org.openscience.cdk.config.Elements.*;
 public final class PeriodicTable {
 
     /** CAS ID Mapping. */
-    private static volatile Map<Elements, String> ids;
-
-    /** A lock used for locking CAD ID initialisation. */
-    private final static Object                   LOCK = new Object();
+    private final static Map<Elements, String> casIds = initCasIds();
 
     /**
      * Get the Van der Waals radius for the element in question.
@@ -79,7 +76,7 @@ public final class PeriodicTable {
      * @return the CAS ID
      */
     public static String getCASId(String symbol) {
-        return casIds().get(Elements.ofString(symbol));
+        return casIds.get(Elements.ofString(symbol));
     }
 
     /**
@@ -241,23 +238,6 @@ public final class PeriodicTable {
         }
     }
 
-    /**
-     * Lazily obtain the CAS ID Mapping.
-     *
-     * @return CAS id mapping
-     */
-    private static Map<Elements, String> casIds() {
-        Map<Elements, String> result = ids;
-        if (result == null) {
-            synchronized (LOCK) {
-                result = ids;
-                if (result == null) {
-                    ids = result = initCasIds();
-                }
-            }
-        }
-        return result;
-    }
 
     /** Obtain the CAS ID Mapping. */
     private static Map<Elements, String> initCasIds() {
