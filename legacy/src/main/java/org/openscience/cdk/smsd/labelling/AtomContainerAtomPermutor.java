@@ -1,6 +1,7 @@
 package org.openscience.cdk.smsd.labelling;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -27,6 +28,8 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
      */
     @Override
     public IAtomContainer next() {
+        if (!hasNext())
+            throw new NoSuchElementException();
         int[] p = super.getNextPermutation();
         return AtomContainerAtomPermutor.permute(p, original);
     }
