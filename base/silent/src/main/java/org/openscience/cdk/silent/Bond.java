@@ -21,6 +21,7 @@ package org.openscience.cdk.silent;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -198,6 +199,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
         @Override
         public IAtom next() {
+            if (pointer >= atomCount)
+                throw new NoSuchElementException();
             ++pointer;
             return atoms[pointer - 1];
         }

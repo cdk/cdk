@@ -1524,6 +1524,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         @Override
         public IAtom next() {
+            if (pointer >= atomCount)
+                throw new NoSuchElementException();
             return atoms[pointer++];
         }
 
@@ -1548,6 +1550,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         @Override
         public IBond next() {
+            if (pointer >= bondCount)
+                throw new NoSuchElementException();
             return bonds[pointer++];
         }
 
@@ -1572,6 +1576,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         @Override
         public ILonePair next() {
+            if (pointer >= lonePairCount)
+                throw new NoSuchElementException();
             return lonePairs[pointer++];
         }
 
@@ -1596,6 +1602,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         @Override
         public ISingleElectron next() {
+            if (pointer >= singleElectronCount)
+                throw new NoSuchElementException();
             return singleElectrons[pointer++];
         }
 
@@ -1626,7 +1634,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
                 return lonePairs[(pointer++) - bondCount];
             else if (pointer < bondCount + lonePairCount + singleElectronCount)
                 return singleElectrons[(pointer++) - bondCount - lonePairCount];
-            return null;
+            throw new NoSuchElementException();
         }
 
         @Override

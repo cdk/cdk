@@ -1560,6 +1560,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public IAtom next() {
+            if (idx >= numAtoms)
+                throw new NoSuchElementException();
             return atoms[idx++];
         }
 
@@ -1580,6 +1582,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public IBond next() {
+            if (idx >= numBonds)
+                throw new NoSuchElementException();
             return bonds[idx++];
         }
 
@@ -1601,6 +1605,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public ILonePair next() {
+            if (idx >= numLonePairs)
+                throw new NoSuchElementException();
             return lonepairs[idx++];
         }
 
@@ -1622,6 +1628,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public ISingleElectron next() {
+            if (idx >= numSingleElectrons)
+                throw new NoSuchElementException();
             return electrons[idx++];
         }
 
@@ -1649,7 +1657,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
                 return lonepairs[(idx++) - numBonds];
             else if (idx < numBonds + numLonePairs + numSingleElectrons)
                 return electrons[(idx++) - (numBonds + numLonePairs)];
-            return null;
+            throw new NoSuchElementException();
         }
 
         @Override

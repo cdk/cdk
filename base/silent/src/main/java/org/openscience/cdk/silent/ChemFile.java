@@ -25,6 +25,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  *  A Object containing a number of ChemSequences. This is supposed to be the
@@ -128,6 +129,8 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
 
         @Override
         public IChemSequence next() {
+            if (pointer >= chemSequenceCount)
+                throw new NoSuchElementException();
             return chemSequences[pointer++];
         }
 
