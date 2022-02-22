@@ -27,6 +27,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Implements the concept of a covalent bond between two or more atoms. A bond is
@@ -197,6 +198,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
         @Override
         public IAtom next() {
+            if (pointer >= atomCount)
+                throw new NoSuchElementException();
             ++pointer;
             return atoms[pointer - 1];
         }

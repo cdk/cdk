@@ -20,6 +20,7 @@ package org.openscience.cdk;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -155,6 +156,8 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 
         @Override
         public IReaction next() {
+            if (pointer >= reactionCount)
+                throw new NoSuchElementException();
             return reactions[pointer++];
         }
 

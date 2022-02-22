@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A set of AtomContainers.
@@ -275,6 +276,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 
         @Override
         public IAtomContainer next() {
+            if (pointer >= atomContainerCount)
+                throw new NoSuchElementException();
             return atomContainers[pointer++];
         }
 
