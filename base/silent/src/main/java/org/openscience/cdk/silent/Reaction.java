@@ -33,6 +33,7 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Represents the idea of a chemical reaction. The reaction consists of
@@ -189,6 +190,8 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 
         @Override
         public IMapping next() {
+            if (pointer >= mappingCount)
+                throw new NoSuchElementException();
             return map[pointer++];
         }
 
