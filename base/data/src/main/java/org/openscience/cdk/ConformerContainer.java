@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import javax.vecmath.Point3d;
 
@@ -459,6 +460,8 @@ public class ConformerContainer implements List<IAtomContainer> {
 
         @Override
         public IAtomContainer next() {
+            if (current >= coordinates.size())
+                throw new NoSuchElementException();
             Point3d[] tmp = coordinates.get(current);
             for (int j = 0; j < atomContainer.getAtomCount(); j++) {
                 IAtom atom = atomContainer.getAtom(j);

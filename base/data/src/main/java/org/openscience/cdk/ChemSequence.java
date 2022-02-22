@@ -26,6 +26,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A sequence of ChemModels, which can, for example, be used to
@@ -134,6 +135,8 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 
         @Override
         public IChemModel next() {
+            if (pointer >= chemModelCount)
+                throw new NoSuchElementException();
             return chemModels[pointer++];
         }
 
