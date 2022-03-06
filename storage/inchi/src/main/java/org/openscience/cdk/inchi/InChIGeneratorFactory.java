@@ -145,7 +145,7 @@ public class InChIGeneratorFactory {
      * Gets InChI generator for CDK IAtomContainer.
      *
      * @param container AtomContainer to generate InChI for.
-     * @param options   String of options for InChI generation.
+     * @param options   Space delimited string of options for InChI generation.
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */

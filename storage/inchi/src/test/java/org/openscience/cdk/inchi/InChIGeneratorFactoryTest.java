@@ -41,6 +41,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import io.github.dan2097.jnainchi.InchiFlag;
+import io.github.dan2097.jnainchi.InchiStatus;
 import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 import org.junit.Assert;
@@ -97,6 +99,16 @@ public class InChIGeneratorFactoryTest {
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, (String) null);
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
+    }
+    
+    @Test
+    public void testGetInChIGenerator_IAtomContainer_StringSeparator() throws Exception {
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    	IAtomContainer ac = sp.parseSmiles("C[C@H](Cl)N");
+        InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, 
+        		InchiFlag.SNon + " " + InchiFlag.FixedH);
+        Assert.assertEquals(gen.getStatus(), InchiStatus.SUCCESS);
+        Assert.assertEquals("InChI=1/C2H6ClN/c1-2(3)4/h2H,4H2,1H3",gen.getInchi());
     }
 
     /**

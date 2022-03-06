@@ -58,7 +58,7 @@ final class InChIOptionParser {
                     break;
                 case 'W': // timeout
                     pos++;
-                    int next = optstr.indexOf(',', pos);
+                    int next = optstr.indexOf(' ', pos);
                     if (next < 0)
                         next = optstr.length();
                     String substring = optstr.substring(pos, next);
@@ -70,19 +70,19 @@ final class InChIOptionParser {
                     }
                     break;
                 default:
-                    next = optstr.indexOf(',', pos);
+                    next = optstr.indexOf(' ', pos);
                     if (next < 0)
                         next = optstr.length();
                     InchiFlag flag = optMap.get(optstr.substring(pos, next));
                     if (flag != null)
                         options.withFlag(flag);
                     else
-                        logger.warn("Ignore unrecognized InChI flag:" + flag);
+                        logger.warn("Ignore unrecognized InChI flag:" + optstr.substring(pos, next));
                     pos = next;
             }
         }
     }
-
+    
     static InchiOptions parseString(String str) {
         if (str == null)
             return null;
