@@ -58,7 +58,7 @@ final class InChIOptionParser {
                     break;
                 case 'W': // timeout
                     pos++;
-                    int next = optstr.indexOf(' ', pos);
+                    int next = getIndexOfEither(optstr,',',' ', pos);
                     if (next < 0)
                         next = optstr.length();
                     String substring = optstr.substring(pos, next);
@@ -70,7 +70,7 @@ final class InChIOptionParser {
                     }
                     break;
                 default:
-                    next = optstr.indexOf(' ', pos);
+                    next = getIndexOfEither(optstr,',',' ', pos);
                     if (next < 0)
                         next = optstr.length();
                     InchiFlag flag = optMap.get(optstr.substring(pos, next));
@@ -81,6 +81,26 @@ final class InChIOptionParser {
                     pos = next;
             }
         }
+    }
+    
+    /**
+     * 
+     * @param str the string to search into.
+     * @param chA a character to search for (Unicode code point).
+     * @param chB a character to search for (Unicode code point).
+     * @param fromIndex the index to start the search from.
+     * @return the index of the first occurrence of either of the characters in the character 
+     * sequence represented by the string object that is greater than or equal to fromIndex, 
+     * or -1 if the character does not occur.
+     */
+    private static int getIndexOfEither(String str, char chA, char chB, int fromIndex) {
+    	int iA = str.indexOf(chA, fromIndex);
+    	int iB = str.indexOf(chB, fromIndex);
+    	if (iA<0)
+    		return iB;
+    	if (iB<0)
+    		return iA;
+    	return Math.min(iA, iB);
     }
     
     static InchiOptions parseString(String str) {

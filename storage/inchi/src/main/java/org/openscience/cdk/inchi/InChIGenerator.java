@@ -152,7 +152,7 @@ public class InChIGenerator {
      * InChI library requires, then calls the library.
      *
      * @param atomContainer       AtomContainer to generate InChI for.
-     * @param optStr              Space delimited string of options to pass to InChI library.
+     * @param optStr              Space or comma delimited string of options to pass to InChI library.
      *                            Each option may optionally be preceded by a command line
      *                            switch (/ or -).
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
