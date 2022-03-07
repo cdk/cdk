@@ -41,6 +41,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import io.github.dan2097.jnainchi.InchiFlag;
+import io.github.dan2097.jnainchi.InchiStatus;
 import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 import org.junit.Assert;
@@ -97,6 +99,35 @@ public class InChIGeneratorFactoryTest {
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, (String) null);
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
+    }
+    
+    /**
+     * We must get the same result from using space or comma delimited string
+     */
+    @Test
+    public void testGetInChIGenerator_IAtomContainer_StringSeparators() throws Exception {
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    	IAtomContainer ac = sp.parseSmiles("C[C@H](Cl)N");
+        String spaceSeparated = "";
+        String commaSeparated = "";
+        String commaAndSpaceSeparated = "";
+        InchiFlag[] opts = new InchiFlag[] {InchiFlag.SNon, InchiFlag.FixedH};
+        for (int i=0; i<opts.length; i++)
+        {
+        	spaceSeparated = spaceSeparated + " " + opts[i];
+        	commaSeparated = commaSeparated + "," + opts[i];
+        	commaAndSpaceSeparated = commaAndSpaceSeparated + ", " + opts[i];
+        }
+        
+        InChIGenerator genSpace = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, spaceSeparated);
+        InChIGenerator genComma = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, commaSeparated);
+        InChIGenerator genBoth = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, commaAndSpaceSeparated);
+        
+        Assert.assertEquals(genSpace.getStatus(), InchiStatus.SUCCESS);
+        Assert.assertEquals(genComma.getStatus(), InchiStatus.SUCCESS);
+        Assert.assertEquals(genBoth.getStatus(), InchiStatus.SUCCESS);
+        Assert.assertEquals(genBoth.getInchi(),genSpace.getInchi());
+        Assert.assertEquals(genComma.getInchi(),genSpace.getInchi());
     }
 
     /**
