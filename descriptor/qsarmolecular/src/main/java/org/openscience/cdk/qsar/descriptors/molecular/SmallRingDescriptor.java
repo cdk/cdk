@@ -47,6 +47,21 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
  * Small ring descriptors: these are based on enumeration of all the small rings (sizes 3 to 9) in a molecule,
  * which can be obtained quickly and deterministically.
  *
+ * Returns these values
+ * <ol>
+ * <li>nSmallRings - total number of small rings (of size 3 through 9)
+ * <li>nAromRings - total number of small aromatic rings
+ * <li>nRingBlocks - total number of distinct ring blocks
+ * <li>nAromBlocks - total number of aromatically connected components
+ * <li>nRings3 - total number of 3-membered rings
+ * <li>nRings4 - total number of 4-membered rings
+ * <li>nRings5 - total number of 5-membered rings
+ * <li>nRings6 - total number of 6-membered rings
+ * <li>nRings7 - total number of 7-membered rings
+ * <li>nRings8 - total number of 8-membered rings
+ * <li>nRings9 - total number of 9-membered rings
+ * </ol>
+ *
  * @cdk.module qsarmolecular
  * @cdk.githash
  *
