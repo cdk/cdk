@@ -40,6 +40,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * Finds the Smallest Set of Smallest Rings.
  * This is an implementation of the algorithm published in
  * {@cdk.cite FIG96}.
+ * This implementation is kept in the CDK for historic and educational reasons. The Figueras algorithm was shown not to find the SSSR in all cases and its use is therefore discouraged. 
  *
  * <p>The {@link SSSRFinder} is encouraged to be used, providing an exact
  * algorithm for finding the SSSR.
