@@ -286,7 +286,7 @@ final class StandardSgroupGenerator {
         Deque<Sgroup> deque = new ArrayDeque<>(map.getOrDefault(key, Collections.emptyList()));
         while (!deque.isEmpty()) {
             Sgroup sgroup = deque.poll();
-            deque.addAll(map.get(sgroup));
+            deque.addAll(map.getOrDefault(sgroup, Collections.emptyList()));
             ++count;
         }
         return count;
@@ -319,13 +319,7 @@ final class StandardSgroupGenerator {
 
         // generate child brackets first
         sgroups = new ArrayList<>(sgroups);
-        sgroups.sort(new Comparator<Sgroup>() {
-            @Override
-            public int compare(Sgroup o1, Sgroup o2) {
-                return Integer.compare(getTotalChildCount(children, o1),
-                        getTotalChildCount(children, o2));
-            }
-        });
+        sgroups.sort(Comparator.comparingInt(o -> getTotalChildCount(children, o)));
 
         for (Sgroup sgroup : sgroups) {
 

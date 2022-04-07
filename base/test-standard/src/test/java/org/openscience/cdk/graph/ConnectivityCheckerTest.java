@@ -292,7 +292,20 @@ public class ConnectivityCheckerTest extends CDKTestCase {
             Assert.assertEquals(0, sgroups1.get(0).getParents().size());
             Assert.assertEquals(1, sgroups2.size());
             Assert.assertEquals(0, sgroups2.get(0).getParents().size());
+            List<Sgroup> orgSgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            assertThat(orgSgroups.size(), is(3));
+            assertNonEmptySgrpParent(orgSgroups);
         }
+    }
+
+    // check at least one of the sgroups has a non-empty parent
+    private void assertNonEmptySgrpParent(List<Sgroup> orgSgroups) {
+        boolean found = false;
+        for (Sgroup orgSgroup : orgSgroups) {
+            if (!orgSgroup.getParents().isEmpty())
+                found = true;
+        }
+        assertTrue(found);
     }
 
 }
