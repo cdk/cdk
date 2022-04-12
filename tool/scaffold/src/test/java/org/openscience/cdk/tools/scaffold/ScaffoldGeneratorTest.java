@@ -83,6 +83,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void getScaffoldTest() throws Exception {
         HashMap<String, String> tmpFileNameToExpectedSmilesMap = new HashMap<>(10, 0.9f);
         tmpFileNameToExpectedSmilesMap.put("Test1", "O=C1c2cc3ccc(OC4OCCC(OC5OCCCC5)C4)cc3cc2CCC1OC6OCCC(OC7OCCC(OC8OCCCC8)C7)C6");
@@ -116,6 +117,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void getScaffoldWithoutHTest() throws Exception {
         HashMap<String, String> tmpFileNameToExpectedSmilesMap = new HashMap<>(10, 0.9f);
         tmpFileNameToExpectedSmilesMap.put("Test1", "O=C1c2[c]c3[c][c]c(OC4O[CH][CH]C(OC5O[CH][CH][CH]C5)C4)cc3cc2C[CH]C1OC6O[CH][CH]C(OC7O[CH][CH]C(OC8O[CH][CH][C]C8)C7)C6");
@@ -206,6 +208,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void getRingsTest() throws Exception {
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         HashMap<String, Integer> tmpFileNameToExcpectedRingCountMap = new HashMap<>(10, 0.9f);
@@ -234,6 +237,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void removeRingTest() throws Exception {
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
@@ -285,6 +289,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void isRingTerminalTest() throws Exception {
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
@@ -308,242 +313,103 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
 
     /**
      * Test of getSideChains() with V2000 and V3000 mol files.
-     * Loads the 7 Test(Test1.mol-Test7.mol) molfiles from the Resources folder.
-     * Stores the side chains of the Schuffenhauer scaffold of all test molecules as images.
-     * The images are saved in the folder with the name of the test molecule. By removing the annotation, side chains from other scaffolds can also be output.
+     * Loads the 7 Test(Test1.mol-Test7.mol) mol files from the resources folder.
+     *
      * @throws Exception If anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void getSideChainsTest() throws Exception {
+        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
+        SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
+        HashMap<String, String[]> tmpFileNameToSideChainsSmilesMap = new HashMap<>(10, 0.9f);
+        tmpFileNameToSideChainsSmilesMap.put("Test1", new String[]{"C", "O", "O=C(COC)C(O)C(O)C", "O=C(O)C", "OC"});
+        tmpFileNameToSideChainsSmilesMap.put("Test2", new String[]{"C", "O", "OC"});
+        tmpFileNameToSideChainsSmilesMap.put("Test3", new String[]{"C", "O=CO", "F", "Cl"});
+        tmpFileNameToSideChainsSmilesMap.put("Test4", new String[]{"OC"});
+        tmpFileNameToSideChainsSmilesMap.put("Test5", new String[]{"O=C(OC)CCC"});
+        tmpFileNameToSideChainsSmilesMap.put("Test6", new String[]{});
+        tmpFileNameToSideChainsSmilesMap.put("Test7", new String[]{"O"});
         for (int tmpCount = 1; tmpCount < 8; tmpCount++) {
             String tmpFileName = "Test" + tmpCount;
             //Load molecule from molfile
             IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-            //Generate the SchuffenhauerScaffold
-            ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
             //Generate SideChains
             List<IAtomContainer> tmpSideChains = tmpScaffoldGenerator.getSideChains(tmpMolecule, true);
-            /*Generate pictures of the SideChains*/
-            DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit();
-            int tmpCounter = 1;
             for (IAtomContainer tmpSideChain : tmpSideChains) {
-                BufferedImage tmpImgtmpSideChain = tmpGenerator.depict(tmpSideChain).toImg();
-                /*Save the picture*/
-                new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName).mkdirs();
-                File tmpOutputtmpSideChain = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName + "/SideChain" + tmpCounter + ".png");
-                ImageIO.write(tmpImgtmpSideChain, "png", tmpOutputtmpSideChain);
-                tmpCounter++;
+                Assert.assertTrue(Arrays.asList(tmpFileNameToSideChainsSmilesMap.get(tmpFileName)).contains(tmpSmiGen.create(tmpSideChain)));
             }
         }
     }
 
     /**
-     * Test of getSideChains() with V2000 and V3000 mol files.
-     * Loads the 7 Test(Test1.mol-Test7.mol) molfiles from the Resources folder.
-     * Stores the side chains of the Schuffenhauer scaffold of all test molecules as images
-     * The images are saved in the folder with the name of the test molecule. By removing the annotation, side chains from other scaffolds can also be output.
-     * @throws Exception If anything goes wrong
-     */
-    @Test
-    public void getSideChainWithoutHTest() throws Exception {
-        for (int tmpCount = 1; tmpCount < 8; tmpCount++) {
-            String tmpFileName = "Test" + tmpCount;
-            //Load molecule from molfile
-            IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-            //Generate the SchuffenhauerScaffold
-            ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-            //Generate SideChains
-            List<IAtomContainer> tmpSideChains = tmpScaffoldGenerator.getSideChains(tmpMolecule, false);
-            /*Generate pictures of the SideChains*/
-            DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit();
-            int tmpCounter = 1;
-            for (IAtomContainer tmpSideChain : tmpSideChains) {
-                BufferedImage tmpImgtmpSideChain = tmpGenerator.depict(tmpSideChain).toImg();
-                /*Save the picture*/
-                new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName).mkdirs();
-                File tmpOutputtmpSideChain = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName + "/SideChain" + tmpCounter + "WithoutH.png");
-                ImageIO.write(tmpImgtmpSideChain, "png", tmpOutputtmpSideChain);
-                tmpCounter++;
-            }
-        }
-    }
-
-    /**
-     * Creates the SideChains for the Schuffenhauer Scaffold, the Murcko Framework and the Beccari Basic Framework. Since the SideChains of the Beccari Basic Framework correspond to those of the Elemental Wire Frame and the Beccari Wire Framework, all possible side chains are covered.
-     * The images of the side chains are saved.
+     * Tests the correct generation of the different scaffold types on one test molecule.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
-    public void getSideChainsScaffoldModeTest() throws Exception {
-        //Load molecule from molfile
+    @Category(SlowTest.class)
+    public void getScaffoldModeTest() throws Exception {
+        SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
+        //Load molecule from mol file
         IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/Test3.mol");
-        //Generate the SchuffenhauerScaffold
+        //Generate the Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        //Generate SideChains
-        List<IAtomContainer> tmpSideChainsSchuff = tmpScaffoldGenerator.getSideChains(tmpMolecule, true);
-        /*Generate pictures of the rings*/
-        DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit();
-        int tmpCounter = 1;
-        for (IAtomContainer tmpSideChain : tmpSideChainsSchuff) {
-            BufferedImage tmpImgtmpSideChain = tmpGenerator.depict(tmpSideChain).toImg();
-            /*Save the picture*/
-            new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Schuffenhauer").mkdirs();
-            File tmpOutputtmpSideChain = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Schuffenhauer/" + tmpCounter + ".png");
-            ImageIO.write(tmpImgtmpSideChain, "png", tmpOutputtmpSideChain);
-            tmpCounter++;
-        }
-        /*Murcko framework SideChains*/
+        IAtomContainer tmpSchuffenhauerScaffold = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
+        Assert.assertEquals("O=C(NC1C(=O)N2CCSC21)c3conc3-c4ccccc4", tmpSmiGen.create(tmpSchuffenhauerScaffold));
+        //Generate Murcko framework
         tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.MURCKO_FRAMEWORK);
-        //Generate SideChains
-        List<IAtomContainer> tmpSideChainsMurcko = tmpScaffoldGenerator.getSideChains(tmpMolecule, true);
-        /*Generate pictures of the rings*/
-        tmpCounter = 1;
-        for (IAtomContainer tmpSideChain : tmpSideChainsMurcko) {
-            BufferedImage tmpImgtmpSideChain = tmpGenerator.depict(tmpSideChain).toImg();
-            /*Save the picture*/
-            new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Murcko").mkdirs();
-            File tmpOutputtmpSideChain = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Murcko/" + tmpCounter + ".png");
-            ImageIO.write(tmpImgtmpSideChain, "png", tmpOutputtmpSideChain);
-            tmpCounter++;
-        }
-        /*Beccari Basic Framework SideChains
-        * These are identical with Elemental Wire Frame and Beccari Wire Framework*/
+        IAtomContainer tmpMurckoFramework = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
+        Assert.assertEquals("n1occ(c1-c2ccccc2)CNC3CN4CCSC43", tmpSmiGen.create(tmpMurckoFramework));
+        //Generate elemental wireframe
+        tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.ELEMENTAL_WIRE_FRAME);
+        IAtomContainer tmpElementalWireframe = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
+        Assert.assertEquals("O1NC(C(C1)CNC2CN3CCSC32)C4CCCCC4", tmpSmiGen.create(tmpElementalWireframe));
+        //Generate Manelfi basic framework
         tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.BASIC_FRAMEWORK);
-        //Generate SideChains
-        List<IAtomContainer> tmpSideChainsBeccari = tmpScaffoldGenerator.getSideChains(tmpMolecule, true);
-        /*Generate pictures of the rings*/
-        tmpCounter = 1;
-        for (IAtomContainer tmpSideChain : tmpSideChainsBeccari) {
-            BufferedImage tmpImgtmpSideChain = tmpGenerator.depict(tmpSideChain).toImg();
-            /*Save the picture*/
-            new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Beccari").mkdirs();
-            File tmpOutputtmpSideChain = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Beccari/" + tmpCounter + ".png");
-            ImageIO.write(tmpImgtmpSideChain, "png", tmpOutputtmpSideChain);
-            tmpCounter++;
-        }
-        
-    }
-
-    /**
-     * Creates the SideChains for the Schuffenhauer Scaffold, the Murcko Framework and the Beccari Basic Framework. Since the SideChains of the Beccari Basic Framework correspond to those of the Elemental Wire Frame and the Beccari Wire Framework, all possible side chains are covered.
-     * The images of the side chains are saved.
-     * @throws Exception if anything goes wrong
-     */
-    @Test
-    public void getSideChainsScaffoldModeWithoutHTest() throws Exception {
-        //Load molecule from molfile
-        IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/Test3.mol");
-        //Generate the SchuffenhauerScaffold
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        //Generate SideChains
-        List<IAtomContainer> tmpSideChainsSchuff = tmpScaffoldGenerator.getSideChains(tmpMolecule, false);
-        /*Generate pictures of the rings*/
-        DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit();
-        int tmpCounter = 1;
-        for (IAtomContainer tmpSideChain : tmpSideChainsSchuff) {
-            BufferedImage tmpImgtmpSideChain = tmpGenerator.depict(tmpSideChain).toImg();
-            /*Save the picture*/
-            new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Schuffenhauer").mkdirs();
-            File tmpOutputtmpSideChain = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Schuffenhauer/" + tmpCounter + "WithoutH.png");
-            ImageIO.write(tmpImgtmpSideChain, "png", tmpOutputtmpSideChain);
-            tmpCounter++;
-        }
-        /*Murcko framework SideChains*/
-        tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.MURCKO_FRAMEWORK);
-        //Generate SideChains
-        List<IAtomContainer> tmpSideChainsMurcko = tmpScaffoldGenerator.getSideChains(tmpMolecule, false);
-        /*Generate pictures of the rings*/
-        tmpCounter = 1;
-        for (IAtomContainer tmpSideChain : tmpSideChainsMurcko) {
-            BufferedImage tmpImgtmpSideChain = tmpGenerator.depict(tmpSideChain).toImg();
-            /*Save the picture*/
-            new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Murcko").mkdirs();
-            File tmpOutputtmpSideChain = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Murcko/" + tmpCounter + "WithoutH.png");
-            ImageIO.write(tmpImgtmpSideChain, "png", tmpOutputtmpSideChain);
-            tmpCounter++;
-        }
-        /*Beccari Basic Framework SideChains
-         * These are identical with Elemental Wire Frame and Beccari Wire Framework*/
-        tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.BASIC_FRAMEWORK);
-        //Generate SideChains
-        List<IAtomContainer> tmpSideChainsBeccari = tmpScaffoldGenerator.getSideChains(tmpMolecule, false);
-        /*Generate pictures of the rings*/
-        tmpCounter = 1;
-        for (IAtomContainer tmpSideChain : tmpSideChainsBeccari) {
-            BufferedImage tmpImgtmpSideChain = tmpGenerator.depict(tmpSideChain).toImg();
-            /*Save the picture*/
-            new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Beccari").mkdirs();
-            File tmpOutputtmpSideChain = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/Settings/ScaffoldModeTest/SideChain/Beccari/" + tmpCounter + "WithoutH.png");
-            ImageIO.write(tmpImgtmpSideChain, "png", tmpOutputtmpSideChain);
-            tmpCounter++;
-        }
-
+        IAtomContainer tmpBasicFramework = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
+        Assert.assertEquals("c1ccc(cc1)C2=CCC=C2CCC3CC4CCCC34", tmpSmiGen.create(tmpBasicFramework));
+        //Generate Manelfi basic wireframe
+        tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.BASIC_WIRE_FRAME);
+        IAtomContainer tmpBasicWireframe = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
+        Assert.assertEquals("C1CCC(CC1)C2CCCC2CCC3CC4CCCC43", tmpSmiGen.create(tmpBasicWireframe));
     }
 
     /**
      * Test of getLinkers() with V2000 and V3000 mol files.
-     * Loads the 7 Test(Test1.mol-Test7.mol) molfiles from the Resources folder.
-     * Stores the linkers of the Schuffenhauer scaffold of all test molecules as images
-     * The images are saved in the folder with the name of the test molecule. By removing the annotation, side chains from other scaffolds can also be output.
+     * Loads the 7 Test(Test1.mol-Test7.mol) mol files from the resources folder.
+     *
      * @throws Exception If anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void getLinkersTest() throws Exception {
+        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
+        SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
+        HashMap<String, String[]> tmpFileNameToLinkerSmilesMap = new HashMap<>(10, 0.9f);
+        tmpFileNameToLinkerSmilesMap.put("Test1", new String[]{"O"});
+        tmpFileNameToLinkerSmilesMap.put("Test2", new String[]{"O=CC"});
+        tmpFileNameToLinkerSmilesMap.put("Test3", new String[]{"O=CN"});
+        tmpFileNameToLinkerSmilesMap.put("Test4", new String[]{});
+        tmpFileNameToLinkerSmilesMap.put("Test5", new String[]{"O=CN"});
+        tmpFileNameToLinkerSmilesMap.put("Test6", new String[]{});
+        tmpFileNameToLinkerSmilesMap.put("Test7", new String[]{});
         for (int tmpCount = 1; tmpCount < 8; tmpCount++) {
             String tmpFileName = "Test" + tmpCount;
             //Load molecule from molfile
             IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-            //Generate the SchuffenhauerScaffold
-            ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
             //Generate Linker
             List<IAtomContainer> tmpLinkers = tmpScaffoldGenerator.getLinkers(tmpMolecule, true);
-            /*Generate pictures of the Linkers*/
-            DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit();
-            int tmpCounter = 1;
             for (IAtomContainer tmpLinker : tmpLinkers) {
-                BufferedImage tmpImgtmpLinker = tmpGenerator.depict(tmpLinker).toImg();
-                /*Save the picture*/
-                new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName).mkdirs();
-                File tmpOutputtmpLinker = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName + "/Linker" + tmpCounter + ".png");
-                ImageIO.write(tmpImgtmpLinker, "png", tmpOutputtmpLinker);
-                tmpCounter++;
+                Assert.assertTrue(Arrays.asList(tmpFileNameToLinkerSmilesMap.get(tmpFileName)).contains(tmpSmiGen.create(tmpLinker)));
             }
         }
     }
 
     /**
-     * Test of getLinkers() with V2000 and V3000 mol files.
-     * Loads the 7 Test(Test1.mol-Test7.mol) molfiles from the Resources folder.
-     * Stores the linkers of the Schuffenhauer scaffold of all test molecules as images
-     * The images are saved in the folder with the name of the test molecule. By removing the annotation, side chains from other scaffolds can also be output.
-     * @throws Exception If anything goes wrong
-     */
-    @Test
-    public void getLinkersWithoutHTest() throws Exception {
-        for (int tmpCount = 1; tmpCount < 8; tmpCount++) {
-            String tmpFileName = "Test" + tmpCount;
-            //Load molecule from molfile
-            IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-            //Generate the SchuffenhauerScaffold
-            ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-            //Generate Linker
-            List<IAtomContainer> tmpLinkers = tmpScaffoldGenerator.getLinkers(tmpMolecule, false);
-            /*Generate pictures of the Linkers*/
-            DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit();
-            int tmpCounter = 1;
-            for (IAtomContainer tmpLinker : tmpLinkers) {
-                BufferedImage tmpImgtmpLinker = tmpGenerator.depict(tmpLinker).toImg();
-                /*Save the picture*/
-                new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName ).mkdirs();
-                File tmpOutputtmpLinker = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName + "/Linker" + tmpCounter + "WithoutH.png");
-                ImageIO.write(tmpImgtmpLinker, "png", tmpOutputtmpLinker);
-                tmpCounter++;
-            }
-        }
-    }
-
-    /**
-     * Loads a molecule with a C=N linker from a SMILES and generates the corresponding linker for the different scaffolds.
+     * Loads a molecule with a C=N linker from a SMILES string and generates the corresponding linker for the
+     * different scaffold types. This case is relevant because the linker atoms are exchanged in some scaffold types.
+     *
      * @throws Exception If anything goes wrong
      */
     @Test
@@ -565,11 +431,11 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.ELEMENTAL_WIRE_FRAME);
         tmpLinkers = tmpScaffoldGenerator.getLinkers(tmpMolecule, true);
         assertEquals("NC",tmpSmilesGenerator.create(tmpLinkers.get(0)));
-        /*Generate the linkers of the Beccari Basic Framework*/
+        /*Generate the linkers of the Manelfi Basic Framework*/
         tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.BASIC_FRAMEWORK);
         tmpLinkers = tmpScaffoldGenerator.getLinkers(tmpMolecule, true);
         assertEquals("C=C",tmpSmilesGenerator.create(tmpLinkers.get(0)));
-        /*Generate the linkers of the Beccari Basic Wire Frame*/
+        /*Generate the linkers of the Manelfi Basic Wire Frame*/
         tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.BASIC_WIRE_FRAME);
         tmpLinkers = tmpScaffoldGenerator.getLinkers(tmpMolecule, true);
         assertEquals("CC",tmpSmilesGenerator.create(tmpLinkers.get(0)));
@@ -577,55 +443,47 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     //</editor-fold>
 
     //<editor-fold desc="Advanced method test">
-    //<editor-fold desc="Assert tests">
     /**
-     * Test of applyEnumerativeRemoval() with V2000 and V3000 mol files.
-     * Loads the 7 Test(Test1.mol-Test7.mol) molfiles from the Resources folder and iteratively removes the terminal rings.
-     * All generated molecules are saved as images in a subfolder of the scaffoldTestOutput folder.
-     * The subfolder has the name of the input file.
+     * Generates parent scaffolds with the enumerative routine from a V2000 or V3000 mol file and checks the generated fragments.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void getIterativeRemovalTest() throws Exception {
-        for (int tmpCount = 1; tmpCount < 8; tmpCount++) {
-            String tmpFileName = "Test" + tmpCount;
-            //Load molecule from molfile
-            IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-            //Generate a list of molecules with iteratively removed terminal rings
-            ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-            List<IAtomContainer> tmpMolecules = tmpScaffoldGenerator.applyEnumerativeRemoval(tmpMolecule);
-            DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit();
-            int tmpCounter = 1;
-            for (IAtomContainer tmpIterative : tmpMolecules) {
-                /*Generate picture of the molecule*/
-                BufferedImage tmpImgRemove = tmpGenerator.depict(tmpIterative).toImg();
-                /*Save the picture*/
-                new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName ).mkdirs();
-                File tmpOutputRemove = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName + "/Iterative" + tmpCounter + ".png");
-                ImageIO.write(tmpImgRemove, "png", tmpOutputRemove);
-                tmpCounter++;
-            }
+        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
+        SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
+        //Load molecule from mol file
+        IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/Test3.mol");
+        List <IAtomContainer> tmpMoleculeList = tmpScaffoldGenerator.applyEnumerativeRemoval(tmpMolecule);
+        for (IAtomContainer tmpScaffold : tmpMoleculeList) {
+            System.out.println(tmpSmiGen.create(tmpScaffold));
         }
+        Assert.assertEquals("O=C(NC1C(=O)N2CCSC21)c3conc3-c4ccccc4", tmpSmiGen.create(tmpMoleculeList.get(0)));
+        Assert.assertEquals("O=C(NC1C(=O)N2CCSC21)c3cnoc3", tmpSmiGen.create(tmpMoleculeList.get(1)));
+        Assert.assertEquals("O=C(NC1C(=O)NC1)c2conc2-c3ccccc3", tmpSmiGen.create(tmpMoleculeList.get(2)));
+        Assert.assertEquals("O=C1N2CCSC2C1", tmpSmiGen.create(tmpMoleculeList.get(3)));
+        Assert.assertEquals("O=C(NC1C(=O)NC1)c2cnoc2", tmpSmiGen.create(tmpMoleculeList.get(4)));
+        Assert.assertEquals("n1occc1-c2ccccc2", tmpSmiGen.create(tmpMoleculeList.get(5)));
+        Assert.assertEquals("S1CNCC1", tmpSmiGen.create(tmpMoleculeList.get(6)));
+        Assert.assertEquals("O=C1NCC1", tmpSmiGen.create(tmpMoleculeList.get(7)));
+        Assert.assertEquals("n1occc1", tmpSmiGen.create(tmpMoleculeList.get(8)));
+        Assert.assertEquals("c1ccccc1", tmpSmiGen.create(tmpMoleculeList.get(9)));
     }
 
     /**
-     * Creates a ScaffoldTree from a V2000 or V3000 mol file and checks the generated fragments.
+     * Creates a scaffold tree from a V2000 or V3000 mol file and checks the generated fragments.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void generateSchuffenhauerTreeTest() throws Exception {
-        //Load molecule from molfile
+        //Load molecule from mol file
         IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/Test3.mol");
-        //Generate a tree of molecules with iteratively removed terminal rings
+        //Generate a tree of molecules with iteratively removed terminal rings following the Schuffenhauer rules
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         ScaffoldTree tmpScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule);
-        /*Remove some nodes. Nodes can be removed from the non-root end.
-        If nodes are removed in the middle of the tree, it cannot be displayed with Graphstream.*/
-        System.out.println(tmpScaffoldTree.getAllNodes().size());
-        //TreeNode tmpRemoveNode = (TreeNode) tmpScaffoldTree.getMatrixNode(3);
-        //tmpScaffoldTree.removeNode(tmpRemoveNode);
-        System.out.println(tmpScaffoldTree.getAllNodes().size());
-        /*Print some further information*/
         SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
         List <IAtomContainer> tmpMoleculeList = new ArrayList<>();
         for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldTree.getAllNodes()) {
@@ -635,17 +493,19 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
             String tmpOrigin = (String) tmpTestNodeBase.getOriginSmilesList().get(0);
             assertEquals("[H]C12SC(C)(C)C(C(=O)O)N2C(=O)C1NC(=O)C=3C(=NOC3C)C=4C(F)=CC=CC4Cl", tmpOrigin);
         }
-        assertEquals("O=C1NCC1", tmpSmilesGenerator.create(tmpMoleculeList.get(0)));
-        assertEquals("O=C1N2CCSC2C1", tmpSmilesGenerator.create(tmpMoleculeList.get(1)));
-        assertEquals("O=C(NC1C(=O)N2CCSC21)C=3C=NOC3", tmpSmilesGenerator.create(tmpMoleculeList.get(2)));
-        assertEquals("O=C(NC1C(=O)N2CCSC21)C3=CON=C3C=4C=CC=CC4", tmpSmilesGenerator.create(tmpMoleculeList.get(3)));
+        Assert.assertEquals("O=C1NCC1", tmpSmilesGenerator.create(tmpMoleculeList.get(0)));
+        Assert.assertEquals("O=C1N2CCSC2C1", tmpSmilesGenerator.create(tmpMoleculeList.get(1)));
+        Assert.assertEquals("O=C(NC1C(=O)N2CCSC21)C=3C=NOC3", tmpSmilesGenerator.create(tmpMoleculeList.get(2)));
+        Assert.assertEquals("O=C(NC1C(=O)N2CCSC21)C3=CON=C3C=4C=CC=CC4", tmpSmilesGenerator.create(tmpMoleculeList.get(3)));
     }
 
     /**
-     * Creates a ScaffoldNetwork from a V2000 or V3000 mol file and checks the generated fragments.
+     * Creates a scaffold network from a V2000 or V3000 mol file and checks the generated fragments.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void generateScaffoldNetworkTest() throws Exception {
         //Load molecule from molfile
         IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/Test3.mol");
@@ -653,37 +513,38 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule);
         /*Remove some nodes. Nodes can be removed from the non-root end.
-        If nodes are removed in the middle of the tree, it cannot be displayed with Graphstream.*/
+        If nodes are removed in the middle of the tree, it becomes invalid*/
         NetworkNode tmpRemoveNode = (NetworkNode) tmpScaffoldNetwork.getMatrixNode(9);
         tmpScaffoldNetwork.removeNode(tmpRemoveNode);
         SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
         List <IAtomContainer> tmpMoleculeList = new ArrayList<>();
         List <String> tmpStringList = new ArrayList<>();
-     for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldNetwork.getAllNodes()) {
+        for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldNetwork.getAllNodes()) {
             NetworkNode tmpTestNode = (NetworkNode) tmpTestNodeBase;
             IAtomContainer tmpTestMolecule = (IAtomContainer) tmpTestNode.getMolecule();
             tmpMoleculeList.add(tmpTestMolecule);
             tmpStringList.add(tmpSmilesGenerator.create(tmpTestMolecule));
-            assertEquals("[H]C12SC(C)(C)C(C(=O)O)N2C(=O)C1NC(=O)C=3C(=NOC3C)C=4C(F)=CC=CC4Cl", tmpTestNode.getOriginSmilesList().get(0));
+            Assert.assertEquals("[H]C12SC(C)(C)C(C(=O)O)N2C(=O)C1NC(=O)C=3C(=NOC3C)C=4C(F)=CC=CC4Cl", tmpTestNode.getOriginSmilesList().get(0));
             if(!tmpTestNode.getNonVirtualOriginCount().equals(0)) {
-                assertEquals("[H]C12SC(C)(C)C(C(=O)O)N2C(=O)C1NC(=O)C=3C(=NOC3C)C=4C(F)=CC=CC4Cl", tmpTestNode.getNonVirtualOriginSmilesList().get(0));
+                Assert.assertEquals("[H]C12SC(C)(C)C(C(=O)O)N2C(=O)C1NC(=O)C=3C(=NOC3C)C=4C(F)=CC=CC4Cl", tmpTestNode.getNonVirtualOriginSmilesList().get(0));
             }
         }
         Collections.sort(tmpStringList);
-        assertEquals("C=1C=CC=CC1", tmpStringList.get(0));
-        assertEquals("N=1OC=CC1", tmpStringList.get(1));
-        assertEquals("N=1OC=CC1C=2C=CC=CC2", tmpStringList.get(2));
-        assertEquals("O=C(NC1C(=O)N2CCSC21)C3=CON=C3C=4C=CC=CC4", tmpStringList.get(3));
-        assertEquals("O=C(NC1C(=O)N2CCSC21)C=3C=NOC3", tmpStringList.get(4));
-        assertEquals("O=C(NC1C(=O)NC1)C2=CON=C2C=3C=CC=CC3", tmpStringList.get(5));
-        assertEquals("O=C(NC1C(=O)NC1)C=2C=NOC2", tmpStringList.get(6));
-        assertEquals("O=C1N2CCSC2C1", tmpStringList.get(7));
-        assertEquals("O=C1NCC1", tmpStringList.get(8));
-        assertEquals("S1CNCC1", tmpStringList.get(9));
+        Assert.assertEquals("C=1C=CC=CC1", tmpStringList.get(0));
+        Assert.assertEquals("N=1OC=CC1", tmpStringList.get(1));
+        Assert.assertEquals("N=1OC=CC1C=2C=CC=CC2", tmpStringList.get(2));
+        Assert.assertEquals("O=C(NC1C(=O)N2CCSC21)C3=CON=C3C=4C=CC=CC4", tmpStringList.get(3));
+        Assert.assertEquals("O=C(NC1C(=O)N2CCSC21)C=3C=NOC3", tmpStringList.get(4));
+        Assert.assertEquals("O=C(NC1C(=O)NC1)C2=CON=C2C=3C=CC=CC3", tmpStringList.get(5));
+        Assert.assertEquals("O=C(NC1C(=O)NC1)C=2C=NOC2", tmpStringList.get(6));
+        Assert.assertEquals("O=C1N2CCSC2C1", tmpStringList.get(7));
+        Assert.assertEquals("O=C1NCC1", tmpStringList.get(8));
+        Assert.assertEquals("S1CNCC1", tmpStringList.get(9));
     }
 
     /**
-     * Creates different ScaffoldTrees and merges them.
+     * Creates multiple scaffold trees and merges them.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
@@ -717,21 +578,22 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         tmpScaffoldTree.mergeTree(tmpOverlapScaffoldTree);
         ScaffoldTree tmpUnfitScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule);
         /*Does the new tree fit in the old one*/
-        assertEquals(false, tmpScaffoldTree.mergeTree(tmpUnfitScaffoldTree));
+        Assert.assertFalse(tmpScaffoldTree.mergeTree(tmpUnfitScaffoldTree));
         /*Check number of nodes*/
-        assertEquals(7, tmpScaffoldTree.getAllNodes().size());
+        Assert.assertEquals(7, tmpScaffoldTree.getAllNodes().size());
         IAtomContainer tmpRootMolecule = (IAtomContainer) tmpScaffoldTree.getRoot().getMolecule();
         SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
         /*Check root*/
-        assertEquals("N1NCNC1", tmpSmilesGenerator.create(tmpRootMolecule));
+        Assert.assertEquals("N1NCNC1", tmpSmilesGenerator.create(tmpRootMolecule));
         IAtomContainer tmpMoleculeFive = (IAtomContainer) tmpScaffoldTree.getMatrixNode(5).getMolecule();
         /*Check molecule 5*/
-        assertEquals("C=1C=CC(=CC1)C2NNC(N2)C=3C=CC=CC3", tmpSmilesGenerator.create(tmpMoleculeFive));
+        Assert.assertEquals("C=1C=CC(=CC1)C2NNC(N2)C=3C=CC=CC3", tmpSmilesGenerator.create(tmpMoleculeFive));
     }
 
     /**
-     * Creates different ScaffoldNetworks and merges them.
+     * Creates multiple scaffold networks and merges them.
      * A network is added here that has no connection to the rest of the network.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
@@ -756,20 +618,20 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         tmpScaffoldNetwork.mergeNetwork(tmpScaffoldNetwork3);
         tmpScaffoldNetwork.mergeNetwork(tmpScaffoldNetwork4);
         /*Checks*/
-        assertEquals(5, tmpScaffoldNetwork.getRoots().size());
-        assertEquals(16, tmpScaffoldNetwork.getAllNodes().size());
-        assertEquals(6, tmpScaffoldNetwork.getAllNodesOnLevel(0).size());
-        assertEquals(3, tmpScaffoldNetwork.getMaxLevel());
+        Assert.assertEquals(5, tmpScaffoldNetwork.getRoots().size());
+        Assert.assertEquals(16, tmpScaffoldNetwork.getAllNodes().size());
+        Assert.assertEquals(6, tmpScaffoldNetwork.getAllNodesOnLevel(0).size());
+        Assert.assertEquals(3, tmpScaffoldNetwork.getMaxLevel());
         SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
         IAtomContainer tmpNodeMolecule = (IAtomContainer) tmpScaffoldNetwork.getMatrixNode(8).getMolecule();
-        assertEquals("S1C(NN2NC(NC12)C=3C=CC=CC3)C=4C=CC=CC4", tmpSmilesGenerator.create(tmpNodeMolecule));
+        Assert.assertEquals("S1C(NN2NC(NC12)C=3C=CC=CC3)C=4C=CC=CC4", tmpSmilesGenerator.create(tmpNodeMolecule));
     }
 
     /**
-     * Loads two stereoisomers as SMILES and joins them as a tree. Since the SMILESGenerator setting is "Isomeric",
+     * Loads two stereo-isomers as SMILES and joins them as a tree. Since the SMILESGenerator setting is "Isomeric",
      * the stereochemistry is kept in consideration and the two molecules are represented in the tree as two different ones.
+     * The structure is similar to the method "merge*Non*StereoMoleculesToForestTest()" except for the setting.
      *
-     * The structure is similar to the method "mergeNonStereoMoleculesToForestTest()" except for the setting.
      * @throws Exception if anything goes wrong
      */
     @Test
@@ -784,35 +646,19 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         tmpTestMoleculeList.add(tmpMolecule1);
         tmpScaffoldGenerator.setSmilesGeneratorSetting(new SmilesGenerator(SmiFlavor.Isomeric));
         List<ScaffoldTree> tmpTestTreeList = tmpScaffoldGenerator.generateSchuffenhauerForest(tmpTestMoleculeList);
-        System.out.println("Number of molecules: " + tmpTestMoleculeList.size());
-        System.out.println("Number of trees: " + tmpTestTreeList.size());
+        Assert.assertEquals(2, tmpTestMoleculeList.size());
+        Assert.assertEquals(1, tmpTestTreeList.size());
         ScaffoldTree tmpScaffoldTree = tmpTestTreeList.get(0);
-        System.out.println("Origin SMILES: " + tmpScaffoldTree.getRoot().getOriginSmilesList());
         SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Isomeric);
-        for(ScaffoldTree tmpTestTree : tmpTestTreeList) {
-            System.out.println("Number of Nodes:" + tmpTestTree.getAllNodes().size());
-            tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.MURCKO_FRAMEWORK);
-            IAtomContainer tmpScaffold = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
-            System.out.println("Root:" + tmpSmilesGenerator.create((IAtomContainer) tmpTestTree.getRoot().getMolecule()));
-            for(ScaffoldNodeBase tmpNodeBase : tmpTestTree.getAllNodes()) {
-                TreeNode tmpNode = (TreeNode) tmpNodeBase;
-                System.out.println("Molecules:" + tmpSmilesGenerator.create((IAtomContainer) tmpNode.getMolecule()));
-                for(Object tmpSmiles : tmpNodeBase.getNonVirtualOriginSmilesList()) {
-                    String tmpSmilesString = (String) tmpSmiles;
-                    System.out.println("NonVirtualOrigin: " + tmpSmilesString);
-                }
-            }
-        }
-        assertEquals(5, tmpScaffoldTree.getAllNodes().size());
-        /*Display the tree*/
-        ////GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
+        Assert.assertEquals(5, tmpScaffoldTree.getAllNodes().size());
+        Assert.assertEquals("C1CC[F+]CC1", tmpSmilesGenerator.create((IAtomContainer) tmpScaffoldTree.getRoot().getMolecule()));
     }
 
     /**
-     * Loads two stereoisomers as SMILES and joins them as a tree. Since the SMILESGenerator setting is "Unique",
+     * Loads two stereo-isomers as SMILES and joins them as a tree. Since the SMILESGenerator setting is "Unique",
      * the stereochemistry is ignored and the two molecules are represented as one in the tree.
-     *
      * The structure is similar to the method "mergeStereoMoleculesToForestTest()" except for the setting.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
@@ -827,111 +673,107 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         tmpTestMoleculeList.add(tmpMolecule1);
         tmpScaffoldGenerator.setSmilesGeneratorSetting(new SmilesGenerator(SmiFlavor.Unique));
         List<ScaffoldTree> tmpTestTreeList = tmpScaffoldGenerator.generateSchuffenhauerForest(tmpTestMoleculeList);
-        System.out.println("Number of molecules: " + tmpTestMoleculeList.size());
-        System.out.println("Number of trees: " + tmpTestTreeList.size());
+        Assert.assertEquals(2, tmpTestMoleculeList.size());
+        Assert.assertEquals(1, tmpTestTreeList.size());
         ScaffoldTree tmpScaffoldTree = tmpTestTreeList.get(0);
-        System.out.println("Origin SMILES: " + tmpScaffoldTree.getRoot().getOriginSmilesList());
         SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        for(ScaffoldTree tmpTestTree : tmpTestTreeList) {
-            System.out.println("Number of Nodes:" + tmpTestTree.getAllNodes().size());
-            tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.MURCKO_FRAMEWORK);
-            IAtomContainer tmpScaffold = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
-            System.out.println("Root:" + tmpSmilesGenerator.create((IAtomContainer) tmpTestTree.getRoot().getMolecule()));
-            System.out.println("Scaffold:" + tmpSmilesGenerator.create(tmpScaffold));
-            for(ScaffoldNodeBase tmpNodeBase : tmpTestTree.getAllNodes()) {
-                TreeNode tmpNode = (TreeNode) tmpNodeBase;
-                System.out.println("Molecules:" + tmpSmilesGenerator.create((IAtomContainer) tmpNode.getMolecule()));
-            }
-        }
-        assertEquals(4, tmpScaffoldTree.getAllNodes().size());
-        /*Display the tree*/
-        ////GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
+        Assert.assertEquals(4, tmpScaffoldTree.getAllNodes().size());
+        tmpScaffoldGenerator.setScaffoldModeSetting(ScaffoldModeOption.MURCKO_FRAMEWORK);
+        IAtomContainer tmpScaffold = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
+        Assert.assertEquals("[F+]1CCCCC1", tmpSmilesGenerator.create((IAtomContainer) tmpScaffoldTree.getRoot().getMolecule()));
+        Assert.assertEquals("[F+]1CCC(CC(=C(CC2CC[F+]CC2)CC3CCCCC3)CC4CCCCC4)CC1", tmpSmilesGenerator.create(tmpScaffold));
     }
 
     /**
-     * Loads a molecule without cycles from a molfile and checks its applySchuffenhauerRules/applyEnumerativeRemoval Output.
+     * Loads a molecule without cycles from a mol file and checks its applySchuffenhauerRules/applyEnumerativeRemoval output.
      * The output should be on empty fragment in both cases.
+     *
      * @throws Exception If anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void nonCyclicTest() throws Exception {
         //Load molecule from molfile
         IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/TestNonCyclic.mol");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpMoleculeList = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
         /*Check if there is only one empty fragment there*/
-        assertEquals(1, tmpMoleculeList.size());
-        assertEquals(0, tmpMoleculeList.get(0).getAtomCount());
+        Assert.assertEquals(1, tmpMoleculeList.size());
+        Assert.assertEquals(0, tmpMoleculeList.get(0).getAtomCount());
         tmpMoleculeList = tmpScaffoldGenerator.applyEnumerativeRemoval(tmpMolecule);
         /*Check if there is only one empty fragment there*/
-        assertEquals(1, tmpMoleculeList.size());
-        assertEquals(0, tmpMoleculeList.get(0).getAtomCount());
+        Assert.assertEquals(1, tmpMoleculeList.size());
+        Assert.assertEquals(0, tmpMoleculeList.get(0).getAtomCount());
     }
 
     /**
-     * Loads Adamantane as a molfile and checks its applySchuffenhauerRules/applyEnumerativeRemoval Output.
+     * Loads adamantane as a mol file and checks its applySchuffenhauerRules/applyEnumerativeRemoval Output.
      * The output should be only one Fragment.
+     *
      * @throws Exception If anything goes wrong
      */
     @Test
-    public void AdamantaneTest() throws Exception {
+    @Category(SlowTest.class)
+    public void adamantaneTest() throws Exception {
         //Load molecule from molfile
         IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/TestAdamantane.mol");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpMoleculeList = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
         /*Check if there is only one fragment there*/
-        assertEquals(1, tmpMoleculeList.size());
-        assertEquals(10, tmpMoleculeList.get(0).getAtomCount());
+        Assert.assertEquals(1, tmpMoleculeList.size());
+        Assert.assertEquals(10, tmpMoleculeList.get(0).getAtomCount());
         tmpMoleculeList = tmpScaffoldGenerator.applyEnumerativeRemoval(tmpMolecule);
         /*Check if there is only one fragment there*/
-        assertEquals(1, tmpMoleculeList.size());
-        assertEquals(10, tmpMoleculeList.get(0).getAtomCount());
+        Assert.assertEquals(1, tmpMoleculeList.size());
+        Assert.assertEquals(10, tmpMoleculeList.get(0).getAtomCount());
     }
 
     /**
-     * Loads Pyrene as a molfile and checks its Schuffenhauer fragments with/without determinded aromaticity.
-     * The output should be only one Fragment.
+     * Loads pyrene as a mol file and checks its Schuffenhauer fragments with/without determined aromaticity.
+     * The output should be only one fragment.
+     *
      * @throws Exception If anything goes wrong
      */
     @Test
     @Category(SlowTest.class)
-    public void PyreneTest() throws Exception {
-        //Load molecule from molfile
+    public void pyreneTest() throws Exception {
+        //Load molecule from mol file
         IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/TestPyrene.mol");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        /*With aromaticity and with only hybridisation at aromatic bonds*/
+        /*With aromaticity and with retaining only hybridisation at aromatic bonds*/
         tmpScaffoldGenerator.setDetermineAromaticitySetting(true);
         tmpScaffoldGenerator.setRetainOnlyHybridisationsAtAromaticBondsSetting(true);
         List<IAtomContainer> tmpMoleculeList = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
         /*Check if there is only one fragment there*/
-        assertEquals(1, tmpMoleculeList.size());
-        assertEquals(16, tmpMoleculeList.get(0).getAtomCount());
-        /*With aromaticity and without only hybridisation at aromatic bonds*/
+        Assert.assertEquals(1, tmpMoleculeList.size());
+        Assert.assertEquals(16, tmpMoleculeList.get(0).getAtomCount());
+        /*With aromaticity and without only retaining hybridisation at aromatic bonds*/
         tmpScaffoldGenerator.setDetermineAromaticitySetting(true);
         tmpScaffoldGenerator.setRetainOnlyHybridisationsAtAromaticBondsSetting(false);
         tmpMoleculeList = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
         /*Check if there is only one fragment there*/
-        assertEquals(1, tmpMoleculeList.size());
-        assertEquals(16, tmpMoleculeList.get(0).getAtomCount());
-        /*Without aromaticity and with only hybridisation at aromatic bonds*/
+        Assert.assertEquals(1, tmpMoleculeList.size());
+        Assert.assertEquals(16, tmpMoleculeList.get(0).getAtomCount());
+        /*Without aromaticity and with only retaining hybridisation at aromatic bonds*/
         tmpScaffoldGenerator.setDetermineAromaticitySetting(false);
         tmpScaffoldGenerator.setRetainOnlyHybridisationsAtAromaticBondsSetting(true);
         tmpMoleculeList = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
-        /*Check if there is only one fragment there*/
-        assertEquals(4, tmpMoleculeList.size());
-        assertEquals(16, tmpMoleculeList.get(0).getAtomCount());
-        /*Without aromaticity and without only hybridisation at aromatic bonds*/
+        /*In this case, pyrene should be fragmented, check whether there are multiple parent scaffolds*/
+        Assert.assertEquals(4, tmpMoleculeList.size());
+        Assert.assertEquals(16, tmpMoleculeList.get(0).getAtomCount());
+        /*Without aromaticity and without only retaining hybridisation at aromatic bonds*/
         tmpScaffoldGenerator.setDetermineAromaticitySetting(false);
         tmpScaffoldGenerator.setRetainOnlyHybridisationsAtAromaticBondsSetting(false);
         tmpMoleculeList = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
         /*Check if there is only one fragment there*/
-        assertEquals(1, tmpMoleculeList.size());
-        assertEquals(16, tmpMoleculeList.get(0).getAtomCount());
+        Assert.assertEquals(1, tmpMoleculeList.size());
+        Assert.assertEquals(16, tmpMoleculeList.get(0).getAtomCount());
     }
 
     /**
      * Tests the network decomposition on two intertwined ring systems.
-     * none of the nodes should be empty
+     * None of the nodes should be empty.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
@@ -939,38 +781,35 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         //SMILES to IAtomContainer
         SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("O=C(O)C(NC(=O)C(N)C(C)C)C1N2CC2C(N=C(N)N)C1");
-        //Generate a Network of molecules with iteratively removed terminal rings
+        //Generate a network of molecules with iteratively removed terminal rings
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        /*Uncomment the molecule to display it*/
-        ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule1);//Ondasetron
-        /*Print some further information*/
-        assertEquals(3, tmpScaffoldNetwork.getAllNodes().size());//Should not be disassembled further
+        ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule1);
+        Assert.assertEquals(3, tmpScaffoldNetwork.getAllNodes().size());
         for(ScaffoldNodeBase tmpNode : tmpScaffoldNetwork.getAllNodes()) {
             IAtomContainer tmpNodeMolecule = (IAtomContainer) tmpNode.getMolecule();
             boolean tmpIsEmpty = true;
             if(tmpNodeMolecule.getAtomCount() != 0) {
                 tmpIsEmpty = false;
             }
-            assertEquals(false, tmpIsEmpty);
+            Assert.assertFalse(tmpIsEmpty);
         }
-        tmpMolecule1 = tmpParser.parseSmiles("O=C1C=C2C(=CC=C1OC)C3=C(OC)C(=O)C(O)=CC34N5C2CC54C");
-        /*Uncomment the molecule to display it*/
-        tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule1);//Ondasetron
+        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("O=C1C=C2C(=CC=C1OC)C3=C(OC)C(=O)C(O)=CC34N5C2CC54C");
+        tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule2);
         for(ScaffoldNodeBase tmpNode : tmpScaffoldNetwork.getAllNodes()) {
             IAtomContainer tmpNodeMolecule = (IAtomContainer) tmpNode.getMolecule();
             boolean tmpIsEmpty = true;
             if(tmpNodeMolecule.getAtomCount() != 0) {
                 tmpIsEmpty = false;
             }
-            assertEquals(false, tmpIsEmpty);
+            Assert.assertFalse(tmpIsEmpty);
         }
-        /*Print some further information*/
-        assertEquals(17, tmpScaffoldNetwork.getAllNodes().size());//Should not be disassembled further
+        Assert.assertEquals(17, tmpScaffoldNetwork.getAllNodes().size());
     }
 
     /**
      * Tests the enumerative removal on two intertwined ring systems.
-     * none of the nodes should be empty
+     * None of the nodes should be empty.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
@@ -978,639 +817,59 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         //SMILES to IAtomContainer
         SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("O=C(O)C(NC(=O)C(N)C(C)C)C1N2CC2C(N=C(N)N)C1");
-        //Generate a Network of molecules with iteratively removed terminal rings
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        /*Uncomment the molecule to display it*/
-        ScaffoldTree tmpTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule1);//Ondasetron
+        ScaffoldTree tmpTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule1);
         for(ScaffoldNodeBase tmpNode : tmpTree.getAllNodes()) {
             IAtomContainer tmpNodeMolecule = (IAtomContainer) tmpNode.getMolecule();
             boolean tmpIsEmpty = true;
             if(tmpNodeMolecule.getAtomCount() != 0) {
                 tmpIsEmpty = false;
             }
-            assertEquals(false, tmpIsEmpty);
+            Assert.assertFalse(tmpIsEmpty);
         }
-        /*Print some further information*/
-        assertEquals(2, tmpTree.getAllNodes().size());//Should not be disassembled further
-        tmpMolecule1 = tmpParser.parseSmiles("O=C1C=C2C(=CC=C1OC)C3=C(OC)C(=O)C(O)=CC34N5C2CC54C");
-        /*Uncomment the molecule to display it*/
-        tmpTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule1);//Ondasetron
+        Assert.assertEquals(2, tmpTree.getAllNodes().size());
+        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("O=C1C=C2C(=CC=C1OC)C3=C(OC)C(=O)C(O)=CC34N5C2CC54C");
+        tmpTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule2);
         for(ScaffoldNodeBase tmpNode : tmpTree.getAllNodes()) {
             IAtomContainer tmpNodeMolecule = (IAtomContainer) tmpNode.getMolecule();
             boolean tmpIsEmpty = true;
             if(tmpNodeMolecule.getAtomCount() != 0) {
                 tmpIsEmpty = false;
             }
-            assertEquals(false, tmpIsEmpty);
+            Assert.assertEquals(false, tmpIsEmpty);
         }
-        /*Print some further information*/
-        assertEquals(5, tmpTree.getAllNodes().size());//Should not be disassembled further
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="Ignored tests">
-    /**
-     * Creates a ScaffoldTree from a V2000 or V3000 mol file and displays it as a network with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void graphStreamTreeTest() throws Exception {
-        String tmpFileName = "Test3" ;
-        //Load molecule from molfile
-        IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-        //Generate a tree of molecules with iteratively removed terminal rings
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        ScaffoldTree tmpScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule);
-        /*Remove some nodes. Nodes can be removed from the non-root end.
-        If nodes are removed in the middle of the tree, it cannot be displayed with Graphstream.*/
-        System.out.println(tmpScaffoldTree.getAllNodes().size());
-        //TreeNode tmpRemoveNode = (TreeNode) tmpScaffoldTree.getMatrixNode(3);
-        //tmpScaffoldTree.removeNode(tmpRemoveNode);
-        System.out.println(tmpScaffoldTree.getAllNodes().size());
-        /*Print some further information*/
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldTree.getAllNodes()) {
-            TreeNode tmpTestNode = (TreeNode) tmpTestNodeBase;
-            IAtomContainer tmpTestMolecule = (IAtomContainer) tmpTestNode.getMolecule();
-            System.out.println("--- Node: " + tmpSmilesGenerator.create(tmpTestMolecule) + " ---");
-            System.out.println("Node on LvL: " + tmpTestNode.getLevel());
-            System.out.println("Children Number: " + tmpTestNode.getChildren().size());
-            System.out.println("Origin" +tmpTestNode.getOriginSmilesList().get(0) + "Size" + tmpTestNode.getOriginSmilesList().size());
-            if(!tmpTestNode.getNonVirtualOriginCount().equals(0)){
-                System.out.println("NonVirtualOrigin" +tmpTestNode.getNonVirtualOriginSmilesList().get(0) + "Size" + tmpTestNode.getNonVirtualOriginSmilesList().size());
-            }
-            for(Object tmpChildObject : tmpTestNode.getChildren()) {
-                TreeNode tmpChildNode = (TreeNode) tmpChildObject;
-                IAtomContainer tmpChildMolecule = (IAtomContainer) tmpChildNode.getMolecule();
-                System.out.println("Contains molecule: " + tmpScaffoldTree.containsMolecule(tmpChildMolecule));
-                System.out.println("Child: " + tmpSmilesGenerator.create(tmpChildMolecule));
-            }
-        }
-        System.out.println("Max Lvl: " + tmpScaffoldTree.getMaxLevel());
-        /*Display the Tree*/
-        ////GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
+        Assert.assertEquals(5, tmpTree.getAllNodes().size());
     }
 
     /**
-     * Creates a ScaffoldNetwork from a V2000 or V3000 mol file and displays it as a network with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void graphStreamNetworkTest() throws Exception {
-        String tmpFileName = "Test3" ;
-        //Load molecule from molfile
-        IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-        //Generate a tree of molecules with iteratively removed terminal rings
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule);
-        /*Remove some nodes. Nodes can be removed from the non-root end.
-        If nodes are removed in the middle of the tree, it cannot be displayed with Graphstream.*/
-        System.out.println(tmpScaffoldNetwork.getAllNodes().size());
-        //tmpScaffoldNetwork.removeNode(tmpScaffoldNetwork.getMatrixNode(0));
-        NetworkNode tmpRemoveNode = (NetworkNode) tmpScaffoldNetwork.getMatrixNode(9);
-        tmpScaffoldNetwork.removeNode(tmpRemoveNode);
-        System.out.println(tmpScaffoldNetwork.getAllNodes().size());
-        /*Print some further information*/
-        System.out.println("Root size: " + tmpScaffoldNetwork.getRoots().size());
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldNetwork.getAllNodes()) {
-            NetworkNode tmpTestNode = (NetworkNode) tmpTestNodeBase;
-            IAtomContainer tmpTestMolecule = (IAtomContainer) tmpTestNode.getMolecule();
-            System.out.println("--- Node: " + tmpSmilesGenerator.create(tmpTestMolecule) + " ---");
-            System.out.println("Node on LvL: " + tmpTestNode.getLevel());
-            System.out.println("Children Number: " + tmpTestNode.getChildren().size());
-            System.out.println("Origin" +tmpTestNode.getOriginSmilesList().get(0) + "Size" + tmpTestNode.getOriginSmilesList().size());
-            if(!tmpTestNode.getNonVirtualOriginCount().equals(0)){
-                System.out.println("NonVirtualOrigin" +tmpTestNode.getNonVirtualOriginSmilesList().get(0) + "Size" + tmpTestNode.getNonVirtualOriginSmilesList().size());
-            }
-            for(Object tmpChildObject : tmpTestNode.getChildren()) {
-                NetworkNode tmpChildNode = (NetworkNode) tmpChildObject;
-                IAtomContainer tmpChildMolecule = (IAtomContainer) tmpChildNode.getMolecule();
-                System.out.println("Child: " + tmpSmilesGenerator.create(tmpChildMolecule));
-            }
-        }
-        System.out.println("Max Lvl: " + tmpScaffoldNetwork.getMaxLevel());
-        /*Display the network*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldNetwork, true);
-    }
-
-    /**
-     * Loads Figure 1 from the "Mining for Bioactive Scaffolds with Scaffold Networks"(2011) Paper by Varin et al.
-     * Creates the Scaffold Networks of Ondasetron, Alosetron or Ramosetron. The result is visualised with GraphStream.
-     * By selecting the corresponding lines, the molecule to be displayed can be chosen.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void getFigure1NetworkTest() throws Exception {
-        //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("CC1=NC=CN1CC2CCC3=C(C2=O)C4=CC=CC=C4N3C");//Ondasetron
-        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("CC1=C(N=CN1)CN2CCC3=C(C2=O)C4=CC=CC=C4N3C");//Alosetron
-        IAtomContainer tmpMolecule3 = tmpParser.parseSmiles("CN1C=C(C2=CC=CC=C21)C(=O)C3CCC4=C(C3)NC=N4");//Ramosetron
-        //Generate a Network of molecules with iteratively removed terminal rings
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        /*Uncomment the molecule to display it*/
-        ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule1);//Ondasetron
-        //ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule2);//Alosetron
-        //ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule3);//Ramosetron
-        /*Print some further information*/
-        System.out.println("Root size: " + tmpScaffoldNetwork.getRoots().size());
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldNetwork.getAllNodes()) {
-            NetworkNode tmpTestNode = (NetworkNode) tmpTestNodeBase;
-            IAtomContainer tmpTestMolecule = (IAtomContainer) tmpTestNode.getMolecule();
-            System.out.println("--- Node: " + tmpSmilesGenerator.create(tmpTestMolecule) + " ---");
-            System.out.println("Node on LvL: " + tmpTestNode.getLevel());
-            System.out.println("Children Number: " + tmpTestNode.getChildren().size());
-            for(Object tmpOrigin : tmpTestNode.getOriginSmilesList()) {
-                System.out.println("Origin: " + tmpOrigin);
-            }
-            for(Object tmpChildObject : tmpTestNode.getChildren()) {
-                NetworkNode tmpChildNode = (NetworkNode) tmpChildObject;
-                IAtomContainer tmpChildMolecule = (IAtomContainer) tmpChildNode.getMolecule();
-                System.out.println("Child: " + tmpSmilesGenerator.create(tmpChildMolecule));
-            }
-        }
-        /*Display the network*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldNetwork, true);
-    }
-
-    /**
-     * Creates different ScaffoldTrees and merges them. The result is visualised with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void mergeTreeDisplayTest() throws Exception {
-        //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
-        IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("C2NC1SCNN1N2");
-        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("c4ccc(C3NC2SC(c1ccccc1)NN2N3)cc4");
-        IAtomContainer tmpMolecule3 = tmpParser.parseSmiles("c2ccc(C1NCNN1)cc2");
-        IAtomContainer tmpMolecule4 = tmpParser.parseSmiles("c3ccc(C2NNC(c1ccccc1)N2)cc3");
-        IAtomContainer tmpMolecule5 = tmpParser.parseSmiles("c2ccc1CCCc1c2");
-        IAtomContainer tmpMolecule6 = tmpParser.parseSmiles("c3ccc(C2NC1SCNN1N2)cc3");
-        //Generate a tree of molecules with iteratively removed terminal rings
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        ScaffoldTree tmpScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule1);
-        ScaffoldTree tmpScaffoldTree2 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule2);
-        ScaffoldTree tmpScaffoldTree3 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule3);
-        ScaffoldTree tmpScaffoldTree4 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule4);
-        ScaffoldTree tmpScaffoldTree5 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule5);
-        ScaffoldTree tmpScaffoldTree6 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule6);
-        //System.out.println(tmpScaffoldTree.mergeTree(tmpScaffoldTree2));
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree2);
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree3);
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree4);
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree5);
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree6);
-        ScaffoldTree tmpOverlapScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule1);
-        //tmpOverlapScaffoldTree.mergeTree(tmpScaffoldTree2);
-        //tmpOverlapScaffoldTree.mergeTree(tmpScaffoldTree3);
-        //tmpOverlapScaffoldTree.mergeTree(tmpScaffoldTree4);
-        //tmpOverlapScaffoldTree.mergeTree(tmpScaffoldTree6);
-        //tmpScaffoldTree.mergeTree(tmpOverlapScaffoldTree);
-        //ScaffoldTree tmpUnfitScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule);//Molecule does not fit
-        //System.out.println("Tree does not fit: " + tmpScaffoldTree.mergeTree(tmpUnfitScaffoldTree));
-        IAtomContainer tmpRootMolecule = (IAtomContainer) tmpScaffoldTree.getRoot().getMolecule();
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        System.out.println("I am Root: " + tmpSmilesGenerator.create(tmpRootMolecule));
-        /*Display the tree*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
-    }
-
-    /**
-     * Creates different ScaffoldNetworks and merges them. The result is visualised with GraphStream.
-     * A network is added here that has no connection to the rest of the network.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void mergeNetworkDisplayTest() throws Exception {
-        //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        /*Generate IAtomContainer from SMILES*/
-        IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("C2NC1SCNN1N2");
-        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("c4ccc(C3NC2SC(c1ccccc1)NN2N3)cc4");
-        //Molecule without connection to the network
-        IAtomContainer tmpMolecule3 = tmpParser.parseSmiles("C3CC1CC1CC4CCC2CC2CC34");
-        IAtomContainer tmpMolecule4 = tmpParser.parseSmiles("c3ccc(C2NNC(c1ccccc1)N2)cc3");
-        //Generate a Network of molecules with iteratively removed terminal rings
-        /*Generate Networks*/
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule1);
-        ScaffoldNetwork tmpScaffoldNetwork2 = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule2);
-        ScaffoldNetwork tmpScaffoldNetwork3 = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule3);
-        ScaffoldNetwork tmpScaffoldNetwork4 = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule4);
-        /*Merge Networks*/
-        tmpScaffoldNetwork.mergeNetwork(tmpScaffoldNetwork2);
-        //tmpScaffoldNetwork.mergeNetwork(tmpScaffoldNetwork3);
-        //tmpScaffoldNetwork.mergeNetwork(tmpScaffoldNetwork4);
-        /*Add edges and nodes*/
-        System.out.println("Root size: " + tmpScaffoldNetwork.getRoots().size());
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldNetwork.getAllNodes()) {
-            NetworkNode tmpTestNode = (NetworkNode) tmpTestNodeBase;
-            IAtomContainer tmpTestMolecule = (IAtomContainer) tmpTestNode.getMolecule();
-            System.out.println("--- Node: " + tmpSmilesGenerator.create(tmpTestMolecule) + " ---");
-            System.out.println("Node on LvL: " + tmpTestNode.getLevel());
-            System.out.println("Children Number: " + tmpTestNode.getChildren().size());
-            for(Object tmpOrigin : tmpTestNode.getOriginSmilesList()) {
-                System.out.println("Origin: " + tmpOrigin);
-            }
-            for(Object tmpChildObject : tmpTestNode.getChildren()) {
-                NetworkNode tmpChildNode = (NetworkNode) tmpChildObject;
-                IAtomContainer tmpChildMolecule = (IAtomContainer) tmpChildNode.getMolecule();
-                System.out.println("Child: " + tmpSmilesGenerator.create(tmpChildMolecule));
-            }
-        }
-        /*Display the network*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldNetwork, true);
-    }
-
-    /**
-     * Creates different ScaffoldNetworks and merges them. The result is visualised with GraphStream.
-     * A network is added here that has no connection to the rest of the network.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void generateEnumerativeForestTest() throws Exception {
-        //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        /*Generate IAtomContainer from SMILES*/
-        //IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("C2NC1SCNN1N2");
-        IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("BrC3CC2CC1CC1CCC2CC4CC34");
-        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("c4ccc(C3NC2SC(c1ccccc1)NN2N3)cc4");
-        //Molecule without connection to the network
-        IAtomContainer tmpMolecule3 = tmpParser.parseSmiles("C3CC1CC1CC4CCC2CC2CC34");
-        IAtomContainer tmpMolecule4 = tmpParser.parseSmiles("c3ccc(C2NNC(c1ccccc1)N2)cc3");
-        IAtomContainer tmpMolecule5 = tmpParser.parseSmiles("C1CCCPCCC1");
-        IAtomContainer tmpMolecule6 = tmpParser.parseSmiles("BrC2CCc1ccccc12");
-        //Generate a Network of molecules with iteratively removed terminal rings
-        /*Generate Networks*/
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        List<IAtomContainer> tmpMoleculeList = new ArrayList<>();
-        tmpMoleculeList.add(tmpMolecule1);
-        tmpMoleculeList.add(tmpMolecule2);
-        tmpMoleculeList.add(tmpMolecule3);
-        tmpMoleculeList.add(tmpMolecule4);
-        tmpMoleculeList.add(tmpMolecule5);
-        tmpMoleculeList.add(tmpMolecule6);
-        ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMoleculeList);
-        /*Add edges and nodes*/
-        System.out.println("Node number: " + tmpScaffoldNetwork.getAllNodes().size());
-        System.out.println("Root size: " + tmpScaffoldNetwork.getRoots().size());
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldNetwork.getAllNodes()) {
-            NetworkNode tmpTestNode = (NetworkNode) tmpTestNodeBase;
-            IAtomContainer tmpTestMolecule = (IAtomContainer) tmpTestNode.getMolecule();
-            System.out.println("--- Node: " + tmpSmilesGenerator.create(tmpTestMolecule) + " ---");
-            System.out.println("Node on LvL: " + tmpTestNode.getLevel());
-            System.out.println("Children Number: " + tmpTestNode.getChildren().size());
-            for(Object tmpOrigin : tmpTestNode.getOriginSmilesList()) {
-                System.out.println("Origin: " + tmpOrigin);
-            }
-            for(Object tmpNonVirtualOrigin : tmpTestNode.getNonVirtualOriginSmilesList()) {
-                System.out.println("NonVirtualOrigin: " + tmpNonVirtualOrigin);
-            }
-            for(Object tmpChildObject : tmpTestNode.getChildren()) {
-                NetworkNode tmpChildNode = (NetworkNode) tmpChildObject;
-                IAtomContainer tmpChildMolecule = (IAtomContainer) tmpChildNode.getMolecule();
-                System.out.println("Child: " + tmpSmilesGenerator.create(tmpChildMolecule));
-            }
-        }
-        /*Display the network*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldNetwork, true);
-    }
-
-    /**
-     * Creates the different ScaffoldNetworks from Figure 1 from the "Mining for Bioactive Scaffolds with Scaffold Networks"(2011) Paper
-     * by Varin et al. and merges them.
-     * The networks of Ondasetron and Alosetron are merged.
-     * The result is visualised with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void mergeFigure1NetworkTest() throws Exception {
-        //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("CC1=NC=CN1CC2CCC3=C(C2=O)C4=CC=CC=C4N3C");//Ondasetron
-        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("CC1=C(N=CN1)CN2CCC3=C(C2=O)C4=CC=CC=C4N3C");//Alosetron
-        IAtomContainer tmpMolecule3 = tmpParser.parseSmiles("CN1C=C(C2=CC=CC=C21)C(=O)C3CCC4=C(C3)NC=N4");//Ramosetron
-        /*Generate a network of molecules with iteratively removed terminal rings*/
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        ScaffoldNetwork tmpScaffoldNetwork = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule1);
-        ScaffoldNetwork tmpScaffoldNetwork2 = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule2);
-        //ScaffoldNetwork tmpScaffoldNetwork3 = tmpScaffoldGenerator.generateScaffoldNetwork(tmpMolecule3);
-        /*Merge the networks*/
-        tmpScaffoldNetwork.mergeNetwork(tmpScaffoldNetwork2);
-        //Uncomment if ramosetron should also be added to the network
-        //tmpScaffoldNetwork.mergeNetwork(tmpScaffoldNetwork3);//Ramosetron
-        /*Print some further information*/
-        System.out.println("Root size: " + tmpScaffoldNetwork.getRoots().size());
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        for(ScaffoldNodeBase tmpTestNodeBase : tmpScaffoldNetwork.getAllNodes()) {
-            NetworkNode tmpTestNode = (NetworkNode) tmpTestNodeBase;
-            IAtomContainer tmpTestMolecule = (IAtomContainer) tmpTestNode.getMolecule();
-            System.out.println("--- Node: " + tmpSmilesGenerator.create(tmpTestMolecule) + " ---");
-            System.out.println("Node on LvL: " + tmpTestNode.getLevel());
-            System.out.println("Children Number: " + tmpTestNode.getChildren().size());
-            for(Object tmpOrigin : tmpTestNode.getOriginSmilesList()) {
-                System.out.println("Origin: " + tmpOrigin);
-            }
-            for(Object tmpOrigin : tmpTestNode.getNonVirtualOriginSmilesList()) {
-                System.out.println("NonVirtualOrigin: " + tmpOrigin);
-            }
-            for(Object tmpChildObject : tmpTestNode.getChildren()) {
-                NetworkNode tmpChildNode = (NetworkNode) tmpChildObject;
-                IAtomContainer tmpChildMolecule = (IAtomContainer) tmpChildNode.getMolecule();
-                System.out.println("Child: " + tmpSmilesGenerator.create(tmpChildMolecule));
-            }
-        }
-        /*Display the network*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldNetwork, true);
-    }
-
-    /**
-     * Creates different ScaffoldTrees and merges them. The result is visualised with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void mergeTreeOriginTest() throws Exception {
-        //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
-        IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("C2NC1SCNN1N2");
-        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("ClC2NC1SCNN1N2");
-        IAtomContainer tmpMolecule3 = tmpParser.parseSmiles("c2ccc(C1NCNN1)cc2");
-        IAtomContainer tmpMolecule4 = tmpParser.parseSmiles("C1=CC=C(C=C1)C3NNC(C2=CC=CC=C2[Br])N3");
-        IAtomContainer tmpMolecule5 = tmpParser.parseSmiles("c2ccc1CCCc1c2");
-        IAtomContainer tmpMolecule6 = tmpParser.parseSmiles("C1=CC=C(C=C1)C3NC2SC(NN2N3)[Br]");
-        //Generate a tree of molecules with iteratively removed terminal rings
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        ScaffoldTree tmpScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule1);
-        ScaffoldTree tmpScaffoldTree2 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule2);
-        ScaffoldTree tmpScaffoldTree3 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule3);
-        ScaffoldTree tmpScaffoldTree4 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule4);
-        ScaffoldTree tmpScaffoldTree5 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule5);
-        ScaffoldTree tmpScaffoldTree6 = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule6);
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree2);
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree3);
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree4);
-        tmpScaffoldTree.mergeTree(tmpScaffoldTree5);
-        ScaffoldTree tmpOverlapScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule1);
-        tmpOverlapScaffoldTree.mergeTree(tmpScaffoldTree2);
-        tmpOverlapScaffoldTree.mergeTree(tmpScaffoldTree3);
-        tmpOverlapScaffoldTree.mergeTree(tmpScaffoldTree4);
-        tmpOverlapScaffoldTree.mergeTree(tmpScaffoldTree6);
-        //tmpScaffoldTree.mergeTree(tmpOverlapScaffoldTree);
-        ScaffoldTree tmpUnfitScaffoldTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule);//Molecule does not fit
-        System.out.println("Tree does not fit: " + tmpScaffoldTree.mergeTree(tmpUnfitScaffoldTree));
-        IAtomContainer tmpRootMolecule = (IAtomContainer) tmpScaffoldTree.getRoot().getMolecule();
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        System.out.println("I am Root: " + tmpSmilesGenerator.create(tmpRootMolecule));
-        System.out.println("Number of Origins: " + tmpScaffoldTree.getRoot().getOriginCount());
-        for(ScaffoldNodeBase tmpTreeNodeBase : tmpScaffoldTree.getAllNodes()) {
-            TreeNode tmpTreeNode = (TreeNode) tmpTreeNodeBase;
-            System.out.println("---Node: " + tmpSmilesGenerator.create((IAtomContainer) tmpTreeNode.getMolecule()));
-            for(Object tmpSmiles : tmpTreeNode.getOriginSmilesList()) {
-                System.out.println("Origin of the Node: " + tmpSmiles);
-            }
-            for(Object tmpSmiles : tmpTreeNode.getNonVirtualOriginSmilesList()) {
-                System.out.println("nonVirtual: " + tmpSmiles);
-            }
-        }
-        /*Display the tree*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
-    }
-
-    /**
-     * Creates different ScaffoldTrees and merges them. The result is visualised with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void mergeMoleculesToForestProblemTest() throws Exception {
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer tmpMolecule = tmpParser.parseSmiles("O=C(OC)CCC=1C=2N=C(C=C3N=C(C=C4N=C(C=C5N=C(C2)C(=C5C)CC)C=C4C)C=C3C)C1C");
-        IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("N=1C2=CC3=NC(=CC4=NC(=C5C6=NC(=CC1C(=C2C)C)C(=C6CCC5)C)C(=C4C)CC)C(=C3C)CC");
-        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("ON=C1C=CC=2C3=NC(=CC4=NC(=CC5=NC(=CC6=NC(C=C6C)=C13)C(=C5C)CC)C(=C4C)CC)C2C");
-
-        //Generate a tree of molecules with iteratively removed terminal rings
-        List<IAtomContainer> tmpTreeList = new ArrayList<>();
-        tmpTreeList.add(tmpMolecule);
-        tmpTreeList.add(tmpMolecule1);
-        tmpTreeList.add(tmpMolecule2);
-        List<ScaffoldTree> tmpFinalForest = tmpScaffoldGenerator.generateSchuffenhauerForest(tmpTreeList);
-        System.out.println("Forest size: " + tmpFinalForest.size());
-        ScaffoldTree tmpScaffoldTree = tmpFinalForest.get(0);
-        System.out.println("Node size" + tmpFinalForest.get(0).getAllNodes().size());
-        for(ScaffoldNodeBase tmpTreeNode : tmpScaffoldTree.getAllNodes()) {
-            for(Object tmpSmiles : tmpTreeNode.getNonVirtualOriginSmilesList()) {
-                System.out.println("nonVirtual: " + tmpSmiles);
-            }
-        }
-        IAtomContainer tmpRootMolecule = (IAtomContainer) tmpScaffoldTree.getRoot().getMolecule();
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        System.out.println("I am Root: " + tmpSmilesGenerator.create(tmpRootMolecule));
-        /*Display the tree*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
-    }
-
-    /**
-     * Creates different ScaffoldTrees and merges them. The result is visualised with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void mergeMoleculesToForestTest() throws Exception {
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
-        IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("c1ncc2c(n1)SC3CCCCC23");
-        IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("c1ncc2c(n1)SC3CCCC23");
-        IAtomContainer tmpMolecule3 = tmpParser.parseSmiles("c2ccc1ncncc1c2");
-        IAtomContainer tmpMolecule4 = tmpParser.parseSmiles("c3ccc2nc(CC1NCNCN1)ncc2c3");
-        IAtomContainer tmpMolecule5 = tmpParser.parseSmiles("c1ccc3c(c1)oc2cncnc23");
-        IAtomContainer tmpMolecule6 = tmpParser.parseSmiles("c1cnc3c(c1)oc2cncnc23");
-        IAtomContainer tmpMolecule7 = tmpParser.parseSmiles("c3ccc(N2NCc1cncnc12)cc3");
-        IAtomContainer tmpMolecule8 = tmpParser.parseSmiles("c2cnc(N1CCCCC1)nc2");
-        IAtomContainer tmpMolecule9 = tmpParser.parseSmiles("c2ncc1NCNc1n2");
-        IAtomContainer tmpMolecule10 = tmpParser.parseSmiles("c1ccc2c(c1)[nH]c3ncncc23");
-        //Generate a tree of molecules with iteratively removed terminal rings
-        List<IAtomContainer> tmpTreeList = new ArrayList<>();
-        tmpTreeList.add(tmpMolecule);
-        tmpTreeList.add(tmpMolecule1);
-        tmpTreeList.add(tmpMolecule2);
-        tmpTreeList.add(tmpMolecule3);
-        tmpTreeList.add(tmpMolecule4);
-        tmpTreeList.add(tmpMolecule5);
-        tmpTreeList.add(tmpMolecule6);
-        tmpTreeList.add(tmpMolecule7);
-        tmpTreeList.add(tmpMolecule8);
-        tmpTreeList.add(tmpMolecule9);
-        tmpTreeList.add(tmpMolecule10);
-        List<ScaffoldTree> tmpFinalForest = tmpScaffoldGenerator.generateSchuffenhauerForest(tmpTreeList);
-        System.out.println("Forest size: " + tmpFinalForest.size());
-        ScaffoldTree tmpScaffoldTree = tmpFinalForest.get(1);
-        for(ScaffoldNodeBase tmpTreeNode : tmpScaffoldTree.getAllNodes()) {
-            for(Object tmpSmiles : tmpTreeNode.getNonVirtualOriginSmilesList()) {
-                System.out.println("nonVirtual: " + tmpSmiles);
-            }
-        }
-        IAtomContainer tmpRootMolecule = (IAtomContainer) tmpScaffoldTree.getRoot().getMolecule();
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        System.out.println("I am Root: " + tmpSmilesGenerator.create(tmpRootMolecule));
-        /*Display the tree*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
-    }
-
-    /**
-     * Test of generateSchuffenhauerForest() with V2000 and V3000 mol files.
-     * Loads the 7 Test(Test1.mol-Test7.mol) molfiles from the Resources folder.
-     * Creates different ScaffoldTrees and merges them. The result is visualised with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void mergeAllTestMoleculesToForestTest() throws Exception {
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        List<IAtomContainer> tmpTestMoleculeList = new ArrayList<>();
-        for (int tmpCount = 1; tmpCount < 8; tmpCount++) {
-            String tmpFileName = "Test" + tmpCount;
-            //Load molecule from molfile
-            IAtomContainer tmpTestMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-            tmpTestMoleculeList.add(tmpTestMolecule);
-        }
-        List<ScaffoldTree> tmpTestTreeList = tmpScaffoldGenerator.generateSchuffenhauerForest(tmpTestMoleculeList);
-        System.out.println("Number of molecules: " + tmpTestMoleculeList.size());
-        System.out.println("Number of trees: " + tmpTestTreeList.size());
-        ScaffoldTree tmpScaffoldTree = tmpTestTreeList.get(2);
-        System.out.println("Origin SMILES: " + tmpScaffoldTree.getRoot().getOriginSmilesList());
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        for(ScaffoldTree tmpTestTree : tmpTestTreeList) {
-            System.out.println("Number of Nodes:" + tmpTestTree.getAllNodes().size());
-            System.out.println("Root:" + tmpSmilesGenerator.create((IAtomContainer) tmpTestTree.getRoot().getMolecule()));
-        }
-        /*Display the tree*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
-    }
-
-    /**
-     * Creates 25000 different ScaffoldTrees from COCONUT molecules and merges them.
-     * The result is visualised with GraphStream.
-     * @throws Exception if anything goes wrong
-     */
-    @Ignore
-    @Test
-    public void mergeCOCONUTMoleculesToForestTest() throws Exception {
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        List<IAtomContainer> tmpTestMoleculeList = new ArrayList<>();
-        /*Loading and reading the library*/
-        File tmpResourcesDirectory = new File("src/test/resources/COCONUT_OR.sdf");
-        IteratingSDFReader tmpReader = new IteratingSDFReader( new FileInputStream(tmpResourcesDirectory), DefaultChemObjectBuilder.getInstance());
-        int tmpAllCounter = 0;
-        int tmpCounter = 0;
-        while (tmpReader.hasNext()) {
-            tmpAllCounter++;
-            tmpCounter++;
-            if(tmpCounter < 25000) {
-                continue;
-            }
-            IAtomContainer tmpMolecule = (IAtomContainer) tmpReader.next();
-            tmpTestMoleculeList.add(tmpMolecule);
-            if(tmpAllCounter == 50000) {
-                break;
-            }
-        }
-        System.out.println("Number of molecules: " + tmpTestMoleculeList.size());
-        List<ScaffoldTree> tmpTestTreeList = tmpScaffoldGenerator.generateSchuffenhauerForest(tmpTestMoleculeList);
-        System.out.println("Number of trees: " + tmpTestTreeList.size());
-        ScaffoldTree tmpScaffoldTree = tmpTestTreeList.get(10);
-        System.out.println("Origin SMILES: " + tmpScaffoldTree.getRoot().getOriginSmilesList());
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        tmpCounter = 0;
-        for(ScaffoldTree tmpTestTree : tmpTestTreeList) {
-            System.out.println(tmpCounter + "Root:" + tmpSmilesGenerator.create((IAtomContainer) tmpTestTree.getRoot().getMolecule()));
-            System.out.println("Number of Nodes:" + tmpTestTree.getAllNodes().size());
-            tmpCounter++;
-        }
-        /*Display the tree*/
-        //GraphStreamUtility.displayWithGraphStream(tmpScaffoldTree, true);
-    }
-
-    @Ignore
-    @Test
-    public void generateSdfNetworkTest() throws Exception {
-        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
-        SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-        tmpScaffoldGenerator.setSmilesGeneratorSetting(tmpSmilesGenerator);
-        List<IAtomContainer> tmpTestMoleculeList = new ArrayList<>();
-        /*Loading and reading the library*/
-        File tmpResourcesDirectory = new File("src/test/resources/COCONUT_PROBLEM.sdf");
-        IteratingSDFReader tmpReader = new IteratingSDFReader( new FileInputStream(tmpResourcesDirectory), DefaultChemObjectBuilder.getInstance());
-        int tmpAllCounter = 0;
-        int tmpCounter = 0;
-        while (tmpReader.hasNext()) {
-            tmpAllCounter++;
-            tmpCounter++;
-            if(tmpCounter < 25000) {
-                continue;
-            }
-            IAtomContainer tmpMolecule = (IAtomContainer) tmpReader.next();
-            tmpTestMoleculeList.add(tmpMolecule);
-            if(tmpAllCounter == 50000) {
-                break;
-            }
-        }
-        System.out.println("Number of molecules: " + tmpTestMoleculeList.size());
-        ScaffoldNetwork tmpTestTreeList = new ScaffoldNetwork(this.getSmilesGenerator());
-        tmpTestTreeList = tmpScaffoldGenerator.generateScaffoldNetwork(tmpTestMoleculeList);
-        System.out.println("Size: " + tmpTestTreeList.getAllNodes().size());
-        for(ScaffoldNodeBase tmpNode : tmpTestTreeList.getAllNodes()) {
-            IAtomContainer tmpMolecule = (IAtomContainer) tmpNode.getMolecule();
-            String tmpSmiles = tmpSmilesGenerator.create(tmpMolecule);
-            System.out.println(tmpSmiles);
-        }
-        for(Object tmpNewNetworkObject : tmpTestTreeList.getAllNodes()) {
-            NetworkNode tmpNewNetworkNode = (NetworkNode) tmpNewNetworkObject;
-            if(tmpSmilesGenerator.create((IAtomContainer) tmpNewNetworkNode.getMolecule()).equals("N=1C=2C=CC1C=C3N=C(C=C3)C=C4N=C(C=C4)C=C5N=C(C=C5)C2")) {
-                System.out.println("Ist schon drin");
-            }
-        }
-        /*Display the tree*/
-        //GraphStreamUtility.displayWithGraphStream(tmpTestTreeList, true);
-    }
-
-    /**
-     * Loads a molecule with two stereochemical information from a SMILES. Outputs its fragments.
+     * Loads a molecule with two stereo-centers from a SMILES code.
      * Shows that one piece of information is retained even though the other has already been removed.
+     *
      * @throws Exception if anything goes wrong
      */
-    @Ignore
     @Test
     public void stereoFragmentationTest() throws Exception {
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         tmpScaffoldGenerator.setSmilesGeneratorSetting(new SmilesGenerator(SmiFlavor.Isomeric));
         SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer tmpMolecule = tmpParser.parseSmiles("C8CCCC(/C(=C(C1CCCNCCC1)\\C6CCCCC(C5CCCC(C/C(CC2CCNCC2)=C(CC3CCCCC3)/CC4CCNCC4)C5)CC6)C7CCCCCNC7)CCC8");
+        IAtomContainer tmpMolecule = tmpParser.parseSmiles(
+                "C8CCCC(/C(=C(C1CCCNCCC1)\\C6CCCCC(C5CCCC(C/C(CC2CCNCC2)=C(CC3CCCCC3)/CC4CCNCC4)C5)CC6)C7CCCCCNC7)CCC8");
         List<IAtomContainer> tmpFragmentList = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
         SmilesGenerator tmpSmilesGenerator = new SmilesGenerator(SmiFlavor.Isomeric);
-        for(IAtomContainer tmpFragment : tmpFragmentList) {
-            System.out.println(tmpSmilesGenerator.create(tmpFragment));
+        String[] tmpParentScaffoldsSmilesArray = new String[] {
+                "C1CCCC(/C(=C(/C2CCCNCCC2)\\C3CCCCC(C4CCCC(C/C(/CC5CCNCC5)=C(\\CC6CCCCC6)/CC7CCNCC7)C4)CC3)/C8CCCCCNC8)CCC1",
+                "C1CCCC(/C(=C(/C2CCCNCCC2)\\C3CCCCC(C4CCCC(C/C(/CC5CCNCC5)=C/CC6CCNCC6)C4)CC3)/C7CCCCCNC7)CCC1",
+                "C1CCCC(/C(=C(/C2CCCNCCC2)\\C3CCCCC(C4CCCC(CC(CC5CCNCC5)=C)C4)CC3)/C6CCCCCNC6)CCC1",
+                "C1CCCC(/C(=C(/C2CCCNCCC2)\\C3CCCCC(C4CCCCC4)CC3)/C5CCCCCNC5)CCC1",
+                "C1CCCC(/C(=C(/C2CCCNCCC2)\\C3CCCCCCC3)/C4CCCCCNC4)CCC1",
+                "C(=C(C1CCCNCCC1)C2CCCCCCC2)C3CCCCCNC3",
+                "C(C1CCCNCCC1)(C2CCCCCCC2)=C",
+                "C1CCCNCCC1"
+        };
+        for (int i = 0; i < tmpFragmentList.size(); i++) {
+            Assert.assertEquals(tmpParentScaffoldsSmilesArray[i], tmpSmilesGenerator.create(tmpFragmentList.get(i)));
         }
     }
-    //</editor-fold>
     //</editor-fold>
 
     //<editor-fold desc="Schuffenhauer rules tests">
