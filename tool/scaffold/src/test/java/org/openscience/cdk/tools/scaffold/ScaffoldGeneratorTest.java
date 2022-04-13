@@ -874,60 +874,80 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
 
     //<editor-fold desc="Schuffenhauer rules tests">
     /**
-     * Test oftmpScaffoldGenerator.applySchuffenhauerRules() with V2000 and V3000 mol files.
-     * Loads the Test(Test1.mol-Test7.mol) molfiles from the Resources folder and creates the SchuffenhauerScaffolds with getScaffold().
-     * All generated scaffolds are saved as images in a subfolder of the scaffoldTestOutput folder.
-     * The subfolder has the name of the input file.
+     * Test of ScaffoldGenerator.applySchuffenhauerRules() with V2000 and V3000 mol files.
+     * Loads the Test(Test1.mol-Test7.mol) mol files from the resources folder and compares their generated parent
+     * scaffolds to defined structures that represented the expected results.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
+    @Category(SlowTest.class)
     public void applySchuffenhauerRulesTest() throws Exception {
+        ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
+        SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
+        HashMap<String, String[]> tmpFileNameToParentScaffoldSmilesMap = new HashMap<>(10, 0.9f);
+        tmpFileNameToParentScaffoldSmilesMap.put("Test1", new String[]
+                {"O=C1c2cc3ccc(OC4OCCC(OC5OCCCC5)C4)cc3cc2CCC1OC6OCCC(OC7OCCC(OC8OCCCC8)C7)C6",
+                "O=C1c2cc3ccc(OC4OCCC(OC5OCCCC5)C4)cc3cc2CCC1OC6OCCC(OC7OCCCC7)C6",
+                "O=C1c2cc3ccc(OC4OCCC(OC5OCCCC5)C4)cc3cc2CCC1OC6OCCCC6",
+                "O=C1c2cc3ccc(OC4OCCC(OC5OCCCC5)C4)cc3cc2CCC1",
+                "O=C1c2cc3ccc(OC4OCCCC4)cc3cc2CCC1",
+                "O=C1c2cc3ccccc3cc2CCC1",
+                "O=C1c2ccccc2CCC1",
+                "O=C1C=CCCC1"});
+        tmpFileNameToParentScaffoldSmilesMap.put("Test2", new String[]
+                {"O=C1C=CCOc2cc(ccc12)CC(=O)c3ccccc3",
+                "O=C1C=CCOc2ccccc12",
+                "O=C1C=COCC=C1"});
+        tmpFileNameToParentScaffoldSmilesMap.put("Test3", new String[]
+                {"O=C(NC1C(=O)N2CCSC21)c3conc3-c4ccccc4",
+                "O=C(NC1C(=O)N2CCSC21)c3cnoc3",
+                "O=C1N2CCSC2C1",
+                "O=C1NCC1"});
+        tmpFileNameToParentScaffoldSmilesMap.put("Test4", new String[]
+                {"O=C1c2nccc3cccc(-c4ccccc14)c32",
+                "O=C1C=Cc2cccc3ccnc1c32"});
+        tmpFileNameToParentScaffoldSmilesMap.put("Test5", new String[]
+                {"O=C(NC1C(=O)C(SC1)=C)c2ccccc2",
+                "O=C1C(SCC1)=C"});
+        tmpFileNameToParentScaffoldSmilesMap.put("Test6", new String[]
+                {"c1ccc2cc3ccccc3cc2c1",
+                "c1ccc2ccccc2c1",
+                "c1ccccc1"});
+        tmpFileNameToParentScaffoldSmilesMap.put("Test7", new String[]{"O=C1C=Cc2cccc3cccc1c32"});
         for (int tmpCount = 1; tmpCount < 8; tmpCount++) {
             String tmpFileName = "Test" + tmpCount;
-            //Load molecule from molfile
+            //Load molecule from mol file
             IAtomContainer tmpMolecule = this.loadMolFile("src/test/resources/" + tmpFileName + ".mol");
-            /*Generate picture of molecule*/
-            DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit();
-            ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
             List<IAtomContainer> tmpSchuffenhauerFragments = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
-            int tmpCounter = 0;
-            for(IAtomContainer tmpFragment : tmpSchuffenhauerFragments) {
-                tmpCounter++;
-                /*Generate picture*/
-                BufferedImage tmpImgFragment = tmpGenerator.depict(tmpFragment).toImg();
-                /*Save the picture*/
-                new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName + "/SchuffenhauerRules").mkdirs();
-                File tmpOutputFragment = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/TestMolecules/" + tmpFileName + "/SchuffenhauerRules/Fragment"+  tmpCounter + ".png");
-                ImageIO.write(tmpImgFragment, "png", tmpOutputFragment);
+            for(int i = 0; i < tmpSchuffenhauerFragments.size(); i++) {
+               Assert.assertEquals(tmpFileNameToParentScaffoldSmilesMap.get(tmpFileName)[i],
+                       tmpSmiGen.create(tmpSchuffenhauerFragments.get(i)));
             }
         }
     }
 
     /**
-     * Test of ScaffoldGenerator.applySchuffenhauerRules() with SMILES.
-     * All generated scaffolds are saved as images in a subfolder of the scaffoldTestOutput folder.
-     * The subfolder has the name of the input file.
+     * Test of ScaffoldGenerator.applySchuffenhauerRules() with a complex structure defined as SMILES code.
+     *
      * @throws Exception if anything goes wrong
      */
     @Test
     public void applySchuffenhauerRulesSMILESTest() throws Exception {
         //SMILES to IAtomContainer
         SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C5CCCCCCCCCCCCCC1NC1CCCCCCCCCCCCCC(C3CC2CC2C4NC34)CC5");
-        /*Generate picture of molecule*/
-        DepictionGenerator tmpGenerator = new DepictionGenerator().withSize(512,512).withFillToFit().withAromaticDisplay();
+        String[] tmpExpectedSmilesArray = new String[]{"N1C2CCCCCCCCCCCCCCCCC(CCCCCCCCCCCCCC12)C3CC4CC4C5NC53",
+                "C1=CC2CC2CC1C3CCCCCCCCCCCCCCCCC4NC4CCCCCCCCCCCCC3",
+                "C1=CCCCCCCCCCCCCCC(CCCCCCCCCCCCCCCC1)C2C=CC3CC3C2",
+                "C1=CCCCCCCCCCCCCCC(CCCCCCCCCCCCCCCC1)C2C=CCCC2",
+                "C1=CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC1"};
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         tmpScaffoldGenerator.setDetermineAromaticitySetting(true);
         List<IAtomContainer> tmpSchuffenhauerFragments = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
-        int tmpCounter = 0;
-        for(IAtomContainer tmpFragment : tmpSchuffenhauerFragments) {
-            tmpCounter++;
-            /*Generate picture*/
-            BufferedImage tmpImgFragment = tmpGenerator.depict(tmpFragment).toImg();
-            /*Save the picture*/
-            new File(System.getProperty("user.dir") + "/scaffoldTestOutput/SchuffenhauerRules/RulesSMILESTest").mkdirs();
-            File tmpOutputFragment = new File(System.getProperty("user.dir") + "/scaffoldTestOutput/SchuffenhauerRules/RulesSMILESTest/Fragment" + tmpCounter + ".png");
-            ImageIO.write(tmpImgFragment, "png", tmpOutputFragment);
+        for(int i = 0; i < tmpExpectedSmilesArray.length; i++) {
+            Assert.assertEquals(tmpExpectedSmilesArray[i], tmpSmiGen.create(tmpSchuffenhauerFragments.get(i)));
         }
     }
     /**
