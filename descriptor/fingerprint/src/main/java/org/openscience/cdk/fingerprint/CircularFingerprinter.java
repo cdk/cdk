@@ -360,10 +360,14 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             }
 
             @Override
-            public void merge(ICountFingerprint fp) {}
+            public void merge(ICountFingerprint fp) {
+                throw new UnsupportedOperationException();
+            }
 
             @Override
-            public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {}
+            public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {
+                throw new UnsupportedOperationException();
+            }
 
             @Override
             public boolean hasHash(int hash) {
