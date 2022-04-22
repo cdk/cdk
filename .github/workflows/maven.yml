@@ -16,7 +16,7 @@ jobs:
     name: Java ${{ matrix.java }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
@@ -32,7 +32,7 @@ jobs:
     name: Build sonarcloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK 11
