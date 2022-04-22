@@ -18,8 +18,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Java
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v3
       with:
+        distribution: 'adopt'
         java-version: ${{ matrix.java }}
     - name: Build with Maven
       run: mvn clean install -q -Pjacoco
@@ -34,8 +35,9 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK 11
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
+          distribution: 'adopt'
           java-version: 11
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
