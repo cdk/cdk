@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -222,7 +223,8 @@ public class ConnectivityChecker {
 
         // split Sgroups, only keep if all atoms/bond in the sgroup
         // are consistent and in the same container
-        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = SgroupManipulator.copy(container.getProperty(CDKConstants.CTAB_SGROUPS),
+                                                       new HashMap<>());
         if (sgroups != null) {
             Map<Sgroup,IAtomContainer> sgroupMap = new HashMap<>();
             for (Sgroup sgroup : sgroups) {
