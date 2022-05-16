@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
     <parent>
         <artifactId>cdk</artifactId>
         <groupId>org.openscience.cdk</groupId>
@@ -11,9 +11,9 @@
     </parent>
 
     <artifactId>cdk-bundle</artifactId>
-    
+
     <name>cdk-bundle</name>
-    
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -242,11 +242,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-iordf</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>cdk-libiomd</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
@@ -315,17 +310,17 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                <finalName>cdk-${project.parent.version}</finalName>
-                <filters>
-                    <filter>
-                        <artifact>*:*</artifact>
-                        <excludes>
-                            <exclude>META-INF/*.SF</exclude>
-                            <exclude>META-INF/*.DSA</exclude>
-                            <exclude>META-INF/*.RSA</exclude>
-                        </excludes>
-                    </filter>
-                </filters>
+                    <finalName>cdk-${project.parent.version}</finalName>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>
@@ -335,7 +330,22 @@
                         </goals>
                     </execution>
                 </executions>
-      </plugin>
+            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>jdk11-plus</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>cdk-iordf</artifactId>
+                    <version>${project.parent.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
