@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.libio.jena;
 
+import org.apache.jena.rdf.model.Model;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -37,8 +38,6 @@ import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * @cdk.module test-iordf
