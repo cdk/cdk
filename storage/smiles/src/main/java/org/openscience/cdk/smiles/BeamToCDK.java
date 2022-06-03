@@ -434,8 +434,8 @@ final class BeamToCDK {
             if (b == Bond.UP || b == Bond.DOWN) {
                 if (first == null)
                     first = e;
-                else if (((first.either() == e.either()) == (first.bond() == b)))
-                    return null;
+                else if (first.bond(u) == e.bond(u))
+                    return null; // inconsistent e.g. C/C=C(/C)/C
             }
         }
         return first;
