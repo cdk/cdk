@@ -2690,6 +2690,17 @@ public class SmilesParserTest extends CDKTestCase {
         }
     }
 
+
+    @Test public void testCisTransBondsOnRings() throws InvalidSmilesException {
+        IAtomContainer mol = load("N\\2.C/C2=C\\C(=O)O");
+        int count = 0;
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se.getConfigClass() == IStereoElement.CisTrans)
+                count++;
+        }
+        Assert.assertEquals(1, count);
+    }
+
     /**
      * Counts aromatic atoms in a molecule.
      * @param mol molecule for which to count aromatic atoms.
