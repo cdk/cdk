@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.depict;
 
+import org.hamcrest.core.StringContains;
 import org.junit.Test;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.LineElement;
@@ -153,6 +154,14 @@ public class SvgDrawVisitorTest {
                                           + "    <rect x='.0' y='-100.0' width='100.0' height='100.0' fill='none' stroke='#FFFFFF'/>\n"
                                           + "  </g>\n"
                                           + "</svg>\n"));
+    }
+
+    @Test
+    public void testTransparencyLocaleEncoding() {
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
+        visitor.setTransform(AffineTransform.getTranslateInstance(15, 15));
+        visitor.visit(GeneralPath.shapeOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2), new Color(255,0,0,126)));
+        assertThat(visitor.toString(), StringContains.containsString("rgba(255,0,0,0.49)"));
     }
 
 }
