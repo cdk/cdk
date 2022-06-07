@@ -198,7 +198,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
         if (col.getAlpha() == 255) {
             return String.format("#%06X", (0xFFFFFF & col.getRGB()));
         } else {
-            return String.format(Locale.US, "rgba(%d,%d,%d,%.2f)", col.getRed(), col.getGreen(), col.getBlue(), col.getAlpha()/255d);
+            return String.format(Locale.ROOT, "rgba(%d,%d,%d,%.2f)", col.getRed(), col.getGreen(), col.getBlue(), col.getAlpha()/255d);
         }
     }
 
