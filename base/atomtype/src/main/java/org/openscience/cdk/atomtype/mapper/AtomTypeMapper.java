@@ -56,8 +56,9 @@ public class AtomTypeMapper {
 
     /**
      * Instantiates an atom type to atom type mapping, based on the given mapping file.
-     * For example, the mapping file <code>org.openscience.cdk.config.data.cdk-sybyl-mappings.owl</code>
-     * which defines how CDK atom types are mapped to Sybyl atom types.
+     * For example, the mapping file <code>org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl</code>
+     * which defines how CDK atom types are mapped to Sybyl atom types. <br>
+     * <b>Important! Make sure there is not a leading slash.</b>
      *
      * @param  mappingFile File name of the OWL file defining the atom type to atom type mappings.
      * @return             An instance of AtomTypeMapper for the given mapping file.
