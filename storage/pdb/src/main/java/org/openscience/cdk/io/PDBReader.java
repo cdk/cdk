@@ -394,8 +394,11 @@ public class PDBReader extends DefaultChemObjectReader {
                             logger.warn("REMARK line found without any comment!");
                         }
                     } else if ("COMPND".equalsIgnoreCase(cCol)) {
-                        String title = cRead.substring(10).trim();
-                        oFile.setProperty(CDKConstants.TITLE, title);
+                        if (cRead.length() > 10) {
+                            String title = cRead.substring(10).trim();
+                            if (!title.isEmpty())
+                                oFile.setProperty(CDKConstants.TITLE, title);
+                        }
                     }
 
                     /* ***********************************************************

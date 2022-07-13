@@ -125,6 +125,24 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
+    public void emptyFields() throws Exception {
+        String data = "HEADER\n" +
+                "TITLE\n" +
+                "COMPND\n" +
+                "KEYWDS\n" +
+                "EXPDTA\n" +
+                "AUTHOR\n" +
+                "REVDAT\n" +
+                "HET             1   13\n" +
+                "HETNAM\n" +
+                "FORMUL\n" +
+                "END\n";
+        IChemFile chemFile = getChemFileFromString(data);
+        IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
+    }
+
+
+    @Test
     public void testAccepts() {
         PDBReader reader = new PDBReader();
         Assert.assertTrue(reader.accepts(ChemFile.class));
