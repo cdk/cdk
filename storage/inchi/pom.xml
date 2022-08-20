@@ -13,7 +13,7 @@
     <artifactId>cdk-inchi</artifactId>
 
     <properties>
-        <jna-inchi.version>1.0.1</jna-inchi.version>
+        <jna-inchi.version>1.1</jna-inchi.version>
     </properties>
 
     <name>cdk-inchi</name>
