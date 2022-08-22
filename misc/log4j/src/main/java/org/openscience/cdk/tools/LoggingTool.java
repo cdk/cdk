@@ -177,7 +177,7 @@ public class LoggingTool implements ILoggingTool {
                 if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
                     toSTDOUT = true;
                 }
-            } catch (Exception e) {
+            } catch (SecurityException e) {
                 System.err.println("Could not read the System property used to determine "
                         + "if logging should be turned on. So continuing without logging.");
             }
