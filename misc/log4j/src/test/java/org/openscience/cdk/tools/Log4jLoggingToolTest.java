@@ -63,11 +63,6 @@ public class Log4jLoggingToolTest extends AbstractLoggingToolTest {
     }
 
     @Test
-    public void testConfigureLog4j() throws Exception {
-        Log4jLoggingTool.configureLog4j();
-    }
-
-    @Test
     public void testDebug_Object() throws Exception {
         Log4jLoggingTool logger = getLoggingTool();
         logger.debug(this);
