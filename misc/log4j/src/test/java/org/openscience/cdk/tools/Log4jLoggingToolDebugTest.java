@@ -26,26 +26,26 @@ import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 /**
  * @cdk.module test-log4j
  */
-public class LoggingToolTestDebugTrue extends AbstractLoggingToolTest {
+public class Log4jLoggingToolDebugTest extends AbstractLoggingToolTest {
 
     @Override
-    public LoggingTool getLoggingTool() {
+    public Log4jLoggingTool getLoggingTool() {
         String originalValue = System.getProperty("cdk.debugging");
         System.setProperty("cdk.debugging", "true");
-        LoggingTool logger = new LoggingTool(this);
+        Log4jLoggingTool logger = new Log4jLoggingTool(this);
         if (originalValue != null) System.setProperty("cdk.debugging", originalValue);
         return logger;
     }
 
     @Test
     public void testLoggingTool() throws Exception {
-        LoggingTool logger = new LoggingTool();
+        Log4jLoggingTool logger = new Log4jLoggingTool();
         Assert.assertNotNull(logger);
     }
 
     @Test
     public void testLoggingTool_Class() throws Exception {
-        LoggingTool logger = new LoggingTool(this.getClass());
+        Log4jLoggingTool logger = new Log4jLoggingTool(this.getClass());
         Assert.assertNotNull(logger);
     }
 
@@ -57,18 +57,18 @@ public class LoggingToolTestDebugTrue extends AbstractLoggingToolTest {
 
     @Test
     public void testConfigureLog4j() throws Exception {
-        LoggingTool.configureLog4j();
+        Log4jLoggingTool.configureLog4j();
     }
 
     @Test
     public void testDebug_Object() throws Exception {
-        LoggingTool logger = getLoggingTool();
+        Log4jLoggingTool logger = getLoggingTool();
         logger.debug(this);
     }
 
     @Test
     public void testCreate() throws Exception {
-        ILoggingTool logger = LoggingTool.create(this.getClass());
+        ILoggingTool logger = Log4jLoggingTool.create(this.getClass());
         Assert.assertNotNull(logger);
     }
 }

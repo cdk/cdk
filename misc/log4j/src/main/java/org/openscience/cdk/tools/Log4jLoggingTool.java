@@ -1,5 +1,6 @@
 /* Copyright (C) 2002-2003  Christoph Steinbeck <steinbeck@users.sf.net>
  *               2002-2008  Egon Willighagen <egonw@users.sf.net>
+ *               2022       John Mayfield
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,7 +36,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Useful for logging messages. Often used as a class static variable instantiated like:
+ * This class provides an adapter from the CDK {@link org.openscience.cdk.tools.ILoggingTool}
+ * interface to Log4J. You can use it by including the <code>cdk-log4j</code>
+ * <b>AND</b> <code>log4j-core</code> in you library.
+ * <br/>
+ *
+ * You should not use this class directly, it is created by the LoggingToolFactory
+ * as follows:
  * <pre>
  * public class SomeClass {
  *     private static ILoggingTool logger =
@@ -87,12 +94,10 @@ import java.util.Map;
  * }
  * </pre>
  *
- * <p>The class uses log4j as a backend if available, and {@link System#err} otherwise.
- *
- * @cdk.module log4j
+ * @cdk.module cdk-log4j
  * @cdk.githash
  */
-public class LoggingTool implements ILoggingTool {
+final class Log4jLoggingTool implements ILoggingTool {
 
     private boolean             toSTDOUT             = false;
 
@@ -122,8 +127,8 @@ public class LoggingTool implements ILoggingTool {
      * Constructs a LoggingTool which produces log lines without any special
      * indication which class the message originates from.
      */
-    public LoggingTool() {
-        this(LoggingTool.class);
+    public Log4jLoggingTool() {
+        this(Log4jLoggingTool.class);
     }
 
     /**
@@ -132,7 +137,7 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param object Object from which the log messages originate
      */
-    public LoggingTool(Object object) {
+    public Log4jLoggingTool(Object object) {
         this(object.getClass());
     }
 
@@ -142,8 +147,8 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param classInst Class from which the log messages originate
      */
-    public LoggingTool(Class<?> classInst) {
-        LoggingTool.logger = this;
+    public Log4jLoggingTool(Class<?> classInst) {
+        Log4jLoggingTool.logger = this;
         stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classInst.getName();
         try {
@@ -190,9 +195,9 @@ public class LoggingTool implements ILoggingTool {
      * but is available for convenience.
      */
     public static void configureLog4j() {
-        LoggingTool localLogger = new LoggingTool(LoggingTool.class);
+        Log4jLoggingTool localLogger = new Log4jLoggingTool(Log4jLoggingTool.class);
         try {
-            try (InputStream resourceAsStream = LoggingTool.class.getResourceAsStream("cdk-log4j2.xml")) {
+            try (InputStream resourceAsStream = Log4jLoggingTool.class.getResourceAsStream("cdk-log4j2.xml")) {
                 if (resourceAsStream != null) {
                     XmlConfiguration config = new XmlConfiguration(
                             LoggerContext.getContext(true),
@@ -478,13 +483,13 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Creates a new {@link LoggingTool} for the given class.
+     * Creates a new {@link Log4jLoggingTool} for the given class.
      *
      * @param sourceClass Class for which logging messages are recorded.
-     * @return            A {@link LoggingTool}.
+     * @return            A {@link Log4jLoggingTool}.
      */
     public static ILoggingTool create(Class<?> sourceClass) {
-        return new LoggingTool(sourceClass);
+        return new Log4jLoggingTool(sourceClass);
     }
 
     /**

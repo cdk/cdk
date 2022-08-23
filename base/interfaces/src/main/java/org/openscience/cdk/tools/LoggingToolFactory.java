@@ -39,9 +39,9 @@ import java.lang.reflect.Method;
 public class LoggingToolFactory {
 
     /** Default logging tool. Currently, the log4j based one. */
-    public final static String                   DEFAULT_LOGGING_TOOL_CLASS = "org.openscience.cdk.tools.LoggingTool";
+    public final static String DEFAULT_LOGGING_TOOL_CLASS = "org.openscience.cdk.tools.Log4jLoggingTool";
     /** Back-up logging tool. Currently, a tool that outputs to System.out. */
-    public final static String                   STDOUT_LOGGING_TOOL_CLASS  = "org.openscience.cdk.tools.SystemOutLoggingTool";
+    public final static String STDOUT_LOGGING_TOOL_CLASS  = "org.openscience.cdk.tools.SystemOutLoggingTool";
 
     private static Class<? extends ILoggingTool> userSetILoggerTool;
 
