@@ -49,6 +49,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Provides a variety of methods to manipulate and convert from/to {@link IReaction}.
  * @cdk.module standard
  * @cdk.githash
  *
@@ -139,10 +140,10 @@ public class ReactionManipulator {
     }
 
     /**
-     * Get all molecule of a {@link IReaction}: reactants + products.
+     * Returns all components of an {@link IReaction}, that is, reactants, agents and products.
      *
-     * @param reaction  The IReaction
-     * @return The IAtomContainerSet
+     * @param reaction all components of this reaction are returned
+     * @return IAtomContainerSet containing all components of the reaction provided as an argument
      */
     public static IAtomContainerSet getAllMolecules(IReaction reaction) {
         IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
@@ -155,10 +156,10 @@ public class ReactionManipulator {
     }
 
     /**
-     * get all products of a IReaction
+     * Returns all products of an {@link IReaction}.
      *
-     * @param reaction  The IReaction
-     * @return The IAtomContainerSet
+     * @param reaction all products of this reaction are returned
+     * @return IAtomContainerSet containing all products of the reaction provided as an argument
      */
     public static IAtomContainerSet getAllProducts(IReaction reaction) {
         IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
@@ -170,10 +171,10 @@ public class ReactionManipulator {
     }
 
     /**
-     * get all reactants of a IReaction
+     * Returns all reactants of an {@link IReaction}.
      *
-     * @param reaction  The IReaction
-     * @return The IAtomContainerSet
+     * @param reaction all reactants of this reaction are returned
+     * @return IAtomContainerSet containing all reactants of the reaction provided as an argument
      */
     public static IAtomContainerSet getAllReactants(IReaction reaction) {
         IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
@@ -184,6 +185,12 @@ public class ReactionManipulator {
         return moleculeSet;
     }
 
+    /**
+     * Returns all agents of an {@link IReaction}.
+     *
+     * @param reaction all agents of this reaction are returned
+     * @return IAtomContainerSet containing all agents of the reaction provided as an argument
+     */
     public static IAtomContainerSet getAllAgents(IReaction reaction) {
         IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainerSet agents = reaction.getAgents();
@@ -194,8 +201,8 @@ public class ReactionManipulator {
     }
 
     /**
-     * Returns a new Reaction object which is the reverse of the given
-     * Reaction.
+     * Returns a new {@link IReaction} which is the reverse of the given reaction.
+     *
      * @param reaction the reaction being considered
      * @return the reverse reaction
      */
@@ -222,9 +229,10 @@ public class ReactionManipulator {
     }
 
     /**
-     * Returns all the AtomContainer's of a Reaction.
-     * @param reaction The reaction being considered
-     * @return a list of the IAtomContainer objects comprising the reaction
+     * Returns all {@link IAtomContainer IAtomContainers} of the given reaction.
+     *
+     * @param reaction the reaction whose <code>IAtomContainers</code> are returned
+     * @return list of <code>IAtomContainers</code> comprising the reaction
      */
     public static List<IAtomContainer> getAllAtomContainers(IReaction reaction) {
         return MoleculeSetManipulator.getAllAtomContainers(getAllMolecules(reaction));
@@ -288,17 +296,18 @@ public class ReactionManipulator {
     }
 
     /**
-     * get the IAtom which is mapped
+     * Returns the {@link IAtom} that is mapped.
      *
-     * @param reaction   The IReaction which contains the mapping
-     * @param chemObject The IChemObject which will be searched its mapped IChemObject
-     * @return           The mapped IChemObject
+     * @param reaction   reaction that contains the mapping
+     * @param chemObject IChemObject which will be searched for the mapped IChemObject
+     * @return           mapped IChemObject
      */
     public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject) {
         for (IMapping mapping : reaction.mappings()) {
             if (mapping.getChemObject(0).equals(chemObject)) {
                 return mapping.getChemObject(1);
-            } else if (mapping.getChemObject(1).equals(chemObject)) return mapping.getChemObject(0);
+            } else if (mapping.getChemObject(1).equals(chemObject))
+                return mapping.getChemObject(0);
         }
         return null;
     }
@@ -306,9 +315,9 @@ public class ReactionManipulator {
     /**
      * Assigns a reaction role and group id to all atoms in a molecule.
      *
-     * @param mol molecule
+     * @param mol the molecule whose atoms are assigned to a role and a group id.
      * @param role role to assign
-     * @param grpId group id
+     * @param grpId group id to assign
      */
     private static void assignRoleAndGrp(IAtomContainer mol, ReactionRole role, int grpId) {
         for (IAtom atom : mol.atoms()) {
@@ -318,10 +327,13 @@ public class ReactionManipulator {
     }
 
     /**
-     * <p>Converts a reaction to an 'inlined' reaction stored as a molecule. All
-     * reactants, agents, products are added to the molecule as disconnected
+     * Converts a reaction to an 'inlined' reaction stored as a molecule.
+     *
+     * <p>
+     * All reactants, agents, products are added to the molecule as disconnected
      * components with atoms flagged as to their role {@link ReactionRole} and
-     * component group.</p>
+     * component group.
+     * </p>
      * <p>
      * The inlined reaction, stored in a molecule can be converted back to an explicit
      * reaction with {@link #toReaction}. Data stored on the individual components (e.g.
@@ -356,7 +368,7 @@ public class ReactionManipulator {
     }
 
     /**
-     * <p>Converts an 'inlined' reaction stored in a molecule back to a reaction.</p>
+     * Converts an 'inlined' reaction stored in a molecule back to a reaction.
      *
      * @param mol molecule to convert
      * @return reaction
@@ -472,8 +484,8 @@ public class ReactionManipulator {
     }
 
     /**
-     * Collect the set of bonds that mapped in both a reactant and a product. The method uses
-     * the {@link CDKConstants#ATOM_ATOM_MAPPING} property of atoms.
+     * Collect the set of bonds that mapped in both a reactant and a product.
+     * The method uses the {@link CDKConstants#ATOM_ATOM_MAPPING} property of atoms.
      *
      * @param reaction reaction
      * @return mapped bonds
