@@ -51,10 +51,6 @@ final class StdErrLogger implements ILoggingTool {
      */
     public StdErrLogger(Class<?> classInst) {
         this.classname = classInst.getName();
-        if (System.getProperty("cdk.debugging", "false").equals("true")
-                || System.getProperty("cdk.debug.stdout", "false").equals("true")) {
-            level = DEBUG;
-        }
         // change logging level from system prop
         String val = System.getProperty("cdk.logging.level", "warn");
         switch (val.toLowerCase(Locale.ROOT)) {
@@ -76,6 +72,10 @@ final class StdErrLogger implements ILoggingTool {
             case "fatal":
                 level = ILoggingTool.FATAL;
                 break;
+        }
+        if (System.getProperty("cdk.debugging", "false").equals("true")
+                || System.getProperty("cdk.debug.stdout", "false").equals("true")) {
+            level = DEBUG;
         }
     }
 
