@@ -544,6 +544,10 @@ public class ReactionManipulator {
      * @see AtomTypeManipulator#configure(IAtom, IAtomType)
      */
     public static void perceiveAtomTypesAndConfigureAtoms(IReaction reaction) throws CDKException {
+        if (reaction == null) {
+            return;
+        }
+
         for (IAtomContainer atomContainer: getAllMolecules(reaction).atomContainers()) {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
         }
@@ -563,6 +567,10 @@ public class ReactionManipulator {
      * @see AtomTypeManipulator#configureUnsetProperties(IAtom, IAtomType)
      */
     public static void perceiveAtomTypesAndConfigureUnsetProperties(IReaction reaction) throws CDKException {
+        if (reaction == null) {
+            return;
+        }
+
         for (IAtomContainer atomContainer: getAllMolecules(reaction).atomContainers()) {
             AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(atomContainer);
         }
@@ -584,6 +592,10 @@ public class ReactionManipulator {
      * @see #perceiveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IReaction)
      */
     public static void clearAtomConfigurations(IReaction reaction) {
+        if (reaction == null) {
+            return;
+        }
+
         for (IAtomContainer atomContainer: ReactionManipulator.getAllMolecules(reaction).atomContainers()) {
             AtomContainerManipulator.clearAtomConfigurations(atomContainer);
         }
