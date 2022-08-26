@@ -24,20 +24,9 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 import java.util.ArrayList;
@@ -54,6 +43,7 @@ import java.util.Set;
  * @cdk.githash
  *
  * @see ChemModelManipulator
+ * @author uli-f
  */
 public class ReactionManipulator {
 
@@ -539,4 +529,76 @@ public class ReactionManipulator {
         }
         return mapped;
     }
+
+    /**
+     * Convenience method to perceive atom types for all {@link IAtom IAtoms} of all components of the provided {@link IReaction}.
+     * This method uses the {@link CDKAtomTypeMatcher}. If the
+     * matcher finds a matching atom type, the <code>IAtom</code> will be configured
+     * to have the same properties as the <code>IAtomType</code>. If no matching atom
+     * type is found, no configuration is performed.
+     * <br>
+     * <b>This method overwrites existing values.</b>
+     *
+     * @param reaction the reaction whose atom types are to be perceived
+     * @throws CDKException
+     * @see AtomTypeManipulator#configure(IAtom, IAtomType)
+     */
+    public static void perceiveAtomTypesAndConfigureAtoms(IReaction reaction) throws CDKException {
+        if (reaction == null) {
+            return;
+        }
+
+        for (IAtomContainer atomContainer: getAllMolecules(reaction).atomContainers()) {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+        }
+    }
+
+    /**
+     * Convenience method to perceive atom types for all {@link IAtom IAtoms} of all components of the provided {@link IReaction}.
+     * This method uses the {@link CDKAtomTypeMatcher}. If the
+     * matcher finds a matching atom type, the <code>IAtom</code> will be configured
+     * to have the same properties as the <code>IAtomType</code>. If no matching atom
+     * type is found, no configuration is performed.
+     * <br>
+     * <b>This method only sets <code>null</code> values.</b>
+     *
+     * @param reaction the reaction whose atom types are to be perceived
+     * @throws CDKException
+     * @see AtomTypeManipulator#configureUnsetProperties(IAtom, IAtomType)
+     */
+    public static void perceiveAtomTypesAndConfigureUnsetProperties(IReaction reaction) throws CDKException {
+        if (reaction == null) {
+            return;
+        }
+
+        for (IAtomContainer atomContainer: getAllMolecules(reaction).atomContainers()) {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(atomContainer);
+        }
+    }
+
+    /**
+     * This method will reset all atom properties related to atom configuration to the value {@link CDKConstants#UNSET}.
+     * <br>
+     * This method reverses most of the effects of
+     * {@link #perceiveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IReaction)}
+     * and after a call to this method all atoms will be "unconfigured".
+     * <br>
+     * Note that this method is not a complete reversal of {@link #perceiveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IReaction)}
+     * since the atomic symbol of the atoms remain unchanged. Also, all flags that were set
+     * by the configuration method (such as {@link CDKConstants#IS_HYDROGENBOND_ACCEPTOR} or
+     * {@link CDKConstants#ISAROMATIC}) will be set to False.
+     *
+     * @param reaction the reaction whose atoms confiuration properties are to be cleared
+     * @see #perceiveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IReaction)
+     */
+    public static void clearAtomConfigurations(IReaction reaction) {
+        if (reaction == null) {
+            return;
+        }
+
+        for (IAtomContainer atomContainer: ReactionManipulator.getAllMolecules(reaction).atomContainers()) {
+            AtomContainerManipulator.clearAtomConfigurations(atomContainer);
+        }
+    }
+
 }

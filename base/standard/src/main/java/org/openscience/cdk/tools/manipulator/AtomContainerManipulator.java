@@ -1507,10 +1507,12 @@ public class AtomContainerManipulator {
      * matcher finds a matching atom type, the <code>IAtom</code> will be configured
      * to have the same properties as the <code>IAtomType</code>. If no matching atom
      * type is found, no configuration is performed.
+     * <br>
      * <b>This method overwrites existing values.</b>
      *
-     * @param container
+     * @param container the container whose atom types are to be perceived
      * @throws CDKException
+     * @see AtomTypeManipulator#configure(IAtom, IAtomType)
      */
     public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
@@ -1526,10 +1528,12 @@ public class AtomContainerManipulator {
      * matcher finds a matching atom type, the <code>IAtom</code> will be configured
      * to have the same properties as the <code>IAtomType</code>. If no matching atom
      * type is found, no configuration is performed.
-     * <b>This method overwrites existing values.</b>
+     * <br>
+     * <b>This method only sets <code>null</code> values.</b>
      *
-     * @param container
+     * @param container the container whose atom types are to be perceived
      * @throws CDKException
+     * @see AtomTypeManipulator#configureUnsetProperties(IAtom, IAtomType)
      */
     public static void percieveAtomTypesAndConfigureUnsetProperties(IAtomContainer container) throws CDKException {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
@@ -1541,15 +1545,15 @@ public class AtomContainerManipulator {
 
     /**
      * This method will reset all atom configuration to UNSET.
-     *
+     * <br>
      * This method is the reverse of {@link #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)}
      * and after a call to this method all atoms will be "unconfigured".
-     *
+     * <br>
      * Note that it is not a complete reversal of {@link #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)}
      * since the atomic symbol of the atoms remains unchanged. Also, all the flags that were set
      * by the configuration method (such as IS_HYDROGENBOND_ACCEPTOR or ISAROMATIC) will be set to False.
      *
-     * @param container The molecule, whose atoms are to be unconfigured
+     * @param container The molecule whose atoms are to be unconfigured
      * @see #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)
      */
     public static void clearAtomConfigurations(IAtomContainer container) {
