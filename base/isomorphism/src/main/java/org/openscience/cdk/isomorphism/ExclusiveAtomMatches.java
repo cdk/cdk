@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
- *               2022 John Mayfield (né May)
+ * Copyright (c) 2022 John Mayfield
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,14 +33,14 @@ import java.util.function.Predicate;
  * <blockquote><pre>{@code
  *     Pattern     pattern = Ullmann.findSubstructure(query);
  *     List<int[]> unique  = FluentIterable.of(patter.matchAll(target))
- *                                         .filter(new UniqueAtomMatches())
+ *                                         .filter(new ExclusiveAtomMatches())
  *                                         .toList();
  * }</pre></blockquote>
  *
  * @author John Mayfield
  * @cdk.module isomorphism
  */
-final class UniqueAtomMatches implements Predicate<int[]> {
+final class ExclusiveAtomMatches implements Predicate<int[]> {
 
     /**
      * Which atoms have we seen in a mapping already.
@@ -52,7 +50,7 @@ final class UniqueAtomMatches implements Predicate<int[]> {
     /**
      * Create filter for unique matches.
      */
-    public UniqueAtomMatches() {
+    public ExclusiveAtomMatches() {
     }
 
     /**
@@ -60,7 +58,7 @@ final class UniqueAtomMatches implements Predicate<int[]> {
      */
     @Override
     public boolean test(int[] mapping) {
-        if (some(mapping))
+        if (none(mapping))
             return add(mapping);
         return false;
     }
@@ -71,22 +69,11 @@ final class UniqueAtomMatches implements Predicate<int[]> {
         return true;
     }
 
-    /**
-     * Backwards compatible method from when we used GUAVA predicates.
-     *
-     * @param ints atom index bijection
-     * @return true/false
-     * @see #test(int[])
-     */
-    public boolean apply(int[] ints) {
-        return test(ints);
-    }
-
-    // If some (at least one) has not been seen yet
-    private boolean some(int[] mapping) {
+    // Has none of the atom indexes been seen already?
+    private boolean none(int[] mapping) {
         for (int atomIdx : mapping)
-            if (!this.visit.get(atomIdx))
-                return true;
-        return false;
+            if (this.visit.get(atomIdx))
+                return false;
+        return true;
     }
 }
