@@ -43,8 +43,9 @@ public class ParserTest extends CDKTestCase {
 
     private void parse(String smarts, int flav) throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        if (!Smarts.parse(builder.newAtomContainer(), smarts, flav))
-            throw new InvalidSmarts(Smarts.getLastErrorMesg());
+        SmartsResult smartsResult = Smarts.parseToResult(builder.newAtomContainer(), smarts, flav);
+        if (!smartsResult.ok())
+            throw new InvalidSmarts(smartsResult.getMessage());
     }
 
     private void parse(String smarts) throws Exception {
@@ -54,9 +55,10 @@ public class ParserTest extends CDKTestCase {
     @Test
     public void errorHandling() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        if (!Smarts.parse(builder.newAtomContainer(), "CCCJCCC")) {
-            assertThat(Smarts.getLastErrorMesg(),     CoreMatchers.is("Unexpected character"));
-            assertThat(Smarts.getLastErrorLocation(), CoreMatchers.is("CCCJCCC\n   ^\n"));
+        SmartsResult result = Smarts.parseToResult(builder.newAtomContainer(), "CCCJCCC", Smarts.FLAVOR_LOOSE);
+        if (!result.ok()) {
+            assertThat(result.getMessage(),  CoreMatchers.is("Unexpected character"));
+            assertThat(result.displayErrorLocation(), CoreMatchers.is("CCCJCCC\n   ^\n"));
         }
     }
 

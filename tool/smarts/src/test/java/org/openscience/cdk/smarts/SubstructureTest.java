@@ -424,8 +424,9 @@ public abstract class SubstructureTest {
     // currently be initialised. avoid aromaticity, rings etc.
     IAtomContainer sma(String sma) throws Exception {
         IAtomContainer query = new QueryAtomContainer(SilentChemObjectBuilder.getInstance());
-        if (!Smarts.parse(query, sma)) {
-            throw new IOException(Smarts.getLastErrorMesg());
+        SmartsResult result = Smarts.parseToResult(query, sma);
+        if (!result.ok()) {
+            throw new IOException(result.getMessage());
         }
         query.setTitle(sma);
         return query;

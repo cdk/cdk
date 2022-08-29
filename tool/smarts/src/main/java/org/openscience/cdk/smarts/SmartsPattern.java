@@ -94,11 +94,12 @@ public final class SmartsPattern extends Pattern {
      */
     private SmartsPattern(final String smarts, IChemObjectBuilder builder) {
         this.query = new QueryAtomContainer(builder);
-        if (!Smarts.parse(query, smarts))
+        SmartsResult result = Smarts.parseToResult(query, smarts);
+        if (!result.ok())
             throw new IllegalArgumentException("Could not parse SMARTS: " +
                                                smarts + "\n" +
-                                               Smarts.getLastErrorMesg() + "\n" +
-                                               Smarts.getLastErrorLocation());
+                                               result.getMessage() + "\n" +
+                                               result.displayErrorLocation());
         this.pattern = Pattern.findSubstructure(query);
     }
 
