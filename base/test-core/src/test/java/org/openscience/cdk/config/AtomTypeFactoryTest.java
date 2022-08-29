@@ -18,31 +18,28 @@
  */
 package org.openscience.cdk.config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.test.CDKTestCase;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Checks the functionality of the AtomTypeFactory.
@@ -56,19 +53,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     private static final String  JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
     private static final String  W3C_XML_SCHEMA       = "http://www.w3.org/2001/XMLSchema";
-
-    static File                  tmpCMLSchema;
-
-    static {
-        try {
-            InputStream in = AtomTypeFactoryTest.class.getClassLoader().getResourceAsStream(
-                    "org/openscience/cdk/io/cml/data/cml25b1.xsd");
-            tmpCMLSchema = copyFileToTmp("cml2.5.b1", ".xsd", in, null, null);
-        } catch (IOException e) {
-            LoggingToolFactory.createLoggingTool(AtomTypeFactoryTest.class)
-                              .warn("Unexpected Error:", e);
-        }
-    }
+    public static final String CML_XSD_LOCATION = "/org/openscience/cdk/io/cml/data/cml25b1.xsd";
 
     @Test
     public void testAtomTypeFactory() {
@@ -285,60 +270,65 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     @Test
     public void testCanReadCMLSchema() throws Exception {
-        InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
-        Assert.assertNotNull("Could not find the CML schema", cmlSchema);
+        try (InputStream cmlSchema = getClass().getResourceAsStream(CML_XSD_LOCATION)) {
+            Assert.assertNotNull("Could not find the CML schema", cmlSchema);
 
-        DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-        // make sure the schema is read
-        Document schemaDoc = parser.parse(cmlSchema);
-        Assert.assertNotNull(schemaDoc.getFirstChild());
-        Assert.assertEquals("xsd:schema", schemaDoc.getFirstChild().getNodeName());
+            // make sure the schema is read
+            Document schemaDoc = parser.parse(cmlSchema);
+            Assert.assertNotNull(schemaDoc.getFirstChild());
+            Assert.assertEquals("xsd:schema", schemaDoc.getFirstChild().getNodeName());
+        }
     }
 
     @Test
     public void testXMLValidityMM2() throws Exception {
-        assertValidCML("org/openscience/cdk/config/data/mm2_atomtypes.xml", "MM2");
+        assertValidCML("/org/openscience/cdk/config/data/mm2_atomtypes.xml", "MM2");
     }
 
     @Test
     public void testXMLValidityMMFF94() throws Exception {
-        assertValidCML("org/openscience/cdk/config/data/mmff94_atomtypes.xml", "MMFF94");
+        assertValidCML("/org/openscience/cdk/config/data/mmff94_atomtypes.xml", "MMFF94");
     }
 
     @Test
     public void testXMLValidityMol2() throws Exception {
-        assertValidCML("org/openscience/cdk/config/data/mol2_atomtypes.xml", "Mol2");
+        assertValidCML("/org/openscience/cdk/config/data/mol2_atomtypes.xml", "Mol2");
     }
 
     @Test
     public void testXMLValidityPDB() throws Exception {
-        assertValidCML("org/openscience/cdk/config/data/pdb_atomtypes.xml", "PDB");
+        assertValidCML("/org/openscience/cdk/config/data/pdb_atomtypes.xml", "PDB");
     }
 
     @Test
     public void testXMLValidityStructGen() throws Exception {
-        assertValidCML("org/openscience/cdk/config/data/structgen_atomtypes.xml", "StructGen");
+        assertValidCML("/org/openscience/cdk/config/data/structgen_atomtypes.xml", "StructGen");
     }
 
     private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(atomTypeList);
-        File tmpInput = copyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", "file://"
-                + tmpCMLSchema.getAbsolutePath());
-        Assert.assertNotNull("Could not find the atom type list CML source", ins);
+        try (InputStream in = getClass().getResourceAsStream(atomTypeList);
+             InputStream cmlSchema = getClass().getResourceAsStream(CML_XSD_LOCATION)) {
 
-        InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
-        Assert.assertNotNull("Could not find the CML schema", cmlSchema);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-        factory.setValidating(true);
-        factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-        factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
-        factory.setFeature("http://apache.org/xml/features/validation/schema", true);
+            Assert.assertNotNull("Could not find the CML schema", cmlSchema);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            factory.setValidating(true);
+            // JWM not needed?
+            // factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+            // factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
+            factory.setFeature("http://apache.org/xml/features/validation/schema", true);
 
-        DocumentBuilder parser = factory.newDocumentBuilder();
-        parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
-        parser.parse(new FileInputStream(tmpInput));
+            DocumentBuilder parser = factory.newDocumentBuilder();
+            parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
+            parser.setEntityResolver((publicId, systemId) -> {
+                if (systemId.endsWith("/cml25b1.xsd"))
+                    return new InputSource(cmlSchema);
+                return null;
+            });
+            parser.parse(in);
+        }
     }
 
     /**
