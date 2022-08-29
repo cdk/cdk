@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.smarts.SmartsResult;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -104,8 +105,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         atomContainer.addBond(0, 1, IBond.Order.SINGLE);
         atomContainer.addBond(1, 2, IBond.Order.SINGLE);
         IQueryAtomContainer query = new QueryAtomContainer(DefaultChemObjectBuilder.getInstance());
-        if (!Smarts.parse(query, "C*C"))
-            Assert.fail(Smarts.getLastErrorMesg());
+        SmartsResult result = Smarts.parseToResult(query, "C*C");
+        if (!result.ok())
+            Assert.fail(result.getMessage());
 
         List<List<RMap>> list = uiTester.getSubgraphMaps(atomContainer, query);
 
@@ -583,8 +585,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
     @Test
     public void testUITSymmetricMatch() throws Exception {
         QueryAtomContainer q = new QueryAtomContainer(DefaultChemObjectBuilder.getInstance());
-        if (!Smarts.parse(q, "C**C"))
-            Assert.fail(Smarts.getLastErrorMesg());
+        SmartsResult result = Smarts.parseToResult(q, "C**C");
+        if (!result.ok())
+            Assert.fail(result.getMessage());
 
         //Creating 'SCCS' target molecule
         AtomContainer target = new AtomContainer();

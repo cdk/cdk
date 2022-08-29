@@ -94,6 +94,22 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
  *         group 8</li>
  * </ul>
  * <br>
+ * In threaded environments error handling can be improved by using the
+ * {@link org.openscience.cdk.smarts.SmartsResult} return type. Other wise the
+ * error message is set on a shared variable which is access via
+ * {@link #getLastErrorMesg()}.
+ * <pre>
+ * {@code
+ * IAtomContainer mol = ...;
+ * SmartsResult res = Smarts.parseToResult(mol, "[aD3]a-a([aD3])[aD3]");
+ * if (res.ok()) {
+ *     String smarts = Smarts.generate(mol);
+ * } else {
+ *     System.err.println(res.getMessage());
+ * }
+ * }
+ * </pre>
+ * <br>
  * In addition to the flavors above CACTVS toolkit style ranges are supported.
  * For example <code>[D{2-4}]</code> means degree 2, 3, or 4. On writing such
  * ranges are converted to <code>[D2,D3,D4]</code>.
@@ -144,20 +160,22 @@ public final class Smarts {
         }
     }
 
-    public static final ThreadLocal<SmartsError> lastError = new ThreadLocal<>();
+    private static SmartsError lastError = null;
 
     private static void setErrorMesg(String sma, int pos, String str) {
-        lastError.set(new SmartsError(sma, pos, str));
+        lastError = new SmartsError(sma, pos, str);
     }
 
     /**
      * Access the error message from previously parsed SMARTS (when
-     * {@link #parse}=false).
+     * {@link #parse}=false). <br>
+     * Note: This is not thread-safe, in threaded environments use
+     * {@link #parseToResult}
      *
      * @return the error message, or null if none
      */
     public static String getLastErrorMesg() {
-        SmartsError error = lastError.get();
+        SmartsError error = lastError;
         if (error != null)
             return error.mesg;
         return null;
@@ -165,12 +183,14 @@ public final class Smarts {
 
     /**
      * Access a display of the error position from previously parsed SMARTS
-     * (when {@link #parse}=false)
+     * (when {@link #parse}=false). <br>
+     * Note: This is not thread-safe, in threaded environments use
+     * {@link #parseToResult}.
      *
      * @return the error message, or null if none
      */
     public static String getLastErrorLocation() {
-        SmartsError error = lastError.get();
+        SmartsError error = lastError;
         if (error != null) {
             StringBuilder sb = new StringBuilder();
             sb.append(error.str);
@@ -2186,19 +2206,58 @@ public final class Smarts {
      *
      * @param mol the molecule to store the query in
      * @param smarts the SMARTS string
+     * @param flavor (optional) the SMARTS flavor, default is {@link Smarts#FLAVOR_LOOSE}.
+     * @see Expr
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryAtom
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryBond
+     * @return the result of the SMARTS
+     */
+    public static SmartsResult parseToResult(IAtomContainer mol,
+                                             String smarts,
+                                             int flavor) {
+        Parser state = new Parser(mol, smarts, flavor);
+        if (!state.parse()) {
+            return new SmartsResult(smarts, state.pos, state.error);
+        }
+        return new SmartsResult(smarts);
+    }
+
+    /**
+     * Parse the provided SMARTS string appending query atom/bonds to the
+     * provided molecule. This method allows the flavor of SMARTS to specified
+     * that changes the meaning of queries.
+     *
+     * @param mol the molecule to store the query in
+     * @param smarts the SMARTS string
+     * @see Expr
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryAtom
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryBond
+     * @return the result of the SMARTS
+     */
+    public static SmartsResult parseToResult(IAtomContainer mol,
+                                             String smarts) {
+        return parseToResult(mol, smarts, FLAVOR_LOOSE);
+    }
+
+    /**
+     * Parse the provided SMARTS string appending query atom/bonds to the
+     * provided molecule. This method allows the flavor of SMARTS to specified
+     * that changes the meaning of queries.
+     *
+     * @param mol the molecule to store the query in
+     * @param smarts the SMARTS string
      * @param flavor the SMARTS flavor (e.g. {@link Smarts#FLAVOR_LOOSE}.
      * @see Expr
      * @see org.openscience.cdk.isomorphism.matchers.IQueryAtom
      * @see org.openscience.cdk.isomorphism.matchers.IQueryBond
-     * @return whether the SMARTS was valid
+     * @return whether the SMARTS was valid, if invalid the
+     *         {@link #getLastErrorMesg()} is set.
      */
     public static boolean parse(IAtomContainer mol, String smarts, int flavor) {
-        Parser state = new Parser(mol, smarts, flavor);
-        if (!state.parse()) {
-            setErrorMesg(smarts, state.pos, state.error);
-            return false;
-        }
-        return true;
+        SmartsResult result = parseToResult(mol, smarts, flavor);
+        if (!result.ok())
+            setErrorMesg(smarts, result.getPosition(), result.getMessage());
+        return result.ok();
     }
 
     /**
@@ -2210,7 +2269,8 @@ public final class Smarts {
      * @see Expr
      * @see org.openscience.cdk.isomorphism.matchers.IQueryAtom
      * @see org.openscience.cdk.isomorphism.matchers.IQueryBond
-     * @return whether the SMARTS was valid
+     * @return whether the SMARTS was valid, if invalid the
+     *         {@link #getLastErrorMesg()} is set.
      */
     public static boolean parse(IAtomContainer mol, String smarts) {
         return parse(mol, smarts, FLAVOR_LOOSE);
