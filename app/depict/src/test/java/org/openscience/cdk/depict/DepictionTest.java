@@ -75,7 +75,7 @@ public class DepictionTest {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
         String svg = dg.depict(ac).toSvgStr();
-        String nl = System.getProperty("line.separator");
+        String nl = "\n";
         String[] lines = svg.split(nl,3);
         assertEquals("<?xml version='1.0' encoding='UTF-8'?>", lines[0]);
         assertEquals("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">", lines[1]);
