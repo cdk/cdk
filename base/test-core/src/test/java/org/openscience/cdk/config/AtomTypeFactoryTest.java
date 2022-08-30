@@ -31,14 +31,10 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -50,10 +46,11 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     final static AtomTypeFactory atf                  = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
 
-    private static final String  JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-
-    private static final String  W3C_XML_SCHEMA       = "http://www.w3.org/2001/XMLSchema";
-    public static final String CML_XSD_LOCATION = "/org/openscience/cdk/io/cml/data/cml25b1.xsd";
+//    private static final String  JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+//
+//    private static final String  W3C_XML_SCHEMA       = "http://www.w3.org/2001/XMLSchema";
+    private static final String CML_XSD_FILENAME = "cml25b1.xsd";
+    private static final String CML_XSD_ABSOLUTE_PATH = "/org/openscience/cdk/io/cml/data" + "/" + CML_XSD_FILENAME;
 
     @Test
     public void testAtomTypeFactory() {
@@ -62,7 +59,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetInstance_InputStream_String_IChemObjectBuilder() throws Exception {
+    public void testGetInstance_InputStream_String_IChemObjectBuilder() {
         String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         AtomTypeFactory atf = AtomTypeFactory.getInstance(ins, "xml", new ChemObject().getBuilder());
@@ -71,7 +68,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetInstance_String_IChemObjectBuilder() throws Exception {
+    public void testGetInstance_String_IChemObjectBuilder() {
         String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
         AtomTypeFactory atf = AtomTypeFactory.getInstance(configFile, new ChemObject().getBuilder());
         Assert.assertNotNull(atf);
@@ -79,19 +76,19 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetInstance_IChemObjectBuilder() throws Exception {
+    public void testGetInstance_IChemObjectBuilder() {
         AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
         Assert.assertNotNull(atf);
     }
 
     @Test
-    public void testGetSize() throws Exception {
+    public void testGetSize() {
         AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
         Assert.assertNotSame(0, atf.getSize());
     }
 
     @Test
-    public void testGetAllAtomTypes() throws Exception {
+    public void testGetAllAtomTypes() {
         AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
         IAtomType[] types = atf.getAllAtomTypes();
         Assert.assertNotNull(types);
@@ -109,7 +106,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomTypes_String() throws Exception {
+    public void testGetAtomTypes_String() {
         IAtomType[] atomTypes = atf.getAtomTypes("C");
 
         Assert.assertNotNull(atomTypes);
@@ -270,7 +267,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     @Test
     public void testCanReadCMLSchema() throws Exception {
-        try (InputStream cmlSchema = getClass().getResourceAsStream(CML_XSD_LOCATION)) {
+        try (InputStream cmlSchema = getClass().getResourceAsStream(CML_XSD_ABSOLUTE_PATH)) {
             Assert.assertNotNull("Could not find the CML schema", cmlSchema);
 
             DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -309,9 +306,11 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
         try (InputStream in = getClass().getResourceAsStream(atomTypeList);
-             InputStream cmlSchema = getClass().getResourceAsStream(CML_XSD_LOCATION)) {
+             InputStream cmlSchema = getClass().getResourceAsStream(CML_XSD_ABSOLUTE_PATH)) {
 
+            Assert.assertNotNull("Could not find the atom type list CML source", in);
             Assert.assertNotNull("Could not find the CML schema", cmlSchema);
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
             factory.setValidating(true);
@@ -323,7 +322,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
             DocumentBuilder parser = factory.newDocumentBuilder();
             parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
             parser.setEntityResolver((publicId, systemId) -> {
-                if (systemId.endsWith("/cml25b1.xsd"))
+                if (systemId.endsWith(CML_XSD_FILENAME))
                     return new InputSource(cmlSchema);
                 return null;
             });
@@ -331,43 +330,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         }
     }
 
-    /**
-     * Copies a file to TMP (whatever that is on your platform), and optionally
-     * replaces a String on the fly. The temporary file will be named prefix+suffix
-     *
-     * @param prefix      Prefix of the temporary file name
-     * @param suffix      Suffix of the temporary file name
-     * @param in          InputStream to copy from
-     * @param toReplace   String to replace. Null, if nothing needs to be replaced.
-     * @param replaceWith String that replaces the toReplace. Null, if nothing needs to be replaced.
-     *
-     * @return            The temporary file/
-     * @throws IOException   if the temp file cannot be created
-     */
-    private static File copyFileToTmp(String prefix, String suffix, InputStream in, String toReplace, String replaceWith)
-            throws IOException {
-        File tmpFile = File.createTempFile(prefix, suffix);
-        FileOutputStream out = new FileOutputStream(tmpFile);
-        byte[] buf = new byte[4096];
-        int i;
-        while ((i = in.read(buf)) != -1) {
-            if (toReplace != null && replaceWith != null && i >= toReplace.length()
-                    && new String(buf).contains(toReplace)) {
-                // a replacement has been defined
-                String newString = new String(buf).replaceAll(toReplace, replaceWith);
-                out.write(newString.getBytes());
-            } else {
-                // no replacement needs to be done
-                out.write(buf, 0, i);
-            }
-        }
-        in.close();
-        out.close();
-        tmpFile.deleteOnExit();
-        return tmpFile;
-    }
-
-    class SAXValidityErrorHandler implements ErrorHandler {
+    static class SAXValidityErrorHandler implements ErrorHandler {
 
         private final String atomTypeList;
 
@@ -376,17 +339,17 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         }
 
         @Override
-        public void error(SAXParseException arg0) throws SAXException {
+        public void error(SAXParseException arg0) {
             Assert.fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
         }
 
         @Override
-        public void fatalError(SAXParseException arg0) throws SAXException {
+        public void fatalError(SAXParseException arg0) {
             Assert.fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
         }
 
         @Override
-        public void warning(SAXParseException arg0) throws SAXException {
+        public void warning(SAXParseException arg0) {
             // warnings are fine
         }
 
