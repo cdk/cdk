@@ -1504,6 +1504,7 @@ public final class Smarts {
 
         private boolean parseAtomExpr() {
             QueryAtom atom = new QueryAtom(mol.getBuilder());
+            atom.setProperty("cdk.smarts.iscomplex", true);
             Expr      expr = new Expr(Expr.Type.NONE);
             atom.setExpression(expr);
             if (!parseExplicitHydrogen(atom, expr) &&
