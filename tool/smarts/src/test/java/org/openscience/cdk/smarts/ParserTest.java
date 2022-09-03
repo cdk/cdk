@@ -19,10 +19,13 @@
 package org.openscience.cdk.smarts;
 
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.CDKTestCase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -1503,6 +1506,26 @@ public class ParserTest extends CDKTestCase {
     @Test
     public void atomMaps2() throws Exception {
         parse("[O!RX2:2]-[C&x2X3h0]1=[C&x2X3h1]-[C&x3X3h0]2=[C&x3X3h0](-[C&x2X4h2]-[C&x2X4h2]-[C&x2X3h0](=[O!RX&h0])-[N&x2X3h1]-2)-[C&x2X3h1]=[C&x2X3h1]-1");
+    }
+
+    @Test
+    public void testComplexFlag() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newAtomContainer();
+        SmartsResult smartsResult = Smarts.parseToResult(mol, "[CH3:1][C:2][H]>>[CH3:1][C:2]O");
+        if (!smartsResult.ok())
+            throw new InvalidSmarts(smartsResult.getMessage());
+        int compCount = 0;
+        int implCount = 0;
+        for (IAtom atom : mol.atoms()) {
+            Boolean complex = atom.getProperty("cdk.smarts.iscomplex");
+            if (complex == null || !complex)
+                implCount++;
+            else
+                compCount++;
+        }
+        MatcherAssert.assertThat(compCount, CoreMatchers.is(5));
+        MatcherAssert.assertThat(implCount, CoreMatchers.is(1));
     }
 
     /**
