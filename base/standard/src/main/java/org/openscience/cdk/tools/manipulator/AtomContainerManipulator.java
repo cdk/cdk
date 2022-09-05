@@ -182,7 +182,7 @@ public class AtomContainerManipulator {
             // resync: get the AtomRef in the context of the new container. This
             // presumes atoms gets added at last position which is currently
             // always the case
-            remap.put(atom, dest.getAtom(atom.getAtomicNumber() - 1));
+            remap.put(atom, dest.getAtom(dest.getAtomCount() - 1));
         }
 
         for (IBond bond : source.bonds()) {
