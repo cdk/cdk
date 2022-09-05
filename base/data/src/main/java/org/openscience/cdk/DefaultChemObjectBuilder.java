@@ -239,6 +239,14 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
                 return new AtomContainer2(0, 0, 0, 0);
 
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public IReaction newReaction() {
+            return new Reaction();
+        }
     }
 
     /**
@@ -293,5 +301,13 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
     @Override
     public IAtomContainer newAtomContainer() {
         return Holder.INSTANCE.newAtomContainer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IReaction newReaction() {
+        return Holder.INSTANCE.newReaction();
     }
 }

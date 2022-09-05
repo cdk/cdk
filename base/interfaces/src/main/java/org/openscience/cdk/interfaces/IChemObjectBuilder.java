@@ -54,7 +54,7 @@ public interface IChemObjectBuilder {
 
     /**
      * Create a new bond using the default constructor. This method is considerably faster
-     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for
+     * than the dynamic dispatch of {@code newInstance(IBond.class)} and should be used for
      * high throughput applications (e.g. IO).
      *
      * @return new bond
@@ -63,10 +63,20 @@ public interface IChemObjectBuilder {
 
     /**
      * Create a new atom container using the default constructor. This method is considerably faster
-     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for
+     * than the dynamic dispatch of {@code newInstance(IAtomContainer.class)} and should be used for
      * high throughput applications (e.g. IO).
      *
      * @return the new atom container
      */
     IAtomContainer newAtomContainer();
+
+    /**
+     * Create a new reaction using the default constructor. This method is considerably faster
+     * than the dynamic dispatch of {@code newInstance(IReaction.class)} and should be used for
+     * high throughput applications (e.g. IO).
+     *
+     * @return the new reaction
+     */
+    IReaction newReaction();
+
 }
