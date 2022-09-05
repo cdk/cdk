@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -70,6 +71,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
@@ -154,6 +156,103 @@ public class AtomContainerManipulator {
 
         return substructure;
     }
+
+    /**
+     * Copy selected atoms/bonds from a 'source' molecule to the provided
+     * 'dest'ination. For consistency the bond filter is only checked if both
+     * atoms of a bond pass the atom filter. i.e. you can't add a bond with
+     * atoms that would not be copied.
+     *
+     * @param dest the destination molecule
+     * @param source the source molecule
+     * @param atomFilter the atom filter indicates which atoms to copy
+     * @param bondFilter the bond filter indicates which bonds to copy
+     */
+    public static void copy(IAtomContainer dest,
+                            IAtomContainer source,
+                            Predicate<IAtom> atomFilter,
+                            Predicate<IBond> bondFilter) {
+        Map<IChemObject, IChemObject> remap = new HashMap<>();
+        for (IAtom atom : source.atoms()) {
+            if (!atomFilter.test(atom))
+                continue;
+            dest.addAtom(atom);
+            source.getConnectedLonePairsList(atom).forEach(dest::addLonePair);
+            source.getConnectedSingleElectronsList(atom).forEach(dest::addSingleElectron);
+            // resync: get the AtomRef in the context of the new container. This
+            // presumes atoms gets added at last position which is currently
+            // always the case
+            remap.put(atom, dest.getAtom(atom.getAtomicNumber() - 1));
+        }
+
+        for (IBond bond : source.bonds()) {
+            IAtom beg = (IAtom) remap.get(bond.getBegin());
+            IAtom end = (IAtom) remap.get(bond.getEnd());
+            if (beg != null && end != null && bondFilter.test(bond)) {
+                dest.addBond(beg.getIndex(), end.getIndex(), bond.getOrder(), bond.getStereo());
+                IBond destBond = dest.getBond(dest.getBondCount() - 1);
+                destBond.setIsInRing(bond.isInRing());
+                destBond.setIsAromatic(bond.isAromatic());
+                destBond.setProperties(bond.getProperties());
+                remap.put(beg, destBond);
+            }
+        }
+
+        for (IStereoElement<?, ?> sourceStereo : source.stereoElements()) {
+            IStereoElement<?, ?> destStereo = sourceStereo.mapStrict(remap);
+            if (destStereo != null)
+                dest.addStereoElement(destStereo);
+        }
+    }
+
+    /**
+     * Copy selected atoms from a 'source' molecule to the provided
+     * 'dest'ination.
+     *
+     * @param dest the destination molecule
+     * @param source the source molecule
+     * @param atomFilter the atom filter indicates which atoms to copy
+     * @see #copy(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IAtomContainer, java.util.function.Predicate, java.util.function.Predicate)
+     */
+    public static void copy(IAtomContainer dest,
+                            IAtomContainer source,
+                            Predicate<IAtom> atomFilter) {
+        copy(dest, source, atomFilter, b -> true);
+    }
+
+    /**
+     * Copy atoms in the collection from a 'source' molecule to the provided
+     * 'dest'ination. For performance a {@link java.util.Set} of 'atoms' is
+     * preferred.
+     *
+     * @param dest the destination molecule
+     * @param source the source molecule
+     * @param atoms the atom collection indicates which atoms to copy
+     * @see #copy(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IAtomContainer, java.util.function.Predicate, java.util.function.Predicate)
+     */
+    public static void copy(IAtomContainer dest,
+                            IAtomContainer source,
+                            Collection<IAtom> atoms) {
+        copy(dest, source, atoms::contains, b -> true);
+    }
+
+    /**
+     * Extract a substructure from a 'source' molecule to the provided
+     * 'dest'ination based on the collection of atoms. For performance a
+     * {@link java.util.Set} of 'atoms' is preferred.
+     *
+     * @param source the source molecule
+     * @param atoms the atom collection indicates which atoms to copy
+     * @return the extracted molecule
+     * @see #copy(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IAtomContainer, java.util.function.Predicate, java.util.function.Predicate)
+     */
+    public static IAtomContainer extractSubstructure(IAtomContainer source,
+                                                     Collection<IAtom> atoms) {
+        IAtomContainer dest = source.getBuilder().newAtomContainer();
+        copy(dest, source, atoms::contains, b -> true);
+        return dest;
+    }
+
 
     /**
      * Returns an atom in an atomcontainer identified by id
