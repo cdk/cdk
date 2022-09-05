@@ -69,7 +69,7 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testNewInstance_Class_arrayObject() throws Exception {
+    public void testNewInstance_Class_arrayObject() {
         // throw random stuff; it should fail
         IChemObjectBuilder builder = rootObject.getBuilder();
         builder.newInstance(IAtom.class, new Object[2]);
@@ -658,6 +658,13 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         IChemObjectBuilder builder = rootObject.getBuilder();
         ISubstance substance = builder.newInstance(ISubstance.class);
         Assert.assertNotNull(substance);
+    }
+
+    @Test
+    public void testNewReaction_dedicatedMethod() {
+        IChemObjectBuilder builder = rootObject.getBuilder();
+        IReaction reaction = builder.newReaction();
+        Assert.assertNotNull(reaction);
     }
 
 }

@@ -68,7 +68,6 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  * implementation. The factory create debug objects which will log their
  * behaviour when used.
  *
- * 
  * <pre>{@code
  *     IChemObjectBuilder builder = DebugChemObjectBuilder.getInstance();
  *
@@ -197,6 +196,14 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
         public IAtomContainer newAtomContainer() {
             return new DebugAtomContainer(0, 0, 0, 0);
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public IReaction newReaction() {
+            return new DebugReaction();
+        }
     }
 
     /**
@@ -251,5 +258,13 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
     @Override
     public IAtomContainer newAtomContainer() {
         return Holder.INSTANCE.newAtomContainer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IReaction newReaction() {
+        return Holder.INSTANCE.newReaction();
     }
 }

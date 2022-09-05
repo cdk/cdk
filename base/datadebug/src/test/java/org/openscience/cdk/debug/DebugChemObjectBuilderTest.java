@@ -25,8 +25,7 @@ import org.openscience.cdk.test.AbstractChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Checks the functionality of the {@link IChemObjectBuilder}
- * {@link DebugChemObjectBuilder} implementation.
+ * Checks the functionality of the {@link IChemObjectBuilder} {@link DebugChemObjectBuilder} implementation.
  *
  * @cdk.module test-datadebug
  */

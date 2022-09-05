@@ -25,8 +25,7 @@ import org.openscience.cdk.test.AbstractChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Checks the functionality of the {@link IChemObjectBuilder}
- * {@link SilentChemObjectBuilder} implementation.
+ * Checks the functionality of the {@link IChemObjectBuilder} {@link SilentChemObjectBuilder} implementation.
  *
  * @cdk.module test-silent
  */
