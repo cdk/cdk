@@ -177,11 +177,7 @@ public class AtomContainerManipulator {
             if (!atomFilter.test(atom))
                 continue;
             dest.addAtom(atom);
-            source.getConnectedLonePairsList(atom).forEach(dest::addLonePair);
-            source.getConnectedSingleElectronsList(atom).forEach(dest::addSingleElectron);
-            // resync: get the AtomRef in the context of the new container. This
-            // presumes atoms gets added at last position which is currently
-            // always the case
+            // for AtomContainer2 we want the new "AtomRef" in the new container
             remap.put(atom, dest.getAtom(dest.getAtomCount() - 1));
         }
 
@@ -196,6 +192,18 @@ public class AtomContainerManipulator {
                 destBond.setProperties(bond.getProperties());
                 remap.put(beg, destBond);
             }
+        }
+
+        for (ISingleElectron se : source.singleElectrons()) {
+            IAtom newAtom = (IAtom) remap.get(se.getAtom());
+            if (newAtom != null)
+                dest.addSingleElectron(dest.indexOf(newAtom));
+        }
+
+        for (ILonePair lp : source.lonePairs()) {
+            IAtom newAtom = (IAtom) remap.get(lp.getAtom());
+            if (newAtom != null)
+                dest.addLonePair(dest.indexOf(newAtom));
         }
 
         for (IStereoElement<?, ?> sourceStereo : source.stereoElements()) {
