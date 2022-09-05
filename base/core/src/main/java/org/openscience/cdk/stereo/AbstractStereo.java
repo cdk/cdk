@@ -184,6 +184,34 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
         return se;
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public final IStereoElement<F, C> mapStrict(Map<IChemObject, IChemObject> chemobjs) {
+        if (chemobjs == null)
+            throw new NullPointerException("chemobj map was not provided!");
+        F newfocus = (F) chemobjs.get(focus);
+        if (newfocus == null)
+            return null;
+        List<C> newcarriers = carriers;
+        for (int i = 0; i < newcarriers.size(); i++) {
+            C newcarrier = (C) chemobjs.get(newcarriers.get(i));
+            if (newcarrier != null) {
+                // make a copy if this is the first change
+                if (newcarriers == carriers)
+                    newcarriers = new ArrayList<>(carriers);
+                newcarriers.set(i, newcarrier);
+            } else {
+                return null;
+            }
+        }
+        // no change, return self
+        if (newfocus == focus && newcarriers == carriers)
+            return this;
+        IStereoElement<F, C> se = create(newfocus, newcarriers, value);
+        se.setGroupInfo(getGroupInfo());
+        return se;
+    }
+
     protected abstract IStereoElement<F,C> create(F focus, List<C> carriers, int cfg);
 
     /**

@@ -310,7 +310,37 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      */
     boolean contains(final IAtom atom);
 
+    /**
+     * Update the stereo using the remapping of atoms/bonds in this instance to
+     * a new stereo element using the provided atom/bond mapping. This allows
+     * the stereo element to be transferred between a cloned or aligned (i.e.
+     * isomorphic) chemical graph.
+     *
+     * If no mapping is found for a given atom or bond the existing atom/bond
+     * it is left intact. If you want to remove stereo in such cases please use
+     * {@link #mapStrict}.
+     *
+     * @param chemobjs chem object mapping
+     * @return a new stereo element in the same configuration but with atoms/bonds
+     *         replaced with their mapped equivalence.
+     */
     IStereoElement<F,C> map(Map<IChemObject, IChemObject> chemobjs);
+
+    /**
+     * Update the stereo using the remapping of atoms/bonds in this instance to
+     * a new stereo element using the provided atom/bond mapping. This allows
+     * the stereo element to be transferred between a cloned or aligned (i.e.
+     * isomorphic) chemical graph.
+     *
+     * <b>If no mapping is found for a given atom or bond a new element is NOT
+     * created.</b>
+     *
+     * @param chemobjs chem object mapping
+     * @return a new stereo element in the same configuration but with atoms/bonds
+     *         replaced with their mapped equivalence.
+     */
+    IStereoElement<F,C> mapStrict(Map<IChemObject, IChemObject> chemobjs);
+
     /**
      * Map the atoms/bonds in this instance to a new stereo element using the
      * provided atom/bond mapping. This allows the stereo element to be transferred
@@ -319,9 +349,9 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      * If no mapping is found for a given atom or bond it is left intact.
      * However the provided atom and bonds maps must not be null.
      *
-     * @param atoms nullable atom mapping, used to convert the original atoms to their mapped
+     * @param atoms used to convert the original atoms to their mapped
      *              counterparts
-     * @param bonds nullable bond mapping, used to convert the original bonds to their mapped
+     * @param bonds used to convert the original bonds to their mapped
      *              counterparts
      * @return a new stereo element in the same configuration but with atoms/bonds
      *         replaced with their mapped equivalence.
