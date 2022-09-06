@@ -63,17 +63,17 @@ final class ExclusiveAtomMatches implements Predicate<int[]> {
         return false;
     }
 
-    private boolean add(int[] mapping) {
-        for (int atomIdx : mapping)
-            this.visit.set(atomIdx);
-        return true;
-    }
-
     // Has none of the atom indexes been seen already?
-    private boolean none(int[] mapping) {
+    boolean none(int[] mapping) {
         for (int atomIdx : mapping)
             if (this.visit.get(atomIdx))
                 return false;
+        return true;
+    }
+
+    boolean add(int[] mapping) {
+        for (int atomIdx : mapping)
+            this.visit.set(atomIdx);
         return true;
     }
 }

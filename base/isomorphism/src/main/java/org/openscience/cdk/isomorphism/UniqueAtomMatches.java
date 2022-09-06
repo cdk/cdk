@@ -65,7 +65,15 @@ final class UniqueAtomMatches implements Predicate<int[]> {
         return false;
     }
 
-    private boolean add(int[] mapping) {
+    // If some (at least one) has not been seen yet
+    boolean some(int[] mapping) {
+        for (int atomIdx : mapping)
+            if (!this.visit.get(atomIdx))
+                return true;
+        return false;
+    }
+
+    boolean add(int[] mapping) {
         for (int atomIdx : mapping)
             this.visit.set(atomIdx);
         return true;
@@ -80,13 +88,5 @@ final class UniqueAtomMatches implements Predicate<int[]> {
      */
     public boolean apply(int[] ints) {
         return test(ints);
-    }
-
-    // If some (at least one) has not been seen yet
-    private boolean some(int[] mapping) {
-        for (int atomIdx : mapping)
-            if (!this.visit.get(atomIdx))
-                return true;
-        return false;
     }
 }
