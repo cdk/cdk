@@ -105,7 +105,7 @@ final class DfState implements Iterable<int[]> {
         if (builder == null) {
             builder = findBuilder();
             if (builder == null)
-                throw new IllegalArgumentException("Please ensure query molecule" +
+                throw new IllegalArgumentException("Please ensure query molecule " +
                                                    "has a IChemObjectBuilder set!");
         }
 
