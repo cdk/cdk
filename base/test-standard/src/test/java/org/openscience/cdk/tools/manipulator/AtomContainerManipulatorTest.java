@@ -80,6 +80,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         ac = TestMoleculeFactory.makeAlphaPinene();
     }
 
+    @Ignore
     @Test
     public void testExtractSubstructure() throws CloneNotSupportedException {
         IAtomContainer source = TestMoleculeFactory.makeEthylCyclohexane();
@@ -92,8 +93,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     public void testCopy_completeCopy() {
         // arrange
-//        IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
-        IAtomContainer atomContainerSource = new AtomContainer();
+        IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
+//        IAtomContainer atomContainerSource = new org.openscience.cdk.silent.AtomContainer();
 
         atomContainerSource.addAtom(new Atom("C"));
         atomContainerSource.addAtom(new Atom("C"));
