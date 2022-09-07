@@ -139,8 +139,7 @@ public class AtomContainerManipulator {
      * @deprecated use {@link #extractSubstructure(IAtomContainer, Collection)} instead
      */
     @Deprecated
-    public static IAtomContainer extractSubstructure(IAtomContainer atomContainer, int... atomIndices)
-            throws CloneNotSupportedException {
+    public static IAtomContainer extractSubstructure(IAtomContainer atomContainer, int... atomIndices) {
         return extractSubstructure(atomContainer,
                 Arrays.stream(atomIndices).mapToObj(atomContainer::getAtom).collect(Collectors.toSet()));
     }
