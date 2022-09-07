@@ -135,7 +135,6 @@ public class AtomContainerManipulator {
      * @param atomContainer the source container to extract from
      * @param atomIndices the indices of the substructure
      * @return a cloned atom container with a substructure of the source
-     * @throws CloneNotSupportedException if the source container cannot be cloned
      * @deprecated use {@link #extractSubstructure(IAtomContainer, Collection)} instead
      */
     @Deprecated
