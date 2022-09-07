@@ -80,21 +80,18 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         ac = TestMoleculeFactory.makeAlphaPinene();
     }
 
-    @Ignore
     @Test
-    public void testExtractSubstructure() throws CloneNotSupportedException {
+    public void testExtractSubstructure() {
         IAtomContainer source = TestMoleculeFactory.makeEthylCyclohexane();
         IAtomContainer ringSubstructure = AtomContainerManipulator.extractSubstructure(source, 0, 1, 2, 3, 4, 5);
         Assert.assertEquals(6, ringSubstructure.getAtomCount());
         Assert.assertEquals(6, ringSubstructure.getBondCount());
     }
 
-    @Ignore
     @Test
     public void testCopy_completeCopy() {
         // arrange
         IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
-//        IAtomContainer atomContainerSource = new org.openscience.cdk.silent.AtomContainer();
 
         atomContainerSource.addAtom(new Atom("C"));
         atomContainerSource.addAtom(new Atom("C"));
@@ -119,19 +116,19 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         // assert
         Assert.assertEquals(7, atomContainerDestination.getAtomCount());
         Assert.assertEquals(6, atomContainerDestination.getBondCount());
-        Assert.assertEquals(atomContainerDestination.getAtom(0).getAtomicNumber().intValue(), 6);
-        Assert.assertEquals(atomContainerDestination.getAtom(1).getAtomicNumber().intValue(), 6);
-        Assert.assertEquals(atomContainerDestination.getAtom(2).getAtomicNumber().intValue(), 8);
-        Assert.assertEquals(atomContainerDestination.getAtom(3).getAtomicNumber().intValue(), 6);
-        Assert.assertEquals(atomContainerDestination.getAtom(4).getAtomicNumber().intValue(), 6);
-        Assert.assertEquals(atomContainerDestination.getAtom(5).getAtomicNumber().intValue(), 8);
-        Assert.assertEquals(atomContainerDestination.getAtom(6).getAtomicNumber().intValue(), 8);
-        Assert.assertEquals(atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(1)).getOrder(), Order.SINGLE);
-        Assert.assertEquals(atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(2)).getOrder(), Order.DOUBLE);
-        Assert.assertEquals(atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(3)).getOrder(), Order.SINGLE);
-        Assert.assertEquals(atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder(), Order.SINGLE);
-        Assert.assertEquals(atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(5)).getOrder(), Order.DOUBLE);
-        Assert.assertEquals(atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(6)).getOrder(), Order.SINGLE);
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(5).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(6).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(1)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(3)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(5)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(6)).getOrder());
     }
 
     /**
