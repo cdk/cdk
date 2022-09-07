@@ -158,8 +158,8 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Copy selected atoms/bonds from a 'source' molecule to the provided
-     * 'dest'ination. For consistency the bond filter is only checked if both
+     * Copy selected atoms/bonds from a 'source' molecule to the provided <code>dest</code>ination.
+     * For consistency the bond filter is only checked if both
      * atoms of a bond pass the atom filter. i.e. you can't add a bond with
      * atoms that would not be copied.
      *
@@ -172,7 +172,9 @@ public class AtomContainerManipulator {
                             IAtomContainer source,
                             Predicate<IAtom> atomFilter,
                             Predicate<IBond> bondFilter) {
+        // holds entries of (reference to atom in source, reference to atom in dest)
         Map<IChemObject, IChemObject> remap = new HashMap<>();
+
         for (IAtom atom : source.atoms()) {
             if (!atomFilter.test(atom))
                 continue;
@@ -214,8 +216,7 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Copy selected atoms from a 'source' molecule to the provided
-     * 'dest'ination.
+     * Copy selected atoms from a 'source' molecule to the provided <code>dest</code>ination.
      *
      * @param dest the destination molecule
      * @param source the source molecule
@@ -229,9 +230,8 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Copy atoms in the collection from a 'source' molecule to the provided
-     * 'dest'ination. For performance a {@link java.util.Set} of 'atoms' is
-     * preferred.
+     * Copy atoms in the collection from a 'source' molecule to the provided <code>dest</code>ination.
+     * For performance a {@link java.util.Set} of 'atoms' is preferred.
      *
      * @param dest the destination molecule
      * @param source the source molecule
@@ -245,9 +245,8 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Extract a substructure from a 'source' molecule to the provided
-     * 'dest'ination based on the collection of atoms. For performance a
-     * {@link java.util.Set} of 'atoms' is preferred.
+     * Extract a substructure from a 'source' molecule to the provided <code>dest</code>ination based on the collection of atoms.
+     * For performance a {@link java.util.Set} of <code>atoms</code> is preferred.
      *
      * @param source the source molecule
      * @param atoms the atom collection indicates which atoms to copy
