@@ -72,6 +72,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
@@ -129,32 +130,19 @@ public class AtomContainerManipulator {
      * Extract a substructure from an atom container, in the form of a new
      * cloned atom container with only the atoms with indices in atomIndices and
      * bonds that connect these atoms.
-     *
      * Note that this may result in a disconnected atom container.
      *
      * @param atomContainer the source container to extract from
      * @param atomIndices the indices of the substructure
      * @return a cloned atom container with a substructure of the source
      * @throws CloneNotSupportedException if the source container cannot be cloned
+     * @deprecated use {@link #extractSubstructure(IAtomContainer, Collection)} instead
      */
+    @Deprecated
     public static IAtomContainer extractSubstructure(IAtomContainer atomContainer, int... atomIndices)
             throws CloneNotSupportedException {
-        IAtomContainer substructure = atomContainer.clone();
-        int numberOfAtoms = substructure.getAtomCount();
-        IAtom[] atoms = new IAtom[numberOfAtoms];
-        for (int atomIndex = 0; atomIndex < numberOfAtoms; atomIndex++) {
-            atoms[atomIndex] = substructure.getAtom(atomIndex);
-        }
-
-        Arrays.sort(atomIndices);
-        for (int index = 0; index < numberOfAtoms; index++) {
-            if (Arrays.binarySearch(atomIndices, index) < 0) {
-                IAtom atom = atoms[index];
-                substructure.removeAtom(atom);
-            }
-        }
-
-        return substructure;
+        return extractSubstructure(atomContainer,
+                Arrays.stream(atomIndices).mapToObj(atomContainer::getAtom).collect(Collectors.toSet()));
     }
 
     /**
