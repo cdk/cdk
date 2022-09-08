@@ -21,27 +21,20 @@ package org.openscience.cdk.tools.manipulator;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -57,14 +50,13 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.*;
 import static org.openscience.cdk.tools.manipulator.AtomContainerManipulator.*;
 
@@ -89,10 +81,10 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCopy_completeCopy() {
+    public void testCopy_completeCopy_sourceAtomContainer2_destinationAtomContainer() {
         // arrange
         IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
-
+        // CC(=O)CC(=O)O
         atomContainerSource.addAtom(new Atom("C"));
         atomContainerSource.addAtom(new Atom("C"));
         atomContainerSource.addAtom(new Atom("O"));
@@ -129,6 +121,345 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
         Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(5)).getOrder());
         Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(6)).getOrder());
+    }
+
+    @Test
+    public void testCopy_completeCopy_sourceAtomContainer2_destinationAtomContainer2() {
+        // arrange
+        IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        // CC(=O)CC(=O)O
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addBond(0, 1, Order.SINGLE);
+        atomContainerSource.addBond(1, 2, Order.DOUBLE);
+        atomContainerSource.addBond(1, 3, Order.SINGLE);
+        atomContainerSource.addBond(3, 4, Order.SINGLE);
+        atomContainerSource.addBond(4, 5, Order.DOUBLE);
+        atomContainerSource.addBond(4, 6, Order.SINGLE);
+        Assert.assertEquals(7, atomContainerSource.getAtomCount());
+        Assert.assertEquals(6, atomContainerSource.getBondCount());
+        IAtomContainer atomContainerDestination = SilentChemObjectBuilder.getInstance().newAtomContainer();
+
+        // act
+        AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, x -> true, x -> true);
+
+        // assert
+        Assert.assertEquals(7, atomContainerDestination.getAtomCount());
+        Assert.assertEquals(6, atomContainerDestination.getBondCount());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(5).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(6).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(1)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(3)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(5)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(6)).getOrder());
+    }
+
+    @Test
+    public void testCopy_completeCopy_sourceAtomContainer_destinationAtomContainer2() {
+        // arrange
+        IAtomContainer atomContainerSource = new AtomContainer();
+        // CC(=O)CC(=O)O
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addBond(0, 1, Order.SINGLE);
+        atomContainerSource.addBond(1, 2, Order.DOUBLE);
+        atomContainerSource.addBond(1, 3, Order.SINGLE);
+        atomContainerSource.addBond(3, 4, Order.SINGLE);
+        atomContainerSource.addBond(4, 5, Order.DOUBLE);
+        atomContainerSource.addBond(4, 6, Order.SINGLE);
+        Assert.assertEquals(7, atomContainerSource.getAtomCount());
+        Assert.assertEquals(6, atomContainerSource.getBondCount());
+        IAtomContainer atomContainerDestination = SilentChemObjectBuilder.getInstance().newAtomContainer();
+
+        // act
+        AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, x -> true, x -> true);
+
+        // assert
+        Assert.assertEquals(7, atomContainerDestination.getAtomCount());
+        Assert.assertEquals(6, atomContainerDestination.getBondCount());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(5).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(6).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(1)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(3)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(5)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(6)).getOrder());
+    }
+
+    @Test
+    public void testCopy_completeCopy_sourceAtomContainer_destinationAtomContainer() {
+        // arrange
+        IAtomContainer atomContainerSource = new AtomContainer();
+        // CC(=O)CC(=O)O
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("C"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addAtom(new Atom("O"));
+        atomContainerSource.addBond(0, 1, Order.SINGLE);
+        atomContainerSource.addBond(1, 2, Order.DOUBLE);
+        atomContainerSource.addBond(1, 3, Order.SINGLE);
+        atomContainerSource.addBond(3, 4, Order.SINGLE);
+        atomContainerSource.addBond(4, 5, Order.DOUBLE);
+        atomContainerSource.addBond(4, 6, Order.SINGLE);
+        Assert.assertEquals(7, atomContainerSource.getAtomCount());
+        Assert.assertEquals(6, atomContainerSource.getBondCount());
+        IAtomContainer atomContainerDestination = new AtomContainer();
+
+        // act
+        AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, x -> true, x -> true);
+
+        // assert
+        Assert.assertEquals(7, atomContainerDestination.getAtomCount());
+        Assert.assertEquals(6, atomContainerDestination.getBondCount());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(5).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(6).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(1)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(3)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(5)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(6)).getOrder());
+    }
+
+    @Test
+    public void testCopy_partialDisconnectedCopy_atomPredicate() {
+        // arrange
+        IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        // CC(=O)C=CC(=O)N
+        atomContainerSource.addAtom(new Atom("C")); // #0
+        atomContainerSource.addAtom(new Atom("C")); // #1
+        atomContainerSource.addAtom(new Atom("O")); // #2
+        atomContainerSource.addAtom(new Atom("C")); // #3
+        atomContainerSource.addAtom(new Atom("C")); // #4
+        atomContainerSource.addAtom(new Atom("C")); // #5
+        atomContainerSource.addAtom(new Atom("O")); // #6
+        atomContainerSource.addAtom(new Atom("N")); // #7
+        atomContainerSource.addBond(0, 1, Order.SINGLE); // #0
+        atomContainerSource.addBond(1, 2, Order.DOUBLE); // #1
+        atomContainerSource.addBond(1, 3, Order.SINGLE); // #2
+        atomContainerSource.addBond(3, 4, Order.DOUBLE); // #3
+        atomContainerSource.addBond(4, 5, Order.SINGLE); // #4
+        atomContainerSource.addBond(5, 6, Order.DOUBLE); // #5
+        atomContainerSource.addBond(5, 7, Order.SINGLE); // #6
+        Assert.assertEquals(8, atomContainerSource.getAtomCount());
+        Assert.assertEquals(7, atomContainerSource.getBondCount());
+        IAtomContainer atomContainerDestination = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        Set<IAtom> atomsToInclude = IntStream.of(1,2,3,5,7).mapToObj(atomContainerSource::getAtom).collect(Collectors.toSet());
+
+        // act
+        AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, atomsToInclude::contains);
+
+        // assert
+        Assert.assertEquals(5, atomContainerDestination.getAtomCount());
+        Assert.assertEquals(3, atomContainerDestination.getBondCount());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(7, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(1)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
+    }
+
+    @Test
+    public void testCopy_partialDisconnectedCopy_atomCollection() {
+        // arrange
+        IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        // CC(=O)C=CC(=O)N
+        atomContainerSource.addAtom(new Atom("C")); // #0
+        atomContainerSource.addAtom(new Atom("C")); // #1
+        atomContainerSource.addAtom(new Atom("O")); // #2
+        atomContainerSource.addAtom(new Atom("C")); // #3
+        atomContainerSource.addAtom(new Atom("C")); // #4
+        atomContainerSource.addAtom(new Atom("C")); // #5
+        atomContainerSource.addAtom(new Atom("O")); // #6
+        atomContainerSource.addAtom(new Atom("N")); // #7
+        atomContainerSource.addBond(0, 1, Order.SINGLE); // #0
+        atomContainerSource.addBond(1, 2, Order.DOUBLE); // #1
+        atomContainerSource.addBond(1, 3, Order.SINGLE); // #2
+        atomContainerSource.addBond(3, 4, Order.DOUBLE); // #3
+        atomContainerSource.addBond(4, 5, Order.SINGLE); // #4
+        atomContainerSource.addBond(5, 6, Order.DOUBLE); // #5
+        atomContainerSource.addBond(5, 7, Order.SINGLE); // #6
+        Assert.assertEquals(8, atomContainerSource.getAtomCount());
+        Assert.assertEquals(7, atomContainerSource.getBondCount());
+        IAtomContainer atomContainerDestination = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        Set<IAtom> atomsToInclude = IntStream.of(1,2,3,5,7).mapToObj(atomContainerSource::getAtom).collect(Collectors.toSet());
+
+        // act
+        AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, atomsToInclude);
+
+        // assert
+        Assert.assertEquals(5, atomContainerDestination.getAtomCount());
+        Assert.assertEquals(3, atomContainerDestination.getBondCount());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(7, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(1)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
+    }
+
+    @Test
+    public void testExtractSubstructure_partialDisconnectedCopy() {
+        // arrange
+        IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        // CC(=O)C=CC(=O)N
+        atomContainerSource.addAtom(new Atom("C")); // #0
+        atomContainerSource.addAtom(new Atom("C")); // #1
+        atomContainerSource.addAtom(new Atom("O")); // #2
+        atomContainerSource.addAtom(new Atom("C")); // #3
+        atomContainerSource.addAtom(new Atom("C")); // #4
+        atomContainerSource.addAtom(new Atom("C")); // #5
+        atomContainerSource.addAtom(new Atom("O")); // #6
+        atomContainerSource.addAtom(new Atom("N")); // #7
+        atomContainerSource.addBond(0, 1, Order.SINGLE); // #0
+        atomContainerSource.addBond(1, 2, Order.DOUBLE); // #1
+        atomContainerSource.addBond(1, 3, Order.SINGLE); // #2
+        atomContainerSource.addBond(3, 4, Order.DOUBLE); // #3
+        atomContainerSource.addBond(4, 5, Order.SINGLE); // #4
+        atomContainerSource.addBond(5, 6, Order.DOUBLE); // #5
+        atomContainerSource.addBond(5, 7, Order.SINGLE); // #6
+        Assert.assertEquals(8, atomContainerSource.getAtomCount());
+        Assert.assertEquals(7, atomContainerSource.getBondCount());
+        Set<IAtom> atomsToInclude = IntStream.of(1,2,3,5,7).mapToObj(atomContainerSource::getAtom).collect(Collectors.toSet());
+
+        // act
+        IAtomContainer atomContainerDestination = AtomContainerManipulator.extractSubstructure(atomContainerSource, atomsToInclude);
+
+        // assert
+        Assert.assertEquals(5, atomContainerDestination.getAtomCount());
+        Assert.assertEquals(3, atomContainerDestination.getBondCount());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(7, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(1)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(0), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
+    }
+
+    @Test
+    public void testCopy_partialDisconnectedCopy_bondPredicate(){
+        // arrange
+        IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        // CC(=O)C=CC(=O)N
+        atomContainerSource.addAtom(new Atom("C")); // #0
+        atomContainerSource.addAtom(new Atom("C")); // #1
+        atomContainerSource.addAtom(new Atom("O")); // #2
+        atomContainerSource.addAtom(new Atom("C")); // #3
+        atomContainerSource.addAtom(new Atom("C")); // #4
+        atomContainerSource.addAtom(new Atom("C")); // #5
+        atomContainerSource.addAtom(new Atom("O")); // #6
+        atomContainerSource.addAtom(new Atom("N")); // #7
+        atomContainerSource.addBond(0, 1, Order.SINGLE); // #0
+        atomContainerSource.addBond(1, 2, Order.DOUBLE); // #1
+        atomContainerSource.addBond(1, 3, Order.SINGLE); // #2
+        atomContainerSource.addBond(3, 4, Order.DOUBLE); // #3
+        atomContainerSource.addBond(4, 5, Order.SINGLE); // #4
+        atomContainerSource.addBond(5, 6, Order.DOUBLE); // #5
+        atomContainerSource.addBond(5, 7, Order.SINGLE); // #6
+        Assert.assertEquals(8, atomContainerSource.getAtomCount());
+        Assert.assertEquals(7, atomContainerSource.getBondCount());
+        IAtomContainer atomContainerDestination = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        Set<IBond> bondsToInclude = IntStream.of(1,4,5,6).mapToObj(atomContainerSource::getBond).collect(Collectors.toSet());
+
+        // act
+        AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, x -> true, bondsToInclude::contains);
+
+        // assert
+        Assert.assertEquals(8, atomContainerDestination.getAtomCount());
+        Assert.assertEquals(4, atomContainerDestination.getBondCount());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(5).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(6).getAtomicNumber().intValue());
+        Assert.assertEquals(7, atomContainerDestination.getAtom(7).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(5)).getOrder());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(5), atomContainerDestination.getAtom(6)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(5), atomContainerDestination.getAtom(7)).getOrder());
+    }
+
+    @Test
+    public void testCopy_partialDisconnectedCopy_atomPredicate_bondPredicate(){
+        // arrange
+        IAtomContainer atomContainerSource = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        // CC(=O)C=CC(=O)N
+        atomContainerSource.addAtom(new Atom("C")); // #0
+        atomContainerSource.addAtom(new Atom("C")); // #1
+        atomContainerSource.addAtom(new Atom("O")); // #2
+        atomContainerSource.addAtom(new Atom("C")); // #3
+        atomContainerSource.addAtom(new Atom("C")); // #4
+        atomContainerSource.addAtom(new Atom("C")); // #5
+        atomContainerSource.addAtom(new Atom("O")); // #6
+        atomContainerSource.addAtom(new Atom("N")); // #7
+        atomContainerSource.addBond(0, 1, Order.SINGLE); // #0
+        atomContainerSource.addBond(1, 2, Order.DOUBLE); // #1
+        atomContainerSource.addBond(1, 3, Order.SINGLE); // #2
+        atomContainerSource.addBond(3, 4, Order.DOUBLE); // #3
+        atomContainerSource.addBond(4, 5, Order.SINGLE); // #4
+        atomContainerSource.addBond(5, 6, Order.DOUBLE); // #5
+        atomContainerSource.addBond(5, 7, Order.SINGLE); // #6
+        Assert.assertEquals(8, atomContainerSource.getAtomCount());
+        Assert.assertEquals(7, atomContainerSource.getBondCount());
+        IAtomContainer atomContainerDestination = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        Set<IAtom> atomsToInclude = IntStream.of(0,1,2,4,5,7).mapToObj(atomContainerSource::getAtom).collect(Collectors.toSet());
+        Set<IBond> bondsToInclude = IntStream.of(1,4,5,6).mapToObj(atomContainerSource::getBond).collect(Collectors.toSet());
+
+        // act
+        AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, atomsToInclude::contains, bondsToInclude::contains);
+
+        // assert
+        Assert.assertEquals(6, atomContainerDestination.getAtomCount());
+        Assert.assertEquals(3, atomContainerDestination.getBondCount());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(0).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(1).getAtomicNumber().intValue());
+        Assert.assertEquals(8, atomContainerDestination.getAtom(2).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(3).getAtomicNumber().intValue());
+        Assert.assertEquals(6, atomContainerDestination.getAtom(4).getAtomicNumber().intValue());
+        Assert.assertEquals(7, atomContainerDestination.getAtom(5).getAtomicNumber().intValue());
+        Assert.assertEquals(Order.DOUBLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(1), atomContainerDestination.getAtom(2)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(3), atomContainerDestination.getAtom(4)).getOrder());
+        Assert.assertEquals(Order.SINGLE, atomContainerDestination.getBond(atomContainerDestination.getAtom(4), atomContainerDestination.getAtom(5)).getOrder());
     }
 
     /**
