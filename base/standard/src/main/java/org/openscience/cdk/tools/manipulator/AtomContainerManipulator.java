@@ -173,7 +173,7 @@ public class AtomContainerManipulator {
             IAtom beg = (IAtom) remap.get(bond.getBegin());
             IAtom end = (IAtom) remap.get(bond.getEnd());
             if (beg != null && end != null && bondFilter.test(bond)) {
-                dest.addBond(source.indexOf(beg), source.indexOf(end),
+                dest.addBond(dest.indexOf(beg), dest.indexOf(end),
                              bond.getOrder(), bond.getStereo());
                 IBond destBond = dest.getBond(dest.getBondCount() - 1);
                 destBond.setIsInRing(bond.isInRing());
