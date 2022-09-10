@@ -16,6 +16,7 @@
         <module>test-extra</module>
         <module>diff</module>
         <module>log4j</module>
+        <module>slf4j</module>
         <module>qm</module>
     </modules>
     <packaging>pom</packaging>

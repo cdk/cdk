@@ -103,6 +103,8 @@ public interface ILoggingTool {
     int ERROR = 4;
     /** Only Fatal messages will be emitted. */
     int FATAL = 5;
+    /** Logging is OFF */
+    int OFF = 6;
 
     /**
      * Default number of StackTraceElements to be printed by debug(Exception).

@@ -28,9 +28,9 @@ public class LoggingToolFactoryTest {
 
     @Test
     public void testSetGetLoggingToolClass() {
-        Class<? extends ILoggingTool> logger = LoggingTool.class;
+        Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
-        Assert.assertEquals(LoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
+        Assert.assertEquals(Log4jLoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
     }
 
     @Test
@@ -41,10 +41,10 @@ public class LoggingToolFactoryTest {
 
     @Test
     public void testCreateLog4jLoggingTool() {
-        Class<? extends ILoggingTool> logger = LoggingTool.class;
+        Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
         ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
-        Assert.assertTrue(instance instanceof LoggingTool);
+        Assert.assertTrue(instance instanceof Log4jLoggingTool);
     }
 
     @Test

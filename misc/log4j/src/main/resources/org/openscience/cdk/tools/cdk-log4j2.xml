@@ -5,6 +5,16 @@
         </Console>
     </Appenders>
     <Loggers>
+        <!-- by default set all loggers to WARN -->
+        <Logger name="org.openscience.cdk" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <!-- if the system property -Dcdk.debugging=true is set, set to DEBUG -->
+        <SystemPropertyArbiter propertyName="cdk.debugging" propertyValue="true">
+            <Logger name="org.openscience.cdk" level="DEBUG" additivity="false">
+                <AppenderRef ref="Console"/>
+            </Logger>
+        </SystemPropertyArbiter>
         <Root level="ERROR">
             <AppenderRef ref="Console"/>
         </Root>

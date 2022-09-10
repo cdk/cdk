@@ -19,40 +19,33 @@
  */
 package org.openscience.cdk.tools;
 
-import org.apache.logging.log4j.core.config.Configurator;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 
 /**
  * @cdk.module test-log4j
  */
-public class LoggingToolTest extends AbstractLoggingToolTest {
-
-    @BeforeClass
-    public static void ensureLog4JConfigured() {
-        Configurator.reconfigure();
-    }
+public class Log4jLoggingToolDebugTest extends AbstractLoggingToolTest {
 
     @Override
-    public LoggingTool getLoggingTool() {
+    public Log4jLoggingTool getLoggingTool() {
         String originalValue = System.getProperty("cdk.debugging");
-        System.setProperty("cdk.debugging", "false");
-        LoggingTool logger = new LoggingTool(this);
+        System.setProperty("cdk.debugging", "true");
+        Log4jLoggingTool logger = new Log4jLoggingTool(this);
         if (originalValue != null) System.setProperty("cdk.debugging", originalValue);
         return logger;
     }
 
     @Test
     public void testLoggingTool() throws Exception {
-        LoggingTool logger = new LoggingTool();
+        Log4jLoggingTool logger = new Log4jLoggingTool();
         Assert.assertNotNull(logger);
     }
 
     @Test
     public void testLoggingTool_Class() throws Exception {
-        LoggingTool logger = new LoggingTool(this.getClass());
+        Log4jLoggingTool logger = new Log4jLoggingTool(this.getClass());
         Assert.assertNotNull(logger);
     }
 
@@ -63,19 +56,14 @@ public class LoggingToolTest extends AbstractLoggingToolTest {
     }
 
     @Test
-    public void testConfigureLog4j() throws Exception {
-        LoggingTool.configureLog4j();
-    }
-
-    @Test
     public void testDebug_Object() throws Exception {
-        LoggingTool logger = getLoggingTool();
+        Log4jLoggingTool logger = getLoggingTool();
         logger.debug(this);
     }
 
     @Test
     public void testCreate() throws Exception {
-        ILoggingTool logger = LoggingTool.create(this.getClass());
+        ILoggingTool logger = Log4jLoggingTool.create(this.getClass());
         Assert.assertNotNull(logger);
     }
 }

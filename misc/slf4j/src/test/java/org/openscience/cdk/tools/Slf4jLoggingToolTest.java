@@ -1,5 +1,4 @@
-/* Copyright (C) 2005-2009  Egon Willighagen <egonw@users.sf.net>
- *                    2007  Rajarshi Guha <rajarshi@users.sf.net>
+/* Copyright (C) 2022 John Mayfield
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,32 +19,34 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 
 /**
  * @cdk.module test-log4j
  */
-public class LoggingToolTestDebugTrue extends AbstractLoggingToolTest {
+public class Slf4jLoggingToolTest extends AbstractLoggingToolTest {
+
+    @BeforeClass
+    public static void ensureLog4JConfigured() {
+        // Configurator.reconfigure();
+    }
 
     @Override
-    public LoggingTool getLoggingTool() {
-        String originalValue = System.getProperty("cdk.debugging");
-        System.setProperty("cdk.debugging", "true");
-        LoggingTool logger = new LoggingTool(this);
-        if (originalValue != null) System.setProperty("cdk.debugging", originalValue);
-        return logger;
+    public Slf4jLoggingTool getLoggingTool() {
+        return new Slf4jLoggingTool(this);
     }
 
     @Test
     public void testLoggingTool() throws Exception {
-        LoggingTool logger = new LoggingTool();
+        Slf4jLoggingTool logger = new Slf4jLoggingTool();
         Assert.assertNotNull(logger);
     }
 
     @Test
     public void testLoggingTool_Class() throws Exception {
-        LoggingTool logger = new LoggingTool(this.getClass());
+        Slf4jLoggingTool logger = new Slf4jLoggingTool(this.getClass());
         Assert.assertNotNull(logger);
     }
 
@@ -56,19 +57,14 @@ public class LoggingToolTestDebugTrue extends AbstractLoggingToolTest {
     }
 
     @Test
-    public void testConfigureLog4j() throws Exception {
-        LoggingTool.configureLog4j();
-    }
-
-    @Test
     public void testDebug_Object() throws Exception {
-        LoggingTool logger = getLoggingTool();
+        Slf4jLoggingTool logger = getLoggingTool();
         logger.debug(this);
     }
 
     @Test
     public void testCreate() throws Exception {
-        ILoggingTool logger = LoggingTool.create(this.getClass());
+        ILoggingTool logger = Slf4jLoggingTool.create(this.getClass());
         Assert.assertNotNull(logger);
     }
 }

@@ -267,7 +267,6 @@ public class Maygen {
 
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
-        this.logger.setLevel(ILoggingTool.INFO);
     }
 
     /* Basic functions */

@@ -1,5 +1,4 @@
-/* Copyright (C) 2002-2003  Christoph Steinbeck <steinbeck@users.sf.net>
- *               2002-2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2022 John Mayfield
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -19,23 +18,24 @@
  */
 package org.openscience.cdk.tools;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.ConfigurationSource;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.xml.XmlConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * Useful for logging messages. Often used as a class static variable instantiated like:
+ * This class provides an adapter from the CDK {@link org.openscience.cdk.tools.ILoggingTool}
+ * interface to SLF4J. You can use it by including the <code>cdk-slf4j</code>
+ * <b>AND</b> some implementation e.g. <code>slf4j-simple</code>,
+ * <code>log4j-over-slf4j</code>, etc. in you library.
+ * <br/>
+ * <p>
+ * You should not use this class directly, it is created by the LoggingToolFactory
+ * as follows:
  * <pre>
  * public class SomeClass {
  *     private static ILoggingTool logger =
@@ -87,43 +87,29 @@ import java.util.Map;
  * }
  * </pre>
  *
- * <p>The class uses log4j as a backend if available, and {@link System#err} otherwise.
- *
- * @cdk.module log4j
+ * @cdk.module cdk-slf4j
  * @cdk.githash
  */
-public class LoggingTool implements ILoggingTool {
+final class Slf4jLoggingTool implements ILoggingTool {
 
-    private boolean             toSTDOUT             = false;
+    private final Logger slf4jlogger;
 
-    private Logger log4jLogger;
-    private static ILoggingTool logger;
-    private final String              classname;
+    private int stackLength;
 
-    private int                 stackLength;                 // NOPMD
+    /**
+     * Default number of StackTraceElements to be printed by debug(Exception).
+     */
+    public final int DEFAULT_STACK_LENGTH = 5;
 
-    /** Default number of StackTraceElements to be printed by debug(Exception). */
-    public final int            DEFAULT_STACK_LENGTH = 5;
 
-    /** Log4J2 has customer levels and no longer has "TRACE_INT" etc so we can't know the values at compile
-     *  time and therefore it's not possible use a switch. */
-    private static final Map<Level, Integer> LOG4J2_LEVEL_TO_CDK_LEVEL = new HashMap<>();
-
-    static {
-        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.TRACE, TRACE);
-        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.DEBUG, DEBUG);
-        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.INFO, INFO);
-        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.WARN, WARN);
-        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.ERROR, ERROR);
-        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.FATAL, FATAL);
-    }
+    private final Marker fatal = MarkerFactory.getMarker("FATAL");
 
     /**
      * Constructs a LoggingTool which produces log lines without any special
      * indication which class the message originates from.
      */
-    public LoggingTool() {
-        this(LoggingTool.class);
+    public Slf4jLoggingTool() {
+        this(Slf4jLoggingTool.class);
     }
 
     /**
@@ -132,7 +118,7 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param object Object from which the log messages originate
      */
-    public LoggingTool(Object object) {
+    public Slf4jLoggingTool(Object object) {
         this(object.getClass());
     }
 
@@ -142,71 +128,9 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param classInst Class from which the log messages originate
      */
-    public LoggingTool(Class<?> classInst) {
-        LoggingTool.logger = this;
+    public Slf4jLoggingTool(Class<?> classInst) {
         stackLength = DEFAULT_STACK_LENGTH;
-        this.classname = classInst.getName();
-        try {
-            log4jLogger = LogManager.getLogger(classname);
-        } catch (NoClassDefFoundError e) {
-            toSTDOUT = true;
-            logger.debug("Log4J class not found!");
-        } catch (NullPointerException e) { // NOPMD
-            toSTDOUT = true;
-            logger.debug("Properties file not found!");
-        } catch (Exception e) {
-            toSTDOUT = true;
-            logger.debug("Unknown error occurred: ", e.getMessage());
-        }
-        /* **************************************************************
-         * but some JVMs (i.e. MSFT) won't pass the SecurityException to this
-         * exception handler. So we are going to check the JVM version first
-         * **************************************************************
-         */
-        String strJvmVersion = System.getProperty("java.version");
-        if (strJvmVersion.compareTo("1.2") >= 0) {
-            // Use a try {} to catch SecurityExceptions when used in applets
-            try {
-                // by default debugging is set off, but it can be turned on
-                // with starting java like "java -Dcdk.debugging=true"
-                if (System.getProperty("cdk.debugging", "false").equals("true")) {
-                    Configurator.setLevel(log4jLogger.getName(), Level.DEBUG);
-                } else {
-                    Configurator.setLevel(log4jLogger.getName(), Level.WARN);
-                }
-                if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
-                    toSTDOUT = true;
-                }
-            } catch (SecurityException e) {
-                System.err.println("Could not read the System property used to determine "
-                        + "if logging should be turned on. So continuing without logging.");
-            }
-        }
-    }
-
-    /**
-     * Forces the <code>LoggingTool</code> to configure the Log4J toolkit.
-     * Normally this should be done by the application that uses the CDK library,
-     * but is available for convenience.
-     */
-    public static void configureLog4j() {
-        LoggingTool localLogger = new LoggingTool(LoggingTool.class);
-        try {
-            try (InputStream resourceAsStream = LoggingTool.class.getResourceAsStream("cdk-log4j2.xml")) {
-                if (resourceAsStream != null) {
-                    XmlConfiguration config = new XmlConfiguration(
-                            LoggerContext.getContext(true),
-                            new ConfigurationSource(resourceAsStream));
-                    Configurator.reconfigure(config);
-                }
-            }
-        } catch (NullPointerException e) { // NOPMD
-            localLogger.error("Properties file not found: ", e.getMessage());
-            localLogger.debug(e);
-        } catch (Exception e) {
-            localLogger.error("Unknown error occurred: ", e.getMessage());
-            localLogger.debug(e);
-        }
+        slf4jlogger = LoggerFactory.getLogger(classInst);
     }
 
     /**
@@ -229,7 +153,6 @@ public class LoggingTool implements ILoggingTool {
      * The default value is DEFAULT_STACK_LENGTH.
      *
      * @param length the new stack length
-     *
      * @see #DEFAULT_STACK_LENGTH
      */
     @Override
@@ -264,11 +187,7 @@ public class LoggingTool implements ILoggingTool {
     }
 
     private void debugString(String string) {
-        if (toSTDOUT) {
-            printToStderr("DEBUG", string);
-        } else {
-            log4jLogger.debug(string);
-        }
+        slf4jlogger.debug(string);
     }
 
     /**
@@ -317,7 +236,7 @@ public class LoggingTool implements ILoggingTool {
                 }
             } catch (Exception ioException) {
                 error("Serious error in LoggingTool while printing exception stack trace: " + ioException.getMessage());
-                logger.debug(ioException);
+                debug(ioException);
             }
             Throwable cause = problem.getCause();
             if (cause != null) {
@@ -341,7 +260,7 @@ public class LoggingTool implements ILoggingTool {
      * Shows ERROR output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object Object to apply toString() too and output
+     * @param object  Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
      */
     @Override
@@ -357,11 +276,7 @@ public class LoggingTool implements ILoggingTool {
     }
 
     private void errorString(String string) {
-        if (toSTDOUT) {
-            printToStderr("ERROR", string);
-        } else {
-            log4jLogger.error(string);
-        }
+        slf4jlogger.error(string);
     }
 
     /**
@@ -370,12 +285,9 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      */
     @Override
-    public void fatal(Object object) {
-        if (toSTDOUT) {
-            printToStderr("FATAL", object.toString());
-        } else {
-            log4jLogger.fatal("" + object.toString());
-        }
+    public void fatal(Object object)
+    {
+        slf4jlogger.error(fatal, "" + object.toString());
     }
 
     /**
@@ -392,7 +304,7 @@ public class LoggingTool implements ILoggingTool {
      * Shows INFO output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object Object to apply toString() too and output
+     * @param object  Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
      */
     @Override
@@ -408,11 +320,7 @@ public class LoggingTool implements ILoggingTool {
     }
 
     private void infoString(String string) {
-        if (toSTDOUT) {
-            printToStderr("INFO", string);
-        } else {
-            log4jLogger.info(string);
-        }
+        slf4jlogger.info(string);
     }
 
     /**
@@ -426,18 +334,14 @@ public class LoggingTool implements ILoggingTool {
     }
 
     private void warnString(String string) {
-        if (toSTDOUT) {
-            printToStderr("WARN", string);
-        } else {
-            log4jLogger.warn(string);
-        }
+        slf4jlogger.warn(string);
     }
 
     /**
      * Shows WARN output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object Object to apply toString() too and output
+     * @param object  Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
      */
     @Override
@@ -466,25 +370,17 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public boolean isDebugEnabled() {
-        return log4jLogger.isDebugEnabled();
-    }
-
-    private void printToStderr(String level, String message) {
-        System.err.print(classname);
-        System.err.print(" ");
-        System.err.print(level);
-        System.err.print(": ");
-        System.err.println(message);
+        return slf4jlogger.isDebugEnabled();
     }
 
     /**
-     * Creates a new {@link LoggingTool} for the given class.
+     * Creates a new {@link org.openscience.cdk.tools.Slf4jLoggingTool} for the given class.
      *
      * @param sourceClass Class for which logging messages are recorded.
-     * @return            A {@link LoggingTool}.
+     * @return A {@link org.openscience.cdk.tools.Slf4jLoggingTool}.
      */
     public static ILoggingTool create(Class<?> sourceClass) {
-        return new LoggingTool(sourceClass);
+        return new Slf4jLoggingTool(sourceClass);
     }
 
     /**
@@ -492,28 +388,7 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void setLevel(int level) {
-        switch (level) {
-            case TRACE:
-                Configurator.setLevel(log4jLogger.getName(), Level.TRACE);
-                break;
-            case DEBUG:
-                Configurator.setLevel(log4jLogger.getName(), Level.DEBUG);
-                break;
-            case INFO:
-                Configurator.setLevel(log4jLogger.getName(), Level.INFO);
-                break;
-            case WARN:
-                Configurator.setLevel(log4jLogger.getName(), Level.WARN);
-                break;
-            case ERROR:
-                Configurator.setLevel(log4jLogger.getName(), Level.ERROR);
-                break;
-            case FATAL:
-                Configurator.setLevel(log4jLogger.getName(), Level.FATAL);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid log level: " + level);
-        }
+        throw new IllegalArgumentException("slf4j does not let you set the level at runtime via the API");
     }
 
     /**
@@ -521,12 +396,21 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public int getLevel() {
-        Level level = log4jLogger.getLevel();
-        if (level == null)
-            level = LogManager.getRootLogger().getLevel();
-        Integer res = LOG4J2_LEVEL_TO_CDK_LEVEL.get(level);
-        if (res == null)
-            throw new IllegalArgumentException("Unsupported log4j level: " + level);
-        return res;
+        if (slf4jlogger.isTraceEnabled()) {
+            return TRACE;
+        }
+        else if (slf4jlogger.isDebugEnabled()) {
+            return DEBUG;
+        }
+        else if (slf4jlogger.isInfoEnabled()) {
+            return INFO;
+        }
+        else if (slf4jlogger.isWarnEnabled()) {
+            return WARN;
+        }
+        else if (slf4jlogger.isErrorEnabled()) {
+            return ERROR;
+        }
+        return OFF;
     }
 }

@@ -1,20 +1,20 @@
-/* Copyright (C) 2003-2009  Egon Willighagen <egonw@users.sf.net>
+/*
+ * Copyright (C) 2022 John Mayfield
  *
- * Contact: cdk-devel@lists.sourceforge.net
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  */
 package org.openscience.cdk.tools;
 
@@ -25,13 +25,14 @@ import java.io.StringWriter;
 import java.util.Locale;
 
 /**
+ * You should not use this class directly.
  * Implementation of the {@link ILoggingTool} interface that sends output to
  * the {@link System#err} channel.
  *
  * @cdk.module core
  * @cdk.githash
  */
-public class SystemOutLoggingTool implements ILoggingTool {
+final class StdErrLogger implements ILoggingTool {
 
     /** The logging level, default anything above warnings. */
     private int level = ILoggingTool.WARN;
@@ -48,12 +49,8 @@ public class SystemOutLoggingTool implements ILoggingTool {
      *
      * @param classInst Class from which the log messages originate
      */
-    public SystemOutLoggingTool(Class<?> classInst) {
+    public StdErrLogger(Class<?> classInst) {
         this.classname = classInst.getName();
-        if (System.getProperty("cdk.debugging", "false").equals("true")
-                || System.getProperty("cdk.debug.stdout", "false").equals("true")) {
-            level = DEBUG;
-        }
         // change logging level from system prop
         String val = System.getProperty("cdk.logging.level", "warn");
         switch (val.toLowerCase(Locale.ROOT)) {
@@ -75,6 +72,10 @@ public class SystemOutLoggingTool implements ILoggingTool {
             case "fatal":
                 level = ILoggingTool.FATAL;
                 break;
+        }
+        if (System.getProperty("cdk.debugging", "false").equals("true")
+                || System.getProperty("cdk.debug.stdout", "false").equals("true")) {
+            level = DEBUG;
         }
     }
 
@@ -257,13 +258,13 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /**
-     * Creates a new {@link SystemOutLoggingTool} for the given class.
+     * Creates a new {@link StdErrLogger} for the given class.
      *
      * @param sourceClass Class for which logging messages are recorded.
-     * @return            A {@link SystemOutLoggingTool}.
+     * @return            A {@link StdErrLogger}.
      */
     public static ILoggingTool create(Class<?> sourceClass) {
-        return new SystemOutLoggingTool(sourceClass);
+        return new StdErrLogger(sourceClass);
     }
 
     /**
