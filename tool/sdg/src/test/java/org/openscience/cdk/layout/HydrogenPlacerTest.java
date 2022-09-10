@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.layout;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -37,8 +36,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import java.io.InputStream;
-
-import static org.junit.Assert.assertNotNull;
 
 /** @cdk.module test-sdg */
 public class HydrogenPlacerTest extends CDKTestCase {

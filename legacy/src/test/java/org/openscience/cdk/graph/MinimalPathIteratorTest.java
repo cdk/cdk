@@ -24,11 +24,9 @@
 package org.openscience.cdk.graph;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.List;

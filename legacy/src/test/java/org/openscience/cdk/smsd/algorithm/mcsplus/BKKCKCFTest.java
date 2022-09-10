@@ -23,8 +23,6 @@
 
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterAll;

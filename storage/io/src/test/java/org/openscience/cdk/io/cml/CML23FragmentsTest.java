@@ -22,11 +22,9 @@
  *  */
 package org.openscience.cdk.io.cml;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;

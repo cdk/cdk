@@ -5,7 +5,6 @@ import java.util.Random;
 
 import javax.vecmath.Point3d;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

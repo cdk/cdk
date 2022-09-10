@@ -18,10 +18,8 @@
  */
 package org.openscience.cdk.formula;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;

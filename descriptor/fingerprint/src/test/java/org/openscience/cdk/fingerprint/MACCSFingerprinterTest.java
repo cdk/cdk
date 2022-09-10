@@ -26,7 +26,6 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.BitSet;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.aromaticity.Aromaticity;

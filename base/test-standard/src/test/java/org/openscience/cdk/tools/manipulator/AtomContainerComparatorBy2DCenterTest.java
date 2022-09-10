@@ -24,7 +24,6 @@ import java.util.Comparator;
 
 import javax.vecmath.Point2d;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;

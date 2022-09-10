@@ -20,7 +20,6 @@ package org.openscience.cdk.atomtype;
 
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;

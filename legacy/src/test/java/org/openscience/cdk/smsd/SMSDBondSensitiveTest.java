@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.smsd;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

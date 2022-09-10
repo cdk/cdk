@@ -21,7 +21,6 @@ package org.openscience.cdk.protein.data;
 
 import java.util.Iterator;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

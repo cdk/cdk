@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractPseudoAtomTest;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 
 /**

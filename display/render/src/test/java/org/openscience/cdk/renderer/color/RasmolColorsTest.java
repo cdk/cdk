@@ -22,7 +22,6 @@ package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.charges;
 
-import org.junit.Assert;
 import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

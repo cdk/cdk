@@ -8,7 +8,6 @@ package org.openscience.cdk.test.interfaces;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;

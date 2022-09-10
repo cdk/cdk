@@ -26,9 +26,6 @@ package org.openscience.cdk.hash.stereo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.exception.CDKException;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author John May

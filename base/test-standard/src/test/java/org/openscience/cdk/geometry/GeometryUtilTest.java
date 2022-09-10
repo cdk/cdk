@@ -24,7 +24,6 @@
 package org.openscience.cdk.geometry;
 
 import org.hamcrest.number.IsCloseTo;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;

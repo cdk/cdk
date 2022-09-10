@@ -37,9 +37,6 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
  * Some simple isolated tests on functionality.
  *

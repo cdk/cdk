@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.smsd.helper;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

@@ -26,7 +26,6 @@ import java.io.InputStream;
 
 import javax.vecmath.Vector3d;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

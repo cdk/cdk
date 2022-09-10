@@ -16,8 +16,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import static org.junit.Assert.*;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;

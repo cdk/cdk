@@ -22,9 +22,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;

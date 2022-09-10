@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;

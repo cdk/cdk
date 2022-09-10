@@ -35,7 +35,6 @@ import java.util.BitSet;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Maximum matching is not specific to kekulisation but it serves as a good

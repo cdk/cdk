@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.single;
 
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;

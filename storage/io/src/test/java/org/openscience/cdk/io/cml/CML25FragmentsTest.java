@@ -24,7 +24,6 @@ package org.openscience.cdk.io.cml;
 
 import java.io.ByteArrayInputStream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.openscience.cdk.test.CDKTestCase;

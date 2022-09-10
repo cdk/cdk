@@ -19,7 +19,6 @@
 package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IElement;

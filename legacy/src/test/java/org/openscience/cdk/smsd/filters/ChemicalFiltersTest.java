@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.smsd.filters;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Map;
 import java.util.TreeMap;
 

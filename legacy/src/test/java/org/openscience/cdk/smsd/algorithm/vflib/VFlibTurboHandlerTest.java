@@ -22,9 +22,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterAll;
