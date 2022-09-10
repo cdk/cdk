@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractRingTest;
@@ -42,23 +43,23 @@ public class DebugRingTest extends AbstractRingTest {
     @Test
     public void testDebugRing_int_String() {
         IRing r = new DebugRing(5, "C");
-        Assert.assertEquals(5, r.getAtomCount());
-        Assert.assertEquals(5, r.getBondCount());
+        Assertions.assertEquals(5, r.getAtomCount());
+        Assertions.assertEquals(5, r.getBondCount());
     }
 
     @Test
     public void testDebugRing_int() {
         IRing r = new DebugRing(5);
-        Assert.assertEquals(0, r.getAtomCount());
-        Assert.assertEquals(0, r.getBondCount());
+        Assertions.assertEquals(0, r.getAtomCount());
+        Assertions.assertEquals(0, r.getBondCount());
     }
 
     @Test
     public void testDebugRing() {
         IRing ring = new DebugRing();
-        Assert.assertNotNull(ring);
-        Assert.assertEquals(0, ring.getAtomCount());
-        Assert.assertEquals(0, ring.getBondCount());
+        Assertions.assertNotNull(ring);
+        Assertions.assertEquals(0, ring.getAtomCount());
+        Assertions.assertEquals(0, ring.getBondCount());
     }
 
     @Test
@@ -68,8 +69,8 @@ public class DebugRingTest extends AbstractRingTest {
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
 
         IRing ring = new DebugRing(container);
-        Assert.assertNotNull(ring);
-        Assert.assertEquals(2, ring.getAtomCount());
-        Assert.assertEquals(0, ring.getBondCount());
+        Assertions.assertNotNull(ring);
+        Assertions.assertEquals(2, ring.getAtomCount());
+        Assertions.assertEquals(0, ring.getBondCount());
     }
 }

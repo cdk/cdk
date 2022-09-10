@@ -203,7 +203,7 @@ public class MmffAtomTypeMatcherTest {
                 "HC", "HC", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "CB", "CB", "HC", "CB", "HC", "CB", "HC",
                 "CB", "HC", "CB", "HC"};
         String[] actual = INSTANCE.symbolicTypes(container);
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     /**
@@ -237,7 +237,7 @@ public class MmffAtomTypeMatcherTest {
 
         String[] expected = {"HC", "CR", "HC", "HC", "CR", "HC", "HC", "NO2", "O2N", "O2N"};
         String[] actual = INSTANCE.symbolicTypes(container);
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     /**
@@ -267,7 +267,7 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(6, 8, IBond.Order.SINGLE);
         String[] expected = {"HO", "-O-", "NC=O", "HNCO", "CONN", "O=CN", "NC=O", "HNCO", "HNCO"};
         String[] actual = INSTANCE.symbolicTypes(container);
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     /**
@@ -283,7 +283,7 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(0, 1, SINGLE);
         String[] expected = {null, null};
         String[] actual = INSTANCE.symbolicTypes(container);
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     /**
@@ -309,7 +309,7 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(3, 6, IBond.Order.SINGLE);
         String[] expected = {"HNR", "NR", "HNR", "CR", "HC", "HC", "HC"};
         String[] actual = INSTANCE.symbolicTypes(container);
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     /**
@@ -339,7 +339,7 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(1, 8, IBond.Order.SINGLE);
         String[] expected = {"HC", "C5A", "C5B", "HC", "C5B", "HC", "C5A", "HC", "STHI"};
         String[] actual = INSTANCE.symbolicTypes(container);
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     /**
@@ -369,7 +369,7 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(1, 8, IBond.Order.SINGLE);
         String[] expected = {"HC", "C5A", "C5B", "HC", "C5B", "HC", "C5A", "HC", "OFUR"};
         String[] actual = INSTANCE.symbolicTypes(container);
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -386,7 +386,7 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(0, 4, SINGLE);
         String[] expected = {"CR", "HC", "HC", "HC", "HC"};
         String[] actual = INSTANCE.symbolicTypes(container);
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test

@@ -23,6 +23,7 @@
 package org.openscience.cdk.geometry.cip;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,9 +41,9 @@ public class ImplicitHydrogenLigandTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)");
 
         ILigand ligand = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
-        Assert.assertNotNull(ligand);
-        Assert.assertEquals(molecule, ligand.getAtomContainer());
-        Assert.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());
-        Assert.assertTrue(ligand.getLigandAtom() instanceof ImmutableHydrogen);
+        Assertions.assertNotNull(ligand);
+        Assertions.assertEquals(molecule, ligand.getAtomContainer());
+        Assertions.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());
+        Assertions.assertTrue(ligand.getLigandAtom() instanceof ImmutableHydrogen);
     }
 }

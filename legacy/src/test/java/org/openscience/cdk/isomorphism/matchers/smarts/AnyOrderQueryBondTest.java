@@ -19,6 +19,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
@@ -41,7 +42,7 @@ public class AnyOrderQueryBondTest extends CDKTestCase {
     public void testMatches() {
         IBond testBond = null;
         AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
-        Assert.assertFalse(matcher.matches(testBond));
+        Assertions.assertFalse(matcher.matches(testBond));
     }
 
     @Test
@@ -50,7 +51,7 @@ public class AnyOrderQueryBondTest extends CDKTestCase {
         IBond testBond = new Bond();
         for (IBond.Order order : IBond.Order.values()) {
             testBond.setOrder(order);
-            Assert.assertTrue(matcher.matches(testBond));
+            Assertions.assertTrue(matcher.matches(testBond));
         }
     }
 }

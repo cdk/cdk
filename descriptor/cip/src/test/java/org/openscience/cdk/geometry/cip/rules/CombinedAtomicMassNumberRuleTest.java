@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -53,7 +54,7 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
     public void testCompare_Identity() {
         ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
-        Assert.assertEquals(0, rule.compare(ligand, ligand));
+        Assertions.assertEquals(0, rule.compare(ligand, ligand));
     }
 
     @Test
@@ -61,8 +62,8 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
         ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 
     @Test
@@ -78,11 +79,11 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
         ligands.add(ligand4);
 
         ligands.sort(new CombinedAtomicMassNumberRule());
-        Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
-        Assert.assertEquals("C", ligands.get(1).getLigandAtom().getSymbol());
-        Assert.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());
-        Assert.assertEquals(13, ligands.get(2).getLigandAtom().getMassNumber().intValue());
-        Assert.assertEquals("Br", ligands.get(3).getLigandAtom().getSymbol());
+        Assertions.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
+        Assertions.assertEquals("C", ligands.get(1).getLigandAtom().getSymbol());
+        Assertions.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());
+        Assertions.assertEquals(13, ligands.get(2).getLigandAtom().getMassNumber().intValue());
+        Assertions.assertEquals("Br", ligands.get(3).getLigandAtom().getSymbol());
     }
 
 }

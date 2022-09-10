@@ -71,10 +71,10 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assertions.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        Assert.assertEquals(2, nmatch);
+        Assertions.assertEquals(2, nmatch);
 
         List<Integer> map1 = new ArrayList<>();
         map1.add(1);
@@ -90,13 +90,13 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         List<Integer> ret1 = mappings.get(0);
         sort(ret1);
         for (int i = 0; i < 3; i++) {
-            Assert.assertEquals(map1.get(i), ret1.get(i));
+            Assertions.assertEquals(map1.get(i), ret1.get(i));
         }
 
         List<Integer> ret2 = mappings.get(1);
         sort(ret2);
         for (int i = 0; i < 3; i++) {
-            Assert.assertEquals(map2.get(i), ret2.get(i));
+            Assertions.assertEquals(map2.get(i), ret2.get(i));
         }
     }
 
@@ -107,10 +107,10 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SMARTSQueryTool querytool = new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assertions.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        Assert.assertEquals(8, nmatch);
+        Assertions.assertEquals(8, nmatch);
     }
 
     @Test
@@ -120,20 +120,20 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SMARTSQueryTool querytool = new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assertions.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        Assert.assertEquals(8, nmatch);
+        Assertions.assertEquals(8, nmatch);
 
         querytool.setSmarts("CC");
         status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assertions.assertTrue(status);
 
         nmatch = querytool.countMatches();
-        Assert.assertEquals(18, nmatch);
+        Assertions.assertEquals(18, nmatch);
 
         List<List<Integer>> umatch = querytool.getUniqueMatchingAtoms();
-        Assert.assertEquals(9, umatch.size());
+        Assertions.assertEquals(9, umatch.size());
     }
 
     @Test
@@ -145,13 +145,13 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assertions.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        Assert.assertEquals(24, nmatch);
+        Assertions.assertEquals(24, nmatch);
 
         List<List<Integer>> umatch = querytool.getUniqueMatchingAtoms();
-        Assert.assertEquals(2, umatch.size());
+        Assertions.assertEquals(2, umatch.size());
     }
 
     @Test
@@ -163,13 +163,13 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assertions.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        Assert.assertEquals(4, nmatch);
+        Assertions.assertEquals(4, nmatch);
 
         List<List<Integer>> umatch = querytool.getUniqueMatchingAtoms();
-        Assert.assertEquals(1, umatch.size());
+        Assertions.assertEquals(1, umatch.size());
     }
 
     /**
@@ -193,7 +193,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         indole = smilesParser.parseSmiles(indoleSmiles);
 
         SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, DefaultChemObjectBuilder.getInstance());
-        assertTrue(querytool.matches(indole));
+        Assertions.assertTrue(querytool.matches(indole));
     }
 
     /**
@@ -208,7 +208,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("CC", DefaultChemObjectBuilder.getInstance());
         boolean matches = sqt.matches(methane);
-        assertFalse(matches);
+        Assertions.assertFalse(matches);
 
     }
 
@@ -229,10 +229,10 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(furan);
 
         sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.mcb()));
-        assertTrue(sqt.matches(furan, true));
+        Assertions.assertTrue(sqt.matches(furan, true));
 
         sqt.setAromaticity(new Aromaticity(ElectronDonation.piBonds(), Cycles.mcb()));
-        assertFalse(sqt.matches(furan, true));
+        Assertions.assertFalse(sqt.matches(furan, true));
     }
 
     static IAtomContainer smiles(String smi) throws Exception {

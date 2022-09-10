@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -45,20 +46,20 @@ public class HybridizationRatioDescriptorTest extends MolecularDescriptorTest {
     public void testHybRatioDescriptor1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCC");
-        Assert.assertEquals(1.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assertions.assertEquals(1.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 
     @Test
     public void testHybRatioDescriptor2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccccc1");
-        Assert.assertEquals(0.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assertions.assertEquals(0.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 
     @Test
     public void testHybRatioDescriptor3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C#N");
-        Assert.assertEquals(Double.NaN, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assertions.assertEquals(Double.NaN, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,8 +38,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         rs2.addAtomContainer(r2);
         rs2.add(rs);
 
-        Assert.assertEquals(1, rs.getAtomContainerCount());
-        Assert.assertEquals(2, rs2.getAtomContainerCount());
+        Assertions.assertEquals(1, rs.getAtomContainerCount());
+        Assertions.assertEquals(2, rs2.getAtomContainerCount());
     }
 
     @Test
@@ -47,8 +48,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         IRingSet ringset = (IRingSet) newChemObject();
         String description = ringset.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -60,10 +61,10 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ringset.addAtomContainer(ring);
 
         IRingSet clone = (IRingSet) ringset.clone();
-        Assert.assertNotNull(clone);
-        Assert.assertTrue(clone instanceof IRingSet);
-        Assert.assertEquals(1, clone.getAtomContainerCount());
-        Assert.assertNotSame(ring, clone.getAtomContainer(0));
+        Assertions.assertNotNull(clone);
+        Assertions.assertTrue(clone instanceof IRingSet);
+        Assertions.assertEquals(1, clone.getAtomContainerCount());
+        Assertions.assertNotSame(ring, clone.getAtomContainer(0));
     }
 
     @Test
@@ -106,12 +107,12 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
 
-        Assert.assertTrue(ringset.contains(ring1Atom1));
-        Assert.assertTrue(ringset.contains(ring1Atom2));
-        Assert.assertTrue(ringset.contains(sharedAtom1));
-        Assert.assertTrue(ringset.contains(sharedAtom2));
-        Assert.assertTrue(ringset.contains(ring2Atom1));
-        Assert.assertTrue(ringset.contains(ring2Atom2));
+        Assertions.assertTrue(ringset.contains(ring1Atom1));
+        Assertions.assertTrue(ringset.contains(ring1Atom2));
+        Assertions.assertTrue(ringset.contains(sharedAtom1));
+        Assertions.assertTrue(ringset.contains(sharedAtom2));
+        Assertions.assertTrue(ringset.contains(ring2Atom1));
+        Assertions.assertTrue(ringset.contains(ring2Atom2));
     }
 
     @Test
@@ -154,8 +155,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
 
-        Assert.assertTrue(ringset.contains(ring1));
-        Assert.assertTrue(ringset.contains(ring2));
+        Assertions.assertTrue(ringset.contains(ring1));
+        Assertions.assertTrue(ringset.contains(ring2));
     }
 
     @Test
@@ -198,13 +199,13 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
 
-        Assert.assertEquals(1, ringset.getRings(ring1Bond1).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getRings(ring1Bond2).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getRings(ring1Bond3).getAtomContainerCount());
-        Assert.assertEquals(2, ringset.getRings(sharedBond).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getRings(ring2Bond1).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getRings(ring2Bond2).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getRings(ring2Bond3).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring1Bond1).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring1Bond2).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring1Bond3).getAtomContainerCount());
+        Assertions.assertEquals(2, ringset.getRings(sharedBond).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring2Bond1).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring2Bond2).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring2Bond3).getAtomContainerCount());
     }
 
     @Test
@@ -247,12 +248,12 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
 
-        Assert.assertEquals(1, ringset.getRings(ring1Atom1).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getRings(ring1Atom1).getAtomContainerCount());
-        Assert.assertEquals(2, ringset.getRings(sharedAtom1).getAtomContainerCount());
-        Assert.assertEquals(2, ringset.getRings(sharedAtom2).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getRings(ring2Atom1).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getRings(ring2Atom2).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring1Atom1).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring1Atom1).getAtomContainerCount());
+        Assertions.assertEquals(2, ringset.getRings(sharedAtom1).getAtomContainerCount());
+        Assertions.assertEquals(2, ringset.getRings(sharedAtom2).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring2Atom1).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getRings(ring2Atom2).getAtomContainerCount());
     }
 
     @Test
@@ -295,8 +296,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
 
-        Assert.assertEquals(1, ringset.getConnectedRings(ring2).getAtomContainerCount());
-        Assert.assertEquals(1, ringset.getConnectedRings(ring1).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getConnectedRings(ring2).getAtomContainerCount());
+        Assertions.assertEquals(1, ringset.getConnectedRings(ring1).getAtomContainerCount());
     }
 
     /**
@@ -370,7 +371,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         List<IRing> foundRings = new ArrayList<>();
         for (IAtomContainer container : connectedRings.atomContainers()) {
             IRing connectedRing = (IRing) container;
-            if (foundRings.contains(connectedRing)) Assert.fail("The list of connected rings contains duplicates.");
+            if (foundRings.contains(connectedRing)) Assertions.fail("The list of connected rings contains duplicates.");
             foundRings.add(connectedRing);
         }
     }

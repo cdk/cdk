@@ -19,6 +19,7 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -71,7 +72,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     @Test
     public void testStructGenMatcher() throws Exception {
         StructGenMatcher matcher = new StructGenMatcher();
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
     }
 
     @Test
@@ -83,9 +84,9 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         StructGenMatcher atm = new StructGenMatcher();
         IAtomType matched = atm.findMatchingAtomType(mol, atom);
-        Assert.assertNotNull(matched);
+        Assertions.assertNotNull(matched);
 
-        Assert.assertEquals("C", matched.getSymbol());
+        Assertions.assertEquals("C", matched.getSymbol());
     }
 
     @Test
@@ -97,9 +98,9 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         StructGenMatcher atm = new StructGenMatcher();
         IAtomType matched = atm.findMatchingAtomType(mol, atom);
-        Assert.assertNotNull(matched);
+        Assertions.assertNotNull(matched);
 
-        Assert.assertEquals("N", matched.getSymbol());
+        Assertions.assertEquals("N", matched.getSymbol());
     }
 
     @Test
@@ -793,7 +794,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
                 if (!testedAtomTypes.containsKey(expectedType.getAtomTypeName()))
                     errorMessage += " " + expectedType.getAtomTypeName();
             }
-            Assert.assertEquals(errorMessage, factory.getAllAtomTypes().length, testedAtomTypes.size());
+            Assertions.assertEquals(factory.getAllAtomTypes().length, testedAtomTypes.size(), errorMessage);
         }
     }
 

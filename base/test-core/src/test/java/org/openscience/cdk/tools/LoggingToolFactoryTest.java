@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,13 +31,13 @@ public class LoggingToolFactoryTest {
     public void testSetGetLoggingToolClass() {
         Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
-        Assert.assertEquals(Log4jLoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
+        Assertions.assertEquals(Log4jLoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
     }
 
     @Test
     public void testCreateLoggingTool() {
         ILoggingTool logger = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
-        Assert.assertNotNull(logger);
+        Assertions.assertNotNull(logger);
     }
 
     @Test
@@ -44,14 +45,14 @@ public class LoggingToolFactoryTest {
         Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
         ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
-        Assert.assertTrue(instance instanceof Log4jLoggingTool);
+        Assertions.assertTrue(instance instanceof Log4jLoggingTool);
     }
 
     @Test
     public void testCustomLogger() {
         LoggingToolFactory.setLoggingToolClass(CustomLogger.class);
         ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
-        Assert.assertTrue(instance instanceof CustomLogger);
+        Assertions.assertTrue(instance instanceof CustomLogger);
     }
 
     /**

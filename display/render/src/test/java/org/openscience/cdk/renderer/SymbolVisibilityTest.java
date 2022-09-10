@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.renderer;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -42,25 +43,25 @@ public class SymbolVisibilityTest {
 
     @Test
     public void anyAtom() {
-        assertTrue(SymbolVisibility.all().visible(null, null, null));
+        Assertions.assertTrue(SymbolVisibility.all().visible(null, null, null));
     }
 
     @Test
     public void iupacOxygen() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("O"), Collections.emptyList(),
-                new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("O"), Collections.emptyList(),
+                                                                              new RendererModel()));
     }
 
     @Test
     public void iupacNitrogen() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("N"), Collections.emptyList(),
-                new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("N"), Collections.emptyList(),
+                                                                              new RendererModel()));
     }
 
     @Test
     public void iupacMethane() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("C"), Collections.emptyList(),
-                new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("C"), Collections.emptyList(),
+                                                                              new RendererModel()));
     }
 
     @Test
@@ -70,7 +71,7 @@ public class SymbolVisibilityTest {
         IBond bond = new Bond(a1, a2);
         a1.setPoint2d(new Point2d(0, 0));
         a2.setPoint2d(new Point2d(0, 0));
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(a1, Arrays.asList(bond), new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendations().visible(a1, Arrays.asList(bond), new RendererModel()));
     }
 
     @Test
@@ -82,8 +83,8 @@ public class SymbolVisibilityTest {
         IBond bond = new Bond(a1, a2);
         a1.setPoint2d(new Point2d(0, 0));
         a2.setPoint2d(new Point2d(0, 0));
-        assertFalse(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon().visible(a1, Arrays.asList(bond),
-                new RendererModel()));
+        Assertions.assertFalse(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon().visible(a1, Arrays.asList(bond),
+                                                                                                    new RendererModel()));
     }
 
     @Test
@@ -103,8 +104,8 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertFalse(SymbolVisibility.iupacRecommendations().visible(a1, Arrays.asList(bond1, bond2),
-                new RendererModel()));
+        Assertions.assertFalse(SymbolVisibility.iupacRecommendations().visible(a1, Arrays.asList(bond1, bond2),
+                                                                               new RendererModel()));
     }
 
     @Test
@@ -125,8 +126,8 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendations()
-                .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendations()
+                                              .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
     @Test
@@ -146,8 +147,8 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendations()
-                .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendations()
+                                              .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
     // produces an NaN internally
@@ -168,8 +169,8 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendations()
-                .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendations()
+                                              .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
     @Test
@@ -191,8 +192,8 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendations()
-                .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendations()
+                                              .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
     @Test
@@ -208,8 +209,8 @@ public class SymbolVisibilityTest {
         a1.setImplicitHydrogenCount(3);
         a2.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
-                                   .visible(a1, Collections.singletonList(bond1), new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
+                                              .visible(a1, Collections.singletonList(bond1), new RendererModel()));
     }
 
     @Test
@@ -225,8 +226,8 @@ public class SymbolVisibilityTest {
         IBond bond1 = new Bond(a1, a2, IBond.Order.DOUBLE);
         IBond bond2 = new Bond(a2, a3, IBond.Order.SINGLE);
 
-        assertTrue(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
-                                   .visible(a1, Collections.singletonList(bond1), new RendererModel()));
+        Assertions.assertTrue(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
+                                              .visible(a1, Collections.singletonList(bond1), new RendererModel()));
     }
 
     @Test
@@ -247,8 +248,8 @@ public class SymbolVisibilityTest {
         a2.setIsAromatic(true);
         a3.setIsAromatic(true);
 
-        assertFalse(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
-                                    .visible(a2, Arrays.asList(bond1, bond2), new RendererModel()));
+        Assertions.assertFalse(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
+                                               .visible(a2, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
 }

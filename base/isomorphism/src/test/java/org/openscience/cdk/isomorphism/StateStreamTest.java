@@ -47,7 +47,7 @@ public class StateStreamTest {
     public void hasNext() throws Exception {
         VFSubState state = createNaphthaleneToBenzene(AtomMatcher.forAny(), BondMatcher.forAny());
         Iterator<int[]> it = new StateStream(state);
-        assertFalse(it.hasNext());
+        Assertions.assertFalse(it.hasNext());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class StateStreamTest {
         int cnt = 0;
         Iterator<int[]> it = new StateStream(state);
         while (it.hasNext()) {
-            assertNotNull(it.next());
+            Assertions.assertNotNull(it.next());
             cnt++;
         }
         assertThat(cnt, is(24));

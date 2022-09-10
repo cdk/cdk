@@ -23,8 +23,10 @@
 package org.openscience.cdk.io.cml;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
@@ -64,9 +66,9 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertEquals("a1", atom.getID());
+        Assertions.assertEquals("a1", atom.getID());
     }
 
     @Test
@@ -76,9 +78,9 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(3, mol.getAtomCount());
+        Assertions.assertEquals(3, mol.getAtomCount());
         IAtom atom = mol.getAtom(1);
-        Assert.assertEquals("a2", atom.getID());
+        Assertions.assertEquals("a2", atom.getID());
     }
 
     @Test
@@ -88,9 +90,9 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertEquals("C", atom.getSymbol());
+        Assertions.assertEquals("C", atom.getSymbol());
     }
 
     @Test
@@ -100,10 +102,10 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertEquals("C", atom.getSymbol());
-        Assert.assertEquals(12, atom.getMassNumber().intValue());
+        Assertions.assertEquals("C", atom.getSymbol());
+        Assertions.assertEquals(12, atom.getMassNumber().intValue());
     }
 
     @Test
@@ -113,10 +115,10 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertEquals("C", atom.getSymbol());
-        Assert.assertEquals(6, atom.getAtomicNumber().intValue());
+        Assertions.assertEquals("C", atom.getSymbol());
+        Assertions.assertEquals(6, atom.getAtomicNumber().intValue());
     }
 
     @Test
@@ -126,10 +128,10 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertEquals("C", atom.getSymbol());
-        Assert.assertEquals(12.0, atom.getExactMass(), 0.01);
+        Assertions.assertEquals("C", atom.getSymbol());
+        Assertions.assertEquals(12.0, atom.getExactMass(), 0.01);
     }
 
     @Test
@@ -141,19 +143,19 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(5, mol.getAtomCount());
+        Assertions.assertEquals(5, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertEquals("C", atom.getSymbol());
+        Assertions.assertEquals("C", atom.getSymbol());
         IStereoElement stereo = mol.stereoElements().iterator().next();
-        Assert.assertTrue(stereo instanceof TetrahedralChirality);
-        Assert.assertEquals(((TetrahedralChirality) stereo).getChiralAtom().getID(), "a1");
+        Assertions.assertTrue(stereo instanceof TetrahedralChirality);
+        Assertions.assertEquals(((TetrahedralChirality) stereo).getChiralAtom().getID(), "a1");
         IAtom[] ligandAtoms = ((TetrahedralChirality) stereo).getLigands();
-        Assert.assertEquals(4, ligandAtoms.length);
-        Assert.assertEquals(ligandAtoms[0].getID(), "a2");
-        Assert.assertEquals(ligandAtoms[1].getID(), "a3");
-        Assert.assertEquals(ligandAtoms[2].getID(), "a5");
-        Assert.assertEquals(ligandAtoms[3].getID(), "a4");
-        Assert.assertEquals(((TetrahedralChirality) stereo).getStereo(), Stereo.CLOCKWISE);
+        Assertions.assertEquals(4, ligandAtoms.length);
+        Assertions.assertEquals(ligandAtoms[0].getID(), "a2");
+        Assertions.assertEquals(ligandAtoms[1].getID(), "a3");
+        Assertions.assertEquals(ligandAtoms[2].getID(), "a5");
+        Assertions.assertEquals(ligandAtoms[3].getID(), "a4");
+        Assertions.assertEquals(((TetrahedralChirality) stereo).getStereo(), Stereo.CLOCKWISE);
     }
 
     @Test
@@ -163,14 +165,14 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(1, mol.getBondCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        Assert.assertEquals(2, bond.getAtomCount());
+        Assertions.assertEquals(2, bond.getAtomCount());
         IAtom atom1 = bond.getBegin();
         IAtom atom2 = bond.getEnd();
-        Assert.assertEquals("a1", atom1.getID());
-        Assert.assertEquals("a2", atom2.getID());
+        Assertions.assertEquals("a1", atom1.getID());
+        Assertions.assertEquals("a2", atom2.getID());
     }
 
     @Test
@@ -180,15 +182,15 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(3, mol.getAtomCount());
-        Assert.assertEquals(2, mol.getBondCount());
+        Assertions.assertEquals(3, mol.getAtomCount());
+        Assertions.assertEquals(2, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        Assert.assertEquals(2, bond.getAtomCount());
+        Assertions.assertEquals(2, bond.getAtomCount());
         IAtom atom1 = bond.getBegin();
         IAtom atom2 = bond.getEnd();
-        Assert.assertEquals("a1", atom1.getID());
-        Assert.assertEquals("a2", atom2.getID());
-        Assert.assertEquals("b2", mol.getBond(1).getID());
+        Assertions.assertEquals("a1", atom1.getID());
+        Assertions.assertEquals("a2", atom2.getID());
+        Assertions.assertEquals("b2", mol.getBond(1).getID());
     }
 
     @Test
@@ -198,14 +200,14 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(3, mol.getAtomCount());
-        Assert.assertEquals(2, mol.getBondCount());
+        Assertions.assertEquals(3, mol.getAtomCount());
+        Assertions.assertEquals(2, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+        Assertions.assertEquals(2, bond.getAtomCount());
+        Assertions.assertEquals(Order.SINGLE, bond.getOrder());
         bond = mol.getBond(1);
-        Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+        Assertions.assertEquals(2, bond.getAtomCount());
+        Assertions.assertEquals(Order.SINGLE, bond.getOrder());
     }
 
     @Test
@@ -215,10 +217,10 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(1, mol.getBondCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        Assert.assertEquals("b1", bond.getID());
+        Assertions.assertEquals("b1", bond.getID());
     }
 
     @Test
@@ -227,10 +229,10 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(1, mol.getBondCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getBondCount());
         IBond bond = mol.getBond(0);
-        Assert.assertEquals(IBond.Stereo.DOWN, bond.getStereo());
+        Assertions.assertEquals(IBond.Stereo.DOWN, bond.getStereo());
     }
 
     @Test
@@ -239,11 +241,11 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(1, mol.getBondCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        Assert.assertEquals(Order.SINGLE, bond.getOrder());
-        Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertEquals(Order.SINGLE, bond.getOrder());
+        Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -252,11 +254,11 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(1, mol.getBondCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        Assert.assertEquals(Order.DOUBLE, bond.getOrder());
-        Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertEquals(Order.DOUBLE, bond.getOrder());
+        Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -277,11 +279,11 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertNotNull(mol.getAtom(0).getPoint2d());
-        Assert.assertNotNull(mol.getAtom(1).getPoint2d());
-        Assert.assertNull(mol.getAtom(0).getPoint3d());
-        Assert.assertNull(mol.getAtom(1).getPoint3d());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertNotNull(mol.getAtom(0).getPoint2d());
+        Assertions.assertNotNull(mol.getAtom(1).getPoint2d());
+        Assertions.assertNull(mol.getAtom(0).getPoint3d());
+        Assertions.assertNull(mol.getAtom(1).getPoint3d());
     }
 
     @Test
@@ -291,11 +293,11 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertNull(mol.getAtom(0).getPoint2d());
-        Assert.assertNull(mol.getAtom(1).getPoint2d());
-        Assert.assertNotNull(mol.getAtom(0).getPoint3d());
-        Assert.assertNotNull(mol.getAtom(1).getPoint3d());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertNull(mol.getAtom(0).getPoint2d());
+        Assertions.assertNull(mol.getAtom(1).getPoint2d());
+        Assertions.assertNotNull(mol.getAtom(0).getPoint3d());
+        Assertions.assertNotNull(mol.getAtom(1).getPoint3d());
     }
 
     @Test
@@ -305,11 +307,11 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertNull(mol.getAtom(0).getPoint3d());
-        Assert.assertNull(mol.getAtom(1).getPoint3d());
-        Assert.assertNotNull(mol.getAtom(0).getFractionalPoint3d());
-        Assert.assertNotNull(mol.getAtom(1).getFractionalPoint3d());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertNull(mol.getAtom(0).getPoint3d());
+        Assertions.assertNull(mol.getAtom(1).getPoint3d());
+        Assertions.assertNotNull(mol.getAtom(0).getFractionalPoint3d());
+        Assertions.assertNotNull(mol.getAtom(1).getFractionalPoint3d());
     }
 
     @Test
@@ -319,14 +321,14 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(3, mol.getAtomCount());
+        Assertions.assertEquals(3, mol.getAtomCount());
         IAtom atom1 = mol.getAtom(0);
         IAtom atom2 = mol.getAtom(1);
         IAtom atom3 = mol.getAtom(2);
 
-        Assert.assertNotNull(atom1.getPoint2d());
-        Assert.assertNull(atom2.getPoint2d());
-        Assert.assertNotNull(atom3.getPoint2d());
+        Assertions.assertNotNull(atom1.getPoint2d());
+        Assertions.assertNull(atom2.getPoint2d());
+        Assertions.assertNotNull(atom3.getPoint2d());
     }
 
     @Test
@@ -336,14 +338,14 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(3, mol.getAtomCount());
+        Assertions.assertEquals(3, mol.getAtomCount());
         IAtom atom1 = mol.getAtom(0);
         IAtom atom2 = mol.getAtom(1);
         IAtom atom3 = mol.getAtom(2);
 
-        Assert.assertNotNull(atom1.getPoint3d());
-        Assert.assertNull(atom2.getPoint3d());
-        Assert.assertNotNull(atom3.getPoint3d());
+        Assertions.assertNotNull(atom1.getPoint3d());
+        Assertions.assertNull(atom2.getPoint3d());
+        Assertions.assertNotNull(atom3.getPoint3d());
     }
 
     @Test
@@ -353,7 +355,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals("m1", mol.getID());
+        Assertions.assertEquals("m1", mol.getID());
     }
 
     @Test
@@ -363,7 +365,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals("acetic acid", mol.getTitle());
+        Assertions.assertEquals("acetic acid", mol.getTitle());
     }
 
     /**
@@ -376,11 +378,11 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertNotNull(atom);
-        Assert.assertNotNull(atom.getImplicitHydrogenCount());
-        Assert.assertEquals(4, atom.getImplicitHydrogenCount().intValue());
+        Assertions.assertNotNull(atom);
+        Assertions.assertNotNull(atom.getImplicitHydrogenCount());
+        Assertions.assertEquals(4, atom.getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -398,12 +400,12 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(5, mol.getAtomCount());
+        Assertions.assertEquals(5, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertNotNull(atom);
-        Assert.assertEquals("C", atom.getSymbol());
-        Assert.assertNotNull(atom.getImplicitHydrogenCount());
-        Assert.assertEquals(0, atom.getImplicitHydrogenCount().intValue());
+        Assertions.assertNotNull(atom);
+        Assertions.assertEquals("C", atom.getSymbol());
+        Assertions.assertNotNull(atom.getImplicitHydrogenCount());
+        Assertions.assertEquals(0, atom.getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -418,11 +420,11 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertNotNull(atom);
-        Assert.assertNotNull(atom.getImplicitHydrogenCount());
-        Assert.assertEquals(3, atom.getImplicitHydrogenCount().intValue());
+        Assertions.assertNotNull(atom);
+        Assertions.assertNotNull(atom.getImplicitHydrogenCount());
+        Assertions.assertEquals(3, atom.getImplicitHydrogenCount().intValue());
     }
 
     @Test
@@ -432,7 +434,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)", mol.getProperty(CDKConstants.INCHI));
+        Assertions.assertEquals("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)", mol.getProperty(CDKConstants.INCHI));
     }
 
     @Test
@@ -448,7 +450,7 @@ public class CML23FragmentsTest extends CDKTestCase {
             Object next = props.next();
             if (next instanceof DictRef) foundDictRefs = true;
         }
-        Assert.assertTrue(foundDictRefs);
+        Assertions.assertTrue(foundDictRefs);
     }
 
     @Test
@@ -487,24 +489,24 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(1, mol.getProperties().size());
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(1, mol.getProperties().size());
         Object key = mol.getProperties().keySet().toArray()[0];
-        Assert.assertNotNull(key);
-        Assert.assertTrue(key instanceof DescriptorSpecification);
+        Assertions.assertNotNull(key);
+        Assertions.assertTrue(key instanceof DescriptorSpecification);
         DescriptorSpecification spec = (DescriptorSpecification) key;
-        Assert.assertEquals(specificationReference, spec.getSpecificationReference());
-        Assert.assertEquals(implementationTitle, spec.getImplementationTitle());
-        Assert.assertEquals(implementationIdentifier, spec.getImplementationIdentifier());
-        Assert.assertEquals(implementationVendor, spec.getImplementationVendor());
+        Assertions.assertEquals(specificationReference, spec.getSpecificationReference());
+        Assertions.assertEquals(implementationTitle, spec.getImplementationTitle());
+        Assertions.assertEquals(implementationIdentifier, spec.getImplementationIdentifier());
+        Assertions.assertEquals(implementationVendor, spec.getImplementationVendor());
 
-        Assert.assertNotNull(mol.getProperty(key));
-        Assert.assertTrue(mol.getProperty(key) instanceof DescriptorValue);
+        Assertions.assertNotNull(mol.getProperty(key));
+        Assertions.assertTrue(mol.getProperty(key) instanceof DescriptorValue);
         DescriptorValue value = mol.getProperty(key);
         IDescriptorResult result = value.getValue();
-        Assert.assertNotNull(result);
-        Assert.assertTrue(result instanceof DoubleResult);
-        Assert.assertEquals(72.0, ((DoubleResult) result).doubleValue(), 0.001);
+        Assertions.assertNotNull(result);
+        Assertions.assertTrue(result instanceof DoubleResult);
+        Assertions.assertEquals(72.0, ((DoubleResult) result).doubleValue(), 0.001);
     }
 
     private IChemFile parseCMLString(String cmlString) throws Exception {
@@ -523,24 +525,24 @@ public class CML23FragmentsTest extends CDKTestCase {
     }
 
     private IAtomContainer checkForXMoleculeFile(IChemFile chemFile, int numberOfMolecules) {
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
 
-        Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
+        Assertions.assertEquals(chemFile.getChemSequenceCount(), 1);
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
+        Assertions.assertNotNull(seq);
 
-        Assert.assertEquals(seq.getChemModelCount(), 1);
+        Assertions.assertEquals(seq.getChemModelCount(), 1);
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
+        Assertions.assertNotNull(moleculeSet);
 
-        Assert.assertEquals(moleculeSet.getAtomContainerCount(), numberOfMolecules);
+        Assertions.assertEquals(moleculeSet.getAtomContainerCount(), numberOfMolecules);
         IAtomContainer mol = null;
         for (int i = 0; i < numberOfMolecules; i++) {
             mol = moleculeSet.getAtomContainer(i);
-            Assert.assertNotNull(mol);
+            Assertions.assertNotNull(mol);
         }
         return mol;
     }
@@ -571,12 +573,12 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IReaction reaction = checkForSingleReactionFile(chemFile);
 
-        Assert.assertEquals(1, reaction.getReactantCount());
-        Assert.assertEquals(1, reaction.getProductCount());
-        Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
-        Assert.assertEquals("react", reaction.getReactants().getAtomContainer(0).getID());
-        Assert.assertEquals("product", reaction.getProducts().getAtomContainer(0).getID());
-        Assert.assertEquals("water", reaction.getAgents().getAtomContainer(0).getID());
+        Assertions.assertEquals(1, reaction.getReactantCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+        Assertions.assertEquals(1, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals("react", reaction.getReactants().getAtomContainer(0).getID());
+        Assertions.assertEquals("product", reaction.getProducts().getAtomContainer(0).getID());
+        Assertions.assertEquals("water", reaction.getAgents().getAtomContainer(0).getID());
     }
 
     /**
@@ -587,24 +589,24 @@ public class CML23FragmentsTest extends CDKTestCase {
     }
 
     private IReaction checkForXReactionFile(IChemFile chemFile, int numberOfReactions) {
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
 
-        Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
+        Assertions.assertEquals(chemFile.getChemSequenceCount(), 1);
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
+        Assertions.assertNotNull(seq);
 
-        Assert.assertEquals(seq.getChemModelCount(), 1);
+        Assertions.assertEquals(seq.getChemModelCount(), 1);
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IReactionSet reactionSet = model.getReactionSet();
-        Assert.assertNotNull(reactionSet);
+        Assertions.assertNotNull(reactionSet);
 
-        Assert.assertEquals(reactionSet.getReactionCount(), numberOfReactions);
+        Assertions.assertEquals(reactionSet.getReactionCount(), numberOfReactions);
         IReaction reaction = null;
         for (int i = 0; i < numberOfReactions; i++) {
             reaction = reactionSet.getReaction(i);
-            Assert.assertNotNull(reaction);
+            Assertions.assertNotNull(reaction);
         }
         return reaction;
     }

@@ -69,7 +69,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(prev, result));
+        Assertions.assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15543053, 1}));
@@ -91,7 +91,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(prev, result));
+        Assertions.assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15543053, 1}));
@@ -114,7 +114,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(prev, result));
+        Assertions.assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15543053, 1}));
@@ -137,7 +137,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(prev, result));
+        Assertions.assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15543053, 1, 15543053, 1, 1}));
@@ -160,7 +160,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(prev, result));
+        Assertions.assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15521419, 1}));
@@ -183,7 +183,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(prev, result));
+        Assertions.assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15521419, 1}));
@@ -206,7 +206,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(prev, result));
+        Assertions.assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15521419, 1, 15521419, 1, 1}));
@@ -229,7 +229,7 @@ public class GeometryEncoderTest {
 
         // check returned true. the permutation was okay, but no geometry, this
         // will never change
-        assertTrue(encoder.encode(prev, result));
+        Assertions.assertTrue(encoder.encode(prev, result));
 
         // check no values modified
         assertThat(result, is(new long[]{1, 1, 1, 1, 1, 1}));
@@ -250,7 +250,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned false, the permutation changes for each cycle
-        assertFalse(encoder.encode(prev, result));
+        Assertions.assertFalse(encoder.encode(prev, result));
 
         // check no values modified
         assertThat(result, is(new long[]{1, 1, 1, 1, 1, 1}));

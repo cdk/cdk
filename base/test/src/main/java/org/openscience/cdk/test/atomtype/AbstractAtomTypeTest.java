@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.IAtomTypeMatcher;
 import org.openscience.cdk.test.CDKTestCase;
@@ -47,8 +48,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
      */
     public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
             throws Exception {
-        Assert.assertEquals("The number of expected atom types is unequal to the number of atoms",
-                expectedTypes.length, mol.getAtomCount());
+        Assertions.assertEquals(expectedTypes.length, mol.getAtomCount(), "The number of expected atom types is unequal to the number of atoms");
         IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
         for (int i = 0; i < expectedTypes.length; i++) {
             IAtom testedAtom = mol.getAtom(i);
@@ -66,8 +66,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
 
     public void assertAtomTypeNames(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
             throws Exception {
-        Assert.assertEquals("The number of expected atom types is unequal to the number of atoms",
-                expectedTypes.length, mol.getAtomCount());
+        Assertions.assertEquals(expectedTypes.length, mol.getAtomCount(), "The number of expected atom types is unequal to the number of atoms");
         IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
         for (int i = 0; i < expectedTypes.length; i++) {
             IAtom testedAtom = mol.getAtom(i);
@@ -89,15 +88,15 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
         }
 
         if (atom.getHybridization() != CDKConstants.UNSET && matched.getHybridization() != CDKConstants.UNSET) {
-            Assert.assertEquals("Hybridization does not match", atom.getHybridization(), matched.getHybridization());
+            Assertions.assertEquals(atom.getHybridization(), matched.getHybridization(), "Hybridization does not match");
         }
         if (atom.getFormalCharge() != CDKConstants.UNSET && matched.getFormalCharge() != CDKConstants.UNSET) {
-            Assert.assertEquals("Formal charge does not match", atom.getFormalCharge(), matched.getFormalCharge());
+            Assertions.assertEquals(atom.getFormalCharge(), matched.getFormalCharge(), "Formal charge does not match");
         }
         List<IBond> connections = mol.getConnectedBondsList(atom);
         int connectionCount = connections.size();
         if (matched.getFormalNeighbourCount() != CDKConstants.UNSET) {
-            Assert.assertFalse("Number of neighbors is too high", connectionCount > matched.getFormalNeighbourCount());
+            Assertions.assertFalse(connectionCount > matched.getFormalNeighbourCount(), "Number of neighbors is too high");
         }
         if (matched.getMaxBondOrder() != null) {
             Order expectedMax = matched.getMaxBondOrder();
@@ -105,11 +104,11 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
                 IBond.Order order = bond.getOrder();
                 if (order != CDKConstants.UNSET && order != IBond.Order.UNSET) {
                     if (BondManipulator.isHigherOrder(order, expectedMax)) {
-                        Assert.fail("At least one bond order exceeds the maximum for the atom type");
+                        Assertions.fail("At least one bond order exceeds the maximum for the atom type");
                     }
                 } else if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
                     if (expectedMax != IBond.Order.SINGLE && expectedMax != IBond.Order.DOUBLE) {
-                        Assert.fail("A single or double flagged bond does not match the bond order of the atom type");
+                        Assertions.fail("A single or double flagged bond does not match the bond order of the atom type");
                     }
                 }
             }
@@ -124,8 +123,8 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
             IAtomType foundAtomType) {
         addTestedAtomType(testedAtomTypes, expectedID);
 
-        Assert.assertNotNull("No atom type was recognized, but expected: " + expectedID, foundAtomType);
-        Assert.assertEquals(error, expectedID, foundAtomType.getAtomTypeName());
+        Assertions.assertNotNull(foundAtomType, "No atom type was recognized, but expected: " + expectedID);
+        Assertions.assertEquals(expectedID, foundAtomType.getAtomTypeName(), error);
     }
 
     private void addTestedAtomType(Map<String, Integer> testedAtomTypes, String expectedID) {
@@ -135,8 +134,8 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
 
         try {
             IAtomType type = getFactory().getAtomType(expectedID);
-            Assert.assertNotNull("Attempt to test atom type which is not defined in the " + getAtomTypeListName()
-                    + ": " + expectedID, type);
+            Assertions.assertNotNull(type, "Attempt to test atom type which is not defined in the " + getAtomTypeListName()
+                    + ": " + expectedID);
         } catch (NoSuchAtomTypeException exception) {
             System.err.println("Attempt to test atom type which is not defined in the " + getAtomTypeListName()
                     + ": " + exception.getMessage());
@@ -156,7 +155,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
         for (IAtomType iAtomType : expectedTypesArray) {
             String definedType = iAtomType.getAtomTypeName();
             if (alreadyDefinedTypes.contains(definedType)) {
-                Assert.fail("Duplicate atom type definition in XML: " + definedType);
+                Assertions.fail("Duplicate atom type definition in XML: " + definedType);
             }
             alreadyDefinedTypes.add(definedType);
         }
@@ -183,7 +182,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
                 errorMessage += " " + notTestedType;
             }
             if (expectedTypeCount != testedAtomTypes.size()) {
-                Assert.fail(errorMessage);
+                Assertions.fail(errorMessage);
             }
         } else { // testedAtomTypes.size() > definedTypes.size()
             // more atom types tested than defined
@@ -194,7 +193,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
                 errorMessage += " " + notDefined;
             }
             if (testedTypeCount != testedAtomTypes.size()) {
-                Assert.fail(errorMessage);
+                Assertions.fail(errorMessage);
             }
         }
     }

@@ -48,7 +48,7 @@ public class SquarePlanarTest {
         SmilesParser             smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer           mol    = smipar.parseSmiles("Cl[Pt@SP3](Cl)([NH3])[NH3]");
         Iterator<IStereoElement> ses    = mol.stereoElements().iterator();
-        assertTrue(ses.hasNext());
+        Assertions.assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(SquarePlanar.class));
         assertThat(se.getConfigOrder(), is(3));

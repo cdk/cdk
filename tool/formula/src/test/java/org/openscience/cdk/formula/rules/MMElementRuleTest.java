@@ -19,6 +19,7 @@
 package org.openscience.cdk.formula.rules;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -52,7 +53,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     public void testMMElementRule() throws Exception {
 
         IRule rule = new MMElementRule();
-        Assert.assertNotNull(rule);
+        Assertions.assertNotNull(rule);
 
     }
 
@@ -67,8 +68,8 @@ public class MMElementRuleTest extends FormulaRuleTest {
         IRule rule = new MMElementRule();
         Object[] objects = rule.getParameters();
 
-        Assert.assertSame(MMElementRule.Database.WILEY, objects[0]);
-        Assert.assertSame(MMElementRule.RangeMass.Minus500, objects[1]);
+        Assertions.assertSame(MMElementRule.Database.WILEY, objects[0]);
+        Assertions.assertSame(MMElementRule.RangeMass.Minus500, objects[1]);
 
     }
 
@@ -90,8 +91,8 @@ public class MMElementRuleTest extends FormulaRuleTest {
         rule.setParameters(params);
         Object[] objects = rule.getParameters();
 
-        Assert.assertSame(MMElementRule.Database.DNP, objects[0]);
-        Assert.assertSame(MMElementRule.RangeMass.Minus1000, objects[1]);
+        Assertions.assertSame(MMElementRule.Database.DNP, objects[0]);
+        Assertions.assertSame(MMElementRule.RangeMass.Minus1000, objects[1]);
     }
 
     /**
@@ -108,7 +109,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 200);
 
-        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(0.0, rule.validate(formula), 0.0001);
     }
 
     /**
@@ -125,6 +126,6 @@ public class MMElementRuleTest extends FormulaRuleTest {
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 6);
 
-        Assert.assertEquals(1.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
     }
 }

@@ -25,6 +25,7 @@
 package org.openscience.cdk.hash;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -1126,7 +1127,7 @@ public class HashCodeScenariosTest {
     private List<IAtomContainer> sdf(String path, int exp) {
         InputStream in = getClass().getResourceAsStream(path);
 
-        assertNotNull(path + " could not be found in classpath", in);
+        Assertions.assertNotNull(in, path + " could not be found in classpath");
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IteratingSDFReader sdf = new IteratingSDFReader(in, builder, false);

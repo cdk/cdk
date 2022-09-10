@@ -22,6 +22,7 @@ import java.util.List;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,6 +44,6 @@ public class BFSShortestPathTest extends CDKTestCase {
         Object startVertex = graph.vertexSet().toArray()[0];
         Object endVertex = graph.vertexSet().toArray()[5];
         List list = BFSShortestPath.findPathBetween(graph, startVertex, endVertex);
-        Assert.assertTrue(list.size() > 0);
+        Assertions.assertTrue(list.size() > 0);
     }
 }

@@ -21,6 +21,7 @@ package org.openscience.cdk.geometry;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -40,9 +41,9 @@ public class ZMatrixToolsTest extends CDKTestCase {
         double[] dihedrals = {0, 0, 0, 180, 0, 120, -120};
         Point3d[] points = ZMatrixTools.zmatrixToCartesian(distances, first_atoms, angles, second_atoms, dihedrals,
                 third_atoms);
-        Assert.assertEquals(-0.5500, points[2].x, 0.0001);
-        Assert.assertEquals(-1.3664, points[5].y, 0.0001);
-        Assert.assertEquals(-0.8952, points[6].z, 0.0001);
+        Assertions.assertEquals(-0.5500, points[2].x, 0.0001);
+        Assertions.assertEquals(-1.3664, points[5].y, 0.0001);
+        Assertions.assertEquals(-0.8952, points[6].z, 0.0001);
     }
 
 }

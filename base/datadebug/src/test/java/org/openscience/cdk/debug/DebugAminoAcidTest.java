@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractAminoAcidTest;
@@ -40,6 +41,6 @@ public class DebugAminoAcidTest extends AbstractAminoAcidTest {
     @Test
     public void testDebugAminoAcid() {
         IAminoAcid oAminoAcid = new DebugAminoAcid();
-        Assert.assertNotNull(oAminoAcid);
+        Assertions.assertNotNull(oAminoAcid);
     }
 }

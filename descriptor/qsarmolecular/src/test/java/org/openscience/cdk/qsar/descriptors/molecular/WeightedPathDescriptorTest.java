@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -52,11 +53,11 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
     private void assertWeights(IAtomContainer mol, double ... expected) {
         DescriptorValue value = descriptor.calculate(mol);
         DoubleArrayResult actual = (DoubleArrayResult) value.getValue();
-        Assert.assertEquals(expected[0], actual.get(0), 0.00001);
-        Assert.assertEquals(expected[1], actual.get(1), 0.00001);
-        Assert.assertEquals(expected[2], actual.get(2), 0.00001);
-        Assert.assertEquals(expected[3], actual.get(3), 0.00001);
-        Assert.assertEquals(expected[4], actual.get(4), 0.00001);
+        Assertions.assertEquals(expected[0], actual.get(0), 0.00001);
+        Assertions.assertEquals(expected[1], actual.get(1), 0.00001);
+        Assertions.assertEquals(expected[2], actual.get(2), 0.00001);
+        Assertions.assertEquals(expected[3], actual.get(3), 0.00001);
+        Assertions.assertEquals(expected[4], actual.get(4), 0.00001);
     }
 
     @Test

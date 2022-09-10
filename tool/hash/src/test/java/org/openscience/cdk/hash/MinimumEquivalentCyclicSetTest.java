@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.hash;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -56,8 +57,8 @@ public class MinimumEquivalentCyclicSetTest {
         Set<Integer> set = finder.find(values, dummy, g);
 
         assertThat(set.size(), is(2));
-        assertTrue(set.contains(0));
-        assertTrue(set.contains(3));
+        Assertions.assertTrue(set.contains(0));
+        Assertions.assertTrue(set.contains(3));
 
     }
 
@@ -79,12 +80,12 @@ public class MinimumEquivalentCyclicSetTest {
         Set<Integer> set = finder.find(values, dummy, g);
 
         assertThat(set.size(), is(6));
-        assertTrue(set.contains(0));
-        assertTrue(set.contains(1));
-        assertTrue(set.contains(2));
-        assertTrue(set.contains(3));
-        assertTrue(set.contains(4));
-        assertTrue(set.contains(5));
+        Assertions.assertTrue(set.contains(0));
+        Assertions.assertTrue(set.contains(1));
+        Assertions.assertTrue(set.contains(2));
+        Assertions.assertTrue(set.contains(3));
+        Assertions.assertTrue(set.contains(4));
+        Assertions.assertTrue(set.contains(5));
 
         // invert values, we should now get the other set
         values = new long[]{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
@@ -92,12 +93,12 @@ public class MinimumEquivalentCyclicSetTest {
         set = finder.find(values, dummy, g);
 
         assertThat(set.size(), is(6));
-        assertTrue(set.contains(6));
-        assertTrue(set.contains(7));
-        assertTrue(set.contains(8));
-        assertTrue(set.contains(9));
-        assertTrue(set.contains(10));
-        assertTrue(set.contains(11));
+        Assertions.assertTrue(set.contains(6));
+        Assertions.assertTrue(set.contains(7));
+        Assertions.assertTrue(set.contains(8));
+        Assertions.assertTrue(set.contains(9));
+        Assertions.assertTrue(set.contains(10));
+        Assertions.assertTrue(set.contains(11));
     }
 
     /**

@@ -59,9 +59,9 @@ public class AllPairsShortestPathsTest {
         for (int i = -10; i < 10; i++) {
             for (int j = -10; j < 10; j++) {
 
-                assertArrayEquals(new int[0][0], asp.from(i).pathsTo(0));
-                assertArrayEquals(new int[0], asp.from(i).pathTo(0));
-                assertArrayEquals(new IAtom[0], asp.from(i).atomsTo(0));
+                Assertions.assertArrayEquals(new int[0][0], asp.from(i).pathsTo(0));
+                Assertions.assertArrayEquals(new int[0], asp.from(i).pathTo(0));
+                Assertions.assertArrayEquals(new IAtom[0], asp.from(i).atomsTo(0));
 
                 assertThat(asp.from(i).nPathsTo(j), is(0));
                 assertThat(asp.from(i).distanceTo(j), is(Integer.MAX_VALUE));
@@ -90,35 +90,35 @@ public class AllPairsShortestPathsTest {
         //  \        /
         //    c6 - c5
 
-        assertNotNull(asp.from(c1));
-        assertNotNull(asp.from(c2));
-        assertNotNull(asp.from(c3));
-        assertNotNull(asp.from(c4));
-        assertNotNull(asp.from(c5));
-        assertNotNull(asp.from(c6));
+        Assertions.assertNotNull(asp.from(c1));
+        Assertions.assertNotNull(asp.from(c2));
+        Assertions.assertNotNull(asp.from(c3));
+        Assertions.assertNotNull(asp.from(c4));
+        Assertions.assertNotNull(asp.from(c5));
+        Assertions.assertNotNull(asp.from(c6));
 
         {
             IAtom[] expected = new IAtom[]{c1, c2, c3};
             IAtom[] actual = asp.from(c1).atomsTo(c3);
-            assertArrayEquals(expected, actual);
+            Assertions.assertArrayEquals(expected, actual);
         }
 
         {
             IAtom[] expected = new IAtom[]{c3, c2, c1};
             IAtom[] actual = asp.from(c3).atomsTo(c1);
-            assertArrayEquals(expected, actual);
+            Assertions.assertArrayEquals(expected, actual);
         }
 
         {
             IAtom[] expected = new IAtom[]{c1, c6, c5};
             IAtom[] actual = asp.from(c1).atomsTo(c5);
-            assertArrayEquals(expected, actual);
+            Assertions.assertArrayEquals(expected, actual);
         }
 
         {
             IAtom[] expected = new IAtom[]{c5, c6, c1};
             IAtom[] actual = asp.from(c5).atomsTo(c1);
-            assertArrayEquals(expected, actual);
+            Assertions.assertArrayEquals(expected, actual);
         }
 
     }
@@ -135,35 +135,35 @@ public class AllPairsShortestPathsTest {
         //  \       /
         //    5 - 4
 
-        assertNotNull(asp.from(0));
-        assertNotNull(asp.from(1));
-        assertNotNull(asp.from(2));
-        assertNotNull(asp.from(3));
-        assertNotNull(asp.from(4));
-        assertNotNull(asp.from(5));
+        Assertions.assertNotNull(asp.from(0));
+        Assertions.assertNotNull(asp.from(1));
+        Assertions.assertNotNull(asp.from(2));
+        Assertions.assertNotNull(asp.from(3));
+        Assertions.assertNotNull(asp.from(4));
+        Assertions.assertNotNull(asp.from(5));
 
         {
             int[] expected = new int[]{0, 1, 2};
             int[] actual = asp.from(0).pathTo(2);
-            assertArrayEquals(expected, actual);
+            Assertions.assertArrayEquals(expected, actual);
         }
 
         {
             int[] expected = new int[]{2, 1, 0};
             int[] actual = asp.from(2).pathTo(0);
-            assertArrayEquals(expected, actual);
+            Assertions.assertArrayEquals(expected, actual);
         }
 
         {
             int[] expected = new int[]{0, 5, 4};
             int[] actual = asp.from(0).pathTo(4);
-            assertArrayEquals(expected, actual);
+            Assertions.assertArrayEquals(expected, actual);
         }
 
         {
             int[] expected = new int[]{4, 5, 0};
             int[] actual = asp.from(4).pathTo(0);
-            assertArrayEquals(expected, actual);
+            Assertions.assertArrayEquals(expected, actual);
         }
 
     }

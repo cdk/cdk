@@ -20,6 +20,7 @@
 package org.openscience.cdk.formula;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -49,7 +50,7 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
     @Test
     public void testAdductFormula() {
         IAdductFormula mfS = new AdductFormula();
-        Assert.assertNotNull(mfS);
+        Assertions.assertNotNull(mfS);
     }
 
     /**
@@ -60,6 +61,6 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
     @Test
     public void testAdductFormula_IMolecularFormula() {
         IAdductFormula mfS = new AdductFormula(getBuilder().newInstance(IMolecularFormula.class));
-        Assert.assertEquals(1, mfS.size());
+        Assertions.assertEquals(1, mfS.size());
     }
 }

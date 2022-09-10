@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -39,7 +40,7 @@ public abstract class AbstractCDKObjectTest extends CDKTestCase {
     public void testGetBuilder() {
         IChemObject chemObject = newChemObject();
         Object object = chemObject.getBuilder();
-        Assert.assertNotNull(object);
-        Assert.assertTrue(object instanceof IChemObjectBuilder);
+        Assertions.assertNotNull(object);
+        Assertions.assertTrue(object instanceof IChemObjectBuilder);
     }
 }

@@ -20,6 +20,7 @@ package org.openscience.cdk.charges;
 
 import org.junit.Assert;
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.test.CDKTestCase;
@@ -56,7 +57,7 @@ public class StabilizationChargesTest extends CDKTestCase {
     @Test
     public void testStabilizationCharges() {
 
-        Assert.assertNotNull(new StabilizationCharges());
+        Assertions.assertNotNull(new StabilizationCharges());
     }
 
     /**
@@ -89,9 +90,9 @@ public class StabilizationChargesTest extends CDKTestCase {
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             if (i == 1)
-                Assert.assertNotSame(0.0, sc.calculatePositive(molecule, molecule.getAtom(i)));
+                Assertions.assertNotSame(0.0, sc.calculatePositive(molecule, molecule.getAtom(i)));
             else
-                Assert.assertEquals(0.0, sc.calculatePositive(molecule, molecule.getAtom(i)), 0.001);
+                Assertions.assertEquals(0.0, sc.calculatePositive(molecule, molecule.getAtom(i)), 0.001);
 
         }
     }

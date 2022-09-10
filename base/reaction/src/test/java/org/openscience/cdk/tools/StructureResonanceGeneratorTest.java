@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
@@ -79,7 +80,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     @Test
     public void testStructureResonanceGenerator() {
 
-        Assert.assertNotNull(new StructureResonanceGenerator());
+        Assertions.assertNotNull(new StructureResonanceGenerator());
     }
 
     /**
@@ -90,7 +91,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     @Test
     public void testStructureResonanceGenerator_boolean() {
 
-        Assert.assertNotNull(new StructureResonanceGenerator(true));
+        Assertions.assertNotNull(new StructureResonanceGenerator(true));
     }
 
     /**
@@ -101,7 +102,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     @Test
     public void testGetReactions() {
 
-        Assert.assertNotNull(new StructureResonanceGenerator().getReactions());
+        Assertions.assertNotNull(new StructureResonanceGenerator().getReactions());
     }
 
     /**
@@ -114,50 +115,50 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
 
         List<IReactionProcess> reactionList = sRG.getReactions();
-        Assert.assertNotNull(reactionList);
+        Assertions.assertNotNull(reactionList);
 
-        Assert.assertEquals(6, reactionList.size());
+        Assertions.assertEquals(6, reactionList.size());
 
         SharingLonePairReaction slReaction = (SharingLonePairReaction) reactionList.get(0);
-        Assert.assertEquals(1, slReaction.getParameterList().size());
+        Assertions.assertEquals(1, slReaction.getParameterList().size());
         List<IParameterReact> objects = slReaction.getParameterList();
         for (IParameterReact object : objects) {
-            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
+            if (object instanceof SetReactionCenter) Assertions.assertFalse(object.isSetParameter());
         }
 
         PiBondingMovementReaction pBReaction = (PiBondingMovementReaction) reactionList.get(1);
-        Assert.assertEquals(1, pBReaction.getParameterList().size());
+        Assertions.assertEquals(1, pBReaction.getParameterList().size());
         objects = pBReaction.getParameterList();
         for (IParameterReact object : objects) {
-            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
+            if (object instanceof SetReactionCenter) Assertions.assertFalse(object.isSetParameter());
         }
 
         RearrangementAnionReaction raReaction = (RearrangementAnionReaction) reactionList.get(2);
-        Assert.assertEquals(1, raReaction.getParameterList().size());
+        Assertions.assertEquals(1, raReaction.getParameterList().size());
         objects = raReaction.getParameterList();
         for (IParameterReact object : objects) {
-            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
+            if (object instanceof SetReactionCenter) Assertions.assertFalse(object.isSetParameter());
         }
 
         RearrangementCationReaction rcReaction = (RearrangementCationReaction) reactionList.get(3);
-        Assert.assertEquals(1, rcReaction.getParameterList().size());
+        Assertions.assertEquals(1, rcReaction.getParameterList().size());
         objects = rcReaction.getParameterList();
         for (IParameterReact object : objects) {
-            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
+            if (object instanceof SetReactionCenter) Assertions.assertFalse(object.isSetParameter());
         }
 
         RearrangementLonePairReaction lnReaction = (RearrangementLonePairReaction) reactionList.get(4);
-        Assert.assertEquals(1, lnReaction.getParameterList().size());
+        Assertions.assertEquals(1, lnReaction.getParameterList().size());
         objects = lnReaction.getParameterList();
         for (IParameterReact object : objects) {
-            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
+            if (object instanceof SetReactionCenter) Assertions.assertFalse(object.isSetParameter());
         }
 
         RearrangementRadicalReaction rrReaction = (RearrangementRadicalReaction) reactionList.get(5);
-        Assert.assertEquals(1, rrReaction.getParameterList().size());
+        Assertions.assertEquals(1, rrReaction.getParameterList().size());
         objects = rrReaction.getParameterList();
         for (IParameterReact object : objects) {
-            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
+            if (object instanceof SetReactionCenter) Assertions.assertFalse(object.isSetParameter());
         }
 
     }
@@ -173,9 +174,9 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
         List<IReactionProcess> reactionList = sRG.getReactions();
-        Assert.assertNotNull(reactionList);
+        Assertions.assertNotNull(reactionList);
 
-        Assert.assertEquals(6, reactionList.size());
+        Assertions.assertEquals(6, reactionList.size());
 
         // put only one reaction more.
         List<IReactionProcess> newReactionList = new ArrayList<>();
@@ -185,7 +186,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         sRG.setReactions(newReactionList);
 
-        Assert.assertEquals(1, sRG.getReactions().size());
+        Assertions.assertEquals(1, sRG.getReactions().size());
 
     }
 
@@ -378,7 +379,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
         IAtomContainerSet setOfMolecules = sRG.getStructures(molecule);
 
-        Assert.assertEquals(4, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(4, setOfMolecules.getAtomContainerCount());
 
     }
 
@@ -428,7 +429,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         IAtomContainerSet setOfMolecules = sRG.getStructures(molecule);
 
-        Assert.assertEquals(2, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(2, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(new Atom("C"));
@@ -451,7 +452,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         addExplicitHydrogens(molecule2);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
     }
 
     /**
@@ -476,7 +477,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gR = new StructureResonanceGenerator();
         IAtomContainerSet setOfMolecules = gR.getStructures(molecule);
 
-        Assert.assertEquals(2, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(2, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -491,7 +492,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         addExplicitHydrogens(molecule2);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
     }
 
     /**
@@ -519,7 +520,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         gR.setReactions(reactionList);
         IAtomContainerSet setOfMolecules = gR.getStructures(molecule);
 
-        Assert.assertEquals(3, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(3, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -534,7 +535,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         lpcheck.saturate(molecule2);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
 
     }
 
@@ -560,7 +561,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gR = new StructureResonanceGenerator();
         IAtomContainerSet setOfMolecules = gR.getStructures(molecule);
 
-        Assert.assertEquals(2, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(2, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer molecule1 = builder.newInstance(IAtomContainer.class);
         molecule1.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -575,7 +576,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         lpcheck.saturate(molecule1);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
     }
 
     /**
@@ -612,7 +613,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
 
-        Assert.assertEquals(5, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(5, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer molecule1 = builder.newInstance(IAtomContainer.class);
         molecule1.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -636,7 +637,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         lpcheck.saturate(molecule1);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(2), qAC));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(2), qAC));
 
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -661,7 +662,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         IAtomContainer product2 = setOfMolecules.getAtomContainer(4);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, qAC));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, qAC));
 
     }
 
@@ -699,7 +700,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainer container = gRI.getContainer(molecule, molecule.getAtom(0));
 
-        Assert.assertEquals(7, container.getAtomCount());
+        Assertions.assertEquals(7, container.getAtomCount());
 
     }
 
@@ -737,7 +738,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
 
-        Assert.assertEquals(3, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(3, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer molecule1 = builder.newInstance(IAtomContainer.class);
         molecule1.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -761,7 +762,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         lpcheck.saturate(molecule1);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
 
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -786,7 +787,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         IAtomContainer product2 = setOfMolecules.getAtomContainer(2);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, qAC));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, qAC));
 
     }
 
@@ -822,7 +823,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
 
-        Assert.assertEquals(5, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(5, setOfMolecules.getAtomContainerCount());
     }
 
     /**
@@ -856,7 +857,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
 
-        Assert.assertEquals(3, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(3, setOfMolecules.getAtomContainerCount());
     }
 
     /**
@@ -879,14 +880,14 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         molecule.addBond(2, 3, IBond.Order.SINGLE);
         molecule.getAtom(0).setFormalCharge(+1);
         addExplicitHydrogens(molecule);
-        Assert.assertEquals(8, molecule.getAtomCount());
+        Assertions.assertEquals(8, molecule.getAtomCount());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet resonanceStructures = gRI.getStructures(molecule);
 
-        Assert.assertEquals(4, resonanceStructures.getAtomContainerCount());
+        Assertions.assertEquals(4, resonanceStructures.getAtomContainerCount());
     }
 
     /**
@@ -909,13 +910,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         addExplicitHydrogens(molecule);
         molecule.getAtom(0).setFormalCharge(0);
         molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
-        Assert.assertEquals(11, molecule.getAtomCount());
+        Assertions.assertEquals(11, molecule.getAtomCount());
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet resonanceStructures = gRI.getStructures(molecule);
-        Assert.assertEquals(2, resonanceStructures.getAtomContainerCount());
+        Assertions.assertEquals(2, resonanceStructures.getAtomContainerCount());
     }
 
     /**
@@ -938,12 +939,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
-        Assert.assertEquals(6, molecule.getAtomCount());
+        Assertions.assertEquals(6, molecule.getAtomCount());
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet resonanceStructures = gRI.getStructures(molecule);
 
-        Assert.assertEquals(2, resonanceStructures.getAtomContainerCount());
+        Assertions.assertEquals(2, resonanceStructures.getAtomContainerCount());
     }
 
     /**
@@ -980,12 +981,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
-        Assert.assertEquals(17, molecule.getAtomCount());
+        Assertions.assertEquals(17, molecule.getAtomCount());
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
         IAtomContainerSet resonanceStructures = gRI.getStructures(molecule);
 
-        Assert.assertEquals(4, resonanceStructures.getAtomContainerCount());
+        Assertions.assertEquals(4, resonanceStructures.getAtomContainerCount());
     }
 
     /**
@@ -1023,7 +1024,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         LonePairElectronChecker lpChecker = new LonePairElectronChecker();
         lpChecker.saturate(molecule);
 
-        Assert.assertEquals(18, molecule.getAtomCount());
+        Assertions.assertEquals(18, molecule.getAtomCount());
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         // put only one reaction more.
@@ -1035,7 +1036,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         IAtomContainerSet resonanceStructures = gRI.getStructures(molecule);
 
-        Assert.assertEquals(2, resonanceStructures.getAtomContainerCount());
+        Assertions.assertEquals(2, resonanceStructures.getAtomContainerCount());
     }
 
     /**
@@ -1069,47 +1070,41 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         lpcheck.saturate(molecule);
 
         boolean isAromatic = Aromaticity.cdkLegacy().apply(molecule);
-        Assert.assertTrue("Molecule is expected to be marked aromatic!", isAromatic);
+        Assertions.assertTrue(isAromatic, "Molecule is expected to be marked aromatic!");
 
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
-                molecule.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
-                molecule.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
-                molecule.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
-                molecule.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
-                molecule.getBond(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
-                molecule.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(molecule.getBond(1).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(2).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(3).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(4).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(5).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(6).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(false);
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
 
-        Assert.assertEquals(5, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(5, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer prod1 = setOfMolecules.getAtomContainer(1);
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(prod1.getBond(1).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(2).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(3).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(4).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(5).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(6).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
         IAtomContainer prod2 = setOfMolecules.getAtomContainer(2);
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(prod2.getBond(1).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(2).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(3).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(4).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(5).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(6).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
         IAtomContainer prod3 = setOfMolecules.getAtomContainer(3);
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(prod3.getBond(1).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(2).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(3).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(4).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(5).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(6).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
 
     }
 
@@ -1124,7 +1119,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
 
-        Assert.assertEquals(2, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(2, setOfMolecules.getAtomContainerCount());
 
     }
 
@@ -1144,7 +1139,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
 
-        Assert.assertEquals(2, setOfMolecules.getAtomContainerCount());
+        Assertions.assertEquals(2, setOfMolecules.getAtomContainerCount());
     }
 
     /**
@@ -1168,14 +1163,14 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
-        Assert.assertEquals(6, molecule.getAtomCount());
+        Assertions.assertEquals(6, molecule.getAtomCount());
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet containers = gRI.getContainers(molecule);
 
-        Assert.assertEquals(1, containers.getAtomContainerCount());
-        Assert.assertEquals(3, containers.getAtomContainer(0).getAtomCount());
-        Assert.assertEquals(2, containers.getAtomContainer(0).getBondCount());
+        Assertions.assertEquals(1, containers.getAtomContainerCount());
+        Assertions.assertEquals(3, containers.getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(2, containers.getAtomContainer(0).getBondCount());
     }
 
     /**
@@ -1217,10 +1212,10 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
         IAtomContainerSet setOfContainers = sRG.getContainers(molecule);
 
-        Assert.assertEquals(2, setOfContainers.getAtomContainerCount());
+        Assertions.assertEquals(2, setOfContainers.getAtomContainerCount());
         for (int i = 0; i < 2; i++) {
-            Assert.assertEquals(3, setOfContainers.getAtomContainer(i).getAtomCount());
-            Assert.assertEquals(2, setOfContainers.getAtomContainer(i).getBondCount());
+            Assertions.assertEquals(3, setOfContainers.getAtomContainer(i).getAtomCount());
+            Assertions.assertEquals(2, setOfContainers.getAtomContainer(i).getBondCount());
 
         }
     }
@@ -1267,9 +1262,9 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
         IAtomContainer container = sRG.getContainer(molecule, atom4);
 
-        Assert.assertEquals(3, container.getAtomCount());
-        Assert.assertEquals(2, container.getBondCount());
-        Assert.assertTrue(container.contains(atom4));
+        Assertions.assertEquals(3, container.getAtomCount());
+        Assertions.assertEquals(2, container.getBondCount());
+        Assertions.assertTrue(container.contains(atom4));
 
     }
 
@@ -1315,9 +1310,9 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
         IAtomContainer container = sRG.getContainer(molecule, molecule.getBond(1));
 
-        Assert.assertEquals(3, container.getAtomCount());
-        Assert.assertEquals(2, container.getBondCount());
-        Assert.assertTrue(container.contains(molecule.getBond(1)));
+        Assertions.assertEquals(3, container.getAtomCount());
+        Assertions.assertEquals(2, container.getBondCount());
+        Assertions.assertTrue(container.contains(molecule.getBond(1)));
 
     }
 
@@ -1370,12 +1365,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
         IAtomContainer container = sRG.getContainer(molecule, atom4);
 
-        Assert.assertNotNull(atom2.getID());
-        Assert.assertNotNull(atom3.getID());
-        Assert.assertNotNull(atom4.getID());
-        Assert.assertEquals(atom2.getID(), container.getAtom(0).getID());
-        Assert.assertEquals(atom3.getID(), container.getAtom(1).getID());
-        Assert.assertEquals(atom4.getID(), container.getAtom(2).getID());
+        Assertions.assertNotNull(atom2.getID());
+        Assertions.assertNotNull(atom3.getID());
+        Assertions.assertNotNull(atom4.getID());
+        Assertions.assertEquals(atom2.getID(), container.getAtom(0).getID());
+        Assertions.assertEquals(atom3.getID(), container.getAtom(1).getID());
+        Assertions.assertEquals(atom4.getID(), container.getAtom(2).getID());
 
     }
 
@@ -1415,15 +1410,15 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
 
-        Assert.assertEquals(1, setOfContainers.getAtomContainerCount());
+        Assertions.assertEquals(1, setOfContainers.getAtomContainerCount());
 
         IAtomContainer container = setOfContainers.getAtomContainer(0);
 
-        Assert.assertEquals(15, molecule.getAtomCount());
-        Assert.assertEquals(7, container.getAtomCount());
+        Assertions.assertEquals(15, molecule.getAtomCount());
+        Assertions.assertEquals(7, container.getAtomCount());
 
-        Assert.assertEquals(15, molecule.getBondCount());
-        Assert.assertEquals(7, container.getBondCount());
+        Assertions.assertEquals(15, molecule.getBondCount());
+        Assertions.assertEquals(7, container.getBondCount());
 
     }
 
@@ -1461,15 +1456,15 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
 
-        Assert.assertEquals(1, setOfContainers.getAtomContainerCount());
+        Assertions.assertEquals(1, setOfContainers.getAtomContainerCount());
 
         IAtomContainer container = setOfContainers.getAtomContainer(0);
 
-        Assert.assertEquals(12, molecule.getAtomCount());
-        Assert.assertEquals(7, container.getAtomCount());
+        Assertions.assertEquals(12, molecule.getAtomCount());
+        Assertions.assertEquals(7, container.getAtomCount());
 
-        Assert.assertEquals(12, molecule.getBondCount());
-        Assert.assertEquals(7, container.getBondCount());
+        Assertions.assertEquals(12, molecule.getBondCount());
+        Assertions.assertEquals(7, container.getBondCount());
 
     }
 
@@ -1499,8 +1494,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
 
-        Assert.assertEquals(1, setOfContainers.getAtomContainerCount());
-        Assert.assertEquals(3, setOfContainers.getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(1, setOfContainers.getAtomContainerCount());
+        Assertions.assertEquals(3, setOfContainers.getAtomContainer(0).getAtomCount());
     }
 
     /**
@@ -1538,8 +1533,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
 
-        Assert.assertEquals(1, setOfContainers.getAtomContainerCount());
-        Assert.assertEquals(8, setOfContainers.getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(1, setOfContainers.getAtomContainerCount());
+        Assertions.assertEquals(8, setOfContainers.getAtomContainer(0).getAtomCount());
     }
 
     /**
@@ -1578,8 +1573,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
 
-        Assert.assertEquals(1, setOfContainers.getAtomContainerCount());
-        Assert.assertEquals(8, setOfContainers.getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(1, setOfContainers.getAtomContainerCount());
+        Assertions.assertEquals(8, setOfContainers.getAtomContainer(0).getAtomCount());
     }
 
     /**
@@ -1589,7 +1584,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     @Test
     public void testGetMaximalStructures() throws Exception {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
-        Assert.assertEquals(50, gRI.getMaximalStructures());
+        Assertions.assertEquals(50, gRI.getMaximalStructures());
 
     }
 
@@ -1601,9 +1596,9 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     @Category(SlowTest.class)
     public void testSetMaximalStructures_int() throws Exception {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
-        Assert.assertEquals(50, gRI.getMaximalStructures());
+        Assertions.assertEquals(50, gRI.getMaximalStructures());
         gRI.setMaximalStructures(1);
-        Assert.assertEquals(1, gRI.getMaximalStructures());
+        Assertions.assertEquals(1, gRI.getMaximalStructures());
 
     }
 
@@ -1642,8 +1637,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
 
-        Assert.assertEquals(1, setOfContainers.getAtomContainerCount());
-        Assert.assertEquals(6, setOfContainers.getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(1, setOfContainers.getAtomContainerCount());
+        Assertions.assertEquals(6, setOfContainers.getAtomContainer(0).getAtomCount());
     }
 
     /**
@@ -1679,14 +1674,14 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
-        Assert.assertTrue(Aromaticity.cdkLegacy().apply(molecule));
+        Assertions.assertTrue(Aromaticity.cdkLegacy().apply(molecule));
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
 
-        Assert.assertNotNull(setOfContainers);
-        Assert.assertEquals(1, setOfContainers.getAtomContainerCount());
-        Assert.assertEquals(6, setOfContainers.getAtomContainer(0).getAtomCount());
+        Assertions.assertNotNull(setOfContainers);
+        Assertions.assertEquals(1, setOfContainers.getAtomContainerCount());
+        Assertions.assertEquals(6, setOfContainers.getAtomContainer(0).getAtomCount());
     }
 
     /**
@@ -1721,11 +1716,11 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
-        Assert.assertTrue(Aromaticity.cdkLegacy().apply(molecule));
+        Assertions.assertTrue(Aromaticity.cdkLegacy().apply(molecule));
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
         IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
 
-        Assert.assertNull(setOfContainers);
+        Assertions.assertNull(setOfContainers);
     }
 }

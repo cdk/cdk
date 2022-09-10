@@ -52,49 +52,49 @@ public class ParserTest extends CDKTestCase {
     @Test
     public void testQueryAtomCreation() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("*", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(1, container.getAtomCount());
+        Assertions.assertEquals(1, container.getAtomCount());
         org.openscience.cdk.interfaces.IAtom atom = container.getAtom(0);
-        Assert.assertTrue(atom instanceof SMARTSAtom);
+        Assertions.assertTrue(atom instanceof SMARTSAtom);
     }
 
     @Test
     public void testAliphaticAtom() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("A", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(1, container.getAtomCount());
+        Assertions.assertEquals(1, container.getAtomCount());
         org.openscience.cdk.interfaces.IAtom atom = container.getAtom(0);
-        Assert.assertTrue(atom instanceof SMARTSAtom);
+        Assertions.assertTrue(atom instanceof SMARTSAtom);
     }
 
     @Test
     public void testAromaticAtom() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("a", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(1, container.getAtomCount());
+        Assertions.assertEquals(1, container.getAtomCount());
         org.openscience.cdk.interfaces.IAtom atom = container.getAtom(0);
-        Assert.assertTrue(atom instanceof SMARTSAtom);
+        Assertions.assertTrue(atom instanceof SMARTSAtom);
     }
 
     @Test
     public void testDegree() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("[D2]", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(1, container.getAtomCount());
+        Assertions.assertEquals(1, container.getAtomCount());
         org.openscience.cdk.interfaces.IAtom atom = container.getAtom(0);
-        Assert.assertTrue(atom instanceof SMARTSAtom);
+        Assertions.assertTrue(atom instanceof SMARTSAtom);
     }
 
     @Test
     public void testImplicitHCount() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("[h3]", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(1, container.getAtomCount());
+        Assertions.assertEquals(1, container.getAtomCount());
         org.openscience.cdk.interfaces.IAtom atom = container.getAtom(0);
-        Assert.assertTrue(atom instanceof SMARTSAtom);
+        Assertions.assertTrue(atom instanceof SMARTSAtom);
     }
 
     @Test
     public void testTotalHCount() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("[H2]", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(1, container.getAtomCount());
+        Assertions.assertEquals(1, container.getAtomCount());
         org.openscience.cdk.interfaces.IAtom atom = container.getAtom(0);
-        Assert.assertTrue(atom instanceof SMARTSAtom);
+        Assertions.assertTrue(atom instanceof SMARTSAtom);
     }
 
     /**
@@ -103,52 +103,52 @@ public class ParserTest extends CDKTestCase {
     @Test
     public void testSingleBond() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("C-C", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(2, container.getAtomCount());
-        Assert.assertEquals(1, container.getBondCount());
+        Assertions.assertEquals(2, container.getAtomCount());
+        Assertions.assertEquals(1, container.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
-        Assert.assertTrue(bond instanceof OrderQueryBond);
+        Assertions.assertTrue(bond instanceof OrderQueryBond);
         OrderQueryBond qBond = (OrderQueryBond) bond;
-        Assert.assertEquals(IBond.Order.SINGLE, qBond.getOrder());
+        Assertions.assertEquals(IBond.Order.SINGLE, qBond.getOrder());
     }
 
     @Test
     public void testDoubleBond() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("C=C", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(2, container.getAtomCount());
-        Assert.assertEquals(1, container.getBondCount());
+        Assertions.assertEquals(2, container.getAtomCount());
+        Assertions.assertEquals(1, container.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
-        Assert.assertTrue(bond instanceof OrderQueryBond);
+        Assertions.assertTrue(bond instanceof OrderQueryBond);
         OrderQueryBond qBond = (OrderQueryBond) bond;
-        Assert.assertEquals(IBond.Order.DOUBLE, qBond.getOrder());
+        Assertions.assertEquals(IBond.Order.DOUBLE, qBond.getOrder());
     }
 
     @Test
     public void testTripleBond() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("C#C", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(2, container.getAtomCount());
-        Assert.assertEquals(1, container.getBondCount());
+        Assertions.assertEquals(2, container.getAtomCount());
+        Assertions.assertEquals(1, container.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
-        Assert.assertTrue(bond instanceof OrderQueryBond);
+        Assertions.assertTrue(bond instanceof OrderQueryBond);
         OrderQueryBond qBond = (OrderQueryBond) bond;
-        Assert.assertEquals(IBond.Order.TRIPLE, qBond.getOrder());
+        Assertions.assertEquals(IBond.Order.TRIPLE, qBond.getOrder());
     }
 
     @Test
     public void testAromaticBond() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("C:C", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(2, container.getAtomCount());
-        Assert.assertEquals(1, container.getBondCount());
+        Assertions.assertEquals(2, container.getAtomCount());
+        Assertions.assertEquals(1, container.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
-        Assert.assertTrue(bond instanceof AromaticQueryBond);
+        Assertions.assertTrue(bond instanceof AromaticQueryBond);
     }
 
     @Test
     public void testAnyOrderBond() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("C~C", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(2, container.getAtomCount());
-        Assert.assertEquals(1, container.getBondCount());
+        Assertions.assertEquals(2, container.getAtomCount());
+        Assertions.assertEquals(1, container.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
-        Assert.assertTrue(bond instanceof AnyOrderQueryBond);
+        Assertions.assertTrue(bond instanceof AnyOrderQueryBond);
     }
 
     /**
@@ -157,8 +157,8 @@ public class ParserTest extends CDKTestCase {
     @Test
     public void test2LetterSMARTS() throws CDKException {
         QueryAtomContainer query = SMARTSParser.parse("Sc1ccccc1", DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(7, query.getAtomCount());
-        Assert.assertEquals("S", query.getAtom(0).getSymbol());
+        Assertions.assertEquals(7, query.getAtomCount());
+        Assertions.assertEquals("S", query.getAtom(0).getSymbol());
     }
 
     @Test

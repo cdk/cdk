@@ -1,6 +1,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -30,15 +31,15 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
 
         IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 
-        Assert.assertEquals(0, ret.get(0));
-        Assert.assertEquals(0, ret.get(1));
-        Assert.assertEquals(0, ret.get(2));
-        Assert.assertEquals(0, ret.get(3));
-        Assert.assertEquals(0, ret.get(4));
-        Assert.assertEquals(2, ret.get(5));
-        Assert.assertEquals(2, ret.get(6));
-        Assert.assertEquals(0, ret.get(7));
-        Assert.assertEquals(0, ret.get(8));
+        Assertions.assertEquals(0, ret.get(0));
+        Assertions.assertEquals(0, ret.get(1));
+        Assertions.assertEquals(0, ret.get(2));
+        Assertions.assertEquals(0, ret.get(3));
+        Assertions.assertEquals(0, ret.get(4));
+        Assertions.assertEquals(2, ret.get(5));
+        Assertions.assertEquals(2, ret.get(6));
+        Assertions.assertEquals(0, ret.get(7));
+        Assertions.assertEquals(0, ret.get(8));
     }
 
     @Test
@@ -48,15 +49,15 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
 
         IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 
-        Assert.assertEquals(0, ret.get(0));
-        Assert.assertEquals(0, ret.get(1));
-        Assert.assertEquals(0, ret.get(2));
-        Assert.assertEquals(1, ret.get(3));
-        Assert.assertEquals(1, ret.get(4));
-        Assert.assertEquals(4, ret.get(5));
-        Assert.assertEquals(0, ret.get(6));
-        Assert.assertEquals(1, ret.get(7));
-        Assert.assertEquals(0, ret.get(8));
+        Assertions.assertEquals(0, ret.get(0));
+        Assertions.assertEquals(0, ret.get(1));
+        Assertions.assertEquals(0, ret.get(2));
+        Assertions.assertEquals(1, ret.get(3));
+        Assertions.assertEquals(1, ret.get(4));
+        Assertions.assertEquals(4, ret.get(5));
+        Assertions.assertEquals(0, ret.get(6));
+        Assertions.assertEquals(1, ret.get(7));
+        Assertions.assertEquals(0, ret.get(8));
     }
 
     @Test
@@ -66,15 +67,15 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
 
         IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 
-        Assert.assertEquals(1, ret.get(0));
-        Assert.assertEquals(1, ret.get(1));
-        Assert.assertEquals(1, ret.get(2));
-        Assert.assertEquals(0, ret.get(3));
-        Assert.assertEquals(1, ret.get(4));
-        Assert.assertEquals(1, ret.get(5));
-        Assert.assertEquals(0, ret.get(6));
-        Assert.assertEquals(0, ret.get(7));
-        Assert.assertEquals(0, ret.get(8));
+        Assertions.assertEquals(1, ret.get(0));
+        Assertions.assertEquals(1, ret.get(1));
+        Assertions.assertEquals(1, ret.get(2));
+        Assertions.assertEquals(0, ret.get(3));
+        Assertions.assertEquals(1, ret.get(4));
+        Assertions.assertEquals(1, ret.get(5));
+        Assertions.assertEquals(0, ret.get(6));
+        Assertions.assertEquals(0, ret.get(7));
+        Assertions.assertEquals(0, ret.get(8));
     }
 
 }

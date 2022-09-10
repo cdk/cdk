@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -38,7 +39,7 @@ public class HydrogenSuppressionTest {
     private static void test(String smaexp,
                              String smainp) {
         IAtomContainer qry = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(qry, smainp));
+        Assertions.assertTrue(Smarts.parse(qry, smainp));
         IAtomContainer sup    = QueryAtomContainerCreator.suppressQueryHydrogens(qry);
         String         smaact = Smarts.generate(sup);
         assertThat(smaact, is(smaexp));

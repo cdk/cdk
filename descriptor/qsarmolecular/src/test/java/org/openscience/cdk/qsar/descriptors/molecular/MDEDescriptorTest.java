@@ -1,6 +1,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -39,8 +40,8 @@ public class MDEDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(0.0000, result.get(MDEDescriptor.MDEO11), 0.0001);
-        Assert.assertEquals(1.1547, result.get(MDEDescriptor.MDEO12), 0.0001);
-        Assert.assertEquals(2.9416, result.get(MDEDescriptor.MDEO22), 0.0001);
+        Assertions.assertEquals(0.0000, result.get(MDEDescriptor.MDEO11), 0.0001);
+        Assertions.assertEquals(1.1547, result.get(MDEDescriptor.MDEO12), 0.0001);
+        Assertions.assertEquals(2.9416, result.get(MDEDescriptor.MDEO22), 0.0001);
     }
 }

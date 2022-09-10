@@ -1,6 +1,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -31,7 +32,7 @@ public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testAccepts() {
-        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
+        Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
     @Test
@@ -48,8 +49,8 @@ public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = g98Reader.read(new ChemFile());
         g98Reader.close();
         List<IAtomContainer> atomContainersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertNotNull(atomContainersList);
-        Assert.assertTrue(atomContainersList.size() == 54);
+        Assertions.assertNotNull(atomContainersList);
+        Assertions.assertTrue(atomContainersList.size() == 54);
         //logger.debug("Found " + atomContainers.length + " atomContainers");
         Iterator<IAtomContainer> iterator = atomContainersList.iterator();
         int counter = 0;
@@ -65,9 +66,9 @@ public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
                 }
             }
             if (counter < 53)
-                Assert.assertTrue(shieldingCounter == 0);
+                Assertions.assertTrue(shieldingCounter == 0);
             else
-                Assert.assertTrue(shieldingCounter == ac.getAtomCount());
+                Assertions.assertTrue(shieldingCounter == ac.getAtomCount());
             //logger.debug("AtomContainer " + (f + 1) + " has " + atomContainers[f].getAtomCount() + " atoms and " + shieldingCounter + " shielding entries");
             counter++;
         }

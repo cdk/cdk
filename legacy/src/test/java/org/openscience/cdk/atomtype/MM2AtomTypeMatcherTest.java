@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -86,7 +87,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test
     public void testMMFF94AtomTypeMatcher() {
         MM2AtomTypeMatcher matcher = new MM2AtomTypeMatcher();
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
     }
 
     @Test
@@ -104,15 +105,15 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+            Assertions.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
         }
     }
 
     @Test
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
         for (int i = 0; i < testMolecule.getAtomCount(); i++) {
-            Assert.assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
-            Assert.assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
+            Assertions.assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
+            Assertions.assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
         }
     }
 
@@ -170,7 +171,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
                 if (!testedAtomTypes.containsKey(expectedType.getAtomTypeName()))
                     errorMessage += " " + expectedType.getAtomTypeName();
             }
-            Assert.assertEquals(errorMessage, factory.getAllAtomTypes().length, testedAtomTypes.size());
+            Assertions.assertEquals(factory.getAllAtomTypes().length, testedAtomTypes.size(), errorMessage);
         }
     }
 

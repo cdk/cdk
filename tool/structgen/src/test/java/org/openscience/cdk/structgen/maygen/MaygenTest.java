@@ -18,6 +18,7 @@
 
 package org.openscience.cdk.structgen.maygen;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -47,7 +48,7 @@ public class MaygenTest {
     public void test_gettersAndSetters() {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setTsvoutput(true);
-        assertTrue(maygen.isTsvoutput());
+        Assertions.assertTrue(maygen.isTsvoutput());
         maygen.isMultiThread();
         maygen.getFormula();
         maygen.getFuzzyFormula();
@@ -70,15 +71,14 @@ public class MaygenTest {
         StringWriter sw = new StringWriter();
         maygen.setConsumer(new SmiOutputConsumer(sw));
         maygen.run();
-        assertEquals(7, maygen.getCount());
-        assertEquals("C1(Cl)(Cl)CC1\n" +
+        Assertions.assertEquals(7, maygen.getCount());
+        Assertions.assertEquals("C1(Cl)(Cl)CC1\n" +
                         "C(Cl)(=C)CCl\n" +
                         "C(=CCl)(C)Cl\n" +
                         "C(=CC)(Cl)Cl\n" +
                         "C(Cl)C=CCl\n" +
                         "C=CC(Cl)Cl\n" +
-                        "C1C(Cl)C1Cl\n",
-                sw.toString());
+                        "C1C(Cl)C1Cl\n", sw.toString());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class MaygenTest {
         StringWriter sw = new StringWriter();
         maygen.setConsumer(new SdfOutputConsumer(sw));
         maygen.run();
-        assertEquals(7, maygen.getCount());
+        Assertions.assertEquals(7, maygen.getCount());
         String res = sw.toString();
         assertThat(res,
                 containsString("  5  5  0  0  0  0  0  0  0  0999 V2000\n" +
@@ -165,7 +165,7 @@ public class MaygenTest {
         StringWriter sw = new StringWriter();
         maygen.setConsumer(new SmiOutputConsumer(sw));
         maygen.run();
-        assertEquals(4141, maygen.getFuzzyCount());
+        Assertions.assertEquals(4141, maygen.getFuzzyCount());
         assertThat(sw.toString(),
                 allOf(containsString("C12CC(=C1C)C2(Cl)Cl\n"),
                         containsString("C12CC3(Cl)C1(C)C23Cl\n"),
@@ -185,9 +185,9 @@ public class MaygenTest {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFuzzyFormula("C(1-2}OH[3-8]");
         maygen.run();
-        assertEquals(0, maygen.getFuzzyCount());
+        Assertions.assertEquals(0, maygen.getFuzzyCount());
         maygen.setMultiThread(true);
         maygen.run();
-        assertEquals(0, maygen.getFuzzyCount());
+        Assertions.assertEquals(0, maygen.getFuzzyCount());
     }
 }

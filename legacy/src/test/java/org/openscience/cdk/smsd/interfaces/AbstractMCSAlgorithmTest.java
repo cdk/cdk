@@ -22,6 +22,7 @@
 package org.openscience.cdk.smsd.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -48,13 +49,12 @@ public abstract class AbstractMCSAlgorithmTest {
      */
     @Test
     public void testIsMCSAlgorithmSet() {
-        Assert.assertNotNull("The extending class has not set an IMCSAlgorithm with the" + "setMCSAlgorithm() method.",
-                AbstractMCSAlgorithmTest.algorithm);
+        Assertions.assertNotNull(AbstractMCSAlgorithmTest.algorithm, "The extending class has not set an IMCSAlgorithm with the" + "setMCSAlgorithm() method.");
     }
 
     @Test
     public void testSearchMCS() {
-        Assert.fail("missing unit test");
+        Assertions.fail("missing unit test");
     }
 
     public class AbstractMCSAlgorithmImpl extends AbstractMCSAlgorithm {

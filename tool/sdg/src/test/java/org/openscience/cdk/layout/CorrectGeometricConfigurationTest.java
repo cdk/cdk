@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.layout;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -92,8 +93,8 @@ public class CorrectGeometricConfigurationTest {
 
     static void assertPoint(IAtom a, double x, double y, double epsilon) {
         Point2d p = a.getPoint2d();
-        assertEquals(p.x, x, epsilon);
-        assertEquals(p.y, y, epsilon);
+        Assertions.assertEquals(p.x, x, epsilon);
+        Assertions.assertEquals(p.y, y, epsilon);
     }
 
     static IAtom atom(String symbol, int hCount, double x, double y) {

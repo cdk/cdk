@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -51,7 +52,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         IChemFile chemFile = reader.read(new ChemFile());
 
         // test the resulting ChemFile content
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "N.sp3", "C.sp2", "N.sp2", "O.sp3", "C.sp2", "C.sp2",
@@ -70,7 +71,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         IChemFile chemFile = reader.read(new ChemFile());
 
         // test the resulting ChemFile content
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         String[] expectedTypes = {"C.sp3", "C.sp2", "O.sp2", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "P.ate", "O.sp2",
@@ -86,7 +87,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         IChemFile chemFile = reader.read(new ChemFile());
 
         // test the resulting ChemFile content
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "F", "C.sp2", "C.sp2", "C.sp2", "O.sp2", "C.sp3",
@@ -104,7 +105,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = reader.read(new ChemFile());
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         IAtomContainer mol1 = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         // Read the second file
@@ -112,16 +113,15 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         ins = this.getClass().getResourceAsStream(filename);
         reader = new CMLReader(ins);
         chemFile = reader.read(new ChemFile());
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         IAtomContainer mol2 = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
         IAtomType[] types2 = atomTypeMatcher.findMatchingAtomTypes(mol2);
         for (int i = 0; i < mol1.getAtomCount(); i++) {
-            Assert.assertNotNull("Atom typing in mol1 failed for atom " + (i + 1), types1[i]);
-            Assert.assertNotNull("Atom typing in mol2 failed for atom " + (i + 1), types2[i]);
-            Assert.assertEquals("Atom type mismatch for the " + (i + 1) + " atom", types1[i].getAtomTypeName(),
-                    types2[i].getAtomTypeName());
+            Assertions.assertNotNull(types1[i], "Atom typing in mol1 failed for atom " + (i + 1));
+            Assertions.assertNotNull(types2[i], "Atom typing in mol2 failed for atom " + (i + 1));
+            Assertions.assertEquals(types1[i].getAtomTypeName(), types2[i].getAtomTypeName(), "Atom type mismatch for the " + (i + 1) + " atom");
         }
     }
 }

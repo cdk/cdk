@@ -22,6 +22,7 @@
 package org.openscience.cdk.renderer.font;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,7 +40,7 @@ public abstract class AbstractFontManagerTest {
     public void testGetSetFontName() {
         String fontName = "Not-Arial";
         manager.setFontName(fontName);
-        Assert.assertEquals(fontName, manager.getFontName());
+        Assertions.assertEquals(fontName, manager.getFontName());
     }
 
 }

@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,10 +46,10 @@ public class MappingPredicatesTest {
     @Test
     public void uniqueAtoms() throws Exception {
         UniqueAtomMatches uam = new UniqueAtomMatches();
-        assertTrue(uam.apply(new int[]{1, 2, 3, 4}));
-        assertTrue(uam.apply(new int[]{1, 2, 3, 5}));
-        assertFalse(uam.apply(new int[]{4, 3, 2, 1}));
-        assertFalse(uam.apply(new int[]{1, 5, 2, 3}));
+        Assertions.assertTrue(uam.apply(new int[]{1, 2, 3, 4}));
+        Assertions.assertTrue(uam.apply(new int[]{1, 2, 3, 5}));
+        Assertions.assertFalse(uam.apply(new int[]{4, 3, 2, 1}));
+        Assertions.assertFalse(uam.apply(new int[]{1, 5, 2, 3}));
     }
 
     @Test

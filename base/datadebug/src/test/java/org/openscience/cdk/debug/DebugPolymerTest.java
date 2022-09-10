@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractPolymerTest;
@@ -40,6 +41,6 @@ public class DebugPolymerTest extends AbstractPolymerTest {
     @Test
     public void testDebugPolymer() {
         IPolymer polymer = new DebugPolymer();
-        Assert.assertTrue(polymer instanceof DebugPolymer);
+        Assertions.assertTrue(polymer instanceof DebugPolymer);
     }
 }

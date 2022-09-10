@@ -22,6 +22,7 @@ package org.openscience.cdk.graph.invariant;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -77,17 +78,17 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac.getAtomCount());
-        Assert.assertEquals(3, ac.getBondCount());
+        Assertions.assertEquals(4, ac.getAtomCount());
+        Assertions.assertEquals(3, ac.getBondCount());
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac.getAtom(i)));
         }
 
         for (int i = 0; i < ac.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac.getBond(i)));
         }
     }
 
@@ -108,17 +109,17 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
-        Assert.assertEquals(10, ac.getAtomCount());
-        Assert.assertEquals(11, ac.getBondCount());
+        Assertions.assertEquals(10, ac.getAtomCount());
+        Assertions.assertEquals(11, ac.getBondCount());
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac.getAtom(i)));
         }
 
         for (int i = 0; i < ac.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac.getBond(i)));
         }
     }
 
@@ -139,17 +140,17 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
-        Assert.assertEquals(6, ac.getAtomCount());
-        Assert.assertEquals(6, ac.getBondCount());
+        Assertions.assertEquals(6, ac.getAtomCount());
+        Assertions.assertEquals(6, ac.getBondCount());
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac.getAtom(i)));
         }
 
         for (int i = 0; i < ac.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac.getBond(i)));
         }
     }
 
@@ -172,29 +173,29 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(2, acSet.getAtomContainerCount());
+        Assertions.assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac1.getAtomCount());
-        Assert.assertEquals(3, ac1.getBondCount());
+        Assertions.assertEquals(4, ac1.getAtomCount());
+        Assertions.assertEquals(3, ac1.getBondCount());
 
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac1.getAtom(i)));
         }
 
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac1.getBond(i)));
         }
 
         IAtomContainer ac2 = acSet.getAtomContainer(1);
-        Assert.assertEquals(4, ac2.getAtomCount());
-        Assert.assertEquals(3, ac2.getBondCount());
+        Assertions.assertEquals(4, ac2.getAtomCount());
+        Assertions.assertEquals(3, ac2.getBondCount());
 
         for (int i = 0; i < ac2.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac2.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac2.getAtom(i)));
         }
 
         for (int i = 0; i < ac2.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac2.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac2.getBond(i)));
         }
     }
 
@@ -218,26 +219,26 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(2, acSet.getAtomContainerCount());
+        Assertions.assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac1.getAtomCount());
-        Assert.assertEquals(3, ac1.getBondCount());
+        Assertions.assertEquals(4, ac1.getAtomCount());
+        Assertions.assertEquals(3, ac1.getBondCount());
 
         for (int i = 0; i < ac1.getAtomCount(); i++)
-            Assert.assertTrue(mol.contains(ac1.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac1.getAtom(i)));
 
         for (int i = 0; i < ac1.getBondCount(); i++)
-            Assert.assertTrue(mol.contains(ac1.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac1.getBond(i)));
 
         IAtomContainer ac2 = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac2.getAtomCount());
-        Assert.assertEquals(3, ac2.getBondCount());
+        Assertions.assertEquals(4, ac2.getAtomCount());
+        Assertions.assertEquals(3, ac2.getBondCount());
 
         for (int i = 0; i < ac2.getAtomCount(); i++)
-            Assert.assertTrue(mol.contains(ac2.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac2.getAtom(i)));
 
         for (int i = 0; i < ac2.getBondCount(); i++)
-            Assert.assertTrue(mol.contains(ac2.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac2.getBond(i)));
 
     }
 
@@ -261,29 +262,29 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(2, acSet.getAtomContainerCount());
+        Assertions.assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac1.getAtomCount());
-        Assert.assertEquals(3, ac1.getBondCount());
+        Assertions.assertEquals(4, ac1.getAtomCount());
+        Assertions.assertEquals(3, ac1.getBondCount());
 
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac1.getAtom(i)));
         }
 
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac1.getBond(i)));
         }
 
         IAtomContainer ac2 = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac2.getAtomCount());
-        Assert.assertEquals(3, ac2.getBondCount());
+        Assertions.assertEquals(4, ac2.getAtomCount());
+        Assertions.assertEquals(3, ac2.getBondCount());
 
         for (int i = 0; i < ac2.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac1.getAtom(i)));
         }
 
         for (int i = 0; i < ac2.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac1.getBond(i)));
         }
 
     }
@@ -306,17 +307,17 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(3, ac1.getAtomCount());
-        Assert.assertEquals(2, ac1.getBondCount());
+        Assertions.assertEquals(3, ac1.getAtomCount());
+        Assertions.assertEquals(2, ac1.getBondCount());
 
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac1.getAtom(i)));
         }
 
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac1.getBond(i)));
         }
 
     }
@@ -342,10 +343,10 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(6, ac1.getAtomCount());
-        Assert.assertEquals(5, ac1.getBondCount());
+        Assertions.assertEquals(6, ac1.getAtomCount());
+        Assertions.assertEquals(5, ac1.getBondCount());
 
     }
 
@@ -364,10 +365,10 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(5, ac1.getAtomCount());
-        Assert.assertEquals(4, ac1.getBondCount());
+        Assertions.assertEquals(5, ac1.getAtomCount());
+        Assertions.assertEquals(4, ac1.getBondCount());
 
     }
 
@@ -389,10 +390,10 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac1.getAtomCount());
-        Assert.assertEquals(3, ac1.getBondCount());
+        Assertions.assertEquals(4, ac1.getAtomCount());
+        Assertions.assertEquals(3, ac1.getBondCount());
 
     }
 
@@ -434,10 +435,10 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac1.getAtomCount());
-        Assert.assertEquals(3, ac1.getBondCount());
+        Assertions.assertEquals(4, ac1.getAtomCount());
+        Assertions.assertEquals(3, ac1.getBondCount());
 
     }
 
@@ -455,18 +456,18 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         CMLReader reader = new CMLReader(ins);
 
         IChemFile file = reader.read(new ChemFile());
-        Assert.assertNotNull(file);
-        Assert.assertEquals(1, file.getChemSequenceCount());
+        Assertions.assertNotNull(file);
+        Assertions.assertEquals(1, file.getChemSequenceCount());
         IChemSequence sequence = file.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(1, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(1, sequence.getChemModelCount());
         IChemModel chemModel = sequence.getChemModel(0);
-        Assert.assertNotNull(chemModel);
+        Assertions.assertNotNull(chemModel);
         IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
-        Assert.assertEquals(1, moleculeSet.getAtomContainerCount());
+        Assertions.assertNotNull(moleculeSet);
+        Assertions.assertEquals(1, moleculeSet.getAtomContainerCount());
         mol = moleculeSet.getAtomContainer(0);
-        Assert.assertNotNull(mol);
+        Assertions.assertNotNull(mol);
 
         return mol;
 
@@ -490,17 +491,17 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(4, ac1.getAtomCount());
-        Assert.assertEquals(3, ac1.getBondCount());
+        Assertions.assertEquals(4, ac1.getAtomCount());
+        Assertions.assertEquals(3, ac1.getBondCount());
 
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac1.getAtom(i)));
         }
 
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac1.getBond(i)));
         }
 
     }
@@ -518,17 +519,17 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(3, ac1.getAtomCount());
-        Assert.assertEquals(2, ac1.getBondCount());
+        Assertions.assertEquals(3, ac1.getAtomCount());
+        Assertions.assertEquals(2, ac1.getBondCount());
 
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac1.getAtom(i)));
         }
 
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac1.getBond(i)));
         }
     }
 
@@ -545,17 +546,17 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
 
-        Assert.assertEquals(1, acSet.getAtomContainerCount());
+        Assertions.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
-        Assert.assertEquals(3, ac1.getAtomCount());
-        Assert.assertEquals(2, ac1.getBondCount());
+        Assertions.assertEquals(3, ac1.getAtomCount());
+        Assertions.assertEquals(2, ac1.getBondCount());
 
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getAtom(i)));
+            Assertions.assertTrue(mol.contains(ac1.getAtom(i)));
         }
 
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            Assert.assertTrue(mol.contains(ac1.getBond(i)));
+            Assertions.assertTrue(mol.contains(ac1.getBond(i)));
         }
     }
 }

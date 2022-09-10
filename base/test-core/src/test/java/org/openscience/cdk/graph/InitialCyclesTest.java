@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.graph;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -46,12 +47,12 @@ public class InitialCyclesTest {
 
     @Test
     public void lengths_empty() {
-        assertFalse(new InitialCycles(new int[0][0]).lengths().iterator().hasNext());
+        Assertions.assertFalse(new InitialCycles(new int[0][0]).lengths().iterator().hasNext());
     }
 
     @Test
     public void cyclesOfLength_empty() {
-        assertTrue(new InitialCycles(new int[0][0]).cyclesOfLength(0).isEmpty());
+        Assertions.assertTrue(new InitialCycles(new int[0][0]).cyclesOfLength(0).isEmpty());
     }
 
     @Test
@@ -62,7 +63,7 @@ public class InitialCyclesTest {
 
     @Test
     public void lengths_K1() {
-        assertFalse(new InitialCycles(k1()).lengths().iterator().hasNext());
+        Assertions.assertFalse(new InitialCycles(k1()).lengths().iterator().hasNext());
     }
 
     @Test
@@ -180,7 +181,7 @@ public class InitialCyclesTest {
         Iterator<Integer> it = initial.lengths().iterator();
         assertThat(it.next(), is(6));
         assertThat(it.next(), is(9));
-        assertFalse(it.hasNext());
+        Assertions.assertFalse(it.hasNext());
     }
 
     @Test
@@ -275,28 +276,28 @@ public class InitialCyclesTest {
     public void singleton() {
         int[] a = new int[]{0, 1, 3, 5, 7, 9};
         int[] b = new int[]{0, 2, 4, 6, 8, 10};
-        assertTrue(InitialCycles.singletonIntersect(a, b));
+        Assertions.assertTrue(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
     public void startOverlap() {
         int[] a = new int[]{0, 1, 2, 3, 4, 6};
         int[] b = new int[]{0, 1, 2, 3, 5, 7};
-        assertFalse(InitialCycles.singletonIntersect(a, b));
+        Assertions.assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
     public void middleOverlap() {
         int[] a = new int[]{0, 1, 3, 5, 6, 7, 9};
         int[] b = new int[]{0, 2, 4, 5, 6, 8, 10};
-        assertFalse(InitialCycles.singletonIntersect(a, b));
+        Assertions.assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
     public void endOverlap() {
         int[] a = new int[]{0, 1, 3, 5, 7, 9, 10};
         int[] b = new int[]{0, 2, 4, 6, 8, 9, 10};
-        assertFalse(InitialCycles.singletonIntersect(a, b));
+        Assertions.assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test

@@ -19,6 +19,7 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -63,7 +64,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
             tested += results.tested;
             failed += results.failed;
         }
-        Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
+        Assertions.assertEquals(tested, (tested - failed), "Could not match all atom types!");
     }
 
     @Test
@@ -78,7 +79,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
             tested += results.tested;
             failed += results.failed;
         }
-        Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
+        Assertions.assertEquals(tested, (tested - failed), "Could not match all atom types!");
     }
 
     @Test
@@ -93,7 +94,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
             tested += results.tested;
             failed += results.failed;
         }
-        Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
+        Assertions.assertEquals(tested, (tested - failed), "Could not match all atom types!");
     }
 
     // this test is a bit of a "defeat device" for modularising testdata, hey ho, let's just dupe
@@ -141,10 +142,10 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
                 tested += results.tested;
                 failed += results.failed;
             } catch (Exception e) {
-                Assert.fail(testFile + " caused an error: " + e);
+                Assertions.fail(testFile + " caused an error: " + e);
             }
         }
-        Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
+        Assertions.assertEquals(tested, (tested - failed), "Could not match all atom types!");
     }
 
     private TestResults testFile(String dir, String filename, ISimpleChemObjectReader reader) throws Exception {
@@ -162,7 +163,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
                 mol.add(container);
         }
 
-        Assert.assertNotNull("Could not read the file into a IAtomContainer: " + filename, mol);
+        Assertions.assertNotNull(mol, "Could not read the file into a IAtomContainer: " + filename);
 
         TestResults results = new TestResults();
         assert mol != null;

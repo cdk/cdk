@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 
 import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -44,7 +45,7 @@ public class AtomContainerDiffTest {
         when(container.getElectronContainerCount()).thenReturn(1);
         when(container.getElectronContainer(0)).thenReturn(mock(IBond.class));
         String result = AtomContainerDiff.diff(container, container);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -78,8 +79,8 @@ public class AtomContainerDiffTest {
         when(container2.getElectronContainer(0)).thenReturn(b2);
 
         String result = AtomContainerDiff.diff(container1, container2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString( "AtomContainerDiff"));
         MatcherAssert.assertThat(result, containsString( "BondDiff"));
         MatcherAssert.assertThat(result, containsString( "SINGLE/DOUBLE"));
@@ -117,7 +118,7 @@ public class AtomContainerDiffTest {
         when(container2.getElectronContainer(0)).thenReturn(b2);
 
         String result = AtomContainerDiff.diff(container1, container2);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Disabled("unit test did not test AtomContainerDiff but rather the ability of AtomContainer"

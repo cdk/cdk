@@ -22,6 +22,7 @@ package org.openscience.cdk.dict;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -37,16 +38,16 @@ public class DictDBTest extends CDKTestCase {
     @Test
     public void testDictionaryDatabase() {
         DictionaryDatabase db = new DictionaryDatabase();
-        Assert.assertTrue(db.hasDictionary("descriptor-algorithms"));
-        Assert.assertTrue(db.hasDictionary("reaction-processes"));
+        Assertions.assertTrue(db.hasDictionary("descriptor-algorithms"));
+        Assertions.assertTrue(db.hasDictionary("reaction-processes"));
     }
 
     @Test
     public void testOWLDictionary() {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("descriptor-algorithms");
-        Assert.assertTrue(dict.size() > 0);
-        Assert.assertNotNull(dict.getNS());
+        Assertions.assertTrue(dict.size() > 0);
+        Assertions.assertNotNull(dict.getNS());
     }
 
     @Test
@@ -54,11 +55,11 @@ public class DictDBTest extends CDKTestCase {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("descriptor-algorithms");
         Entry entry = dict.getEntry("apol");
-        Assert.assertNotNull(entry);
-        Assert.assertEquals("Atomic Polarizabilities", entry.getLabel());
+        Assertions.assertNotNull(entry);
+        Assertions.assertEquals("Atomic Polarizabilities", entry.getLabel());
         String def = entry.getDefinition();
-        Assert.assertNotNull(def);
-        Assert.assertTrue(def.length() > 0);
+        Assertions.assertNotNull(def);
+        Assertions.assertTrue(def.length() > 0);
     }
 
     @Test
@@ -66,23 +67,23 @@ public class DictDBTest extends CDKTestCase {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("reaction-processes");
         Entry entry = dict.getEntry("AdductionProtonLP".toLowerCase());
-        Assert.assertNotNull(entry);
-        Assert.assertEquals("Adduction Proton from Lone Pair Orbitals", entry.getLabel());
+        Assertions.assertNotNull(entry);
+        Assertions.assertEquals("Adduction Proton from Lone Pair Orbitals", entry.getLabel());
         String def = entry.getDefinition();
-        Assert.assertNotNull(def);
-        Assert.assertTrue(def.length() > 0);
+        Assertions.assertNotNull(def);
+        Assertions.assertTrue(def.length() > 0);
     }
 
     @Test
     public void testListDictionaries() {
         DictionaryDatabase db = new DictionaryDatabase();
         Iterator<String> dbs = db.listDictionaries();
-        Assert.assertNotNull(dbs);
-        Assert.assertTrue(dbs.hasNext());
+        Assertions.assertNotNull(dbs);
+        Assertions.assertTrue(dbs.hasNext());
         while (dbs.hasNext()) {
             String dbName = dbs.next();
-            Assert.assertNotNull(dbName);
-            Assert.assertNotSame(0, dbName.length());
+            Assertions.assertNotNull(dbName);
+            Assertions.assertNotSame(0, dbName.length());
         }
     }
 
@@ -90,11 +91,11 @@ public class DictDBTest extends CDKTestCase {
     public void testGetDictionaryNames() {
         DictionaryDatabase db = new DictionaryDatabase();
         String[] dbs = db.getDictionaryNames();
-        Assert.assertNotNull(dbs);
-        Assert.assertNotSame(0, dbs.length);
+        Assertions.assertNotNull(dbs);
+        Assertions.assertNotSame(0, dbs.length);
         for (String dbName : dbs) {
-            Assert.assertNotNull(dbName);
-            Assert.assertNotSame(0, dbName.length());
+            Assertions.assertNotNull(dbName);
+            Assertions.assertNotSame(0, dbName.length());
         }
     }
 
@@ -102,11 +103,11 @@ public class DictDBTest extends CDKTestCase {
     public void testHasDictionary() {
         DictionaryDatabase db = new DictionaryDatabase();
         Iterator<String> dbs = db.listDictionaries();
-        Assert.assertNotNull(dbs);
-        Assert.assertTrue(dbs.hasNext());
+        Assertions.assertNotNull(dbs);
+        Assertions.assertTrue(dbs.hasNext());
         while (dbs.hasNext()) {
             String dbName = dbs.next();
-            Assert.assertTrue(db.hasDictionary(dbName));
+            Assertions.assertTrue(db.hasDictionary(dbName));
         }
     }
 }

@@ -19,6 +19,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -39,9 +40,9 @@ public class DefaultChemObjectBuilderTest extends AbstractChemObjectBuilderTest 
     @Test
     public void testGetInstance() {
         Object builder = DefaultChemObjectBuilder.getInstance();
-        Assert.assertNotNull(builder);
-        Assert.assertTrue(builder instanceof IChemObjectBuilder);
-        Assert.assertTrue(builder.getClass().getName().contains("DefaultChemObjectBuilder"));
+        Assertions.assertNotNull(builder);
+        Assertions.assertTrue(builder instanceof IChemObjectBuilder);
+        Assertions.assertTrue(builder.getClass().getName().contains("DefaultChemObjectBuilder"));
     }
 
 }

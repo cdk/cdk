@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -39,7 +40,7 @@ public class SingleElectronDiffTest {
     public void testMatchAgainstItself() {
         ISingleElectron bond1 = mock(ISingleElectron.class);
         String result = SingleElectronDiff.diff(bond1, bond1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -57,8 +58,8 @@ public class SingleElectronDiffTest {
         when(bond2.getAtom()).thenReturn(oxygen);
 
         String result = SingleElectronDiff.diff(bond1, bond2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString("SingleElectronDiff"));
         MatcherAssert.assertThat(result, containsString("AtomDiff"));
         MatcherAssert.assertThat(result, containsString("C/O"));
@@ -90,6 +91,6 @@ public class SingleElectronDiffTest {
         bond2.setOrder(IBond.Order.DOUBLE);
 
         IDifference difference = BondDiff.difference(bond1, bond2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 }

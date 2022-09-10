@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -50,7 +51,7 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); //
         addExplicitHydrogens(mol);
-        Assert.assertEquals(3, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assertions.assertEquals(3, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     @Test

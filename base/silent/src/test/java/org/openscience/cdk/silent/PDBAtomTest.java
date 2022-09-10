@@ -22,6 +22,7 @@ package org.openscience.cdk.silent;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractPDBAtomTest;
@@ -53,16 +54,16 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
     public void testPDBAtom_IElement() {
         IElement element = new Element();
         IAtom a = new PDBAtom(element);
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @Test
     public void testPDBAtom_String() {
         IPDBAtom a = new PDBAtom("C");
-        Assert.assertEquals("C", a.getSymbol());
-        Assert.assertNull(a.getPoint2d());
-        Assert.assertNull(a.getPoint3d());
-        Assert.assertNull(a.getFractionalPoint3d());
+        Assertions.assertEquals("C", a.getSymbol());
+        Assertions.assertNull(a.getPoint2d());
+        Assertions.assertNull(a.getPoint3d());
+        Assertions.assertNull(a.getFractionalPoint3d());
     }
 
     @Test
@@ -70,10 +71,10 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IPDBAtom a = new PDBAtom("C", point3d);
-        Assert.assertEquals("C", a.getSymbol());
-        Assert.assertEquals(point3d, a.getPoint3d());
-        Assert.assertNull(a.getPoint2d());
-        Assert.assertNull(a.getFractionalPoint3d());
+        Assertions.assertEquals("C", a.getSymbol());
+        Assertions.assertEquals(point3d, a.getPoint3d());
+        Assertions.assertNull(a.getPoint2d());
+        Assertions.assertNull(a.getFractionalPoint3d());
     }
 
     // Overwrite default methods: no notifications are expected!

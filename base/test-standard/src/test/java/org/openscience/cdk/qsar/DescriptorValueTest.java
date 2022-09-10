@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
@@ -48,7 +49,7 @@ public class DescriptorValueTest extends CDKTestCase {
                 DESC_IMPL_VENDOR);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], new DoubleResult(0.7),
                 new String[]{"bla"});
-        Assert.assertNotNull(value);
+        Assertions.assertNotNull(value);
     }
 
     @Test
@@ -57,7 +58,7 @@ public class DescriptorValueTest extends CDKTestCase {
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
-        Assert.assertEquals(doubleVal, value.getValue());
+        Assertions.assertEquals(doubleVal, value.getValue());
     }
 
     @Test
@@ -66,7 +67,7 @@ public class DescriptorValueTest extends CDKTestCase {
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
-        Assert.assertEquals(spec, value.getSpecification());
+        Assertions.assertEquals(spec, value.getSpecification());
     }
 
     @Test
@@ -75,7 +76,7 @@ public class DescriptorValueTest extends CDKTestCase {
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
-        Assert.assertEquals(0, value.getParameters().length);
+        Assertions.assertEquals(0, value.getParameters().length);
     }
 
     @Test
@@ -84,7 +85,7 @@ public class DescriptorValueTest extends CDKTestCase {
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
-        Assert.assertEquals(0, value.getParameterNames().length);
+        Assertions.assertEquals(0, value.getParameterNames().length);
     }
 
     @Test
@@ -97,13 +98,13 @@ public class DescriptorValueTest extends CDKTestCase {
         doubleVals.add(0.2);
         DescriptorValue value;
         value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
-        Assert.assertEquals(1, value.getNames().length);
+        Assertions.assertEquals(1, value.getNames().length);
         value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{ });
-        Assert.assertEquals(1, value.getNames().length);
+        Assertions.assertEquals(1, value.getNames().length);
         value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, null);
-        Assert.assertEquals(1, value.getNames().length);
+        Assertions.assertEquals(1, value.getNames().length);
         value = new DescriptorValue(spec, new String[0], new Object[0], doubleVals, null);
-        Assert.assertEquals(2, value.getNames().length);
+        Assertions.assertEquals(2, value.getNames().length);
     }
 
     @Test

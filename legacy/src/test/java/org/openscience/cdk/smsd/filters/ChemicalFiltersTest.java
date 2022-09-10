@@ -29,6 +29,7 @@ import java.util.TreeMap;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -76,12 +77,12 @@ public class ChemicalFiltersTest {
         Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, false);
         smsd.init(queryac, target, true, true);
         smsd.setChemFilters(false, false, false);
-        assertEquals(4, smsd.getAllAtomMapping().size());
+        Assertions.assertEquals(4, smsd.getAllAtomMapping().size());
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        assertEquals(1, smsd1.getAllAtomMapping().size());
+        Assertions.assertEquals(1, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -98,12 +99,12 @@ public class ChemicalFiltersTest {
         Isomorphism smsd = new Isomorphism(Algorithm.CDKMCS, false);
         smsd.init(queryac, target, true, true);
         smsd.setChemFilters(false, false, false);
-        assertEquals(4, smsd.getAllAtomMapping().size());
+        Assertions.assertEquals(4, smsd.getAllAtomMapping().size());
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.CDKMCS, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, true, false);
-        assertEquals(2, smsd1.getAllAtomMapping().size());
+        Assertions.assertEquals(2, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -119,12 +120,12 @@ public class ChemicalFiltersTest {
         Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         smsd.init(queryac, target, true, true);
         smsd.setChemFilters(false, false, false);
-        assertEquals(4, smsd.getAllAtomMapping().size());
+        Assertions.assertEquals(4, smsd.getAllAtomMapping().size());
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, false, true);
-        assertEquals(2, smsd1.getAllAtomMapping().size());
+        Assertions.assertEquals(2, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -145,7 +146,7 @@ public class ChemicalFiltersTest {
         expResult.put(4, 4.0);
 
         Map<Integer, Double> result = ChemicalFilters.sortMapByValueInAccendingOrder(map);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -165,7 +166,7 @@ public class ChemicalFiltersTest {
         expResult.put(3, 1.0);
 
         Map<Integer, Double> result = ChemicalFilters.sortMapByValueInDecendingOrder(map);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -183,7 +184,7 @@ public class ChemicalFiltersTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, false, true);
         Double score = 610.0;
-        assertEquals(score, smsd1.getEnergyScore(0));
+        Assertions.assertEquals(score, smsd1.getEnergyScore(0));
     }
 
     /**
@@ -201,7 +202,7 @@ public class ChemicalFiltersTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, true, false);
         Integer score = 2;
-        assertEquals(score, smsd1.getFragmentSize(0));
+        Assertions.assertEquals(score, smsd1.getFragmentSize(0));
     }
 
     /**
@@ -219,6 +220,6 @@ public class ChemicalFiltersTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
         Integer score = 1048;
-        assertEquals(score, smsd1.getStereoScore(0));
+        Assertions.assertEquals(score, smsd1.getStereoScore(0));
     }
 }

@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.tools.diff.tree.IDifference;
@@ -39,7 +40,7 @@ public class AtomTypeDiffTest {
     public void testMatchAgainstItself() {
         IAtomType element1 = mock(IAtomType.class);
         String result = AtomTypeDiff.diff(element1, element1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -50,8 +51,8 @@ public class AtomTypeDiffTest {
         when(element2.getHybridization()).thenReturn(SP3);
 
         String result = AtomTypeDiff.diff(element1, element2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString( "AtomTypeDiff"));
         MatcherAssert.assertThat(result, containsString( "PLANAR3/SP3"));
     }
@@ -64,6 +65,6 @@ public class AtomTypeDiffTest {
         when(element2.getHybridization()).thenReturn(SP3);
 
         IDifference difference = AtomTypeDiff.difference(element1, element2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 }

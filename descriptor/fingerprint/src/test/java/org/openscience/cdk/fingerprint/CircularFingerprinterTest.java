@@ -45,6 +45,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDK;
 import org.openscience.cdk.test.CDKTestCase;
@@ -343,7 +344,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
         pyrazole.addBond(4, 5, IBond.Order.DOUBLE);
         pyrazole.addBond(1, 5, IBond.Order.SINGLE);
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
-        assertNotNull(circ.getBitFingerprint(pyrazole));
+        Assertions.assertNotNull(circ.getBitFingerprint(pyrazole));
     }
 
     /**
@@ -364,7 +365,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
         m.addBond(1, 4, IBond.Order.SINGLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
-        assertNotNull(circ.getBitFingerprint(m));
+        Assertions.assertNotNull(circ.getBitFingerprint(m));
     }
 
 	@Test

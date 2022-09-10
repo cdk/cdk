@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractPDBMonomerTest;
@@ -40,7 +41,7 @@ public class DebugPDBMonomerTest extends AbstractPDBMonomerTest {
     @Test
     public void testDebugPDBMonomer() {
         IPDBMonomer monomer = new DebugPDBMonomer();
-        Assert.assertNotNull(monomer);
-        Assert.assertEquals(monomer.getICode(), null);
+        Assertions.assertNotNull(monomer);
+        Assertions.assertEquals(monomer.getICode(), null);
     }
 }

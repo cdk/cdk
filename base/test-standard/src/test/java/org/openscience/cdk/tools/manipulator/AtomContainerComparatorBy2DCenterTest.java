@@ -25,6 +25,7 @@ import java.util.Comparator;
 import javax.vecmath.Point2d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -45,7 +46,7 @@ public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
     @Test
     public void testCompare_Null_Null() {
         Comparator<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter();
-        Assert.assertEquals("null <-> null", 0, comparator.compare(null, null));
+        Assertions.assertEquals(0, comparator.compare(null, null), "null <-> null");
     }
 
     @Test
@@ -53,7 +54,7 @@ public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
         IAtomContainer atomContainer = new AtomContainer();
         atomContainer.addAtom(new Atom("N"));
         Comparator<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter();
-        Assert.assertEquals("null 2d Coords<-> null 2d coords", 0, comparator.compare(atomContainer, atomContainer));
+        Assertions.assertEquals(0, comparator.compare(atomContainer, atomContainer), "null 2d Coords<-> null 2d coords");
     }
 
     @Test
@@ -64,7 +65,7 @@ public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
         atomContainer.addAtom(atom);
 
         Comparator<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter();
-        Assert.assertEquals("self 2d Coords<-> self 2d coords", 0, comparator.compare(atomContainer, atomContainer));
+        Assertions.assertEquals(0, comparator.compare(atomContainer, atomContainer), "self 2d Coords<-> self 2d coords");
     }
 
     @Test
@@ -80,7 +81,7 @@ public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
         atomContainer2.addAtom(atom2);
 
         Comparator<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter();
-        Assert.assertEquals("(10,10)<-> (20,10)", -1, comparator.compare(atomContainer, atomContainer2));
+        Assertions.assertEquals(-1, comparator.compare(atomContainer, atomContainer2), "(10,10)<-> (20,10)");
     }
 
     @Test
@@ -96,7 +97,7 @@ public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
         atomContainer2.addAtom(atom2);
 
         Comparator<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter();
-        Assert.assertEquals("(20,10)<-> (20,5)", 1, comparator.compare(atomContainer, atomContainer2));
+        Assertions.assertEquals(1, comparator.compare(atomContainer, atomContainer2), "(20,10)<-> (20,5)");
     }
 
 }

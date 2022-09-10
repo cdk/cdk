@@ -29,6 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -60,70 +61,70 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
     public void testRgroupQueryFile_1() throws Exception {
         String rgFile = recreate("rgfile.1.mol");
 
-        Assert.assertEquals("AAL lines", 0, countSubstring("AAL", rgFile));
-        Assert.assertEquals("LOG lines", 1, countSubstring("LOG", rgFile));
-        Assert.assertEquals("APO lines", 3, countSubstring("APO", rgFile));
-        Assert.assertTrue(rgFile.contains("M  LOG  1   1   0   1   0,1-3"));
-        Assert.assertEquals("Total #lines", 59, countSubstring("\n", rgFile));
+        Assertions.assertEquals(0, countSubstring("AAL", rgFile), "AAL lines");
+        Assertions.assertEquals(1, countSubstring("LOG", rgFile), "LOG lines");
+        Assertions.assertEquals(3, countSubstring("APO", rgFile), "APO lines");
+        Assertions.assertTrue(rgFile.contains("M  LOG  1   1   0   1   0,1-3"));
+        Assertions.assertEquals(59, countSubstring("\n", rgFile), "Total #lines");
     }
 
     @Test
     public void testRgroupQueryFile_2() throws Exception {
         String rgFile = recreate("rgfile.2.mol");
 
-        Assert.assertEquals("AAL lines", 1, countSubstring("AAL", rgFile));
-        Assert.assertEquals("LOG lines", 3, countSubstring("LOG", rgFile));
-        Assert.assertEquals("APO lines", 5, countSubstring("APO", rgFile));
-        Assert.assertTrue(rgFile.contains("M  RGP  4   1  11   2   2   3   2   4   1"));
-        Assert.assertEquals("Total #lines", 107, countSubstring("\n", rgFile));
+        Assertions.assertEquals(1, countSubstring("AAL", rgFile), "AAL lines");
+        Assertions.assertEquals(3, countSubstring("LOG", rgFile), "LOG lines");
+        Assertions.assertEquals(5, countSubstring("APO", rgFile), "APO lines");
+        Assertions.assertTrue(rgFile.contains("M  RGP  4   1  11   2   2   3   2   4   1"));
+        Assertions.assertEquals(107, countSubstring("\n", rgFile), "Total #lines");
     }
 
     @Test
     public void testRgroupQueryFile_3() throws Exception {
         String rgFile = recreate("rgfile.3.mol");
-        Assert.assertEquals("AAL lines", 2, countSubstring("AAL", rgFile));
-        Assert.assertEquals("LOG lines", 1, countSubstring("LOG", rgFile));
-        Assert.assertEquals("APO lines", 2, countSubstring("APO", rgFile));
-        Assert.assertEquals("Total #lines", 66, countSubstring("\n", rgFile));
-        Assert.assertTrue(rgFile.contains("M  RGP  2   5   1   7   1"));
+        Assertions.assertEquals(2, countSubstring("AAL", rgFile), "AAL lines");
+        Assertions.assertEquals(1, countSubstring("LOG", rgFile), "LOG lines");
+        Assertions.assertEquals(2, countSubstring("APO", rgFile), "APO lines");
+        Assertions.assertEquals(66, countSubstring("\n", rgFile), "Total #lines");
+        Assertions.assertTrue(rgFile.contains("M  RGP  2   5   1   7   1"));
     }
 
     @Test
     public void testRgroupQueryFile_4() throws Exception {
         String rgFile = recreate("rgfile.4.mol");
-        Assert.assertEquals("AAL lines", 0, countSubstring("AAL", rgFile));
-        Assert.assertEquals("\\$CTAB lines", 3, countSubstring("\\$CTAB", rgFile));
+        Assertions.assertEquals(0, countSubstring("AAL", rgFile), "AAL lines");
+        Assertions.assertEquals(3, countSubstring("\\$CTAB", rgFile), "\\$CTAB lines");
         // the R-group is detached, we don't write APO lines (unlike the 0 value APO in the input file)
-        Assert.assertEquals("APO lines", 0, countSubstring("APO", rgFile));
-        Assert.assertEquals("Total #lines", 46, countSubstring("\n", rgFile));
-        Assert.assertTrue(rgFile.contains("M  RGP  1   6   1"));
+        Assertions.assertEquals(0, countSubstring("APO", rgFile), "APO lines");
+        Assertions.assertEquals(46, countSubstring("\n", rgFile), "Total #lines");
+        Assertions.assertTrue(rgFile.contains("M  RGP  1   6   1"));
     }
 
     @Test
     public void testRgroupQueryFile_5() throws Exception {
         String rgFile = recreate("rgfile.5.mol");
-        Assert.assertEquals("LOG lines", 4, countSubstring("LOG", rgFile));
-        Assert.assertEquals("APO lines", 0, countSubstring("APO", rgFile));
-        Assert.assertEquals("M  RGP lines", 2, countSubstring("M  RGP", rgFile)); //overflow
-        Assert.assertEquals("Total #lines", 132, countSubstring("\n", rgFile));
+        Assertions.assertEquals(4, countSubstring("LOG", rgFile), "LOG lines");
+        Assertions.assertEquals(0, countSubstring("APO", rgFile), "APO lines");
+        Assertions.assertEquals(2, countSubstring("M  RGP", rgFile), "M  RGP lines"); //overflow
+        Assertions.assertEquals(132, countSubstring("\n", rgFile), "Total #lines");
     }
 
     @Test
     public void testRgroupQueryFile_6() throws Exception {
         String rgFile = recreate("rgfile.6.mol");
-        Assert.assertEquals("AAL lines", 1, countSubstring("AAL", rgFile));
-        Assert.assertEquals("LOG lines", 3, countSubstring("LOG", rgFile));
-        Assert.assertEquals("APO lines", 1, countSubstring("APO", rgFile));
-        Assert.assertEquals("Total #lines", 57, countSubstring("\n", rgFile));
+        Assertions.assertEquals(1, countSubstring("AAL", rgFile), "AAL lines");
+        Assertions.assertEquals(3, countSubstring("LOG", rgFile), "LOG lines");
+        Assertions.assertEquals(1, countSubstring("APO", rgFile), "APO lines");
+        Assertions.assertEquals(57, countSubstring("\n", rgFile), "Total #lines");
     }
 
     @Test
     public void testRgroupQueryFile_7() throws Exception {
         String rgFile = recreate("rgfile.7.mol");
-        Assert.assertEquals("LOG lines", 1, countSubstring("LOG", rgFile));
-        Assert.assertEquals("APO lines", 2, countSubstring("APO", rgFile));
-        Assert.assertTrue(rgFile.contains("M  RGP  3   4  32   6  32   7  32"));
-        Assert.assertEquals("Total #lines", 53, countSubstring("\n", rgFile));
+        Assertions.assertEquals(1, countSubstring("LOG", rgFile), "LOG lines");
+        Assertions.assertEquals(2, countSubstring("APO", rgFile), "APO lines");
+        Assertions.assertTrue(rgFile.contains("M  RGP  3   4  32   6  32   7  32"));
+        Assertions.assertEquals(53, countSubstring("\n", rgFile), "Total #lines");
     }
 
     private int countSubstring(String regExp, String text) {

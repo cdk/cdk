@@ -28,6 +28,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -60,7 +61,7 @@ public class CTXReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         CTXReader reader = new CTXReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
@@ -72,26 +73,26 @@ public class CTXReaderTest extends SimpleChemObjectReaderTest {
         IChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
-        Assert.assertEquals(1, moleculeSet.getAtomContainerCount());
+        Assertions.assertNotNull(moleculeSet);
+        Assertions.assertEquals(1, moleculeSet.getAtomContainerCount());
 
         IAtomContainer container = moleculeSet.getAtomContainer(0);
-        Assert.assertNotNull(container);
-        Assert.assertEquals("Incorrect atom count.", 6, container.getAtomCount());
-        Assert.assertEquals(5, container.getBondCount());
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(6, container.getAtomCount(), "Incorrect atom count.");
+        Assertions.assertEquals(5, container.getBondCount());
 
-        Assert.assertEquals("Petra", container.getID());
+        Assertions.assertEquals("Petra", container.getID());
 
-        Assert.assertNotNull(container.getTitle());
-        Assert.assertEquals("CH4O", container.getTitle());
+        Assertions.assertNotNull(container.getTitle());
+        Assertions.assertEquals("CH4O", container.getTitle());
     }
 }

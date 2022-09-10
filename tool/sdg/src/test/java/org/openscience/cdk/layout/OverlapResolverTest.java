@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.Vector;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -70,12 +71,12 @@ public class OverlapResolverTest extends CDKTestCase {
         OverlapResolver or = new OverlapResolver();
         double score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
         logger.debug("Overlap Score before treatment: " + score);
-        Assert.assertTrue(score > 0);
+        Assertions.assertTrue(score > 0);
         or.resolveOverlap(atomContainer, null);
         //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
         score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
         logger.debug("Overlap Score after treatment: " + score);
-        Assert.assertEquals(0.0, score, 0.00001);
+        Assertions.assertEquals(0.0, score, 0.00001);
         logger.debug("End of test case with atom clash");
 
     }
@@ -95,7 +96,7 @@ public class OverlapResolverTest extends CDKTestCase {
         IAtomContainer atomContainer = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
         //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
         double score = new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
-        Assert.assertEquals(0.0, score, 0.0001);
+        Assertions.assertEquals(0.0, score, 0.0001);
         logger.debug("End of test case with neither bond nor atom overlap");
 
     }
@@ -115,7 +116,7 @@ public class OverlapResolverTest extends CDKTestCase {
         IAtomContainer atomContainer = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
         //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
         double score = new OverlapResolver().getBondOverlapScore(atomContainer, new Vector());
-        Assert.assertTrue(score > 0);
+        Assertions.assertTrue(score > 0);
         logger.debug("End of test case with bond overlap");
 
     }
@@ -138,7 +139,7 @@ public class OverlapResolverTest extends CDKTestCase {
         OverlapResolver or = new OverlapResolver();
         overlapScore = or.resolveOverlap(atomContainer, null);
         //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
-        Assert.assertEquals(0.0, overlapScore, 0.0001);
+        Assertions.assertEquals(0.0, overlapScore, 0.0001);
         logger.debug("End of test case with atom clash");
 
     }
@@ -161,7 +162,7 @@ public class OverlapResolverTest extends CDKTestCase {
         OverlapResolver or = new OverlapResolver();
         overlapScore = or.resolveOverlap(atomContainer, null);
         //MoleculeViewer2D.display(new AtomContainer(atomContainer), true);
-        Assert.assertEquals(0.0, overlapScore, 0.0001);
+        Assertions.assertEquals(0.0, overlapScore, 0.0001);
         logger.debug("End of test case with atom clash");
 
     }

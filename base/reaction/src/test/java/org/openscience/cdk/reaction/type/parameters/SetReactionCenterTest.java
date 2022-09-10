@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type.parameters;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -44,6 +45,6 @@ public class SetReactionCenterTest extends CDKTestCase {
     @Test
     public void testSetReactionCenter() {
         SetReactionCenter react = new SetReactionCenter();
-        Assert.assertNotNull(react);
+        Assertions.assertNotNull(react);
     }
 }

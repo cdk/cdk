@@ -67,8 +67,8 @@ public class MDLV2000BondBlockTest {
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -77,8 +77,8 @@ public class MDLV2000BondBlockTest {
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.DOUBLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.E_Z_BY_COORDINATES));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -87,8 +87,8 @@ public class MDLV2000BondBlockTest {
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.TRIPLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -96,8 +96,8 @@ public class MDLV2000BondBlockTest {
         String input = "  1  3  4  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertTrue(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -105,8 +105,8 @@ public class MDLV2000BondBlockTest {
         String input = "  1  3  5  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
         assertThat(bond, is(instanceOf(QueryBond.class)));
         assertThat(((QueryBond) bond).getExpression().type(), is(Expr.Type.SINGLE_OR_DOUBLE));
     }
@@ -116,8 +116,8 @@ public class MDLV2000BondBlockTest {
         String input = "  1  3  6  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
         assertThat(bond, is(instanceOf(QueryBond.class)));
         assertThat(((QueryBond) bond).getExpression().type(), is(Expr.Type.SINGLE_OR_AROMATIC));
     }
@@ -127,8 +127,8 @@ public class MDLV2000BondBlockTest {
         String input = "  1  3  7  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
         assertThat(bond, is(instanceOf(QueryBond.class)));
         assertThat(((QueryBond) bond).getExpression().type(), is(Expr.Type.DOUBLE_OR_AROMATIC));
     }
@@ -138,8 +138,8 @@ public class MDLV2000BondBlockTest {
         String input = "  1  3  8  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
         assertThat(bond, is(instanceOf(QueryBond.class)));
         assertThat(((QueryBond) bond).getExpression().type(), is(Expr.Type.TRUE));
     }
@@ -232,8 +232,8 @@ public class MDLV2000BondBlockTest {
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -244,8 +244,8 @@ public class MDLV2000BondBlockTest {
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -256,8 +256,8 @@ public class MDLV2000BondBlockTest {
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -268,8 +268,8 @@ public class MDLV2000BondBlockTest {
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -280,7 +280,7 @@ public class MDLV2000BondBlockTest {
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
-        assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 }

@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IPDBMonomer;
@@ -40,8 +41,8 @@ public class PDBMonomerTest extends AbstractPDBMonomerTest {
     @Test
     public void testPDBMonomer() {
         IPDBMonomer monomer = new PDBMonomer();
-        Assert.assertNotNull(monomer);
-        Assert.assertEquals(monomer.getICode(), null);
+        Assertions.assertNotNull(monomer);
+        Assertions.assertEquals(monomer.getICode(), null);
     }
 
     // Overwrite default methods: no notifications are expected!

@@ -25,6 +25,7 @@
 package org.openscience.cdk.hash.stereo;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -113,7 +114,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
         GeometricParity geometricParity = getGeometricParity(extractEncoders(encoder).get(0));
 
-        assertTrue(geometricParity instanceof Tetrahedral2DParity);
+        Assertions.assertTrue(geometricParity instanceof Tetrahedral2DParity);
 
         assertThat(coords2D(geometricParity), CoreMatchers.is(new Point2d[]{p2, p3, p4, p5}));
 
@@ -173,7 +174,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
         GeometricParity geometricParity = getGeometricParity(extractEncoders(encoder).get(0));
 
-        assertTrue(geometricParity instanceof Tetrahedral2DParity);
+        Assertions.assertTrue(geometricParity instanceof Tetrahedral2DParity);
 
         assertThat(coords2D(geometricParity), CoreMatchers.is(new Point2d[]{p2, p3, p4, p1 // p1 is from central atom
                 }));
@@ -241,7 +242,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
         GeometricParity geometricParity = getGeometricParity(extractEncoders(encoder).get(0));
 
-        assertTrue(geometricParity instanceof Tetrahedral3DParity);
+        Assertions.assertTrue(geometricParity instanceof Tetrahedral3DParity);
 
         assertThat(coords3D(geometricParity), CoreMatchers.is(new Point3d[]{p2, p3, p4, p5}));
 
@@ -300,7 +301,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
         GeometricParity geometricParity = getGeometricParity(extractEncoders(encoder).get(0));
 
-        assertTrue(geometricParity instanceof Tetrahedral3DParity);
+        Assertions.assertTrue(geometricParity instanceof Tetrahedral3DParity);
 
         assertThat(coords3D(geometricParity), CoreMatchers.is(new Point3d[]{p2, p3, p4, p1 // p1 = central atom
                 }));

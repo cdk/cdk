@@ -19,6 +19,7 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -108,13 +109,13 @@ public class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
         }
         IAtomType[] retyped = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
-            Assert.assertEquals("First perception resulted in " + types[i] + " but the second perception " + "gave "
-                    + retyped[i], types[i], retyped[i]);
+            Assertions.assertEquals(types[i], retyped[i], "First perception resulted in " + types[i] + " but the second perception " + "gave "
+                    + retyped[i]);
         }
         retyped = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
-            Assert.assertEquals("First perception resulted in " + types[i] + " but the third perception " + "gave "
-                    + retyped[i], types[i], retyped[i]);
+            Assertions.assertEquals(types[i], retyped[i], "First perception resulted in " + types[i] + " but the third perception " + "gave "
+                    + retyped[i]);
         }
     }
 }

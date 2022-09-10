@@ -30,6 +30,7 @@ import javax.vecmath.Point3d;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -81,29 +82,29 @@ public class CIPToolTest extends CDKTestCase {
 
     @Test
     public void testCheckIfAllLigandsAreDifferent() {
-        Assert.assertTrue(CIPTool.checkIfAllLigandsAreDifferent(ligands));
+        Assertions.assertTrue(CIPTool.checkIfAllLigandsAreDifferent(ligands));
     }
 
     @Test
     public void testCheckIfAllLigandsAreDifferent_False() {
         ILigand[] sameLigands = new ILigand[]{ligands[0], ligands[0], ligands[1], ligands[2]};
-        Assert.assertFalse(CIPTool.checkIfAllLigandsAreDifferent(sameLigands));
+        Assertions.assertFalse(CIPTool.checkIfAllLigandsAreDifferent(sameLigands));
     }
 
     @Test
     public void testOrder() {
         ILigand[] ligandCopy = CIPTool.order(ligands);
-        Assert.assertEquals("H", ligandCopy[0].getLigandAtom().getSymbol());
-        Assert.assertEquals("Cl", ligandCopy[1].getLigandAtom().getSymbol());
-        Assert.assertEquals("Br", ligandCopy[2].getLigandAtom().getSymbol());
-        Assert.assertEquals("I", ligandCopy[3].getLigandAtom().getSymbol());
+        Assertions.assertEquals("H", ligandCopy[0].getLigandAtom().getSymbol());
+        Assertions.assertEquals("Cl", ligandCopy[1].getLigandAtom().getSymbol());
+        Assertions.assertEquals("Br", ligandCopy[2].getLigandAtom().getSymbol());
+        Assertions.assertEquals("I", ligandCopy[3].getLigandAtom().getSymbol());
     }
 
     @Test
     public void testGetCIPChirality() {
         LigancyFourChirality chirality = new LigancyFourChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(chirality);
-        Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
+        Assertions.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
 
     @Test
@@ -113,7 +114,7 @@ public class CIPToolTest extends CDKTestCase {
         LigancyFourChirality chirality = new LigancyFourChirality(molecule.getAtom(1), antiLigands,
                 Stereo.ANTI_CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(chirality);
-        Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
+        Assertions.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
 
     @Test
@@ -124,7 +125,7 @@ public class CIPToolTest extends CDKTestCase {
         ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
                 ligandAtoms.toArray(new IAtom[]{}), Stereo.CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
-        Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
+        Assertions.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
 
     @Test
@@ -137,7 +138,7 @@ public class CIPToolTest extends CDKTestCase {
         ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
                 ligandAtoms.toArray(new IAtom[]{}), Stereo.ANTI_CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
-        Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
+        Assertions.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
 
     @Test
@@ -183,29 +184,29 @@ public class CIPToolTest extends CDKTestCase {
     public void testDefineLigancyFourChirality() {
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 1, 0, 2, 3, 4,
                 Stereo.ANTI_CLOCKWISE);
-        Assert.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
-        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, chirality.getStereo());
+        Assertions.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
+        Assertions.assertEquals(Stereo.ANTI_CLOCKWISE, chirality.getStereo());
         ILigand[] ligands = chirality.getLigands();
-        Assert.assertEquals(molecule, ligands[0].getAtomContainer());
-        Assert.assertEquals(molecule.getAtom(0), ligands[0].getLigandAtom());
-        Assert.assertEquals(molecule.getAtom(1), ligands[0].getCentralAtom());
-        Assert.assertEquals(molecule, ligands[1].getAtomContainer());
-        Assert.assertEquals(molecule.getAtom(2), ligands[1].getLigandAtom());
-        Assert.assertEquals(molecule.getAtom(1), ligands[1].getCentralAtom());
-        Assert.assertEquals(molecule, ligands[2].getAtomContainer());
-        Assert.assertEquals(molecule.getAtom(3), ligands[2].getLigandAtom());
-        Assert.assertEquals(molecule.getAtom(1), ligands[2].getCentralAtom());
-        Assert.assertEquals(molecule, ligands[3].getAtomContainer());
-        Assert.assertEquals(molecule.getAtom(4), ligands[3].getLigandAtom());
-        Assert.assertEquals(molecule.getAtom(1), ligands[3].getCentralAtom());
+        Assertions.assertEquals(molecule, ligands[0].getAtomContainer());
+        Assertions.assertEquals(molecule.getAtom(0), ligands[0].getLigandAtom());
+        Assertions.assertEquals(molecule.getAtom(1), ligands[0].getCentralAtom());
+        Assertions.assertEquals(molecule, ligands[1].getAtomContainer());
+        Assertions.assertEquals(molecule.getAtom(2), ligands[1].getLigandAtom());
+        Assertions.assertEquals(molecule.getAtom(1), ligands[1].getCentralAtom());
+        Assertions.assertEquals(molecule, ligands[2].getAtomContainer());
+        Assertions.assertEquals(molecule.getAtom(3), ligands[2].getLigandAtom());
+        Assertions.assertEquals(molecule.getAtom(1), ligands[2].getCentralAtom());
+        Assertions.assertEquals(molecule, ligands[3].getAtomContainer());
+        Assertions.assertEquals(molecule.getAtom(4), ligands[3].getLigandAtom());
+        Assertions.assertEquals(molecule.getAtom(1), ligands[3].getCentralAtom());
     }
 
     @Test
     public void testDefineLigand() {
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 1, 2);
-        Assert.assertEquals(molecule, ligand.getAtomContainer());
-        Assert.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());
-        Assert.assertEquals(molecule.getAtom(2), ligand.getLigandAtom());
+        Assertions.assertEquals(molecule, ligand.getAtomContainer());
+        Assertions.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());
+        Assertions.assertEquals(molecule.getAtom(2), ligand.getLigandAtom());
     }
 
     /**
@@ -216,16 +217,16 @@ public class CIPToolTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
-        Assert.assertEquals(2, sideChains.length);
+        Assertions.assertEquals(2, sideChains.length);
         ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 4);
         sideChains = CIPTool.getLigandLigands(ligand);
-        Assert.assertEquals(1, sideChains.length);
+        Assertions.assertEquals(1, sideChains.length);
         ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         sideChains = CIPTool.getLigandLigands(ligand);
-        Assert.assertEquals(3, sideChains.length);
+        Assertions.assertEquals(3, sideChains.length);
         ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 10);
         sideChains = CIPTool.getLigandLigands(ligand);
-        Assert.assertEquals(0, sideChains.length);
+        Assertions.assertEquals(0, sideChains.length);
     }
 
     /**
@@ -237,7 +238,7 @@ public class CIPToolTest extends CDKTestCase {
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
         for (ILigand ligand2 : sideChains) {
-            Assert.assertNotSame(ligand2.getVisitedAtoms(), ligand.getVisitedAtoms());
+            Assertions.assertNotSame(ligand2.getVisitedAtoms(), ligand.getVisitedAtoms());
         }
     }
 
@@ -249,23 +250,23 @@ public class CIPToolTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)[H]");
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
-        Assert.assertEquals(2, sideChains.length);
+        Assertions.assertEquals(2, sideChains.length);
         ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 4);
         sideChains = CIPTool.getLigandLigands(ligand);
-        Assert.assertEquals(3, sideChains.length);
+        Assertions.assertEquals(3, sideChains.length);
         ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         sideChains = CIPTool.getLigandLigands(ligand);
-        Assert.assertEquals(3, sideChains.length);
+        Assertions.assertEquals(3, sideChains.length);
         ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 9);
         sideChains = CIPTool.getLigandLigands(ligand);
-        Assert.assertEquals(0, sideChains.length);
+        Assertions.assertEquals(0, sideChains.length);
     }
 
     @Test
     public void testDefineLigand_ImplicitHydrogen() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)");
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, CIPTool.HYDROGEN);
-        Assert.assertTrue(ligand instanceof ImplicitHydrogenLigand);
+        Assertions.assertTrue(ligand instanceof ImplicitHydrogenLigand);
     }
 
     @Test
@@ -764,6 +765,6 @@ public class CIPToolTest extends CDKTestCase {
         Stereo stereo = StereoTool.getStereo(ligandAtoms[0], ligandAtoms[1], ligandAtoms[2], ligandAtoms[3]);
         ITetrahedralChirality tetraStereo = new TetrahedralChirality(a32, ligandAtoms, stereo);
 
-        Assert.assertEquals(CIP_CHIRALITY.NONE, CIPTool.getCIPChirality(mol, tetraStereo));
+        Assertions.assertEquals(CIP_CHIRALITY.NONE, CIPTool.getCIPChirality(mol, tetraStereo));
     }
 }

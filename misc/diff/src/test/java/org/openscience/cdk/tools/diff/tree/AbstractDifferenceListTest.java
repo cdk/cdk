@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -33,17 +34,17 @@ public class AbstractDifferenceListTest {
     @Test
     public void testConstructor() {
         DifferenceClass diffClass = new DifferenceClass();
-        Assert.assertNotNull(diffClass);
+        Assertions.assertNotNull(diffClass);
     }
 
     @Test
     public void testAddChild() {
         DifferenceClass diffClass = new DifferenceClass();
         diffClass.addChild(StringDifference.construct("Foo", "Bar1", "Bar2"));
-        Assert.assertEquals(1, diffClass.childCount());
+        Assertions.assertEquals(1, diffClass.childCount());
 
         diffClass.addChild(null);
-        Assert.assertEquals(1, diffClass.childCount());
+        Assertions.assertEquals(1, diffClass.childCount());
     }
 
     @Test
@@ -53,14 +54,14 @@ public class AbstractDifferenceListTest {
         diffs.add(StringDifference.construct("Foo", "Bar1", "Bar2"));
         diffs.add(IntegerDifference.construct("Foo", 1, 2));
         diffClass.addChildren(diffs);
-        Assert.assertEquals(2, diffClass.childCount());
+        Assertions.assertEquals(2, diffClass.childCount());
         Iterator<IDifference> diffs2 = diffClass.getChildren().iterator();
         int count = 0;
         while (diffs2.hasNext()) {
             diffs2.next();
             count++;
         }
-        Assert.assertEquals(2, count);
+        Assertions.assertEquals(2, count);
     }
 
     private class DifferenceClass extends AbstractDifferenceList {

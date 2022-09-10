@@ -25,6 +25,7 @@
 package org.openscience.cdk.similarity;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -64,7 +65,7 @@ public class TanimotoTest extends CDKTestCase {
         BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();
         float tanimoto = Tanimoto.calculate(bs1, bs2);
         if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-        if (!standAlone) Assert.assertEquals(0.3939, tanimoto, 0.01);
+        if (!standAlone) Assertions.assertEquals(0.3939, tanimoto, 0.01);
     }
 
     @Test
@@ -76,7 +77,7 @@ public class TanimotoTest extends CDKTestCase {
         BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();
         float tanimoto = Tanimoto.calculate(bs1, bs2);
         if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-        if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
+        if (!standAlone) Assertions.assertEquals(1.0, tanimoto, 0.001);
     }
 
     @Test
@@ -85,7 +86,7 @@ public class TanimotoTest extends CDKTestCase {
         IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
         Fingerprinter fp = new Fingerprinter(1024, 8);
         double similarity = Tanimoto.calculate(fp.getBitFingerprint(mol1), fp.getBitFingerprint(mol2));
-        Assert.assertEquals(0.3939, similarity, 0.01);
+        Assertions.assertEquals(0.3939, similarity, 0.01);
     }
 
     @Test
@@ -100,7 +101,7 @@ public class TanimotoTest extends CDKTestCase {
         Map<String, Integer> feat1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> feat2 = fingerprinter.getRawFingerprint(mol2);
         float tanimoto = Tanimoto.calculate(feat1, feat2);
-        Assert.assertEquals(1.0, tanimoto, 0.001);
+        Assertions.assertEquals(1.0, tanimoto, 0.001);
 
     }
 
@@ -110,7 +111,7 @@ public class TanimotoTest extends CDKTestCase {
         double[] f2 = {1, 2, 3, 4, 5, 6, 7};
         float tanimoto = Tanimoto.calculate(f1, f2);
         if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-        if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
+        if (!standAlone) Assertions.assertEquals(1.0, tanimoto, 0.001);
     }
 
     @Test
@@ -152,7 +153,7 @@ public class TanimotoTest extends CDKTestCase {
                 put("A", 4);
             }
         });
-        Assert.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001);
+        Assertions.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001);
     }
 
     @Test
@@ -169,7 +170,7 @@ public class TanimotoTest extends CDKTestCase {
                 put("A", 4);
             }
         });
-        Assert.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001);
+        Assertions.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001);
     }
 
     @Test
@@ -185,13 +186,13 @@ public class TanimotoTest extends CDKTestCase {
         BitSetFingerprint fp2 = new BitSetFingerprint(bs2);
 
         double tanimoto2 = Tanimoto.calculate(fp1, fp2);
-        Assert.assertEquals(tanimoto, tanimoto2, 0.01);
+        Assertions.assertEquals(tanimoto, tanimoto2, 0.01);
 
         IntArrayFingerprint ifp1 = new IntArrayFingerprint(fp1);
         IntArrayFingerprint ifp2 = new IntArrayFingerprint(fp2);
 
         tanimoto2 = Tanimoto.calculate(ifp1, ifp2);
-        Assert.assertEquals(tanimoto, tanimoto2, 0.01);
+        Assertions.assertEquals(tanimoto, tanimoto2, 0.01);
     }
 
 }

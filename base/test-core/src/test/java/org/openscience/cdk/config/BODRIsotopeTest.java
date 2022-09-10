@@ -19,6 +19,7 @@
 package org.openscience.cdk.config;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IIsotope;
 
@@ -30,18 +31,18 @@ public class BODRIsotopeTest {
     @Test
     public void testConstructor() {
         IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
-        Assert.assertEquals("C", isotope.getSymbol());
-        Assert.assertEquals(6, isotope.getAtomicNumber().intValue());
-        Assert.assertEquals(12, isotope.getMassNumber().intValue());
-        Assert.assertEquals(12.0, isotope.getExactMass(), 0.001);
-        Assert.assertEquals(99.0, isotope.getNaturalAbundance(), 0.001);
+        Assertions.assertEquals("C", isotope.getSymbol());
+        Assertions.assertEquals(6, isotope.getAtomicNumber().intValue());
+        Assertions.assertEquals(12, isotope.getMassNumber().intValue());
+        Assertions.assertEquals(12.0, isotope.getExactMass(), 0.001);
+        Assertions.assertEquals(99.0, isotope.getNaturalAbundance(), 0.001);
     }
 
     @Test
     public void testNonclonable() throws CloneNotSupportedException {
         IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
         IIsotope clone = (IIsotope) isotope.clone();
-        Assert.assertEquals(isotope, clone);
+        Assertions.assertEquals(isotope, clone);
     }
 
     @Test
@@ -54,14 +55,14 @@ public class BODRIsotopeTest {
         isotope.setExactMass(15.000);
         isotope.setNaturalAbundance(0.364);
         // check if original
-        Assert.assertEquals(6, isotope.getAtomicNumber().intValue());
-        Assert.assertEquals(12, isotope.getMassNumber().intValue());
-        Assert.assertEquals(12.0, isotope.getExactMass(), 0.001);
-        Assert.assertEquals(99.0, isotope.getNaturalAbundance(), 0.001);
+        Assertions.assertEquals(6, isotope.getAtomicNumber().intValue());
+        Assertions.assertEquals(12, isotope.getMassNumber().intValue());
+        Assertions.assertEquals(12.0, isotope.getExactMass(), 0.001);
+        Assertions.assertEquals(99.0, isotope.getNaturalAbundance(), 0.001);
     }
 
     @Test
     public void untested() {
-        Assert.assertTrue(true); // keep PMD from complaining
+        Assertions.assertTrue(true); // keep PMD from complaining
     }
 }

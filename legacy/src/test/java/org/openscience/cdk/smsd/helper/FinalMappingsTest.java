@@ -33,6 +33,7 @@ import java.util.TreeMap;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,7 @@ public class FinalMappingsTest {
     @Test
     public void testGetInstance() {
         FinalMappings result = FinalMappings.getInstance();
-        assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     /**
@@ -80,7 +81,7 @@ public class FinalMappingsTest {
 
         FinalMappings instance = new FinalMappings();
         instance.add(mapping);
-        assertEquals(1, instance.getSize());
+        Assertions.assertEquals(1, instance.getSize());
     }
 
     /**
@@ -103,7 +104,7 @@ public class FinalMappingsTest {
         FinalMappings instance = new FinalMappings();
         instance.set(mappings);
 
-        assertEquals(2, instance.getSize());
+        Assertions.assertEquals(2, instance.getSize());
     }
 
     /**
@@ -127,7 +128,7 @@ public class FinalMappingsTest {
         instance.set(mappings);
 
         Iterator<Map<Integer, Integer>> result = instance.getIterator();
-        assertEquals(true, result.hasNext());
+        Assertions.assertEquals(true, result.hasNext());
     }
 
     /**
@@ -149,9 +150,9 @@ public class FinalMappingsTest {
         mappings.add(mapping2);
         FinalMappings instance = new FinalMappings();
         instance.set(mappings);
-        assertEquals(2, instance.getSize());
+        Assertions.assertEquals(2, instance.getSize());
         instance.clear();
-        assertEquals(0, instance.getSize());
+        Assertions.assertEquals(0, instance.getSize());
     }
 
     /**
@@ -176,7 +177,7 @@ public class FinalMappingsTest {
 
         List<Map<Integer, Integer>> expResult = mappings;
         List<Map<Integer, Integer>> result = instance.getFinalMapping();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -198,6 +199,6 @@ public class FinalMappingsTest {
         mappings.add(mapping2);
         FinalMappings instance = new FinalMappings();
         instance.set(mappings);
-        assertEquals(2, instance.getSize());
+        Assertions.assertEquals(2, instance.getSize());
     }
 }

@@ -26,6 +26,7 @@ package org.openscience.cdk.io.cml;
 
 import nu.xom.Element;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -76,18 +77,18 @@ public class QSARCMLRoundTripTest {
 
         IChemFile file = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
-        Assert.assertNotNull(file);
-        Assert.assertEquals(1, file.getChemSequenceCount());
+        Assertions.assertNotNull(file);
+        Assertions.assertEquals(1, file.getChemSequenceCount());
         IChemSequence sequence = file.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(1, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(1, sequence.getChemModelCount());
         IChemModel chemModel = sequence.getChemModel(0);
-        Assert.assertNotNull(chemModel);
+        Assertions.assertNotNull(chemModel);
         IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
-        Assert.assertEquals(1, moleculeSet.getAtomContainerCount());
+        Assertions.assertNotNull(moleculeSet);
+        Assertions.assertEquals(1, moleculeSet.getAtomContainerCount());
         roundTrippedMol = moleculeSet.getAtomContainer(0);
-        Assert.assertNotNull(roundTrippedMol);
+        Assertions.assertNotNull(roundTrippedMol);
 
         return roundTrippedMol;
     }
@@ -102,22 +103,21 @@ public class QSARCMLRoundTripTest {
         molecule.setProperty(originalValue.getSpecification(), originalValue);
         IAtomContainer roundTrippedMol = roundTripMolecule(convertor, molecule);
 
-        Assert.assertEquals(1, roundTrippedMol.getProperties().size());
+        Assertions.assertEquals(1, roundTrippedMol.getProperties().size());
         Object object = roundTrippedMol.getProperties().keySet().toArray()[0];
-        Assert.assertTrue(object instanceof DescriptorSpecification);
+        Assertions.assertTrue(object instanceof DescriptorSpecification);
         DescriptorSpecification spec = (DescriptorSpecification) object;
-        Assert.assertEquals(descriptor.getSpecification().getSpecificationReference(), spec.getSpecificationReference());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationIdentifier(),
-                spec.getImplementationIdentifier());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationTitle(), spec.getImplementationTitle());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationVendor(), spec.getImplementationVendor());
+        Assertions.assertEquals(descriptor.getSpecification().getSpecificationReference(), spec.getSpecificationReference());
+        Assertions.assertEquals(descriptor.getSpecification().getImplementationIdentifier(), spec.getImplementationIdentifier());
+        Assertions.assertEquals(descriptor.getSpecification().getImplementationTitle(), spec.getImplementationTitle());
+        Assertions.assertEquals(descriptor.getSpecification().getImplementationVendor(), spec.getImplementationVendor());
 
         Object value = roundTrippedMol.getProperty(spec);
-        Assert.assertNotNull(value);
-        Assert.assertTrue(value instanceof DescriptorValue);
+        Assertions.assertNotNull(value);
+        Assertions.assertTrue(value instanceof DescriptorValue);
         DescriptorValue descriptorResult = (DescriptorValue) value;
-        Assert.assertEquals(originalValue.getClass().getName(), descriptorResult.getClass().getName());
-        Assert.assertEquals(originalValue.getValue().toString(), descriptorResult.getValue().toString());
+        Assertions.assertEquals(originalValue.getClass().getName(), descriptorResult.getClass().getName());
+        Assertions.assertEquals(originalValue.getValue().toString(), descriptorResult.getValue().toString());
     }
 
     @Test
@@ -137,8 +137,8 @@ public class QSARCMLRoundTripTest {
         logger.debug("****************************** testQSARCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.contains("<property") && cmlContent.contains("xmlns:qsar"));
-        Assert.assertTrue(cmlContent.contains("#weight\""));
+        Assertions.assertTrue(cmlContent.contains("<property") && cmlContent.contains("xmlns:qsar"));
+        Assertions.assertTrue(cmlContent.contains("#weight\""));
     }
 
 }

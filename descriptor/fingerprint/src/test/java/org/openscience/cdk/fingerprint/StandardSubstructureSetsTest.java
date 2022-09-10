@@ -23,6 +23,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -35,16 +36,16 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
     public void testGetFunctionalGroupSubstructureSet() throws Exception {
         String[] smarts;
         smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
-        Assert.assertNotNull(smarts);
-        Assert.assertEquals(307, smarts.length);
+        Assertions.assertNotNull(smarts);
+        Assertions.assertEquals(307, smarts.length);
     }
 
     @Test
     public void testGetCountableMACCSSMARTSSubstructureSet() throws Exception {
         String[] smarts;
         smarts = StandardSubstructureSets.getCountableMACCSSMARTS();
-        Assert.assertNotNull(smarts);
-        Assert.assertEquals(142, smarts.length); // currently fragment pattern is ignored
+        Assertions.assertNotNull(smarts);
+        Assertions.assertEquals(142, smarts.length); // currently fragment pattern is ignored
     }
 
 }

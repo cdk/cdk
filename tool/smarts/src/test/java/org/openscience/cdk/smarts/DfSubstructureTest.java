@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.DfPattern;
@@ -43,9 +44,9 @@ public class DfSubstructureTest extends SubstructureTest {
         IAtomContainer mol  = smi("OC(=O)C(=O)O");
         IAtomContainer qry  = sma("O=*");
         DfPattern      ptrn = DfPattern.findSubstructure(qry);
-        assertFalse(ptrn.matchesRoot(mol.getAtom(0)));
-        assertTrue(ptrn.matchesRoot(mol.getAtom(2)));
-        assertTrue(ptrn.matchesRoot(mol.getAtom(4)));
-        assertFalse(ptrn.matchesRoot(mol.getAtom(5)));
+        Assertions.assertFalse(ptrn.matchesRoot(mol.getAtom(0)));
+        Assertions.assertTrue(ptrn.matchesRoot(mol.getAtom(2)));
+        Assertions.assertTrue(ptrn.matchesRoot(mol.getAtom(4)));
+        Assertions.assertFalse(ptrn.matchesRoot(mol.getAtom(5)));
     }
 }

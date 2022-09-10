@@ -7,6 +7,7 @@
 package org.openscience.cdk.geometry;
 
 import org.hamcrest.number.IsCloseTo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -41,7 +42,7 @@ public class AtomToolsTest {
                     mol.getAtom(0).getPoint3d(),
                     mol.getAtom(2).getPoint3d(),
                     mol.getAtom(3).getPoint3d(), 1.5);
-            assertNotNull(newP);
+            Assertions.assertNotNull(newP);
             assertThat(newP.x, IsCloseTo.closeTo(2.0160, 0.001));
             assertThat(newP.y, IsCloseTo.closeTo(-0.6871, 0.001));
             assertThat(newP.z, IsCloseTo.closeTo(-1.1901, 0.001));

@@ -3,6 +3,7 @@ package org.openscience.cdk.graph;
 import java.util.BitSet;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -44,14 +45,14 @@ public class PermutorTest {
         int size = 4;
         Permutor permutor = new Permutor(size);
         int[] current = permutor.getCurrentPermutation();
-        Assert.assertArrayEquals(getIdentity(size), current);
+        Assertions.assertArrayEquals(getIdentity(size), current);
     }
 
     @Test
     public void hasNextTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
-        Assert.assertTrue(permutor.hasNext());
+        Assertions.assertTrue(permutor.hasNext());
     }
 
     @Test
@@ -61,7 +62,7 @@ public class PermutorTest {
         Permutor permutor = new Permutor(size);
         // out of 4! = 24 permutations, numbered 0-23, this is the last
         permutor.setRank(23);
-        Assert.assertArrayEquals(reverse, permutor.getCurrentPermutation());
+        Assertions.assertArrayEquals(reverse, permutor.getCurrentPermutation());
     }
 
     @Test
@@ -70,7 +71,7 @@ public class PermutorTest {
         int rank = 10;
         Permutor permutor = new Permutor(size);
         permutor.setRank(rank);
-        Assert.assertEquals(rank, permutor.getRank());
+        Assertions.assertEquals(rank, permutor.getRank());
     }
 
     @Test
@@ -79,7 +80,7 @@ public class PermutorTest {
         int[] target = new int[]{3, 1, 0, 2};
         Permutor permutor = new Permutor(size);
         permutor.setPermutation(target);
-        Assert.assertArrayEquals(target, permutor.getCurrentPermutation());
+        Assertions.assertArrayEquals(target, permutor.getCurrentPermutation());
     }
 
     @Test
@@ -91,7 +92,7 @@ public class PermutorTest {
             permutor.getNextPermutation();
             count++;
         }
-        Assert.assertEquals(factorial(size), count);
+        Assertions.assertEquals(factorial(size), count);
     }
 
     @Test
@@ -109,14 +110,14 @@ public class PermutorTest {
                 break;
             }
         }
-        Assert.assertTrue(allOk);
+        Assertions.assertTrue(allOk);
     }
 
     @Test
     public void maxRankTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
-        Assert.assertEquals(factorial(size) - 1, permutor.calculateMaxRank());
+        Assertions.assertEquals(factorial(size) - 1, permutor.calculateMaxRank());
     }
 
     @Test
@@ -124,7 +125,7 @@ public class PermutorTest {
         int size = 4;
         Permutor permutor = new Permutor(size);
         int[] random = permutor.getRandomNextPermutation();
-        Assert.assertTrue(arrayElementsDistinct(random));
+        Assertions.assertTrue(arrayElementsDistinct(random));
     }
 
 }

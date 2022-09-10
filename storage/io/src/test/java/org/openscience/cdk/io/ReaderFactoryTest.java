@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
@@ -66,8 +67,8 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
     public void testCreateReader_IChemFormat() {
         IChemFormat format = (IChemFormat) XYZFormat.getInstance();
         ISimpleChemObjectReader reader = factory.createReader(format);
-        Assert.assertNotNull(reader);
-        Assert.assertEquals(format.getFormatName(), reader.getFormat().getFormatName());
+        Assertions.assertNotNull(reader);
+        Assertions.assertEquals(format.getFormatName(), reader.getFormat().getFormatName());
     }
 
     @Test
@@ -159,7 +160,7 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
     public void testSmiles() throws Exception {
         InputStream is = this.getClass().getResourceAsStream("drugs.smi");
         Object reader = factory.createReader(is);
-        Assert.assertNull(reader);
+        Assertions.assertNull(reader);
     }
 
     /**
@@ -169,20 +170,20 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
     public void testBug2153298() throws Exception {
         String filename = "org/openscience/cdk/io/cid1145.xml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        Assert.assertNotNull("Cannot find file: " + filename, ins);
+        Assertions.assertNotNull(ins, "Cannot find file: " + filename);
         IChemFormatMatcher realFormat = (IChemFormatMatcher) PubChemCompoundXMLFormat.getInstance();
         factory.registerFormat(realFormat);
         // ok, if format ok, try instantiating a reader
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = factory.createReader(ins);
-        Assert.assertNotNull(reader);
-        Assert.assertEquals(((IChemFormat) PubChemCompoundXMLFormat.getInstance()).getReaderClassName(), reader
+        Assertions.assertNotNull(reader);
+        Assertions.assertEquals(((IChemFormat) PubChemCompoundXMLFormat.getInstance()).getReaderClassName(), reader
                 .getClass().getName());
         // now try reading something from it
         IAtomContainer molecule = reader.read(new AtomContainer());
-        Assert.assertNotNull(molecule);
-        Assert.assertNotSame(0, molecule.getAtomCount());
-        Assert.assertNotSame(0, molecule.getBondCount());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertNotSame(0, molecule.getAtomCount());
+        Assertions.assertNotSame(0, molecule.getBondCount());
     }
 
     @Test
@@ -192,16 +193,16 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
                 .getResourceAsStream(filename)));
         // ok, if format ok, try instantiating a reader
         ISimpleChemObjectReader reader = factory.createReader(input);
-        Assert.assertNotNull(reader);
-        Assert.assertEquals(((IChemFormat) XYZFormat.getInstance()).getReaderClassName(), reader.getClass().getName());
+        Assertions.assertNotNull(reader);
+        Assertions.assertEquals(((IChemFormat) XYZFormat.getInstance()).getReaderClassName(), reader.getClass().getName());
         // now try reading something from it
         IChemFile chemFile = reader.read(new ChemFile());
         IAtomContainer molecule = new AtomContainer();
         for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(chemFile)) {
             molecule.add(container);
         }
-        Assert.assertNotNull(molecule);
-        Assert.assertEquals(4, molecule.getAtomCount());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertEquals(4, molecule.getAtomCount());
     }
 
     @Test
@@ -210,16 +211,16 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
         InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
         // ok, if format ok, try instantiating a reader
         ISimpleChemObjectReader reader = factory.createReader(input);
-        Assert.assertNotNull(reader);
-        Assert.assertEquals(((IChemFormat) XYZFormat.getInstance()).getReaderClassName(), reader.getClass().getName());
+        Assertions.assertNotNull(reader);
+        Assertions.assertEquals(((IChemFormat) XYZFormat.getInstance()).getReaderClassName(), reader.getClass().getName());
         // now try reading something from it
         IChemFile chemFile = reader.read(new ChemFile());
         IAtomContainer molecule = new AtomContainer();
         for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(chemFile)) {
             molecule.add(container);
         }
-        Assert.assertNotNull(molecule);
-        Assert.assertEquals(4, molecule.getAtomCount());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertEquals(4, molecule.getAtomCount());
     }
 
 }

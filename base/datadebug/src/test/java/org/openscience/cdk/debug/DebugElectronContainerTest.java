@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractElectronContainerTest;
@@ -40,7 +41,7 @@ public class DebugElectronContainerTest extends AbstractElectronContainerTest {
     @Test
     public void testDebugElectronContainer() {
         IElectronContainer ec = new DebugElectronContainer();
-        Assert.assertNotNull(ec);
-        Assert.assertEquals(0, ec.getElectronCount().intValue());
+        Assertions.assertNotNull(ec);
+        Assertions.assertEquals(0, ec.getElectronCount().intValue());
     }
 }

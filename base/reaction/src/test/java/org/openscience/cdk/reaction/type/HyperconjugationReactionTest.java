@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -68,7 +69,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
     @Test
     public void testHyperconjugationReaction() throws Exception {
         IReactionProcess type = new HyperconjugationReaction();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     /**
@@ -107,8 +108,8 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(2, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(2, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         /* C=CC */
@@ -120,7 +121,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         molecule2.addBond(1, 2, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule2);
 
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, product));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, product));
 
         product = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         /* [H+] */
@@ -128,7 +129,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         molecule2.addAtom(builder.newInstance(IAtom.class, "H"));
         molecule2.getAtom(0).setFormalCharge(1);
 
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, product));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, product));
     }
 
     /**
@@ -143,7 +144,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assertions.assertNotNull(matcher.findMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);
         }
     }
 
@@ -177,15 +178,15 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
 
     }
 
@@ -211,15 +212,15 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(3, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(3, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product, queryAtom));
 
         product = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
@@ -228,7 +229,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         molecule2.getAtom(0).setFormalCharge(1);
 
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
     }
 
     /**
@@ -261,16 +262,16 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
         IAtomContainer reactant1 = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
 
-        Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant1.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant1.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(6).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant1.getAtom(6).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant1.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getBond(5).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant1.getBond(5).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant1.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant1.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(6).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant1.getAtom(6).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant1.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(5).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant1.getBond(5).getFlag(CDKConstants.REACTIVE_CENTER));
     }
 
     /**
@@ -298,19 +299,19 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
-        Assert.assertEquals(3, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(3, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         // if these assertions fail the atom order may have changed
         IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(1));
-        Assert.assertEquals(mappedProductA1, product1.getAtom(1));
+        Assertions.assertEquals(mappedProductA1, product1.getAtom(1));
         mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(2));
-        Assert.assertEquals(mappedProductA1, product1.getAtom(2));
+        Assertions.assertEquals(mappedProductA1, product1.getAtom(2));
         mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(6));
-        Assert.assertEquals(mappedProductA1, product2.getAtom(0));
+        Assertions.assertEquals(mappedProductA1, product2.getAtom(0));
     }
 
     /**

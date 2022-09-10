@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -71,12 +72,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b2);
 
         assertAtomTypesPerceived(molecule);
-        Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
-        Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(1), molecule).getValue()).intValue());
-        Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(2), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(1), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(2), molecule).getValue()).intValue());
     }
 
     /**
@@ -103,12 +101,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b2);
 
         assertAtomTypesPerceived(molecule);
-        Assert.assertEquals(IAtomType.Hybridization.SP1.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
-        Assert.assertEquals(IAtomType.Hybridization.SP1.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(1), molecule).getValue()).intValue());
-        Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(2), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP1.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP1.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(1), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(2), molecule).getValue()).intValue());
     }
 
     /**
@@ -137,12 +132,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b2);
 
         assertAtomTypesPerceived(molecule);
-        Assert.assertEquals(IAtomType.Hybridization.PLANAR3.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
-        Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(1), molecule).getValue()).intValue());
-        Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(2), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.PLANAR3.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(1), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(2), molecule).getValue()).intValue());
     }
 
     /**
@@ -171,8 +163,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b3);
 
         assertAtomTypesPerceived(molecule);
-        Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
 
     }
 
@@ -208,8 +199,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b4);
 
         assertAtomTypesPerceived(molecule);
-        Assert.assertEquals(IAtomType.Hybridization.SP3D2.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP3D2.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
 
     }
 
@@ -238,8 +228,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b2);
 
         assertAtomTypesPerceived(molecule);
-        Assert.assertEquals(IAtomType.Hybridization.SP3D1.ordinal(),
-                ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
+        Assertions.assertEquals(IAtomType.Hybridization.SP3D1.ordinal(), ((IntegerResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).intValue());
 
     }
 
@@ -273,8 +262,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
 
         assertAtomTypesPerceived(mol);
         for (int i = 0; i < 3; i++) {
-            Assert.assertEquals(testResult[i],
-                    ((IntegerResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).intValue());
+            Assertions.assertEquals(testResult[i], ((IntegerResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).intValue());
         }
     }
 
@@ -301,8 +289,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
 
         assertAtomTypesPerceived(mol);
         for (int i = 0; i < 3; i++) {
-            Assert.assertEquals(testResult[i],
-                    ((IntegerResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).intValue());
+            Assertions.assertEquals(testResult[i], ((IntegerResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).intValue());
         }
     }
 }

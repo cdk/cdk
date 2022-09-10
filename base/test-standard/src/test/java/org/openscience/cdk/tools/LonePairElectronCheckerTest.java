@@ -20,6 +20,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -78,7 +79,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         m.addBond(new Bond(c, O, IBond.Order.DOUBLE));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 
-        Assert.assertTrue(lpcheck.allSaturated(m));
+        Assertions.assertTrue(lpcheck.allSaturated(m));
     }
 
     /**
@@ -104,7 +105,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         }
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 
-        Assert.assertFalse(lpcheck.allSaturated(m));
+        Assertions.assertFalse(lpcheck.allSaturated(m));
     }
 
     /**
@@ -125,8 +126,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         lpcheck.saturate(m);
-        Assert.assertEquals(3, m.getConnectedLonePairsCount(cl));
-        Assert.assertEquals(0, m.getConnectedLonePairsCount(c1));
+        Assertions.assertEquals(3, m.getConnectedLonePairsCount(cl));
+        Assertions.assertEquals(0, m.getConnectedLonePairsCount(c1));
     }
 
     /**
@@ -148,8 +149,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         lpcheck.saturate(m);
-        Assert.assertEquals(2, m.getConnectedLonePairsCount(o));
-        Assert.assertEquals(0, m.getConnectedLonePairsCount(c1));
+        Assertions.assertEquals(2, m.getConnectedLonePairsCount(o));
+        Assertions.assertEquals(0, m.getConnectedLonePairsCount(c1));
     }
 
     /**
@@ -172,8 +173,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         lpcheck.saturate(m);
 
-        Assert.assertEquals(2, m.getConnectedLonePairsCount(m.getAtom(1)));
-        Assert.assertEquals(0, m.getConnectedLonePairsCount(m.getAtom(0)));
+        Assertions.assertEquals(2, m.getConnectedLonePairsCount(m.getAtom(1)));
+        Assertions.assertEquals(0, m.getConnectedLonePairsCount(m.getAtom(0)));
     }
 
     /**
@@ -197,7 +198,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         lpcheck.saturate(m);
 
-        Assert.assertEquals(1, m.getConnectedLonePairsCount(o));
+        Assertions.assertEquals(1, m.getConnectedLonePairsCount(o));
     }
 
     /**
@@ -220,7 +221,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         lpcheck.saturate(m);
 
-        Assert.assertEquals(3, m.getConnectedLonePairsCount(o));
+        Assertions.assertEquals(3, m.getConnectedLonePairsCount(o));
     }
 
     /**
@@ -238,7 +239,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         lpcheck.saturate(m);
 
-        Assert.assertEquals(1, m.getConnectedLonePairsCount(n));
+        Assertions.assertEquals(1, m.getConnectedLonePairsCount(n));
     }
 
     /**
@@ -262,7 +263,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         lpcheck.saturate(m);
 
-        Assert.assertEquals(0, m.getConnectedLonePairsCount(n));
+        Assertions.assertEquals(0, m.getConnectedLonePairsCount(n));
     }
 
     /**
@@ -276,8 +277,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         lpcheck.saturate(mol);
 
-        Assert.assertEquals(2, mol.getConnectedLonePairsCount(mol.getAtom(0)));
-        Assert.assertEquals(0, mol.getConnectedLonePairsCount(mol.getAtom(3)));
-        Assert.assertEquals(1, mol.getConnectedLonePairsCount(mol.getAtom(5)));
+        Assertions.assertEquals(2, mol.getConnectedLonePairsCount(mol.getAtom(0)));
+        Assertions.assertEquals(0, mol.getConnectedLonePairsCount(mol.getAtom(3)));
+        Assertions.assertEquals(1, mol.getConnectedLonePairsCount(mol.getAtom(5)));
     }
 }

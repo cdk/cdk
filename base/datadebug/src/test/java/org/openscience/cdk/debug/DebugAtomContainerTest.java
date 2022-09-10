@@ -19,6 +19,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractAtomContainerTest;
@@ -46,8 +47,8 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
         // array lengths
         IAtomContainer ac = new DebugAtomContainer(5, 6, 1, 2);
 
-        Assert.assertEquals(0, ac.getAtomCount());
-        Assert.assertEquals(0, ac.getElectronContainerCount());
+        Assertions.assertEquals(0, ac.getAtomCount());
+        Assertions.assertEquals(0, ac.getElectronContainerCount());
 
         // test whether the ElectronContainer is correctly initialized
         ac.addBond(ac.getBuilder().newInstance(IBond.class, ac.getBuilder().newInstance(IAtom.class, "C"),
@@ -60,8 +61,8 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
         // create an empty container with in the constructor defined array lengths
         IAtomContainer container = new DebugAtomContainer();
 
-        Assert.assertEquals(0, container.getAtomCount());
-        Assert.assertEquals(0, container.getBondCount());
+        Assertions.assertEquals(0, container.getAtomCount());
+        Assertions.assertEquals(0, container.getBondCount());
 
         // test whether the ElectronContainer is correctly initialized
         container.addBond(container.getBuilder().newInstance(IBond.class,
@@ -91,7 +92,7 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
         acetone.addBond(b3);
 
         IAtomContainer container = new DebugAtomContainer(acetone);
-        Assert.assertEquals(4, container.getAtomCount());
-        Assert.assertEquals(3, container.getBondCount());
+        Assertions.assertEquals(4, container.getAtomCount());
+        Assertions.assertEquals(3, container.getBondCount());
     }
 }

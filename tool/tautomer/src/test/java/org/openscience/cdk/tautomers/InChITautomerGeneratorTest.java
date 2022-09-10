@@ -67,7 +67,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         IAtomContainer container = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(container, inchi);
-        Assert.assertEquals(tautCountExpected, tautomers.size());
+        Assertions.assertEquals(tautCountExpected, tautomers.size());
         return tautomers;
     }
 
@@ -77,7 +77,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         InChITautomerGenerator tautegen = new InChITautomerGenerator(flags);
         List<IAtomContainer> tautomers = tautegen.getTautomers(container);
-        Assert.assertEquals(tautCountExpected, tautomers.size());
+        Assertions.assertEquals(tautCountExpected, tautomers.size());
         return tautomers;
     }
 
@@ -193,7 +193,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         hAdder.addImplicitHydrogens(molecule);
 
         List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(molecule); // InChI will be calculated
-        Assert.assertEquals(5, tautomers.size());
+        Assertions.assertEquals(5, tautomers.size());
     }
 
     @Test
@@ -265,7 +265,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(mol);
-        Assert.assertEquals(8, tautomers.size());
+        Assertions.assertEquals(8, tautomers.size());
     }
 
 }

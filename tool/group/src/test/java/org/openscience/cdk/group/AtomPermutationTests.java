@@ -2,6 +2,7 @@ package org.openscience.cdk.group;
 
 import org.junit.Assert;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -32,7 +33,7 @@ public class AtomPermutationTests extends CDKTestCase {
             refiner.refine(permutedContainer);
             best = refiner.getBest().invert();
             String permCert = AtomContainerPrinter.toString(permutedContainer, best, true);
-            Assert.assertEquals(cert, permCert);
+            Assertions.assertEquals(cert, permCert);
         }
     }
 

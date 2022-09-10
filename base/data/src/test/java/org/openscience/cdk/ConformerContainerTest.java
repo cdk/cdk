@@ -74,47 +74,47 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test
     public void testConformerContainer() {
         ConformerContainer container = new ConformerContainer();
-        Assert.assertNotNull(container);
+        Assertions.assertNotNull(container);
         base.setTitle("myMolecule");
         container.add(base);
-        Assert.assertEquals(1, container.size());
+        Assertions.assertEquals(1, container.size());
 
         for (IAtomContainer conf : confs)
             container.add(conf);
-        Assert.assertEquals(nconfs + 1, container.size());
+        Assertions.assertEquals(nconfs + 1, container.size());
     }
 
     @Test
     public void testConformerContainer_arrayIAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertNotNull(container);
-        Assert.assertEquals(nconfs, container.size());
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(nconfs, container.size());
     }
 
     @Test
     public void testGetTitle() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertEquals("myMolecule", container.getTitle());
+        Assertions.assertEquals("myMolecule", container.getTitle());
     }
 
     @Test
     public void testIsEmpty() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertTrue(!container.isEmpty());
+        Assertions.assertTrue(!container.isEmpty());
     }
 
     @Test
     public void testContains() {
         ConformerContainer container = new ConformerContainer(confs);
         IAtomContainer o = container.get(0);
-        Assert.assertTrue(container.contains(o));
+        Assertions.assertTrue(container.contains(o));
     }
 
     @Test
     public void testToArray() {
         ConformerContainer container = new ConformerContainer(confs);
         IAtomContainer[] array = (IAtomContainer[]) container.toArray();
-        Assert.assertEquals(nconfs, array.length);
+        Assertions.assertEquals(nconfs, array.length);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ConformerContainerTest extends CDKTestCase {
             IAtomContainer atomContainer = iter.next();
             nmol++;
         }
-        Assert.assertEquals(nconfs, nmol);
+        Assertions.assertEquals(nconfs, nmol);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ConformerContainerTest extends CDKTestCase {
         for (IAtomContainer conf : container) {
             nmol++;
         }
-        Assert.assertEquals(nconfs, nmol);
+        Assertions.assertEquals(nconfs, nmol);
 
     }
 
@@ -144,14 +144,14 @@ public class ConformerContainerTest extends CDKTestCase {
     public void testRemove_int() {
         ConformerContainer container = new ConformerContainer(confs);
         container.clear();
-        Assert.assertEquals(0, container.size());
+        Assertions.assertEquals(0, container.size());
 
         for (int i = 0; i < nconfs; i++)
             container.add(confs[i]);
-        Assert.assertEquals(nconfs, container.size());
+        Assertions.assertEquals(nconfs, container.size());
 
         container.remove(0);
-        Assert.assertEquals(nconfs - 1, container.size());
+        Assertions.assertEquals(nconfs - 1, container.size());
     }
 
     @Test
@@ -159,7 +159,7 @@ public class ConformerContainerTest extends CDKTestCase {
         ConformerContainer container = new ConformerContainer(confs);
         IAtomContainer ac = container.get(2);
         int index = container.indexOf(ac);
-        Assert.assertEquals(2, index);
+        Assertions.assertEquals(2, index);
     }
 
     @Test
@@ -206,20 +206,20 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test
     public void testAdd_Object() {
         ConformerContainer container = new ConformerContainer();
-        Assert.assertNotNull(container);
+        Assertions.assertNotNull(container);
         for (IAtomContainer conf : confs)
             container.add(conf);
-        Assert.assertEquals(nconfs, container.size());
+        Assertions.assertEquals(nconfs, container.size());
     }
 
     @Test
     public void testIndexOf_Object() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertNotNull(container);
+        Assertions.assertNotNull(container);
 
         int counter = 0;
         for (IAtomContainer conf : confs) {
-            Assert.assertEquals(counter, container.indexOf(conf));
+            Assertions.assertEquals(counter, container.indexOf(conf));
             counter++;
         }
     }
@@ -227,37 +227,37 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test
     public void testClear() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertEquals(nconfs, container.size());
+        Assertions.assertEquals(nconfs, container.size());
         container.clear();
-        Assert.assertEquals(0, container.size());
+        Assertions.assertEquals(0, container.size());
     }
 
     @Test
     public void testSize() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertEquals(nconfs, container.size());
+        Assertions.assertEquals(nconfs, container.size());
     }
 
     @Test
     public void testLastIndexOf_Object() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertEquals(nconfs, container.size());
+        Assertions.assertEquals(nconfs, container.size());
         int x = container.lastIndexOf(container.get(3));
-        Assert.assertEquals(3, container.lastIndexOf(container.get(3)));
+        Assertions.assertEquals(3, container.lastIndexOf(container.get(3)));
     }
 
     @Test
     public void testContains_Object() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertEquals(nconfs, container.size());
-        Assert.assertTrue(container.contains(container.get(3)));
+        Assertions.assertEquals(nconfs, container.size());
+        Assertions.assertTrue(container.contains(container.get(3)));
     }
 
     @Test
     public void testAddAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertEquals(nconfs, container.size());
-        Assert.assertTrue(container.contains(container.get(3)));
+        Assertions.assertEquals(nconfs, container.size());
+        Assertions.assertTrue(container.contains(container.get(3)));
     }
 
     @Test
@@ -281,12 +281,12 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test
     public void testRemove_Object() {
         ConformerContainer cContainer = new ConformerContainer(confs);
-        Assert.assertEquals(nconfs, cContainer.size());
+        Assertions.assertEquals(nconfs, cContainer.size());
         IAtomContainer container = cContainer.get(3);
-        Assert.assertTrue(cContainer.contains(container));
+        Assertions.assertTrue(cContainer.contains(container));
         cContainer.remove(container);
-        Assert.assertEquals(nconfs - 1, cContainer.size());
-        Assert.assertFalse(cContainer.contains(container));
+        Assertions.assertEquals(nconfs - 1, cContainer.size());
+        Assertions.assertFalse(cContainer.contains(container));
     }
 
     @Test
@@ -294,7 +294,7 @@ public class ConformerContainerTest extends CDKTestCase {
         ConformerContainer container = new ConformerContainer(confs);
         int location = 5;
         container.set(location, container.get(location + 1));
-        Assert.assertEquals(location, container.indexOf(container.get(location + 1)));
+        Assertions.assertEquals(location, container.indexOf(container.get(location + 1)));
     }
 
     /*
@@ -316,25 +316,25 @@ public class ConformerContainerTest extends CDKTestCase {
         ConformerContainer container = new ConformerContainer(confs);
         int location = 5;
         container.set(location, container.get(location + 1));
-        Assert.assertEquals(location, container.indexOf(container.get(location + 1)));
+        Assertions.assertEquals(location, container.indexOf(container.get(location + 1)));
     }
 
     @Test
     public void testContainsAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertNotNull(container);
-        Assert.assertEquals(nconfs, container.size());
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(nconfs, container.size());
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
-                                    Assert.assertTrue(container.containsAll(container));
+                                    Assertions.assertTrue(container.containsAll(container));
                                 });
     }
 
     @Test
     public void testRemoveAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
-        Assert.assertNotNull(container);
-        Assert.assertEquals(nconfs, container.size());
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(nconfs, container.size());
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
                                     container.removeAll(container);
@@ -380,8 +380,8 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test
     public void testConformerContainer_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(base);
-        Assert.assertNotNull(container);
-        Assert.assertEquals(1, container.size());
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(1, container.size());
     }
 
 }

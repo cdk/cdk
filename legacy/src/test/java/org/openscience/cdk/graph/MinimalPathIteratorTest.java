@@ -95,16 +95,16 @@ public class MinimalPathIteratorTest extends CDKTestCase {
     public void testMinimalPathIterator() {
         int count = 0;
         for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
-            Assert.assertTrue(((List) i.next()).size() == 5);
+            Assertions.assertTrue(((List) i.next()).size() == 5);
             count++;
         }
-        Assert.assertEquals(10, count);
+        Assertions.assertEquals(10, count);
     }
 
     @Test
     public void testRemove() {
         for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
-            Assert.assertTrue(((List) i.next()).size() == 5);
+            Assertions.assertTrue(((List) i.next()).size() == 5);
             Assertions.assertThrows(UnsupportedOperationException.class, () -> {
                 i.remove();
             });

@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -88,8 +89,8 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        assertNotNull(smsd1.getReactantMolecule());
-        assertNotNull(smsd1.getProductMolecule());
+        Assertions.assertNotNull(smsd1.getReactantMolecule());
+        Assertions.assertNotNull(smsd1.getProductMolecule());
     }
 
     /**
@@ -105,8 +106,8 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        assertNotNull(smsd1.getReactantMolecule());
-        assertNotNull(smsd1.getProductMolecule());
+        Assertions.assertNotNull(smsd1.getReactantMolecule());
+        Assertions.assertNotNull(smsd1.getProductMolecule());
     }
 
     /**
@@ -128,9 +129,9 @@ public class SMSDTest {
             Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
             smsd1.init(queryac, target, true, true);
             smsd1.setChemFilters(true, true, true);
-            Assert.assertEquals(7, smsd1.getFirstAtomMapping().size());
-            Assert.assertEquals(2, smsd1.getAllAtomMapping().size());
-            assertNotNull(smsd1.getFirstMapping());
+            Assertions.assertEquals(7, smsd1.getFirstAtomMapping().size());
+            Assertions.assertEquals(2, smsd1.getAllAtomMapping().size());
+            Assertions.assertNotNull(smsd1.getFirstMapping());
         } catch (InvalidSmilesException ex) {
             Logger.getLogger(MCSPlusHandlerTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -149,7 +150,7 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
     }
 
@@ -176,7 +177,7 @@ public class SMSDTest {
         smsd1.init(query, target, true, true);
         smsd1.setChemFilters(true, true, true);
         double score = 1.0;
-        assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
+        Assertions.assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
     }
 
     /**
@@ -194,7 +195,7 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(source.getMolecule(), target.getMolecule(), true, true);
         smsd1.setChemFilters(true, true, true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
     }
 
     /**
@@ -223,8 +224,8 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertNotNull(smsd1.getFirstMapping());
-        assertEquals(2, smsd1.getAllAtomMapping().size());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertEquals(2, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -245,9 +246,9 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(2, smsd1.getAllMapping().size());
+        Assertions.assertEquals(2, smsd1.getAllMapping().size());
     }
 
     /**
@@ -263,9 +264,9 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(7, smsd1.getFirstAtomMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstAtomMapping().size());
     }
 
     /**
@@ -281,9 +282,9 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(7, smsd1.getFirstMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstMapping().size());
     }
 
     /**
@@ -299,7 +300,7 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertEquals(1, smsd1.getAllAtomMapping().size());
+        Assertions.assertEquals(1, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -316,7 +317,7 @@ public class SMSDTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, true, false);
         Integer score = 2;
-        assertEquals(score, smsd1.getFragmentSize(0));
+        Assertions.assertEquals(score, smsd1.getFragmentSize(0));
     }
 
     /**
@@ -333,7 +334,7 @@ public class SMSDTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
         Integer score = 1048;
-        assertEquals(score, smsd1.getStereoScore(0));
+        Assertions.assertEquals(score, smsd1.getStereoScore(0));
     }
 
     /**
@@ -350,7 +351,7 @@ public class SMSDTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, false, true);
         Double score = 610.0;
-        assertEquals(score, smsd1.getEnergyScore(0));
+        Assertions.assertEquals(score, smsd1.getEnergyScore(0));
     }
 
     /**
@@ -367,7 +368,7 @@ public class SMSDTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
-        assertEquals(7, smsd1.getReactantMolecule().getAtomCount());
+        Assertions.assertEquals(7, smsd1.getReactantMolecule().getAtomCount());
     }
 
     /**
@@ -384,7 +385,7 @@ public class SMSDTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
-        assertEquals(20, smsd1.getProductMolecule().getAtomCount());
+        Assertions.assertEquals(20, smsd1.getProductMolecule().getAtomCount());
     }
 
     /**
@@ -402,7 +403,7 @@ public class SMSDTest {
         smsd1.setChemFilters(true, true, true);
 
         double score = 0.35;
-        assertEquals(score, smsd1.getTanimotoSimilarity(), 0);
+        Assertions.assertEquals(score, smsd1.getTanimotoSimilarity(), 0);
     }
 
     /**
@@ -418,7 +419,7 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertEquals(false, smsd1.isStereoMisMatch());
+        Assertions.assertEquals(false, smsd1.isStereoMisMatch());
     }
 
     /**
@@ -434,7 +435,7 @@ public class SMSDTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertEquals(true, smsd1.isSubgraph());
+        Assertions.assertEquals(true, smsd1.isSubgraph());
     }
 
     /**
@@ -452,13 +453,13 @@ public class SMSDTest {
         smsd1.setChemFilters(true, true, true);
 
         double score = 3.605;
-        assertEquals(score, smsd1.getEuclideanDistance(), 0.005);
+        Assertions.assertEquals(score, smsd1.getEuclideanDistance(), 0.005);
 
         Isomorphism smsd2 = new Isomorphism(Algorithm.VFLibMCS, true);
         smsd2.init(queryac, target, true, true);
         smsd2.setChemFilters(true, true, true);
 
-        assertEquals(score, smsd2.getEuclideanDistance(), 0.005);
+        Assertions.assertEquals(score, smsd2.getEuclideanDistance(), 0.005);
     }
 
     @Test
@@ -470,12 +471,12 @@ public class SMSDTest {
 
         smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+        Assertions.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+        Assertions.assertTrue(foundMatches);
     }
 
     @Test
@@ -487,12 +488,12 @@ public class SMSDTest {
 
         smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+        Assertions.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+        Assertions.assertTrue(foundMatches);
     }
 
     @Test
@@ -512,7 +513,7 @@ public class SMSDTest {
         Isomorphism smsd = new Isomorphism(Algorithm.SubStructure, true);
         smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+        Assertions.assertTrue(foundMatches);
 
         //        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         //
@@ -531,13 +532,13 @@ public class SMSDTest {
 
         smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
-        Assert.assertEquals(18, smsd.getAllAtomMapping().size());
-        Assert.assertTrue(foundMatches);
+        Assertions.assertEquals(18, smsd.getAllAtomMapping().size());
+        Assertions.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+        Assertions.assertTrue(foundMatches);
     }
 
     @Test
@@ -549,13 +550,13 @@ public class SMSDTest {
 
         smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
-        Assert.assertEquals(18, smsd.getAllAtomMapping().size());
-        Assert.assertTrue(foundMatches);
+        Assertions.assertEquals(18, smsd.getAllAtomMapping().size());
+        Assertions.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+        Assertions.assertTrue(foundMatches);
     }
 
     @Test
@@ -567,13 +568,13 @@ public class SMSDTest {
 
         smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
-        Assert.assertEquals(18, smsd.getAllAtomMapping().size());
-        Assert.assertTrue(foundMatches);
+        Assertions.assertEquals(18, smsd.getAllAtomMapping().size());
+        Assertions.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+        Assertions.assertTrue(foundMatches);
     }
 
     @Test
@@ -585,6 +586,6 @@ public class SMSDTest {
 
         smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
-        Assert.assertFalse(foundMatches);
+        Assertions.assertFalse(foundMatches);
     }
 }

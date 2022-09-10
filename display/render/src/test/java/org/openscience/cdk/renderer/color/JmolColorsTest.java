@@ -25,6 +25,7 @@ package org.openscience.cdk.renderer.color;
 import java.awt.Color;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.test.CDKTestCase;
@@ -39,20 +40,16 @@ public class JmolColorsTest extends CDKTestCase {
     @Test
     public void testGetAtomColor() {
     	IAtomColorer colors = new JmolColors();
-        Assert.assertNotNull(colors);
-        Assert.assertEquals(
-        	new Color(0xFFFFFF).getRGB(), colors.getAtomColor(new Atom("H")).getRGB()
-        );
+        Assertions.assertNotNull(colors);
+        Assertions.assertEquals(new Color(0xFFFFFF).getRGB(), colors.getAtomColor(new Atom("H")).getRGB());
     }
 
     @Test
     public void testGetDefaultAtomColor() {
     	IAtomColorer colors = new JmolColors();
 
-        Assert.assertNotNull(colors);
+        Assertions.assertNotNull(colors);
         IAtom imaginary = new PseudoAtom("Ix");
-        Assert.assertEquals(
-           	new Color(0xB31FBA).getRGB(), colors.getAtomColor(imaginary).getRGB()
-        );
+        Assertions.assertEquals(new Color(0xB31FBA).getRGB(), colors.getAtomColor(imaginary).getRGB());
     }
 }

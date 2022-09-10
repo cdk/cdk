@@ -20,6 +20,7 @@
 package org.openscience.cdk.config.isotopes;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.test.CDKTestCase;
@@ -37,35 +38,35 @@ public class IsotopeHandlerTest extends CDKTestCase {
     @Test
     public void testIsotopeHandler_IChemObjectBuilder() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
-        Assert.assertNotNull(handler);
+        Assertions.assertNotNull(handler);
     }
 
     @Test
     public void testGetIsotopes() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read
-        Assert.assertNotNull(handler);
-        Assert.assertNull(handler.getIsotopes());
+        Assertions.assertNotNull(handler);
+        Assertions.assertNull(handler.getIsotopes());
     }
 
     @Test
     public void testStartDocument() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
-        Assert.assertNotNull(handler);
-        Assert.assertNull(handler.getIsotopes());
+        Assertions.assertNotNull(handler);
+        Assertions.assertNull(handler.getIsotopes());
     }
 
     @Test
     public void testCharacters_arraychar_int_int() {
         // nothing I can test here that IsotopeFactoryTest doesn't do
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
     @Test
     public void testEndElement_String_String_String() {
         // nothing I can test here that IsotopeFactoryTest doesn't do
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
 }

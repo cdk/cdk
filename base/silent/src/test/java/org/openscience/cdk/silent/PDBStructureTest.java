@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IPDBStructure;
@@ -40,13 +41,13 @@ public class PDBStructureTest extends AbstractPDBStructureTest {
     @Test
     public void testPDBStructure() {
         IPDBStructure structure = new PDBStructure();
-        Assert.assertNotNull(structure);
+        Assertions.assertNotNull(structure);
     }
 
     @Test
     public void testGetBuilder() {
         PDBStructure structure = new PDBStructure();
-        Assert.assertTrue(structure.getBuilder().getClass().getName().contains("SilentChemObjectBuilder"));
+        Assertions.assertTrue(structure.getBuilder().getClass().getName().contains("SilentChemObjectBuilder"));
     }
 
     @Test

@@ -23,6 +23,7 @@
 package org.openscience.cdk.io.iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -54,22 +55,22 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             //        	System.out.println("next molecule found");
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             set.addAtomContainer((IAtomContainer) object);
             molCount++;
         }
 
-        Assert.assertEquals(3, molCount);
+        Assertions.assertEquals(3, molCount);
         IAtomContainer first = set.getAtomContainer(0);
-        Assert.assertEquals(8, first.getAtomCount());
-        Assert.assertEquals(7, first.getBondCount());
-        Assert.assertNotNull(first.getProperty("IUPAC Name (Traditional)"));
-        Assert.assertEquals("acetic acid", first.getProperty("IUPAC Name (Traditional)"));
-        Assert.assertNotNull(first.getProperty("InChI"));
-        Assert.assertEquals("InChI=1/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/f/h3H", first.getProperty("InChI"));
-        Assert.assertNotNull(first.getProperty("InChI"));
-        Assert.assertEquals("176", first.getProperty("PubChem CID"));
+        Assertions.assertEquals(8, first.getAtomCount());
+        Assertions.assertEquals(7, first.getBondCount());
+        Assertions.assertNotNull(first.getProperty("IUPAC Name (Traditional)"));
+        Assertions.assertEquals("acetic acid", first.getProperty("IUPAC Name (Traditional)"));
+        Assertions.assertNotNull(first.getProperty("InChI"));
+        Assertions.assertEquals("InChI=1/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/f/h3H", first.getProperty("InChI"));
+        Assertions.assertNotNull(first.getProperty("InChI"));
+        Assertions.assertEquals("176", first.getProperty("PubChem CID"));
     }
 
 }

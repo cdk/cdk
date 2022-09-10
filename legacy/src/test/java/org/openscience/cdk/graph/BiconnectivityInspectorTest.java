@@ -25,6 +25,7 @@ package org.openscience.cdk.graph;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -76,7 +77,7 @@ public class BiconnectivityInspectorTest extends CDKTestCase {
         BiconnectivityInspector bci = new BiconnectivityInspector(g);
         List connectedSets = bci.biconnectedSets();
 
-        Assert.assertTrue(connectedSets.size() == 5);
+        Assertions.assertTrue(connectedSets.size() == 5);
     }
 
 }

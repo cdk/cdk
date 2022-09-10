@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -49,7 +50,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCOc1ccccc1"); // ethanol
-        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assertions.assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     @Test
@@ -58,7 +59,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
         for (IBond iBond : molecule.bonds()) {
             iBond.setFlag(CDKConstants.ISAROMATIC, true);
         }
-        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
+        Assertions.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }
 
 }

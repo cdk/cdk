@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -72,7 +73,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
     @Test
     public void testElectronImpactNBEReaction() throws Exception {
         IReactionProcess type = new ElectronImpactNBEReaction();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     /**
@@ -124,14 +125,14 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer molecule = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge().intValue());
-        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
+        Assertions.assertEquals(1, molecule.getAtom(4).getFormalCharge().intValue());
+        Assertions.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
 
-        Assert.assertTrue(setOfReactions.getReaction(0).mappings().iterator().hasNext());
+        Assertions.assertTrue(setOfReactions.getReaction(0).mappings().iterator().hasNext());
 
     }
 
@@ -173,12 +174,12 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         IReactionProcess type = new ElectronImpactNBEReaction();
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer molecule = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge().intValue());
-        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
+        Assertions.assertEquals(1, molecule.getAtom(4).getFormalCharge().intValue());
+        Assertions.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
 
     }
 
@@ -225,7 +226,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -251,7 +252,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
 
     }
 
@@ -295,7 +296,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -317,7 +318,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
 
     }
 
@@ -362,7 +363,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -384,7 +385,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
 
     }
 
@@ -414,12 +415,12 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
-        Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
     }
 
     /**
@@ -447,10 +448,10 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        Assert.assertEquals(4, setOfReactions.getReaction(0).getMappingCount());
+        Assertions.assertEquals(4, setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(1));
-        Assert.assertEquals(mappedProductA1, product.getAtom(1));
+        Assertions.assertEquals(mappedProductA1, product.getAtom(1));
     }
 
     /**
@@ -465,7 +466,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assertions.assertNotNull(matcher.findMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);
         }
     }
 

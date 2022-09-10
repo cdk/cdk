@@ -47,7 +47,7 @@ public class TrigonalBipyramidalTest {
         SmilesParser             smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer           mol    = smipar.parseSmiles("C[As@TB3](Cl)(Cl)(C)Cl");
         Iterator<IStereoElement> ses    = mol.stereoElements().iterator();
-        assertTrue(ses.hasNext());
+        Assertions.assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(TrigonalBipyramidal.class));
         assertThat(se.getConfigOrder(), is(3));

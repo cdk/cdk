@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -54,31 +55,31 @@ public class SpiroAtomCountDescriptorTest extends MolecularDescriptorTest {
     public void testDecalin() throws Exception {
         IAtomContainer mol = sp.parseSmiles("C1CCC2CCCCC2C1"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertEquals(0, ((IntegerResult) value.getValue()).intValue());
-        Assert.assertEquals(1, value.getNames().length);
-        Assert.assertEquals("nSpiroAtoms", value.getNames()[0]);
-        Assert.assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
+        Assertions.assertEquals(0, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(1, value.getNames().length);
+        Assertions.assertEquals("nSpiroAtoms", value.getNames()[0]);
+        Assertions.assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
     }
 
     @Test
     public void testNorbornane() throws Exception {
         IAtomContainer mol = sp.parseSmiles("C1CC2CCC1C2"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertEquals(0, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(0, ((IntegerResult) value.getValue()).intValue());
     }
 
     @Test
     public void testSpiroUndecane() throws Exception {
         IAtomContainer mol = sp.parseSmiles("C1CCC2(CC1)CCCCC2"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
     }
 
     @Test
     public void testDiSpiroPentane() throws Exception {
         IAtomContainer mol = sp.parseSmiles("CC1C[C]11(CC1)[C]123CC1.C2C3"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertEquals(2, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(2, ((IntegerResult) value.getValue()).intValue());
     }
 
     @Test
@@ -86,14 +87,14 @@ public class SpiroAtomCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1CCC2(CC1)CC=C1C=CC=CC1=C2"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
     }
 
     @Test
     public void testTriSpiro() throws Exception {
         IAtomContainer mol = sp.parseSmiles("C1OOC[Fe]1123COOC1.C2OOC3"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
     }
 
 }

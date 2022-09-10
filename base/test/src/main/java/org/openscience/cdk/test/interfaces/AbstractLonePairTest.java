@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -25,26 +26,26 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
         ILonePair lp = (ILonePair) newChemObject();
         IAtom atom = lp.getBuilder().newInstance(IAtom.class, "N");
         lp.setAtom(atom);
-        Assert.assertEquals(atom, lp.getAtom());
+        Assertions.assertEquals(atom, lp.getAtom());
     }
 
     @Test
     public void testGetAtom() {
         ILonePair lp = (ILonePair) newChemObject();
         IAtom atom = lp.getBuilder().newInstance(IAtom.class, "N");
-        Assert.assertNull(lp.getAtom());
+        Assertions.assertNull(lp.getAtom());
         lp.setAtom(atom);
-        Assert.assertEquals(atom, lp.getAtom());
+        Assertions.assertEquals(atom, lp.getAtom());
     }
 
     @Test
     @Override
     public void testGetElectronCount() {
         ILonePair lp = (ILonePair) newChemObject();
-        Assert.assertEquals(2, lp.getElectronCount().intValue());
+        Assertions.assertEquals(2, lp.getElectronCount().intValue());
 
         lp = lp.getBuilder().newInstance(ILonePair.class, lp.getBuilder().newInstance(IAtom.class, "N"));
-        Assert.assertEquals(2, lp.getElectronCount().intValue());
+        Assertions.assertEquals(2, lp.getElectronCount().intValue());
     }
 
     @Test
@@ -52,7 +53,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
         ILonePair lp = (ILonePair) newChemObject();
         IAtom atom = lp.getBuilder().newInstance(IAtom.class, "N");
         lp.setAtom(atom);
-        Assert.assertTrue(lp.contains(atom));
+        Assertions.assertTrue(lp.contains(atom));
     }
 
     @Test
@@ -60,7 +61,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
     public void testClone() throws Exception {
         ILonePair lp = (ILonePair) newChemObject();
         Object clone = lp.clone();
-        Assert.assertTrue(clone instanceof ILonePair);
+        Assertions.assertTrue(clone instanceof ILonePair);
     }
 
     @Test
@@ -71,7 +72,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
 
         // test cloning of atom
         ILonePair clone = (ILonePair) lp.clone();
-        Assert.assertNotSame(atom, clone.getAtom());
+        Assertions.assertNotSame(atom, clone.getAtom());
     }
 
     /** Test for RFC #9 */
@@ -81,8 +82,8 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
         ILonePair lp = (ILonePair) newChemObject();
         String description = lp.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -94,9 +95,9 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
     public void testSetElectronCount_Integer() {
         IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(3);
-        Assert.assertEquals(2, ec.getElectronCount().intValue());
+        Assertions.assertEquals(2, ec.getElectronCount().intValue());
         ec.setElectronCount(null);
-        Assert.assertEquals(2, ec.getElectronCount().intValue());
+        Assertions.assertEquals(2, ec.getElectronCount().intValue());
     }
 
 }

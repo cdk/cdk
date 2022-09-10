@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -103,14 +104,14 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
         try {
             // make a new instance of this class
             Object instance = this.getClass().getClassLoader().loadClass(className).newInstance();
-            Assert.assertNotNull(instance);
-            Assert.assertEquals(className, instance.getClass().getName());
+            Assertions.assertNotNull(instance);
+            Assertions.assertEquals(className, instance.getClass().getName());
         } catch (ClassNotFoundException exception) {
             logger.debug("Could not find this class: " + className);
             // but that's not error, it can mean that it is a Jmol based IO class, and no Jmol is in the classpath
         } catch (InstantiationException | IllegalAccessException exception) {
             logger.debug(exception);
-            Assert.fail("Could not instantiate this class: " + className);
+            Assertions.fail("Could not instantiate this class: " + className);
         }
     }
 

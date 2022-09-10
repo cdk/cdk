@@ -22,6 +22,7 @@
 package org.openscience.cdk.renderer.font;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +39,7 @@ public class AWTFontManagerTest extends AbstractFontManagerTest {
     @Test
     public void testConstructor() {
         IFontManager fontManager = new AWTFontManager();
-        Assert.assertNotNull(fontManager);
+        Assertions.assertNotNull(fontManager);
     }
 
 }

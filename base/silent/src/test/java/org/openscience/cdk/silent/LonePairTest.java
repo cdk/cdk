@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -41,17 +42,17 @@ public class LonePairTest extends AbstractLonePairTest {
     @Test
     public void testLonePair() {
         ILonePair lp = new LonePair();
-        Assert.assertNull(lp.getAtom());
-        Assert.assertEquals(2, lp.getElectronCount().intValue());
+        Assertions.assertNull(lp.getAtom());
+        Assertions.assertEquals(2, lp.getElectronCount().intValue());
     }
 
     @Test
     public void testLonePair_IAtom() {
         IAtom atom = newChemObject().getBuilder().newInstance(IAtom.class, "N");
         ILonePair lp = new LonePair(atom);
-        Assert.assertEquals(2, lp.getElectronCount().intValue());
-        Assert.assertEquals(atom, lp.getAtom());
-        Assert.assertTrue(lp.contains(atom));
+        Assertions.assertEquals(2, lp.getElectronCount().intValue());
+        Assertions.assertEquals(atom, lp.getAtom());
+        Assertions.assertTrue(lp.contains(atom));
     }
 
     // Overwrite default methods: no notifications are expected!

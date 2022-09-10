@@ -22,6 +22,7 @@ package org.openscience.cdk.graph.invariant;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -51,10 +52,10 @@ public class MorganNumbersToolsTest extends CDKTestCase {
 
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         long[] morganNumbers = MorganNumbersTools.getMorganNumbers(mol);
-        Assert.assertEquals(reference.length, morganNumbers.length);
+        Assertions.assertEquals(reference.length, morganNumbers.length);
         for (int f = 0; f < morganNumbers.length; f++) {
             //logger.debug(morganNumbers[f]);
-            Assert.assertEquals(reference[f], morganNumbers[f]);
+            Assertions.assertEquals(reference[f], morganNumbers[f]);
         }
     }
 
@@ -65,10 +66,10 @@ public class MorganNumbersToolsTest extends CDKTestCase {
 
         IAtomContainer mol = TestMoleculeFactory.makePhenylAmine();
         String[] morganNumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(mol);
-        Assert.assertEquals(reference.length, morganNumbers.length);
+        Assertions.assertEquals(reference.length, morganNumbers.length);
         for (int f = 0; f < morganNumbers.length; f++) {
             //logger.debug(morganNumbers[f]);
-            Assert.assertEquals(reference[f], morganNumbers[f]);
+            Assertions.assertEquals(reference[f], morganNumbers[f]);
         }
     }
 
@@ -83,7 +84,7 @@ public class MorganNumbersToolsTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer ac = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
         long[] morganNumbers = MorganNumbersTools.getMorganNumbers(ac);
-        Assert.assertFalse(morganNumbers[7] == morganNumbers[8]);
+        Assertions.assertFalse(morganNumbers[7] == morganNumbers[8]);
     }
 
 }

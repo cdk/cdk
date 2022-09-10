@@ -58,18 +58,18 @@ public class PharmacophoreUtilityTest {
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
-        Assert.assertEquals(2, defs.size());
+        Assertions.assertEquals(2, defs.size());
 
         IQueryAtomContainer def1 = defs.get(0);
-        Assert.assertEquals(4, def1.getAtomCount());
-        Assert.assertEquals(2, def1.getBondCount());
-        Assert.assertEquals("An imaginary pharmacophore definition", def1.getProperty("description"));
-        Assert.assertEquals("Imaginary", def1.getTitle());
+        Assertions.assertEquals(4, def1.getAtomCount());
+        Assertions.assertEquals(2, def1.getBondCount());
+        Assertions.assertEquals("An imaginary pharmacophore definition", def1.getProperty("description"));
+        Assertions.assertEquals("Imaginary", def1.getTitle());
 
         IQueryAtomContainer def2 = defs.get(1);
-        Assert.assertEquals(3, def2.getAtomCount());
-        Assert.assertEquals(3, def2.getBondCount());
-        Assert.assertNull(def2.getTitle());
+        Assertions.assertEquals(3, def2.getAtomCount());
+        Assertions.assertEquals(3, def2.getBondCount());
+        Assertions.assertNull(def2.getTitle());
 
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
         for (IAtom atom : def2.atoms()) {
@@ -81,7 +81,7 @@ public class PharmacophoreUtilityTest {
                     break;
                 }
             }
-            Assert.assertTrue("'" + sym + "' in pcore.xml is invalid", found);
+            Assertions.assertTrue(found, "'" + sym + "' in pcore.xml is invalid");
         }
     }
 
@@ -91,12 +91,12 @@ public class PharmacophoreUtilityTest {
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
-        Assert.assertEquals(1, defs.size());
+        Assertions.assertEquals(1, defs.size());
 
         IQueryAtomContainer def1 = defs.get(0);
-        Assert.assertEquals(3, def1.getAtomCount());
-        Assert.assertEquals(2, def1.getBondCount());
-        Assert.assertEquals("A modified definition for the D1 receptor", def1.getProperty("description"));
+        Assertions.assertEquals(3, def1.getAtomCount());
+        Assertions.assertEquals(2, def1.getBondCount());
+        Assertions.assertEquals("A modified definition for the D1 receptor", def1.getProperty("description"));
 
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
         for (IAtom atom : def1.atoms()) {
@@ -108,18 +108,18 @@ public class PharmacophoreUtilityTest {
                     break;
                 }
             }
-            Assert.assertTrue("'" + sym + "' in pcore.xml is invalid", found);
+            Assertions.assertTrue(found, "'" + sym + "' in pcore.xml is invalid");
         }
 
         for (IBond bond : def1.bonds()) {
             if (bond instanceof PharmacophoreQueryBond) {
                 PharmacophoreQueryBond cons = (PharmacophoreQueryBond) bond;
                 IAtom[] a = getAtoms(cons);
-                Assert.assertEquals(2, a.length);
+                Assertions.assertEquals(2, a.length);
             } else if (bond instanceof PharmacophoreQueryAngleBond) {
                 PharmacophoreQueryAngleBond cons = (PharmacophoreQueryAngleBond) bond;
                 IAtom[] a = getAtoms(cons);
-                Assert.assertEquals(3, a.length);
+                Assertions.assertEquals(3, a.length);
             }
         }
     }
@@ -143,9 +143,9 @@ public class PharmacophoreUtilityTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PharmacophoreUtils.writePharmacophoreDefinition(defarray, baos);
         String s = baos.toString();
-        Assert.assertNotNull(s);
+        Assertions.assertNotNull(s);
         String[] lines = s.split("\n");
-        Assert.assertEquals("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>", lines[0].trim());
+        Assertions.assertEquals("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>", lines[0].trim());
 
         int ndef = 0;
         int ndist = 0;
@@ -155,9 +155,9 @@ public class PharmacophoreUtilityTest {
             if (line.contains("</distanceConstraint>")) ndist++;
             if (line.contains("</angleConstraint>")) nangle++;
         }
-        Assert.assertEquals(2, ndef);
-        Assert.assertEquals(5, ndist);
-        Assert.assertEquals(0, nangle);
+        Assertions.assertEquals(2, ndef);
+        Assertions.assertEquals(5, ndist);
+        Assertions.assertEquals(0, nangle);
     }
 
     private IAtom[] getAtoms(IBond bond) {

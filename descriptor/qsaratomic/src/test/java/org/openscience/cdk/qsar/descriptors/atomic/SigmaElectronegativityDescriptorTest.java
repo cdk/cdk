@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -69,7 +70,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
             params[0] = 6;
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
 
     }
@@ -97,7 +98,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
             params[0] = 6;
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -129,7 +130,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
             params[0] = 6;
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.02);
+            Assertions.assertEquals(testResult[i], result, 0.02);
         }
     }
 
@@ -151,7 +152,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(5), mol).getValue()).doubleValue();
-        Assert.assertEquals(testResult, result, 0.08);
+        Assertions.assertEquals(testResult, result, 0.08);
     }
 
     /**
@@ -192,7 +193,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
             params[0] = 6;
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.002);
+            Assertions.assertEquals(testResult[i], result, 0.002);
         }
     }
 
@@ -224,7 +225,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
             params[0] = 6;
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.002);
+            Assertions.assertEquals(testResult[i], result, 0.002);
         }
     }
 
@@ -253,7 +254,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < 4; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
     }
 
@@ -297,12 +298,12 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molB);
         lpcheck.saturate(molB);
 
-        Assert.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
-        Assert.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
-        Assert.assertEquals(2, molB.getLonePairCount(), 0.00001);
+        Assertions.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
+        Assertions.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
+        Assertions.assertEquals(2, molB.getLonePairCount(), 0.00001);
 
         double resultB = ((DoubleResult) descriptor.calculate(molB.getAtom(3), molB).getValue()).doubleValue();
 
-        Assert.assertEquals(resultA, resultB, 0.00001);
+        Assertions.assertEquals(resultA, resultB, 0.00001);
     }
 }

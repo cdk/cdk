@@ -31,6 +31,7 @@ import java.util.Properties;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -80,9 +81,9 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     @Test
     public void testAccepts() throws Exception {
         SDFWriter reader = new SDFWriter();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
-        Assert.assertTrue(reader.accepts(ChemModel.class));
-        Assert.assertTrue(reader.accepts(AtomContainerSet.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemModel.class));
+        Assertions.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test
@@ -102,7 +103,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molSet);
         sdfWriter.close();
         String result = writer.toString();
-        Assert.assertFalse(result.contains("<foo>"));
+        Assertions.assertFalse(result.contains("<foo>"));
     }
 
     /**
@@ -119,7 +120,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertNotSame(0, writer.toString().length());
+        Assertions.assertNotSame(0, writer.toString().length());
     }
 
     @Test
@@ -134,8 +135,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().contains("<foo>"));
-        Assert.assertTrue(writer.toString().contains("bar"));
+        Assertions.assertTrue(writer.toString().contains("<foo>"));
+        Assertions.assertTrue(writer.toString().contains("bar"));
     }
 
     @Test
@@ -150,7 +151,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(!writer.toString().contains(InvPair.CANONICAL_LABEL));
+        Assertions.assertTrue(!writer.toString().contains(InvPair.CANONICAL_LABEL));
     }
 
     @Test
@@ -164,7 +165,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().contains("$$$$"));
+        Assertions.assertTrue(writer.toString().contains("$$$$"));
     }
 
     @Test
@@ -181,7 +182,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().contains("$$$$"));
+        Assertions.assertTrue(writer.toString().contains("$$$$"));
     }
 
     @Test
@@ -200,11 +201,11 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molecule);
 
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().contains("foo"));
-        Assert.assertTrue(writer.toString().contains("bar"));
-        Assert.assertTrue(writer.toString().contains("toys"));
-        Assert.assertTrue(writer.toString().contains("r-us"));
-        Assert.assertTrue(writer.toString().contains("$$$$"));
+        Assertions.assertTrue(writer.toString().contains("foo"));
+        Assertions.assertTrue(writer.toString().contains("bar"));
+        Assertions.assertTrue(writer.toString().contains("toys"));
+        Assertions.assertTrue(writer.toString().contains("r-us"));
+        Assertions.assertTrue(writer.toString().contains("$$$$"));
     }
 
     @Test
@@ -294,7 +295,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         writer.close();
 
         String output = strWriter.toString();
-        Assert.assertTrue(output.contains("4  0  0  0  0"));
+        Assertions.assertTrue(output.contains("4  0  0  0  0"));
     }
 
     @Test
@@ -307,8 +308,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdf.write(adenine);
         sdf.close();
         String out = sw.toString();
-        assertTrue(out.contains("> <one>"));
-        assertTrue(out.contains("> <two>"));
+        Assertions.assertTrue(out.contains("> <one>"));
+        Assertions.assertTrue(out.contains("> <two>"));
     }
 
     @Test
@@ -321,8 +322,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdf.write(adenine);
         sdf.close();
         String out = sw.toString();
-        assertTrue(out.contains("> <one>"));
-        assertFalse(out.contains("> <two>"));
+        Assertions.assertTrue(out.contains("> <one>"));
+        Assertions.assertFalse(out.contains("> <two>"));
     }
 
     @Test
@@ -335,8 +336,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdf.write(adenine);
         sdf.close();
         String out = sw.toString();
-        assertTrue(out.contains("> <two>"));
-        assertFalse(out.contains("> <one>"));
+        Assertions.assertTrue(out.contains("> <two>"));
+        Assertions.assertFalse(out.contains("> <one>"));
     }
 
     @Test
@@ -349,8 +350,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdf.write(adenine);
         sdf.close();
         String out = sw.toString();
-        assertFalse(out.contains("> <two>"));
-        assertFalse(out.contains("> <one>"));
+        Assertions.assertFalse(out.contains("> <two>"));
+        Assertions.assertFalse(out.contains("> <one>"));
     }
 
     @Test

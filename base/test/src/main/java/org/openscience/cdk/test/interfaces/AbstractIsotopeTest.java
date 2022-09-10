@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.diff.IsotopeDiff;
@@ -23,7 +24,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
     public void testSetNaturalAbundance_Double() {
         IIsotope i = (IIsotope) newChemObject();
         i.setNaturalAbundance(80.0);
-        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+        Assertions.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
 
     @Test
@@ -35,7 +36,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
     public void testSetExactMass_Double() {
         IIsotope i = (IIsotope) newChemObject();
         i.setExactMass(12.03);
-        Assert.assertEquals(12.03, i.getExactMass(), 0.001);
+        Assertions.assertEquals(12.03, i.getExactMass(), 0.001);
     }
 
     @Test
@@ -47,7 +48,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
     public void testSetMassNumber_Integer() {
         IIsotope i = (IIsotope) newChemObject();
         i.setMassNumber(2);
-        Assert.assertEquals(2, i.getMassNumber().intValue());
+        Assertions.assertEquals(2, i.getMassNumber().intValue());
     }
 
     @Test
@@ -63,12 +64,12 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
     public void testClone() throws Exception {
         IIsotope iso = (IIsotope) newChemObject();
         Object clone = iso.clone();
-        Assert.assertTrue(clone instanceof IIsotope);
+        Assertions.assertTrue(clone instanceof IIsotope);
 
         // test that everything has been cloned properly
         String diff = IsotopeDiff.diff(iso, (IIsotope) clone);
-        Assert.assertNotNull(diff);
-        Assert.assertEquals(0, diff.length());
+        Assertions.assertNotNull(diff);
+        Assertions.assertEquals(0, diff.length());
     }
 
     /**
@@ -82,7 +83,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
 
         // test cloning of exact mass
         iso.setExactMass(2.0);
-        Assert.assertEquals(1.0, clone.getExactMass(), 0.001);
+        Assertions.assertEquals(1.0, clone.getExactMass(), 0.001);
     }
 
     /**
@@ -96,7 +97,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
 
         // test cloning of exact mass
         iso.setNaturalAbundance(2.0);
-        Assert.assertEquals(1.0, clone.getNaturalAbundance(), 0.001);
+        Assertions.assertEquals(1.0, clone.getNaturalAbundance(), 0.001);
     }
 
     /**
@@ -110,7 +111,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
 
         // test cloning of exact mass
         iso.setMassNumber(13);
-        Assert.assertEquals(12, clone.getMassNumber().intValue());
+        Assertions.assertEquals(12, clone.getMassNumber().intValue());
     }
 
     /**
@@ -122,8 +123,8 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
         IIsotope iso = (IIsotope) newChemObject();
         String description = iso.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 

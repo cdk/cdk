@@ -26,6 +26,7 @@ package org.openscience.cdk.structgen;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -57,12 +58,12 @@ public class VicinitySamplerTest extends CDKTestCase {
 
         IAtomContainer temp;
         List structures = VicinitySampler.sample(mol);
-        Assert.assertEquals(37, structures.size());
+        Assertions.assertEquals(37, structures.size());
         for (Object structure : structures) {
             temp = (IAtomContainer) structure;
-            Assert.assertNotNull(temp);
-            Assert.assertTrue(ConnectivityChecker.isConnected(temp));
-            Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
+            Assertions.assertNotNull(temp);
+            Assertions.assertTrue(ConnectivityChecker.isConnected(temp));
+            Assertions.assertEquals(mol.getAtomCount(), temp.getAtomCount());
         }
 
     }
@@ -78,12 +79,12 @@ public class VicinitySamplerTest extends CDKTestCase {
 
         IAtomContainer temp;
         List structures = VicinitySampler.sample(mol);
-        Assert.assertEquals(1, structures.size());
+        Assertions.assertEquals(1, structures.size());
         for (Object structure : structures) {
             temp = (IAtomContainer) structure;
-            Assert.assertNotNull(temp);
-            Assert.assertTrue(ConnectivityChecker.isConnected(temp));
-            Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
+            Assertions.assertNotNull(temp);
+            Assertions.assertTrue(ConnectivityChecker.isConnected(temp));
+            Assertions.assertEquals(mol.getAtomCount(), temp.getAtomCount());
         }
 
     }

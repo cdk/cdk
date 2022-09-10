@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -27,7 +28,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
-        Assert.assertEquals(3, cs.getChemModelCount());
+        Assertions.assertEquals(3, cs.getChemModelCount());
     }
 
     @Test
@@ -36,9 +37,9 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
-        Assert.assertEquals(3, cs.getChemModelCount());
+        Assertions.assertEquals(3, cs.getChemModelCount());
         cs.removeChemModel(1);
-        Assert.assertEquals(2, cs.getChemModelCount());
+        Assertions.assertEquals(2, cs.getChemModelCount());
     }
 
     @Test
@@ -47,11 +48,11 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
-        Assert.assertEquals(3, cs.getChemModelCount());
+        Assertions.assertEquals(3, cs.getChemModelCount());
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class)); // this one should enfore array grow
-        Assert.assertEquals(6, cs.getChemModelCount());
+        Assertions.assertEquals(6, cs.getChemModelCount());
     }
 
     @Test
@@ -60,7 +61,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
-        Assert.assertEquals(3, cs.getChemModelCount());
+        Assertions.assertEquals(3, cs.getChemModelCount());
     }
 
     @Test
@@ -71,7 +72,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         cs.addChemModel(second);
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
 
-        Assert.assertEquals(second, cs.getChemModel(1));
+        Assertions.assertEquals(second, cs.getChemModel(1));
     }
 
     @Test
@@ -81,14 +82,14 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
 
-        Assert.assertEquals(3, cs.getChemModelCount());
+        Assertions.assertEquals(3, cs.getChemModelCount());
         Iterator<IChemModel> models = cs.chemModels().iterator();
         int count = 0;
         while (models.hasNext()) {
-            Assert.assertNotNull(models.next());
+            Assertions.assertNotNull(models.next());
             ++count;
         }
-        Assert.assertEquals(3, count);
+        Assertions.assertEquals(3, count);
     }
 
     /** Test for RFC #9 */
@@ -97,8 +98,8 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         IChemSequence cs = (IChemSequence) newChemObject();
         String description = cs.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -110,7 +111,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         chemObject.addListener(listener);
 
         chemObject.addChemModel(chemObject.getBuilder().newInstance(IChemModel.class));
-        Assert.assertTrue(listener.changed);
+        Assertions.assertTrue(listener.changed);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
@@ -138,7 +139,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
     public void testClone() throws Exception {
         IChemSequence sequence = (IChemSequence) newChemObject();
         Object clone = sequence.clone();
-        Assert.assertTrue(clone instanceof IChemSequence);
+        Assertions.assertTrue(clone instanceof IChemSequence);
     }
 
     @Test
@@ -150,12 +151,12 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         sequence.addChemModel(sequence.getBuilder().newInstance(IChemModel.class)); // 4
 
         IChemSequence clone = (IChemSequence) sequence.clone();
-        Assert.assertEquals(sequence.getChemModelCount(), clone.getChemModelCount());
+        Assertions.assertEquals(sequence.getChemModelCount(), clone.getChemModelCount());
         for (int f = 0; f < sequence.getChemModelCount(); f++) {
             for (int g = 0; g < clone.getChemModelCount(); g++) {
-                Assert.assertNotNull(sequence.getChemModel(f));
-                Assert.assertNotNull(clone.getChemModel(g));
-                Assert.assertNotSame(sequence.getChemModel(f), clone.getChemModel(g));
+                Assertions.assertNotNull(sequence.getChemModel(f));
+                Assertions.assertNotNull(clone.getChemModel(g));
+                Assertions.assertNotSame(sequence.getChemModel(f), clone.getChemModel(g));
             }
         }
     }

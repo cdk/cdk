@@ -20,6 +20,7 @@ package org.openscience.cdk.graph.invariant;
 
 import io.github.dan2097.jnainchi.InchiFlag;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.Atom;
@@ -47,9 +48,9 @@ public class InChINumbersToolsTest extends CDKTestCase {
         container.addAtom(new Atom("C"));
         container.addBond(0, 1, IBond.Order.SINGLE);
         long[] numbers = InChINumbersTools.getNumbers(container);
-        Assert.assertEquals(2, numbers.length);
-        Assert.assertEquals(2, numbers[0]);
-        Assert.assertEquals(1, numbers[1]);
+        Assertions.assertEquals(2, numbers.length);
+        Assertions.assertEquals(2, numbers[0]);
+        Assertions.assertEquals(1, numbers[1]);
     }
 
     @Test
@@ -65,12 +66,12 @@ public class InChINumbersToolsTest extends CDKTestCase {
         container.addAtom(new Atom("H"));
         container.addBond(1, 4, IBond.Order.SINGLE);
         long[] numbers = InChINumbersTools.getNumbers(container);
-        Assert.assertEquals(5, numbers.length);
-        Assert.assertEquals(0, numbers[0]);
-        Assert.assertEquals(1, numbers[1]);
-        Assert.assertEquals(0, numbers[2]);
-        Assert.assertEquals(0, numbers[3]);
-        Assert.assertEquals(0, numbers[4]);
+        Assertions.assertEquals(5, numbers.length);
+        Assertions.assertEquals(0, numbers[0]);
+        Assertions.assertEquals(1, numbers[1]);
+        Assertions.assertEquals(0, numbers[2]);
+        Assertions.assertEquals(0, numbers[3]);
+        Assertions.assertEquals(0, numbers[4]);
     }
 
     @Test
@@ -78,12 +79,12 @@ public class InChINumbersToolsTest extends CDKTestCase {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = parser.parseSmiles("C(C(=O)O)N");
         long[] numbers = InChINumbersTools.getNumbers(atomContainer);
-        Assert.assertEquals(5, numbers.length);
-        Assert.assertEquals(1, numbers[0]);
-        Assert.assertEquals(2, numbers[1]);
-        Assert.assertEquals(4, numbers[2]);
-        Assert.assertEquals(5, numbers[3]);
-        Assert.assertEquals(3, numbers[4]);
+        Assertions.assertEquals(5, numbers.length);
+        Assertions.assertEquals(1, numbers[0]);
+        Assertions.assertEquals(2, numbers[1]);
+        Assertions.assertEquals(4, numbers[2]);
+        Assertions.assertEquals(5, numbers[3]);
+        Assertions.assertEquals(3, numbers[4]);
     }
 
     @Test
@@ -91,12 +92,12 @@ public class InChINumbersToolsTest extends CDKTestCase {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = parser.parseSmiles("C(C(=O)O)N");
         long[] numbers = InChINumbersTools.getNumbers(atomContainer);
-        Assert.assertEquals(5, numbers.length);
-        Assert.assertEquals(1, numbers[0]);
-        Assert.assertEquals(2, numbers[1]);
-        Assert.assertEquals(4, numbers[2]);
-        Assert.assertEquals(5, numbers[3]);
-        Assert.assertEquals(3, numbers[4]);
+        Assertions.assertEquals(5, numbers.length);
+        Assertions.assertEquals(1, numbers[0]);
+        Assertions.assertEquals(2, numbers[1]);
+        Assertions.assertEquals(4, numbers[2]);
+        Assertions.assertEquals(5, numbers[3]);
+        Assertions.assertEquals(3, numbers[4]);
     }
 
     @Test

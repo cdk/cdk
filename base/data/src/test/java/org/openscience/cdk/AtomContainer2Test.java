@@ -23,6 +23,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractAtomContainerTest;
@@ -53,8 +54,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         // array lengths
         IAtomContainer ac = new AtomContainer2(5, 6, 1, 2);
 
-        Assert.assertEquals(0, ac.getAtomCount());
-        Assert.assertEquals(0, ac.getElectronContainerCount());
+        Assertions.assertEquals(0, ac.getAtomCount());
+        Assertions.assertEquals(0, ac.getElectronContainerCount());
 
         // test whether the ElectronContainer is correctly initialized
         IAtom a1 = ac.getBuilder().newInstance(IAtom.class, "C");
@@ -70,8 +71,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         // create an empty container with in the constructor defined array lengths
         IAtomContainer container = new AtomContainer2();
 
-        Assert.assertEquals(0, container.getAtomCount());
-        Assert.assertEquals(0, container.getBondCount());
+        Assertions.assertEquals(0, container.getAtomCount());
+        Assertions.assertEquals(0, container.getBondCount());
 
         // test whether the ElectronContainer is correctly initialized
         IAtom a1 = container.getBuilder().newInstance(IAtom.class, "C");
@@ -104,8 +105,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         acetone.addBond(b3);
 
         IAtomContainer container = new AtomContainer(acetone);
-        Assert.assertEquals(4, container.getAtomCount());
-        Assert.assertEquals(3, container.getBondCount());
+        Assertions.assertEquals(4, container.getAtomCount());
+        Assertions.assertEquals(3, container.getBondCount());
     }
 
     @Test
@@ -126,6 +127,6 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
                    is(mol.getAtom(0).getBond(mol.getAtom(1))));
         assertThat(mol.getBond(1),
                    is(mol.getAtom(1).getBond(mol.getAtom(2))));
-        assertNull(mol.getAtom(0).getBond(mol.getAtom(2)));
+        Assertions.assertNull(mol.getAtom(0).getBond(mol.getAtom(2)));
     }
 }

@@ -661,9 +661,8 @@ public class NonPlanarBondsTest {
         assertThat(bond1.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond2.getOrder(), is(IBond.Order.SINGLE));
 
-        assertTrue("One of the single bonds should have been wedged",
-                   bond1.getStereo() == IBond.Stereo.DOWN ||
-                   bond2.getStereo() == IBond.Stereo.DOWN);
+        Assertions.assertTrue(bond1.getStereo() == IBond.Stereo.DOWN ||
+        bond2.getStereo() == IBond.Stereo.DOWN, "One of the single bonds should have been wedged");
 
     }
 
@@ -713,7 +712,7 @@ public class NonPlanarBondsTest {
                 case DOWN:
                 case UP_INVERTED:
                 case DOWN_INVERTED:
-                    assertFalse(bond.isInRing());
+                    Assertions.assertFalse(bond.isInRing());
                     ++wedgeCount;
                     break;
             }

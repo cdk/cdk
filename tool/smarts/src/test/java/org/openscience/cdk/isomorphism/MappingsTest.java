@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.openscience.cdk.interfaces.*;
@@ -108,15 +109,15 @@ public class MappingsTest {
 
         verify(f, atMost(0)).apply(ArgumentMatchers.any());
 
-        assertTrue(stringIt.hasNext());
+        Assertions.assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p1"));
-        assertTrue(stringIt.hasNext());
+        Assertions.assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p2"));
-        assertTrue(stringIt.hasNext());
+        Assertions.assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p3"));
-        assertTrue(stringIt.hasNext());
+        Assertions.assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p4"));
-        assertFalse(stringIt.hasNext());
+        Assertions.assertFalse(stringIt.hasNext());
 
         verify(f, atMost(4)).apply(ArgumentMatchers.any());
     }
@@ -178,15 +179,15 @@ public class MappingsTest {
         Iterable<Map<IAtom, IAtom>> iterable = Pattern.findIdentical(query).matchAll(target).toAtomMap();
         Iterator<Map<IAtom, IAtom>> iterator = iterable.iterator();
 
-        assertTrue(iterator.hasNext());
+        Assertions.assertTrue(iterator.hasNext());
         Map<IAtom, IAtom> m1 = iterator.next();
         assertThat(m1.get(query.getAtom(0)), is(target.getAtom(0)));
         assertThat(m1.get(query.getAtom(1)), is(target.getAtom(1)));
-        assertTrue(iterator.hasNext());
+        Assertions.assertTrue(iterator.hasNext());
         Map<IAtom, IAtom> m2 = iterator.next();
         assertThat(m2.get(query.getAtom(0)), is(target.getAtom(1)));
         assertThat(m2.get(query.getAtom(1)), is(target.getAtom(0)));
-        assertFalse(iterator.hasNext());
+        Assertions.assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -197,15 +198,15 @@ public class MappingsTest {
         Iterable<Map<IBond, IBond>> iterable = Pattern.findIdentical(query).matchAll(target).toBondMap();
         Iterator<Map<IBond, IBond>> iterator = iterable.iterator();
 
-        assertTrue(iterator.hasNext());
+        Assertions.assertTrue(iterator.hasNext());
         Map<IBond, IBond> m1 = iterator.next();
         assertThat(m1.get(query.getBond(0)), is(target.getBond(0)));
         assertThat(m1.get(query.getBond(1)), is(target.getBond(1)));
-        assertTrue(iterator.hasNext());
+        Assertions.assertTrue(iterator.hasNext());
         Map<IBond, IBond> m2 = iterator.next();
         assertThat(m2.get(query.getBond(0)), is(target.getBond(1)));
         assertThat(m2.get(query.getBond(1)), is(target.getBond(0)));
-        assertFalse(iterator.hasNext());
+        Assertions.assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -216,21 +217,21 @@ public class MappingsTest {
         Iterable<Map<IChemObject, IChemObject>> iterable = Pattern.findIdentical(query).matchAll(target).toAtomBondMap();
         Iterator<Map<IChemObject, IChemObject>> iterator = iterable.iterator();
 
-        assertTrue(iterator.hasNext());
+        Assertions.assertTrue(iterator.hasNext());
         Map<IChemObject, IChemObject> m1 = iterator.next();
         assertThat(m1.get(query.getAtom(0)), is(target.getAtom(0)));
         assertThat(m1.get(query.getAtom(1)), is(target.getAtom(1)));
         assertThat(m1.get(query.getAtom(2)), is(target.getAtom(2)));
         assertThat(m1.get(query.getBond(0)), is(target.getBond(0)));
         assertThat(m1.get(query.getBond(1)), is(target.getBond(1)));
-        assertTrue(iterator.hasNext());
+        Assertions.assertTrue(iterator.hasNext());
         Map<IChemObject, IChemObject> m2 = iterator.next();
         assertThat(m2.get(query.getAtom(0)), is(target.getAtom(2)));
         assertThat(m2.get(query.getAtom(1)), is(target.getAtom(1)));
         assertThat(m2.get(query.getAtom(2)), is(target.getAtom(0)));
         assertThat(m2.get(query.getBond(0)), is(target.getBond(1)));
         assertThat(m2.get(query.getBond(1)), is(target.getBond(0)));
-        assertFalse(iterator.hasNext());
+        Assertions.assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -244,7 +245,7 @@ public class MappingsTest {
                                                    .toSubstructures();
         Iterator<IAtomContainer> iterator = iterable.iterator();
 
-        assertTrue(iterator.hasNext());
+        Assertions.assertTrue(iterator.hasNext());
         IAtomContainer submol = iterator.next();
         assertThat(submol, is(not(query)));
         // note that indices are mapped from query to target
@@ -254,7 +255,7 @@ public class MappingsTest {
         assertThat(submol.getBond(0), is(target.getBond(0))); // C-O bond
         assertThat(submol.getBond(1), is(target.getBond(2))); // O-C bond
         assertThat(submol.getBond(2), is(target.getBond(1))); // C-C bond
-        assertFalse(iterator.hasNext());
+        Assertions.assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -267,7 +268,7 @@ public class MappingsTest {
         when(iterator.next()).thenReturn(new int[0]);
 
         Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
-        assertTrue(ms.atLeast(2));
+        Assertions.assertTrue(ms.atLeast(2));
         verify(iterator, atMost(2)).next(); // was only called twice
     }
 

@@ -1,5 +1,6 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -131,7 +132,7 @@ public class DaylightSMARTSAtomInvariantsTest {
 
     @Test
     public void ringSize() throws Exception {
-        assertTrue(invariantOfFirstAtom("C").ringSize().isEmpty());
+        Assertions.assertTrue(invariantOfFirstAtom("C").ringSize().isEmpty());
         assertThat(invariantOfFirstAtom("C1CC1").ringSize(), hasItem(3));
         assertThat(invariantOfFirstAtom("C1CCC1").ringSize(), hasItem(4));
         assertThat(invariantOfFirstAtom("C1CCCC1").ringSize(), hasItem(5));
@@ -184,7 +185,7 @@ public class DaylightSMARTSAtomInvariantsTest {
         SMARTSAtomInvariants.configureDaylightWithoutRingInfo(container);
         for (IAtom atom : container.atoms()) {
             SMARTSAtomInvariants inv = atom.getProperty(SMARTSAtomInvariants.KEY);
-            assertTrue(inv.ringSize().isEmpty());
+            Assertions.assertTrue(inv.ringSize().isEmpty());
             assertThat(inv.ringNumber(), is(0));
         }
     }

@@ -24,6 +24,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -59,8 +60,8 @@ public class SMILES2Mol2WriterTest {
         Mol2Writer writer = new Mol2Writer(swriter);
         writer.write(molecule);
         writer.close();
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 1 2 1") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 1 2 1") > 0);
     }
 
     @Test
@@ -75,12 +76,11 @@ public class SMILES2Mol2WriterTest {
         writer.write(molecule);
         writer.close();
 
-        Assert.assertTrue("Aromatic atom not properly reported",
-                swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.ar") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 O8 0.000 0.000 0.000 O.2") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("7 C7 0.000 0.000 0.000 C.2") > 0);
-        Assert.assertTrue("Aromatic bond not properly reported", swriter.getBuffer().toString().indexOf("1 1 2 ar") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 7 8 2") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.ar") > 0, "Aromatic atom not properly reported");
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("8 O8 0.000 0.000 0.000 O.2") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("7 C7 0.000 0.000 0.000 C.2") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 1 2 ar") > 0, "Aromatic bond not properly reported");
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("8 7 8 2") > 0);
     }
 
     @Test
@@ -94,11 +94,11 @@ public class SMILES2Mol2WriterTest {
         writer.write(molecule);
         writer.close();
 
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("3 O3 0.000 0.000 0.000 O.") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 N4 0.000 0.000 0.000 N.a") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 1 2 1") > 0);
-        Assert.assertTrue("Amide bond not properly reported", swriter.getBuffer().toString().indexOf("3 2 4 am") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 4 5 1") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("3 O3 0.000 0.000 0.000 O.") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("4 N4 0.000 0.000 0.000 N.a") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 1 2 1") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("3 2 4 am") > 0, "Amide bond not properly reported");
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("4 4 5 1") > 0);
     }
 }

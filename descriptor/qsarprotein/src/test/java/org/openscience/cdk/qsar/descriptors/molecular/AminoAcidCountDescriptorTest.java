@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -48,32 +49,32 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
         IBioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW",
                 SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
-        Assert.assertTrue(result instanceof IntegerArrayResult);
+        Assertions.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult) result;
         for (int i = 0; i < iaResult.length(); i++) {
-            Assert.assertTrue(iaResult.get(i) >= 1); // all AAs are found at least once
+            Assertions.assertTrue(iaResult.get(i) >= 1); // all AAs are found at least once
         }
-        Assert.assertEquals(20, iaResult.get(8)); // glycine is in all of them, so 20 times
+        Assertions.assertEquals(20, iaResult.get(8)); // glycine is in all of them, so 20 times
     }
 
     @Test
     public void testFCount() throws Exception {
         IBioPolymer protein = ProteinBuilderTool.createProtein("FF", SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
-        Assert.assertTrue(result instanceof IntegerArrayResult);
+        Assertions.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult) result;
-        Assert.assertEquals(2, iaResult.get(8));
-        Assert.assertEquals(4, iaResult.get(5)); // thingy is symmetrical, so two mappings at each AA position possible
+        Assertions.assertEquals(2, iaResult.get(8));
+        Assertions.assertEquals(4, iaResult.get(5)); // thingy is symmetrical, so two mappings at each AA position possible
     }
 
     @Test
     public void testTCount() throws Exception {
         IBioPolymer protein = ProteinBuilderTool.createProtein("TT", SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
-        Assert.assertTrue(result instanceof IntegerArrayResult);
+        Assertions.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult) result;
-        Assert.assertEquals(2, iaResult.get(8));
-        Assert.assertEquals(2, iaResult.get(16));
+        Assertions.assertEquals(2, iaResult.get(8));
+        Assertions.assertEquals(2, iaResult.get(16));
     }
 
 }

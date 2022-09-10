@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.hash;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -59,12 +60,12 @@ public class AllEquivalentCyclicSetTest {
 
         assertThat(set.size(), is(6));
         // the first size vertex are all in a cycle
-        assertTrue(set.contains(0));
-        assertTrue(set.contains(1));
-        assertTrue(set.contains(2));
-        assertTrue(set.contains(3));
-        assertTrue(set.contains(4));
-        assertTrue(set.contains(5));
+        Assertions.assertTrue(set.contains(0));
+        Assertions.assertTrue(set.contains(1));
+        Assertions.assertTrue(set.contains(2));
+        Assertions.assertTrue(set.contains(3));
+        Assertions.assertTrue(set.contains(4));
+        Assertions.assertTrue(set.contains(5));
 
     }
 

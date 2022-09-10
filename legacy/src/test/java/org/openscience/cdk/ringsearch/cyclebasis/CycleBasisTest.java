@@ -26,6 +26,7 @@ package org.openscience.cdk.ringsearch.cyclebasis;
 import org._3pq.jgrapht.alg.ConnectivityInspector;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -82,34 +83,34 @@ public class CycleBasisTest extends CDKTestCase {
 
     @Test
     public void testCycleBasis_UndirectedGraph() {
-        Assert.assertNotNull(basis);
+        Assertions.assertNotNull(basis);
     }
 
     @Test
     public void testCycles() {
         int trueCycleCount = g.edgeSet().size() - g.vertexSet().size()
                 + new ConnectivityInspector(g).connectedSets().size();
-        Assert.assertEquals(trueCycleCount, basis.cycles().size());
+        Assertions.assertEquals(trueCycleCount, basis.cycles().size());
     }
 
     @Test
     public void testWeightVector() {
-        Assert.assertArrayEquals(basis.weightVector(), new int[]{3, 3, 3, 3});
+        Assertions.assertArrayEquals(basis.weightVector(), new int[]{3, 3, 3, 3});
     }
 
     @Test
     public void testEssentialCycles() {
-        Assert.assertEquals(4, basis.essentialCycles().size());
+        Assertions.assertEquals(4, basis.essentialCycles().size());
     }
 
     @Test
     public void testRelevantCycles() {
-        Assert.assertEquals(4, basis.relevantCycles().size());
+        Assertions.assertEquals(4, basis.relevantCycles().size());
     }
 
     @Test
     public void testEquivalenceClasses() {
-        Assert.assertEquals(4, basis.equivalenceClasses().size());
+        Assertions.assertEquals(4, basis.equivalenceClasses().size());
     }
 
 }

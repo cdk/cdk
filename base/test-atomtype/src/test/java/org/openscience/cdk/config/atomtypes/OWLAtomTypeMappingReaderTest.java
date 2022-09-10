@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -59,33 +60,33 @@ public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
     @Test
     public void testOWLAtomTypeMappingReader_Reader() {
         OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StringReader(""));
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
     }
 
     @Test
     public void testReadAtomTypeMappings() {
         OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StringReader(OWL_CONTENT));
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
         Map<String, String> mappings = reader.readAtomTypeMappings();
-        Assert.assertNotNull(mappings);
-        Assert.assertEquals(2, mappings.size());
+        Assertions.assertNotNull(mappings);
+        Assertions.assertEquals(2, mappings.size());
     }
 
     @Test
     public void testReadAtomTypes_CDK2Sybyl() {
         OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StringReader(OWL_CONTENT));
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
         Map<String, String> mappings = reader.readAtomTypeMappings();
-        Assert.assertNotNull(mappings);
-        Assert.assertEquals(2, mappings.size());
+        Assertions.assertNotNull(mappings);
+        Assertions.assertEquals(2, mappings.size());
 
         Set<String> cdkTypes = mappings.keySet();
-        Assert.assertNotNull(cdkTypes);
-        Assert.assertTrue(cdkTypes.contains("C.sp3"));
-        Assert.assertTrue(cdkTypes.contains("X"));
+        Assertions.assertNotNull(cdkTypes);
+        Assertions.assertTrue(cdkTypes.contains("C.sp3"));
+        Assertions.assertTrue(cdkTypes.contains("X"));
 
-        Assert.assertEquals("X", mappings.get("X"));
-        Assert.assertEquals("C.3", mappings.get("C.sp3"));
+        Assertions.assertEquals("X", mappings.get("X"));
+        Assertions.assertEquals("C.3", mappings.get("C.sp3"));
     }
 
 }

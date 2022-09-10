@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -53,7 +54,7 @@ public final class RingSearchTest_SpiroRings {
         int n = spiro.getAtomCount();
         RingSearch ringSearch = new RingSearch(spiro);
         for (int i = 0; i < n; i++) {
-            assertTrue(ringSearch.cyclic(i));
+            Assertions.assertTrue(ringSearch.cyclic(i));
         }
     }
 

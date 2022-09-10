@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -52,7 +53,7 @@ public final class RingSearchTest_Biphenyl {
         int n = biphenyl.getAtomCount();
         RingSearch ringSearch = new RingSearch(biphenyl);
         for (int i = 0; i < n; i++) {
-            assertTrue(ringSearch.cyclic(i));
+            Assertions.assertTrue(ringSearch.cyclic(i));
         }
     }
 

@@ -24,6 +24,7 @@ package org.openscience.cdk.smsd.helper;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,7 +37,7 @@ public class LabelContainerTest {
 
     @Test
     public void testGetInstance() {
-        Assert.assertNotNull(LabelContainer.getInstance());
+        Assertions.assertNotNull(LabelContainer.getInstance());
     }
 
     /**
@@ -47,9 +48,9 @@ public class LabelContainerTest {
         String label = "R3";
         LabelContainer instance = new LabelContainer();
         instance.addLabel(label);
-        assertEquals(3, instance.getSize());
+        Assertions.assertEquals(3, instance.getSize());
         Integer expectedValue = 2;
-        assertEquals(expectedValue, instance.getLabelID("R3"));
+        Assertions.assertEquals(expectedValue, instance.getLabelID("R3"));
     }
 
     /**
@@ -61,7 +62,7 @@ public class LabelContainerTest {
         LabelContainer instance = new LabelContainer();
         instance.addLabel(label);
         Integer expectedValue = 2;
-        assertEquals(expectedValue, instance.getLabelID("R3"));
+        Assertions.assertEquals(expectedValue, instance.getLabelID("R3"));
     }
 
     /**
@@ -74,7 +75,7 @@ public class LabelContainerTest {
         instance.addLabel(label);
         Integer index = 2;
         String result = instance.getLabel(index);
-        assertEquals(label, result);
+        Assertions.assertEquals(label, result);
     }
 
     /**
@@ -87,6 +88,6 @@ public class LabelContainerTest {
         instance.addLabel(label);
         int expectedValue = 3;
         int result = instance.getSize();
-        assertEquals(expectedValue, result);
+        Assertions.assertEquals(expectedValue, result);
     }
 }

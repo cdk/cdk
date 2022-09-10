@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
     */
     @Test
     public void testIPBondLearningDescriptor() {
-        Assert.assertNotNull(descriptor);
+        Assertions.assertNotNull(descriptor);
     }
 
     /**
@@ -78,7 +79,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.80;
-        Assert.assertEquals(result, resultAccordingNIST, 0.051);
+        Assertions.assertEquals(result, resultAccordingNIST, 0.051);
     }
 
     /**
@@ -96,7 +97,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(4), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.95;
-        Assert.assertEquals(result, resultAccordingNIST, 0.1);
+        Assertions.assertEquals(result, resultAccordingNIST, 0.1);
     }
 
     /**
@@ -114,7 +115,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44;
-        Assert.assertEquals(result, resultAccordingNIST, 0.3);
+        Assertions.assertEquals(result, resultAccordingNIST, 0.3);
     }
 
     /**
@@ -134,7 +135,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.3);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.3);
 
     }
 
@@ -155,7 +156,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 0.0;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.0001);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.0001);
     }
 
     /**
@@ -174,7 +175,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44;
-        Assert.assertEquals(resultAccordingNIST, result, 0.75);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.75);
     }
 
     /**
@@ -193,7 +194,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.98;
-        Assert.assertEquals(resultAccordingNIST, result, 0.1);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.1);
     }
 
     /**
@@ -211,11 +212,11 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.47;
-        Assert.assertEquals(resultAccordingNIST, result, 0.6);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.6);
 
         result = ((DoubleResult) descriptor.calculate(mol.getBond(2), mol).getValue()).doubleValue();
         resultAccordingNIST = 8.47;
-        Assert.assertEquals(resultAccordingNIST, result, 0.4);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.4);
     }
 
     /**
@@ -234,7 +235,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.072;
-        Assert.assertEquals(resultAccordingNIST, result, 2.11);
+        Assertions.assertEquals(resultAccordingNIST, result, 2.11);
 
     }
 

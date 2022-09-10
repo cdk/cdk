@@ -47,7 +47,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(25.8524433266667, volume, 0.01);
+        Assertions.assertEquals(25.8524433266667, volume, 0.01);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("COc2ccc1[nH]c(nc1c2)S(=O)Cc3ncc(C)c(OC)c3C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(292.23, volume, 0.01);
+        Assertions.assertEquals(292.23, volume, 0.01);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("O=C1NS(=O)(=O)c2ccccc12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(139.35, volume, 0.01);
+        Assertions.assertEquals(139.35, volume, 0.01);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("Nc1ncnc2n(CCOCP(=O)(O)O)cnc12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(199.84, volume, 0.01);
+        Assertions.assertEquals(199.84, volume, 0.01);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("[H]C([H])([H])[H]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(25.8524433266667, volume, 0.01);
+        Assertions.assertEquals(25.8524433266667, volume, 0.01);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("CC");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(43.1484279525333, volume, 0.01);
+        Assertions.assertEquals(43.1484279525333, volume, 0.01);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("CCCC");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(77.7403972042667, volume, 0.01);
+        Assertions.assertEquals(77.7403972042667, volume, 0.01);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("CC#N");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(48.8722707591, volume, 0.01);
+        Assertions.assertEquals(48.8722707591, volume, 0.01);
     }
 
     @Test
@@ -120,7 +120,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("CC(=O)O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(58.0924226528555, volume, 0.01);
+        Assertions.assertEquals(58.0924226528555, volume, 0.01);
     }
 
     @Test
@@ -128,7 +128,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("CC(F)(F)Cl");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(70.4946134235795, volume, 0.01);
+        Assertions.assertEquals(70.4946134235795, volume, 0.01);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("S=C=S");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(57.5975740402667, volume, 0.01);
+        Assertions.assertEquals(57.5975740402667, volume, 0.01);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("CCOP(=O)(OCC)OCC");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(167.320526666244, volume, 0.01);
+        Assertions.assertEquals(167.320526666244, volume, 0.01);
     }
 
     @Test
@@ -152,7 +152,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("c1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(81.1665316528, volume, 0.01);
+        Assertions.assertEquals(81.1665316528, volume, 0.01);
     }
 
     @Test
@@ -160,7 +160,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("c1cc2ccc3cccc4ccc(c1)c2c34");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(171.174708305067, volume, 0.01);
+        Assertions.assertEquals(171.174708305067, volume, 0.01);
     }
 
     @Test
@@ -168,7 +168,7 @@ public class VABCVolumeTest {
         IAtomContainer methane = smilesParser.parseSmiles("CN1CCCC1c2cccnc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(159.9875318718, volume, 0.01);
+        Assertions.assertEquals(159.9875318718, volume, 0.01);
     }
 
 }

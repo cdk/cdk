@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainerSet;
@@ -64,8 +65,8 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         SMILESReader reader = new SMILESReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
-        Assert.assertTrue(reader.accepts(AtomContainerSet.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test
@@ -75,7 +76,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
-        Assert.assertEquals(8, som.getAtomContainerCount());
+        Assertions.assertEquals(8, som.getAtomContainerCount());
     }
 
     @Test
@@ -88,7 +89,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         String name;
         IAtomContainer thisMol = som.getAtomContainer(0);
         name = ((String) thisMol.getProperty("SMIdbNAME")).toString();
-        Assert.assertEquals("benzene", name);
+        Assertions.assertEquals("benzene", name);
     }
 
     @Test
@@ -99,7 +100,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         IAtomContainer thisMol = som.getAtomContainer(1);
-        Assert.assertNull(thisMol.getProperty("SMIdbNAME"));
+        Assertions.assertNull(thisMol.getProperty("SMIdbNAME"));
     }
 
     @Test
@@ -109,7 +110,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
-        Assert.assertEquals(5, som.getAtomContainerCount());
+        Assertions.assertEquals(5, som.getAtomContainerCount());
     }
     
     @Test

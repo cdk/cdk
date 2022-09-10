@@ -19,6 +19,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -46,57 +47,57 @@ public class ElementTest extends AbstractElementTest {
     @Test
     public void testElement() {
         IElement e = new Element();
-        Assert.assertTrue(e instanceof IChemObject);
+        Assertions.assertTrue(e instanceof IChemObject);
     }
 
     @Test
     public void testElement_IElement() {
         IElement element = new Element();
         IElement e = new Element(element);
-        Assert.assertTrue(e instanceof IChemObject);
+        Assertions.assertTrue(e instanceof IChemObject);
     }
 
     @Test
     public void testElement_String() {
         IElement e = new Element("C");
-        Assert.assertEquals("C", e.getSymbol());
+        Assertions.assertEquals("C", e.getSymbol());
     }
 
     @Test
     public void testElement_X() {
         IElement e = new Element("X");
-        Assert.assertEquals("R", e.getSymbol());
+        Assertions.assertEquals("R", e.getSymbol());
         // and it should not throw exceptions
-        Assert.assertNotNull(e.getAtomicNumber());
+        Assertions.assertNotNull(e.getAtomicNumber());
         org.hamcrest.MatcherAssert.assertThat(e.getAtomicNumber(), is(0));
     }
 
     @Test
     public void testElement_String_Integer() {
         IElement e = new Element("H", 1);
-        Assert.assertEquals("H", e.getSymbol());
-        Assert.assertEquals(1, e.getAtomicNumber().intValue());
+        Assertions.assertEquals("H", e.getSymbol());
+        Assertions.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test
     public void compareSymbol() {
         Element e1 = new Element("H", 1);
         Element e2 = new Element("H", 1);
-        Assert.assertTrue(e1.compare(e2));
+        Assertions.assertTrue(e1.compare(e2));
     }
 
     @Test
     public void compareAtomicNumber() {
         Element e1 = new Element("H", 1);
         Element e2 = new Element("H", 1);
-        Assert.assertTrue(e1.compare(e2));
+        Assertions.assertTrue(e1.compare(e2));
     }
 
     @Test
     public void compareDiffSymbol() {
         Element e1 = new Element("H", 1);
         Element e2 = new Element("C", 12);
-        Assert.assertFalse(e1.compare(e2));
+        Assertions.assertFalse(e1.compare(e2));
     }
 
     @Test
@@ -105,6 +106,6 @@ public class ElementTest extends AbstractElementTest {
         Element e2 = new Element();
         e1.setAtomicNumber(1);
         e1.setAtomicNumber(2);
-        Assert.assertFalse(e1.compare(e2));
+        Assertions.assertFalse(e1.compare(e2));
     }
 }

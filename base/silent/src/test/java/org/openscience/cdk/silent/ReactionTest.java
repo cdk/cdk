@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IReaction;
@@ -40,7 +41,7 @@ public class ReactionTest extends AbstractReactionTest {
     @Test
     public void testReaction() {
         IReaction polymer = new Reaction();
-        Assert.assertTrue(polymer instanceof Reaction);
+        Assertions.assertTrue(polymer instanceof Reaction);
     }
 
     // Overwrite default methods: no notifications are expected!

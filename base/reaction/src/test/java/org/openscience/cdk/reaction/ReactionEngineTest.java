@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.reaction.type.AdductionProtonLPReaction;
@@ -46,7 +47,7 @@ public class ReactionEngineTest extends CDKTestCase {
     @Test
     public void testReactionEngine() throws Exception {
         ReactionEngine engine = new AdductionProtonLPReaction();
-        Assert.assertNotNull(engine);
+        Assertions.assertNotNull(engine);
     }
 
     /**
@@ -57,7 +58,7 @@ public class ReactionEngineTest extends CDKTestCase {
     @Test
     public void testGetParameterList() throws Exception {
         ReactionEngine engine = new AdductionProtonLPReaction();
-        Assert.assertNotNull(engine.getParameterList());
+        Assertions.assertNotNull(engine.getParameterList());
     }
 
     /**
@@ -69,7 +70,7 @@ public class ReactionEngineTest extends CDKTestCase {
     public void testSetParameterList_List() throws Exception {
         ReactionEngine engine = new AdductionProtonLPReaction();
         engine.setParameterList(engine.getParameterList());
-        Assert.assertNotNull(engine.getParameterList());
+        Assertions.assertNotNull(engine.getParameterList());
     }
 
     /**
@@ -80,6 +81,6 @@ public class ReactionEngineTest extends CDKTestCase {
     @Test
     public void testGetParameterClass_Class() throws Exception {
         ReactionEngine engine = new AdductionProtonLPReaction();
-        Assert.assertNotNull(engine.getParameterClass(SetReactionCenter.class));
+        Assertions.assertNotNull(engine.getParameterClass(SetReactionCenter.class));
     }
 }

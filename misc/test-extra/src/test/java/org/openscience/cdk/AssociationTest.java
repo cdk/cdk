@@ -20,6 +20,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.test.CDKTestCase;
@@ -36,15 +37,15 @@ public class AssociationTest extends CDKTestCase {
     @Test
     public void testAssociation() {
         Association association = new Association();
-        Assert.assertEquals(0, association.getElectronCount().intValue());
-        Assert.assertEquals(0, association.getAtomCount());
+        Assertions.assertEquals(0, association.getElectronCount().intValue());
+        Assertions.assertEquals(0, association.getAtomCount());
     }
 
     @Test
     public void testAssociation_IAtom_IAtom() {
         Association association = new Association(new Atom("C"), new Atom("C"));
-        Assert.assertEquals(0, association.getElectronCount().intValue());
-        Assert.assertEquals(2, association.getAtomCount());
+        Assertions.assertEquals(0, association.getElectronCount().intValue());
+        Assertions.assertEquals(2, association.getAtomCount());
     }
 
     /** Test for RFC #9 */
@@ -53,8 +54,8 @@ public class AssociationTest extends CDKTestCase {
         Association association = new Association();
         String description = association.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -62,7 +63,7 @@ public class AssociationTest extends CDKTestCase {
     public void testToStringWithAtoms() {
         Association association = new Association(new Atom("C"), new Atom("C"));
         String description = association.toString();
-        Assert.assertTrue(description.contains(","));
+        Assertions.assertTrue(description.contains(","));
     }
 
     @Test
@@ -72,8 +73,8 @@ public class AssociationTest extends CDKTestCase {
 
         Association association = new Association(c, o);
 
-        Assert.assertTrue(association.contains(c));
-        Assert.assertTrue(association.contains(o));
+        Assertions.assertTrue(association.contains(c));
+        Assertions.assertTrue(association.contains(o));
     }
 
     @Test
@@ -83,7 +84,7 @@ public class AssociationTest extends CDKTestCase {
 
         Association association = new Association(c, o);
 
-        Assert.assertEquals(2, association.getAtomCount());
+        Assertions.assertEquals(2, association.getAtomCount());
     }
 
     @Test
@@ -94,9 +95,9 @@ public class AssociationTest extends CDKTestCase {
         Association association = new Association(c, o);
 
         IAtom[] atoms = association.getAtoms();
-        Assert.assertEquals(2, atoms.length);
-        Assert.assertNotNull(atoms[0]);
-        Assert.assertNotNull(atoms[1]);
+        Assertions.assertEquals(2, atoms.length);
+        Assertions.assertNotNull(atoms[0]);
+        Assertions.assertNotNull(atoms[1]);
     }
 
     @Test
@@ -106,8 +107,8 @@ public class AssociationTest extends CDKTestCase {
         Association association = new Association();
         association.setAtoms(new IAtom[]{c, o});
 
-        Assert.assertTrue(association.contains(c));
-        Assert.assertTrue(association.contains(o));
+        Assertions.assertTrue(association.contains(c));
+        Assertions.assertTrue(association.contains(o));
     }
 
     @Test
@@ -118,9 +119,9 @@ public class AssociationTest extends CDKTestCase {
         Association association = new Association(c, o);
         association.setAtomAt(n, 1);
 
-        Assert.assertTrue(association.contains(c));
-        Assert.assertTrue(association.contains(n));
-        Assert.assertFalse(association.contains(o));
+        Assertions.assertTrue(association.contains(c));
+        Assertions.assertTrue(association.contains(n));
+        Assertions.assertFalse(association.contains(o));
     }
 
     @Test
@@ -130,16 +131,16 @@ public class AssociationTest extends CDKTestCase {
         Atom n = new Atom("N");
         Association association = new Association(c, o);
 
-        Assert.assertEquals(c, association.getAtomAt(0));
-        Assert.assertEquals(o, association.getAtomAt(1));
+        Assertions.assertEquals(c, association.getAtomAt(0));
+        Assertions.assertEquals(o, association.getAtomAt(1));
 
         association.setAtomAt(n, 0);
-        Assert.assertEquals(n, association.getAtomAt(0));
+        Assertions.assertEquals(n, association.getAtomAt(0));
     }
 
     @Test
     public void testGetElectronCount() {
         Association association = new Association();
-        Assert.assertEquals(0, association.getElectronCount(), 0.00001);
+        Assertions.assertEquals(0, association.getElectronCount(), 0.00001);
     }
 }

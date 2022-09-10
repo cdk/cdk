@@ -19,6 +19,7 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.vecmath.Point3d;
@@ -40,9 +41,9 @@ public class PharmacophoreQueryBondTest {
         PharmacophoreQueryBond qbond2 = new PharmacophoreQueryBond(qatom1, qatom2, 1.732);
         PharmacophoreQueryBond qbond3 = new PharmacophoreQueryBond(qatom1, qatom2, 0.1, 1.0);
 
-        Assert.assertTrue(qbond1.matches(pbond));
-        Assert.assertTrue(qbond2.matches(pbond));
-        Assert.assertFalse(qbond3.matches(pbond));
+        Assertions.assertTrue(qbond1.matches(pbond));
+        Assertions.assertTrue(qbond2.matches(pbond));
+        Assertions.assertFalse(qbond3.matches(pbond));
 
     }
 
@@ -53,8 +54,8 @@ public class PharmacophoreQueryBondTest {
         PharmacophoreQueryBond qbond1 = new PharmacophoreQueryBond(qatom1, qatom2, 1.0, 2.0);
         PharmacophoreQueryBond qbond2 = new PharmacophoreQueryBond(qatom1, qatom2, 1.732);
 
-        Assert.assertEquals(2.0, qbond1.getUpper(), 0.01);
-        Assert.assertEquals(1.732, qbond2.getUpper(), 0.01);
+        Assertions.assertEquals(2.0, qbond1.getUpper(), 0.01);
+        Assertions.assertEquals(1.732, qbond2.getUpper(), 0.01);
     }
 
     @Test
@@ -64,8 +65,8 @@ public class PharmacophoreQueryBondTest {
         PharmacophoreQueryBond qbond1 = new PharmacophoreQueryBond(qatom1, qatom2, 1.0, 2.0);
         PharmacophoreQueryBond qbond2 = new PharmacophoreQueryBond(qatom1, qatom2, 1.732);
 
-        Assert.assertEquals(1.0, qbond1.getLower(), 0.01);
-        Assert.assertEquals(1.732, qbond2.getLower(), 0.01);
+        Assertions.assertEquals(1.0, qbond1.getLower(), 0.01);
+        Assertions.assertEquals(1.732, qbond2.getLower(), 0.01);
     }
 
     @Test
@@ -74,6 +75,6 @@ public class PharmacophoreQueryBondTest {
         PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
         PharmacophoreQueryBond qbond1 = new PharmacophoreQueryBond(qatom1, qatom2, 1.0, 2.0);
         String repr = qbond1.toString();
-        Assert.assertEquals(repr, "DC::Amine [[CX2]N]::aromatic [c1ccccc1]::[1.0 - 2.0] ");
+        Assertions.assertEquals(repr, "DC::Amine [[CX2]N]::aromatic [c1ccccc1]::[1.0 - 2.0] ");
     }
 }

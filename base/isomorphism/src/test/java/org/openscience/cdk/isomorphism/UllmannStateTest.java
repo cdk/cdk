@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -67,32 +68,32 @@ public class UllmannStateTest {
         assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}));
-        assertTrue(state.add(0, 0));
+        Assertions.assertTrue(state.add(0, 0));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                 {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
                 {-1, 1, -1, 1, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
                 {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
-        assertTrue(state.add(1, 9));
+        Assertions.assertTrue(state.add(1, 9));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                 {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {1, -1, -2, -1, -1, -1, -1, -1, 1, -1},
                 {-1, 1, -1, -2, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
                 {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
-        assertTrue(state.add(2, 8));
+        Assertions.assertTrue(state.add(2, 8));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                 {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
                 {-1, -3, -1, -2, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
                 {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
-        assertTrue(state.add(3, 7));
+        Assertions.assertTrue(state.add(3, 7));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                 {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
                 {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, 1, -1},
                 {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
-        assertTrue(state.add(4, 2));
+        Assertions.assertTrue(state.add(4, 2));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                 {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
                 {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
                 {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
-        assertTrue(state.add(5, 1));
+        Assertions.assertTrue(state.add(5, 1));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                 {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
                 {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
@@ -105,12 +106,12 @@ public class UllmannStateTest {
         assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}));
-        assertTrue(state.add(0, 0));
-        assertTrue(state.add(1, 9));
-        assertTrue(state.add(2, 8));
-        assertTrue(state.add(3, 7));
-        assertTrue(state.add(4, 2));
-        assertTrue(state.add(5, 1));
+        Assertions.assertTrue(state.add(0, 0));
+        Assertions.assertTrue(state.add(1, 9));
+        Assertions.assertTrue(state.add(2, 8));
+        Assertions.assertTrue(state.add(3, 7));
+        Assertions.assertTrue(state.add(4, 2));
+        Assertions.assertTrue(state.add(5, 1));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                 {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
                 {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},

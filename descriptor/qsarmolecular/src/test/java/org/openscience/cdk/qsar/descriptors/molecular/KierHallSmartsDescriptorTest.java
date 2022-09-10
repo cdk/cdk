@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -64,8 +65,8 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         DescriptorValue value = descriptor.calculate(mol);
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();
 
-        Assert.assertEquals(79, result.length());
-        Assert.assertEquals(1, result.get(getIndex("khs.sOH")));
+        Assertions.assertEquals(79, result.length());
+        Assertions.assertEquals(1, result.get(getIndex("khs.sOH")));
     }
 
     @Test
@@ -79,12 +80,12 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         DescriptorValue value = descriptor.calculate(mol);
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();
 
-        Assert.assertEquals(79, result.length());
-        Assert.assertEquals(2, result.get(getIndex("khs.sOH")));
-        Assert.assertEquals(1, result.get(getIndex("khs.dO")));
-        Assert.assertEquals(1, result.get(getIndex("khs.ssO")));
-        Assert.assertEquals(1, result.get(getIndex("khs.sNH2")));
-        Assert.assertEquals(1, result.get(getIndex("khs.ssNH")));
+        Assertions.assertEquals(79, result.length());
+        Assertions.assertEquals(2, result.get(getIndex("khs.sOH")));
+        Assertions.assertEquals(1, result.get(getIndex("khs.dO")));
+        Assertions.assertEquals(1, result.get(getIndex("khs.ssO")));
+        Assertions.assertEquals(1, result.get(getIndex("khs.sNH2")));
+        Assertions.assertEquals(1, result.get(getIndex("khs.ssNH")));
     }
 
     @Test
@@ -98,8 +99,8 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         DescriptorValue value = descriptor.calculate(mol);
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();
 
-        Assert.assertEquals(79, result.length());
-        Assert.assertEquals(2, result.get(getIndex("khs.tsC")));
-        Assert.assertEquals(2, result.get(getIndex("khs.ssssC")));
+        Assertions.assertEquals(79, result.length());
+        Assertions.assertEquals(2, result.get(getIndex("khs.tsC")));
+        Assertions.assertEquals(2, result.get(getIndex("khs.ssssC")));
     }
 }

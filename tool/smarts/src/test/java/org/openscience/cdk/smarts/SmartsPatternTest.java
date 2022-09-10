@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,20 +51,20 @@ public class SmartsPatternTest {
     public void isotopes() throws Exception {
         // FIXME SMARTS Grammar needs fixing/replacing [12] is not considered valid
 
-        assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("C")));
-        assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("[CH4]")));
-        assertTrue(SmartsPattern.create("[12*]", bldr).matches(smi("[12CH4]")));
-        assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("[13CH4]")));
+        Assertions.assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("C")));
+        Assertions.assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("[CH4]")));
+        Assertions.assertTrue(SmartsPattern.create("[12*]", bldr).matches(smi("[12CH4]")));
+        Assertions.assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("[13CH4]")));
 
-        assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("C")));
-        assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("[CH4]")));
-        assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("[12CH4]")));
-        assertTrue(SmartsPattern.create("[13*]", bldr).matches(smi("[13CH4]")));
+        Assertions.assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("C")));
+        Assertions.assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("[CH4]")));
+        Assertions.assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("[12CH4]")));
+        Assertions.assertTrue(SmartsPattern.create("[13*]", bldr).matches(smi("[13CH4]")));
 
-        assertTrue(SmartsPattern.create("[0*]", bldr).matches(smi("C")));
-        assertTrue(SmartsPattern.create("[0*]", bldr).matches(smi("[CH4]")));
-        assertFalse(SmartsPattern.create("[0*]", bldr).matches(smi("[12CH4]")));
-        assertFalse(SmartsPattern.create("[0*]", bldr).matches(smi("[13CH4]")));
+        Assertions.assertTrue(SmartsPattern.create("[0*]", bldr).matches(smi("C")));
+        Assertions.assertTrue(SmartsPattern.create("[0*]", bldr).matches(smi("[CH4]")));
+        Assertions.assertFalse(SmartsPattern.create("[0*]", bldr).matches(smi("[12CH4]")));
+        Assertions.assertFalse(SmartsPattern.create("[0*]", bldr).matches(smi("[13CH4]")));
 
 //      Not possible with current grammar
 //        assertFalse(SmartsPattern.create("[!0*]", bldr).matches(smi("C")));
@@ -74,39 +75,39 @@ public class SmartsPatternTest {
 
     @Test
     public void components() throws Exception {
-        assertTrue(SmartsPattern.create("(O).(O)", bldr).matches(smi("O.O")));
-        assertFalse(SmartsPattern.create("(O).(O)", bldr).matches(smi("OO")));
+        Assertions.assertTrue(SmartsPattern.create("(O).(O)", bldr).matches(smi("O.O")));
+        Assertions.assertFalse(SmartsPattern.create("(O).(O)", bldr).matches(smi("OO")));
     }
 
     @Test
     public void stereochemistry() throws Exception {
-        assertTrue(SmartsPattern.create("C[C@H](O)CC", bldr).matches(smi("C[C@H](O)CC")));
-        assertFalse(SmartsPattern.create("C[C@H](O)CC", bldr).matches(smi("C[C@@H](O)CC")));
-        assertFalse(SmartsPattern.create("C[C@H](O)CC", bldr).matches(smi("CC(O)CC")));
+        Assertions.assertTrue(SmartsPattern.create("C[C@H](O)CC", bldr).matches(smi("C[C@H](O)CC")));
+        Assertions.assertFalse(SmartsPattern.create("C[C@H](O)CC", bldr).matches(smi("C[C@@H](O)CC")));
+        Assertions.assertFalse(SmartsPattern.create("C[C@H](O)CC", bldr).matches(smi("CC(O)CC")));
     }
 
     @Test
     public void smartsMatchingReaction() throws Exception {
-        assertTrue(SmartsPattern.create("CC", bldr).matches(rsmi("CC>>")));
-        assertTrue(SmartsPattern.create("CC", bldr).matches(rsmi(">>CC")));
-        assertTrue(SmartsPattern.create("CC", bldr).matches(rsmi(">CC>")));
-        assertFalse(SmartsPattern.create("CO", bldr).matches(rsmi(">>CC")));
+        Assertions.assertTrue(SmartsPattern.create("CC", bldr).matches(rsmi("CC>>")));
+        Assertions.assertTrue(SmartsPattern.create("CC", bldr).matches(rsmi(">>CC")));
+        Assertions.assertTrue(SmartsPattern.create("CC", bldr).matches(rsmi(">CC>")));
+        Assertions.assertFalse(SmartsPattern.create("CO", bldr).matches(rsmi(">>CC")));
     }
 
     @Test
     public void reactionSmartsMatchingReaction() throws Exception {
-        assertTrue(SmartsPattern.create("CC>>", bldr).matches(rsmi("CC>>")));
-        assertFalse(SmartsPattern.create("CC>>", bldr).matches(rsmi(">>CC")));
-        assertFalse(SmartsPattern.create("CC>>", bldr).matches(rsmi(">CC>")));
+        Assertions.assertTrue(SmartsPattern.create("CC>>", bldr).matches(rsmi("CC>>")));
+        Assertions.assertFalse(SmartsPattern.create("CC>>", bldr).matches(rsmi(">>CC")));
+        Assertions.assertFalse(SmartsPattern.create("CC>>", bldr).matches(rsmi(">CC>")));
     }
 
     @Test
     public void reactionGrouping() throws Exception {
-        assertTrue(SmartsPattern.create("[Na+].[OH-]>>", bldr).matches(rsmi("[Na+].[OH-]>>")));
-        assertTrue(SmartsPattern.create("[Na+].[OH-]>>", bldr).matches(rsmi("[Na+].[OH-]>> |f:0.1|")));
-        assertTrue(SmartsPattern.create("([Na+].[OH-])>>", bldr).matches(rsmi("[Na+].[OH-]>> |f:0.1|")));
+        Assertions.assertTrue(SmartsPattern.create("[Na+].[OH-]>>", bldr).matches(rsmi("[Na+].[OH-]>>")));
+        Assertions.assertTrue(SmartsPattern.create("[Na+].[OH-]>>", bldr).matches(rsmi("[Na+].[OH-]>> |f:0.1|")));
+        Assertions.assertTrue(SmartsPattern.create("([Na+].[OH-])>>", bldr).matches(rsmi("[Na+].[OH-]>> |f:0.1|")));
         // this one can't match because we don't know if NaOH is one component from the input smiles
-        assertFalse(SmartsPattern.create("([Na+].[OH-])>>", bldr).matches(rsmi("[Na+].[OH-]>>")));
+        Assertions.assertFalse(SmartsPattern.create("([Na+].[OH-])>>", bldr).matches(rsmi("[Na+].[OH-]>>")));
     }
 
     @Test public void noMaps() throws Exception {
@@ -188,23 +189,23 @@ public class SmartsPatternTest {
     @Test
     public void stereo_ring_closures() throws Exception {
         Pattern ptrn = SmartsPattern.create("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C");
-        assertTrue(ptrn.matches(smi("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C")));
+        Assertions.assertTrue(ptrn.matches(smi("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C")));
     }
 
     @Test
     public void hasIsotope() throws Exception {
         Pattern ptrn = SmartsPattern.create("[!0]");
-        assertFalse(ptrn.matches(smi("C")));
-        assertTrue(ptrn.matches(smi("[12C]")));
-        assertTrue(ptrn.matches(smi("[13C]")));
+        Assertions.assertFalse(ptrn.matches(smi("C")));
+        Assertions.assertTrue(ptrn.matches(smi("[12C]")));
+        Assertions.assertTrue(ptrn.matches(smi("[13C]")));
     }
 
     @Test
     public void hIsotope() throws Exception {
         Pattern ptrn = SmartsPattern.create("[2#1,3#1]");
-        assertFalse(ptrn.matches(smi("[H][H]")));
-        assertTrue(ptrn.matches(smi("[2H]")));
-        assertTrue(ptrn.matches(smi("[3H]")));
+        Assertions.assertFalse(ptrn.matches(smi("[H][H]")));
+        Assertions.assertTrue(ptrn.matches(smi("[2H]")));
+        Assertions.assertTrue(ptrn.matches(smi("[3H]")));
     }
 
     /**
@@ -214,7 +215,7 @@ public class SmartsPatternTest {
     @Test
     public void bug1358() throws Exception {
         Pattern ptrn = SmartsPattern.create("[$([*@](~*)(~*)(*)*),$([*@H](*)(*)*),$([*@](~*)(*)*)]");
-        assertFalse(ptrn.matches(smi("N#CN/C(=N/CCSCC=1N=CNC1C)NC")));
+        Assertions.assertFalse(ptrn.matches(smi("N#CN/C(=N/CCSCC=1N=CNC1C)NC")));
     }
 
     private void assertMatch(String sma, String smiles, int numHits, int uniqNumHits) throws Exception {

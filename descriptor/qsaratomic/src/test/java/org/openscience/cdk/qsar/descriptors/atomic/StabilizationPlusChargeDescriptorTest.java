@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
@@ -76,7 +77,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 
         DoubleResult result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue());
 
-        Assert.assertNotSame(0.0, result.doubleValue());
+        Assertions.assertNotSame(0.0, result.doubleValue());
     }
 
     /**
@@ -100,7 +101,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 
         DoubleResult result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue());
 
-        Assert.assertEquals(0.0, result.doubleValue(), 0.00001);
+        Assertions.assertEquals(0.0, result.doubleValue(), 0.00001);
 
     }
 
@@ -128,7 +129,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 
         DoubleResult result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue());
 
-        Assert.assertNotSame(0.0, result.doubleValue());
+        Assertions.assertNotSame(0.0, result.doubleValue());
 
     }
 
@@ -182,8 +183,8 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 
         DoubleResult result3 = ((DoubleResult) descriptor.calculate(mol3.getAtom(1), mol3).getValue());
 
-        Assert.assertTrue(result3.doubleValue() < result2.doubleValue());
-        Assert.assertTrue(result2.doubleValue() < result1.doubleValue());
+        Assertions.assertTrue(result3.doubleValue() < result2.doubleValue());
+        Assertions.assertTrue(result2.doubleValue() < result1.doubleValue());
     }
 
     /**
@@ -227,13 +228,13 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         addExplicitHydrogens(molB);
         lpcheck.saturate(molB);
 
-        Assert.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
-        Assert.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
-        Assert.assertEquals(2, molB.getLonePairCount(), 0.00001);
+        Assertions.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
+        Assertions.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
+        Assertions.assertEquals(2, molB.getLonePairCount(), 0.00001);
 
         double resultB = ((DoubleResult) descriptor.calculate(molB.getAtom(3), molB).getValue()).doubleValue();
 
-        Assert.assertNotSame(resultA, resultB);
+        Assertions.assertNotSame(resultA, resultB);
     }
 
 }

@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.hash.stereo;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.vecmath.Point2d;
@@ -44,42 +45,42 @@ public class DoubleBond2DParityTest {
     public void unspecified() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.6518, 0.1473), new Point2d(-1.8268, 0.1473),
                 new Point2d(-3.0643, 0.8618), new Point2d(-1.4143, 0.1473));
-        assertEquals(UNSPECIFIED, geometric.parity());
+        Assertions.assertEquals(UNSPECIFIED, geometric.parity());
     }
 
     @Test
     public void opposite() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.6518, 0.1473), new Point2d(-1.8268, 0.1473),
                 new Point2d(-3.0643, 0.8618), new Point2d(-1.4143, -0.5671));
-        assertEquals(OPPOSITE, geometric.parity());
+        Assertions.assertEquals(OPPOSITE, geometric.parity());
     }
 
     @Test
     public void together() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.6518, 0.1473), new Point2d(-1.8268, 0.1473),
                 new Point2d(-3.0643, 0.8618), new Point2d(-1.4143, 0.8618));
-        assertEquals(TOGETHER, geometric.parity());
+        Assertions.assertEquals(TOGETHER, geometric.parity());
     }
 
     @Test
     public void unspecified_both() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.6518, 0.1473), new Point2d(-1.8268, 0.1473),
                 new Point2d(-3.0643, 0.1473), new Point2d(-1.4143, 0.1473));
-        assertEquals(UNSPECIFIED, geometric.parity());
+        Assertions.assertEquals(UNSPECIFIED, geometric.parity());
     }
 
     @Test
     public void opposite_inverted() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.6518, 0.1473), new Point2d(-1.8268, 0.1473),
                 new Point2d(-3.0643, -0.5671), new Point2d(-1.4143, 0.8618));
-        assertEquals(OPPOSITE, geometric.parity());
+        Assertions.assertEquals(OPPOSITE, geometric.parity());
     }
 
     @Test
     public void together_inverted() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.6518, 0.1473), new Point2d(-1.8268, 0.1473),
                 new Point2d(-3.0643, -0.5671), new Point2d(-1.4143, -0.5671));
-        assertEquals(TOGETHER, geometric.parity());
+        Assertions.assertEquals(TOGETHER, geometric.parity());
     }
 
     // double bond rotated pi/6 radians (30 degrees)
@@ -87,7 +88,7 @@ public class DoubleBond2DParityTest {
     public void opposite30() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.4455, 0.5046), new Point2d(-2.0330, -0.2099),
                 new Point2d(-2.0330, 1.2191), new Point2d(-2.4455, -0.9244));
-        assertEquals(OPPOSITE, geometric.parity());
+        Assertions.assertEquals(OPPOSITE, geometric.parity());
     }
 
     // double bond rotated pi/6 radians (30 degrees)
@@ -95,7 +96,7 @@ public class DoubleBond2DParityTest {
     public void together30() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.4455, 0.5046), new Point2d(-2.0330, -0.2099),
                 new Point2d(-3.2705, 0.5046), new Point2d(-2.4455, -0.9244));
-        assertEquals(TOGETHER, geometric.parity());
+        Assertions.assertEquals(TOGETHER, geometric.parity());
     }
 
     // double bond rotated pi/6 radians (30 degrees)
@@ -103,7 +104,7 @@ public class DoubleBond2DParityTest {
     public void unspecified30() throws Exception {
         GeometricParity geometric = new DoubleBond2DParity(new Point2d(-2.4455, 0.5046), new Point2d(-2.0330, -0.2099),
                 new Point2d(-2.8580, 1.2191), new Point2d(-2.4455, -0.9244));
-        assertEquals(UNSPECIFIED, geometric.parity());
+        Assertions.assertEquals(UNSPECIFIED, geometric.parity());
     }
 
 }

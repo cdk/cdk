@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,35 +30,35 @@ public class IntegerDifferenceTest {
     @Test
     public void testDiff() {
         IDifference result = IntegerDifference.construct("Foo", 1, 2);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
     public void testSame() {
         IDifference result = IntegerDifference.construct("Foo", 1, 1);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
     public void testTwoNull() {
         IDifference result = IntegerDifference.construct("Foo", null, null);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
     public void testOneNull() {
         IDifference result = IntegerDifference.construct("Foo", null, 1);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
 
         result = IntegerDifference.construct("Foo", 2, null);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
     public void testToString() {
         IDifference result = IntegerDifference.construct("Foo", 1, 2);
         String diffString = result.toString();
-        Assert.assertNotNull(diffString);
+        Assertions.assertNotNull(diffString);
         StringDifferenceTest.assertOneLiner(diffString);
     }
 
@@ -66,6 +67,6 @@ public class IntegerDifferenceTest {
         Integer x = 1;
         Integer y = 1;
         IDifference diff = IntegerDifference.construct("foo", x, y);
-        Assert.assertNull(diff);
+        Assertions.assertNull(diff);
     }
 }

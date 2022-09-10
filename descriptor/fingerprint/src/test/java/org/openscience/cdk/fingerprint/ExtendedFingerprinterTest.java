@@ -31,6 +31,7 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -62,26 +63,26 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
     @Test
     public void testExtendedFingerprinter() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
     }
 
     @Test
     public void testgetBitFingerprint_IAtomContainer() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
-        Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertFalse(FingerprinterTool.isSubset(bs1, bs));
     }
 
     @Test
     public void testgetBitFingerprint_IAtomContainer_IRingSet_List() throws java.lang.Exception {
         ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         IRingSet rs = Cycles.sssr(mol).toRingSet();
@@ -89,41 +90,41 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         BitSet bs = fingerprinter.getBitFingerprint(mol, rs, rslist).asBitSet();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
-        Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertFalse(FingerprinterTool.isSubset(bs1, bs));
     }
 
     @Test
     public void testGetSize() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
-        Assert.assertNotNull(fingerprinter);
-        Assert.assertEquals(512, fingerprinter.getSize());
+        Assertions.assertNotNull(fingerprinter);
+        Assertions.assertEquals(512, fingerprinter.getSize());
     }
 
     @Test
     public void testExtendedFingerprinter_int() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
-        Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertFalse(FingerprinterTool.isSubset(bs1, bs));
     }
 
     @Test
     public void testExtendedFingerprinter_int_int() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter(512, 7);
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
-        Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertFalse(FingerprinterTool.isSubset(bs1, bs));
     }
 
     /*
@@ -176,8 +177,8 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         ac2.addBond(bond7);
         BitSet bs = fingerprinter.getBitFingerprint(ac1).asBitSet();
         BitSet bs1 = fingerprinter.getBitFingerprint(ac2).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs1, bs));
-        Assert.assertFalse(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs1, bs));
+        Assertions.assertFalse(FingerprinterTool.isSubset(bs, bs1));
     }
 
     /*
@@ -383,8 +384,8 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         BitSet bs1 = fingerprinter.getBitFingerprint(molsingle).asBitSet();
         BitSet bs2 = fingerprinter.getBitFingerprint(molcondensed).asBitSet();
 
-        Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
-        Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
+        Assertions.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
 
     }
 
@@ -411,8 +412,8 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         BitSet subBS = fingerprinter.getBitFingerprint(searchmol).asBitSet();
         boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
         boolean isSubset2 = FingerprinterTool.isSubset(subBS, superBS);
-        Assert.assertFalse(isSubset);
-        Assert.assertFalse(isSubset2);
+        Assertions.assertFalse(isSubset);
+        Assertions.assertFalse(isSubset2);
     }
 
     /**
@@ -427,18 +428,18 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 
         // should pass since we have not explicitly detected aromaticity
         for (IAtom atom : mol.atoms()) {
-            Assert.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
         }
 
         String diff1 = AtomContainerDiff.diff(mol, clone);
-        Assert.assertEquals("", diff1);
+        Assertions.assertEquals("", diff1);
 
         ExtendedFingerprinter fprinter = new ExtendedFingerprinter();
         BitSet fp = fprinter.getBitFingerprint(mol).asBitSet();
-        Assert.assertNotNull(fp);
+        Assertions.assertNotNull(fp);
 
         String diff2 = AtomContainerDiff.diff(mol, clone);
-        Assert.assertTrue("There was a difference\n" + diff2, diff2.equals(""));
+        Assertions.assertTrue(diff2.equals(""), "There was a difference\n" + diff2);
     }
 
     @Test public void testGetRawFingerprint() throws CDKException {
@@ -514,7 +515,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         expected.put("C:C:C:C:C:C-O-C", 2);
         expected.put("O=C-O-C:C:C:C:C", 2);
         expected.put("O=C-C:C:C:C:C:C", 2);
-        Assert.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -525,6 +526,6 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         final String smi  = "CC(=O)OC1=CC=CC=C1C(=O)O";
         IAtomContainer mol  = smipar.parseSmiles(smi);
         ICountFingerprint actual = fpr.getCountFingerprint(mol);
-        Assert.assertEquals(65, actual.numOfPopulatedbins());
+        Assertions.assertEquals(65, actual.numOfPopulatedbins());
     }
 }

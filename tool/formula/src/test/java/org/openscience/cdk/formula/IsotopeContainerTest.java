@@ -1,6 +1,7 @@
 package org.openscience.cdk.formula;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -32,7 +33,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     @Test
     public void testIsotopeContainer() {
         IsotopeContainer isoC = new IsotopeContainer();
-        Assert.assertNotNull(isoC);
+        Assertions.assertNotNull(isoC);
     }
 
     /**
@@ -46,9 +47,9 @@ public class IsotopeContainerTest extends CDKTestCase {
         double intensity = 130.00;
         IsotopeContainer isoC = new IsotopeContainer(formula, intensity);
 
-        Assert.assertNotNull(isoC);
-        Assert.assertEquals(formula, isoC.getFormula());
-        Assert.assertEquals(intensity, isoC.getIntensity(), 0.001);
+        Assertions.assertNotNull(isoC);
+        Assertions.assertEquals(formula, isoC.getFormula());
+        Assertions.assertEquals(intensity, isoC.getIntensity(), 0.001);
     }
 
     /**
@@ -62,9 +63,9 @@ public class IsotopeContainerTest extends CDKTestCase {
         double intensity = 500000.00;
         IsotopeContainer isoC = new IsotopeContainer(mass, intensity);
 
-        Assert.assertNotNull(isoC);
-        Assert.assertEquals(mass, isoC.getMass(), 0.001);
-        Assert.assertEquals(intensity, isoC.getIntensity(), 0.001);
+        Assertions.assertNotNull(isoC);
+        Assertions.assertEquals(mass, isoC.getMass(), 0.001);
+        Assertions.assertEquals(intensity, isoC.getIntensity(), 0.001);
     }
 
     /**
@@ -77,7 +78,7 @@ public class IsotopeContainerTest extends CDKTestCase {
         IsotopeContainer isoC = new IsotopeContainer();
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
         isoC.setFormula(formula);
-        Assert.assertNotNull(isoC);
+        Assertions.assertNotNull(isoC);
     }
 
     /**
@@ -89,7 +90,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     public void testSetMass_double() {
         IsotopeContainer isoC = new IsotopeContainer();
         isoC.setMass(130.00);
-        Assert.assertNotNull(isoC);
+        Assertions.assertNotNull(isoC);
     }
 
     /**
@@ -101,7 +102,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     public void testSetIntensity_double() {
         IsotopeContainer isoC = new IsotopeContainer();
         isoC.setIntensity(5000000.0);
-        Assert.assertNotNull(isoC);
+        Assertions.assertNotNull(isoC);
     }
 
     /**
@@ -114,7 +115,7 @@ public class IsotopeContainerTest extends CDKTestCase {
         IsotopeContainer isoC = new IsotopeContainer();
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
         isoC.setFormula(formula);
-        Assert.assertEquals(formula, isoC.getFormula());
+        Assertions.assertEquals(formula, isoC.getFormula());
     }
 
     /**
@@ -127,7 +128,7 @@ public class IsotopeContainerTest extends CDKTestCase {
         IsotopeContainer isoC = new IsotopeContainer();
         double mass = 130.00;
         isoC.setMass(mass);
-        Assert.assertEquals(mass, isoC.getMass(), 0.001);
+        Assertions.assertEquals(mass, isoC.getMass(), 0.001);
 
     }
 
@@ -141,7 +142,7 @@ public class IsotopeContainerTest extends CDKTestCase {
         IsotopeContainer isoC = new IsotopeContainer();
         double intensity = 130.00;
         isoC.setIntensity(intensity);
-        Assert.assertEquals(intensity, isoC.getIntensity(), 0.001);
+        Assertions.assertEquals(intensity, isoC.getIntensity(), 0.001);
     }
 
     /**
@@ -160,9 +161,9 @@ public class IsotopeContainerTest extends CDKTestCase {
         isoC.setIntensity(intensity);
 
         IsotopeContainer clone = (IsotopeContainer) isoC.clone();
-        Assert.assertEquals(mass, clone.getMass(), 0.001);
-        Assert.assertEquals(intensity, clone.getIntensity(), 0.001);
-        Assert.assertEquals(formula, clone.getFormula());
+        Assertions.assertEquals(mass, clone.getMass(), 0.001);
+        Assertions.assertEquals(intensity, clone.getIntensity(), 0.001);
+        Assertions.assertEquals(formula, clone.getFormula());
 
     }
 

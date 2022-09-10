@@ -25,6 +25,7 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 
@@ -57,7 +58,7 @@ public class MCSPlusTest {
     public void testSomeMethod() throws CDKException {
 
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(new MCSPlus().getOverlaps(new AtomContainer(), new AtomContainer(), true));
+        Assertions.assertNotNull(new MCSPlus().getOverlaps(new AtomContainer(), new AtomContainer(), true));
 
     }
 }

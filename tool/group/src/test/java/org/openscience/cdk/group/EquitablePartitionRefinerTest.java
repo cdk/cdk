@@ -25,6 +25,7 @@ package org.openscience.cdk.group;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -91,7 +92,7 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
     @Test
     public void constructorTest() {
         EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
-        Assert.assertNotNull(refiner);
+        Assertions.assertNotNull(refiner);
     }
 
     @Test
@@ -100,7 +101,7 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
         Partition coarser = Partition.fromString("[0|1,2,3]");
         Partition finer = refiner.refine(coarser);
         Partition expected = Partition.fromString("[0|1,2|3]");
-        Assert.assertEquals(expected, finer);
+        Assertions.assertEquals(expected, finer);
     }
 
 }

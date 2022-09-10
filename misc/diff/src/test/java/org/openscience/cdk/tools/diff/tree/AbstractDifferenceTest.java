@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,7 +30,7 @@ public class AbstractDifferenceTest {
     @Test
     public void testConstructor() {
         DifferenceClass diffClass = new DifferenceClass();
-        Assert.assertNotNull(diffClass);
+        Assertions.assertNotNull(diffClass);
     }
 
     protected class DifferenceClass extends AbstractDifference {

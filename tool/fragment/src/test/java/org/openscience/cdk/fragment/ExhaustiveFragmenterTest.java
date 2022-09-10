@@ -20,6 +20,7 @@
 package org.openscience.cdk.fragment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -54,7 +55,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("CCC");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
-        Assert.assertEquals(0, frags.length);
+        Assertions.assertEquals(0, frags.length);
     }
 
     @Test
@@ -62,7 +63,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCC1");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
-        Assert.assertEquals(0, frags.length);
+        Assertions.assertEquals(0, frags.length);
     }
 
     @Test
@@ -78,7 +79,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1CC");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
-        Assert.assertNotNull(frags);
+        Assertions.assertNotNull(frags);
         org.hamcrest.MatcherAssert.assertThat(frags, is(new String[]{"c1ccccc1"}));
     }
 
@@ -87,10 +88,10 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1Cc1ccccc1");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
-        Assert.assertNotNull(frags);
+        Assertions.assertNotNull(frags);
         org.hamcrest.MatcherAssert.assertThat(Arrays.asList(frags), hasItems("c1ccc(cc1)C", "c1ccccc1"));
-        Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
-        Assert.assertEquals(2, fragmenter.getFragmentsAsContainers().length);
+        Assertions.assertNotNull(fragmenter.getFragmentsAsContainers());
+        Assertions.assertEquals(2, fragmenter.getFragmentsAsContainers().length);
 
     }
 
@@ -99,11 +100,11 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1c1ccccc1");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
-        Assert.assertNotNull(frags);
+        Assertions.assertNotNull(frags);
         org.hamcrest.MatcherAssert.assertThat(frags, is(new String[]{"c1ccccc1"}));
 
-        Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
-        Assert.assertEquals(1, fragmenter.getFragmentsAsContainers().length);
+        Assertions.assertNotNull(fragmenter.getFragmentsAsContainers());
+        Assertions.assertEquals(1, fragmenter.getFragmentsAsContainers().length);
 
     }
 
@@ -112,11 +113,11 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
         fragmenter.generateFragments(mol);
         List<String> frags = Arrays.asList(fragmenter.getFragments());
-        Assert.assertNotNull(frags);
-        Assert.assertEquals(25, frags.size());
+        Assertions.assertNotNull(frags);
+        Assertions.assertEquals(25, frags.size());
 
-        Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
-        Assert.assertEquals(25, fragmenter.getFragmentsAsContainers().length);
+        Assertions.assertNotNull(fragmenter.getFragmentsAsContainers());
+        Assertions.assertEquals(25, fragmenter.getFragmentsAsContainers().length);
 
         org.hamcrest.MatcherAssert.assertThat(frags, hasItems("c1ccccc1", "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3", "c1ccc(cc1)C2(C)CCC(C)C2"));
     }
@@ -127,8 +128,8 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.setMinimumFragmentSize(6);
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
-        Assert.assertNotNull(frags);
-        Assert.assertEquals(1, frags.length);
-        Assert.assertTrue(frags[0].equals("C1CCCCC1"));
+        Assertions.assertNotNull(frags);
+        Assertions.assertEquals(1, frags.length);
+        Assertions.assertTrue(frags[0].equals("C1CCCCC1"));
     }
 }

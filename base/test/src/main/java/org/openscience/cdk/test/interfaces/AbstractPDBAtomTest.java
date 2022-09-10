@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IPDBAtom;
@@ -29,10 +30,10 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         a.setSymbol("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
-        Assert.assertNotNull(fract);
-        Assert.assertEquals(0.5, fract.x, 0.001);
-        Assert.assertEquals(0.5, fract.y, 0.001);
-        Assert.assertEquals(0.5, fract.z, 0.001);
+        Assertions.assertNotNull(fract);
+        Assertions.assertEquals(0.5, fract.x, 0.001);
+        Assertions.assertEquals(0.5, fract.y, 0.001);
+        Assertions.assertEquals(0.5, fract.z, 0.001);
     }
 
     @Test
@@ -48,7 +49,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
 
         IPDBAtom a = (IPDBAtom) newChemObject();
         a.setPoint3d(point3d);
-        Assert.assertNotNull(a.getPoint3d());
+        Assertions.assertNotNull(a.getPoint3d());
         assertEquals(point3d, a.getPoint3d(), 0.001);
     }
 
@@ -60,7 +61,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom a = (IPDBAtom) newChemObject();
         a.setSymbol("C");
         a.setPoint3d(point3d);
-        Assert.assertEquals(point3d, a.getPoint3d());
+        Assertions.assertEquals(point3d, a.getPoint3d());
     }
 
     /**
@@ -72,7 +73,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         Object clone = atom.clone();
-        Assert.assertTrue(clone instanceof IAtom);
+        Assertions.assertTrue(clone instanceof IAtom);
     }
 
     /**
@@ -85,7 +86,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         atom.setSymbol("C");
         atom.setPoint3d(new Point3d(2, 3, 4));
         IAtom clone = atom.clone();
-        Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
+        Assertions.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
     /**
@@ -98,7 +99,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         atom.setSymbol("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = atom.clone();
-        Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
+        Assertions.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 
     /**
@@ -111,8 +112,8 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         atom.setSymbol("C");
         String description = atom.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 
@@ -124,7 +125,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
     public void testDefaultChargeValue() {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
-        Assert.assertEquals(0.00, atom.getCharge(), 0.00000001);
+        Assertions.assertEquals(0.00, atom.getCharge(), 0.00000001);
     }
 
     @Test
@@ -132,7 +133,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setRecord("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N");
-        Assert.assertEquals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N", atom.getRecord());
+        Assertions.assertEquals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N", atom.getRecord());
     }
 
     @Test
@@ -145,7 +146,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setTempFactor(0.0);
-        Assert.assertEquals(atom.getTempFactor(), 0.0, 001);
+        Assertions.assertEquals(atom.getTempFactor(), 0.0, 001);
     }
 
     @Test
@@ -163,7 +164,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setResName("PHE");
-        Assert.assertEquals("PHE", atom.getResName());
+        Assertions.assertEquals("PHE", atom.getResName());
     }
 
     @Test
@@ -176,7 +177,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setICode("123");
-        Assert.assertEquals("123", atom.getICode());
+        Assertions.assertEquals("123", atom.getICode());
     }
 
     @Test
@@ -189,7 +190,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setChainID("123");
-        Assert.assertEquals("123", atom.getChainID());
+        Assertions.assertEquals("123", atom.getChainID());
     }
 
     @Test
@@ -202,7 +203,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setAltLoc("123");
-        Assert.assertEquals("123", atom.getAltLoc());
+        Assertions.assertEquals("123", atom.getAltLoc());
     }
 
     @Test
@@ -215,7 +216,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setSegID("123");
-        Assert.assertEquals("123", atom.getSegID());
+        Assertions.assertEquals("123", atom.getSegID());
     }
 
     @Test
@@ -228,7 +229,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setSerial(123);
-        Assert.assertEquals(123, atom.getSerial().intValue());
+        Assertions.assertEquals(123, atom.getSerial().intValue());
     }
 
     @Test
@@ -241,7 +242,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setResSeq("123");
-        Assert.assertEquals("123", atom.getResSeq());
+        Assertions.assertEquals("123", atom.getResSeq());
     }
 
     @Test
@@ -254,7 +255,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setOxt(true);
-        Assert.assertTrue(atom.getOxt());
+        Assertions.assertTrue(atom.getOxt());
     }
 
     @Test
@@ -267,7 +268,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setHetAtom(true);
-        Assert.assertTrue(atom.getHetAtom());
+        Assertions.assertTrue(atom.getHetAtom());
     }
 
     @Test
@@ -280,7 +281,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setOccupancy(1.0);
-        Assert.assertEquals(atom.getOccupancy(), 1.0, 0.01);
+        Assertions.assertEquals(atom.getOccupancy(), 1.0, 0.01);
     }
 
     @Test
@@ -288,7 +289,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setName("123");
-        Assert.assertEquals("123", atom.getName());
+        Assertions.assertEquals("123", atom.getName());
     }
 
     @Test

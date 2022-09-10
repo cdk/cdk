@@ -29,6 +29,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
@@ -58,7 +59,7 @@ public class AtomPlacerTest extends CDKTestCase {
         } catch (NullPointerException npe) {
             npeThrown = true;
         }
-        Assert.assertFalse("Null pointer for empty atoms list", npeThrown);
+        Assertions.assertFalse(npeThrown, "Null pointer for empty atoms list");
     }
 
     @Test
@@ -70,7 +71,7 @@ public class AtomPlacerTest extends CDKTestCase {
         AtomPlacer placer = new AtomPlacer();
         placer.populatePolygonCorners(atoms, new Point2d(0, 0), 0, 10, 10);
         for (IAtom atom : atoms) {
-            Assert.assertNotNull(atom.getPoint2d());
+            Assertions.assertNotNull(atom.getPoint2d());
         }
     }
 

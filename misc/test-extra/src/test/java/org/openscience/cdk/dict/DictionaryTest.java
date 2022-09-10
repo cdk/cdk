@@ -19,6 +19,7 @@
 package org.openscience.cdk.dict;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -36,7 +37,7 @@ public class DictionaryTest extends CDKTestCase {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("chemical"); // this dictionary needs the DefaultHanlder
         Entry entry = dict.getEntry("ionPair".toLowerCase());
-        Assert.assertNotNull(entry);
+        Assertions.assertNotNull(entry);
     }
 
 }

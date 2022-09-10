@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
@@ -265,7 +266,7 @@ public class SmartsExprWriteTest {
 
     @Test public void indoleRoundTrip() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "n1ccc2c1cccc2"));
+        Assertions.assertTrue(Smarts.parse(mol, "n1ccc2c1cccc2"));
         // CDK choice of data structures lose local arrangement but
         // output is still indole
         assertThat(Smarts.generate(mol), is("n1c2c(cc1)cccc2"));
@@ -274,7 +275,7 @@ public class SmartsExprWriteTest {
     @Test
     public void indoleWithExprRoundTrip() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "[n;$(*C),$(*OC)]1ccc2c1cccc2"));
+        Assertions.assertTrue(Smarts.parse(mol, "[n;$(*C),$(*OC)]1ccc2c1cccc2"));
         // CDK choice of data structures lose local arrangement but
         // output is still indole
         assertThat(Smarts.generate(mol), is("[n;$(*C),$(*OC)]1c2c(cc1)cccc2"));
@@ -283,103 +284,103 @@ public class SmartsExprWriteTest {
     @Test
     public void bondTrue() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C~C~N(~O)~O"));
+        Assertions.assertTrue(Smarts.parse(mol, "C~C~N(~O)~O"));
         assertThat(Smarts.generate(mol), is("C~C~N(~O)~O"));
     }
 
     @Test public void bondFalse() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C!~C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C!~C"));
         assertThat(Smarts.generate(mol), is("C!~C"));
     }
 
     @Test public void bondInChain() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C!@C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C!@C"));
         assertThat(Smarts.generate(mol), is("C!@C"));
     }
 
     @Test
     public void bondInRing() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C@C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C@C"));
         assertThat(Smarts.generate(mol), is("C@C"));
     }
 
     @Test
     public void tripleBond() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C#C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C#C"));
         assertThat(Smarts.generate(mol), is("C#C"));
     }
 
     @Test
     public void notTripleBond() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C!#C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C!#C"));
         assertThat(Smarts.generate(mol), is("C!#C"));
     }
 
     @Test
     public void aromaticBond() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "[#6]:[#6]"));
+        Assertions.assertTrue(Smarts.parse(mol, "[#6]:[#6]"));
         assertThat(Smarts.generate(mol), is("[#6]:[#6]"));
     }
 
     @Test
     public void ringClosureExprs() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C1CCCC-,=1"));
+        Assertions.assertTrue(Smarts.parse(mol, "C1CCCC-,=1"));
         assertThat(Smarts.generate(mol), is("C1-,=CCCC1"));
     }
 
     @Test
     public void ringClosureExprs2() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C-,=1CCCC1"));
+        Assertions.assertTrue(Smarts.parse(mol, "C-,=1CCCC1"));
         assertThat(Smarts.generate(mol), is("C1-,=CCCC1"));
     }
 
     @Test
     public void ringClosureExprs3() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C1-,=CCCC1"));
+        Assertions.assertTrue(Smarts.parse(mol, "C1-,=CCCC1"));
         assertThat(Smarts.generate(mol), is("C1CCCC-,=1"));
     }
 
     @Test
     public void reaction() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "c1ccccc1[NH2]>>c1ccccc1N(~O)~O"));
+        Assertions.assertTrue(Smarts.parse(mol, "c1ccccc1[NH2]>>c1ccccc1N(~O)~O"));
         assertThat(Smarts.generate(mol), is("c1c(cccc1)[NH2]>>c1c(cccc1)N(~O)~O"));
     }
 
     @Test
     public void reactionWithMaps() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "c1cccc[c:1]1[NH2:2]>>c1cccc[c:1]1[N:2](~O)~O"));
+        Assertions.assertTrue(Smarts.parse(mol, "c1cccc[c:1]1[NH2:2]>>c1cccc[c:1]1[N:2](~O)~O"));
         assertThat(Smarts.generate(mol), is("c1[c:1](cccc1)[NH2:2]>>c1[c:1](cccc1)[N:2](~O)~O"));
     }
 
     @Test
     public void compGrouping() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "([Na+].[Cl-]).c1ccccc1"));
+        Assertions.assertTrue(Smarts.parse(mol, "([Na+].[Cl-]).c1ccccc1"));
         assertThat(Smarts.generate(mol), is("c1ccccc1.([Na+].[Cl-])"));
     }
 
     @Test
     public void compGroupingOnAgent() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, ">(c1ccccc1[O-].[Na+])>"));
+        Assertions.assertTrue(Smarts.parse(mol, ">(c1ccccc1[O-].[Na+])>"));
         assertThat(Smarts.generate(mol), is(">(c1c(cccc1)[O-].[Na+])>"));
     }
 
     @Test
     public void atomStereo() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C[C@H](O)CC"));
+        Assertions.assertTrue(Smarts.parse(mol, "C[C@H](O)CC"));
         assertThat(Smarts.generate(mol), is("C[C@H1](O)CC"));
     }
 
@@ -392,7 +393,7 @@ public class SmartsExprWriteTest {
     @Test
     public void atomStereoReordered() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C[C@H](O)CC"));
+        Assertions.assertTrue(Smarts.parse(mol, "C[C@H](O)CC"));
         IBond[] bonds = AtomContainerManipulator.getBondArray(mol);
         swap(bonds, 1, 2);
         mol.setBonds(bonds);
@@ -402,7 +403,7 @@ public class SmartsExprWriteTest {
     @Test
     public void atomStereoReordered2() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C[C@H](O)CC"));
+        Assertions.assertTrue(Smarts.parse(mol, "C[C@H](O)CC"));
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(mol);
         swap(atoms, 0, 1);
         mol.setAtoms(atoms);
@@ -412,7 +413,7 @@ public class SmartsExprWriteTest {
     @Test
     public void atomStereoReordered3() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "[C@H](C)(O)CC"));
+        Assertions.assertTrue(Smarts.parse(mol, "[C@H](C)(O)CC"));
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(mol);
         swap(atoms, 0, 1);
         mol.setAtoms(atoms);
@@ -421,13 +422,13 @@ public class SmartsExprWriteTest {
 
     @Test public void atomStereoOrUnspec() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C[C@?H](O)CC"));
+        Assertions.assertTrue(Smarts.parse(mol, "C[C@?H](O)CC"));
         assertThat(Smarts.generate(mol), is("C[CH1@?](O)CC"));
     }
 
     @Test public void bondStereoTrans() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/C=C/C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C/C"));
         assertThat(Smarts.generate(mol), is("C/C=C/C"));
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(mol);
         swap(atoms, 0, 1);
@@ -437,29 +438,29 @@ public class SmartsExprWriteTest {
 
     @Test public void bondStereoCisTrans() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/C=C/,\\C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C/,\\C"));
         assertThat(Smarts.generate(mol), is("C/C=C/,\\C"));
     }
 
     @Test
     public void bondStereoCisUnspec() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/C=C\\?C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C\\?C"));
         assertThat(Smarts.generate(mol), is("C/C=C\\?C"));
         // not trans same as cis/unspec
         mol.removeAllElements();
-        assertTrue(Smarts.parse(mol, "C/C=C!/C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C!/C"));
         assertThat(Smarts.generate(mol), is("C/C=C\\?C"));
     }
 
     @Test
     public void bondStereoTransUnspec() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/?C=C/C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/?C=C/C"));
         assertThat(Smarts.generate(mol), is("C/C=C/?C"));
         // not cis same as trans/unspec
         mol.removeAllElements();
-        assertTrue(Smarts.parse(mol, "C/C=C!\\C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C!\\C"));
         assertThat(Smarts.generate(mol), is("C/C=C/?C"));
     }
 
@@ -467,7 +468,7 @@ public class SmartsExprWriteTest {
     @Test
     public void bondStereoUnspec() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/C=C/?\\?C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C/?\\?C"));
         assertThat(Smarts.generate(mol), is("C/C=C!/!\\C"));
     }
 
@@ -476,21 +477,21 @@ public class SmartsExprWriteTest {
     @Test
     public void bondStereoCisThenTrans() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/C=C\\C=C\\C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C\\C=C\\C"));
         assertThat(Smarts.generate(mol), is("C/C=C\\C=C\\C"));
     }
 
     // make sure we set the bond direction on the correct neighbor
     @Test public void bondStereoCisThenTransWithNbr() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/C=C(C)\\C=C\\C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C(C)\\C=C\\C"));
         assertThat(Smarts.generate(mol), is("C/C=C(C)\\C=C\\C"));
     }
 
     @Test
     public void bondStereoCisThenTransUnspecWithNbr() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/C=C(C)\\C=C\\?O"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C(C)\\C=C\\?O"));
         assertThat(Smarts.generate(mol), is("C/C=C(C)\\C=C\\?O"));
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(mol);
         swap(atoms, 0, atoms.length-1);
@@ -503,7 +504,7 @@ public class SmartsExprWriteTest {
     // set 'C/C=C(C)/?C=CO' and there is no way to set the other bond
     @Test public void bondStereoCisThenTransUnspecWithNbrComplex() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/?C=C(C)\\C=C\\O"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/?C=C(C)\\C=C\\O"));
         assertThat(Smarts.generate(mol), is("C/?C=C(C)/C=C/O"));
     }
 
@@ -511,8 +512,8 @@ public class SmartsExprWriteTest {
     // put the queries in a single atom container
     @Test public void multipleReads() {
         QueryAtomContainer mol = new QueryAtomContainer(null);
-        assertTrue(Smarts.parse(mol, "C/C=C/C"));
-        assertTrue(Smarts.parse(mol, "C/C=C\\C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C/C"));
+        Assertions.assertTrue(Smarts.parse(mol, "C/C=C\\C"));
         assertThat(Smarts.generate(mol), is("C/C=C/C.C/C=C\\C"));
     }
 

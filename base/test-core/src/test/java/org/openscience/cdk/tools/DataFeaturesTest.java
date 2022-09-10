@@ -20,6 +20,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -35,7 +36,7 @@ public class DataFeaturesTest extends CDKTestCase {
 
     @Test
     public void testDataFeatures() {
-        Assert.assertFalse(DataFeatures.HAS_2D_COORDINATES == -1);
+        Assertions.assertFalse(DataFeatures.HAS_2D_COORDINATES == -1);
     }
 
     // FIXME: should add a test here that used introspection and test whether there

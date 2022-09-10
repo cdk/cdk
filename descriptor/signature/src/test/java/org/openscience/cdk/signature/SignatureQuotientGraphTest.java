@@ -23,6 +23,7 @@
 package org.openscience.cdk.signature;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,14 +43,14 @@ public class SignatureQuotientGraphTest extends AbstractSignatureTest {
         singleBond.addAtom(builder.newInstance(IAtom.class, "C"));
         singleBond.addBond(0, 1, IBond.Order.SINGLE);
         SignatureQuotientGraph quotientGraph = new SignatureQuotientGraph(singleBond);
-        Assert.assertTrue(quotientGraph.isConnected(0, 1));
+        Assertions.assertTrue(quotientGraph.isConnected(0, 1));
     }
 
     public void checkParameters(SignatureQuotientGraph qGraph, int expectedVertexCount, int expectedEdgeCount,
             int expectedLoopEdgeCount) {
-        Assert.assertEquals(expectedVertexCount, qGraph.getVertexCount());
-        Assert.assertEquals(expectedEdgeCount, qGraph.getEdgeCount());
-        Assert.assertEquals(expectedLoopEdgeCount, qGraph.numberOfLoopEdges());
+        Assertions.assertEquals(expectedVertexCount, qGraph.getVertexCount());
+        Assertions.assertEquals(expectedEdgeCount, qGraph.getEdgeCount());
+        Assertions.assertEquals(expectedLoopEdgeCount, qGraph.numberOfLoopEdges());
     }
 
     @Test

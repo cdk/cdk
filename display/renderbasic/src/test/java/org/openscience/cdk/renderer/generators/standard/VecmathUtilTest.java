@@ -214,8 +214,8 @@ public class VecmathUtilTest {
     public void parallelLines() {
         Tuple2d intersect = VecmathUtil.intersection(new Point2d(0, 1), new Vector2d(0, 1), new Point2d(0, -1),
                 new Vector2d(0, 1));
-        assertTrue(Double.isNaN(intersect.x));
-        assertTrue(Double.isNaN(intersect.y));
+        Assertions.assertTrue(Double.isNaN(intersect.x));
+        Assertions.assertTrue(Double.isNaN(intersect.y));
     }
 
     @Test

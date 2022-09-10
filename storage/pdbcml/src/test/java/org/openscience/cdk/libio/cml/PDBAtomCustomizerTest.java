@@ -1,6 +1,7 @@
 package org.openscience.cdk.libio.cml;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,6 +38,6 @@ public class PDBAtomCustomizerTest {
         logger.debug("****************************** testPDBAtomCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.contains("<scalar dictRef=\"pdb:resName"));
+        Assertions.assertTrue(cmlContent.contains("<scalar dictRef=\"pdb:resName"));
     }
 }

@@ -19,6 +19,7 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -56,7 +57,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 
     @Test
     public void testEStateAtomTypeMatcher() {
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
     }
 
     IRingSet getRings() {
@@ -86,7 +87,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+            Assertions.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
         }
     }
 
@@ -174,14 +175,14 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         mol.addBond(b19);
 
         matcher.setRingSet(getRings());
-        Assert.assertTrue(testAtom("SsCH3", a1));
-        Assert.assertTrue(testAtom("SssssC", a2));
-        Assert.assertTrue(testAtom("SsCH3", a3));
-        Assert.assertTrue(testAtom("SsCH3", a4));
-        Assert.assertTrue(testAtom("SssCH2", a5));
-        Assert.assertTrue(testAtom("SsCH3", a6));
-        Assert.assertTrue(testAtom("SsH", a7));
-        Assert.assertTrue(testAtom("SsH", a8));
+        Assertions.assertTrue(testAtom("SsCH3", a1));
+        Assertions.assertTrue(testAtom("SssssC", a2));
+        Assertions.assertTrue(testAtom("SsCH3", a3));
+        Assertions.assertTrue(testAtom("SsCH3", a4));
+        Assertions.assertTrue(testAtom("SssCH2", a5));
+        Assertions.assertTrue(testAtom("SsCH3", a6));
+        Assertions.assertTrue(testAtom("SsH", a7));
+        Assertions.assertTrue(testAtom("SsH", a8));
     }
 
     @Test
@@ -224,11 +225,11 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         mol.addBond(b8);
 
         matcher.setRingSet(getRings());
-        Assert.assertTrue(testAtom("SdCH2", a1));
-        Assert.assertTrue(testAtom("SdsCH", a2));
-        Assert.assertTrue(testAtom("SdsCH", a3));
-        Assert.assertTrue(testAtom("SdNH", a4));
-        Assert.assertTrue(testAtom("SsH", a9));
+        Assertions.assertTrue(testAtom("SdCH2", a1));
+        Assertions.assertTrue(testAtom("SdsCH", a2));
+        Assertions.assertTrue(testAtom("SdsCH", a3));
+        Assertions.assertTrue(testAtom("SdNH", a4));
+        Assertions.assertTrue(testAtom("SsH", a9));
     }
 
     @Test
@@ -267,11 +268,11 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         mol.addBond(b7);
 
         matcher.setRingSet(getRings());
-        Assert.assertTrue(testAtom("StCH", a1));
-        Assert.assertTrue(testAtom("StsC", a2));
-        Assert.assertTrue(testAtom("SssCH2", a3));
-        Assert.assertTrue(testAtom("StsC", a4));
-        Assert.assertTrue(testAtom("StN", a5));
+        Assertions.assertTrue(testAtom("StCH", a1));
+        Assertions.assertTrue(testAtom("StsC", a2));
+        Assertions.assertTrue(testAtom("SssCH2", a3));
+        Assertions.assertTrue(testAtom("StsC", a4));
+        Assertions.assertTrue(testAtom("StN", a5));
     }
 
     @Test
@@ -342,13 +343,13 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         mol.addBond(b14);
 
         matcher.setRingSet(getRings());
-        Assert.assertTrue(testAtom("SaaCH", a1));
-        Assert.assertTrue(testAtom("SaaCH", a2));
-        Assert.assertTrue(testAtom("SaaN", a3));
-        Assert.assertTrue(testAtom("SaaCH", a4));
-        Assert.assertTrue(testAtom("SaaCH", a5));
-        Assert.assertTrue(testAtom("SsaaC", a6));
-        Assert.assertTrue(testAtom("SsCH3", a7));
+        Assertions.assertTrue(testAtom("SaaCH", a1));
+        Assertions.assertTrue(testAtom("SaaCH", a2));
+        Assertions.assertTrue(testAtom("SaaN", a3));
+        Assertions.assertTrue(testAtom("SaaCH", a4));
+        Assertions.assertTrue(testAtom("SaaCH", a5));
+        Assertions.assertTrue(testAtom("SsaaC", a6));
+        Assertions.assertTrue(testAtom("SsCH3", a7));
     }
 
     @Test
@@ -362,7 +363,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         matcher.setRingSet(getRings());
         for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.C) {
-                Assert.assertTrue(testAtom("SaaCH", atom));
+                Assertions.assertTrue(testAtom("SaaCH", atom));
             }
         }
     }
@@ -457,16 +458,16 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         mol.addBond(b19);
 
         matcher.setRingSet(getRings());
-        Assert.assertTrue(testAtom("SaaCH", a1));
-        Assert.assertTrue(testAtom("SaaCH", a2));
-        Assert.assertTrue(testAtom("SaaaC", a3));
-        Assert.assertTrue(testAtom("SaaCH", a4));
-        Assert.assertTrue(testAtom("SaaCH", a5));
-        Assert.assertTrue(testAtom("SaaCH", a6));
-        Assert.assertTrue(testAtom("SaaCH", a7));
-        Assert.assertTrue(testAtom("SaaaC", a8));
-        Assert.assertTrue(testAtom("SaaCH", a9));
-        Assert.assertTrue(testAtom("SaaCH", a10));
+        Assertions.assertTrue(testAtom("SaaCH", a1));
+        Assertions.assertTrue(testAtom("SaaCH", a2));
+        Assertions.assertTrue(testAtom("SaaaC", a3));
+        Assertions.assertTrue(testAtom("SaaCH", a4));
+        Assertions.assertTrue(testAtom("SaaCH", a5));
+        Assertions.assertTrue(testAtom("SaaCH", a6));
+        Assertions.assertTrue(testAtom("SaaCH", a7));
+        Assertions.assertTrue(testAtom("SaaaC", a8));
+        Assertions.assertTrue(testAtom("SaaCH", a9));
+        Assertions.assertTrue(testAtom("SaaCH", a10));
     }
 
     @Test
@@ -506,8 +507,8 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         mol.addBond(b7);
 
         matcher.setRingSet(getRings());
-        Assert.assertTrue(testAtom("SsCH3", a1));
-        Assert.assertTrue(testAtom("SsNpH3", a2));
+        Assertions.assertTrue(testAtom("SsCH3", a1));
+        Assertions.assertTrue(testAtom("SsNpH3", a2));
     }
 
     @Test
@@ -522,8 +523,8 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         mol.addAtom(a2);
 
         matcher.setRingSet(getRings());
-        Assert.assertTrue(testAtom("SNap", a1));
-        Assert.assertTrue(testAtom("SClm", a2));
+        Assertions.assertTrue(testAtom("SNap", a1));
+        Assertions.assertTrue(testAtom("SClm", a2));
 
         //Testing with different presentation - [Na]Cl
         mol = new AtomContainer();
@@ -535,8 +536,8 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         mol.addBond(b1);
 
         matcher.setRingSet(getRings());
-        Assert.assertTrue(testAtom("SsNa", a1));
-        Assert.assertTrue(testAtom("SsCl", a2));
+        Assertions.assertTrue(testAtom("SsNa", a1));
+        Assertions.assertTrue(testAtom("SsCl", a2));
     }
 
 }

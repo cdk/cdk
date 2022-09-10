@@ -19,6 +19,7 @@
 package org.openscience.cdk.geometry;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -54,29 +55,29 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     public void testNotionalToCartesian_double_double_double_double_double_double() {
         Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(1.0, 2.0, 3.0, 90.0, 90.0, 90.0);
         // the a axis
-        Assert.assertEquals(1.0, cardAxes[0].x, 0.001);
-        Assert.assertEquals(0.0, cardAxes[0].y, 0.001);
-        Assert.assertEquals(0.0, cardAxes[0].z, 0.001);
+        Assertions.assertEquals(1.0, cardAxes[0].x, 0.001);
+        Assertions.assertEquals(0.0, cardAxes[0].y, 0.001);
+        Assertions.assertEquals(0.0, cardAxes[0].z, 0.001);
         // the b axis
-        Assert.assertEquals(0.0, cardAxes[1].x, 0.001);
-        Assert.assertEquals(2.0, cardAxes[1].y, 0.001);
-        Assert.assertEquals(0.0, cardAxes[1].z, 0.001);
+        Assertions.assertEquals(0.0, cardAxes[1].x, 0.001);
+        Assertions.assertEquals(2.0, cardAxes[1].y, 0.001);
+        Assertions.assertEquals(0.0, cardAxes[1].z, 0.001);
         // the c axis
-        Assert.assertEquals(0.0, cardAxes[2].x, 0.001);
-        Assert.assertEquals(0.0, cardAxes[2].y, 0.001);
-        Assert.assertEquals(3.0, cardAxes[2].z, 0.001);
+        Assertions.assertEquals(0.0, cardAxes[2].x, 0.001);
+        Assertions.assertEquals(0.0, cardAxes[2].y, 0.001);
+        Assertions.assertEquals(3.0, cardAxes[2].z, 0.001);
 
         // some sanity checking: roundtripping
         cardAxes = CrystalGeometryTools.notionalToCartesian(9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821);
         Vector3d a = cardAxes[0];
         Vector3d b = cardAxes[1];
         Vector3d c = cardAxes[2];
-        Assert.assertEquals(69.043, Math.toDegrees(b.angle(c)), 0.001);
-        Assert.assertEquals(74.441, Math.toDegrees(a.angle(c)), 0.001);
-        Assert.assertEquals(77.821, Math.toDegrees(b.angle(a)), 0.001);
-        Assert.assertEquals(9.3323, a.length(), 0.0001);
-        Assert.assertEquals(10.1989, b.length(), 0.0001);
-        Assert.assertEquals(11.2477, c.length(), 0.0001);
+        Assertions.assertEquals(69.043, Math.toDegrees(b.angle(c)), 0.001);
+        Assertions.assertEquals(74.441, Math.toDegrees(a.angle(c)), 0.001);
+        Assertions.assertEquals(77.821, Math.toDegrees(b.angle(a)), 0.001);
+        Assertions.assertEquals(9.3323, a.length(), 0.0001);
+        Assertions.assertEquals(10.1989, b.length(), 0.0001);
+        Assertions.assertEquals(11.2477, c.length(), 0.0001);
     }
 
     /**
@@ -89,12 +90,12 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
         double[] notionalCoords = CrystalGeometryTools.cartesianToNotional(a, b, c);
-        Assert.assertEquals(1.0, notionalCoords[0], 0.001);
-        Assert.assertEquals(2.0, notionalCoords[1], 0.001);
-        Assert.assertEquals(3.0, notionalCoords[2], 0.001);
-        Assert.assertEquals(90.0, notionalCoords[3], 0.001);
-        Assert.assertEquals(90.0, notionalCoords[4], 0.001);
-        Assert.assertEquals(90.0, notionalCoords[5], 0.001);
+        Assertions.assertEquals(1.0, notionalCoords[0], 0.001);
+        Assertions.assertEquals(2.0, notionalCoords[1], 0.001);
+        Assertions.assertEquals(3.0, notionalCoords[2], 0.001);
+        Assertions.assertEquals(90.0, notionalCoords[3], 0.001);
+        Assertions.assertEquals(90.0, notionalCoords[4], 0.001);
+        Assertions.assertEquals(90.0, notionalCoords[5], 0.001);
     }
 
     /**
@@ -108,9 +109,9 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
         Point3d fractCoord = new Point3d(0.25, 0.50, 0.75);
         Point3d cartCoord = CrystalGeometryTools.fractionalToCartesian(a, b, c, fractCoord);
-        Assert.assertEquals(0.25, cartCoord.x, 0.001);
-        Assert.assertEquals(1.0, cartCoord.y, 0.001);
-        Assert.assertEquals(2.25, cartCoord.z, 0.001);
+        Assertions.assertEquals(0.25, cartCoord.x, 0.001);
+        Assertions.assertEquals(1.0, cartCoord.y, 0.001);
+        Assertions.assertEquals(2.25, cartCoord.z, 0.001);
     }
 
     /**
@@ -127,9 +128,9 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
 
         Point3d cartCoords = CrystalGeometryTools.fractionalToCartesian(a, b, c, new Point3d(0.517879, 0.258121,
                 0.698477));
-        Assert.assertEquals(7.495, cartCoords.x, 0.001);
-        Assert.assertEquals(4.993, cartCoords.y, 0.001);
-        Assert.assertEquals(7.171, cartCoords.z, 0.001);
+        Assertions.assertEquals(7.495, cartCoords.x, 0.001);
+        Assertions.assertEquals(4.993, cartCoords.y, 0.001);
+        Assertions.assertEquals(7.171, cartCoords.z, 0.001);
     }
 
     /**
@@ -143,9 +144,9 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
         Point3d cartCoord = new Point3d(0.25, 1.0, 2.25);
         Point3d fractCoord = CrystalGeometryTools.cartesianToFractional(a, b, c, cartCoord);
-        Assert.assertEquals(0.25, fractCoord.x, 0.001);
-        Assert.assertEquals(0.50, fractCoord.y, 0.001);
-        Assert.assertEquals(0.75, fractCoord.z, 0.001);
+        Assertions.assertEquals(0.25, fractCoord.x, 0.001);
+        Assertions.assertEquals(0.50, fractCoord.y, 0.001);
+        Assertions.assertEquals(0.75, fractCoord.z, 0.001);
     }
 
     /**
@@ -155,7 +156,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     public void testCalcAxisLength() {
         Vector3d a = new Vector3d(1.0, 1.0, 1.0);
         double length = a.length();
-        Assert.assertEquals(Math.sqrt(3.0), length, 0.001);
+        Assertions.assertEquals(Math.sqrt(3.0), length, 0.001);
     }
 
     /**
@@ -166,13 +167,13 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     public void testCalcAxisLength2() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
         double length = a.length();
-        Assert.assertEquals(1.0, length, 0.001);
+        Assertions.assertEquals(1.0, length, 0.001);
         Vector3d b = new Vector3d(0.0, 1.0, 0.0);
         length = b.length();
-        Assert.assertEquals(1.0, length, 0.001);
+        Assertions.assertEquals(1.0, length, 0.001);
         Vector3d c = new Vector3d(0.0, 0.0, 1.0);
         length = c.length();
-        Assert.assertEquals(1.0, length, 0.001);
+        Assertions.assertEquals(1.0, length, 0.001);
     }
 
     /**
@@ -183,7 +184,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
         double angle = b.angle(c) * 180.0 / Math.PI;
-        Assert.assertEquals(90.0, angle, 0.001);
+        Assertions.assertEquals(90.0, angle, 0.001);
     }
 
     /**
@@ -194,7 +195,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Vector3d b = new Vector3d(0.0, 1.0, 1.0);
         Vector3d c = new Vector3d(0.0, 0.0, 1.0);
         double angle = b.angle(c) * 180.0 / Math.PI;
-        Assert.assertEquals(45.0, angle, 0.001);
+        Assertions.assertEquals(45.0, angle, 0.001);
     }
 
     /**
@@ -205,7 +206,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     public void testCalcAngle3() {
         Vector3d b = new Vector3d(4.5, 3.1, 1.7);
         double angle = b.angle(b) * 180.0 / Math.PI;
-        Assert.assertEquals(0.0, angle, 0.001);
+        Assertions.assertEquals(0.0, angle, 0.001);
     }
 
     /**
@@ -219,12 +220,12 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Vector3d b = cardAxes[1];
         Vector3d c = cardAxes[2];
         double[] notionalCoords = CrystalGeometryTools.cartesianToNotional(a, b, c);
-        Assert.assertEquals(7.6, notionalCoords[0], 0.001);
-        Assert.assertEquals(3.9, notionalCoords[1], 0.001);
-        Assert.assertEquals(10.3, notionalCoords[2], 0.001);
-        Assert.assertEquals(67.0, notionalCoords[3], 0.001);
-        Assert.assertEquals(91.2, notionalCoords[4], 0.001);
-        Assert.assertEquals(110.5, notionalCoords[5], 0.001);
+        Assertions.assertEquals(7.6, notionalCoords[0], 0.001);
+        Assertions.assertEquals(3.9, notionalCoords[1], 0.001);
+        Assertions.assertEquals(10.3, notionalCoords[2], 0.001);
+        Assertions.assertEquals(67.0, notionalCoords[3], 0.001);
+        Assertions.assertEquals(91.2, notionalCoords[4], 0.001);
+        Assertions.assertEquals(110.5, notionalCoords[5], 0.001);
     }
 
     /**
@@ -244,14 +245,14 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Vector3d a3 = doubleAxes[0];
         Vector3d b3 = doubleAxes[1];
         Vector3d c3 = doubleAxes[2];
-        Assert.assertEquals(a.x, a3.x, 0.001);
-        Assert.assertEquals(a.y, a3.y, 0.001);
-        Assert.assertEquals(a.z, a3.z, 0.001);
-        Assert.assertEquals(b.x, b3.x, 0.001);
-        Assert.assertEquals(b.y, b3.y, 0.001);
-        Assert.assertEquals(b.z, b3.z, 0.001);
-        Assert.assertEquals(c.x, c3.x, 0.001);
-        Assert.assertEquals(c.y, c3.y, 0.001);
-        Assert.assertEquals(c.z, c3.z, 0.001);
+        Assertions.assertEquals(a.x, a3.x, 0.001);
+        Assertions.assertEquals(a.y, a3.y, 0.001);
+        Assertions.assertEquals(a.z, a3.z, 0.001);
+        Assertions.assertEquals(b.x, b3.x, 0.001);
+        Assertions.assertEquals(b.y, b3.y, 0.001);
+        Assertions.assertEquals(b.z, b3.z, 0.001);
+        Assertions.assertEquals(c.x, c3.x, 0.001);
+        Assertions.assertEquals(c.y, c3.y, 0.001);
+        Assertions.assertEquals(c.z, c3.z, 0.001);
     }
 }

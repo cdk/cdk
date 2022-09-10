@@ -34,11 +34,11 @@ public class PrimesTest extends CDKTestCase {
 
     @Test
     public void testGetPrimeAt_int() {
-        Assert.assertEquals(2, Primes.getPrimeAt(0));
+        Assertions.assertEquals(2, Primes.getPrimeAt(0));
 
         try {
             Primes.getPrimeAt(2229);
-            Assert.fail("Should fail her, because it contains only X primes.");
+            Assertions.fail("Should fail her, because it contains only X primes.");
         } catch (ArrayIndexOutOfBoundsException exception) {
             // OK, that should happen
         }

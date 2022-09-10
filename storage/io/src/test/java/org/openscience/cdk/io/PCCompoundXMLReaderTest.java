@@ -28,6 +28,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -51,7 +52,7 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() throws Exception {
         PCCompoundXMLReader reader = new PCCompoundXMLReader();
-        Assert.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test
@@ -62,25 +63,25 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
         // check atom stuff
-        Assert.assertEquals(14, molecule.getAtomCount());
-        Assert.assertEquals("O", molecule.getAtom(0).getSymbol());
-        Assert.assertEquals(Integer.valueOf(-1), molecule.getAtom(0).getFormalCharge());
-        Assert.assertEquals("N", molecule.getAtom(1).getSymbol());
-        Assert.assertEquals(Integer.valueOf(1), molecule.getAtom(1).getFormalCharge());
+        Assertions.assertEquals(14, molecule.getAtomCount());
+        Assertions.assertEquals("O", molecule.getAtom(0).getSymbol());
+        Assertions.assertEquals(Integer.valueOf(-1), molecule.getAtom(0).getFormalCharge());
+        Assertions.assertEquals("N", molecule.getAtom(1).getSymbol());
+        Assertions.assertEquals(Integer.valueOf(1), molecule.getAtom(1).getFormalCharge());
 
         // check bond stuff
-        Assert.assertEquals(13, molecule.getBondCount());
-        Assert.assertNotNull(molecule.getBond(3));
+        Assertions.assertEquals(13, molecule.getBondCount());
+        Assertions.assertNotNull(molecule.getBond(3));
 
         // coordinates
-        Assert.assertNull(molecule.getAtom(0).getPoint3d());
+        Assertions.assertNull(molecule.getAtom(0).getPoint3d());
         Point2d point = molecule.getAtom(0).getPoint2d();
-        Assert.assertNotNull(point);
-        Assert.assertEquals(3.7320508956909, point.x, 0.00000001);
-        Assert.assertEquals(0.5, point.y, 0.00000001);
+        Assertions.assertNotNull(point);
+        Assertions.assertEquals(3.7320508956909, point.x, 0.00000001);
+        Assertions.assertEquals(0.5, point.y, 0.00000001);
     }
 
     @Test
@@ -91,15 +92,15 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
         // check atom stuff
-        Assert.assertEquals(8, molecule.getAtomCount());
-        Assert.assertNull(molecule.getAtom(0).getPoint2d());
+        Assertions.assertEquals(8, molecule.getAtomCount());
+        Assertions.assertNull(molecule.getAtom(0).getPoint2d());
         Point3d point = molecule.getAtom(0).getPoint3d();
-        Assert.assertNotNull(point);
-        Assert.assertEquals(-0.9598, point.x, 0.0001);
-        Assert.assertEquals(1.5616, point.y, 0.0001);
-        Assert.assertEquals(1.8714, point.z, 0.0001);
+        Assertions.assertNotNull(point);
+        Assertions.assertEquals(-0.9598, point.x, 0.0001);
+        Assertions.assertEquals(1.5616, point.y, 0.0001);
+        Assertions.assertEquals(1.8714, point.z, 0.0001);
     }
 }

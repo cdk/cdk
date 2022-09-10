@@ -19,6 +19,7 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -37,7 +38,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
     @Disabled
     @Test
     public void testCharges_pOC() throws Exception {
-        Assert.fail("Not tested yet");
+        Assertions.fail("Not tested yet");
     }
 
     /**
@@ -47,7 +48,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
     @Disabled
     @Test
     public void testCharges_pOP() throws Exception {
-        Assert.fail("Not tested yet");
+        Assertions.fail("Not tested yet");
     }
 
     /**
@@ -57,7 +58,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
     @Disabled
     @Test
     public void testCharges_pOS() throws Exception {
-        Assert.fail("Not tested yet");
+        Assertions.fail("Not tested yet");
     }
 
     /**
@@ -67,7 +68,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
     @Disabled
     @Test
     public void testCharges_p_p() throws Exception {
-        Assert.fail("Not tested yet");
+        Assertions.fail("Not tested yet");
     }
 
     /**
@@ -77,7 +78,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
     @Disabled
     @Test
     public void testCharges_p_n() throws Exception {
-        Assert.fail("Not tested yet");
+        Assertions.fail("Not tested yet");
     }
 
 }

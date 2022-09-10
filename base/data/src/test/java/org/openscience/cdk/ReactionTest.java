@@ -23,6 +23,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IReaction;
@@ -43,10 +44,10 @@ public class ReactionTest extends AbstractReactionTest {
     @Test
     public void testReaction() {
         IReaction reaction = new Reaction();
-        Assert.assertNotNull(reaction);
-        Assert.assertEquals(0, reaction.getReactantCount());
-        Assert.assertEquals(0, reaction.getProductCount());
-        Assert.assertEquals(IReaction.Direction.FORWARD, reaction.getDirection());
+        Assertions.assertNotNull(reaction);
+        Assertions.assertEquals(0, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getProductCount());
+        Assertions.assertEquals(IReaction.Direction.FORWARD, reaction.getDirection());
     }
 
 }

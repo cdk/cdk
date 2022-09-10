@@ -28,6 +28,7 @@ import java.io.StringWriter;
 import javax.vecmath.Vector3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.test.CDKTestCase;
@@ -65,15 +66,15 @@ public class ShelXWriterTest extends CDKTestCase {
         ICrystal rCrystal = resReader.read(new Crystal());
 
         // OK, do checking
-        Assert.assertNotNull(rCrystal);
-        Assert.assertEquals(crystal.getA().x, rCrystal.getA().x, 0.001);
-        Assert.assertEquals(crystal.getA().y, rCrystal.getA().y, 0.001);
-        Assert.assertEquals(crystal.getA().z, rCrystal.getA().z, 0.001);
-        Assert.assertEquals(crystal.getB().x, rCrystal.getB().x, 0.001);
-        Assert.assertEquals(crystal.getB().y, rCrystal.getB().y, 0.001);
-        Assert.assertEquals(crystal.getB().z, rCrystal.getB().z, 0.001);
-        Assert.assertEquals(crystal.getC().x, rCrystal.getC().x, 0.001);
-        Assert.assertEquals(crystal.getC().y, rCrystal.getC().y, 0.001);
-        Assert.assertEquals(crystal.getC().z, rCrystal.getC().z, 0.001);
+        Assertions.assertNotNull(rCrystal);
+        Assertions.assertEquals(crystal.getA().x, rCrystal.getA().x, 0.001);
+        Assertions.assertEquals(crystal.getA().y, rCrystal.getA().y, 0.001);
+        Assertions.assertEquals(crystal.getA().z, rCrystal.getA().z, 0.001);
+        Assertions.assertEquals(crystal.getB().x, rCrystal.getB().x, 0.001);
+        Assertions.assertEquals(crystal.getB().y, rCrystal.getB().y, 0.001);
+        Assertions.assertEquals(crystal.getB().z, rCrystal.getB().z, 0.001);
+        Assertions.assertEquals(crystal.getC().x, rCrystal.getC().x, 0.001);
+        Assertions.assertEquals(crystal.getC().y, rCrystal.getC().y, 0.001);
+        Assertions.assertEquals(crystal.getC().z, rCrystal.getC().z, 0.001);
     }
 }

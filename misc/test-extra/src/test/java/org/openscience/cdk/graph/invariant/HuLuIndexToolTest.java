@@ -22,6 +22,7 @@
 package org.openscience.cdk.graph.invariant;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,7 +45,7 @@ public class HuLuIndexToolTest {
                     8.092, 6.05, 3.581, 3.581, 4.6061, 4.6061, 6.8892, 1.6792
             };
             double[] actual = HuLuIndexTool.getAtomWeights(mol);
-            Assert.assertArrayEquals(expected, actual, 0.0001);
+            Assertions.assertArrayEquals(expected, actual, 0.0001);
         }
     }
 
@@ -76,7 +77,7 @@ public class HuLuIndexToolTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("hulu_fig2.mol"))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
-            Assert.assertEquals(17.62199170, HuLuIndexTool.getEAIDNumber(mol), 0.0001);
+            Assertions.assertEquals(17.62199170, HuLuIndexTool.getEAIDNumber(mol), 0.0001);
         }
     }
 
@@ -93,13 +94,13 @@ public class HuLuIndexToolTest {
                 6.0, 7.6603, 16.403043, 7.6603, 10.42043, 5.80979, 5.6645, 8.91325, 5.639325, 3.4639325, 7.7065, 6.2803, 1.66065, 2.4203043
         };
         double[] actual = HuLuIndexTool.getAtomWeights(mol);
-        Assert.assertArrayEquals(expected, actual, 0.0001);
+        Assertions.assertArrayEquals(expected, actual, 0.0001);
     }
 
     private void assertMatrixEquals(double[][] expected, double[][] actual, double epsilon) {
-        assertEquals(expected.length, actual.length);
+        Assertions.assertEquals(expected.length, actual.length);
         for (int i = 0; i < expected.length; i++) {
-            assertArrayEquals(expected[i], actual[i], epsilon);
+            Assertions.assertArrayEquals(expected[i], actual[i], epsilon);
         }
     }
 }

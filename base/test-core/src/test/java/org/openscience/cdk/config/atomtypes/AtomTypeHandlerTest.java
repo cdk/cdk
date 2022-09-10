@@ -20,6 +20,7 @@
 package org.openscience.cdk.config.atomtypes;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.test.CDKTestCase;
@@ -37,41 +38,41 @@ public class AtomTypeHandlerTest extends CDKTestCase {
     @Test
     public void testAtomTypeHandler_IChemObjectBuilder() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
-        Assert.assertNotNull(handler);
+        Assertions.assertNotNull(handler);
     }
 
     @Test
     public void testGetAtomTypes() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read
-        Assert.assertNotNull(handler);
-        Assert.assertNull(handler.getAtomTypes());
+        Assertions.assertNotNull(handler);
+        Assertions.assertNull(handler.getAtomTypes());
     }
 
     @Test
     public void testStartDocument() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
-        Assert.assertNotNull(handler);
-        Assert.assertNull(handler.getAtomTypes());
+        Assertions.assertNotNull(handler);
+        Assertions.assertNull(handler.getAtomTypes());
     }
 
     @Test
     public void testCharacters_arraychar_int_int() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
     @Test
     public void testStartElement_String_String_String_Attributes() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
     @Test
     public void testEndElement_String_String_String() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
 }

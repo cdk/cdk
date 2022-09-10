@@ -19,6 +19,7 @@
 package org.openscience.cdk.graph;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -56,7 +57,7 @@ public class AtomContainerPermutorTest extends CDKTestCase {
                 atoms += result.getAtom(f).getSymbol();
             }
         }
-        Assert.assertEquals(719, counter);
+        Assertions.assertEquals(719, counter);
     }
 
     @Test
@@ -86,7 +87,7 @@ public class AtomContainerPermutorTest extends CDKTestCase {
             }
             //logger.debug(bonds);
         }
-        Assert.assertEquals(119, counter);
+        Assertions.assertEquals(119, counter);
     }
 
 }

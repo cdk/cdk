@@ -19,6 +19,7 @@
 package org.openscience.cdk.smiles;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.test.CDKTestCase;
@@ -37,50 +38,50 @@ public class InvPairTest extends CDKTestCase {
     @Test
     public void testInvPair() {
         InvPair pair = new InvPair();
-        Assert.assertNotNull(pair);
+        Assertions.assertNotNull(pair);
     }
 
     @Test
     public void testInvPair_long_IAtom() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
-        Assert.assertNotNull(pair);
-        Assert.assertEquals(5l, pair.getCurr());
-        Assert.assertEquals(atom, pair.getAtom());
+        Assertions.assertNotNull(pair);
+        Assertions.assertEquals(5l, pair.getCurr());
+        Assertions.assertEquals(atom, pair.getAtom());
     }
 
     @Test
     public void testEquals_Object() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
-        Assert.assertEquals(pair, pair);
-        Assert.assertNotSame("NotSame", pair);
-        Assert.assertNotSame(new InvPair(), pair);
+        Assertions.assertEquals(pair, pair);
+        Assertions.assertNotSame("NotSame", pair);
+        Assertions.assertNotSame(new InvPair(), pair);
     }
 
     @Test
     public void testToString() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
-        Assert.assertNotNull(pair.toString());
-        Assert.assertTrue(pair.toString().length() > 0);
+        Assertions.assertNotNull(pair.toString());
+        Assertions.assertTrue(pair.toString().length() > 0);
     }
 
     @Test
     public void testSetAtom_IAtom() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair();
-        Assert.assertNotSame(atom, pair.getAtom());
+        Assertions.assertNotSame(atom, pair.getAtom());
         pair.setAtom(atom);
-        Assert.assertEquals(atom, pair.getAtom());
+        Assertions.assertEquals(atom, pair.getAtom());
     }
 
     @Test
     public void testGetAtom() {
         InvPair pair = new InvPair();
-        Assert.assertNull(pair.getAtom());
+        Assertions.assertNull(pair.getAtom());
         pair.setAtom(new Atom(Elements.CARBON));
-        Assert.assertNotNull(pair.getAtom());
+        Assertions.assertNotNull(pair.getAtom());
     }
 
     /**
@@ -93,10 +94,10 @@ public class InvPairTest extends CDKTestCase {
         pair.setPrime();
         int prime = pair.getPrime();
         pair.setPrime();
-        Assert.assertEquals("The prime should not change when curr is not changed", prime, pair.getPrime());
+        Assertions.assertEquals(prime, pair.getPrime(), "The prime should not change when curr is not changed");
         pair.setCurr(6l);
         pair.setPrime();
-        Assert.assertNotSame(prime, pair.getPrime());
+        Assertions.assertNotSame(prime, pair.getPrime());
     }
 
     @Test
@@ -104,7 +105,7 @@ public class InvPairTest extends CDKTestCase {
         InvPair pair = new InvPair();
         try {
             pair.setPrime();
-            Assert.fail("should have failed with an ArrayIndexOutOfBounds exception");
+            Assertions.fail("should have failed with an ArrayIndexOutOfBounds exception");
         } catch (Exception e) {
             // OK, is apparently expected to happen
         }
@@ -115,39 +116,39 @@ public class InvPairTest extends CDKTestCase {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         pair.commit();
-        Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
-        Assert.assertEquals(5l, ((Long) atom.getProperty(InvPair.CANONICAL_LABEL)).longValue());
+        Assertions.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
+        Assertions.assertEquals(5l, ((Long) atom.getProperty(InvPair.CANONICAL_LABEL)).longValue());
     }
 
     @Test
     public void testSetCurr_long() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
-        Assert.assertEquals(5l, pair.getCurr());
+        Assertions.assertEquals(5l, pair.getCurr());
         pair.setCurr(4l);
-        Assert.assertEquals(4l, pair.getCurr());
+        Assertions.assertEquals(4l, pair.getCurr());
     }
 
     @Test
     public void testGetCurr() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
-        Assert.assertEquals(5l, pair.getCurr());
+        Assertions.assertEquals(5l, pair.getCurr());
     }
 
     @Test
     public void testSetLast_long() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
-        Assert.assertEquals(0l, pair.getLast());
+        Assertions.assertEquals(0l, pair.getLast());
         pair.setLast(4l);
-        Assert.assertEquals(4l, pair.getLast());
+        Assertions.assertEquals(4l, pair.getLast());
     }
 
     @Test
     public void testGetLast() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
-        Assert.assertEquals(0l, pair.getLast());
+        Assertions.assertEquals(0l, pair.getLast());
     }
 }

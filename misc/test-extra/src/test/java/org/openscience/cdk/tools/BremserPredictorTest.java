@@ -26,6 +26,7 @@ package org.openscience.cdk.tools;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IElement;
@@ -54,7 +55,7 @@ public class BremserPredictorTest extends CDKTestCase {
     @Test
     public void testConstructor() {
         BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-        Assert.assertNotNull(bp);
+        Assertions.assertNotNull(bp);
     }
 
     /**
@@ -76,7 +77,7 @@ public class BremserPredictorTest extends CDKTestCase {
         for (int f = 0; f < data.length; f++) {
             prediction = bp.predict(data[f]);
             //logger.debug("\"" + prediction + "\",");
-            Assert.assertEquals(result[f], prediction, 0.001);
+            Assertions.assertEquals(result[f], prediction, 0.001);
         }
 
     }
@@ -106,7 +107,7 @@ public class BremserPredictorTest extends CDKTestCase {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
             prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
             //logger.debug("\"" + prediction + "\",");
-            Assert.assertEquals(result[f], prediction, 0.001);
+            Assertions.assertEquals(result[f], prediction, 0.001);
         }
 
     }
@@ -122,7 +123,7 @@ public class BremserPredictorTest extends CDKTestCase {
                 correct = true;
             }
         }
-        Assert.assertTrue(correct);
+        Assertions.assertTrue(correct);
     }
 
     @Test
@@ -136,7 +137,7 @@ public class BremserPredictorTest extends CDKTestCase {
                 correct = true;
             }
         }
-        Assert.assertTrue(correct);
+        Assertions.assertTrue(correct);
     }
 
     @Test
@@ -151,7 +152,7 @@ public class BremserPredictorTest extends CDKTestCase {
                 correct = true;
             }
         }
-        Assert.assertTrue(correct);
+        Assertions.assertTrue(correct);
     }
 
     private void removeHydrogens(IAtomContainer ac) {

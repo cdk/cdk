@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -25,7 +26,7 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
-        Assert.assertEquals(3, cs.getChemSequenceCount());
+        Assertions.assertEquals(3, cs.getChemSequenceCount());
     }
 
     @Test
@@ -34,9 +35,9 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
-        Assert.assertEquals(3, cs.getChemSequenceCount());
+        Assertions.assertEquals(3, cs.getChemSequenceCount());
         cs.removeChemSequence(1);
-        Assert.assertEquals(2, cs.getChemSequenceCount());
+        Assertions.assertEquals(2, cs.getChemSequenceCount());
     }
 
     @Test
@@ -46,7 +47,7 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         IChemSequence second = cs.getBuilder().newInstance(IChemSequence.class);
         cs.addChemSequence(second);
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
-        Assert.assertEquals(second, cs.getChemSequence(1));
+        Assertions.assertEquals(second, cs.getChemSequence(1));
     }
 
     @Test
@@ -55,11 +56,11 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
-        Assert.assertEquals(3, cs.getChemSequenceCount());
+        Assertions.assertEquals(3, cs.getChemSequenceCount());
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class)); // this one should enfore array grow
-        Assert.assertEquals(6, cs.getChemSequenceCount());
+        Assertions.assertEquals(6, cs.getChemSequenceCount());
     }
 
     @Test
@@ -69,8 +70,8 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
 
-        Assert.assertNotNull(cs.chemSequences());
-        Assert.assertEquals(3, cs.getChemSequenceCount());
+        Assertions.assertNotNull(cs.chemSequences());
+        Assertions.assertEquals(3, cs.getChemSequenceCount());
     }
 
     @Test
@@ -80,7 +81,7 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
 
-        Assert.assertEquals(3, cs.getChemSequenceCount());
+        Assertions.assertEquals(3, cs.getChemSequenceCount());
     }
 
     /** Test for RFC #9 */
@@ -89,8 +90,8 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         IChemFile cs = (IChemFile) newChemObject();
         String description = cs.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -102,7 +103,7 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         chemObject.addListener(listener);
 
         chemObject.addChemSequence(chemObject.getBuilder().newInstance(IChemSequence.class));
-        Assert.assertTrue(listener.changed);
+        Assertions.assertTrue(listener.changed);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
@@ -130,7 +131,7 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
     public void testClone() throws Exception {
         IChemFile file = (IChemFile) newChemObject();
         Object clone = file.clone();
-        Assert.assertTrue(clone instanceof IChemFile);
+        Assertions.assertTrue(clone instanceof IChemFile);
     }
 
     @Test
@@ -142,12 +143,12 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 4
 
         IChemFile clone = (IChemFile) file.clone();
-        Assert.assertEquals(file.getChemSequenceCount(), clone.getChemSequenceCount());
+        Assertions.assertEquals(file.getChemSequenceCount(), clone.getChemSequenceCount());
         for (int f = 0; f < file.getChemSequenceCount(); f++) {
             for (int g = 0; g < clone.getChemSequenceCount(); g++) {
-                Assert.assertNotNull(file.getChemSequence(f));
-                Assert.assertNotNull(clone.getChemSequence(g));
-                Assert.assertNotSame(file.getChemSequence(f), clone.getChemSequence(g));
+                Assertions.assertNotNull(file.getChemSequence(f));
+                Assertions.assertNotNull(clone.getChemSequence(g));
+                Assertions.assertNotSame(file.getChemSequence(f), clone.getChemSequence(g));
             }
         }
     }

@@ -22,6 +22,7 @@ import javax.vecmath.Point3d;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -57,7 +58,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
         // the same result. this test though should depend on kekulisation working
         IAtomContainer mol = sp.parseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
-        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     /**
@@ -119,7 +120,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
 
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
-        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assertions.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     /**
@@ -143,6 +144,6 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
         // the same result. this test though should depend on kekulisation working
         IAtomContainer mol = sp.parseSmiles("Oc1ccccc1");
-        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 }

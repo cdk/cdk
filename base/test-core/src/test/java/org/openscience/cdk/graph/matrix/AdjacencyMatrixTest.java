@@ -19,6 +19,7 @@
 package org.openscience.cdk.graph.matrix;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -42,11 +43,11 @@ public class AdjacencyMatrixTest extends CDKTestCase {
     public void testGetMatrix_IAtomContainer() throws Exception {
         IAtomContainer container = sp.parseSmiles("C1CC1");
         int[][] matrix = AdjacencyMatrix.getMatrix(container);
-        Assert.assertEquals(3, matrix.length);
-        Assert.assertEquals(3, matrix[0].length);
-        Assert.assertEquals(0, matrix[0][0]);
-        Assert.assertEquals(1, matrix[0][2]);
-        Assert.assertEquals(1, matrix[0][1]);
+        Assertions.assertEquals(3, matrix.length);
+        Assertions.assertEquals(3, matrix[0].length);
+        Assertions.assertEquals(0, matrix[0][0]);
+        Assertions.assertEquals(1, matrix[0][2]);
+        Assertions.assertEquals(1, matrix[0][1]);
     }
 
 }

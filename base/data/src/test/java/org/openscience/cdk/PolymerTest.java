@@ -22,6 +22,7 @@
  *  */
 package org.openscience.cdk;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.openscience.cdk.test.interfaces.AbstractPolymerTest;
 import org.openscience.cdk.interfaces.IAtom;
@@ -49,8 +50,8 @@ public class PolymerTest extends AbstractPolymerTest {
     @Test
     public void testPolymer() {
         IPolymer oPolymer = new Polymer();
-        Assert.assertNotNull(oPolymer);
-        Assert.assertEquals(oPolymer.getMonomerCount(), 0);
+        Assertions.assertNotNull(oPolymer);
+        Assertions.assertEquals(oPolymer.getMonomerCount(), 0);
     }
 
     /**
@@ -62,27 +63,27 @@ public class PolymerTest extends AbstractPolymerTest {
     @Test
     public void testPolymerClone() throws Exception {
         IPolymer oPolymer = new Polymer();
-        Assert.assertNotNull(oPolymer);
-        Assert.assertEquals(0, oPolymer.getMonomerCount());
+        Assertions.assertNotNull(oPolymer);
+        Assertions.assertEquals(0, oPolymer.getMonomerCount());
         Polymer clone = (Polymer) oPolymer.clone();
         Monomer monomer = new Monomer();
         monomer.setMonomerName("TYR55");
         oPolymer.addAtom(new Atom("C"), monomer);
 
         // changes should not occur in the clone
-        Assert.assertEquals(0, clone.getMonomerCount());
-        Assert.assertEquals(0, clone.getMonomerNames().size());
+        Assertions.assertEquals(0, clone.getMonomerCount());
+        Assertions.assertEquals(0, clone.getMonomerNames().size());
 
         // new clone should see the changes
         clone = (Polymer) oPolymer.clone();
-        Assert.assertEquals(1, clone.getMonomerCount());
-        Assert.assertEquals(1, clone.getMonomerNames().size());
-        Assert.assertEquals(1, clone.getAtomCount());
+        Assertions.assertEquals(1, clone.getMonomerCount());
+        Assertions.assertEquals(1, clone.getMonomerNames().size());
+        Assertions.assertEquals(1, clone.getAtomCount());
 
         oPolymer.addAtom(new Atom("N"));
         clone = (Polymer) oPolymer.clone();
-        Assert.assertEquals(1, clone.getMonomerCount());
-        Assert.assertEquals(2, clone.getAtomCount());
+        Assertions.assertEquals(1, clone.getMonomerCount());
+        Assertions.assertEquals(2, clone.getAtomCount());
     }
 
     /**
@@ -91,8 +92,8 @@ public class PolymerTest extends AbstractPolymerTest {
     @Test
     public void testPolymerClone2() throws CloneNotSupportedException {
         IPolymer oPolymer = new Polymer();
-        Assert.assertNotNull(oPolymer);
-        Assert.assertEquals(0, oPolymer.getMonomerCount());
+        Assertions.assertNotNull(oPolymer);
+        Assertions.assertEquals(0, oPolymer.getMonomerCount());
 
         Monomer monomer = new Monomer();
         monomer.setMonomerName("TYR55");
@@ -101,13 +102,13 @@ public class PolymerTest extends AbstractPolymerTest {
 
         Polymer clone = (Polymer) oPolymer.clone();
         IMonomer clonedMonomer = clone.getMonomer("TYR55");
-        Assert.assertNotSame(monomer, clonedMonomer);
+        Assertions.assertNotSame(monomer, clonedMonomer);
         IAtom clonedAtom = clone.getAtom(0);
-        Assert.assertNotSame(atom, clonedAtom);
+        Assertions.assertNotSame(atom, clonedAtom);
 
         IAtom atomFromMonomer = clone.getMonomer("TYR55").getAtom(0);
-        Assert.assertEquals("C", atomFromMonomer.getSymbol());
-        Assert.assertNotSame(atom, atomFromMonomer);
-        Assert.assertSame(atomFromMonomer, clonedAtom);
+        Assertions.assertEquals("C", atomFromMonomer.getSymbol());
+        Assertions.assertNotSame(atom, atomFromMonomer);
+        Assertions.assertSame(atomFromMonomer, clonedAtom);
     }
 }

@@ -48,7 +48,7 @@ public class OctahedralTest {
         SmilesParser             smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer           mol    = smipar.parseSmiles("C[Co@OH8](F)(Br)(Cl)(I)S");
         Iterator<IStereoElement> ses    = mol.stereoElements().iterator();
-        assertTrue(ses.hasNext());
+        Assertions.assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(Octahedral.class));
         assertThat(se.getConfigOrder(), is(8));

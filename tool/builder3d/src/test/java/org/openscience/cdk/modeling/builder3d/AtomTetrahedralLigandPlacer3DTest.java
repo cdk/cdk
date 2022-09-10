@@ -21,6 +21,7 @@ package org.openscience.cdk.modeling.builder3d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
@@ -77,7 +78,7 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase {
         atom2.setPoint3d(new Point3d(2, 2, 2));
         atom2.setCovalentRadius(0.2);
         Point3d newpoint = new AtomTetrahedralLigandPlacer3D().rescaleBondLength(atom1, atom2, atom2.getPoint3d());
-        Assert.assertEquals(0.4, newpoint.distance(atom1.getPoint3d()), 0.001);
+        Assertions.assertEquals(0.4, newpoint.distance(atom1.getPoint3d()), 0.001);
     }
 
     @Test
@@ -113,7 +114,7 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase {
         Point3d[] newPoints = new AtomTetrahedralLigandPlacer3D().get3DCoordinatesForLigands(atom1, noCoords,
                 withCoords, null, 4, AtomTetrahedralLigandPlacer3D.DEFAULT_BOND_LENGTH_H, -1);
         for (int j = 0; j < noCoords.getAtomCount(); j++) {
-            if (newPoints[j] == null) Assert.fail("No coordinates generated for atom " + j);
+            if (newPoints[j] == null) Assertions.fail("No coordinates generated for atom " + j);
             IAtom ligand = noCoords.getAtom(j);
             ligand.setPoint3d(newPoints[j]);
         }

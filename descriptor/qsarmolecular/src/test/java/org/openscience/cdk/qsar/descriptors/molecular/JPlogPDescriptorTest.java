@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
@@ -43,7 +44,7 @@ public class JPlogPDescriptorTest {
 		DescriptorValue answer = desc.calculate(struct);
 		DoubleResult result = (DoubleResult) answer.getValue();
 		double output = result.doubleValue();
-		assertEquals(0.9, output, 0.1);
+		Assertions.assertEquals(0.9, output, 0.1);
 	}
 
 	@Test
@@ -54,7 +55,7 @@ public class JPlogPDescriptorTest {
 		DescriptorValue answer = desc.calculate(struct);
 		DoubleResult result = (DoubleResult) answer.getValue();
 		double output = result.doubleValue();
-		assertEquals(0.3, output, 0.1);
+		Assertions.assertEquals(0.3, output, 0.1);
 	}
 
 	@Test
@@ -65,7 +66,7 @@ public class JPlogPDescriptorTest {
 		DescriptorValue answer = desc.calculate(struct);
 		DoubleResult result = (DoubleResult) answer.getValue();
 		double output = result.doubleValue();
-		assertEquals(0.4, output, 0.1);
+		Assertions.assertEquals(0.4, output, 0.1);
 	}
 
 	@Test
@@ -76,7 +77,7 @@ public class JPlogPDescriptorTest {
 		DescriptorValue answer = desc.calculate(struct);
 		DoubleResult result = (DoubleResult) answer.getValue();
 		double output = result.doubleValue();
-		assertEquals(1.2, output, 0.1);
+		Assertions.assertEquals(1.2, output, 0.1);
 	}
 
 	@Test
@@ -87,7 +88,7 @@ public class JPlogPDescriptorTest {
 		DescriptorValue answer = desc.calculate(struct);
 		DoubleResult result = (DoubleResult) answer.getValue();
 		double output = result.doubleValue();
-		assertEquals(2.0, output, 0.1);
+		Assertions.assertEquals(2.0, output, 0.1);
 	}
 
 	@Test
@@ -95,12 +96,11 @@ public class JPlogPDescriptorTest {
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		DescriptorSpecification specification = desc.getSpecification();
 		String name = desc.getDescriptorNames()[0];
-		assertEquals("JPlogP developed at Lhasa Limited www.lhasalimited.org",
-				specification.getSpecificationReference());
-		assertEquals("Jeffrey Plante - Lhasa Limited", specification.getImplementationVendor());
-		assertEquals("JPLogP", name);
-		assertEquals(1, desc.getParameterNames().length);
-		assertEquals("addImplicitH", desc.getParameterNames()[0]);
+		Assertions.assertEquals("JPlogP developed at Lhasa Limited www.lhasalimited.org", specification.getSpecificationReference());
+		Assertions.assertEquals("Jeffrey Plante - Lhasa Limited", specification.getImplementationVendor());
+		Assertions.assertEquals("JPLogP", name);
+		Assertions.assertEquals(1, desc.getParameterNames().length);
+		Assertions.assertEquals("addImplicitH", desc.getParameterNames()[0]);
 	}
 
 	@Test
@@ -109,8 +109,8 @@ public class JPlogPDescriptorTest {
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer molecule = parseSmiles("c1ccccc1");
 		Map<Integer, Integer> holo = desc.jplogp.getMappedHologram(molecule);
-		assertEquals(2, holo.keySet().size());
-		assertEquals(6, holo.get(106204).intValue());
+		Assertions.assertEquals(2, holo.keySet().size());
+		Assertions.assertEquals(6, holo.get(106204).intValue());
 	}
 
 

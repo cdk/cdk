@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,35 +30,35 @@ public class BooleanDifferenceTest {
     @Test
     public void testDiff() {
         IDifference result = BooleanDifference.construct("Foo", true, false);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
     public void testSame() {
         IDifference result = BooleanDifference.construct("Foo", false, false);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
     public void testTwoNull() {
         IDifference result = BooleanDifference.construct("Foo", null, null);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
     public void testOneNull() {
         IDifference result = BooleanDifference.construct("Foo", null, false);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
 
         result = BooleanDifference.construct("Foo", false, null);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
     public void testToString() {
         IDifference result = BooleanDifference.construct("Foo", true, false);
         String diffString = result.toString();
-        Assert.assertNotNull(diffString);
+        Assertions.assertNotNull(diffString);
         StringDifferenceTest.assertOneLiner(diffString);
     }
 }

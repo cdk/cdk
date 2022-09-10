@@ -25,45 +25,45 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
     public void testGetFragment() {
         IFragmentAtom a = (IFragmentAtom) newChemObject();
         // make sure that we start with a not-null, but empty container
-        Assert.assertNotNull(a.getFragment());
-        Assert.assertEquals(0, a.getFragment().getAtomCount());
-        Assert.assertEquals(0, a.getFragment().getBondCount());
+        Assertions.assertNotNull(a.getFragment());
+        Assertions.assertEquals(0, a.getFragment().getAtomCount());
+        Assertions.assertEquals(0, a.getFragment().getBondCount());
     }
 
     @Test
     public void testIsExpanded() {
         IFragmentAtom a = (IFragmentAtom) newChemObject();
-        Assert.assertNotNull(a);
-        Assert.assertFalse(a.isExpanded()); // test the default state
+        Assertions.assertNotNull(a);
+        Assertions.assertFalse(a.isExpanded()); // test the default state
     }
 
     @Test
     public void testSetExpanded_boolean() {
         IFragmentAtom a = (IFragmentAtom) newChemObject();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
         a.setExpanded(true);
-        Assert.assertTrue(a.isExpanded());
+        Assertions.assertTrue(a.isExpanded());
         a.setExpanded(false);
-        Assert.assertFalse(a.isExpanded());
+        Assertions.assertFalse(a.isExpanded());
     }
 
     @Test
     public void testSetFragment_IAtomContainer() {
         IFragmentAtom a = (IFragmentAtom) newChemObject();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
         IAtomContainer container = a.getBuilder().newInstance(IAtomContainer.class);
         container.addAtom(a.getBuilder().newInstance(IAtom.class, "N"));
         container.addAtom(a.getBuilder().newInstance(IAtom.class, "C"));
         container.addBond(0, 1, IBond.Order.TRIPLE);
         a.setFragment(container);
-        Assert.assertEquals(container, a.getFragment());
+        Assertions.assertEquals(container, a.getFragment());
     }
 
     @Test
     @Override
     public void testGetExactMass() {
         IFragmentAtom a = (IFragmentAtom) newChemObject();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
         IAtomContainer container = a.getBuilder().newInstance(IAtomContainer.class);
         container.addAtom(a.getBuilder().newInstance(IAtom.class, "N"));
         container.getAtom(0).setExactMass(5.5);
@@ -71,7 +71,7 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
         container.getAtom(1).setExactMass(3.5);
         container.addBond(0, 1, IBond.Order.TRIPLE);
         a.setFragment(container);
-        Assert.assertEquals(9.0, a.getExactMass(), 0.0001);
+        Assertions.assertEquals(9.0, a.getExactMass(), 0.0001);
     }
 
     /** Test for RFC #9 */
@@ -81,8 +81,8 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
         IFragmentAtom bond = (IFragmentAtom) newChemObject();
         String description = bond.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 

@@ -94,116 +94,116 @@ public class ExprTest {
     public void testT() {
         Expr  expr = new Expr(TRUE);
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
     public void testF() {
         Expr  expr = new Expr(FALSE);
         IAtom atom = mock(IAtom.class);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
     public void testAndTT() {
         Expr  expr = new Expr(AND, new Expr(TRUE), new Expr(TRUE));
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
     public void testAndTF() {
         Expr  expr = new Expr(AND, new Expr(TRUE), new Expr(FALSE));
         IAtom atom = mock(IAtom.class);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
     public void testAndFT() {
         Expr  expr = new Expr(AND, new Expr(FALSE), new Expr(TRUE));
         IAtom atom = mock(IAtom.class);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
     public void testOrTT() {
         Expr  expr = new Expr(OR, new Expr(TRUE), new Expr(TRUE));
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
     public void testOrTF() {
         Expr  expr = new Expr(OR, new Expr(TRUE), new Expr(FALSE));
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
     public void testOrFT() {
         Expr  expr = new Expr(OR, new Expr(FALSE), new Expr(TRUE));
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
     public void testOrFF() {
         Expr  expr = new Expr(OR, new Expr(FALSE), new Expr(FALSE));
         IAtom atom = mock(IAtom.class);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
     public void testNotF() {
         Expr  expr = new Expr(NOT, new Expr(FALSE), null);
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
     public void testNotT() {
         Expr  expr = new Expr(NOT, new Expr(TRUE), null);
         IAtom atom = mock(IAtom.class);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
     public void testNotStereo() {
         Expr  expr = new Expr(NOT, new Expr(STEREOCHEMISTRY, 1), null);
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom));
-        assertTrue(expr.matches(atom, 2));
-        assertFalse(expr.matches(atom, 1));
+        Assertions.assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom, 2));
+        Assertions.assertFalse(expr.matches(atom, 1));
     }
 
     @Test
     public void testNotStereo3() {
         Expr  expr = new Expr(NOT, new Expr(STEREOCHEMISTRY, 1).or(new Expr(STEREOCHEMISTRY, 0)), null);
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom));
-        assertTrue(expr.matches(atom, 2));
-        assertFalse(expr.matches(atom, 1));
+        Assertions.assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom, 2));
+        Assertions.assertFalse(expr.matches(atom, 1));
     }
 
     @Test
     public void testNotStereo4() {
         Expr  expr = new Expr(NOT, new Expr(OR, new Expr(TRUE), new Expr(TRUE)), null);
         IAtom atom = mock(IAtom.class);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
     public void testStereoT() {
         Expr  expr = new Expr(STEREOCHEMISTRY, 1);
         IAtom atom = mock(IAtom.class);
-        assertTrue(expr.matches(atom, 1));
+        Assertions.assertTrue(expr.matches(atom, 1));
     }
 
     @Test
     public void testStereoF() {
         Expr  expr = new Expr(STEREOCHEMISTRY, 1);
         IAtom atom = mock(IAtom.class);
-        assertFalse(expr.matches(atom, 2));
+        Assertions.assertFalse(expr.matches(atom, 2));
     }
 
     @Test
@@ -211,9 +211,9 @@ public class ExprTest {
         Expr  expr = new Expr(IS_AROMATIC);
         IAtom atom = new Atom();
         atom.setIsAromatic(false);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         atom.setIsAromatic(true);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -221,7 +221,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_ALIPHATIC);
         IAtom atom = new Atom();
         atom.setIsAromatic(false);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -229,7 +229,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_ALIPHATIC);
         IAtom atom = new Atom();
         atom.setIsAromatic(true);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -237,11 +237,11 @@ public class ExprTest {
         Expr  expr = new Expr(IS_HETERO);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         when(atom.getAtomicNumber()).thenReturn(6);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         when(atom.getAtomicNumber()).thenReturn(8);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -249,9 +249,9 @@ public class ExprTest {
         Expr  expr = new Expr(HAS_IMPLICIT_HYDROGEN);
         IAtom atom = mock(IAtom.class);
         when(atom.getImplicitHydrogenCount()).thenReturn(1);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -259,7 +259,7 @@ public class ExprTest {
         Expr  expr = new Expr(HAS_IMPLICIT_HYDROGEN);
         IAtom atom = mock(IAtom.class);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -267,7 +267,7 @@ public class ExprTest {
         Expr  expr = new Expr(HAS_IMPLICIT_HYDROGEN);
         IAtom atom = mock(IAtom.class);
         when(atom.getImplicitHydrogenCount()).thenReturn(null);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -275,9 +275,9 @@ public class ExprTest {
         Expr  expr = new Expr(HAS_ISOTOPE);
         IAtom atom = mock(IAtom.class);
         when(atom.getMassNumber()).thenReturn(null);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         when(atom.getMassNumber()).thenReturn(12);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -285,9 +285,9 @@ public class ExprTest {
         Expr  expr = new Expr(HAS_UNSPEC_ISOTOPE);
         IAtom atom = mock(IAtom.class);
         when(atom.getMassNumber()).thenReturn(12);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         when(atom.getMassNumber()).thenReturn(null);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -295,9 +295,9 @@ public class ExprTest {
         Expr  expr = new Expr(IS_IN_RING);
         IAtom atom = mock(IAtom.class);
         when(atom.isInRing()).thenReturn(false);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         when(atom.isInRing()).thenReturn(true);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -305,9 +305,9 @@ public class ExprTest {
         Expr  expr = new Expr(IS_IN_CHAIN);
         IAtom atom = mock(IAtom.class);
         when(atom.isInRing()).thenReturn(false);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
         when(atom.isInRing()).thenReturn(true);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -317,7 +317,7 @@ public class ExprTest {
         IBond bond = mock(IBond.class);
         when(bond.getOrder()).thenReturn(IBond.Order.DOUBLE);
         when(atom.bonds()).thenReturn(Collections.singletonList(bond));
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -327,7 +327,7 @@ public class ExprTest {
         IBond bond = mock(IBond.class);
         when(bond.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(atom.bonds()).thenReturn(Collections.singletonList(bond));
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -336,7 +336,7 @@ public class ExprTest {
             Expr  expr = new Expr(ELEMENT, num);
             IAtom atom = mock(IAtom.class);
             when(atom.getAtomicNumber()).thenReturn(num);
-            assertTrue(expr.matches(atom));
+            Assertions.assertTrue(expr.matches(atom));
         }
     }
 
@@ -346,7 +346,7 @@ public class ExprTest {
             Expr  expr = new Expr(ELEMENT, num);
             IAtom atom = mock(IAtom.class);
             when(atom.getAtomicNumber()).thenReturn(num + 1);
-            assertFalse(expr.matches(atom));
+            Assertions.assertFalse(expr.matches(atom));
         }
     }
 
@@ -357,7 +357,7 @@ public class ExprTest {
             IAtom atom = mock(IAtom.class);
             when(atom.getAtomicNumber()).thenReturn(num);
             when(atom.isAromatic()).thenReturn(false);
-            assertTrue(expr.matches(atom));
+            Assertions.assertTrue(expr.matches(atom));
         }
     }
 
@@ -368,7 +368,7 @@ public class ExprTest {
             IAtom atom = mock(IAtom.class);
             when(atom.getAtomicNumber()).thenReturn(num);
             when(atom.isAromatic()).thenReturn(true);
-            assertFalse(expr.matches(atom));
+            Assertions.assertFalse(expr.matches(atom));
         }
     }
 
@@ -379,7 +379,7 @@ public class ExprTest {
             IAtom atom = mock(IAtom.class);
             when(atom.getAtomicNumber()).thenReturn(num + 1);
             when(atom.isAromatic()).thenReturn(false);
-            assertFalse(expr.matches(atom));
+            Assertions.assertFalse(expr.matches(atom));
         }
     }
 
@@ -390,7 +390,7 @@ public class ExprTest {
             IAtom atom = mock(IAtom.class);
             when(atom.getAtomicNumber()).thenReturn(num);
             when(atom.isAromatic()).thenReturn(true);
-            assertTrue(expr.matches(atom));
+            Assertions.assertTrue(expr.matches(atom));
         }
     }
 
@@ -401,7 +401,7 @@ public class ExprTest {
             IAtom atom = mock(IAtom.class);
             when(atom.getAtomicNumber()).thenReturn(num);
             when(atom.isAromatic()).thenReturn(false);
-            assertFalse(expr.matches(atom));
+            Assertions.assertFalse(expr.matches(atom));
         }
     }
 
@@ -412,7 +412,7 @@ public class ExprTest {
             IAtom atom = mock(IAtom.class);
             when(atom.getAtomicNumber()).thenReturn(num + 1);
             when(atom.isAromatic()).thenReturn(true);
-            assertFalse(expr.matches(atom));
+            Assertions.assertFalse(expr.matches(atom));
         }
     }
 
@@ -421,7 +421,7 @@ public class ExprTest {
         Expr  expr = new Expr(IMPL_H_COUNT, 1);
         IAtom atom = mock(IAtom.class);
         when(atom.getImplicitHydrogenCount()).thenReturn(1);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -429,7 +429,7 @@ public class ExprTest {
         Expr  expr = new Expr(IMPL_H_COUNT, 2);
         IAtom atom = mock(IAtom.class);
         when(atom.getImplicitHydrogenCount()).thenReturn(1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -443,7 +443,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
         when(h.getAtomicNumber()).thenReturn(1);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -457,7 +457,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
         when(h.getAtomicNumber()).thenReturn(1);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -471,7 +471,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(null);
         when(h.getAtomicNumber()).thenReturn(1);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -485,7 +485,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
         when(h.getAtomicNumber()).thenReturn(1);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -493,7 +493,7 @@ public class ExprTest {
         Expr  expr = new Expr(DEGREE, 1);
         IAtom atom = mock(IAtom.class);
         when(atom.getBondCount()).thenReturn(1);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -501,7 +501,7 @@ public class ExprTest {
         Expr  expr = new Expr(DEGREE, 2);
         IAtom atom = mock(IAtom.class);
         when(atom.getBondCount()).thenReturn(1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -510,7 +510,7 @@ public class ExprTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getBondCount()).thenReturn(1);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -519,7 +519,7 @@ public class ExprTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getBondCount()).thenReturn(1);
         when(atom.getImplicitHydrogenCount()).thenReturn(1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -534,7 +534,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
         when(h.getAtomicNumber()).thenReturn(1);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -549,7 +549,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
         when(h.getAtomicNumber()).thenReturn(1);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -564,7 +564,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
         when(o.getAtomicNumber()).thenReturn(8);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -579,7 +579,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
         when(o.getAtomicNumber()).thenReturn(8);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -594,7 +594,7 @@ public class ExprTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(2);
         when(c.getAtomicNumber()).thenReturn(6);
         when(atom.bonds()).thenReturn(Collections.singletonList(b));
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -607,7 +607,7 @@ public class ExprTest {
         when(b1.getOrder()).thenReturn(IBond.Order.DOUBLE);
         when(b2.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(a1.bonds()).thenReturn(Arrays.asList(b1, b2));
-        assertTrue(expr.matches(a1));
+        Assertions.assertTrue(expr.matches(a1));
     }
 
     @Test
@@ -620,7 +620,7 @@ public class ExprTest {
         when(b1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(b2.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(a1.bonds()).thenReturn(Arrays.asList(b1, b2));
-        assertFalse(expr.matches(a1));
+        Assertions.assertFalse(expr.matches(a1));
     }
 
     @Test
@@ -633,7 +633,7 @@ public class ExprTest {
         when(b1.getOrder()).thenReturn(IBond.Order.DOUBLE);
         when(b2.getOrder()).thenReturn(null);
         when(a1.bonds()).thenReturn(Arrays.asList(b1, b2));
-        assertFalse(expr.matches(a1));
+        Assertions.assertFalse(expr.matches(a1));
     }
 
     @Test
@@ -641,7 +641,7 @@ public class ExprTest {
         Expr  expr = new Expr(VALENCE, 2);
         IAtom a1   = mock(IAtom.class);
         when(a1.getImplicitHydrogenCount()).thenReturn(4);
-        assertFalse(expr.matches(a1));
+        Assertions.assertFalse(expr.matches(a1));
     }
 
     @Test
@@ -649,7 +649,7 @@ public class ExprTest {
         Expr  expr = new Expr(ISOTOPE, 13);
         IAtom atom = mock(IAtom.class);
         when(atom.getMassNumber()).thenReturn(13);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -657,7 +657,7 @@ public class ExprTest {
         Expr  expr = new Expr(ISOTOPE, 12);
         IAtom atom = mock(IAtom.class);
         when(atom.getMassNumber()).thenReturn(13);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -665,7 +665,7 @@ public class ExprTest {
         Expr  expr = new Expr(FORMAL_CHARGE, -1);
         IAtom atom = mock(IAtom.class);
         when(atom.getFormalCharge()).thenReturn(-1);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -673,7 +673,7 @@ public class ExprTest {
         Expr  expr = new Expr(FORMAL_CHARGE, -1);
         IAtom atom = mock(IAtom.class);
         when(atom.getFormalCharge()).thenReturn(0);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -689,7 +689,7 @@ public class ExprTest {
         when(b2.isInRing()).thenReturn(true);
         when(b3.isInRing()).thenReturn(true);
         when(atom.bonds()).thenReturn(Arrays.asList(b1, b2, b3));
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -705,7 +705,7 @@ public class ExprTest {
         when(b2.isInRing()).thenReturn(true);
         when(b3.isInRing()).thenReturn(false);
         when(atom.bonds()).thenReturn(Arrays.asList(b1, b2, b3));
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -713,7 +713,7 @@ public class ExprTest {
         Expr  expr = new Expr(RING_BOND_COUNT, 3);
         IAtom atom = mock(IAtom.class);
         when(atom.isInRing()).thenReturn(false);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -722,7 +722,7 @@ public class ExprTest {
         IAtom atom = mock(IAtom.class);
         when(atom.isInRing()).thenReturn(true);
         when(atom.getBondCount()).thenReturn(2);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -734,7 +734,7 @@ public class ExprTest {
         when(b1.getOrder()).thenReturn(IBond.Order.DOUBLE);
         when(b2.getOrder()).thenReturn(IBond.Order.DOUBLE);
         when(atom.bonds()).thenReturn(Arrays.asList(b1, b2));
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -746,7 +746,7 @@ public class ExprTest {
         when(b1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(b2.getOrder()).thenReturn(IBond.Order.DOUBLE);
         when(atom.bonds()).thenReturn(Arrays.asList(b1, b2));
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -755,13 +755,13 @@ public class ExprTest {
                              Elements.Chlorine.group());
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(9);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
         when(atom.getAtomicNumber()).thenReturn(17);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
         when(atom.getAtomicNumber()).thenReturn(35);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
         when(atom.getAtomicNumber()).thenReturn(53);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -770,13 +770,13 @@ public class ExprTest {
                              Elements.Chlorine.group());
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(8);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         when(atom.getAtomicNumber()).thenReturn(16);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         when(atom.getAtomicNumber()).thenReturn(34);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
         when(atom.getAtomicNumber()).thenReturn(52);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -785,7 +785,7 @@ public class ExprTest {
                              Elements.Chlorine.group());
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(null);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -794,7 +794,7 @@ public class ExprTest {
                              0);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -803,7 +803,7 @@ public class ExprTest {
                              1);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -812,7 +812,7 @@ public class ExprTest {
                              1);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP2);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -821,7 +821,7 @@ public class ExprTest {
                              2);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP2);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -830,7 +830,7 @@ public class ExprTest {
                              2);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -839,7 +839,7 @@ public class ExprTest {
                              3);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP3);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -848,7 +848,7 @@ public class ExprTest {
                              3);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -857,7 +857,7 @@ public class ExprTest {
                              4);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP3D1);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -866,7 +866,7 @@ public class ExprTest {
                              4);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -875,7 +875,7 @@ public class ExprTest {
                              5);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP3D2);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -884,7 +884,7 @@ public class ExprTest {
                              5);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -893,7 +893,7 @@ public class ExprTest {
                              6);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP3D3);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -902,7 +902,7 @@ public class ExprTest {
                              6);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -911,7 +911,7 @@ public class ExprTest {
                              7);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP3D4);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -920,7 +920,7 @@ public class ExprTest {
                              7);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -929,7 +929,7 @@ public class ExprTest {
                              8);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP3D5);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -938,7 +938,7 @@ public class ExprTest {
                              1);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(null);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -947,7 +947,7 @@ public class ExprTest {
                              8);
         IAtom atom = mock(IAtom.class);
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP1);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -956,7 +956,7 @@ public class ExprTest {
                              ReactionRole.Reactant.ordinal());
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(CDKConstants.REACTION_ROLE)).thenReturn(ReactionRole.Reactant);
-        assertTrue(expr.matches(atom));
+        Assertions.assertTrue(expr.matches(atom));
     }
 
     @Test
@@ -965,7 +965,7 @@ public class ExprTest {
                              ReactionRole.Reactant.ordinal());
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(CDKConstants.REACTION_ROLE)).thenReturn(ReactionRole.Product);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -974,7 +974,7 @@ public class ExprTest {
                              ReactionRole.Reactant.ordinal());
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(CDKConstants.REACTION_ROLE)).thenReturn(null);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -982,7 +982,7 @@ public class ExprTest {
         Expr           expr = new Expr(RING_SIZE, 6);
         IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
         Cycles.markRingAtomsAndBonds(mol);
-        assertTrue(expr.matches(mol.getAtom(0)));
+        Assertions.assertTrue(expr.matches(mol.getAtom(0)));
     }
 
     @Test
@@ -990,7 +990,7 @@ public class ExprTest {
         Expr           expr = new Expr(RING_SIZE, 10);
         IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
         Cycles.markRingAtomsAndBonds(mol);
-        assertTrue(expr.matches(mol.getAtom(0)));
+        Assertions.assertTrue(expr.matches(mol.getAtom(0)));
     }
 
     @Test
@@ -998,7 +998,7 @@ public class ExprTest {
         Expr  expr = new Expr(RING_SMALLEST, 6);
         IAtom atom = mock(IAtom.class);
         when(atom.isInRing()).thenReturn(false);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -1006,7 +1006,7 @@ public class ExprTest {
         Expr  expr = new Expr(RING_SIZE, 6);
         IAtom atom = mock(IAtom.class);
         when(atom.isInRing()).thenReturn(false);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -1014,7 +1014,7 @@ public class ExprTest {
         Expr  expr = new Expr(RING_COUNT, 6);
         IAtom atom = mock(IAtom.class);
         when(atom.isInRing()).thenReturn(false);
-        assertFalse(expr.matches(atom));
+        Assertions.assertFalse(expr.matches(atom));
     }
 
     @Test
@@ -1022,7 +1022,7 @@ public class ExprTest {
         Expr           expr = new Expr(RING_SMALLEST, 6);
         IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
         Cycles.markRingAtomsAndBonds(mol);
-        assertTrue(expr.matches(mol.getAtom(0)));
+        Assertions.assertTrue(expr.matches(mol.getAtom(0)));
     }
 
     @Test
@@ -1030,7 +1030,7 @@ public class ExprTest {
         Expr           expr = new Expr(RING_SMALLEST, 10);
         IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
         Cycles.markRingAtomsAndBonds(mol);
-        assertFalse(expr.matches(mol.getAtom(0)));
+        Assertions.assertFalse(expr.matches(mol.getAtom(0)));
     }
 
     @Test
@@ -1088,7 +1088,7 @@ public class ExprTest {
         IAtom atom = mock(IAtom.class);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
-                                    assertFalse(expr.matches(atom));
+                                    Assertions.assertFalse(expr.matches(atom));
                                 });
     }
 
@@ -1135,116 +1135,116 @@ public class ExprTest {
     public void testBondT() {
         Expr  expr = new Expr(TRUE);
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
     public void testBondF() {
         Expr  expr = new Expr(FALSE);
         IBond bond = mock(IBond.class);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
     public void testBondAndTT() {
         Expr  expr = new Expr(AND, new Expr(TRUE), new Expr(TRUE));
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
     public void testBondAndTF() {
         Expr  expr = new Expr(AND, new Expr(TRUE), new Expr(FALSE));
         IBond bond = mock(IBond.class);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
     public void testBondAndFT() {
         Expr  expr = new Expr(AND, new Expr(FALSE), new Expr(TRUE));
         IBond bond = mock(IBond.class);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
     public void testBondOrTT() {
         Expr  expr = new Expr(OR, new Expr(TRUE), new Expr(TRUE));
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
     public void testBondOrTF() {
         Expr  expr = new Expr(OR, new Expr(TRUE), new Expr(FALSE));
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
     public void testBondOrFT() {
         Expr  expr = new Expr(OR, new Expr(FALSE), new Expr(TRUE));
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
     public void testBondOrFF() {
         Expr  expr = new Expr(OR, new Expr(FALSE), new Expr(FALSE));
         IBond bond = mock(IBond.class);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
     public void testBondNotF() {
         Expr  expr = new Expr(NOT, new Expr(FALSE), null);
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
     public void testBondNotT() {
         Expr  expr = new Expr(NOT, new Expr(TRUE), null);
         IBond bond = mock(IBond.class);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
     public void testBondNotStereo() {
         Expr  expr = new Expr(NOT, new Expr(STEREOCHEMISTRY, 1), null);
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond));
-        assertTrue(expr.matches(bond, 2));
-        assertFalse(expr.matches(bond, 1));
+        Assertions.assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond, 2));
+        Assertions.assertFalse(expr.matches(bond, 1));
     }
 
     @Test
     public void testBondNotStereo3() {
         Expr  expr = new Expr(NOT, new Expr(STEREOCHEMISTRY, 1).or(new Expr(STEREOCHEMISTRY, 0)), null);
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond));
-        assertTrue(expr.matches(bond, 2));
-        assertFalse(expr.matches(bond, 1));
+        Assertions.assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond, 2));
+        Assertions.assertFalse(expr.matches(bond, 1));
     }
 
     @Test
     public void testBondNotStereo4() {
         Expr  expr = new Expr(NOT, new Expr(OR, new Expr(TRUE), new Expr(TRUE)), null);
         IBond bond = mock(IBond.class);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
     public void testBondStereoT() {
         Expr  expr = new Expr(STEREOCHEMISTRY, 1);
         IBond bond = mock(IBond.class);
-        assertTrue(expr.matches(bond, 1));
+        Assertions.assertTrue(expr.matches(bond, 1));
     }
 
     @Test
     public void testBondStereoF() {
         Expr  expr = new Expr(STEREOCHEMISTRY, 1);
         IBond bond = mock(IBond.class);
-        assertFalse(expr.matches(bond, 2));
+        Assertions.assertFalse(expr.matches(bond, 2));
     }
 
     @Test
@@ -1252,7 +1252,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_AROMATIC);
         IBond bond = mock(IBond.class);
         when(bond.isAromatic()).thenReturn(true);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
@@ -1260,7 +1260,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_AROMATIC);
         IBond bond = mock(IBond.class);
         when(bond.isAromatic()).thenReturn(false);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1268,7 +1268,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_ALIPHATIC);
         IBond bond = mock(IBond.class);
         when(bond.isAromatic()).thenReturn(false);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
@@ -1276,7 +1276,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_ALIPHATIC);
         IBond bond = mock(IBond.class);
         when(bond.isAromatic()).thenReturn(true);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1284,7 +1284,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_IN_CHAIN);
         IBond bond = mock(IBond.class);
         when(bond.isInRing()).thenReturn(false);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
@@ -1292,7 +1292,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_IN_CHAIN);
         IBond bond = mock(IBond.class);
         when(bond.isInRing()).thenReturn(true);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1300,7 +1300,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_IN_RING);
         IBond bond = mock(IBond.class);
         when(bond.isInRing()).thenReturn(true);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
@@ -1308,7 +1308,7 @@ public class ExprTest {
         Expr  expr = new Expr(IS_IN_RING);
         IBond bond = mock(IBond.class);
         when(bond.isInRing()).thenReturn(false);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1316,7 +1316,7 @@ public class ExprTest {
         Expr  expr = new Expr(ALIPHATIC_ORDER, 2);
         IBond bond = mock(IBond.class);
         when(bond.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
@@ -1324,7 +1324,7 @@ public class ExprTest {
         Expr  expr = new Expr(ALIPHATIC_ORDER, 2);
         IBond bond = mock(IBond.class);
         when(bond.getOrder()).thenReturn(IBond.Order.SINGLE);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1333,7 +1333,7 @@ public class ExprTest {
         IBond bond = mock(IBond.class);
         when(bond.isAromatic()).thenReturn(true);
         when(bond.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1341,7 +1341,7 @@ public class ExprTest {
         Expr  expr = new Expr(ALIPHATIC_ORDER, 2);
         IBond bond = mock(IBond.class);
         when(bond.getOrder()).thenReturn(null);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1350,10 +1350,10 @@ public class ExprTest {
         IBond bond = mock(IBond.class);
         when(bond.isAromatic()).thenReturn(false);
         when(bond.getOrder()).thenReturn(IBond.Order.SINGLE);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
         when(bond.isAromatic()).thenReturn(true);
         when(bond.getOrder()).thenReturn(null);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
     }
 
     @Test
@@ -1362,7 +1362,7 @@ public class ExprTest {
         IBond bond = mock(IBond.class);
         when(bond.isAromatic()).thenReturn(false);
         when(bond.getOrder()).thenReturn(IBond.Order.TRIPLE);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1371,13 +1371,13 @@ public class ExprTest {
         IBond bond = mock(IBond.class);
         when(bond.isAromatic()).thenReturn(true);
         when(bond.getOrder()).thenReturn(null);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
         when(bond.isAromatic()).thenReturn(false);
         when(bond.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
         when(bond.isAromatic()).thenReturn(false);
         when(bond.getOrder()).thenReturn(IBond.Order.TRIPLE);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test
@@ -1385,11 +1385,11 @@ public class ExprTest {
         Expr  expr = new Expr(SINGLE_OR_DOUBLE);
         IBond bond = mock(IBond.class);
         when(bond.getOrder()).thenReturn(IBond.Order.SINGLE);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
         when(bond.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertTrue(expr.matches(bond));
+        Assertions.assertTrue(expr.matches(bond));
         when(bond.getOrder()).thenReturn(IBond.Order.TRIPLE);
-        assertFalse(expr.matches(bond));
+        Assertions.assertFalse(expr.matches(bond));
     }
 
     @Test

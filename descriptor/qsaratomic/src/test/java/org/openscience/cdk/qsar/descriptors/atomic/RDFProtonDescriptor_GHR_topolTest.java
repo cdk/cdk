@@ -3,6 +3,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -53,8 +54,8 @@ public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
                 DescriptorValue dv = descriptor.calculate(mol.getAtom(i), mol);
                 IDescriptorResult result = dv.getValue();
                 //				System.out.println("array: " + result.toString());
-                Assert.assertNotNull(result);
-                Assert.assertEquals(dv.getNames().length, result.length());
+                Assertions.assertNotNull(result);
+                Assertions.assertEquals(dv.getNames().length, result.length());
             }
 
         }
@@ -67,11 +68,11 @@ public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
         mol.addAtom(atom);
         DescriptorValue dv = descriptor.calculate(atom, mol);
         IDescriptorResult result = dv.getValue();
-        Assert.assertNotNull(result);
-        Assert.assertTrue(result instanceof DoubleArrayResult);
+        Assertions.assertNotNull(result);
+        Assertions.assertTrue(result instanceof DoubleArrayResult);
         DoubleArrayResult dResult = (DoubleArrayResult) result;
         for (int i = 0; i < result.length(); i++) {
-            Assert.assertEquals(Double.NaN, dResult.get(i), 0.000001);
+            Assertions.assertEquals(Double.NaN, dResult.get(i), 0.000001);
         }
     }
 

@@ -55,10 +55,10 @@ public class MatchingTest {
         Matching matching = Matching.withCapacity(8);
         matching.match(2, 5);
         matching.match(6, 7);
-        assertTrue(matching.matched(2));
-        assertTrue(matching.matched(5));
-        assertTrue(matching.matched(6));
-        assertTrue(matching.matched(7));
+        Assertions.assertTrue(matching.matched(2));
+        Assertions.assertTrue(matching.matched(5));
+        Assertions.assertTrue(matching.matched(6));
+        Assertions.assertTrue(matching.matched(7));
         assertThat(matching.other(2), is(5));
         assertThat(matching.other(5), is(2));
         assertThat(matching.other(6), is(7));
@@ -71,10 +71,10 @@ public class MatchingTest {
         matching.match(2, 5);
         matching.match(6, 7);
         matching.match(5, 6);
-        assertFalse(matching.matched(2));
-        assertTrue(matching.matched(5));
-        assertTrue(matching.matched(6));
-        assertFalse(matching.matched(7));
+        Assertions.assertFalse(matching.matched(2));
+        Assertions.assertTrue(matching.matched(5));
+        Assertions.assertTrue(matching.matched(6));
+        Assertions.assertFalse(matching.matched(7));
         assertThat(matching.other(5), is(6));
         assertThat(matching.other(6), is(5));
     }
@@ -95,8 +95,8 @@ public class MatchingTest {
         Matching matching = Matching.withCapacity(5);
         matching.match(2, 4);
         matching.unmatch(4); // also unmatches 2
-        assertFalse(matching.matched(4));
-        assertFalse(matching.matched(2));
+        Assertions.assertFalse(matching.matched(4));
+        Assertions.assertFalse(matching.matched(2));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class MatchingTest {
         Matching matching = Matching.withCapacity(4);
         BitSet subset = new BitSet();
         subset.flip(0, 4);
-        assertTrue(matching.arbitaryMatching(new int[][]{{1}, {0, 2}, {1, 3}, {2}}, subset));
+        Assertions.assertTrue(matching.arbitaryMatching(new int[][]{{1}, {0, 2}, {1, 3}, {2}}, subset));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class MatchingTest {
         Matching matching = Matching.withCapacity(5);
         BitSet subset = new BitSet();
         subset.flip(0, 5);
-        assertFalse(matching.arbitaryMatching(new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3}}, subset));
+        Assertions.assertFalse(matching.arbitaryMatching(new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3}}, subset));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class MatchingTest {
         BitSet subset = new BitSet();
         subset.flip(0, graph.length);
         // arbitary matching will assign a perfect matching here
-        assertTrue(m.arbitaryMatching(graph, subset));
+        Assertions.assertTrue(m.arbitaryMatching(graph, subset));
     }
 
     @Test
@@ -136,10 +136,10 @@ public class MatchingTest {
         m.match(1, 2);
 
         // arbitary matching will not be able assign a perfect matching
-        assertFalse(m.arbitaryMatching(graph, subset));
+        Assertions.assertFalse(m.arbitaryMatching(graph, subset));
 
         // but perfect() will
-        assertTrue(m.perfect(graph, subset));
+        Assertions.assertTrue(m.perfect(graph, subset));
     }
 
     @Test

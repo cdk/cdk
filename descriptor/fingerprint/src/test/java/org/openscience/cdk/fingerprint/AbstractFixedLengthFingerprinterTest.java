@@ -23,6 +23,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -108,7 +109,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         BitSet superBS = fingerprinter.getBitFingerprint(superstructure).asBitSet();
         BitSet subBS = fingerprinter.getBitFingerprint(substructure).asBitSet();
         boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
-        Assert.assertTrue(isSubset);
+        Assertions.assertTrue(isSubset);
     }
 
     /**
@@ -176,7 +177,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         BitSet superBS = fingerprinter.getBitFingerprint(structure2).asBitSet();
         BitSet subBS = fingerprinter.getBitFingerprint(structure1).asBitSet();
         boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
-        Assert.assertTrue(isSubset);
+        Assertions.assertTrue(isSubset);
     }
 
     /**
@@ -211,7 +212,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         // cardinality gives us the number of "true" bits in the
         // result of the XOR operation.
         int cardinality = bs1.cardinality();
-        Assert.assertEquals(0, cardinality);
+        Assertions.assertEquals(0, cardinality);
     }
 
     /**

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -54,13 +55,13 @@ public class MMFF94BasedParameterSetReaderTest {
         List<IAtomType> atomtypes = mmff94bpsr.getAtomTypes();
         IAtomType atomtype = atomtypes.get(0);
         String sid = "C";
-        assertEquals(sid, atomtype.getAtomTypeName());
+        Assertions.assertEquals(sid, atomtype.getAtomTypeName());
         String rootType = "C";
-        assertEquals(rootType, atomtype.getSymbol());
+        Assertions.assertEquals(rootType, atomtype.getSymbol());
         String smaxbond = "4";
-        assertEquals(Integer.parseInt(smaxbond), (int) atomtype.getFormalNeighbourCount());
+        Assertions.assertEquals(Integer.parseInt(smaxbond), (int) atomtype.getFormalNeighbourCount());
         String satomNr = "6";
-        assertEquals(Integer.parseInt(satomNr), (int) atomtype.getAtomicNumber());
+        Assertions.assertEquals(Integer.parseInt(satomNr), (int) atomtype.getAtomicNumber());
 
         //atom
         //TODO testing
@@ -144,14 +145,14 @@ public class MMFF94BasedParameterSetReaderTest {
 
         for (Entry<String, Object> e : parameterSet.entrySet()) {
             if (e.getKey().equals(bondkey))
-                assertEquals(bonddata, e.getValue());
+                Assertions.assertEquals(bonddata, e.getValue());
             else if (e.getKey().equals(strbndkey))
-                assertEquals(strbnddata, e.getValue());
+                Assertions.assertEquals(strbnddata, e.getValue());
             else if (e.getKey().equals(anglekey))
-                assertEquals(angledata, e.getValue());
+                Assertions.assertEquals(angledata, e.getValue());
             else if (e.getKey().equals(torsionkey))
-                assertEquals(torsiondata, e.getValue());
-            else if (e.getKey().equals(opbendkey)) assertEquals(opbenddata, e.getValue());
+                Assertions.assertEquals(torsiondata, e.getValue());
+            else if (e.getKey().equals(opbendkey)) Assertions.assertEquals(opbenddata, e.getValue());
         }
     }
 }

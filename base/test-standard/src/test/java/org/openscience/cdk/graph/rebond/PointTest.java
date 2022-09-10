@@ -19,6 +19,7 @@
 package org.openscience.cdk.graph.rebond;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -34,21 +35,21 @@ public class PointTest extends CDKTestCase {
     @Test
     public void testPoint_double_double_double() {
         Point point = new Point(0.1, 0.2, 0.3);
-        Assert.assertNotNull(point);
+        Assertions.assertNotNull(point);
     }
 
     @Test
     public void testGetDimValue_int() {
         Point point = new Point(0.1, 0.2, 0.3);
-        Assert.assertEquals(0.1, point.getDimValue(0), 0.0001);
-        Assert.assertEquals(0.2, point.getDimValue(1), 0.0001);
-        Assert.assertEquals(0.3, point.getDimValue(2), 0.0001);
+        Assertions.assertEquals(0.1, point.getDimValue(0), 0.0001);
+        Assertions.assertEquals(0.2, point.getDimValue(1), 0.0001);
+        Assertions.assertEquals(0.3, point.getDimValue(2), 0.0001);
     }
 
     @Test
     public void testToString() {
         Point point = new Point(0.1, 0.2, 0.3);
-        Assert.assertEquals("<0.1,0.2,0.3>", point.toString());
+        Assertions.assertEquals("<0.1,0.2,0.3>", point.toString());
     }
 
 }

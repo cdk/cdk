@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -40,7 +41,7 @@ public class ReactionSetTest extends AbstractReactionSetTest {
     @Test
     public void testReactionSet() {
         IReactionSet rs = new ReactionSet();
-        Assert.assertNotNull(rs);
+        Assertions.assertNotNull(rs);
     }
 
     // Overwrite default methods: no notifications are expected!

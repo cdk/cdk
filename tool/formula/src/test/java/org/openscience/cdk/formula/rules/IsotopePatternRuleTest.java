@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -58,7 +59,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     public void testIsotopePatternRule() throws Exception {
 
         IRule rule = new IsotopePatternRule();
-        Assert.assertNotNull(rule);
+        Assertions.assertNotNull(rule);
 
     }
 
@@ -73,7 +74,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
         IRule rule = new IsotopePatternRule();
         Object[] objects = rule.getParameters();
 
-        Assert.assertNull(objects[0]);
+        Assertions.assertNull(objects[0]);
     }
 
     /**
@@ -94,8 +95,8 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
 
         Object[] objects = rule.getParameters();
 
-        Assert.assertNotNull(objects[0]);
-        Assert.assertEquals(2, objects.length);
+        Assertions.assertNotNull(objects[0]);
+        Assertions.assertEquals(2, objects.length);
     }
 
     /**
@@ -122,7 +123,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
         formula.addIsotope(ifac.getMajorIsotope("Br"), 2);
         formula.setCharge(0);
 
-        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(0.0, rule.validate(formula), 0.0001);
     }
 
     /**
@@ -153,7 +154,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
         params[1] = 0.001;
         rule.setParameters(params);
 
-        Assert.assertEquals(0.9433, rule.validate(formula), 0.001);
+        Assertions.assertEquals(0.9433, rule.validate(formula), 0.001);
     }
 
 }

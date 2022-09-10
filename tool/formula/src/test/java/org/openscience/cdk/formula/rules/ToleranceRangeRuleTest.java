@@ -19,6 +19,7 @@
 package org.openscience.cdk.formula.rules;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -52,7 +53,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
     public void testToleranceRangeRule() throws Exception {
 
         IRule rule = new ToleranceRangeRule();
-        Assert.assertNotNull(rule);
+        Assertions.assertNotNull(rule);
 
     }
 
@@ -66,12 +67,12 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
 
         IRule rule = new ToleranceRangeRule();
         Object[] objects = rule.getParameters();
-        Assert.assertEquals(2, objects.length);
+        Assertions.assertEquals(2, objects.length);
 
         double mass = (Double) objects[0];
-        Assert.assertEquals(0.0, mass, 0.00001);
+        Assertions.assertEquals(0.0, mass, 0.00001);
         double tolerance = (Double) objects[1];
-        Assert.assertEquals(0.05, tolerance, 0.00001);
+        Assertions.assertEquals(0.05, tolerance, 0.00001);
 
     }
 
@@ -92,12 +93,12 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
 
         Object[] objects = rule.getParameters();
 
-        Assert.assertEquals(2, objects.length);
+        Assertions.assertEquals(2, objects.length);
 
         double mass = (Double) objects[0];
-        Assert.assertEquals(133.0, mass, 0.00001);
+        Assertions.assertEquals(133.0, mass, 0.00001);
         double tolerance = (Double) objects[1];
-        Assert.assertEquals(0.00005, tolerance, 0.00001);
+        Assertions.assertEquals(0.00005, tolerance, 0.00001);
 
     }
 
@@ -119,7 +120,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
         formula.addIsotope(carb);
         formula.addIsotope(cl);
 
-        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(0.0, rule.validate(formula), 0.0001);
     }
 
     /**
@@ -145,7 +146,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
         params[1] = 0.00005;
         rule.setParameters(params);
 
-        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(0.0, rule.validate(formula), 0.0001);
     }
 
     /**
@@ -171,7 +172,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
         params[1] = 0.00005;
         rule.setParameters(params);
 
-        Assert.assertEquals(1.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
     }
 
 }

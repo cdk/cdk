@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -32,12 +33,12 @@ public class DescriptorExceptionTest extends CDKTestCase {
     @Test
     public void testConstructor() {
         DescriptorException exception = new DescriptorException("Message");
-        Assert.assertNotNull(exception);
-        Assert.assertEquals("Message", exception.getMessage());
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals("Message", exception.getMessage());
 
         exception = new DescriptorException("Name", "Message");
-        Assert.assertNotNull(exception);
-        Assert.assertEquals("Name: Message", exception.getMessage());
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals("Name: Message", exception.getMessage());
     }
 
 }

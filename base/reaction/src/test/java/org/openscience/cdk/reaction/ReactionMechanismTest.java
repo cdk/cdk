@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
@@ -64,8 +65,7 @@ public abstract class ReactionMechanismTest extends CDKTestCase {
      */
     @Test
     public void testHasSetSuperDotDescriptor() {
-        Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.",
-                reactionMechanism);
+        Assertions.assertNotNull(reactionMechanism, "The extending class must set the super.descriptor in its setUp() method.");
     }
 
 }

@@ -24,6 +24,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -42,8 +43,8 @@ public class CMLWriterFactoryTest {
         WriterFactory factory = new WriterFactory();
         factory.registerWriter(CMLWriter.class);
         IChemObjectWriter writer = factory.createWriter((IChemFormat) CMLFormat.getInstance());
-        Assert.assertNotNull(writer);
-        Assert.assertEquals(new CMLWriter().getClass().getName(), writer.getClass().getName());
+        Assertions.assertNotNull(writer);
+        Assertions.assertEquals(new CMLWriter().getClass().getName(), writer.getClass().getName());
     }
 
 }

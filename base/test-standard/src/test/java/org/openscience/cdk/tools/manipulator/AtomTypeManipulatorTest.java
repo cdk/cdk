@@ -47,8 +47,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         IAtomType atomType = new AtomType(Elements.CARBON);
         atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
         AtomTypeManipulator.configure(atom, atomType);
-        Assert.assertEquals(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR),
-                atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        Assertions.assertEquals(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR), atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
     }
 
     @Test
@@ -58,7 +57,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         IAtomType atomType = new AtomType(Elements.CARBON);
         atomType.setExactMass(12.0);
         AtomTypeManipulator.configureUnsetProperties(atom, atomType);
-        Assert.assertEquals(13.0, atom.getExactMass(), 0.1);
+        Assertions.assertEquals(13.0, atom.getExactMass(), 0.1);
     }
 
     @Test
@@ -67,7 +66,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         IAtomType atomType = new AtomType(Elements.CARBON);
         atomType.setExactMass(12.0);
         AtomTypeManipulator.configureUnsetProperties(atom, atomType);
-        Assert.assertEquals(12.0, atom.getExactMass(), 0.1);
+        Assertions.assertEquals(12.0, atom.getExactMass(), 0.1);
     }
 
     @Test

@@ -103,7 +103,7 @@ public class HashGeneratorMakerTest {
     public void testPerturbed() {
         AtomHashGenerator g1 = new HashGeneratorMaker().depth(0).elemental().perturbed().atomic();
 
-        assertTrue(g1 instanceof PerturbedAtomHashGenerator);
+        Assertions.assertTrue(g1 instanceof PerturbedAtomHashGenerator);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class HashGeneratorMakerTest {
         EquivalentSetFinder mock = mock(EquivalentSetFinder.class);
         AtomHashGenerator g1 = new HashGeneratorMaker().depth(0).elemental().perturbWith(mock).atomic();
 
-        assertTrue(g1 instanceof PerturbedAtomHashGenerator);
+        Assertions.assertTrue(g1 instanceof PerturbedAtomHashGenerator);
         Field field = g1.getClass().getDeclaredField("finder");
         field.setAccessible(true);
         assertThat((EquivalentSetFinder) field.get(g1), is(sameInstance(mock)));
@@ -158,12 +158,12 @@ public class HashGeneratorMakerTest {
 
     @Test
     public void testAtomic() {
-        assertNotNull(new HashGeneratorMaker().depth(0).elemental().atomic());
+        Assertions.assertNotNull(new HashGeneratorMaker().depth(0).elemental().atomic());
     }
 
     @Test
     public void testMolecular() {
-        assertNotNull(new HashGeneratorMaker().depth(0).elemental().molecular());
+        Assertions.assertNotNull(new HashGeneratorMaker().depth(0).elemental().molecular());
     }
 
     @Test

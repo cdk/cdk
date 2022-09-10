@@ -23,6 +23,7 @@
 package org.openscience.cdk.config;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
@@ -35,19 +36,19 @@ public class NaturalElementTest {
     @Test
     public void testGetFlagValueZeroDefault() {
         IChemObject chemObject = new NaturalElement("C", 12);
-        Assert.assertEquals((short) 0, chemObject.getFlagValue());
+        Assertions.assertEquals((short) 0, chemObject.getFlagValue());
     }
 
     @Test
     public void testSymbol() {
         IElement chemObject = new NaturalElement("C", 12);
-        Assert.assertEquals("C", chemObject.getSymbol());
+        Assertions.assertEquals("C", chemObject.getSymbol());
     }
 
     @Test
     public void testMassNumber() {
         IElement chemObject = new NaturalElement("C", 12);
-        Assert.assertEquals(12, chemObject.getAtomicNumber().intValue());
+        Assertions.assertEquals(12, chemObject.getAtomicNumber().intValue());
     }
 
 }

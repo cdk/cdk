@@ -22,6 +22,7 @@ package org.openscience.cdk.formula;
 import java.io.IOException;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -52,7 +53,7 @@ public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
     public void testMolecularFormula() {
 
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
-        Assert.assertNotNull(mf);
+        Assertions.assertNotNull(mf);
     }
 
     @Test
@@ -70,8 +71,8 @@ public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
         anotherCarb.setNaturalAbundance(34.0);
         h.setNaturalAbundance(99.0);
 
-        Assert.assertTrue(mf.isTheSame(carb, carb));
-        Assert.assertTrue(mf.isTheSame(carb, anotherCarb));
-        Assert.assertFalse(mf.isTheSame(carb, h));
+        Assertions.assertTrue(mf.isTheSame(carb, carb));
+        Assertions.assertTrue(mf.isTheSame(carb, anotherCarb));
+        Assertions.assertFalse(mf.isTheSame(carb, h));
     }
 }

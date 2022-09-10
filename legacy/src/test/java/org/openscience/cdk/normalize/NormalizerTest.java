@@ -19,6 +19,7 @@
 package org.openscience.cdk.normalize;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -56,7 +57,7 @@ public class NormalizerTest extends CDKTestCase {
         set.appendChild(replacement);
         replacement.appendChild(doc.createTextNode("[O-][N+]=O"));
         Normalizer.normalize(ac, doc);
-        Assert.assertTrue(ac.getBond(1).getOrder() == IBond.Order.SINGLE
+        Assertions.assertTrue(ac.getBond(1).getOrder() == IBond.Order.SINGLE
                 ^ ac.getBond(2).getOrder() == IBond.Order.SINGLE);
     }
 }

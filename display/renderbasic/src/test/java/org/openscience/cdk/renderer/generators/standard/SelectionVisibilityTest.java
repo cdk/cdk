@@ -1,5 +1,6 @@
 package org.openscience.cdk.renderer.generators.standard;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
@@ -34,8 +35,8 @@ public class SelectionVisibilityTest {
         methyl.addBond(0, 3, IBond.Order.SINGLE);
         methyl.addBond(0, 4, IBond.Order.SINGLE);
         SymbolVisibility visibility = SelectionVisibility.all(SymbolVisibility.iupacRecommendations());
-        assertFalse(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0)),
-                new RendererModel()));
+        Assertions.assertFalse(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0)),
+                                                  new RendererModel()));
     }
 
     @Test
@@ -52,8 +53,8 @@ public class SelectionVisibilityTest {
         methyl.addBond(0, 3, IBond.Order.SINGLE);
         methyl.addBond(0, 4, IBond.Order.SINGLE);
         SymbolVisibility visibility = SelectionVisibility.all(SymbolVisibility.iupacRecommendations());
-        assertTrue(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0)),
-                new RendererModel()));
+        Assertions.assertTrue(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0)),
+                                                 new RendererModel()));
     }
 
     @Test
@@ -70,8 +71,8 @@ public class SelectionVisibilityTest {
         methyl.addBond(0, 4, IBond.Order.SINGLE);
         methyl.getAtom(0).setProperty(StandardGenerator.HIGHLIGHT_COLOR, Color.RED);
         SymbolVisibility visibility = SelectionVisibility.disconnected(SymbolVisibility.iupacRecommendations());
-        assertTrue(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0)),
-                new RendererModel()));
+        Assertions.assertTrue(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0)),
+                                                 new RendererModel()));
     }
 
     @Test
@@ -89,15 +90,15 @@ public class SelectionVisibilityTest {
         methyl.getAtom(0).setProperty(StandardGenerator.HIGHLIGHT_COLOR, Color.RED);
         methyl.getBond(0).setProperty(StandardGenerator.HIGHLIGHT_COLOR, Color.RED);
         SymbolVisibility visibility = SelectionVisibility.disconnected(SymbolVisibility.iupacRecommendations());
-        assertFalse(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0)),
-                new RendererModel()));
+        Assertions.assertFalse(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0)),
+                                                  new RendererModel()));
     }
 
     @Test
     public void highlightIsSelected() {
         IChemObject chemObject = mock(IChemObject.class);
         when(chemObject.getProperty(StandardGenerator.HIGHLIGHT_COLOR)).thenReturn(Color.RED);
-        assertTrue(SelectionVisibility.isSelected(chemObject, new RendererModel()));
+        Assertions.assertTrue(SelectionVisibility.isSelected(chemObject, new RendererModel()));
     }
 
     static IAtom atomAt(String symb, Point2d p) {

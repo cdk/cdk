@@ -25,6 +25,7 @@
 package org.openscience.cdk.stereo;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -182,7 +183,7 @@ public class StereoElementFactoryTest {
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(OPPOSITE));
     }
 
@@ -200,7 +201,7 @@ public class StereoElementFactoryTest {
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(1), null);
 
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
     }
 
@@ -228,7 +229,7 @@ public class StereoElementFactoryTest {
         dbs.add(mol.getBond(1));
         dbs.add(mol.getBond(2));
         ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getConfigOrder(), is(IStereoElement.OPPOSITE));
     }
 
@@ -256,7 +257,7 @@ public class StereoElementFactoryTest {
         dbs.add(mol.getBond(1));
         dbs.add(mol.getBond(2));
         ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getConfigOrder(), is(IStereoElement.TOGETHER));
     }
 
@@ -284,7 +285,7 @@ public class StereoElementFactoryTest {
         dbs.add(mol.getBond(1));
         dbs.add(mol.getBond(2));
         ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getConfigOrder(), is(IStereoElement.OPPOSITE));
     }
 
@@ -312,7 +313,7 @@ public class StereoElementFactoryTest {
         dbs.add(mol.getBond(1));
         dbs.add(mol.getBond(2));
         ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getConfigOrder(), is(IStereoElement.TOGETHER));
     }
 
@@ -330,7 +331,7 @@ public class StereoElementFactoryTest {
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
-        assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -347,7 +348,7 @@ public class StereoElementFactoryTest {
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
-        assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -364,7 +365,7 @@ public class StereoElementFactoryTest {
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
-        assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -381,7 +382,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 4, IBond.Order.SINGLE);
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
@@ -399,7 +400,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 4, IBond.Order.SINGLE);
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
@@ -417,7 +418,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 4, IBond.Order.SINGLE);
         StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
@@ -435,7 +436,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 4, IBond.Order.SINGLE);
         StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
@@ -455,7 +456,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 5, IBond.Order.SINGLE);
         StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
@@ -475,7 +476,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 5, IBond.Order.SINGLE);
         StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
@@ -494,7 +495,7 @@ public class StereoElementFactoryTest {
 
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
-        assertNull(element);
+        Assertions.assertNull(element);
     }
 
     /**
@@ -514,7 +515,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 4, IBond.Order.DOUBLE);
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
@@ -535,7 +536,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 4, IBond.Order.DOUBLE);
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
@@ -553,7 +554,7 @@ public class StereoElementFactoryTest {
         StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(OPPOSITE));
     }
 
@@ -571,7 +572,7 @@ public class StereoElementFactoryTest {
         StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
     }
 
@@ -589,7 +590,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 4, IBond.Order.SINGLE);
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m));
-        assertNotNull(element);
+        Assertions.assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
@@ -613,7 +614,7 @@ public class StereoElementFactoryTest {
 
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m));
-        assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -627,9 +628,9 @@ public class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.UP);  // CH-CH2
         m.addBond(1, 3, IBond.Order.SINGLE); // CH-Cl
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
-        Assert.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
+        Assertions.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
         factory.withStrictMode();
-        Assert.assertNull(factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m)));
+        Assertions.assertNull(factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m)));
     }
 
     @Test
@@ -644,9 +645,9 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE); // CH-Cl
 
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
-        Assert.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
+        Assertions.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
         factory.withStrictMode();
-        Assert.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
+        Assertions.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
     }
 
     // see http://efficientbits.blogspot.com/2019/09/rules-for-interpreting-updown-wedge.html
@@ -660,11 +661,11 @@ public class StereoElementFactoryTest {
             int numStereo = 0;
             for (IStereoElement<?,?> se : mol.stereoElements())
                 numStereo++;
-            assertEquals(0, numStereo);
+            Assertions.assertEquals(0, numStereo);
             StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
-            Assert.assertEquals(1, stereoFactory.createAll().size());
+            Assertions.assertEquals(1, stereoFactory.createAll().size());
             stereoFactory.withStrictMode();
-            Assert.assertEquals(1, stereoFactory.createAll().size());
+            Assertions.assertEquals(1, stereoFactory.createAll().size());
         }
     }
 
@@ -678,11 +679,11 @@ public class StereoElementFactoryTest {
             int numStereo = 0;
             for (IStereoElement<?,?> se : mol.stereoElements())
                 numStereo++;
-            assertEquals(0, numStereo);
+            Assertions.assertEquals(0, numStereo);
             StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
-            Assert.assertEquals(1, stereoFactory.createAll().size());
+            Assertions.assertEquals(1, stereoFactory.createAll().size());
             stereoFactory.withStrictMode();
-            Assert.assertEquals(0, stereoFactory.createAll().size());
+            Assertions.assertEquals(0, stereoFactory.createAll().size());
         }
     }
 
@@ -696,11 +697,11 @@ public class StereoElementFactoryTest {
             int numStereo = 0;
             for (IStereoElement<?,?> se : mol.stereoElements())
                 numStereo++;
-            assertEquals(0, numStereo);
+            Assertions.assertEquals(0, numStereo);
             StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
-            Assert.assertEquals(1, stereoFactory.createAll().size());
+            Assertions.assertEquals(1, stereoFactory.createAll().size());
             stereoFactory.withStrictMode();
-            Assert.assertEquals(0, stereoFactory.createAll().size());
+            Assertions.assertEquals(0, stereoFactory.createAll().size());
         }
     }
 
@@ -714,11 +715,11 @@ public class StereoElementFactoryTest {
             int numStereo = 0;
             for (IStereoElement<?,?> se : mol.stereoElements())
                 numStereo++;
-            assertEquals(0, numStereo);
+            Assertions.assertEquals(0, numStereo);
             StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
-            Assert.assertEquals(1, stereoFactory.createAll().size());
+            Assertions.assertEquals(1, stereoFactory.createAll().size());
             stereoFactory.withStrictMode();
-            Assert.assertEquals(1, stereoFactory.createAll().size());
+            Assertions.assertEquals(1, stereoFactory.createAll().size());
         }
     }
 
@@ -732,11 +733,11 @@ public class StereoElementFactoryTest {
             int numStereo = 0;
             for (IStereoElement<?,?> se : mol.stereoElements())
                 numStereo++;
-            assertEquals(0, numStereo);
+            Assertions.assertEquals(0, numStereo);
             StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
-            Assert.assertEquals(1, stereoFactory.createAll().size());
+            Assertions.assertEquals(1, stereoFactory.createAll().size());
             stereoFactory.withStrictMode();
-            Assert.assertEquals(0, stereoFactory.createAll().size());
+            Assertions.assertEquals(0, stereoFactory.createAll().size());
         }
     }
 
@@ -757,7 +758,7 @@ public class StereoElementFactoryTest {
             ac.stereoElements().forEach(ses::add);
 
             assertThat(ses.size(), is(1));
-            assertNotNull(ses.get(0));
+            Assertions.assertNotNull(ses.get(0));
         } finally {
             if (mdl != null) mdl.close();
         }
@@ -870,7 +871,7 @@ public class StereoElementFactoryTest {
 
         ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
                 Stereocenters.of(m));
-        assertNull(et);
+        Assertions.assertNull(et);
     }
 
     @Test
@@ -938,7 +939,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.setStereoElements(StereoElementFactory.using2DCoordinates(m).createAll());
-        assertTrue(m.stereoElements().iterator().hasNext());
+        Assertions.assertTrue(m.stereoElements().iterator().hasNext());
         assertThat(m.stereoElements().iterator().next(), is(instanceOf(ExtendedTetrahedral.class)));
     }
 
@@ -957,7 +958,7 @@ public class StereoElementFactoryTest {
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
         m.setStereoElements(StereoElementFactory.using2DCoordinates(m).checkSymmetry(true).createAll());
-        assertFalse(m.stereoElements().iterator().hasNext());
+        Assertions.assertFalse(m.stereoElements().iterator().hasNext());
     }
 
     /**
@@ -1105,21 +1106,21 @@ public class StereoElementFactoryTest {
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(5, 7, IBond.Order.SINGLE);
 
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .createAll()
-                                       .isEmpty());
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .interpretProjections(Projection.Haworth)
-                                       .createAll()
-                                       .isEmpty());
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .interpretProjections(Projection.Chair)
-                                       .createAll()
-                                       .isEmpty());
-        assertFalse(StereoElementFactory.using2DCoordinates(m)
-                                        .interpretProjections(Projection.Fischer)
-                                        .createAll()
-                                        .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .interpretProjections(Projection.Haworth)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .interpretProjections(Projection.Chair)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertFalse(StereoElementFactory.using2DCoordinates(m)
+                                                   .interpretProjections(Projection.Fischer)
+                                                   .createAll()
+                                                   .isEmpty());
     }
 
     /**
@@ -1154,21 +1155,21 @@ public class StereoElementFactoryTest {
         m.addBond(2, 10, IBond.Order.SINGLE);
         m.addBond(3, 11, IBond.Order.SINGLE);
 
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .createAll()
-                                       .isEmpty());
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .interpretProjections(Projection.Fischer)
-                                       .createAll()
-                                       .isEmpty());
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .interpretProjections(Projection.Chair)
-                                       .createAll()
-                                       .isEmpty());
-        assertFalse(StereoElementFactory.using2DCoordinates(m)
-                                        .interpretProjections(Projection.Haworth)
-                                        .createAll()
-                                        .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .interpretProjections(Projection.Fischer)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .interpretProjections(Projection.Chair)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertFalse(StereoElementFactory.using2DCoordinates(m)
+                                                   .interpretProjections(Projection.Haworth)
+                                                   .createAll()
+                                                   .isEmpty());
     }
     
     /**
@@ -1202,21 +1203,21 @@ public class StereoElementFactoryTest {
         m.addBond(0, 10, IBond.Order.SINGLE);
         m.addBond(5, 11, IBond.Order.SINGLE);
 
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .createAll()
-                                       .isEmpty());
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .interpretProjections(Projection.Fischer)
-                                       .createAll()
-                                       .isEmpty());
-        assertTrue(StereoElementFactory.using2DCoordinates(m)
-                                       .interpretProjections(Projection.Haworth)
-                                       .createAll()
-                                       .isEmpty());
-        assertFalse(StereoElementFactory.using2DCoordinates(m)
-                                        .interpretProjections(Projection.Chair)
-                                        .createAll()
-                                        .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .interpretProjections(Projection.Fischer)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                                  .interpretProjections(Projection.Haworth)
+                                                  .createAll()
+                                                  .isEmpty());
+        Assertions.assertFalse(StereoElementFactory.using2DCoordinates(m)
+                                                   .interpretProjections(Projection.Chair)
+                                                   .createAll()
+                                                   .isEmpty());
     }
 
     /**
@@ -1702,10 +1703,10 @@ public class StereoElementFactoryTest {
             int numStereo = 0;
             for (IStereoElement<?,?> se : mol.stereoElements())
                 numStereo++;
-            assertEquals(0, numStereo);
+            Assertions.assertEquals(0, numStereo);
             StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
             List<IStereoElement> stereoElements = stereoFactory.createAll();
-            Assert.assertEquals(1, stereoElements.size());
+            Assertions.assertEquals(1, stereoElements.size());
         }
     }
 
@@ -1719,12 +1720,12 @@ public class StereoElementFactoryTest {
             int numStereo = 0;
             for (IStereoElement<?,?> se : mol.stereoElements())
                 numStereo++;
-            assertEquals(0, numStereo);
+            Assertions.assertEquals(0, numStereo);
             StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
             stereoFactory.checkSymmetry(true);
-            Assert.assertEquals(1, stereoFactory.createAll().size());
+            Assertions.assertEquals(1, stereoFactory.createAll().size());
             stereoFactory.withStrictMode();
-            Assert.assertEquals(0, stereoFactory.createAll().size());
+            Assertions.assertEquals(0, stereoFactory.createAll().size());
         }
     }
 

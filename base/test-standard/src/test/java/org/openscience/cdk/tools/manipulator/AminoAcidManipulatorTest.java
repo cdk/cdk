@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAminoAcid;
@@ -41,10 +42,10 @@ public class AminoAcidManipulatorTest extends CDKTestCase {
     public void testRemoveAcidicOxygen_IAminoAcid() throws Exception {
         IAminoAcid glycine = builder.newInstance(IAminoAcid.class);
         glycine.add(new SmilesParser(builder).parseSmiles("C(C(=O)O)N"));
-        Assert.assertEquals(5, glycine.getAtomCount());
+        Assertions.assertEquals(5, glycine.getAtomCount());
         glycine.addCTerminus(glycine.getAtom(1));
         AminoAcidManipulator.removeAcidicOxygen(glycine);
-        Assert.assertEquals(4, glycine.getAtomCount());
+        Assertions.assertEquals(4, glycine.getAtomCount());
     }
 
     /**
@@ -55,10 +56,10 @@ public class AminoAcidManipulatorTest extends CDKTestCase {
         // FIXME: I think this is the proper test, but it currently fails
         IAminoAcid glycine = builder.newInstance(IAminoAcid.class);
         glycine.add(new SmilesParser(builder).parseSmiles("C(C=O)N"));
-        Assert.assertEquals(4, glycine.getAtomCount());
+        Assertions.assertEquals(4, glycine.getAtomCount());
         glycine.addCTerminus(glycine.getAtom(1));
         AminoAcidManipulator.addAcidicOxygen(glycine);
-        Assert.assertEquals(5, glycine.getAtomCount());
+        Assertions.assertEquals(5, glycine.getAtomCount());
     }
 
 }

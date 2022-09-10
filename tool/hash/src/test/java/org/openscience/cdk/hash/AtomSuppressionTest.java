@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.hash;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,11 +46,11 @@ public class AtomSuppressionTest {
         AtomSuppression suppression = AtomSuppression.unsuppressed();
         IAtomContainer container = mock(IAtomContainer.class);
         Suppressed suppressed = suppression.suppress(container);
-        assertFalse(suppressed.contains(0));
-        assertFalse(suppressed.contains(1));
-        assertFalse(suppressed.contains(2));
-        assertFalse(suppressed.contains(3));
-        assertFalse(suppressed.contains(4));
+        Assertions.assertFalse(suppressed.contains(0));
+        Assertions.assertFalse(suppressed.contains(1));
+        Assertions.assertFalse(suppressed.contains(2));
+        Assertions.assertFalse(suppressed.contains(3));
+        Assertions.assertFalse(suppressed.contains(4));
     }
 
     @Test
@@ -72,11 +73,11 @@ public class AtomSuppressionTest {
         when(container.getAtom(4)).thenReturn(hydrogen);
 
         Suppressed suppressed = suppression.suppress(container);
-        assertFalse(suppressed.contains(0));
-        assertTrue(suppressed.contains(1));
-        assertFalse(suppressed.contains(2));
-        assertFalse(suppressed.contains(3));
-        assertTrue(suppressed.contains(4));
+        Assertions.assertFalse(suppressed.contains(0));
+        Assertions.assertTrue(suppressed.contains(1));
+        Assertions.assertFalse(suppressed.contains(2));
+        Assertions.assertFalse(suppressed.contains(3));
+        Assertions.assertTrue(suppressed.contains(4));
     }
 
     @Test
@@ -95,10 +96,10 @@ public class AtomSuppressionTest {
         when(container.getAtom(4)).thenReturn(pseudo);
 
         Suppressed suppressed = suppression.suppress(container);
-        assertFalse(suppressed.contains(0));
-        assertTrue(suppressed.contains(1));
-        assertFalse(suppressed.contains(2));
-        assertFalse(suppressed.contains(3));
-        assertTrue(suppressed.contains(4));
+        Assertions.assertFalse(suppressed.contains(0));
+        Assertions.assertTrue(suppressed.contains(1));
+        Assertions.assertFalse(suppressed.contains(2));
+        Assertions.assertFalse(suppressed.contains(3));
+        Assertions.assertTrue(suppressed.contains(4));
     }
 }

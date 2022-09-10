@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
@@ -26,7 +27,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     public void testGetReactionSchemeCount() {
         IReactionScheme scheme = (IReactionScheme) newChemObject();
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
-        Assert.assertEquals(1, scheme.getReactionSchemeCount());
+        Assertions.assertEquals(1, scheme.getReactionSchemeCount());
     }
 
     /**
@@ -40,7 +41,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
         IReactionScheme scheme = (IReactionScheme) newChemObject();
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
-        Assert.assertEquals(2, scheme.getReactionCount());
+        Assertions.assertEquals(2, scheme.getReactionCount());
     }
 
     /**
@@ -55,13 +56,13 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
 
-        Assert.assertEquals(3, scheme.getReactionSchemeCount());
+        Assertions.assertEquals(3, scheme.getReactionSchemeCount());
         int count = 0;
         for (IReactionScheme sch : scheme.reactionSchemes()) {
             sch.getClass();
             ++count;
         }
-        Assert.assertEquals(3, count);
+        Assertions.assertEquals(3, count);
     }
 
     /**
@@ -77,12 +78,12 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
 
-        Assert.assertEquals(3, scheme.getReactionCount());
+        Assertions.assertEquals(3, scheme.getReactionCount());
         int count = 0;
         for (IReaction iReaction : scheme.reactions()) {
             ++count;
         }
-        Assert.assertEquals(3, count);
+        Assertions.assertEquals(3, count);
     }
 
     /**
@@ -98,9 +99,9 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
 
         IReactionScheme tested = scheme.getBuilder().newInstance(IReactionScheme.class);
-        Assert.assertEquals(0, tested.getReactionSchemeCount());
+        Assertions.assertEquals(0, tested.getReactionSchemeCount());
         tested.add(scheme);
-        Assert.assertEquals(1, tested.getReactionSchemeCount());
+        Assertions.assertEquals(1, tested.getReactionSchemeCount());
     }
 
     /**
@@ -116,10 +117,10 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
 
         IReactionScheme tested = scheme.getBuilder().newInstance(IReactionScheme.class);
-        Assert.assertEquals(0, tested.getReactionSchemeCount());
+        Assertions.assertEquals(0, tested.getReactionSchemeCount());
         tested.add(scheme);
-        Assert.assertEquals(1, tested.getReactionSchemeCount());
-        Assert.assertEquals(0, tested.getReactionCount());
+        Assertions.assertEquals(1, tested.getReactionSchemeCount());
+        Assertions.assertEquals(0, tested.getReactionCount());
     }
 
     /**
@@ -132,8 +133,8 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     public void testClone() throws Exception {
         IReactionScheme scheme = (IReactionScheme) newChemObject();
         Object clone = scheme.clone();
-        Assert.assertTrue(clone instanceof IReactionScheme);
-        Assert.assertNotSame(scheme, clone);
+        Assertions.assertTrue(clone instanceof IReactionScheme);
+        Assertions.assertNotSame(scheme, clone);
     }
 
     /**
@@ -149,7 +150,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
         scheme.add(scheme1);
         scheme.add(scheme2);
         scheme.removeReactionScheme(scheme1);
-        Assert.assertEquals(1, scheme.getReactionSchemeCount());
+        Assertions.assertEquals(1, scheme.getReactionSchemeCount());
     }
 
     /**
@@ -165,8 +166,8 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
         scheme.add(scheme1);
         scheme.add(scheme2);
 
-        Assert.assertEquals(2, scheme.getReactionSchemeCount());
+        Assertions.assertEquals(2, scheme.getReactionSchemeCount());
         scheme.removeAllReactionSchemes();
-        Assert.assertEquals(0, scheme.getReactionSchemeCount());
+        Assertions.assertEquals(0, scheme.getReactionSchemeCount());
     }
 }

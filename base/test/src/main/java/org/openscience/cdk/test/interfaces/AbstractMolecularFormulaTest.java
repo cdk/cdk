@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,7 +44,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
 
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
 
-        Assert.assertEquals(0, mf.getIsotopeCount());
+        Assertions.assertEquals(0, mf.getIsotopeCount());
     }
 
     /**
@@ -61,7 +62,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(getBuilder().newInstance(IIsotope.class, "H"));
         mf.addIsotope(getBuilder().newInstance(IIsotope.class, "H"));
 
-        Assert.assertEquals(2, mf.getIsotopeCount());
+        Assertions.assertEquals(2, mf.getIsotopeCount());
     }
 
     /**
@@ -80,7 +81,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         hy.setNaturalAbundance(2.00342342);
         mf.addIsotope(hy);
 
-        Assert.assertEquals(3, mf.getIsotopeCount());
+        Assertions.assertEquals(3, mf.getIsotopeCount());
     }
 
     /**
@@ -103,10 +104,10 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(h2);
         mf.addIsotope(h3);
 
-        Assert.assertEquals(3, mf.getIsotopeCount());
-        Assert.assertEquals(1, mf.getIsotopeCount(carb));
-        Assert.assertEquals(1, mf.getIsotopeCount(flu));
-        Assert.assertEquals(3, mf.getIsotopeCount(h1));
+        Assertions.assertEquals(3, mf.getIsotopeCount());
+        Assertions.assertEquals(1, mf.getIsotopeCount(carb));
+        Assertions.assertEquals(1, mf.getIsotopeCount(flu));
+        Assertions.assertEquals(3, mf.getIsotopeCount(h1));
     }
 
     /**
@@ -127,10 +128,10 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(h1);
         mf.addIsotope(h1);
 
-        Assert.assertEquals(3, mf.getIsotopeCount());
-        Assert.assertEquals(1, mf.getIsotopeCount(carb));
-        Assert.assertEquals(1, mf.getIsotopeCount(flu));
-        Assert.assertEquals(3, mf.getIsotopeCount(h1));
+        Assertions.assertEquals(3, mf.getIsotopeCount());
+        Assertions.assertEquals(1, mf.getIsotopeCount(carb));
+        Assertions.assertEquals(1, mf.getIsotopeCount(flu));
+        Assertions.assertEquals(3, mf.getIsotopeCount(h1));
     }
 
     /**
@@ -149,10 +150,10 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(flu);
         mf.addIsotope(h1, 3);
 
-        Assert.assertEquals(3, mf.getIsotopeCount());
-        Assert.assertEquals(1, mf.getIsotopeCount(carb));
-        Assert.assertEquals(1, mf.getIsotopeCount(flu));
-        Assert.assertEquals(3, mf.getIsotopeCount(h1));
+        Assertions.assertEquals(3, mf.getIsotopeCount());
+        Assertions.assertEquals(1, mf.getIsotopeCount(carb));
+        Assertions.assertEquals(1, mf.getIsotopeCount(flu));
+        Assertions.assertEquals(3, mf.getIsotopeCount(h1));
         // In a List the objects are not stored in the same order than called
         //        Assert.assertEquals("C", mf.getIsotope(0).getSymbol());
         //        Assert.assertEquals("F", mf.getIsotope(1).getSymbol());
@@ -176,13 +177,13 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(h1, 3);
 
         Object clone = mf.clone();
-        Assert.assertTrue(clone instanceof IMolecularFormula);
+        Assertions.assertTrue(clone instanceof IMolecularFormula);
 
         IMolecularFormula cloneFormula = (IMolecularFormula) clone;
 
-        Assert.assertEquals(1, cloneFormula.getIsotopeCount(carb));
-        Assert.assertEquals(1, cloneFormula.getIsotopeCount(flu));
-        Assert.assertEquals(3, cloneFormula.getIsotopeCount(h1));
+        Assertions.assertEquals(1, cloneFormula.getIsotopeCount(carb));
+        Assertions.assertEquals(1, cloneFormula.getIsotopeCount(flu));
+        Assertions.assertEquals(3, cloneFormula.getIsotopeCount(h1));
         // In a List the objects are not stored in the same order than called
         //        Assert.assertEquals("C", cloneFormula.getIsotope(0).getSymbol());
         //        Assert.assertEquals("F", cloneFormula.getIsotope(1).getSymbol());
@@ -205,10 +206,10 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(flu);
         mf.addIsotope(h1, 3);
 
-        Assert.assertEquals(3, mf.getIsotopeCount());
-        Assert.assertEquals(1, mf.getIsotopeCount(carb));
-        Assert.assertEquals(1, mf.getIsotopeCount(flu));
-        Assert.assertEquals(3, mf.getIsotopeCount(h1));
+        Assertions.assertEquals(3, mf.getIsotopeCount());
+        Assertions.assertEquals(1, mf.getIsotopeCount(carb));
+        Assertions.assertEquals(1, mf.getIsotopeCount(flu));
+        Assertions.assertEquals(3, mf.getIsotopeCount(h1));
     }
 
     /**
@@ -224,14 +225,14 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         IIsotope oxig = getBuilder().newInstance(IIsotope.class, "O");
         acetone.addIsotope(oxig);
 
-        Assert.assertEquals(2, acetone.getIsotopeCount());
+        Assertions.assertEquals(2, acetone.getIsotopeCount());
 
         IMolecularFormula water = getBuilder().newInstance(IMolecularFormula.class);
         water.addIsotope(getBuilder().newInstance(IIsotope.class, "H"), 2);
         water.addIsotope(oxig);
         acetone.add(water);
 
-        Assert.assertEquals(3, acetone.getIsotopeCount());
+        Assertions.assertEquals(3, acetone.getIsotopeCount());
 
     }
 
@@ -262,7 +263,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
             istoIter.next();
             counter++;
         }
-        Assert.assertEquals(3, counter);
+        Assertions.assertEquals(3, counter);
     }
 
     /**
@@ -282,9 +283,9 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(carb);
         mf.addIsotope(h1);
 
-        Assert.assertTrue(mf.contains(carb));
-        Assert.assertTrue(mf.contains(h1));
-        Assert.assertFalse(mf.contains(h2));
+        Assertions.assertTrue(mf.contains(carb));
+        Assertions.assertTrue(mf.contains(h1));
+        Assertions.assertFalse(mf.contains(h2));
     }
 
     /**
@@ -305,23 +306,23 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(h1, 3);
 
         Iterator<IIsotope> istoIter = mf.isotopes().iterator();
-        Assert.assertNotNull(istoIter);
-        Assert.assertTrue(istoIter.hasNext());
+        Assertions.assertNotNull(istoIter);
+        Assertions.assertTrue(istoIter.hasNext());
         IIsotope next = istoIter.next();
-        Assert.assertTrue(next instanceof IIsotope);
+        Assertions.assertTrue(next instanceof IIsotope);
         //        Assert.assertEquals(carb, next);
 
-        Assert.assertTrue(istoIter.hasNext());
+        Assertions.assertTrue(istoIter.hasNext());
         next = istoIter.next();
-        Assert.assertTrue(next instanceof IIsotope);
+        Assertions.assertTrue(next instanceof IIsotope);
         //        Assert.assertEquals(flu, next);
 
-        Assert.assertTrue(istoIter.hasNext());
+        Assertions.assertTrue(istoIter.hasNext());
         next = istoIter.next();
-        Assert.assertTrue(next instanceof IIsotope);
+        Assertions.assertTrue(next instanceof IIsotope);
         //        Assert.assertEquals(h1, next);
 
-        Assert.assertFalse(istoIter.hasNext());
+        Assertions.assertFalse(istoIter.hasNext());
     }
 
     /**
@@ -338,8 +339,8 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(getBuilder().newInstance(IAtom.class, "F"));
         mf.addIsotope(getBuilder().newInstance(IAtom.class, "H"), 3);
 
-        Assert.assertEquals(3, mf.getIsotopeCount());
-        Assert.assertEquals(1.0, mf.getCharge(), 0.001);
+        Assertions.assertEquals(3, mf.getIsotopeCount());
+        Assertions.assertEquals(1.0, mf.getCharge(), 0.001);
 
     }
 
@@ -352,13 +353,13 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     public void testSetCharge_Double() {
 
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
-        Assert.assertEquals(CDKConstants.UNSET, mf.getCharge());
+        Assertions.assertEquals(CDKConstants.UNSET, mf.getCharge());
 
         mf.setCharge(1);
-        Assert.assertEquals(1.0, mf.getCharge(), 0.001);
+        Assertions.assertEquals(1.0, mf.getCharge(), 0.001);
 
         mf.add(mf);
-        Assert.assertEquals(2.0, mf.getCharge(), 0.001);
+        Assertions.assertEquals(2.0, mf.getCharge(), 0.001);
     }
 
     @Test
@@ -370,7 +371,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(getBuilder().newInstance(IAtom.class, "F"));
         mf.addIsotope(getBuilder().newInstance(IAtom.class, "H"), 3);
 
-        Assert.assertEquals(1.0, mf.getCharge(), 0.001);
+        Assertions.assertEquals(1.0, mf.getCharge(), 0.001);
 
     }
 
@@ -383,15 +384,15 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     public void testCharge_rest() {
 
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
-        Assert.assertEquals(CDKConstants.UNSET, mf.getCharge());
+        Assertions.assertEquals(CDKConstants.UNSET, mf.getCharge());
 
         mf.setCharge(1);
-        Assert.assertEquals(1.0, mf.getCharge(), 0.001);
+        Assertions.assertEquals(1.0, mf.getCharge(), 0.001);
 
         IMolecularFormula mf2 = getBuilder().newInstance(IMolecularFormula.class);
         mf2.setCharge(-1);
         mf.add(mf2);
-        Assert.assertEquals(0.0, mf.getCharge(), 0.001);
+        Assertions.assertEquals(0.0, mf.getCharge(), 0.001);
     }
 
     /**
@@ -413,7 +414,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         // remove the Fluorine
         mf.removeIsotope(flu);
 
-        Assert.assertEquals(2, mf.getIsotopeCount());
+        Assertions.assertEquals(2, mf.getIsotopeCount());
 
     }
 
@@ -435,7 +436,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         // remove the Fluorine
         mf.removeAllIsotopes();
 
-        Assert.assertEquals(0, mf.getIsotopeCount());
+        Assertions.assertEquals(0, mf.getIsotopeCount());
 
     }
 
@@ -450,9 +451,9 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
         mf.setCharge(1);
         Object clone = mf.clone();
-        Assert.assertTrue(clone instanceof IMolecularFormula);
-        Assert.assertEquals(mf.getIsotopeCount(), ((IMolecularFormula) clone).getIsotopeCount());
-        Assert.assertEquals(mf.getCharge(), ((IMolecularFormula) clone).getCharge());
+        Assertions.assertTrue(clone instanceof IMolecularFormula);
+        Assertions.assertEquals(mf.getIsotopeCount(), ((IMolecularFormula) clone).getIsotopeCount());
+        Assertions.assertEquals(mf.getCharge(), ((IMolecularFormula) clone).getCharge());
 
     }
 
@@ -470,16 +471,16 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         mf.addIsotope(flu);
         mf.addIsotope(h1, 3);
 
-        Assert.assertEquals(3, mf.getIsotopeCount());
-        Assert.assertEquals(1, mf.getIsotopeCount(carb));
-        Assert.assertEquals(1, mf.getIsotopeCount(flu));
-        Assert.assertEquals(3, mf.getIsotopeCount(h1));
+        Assertions.assertEquals(3, mf.getIsotopeCount());
+        Assertions.assertEquals(1, mf.getIsotopeCount(carb));
+        Assertions.assertEquals(1, mf.getIsotopeCount(flu));
+        Assertions.assertEquals(3, mf.getIsotopeCount(h1));
 
         Object clone = mf.clone();
-        Assert.assertTrue(clone instanceof IMolecularFormula);
-        Assert.assertEquals(mf.getIsotopeCount(), ((IMolecularFormula) clone).getIsotopeCount());
+        Assertions.assertTrue(clone instanceof IMolecularFormula);
+        Assertions.assertEquals(mf.getIsotopeCount(), ((IMolecularFormula) clone).getIsotopeCount());
 
-        Assert.assertEquals(3, ((IMolecularFormula) clone).getIsotopeCount());
+        Assertions.assertEquals(3, ((IMolecularFormula) clone).getIsotopeCount());
     }
 
     /**
@@ -489,7 +490,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     public void testSetProperty_Object_Object() throws Exception {
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
         mf.setProperty("blabla", 2);
-        Assert.assertNotNull(mf.getProperty("blabla"));
+        Assertions.assertNotNull(mf.getProperty("blabla"));
     }
 
     /**
@@ -501,10 +502,10 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         String blabla = "blabla";
         double number = 2;
         mf.setProperty(blabla, number);
-        Assert.assertNotNull(mf.getProperty(blabla));
+        Assertions.assertNotNull(mf.getProperty(blabla));
 
         mf.removeProperty("blabla");
-        Assert.assertNull(mf.getProperty(blabla));
+        Assertions.assertNull(mf.getProperty(blabla));
 
     }
 
@@ -525,7 +526,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
         mf.setProperty("blabla", 2);
         mf.setProperty("blabla3", 3);
-        Assert.assertEquals(2, mf.getProperties().size());
+        Assertions.assertEquals(2, mf.getProperties().size());
     }
 
     /**
@@ -541,7 +542,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     public void testGetBuilder() {
         IMolecularFormula add = getBuilder().newInstance(IMolecularFormula.class);
         IChemObjectBuilder builder = add.getBuilder();
-        Assert.assertNotNull(getBuilder());
-        Assert.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
+        Assertions.assertNotNull(getBuilder());
+        Assertions.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
     }
 }

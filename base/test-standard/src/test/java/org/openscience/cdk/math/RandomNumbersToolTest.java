@@ -19,6 +19,7 @@
 package org.openscience.cdk.math;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -43,33 +44,33 @@ public class RandomNumbersToolTest extends CDKTestCase {
     public void testSetRandomSeed_long() {
         long seed = System.currentTimeMillis();
         RandomNumbersTool.setRandomSeed(seed);
-        Assert.assertEquals(seed, RandomNumbersTool.getRandomSeed());
+        Assertions.assertEquals(seed, RandomNumbersTool.getRandomSeed());
     }
 
     @Test
     public void testSetRandom() {
         Random rng = new Random();
         RandomNumbersTool.setRandom(rng);
-        Assert.assertEquals(rng, RandomNumbersTool.getRandom());
+        Assertions.assertEquals(rng, RandomNumbersTool.getRandom());
     }
 
     @Test
     public void testRandomInt() {
         int random = RandomNumbersTool.randomInt();
-        Assert.assertTrue(random == 0 || random == 1);
+        Assertions.assertTrue(random == 0 || random == 1);
     }
 
     @Test
     public void testRandomBoolean() {
         boolean random = RandomNumbersTool.randomBoolean();
-        Assert.assertTrue(random || !random);
+        Assertions.assertTrue(random || !random);
     }
 
     @Test
     public void testRandomLong() {
         long random = RandomNumbersTool.randomLong();
-        Assert.assertTrue(random >= 0l);
-        Assert.assertTrue(random <= 1l);
+        Assertions.assertTrue(random >= 0l);
+        Assertions.assertTrue(random <= 1l);
     }
 
     @Test
@@ -77,15 +78,15 @@ public class RandomNumbersToolTest extends CDKTestCase {
         long lower_limit = 2l;
         long upper_limit = 4l;
         long random = RandomNumbersTool.randomLong(lower_limit, upper_limit);
-        Assert.assertTrue(random >= lower_limit);
-        Assert.assertTrue(random <= upper_limit);
+        Assertions.assertTrue(random >= lower_limit);
+        Assertions.assertTrue(random <= upper_limit);
     }
 
     @Test
     public void testRandomDouble() {
         double random = RandomNumbersTool.randomDouble();
-        Assert.assertTrue(random >= 0.0);
-        Assert.assertTrue(random <= 1.0);
+        Assertions.assertTrue(random >= 0.0);
+        Assertions.assertTrue(random <= 1.0);
     }
 
     @Test
@@ -93,15 +94,15 @@ public class RandomNumbersToolTest extends CDKTestCase {
         double lower_limit = 2.0;
         double upper_limit = 4.0;
         double random = RandomNumbersTool.randomDouble(lower_limit, upper_limit);
-        Assert.assertTrue(random >= lower_limit);
-        Assert.assertTrue(random <= upper_limit);
+        Assertions.assertTrue(random >= lower_limit);
+        Assertions.assertTrue(random <= upper_limit);
     }
 
     @Test
     public void testRandomFloat() {
         float random = RandomNumbersTool.randomFloat();
-        Assert.assertTrue(random >= 0.0);
-        Assert.assertTrue(random <= 1.0);
+        Assertions.assertTrue(random >= 0.0);
+        Assertions.assertTrue(random <= 1.0);
     }
 
     @Test
@@ -109,20 +110,20 @@ public class RandomNumbersToolTest extends CDKTestCase {
         float lower_limit = (float) 2.0;
         float upper_limit = (float) 4.0;
         float random = RandomNumbersTool.randomFloat(lower_limit, upper_limit);
-        Assert.assertTrue(random >= lower_limit);
-        Assert.assertTrue(random <= upper_limit);
+        Assertions.assertTrue(random >= lower_limit);
+        Assertions.assertTrue(random <= upper_limit);
     }
 
     @Test
     public void testRandomBit() {
         int random = RandomNumbersTool.randomBit();
-        Assert.assertTrue(random == 0 || random == 1);
+        Assertions.assertTrue(random == 0 || random == 1);
     }
 
     @Test
     public void testRandomInt_int_int() {
         int random = RandomNumbersTool.randomInt(0, 5);
-        Assert.assertTrue(random == 0 || random == 1 || random == 2 || random == 3 || random == 4 || random == 5);
+        Assertions.assertTrue(random == 0 || random == 1 || random == 2 || random == 3 || random == 4 || random == 5);
     }
 
     @Disabled("Test based on random probability - random failures")
@@ -137,8 +138,8 @@ public class RandomNumbersToolTest extends CDKTestCase {
             else
                 nfalse += 1;
         }
-        Assert.assertEquals(0.5, (double) ntrue / ntry, 0.001);
-        Assert.assertEquals(0.5, (double) nfalse / ntry, 0.001);
+        Assertions.assertEquals(0.5, (double) ntrue / ntry, 0.001);
+        Assertions.assertEquals(0.5, (double) nfalse / ntry, 0.001);
     }
 
     @Disabled("Test based on random probability - random failures")
@@ -161,8 +162,8 @@ public class RandomNumbersToolTest extends CDKTestCase {
         for (int i = 0; i < ntry; i++)
             sd += (values[i] - mean) * (values[i] - mean);
         sd = (float) Math.sqrt(sd / (ntry - 1));
-        Assert.assertTrue("Estimated SD does not match to 2 decimal places", sd >= (dev - epsilon)
-                && sd <= (dev + epsilon));
+        Assertions.assertTrue(sd >= (dev - epsilon)
+                && sd <= (dev + epsilon), "Estimated SD does not match to 2 decimal places");
     }
 
     @Disabled("Test based on random probability - random failures")
@@ -184,8 +185,8 @@ public class RandomNumbersToolTest extends CDKTestCase {
         for (int i = 0; i < ntry; i++)
             sd += (values[i] - mean) * (values[i] - mean);
         sd = Math.sqrt(sd / (ntry - 1));
-        Assert.assertTrue("Estimated SD does not match to 2 decimal places", sd >= (dev - epsilon)
-                && sd <= (dev + epsilon));
+        Assertions.assertTrue(sd >= (dev - epsilon)
+                && sd <= (dev + epsilon), "Estimated SD does not match to 2 decimal places");
     }
 
     @Disabled("Test based on random probability - random failures")
@@ -204,7 +205,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
             m += values[i];
         m = m / ntry;
 
-        Assert.assertTrue("Estimated mean does not match to 2 decimal places " + m, m >= (mean - epsilon)
-                && m <= (mean + epsilon));
+        Assertions.assertTrue(m >= (mean - epsilon)
+                && m <= (mean + epsilon), "Estimated mean does not match to 2 decimal places " + m);
     }
 }

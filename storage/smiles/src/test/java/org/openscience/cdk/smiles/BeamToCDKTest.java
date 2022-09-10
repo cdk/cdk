@@ -125,7 +125,7 @@ public class BeamToCDKTest {
     @Test
     public void unspecifiedMass() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).build(), 4);
-        assertNull(a.getMassNumber());
+        Assertions.assertNull(a.getMassNumber());
     }
 
     @Test
@@ -149,7 +149,7 @@ public class BeamToCDKTest {
     @Test
     public void aromatic() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aromatic(Element.Carbon).build(), 0);
-        assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -159,12 +159,12 @@ public class BeamToCDKTest {
         assertThat(ac.getBondCount(), is(6));
         for (IAtom a : ac.atoms()) {
             assertThat(a.getSymbol(), is("C"));
-            assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
             assertThat(a.getImplicitHydrogenCount(), is(1));
         }
         for (IBond b : ac.bonds()) {
             assertThat(b.getOrder(), is(IBond.Order.UNSET));
-            assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -185,12 +185,12 @@ public class BeamToCDKTest {
         assertThat(ac.getBond(ac.getAtom(4), ac.getAtom(5)).getOrder(), is(IBond.Order.SINGLE));
         assertThat(ac.getBond(ac.getAtom(5), ac.getAtom(0)).getOrder(), is(IBond.Order.DOUBLE));
 
-        assertFalse(ac.getBond(0).getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(ac.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(ac.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(ac.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(ac.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        assertFalse(ac.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ac.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ac.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ac.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ac.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ac.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ac.getBond(5).getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -201,7 +201,7 @@ public class BeamToCDKTest {
         assertThat(ac.getBondCount(), is(5));
 
         for (IAtom a : ac.atoms())
-            assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
 
         assertThat(ac.getAtom(0).getSymbol(), is("C"));
         assertThat(ac.getAtom(1).getSymbol(), is("N"));
@@ -216,12 +216,12 @@ public class BeamToCDKTest {
         assertThat(ac.getAtom(4).getImplicitHydrogenCount(), is(1));
 
         for (IAtom a : ac.atoms()) {
-            assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
         }
 
         for (IBond b : ac.bonds()) {
             assertThat(b.getOrder(), is(IBond.Order.UNSET));
-            assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -233,7 +233,7 @@ public class BeamToCDKTest {
         assertThat(ac.getBondCount(), is(5));
 
         for (IAtom a : ac.atoms())
-            assertFalse(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(a.getFlag(CDKConstants.ISAROMATIC));
 
         assertThat(ac.getAtom(0).getSymbol(), is("N"));
         assertThat(ac.getAtom(1).getSymbol(), is("C"));
@@ -248,7 +248,7 @@ public class BeamToCDKTest {
         assertThat(ac.getAtom(4).getImplicitHydrogenCount(), is(1));
 
         for (IAtom a : ac.atoms()) {
-            assertFalse(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(a.getFlag(CDKConstants.ISAROMATIC));
         }
 
         assertThat(ac.getBond(ac.getAtom(0), ac.getAtom(1)).getOrder(), is(IBond.Order.SINGLE));
@@ -258,7 +258,7 @@ public class BeamToCDKTest {
         assertThat(ac.getBond(ac.getAtom(4), ac.getAtom(0)).getOrder(), is(IBond.Order.SINGLE));
 
         for (IBond b : ac.bonds()) {
-            assertFalse(b.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(b.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -438,7 +438,7 @@ public class BeamToCDKTest {
     @Test
     public void readAtomClass() throws Exception {
         IAtomContainer ac = convert("CC[C:2]C");
-        assertNotNull(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING));
+        Assertions.assertNotNull(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING));
         assertThat(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING, Integer.class), is(2));
     }
 
@@ -488,7 +488,7 @@ public class BeamToCDKTest {
     public void extendedTetrahedral_ccw() throws Exception {
         IAtomContainer ac = convert("CC=[C@]=CC");
         Iterator<IStereoElement> elements = ac.stereoElements().iterator();
-        assertTrue(elements.hasNext());
+        Assertions.assertTrue(elements.hasNext());
         IStereoElement element = elements.next();
         assertThat(element, is(instanceOf(ExtendedTetrahedral.class)));
         ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) element;
@@ -502,7 +502,7 @@ public class BeamToCDKTest {
     public void extendedTetrahedral_cw() throws Exception {
         IAtomContainer ac = convert("CC=[C@@]=CC");
         Iterator<IStereoElement> elements = ac.stereoElements().iterator();
-        assertTrue(elements.hasNext());
+        Assertions.assertTrue(elements.hasNext());
         IStereoElement element = elements.next();
         assertThat(element, is(instanceOf(ExtendedTetrahedral.class)));
         ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) element;
@@ -513,27 +513,23 @@ public class BeamToCDKTest {
     }
 
     @Test public void titleWithTab() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getTitle(),
-                     "caffeine");
+        Assertions.assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getTitle(), "caffeine");
     }
 
     @Test
     public void titleWithSpace() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getTitle(),
-                     "caffeine");
+        Assertions.assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getTitle(), "caffeine");
     }
 
     @Test
     public void titleWithMultipleSpace() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getTitle(),
-                     "caffeine compound");
+        Assertions.assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getTitle(), "caffeine compound");
     }
 
     /** GitHub Issue #723 */
     @Test
     public void cumulatedCycle() throws Exception {
-        assertEquals(convert("C=1(=N(=C=1)(CC)CC)/N=C(/N1CCC(C2=CC=CC#C2)(CN2C(=NC3=C2C=CC=C3)C)CC1)\\NCC").getBondCount(),
-                     39);
+        Assertions.assertEquals(convert("C=1(=N(=C=1)(CC)CC)/N=C(/N1CCC(C2=CC=CC#C2)(CN2C(=NC3=C2C=CC=C3)C)CC1)\\NCC").getBondCount(), 39);
     }
 
     IAtomContainer convert(String smi) throws IOException {

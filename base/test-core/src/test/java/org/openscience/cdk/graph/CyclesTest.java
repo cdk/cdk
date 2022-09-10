@@ -1,5 +1,6 @@
 package org.openscience.cdk.graph;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -190,7 +191,7 @@ public class CyclesTest {
         IAtomContainer biphenyl = makeBiphenyl();
         IRingSet rs = Cycles.vertexShort(biphenyl).toRingSet();
         Iterator<IAtomContainer> it = rs.atomContainers().iterator();
-        assertTrue(it.hasNext());
+        Assertions.assertTrue(it.hasNext());
         IAtomContainer r1 = it.next();
 
         assertThat(r1.getAtom(0), is(biphenyl.getAtom(0)));
@@ -207,7 +208,7 @@ public class CyclesTest {
         assertThat(r1.getBond(4), is(biphenyl.getBond(4)));
         assertThat(r1.getBond(5), is(biphenyl.getBond(5)));
 
-        assertTrue(it.hasNext());
+        Assertions.assertTrue(it.hasNext());
         IAtomContainer r2 = it.next();
 
         assertThat(r2.getAtom(0), is(biphenyl.getAtom(6)));
@@ -304,101 +305,101 @@ public class CyclesTest {
     public void testSmallRing_atom_simple() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("C1CCCCC1");
         Cycles.markRingAtomsAndBonds(mol); // required
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(0)));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(2)));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(5)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(0)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(2)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(5)));
 
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(0), 4));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(2), 4));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(5), 4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(0), 4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(2), 4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(5), 4));
 
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(0), 6));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(2), 6));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(5), 6));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(0), 6));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(2), 6));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(5), 6));
 
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(0), 7));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(2), 7));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(5), 7));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(0), 7));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(2), 7));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(5), 7));
     }
 
     @Test
     public void testSmallRing_atom_acyclic() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("CCCC");
         Cycles.markRingAtomsAndBonds(mol); // required
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(0)));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(1)));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(2)));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(0)));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(1)));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(2)));
     }
 
     @Test
     public void testSmallRing_atom_indole() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("[nH]1ccc2c1cccc2");
         Cycles.markRingAtomsAndBonds(mol); // required
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(0)));
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(1)));
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(2)));
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(3)));
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(4)));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(5)));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(6)));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(7)));
-        assertEquals(6,Cycles.smallRingSize(mol.getAtom(8)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(0)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(1)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(2)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(3)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(4)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(5)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(6)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(7)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(8)));
     }
 
     @Test
     public void testSmallRing_atom_indole_lim() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("[nH]1ccc2c1cccc2");
         Cycles.markRingAtomsAndBonds(mol); // required
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(0), 5));
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(1), 5));
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(2), 5));
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(3), 5));
-        assertEquals(5,Cycles.smallRingSize(mol.getAtom(4), 5));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(5), 5));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(6), 5));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(7), 5));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(8), 5));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(0), 5));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(1), 5));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(2), 5));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(3), 5));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(4), 5));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(5), 5));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(6), 5));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(7), 5));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(8), 5));
         // limit = 4
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(0), 4));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(1), 4));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(2), 4));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(3), 4));
-        assertEquals(0,Cycles.smallRingSize(mol.getAtom(4), 4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(0), 4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(1), 4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(2), 4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(3), 4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(4), 4));
     }
 
     @Test
     public void testSmallRing_bond_indole() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("[nH]1ccc2c1cccc2");
         Cycles.markRingAtomsAndBonds(mol); // required
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(0)));
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(1)));
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(2)));
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(3)));
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(4)));
-        assertEquals(6,Cycles.smallRingSize(mol.getBond(5)));
-        assertEquals(6,Cycles.smallRingSize(mol.getBond(6)));
-        assertEquals(6,Cycles.smallRingSize(mol.getBond(7)));
-        assertEquals(6,Cycles.smallRingSize(mol.getBond(8)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(0)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(1)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(2)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(3)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(4)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getBond(5)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getBond(6)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getBond(7)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getBond(8)));
     }
 
     @Test
     public void testSmallRing_bond_spiro() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("C1CCCC11CCC1");
         Cycles.markRingAtomsAndBonds(mol); // required
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(0)));
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(1)));
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(2)));
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(3)));
-        assertEquals(5,Cycles.smallRingSize(mol.getBond(4)));
-        assertEquals(4,Cycles.smallRingSize(mol.getBond(5)));
-        assertEquals(4,Cycles.smallRingSize(mol.getBond(6)));
-        assertEquals(4,Cycles.smallRingSize(mol.getBond(7)));
-        assertEquals(4,Cycles.smallRingSize(mol.getBond(8)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(0)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(1)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(2)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(3)));
+        Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(4)));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(5)));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(6)));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(7)));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(8)));
         // limit=4
-        assertEquals(0,Cycles.smallRingSize(mol.getBond(3),4));
-        assertEquals(4,Cycles.smallRingSize(mol.getBond(7),4));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(3), 4));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(7), 4));
         // limit=3
-        assertEquals(0,Cycles.smallRingSize(mol.getBond(3),3));
-        assertEquals(0,Cycles.smallRingSize(mol.getBond(7),3));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(3), 3));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(7), 3));
     }
 }

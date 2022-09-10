@@ -19,6 +19,7 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.test.CDKTestCase;
@@ -54,7 +55,7 @@ public class ElectronegativityTest extends CDKTestCase {
     @Test
     public void testElectronegativity() {
 
-        Assert.assertNotNull(new Electronegativity());
+        Assertions.assertNotNull(new Electronegativity());
     }
 
     /**
@@ -65,7 +66,7 @@ public class ElectronegativityTest extends CDKTestCase {
     @Test
     public void testElectronegativity_Int_Int() {
 
-        Assert.assertNotNull(new Electronegativity(6, 50));
+        Assertions.assertNotNull(new Electronegativity(6, 50));
     }
 
     /**
@@ -91,7 +92,7 @@ public class ElectronegativityTest extends CDKTestCase {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++)
-            Assert.assertEquals(testResult[i], pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i)), 0.001);
+            Assertions.assertEquals(testResult[i], pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i)), 0.001);
 
     }
 
@@ -118,8 +119,7 @@ public class ElectronegativityTest extends CDKTestCase {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            Assert.assertEquals(testResult[i],
-                    pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i), 6, 50), 0.001);
+            Assertions.assertEquals(testResult[i], pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i), 6, 50), 0.001);
 
         }
     }
@@ -134,7 +134,7 @@ public class ElectronegativityTest extends CDKTestCase {
     public void testGetMaxIterations() throws Exception {
 
         Electronegativity pe = new Electronegativity();
-        Assert.assertSame(6, pe.getMaxIterations());
+        Assertions.assertSame(6, pe.getMaxIterations());
     }
 
     /**
@@ -147,7 +147,7 @@ public class ElectronegativityTest extends CDKTestCase {
     public void testGetMaxResonStruc() throws Exception {
 
         Electronegativity pe = new Electronegativity();
-        Assert.assertSame(50, pe.getMaxResonStruc());
+        Assertions.assertSame(50, pe.getMaxResonStruc());
     }
 
     /**
@@ -162,7 +162,7 @@ public class ElectronegativityTest extends CDKTestCase {
         Electronegativity pe = new Electronegativity();
         int maxIter = 10;
         pe.setMaxIterations(maxIter);
-        Assert.assertSame(maxIter, pe.getMaxIterations());
+        Assertions.assertSame(maxIter, pe.getMaxIterations());
     }
 
     /**
@@ -177,6 +177,6 @@ public class ElectronegativityTest extends CDKTestCase {
         Electronegativity pe = new Electronegativity();
         int maxRes = 10;
         pe.setMaxResonStruc(maxRes);
-        Assert.assertSame(maxRes, pe.getMaxResonStruc());
+        Assertions.assertSame(maxRes, pe.getMaxResonStruc());
     }
 }

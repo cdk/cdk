@@ -25,6 +25,7 @@ package org.openscience.cdk.io.program;
 import java.io.StringWriter;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,7 +50,7 @@ public class GaussianInputWriterTest extends ChemObjectIOTest {
     @Test
     public void testAccepts() {
         GaussianInputWriter reader = new GaussianInputWriter();
-        Assert.assertTrue(reader.accepts(IAtomContainer.class));
+        Assertions.assertTrue(reader.accepts(IAtomContainer.class));
     }
 
     /**
@@ -63,6 +64,6 @@ public class GaussianInputWriterTest extends ChemObjectIOTest {
         gaussianWriter.write(molecule);
         gaussianWriter.close();
         String output = writer.toString();
-        Assert.assertNotSame(0, output.length());
+        Assertions.assertNotSame(0, output.length());
     }
 }

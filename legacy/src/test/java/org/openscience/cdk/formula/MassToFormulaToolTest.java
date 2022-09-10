@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -74,7 +75,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test
     public void testMassToFormulaTool_IChemObjectBuilder() {
 
-        Assert.assertNotNull(new MassToFormulaTool(builder));
+        Assertions.assertNotNull(new MassToFormulaTool(builder));
     }
 
     /**
@@ -85,7 +86,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test
     public void testMass_0Null() {
 
-        Assert.assertNull(new MassToFormulaTool(builder).generate(0.0));
+        Assertions.assertNull(new MassToFormulaTool(builder).generate(0.0));
     }
 
     /**
@@ -96,7 +97,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test
     public void testMass_NegativeNULL() {
 
-        Assert.assertNull(new MassToFormulaTool(builder).generate(-10.0));
+        Assertions.assertNull(new MassToFormulaTool(builder).generate(-10.0));
     }
 
     /**
@@ -107,7 +108,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test
     public void testGetRestrictions() {
 
-        Assert.assertNotNull(new MassToFormulaTool(builder).getRestrictions());
+        Assertions.assertNotNull(new MassToFormulaTool(builder).getRestrictions());
     }
 
     /**
@@ -120,37 +121,37 @@ public class MassToFormulaToolTest extends CDKTestCase {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> rules = mfTool.getRestrictions();
-        Assert.assertNotNull(rules);
+        Assertions.assertNotNull(rules);
 
-        Assert.assertEquals(3, rules.size());
+        Assertions.assertEquals(3, rules.size());
 
         ElementRule elemR = (ElementRule) rules.get(0);
-        Assert.assertEquals(1, elemR.getParameters().length);
+        Assertions.assertEquals(1, elemR.getParameters().length);
         Object[] objects = elemR.getParameters();
         MolecularFormulaRange mfRange = (MolecularFormulaRange) objects[0];
-        Assert.assertEquals(4, mfRange.getIsotopeCount());
-        Assert.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("C")));
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("C")));
-        Assert.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("H")));
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("H")));
-        Assert.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("N")));
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("N")));
-        Assert.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("O")));
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("O")));
+        Assertions.assertEquals(4, mfRange.getIsotopeCount());
+        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("C")));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("C")));
+        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("H")));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("H")));
+        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("O")));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("O")));
 
         ChargeRule chargeR = (ChargeRule) rules.get(1);
-        Assert.assertEquals(1, chargeR.getParameters().length);
+        Assertions.assertEquals(1, chargeR.getParameters().length);
         objects = chargeR.getParameters();
         double charge = (Double) objects[0];
-        Assert.assertEquals(0.0, charge, 0.001);
+        Assertions.assertEquals(0.0, charge, 0.001);
 
         ToleranceRangeRule toleranceR = (ToleranceRangeRule) rules.get(2);
-        Assert.assertEquals(2, toleranceR.getParameters().length);
+        Assertions.assertEquals(2, toleranceR.getParameters().length);
         objects = toleranceR.getParameters();
         double mass = (Double) objects[0];
-        Assert.assertEquals(0.0, mass, 0.001);
+        Assertions.assertEquals(0.0, mass, 0.001);
         double tolerance = (Double) objects[1];
-        Assert.assertEquals(0.05, tolerance, 0.001);
+        Assertions.assertEquals(0.05, tolerance, 0.001);
 
     }
 
@@ -164,9 +165,9 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
         List<IRule> rules = mfTool.getRestrictions();
-        Assert.assertNotNull(rules);
+        Assertions.assertNotNull(rules);
 
-        Assert.assertEquals(3, rules.size());
+        Assertions.assertEquals(3, rules.size());
 
         // put one rule more.
         List<IRule> myRules = new ArrayList<>();
@@ -176,7 +177,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         mfTool.setRestrictions(myRules);
 
-        Assert.assertEquals(4, rules.size());
+        Assertions.assertEquals(4, rules.size());
     }
 
     /**
@@ -189,9 +190,9 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
         List<IRule> rules = mfTool.getRestrictions();
-        Assert.assertNotNull(rules);
+        Assertions.assertNotNull(rules);
 
-        Assert.assertEquals(3, rules.size());
+        Assertions.assertEquals(3, rules.size());
 
         List<IRule> myRules = new ArrayList<>();
 
@@ -208,16 +209,16 @@ public class MassToFormulaToolTest extends CDKTestCase {
         //-----------------------------------------------------------------
 
         rules = mfTool.getRestrictions();
-        Assert.assertNotNull(rules);
+        Assertions.assertNotNull(rules);
 
-        Assert.assertEquals(3, rules.size());
+        Assertions.assertEquals(3, rules.size());
 
         for (IRule ruleA : rules) {
             if (ruleA instanceof ElementRule) {
-                Assert.assertEquals(1, ruleA.getParameters().length);
+                Assertions.assertEquals(1, ruleA.getParameters().length);
                 Object[] objects = ruleA.getParameters();
                 MolecularFormulaRange mfRange2 = (MolecularFormulaRange) objects[0];
-                Assert.assertEquals(2, mfRange2.getIsotopeCount());
+                Assertions.assertEquals(2, mfRange2.getIsotopeCount());
             }
         }
 
@@ -246,14 +247,14 @@ public class MassToFormulaToolTest extends CDKTestCase {
         //-----------------------------------------------------------------
 
         List<IRule> rules = mfTool.getRestrictions();
-        Assert.assertNotNull(rules);
+        Assertions.assertNotNull(rules);
 
         for (IRule ruleA : rules) {
             if (ruleA instanceof ChargeRule) {
-                Assert.assertEquals(1, ruleA.getParameters().length);
+                Assertions.assertEquals(1, ruleA.getParameters().length);
                 Object[] objects = ruleA.getParameters();
                 double charge2 = (Double) objects[0];
-                Assert.assertEquals(-1.0, charge2, 0.001);
+                Assertions.assertEquals(-1.0, charge2, 0.001);
             }
         }
 
@@ -283,16 +284,16 @@ public class MassToFormulaToolTest extends CDKTestCase {
         //-----------------------------------------------------------------
 
         List<IRule> rules = mfTool.getRestrictions();
-        Assert.assertNotNull(rules);
+        Assertions.assertNotNull(rules);
 
         for (IRule ruleA : rules) {
             if (ruleA instanceof ToleranceRangeRule) {
-                Assert.assertEquals(2, ruleA.getParameters().length);
+                Assertions.assertEquals(2, ruleA.getParameters().length);
                 Object[] objects = ruleA.getParameters();
                 double mass2 = (Double) objects[0];
-                Assert.assertEquals(133.0, mass2, 0.001);
+                Assertions.assertEquals(133.0, mass2, 0.001);
                 double tolerance2 = (Double) objects[1];
-                Assert.assertEquals(0.00001, tolerance2, 0.001);
+                Assertions.assertEquals(0.00001, tolerance2, 0.001);
             }
         }
 
@@ -306,7 +307,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test
     public void testGenerate_double() {
 
-        Assert.assertNotNull(new MassToFormulaTool(builder).generate(44.0032));
+        Assertions.assertNotNull(new MassToFormulaTool(builder).generate(44.0032));
     }
 
     /**
@@ -339,22 +340,20 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = new MassToFormulaTool(builder).generate(133.0968);
 
-        Assert.assertEquals(37, mfSet.size());
+        Assertions.assertEquals(37, mfSet.size());
 
-        Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1),
-                MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(0)));
-        Assert.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
-        Assert.assertEquals(mf1.getIsotopeCount(carb), mfSet.getMolecularFormula(0).getIsotopeCount(carb));
-        Assert.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(0)
-                .getIsotopeCount(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(0)));
+        Assertions.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
+        Assertions.assertEquals(mf1.getIsotopeCount(carb), mfSet.getMolecularFormula(0).getIsotopeCount(carb));
+        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(0)
+                                                                                     .getIsotopeCount(ifac.getMajorIsotope("N")));
 
-        Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf2),
-                MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(1)));
-        Assert.assertEquals(mf2.getIsotopeCount(), mfSet.getMolecularFormula(1).getIsotopeCount());
-        Assert.assertEquals(mf2.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(1)
-                .getIsotopeCount(ifac.getMajorIsotope("C")));
-        Assert.assertEquals(mf2.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(1)
-                .getIsotopeCount(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(MolecularFormulaManipulator.getAtomCount(mf2), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(1)));
+        Assertions.assertEquals(mf2.getIsotopeCount(), mfSet.getMolecularFormula(1).getIsotopeCount());
+        Assertions.assertEquals(mf2.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(1)
+                                                                                     .getIsotopeCount(ifac.getMajorIsotope("C")));
+        Assertions.assertEquals(mf2.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(1)
+                                                                                     .getIsotopeCount(ifac.getMajorIsotope("N")));
 
     }
 
@@ -391,15 +390,14 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(133.0968);
 
-        Assert.assertEquals(1, mfSet.size());
+        Assertions.assertEquals(1, mfSet.size());
 
-        Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1),
-                MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(0)));
-        Assert.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
-        Assert.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(0)
-                .getIsotopeCount(ifac.getMajorIsotope("C")));
-        Assert.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(0)
-                .getIsotopeCount(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(0)));
+        Assertions.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
+        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(0)
+                                                                                     .getIsotopeCount(ifac.getMajorIsotope("C")));
+        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(0)
+                                                                                     .getIsotopeCount(ifac.getMajorIsotope("N")));
 
     }
 
@@ -440,15 +438,14 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(133.0968);
 
-        Assert.assertEquals(42, mfSet.size());
+        Assertions.assertEquals(42, mfSet.size());
 
-        Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1),
-                MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(13)));
-        Assert.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(13).getIsotopeCount());
-        Assert.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(13)
-                .getIsotopeCount(ifac.getMajorIsotope("C")));
-        Assert.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(13)
-                .getIsotopeCount(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(13)));
+        Assertions.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(13).getIsotopeCount());
+        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(13)
+                                                                                     .getIsotopeCount(ifac.getMajorIsotope("C")));
+        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(13)
+                                                                                     .getIsotopeCount(ifac.getMajorIsotope("N")));
 
     }
 
@@ -486,8 +483,8 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(698.2588); //C37H38N4O10
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertSame(3, mfSet.size());
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertSame(3, mfSet.size());
 
         IMolecularFormula mf1 = new MolecularFormula();
         IIsotope carb = ifac.getMajorIsotope("C");
@@ -499,8 +496,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         IIsotope nit = ifac.getMajorIsotope("N");
         mf1.addIsotope(nit, 4);
 
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf1),
-                MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
+        Assertions.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
 
     }
 
@@ -572,7 +568,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         mfTool.setRestrictions(myRules);
 
         IMolecularFormulaSet mfSet = mfTool.generate(137.03807);
-        Assert.assertEquals(24, mfSet.size());
+        Assertions.assertEquals(24, mfSet.size());
         boolean found = false;
         for (IMolecularFormula formula : mfSet.molecularFormulas()) {
             String mf = MolecularFormulaManipulator.getString(formula);
@@ -581,7 +577,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
                 break;
             }
         }
-        Assert.assertTrue("The molecular formula C4H11NO4 should be found", found);
+        Assertions.assertTrue(found, "The molecular formula C4H11NO4 should be found");
     }
 
     /**
@@ -616,7 +612,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         mfTool.setRestrictions(myRules);
 
         IMolecularFormulaSet mfSet = mfTool.generate(188.0711);
-        Assert.assertEquals(56, mfSet.size());
+        Assertions.assertEquals(56, mfSet.size());
         boolean found = false;
         for (IMolecularFormula formula : mfSet.molecularFormulas()) {
             String mf = MolecularFormulaManipulator.getString(formula);
@@ -625,7 +621,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
                 break;
             }
         }
-        Assert.assertTrue("The molecular formula C4H11NO4 should be found", found);
+        Assertions.assertTrue(found, "The molecular formula C4H11NO4 should be found");
     }
 
     /**
@@ -661,8 +657,8 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(115.086589);
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertNotSame(0, mfSet.size());
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertNotSame(0, mfSet.size());
 
         IMolecularFormula mf1 = new MolecularFormula();
         IIsotope carb = ifac.getMajorIsotope("C");
@@ -674,8 +670,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         IIsotope nit = ifac.getMajorIsotope("N");
         mf1.addIsotope(nit, 2);
 
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf1),
-                MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
+        Assertions.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
 
     }
 
@@ -716,8 +711,8 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(318.915722);
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertNotSame(0, mfSet.size());
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertNotSame(0, mfSet.size());
 
         IMolecularFormula mf1 = new MolecularFormula();
         IIsotope carb = ifac.getMajorIsotope("C");
@@ -735,8 +730,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         IIsotope sol = ifac.getMajorIsotope("S");
         mf1.addIsotope(sol);
 
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf1),
-                MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
+        Assertions.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
 
     }
 
@@ -775,8 +769,8 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(54.04193);
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertNotSame(0, mfSet.size());
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertNotSame(0, mfSet.size());
 
         IMolecularFormula mf1 = new MolecularFormula(); //C3CH5
         mf1.addIsotope(carbon12, 3);
@@ -784,9 +778,9 @@ public class MassToFormulaToolTest extends CDKTestCase {
         IIsotope h = ifac.getMajorIsotope("H");
         mf1.addIsotope(h, 5);
 
-        Assert.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
-        Assert.assertEquals(mf1.getIsotopeCount(carbon12), mfSet.getMolecularFormula(0).getIsotopeCount(carbon12));
-        Assert.assertEquals(mf1.getIsotopeCount(carbon13), mfSet.getMolecularFormula(0).getIsotopeCount(carbon13));
+        Assertions.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
+        Assertions.assertEquals(mf1.getIsotopeCount(carbon12), mfSet.getMolecularFormula(0).getIsotopeCount(carbon12));
+        Assertions.assertEquals(mf1.getIsotopeCount(carbon13), mfSet.getMolecularFormula(0).getIsotopeCount(carbon13));
 
     }
 
@@ -817,7 +811,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(199.16973802990927);
 
-        Assert.assertNull(mfSet);
+        Assertions.assertNull(mfSet);
 
     }
 
@@ -849,7 +843,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(191.10318196);
 
-        Assert.assertNotNull(mfSet);
+        Assertions.assertNotNull(mfSet);
 
         IMolecularFormula mf1 = new MolecularFormula();
         IIsotope carb = ifac.getMajorIsotope("C");
@@ -861,8 +855,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
         IIsotope nit = ifac.getMajorIsotope("N");
         mf1.addIsotope(nit, 2);
 
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf1),
-                MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
+        Assertions.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
 
     }
 
@@ -899,9 +892,9 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(10.0);
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
-        Assert.assertEquals("C", MolecularFormulaManipulator
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
+        Assertions.assertEquals("C", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
     }
     
@@ -948,7 +941,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = mfTool.generate(10.0);
 
-        Assert.assertNotNull(mfSet);
+        Assertions.assertNotNull(mfSet);
 
         boolean found = false;
         for (IMolecularFormula formula : mfSet.molecularFormulas()) {
@@ -958,6 +951,6 @@ public class MassToFormulaToolTest extends CDKTestCase {
                 break;
             }
         }
-        Assert.assertTrue("The molecular formula H2O should be found", found);
+        Assertions.assertTrue(found, "The molecular formula H2O should be found");
     }
 }

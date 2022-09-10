@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -54,7 +55,7 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         XYZReader reader = new XYZReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
@@ -66,27 +67,27 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(63, m.getAtomCount());
-        Assert.assertEquals(0, m.getBondCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(63, m.getAtomCount());
+        Assertions.assertEquals(0, m.getBondCount());
 
-        Assert.assertEquals("N", m.getAtom(0).getSymbol());
-        Assert.assertNotNull(m.getAtom(0).getPoint3d());
-        Assert.assertEquals(-3.4932, m.getAtom(0).getPoint3d().x, 0.0001);
-        Assert.assertEquals(-1.8950, m.getAtom(0).getPoint3d().y, 0.0001);
-        Assert.assertEquals(0.1795, m.getAtom(0).getPoint3d().z, 0.0001);
+        Assertions.assertEquals("N", m.getAtom(0).getSymbol());
+        Assertions.assertNotNull(m.getAtom(0).getPoint3d());
+        Assertions.assertEquals(-3.4932, m.getAtom(0).getPoint3d().x, 0.0001);
+        Assertions.assertEquals(-1.8950, m.getAtom(0).getPoint3d().y, 0.0001);
+        Assertions.assertEquals(0.1795, m.getAtom(0).getPoint3d().z, 0.0001);
     }
 
     @Test
@@ -98,28 +99,28 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(63, m.getAtomCount());
-        Assert.assertEquals(0, m.getBondCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(63, m.getAtomCount());
+        Assertions.assertEquals(0, m.getBondCount());
 
         // atom 63: H    3.1625    3.1270   -0.9362
-        Assert.assertEquals("H", m.getAtom(62).getSymbol());
-        Assert.assertNotNull(m.getAtom(62).getPoint3d());
-        Assert.assertEquals(3.1625, m.getAtom(62).getPoint3d().x, 0.0001);
-        Assert.assertEquals(3.1270, m.getAtom(62).getPoint3d().y, 0.0001);
-        Assert.assertEquals(-0.9362, m.getAtom(62).getPoint3d().z, 0.0001);
+        Assertions.assertEquals("H", m.getAtom(62).getSymbol());
+        Assertions.assertNotNull(m.getAtom(62).getPoint3d());
+        Assertions.assertEquals(3.1625, m.getAtom(62).getPoint3d().x, 0.0001);
+        Assertions.assertEquals(3.1270, m.getAtom(62).getPoint3d().y, 0.0001);
+        Assertions.assertEquals(-0.9362, m.getAtom(62).getPoint3d().z, 0.0001);
     }
 
 }

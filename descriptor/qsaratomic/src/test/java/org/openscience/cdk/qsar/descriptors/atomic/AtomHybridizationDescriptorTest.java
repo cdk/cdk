@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -54,8 +55,8 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
                 IAtomType.Hybridization.SP1, IAtomType.Hybridization.SP2, IAtomType.Hybridization.SP2,
                 IAtomType.Hybridization.SP3};
         for (int i = 0; i < expectedStates.length; i++) {
-            Assert.assertEquals(expectedStates[i].ordinal(), ((IntegerResult) descriptor.calculate(mol.getAtom(i), mol)
-                    .getValue()).intValue());
+            Assertions.assertEquals(expectedStates[i].ordinal(), ((IntegerResult) descriptor.calculate(mol.getAtom(i), mol)
+                                                                                            .getValue()).intValue());
         }
     }
 

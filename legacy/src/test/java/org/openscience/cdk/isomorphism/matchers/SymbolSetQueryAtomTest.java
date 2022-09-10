@@ -20,6 +20,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -46,23 +47,23 @@ public class SymbolSetQueryAtomTest extends CDKTestCase {
     public void testMatches() {
         Atom c = new Atom("C");
         Atom n = new Atom("N");
-        Assert.assertTrue(symbolSet.matches(c));
-        Assert.assertFalse(symbolSet.matches(n));
+        Assertions.assertTrue(symbolSet.matches(c));
+        Assertions.assertFalse(symbolSet.matches(n));
     }
 
     @Test
     public void testRemoveSymbol() {
         symbolSet.removeSymbol("Fe");
-        Assert.assertEquals(1, symbolSet.getSymbolSet().size());
-        Assert.assertFalse(symbolSet.hasSymbol("Fe"));
-        Assert.assertTrue(symbolSet.hasSymbol("C"));
+        Assertions.assertEquals(1, symbolSet.getSymbolSet().size());
+        Assertions.assertFalse(symbolSet.hasSymbol("Fe"));
+        Assertions.assertTrue(symbolSet.hasSymbol("C"));
         symbolSet.addSymbol("Fe");
     }
 
     @Test
     public void testHasSymbol() {
-        Assert.assertTrue(symbolSet.hasSymbol("C"));
-        Assert.assertFalse(symbolSet.hasSymbol("N"));
+        Assertions.assertTrue(symbolSet.hasSymbol("C"));
+        Assertions.assertFalse(symbolSet.hasSymbol("N"));
     }
 
 }

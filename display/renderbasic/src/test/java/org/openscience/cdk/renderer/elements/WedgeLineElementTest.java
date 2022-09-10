@@ -24,6 +24,7 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.Color;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +44,7 @@ public class WedgeLineElementTest extends AbstractElementTest {
     public void testConstructor_LineElement() {
         IRenderingElement element = new WedgeLineElement(new LineElement(0, 0, 1, 1, 1.0, Color.red),
                 WedgeLineElement.TYPE.DASHED, WedgeLineElement.Direction.toFirst, Color.orange);
-        Assert.assertNotNull(element);
+        Assertions.assertNotNull(element);
     }
 
 }

@@ -24,6 +24,7 @@ package org.openscience.cdk.libio.jena;
 
 import org.apache.jena.rdf.model.Model;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
@@ -52,7 +53,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals(0, diff.length());
+        Assertions.assertEquals(0, diff.length());
     }
 
     @Test
@@ -62,7 +63,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -93,7 +94,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -106,7 +107,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -118,7 +119,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -130,7 +131,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -141,7 +142,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -154,7 +155,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -166,7 +167,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -178,7 +179,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -190,7 +191,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -251,7 +252,7 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 
     @Test
@@ -282,6 +283,6 @@ public class ConvertorTest extends CDKTestCase {
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
-        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+        Assertions.assertEquals(0, diff.length(), "Unexpected diff: " + diff);
     }
 }

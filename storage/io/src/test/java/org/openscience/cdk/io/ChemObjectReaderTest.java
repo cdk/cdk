@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.io.ChemObjectIOTest;
 
@@ -47,7 +48,7 @@ public abstract class ChemObjectReaderTest extends org.openscience.cdk.test.io.C
 
     @Test
     public void testSetReader_InputStream() throws Exception {
-        Assert.assertNotNull("No test file has been set!", testFile);
+        Assertions.assertNotNull(testFile, "No test file has been set!");
         InputStream ins = org.openscience.cdk.test.io.ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         if (ins == null)
             ins = chemObjectIO.getClass().getResourceAsStream(testFile);
@@ -56,7 +57,7 @@ public abstract class ChemObjectReaderTest extends org.openscience.cdk.test.io.C
 
     @Test
     public void testSetReader_Reader() throws Exception {
-        Assert.assertNotNull("No test file has been set!", testFile);
+        Assertions.assertNotNull(testFile, "No test file has been set!");
         InputStream ins = org.openscience.cdk.test.io.ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         if (ins == null)
             ins = chemObjectIO.getClass().getResourceAsStream(testFile);

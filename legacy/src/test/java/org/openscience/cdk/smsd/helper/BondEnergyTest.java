@@ -25,6 +25,7 @@ package org.openscience.cdk.smsd.helper;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.openscience.cdk.interfaces.IBond.Order;
 
@@ -62,7 +63,7 @@ public class BondEnergyTest {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         String expResult = "H";
         String result = instance.getSymbolFirstAtom();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -73,7 +74,7 @@ public class BondEnergyTest {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         String expResult = "I";
         String result = instance.getSymbolSecondAtom();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -84,7 +85,7 @@ public class BondEnergyTest {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         Order expResult = Order.SINGLE;
         Order result = instance.getBondOrder();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -95,6 +96,6 @@ public class BondEnergyTest {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         int expResult = 295;
         int result = instance.getEnergy();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 }

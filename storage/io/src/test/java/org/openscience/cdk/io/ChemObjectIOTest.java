@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -60,13 +61,13 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     @Test
     public void testChemObjectIOSet() {
-        Assert.assertNotNull("You must use setChemObjectIO() to set the IChemObjectIO object.", chemObjectIO);
+        Assertions.assertNotNull(chemObjectIO, "You must use setChemObjectIO() to set the IChemObjectIO object.");
     }
 
     @Test
     public void testGetFormat() {
         IResourceFormat format = chemObjectIO.getFormat();
-        Assert.assertNotNull("The IChemObjectIO.getFormat method returned null.", format);
+        Assertions.assertNotNull(format, "The IChemObjectIO.getFormat method returned null.");
     }
 
     private static final IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
@@ -80,9 +81,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted = true;
             }
         }
-        Assert.assertTrue(
-                "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction",
-                oneAccepted);
+        Assertions.assertTrue(oneAccepted, "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction");
     }
 
     private static final IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
@@ -96,9 +95,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted = true;
             }
         }
-        Assert.assertTrue(
-                "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction",
-                oneAccepted);
+        Assertions.assertTrue(oneAccepted, "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction");
     }
 
     /** static objects, shared between tests - difficult to locate bugs. */
@@ -119,9 +116,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted = true;
             }
         }
-        Assert.assertTrue(
-                "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction, IRGroupQuery",
-                oneAccepted);
+        Assertions.assertTrue(oneAccepted, "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction, IRGroupQuery");
     }
 
     @SuppressWarnings("rawtypes")
@@ -140,9 +135,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted = true;
             }
         }
-        Assert.assertTrue(
-                "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction, IRGroupQuery",
-                oneAccepted);
+        Assertions.assertTrue(oneAccepted, "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction, IRGroupQuery");
     }
 
     @Test
@@ -154,11 +147,11 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     public void testGetIOSetting() {
         IOSetting[] settings = chemObjectIO.getIOSettings();
         for (IOSetting setting : settings) {
-            Assert.assertNotNull(setting);
-            Assert.assertNotNull(setting.getDefaultSetting());
-            Assert.assertNotNull(setting.getName());
-            Assert.assertNotNull(setting.getQuestion());
-            Assert.assertNotNull(setting.getLevel());
+            Assertions.assertNotNull(setting);
+            Assertions.assertNotNull(setting.getDefaultSetting());
+            Assertions.assertNotNull(setting.getName());
+            Assertions.assertNotNull(setting.getQuestion());
+            Assertions.assertNotNull(setting.getLevel());
         }
     }
 

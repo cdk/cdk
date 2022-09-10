@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -52,7 +53,7 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         PCCompoundASNReader reader = new PCCompoundASNReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
@@ -64,27 +65,26 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
         IChemFile cFile = reader.read(new ChemFile());
         reader.close();
         List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cFile);
-        Assert.assertEquals(1, containers.size());
-        Assert.assertTrue(containers.get(0) instanceof IAtomContainer);
+        Assertions.assertEquals(1, containers.size());
+        Assertions.assertTrue(containers.get(0) instanceof IAtomContainer);
         IAtomContainer molecule = containers.get(0);
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
         // check atom stuff
-        Assert.assertEquals(31, molecule.getAtomCount());
-        Assert.assertNotNull(molecule.getAtom(3));
-        Assert.assertEquals("O", molecule.getAtom(3).getSymbol());
-        Assert.assertNotNull(molecule.getAtom(4));
-        Assert.assertEquals("N", molecule.getAtom(4).getSymbol());
+        Assertions.assertEquals(31, molecule.getAtomCount());
+        Assertions.assertNotNull(molecule.getAtom(3));
+        Assertions.assertEquals("O", molecule.getAtom(3).getSymbol());
+        Assertions.assertNotNull(molecule.getAtom(4));
+        Assertions.assertEquals("N", molecule.getAtom(4).getSymbol());
 
         // check bond stuff
-        Assert.assertEquals(30, molecule.getBondCount());
-        Assert.assertNotNull(molecule.getBond(3));
-        Assert.assertEquals(molecule.getAtom(2), molecule.getBond(3).getBegin());
-        Assert.assertEquals(molecule.getAtom(11), molecule.getBond(3).getEnd());
+        Assertions.assertEquals(30, molecule.getBondCount());
+        Assertions.assertNotNull(molecule.getBond(3));
+        Assertions.assertEquals(molecule.getAtom(2), molecule.getBond(3).getBegin());
+        Assertions.assertEquals(molecule.getAtom(11), molecule.getBond(3).getEnd());
 
         // some extracted props
-        Assert.assertEquals("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
-                molecule.getProperty(CDKConstants.INCHI));
-        Assert.assertEquals("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C", molecule.getProperty(CDKConstants.SMILES));
+        Assertions.assertEquals("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3", molecule.getProperty(CDKConstants.INCHI));
+        Assertions.assertEquals("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C", molecule.getProperty(CDKConstants.SMILES));
     }
 }

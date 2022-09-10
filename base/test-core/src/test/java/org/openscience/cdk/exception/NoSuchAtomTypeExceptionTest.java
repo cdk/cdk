@@ -20,6 +20,7 @@
 package org.openscience.cdk.exception;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -36,7 +37,7 @@ public class NoSuchAtomTypeExceptionTest extends CDKTestCase {
     public void testNoSuchAtomTypeException_String() {
         final String EXPLANATION = "Buckybull is not an atom type!";
         NoSuchAtomTypeException exception = new NoSuchAtomTypeException(EXPLANATION);
-        Assert.assertNotNull(exception);
-        Assert.assertEquals(EXPLANATION, exception.getMessage());
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals(EXPLANATION, exception.getMessage());
     }
 }

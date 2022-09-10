@@ -19,6 +19,7 @@
 package org.openscience.cdk.graph.rebond;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -34,12 +35,12 @@ public class BsptTest extends CDKTestCase {
     @Test
     public void testToString() {
         Bspt bspt = new Bspt(3);
-        Assert.assertNotNull(bspt.toString());
+        Assertions.assertNotNull(bspt.toString());
     }
 
     @Test
     public void testBspt() {
         Bspt bspt = new Bspt(3);
-        Assert.assertNotNull(bspt);
+        Assertions.assertNotNull(bspt);
     }
 }

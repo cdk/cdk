@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.formula.MolecularFormula;
@@ -81,15 +82,15 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
 
         /* Result: C4-9H5-20N0-4O2-7 */
 
-        Assert.assertEquals(4, mfRange.getIsotopeCount());
-        Assert.assertEquals(4, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "C")));
-        Assert.assertEquals(9, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "C")));
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "H")));
-        Assert.assertEquals(20, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "H")));
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "N")));
-        Assert.assertEquals(4, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "N")));
-        Assert.assertEquals(2, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "O")));
-        Assert.assertEquals(7, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "O")));
+        Assertions.assertEquals(4, mfRange.getIsotopeCount());
+        Assertions.assertEquals(4, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "C")));
+        Assertions.assertEquals(9, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "C")));
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "H")));
+        Assertions.assertEquals(20, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "H")));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "N")));
+        Assertions.assertEquals(4, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "N")));
+        Assertions.assertEquals(2, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "O")));
+        Assertions.assertEquals(7, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "O")));
 
     }
 
@@ -127,15 +128,11 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
 
         /* Result: C4-9H5-20N0-4O2-7 */
 
-        Assert.assertEquals(4, mfRange.getIsotopeCount());
-        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")),
-                mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "C")));
-        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")),
-                mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "H")));
-        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")),
-                mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "N")));
-        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")),
-                mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "O")));
+        Assertions.assertEquals(4, mfRange.getIsotopeCount());
+        Assertions.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")), mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "C")));
+        Assertions.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")), mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "H")));
+        Assertions.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")), mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "N")));
+        Assertions.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")), mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "O")));
 
     }
 
@@ -173,15 +170,11 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
 
         /* Result: C4-9H5-20N0-4O2-7 */
 
-        Assert.assertEquals(4, mfRange.getIsotopeCount());
-        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")),
-                mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "C")));
-        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")),
-                mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "H")));
-        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")),
-                mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "N")));
-        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")),
-                mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "O")));
+        Assertions.assertEquals(4, mfRange.getIsotopeCount());
+        Assertions.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")), mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "C")));
+        Assertions.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")), mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "H")));
+        Assertions.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")), mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "N")));
+        Assertions.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")), mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "O")));
 
     }
 }

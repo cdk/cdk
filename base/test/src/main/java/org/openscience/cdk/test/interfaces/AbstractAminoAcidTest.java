@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
@@ -25,13 +26,13 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
         IAminoAcid m = (IAminoAcid) newChemObject();
         IAtom cTerminus = m.getBuilder().newInstance(IAtom.class, "C");
         m.addCTerminus(cTerminus);
-        Assert.assertEquals(cTerminus, m.getCTerminus());
+        Assertions.assertEquals(cTerminus, m.getCTerminus());
     }
 
     @Test
     public void testGetCTerminus() {
         IAminoAcid m = (IAminoAcid) newChemObject();
-        Assert.assertNull(m.getCTerminus());
+        Assertions.assertNull(m.getCTerminus());
     }
 
     @Test
@@ -39,13 +40,13 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
         IAminoAcid m = (IAminoAcid) newChemObject();
         IAtom nTerminus = m.getBuilder().newInstance(IAtom.class, "N");
         m.addNTerminus(nTerminus);
-        Assert.assertEquals(nTerminus, m.getNTerminus());
+        Assertions.assertEquals(nTerminus, m.getNTerminus());
     }
 
     @Test
     public void testGetNTerminus() {
         IAminoAcid m = (IAminoAcid) newChemObject();
-        Assert.assertNull(m.getNTerminus());
+        Assertions.assertNull(m.getNTerminus());
     }
 
     /**
@@ -59,8 +60,8 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
         m.addNTerminus(nTerminus);
         String description = m.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
 
         m = (IAminoAcid) newChemObject();
@@ -68,8 +69,8 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
         m.addCTerminus(cTerminus);
         description = m.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 
@@ -78,21 +79,21 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
     public void testClone() throws Exception {
         IAminoAcid aa = (IAminoAcid) newChemObject();
         Object clone = aa.clone();
-        Assert.assertTrue(clone instanceof IAminoAcid);
-        Assert.assertNotSame(aa, clone);
+        Assertions.assertTrue(clone instanceof IAminoAcid);
+        Assertions.assertNotSame(aa, clone);
 
         aa = (IAminoAcid) newChemObject();
         IAtom nTerminus = aa.getBuilder().newInstance(IAtom.class, "N");
         aa.addNTerminus(nTerminus);
         clone = aa.clone();
-        Assert.assertTrue(clone instanceof IAminoAcid);
-        Assert.assertNotSame(aa, clone);
+        Assertions.assertTrue(clone instanceof IAminoAcid);
+        Assertions.assertNotSame(aa, clone);
 
         aa = (IAminoAcid) newChemObject();
         IAtom cTerminus = aa.getBuilder().newInstance(IAtom.class, "C");
         aa.addCTerminus(cTerminus);
         clone = aa.clone();
-        Assert.assertTrue(clone instanceof IAminoAcid);
-        Assert.assertNotSame(aa, clone);
+        Assertions.assertTrue(clone instanceof IAminoAcid);
+        Assertions.assertNotSame(aa, clone);
     }
 }

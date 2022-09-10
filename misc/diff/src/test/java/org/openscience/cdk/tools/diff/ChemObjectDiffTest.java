@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.diff.tree.IDifference;
@@ -37,7 +38,7 @@ public class ChemObjectDiffTest {
     public void testMatchAgainstItself() {
         IChemObject atom1 = mock(IChemObject.class);
         String result = ChemObjectDiff.diff(atom1, atom1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -48,8 +49,8 @@ public class ChemObjectDiffTest {
         when(atom2.getFlags()).thenReturn(new boolean[]{false, true, false});
 
         String result = ChemObjectDiff.diff(atom1, atom2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame("Expected non-zero-length result", 0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length(), "Expected non-zero-length result");
         MatcherAssert.assertThat(result, containsString("ChemObjectDiff"));
         MatcherAssert.assertThat(result, containsString("F/T"));
     }
@@ -62,6 +63,6 @@ public class ChemObjectDiffTest {
         when(atom2.getFlags()).thenReturn(new boolean[]{false, true, false});
 
         IDifference difference = ChemObjectDiff.difference(atom1, atom2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 }

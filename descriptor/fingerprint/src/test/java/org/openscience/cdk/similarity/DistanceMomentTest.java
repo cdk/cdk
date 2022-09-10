@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -34,7 +35,7 @@ public class DistanceMomentTest extends CDKTestCase {
         String filename = "sim3d1.sdf";
         IAtomContainer ac = loadMolecule(filename);
         float sim = DistanceMoment.calculate(ac, ac);
-        Assert.assertEquals(1.0000, sim, 0.00001);
+        Assertions.assertEquals(1.0000, sim, 0.00001);
     }
 
     @Test
@@ -47,7 +48,7 @@ public class DistanceMomentTest extends CDKTestCase {
 
         // no assertArrayEquals for junit 4.5
         for (int i = 0; i < expected.length; i++) {
-            Assert.assertEquals(expected[i], actual[i], 0.000001);
+            Assertions.assertEquals(expected[i], actual[i], 0.000001);
         }
 
     }
@@ -57,7 +58,7 @@ public class DistanceMomentTest extends CDKTestCase {
         IAtomContainer ac1 = loadMolecule("sim3d1.sdf");
         IAtomContainer ac2 = loadMolecule("sim3d2.sdf");
         float sim = DistanceMoment.calculate(ac1, ac2);
-        Assert.assertEquals(0.24962, sim, 0.00001);
+        Assertions.assertEquals(0.24962, sim, 0.00001);
     }
 
 }

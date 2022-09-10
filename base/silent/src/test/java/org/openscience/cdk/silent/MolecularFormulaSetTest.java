@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractMolecularFormulaSetTest;
@@ -41,13 +42,13 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
     @Test
     public void testMolecularFormulaSet() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        Assert.assertNotNull(mfS);
+        Assertions.assertNotNull(mfS);
     }
 
     @Test
     public void testMolecularFormulaSet_IMolecularFormula() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
-        Assert.assertEquals(1, mfS.size());
+        Assertions.assertEquals(1, mfS.size());
     }
 
 }

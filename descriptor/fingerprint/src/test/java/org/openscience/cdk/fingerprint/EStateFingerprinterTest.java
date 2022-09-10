@@ -25,6 +25,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -51,7 +52,7 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
     @Test
     public void testGetSize() throws Exception {
         IFingerprinter printer = new EStateFingerprinter();
-        Assert.assertEquals(79, printer.getSize());
+        Assertions.assertEquals(79, printer.getSize());
     }
 
     @Test
@@ -62,11 +63,11 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
         IBitFingerprint bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N"));
         IBitFingerprint bs2 = printer.getBitFingerprint(parser.parseSmiles("C=CCC(O)CC#N"));
 
-        Assert.assertEquals(79, printer.getSize());
+        Assertions.assertEquals(79, printer.getSize());
 
-        Assert.assertTrue(bs1.get(7));
-        Assert.assertTrue(bs1.get(10));
-        Assert.assertTrue(FingerprinterTool.isSubset(bs2.asBitSet(), bs1.asBitSet()));
+        Assertions.assertTrue(bs1.get(7));
+        Assertions.assertTrue(bs1.get(10));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs2.asBitSet(), bs1.asBitSet()));
     }
 
     /**

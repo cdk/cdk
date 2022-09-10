@@ -20,6 +20,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -40,7 +41,7 @@ public class ChemSequenceTest extends AbstractChemSequenceTest {
     @Test
     public void testChemSequence() {
         IChemSequence cs = new ChemSequence();
-        Assert.assertNotNull(cs);
+        Assertions.assertNotNull(cs);
     }
 
 }

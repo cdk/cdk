@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractPolymerTest;
@@ -40,8 +41,8 @@ public class PolymerTest extends AbstractPolymerTest {
     @Test
     public void testPolymer() {
         IPolymer polymer = new Polymer();
-        Assert.assertNotNull(polymer);
-        Assert.assertTrue(polymer instanceof Polymer);
+        Assertions.assertNotNull(polymer);
+        Assertions.assertTrue(polymer instanceof Polymer);
     }
 
     // Overwrite default methods: no notifications are expected!

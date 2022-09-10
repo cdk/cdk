@@ -26,6 +26,7 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -38,7 +39,7 @@ public class DisjointSetForestTest {
     public void constructorTest() {
         int n = 10;
         DisjointSetForest forest = new DisjointSetForest(n);
-        Assert.assertNotNull(forest);
+        Assertions.assertNotNull(forest);
     }
 
     @Test
@@ -46,7 +47,7 @@ public class DisjointSetForestTest {
         int n = 10;
         DisjointSetForest forest = new DisjointSetForest(n);
         for (int i = 0; i < n; i++) {
-            Assert.assertEquals(-1, forest.get(i));
+            Assertions.assertEquals(-1, forest.get(i));
         }
     }
 
@@ -55,7 +56,7 @@ public class DisjointSetForestTest {
         int n = 2;
         DisjointSetForest forest = new DisjointSetForest(n);
         forest.makeUnion(0, 1);
-        Assert.assertEquals(0, forest.getRoot(1));
+        Assertions.assertEquals(0, forest.getRoot(1));
     }
 
     @Test
@@ -63,7 +64,7 @@ public class DisjointSetForestTest {
         int n = 2;
         DisjointSetForest forest = new DisjointSetForest(n);
         forest.makeUnion(0, 1);
-        Assert.assertEquals(0, forest.get(1));
+        Assertions.assertEquals(0, forest.get(1));
     }
 
     @Test
@@ -76,7 +77,7 @@ public class DisjointSetForestTest {
         int[][] sets = forest.getSets();
         int[][] expected = new int[][]{{0, 1}, {2, 3}, {4, 5}};
         String failMessage = "Expected " + Arrays.deepToString(expected) + " but was " + Arrays.deepToString(sets);
-        Assert.assertTrue(failMessage, Arrays.deepEquals(expected, sets));
+        Assertions.assertTrue(Arrays.deepEquals(expected, sets), failMessage);
     }
 
 }

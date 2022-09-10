@@ -23,6 +23,7 @@
 package org.openscience.cdk.signature;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -64,9 +65,9 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         cc.addBond(0, 1, order);
         String signature = signatureForAtom(cc, 0);
         IAtomContainer reconstructed = reconstruct(signature);
-        Assert.assertEquals(2, reconstructed.getAtomCount());
-        Assert.assertEquals(1, reconstructed.getBondCount());
-        Assert.assertEquals(order, reconstructed.getBond(0).getOrder());
+        Assertions.assertEquals(2, reconstructed.getAtomCount());
+        Assertions.assertEquals(1, reconstructed.getBondCount());
+        Assertions.assertEquals(order, reconstructed.getBond(0).getOrder());
     }
 
     public IAtomContainer makeRing(int ringSize) {
@@ -85,7 +86,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         IAtomContainer ring = makeRing(ringSize);
         String signature = canonicalSignature(ring);
         IAtomContainer reconstructedRing = reconstruct(signature);
-        Assert.assertEquals(ringSize, reconstructedRing.getAtomCount());
+        Assertions.assertEquals(ringSize, reconstructedRing.getAtomCount());
     }
 
     @Test
@@ -127,7 +128,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public void makeGraphTest() {
         MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
-        Assert.assertNotNull(builder.getAtomContainer());
+        Assertions.assertNotNull(builder.getAtomContainer());
     }
 
     @Test
@@ -136,7 +137,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         builder.makeGraph();
         builder.makeVertex("C");
         IAtomContainer product = builder.getAtomContainer();
-        Assert.assertEquals(1, product.getAtomCount());
+        Assertions.assertEquals(1, product.getAtomCount());
     }
 
     @Test
@@ -148,9 +149,9 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         builder.makeEdge(0, 1, "C", "C", "");
 
         IAtomContainer product = builder.getAtomContainer();
-        Assert.assertEquals(2, product.getAtomCount());
-        Assert.assertEquals(1, product.getBondCount());
-        Assert.assertEquals(IBond.Order.SINGLE, product.getBond(0).getOrder());
+        Assertions.assertEquals(2, product.getAtomCount());
+        Assertions.assertEquals(1, product.getBondCount());
+        Assertions.assertEquals(IBond.Order.SINGLE, product.getBond(0).getOrder());
     }
 
     @Test
@@ -162,9 +163,9 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         builder.makeEdge(0, 1, "C", "C", "=");
 
         IAtomContainer product = builder.getAtomContainer();
-        Assert.assertEquals(2, product.getAtomCount());
-        Assert.assertEquals(1, product.getBondCount());
-        Assert.assertEquals(IBond.Order.DOUBLE, product.getBond(0).getOrder());
+        Assertions.assertEquals(2, product.getAtomCount());
+        Assertions.assertEquals(1, product.getBondCount());
+        Assertions.assertEquals(IBond.Order.DOUBLE, product.getBond(0).getOrder());
     }
 
     @Test
@@ -176,9 +177,9 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         builder.makeEdge(0, 1, "C", "C", "#");
 
         IAtomContainer product = builder.getAtomContainer();
-        Assert.assertEquals(2, product.getAtomCount());
-        Assert.assertEquals(1, product.getBondCount());
-        Assert.assertEquals(IBond.Order.TRIPLE, product.getBond(0).getOrder());
+        Assertions.assertEquals(2, product.getAtomCount());
+        Assertions.assertEquals(1, product.getBondCount());
+        Assertions.assertEquals(IBond.Order.TRIPLE, product.getBond(0).getOrder());
     }
 
     @Test
@@ -190,18 +191,18 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         builder.makeEdge(0, 1, "C", "C", "p");
 
         IAtomContainer product = builder.getAtomContainer();
-        Assert.assertEquals(2, product.getAtomCount());
-        Assert.assertEquals(1, product.getBondCount());
+        Assertions.assertEquals(2, product.getAtomCount());
+        Assertions.assertEquals(1, product.getBondCount());
         IBond bond = product.getBond(0);
-        Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
-        Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+        Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
     public void getAtomContainerTest() {
         MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
-        Assert.assertNotNull(builder.getAtomContainer());
+        Assertions.assertNotNull(builder.getAtomContainer());
     }
 
 }

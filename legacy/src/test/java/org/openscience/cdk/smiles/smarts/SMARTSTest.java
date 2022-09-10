@@ -21,6 +21,7 @@ package org.openscience.cdk.smiles.smarts;
 
 import org.hamcrest.core.Is;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -79,7 +80,7 @@ public class SMARTSTest extends CDKTestCase {
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE, builder));
 
-        Assert.assertFalse(uiTester.isSubgraph(atomContainer, query));
+        Assertions.assertFalse(uiTester.isSubgraph(atomContainer, query));
     }
 
     @Test
@@ -95,7 +96,7 @@ public class SMARTSTest extends CDKTestCase {
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE, builder));
 
-        Assert.assertTrue(uiTester.isSubgraph(atomContainer, query));
+        Assertions.assertTrue(uiTester.isSubgraph(atomContainer, query));
     }
 
     private IAtomContainer createEthane() {
@@ -122,7 +123,7 @@ public class SMARTSTest extends CDKTestCase {
         query1.addAtom(atom1);
         query1.addAtom(atom2);
         query1.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.SINGLE, builder));
-        Assert.assertTrue(uiTester.isSubgraph(container, query1));
+        Assertions.assertTrue(uiTester.isSubgraph(container, query1));
     }
 
     @Test
@@ -137,7 +138,7 @@ public class SMARTSTest extends CDKTestCase {
         query1.addAtom(atom1);
         query1.addAtom(atom2);
         query1.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.SINGLE, builder));
-        Assert.assertFalse(uiTester.isSubgraph(container, query1));
+        Assertions.assertFalse(uiTester.isSubgraph(container, query1));
     }
 
     @Test
@@ -154,16 +155,16 @@ public class SMARTSTest extends CDKTestCase {
             query1.addAtom(c1);
             query1.addAtom(c2);
             query1.addBond(new OrderQueryBond(c1, c2, Order.SINGLE, builder));
-            Assert.assertTrue(uiTester.isSubgraph(c, query1));
+            Assertions.assertTrue(uiTester.isSubgraph(c, query1));
 
             QueryAtomContainer query = new QueryAtomContainer(builder);
             query.addAtom(c1);
             query.addAtom(c2);
             query.addBond(new AnyOrderQueryBond(c1, c2, Order.SINGLE, builder));
-            Assert.assertTrue(uiTester.isSubgraph(c, query));
+            Assertions.assertTrue(uiTester.isSubgraph(c, query));
 
         } catch (CDKException exception) {
-            Assert.fail(exception.getMessage());
+            Assertions.fail(exception.getMessage());
         }
 
     }

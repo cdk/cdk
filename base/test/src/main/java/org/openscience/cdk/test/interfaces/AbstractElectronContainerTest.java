@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IElectronContainer;
 
@@ -22,7 +23,7 @@ public abstract class AbstractElectronContainerTest extends AbstractChemObjectTe
     public void testSetElectronCount_Integer() {
         IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(3);
-        Assert.assertEquals(3, ec.getElectronCount().intValue());
+        Assertions.assertEquals(3, ec.getElectronCount().intValue());
     }
 
     @Test
@@ -36,8 +37,8 @@ public abstract class AbstractElectronContainerTest extends AbstractChemObjectTe
         IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(2);
         Object clone = ec.clone();
-        Assert.assertNotNull(clone);
-        Assert.assertTrue(clone instanceof IElectronContainer);
+        Assertions.assertNotNull(clone);
+        Assertions.assertTrue(clone instanceof IElectronContainer);
     }
 
     /**
@@ -48,8 +49,8 @@ public abstract class AbstractElectronContainerTest extends AbstractChemObjectTe
         IElectronContainer at = (IElectronContainer) newChemObject();
         String description = at.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 }

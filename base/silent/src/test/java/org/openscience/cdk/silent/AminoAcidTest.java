@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractAminoAcidTest;
@@ -40,7 +41,7 @@ public class AminoAcidTest extends AbstractAminoAcidTest {
     @Test
     public void testAminoAcid() {
         IAminoAcid oAminoAcid = new AminoAcid();
-        Assert.assertNotNull(oAminoAcid);
+        Assertions.assertNotNull(oAminoAcid);
     }
 
     // Overwrite default methods: no notifications are expected!

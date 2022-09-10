@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -83,6 +84,6 @@ public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest 
         IAtomicDescriptor descriptor = new InductiveAtomicHardnessDescriptor();
 
         double retval = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
-        Assert.assertEquals(testResult[0], retval, 0.1);
+        Assertions.assertEquals(testResult[0], retval, 0.1);
     }
 }

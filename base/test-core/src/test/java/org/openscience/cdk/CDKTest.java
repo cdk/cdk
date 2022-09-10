@@ -19,6 +19,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -34,7 +35,7 @@ public class CDKTest {
     @Test
     public void testGetVersion() {
         String version = CDK.getVersion();
-        Assert.assertNotNull(version);
+        Assertions.assertNotNull(version);
         // see for the expected behavior: http://stackoverflow.com/a/3697482/217943
         org.hamcrest.MatcherAssert.assertThat("The CDK version in build.props is not properly overwritten by Maven.",
                           version,

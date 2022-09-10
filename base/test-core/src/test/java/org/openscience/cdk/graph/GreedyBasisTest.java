@@ -53,7 +53,7 @@ public class GreedyBasisTest {
         when(c1.edgeVector()).thenReturn(new BitSet());
         when(c2.edgeVector()).thenReturn(new BitSet());
         GreedyBasis basis = new GreedyBasis(2, 0);
-        assertTrue(basis.members().isEmpty());
+        Assertions.assertTrue(basis.members().isEmpty());
         basis.add(c1);
         assertThat(basis.members(), hasItem(c1));
         basis.add(c2);
@@ -67,7 +67,7 @@ public class GreedyBasisTest {
         when(c1.edgeVector()).thenReturn(new BitSet());
         when(c2.edgeVector()).thenReturn(new BitSet());
         GreedyBasis basis = new GreedyBasis(2, 0);
-        assertTrue(basis.members().isEmpty());
+        Assertions.assertTrue(basis.members().isEmpty());
         basis.addAll(Arrays.asList(c1, c2));
         assertThat(basis.members(), hasItems(c1, c2));
     }
@@ -95,11 +95,11 @@ public class GreedyBasisTest {
         when(c2.length()).thenReturn(3);
         when(c3.length()).thenReturn(4);
         GreedyBasis basis = new GreedyBasis(3, 12);
-        assertFalse(basis.isSubsetOfBasis(c3));
+        Assertions.assertFalse(basis.isSubsetOfBasis(c3));
         basis.add(c1);
-        assertFalse(basis.isSubsetOfBasis(c3));
+        Assertions.assertFalse(basis.isSubsetOfBasis(c3));
         basis.add(c2);
-        assertTrue(basis.isSubsetOfBasis(c3));
+        Assertions.assertTrue(basis.isSubsetOfBasis(c3));
 
     }
 
@@ -115,14 +115,14 @@ public class GreedyBasisTest {
         when(c2.length()).thenReturn(3);
         when(c3.length()).thenReturn(6);
         GreedyBasis basis = new GreedyBasis(3, 12);
-        assertTrue(basis.isIndependent(c1));
-        assertTrue(basis.isIndependent(c2));
-        assertTrue(basis.isIndependent(c3));
+        Assertions.assertTrue(basis.isIndependent(c1));
+        Assertions.assertTrue(basis.isIndependent(c2));
+        Assertions.assertTrue(basis.isIndependent(c3));
         basis.add(c1);
-        assertTrue(basis.isIndependent(c2));
-        assertTrue(basis.isIndependent(c2));
+        Assertions.assertTrue(basis.isIndependent(c2));
+        Assertions.assertTrue(basis.isIndependent(c2));
         basis.add(c2);
-        assertFalse(basis.isIndependent(c3));
+        Assertions.assertFalse(basis.isIndependent(c3));
     }
 
     @Test

@@ -24,6 +24,7 @@ package org.openscience.cdk.group;
 
 import org.junit.Assert;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -50,7 +51,7 @@ public class BondGroupTests extends CDKTestCase {
     public void test(IAtomContainer mol, int expected) {
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         PermutationGroup group = refiner.getAutomorphismGroup(mol);
-        Assert.assertEquals(expected, group.order());
+        Assertions.assertEquals(expected, group.order());
     }
 
     @Test

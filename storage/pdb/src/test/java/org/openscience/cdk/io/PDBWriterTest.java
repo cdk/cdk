@@ -30,6 +30,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -85,19 +86,19 @@ public class PDBWriterTest extends ChemObjectIOTest {
         writer.close();
 
         String output = sWriter.toString();
-        Assert.assertNotNull(output);
-        Assert.assertTrue(output.length() > 0);
+        Assertions.assertNotNull(output);
+        Assertions.assertTrue(output.length() > 0);
 
         PDBReader reader = new PDBReader();
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         IChemSequence sequence = chemFile.getChemSequence(0);
-        Assert.assertEquals(1, sequence.getChemModelCount());
+        Assertions.assertEquals(1, sequence.getChemModelCount());
         IChemModel chemModel = sequence.getChemModel(0);
-        Assert.assertNotNull(chemModel);
+        Assertions.assertNotNull(chemModel);
 
         // can't do further testing as the PDBReader does not read
         // Crystal structures :(
@@ -121,19 +122,19 @@ public class PDBWriterTest extends ChemObjectIOTest {
         writer.close();
 
         String output = sWriter.toString();
-        Assert.assertNotNull(output);
-        Assert.assertTrue(output.length() > 0);
+        Assertions.assertNotNull(output);
+        Assertions.assertTrue(output.length() > 0);
 
         PDBReader reader = new PDBReader();
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         IChemSequence sequence = chemFile.getChemSequence(0);
-        Assert.assertEquals(1, sequence.getChemModelCount());
+        Assertions.assertEquals(1, sequence.getChemModelCount());
         IChemModel chemModel = sequence.getChemModel(0);
-        Assert.assertNotNull(chemModel);
+        Assertions.assertNotNull(chemModel);
 
         // can't do further testing as the PDBReader does not read
         // Crystal structures :(
@@ -187,7 +188,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         writer.writeMolecule(mol);
         writer.close();
         String asString = stringWriter.toString();
-        Assert.assertTrue(asString.contains("HETATM"));
+        Assertions.assertTrue(asString.contains("HETATM"));
     }
 
     @Test
@@ -199,32 +200,32 @@ public class PDBWriterTest extends ChemObjectIOTest {
         writer.writeMolecule(mol);
         writer.close();
         String asString = stringWriter.toString();
-        Assert.assertTrue(asString.contains("ATOM"));
+        Assertions.assertTrue(asString.contains("ATOM"));
     }
 
     @Test
     public void writeMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule("ZZZ");
-        Assert.assertTrue(getAsString(mol).contains("ZZZ"));
+        Assertions.assertTrue(getAsString(mol).contains("ZZZ"));
     }
 
     @Test
     public void writeNullMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule(null);
-        Assert.assertTrue(getAsString(mol).contains("MOL"));
+        Assertions.assertTrue(getAsString(mol).contains("MOL"));
     }
 
     @Test
     public void writeEmptyStringMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule("");
-        Assert.assertTrue(getAsString(mol).contains("MOL"));
+        Assertions.assertTrue(getAsString(mol).contains("MOL"));
     }
 
     @Test
     public void writeChargedAtom() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule("", 1);
         String[] lines = getAsStringArray(mol);
-        Assert.assertTrue(lines[lines.length - 2].endsWith("+1"));
+        Assertions.assertTrue(lines[lines.length - 2].endsWith("+1"));
     }
 
     @Test
@@ -233,8 +234,8 @@ public class PDBWriterTest extends ChemObjectIOTest {
         String[] lines = getAsStringArray(mol);
         String lastLineButTwo = lines[lines.length - 3];
         String lastLineButOne = lines[lines.length - 2];
-        Assert.assertEquals("CONECT    1    2", lastLineButTwo);
-        Assert.assertEquals("CONECT    2    1", lastLineButOne);
+        Assertions.assertEquals("CONECT    1    2", lastLineButTwo);
+        Assertions.assertEquals("CONECT    2    1", lastLineButOne);
     }
 
     private void setCoordinatesToZero(IAtomContainer mol) {
@@ -256,7 +257,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         IAtomContainer reconstructed = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(original.getAtomCount(), reconstructed.getAtomCount());
-        Assert.assertEquals(original.getBondCount(), reconstructed.getBondCount());
+        Assertions.assertEquals(original.getAtomCount(), reconstructed.getAtomCount());
+        Assertions.assertEquals(original.getBondCount(), reconstructed.getBondCount());
     }
 }

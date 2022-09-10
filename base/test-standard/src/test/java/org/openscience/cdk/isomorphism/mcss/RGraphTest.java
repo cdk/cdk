@@ -19,6 +19,7 @@
 package org.openscience.cdk.isomorphism.mcss;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -30,7 +31,7 @@ public class RGraphTest extends CDKTestCase {
     @Test
     public void testRGraph() {
         RGraph graph = new RGraph();
-        Assert.assertNotNull(graph);
+        Assertions.assertNotNull(graph);
     }
 
 }

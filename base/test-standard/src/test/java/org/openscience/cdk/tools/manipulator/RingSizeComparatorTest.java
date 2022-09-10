@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -37,7 +38,7 @@ public class RingSizeComparatorTest extends CDKTestCase {
     @Test
     public void testRingSizeComparator_int() {
         RingSizeComparator comp = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
-        Assert.assertNotNull(comp);
+        Assertions.assertNotNull(comp);
     }
 
     @Test
@@ -48,14 +49,14 @@ public class RingSizeComparatorTest extends CDKTestCase {
         IRing cycloHexane2 = builder.newInstance(IRing.class, 6, "C");
 
         RingSizeComparator ringSizeComparator = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
-        Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloPentane) == -1);
-        Assert.assertTrue(ringSizeComparator.compare(cycloPentane, cycloHexane) == 1);
-        Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloHexane2) == 0);
+        Assertions.assertTrue(ringSizeComparator.compare(cycloHexane, cycloPentane) == -1);
+        Assertions.assertTrue(ringSizeComparator.compare(cycloPentane, cycloHexane) == 1);
+        Assertions.assertTrue(ringSizeComparator.compare(cycloHexane, cycloHexane2) == 0);
 
         ringSizeComparator = new RingSizeComparator(RingSizeComparator.SMALL_FIRST);
-        Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloPentane) == 1);
-        Assert.assertTrue(ringSizeComparator.compare(cycloPentane, cycloHexane) == -1);
-        Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloHexane2) == 0);
+        Assertions.assertTrue(ringSizeComparator.compare(cycloHexane, cycloPentane) == 1);
+        Assertions.assertTrue(ringSizeComparator.compare(cycloPentane, cycloHexane) == -1);
+        Assertions.assertTrue(ringSizeComparator.compare(cycloHexane, cycloHexane2) == 0);
     }
 
 }

@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -51,7 +52,7 @@ public class PMPReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         PMPReader reader = new PMPReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
@@ -62,23 +63,23 @@ public class PMPReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         ICrystal crystal = model.getCrystal();
-        Assert.assertNotNull(crystal);
-        Assert.assertEquals(32, crystal.getAtomCount());
-        Assert.assertEquals(28, crystal.getBondCount());
+        Assertions.assertNotNull(crystal);
+        Assertions.assertEquals(32, crystal.getAtomCount());
+        Assertions.assertEquals(28, crystal.getBondCount());
 
-        Assert.assertEquals("O", crystal.getAtom(6).getSymbol());
-        Assert.assertEquals(1.4921997, crystal.getAtom(6).getPoint3d().x, 0.00001);
-        Assert.assertEquals("O", crystal.getAtom(7).getSymbol());
-        Assert.assertEquals(1.4922556, crystal.getAtom(7).getPoint3d().x, 0.00001);
+        Assertions.assertEquals("O", crystal.getAtom(6).getSymbol());
+        Assertions.assertEquals(1.4921997, crystal.getAtom(6).getPoint3d().x, 0.00001);
+        Assertions.assertEquals("O", crystal.getAtom(7).getSymbol());
+        Assertions.assertEquals(1.4922556, crystal.getAtom(7).getPoint3d().x, 0.00001);
     }
 
     @Test
@@ -89,24 +90,24 @@ public class PMPReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(2, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(2, seq.getChemModelCount());
 
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         ICrystal crystal = model.getCrystal();
-        Assert.assertNotNull(crystal);
-        Assert.assertEquals(32, crystal.getAtomCount());
-        Assert.assertEquals(28, crystal.getBondCount());
+        Assertions.assertNotNull(crystal);
+        Assertions.assertEquals(32, crystal.getAtomCount());
+        Assertions.assertEquals(28, crystal.getBondCount());
 
         model = seq.getChemModel(1);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         crystal = model.getCrystal();
-        Assert.assertNotNull(crystal);
-        Assert.assertEquals(32, crystal.getAtomCount());
-        Assert.assertEquals(28, crystal.getBondCount());
+        Assertions.assertNotNull(crystal);
+        Assertions.assertEquals(32, crystal.getAtomCount());
+        Assertions.assertEquals(28, crystal.getBondCount());
     }
 }

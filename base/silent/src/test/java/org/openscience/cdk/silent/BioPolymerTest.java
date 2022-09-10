@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,8 +44,8 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
     @Test
     public void testBioPolymer() {
         IBioPolymer oBioPolymer = new BioPolymer();
-        Assert.assertNotNull(oBioPolymer);
-        Assert.assertEquals(oBioPolymer.getMonomerCount(), 0);
+        Assertions.assertNotNull(oBioPolymer);
+        Assertions.assertEquals(oBioPolymer.getMonomerCount(), 0);
 
         IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
@@ -67,31 +68,31 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
         oBioPolymer.addAtom(oAtom3, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom4, oMono2, oStrand2);
         oBioPolymer.addAtom(oAtom5, oMono3, oStrand2);
-        Assert.assertNotNull(oBioPolymer.getAtom(0));
-        Assert.assertNotNull(oBioPolymer.getAtom(1));
-        Assert.assertNotNull(oBioPolymer.getAtom(2));
-        Assert.assertNotNull(oBioPolymer.getAtom(3));
-        Assert.assertNotNull(oBioPolymer.getAtom(4));
-        Assert.assertEquals(oAtom1, oBioPolymer.getAtom(0));
-        Assert.assertEquals(oAtom2, oBioPolymer.getAtom(1));
-        Assert.assertEquals(oAtom3, oBioPolymer.getAtom(2));
-        Assert.assertEquals(oAtom4, oBioPolymer.getAtom(3));
-        Assert.assertEquals(oAtom5, oBioPolymer.getAtom(4));
+        Assertions.assertNotNull(oBioPolymer.getAtom(0));
+        Assertions.assertNotNull(oBioPolymer.getAtom(1));
+        Assertions.assertNotNull(oBioPolymer.getAtom(2));
+        Assertions.assertNotNull(oBioPolymer.getAtom(3));
+        Assertions.assertNotNull(oBioPolymer.getAtom(4));
+        Assertions.assertEquals(oAtom1, oBioPolymer.getAtom(0));
+        Assertions.assertEquals(oAtom2, oBioPolymer.getAtom(1));
+        Assertions.assertEquals(oAtom3, oBioPolymer.getAtom(2));
+        Assertions.assertEquals(oAtom4, oBioPolymer.getAtom(3));
+        Assertions.assertEquals(oAtom5, oBioPolymer.getAtom(4));
 
-        Assert.assertNull(oBioPolymer.getMonomer("0815", "A"));
-        Assert.assertNull(oBioPolymer.getMonomer("0815", "B"));
-        Assert.assertNull(oBioPolymer.getMonomer("0815", ""));
-        Assert.assertNull(oBioPolymer.getStrand(""));
-        Assert.assertNotNull(oBioPolymer.getMonomer("TRP279", "A"));
-        Assert.assertEquals(oMono1, oBioPolymer.getMonomer("TRP279", "A"));
-        Assert.assertEquals(oBioPolymer.getMonomer("TRP279", "A").getAtomCount(), 1);
-        Assert.assertNotNull(oBioPolymer.getMonomer("HOH", "B"));
-        Assert.assertEquals(oMono2, oBioPolymer.getMonomer("HOH", "B"));
-        Assert.assertEquals(oBioPolymer.getMonomer("HOH", "B").getAtomCount(), 1);
-        Assert.assertEquals(oBioPolymer.getStrand("B").getAtomCount(), 2);
-        Assert.assertEquals(oBioPolymer.getStrand("B").getMonomerCount(), 2);
-        Assert.assertNull(oBioPolymer.getStrand("C"));
-        Assert.assertNotNull(oBioPolymer.getStrand("B"));
+        Assertions.assertNull(oBioPolymer.getMonomer("0815", "A"));
+        Assertions.assertNull(oBioPolymer.getMonomer("0815", "B"));
+        Assertions.assertNull(oBioPolymer.getMonomer("0815", ""));
+        Assertions.assertNull(oBioPolymer.getStrand(""));
+        Assertions.assertNotNull(oBioPolymer.getMonomer("TRP279", "A"));
+        Assertions.assertEquals(oMono1, oBioPolymer.getMonomer("TRP279", "A"));
+        Assertions.assertEquals(oBioPolymer.getMonomer("TRP279", "A").getAtomCount(), 1);
+        Assertions.assertNotNull(oBioPolymer.getMonomer("HOH", "B"));
+        Assertions.assertEquals(oMono2, oBioPolymer.getMonomer("HOH", "B"));
+        Assertions.assertEquals(oBioPolymer.getMonomer("HOH", "B").getAtomCount(), 1);
+        Assertions.assertEquals(oBioPolymer.getStrand("B").getAtomCount(), 2);
+        Assertions.assertEquals(oBioPolymer.getStrand("B").getMonomerCount(), 2);
+        Assertions.assertNull(oBioPolymer.getStrand("C"));
+        Assertions.assertNotNull(oBioPolymer.getStrand("B"));
     }
 
     // Overwrite default methods: no notifications are expected!

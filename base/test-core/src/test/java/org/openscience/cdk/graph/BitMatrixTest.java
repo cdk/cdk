@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.graph;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -147,9 +148,9 @@ public class BitMatrixTest {
         m.add(toBitSet("110011000"));
         m.add(toBitSet("000011000"));
         assertThat(m.eliminate(), is(2));
-        assertFalse(m.eliminated(0));
-        assertFalse(m.eliminated(1));
-        assertTrue(m.eliminated(2));
+        Assertions.assertFalse(m.eliminated(0));
+        Assertions.assertFalse(m.eliminated(1));
+        Assertions.assertTrue(m.eliminated(2));
     }
 
     @Test
@@ -160,9 +161,9 @@ public class BitMatrixTest {
         m.add(toBitSet("001000110"));
         m.add(toBitSet("111011110"));
         assertThat(m.eliminate(), is(2));
-        assertFalse(m.eliminated(0));
-        assertFalse(m.eliminated(1));
-        assertTrue(m.eliminated(2));
+        Assertions.assertFalse(m.eliminated(0));
+        Assertions.assertFalse(m.eliminated(1));
+        Assertions.assertTrue(m.eliminated(2));
     }
 
     @Test
@@ -182,7 +183,7 @@ public class BitMatrixTest {
         assertThat(m.eliminate(), is(3));
 
         // 4 was not
-        assertFalse(m.eliminated(3));
+        Assertions.assertFalse(m.eliminated(3));
     }
 
     @Test
@@ -192,9 +193,9 @@ public class BitMatrixTest {
         m.add(toBitSet("001000110"));
         m.add(toBitSet("111011110"));
         assertThat(m.eliminate(), is(3));
-        assertFalse(m.eliminated(0));
-        assertFalse(m.eliminated(1));
-        assertFalse(m.eliminated(2));
+        Assertions.assertFalse(m.eliminated(0));
+        Assertions.assertFalse(m.eliminated(1));
+        Assertions.assertFalse(m.eliminated(2));
     }
 
     @Test
@@ -205,9 +206,9 @@ public class BitMatrixTest {
         m.add(toBitSet("110011011"));
         m.add(toBitSet("110011010"));
         assertThat(m.eliminate(), is(3));
-        assertFalse(m.eliminated(0));
-        assertFalse(m.eliminated(1));
-        assertFalse(m.eliminated(2));
+        Assertions.assertFalse(m.eliminated(0));
+        Assertions.assertFalse(m.eliminated(1));
+        Assertions.assertFalse(m.eliminated(2));
     }
 
     @Test

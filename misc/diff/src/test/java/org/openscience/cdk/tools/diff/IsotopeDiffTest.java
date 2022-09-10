@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.diff.tree.IDifference;
@@ -37,7 +38,7 @@ public class IsotopeDiffTest {
     public void testMatchAgainstItself() {
         IIsotope element1 = mock(IIsotope.class);
         String result = IsotopeDiff.diff(element1, element1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -48,8 +49,8 @@ public class IsotopeDiffTest {
         when(element2.getSymbol()).thenReturn("C");
 
         String result = IsotopeDiff.diff(element1, element2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString("IsotopeDiff"));
         MatcherAssert.assertThat(result, containsString("H/C"));
     }
@@ -62,6 +63,6 @@ public class IsotopeDiffTest {
         when(element2.getSymbol()).thenReturn("C");
 
         IDifference difference = IsotopeDiff.difference(element1, element2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 }

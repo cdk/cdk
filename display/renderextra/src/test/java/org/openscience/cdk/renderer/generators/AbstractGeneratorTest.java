@@ -22,6 +22,7 @@
 package org.openscience.cdk.renderer.generators;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -288,8 +289,8 @@ public abstract class AbstractGeneratorTest {
 
     @Test
     public void testGetParameters() {
-        Assert.assertNotNull("The tested generator is not set.", this.testedGenerator);
+        Assertions.assertNotNull(this.testedGenerator, "The tested generator is not set.");
 
-        Assert.assertNotNull("The getParameters() must not return a null value.", this.testedGenerator.getParameters());
+        Assertions.assertNotNull(this.testedGenerator.getParameters(), "The getParameters() must not return a null value.");
     }
 }

@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -59,7 +60,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testAccepts() {
-        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
+        Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
     @Test
@@ -71,20 +72,20 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(12, m.getAtomCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(12, m.getAtomCount());
         // assertEquals(?, m.getBondCount());
     }
 
@@ -97,20 +98,20 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(37, m.getAtomCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(37, m.getAtomCount());
         // assertEquals(?, m.getBondCount());
     }
 
@@ -123,17 +124,17 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(3, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(3, som.getAtomContainerCount());
     }
 
     @Test
@@ -145,8 +146,8 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = cList.get(0);
-        Assert.assertEquals(57, ac.getAtomCount());
-        Assert.assertEquals(59, ac.getBondCount());
+        Assertions.assertEquals(57, ac.getAtomCount());
+        Assertions.assertEquals(59, ac.getBondCount());
     }
 
     /**
@@ -161,7 +162,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         IChemFile content = reader.read(new ChemFile());
         reader.close();
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
-        Assert.assertEquals(1, cList.size());
+        Assertions.assertEquals(1, cList.size());
     }
 
     /**
@@ -176,28 +177,28 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         IChemFile content = reader.read(new ChemFile());
         reader.close();
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
-        Assert.assertEquals(1, cList.size());
+        Assertions.assertEquals(1, cList.size());
 
         IAtomContainer mol = cList.get(0);
-        Assert.assertTrue(mol.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(1).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(2).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(3).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(5).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(4).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(1).getFlag(CDKConstants.ISAROMATIC));
 
-        Assert.assertTrue(mol.getAtom(7).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(12).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(11).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(10).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(9).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(7).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(12).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(11).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(10).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(9).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
 
         // make sure that only the phenyl C's were marked as aromatic
         for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.C)
-                Assert.assertTrue(atom.getSymbol() + " (index " + mol.indexOf(atom)
-                        + ") was wrongly marked as aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), atom.getSymbol() + " (index " + mol.indexOf(atom)
+                        + ") was wrongly marked as aromatic");
         }
 
     }

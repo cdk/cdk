@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -40,7 +41,7 @@ public class MonomerTest extends AbstractMonomerTest {
     @Test
     public void testMonomer() {
         IMonomer oMonomer = new Monomer();
-        Assert.assertNotNull(oMonomer);
+        Assertions.assertNotNull(oMonomer);
     }
 
     // Overwrite default methods: no notifications are expected!

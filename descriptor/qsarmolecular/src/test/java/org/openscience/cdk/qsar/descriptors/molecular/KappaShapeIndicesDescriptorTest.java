@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -53,6 +54,6 @@ public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
         // positions 1 = kier2
         // THIS IS OK: Assert.assertEquals(testResult[1], ((Double)retval.get(1)).doubleValue(), 0.0001);
         // THIS IS OK: Assert.assertEquals(testResult[0], ((Double)retval.get(0)).doubleValue(), 0.0001);
-        Assert.assertEquals(testResult[2], retval.get(2), 0.0001);
+        Assertions.assertEquals(testResult[2], retval.get(2), 0.0001);
     }
 }

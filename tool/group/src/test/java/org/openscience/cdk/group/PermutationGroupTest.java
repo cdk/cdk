@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -71,14 +72,14 @@ public class PermutationGroupTest extends CDKTestCase {
 
     @Test
     public void testTheFactorialFunction() {
-        Assert.assertEquals(40320, factorial(8));
+        Assertions.assertEquals(40320, factorial(8));
     }
 
     @Test
     public void sizeConstructor() {
         int size = 4;
         PermutationGroup group = new PermutationGroup(size);
-        Assert.assertEquals(size, group.getSize());
+        Assertions.assertEquals(size, group.getSize());
     }
 
     @Test
@@ -86,7 +87,7 @@ public class PermutationGroupTest extends CDKTestCase {
         int size = 4;
         Permutation base = new Permutation(size);
         PermutationGroup group = new PermutationGroup(base);
-        Assert.assertEquals(size, group.getSize());
+        Assertions.assertEquals(size, group.getSize());
     }
 
     @Test
@@ -98,30 +99,30 @@ public class PermutationGroupTest extends CDKTestCase {
         generators.add(p1);
         generators.add(p2);
         PermutationGroup group = new PermutationGroup(size, generators);
-        Assert.assertEquals(size, group.getSize());
-        Assert.assertEquals(factorial(size), group.order());
+        Assertions.assertEquals(size, group.getSize());
+        Assertions.assertEquals(factorial(size), group.order());
     }
 
     @Test
     public void makeSymNTest() {
         int size = 4;
         PermutationGroup sym = PermutationGroup.makeSymN(size);
-        Assert.assertEquals(size, sym.getSize());
-        Assert.assertEquals(factorial(size), sym.order());
+        Assertions.assertEquals(size, sym.getSize());
+        Assertions.assertEquals(factorial(size), sym.order());
     }
 
     @Test
     public void getSizeTest() {
         int size = 4;
         PermutationGroup group = new PermutationGroup(size);
-        Assert.assertEquals(size, group.getSize());
+        Assertions.assertEquals(size, group.getSize());
     }
 
     @Test
     public void orderTest() {
         int size = 5;
         PermutationGroup sym = PermutationGroup.makeSymN(size);
-        Assert.assertEquals(factorial(size), sym.order());
+        Assertions.assertEquals(factorial(size), sym.order());
     }
 
     @Test
@@ -141,20 +142,20 @@ public class PermutationGroupTest extends CDKTestCase {
         int uIndex = 0;
         int uSubIndex = 1;
         Permutation u01 = group.get(uIndex, uSubIndex);
-        Assert.assertNull(u01);
+        Assertions.assertNull(u01);
 
         // however, 0 and 3 are in the same orbit by both flips
         uSubIndex = 3;
         Permutation u03 = group.get(uIndex, uSubIndex);
         List<Integer> orbit = u03.getOrbit(0);
-        Assert.assertTrue(orbit.contains(uSubIndex));
+        Assertions.assertTrue(orbit.contains(uSubIndex));
     }
 
     @Test
     public void getLeftTransversalTest() {
         PermutationGroup group = getCubeGroup();
         List<Permutation> transversal = group.getLeftTransversal(1);
-        Assert.assertEquals(3, transversal.size());
+        Assertions.assertEquals(3, transversal.size());
     }
 
     @Test
@@ -179,8 +180,8 @@ public class PermutationGroupTest extends CDKTestCase {
         int transversalSize = transversal.size();
 
         // check that |Aut(G)| / |Sym(N)| = |Transversal|
-        Assert.assertEquals(factorial(size), groupOrder);
-        Assert.assertEquals(groupOrder / subgroupOrder, transversalSize);
+        Assertions.assertEquals(factorial(size), groupOrder);
+        Assertions.assertEquals(groupOrder / subgroupOrder, transversalSize);
     }
 
     @Test
@@ -200,7 +201,7 @@ public class PermutationGroupTest extends CDKTestCase {
                 all.add(p);
             }
         });
-        Assert.assertEquals(factorial(size), all.size());
+        Assertions.assertEquals(factorial(size), all.size());
     }
 
     @Test
@@ -221,7 +222,7 @@ public class PermutationGroupTest extends CDKTestCase {
                 all.add(p);
             }
         });
-        Assert.assertEquals(max, all.size());
+        Assertions.assertEquals(max, all.size());
     }
 
     @Test
@@ -229,7 +230,7 @@ public class PermutationGroupTest extends CDKTestCase {
         int size = 4;
         PermutationGroup group = PermutationGroup.makeSymN(size);
         List<Permutation> all = group.all();
-        Assert.assertEquals(factorial(size), all.size());
+        Assertions.assertEquals(factorial(size), all.size());
     }
 
     @Test
@@ -238,7 +239,7 @@ public class PermutationGroupTest extends CDKTestCase {
         Permutation p = new Permutation(6, 7, 4, 5, 2, 3, 0, 1);
         int position = group.test(p);
         // this means p is a member of G
-        Assert.assertTrue(position == group.getSize());
+        Assertions.assertTrue(position == group.getSize());
     }
 
     @Test
@@ -247,7 +248,7 @@ public class PermutationGroupTest extends CDKTestCase {
         Permutation p = new Permutation(1, 2, 3, 4, 0, 6, 7, 5);
         int position = group.test(p);
         // this means p is not in G
-        Assert.assertTrue(position < group.getSize());
+        Assertions.assertTrue(position < group.getSize());
     }
 
     @Test
@@ -255,7 +256,7 @@ public class PermutationGroupTest extends CDKTestCase {
         int size = 4;
         PermutationGroup group = new PermutationGroup(size);
         group.enter(new Permutation(1, 0, 3, 2));
-        Assert.assertEquals(2, group.order());
+        Assertions.assertEquals(2, group.order());
     }
 
     @Test
@@ -264,6 +265,6 @@ public class PermutationGroupTest extends CDKTestCase {
         PermutationGroup group = new PermutationGroup(size);
         group.enter(new Permutation(1, 0, 3, 2));
         group.changeBase(new Permutation(size));
-        Assert.assertEquals(2, group.order());
+        Assertions.assertEquals(2, group.order());
     }
 }

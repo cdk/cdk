@@ -19,6 +19,7 @@
 package org.openscience.cdk.config;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -39,10 +40,10 @@ public class ImmutableAtomTypeTest extends CDKTestCase {
 			SilentChemObjectBuilder.getInstance()
 		);
 		IAtomType type = factory.getAtomType("C.sp3");
-		Assert.assertTrue(type instanceof ImmutableAtomType);
+		Assertions.assertTrue(type instanceof ImmutableAtomType);
 		String output = type.toString();
-		Assert.assertTrue(output.contains("ImmutableAtomType("));
-		Assert.assertTrue(output.contains("MBO:"));
+		Assertions.assertTrue(output.contains("ImmutableAtomType("));
+		Assertions.assertTrue(output.contains("MBO:"));
 	}
 
 }

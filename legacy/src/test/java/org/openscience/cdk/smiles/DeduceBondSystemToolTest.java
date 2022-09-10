@@ -59,16 +59,16 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     @Test
     public void testConstructors() {
         // basically: just test that no exception is thrown
-        Assert.assertNotNull(new DeduceBondSystemTool());
-        Assert.assertNotNull(new DeduceBondSystemTool(new AllRingsFinder()));
+        Assertions.assertNotNull(new DeduceBondSystemTool());
+        Assertions.assertNotNull(new DeduceBondSystemTool(new AllRingsFinder()));
     }
 
     @Test
     public void testInterruption() {
         dbst.setInterrupted(false);
-        Assert.assertFalse(dbst.isInterrupted());
+        Assertions.assertFalse(dbst.isInterrupted());
         dbst.setInterrupted(true);
-        Assert.assertTrue(dbst.isInterrupted());
+        Assertions.assertTrue(dbst.isInterrupted());
         dbst.setInterrupted(false);
     }
 
@@ -82,16 +82,16 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
             AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             molecule = dbst.fixAromaticBondOrders(molecule);
-            Assert.assertNotNull(molecule);
+            Assertions.assertNotNull(molecule);
 
             molecule = AtomContainerManipulator.removeHydrogens(molecule);
             int doubleBondCount = 0;
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
-            Assert.assertEquals(6, doubleBondCount);
+            Assertions.assertEquals(6, doubleBondCount);
         });
     }
 
@@ -105,17 +105,17 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
             AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             molecule = dbst.fixAromaticBondOrders(molecule);
-            Assert.assertNotNull(molecule);
+            Assertions.assertNotNull(molecule);
 
             molecule = AtomContainerManipulator.removeHydrogens(molecule);
 
             int doubleBondCount = 0;
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
-            Assert.assertEquals(6, doubleBondCount);
+            Assertions.assertEquals(6, doubleBondCount);
         });
     }
 
@@ -128,10 +128,10 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
             DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
             molecule = dbst.fixAromaticBondOrders(molecule);
-            Assert.assertNotNull(molecule);
+            Assertions.assertNotNull(molecule);
 
             molecule = AtomContainerManipulator.removeHydrogens(molecule);
-            Assert.assertEquals(34, molecule.getAtomCount());
+            Assertions.assertEquals(34, molecule.getAtomCount());
 
             // we should have 14 double bonds
             int doubleBondCount = 0;
@@ -139,7 +139,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
                 IBond bond = molecule.getBond(i);
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
-            Assert.assertEquals(13, doubleBondCount);
+            Assertions.assertEquals(13, doubleBondCount);
         });
     }
 
@@ -154,10 +154,10 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
         DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
         molecule = dbst.fixAromaticBondOrders(molecule);
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
         molecule = AtomContainerManipulator.removeHydrogens(molecule);
-        Assert.assertEquals(40, molecule.getAtomCount());
+        Assertions.assertEquals(40, molecule.getAtomCount());
 
         // we should have 14 double bonds
         int doubleBondCount = 0;
@@ -165,7 +165,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
             IBond bond = molecule.getBond(i);
             if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(10, doubleBondCount);
+        Assertions.assertEquals(10, doubleBondCount);
     }
 
     @Test
@@ -180,16 +180,16 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
             DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
             molecule = dbst.fixAromaticBondOrders(molecule);
-            Assert.assertNotNull(molecule);
+            Assertions.assertNotNull(molecule);
 
             molecule = AtomContainerManipulator.removeHydrogens(molecule);
             int doubleBondCount = 0;
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
-            Assert.assertEquals(6, doubleBondCount);
+            Assertions.assertEquals(6, doubleBondCount);
         });
     }
 
@@ -250,18 +250,18 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
         // now have the algorithm have a go at it
         enol = dbst.fixAromaticBondOrders(enol);
-        Assert.assertNotNull(enol);
-        Assert.assertTrue(dbst.isOK(enol));
+        Assertions.assertNotNull(enol);
+        Assertions.assertTrue(dbst.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.SINGLE, enol.getBond(0).getOrder());
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(1).getOrder());
-        Assert.assertEquals(Order.SINGLE, enol.getBond(2).getOrder());
-        Assert.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(4).getOrder());
-        Assert.assertEquals(Order.SINGLE, enol.getBond(5).getOrder());
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(6).getOrder());
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(7).getOrder());
+        Assertions.assertEquals(Order.SINGLE, enol.getBond(0).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, enol.getBond(1).getOrder());
+        Assertions.assertEquals(Order.SINGLE, enol.getBond(2).getOrder());
+        Assertions.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, enol.getBond(4).getOrder());
+        Assertions.assertEquals(Order.SINGLE, enol.getBond(5).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, enol.getBond(6).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, enol.getBond(7).getOrder());
     }
 
     /**
@@ -307,15 +307,15 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
         // now have the algorithm have a go at it
         enol = dbst.fixAromaticBondOrders(enol);
-        Assert.assertNotNull(enol);
-        Assert.assertTrue(dbst.isOK(enol));
+        Assertions.assertNotNull(enol);
+        Assertions.assertTrue(dbst.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(0).getOrder());
-        Assert.assertEquals(Order.SINGLE, enol.getBond(1).getOrder());
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(2).getOrder());
-        Assert.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());
-        Assert.assertEquals(Order.SINGLE, enol.getBond(4).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, enol.getBond(0).getOrder());
+        Assertions.assertEquals(Order.SINGLE, enol.getBond(1).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, enol.getBond(2).getOrder());
+        Assertions.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());
+        Assertions.assertEquals(Order.SINGLE, enol.getBond(4).getOrder());
     }
 
     @Test
@@ -362,26 +362,26 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
         // now have the algorithm have a go at it
         enol = dbst.fixAromaticBondOrders(enol);
-        Assert.assertNotNull(enol);
-        Assert.assertTrue(dbst.isOK(enol));
+        Assertions.assertNotNull(enol);
+        Assertions.assertTrue(dbst.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(0).getOrder().numeric()
                 + enol.getBond(5).getOrder().numeric()); // around atom1
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(0).getOrder().numeric()
                 + enol.getBond(1).getOrder().numeric()); // around atom2
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(1).getOrder().numeric()
                 + enol.getBond(2).getOrder().numeric()); // around atom3
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(2).getOrder().numeric()
                 + enol.getBond(3).getOrder().numeric()); // around atom4
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(3).getOrder().numeric()
                 + enol.getBond(4).getOrder().numeric()); // around atom5
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(4).getOrder().numeric()
                 + enol.getBond(5).getOrder().numeric()); // around atom6
     }
@@ -434,26 +434,26 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
         // now have the algorithm have a go at it
         enol = dbst.fixAromaticBondOrders(enol);
-        Assert.assertNotNull(enol);
-        Assert.assertTrue(dbst.isOK(enol));
+        Assertions.assertNotNull(enol);
+        Assertions.assertTrue(dbst.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(0).getOrder().numeric()
                 + enol.getBond(5).getOrder().numeric()); // around atom1
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(0).getOrder().numeric()
                 + enol.getBond(1).getOrder().numeric()); // around atom2
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(1).getOrder().numeric()
                 + enol.getBond(2).getOrder().numeric()); // around atom3
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(2).getOrder().numeric()
                 + enol.getBond(3).getOrder().numeric()); // around atom4
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(3).getOrder().numeric()
                 + enol.getBond(4).getOrder().numeric()); // around atom5
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
+        Assertions.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
                 .getBond(4).getOrder().numeric()
                 + enol.getBond(5).getOrder().numeric()); // around atom6
     }

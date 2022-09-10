@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type.parameters;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -44,7 +45,7 @@ public class ParameterReactTest extends CDKTestCase {
     @Test
     public void testParameterReact() {
         IParameterReact paramSet = new ParameterReact();
-        Assert.assertNotNull(paramSet);
+        Assertions.assertNotNull(paramSet);
     }
 
     /**
@@ -57,7 +58,7 @@ public class ParameterReactTest extends CDKTestCase {
         IParameterReact paramSet = new ParameterReact();
 
         paramSet.setParameter(Boolean.TRUE);
-        Assert.assertTrue(paramSet.isSetParameter());
+        Assertions.assertTrue(paramSet.isSetParameter());
 
     }
 
@@ -69,7 +70,7 @@ public class ParameterReactTest extends CDKTestCase {
     @Test
     public void testIsSetParameter() {
         IParameterReact paramSet = new ParameterReact();
-        Assert.assertFalse(paramSet.isSetParameter());
+        Assertions.assertFalse(paramSet.isSetParameter());
     }
 
     /**
@@ -81,7 +82,7 @@ public class ParameterReactTest extends CDKTestCase {
     public void testSetValue_object() {
         IParameterReact paramSet = new ParameterReact();
         paramSet.setValue(null);
-        Assert.assertNull(paramSet.getValue());
+        Assertions.assertNull(paramSet.getValue());
 
     }
 
@@ -94,6 +95,6 @@ public class ParameterReactTest extends CDKTestCase {
     public void testGetValue() {
         IParameterReact paramSet = new ParameterReact();
         paramSet.setValue(new Object());
-        Assert.assertNotNull(paramSet.getValue());
+        Assertions.assertNotNull(paramSet.getValue());
     }
 }

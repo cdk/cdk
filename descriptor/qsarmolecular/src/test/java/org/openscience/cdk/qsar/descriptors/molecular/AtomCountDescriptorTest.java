@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -49,10 +50,10 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertEquals(2, ((IntegerResult) value.getValue()).intValue());
-        Assert.assertEquals(1, value.getNames().length);
-        Assert.assertEquals("nC", value.getNames()[0]);
-        Assert.assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
+        Assertions.assertEquals(2, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(1, value.getNames().length);
+        Assertions.assertEquals("nC", value.getNames()[0]);
+        Assertions.assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
     }
 
     @Test
@@ -62,10 +63,10 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertEquals(5, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(5, ((IntegerResult) value.getValue()).intValue());
 
         mol = sp.parseSmiles("[C]"); // ethanol
         value = descriptor.calculate(mol);
-        Assert.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
     }
 }

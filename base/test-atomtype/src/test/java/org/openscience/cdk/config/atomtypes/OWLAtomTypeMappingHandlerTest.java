@@ -20,6 +20,7 @@
 package org.openscience.cdk.config.atomtypes;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -33,38 +34,38 @@ public class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
     @Test
     public void testOWLAtomTypeMappingHandler() {
         OWLAtomTypeMappingHandler handler = new OWLAtomTypeMappingHandler();
-        Assert.assertNotNull(handler);
+        Assertions.assertNotNull(handler);
     }
 
     @Test
     public void testGetAtomTypeMappings() {
         OWLAtomTypeMappingHandler handler = new OWLAtomTypeMappingHandler();
         // nothing is read
-        Assert.assertNotNull(handler);
-        Assert.assertNull(handler.getAtomTypeMappings());
+        Assertions.assertNotNull(handler);
+        Assertions.assertNull(handler.getAtomTypeMappings());
     }
 
     @Test
     public void testStartDocument() {
         OWLAtomTypeMappingHandler handler = new OWLAtomTypeMappingHandler();
         // nothing is read, but Vector is initialized
-        Assert.assertNotNull(handler);
-        Assert.assertNull(handler.getAtomTypeMappings());
+        Assertions.assertNotNull(handler);
+        Assertions.assertNull(handler.getAtomTypeMappings());
     }
 
     @Test
     public void testEndElement_String_String_String() {
-        Assert.assertTrue(true); // tested by testGetAtomTypeMappings
+        Assertions.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 
     @Test
     public void testStartElement_String_String_String_Attributes() {
-        Assert.assertTrue(true); // tested by testGetAtomTypeMappings
+        Assertions.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 
     @Test
     public void testCharacters_arraychar_int_int() {
-        Assert.assertTrue(true); // tested by testGetAtomTypeMappings
+        Assertions.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 
 }

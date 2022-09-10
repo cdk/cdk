@@ -29,6 +29,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -57,14 +58,14 @@ public class FurtherTemplateHandler3DTest {
         constructor.setAccessible(true);
 
         TemplateHandler3D tmphandler3d = constructor.newInstance();
-        assertEquals(0, tmphandler3d.getTemplateCount());
+        Assertions.assertEquals(0, tmphandler3d.getTemplateCount());
         //cannot test TemplateHandler3D#loadTemplates as it is a private method
 
         // but we can using reflection ...
         Method loadTemplates = TemplateHandler3D.class.getDeclaredMethod("loadTemplates");
         loadTemplates.setAccessible(true); // private -> public
         loadTemplates.invoke(tmphandler3d);
-        assertEquals(10751, tmphandler3d.getTemplateCount());
+        Assertions.assertEquals(10751, tmphandler3d.getTemplateCount());
     }
 
     @Test
@@ -82,7 +83,7 @@ public class FurtherTemplateHandler3DTest {
         IAtomContainer allAtomsInOneContainer = RingSetManipulator.getAllInOneContainer(largestRingSet);
         tmphandler3d.mapTemplates(allAtomsInOneContainer, allAtomsInOneContainer.getAtomCount());
         for (int j = 0; j < allAtomsInOneContainer.getAtomCount(); j++) {
-            assertNotNull(allAtomsInOneContainer.getAtom(j).getPoint3d());
+            Assertions.assertNotNull(allAtomsInOneContainer.getAtom(j).getPoint3d());
         }
     }
 
@@ -101,7 +102,7 @@ public class FurtherTemplateHandler3DTest {
         IAtomContainer allAtomsInOneContainer = RingSetManipulator.getAllInOneContainer(largestRingSet);
         tmphandler3d.mapTemplates(allAtomsInOneContainer, allAtomsInOneContainer.getAtomCount());
         for (int j = 0; j < allAtomsInOneContainer.getAtomCount(); j++) {
-            assertNotNull(allAtomsInOneContainer.getAtom(j).getPoint3d());
+            Assertions.assertNotNull(allAtomsInOneContainer.getAtom(j).getPoint3d());
         }
     }
 

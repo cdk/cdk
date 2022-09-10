@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -109,7 +110,7 @@ public class AbstractVFStateTest {
                 return false;
             }
         };
-        assertFalse(state.add(0, 1));
+        Assertions.assertFalse(state.add(0, 1));
         assertThat(state.size, is(0));
         assertThat(state.m1, is(new int[]{UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
         assertThat(state.m2, is(new int[]{UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
@@ -122,13 +123,13 @@ public class AbstractVFStateTest {
         int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
         int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
-        assertTrue(state.add(0, 1));
+        Assertions.assertTrue(state.add(0, 1));
         assertThat(state.size, is(1));
         assertThat(state.m1, is(new int[]{1, UNMAPPED, UNMAPPED, UNMAPPED}));
         assertThat(state.m2, is(new int[]{UNMAPPED, 0, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
         assertThat(state.t1, is(new int[]{0, 1, 0, 0}));
         assertThat(state.t2, is(new int[]{1, 0, 1, 0, 0, 0}));
-        assertTrue(state.add(1, 2));
+        Assertions.assertTrue(state.add(1, 2));
         assertThat(state.size, is(2));
         assertThat(state.m1, is(new int[]{1, 2, UNMAPPED, UNMAPPED}));
         assertThat(state.m2, is(new int[]{UNMAPPED, 0, 1, UNMAPPED, UNMAPPED, UNMAPPED}));

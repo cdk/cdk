@@ -69,7 +69,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
                 minMass, maxMass, mfRange);
         IMolecularFormula f = gen.getNextFormula();
-        Assert.assertNotNull(f);
+        Assertions.assertNotNull(f);
 
     }
 
@@ -98,8 +98,8 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertNotEquals(0, mfSet.size());
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertNotEquals(0, mfSet.size());
     }
 
     /**
@@ -130,18 +130,18 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
 
         // The initial value must be 0
         finishedPerc = gen.getFinishedPercentage();
-        Assert.assertEquals(0d, finishedPerc, 0.0001);
+        Assertions.assertEquals(0d, finishedPerc, 0.0001);
 
         // The value must increase after each generated formula
         while (gen.getNextFormula() != null) {
             finishedPerc = gen.getFinishedPercentage();
-            Assert.assertTrue(finishedPerc > lastFinishedPerc);
+            Assertions.assertTrue(finishedPerc > lastFinishedPerc);
             lastFinishedPerc = finishedPerc;
         }
 
         // The final value must be 1
         finishedPerc = gen.getFinishedPercentage();
-        Assert.assertEquals(1d, finishedPerc, 0.0001);
+        Assertions.assertEquals(1d, finishedPerc, 0.0001);
 
     }
 
@@ -195,7 +195,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
 
             // Next getNextFormula() call should return null
             IMolecularFormula f = gen.getNextFormula();
-            Assert.assertNull(f);
+            Assertions.assertNull(f);
         });
     }
 
@@ -261,7 +261,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         for (IMolecularFormula f : mfSet.molecularFormulas()) {
             for (IIsotope i : f.isotopes()) {
                 int count = f.getIsotopeCount(i);
-                Assert.assertTrue(count >= 5);
+                Assertions.assertTrue(count >= 5);
             }
         }
 
@@ -298,7 +298,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         for (IMolecularFormula f : mfSet.molecularFormulas()) {
             for (IIsotope i : f.isotopes()) {
                 int count = f.getIsotopeCount(i);
-                Assert.assertTrue(count <= 7);
+                Assertions.assertTrue(count <= 7);
             }
         }
     }
@@ -322,9 +322,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
-        Assert.assertEquals("C", MolecularFormulaManipulator.getString(mfSet
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
+        Assertions.assertEquals("C", MolecularFormulaManipulator.getString(mfSet
                 .getMolecularFormula(0)));
     }
 
@@ -347,9 +347,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
-        Assert.assertEquals("C10000", MolecularFormulaManipulator
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
+        Assertions.assertEquals("C10000", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
     }
 
@@ -382,7 +382,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
+        Assertions.assertNotNull(mfSet);
 
         boolean found = false;
         for (IMolecularFormula formula : mfSet.molecularFormulas()) {
@@ -392,7 +392,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 break;
             }
         }
-        Assert.assertTrue("The molecular formula H2O should be found", found);
+        Assertions.assertTrue(found, "The molecular formula H2O should be found");
     }
 
     /**
@@ -411,7 +411,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         mfRange.addIsotope(n, 0, 10);
 
         MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 1023.000, 1023.002, mfRange);
-        Assert.assertTrue("generator implementation should be instance of FullEnumerationFormulaGenerator", generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+        Assertions.assertTrue(generator.formulaGenerator instanceof FullEnumerationFormulaGenerator, "generator implementation should be instance of FullEnumerationFormulaGenerator");
     }
 
     /**
@@ -433,7 +433,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         mfRange.addIsotope(n, 0, 10);
 
         MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 13, 14, mfRange);
-        Assert.assertTrue("generator implementation should be instance of FullEnumerationFormulaGenerator", generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+        Assertions.assertTrue(generator.formulaGenerator instanceof FullEnumerationFormulaGenerator, "generator implementation should be instance of FullEnumerationFormulaGenerator");
     }
 
 
@@ -456,7 +456,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         mfRange.addIsotope(n, 0, 10);
 
         MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 1300000, 1300000.1, mfRange);
-        Assert.assertTrue("generator implementation should be instance of FullEnumerationFormulaGenerator", generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+        Assertions.assertTrue(generator.formulaGenerator instanceof FullEnumerationFormulaGenerator, "generator implementation should be instance of FullEnumerationFormulaGenerator");
     }
 
 
@@ -478,7 +478,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         mfRange.addIsotope(n, 0, 10);
 
         MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 230.002, 230.004, mfRange);
-        Assert.assertTrue("generator implementation should be instance of RoundRobinFormulaGenerator", generator.formulaGenerator instanceof RoundRobinFormulaGenerator);
+        Assertions.assertTrue(generator.formulaGenerator instanceof RoundRobinFormulaGenerator, "generator implementation should be instance of RoundRobinFormulaGenerator");
     }
 
     /**
@@ -506,9 +506,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
-        Assert.assertEquals("C5H11N2O", MolecularFormulaManipulator
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
+        Assertions.assertEquals("C5H11N2O", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
     }
 
@@ -538,9 +538,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
-        Assert.assertEquals("C37H38N4O10", MolecularFormulaManipulator
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
+        Assertions.assertEquals("C37H38N4O10", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
     }
 
@@ -572,9 +572,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
-        Assert.assertEquals("C374H623N103O116S", MolecularFormulaManipulator
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
+        Assertions.assertEquals("C374H623N103O116S", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
 
 
@@ -609,7 +609,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertEquals(48, mfSet.size());
+        Assertions.assertEquals(48, mfSet.size());
         boolean found = false;
         for (IMolecularFormula formula : mfSet.molecularFormulas()) {
             String mf = MolecularFormulaManipulator.getString(formula);
@@ -618,8 +618,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 break;
             }
         }
-        Assert.assertTrue("The molecular formula C4H11NO4 should be found",
-                found);
+        Assertions.assertTrue(found, "The molecular formula C4H11NO4 should be found");
     }
 
     /**
@@ -648,7 +647,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertEquals(528, mfSet.size());
+        Assertions.assertEquals(528, mfSet.size());
         boolean found = false;
         for (IMolecularFormula formula : mfSet.molecularFormulas()) {
             String mf = MolecularFormulaManipulator.getString(formula);
@@ -657,8 +656,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 break;
             }
         }
-        Assert.assertTrue("The molecular formula C11H10NO2 should be found",
-                found);
+        Assertions.assertTrue(found, "The molecular formula C11H10NO2 should be found");
     }
 
     /**
@@ -694,9 +692,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
-        Assert.assertEquals("C8H9Cl3NO2PS", MolecularFormulaManipulator
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
+        Assertions.assertEquals("C8H9Cl3NO2PS", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
 
     }
@@ -725,19 +723,19 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 minMass, maxMass, mfRange);
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
 
         IMolecularFormula trueFormula = new MolecularFormula(); // C3CH5
         trueFormula.addIsotope(c, 3);
         trueFormula.addIsotope(c13, 1);
         trueFormula.addIsotope(h, 5);
 
-        Assert.assertEquals(trueFormula.getIsotopeCount(), mfSet
+        Assertions.assertEquals(trueFormula.getIsotopeCount(), mfSet
                 .getMolecularFormula(0).getIsotopeCount());
-        Assert.assertEquals(trueFormula.getIsotopeCount(c), mfSet
+        Assertions.assertEquals(trueFormula.getIsotopeCount(c), mfSet
                 .getMolecularFormula(0).getIsotopeCount(c));
-        Assert.assertEquals(trueFormula.getIsotopeCount(c13), mfSet
+        Assertions.assertEquals(trueFormula.getIsotopeCount(c13), mfSet
                 .getMolecularFormula(0).getIsotopeCount(c13));
 
     }
@@ -768,9 +766,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(1, mfSet.size());
-        Assert.assertEquals("C7H15N2O4", MolecularFormulaManipulator
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(1, mfSet.size());
+        Assertions.assertEquals("C7H15N2O4", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
 
     }
@@ -801,8 +799,8 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
 
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(0, mfSet.size());
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(0, mfSet.size());
 
     }
 
@@ -831,8 +829,8 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
                 massMin, massMax, mfRange);
 
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
-        Assert.assertNotNull(mfSet);
-        Assert.assertEquals(0, mfSet.size());
+        Assertions.assertNotNull(mfSet);
+        Assertions.assertEquals(0, mfSet.size());
 
     }
 

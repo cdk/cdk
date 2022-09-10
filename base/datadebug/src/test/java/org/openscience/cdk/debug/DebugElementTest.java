@@ -19,6 +19,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractElementTest;
@@ -42,63 +43,63 @@ public class DebugElementTest extends AbstractElementTest {
     @Test
     public void testDebugElement() {
         IElement e = new DebugElement();
-        Assert.assertTrue(e instanceof IChemObject);
+        Assertions.assertTrue(e instanceof IChemObject);
     }
 
     @Test
     public void testDebugElement_IElement() {
         IElement element = new DebugElement();
         IElement e = new DebugElement(element);
-        Assert.assertTrue(e instanceof IChemObject);
+        Assertions.assertTrue(e instanceof IChemObject);
     }
 
     @Test
     public void testDebugElement_String() {
         IElement e = new DebugElement("C");
-        Assert.assertEquals("C", e.getSymbol());
+        Assertions.assertEquals("C", e.getSymbol());
     }
 
     @Test
     public void testElement_X() {
         IElement e = new DebugElement("X");
-        Assert.assertEquals("R", e.getSymbol());
+        Assertions.assertEquals("R", e.getSymbol());
         // and it should not throw exceptions
-        Assert.assertNotNull(e.getAtomicNumber());
+        Assertions.assertNotNull(e.getAtomicNumber());
         org.hamcrest.MatcherAssert.assertThat(e.getAtomicNumber(), is(0));
     }
 
     @Test
     public void testDebugElement_String_int() {
         IElement e = new DebugElement("H", 1);
-        Assert.assertEquals("H", e.getSymbol());
-        Assert.assertEquals(1, e.getAtomicNumber().intValue());
+        Assertions.assertEquals("H", e.getSymbol());
+        Assertions.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test
     public void compareSymbol() {
         DebugElement e1 = new DebugElement("H", 1);
         DebugElement e2 = new DebugElement("H", 1);
-        Assert.assertTrue(e1.compare(e2));
+        Assertions.assertTrue(e1.compare(e2));
     }
 
     @Test
     public void compareAtomicNumber() {
         DebugElement e1 = new DebugElement("H", 1);
         DebugElement e2 = new DebugElement("H", 1);
-        Assert.assertTrue(e1.compare(e2));
+        Assertions.assertTrue(e1.compare(e2));
     }
 
     @Test
     public void compareDiffSymbol() {
         DebugElement e1 = new DebugElement("H", 1);
         DebugElement e2 = new DebugElement("C", 12);
-        Assert.assertFalse(e1.compare(e2));
+        Assertions.assertFalse(e1.compare(e2));
     }
 
     @Test
     public void compareDiffAtomicNumber() {
         DebugElement e1 = new DebugElement("H", 1);
         DebugElement e2 = new DebugElement("H", 0);
-        Assert.assertFalse(e1.compare(e2));
+        Assertions.assertFalse(e1.compare(e2));
     }
 }

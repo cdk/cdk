@@ -21,6 +21,7 @@ package org.openscience.cdk.fragment;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
@@ -65,7 +66,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("CCO[C@@H](C)C(=O)C(O)O");
         fragmenter.generateFragments(mol);
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(0, frameworks.length);
+        Assertions.assertEquals(0, frameworks.length);
     }
 
     @Test
@@ -73,9 +74,9 @@ public class MurckoFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1CCCCC");
         fragmenter.generateFragments(mol);
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(0, frameworks.length);
+        Assertions.assertEquals(0, frameworks.length);
         String[] rings = fragmenter.getRingSystems();
-        Assert.assertEquals(1, rings.length);
+        Assertions.assertEquals(1, rings.length);
     }
 
     @Test
@@ -83,7 +84,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("C(CC1=C2C=CC=CC2=CC2=C1C=CC=C2)C1CCCCC1");
         fragmenter.generateFragments(mol);
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(1, frameworks.length);
+        Assertions.assertEquals(1, frameworks.length);
     }
 
     @Test
@@ -91,7 +92,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("C(CC1=C2C=CC=CC2=CC2=C1C=CC=C2)C1CCCCC1");
         fragmenter.generateFragments(mol);
         IAtomContainer[] frameworks = fragmenter.getFrameworksAsContainers();
-        Assert.assertEquals(1, frameworks.length);
+        Assertions.assertEquals(1, frameworks.length);
     }
 
     @Test
@@ -101,10 +102,10 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         fragmenter.generateFragments(mol);
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(3, frameworks.length);
+        Assertions.assertEquals(3, frameworks.length);
 
         String[] rings = fragmenter.getRingSystems();
-        Assert.assertEquals(2, rings.length);
+        Assertions.assertEquals(2, rings.length);
     }
 
     @Test
@@ -114,10 +115,10 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         fragmenter.generateFragments(mol);
         IAtomContainer[] frameworks = fragmenter.getFrameworksAsContainers();
-        Assert.assertEquals(3, frameworks.length);
+        Assertions.assertEquals(3, frameworks.length);
 
         IAtomContainer[] rings = fragmenter.getRingSystemsAsContainers();
-        Assert.assertEquals(2, rings.length);
+        Assertions.assertEquals(2, rings.length);
     }
 
     @Test
@@ -128,10 +129,10 @@ public class MurckoFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
 
         String[] rings = fragmenter.getRingSystems();
-        Assert.assertEquals(3, rings.length);
+        Assertions.assertEquals(3, rings.length);
 
         List<String> frameworks = Arrays.asList(fragmenter.getFrameworks());
-        Assert.assertEquals(7, frameworks.size());
+        Assertions.assertEquals(7, frameworks.size());
 
         assertThat(
                 frameworks,
@@ -147,7 +148,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
 
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(1, frameworks.length);
+        Assertions.assertEquals(1, frameworks.length);
 
     }
 
@@ -158,7 +159,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
 
         List<String> frameworks = Arrays.asList(fragmenter.getFrameworks());
-        Assert.assertEquals(3, frameworks.size());
+        Assertions.assertEquals(3, frameworks.size());
         assertThat(frameworks, hasItems("n1coc(c1)-c2ccccc2", "n1coc(-c2ccccc2)c1-c3ccccc3", "n1cocc1-c2ccccc2"));
     }
 
@@ -167,10 +168,10 @@ public class MurckoFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("c1cc(ccc1C(=O)Nc2ccc3c(c2)nc(o3)c4ccncc4)F");
         fragmenter.generateFragments(mol);
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(3, frameworks.length);
+        Assertions.assertEquals(3, frameworks.length);
 
         String[] rings = fragmenter.getRingSystems();
-        Assert.assertEquals(3, rings.length);
+        Assertions.assertEquals(3, rings.length);
     }
 
     @Test
@@ -179,10 +180,10 @@ public class MurckoFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
 
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(3, frameworks.length);
+        Assertions.assertEquals(3, frameworks.length);
 
         String[] rings = fragmenter.getRingSystems();
-        Assert.assertEquals(2, rings.length);
+        Assertions.assertEquals(2, rings.length);
     }
 
     @Test
@@ -191,10 +192,10 @@ public class MurckoFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
 
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(4, frameworks.length);
+        Assertions.assertEquals(4, frameworks.length);
 
         String[] rings = fragmenter.getRingSystems();
-        Assert.assertEquals(3, rings.length);
+        Assertions.assertEquals(3, rings.length);
     }
 
     /**
@@ -208,8 +209,8 @@ public class MurckoFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
 
         String[] frameworks = fragmenter.getFrameworks();
-        Assert.assertEquals(1, frameworks.length);
-        Assert.assertEquals("c1ccc(cc1)CCC(CC2CC2)C3C=CC=C3", frameworks[0]);
+        Assertions.assertEquals(1, frameworks.length);
+        Assertions.assertEquals("c1ccc(cc1)CCC(CC2CC2)C3C=CC=C3", frameworks[0]);
     }
 
     /**
@@ -225,15 +226,15 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         String[] f = fragmenter.getFrameworks();
         IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
-        Assert.assertEquals(1, f.length);
-        Assert.assertEquals(f.length, fc.length);
-        Assert.assertEquals("n1ccccc1Cc2ccccc2", f[0]);
+        Assertions.assertEquals(1, f.length);
+        Assertions.assertEquals(f.length, fc.length);
+        Assertions.assertEquals("n1ccccc1Cc2ccccc2", f[0]);
 
         SmilesGenerator sg = SmilesGenerator.unique().aromatic();
         for (int i = 0; i < f.length; i++) {
             Aromaticity.cdkLegacy().apply(fc[i]);
             String newsmiles = sg.create(fc[i]);
-            Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
+            Assertions.assertTrue(f[i].equals(newsmiles), f[i] + " did not match the container, " + newsmiles);
         }
     }
 
@@ -254,19 +255,19 @@ public class MurckoFragmenterTest extends CDKTestCase {
         String[] f = fragmenter.getFrameworks();
         IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
 
-        Assert.assertEquals(1, f.length);
-        Assert.assertEquals(f.length, fc.length);
+        Assertions.assertEquals(1, f.length);
+        Assertions.assertEquals(f.length, fc.length);
 
         AtomContainerManipulator.clearAtomConfigurations(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
-        Assert.assertEquals("N=1C=C(CN2C=CC=CC12)CCN3CCC(Cc4ccccc4)CC3", f[0]);
+        Assertions.assertEquals("N=1C=C(CN2C=CC=CC12)CCN3CCC(Cc4ccccc4)CC3", f[0]);
 
         for (int i = 0; i < f.length; i++) {
             String newsmiles = sg.create(fc[i]);
-            Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
+            Assertions.assertTrue(f[i].equals(newsmiles), f[i] + " did not match the container, " + newsmiles);
         }
     }
 
@@ -285,14 +286,14 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         String[] f = fragmenter.getFrameworks();
         IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
-        Assert.assertEquals(1, f.length);
-        Assert.assertEquals(f.length, fc.length);
-        Assert.assertEquals("c1ccc(cc1)-n2cccc2", f[0]);
+        Assertions.assertEquals(1, f.length);
+        Assertions.assertEquals(f.length, fc.length);
+        Assertions.assertEquals("c1ccc(cc1)-n2cccc2", f[0]);
 
         for (int i = 0; i < f.length; i++) {
             Aromaticity.cdkLegacy().apply(fc[i]);
             String newsmiles = sg.create(fc[i]);
-            Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
+            Assertions.assertTrue(f[i].equals(newsmiles), f[i] + " did not match the container, " + newsmiles);
         }
     }
 

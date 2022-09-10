@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.junit.Assert;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,7 +63,7 @@ public class AtomNumberGeneratorTest extends AbstractGeneratorTest {
         // nothing should be made
         IRenderingElement root = generator.generate(emptyContainer, model);
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-        Assert.assertEquals(0, elements.size());
+        Assertions.assertEquals(0, elements.size());
     }
 
 }

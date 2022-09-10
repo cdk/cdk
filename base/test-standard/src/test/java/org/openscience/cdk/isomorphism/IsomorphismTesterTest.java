@@ -20,6 +20,7 @@
 package org.openscience.cdk.isomorphism;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -124,27 +125,27 @@ public class IsomorphismTesterTest extends CDKTestCase {
     @Test
     public void testIsomorphismTester_IAtomContainer() throws Exception {
         IsomorphismTester it = new IsomorphismTester(pinene_1);
-        Assert.assertNotNull(it);
+        Assertions.assertNotNull(it);
     }
 
     @Test
     public void testIsomorphismTester() throws Exception {
         IsomorphismTester it = new IsomorphismTester();
-        Assert.assertNotNull(it);
+        Assertions.assertNotNull(it);
     }
 
     @Test
     public void testIsIsomorphic_IAtomContainer() throws Exception {
         IsomorphismTester it = new IsomorphismTester(pinene_1);
-        Assert.assertTrue(it.isIsomorphic(pinene_2));
-        Assert.assertFalse(it.isIsomorphic(pinene_non));
+        Assertions.assertTrue(it.isIsomorphic(pinene_2));
+        Assertions.assertFalse(it.isIsomorphic(pinene_non));
     }
 
     @Test
     public void testIsIsomorphic_IAtomContainer_IAtomContainer() throws Exception {
         IsomorphismTester it = new IsomorphismTester();
-        Assert.assertTrue(it.isIsomorphic(pinene_2, pinene_1));
-        Assert.assertFalse(it.isIsomorphic(pinene_2, pinene_non));
+        Assertions.assertTrue(it.isIsomorphic(pinene_2, pinene_1));
+        Assertions.assertFalse(it.isIsomorphic(pinene_2, pinene_non));
     }
 
     @Test
@@ -167,6 +168,6 @@ public class IsomorphismTesterTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(biphenyl_kekulesmiles);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_kekulesmiles);
 
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));
     }
 }

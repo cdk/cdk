@@ -19,6 +19,7 @@
 package org.openscience.cdk.dict;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -38,30 +39,30 @@ public abstract class AbstractDictionaryTest {
 
     @Test
     public void testSetTestClass() {
-        Assert.assertNotNull(this.testClass);
+        Assertions.assertNotNull(this.testClass);
     }
 
     @Test
     public void testNS() {
         Dictionary dict = getTestClass();
-        Assert.assertNotNull(dict);
-        Assert.assertNull(dict.getNS());
+        Assertions.assertNotNull(dict);
+        Assertions.assertNull(dict.getNS());
         dict.setNS("http://www.namespace.example.org/");
-        Assert.assertEquals("http://www.namespace.example.org/", dict.getNS());
+        Assertions.assertEquals("http://www.namespace.example.org/", dict.getNS());
     }
 
     @Test
     public void testAddEntry() {
         Dictionary dict = getTestClass();
-        Assert.assertNotNull(dict);
-        Assert.assertEquals(0, dict.size());
-        Assert.assertFalse(dict.hasEntry("someidentifier"));
+        Assertions.assertNotNull(dict);
+        Assertions.assertEquals(0, dict.size());
+        Assertions.assertFalse(dict.hasEntry("someidentifier"));
         Entry entry = new Entry();
         entry.setID("someidentifier");
         dict.addEntry(entry);
-        Assert.assertEquals(1, dict.size());
-        Assert.assertTrue(dict.hasEntry("someidentifier"));
-        Assert.assertEquals(entry, dict.getEntry("someidentifier"));
+        Assertions.assertEquals(1, dict.size());
+        Assertions.assertTrue(dict.hasEntry("someidentifier"));
+        Assertions.assertEquals(entry, dict.getEntry("someidentifier"));
     }
 
 }

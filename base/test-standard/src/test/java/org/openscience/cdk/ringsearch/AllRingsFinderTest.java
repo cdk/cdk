@@ -24,6 +24,7 @@ import java.time.Duration;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -65,7 +66,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     @Test
     public void testAllRingsFinder() {
         AllRingsFinder arf = new AllRingsFinder();
-        Assert.assertNotNull(arf);
+        Assertions.assertNotNull(arf);
     }
 
     @Test
@@ -77,7 +78,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
         ringSet = arf.findAllRings(molecule);
 
-        Assert.assertEquals(6, ringSet.getAtomContainerCount());
+        Assertions.assertEquals(6, ringSet.getAtomContainerCount());
     }
 
     /**
@@ -98,8 +99,8 @@ public class AllRingsFinderTest extends CDKTestCase {
 
                 IAtom atom1 = ec.getBegin();
                 IAtom atom2 = ec.getEnd();
-                Assert.assertTrue(ring.contains(atom1));
-                Assert.assertTrue(ring.contains(atom2));
+                Assertions.assertTrue(ring.contains(atom1));
+                Assertions.assertTrue(ring.contains(atom2));
             }
         }
     }
@@ -130,7 +131,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testGetTimeout() {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(3);
-        Assert.assertEquals(3, arf.getTimeout(), 0.01);
+        Assertions.assertEquals(3, arf.getTimeout(), 0.01);
     }
 
     @Test
@@ -147,13 +148,13 @@ public class AllRingsFinderTest extends CDKTestCase {
         IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
 
         ringSet = arf.findAllRings(molecule);
-        Assert.assertEquals(20, ringSet.getAtomContainerCount());
+        Assertions.assertEquals(20, ringSet.getAtomContainerCount());
     }
 
     @Test
     public void testBigRingSystem() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(500), () -> {
-            Assume.assumeTrue(runSlowTests());
+            Assumptions.assumeTrue(runSlowTests());
 
             IRingSet ringSet;
             AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_994);
@@ -168,7 +169,7 @@ public class AllRingsFinderTest extends CDKTestCase {
 
             ringSet = arf.findAllRings(molecule);
             // the 1976 value was empirically derived, and might not be accurate
-            Assert.assertEquals(1976, ringSet.getAtomContainerCount());
+            Assertions.assertEquals(1976, ringSet.getAtomContainerCount());
         });
     }
 
@@ -186,7 +187,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
 
         ringSet = arf.findAllRings(molecule);
-        Assert.assertEquals(14, ringSet.getAtomContainerCount());
+        Assertions.assertEquals(14, ringSet.getAtomContainerCount());
     }
 
     @Test
@@ -203,7 +204,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
 
         ringSet = arf.findAllRings(molecule);
-        Assert.assertEquals(3, ringSet.getAtomContainerCount());
+        Assertions.assertEquals(3, ringSet.getAtomContainerCount());
     }
 
     /**
@@ -227,7 +228,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         //logger.debug("Starting AllRingsFinder");
         ringSet = new AllRingsFinder().findAllRings(mol);
         //logger.debug("Finished AllRingsFinder");
-        Assert.assertEquals(24, ringSet.getAtomContainerCount());
+        Assertions.assertEquals(24, ringSet.getAtomContainerCount());
         //display(mol);
 
         // check sizes of rings
@@ -250,7 +251,7 @@ public class AllRingsFinderTest extends CDKTestCase {
      */
     @Test
     public void testBug777488() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         //String filename = "data/Bug646.cml";
         String filename = "testBug777488-1-AllRingsFinder.cml";
@@ -284,7 +285,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         for (IAtom atom : molecule.atoms()) {
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
-        Assert.assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
+        Assertions.assertEquals(6, count, "All atoms in benzene were not marked as being in a ring");
     }
 
     @Test
@@ -301,7 +302,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         for (IAtom atom : molecule.atoms()) {
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
-        Assert.assertEquals("All atoms in 1-ethyl-cyclopentane were not marked as being in a ring", 5, count);
+        Assertions.assertEquals(5, count, "All atoms in 1-ethyl-cyclopentane were not marked as being in a ring");
     }
 
     @Test
@@ -316,7 +317,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         IChemModel model = seq.getChemModel(0);
         IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
         ringSet = arf.findAllRings(molecule, 6);
-        Assert.assertEquals(12, ringSet.getAtomContainerCount());
+        Assertions.assertEquals(12, ringSet.getAtomContainerCount());
     }
 
     @Test
@@ -332,7 +333,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
         // there are 5x10 squares (four-rings) in the 5x10 molecule
         ringSet = arf.findAllRings(molecule, 4);
-        Assert.assertEquals(50, ringSet.getAtomContainerCount());
+        Assertions.assertEquals(50, ringSet.getAtomContainerCount());
     }
 
     @Test
@@ -350,7 +351,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         // there are (9x5) + (4x10) six-rings   = 85
         // combined 135
         ringSet = arf.findAllRings(molecule, 6);
-        Assert.assertEquals(135, ringSet.getAtomContainerCount());
+        Assertions.assertEquals(135, ringSet.getAtomContainerCount());
     }
 
 }

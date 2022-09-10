@@ -27,6 +27,7 @@ import java.io.InputStream;
 import javax.vecmath.Vector3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
@@ -54,8 +55,8 @@ public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testAccepts() {
-        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
-        Assert.assertFalse(chemObjectIO.accepts(AtomContainer.class));
+        Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
+        Assertions.assertFalse(chemObjectIO.accepts(AtomContainer.class));
     }
 
     @Test
@@ -66,37 +67,37 @@ public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
         CrystClustReader reader = new CrystClustReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(2, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(2, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
-        Assert.assertNotNull(crystal);
-        Assert.assertEquals(42, crystal.getAtomCount());
-        Assert.assertEquals(1, crystal.getZ().intValue());
+        Assertions.assertNotNull(crystal);
+        Assertions.assertEquals(42, crystal.getAtomCount());
+        Assertions.assertEquals(1, crystal.getZ().intValue());
 
         // test reading of partial charges
         org.openscience.cdk.interfaces.IAtom atom = crystal.getAtom(0);
-        Assert.assertNotNull(atom);
-        Assert.assertEquals("O", atom.getSymbol());
-        Assert.assertEquals(-0.68264902, atom.getCharge(), 0.00000001);
+        Assertions.assertNotNull(atom);
+        Assertions.assertEquals("O", atom.getSymbol());
+        Assertions.assertEquals(-0.68264902, atom.getCharge(), 0.00000001);
 
         // test unit cell axes
         Vector3d a = crystal.getA();
-        Assert.assertEquals(7.971030, a.x, 0.000001);
-        Assert.assertEquals(0.0, a.y, 0.000001);
-        Assert.assertEquals(0.0, a.z, 0.000001);
+        Assertions.assertEquals(7.971030, a.x, 0.000001);
+        Assertions.assertEquals(0.0, a.y, 0.000001);
+        Assertions.assertEquals(0.0, a.z, 0.000001);
         Vector3d b = crystal.getB();
-        Assert.assertEquals(0.0, b.x, 0.000001);
-        Assert.assertEquals(18.772200, b.y, 0.000001);
-        Assert.assertEquals(0.0, b.z, 0.000001);
+        Assertions.assertEquals(0.0, b.x, 0.000001);
+        Assertions.assertEquals(18.772200, b.y, 0.000001);
+        Assertions.assertEquals(0.0, b.z, 0.000001);
         Vector3d c = crystal.getC();
-        Assert.assertEquals(0.0, c.x, 0.000001);
-        Assert.assertEquals(0.0, c.y, 0.000001);
-        Assert.assertEquals(10.262220, c.z, 0.000001);
+        Assertions.assertEquals(0.0, c.x, 0.000001);
+        Assertions.assertEquals(0.0, c.y, 0.000001);
+        Assertions.assertEquals(10.262220, c.z, 0.000001);
     }
 }

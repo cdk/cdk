@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -24,21 +25,21 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     public void testSetAtomTypeName_String() {
         IAtomType at = (IAtomType) newChemObject();
         at.setAtomTypeName("C4");
-        Assert.assertEquals("C4", at.getAtomTypeName());
+        Assertions.assertEquals("C4", at.getAtomTypeName());
     }
 
     @Test
     public void testGetAtomTypeName() {
         IAtomType at = (IAtomType) newChemObject();
         at.setAtomTypeName("C4");
-        Assert.assertEquals("C4", at.getAtomTypeName());
+        Assertions.assertEquals("C4", at.getAtomTypeName());
     }
 
     @Test
     public void testSetMaxBondOrder_IBond_Order() {
         IAtomType at = (IAtomType) newChemObject();
         at.setMaxBondOrder(IBond.Order.TRIPLE);
-        Assert.assertEquals(IBond.Order.TRIPLE, at.getMaxBondOrder());
+        Assertions.assertEquals(IBond.Order.TRIPLE, at.getMaxBondOrder());
     }
 
     @Test
@@ -50,7 +51,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     public void testSetBondOrderSum_Double() {
         IAtomType at = (IAtomType) newChemObject();
         at.setBondOrderSum(4.0);
-        Assert.assertEquals(4.0, at.getBondOrderSum(), 0.001);
+        Assertions.assertEquals(4.0, at.getBondOrderSum(), 0.001);
     }
 
     @Test
@@ -62,7 +63,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     public void testSetCovalentRadius_Double() {
         IAtomType at = (IAtomType) newChemObject();
         at.setCovalentRadius(1.0);
-        Assert.assertEquals(1.0, at.getCovalentRadius(), 0.001);
+        Assertions.assertEquals(1.0, at.getCovalentRadius(), 0.001);
     }
 
     @Test
@@ -76,7 +77,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
 
         IAtomType a = (IAtomType) newChemObject();
         a.setFormalCharge(charge);
-        Assert.assertEquals(charge, a.getFormalCharge().intValue());
+        Assertions.assertEquals(charge, a.getFormalCharge().intValue());
     }
 
     @Test
@@ -93,7 +94,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
 
         IAtomType a = (IAtomType) newChemObject();
         a.setValency(valency);
-        Assert.assertEquals(valency, (int) a.getValency());
+        Assertions.assertEquals(valency, (int) a.getValency());
     }
 
     @Test
@@ -107,7 +108,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
 
         IAtomType a = (IAtomType) newChemObject();
         a.setFormalNeighbourCount(count);
-        Assert.assertEquals(count, (int) a.getFormalNeighbourCount());
+        Assertions.assertEquals(count, (int) a.getFormalNeighbourCount());
     }
 
     @Test
@@ -121,7 +122,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
 
         IAtomType atom = (IAtomType) newChemObject();
         atom.setHybridization(hybridization);
-        Assert.assertEquals(hybridization, atom.getHybridization());
+        Assertions.assertEquals(hybridization, atom.getHybridization());
     }
 
     @Test
@@ -135,9 +136,9 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
 
         IAtomType atom = (IAtomType) newChemObject();
         atom.setHybridization(hybridization);
-        Assert.assertEquals(hybridization, atom.getHybridization());
+        Assertions.assertEquals(hybridization, atom.getHybridization());
         atom.setHybridization(null);
-        Assert.assertNull(atom.getHybridization());
+        Assertions.assertNull(atom.getHybridization());
     }
 
     @Test
@@ -145,7 +146,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         boolean acceptor = true;
         IAtomType a = (IAtomType) newChemObject();
         a.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, acceptor);
-        Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        Assertions.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
     }
 
     @Test
@@ -158,7 +159,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         boolean donor = true;
         IAtomType a = (IAtomType) newChemObject();
         a.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, donor);
-        Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
+        Assertions.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
     }
 
     @Test
@@ -171,7 +172,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         int benzol = 6;
         IAtomType a = (IAtomType) newChemObject();
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, benzol);
-        Assert.assertEquals(benzol, ((Integer) a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());
+        Assertions.assertEquals(benzol, ((Integer) a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());
     }
 
     @Test
@@ -184,7 +185,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         int five = 5;
         IAtomType a = (IAtomType) newChemObject();
         a.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, five);
-        Assert.assertEquals(five, ((Integer) a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());
+        Assertions.assertEquals(five, ((Integer) a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());
     }
 
     @Test
@@ -196,7 +197,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     public void testSetIsAromatic_boolean() {
         IAtomType a = (IAtomType) newChemObject();
         a.setFlag(CDKConstants.ISAROMATIC, true);
-        Assert.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -209,7 +210,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         String hoseCode = "C-4;HHHC(;///***)";
         IAtomType a = (IAtomType) newChemObject();
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, hoseCode);
-        Assert.assertEquals(hoseCode, a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));
+        Assertions.assertEquals(hoseCode, a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));
     }
 
     @Test
@@ -225,7 +226,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType a = (IAtomType) newChemObject();
         a.setID("carbon1");
         a.setAtomTypeName("C.sp3");
-        Assert.assertEquals("carbon1", a.getID());
+        Assertions.assertEquals("carbon1", a.getID());
     }
 
     /**
@@ -236,12 +237,12 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     public void testClone() throws Exception {
         IAtomType at = (IAtomType) newChemObject();
         Object clone = at.clone();
-        Assert.assertTrue(clone instanceof IAtomType);
+        Assertions.assertTrue(clone instanceof IAtomType);
 
         // test that everything has been cloned properly
         String diff = AtomTypeDiff.diff(at, (IAtomType) clone);
-        Assert.assertNotNull(diff);
-        Assert.assertEquals(0, diff.length());
+        Assertions.assertNotNull(diff);
+        Assertions.assertEquals(0, diff.length());
     }
 
     /**
@@ -254,7 +255,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType clone = (IAtomType) at.clone();
 
         at.setMaxBondOrder(IBond.Order.DOUBLE);
-        Assert.assertEquals(IBond.Order.SINGLE, clone.getMaxBondOrder());
+        Assertions.assertEquals(IBond.Order.SINGLE, clone.getMaxBondOrder());
     }
 
     /**
@@ -267,7 +268,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType clone = (IAtomType) at.clone();
 
         at.setBondOrderSum(2.0);
-        Assert.assertEquals(1.0, clone.getBondOrderSum(), 0.001);
+        Assertions.assertEquals(1.0, clone.getBondOrderSum(), 0.001);
     }
 
     /**
@@ -280,7 +281,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType clone = (IAtomType) at.clone();
 
         at.setCovalentRadius(2.0);
-        Assert.assertEquals(1.0, clone.getCovalentRadius(), 0.001);
+        Assertions.assertEquals(1.0, clone.getCovalentRadius(), 0.001);
     }
 
     /**
@@ -293,7 +294,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType clone = (IAtomType) at.clone();
 
         at.setFormalCharge(2);
-        Assert.assertEquals(1, clone.getFormalCharge().intValue());
+        Assertions.assertEquals(1, clone.getFormalCharge().intValue());
     }
 
     /**
@@ -306,7 +307,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType clone = (IAtomType) at.clone();
 
         at.setFormalNeighbourCount(2);
-        Assert.assertEquals(1, (int) clone.getFormalNeighbourCount());
+        Assertions.assertEquals(1, (int) clone.getFormalNeighbourCount());
     }
 
     /**
@@ -319,7 +320,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType clone = (IAtomType) at.clone();
 
         at.setHybridization(Hybridization.SP1);
-        Assert.assertEquals(Hybridization.PLANAR3, clone.getHybridization());
+        Assertions.assertEquals(Hybridization.PLANAR3, clone.getHybridization());
     }
 
     /**
@@ -331,8 +332,8 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType) newChemObject();
         String description = at.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -341,12 +342,12 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType) newChemObject();
         at.setAtomTypeName("N.sp2.3");
         String description = at.toString();
-        Assert.assertTrue(description.contains("N.sp2.3"));
+        Assertions.assertTrue(description.contains("N.sp2.3"));
     }
 
     @Test
     public void testDefaultFormalCharge() {
         IAtomType atomType = (IAtomType) newChemObject();
-        Assert.assertEquals(0, atomType.getFormalCharge().intValue());
+        Assertions.assertEquals(0, atomType.getFormalCharge().intValue());
     }
 }

@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -40,8 +41,8 @@ public class ElectronContainerTest extends AbstractElectronContainerTest {
     @Test
     public void testElectronContainer() {
         IElectronContainer ec = new ElectronContainer();
-        Assert.assertNotNull(ec);
-        Assert.assertEquals(0, ec.getElectronCount().intValue());
+        Assertions.assertNotNull(ec);
+        Assertions.assertEquals(0, ec.getElectronCount().intValue());
     }
 
     // Overwrite default methods: no notifications are expected!

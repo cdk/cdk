@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -25,7 +26,7 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
     @Override
     public void testGetElectronCount() {
         ISingleElectron radical = (ISingleElectron) newChemObject();
-        Assert.assertEquals(1, radical.getElectronCount().intValue());
+        Assertions.assertEquals(1, radical.getElectronCount().intValue());
     }
 
     @Test
@@ -33,16 +34,16 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
         IChemObject object = newChemObject();
         IAtom atom = object.getBuilder().newInstance(IAtom.class, "N");
         ISingleElectron radical = object.getBuilder().newInstance(ISingleElectron.class, atom);
-        Assert.assertTrue(radical.contains(atom));
+        Assertions.assertTrue(radical.contains(atom));
     }
 
     @Test
     public void testSetAtom_IAtom() {
         ISingleElectron radical = (ISingleElectron) newChemObject();
         IAtom atom = radical.getBuilder().newInstance(IAtom.class, "N");
-        Assert.assertNull(radical.getAtom());
+        Assertions.assertNull(radical.getAtom());
         radical.setAtom(atom);
-        Assert.assertEquals(atom, radical.getAtom());
+        Assertions.assertEquals(atom, radical.getAtom());
     }
 
     @Test
@@ -50,7 +51,7 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
         IChemObject object = newChemObject();
         IAtom atom = object.getBuilder().newInstance(IAtom.class, "N");
         ISingleElectron radical = object.getBuilder().newInstance(ISingleElectron.class, atom);
-        Assert.assertEquals(atom, radical.getAtom());
+        Assertions.assertEquals(atom, radical.getAtom());
     }
 
     @Test
@@ -58,8 +59,8 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
     public void testClone() throws Exception {
         ISingleElectron radical = (ISingleElectron) newChemObject();
         Object clone = radical.clone();
-        Assert.assertNotNull(clone);
-        Assert.assertTrue(clone instanceof ISingleElectron);
+        Assertions.assertNotNull(clone);
+        Assertions.assertTrue(clone instanceof ISingleElectron);
     }
 
     @Test
@@ -70,7 +71,7 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
 
         // test cloning of atom
         ISingleElectron clone = (ISingleElectron) radical.clone();
-        Assert.assertNotSame(atom, clone.getAtom());
+        Assertions.assertNotSame(atom, clone.getAtom());
     }
 
     /** Test for RFC #9 */
@@ -80,8 +81,8 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
         ISingleElectron radical = (ISingleElectron) newChemObject();
         String description = radical.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -93,8 +94,8 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
     public void testSetElectronCount_Integer() {
         IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(3);
-        Assert.assertEquals(1, ec.getElectronCount().intValue());
+        Assertions.assertEquals(1, ec.getElectronCount().intValue());
         ec.setElectronCount(null);
-        Assert.assertEquals(1, ec.getElectronCount().intValue());
+        Assertions.assertEquals(1, ec.getElectronCount().intValue());
     }
 }

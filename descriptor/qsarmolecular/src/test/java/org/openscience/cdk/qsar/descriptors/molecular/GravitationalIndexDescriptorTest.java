@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -59,14 +60,14 @@ public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(1756.5060703860984, retval.get(0), 0.00000001);
-        Assert.assertEquals(41.91069159994975, retval.get(1), 0.00000001);
-        Assert.assertEquals(12.06562671430088, retval.get(2), 0.00000001);
-        Assert.assertEquals(1976.6432599699767, retval.get(3), 0.00000001);
-        Assert.assertEquals(44.45945636161082, retval.get(4), 0.00000001);
-        Assert.assertEquals(12.549972243701887, retval.get(5), 0.00000001);
-        Assert.assertEquals(4333.097373073368, retval.get(6), 0.00000001);
-        Assert.assertEquals(65.82626658920714, retval.get(7), 0.00000001);
-        Assert.assertEquals(16.302948232909483, retval.get(8), 0.00000001);
+        Assertions.assertEquals(1756.5060703860984, retval.get(0), 0.00000001);
+        Assertions.assertEquals(41.91069159994975, retval.get(1), 0.00000001);
+        Assertions.assertEquals(12.06562671430088, retval.get(2), 0.00000001);
+        Assertions.assertEquals(1976.6432599699767, retval.get(3), 0.00000001);
+        Assertions.assertEquals(44.45945636161082, retval.get(4), 0.00000001);
+        Assertions.assertEquals(12.549972243701887, retval.get(5), 0.00000001);
+        Assertions.assertEquals(4333.097373073368, retval.get(6), 0.00000001);
+        Assertions.assertEquals(65.82626658920714, retval.get(7), 0.00000001);
+        Assertions.assertEquals(16.302948232909483, retval.get(8), 0.00000001);
     }
 }

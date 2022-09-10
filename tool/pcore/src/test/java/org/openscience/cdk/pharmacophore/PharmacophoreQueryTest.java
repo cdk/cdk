@@ -19,6 +19,7 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +54,7 @@ public class PharmacophoreQueryTest {
     @Test
     public void testToString() {
         String repr = query.toString();
-        Assert.assertTrue(repr
+        Assertions.assertTrue(repr
                 .indexOf(" #A:3, #EC:3, D, A, A, DC::D [[OX1]]::A [[N]]::[4.0 - 4.5] , DC::D [[OX1]]::A [[N]]::[4.0 - 5.0] , DC::A [[N]]::A [[N]]::[5.4 - 5.8] , )") > 0);
     }
 }

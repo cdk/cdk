@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractMonomerTest;
@@ -40,6 +41,6 @@ public class DebugMonomerTest extends AbstractMonomerTest {
     @Test
     public void testDebugMonomer() {
         IMonomer oMonomer = new DebugMonomer();
-        Assert.assertNotNull(oMonomer);
+        Assertions.assertNotNull(oMonomer);
     }
 }

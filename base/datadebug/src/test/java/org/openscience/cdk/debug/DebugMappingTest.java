@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractMappingTest;
@@ -48,7 +49,7 @@ public class DebugMappingTest extends AbstractMappingTest {
     @Test
     public void testDebugMapping_IChemObject_IChemObject() {
         IMapping mapping = new DebugMapping(new DebugAtom(), new DebugAtom());
-        Assert.assertNotNull(mapping);
+        Assertions.assertNotNull(mapping);
     }
 
 }

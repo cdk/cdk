@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -68,7 +69,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 
         for (int i = 0; i < 2; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
 
     }
@@ -114,7 +115,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 
         for (int i = 0; i < 8; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.03);
+            Assertions.assertEquals(testResult[i], result, 0.03);
         }
     }
 
@@ -136,7 +137,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         for (int i = 0; i < 6; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult, result, 0.001);
+            Assertions.assertEquals(testResult, result, 0.001);
         }
     }
 
@@ -181,7 +182,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 
         for (int i = 0; i < 9; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.03);
+            Assertions.assertEquals(testResult[i], result, 0.03);
         }
     }
 }

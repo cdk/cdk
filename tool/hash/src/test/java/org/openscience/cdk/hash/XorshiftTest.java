@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.hash;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -63,7 +64,7 @@ public class XorshiftTest {
         }
 
         for (int v : values) {
-            assertTrue(v + " was not within 0.1 % of a uniform distribution", 99000 <= v && v <= 101000);
+            Assertions.assertTrue(99000 <= v && v <= 101000, v + " was not within 0.1 % of a uniform distribution");
         }
     }
 

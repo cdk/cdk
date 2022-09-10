@@ -21,6 +21,7 @@ package org.openscience.cdk.inchi;
 import net.sf.jniinchi.INCHI_RET;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
@@ -55,15 +56,15 @@ public class InChIToStructureTest extends CDKTestCase {
     @Test
     public void testConstructor_String_IChemObjectBuilder() throws CDKException {
         InChIToStructure parser = new InChIToStructure("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
-        assertNotNull(parser);
+        Assertions.assertNotNull(parser);
     }
 
     @Test
     public void testGetAtomContainer() throws CDKException {
         InChIToStructure parser = new InChIToStructure("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
-        assertNotNull(container);
-        Assert.assertEquals(1, container.getAtomCount());
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(1, container.getAtomCount());
     }
 
     /** @cdk.bug 1293 */
@@ -72,10 +73,10 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         for (IAtom atom : container.atoms()) {
-            assertNotNull(atom.getAtomicNumber());
+            Assertions.assertNotNull(atom.getAtomicNumber());
         }
-        assertNotNull(container);
-        Assert.assertEquals(1, container.getAtomCount());
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(1, container.getAtomCount());
     }
 
     @Test
@@ -83,10 +84,10 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H",
                 DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
-        assertNotNull(container);
-        Assert.assertEquals(3, container.getAtomCount());
-        Assert.assertEquals(2, container.getBondCount());
-        assertTrue(container.getBond(0).getOrder() == Order.DOUBLE || container.getBond(1).getOrder() == Order.DOUBLE);
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(3, container.getAtomCount());
+        Assertions.assertEquals(2, container.getBondCount());
+        Assertions.assertTrue(container.getBond(0).getOrder() == Order.DOUBLE || container.getBond(1).getOrder() == Order.DOUBLE);
     }
 
     @Test
@@ -94,8 +95,8 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1S", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         INCHI_RET returnStatus = parser.getReturnStatus();
-        assertNotNull(returnStatus);
-        Assert.assertEquals(INCHI_RET.WARNING, returnStatus);
+        Assertions.assertNotNull(returnStatus);
+        Assertions.assertEquals(INCHI_RET.WARNING, returnStatus);
         // JNA-INCHI to fix there should be a message about EOF!
     }
 
@@ -104,7 +105,7 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         String message = parser.getMessage();
-        assertNotNull(message);
+        Assertions.assertNotNull(message);
     }
 
     @Test
@@ -112,7 +113,7 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1S", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         String message = parser.getMessage();
-        Assert.assertNull(message);
+        Assertions.assertNull(message);
     }
 
     @Test
@@ -120,7 +121,7 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         String message = parser.getMessage();
-        assertNotNull(message);
+        Assertions.assertNotNull(message);
     }
 
     @Test
@@ -128,10 +129,10 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         long[][] flags = parser.getWarningFlags();
-        assertNotNull(flags);
-        Assert.assertEquals(2, flags.length);
-        Assert.assertEquals(2, flags[0].length);
-        Assert.assertEquals(2, flags[1].length);
+        Assertions.assertNotNull(flags);
+        Assertions.assertEquals(2, flags.length);
+        Assertions.assertEquals(2, flags[0].length);
+        Assertions.assertEquals(2, flags[1].length);
     }
 
     @Test
@@ -173,7 +174,7 @@ public class InChIToStructureTest extends CDKTestCase {
         IAtomContainer container = parser.getAtomContainer();
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
-        assertTrue(ses.hasNext());
+        Assertions.assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
         assertThat(((IDoubleBondStereochemistry) se).getStereo(), is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
@@ -187,7 +188,7 @@ public class InChIToStructureTest extends CDKTestCase {
         IAtomContainer container = parser.getAtomContainer();
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
-        assertTrue(ses.hasNext());
+        Assertions.assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
         assertThat(((IDoubleBondStereochemistry) se).getStereo(), is(IDoubleBondStereochemistry.Conformation.TOGETHER));
@@ -204,7 +205,7 @@ public class InChIToStructureTest extends CDKTestCase {
 
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
-        assertTrue(ses.hasNext());
+        Assertions.assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(ExtendedTetrahedral.class)));
         ExtendedTetrahedral element = (ExtendedTetrahedral) se;
@@ -225,7 +226,7 @@ public class InChIToStructureTest extends CDKTestCase {
 
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
-        assertTrue(ses.hasNext());
+        Assertions.assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(ExtendedTetrahedral.class)));
         ExtendedTetrahedral element = (ExtendedTetrahedral) se;
@@ -272,15 +273,15 @@ public class InChIToStructureTest extends CDKTestCase {
         IAtomContainer mol = InChIGeneratorFactory.getInstance()
                 .getInChIToStructure("InChI=1/C4BrClFI/c5-3(8)1-2-4(6)7/b4-3-",
                         SilentChemObjectBuilder.getInstance()).getAtomContainer();
-        assertNotNull(mol);
+        Assertions.assertNotNull(mol);
         int nExtendedCisTrans = 0;
         for (IStereoElement<?,?> se : mol.stereoElements()) {
             if (se.getConfigClass() == IStereoElement.CU)
                 nExtendedCisTrans++;
             else
-                Assert.fail("Expected onl extended cis/trans");
+                Assertions.fail("Expected onl extended cis/trans");
         }
-        Assert.assertEquals(1, nExtendedCisTrans);
+        Assertions.assertEquals(1, nExtendedCisTrans);
     }
 
     /**
@@ -294,7 +295,7 @@ public class InChIToStructureTest extends CDKTestCase {
         IAtomContainer mol = InChIGeneratorFactory.getInstance()
                                                   .getInChIToStructure("InChI=1S/C16H25NO/c1-14(2)8-6-9-15(3)10-7-11-16(18)17-12-4-5-13-17/h7-8,10-11H,4-6,9,12-13H2,1-3H3/b11-7+,15-10+",
                                                           SilentChemObjectBuilder.getInstance()).getAtomContainer();
-        assertNotNull(mol);
+        Assertions.assertNotNull(mol);
         int nCisTrans = 0;
         for (IStereoElement<?,?> se : mol.stereoElements()) {
             if (se.getConfigClass() == IStereoElement.CisTrans) {
@@ -302,11 +303,11 @@ public class InChIToStructureTest extends CDKTestCase {
                 IStereoElement<IBond,IBond> ctse = (IStereoElement<IBond,IBond>)se;
                 IBond bond = ctse.getFocus();
                 List<IBond> carriers = ctse.getCarriers();
-                Assert.assertEquals(2, carriers.size());
-                Assert.assertTrue(carriers.get(0).contains(bond.getBegin()));
-                Assert.assertTrue(carriers.get(1).contains(bond.getEnd()));
+                Assertions.assertEquals(2, carriers.size());
+                Assertions.assertTrue(carriers.get(0).contains(bond.getBegin()));
+                Assertions.assertTrue(carriers.get(1).contains(bond.getEnd()));
             }
         }
-        Assert.assertEquals(2, nCisTrans);
+        Assertions.assertEquals(2, nCisTrans);
     }
 }

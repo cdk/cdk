@@ -157,11 +157,11 @@ public class RegularPathGraphTest {
 
     @Test
     public void loop() {
-        assertFalse(new SimpleEdge(0, 1).loop());
-        assertTrue(new SimpleEdge(0, 0).loop());
-        assertFalse(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1).loop());
-        assertTrue(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(0, 1), 0).loop());
-        assertTrue(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(0, 1), 1).loop());
+        Assertions.assertFalse(new SimpleEdge(0, 1).loop());
+        Assertions.assertTrue(new SimpleEdge(0, 0).loop());
+        Assertions.assertFalse(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1).loop());
+        Assertions.assertTrue(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(0, 1), 0).loop());
+        Assertions.assertTrue(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(0, 1), 1).loop());
     }
 
     @Test
@@ -176,10 +176,10 @@ public class RegularPathGraphTest {
     public void disjoint() {
         PathEdge e = new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1);
         PathEdge f = new ReducedEdge(new SimpleEdge(2, 3), new SimpleEdge(3, 4), 3);
-        assertTrue(e.disjoint(f));
-        assertTrue(f.disjoint(e));
-        assertFalse(e.disjoint(e));
-        assertFalse(f.disjoint(f));
+        Assertions.assertTrue(e.disjoint(f));
+        Assertions.assertTrue(f.disjoint(e));
+        Assertions.assertFalse(e.disjoint(e));
+        Assertions.assertFalse(f.disjoint(f));
     }
 
     @Test

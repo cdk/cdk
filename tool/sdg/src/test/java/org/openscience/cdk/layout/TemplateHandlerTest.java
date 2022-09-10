@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -75,7 +76,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     public void testInit() throws Exception {
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 
-        Assert.assertEquals(5, th.getTemplateCount());
+        Assertions.assertEquals(5, th.getTemplateCount());
     }
 
     @Test
@@ -83,7 +84,7 @@ public class TemplateHandlerTest extends CDKTestCase {
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
         IAtomContainer mol = sp.parseSmiles(smiles);
-        Assert.assertTrue(th.mapTemplates(mol));
+        Assertions.assertTrue(th.mapTemplates(mol));
     }
 
     /**
@@ -95,10 +96,10 @@ public class TemplateHandlerTest extends CDKTestCase {
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = TestMoleculeFactory.makeSteran();
         itIsInThere = th.mapTemplates(mol);
-        Assert.assertTrue(itIsInThere);
+        Assertions.assertTrue(itIsInThere);
         mol.getAtom(0).setSymbol("N");
         itIsInThere = th.mapTemplates(mol);
-        Assert.assertTrue(itIsInThere);
+        Assertions.assertTrue(itIsInThere);
     }
 
     /**
@@ -110,10 +111,10 @@ public class TemplateHandlerTest extends CDKTestCase {
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = TestMoleculeFactory.makeSteran();
         itIsInThere = th.mapTemplates(mol);
-        Assert.assertTrue(itIsInThere);
+        Assertions.assertTrue(itIsInThere);
         mol.getBond(0).setOrder(IBond.Order.DOUBLE);
         itIsInThere = th.mapTemplates(mol);
-        Assert.assertTrue(itIsInThere);
+        Assertions.assertTrue(itIsInThere);
     }
 
     @Test
@@ -130,12 +131,12 @@ public class TemplateHandlerTest extends CDKTestCase {
         IAtomContainer smilesMol = sp.parseSmiles(smiles);
         itIsInThere = th.mapTemplates(smilesMol);
         logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-        Assert.assertFalse(itIsInThere);
+        Assertions.assertFalse(itIsInThere);
         th.addMolecule(mol);
         logger.debug("now adding template for alpha-Pinen and trying again.");
         itIsInThere = th.mapTemplates(smilesMol);
         logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-        Assert.assertTrue(itIsInThere);
+        Assertions.assertTrue(itIsInThere);
     }
 
     @Test
@@ -152,17 +153,17 @@ public class TemplateHandlerTest extends CDKTestCase {
         IAtomContainer smilesMol = sp.parseSmiles(smiles);
         itIsInThere = th.mapTemplates(smilesMol);
         logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-        Assert.assertFalse(itIsInThere);
+        Assertions.assertFalse(itIsInThere);
         th.addMolecule(mol);
         logger.debug("now adding template for alpha-Pinen and trying again.");
         itIsInThere = th.mapTemplates(smilesMol);
         logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-        Assert.assertTrue(itIsInThere);
+        Assertions.assertTrue(itIsInThere);
         logger.debug("now removing template for alpha-Pinen again and trying again.");
         th.removeMolecule(mol);
         itIsInThere = th.mapTemplates(smilesMol);
         logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-        Assert.assertFalse(itIsInThere);
+        Assertions.assertFalse(itIsInThere);
 
     }
 
@@ -185,7 +186,7 @@ public class TemplateHandlerTest extends CDKTestCase {
         IAtomContainerSet mappedStructures = th.getMappedSubstructures(molecule);
 
         // Do the Assert.assertion
-        Assert.assertEquals("3 mapped templates", 3, mappedStructures.getAtomContainerCount());
+        Assertions.assertEquals(3, mappedStructures.getAtomContainerCount(), "3 mapped templates");
     }
 
     @Test public void convert() throws IOException {

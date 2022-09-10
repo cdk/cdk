@@ -23,6 +23,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
@@ -43,17 +44,17 @@ public class RingManipulatorTest extends CDKTestCase {
     @Test
     public void testMarkAromaticRings() {
         IRing ring = new Ring(3, "C");
-        Assert.assertNotNull(ring);
+        Assertions.assertNotNull(ring);
         RingManipulator.markAromaticRings(ring);
-        Assert.assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
 
         for (IAtom iAtom : ring.atoms()) iAtom.setFlag(CDKConstants.ISAROMATIC, true);
         RingManipulator.markAromaticRings(ring);
-        Assert.assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
 
         for (IBond iBond : ring.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, true);
         RingManipulator.markAromaticRings(ring);
-        Assert.assertTrue(ring.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(ring.getFlag(CDKConstants.ISAROMATIC));
     }
 
 }

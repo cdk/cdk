@@ -20,6 +20,7 @@ package org.openscience.cdk.dict;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
@@ -34,7 +35,7 @@ public class DictionaryTest extends AbstractDictionaryTest {
 
     @AfterEach
     public void testTestClass() {
-        Assert.assertTrue(getTestClass().getClass().getName().endsWith(".Dictionary"));
+        Assertions.assertTrue(getTestClass().getClass().getName().endsWith(".Dictionary"));
     }
 
 }

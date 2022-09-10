@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -67,7 +68,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
     @Test
     public void testTautomerizationReaction() throws Exception {
         IReactionProcess type = new TautomerizationReaction();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     /**
@@ -96,15 +97,15 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
 
         // reverse process
         IAtomContainerSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -112,13 +113,13 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 
         IReactionSet setOfReactions2 = type.initiate(setOfReactants2, null);
 
-        Assert.assertEquals(1, setOfReactions2.getReactionCount());
-        Assert.assertEquals(1, setOfReactions2.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions2.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions2.getReaction(0).getProductCount());
 
         IAtomContainer product2 = setOfReactions2.getReaction(0).getProducts().getAtomContainer(0);
 
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule, queryAtom));
     }
 
     /**
@@ -154,15 +155,15 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
 
         // reverse process
         /* manually putting the active center */
@@ -178,13 +179,13 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 
         IReactionSet setOfReactions2 = type.initiate(setOfReactants2, null);
 
-        Assert.assertEquals(1, setOfReactions2.getReactionCount());
-        Assert.assertEquals(1, setOfReactions2.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions2.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions2.getReaction(0).getProductCount());
 
         IAtomContainer product2 = setOfReactions2.getReaction(0).getProducts().getAtomContainer(0);
 
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule, queryAtom));
     }
 
     /**
@@ -220,20 +221,20 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
-        Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(4).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(4).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getBond(3).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getBond(3).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(4).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(4).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(3).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(3).getFlag(CDKConstants.REACTIVE_CENTER));
     }
 
     /**
@@ -262,20 +263,20 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        Assert.assertEquals(7, setOfReactions.getReaction(0).getMappingCount());
+        Assertions.assertEquals(7, setOfReactions.getReaction(0).getMappingCount());
 
         IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(0));
-        Assert.assertEquals(mappedProductA1, product.getAtom(0));
+        Assertions.assertEquals(mappedProductA1, product.getAtom(0));
         mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(1));
-        Assert.assertEquals(mappedProductA1, product.getAtom(1));
+        Assertions.assertEquals(mappedProductA1, product.getAtom(1));
         mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(2));
-        Assert.assertEquals(mappedProductA1, product.getAtom(2));
+        Assertions.assertEquals(mappedProductA1, product.getAtom(2));
         mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(4));
-        Assert.assertEquals(mappedProductA1, product.getAtom(4));
+        Assertions.assertEquals(mappedProductA1, product.getAtom(4));
 
     }
 

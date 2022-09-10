@@ -19,6 +19,7 @@
 package org.openscience.cdk.math;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -33,7 +34,7 @@ public class FortranFormatTest extends CDKTestCase {
 
     @Test
     public void testAtof_String() {
-        Assert.assertEquals(1.5, FortranFormat.atof("1.5"), 0.0001);
+        Assertions.assertEquals(1.5, FortranFormat.atof("1.5"), 0.0001);
 
         // FIXME: need to add something here with a 'd'
     }

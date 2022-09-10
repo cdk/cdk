@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -51,7 +52,7 @@ public final class RingSearchTest_NonCyclic {
         int n = nonCyclic.getAtomCount();
         RingSearch ringSearch = new RingSearch(nonCyclic);
         for (int i = 0; i < n; i++) {
-            assertFalse(ringSearch.cyclic(i));
+            Assertions.assertFalse(ringSearch.cyclic(i));
         }
     }
 
@@ -67,17 +68,17 @@ public final class RingSearchTest_NonCyclic {
 
     @Test
     public void testRingFragments() {
-        assertTrue(new RingSearch(nonCyclic).ringFragments().isEmpty());
+        Assertions.assertTrue(new RingSearch(nonCyclic).ringFragments().isEmpty());
     }
 
     @Test
     public void testIsolatedRingFragments() {
-        assertTrue(new RingSearch(nonCyclic).isolatedRingFragments().isEmpty());
+        Assertions.assertTrue(new RingSearch(nonCyclic).isolatedRingFragments().isEmpty());
     }
 
     @Test
     public void testFusedRingFragments() {
-        assertTrue(new RingSearch(nonCyclic).fusedRingFragments().isEmpty());
+        Assertions.assertTrue(new RingSearch(nonCyclic).fusedRingFragments().isEmpty());
     }
 
 }

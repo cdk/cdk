@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
@@ -74,7 +75,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
             MolHandler mol2 = new MolHandler(target, true, true);
             smsd1.set(mol1, mol2);
             smsd1.searchMCS(true);
-            assertNotNull(smsd1.getFirstMapping());
+            Assertions.assertNotNull(smsd1.getFirstMapping());
         } catch (InvalidSmilesException ex) {
             Logger.getLogger(CDKMCSHandlerTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,7 +97,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
     }
 
     /**
@@ -122,7 +123,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
         smsd1.init(query, target, true, true);
         smsd1.setChemFilters(true, true, true);
         double score = 1.0;
-        assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
+        Assertions.assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
     }
 
     /**
@@ -140,7 +141,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
         CDKMCSHandler instance = new CDKMCSHandler();
         instance.set(source, target);
         instance.searchMCS(true);
-        assertNotNull(instance.getFirstMapping());
+        Assertions.assertNotNull(instance.getFirstMapping());
     }
 
     /**
@@ -158,8 +159,8 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
-        assertEquals(4, smsd1.getAllAtomMapping().size());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertEquals(4, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -178,9 +179,9 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(4, smsd1.getAllMapping().size());
+        Assertions.assertEquals(4, smsd1.getAllMapping().size());
     }
 
     /**
@@ -199,9 +200,9 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(7, smsd1.getFirstAtomMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstAtomMapping().size());
     }
 
     /**
@@ -220,8 +221,8 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(7, smsd1.getFirstMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstMapping().size());
     }
 }

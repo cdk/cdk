@@ -21,6 +21,7 @@
 package org.openscience.cdk.graph.invariant;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -161,10 +162,10 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         for (int i = 1; i < equivalentClass.length - 1; i++)
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
-        Assert.assertNotNull(equivalentClass);
-        Assert.assertTrue(equivalentClass[0] == 10);//number of Class
-        Assert.assertTrue(equivalentClass[40] == 10);
-        Assert.assertEquals("111112221333444556667878222879995555444", strEquivalent);
+        Assertions.assertNotNull(equivalentClass);
+        Assertions.assertTrue(equivalentClass[0] == 10);//number of Class
+        Assertions.assertTrue(equivalentClass[40] == 10);
+        Assertions.assertEquals("111112221333444556667878222879995555444", strEquivalent);
     }
 
     @Test
@@ -238,9 +239,9 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         for (int i = 1; i < equivalentClass.length; i++)
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
-        Assert.assertNotNull(equivalentClass);
-        Assert.assertTrue(equivalentClass[0] == 2);//number of Class
-        Assert.assertEquals("111111222222222222111111", strEquivalent);
+        Assertions.assertNotNull(equivalentClass);
+        Assertions.assertTrue(equivalentClass[0] == 2);//number of Class
+        Assertions.assertEquals("111111222222222222111111", strEquivalent);
     }
 
     /**
@@ -254,17 +255,17 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol = reader.read(mol);
-        Assert.assertNotNull(mol);
+        Assertions.assertNotNull(mol);
 
         // check that there are some pseudo-atoms
         boolean hasPseudo = false;
         for (IAtom atom : mol.atoms()) {
             if (atom instanceof IPseudoAtom) hasPseudo = true;
         }
-        Assert.assertTrue("The molecule should have one or more pseudo atoms", hasPseudo);
+        Assertions.assertTrue(hasPseudo, "The molecule should have one or more pseudo atoms");
 
         EquivalentClassPartitioner partitioner = new EquivalentClassPartitioner(mol);
-        Assert.assertNotNull(partitioner);
+        Assertions.assertNotNull(partitioner);
 
         int[] classes = partitioner.getTopoEquivClassbyHuXu(mol);
     }
@@ -282,7 +283,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
     public void testAromaticSystem() throws Exception {
 
         IAtomContainer mol = TestMoleculeFactory.makeAzulene();
-        Assert.assertNotNull("Created molecule was null", mol);
+        Assertions.assertNotNull(mol, "Created molecule was null");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -293,10 +294,10 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
 
-        Assert.assertNotNull("Equivalent class was null", equivalentClass);
-        Assert.assertEquals("Unexpected equivalent class length", mol.getAtomCount() + 1, equivalentClass.length);
-        Assert.assertEquals("Wrong number of equivalent classes", 6, equivalentClass[0]);//number of Class
-        Assert.assertEquals("Wrong class assignment", "1232145654", strEquivalent);
+        Assertions.assertNotNull(equivalentClass, "Equivalent class was null");
+        Assertions.assertEquals(mol.getAtomCount() + 1, equivalentClass.length, "Unexpected equivalent class length");
+        Assertions.assertEquals(6, equivalentClass[0], "Wrong number of equivalent classes");//number of Class
+        Assertions.assertEquals("1232145654", strEquivalent, "Wrong class assignment");
     }
 
     /**
@@ -309,16 +310,16 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        Assert.assertNotNull("Created molecule was null", mol);
+        Assertions.assertNotNull(mol, "Created molecule was null");
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int[] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
         char[] arrEquivalent = new char[mol.getAtomCount()];
         for (int i = 1; i < equivalentClass.length; i++)
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
-        Assert.assertNotNull("Equivalent class was null", equivalentClass);
-        Assert.assertEquals("Wrong number of equivalent classes", 9, equivalentClass[0]);
-        Assert.assertEquals("Wrong class assignment", "1234567899", strEquivalent);
+        Assertions.assertNotNull(equivalentClass, "Equivalent class was null");
+        Assertions.assertEquals(9, equivalentClass[0], "Wrong number of equivalent classes");
+        Assertions.assertEquals("1234567899", strEquivalent, "Wrong class assignment");
     }
 
     /**
@@ -333,16 +334,16 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makePyrimidine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        Assert.assertNotNull("Created molecule was null", mol);
+        Assertions.assertNotNull(mol, "Created molecule was null");
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int[] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
         char[] arrEquivalent = new char[mol.getAtomCount()];
         for (int i = 1; i < equivalentClass.length; i++)
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
-        Assert.assertNotNull("Equivalent class was null", equivalentClass);
-        Assert.assertEquals("Wrong number of equivalent classes", 4, equivalentClass[0]);
-        Assert.assertEquals("Wrong class assignment", "123214", strEquivalent);
+        Assertions.assertNotNull(equivalentClass, "Equivalent class was null");
+        Assertions.assertEquals(4, equivalentClass[0], "Wrong number of equivalent classes");
+        Assertions.assertEquals("123214", strEquivalent, "Wrong class assignment");
     }
 
     /**
@@ -356,16 +357,16 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        Assert.assertNotNull("Created molecule was null", mol);
+        Assertions.assertNotNull(mol, "Created molecule was null");
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int[] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
         char[] arrEquivalent = new char[mol.getAtomCount()];
         for (int i = 1; i < equivalentClass.length; i++)
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
-        Assert.assertNotNull("Equivalent class was null", equivalentClass);
-        Assert.assertEquals("Wrong number of equivalent classes", 4, equivalentClass[0]);
-        Assert.assertEquals("Wrong class assignment", "123432123432", strEquivalent);
+        Assertions.assertNotNull(equivalentClass, "Equivalent class was null");
+        Assertions.assertEquals(4, equivalentClass[0], "Wrong number of equivalent classes");
+        Assertions.assertEquals("123432123432", strEquivalent, "Wrong class assignment");
     }
 
     /**
@@ -381,16 +382,16 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makeImidazole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        Assert.assertNotNull("Created molecule was null", mol);
+        Assertions.assertNotNull(mol, "Created molecule was null");
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int[] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
         char[] arrEquivalent = new char[mol.getAtomCount()];
         for (int i = 1; i < equivalentClass.length; i++)
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
-        Assert.assertNotNull("Equivalent class was null", equivalentClass);
-        Assert.assertEquals("Wrong number of equivalent classes", 3, equivalentClass[0]);
-        Assert.assertEquals("Wrong class assignment", "12321", strEquivalent);
+        Assertions.assertNotNull(equivalentClass, "Equivalent class was null");
+        Assertions.assertEquals(3, equivalentClass[0], "Wrong number of equivalent classes");
+        Assertions.assertEquals("12321", strEquivalent, "Wrong class assignment");
     }
 
 }

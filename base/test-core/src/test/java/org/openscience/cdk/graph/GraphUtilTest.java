@@ -120,11 +120,11 @@ public class GraphUtilTest {
         assertThat("vertex 'd' should have degree 1", adjacent[3].length, is(1));
         assertThat("vertex 'e' should have degree 1", adjacent[4].length, is(1));
 
-        assertArrayEquals(new int[]{1}, adjacent[0]);
-        assertArrayEquals(new int[]{0, 2, 4}, adjacent[1]);
-        assertArrayEquals(new int[]{1, 3}, adjacent[2]);
-        assertArrayEquals(new int[]{2}, adjacent[3]);
-        assertArrayEquals(new int[]{1}, adjacent[4]);
+        Assertions.assertArrayEquals(new int[]{1}, adjacent[0]);
+        Assertions.assertArrayEquals(new int[]{0, 2, 4}, adjacent[1]);
+        Assertions.assertArrayEquals(new int[]{1, 3}, adjacent[2]);
+        Assertions.assertArrayEquals(new int[]{2}, adjacent[3]);
+        Assertions.assertArrayEquals(new int[]{1}, adjacent[4]);
 
     }
 
@@ -144,14 +144,14 @@ public class GraphUtilTest {
         assertThat("vertex 'd' should have degree 1", adjacent[3].length, is(1));
         assertThat("vertex 'e' should have degree 1", adjacent[4].length, is(1));
 
-        assertArrayEquals(new int[]{1}, adjacent[0]);
-        assertArrayEquals(new int[]{0, 2, 4}, adjacent[1]);
-        assertArrayEquals(new int[]{1, 3}, adjacent[2]);
-        assertArrayEquals(new int[]{2}, adjacent[3]);
-        assertArrayEquals(new int[]{1}, adjacent[4]);
+        Assertions.assertArrayEquals(new int[]{1}, adjacent[0]);
+        Assertions.assertArrayEquals(new int[]{0, 2, 4}, adjacent[1]);
+        Assertions.assertArrayEquals(new int[]{1, 3}, adjacent[2]);
+        Assertions.assertArrayEquals(new int[]{2}, adjacent[3]);
+        Assertions.assertArrayEquals(new int[]{1}, adjacent[4]);
 
-        assertNotNull(map.get(0, 1));
-        assertNotNull(map.get(1, 2));
+        Assertions.assertNotNull(map.get(0, 1));
+        Assertions.assertNotNull(map.get(1, 2));
 
         assertThat(map.get(0, 1), is(sameInstance(map.get(1, 0))));
         assertThat(map.get(1, 2), is(sameInstance(map.get(2, 1))));

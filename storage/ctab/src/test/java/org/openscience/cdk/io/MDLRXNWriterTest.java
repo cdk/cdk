@@ -24,6 +24,7 @@ package org.openscience.cdk.io;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -66,7 +67,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
     @Test
     public void testAccepts() throws Exception {
         MDLRXNWriter reader = new MDLRXNWriter();
-        Assert.assertTrue(reader.accepts(Reaction.class));
+        Assertions.assertTrue(reader.accepts(Reaction.class));
     }
 
     @Test
@@ -91,7 +92,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         file = writer.toString();
 
-        Assert.assertTrue(file.length() > 0);
+        Assertions.assertTrue(file.length() > 0);
 
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newInstance(IReaction.class);
@@ -99,9 +100,9 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         reaction2 = reader.read(reaction2);
         reader.close();
 
-        Assert.assertEquals(2, reaction2.getReactantCount());
-        Assert.assertEquals(1, reaction2.getProductCount());
-        Assert.assertEquals(1, reaction2.getMappingCount());
+        Assertions.assertEquals(2, reaction2.getReactantCount());
+        Assertions.assertEquals(1, reaction2.getProductCount());
+        Assertions.assertEquals(1, reaction2.getMappingCount());
     }
 
     @Test
@@ -129,7 +130,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         file = writer.toString();
 
-        Assert.assertTrue(file.length() > 0);
+        Assertions.assertTrue(file.length() > 0);
 
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newInstance(IReaction.class);
@@ -137,11 +138,11 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         reaction2 = reader.read(reaction2);
         reader.close();
 
-        Assert.assertEquals(2, reaction2.getReactantCount());
-        Assert.assertEquals(1, reaction2.getReactants().getAtomContainer(0).getAtomCount());
-        Assert.assertEquals(1, reaction2.getReactants().getAtomContainer(1).getAtomCount());
-        Assert.assertEquals(1, reaction2.getProductCount());
-        Assert.assertEquals(1, reaction2.getProducts().getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(2, reaction2.getReactantCount());
+        Assertions.assertEquals(1, reaction2.getReactants().getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(1, reaction2.getReactants().getAtomContainer(1).getAtomCount());
+        Assertions.assertEquals(1, reaction2.getProductCount());
+        Assertions.assertEquals(1, reaction2.getProducts().getAtomContainer(0).getAtomCount());
     }
 
     @Test
@@ -183,7 +184,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         file = writer.toString();
 
-        Assert.assertTrue(file.length() > 0);
+        Assertions.assertTrue(file.length() > 0);
 
         // now deserialize the MDL RXN output
         IReactionSet reactionSetF = builder.newInstance(IReactionSet.class);
@@ -191,11 +192,11 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         reactionSetF = reader.read(reactionSetF);
         reader.close();
 
-        Assert.assertEquals(2, reactionSetF.getReactionCount());
-        Assert.assertEquals(1, reactionSetF.getReaction(0).getReactants().getAtomContainer(0).getAtomCount());
-        Assert.assertEquals(1, reactionSetF.getReaction(0).getReactants().getAtomContainer(1).getAtomCount());
-        Assert.assertEquals(1, reactionSetF.getReaction(0).getProductCount());
-        Assert.assertEquals(1, reactionSetF.getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(2, reactionSetF.getReactionCount());
+        Assertions.assertEquals(1, reactionSetF.getReaction(0).getReactants().getAtomContainer(0).getAtomCount());
+        Assertions.assertEquals(1, reactionSetF.getReaction(0).getReactants().getAtomContainer(1).getAtomCount());
+        Assertions.assertEquals(1, reactionSetF.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, reactionSetF.getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
     }
 
     @Test public void writeAgentsFromV3000() throws IOException, CDKException {

@@ -21,6 +21,7 @@ package org.openscience.cdk.atomtype;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -64,8 +65,7 @@ abstract public class AbstractSybylAtomTypeTest extends AbstractAtomTypeTest {
     @Override
     public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
             throws Exception {
-        Assert.assertEquals("The number of expected atom types is unequal to the number of atoms",
-                expectedTypes.length, mol.getAtomCount());
+        Assertions.assertEquals(expectedTypes.length, mol.getAtomCount(), "The number of expected atom types is unequal to the number of atoms");
         IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
         for (int i = 0; i < expectedTypes.length; i++) {
             IAtom testedAtom = mol.getAtom(i);

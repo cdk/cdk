@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.protein;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,6 @@ public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
         DescriptorValue result = descriptor.calculate(pepseq);
 
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
-        Assert.assertEquals(147, dar.length());
+        Assertions.assertEquals(147, dar.length());
     }
 }

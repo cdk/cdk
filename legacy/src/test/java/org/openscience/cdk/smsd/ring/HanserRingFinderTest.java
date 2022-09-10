@@ -27,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -52,7 +53,7 @@ public class HanserRingFinderTest {
         HanserRingFinder instance = new HanserRingFinder();
         Collection expResult = null;
         Collection result = instance.findRings(molecule);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     private HanserRingFinder finder;
@@ -66,20 +67,20 @@ public class HanserRingFinderTest {
         IAtomContainer benzene = Molecules.createBenzene();
         Collection<List<IAtom>> rings = finder.findRings(benzene);
 
-        assertEquals(1, rings.size());
+        Assertions.assertEquals(1, rings.size());
     }
 
     public void testItShouldFindThreeRingsInNaphthalene() throws CDKException {
         IAtomContainer naphthalene = Molecules.createNaphthalene();
         Collection rings = finder.findRings(naphthalene);
 
-        assertEquals(3, rings.size());
+        Assertions.assertEquals(3, rings.size());
     }
 
     public void testItShouldFind28RingsInCubane() throws CDKException {
         IAtomContainer cubane = Molecules.createCubane();
         Collection rings = finder.findRings(cubane);
 
-        assertEquals(28, rings.size());
+        Assertions.assertEquals(28, rings.size());
     }
 }

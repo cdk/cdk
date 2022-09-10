@@ -28,6 +28,7 @@ import java.util.List;
 import javax.vecmath.Point2d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -65,7 +66,7 @@ public class BasicGeneratorTest extends AbstractGeneratorTest {
         // nothing should be made
         IRenderingElement root = generator.generate(singleAtom, model);
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-        Assert.assertEquals(1, elements.size());
+        Assertions.assertEquals(1, elements.size());
     }
 
     @Test
@@ -75,11 +76,11 @@ public class BasicGeneratorTest extends AbstractGeneratorTest {
         // generate the single line element
         IRenderingElement root = generator.generate(container, model);
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-        Assert.assertEquals(1, elements.size());
+        Assertions.assertEquals(1, elements.size());
 
         // test that the endpoints are distinct
         LineElement line = (LineElement) elements.get(0);
-        Assert.assertNotSame(0, AbstractGeneratorTest.length(line));
+        Assertions.assertNotSame(0, AbstractGeneratorTest.length(line));
     }
 
     @Test
@@ -89,10 +90,10 @@ public class BasicGeneratorTest extends AbstractGeneratorTest {
         // generate all four bonds
         IRenderingElement root = generator.generate(square, model);
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-        Assert.assertEquals(4, elements.size());
+        Assertions.assertEquals(4, elements.size());
 
         // test that the center is at the origin
-        Assert.assertEquals(new Point2d(0, 0), center(elements));
+        Assertions.assertEquals(new Point2d(0, 0), center(elements));
     }
 
 }

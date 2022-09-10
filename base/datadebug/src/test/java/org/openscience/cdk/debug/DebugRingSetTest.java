@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractRingSetTest;
@@ -40,6 +41,6 @@ public class DebugRingSetTest extends AbstractRingSetTest {
     @Test
     public void testDebugRingSet() {
         IRingSet rs = new DebugRingSet();
-        Assert.assertNotNull(rs);
+        Assertions.assertNotNull(rs);
     }
 }
