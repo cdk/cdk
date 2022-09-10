@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
- *               2022 John Mayfield (né May)
+ * Copyright (c) 2022 John Mayfield (né May)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,21 +24,25 @@
 package org.openscience.cdk.isomorphism;
 
 import java.util.BitSet;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 
 /**
- * A predicate for filtering atom-mapping results.
+ * A predicate for filtering atom-mapping results. This implementation differs
+ * from {@link org.openscience.cdk.isomorphism.UniqueAtomMatches} in that it
+ * allows unique sets of matches:
  *
  * <pre>{@code
  * [0, 1, 2]  => accept
  * [0, 1, 3]  => accept
- * [2, 1, 3]  => reject (no new mappings)
+ * [2, 1, 3]  => accept (nothing new but not in this combination)
  * </pre>
  *
  * This class is intended for use with {@link Pattern}.
  *
  * <blockquote><pre>{@code
- *     Pattern     pattern = Ullmann.findSubstructure(query);
+ *     Pattern     pattern = Pattern.findSubstructure(query);
  *     List<int[]> unique  = FluentIterable.of(patter.matchAll(target))
  *                                         .filter(new UniqueAtomMatches())
  *                                         .toList();
@@ -49,17 +51,17 @@ import java.util.function.Predicate;
  * @author John Mayfield
  * @cdk.module isomorphism
  */
-final class UniqueAtomMatches implements Predicate<int[]> {
+final class UniqueAtomSetMatches implements Predicate<int[]> {
 
     /**
      * Which atoms have we seen in a mapping already.
      */
-    private final BitSet visit = new BitSet();
+    private final Set<BitSet> visit = new HashSet<>();
 
     /**
      * Create filter for unique matches.
      */
-    public UniqueAtomMatches() {
+    public UniqueAtomSetMatches() {
     }
 
     /**
@@ -67,23 +69,11 @@ final class UniqueAtomMatches implements Predicate<int[]> {
      */
     @Override
     public boolean test(int[] mapping) {
-        if (some(mapping))
-            return add(mapping);
-        return false;
+        return add(mapping);
     }
 
-    // If some (at least one) has not been seen yet
-    boolean some(int[] mapping) {
-        for (int atomIdx : mapping)
-            if (!this.visit.get(atomIdx))
-                return true;
-        return false;
-    }
-
-    boolean add(int[] mapping) {
-        for (int atomIdx : mapping)
-            this.visit.set(atomIdx);
-        return true;
+    private boolean add(int[] mapping) {
+       return this.visit.add(toBitSet(mapping));
     }
 
     /**
@@ -95,5 +85,17 @@ final class UniqueAtomMatches implements Predicate<int[]> {
      */
     public boolean apply(int[] ints) {
         return test(ints);
+    }
+
+    // If some (at least one) has not been seen yet
+    private boolean some(int[] mapping) {
+        return !visit.contains(toBitSet(mapping));
+    }
+
+    public BitSet toBitSet(int[] mapping) {
+        BitSet bs = new BitSet();
+        for (int x : mapping)
+            bs.set(x);
+        return bs;
     }
 }
