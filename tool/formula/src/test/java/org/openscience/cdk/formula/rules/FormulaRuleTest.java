@@ -19,7 +19,7 @@
 package org.openscience.cdk.formula.rules;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.formula.MolecularFormula;

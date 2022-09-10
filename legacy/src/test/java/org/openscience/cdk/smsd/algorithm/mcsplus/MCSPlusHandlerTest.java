@@ -29,9 +29,9 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setMCSAlgorithm() {
         AbstractMCSAlgorithmTest.setMCSAlgorithm(new MCSPlusHandler());
     }
@@ -149,7 +149,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws InvalidSmilesException
      */
     @Test
-    @Ignore("Failing but not going to be fixed")
+    @Disabled("Failing but not going to be fixed")
     public void testGetAllAtomMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
@@ -173,7 +173,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws InvalidSmilesException
      */
     @Test
-    @Ignore("Failing but not going to be fixed")
+    @Disabled("Failing but not going to be fixed")
     public void testGetAllMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);

@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.openscience.cdk.test.CDKTestCase;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 

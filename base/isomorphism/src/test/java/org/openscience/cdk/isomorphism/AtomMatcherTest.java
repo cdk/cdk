@@ -24,7 +24,9 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -89,14 +91,17 @@ public class AtomMatcherTest {
         assertTrue(matcher.matches(atom2, atom1));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void elementError() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getAtomicNumber()).thenReturn(null);
         when(atom2.getAtomicNumber()).thenReturn(null);
-        matcher.matches(atom1, atom2);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    matcher.matches(atom1, atom2);
+                                });
     }
 
     @Test

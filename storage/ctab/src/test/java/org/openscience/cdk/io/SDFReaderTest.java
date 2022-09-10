@@ -23,8 +23,8 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,7 +46,7 @@ import java.io.InputStream;
  */
 public class SDFReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLV2000Reader(), "org/openscience/cdk/io/iterator/test.sdf");
     }

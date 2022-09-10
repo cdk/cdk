@@ -23,7 +23,8 @@
  */
 package org.openscience.cdk.graph;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -61,14 +62,20 @@ public class ShortestPathsTest {
 
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testConstructor_Container_Null() {
-        new ShortestPaths(null, new Atom());
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new ShortestPaths(null, new Atom());
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructor_Container_MissingAtom() {
-        new ShortestPaths(TestMoleculeFactory.makeBenzene(), new Atom());
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new ShortestPaths(TestMoleculeFactory.makeBenzene(), new Atom());
+                                });
     }
 
     @Test

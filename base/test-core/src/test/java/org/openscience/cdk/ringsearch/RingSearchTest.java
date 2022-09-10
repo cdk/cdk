@@ -22,7 +22,8 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -52,24 +53,28 @@ import static org.mockito.Mockito.when;
  */
 public class RingSearchTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNull() {
-        new RingSearch(null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {new RingSearch(null);});
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNullContainer() {
-        new RingSearch(null, mock(CyclicVertexSearch.class));
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {new RingSearch(null, mock(CyclicVertexSearch.class));});
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNullCyclicSearch() {
-        new RingSearch(mock(IAtomContainer.class), (CyclicVertexSearch) null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {new RingSearch(mock(IAtomContainer.class), (CyclicVertexSearch) null);});
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNullGraph() {
-        new RingSearch(mock(IAtomContainer.class), (int[][]) null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {new RingSearch(mock(IAtomContainer.class), (int[][]) null);});
     }
 
     @Test
@@ -166,18 +171,20 @@ public class RingSearchTest {
         verify(cyclicSearch, times(1)).cyclic(42, 43);
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testCyclic_Atom_NotFound() throws Exception {
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {
+                                    CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
+                                    IAtomContainer container = mock(IAtomContainer.class);
+                                    IAtom atom = mock(IAtom.class);
 
-        CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
-        IAtomContainer container = mock(IAtomContainer.class);
-        IAtom atom = mock(IAtom.class);
+                                    when(container.indexOf(any(IAtom.class))).thenReturn(-1);
 
-        when(container.indexOf(any(IAtom.class))).thenReturn(-1);
+                                    RingSearch ringSearch = new RingSearch(container, cyclicSearch);
 
-        RingSearch ringSearch = new RingSearch(container, cyclicSearch);
-
-        ringSearch.cyclic(atom);
+                                    ringSearch.cyclic(atom);
+                                });
     }
 
     @Test

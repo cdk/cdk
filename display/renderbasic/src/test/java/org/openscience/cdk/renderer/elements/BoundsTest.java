@@ -24,8 +24,8 @@
 
 package org.openscience.cdk.renderer.elements;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,7 +37,7 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
  */
 public class BoundsTest extends AbstractElementTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setRenderingElement(new Bounds(0, 0, 0, 0));
     }

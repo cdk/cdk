@@ -21,8 +21,8 @@ package org.openscience.cdk.fragment;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -54,7 +54,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
     static MurckoFragmenter fragmenter;
     static SmilesParser     smilesParser;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         fragmenter = new MurckoFragmenter(false, 5);
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());

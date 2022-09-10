@@ -20,7 +20,8 @@
 package org.openscience.cdk.config;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -228,11 +229,14 @@ public class IsotopesTest extends CDKTestCase {
     /**
      * @cdk.bug 3534288
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNonexistingElement() throws Exception {
-        Isotopes isofac = Isotopes.getInstance();
-        IAtom xxAtom = new Atom("Xx");
-        isofac.configure(xxAtom);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    Isotopes isofac = Isotopes.getInstance();
+                                    IAtom xxAtom = new Atom("Xx");
+                                    isofac.configure(xxAtom);
+                                });
     }
 
     @Test

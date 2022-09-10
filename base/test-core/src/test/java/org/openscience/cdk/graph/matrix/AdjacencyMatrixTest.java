@@ -19,8 +19,8 @@
 package org.openscience.cdk.graph.matrix;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -33,7 +33,7 @@ public class AdjacencyMatrixTest extends CDKTestCase {
 
     private static SmilesParser sp;
 
-    @BeforeClass
+    @BeforeAll
     public static void getSmilesParser() {
         sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }

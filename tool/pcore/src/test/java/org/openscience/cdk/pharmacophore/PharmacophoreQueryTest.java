@@ -19,8 +19,8 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @cdk.module test-pcore
@@ -29,7 +29,7 @@ public class PharmacophoreQueryTest {
 
     private PharmacophoreQuery query;
 
-    @Before
+    @BeforeEach
     public void setup() {
         query = new PharmacophoreQuery();
 

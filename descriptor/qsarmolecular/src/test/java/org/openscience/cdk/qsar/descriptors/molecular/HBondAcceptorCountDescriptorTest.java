@@ -22,8 +22,8 @@ import javax.vecmath.Point3d;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -44,7 +44,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
 
     public HBondAcceptorCountDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(HBondAcceptorCountDescriptor.class);
     }

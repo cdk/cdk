@@ -20,8 +20,8 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.test.interfaces.AbstractRingSetTest;
 
@@ -34,7 +34,7 @@ import org.openscience.cdk.test.interfaces.AbstractRingSetTest;
  */
 public class RingSetTest extends AbstractRingSetTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(RingSet::new);
     }

@@ -25,7 +25,9 @@ package org.openscience.cdk.modeling.builder3d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -373,7 +375,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
      * is thrown.
      * @cdk.inchi InChI=1/C14H30/c1-4-7-10-13-14(11-8-5-2)12-9-6-3/h14H,4-13H2,1-3H3
      */
-    @Test(expected = CDKException.class)
+    @Test
     public void invalidChain() throws CDKException {
 
         String input = "CCCCCC(CCCC)CCCC";
@@ -386,7 +388,9 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 
         AtomPlacer3D ap3d = new AtomPlacer3D();
         ap3d.initilize(ffc.getParameterSet());
-        ap3d.placeAliphaticHeavyChain(m, m);
+        Assertions.assertThrows(CDKException.class, () -> {
+            ap3d.placeAliphaticHeavyChain(m, m);
+        });
     }
 
 }

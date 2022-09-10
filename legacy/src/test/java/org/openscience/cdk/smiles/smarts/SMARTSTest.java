@@ -21,8 +21,8 @@ package org.openscience.cdk.smiles.smarts;
 
 import org.hamcrest.core.Is;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -59,7 +59,7 @@ public class SMARTSTest extends CDKTestCase {
 
     private UniversalIsomorphismTester uiTester;
 
-    @Before
+    @BeforeEach
     public void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }

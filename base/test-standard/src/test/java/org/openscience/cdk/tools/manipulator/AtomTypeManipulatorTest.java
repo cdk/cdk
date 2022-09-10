@@ -19,7 +19,8 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
@@ -69,11 +70,13 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         Assert.assertEquals(12.0, atom.getExactMass(), 0.1);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConfigure_IAtom_Null() {
         IAtom atom = new Atom(Elements.CARBON);
         IAtomType atomType = null;
-        AtomTypeManipulator.configure(atom, atomType);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            AtomTypeManipulator.configure(atom, atomType);
+        });
     }
 
     @Test

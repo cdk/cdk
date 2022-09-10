@@ -1,8 +1,6 @@
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-import org.openscience.cdk.hash.stereo.CombinedPermutationParity;
-import org.openscience.cdk.hash.stereo.PermutationParity;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -20,8 +20,9 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
@@ -67,7 +68,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     IAtomContainer ac;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ac = TestMoleculeFactory.makeAlphaPinene();
     }
@@ -963,21 +964,25 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(49.992327775, totalExactMass, 0.000001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getNaturalExactMassNeedsHydrogens() {
-        IAtomContainer mol = new AtomContainer();
-        IAtom atom = new Atom("C");
-        atom.setImplicitHydrogenCount(null);
-        mol.addAtom(atom);
-        AtomContainerManipulator.getNaturalExactMass(mol);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            IAtomContainer mol = new AtomContainer();
+            IAtom atom = new Atom("C");
+            atom.setImplicitHydrogenCount(null);
+            mol.addAtom(atom);
+            AtomContainerManipulator.getNaturalExactMass(mol);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getNaturalExactMassNeedsAtomicNumber() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C"));
-        mol.getAtom(0).setAtomicNumber(null);
-        AtomContainerManipulator.getNaturalExactMass(mol);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            IAtomContainer mol = new AtomContainer();
+            mol.addAtom(new Atom("C"));
+            mol.getAtom(0).setAtomicNumber(null);
+            AtomContainerManipulator.getNaturalExactMass(mol);
+        });
     }
 
     @Test
@@ -1177,19 +1182,24 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * @cdk.bug 1254
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCountExplicitH_Null_IAtom() {
-        AtomContainerManipulator.countExplicitHydrogens(null,
-                DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            AtomContainerManipulator.countExplicitHydrogens(null,
+                                                            DefaultChemObjectBuilder.getInstance()
+                                                                                    .newInstance(IAtom.class));
+        });
     }
 
     /**
      * @cdk.bug 1254
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCountExplicitH_IAtomContainer_Null() {
-        AtomContainerManipulator.countExplicitHydrogens(
-                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class), null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            AtomContainerManipulator.countExplicitHydrogens(
+                    DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class), null);
+        });
     }
 
     @Test
@@ -1258,9 +1268,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * @cdk.bug 1254
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetImplicitHydrogenCount_null() throws Exception {
-        AtomContainerManipulator.getImplicitHydrogenCount(null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            AtomContainerManipulator.getImplicitHydrogenCount(null);
+        });
     }
 
     /**
@@ -1747,7 +1759,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
                    closeTo(551.503, 0.001));
     }
 
-    @Test public void getMassCranbin() {
+    @Test
+    public void getMassCranbin() {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IAtomContainer mol =
                 MolecularFormulaManipulator.getAtomContainer("C202H315N55O64S6",
@@ -1807,7 +1820,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     // can't put these test in cdk-formula since we can't access SMILES and it's a bit verbose
     // to construct the molecules as needed
-    @Test public void getFormulaMultiattach() throws InvalidSmilesException {
+    @Test
+    public void getFormulaMultiattach() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[Ru]([P](CCC1=CC=CC=C1)(C2CCCCC2)C3CCCCC3)(Cl)(Cl)*.C1(=CC=C(C=C1)C(C)C)C |m:24:25.26.27.28.29.30|");
         String mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(mol));

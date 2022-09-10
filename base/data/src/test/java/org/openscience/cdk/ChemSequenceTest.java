@@ -20,8 +20,8 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.test.interfaces.AbstractChemSequenceTest;
 
@@ -32,7 +32,7 @@ import org.openscience.cdk.test.interfaces.AbstractChemSequenceTest;
  */
 public class ChemSequenceTest extends AbstractChemSequenceTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(ChemSequence::new);
     }

@@ -19,9 +19,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -40,7 +39,7 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
 
     public BondCountDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(BondCountDescriptor.class);
     }

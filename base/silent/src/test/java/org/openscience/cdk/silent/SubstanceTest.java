@@ -18,8 +18,8 @@
  */
 package org.openscience.cdk.silent;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractSubstanceTest;
 
 /**
@@ -29,7 +29,7 @@ import org.openscience.cdk.test.interfaces.AbstractSubstanceTest;
  */
 public class SubstanceTest extends AbstractSubstanceTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(Substance::new);
     }

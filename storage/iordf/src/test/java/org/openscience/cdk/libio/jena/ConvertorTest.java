@@ -24,7 +24,7 @@ package org.openscience.cdk.libio.jena;
 
 import org.apache.jena.rdf.model.Model;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;

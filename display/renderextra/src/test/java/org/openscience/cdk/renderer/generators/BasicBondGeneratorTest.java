@@ -22,8 +22,8 @@
 package org.openscience.cdk.renderer.generators;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
@@ -54,7 +54,7 @@ public class BasicBondGeneratorTest extends AbstractGeneratorTest {
         return null;
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setup() {
         super.setup();

@@ -20,7 +20,8 @@
 package org.openscience.cdk.config;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
@@ -36,6 +37,7 @@ import org.xml.sax.SAXParseException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -292,11 +294,13 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     /**
      * @cdk.bug 3534288
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNonexistingElement() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
-        IAtom xxAtom = new Atom("Xx");
-        isofac.configure(xxAtom);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            IAtom xxAtom = new Atom("Xx");
+            isofac.configure(xxAtom);
+        });
     }
 
 }

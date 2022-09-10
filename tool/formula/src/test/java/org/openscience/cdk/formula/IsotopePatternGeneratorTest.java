@@ -19,8 +19,8 @@
 package org.openscience.cdk.formula;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -278,7 +278,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * Calculate isotopes for C20H30Fe2P2S4Cl4 (in CDK 1.5.12, this call 
      * sometimes returns 34 and sometimes 35 isotopes, non-deterministically).
      */
-    @Ignore("Non-deterministic test value is bad! This likely depends on our current isotope data which is also bad.")
+    @Disabled("Non-deterministic test value is bad! This likely depends on our current isotope data which is also bad.")
     public void testCalculateIsotopesC20H30Fe2P2S4Cl4() {
         IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C20H30Fe2P2S4Cl4", builder);
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);

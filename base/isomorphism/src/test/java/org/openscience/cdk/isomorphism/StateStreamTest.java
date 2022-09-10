@@ -24,7 +24,8 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -91,14 +92,17 @@ public class StateStreamTest {
         assertThat(it.next(), is(new int[]{9, 8, 7, 2, 1, 0}));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void remove() throws Exception {
         VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         Iterator<int[]> it = new StateStream(state);
-        it.remove();
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    it.remove();
+                                });
     }
 
-    /**
+                                /**
      * Create a sub state for matching benzene to naphthalene
      *
      *
@@ -106,7 +110,7 @@ public class StateStreamTest {
      *
      * Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
      */
-    VFSubState createBenzeneToNaphthalene(AtomMatcher atomMatcher, BondMatcher bondMatcher) throws Exception {
+                                VFSubState createBenzeneToNaphthalene(AtomMatcher atomMatcher, BondMatcher bondMatcher) throws Exception {
         IAtomContainer container1 = TestMoleculeFactory.makeBenzene();
         IAtomContainer container2 = TestMoleculeFactory.makeNaphthalene();
         GraphUtil.EdgeToBondMap bonds1 = GraphUtil.EdgeToBondMap.withSpaceFor(container1);

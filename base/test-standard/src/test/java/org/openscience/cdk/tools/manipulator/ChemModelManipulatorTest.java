@@ -24,8 +24,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -72,7 +73,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         molecule1 = new AtomContainer();
         atomInMol1 = new Atom("Cl");
@@ -300,10 +301,12 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     /**
      * @cdk.bug 3530861
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetRelevantAtomContainer_NonExistentAtom() {
         IChemModel model = new org.openscience.cdk.silent.ChemModel();
-        ChemModelManipulator.getRelevantAtomContainer(model, new org.openscience.cdk.silent.Atom());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            ChemModelManipulator.getRelevantAtomContainer(model, new org.openscience.cdk.silent.Atom());
+        });
     }
 
 }

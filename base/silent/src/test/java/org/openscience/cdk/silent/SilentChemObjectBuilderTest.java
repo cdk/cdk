@@ -19,8 +19,8 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.AbstractChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class SilentChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setRootObject(new ChemObject());
     }

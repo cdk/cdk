@@ -22,9 +22,8 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -45,7 +44,7 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
 
     public WeightedPathDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(WeightedPathDescriptor.class);
     }

@@ -23,7 +23,7 @@
 package org.openscience.cdk.io.formats;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @cdk.module test-ioformats

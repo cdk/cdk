@@ -22,7 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 

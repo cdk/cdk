@@ -19,8 +19,8 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -39,7 +39,7 @@ public class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
     private static SmilesParser       smilesParser;
     private static CDKAtomTypeMatcher atomTypeMatcher;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         atomTypeMatcher = CDKAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());

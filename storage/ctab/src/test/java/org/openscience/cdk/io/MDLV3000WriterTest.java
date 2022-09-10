@@ -24,7 +24,8 @@
 package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -109,7 +110,7 @@ public class MDLV3000WriterTest {
         assertThat(res, CoreMatchers.containsString("M  V30 1 C 0 0 0 0 RAD=2 VAL=3\n"));
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void nullBondOrder() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("H"));
@@ -118,10 +119,13 @@ public class MDLV3000WriterTest {
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(0).setMassNumber(2);
         mol.getAtom(1).setImplicitHydrogenCount(3);
-        writeToStr(mol);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    writeToStr(mol);
+                                });
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void unsetBondOrder() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("H"));
@@ -130,7 +134,10 @@ public class MDLV3000WriterTest {
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(0).setMassNumber(2);
         mol.getAtom(1).setImplicitHydrogenCount(3);
-        writeToStr(mol);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    writeToStr(mol);
+                                });
     }
 
     @Test

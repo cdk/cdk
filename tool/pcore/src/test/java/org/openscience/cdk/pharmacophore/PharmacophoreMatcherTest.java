@@ -23,11 +23,12 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,13 +46,13 @@ public class PharmacophoreMatcherTest {
 
     public static ConformerContainer conformers = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {}
 
-    @After
+    @AfterEach
     public void tearDown() {}
 
-    @BeforeClass
+    @BeforeAll
     public static void loadConformerData() {
         String filename = "pcoretest1.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
@@ -191,7 +192,7 @@ public class PharmacophoreMatcherTest {
         Assert.assertEquals(b1, value);
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void testInvalidQuery() throws CDKException {
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
@@ -211,7 +212,9 @@ public class PharmacophoreMatcherTest {
         query.addBond(b3);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
-        matcher.matches(conformers.get(0));
+        Assertions.assertThrows(CDKException.class, () -> {
+            matcher.matches(conformers.get(0));
+        });
     }
 
     @Test

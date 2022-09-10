@@ -24,7 +24,9 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 
 import java.util.Arrays;
 
@@ -44,9 +46,12 @@ import static org.mockito.Mockito.when;
  */
 public class GeometryEncoderTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstruction_Empty() {
-        new GeometryEncoder(new int[0], mock(PermutationParity.class), mock(GeometricParity.class));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new GeometryEncoder(new int[0], mock(PermutationParity.class), mock(GeometricParity.class));
+                                });
     }
 
     @Test

@@ -22,7 +22,7 @@
 package org.openscience.cdk.renderer.generators.parameter;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 /**

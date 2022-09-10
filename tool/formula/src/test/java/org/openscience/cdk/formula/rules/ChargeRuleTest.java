@@ -19,10 +19,9 @@
 package org.openscience.cdk.formula.rules;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -38,7 +37,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
     /**
     *  The JUnit setup method
     */
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         setRule(ChargeRule.class);

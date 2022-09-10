@@ -20,8 +20,8 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -49,7 +49,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
     /**
     *  The JUnit setup method
     */
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         lpcheck = new LonePairElectronChecker();
     }

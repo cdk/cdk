@@ -24,8 +24,8 @@ package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -66,7 +66,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLV3000Reader(), "org/openscience/cdk/io/iterator/molV3000.mol");
     }
@@ -135,7 +135,8 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    @Test public void positionalVariation() throws Exception {
+    @Test
+    public void positionalVariation() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
             IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
             assertThat(container.getBondCount(), is(8));
@@ -146,7 +147,8 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    @Test public void radicalsInCH3() throws Exception {
+    @Test
+    public void radicalsInCH3() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("CH3.mol"))) {
             IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
             assertThat(container.getSingleElectronCount(), is(1));
@@ -154,14 +156,16 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    @Test public void issue602() throws Exception {
+    @Test
+    public void issue602() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
             IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(mol.getAtomCount(), CoreMatchers.is(31));
         }
     }
 
-    @Test public void forceReadAs3D() throws Exception {
+    @Test
+    public void forceReadAs3D() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
             IAtomContainer mol = reader.read(builder.newAtomContainer());
@@ -209,7 +213,8 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     // InterpretHydrogenIsotopes=false means D comes in as an IPseudoAtom
-    @Test public void hydIsotopesAsPseudo() throws Exception {
+    @Test
+    public void hydIsotopesAsPseudo() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("cyclohexane-d6.mdl3"))) {
             reader.getSetting("InterpretHydrogenIsotopes").setSetting("false");
@@ -231,7 +236,8 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
      * MDLV3000Reader does not yet support queries. Parsed query bonds (order >= 4) should be set to IBond.Order.UNSET
      * to avoid NPE in valence calculation.
      */
-    @Test public void reading_query_bond_should_not_npe() throws Exception {
+    @Test
+    public void reading_query_bond_should_not_npe() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("v3000Query.mol"))) {
             IAtomContainer container = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             for (IBond bond: container.bonds()) {

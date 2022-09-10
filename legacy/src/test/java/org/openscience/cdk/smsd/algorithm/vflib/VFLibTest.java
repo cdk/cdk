@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -61,7 +61,7 @@ public class VFLibTest extends CDKTestCase {
     private static IAtomContainer benzene;
     private static IQuery         benzeneQuery;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws CDKException {
         hexane = createHexane();
         Assert.assertEquals(6, hexane.getAtomCount());

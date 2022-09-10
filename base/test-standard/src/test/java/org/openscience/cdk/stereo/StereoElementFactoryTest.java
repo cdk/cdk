@@ -25,7 +25,7 @@
 package org.openscience.cdk.stereo;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -1087,7 +1086,8 @@ public class StereoElementFactoryTest {
      * glyceraldehyde
      * @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
      */
-    @Test public void onlyInterpretFischerProjectionsWhenAsked() throws Exception {
+    @Test
+    public void onlyInterpretFischerProjectionsWhenAsked() throws Exception {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 0, 0.80d, 1.24d));
         m.addAtom(atom("C", 0, 0.80d, 0.42d));
@@ -1126,7 +1126,8 @@ public class StereoElementFactoryTest {
      * beta-D-glucose
      * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
      */
-    @Test public void onlyInterpretHaworthProjectionsWhenAsked() throws Exception {
+    @Test
+    public void onlyInterpretHaworthProjectionsWhenAsked() throws Exception {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 1, 4.16d, 1.66d));
         m.addAtom(atom("C", 1, 3.75d, 0.94d));
@@ -1708,7 +1709,8 @@ public class StereoElementFactoryTest {
         }
     }
 
-    @Test public void ignoreInverseWedgeWhenStrict() throws Exception{
+    @Test
+    public void ignoreInverseWedgeWhenStrict() throws Exception{
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("inverse-wedge.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {

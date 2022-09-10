@@ -34,8 +34,8 @@ import java.awt.Font;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class TextOutlineTest {
 
@@ -47,7 +47,7 @@ public class TextOutlineTest {
         // values?
     }
 
-    @Ignore("Font bounds vary between systems")
+    @Disabled("Font bounds vary between systems")
     public void untransformedBounds() throws Exception {
         TextOutline clOutline = new TextOutline("Cl", font);
         Rectangle2D bounds = clOutline.getBounds();
@@ -81,7 +81,7 @@ public class TextOutlineTest {
         assertThat(tBounds.getHeight(), closeTo(oBounds.getHeight(), 0.01));
     }
 
-    @Ignore("Font bounds vary between systems")
+    @Disabled("Font bounds vary between systems")
     public void untransformedCenter() throws Exception {
         TextOutline clOutline = new TextOutline("Cl", font);
         Point2D center = clOutline.getCenter();

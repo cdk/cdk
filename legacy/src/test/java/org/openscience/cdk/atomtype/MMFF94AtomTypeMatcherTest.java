@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -64,7 +64,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpTestMolecule() throws Exception {
         if (testMolecule == null) {
             //logger.debug("**** START ATOMTYPE TEST ******");
@@ -94,7 +94,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test
-    @Ignore("Old atom typing method - see new Mmff class")
+    @Disabled("Old atom typing method - see new Mmff class")
     public void testFindMatchingAtomType_IAtomContainer() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
@@ -123,7 +123,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     // FIXME: Below should be tests for *all* atom types in the MM2 atom type specificiation
 
     @Test
-    @Ignore("Old atom typing method - see new Mmff class")
+    @Disabled("Old atom typing method - see new Mmff class")
     public void testSthi() throws Exception {
         setUpTestMolecule();
         assertAtomType(testedAtomTypes, "Sthi", testMolecule.getAtom(0));
@@ -148,7 +148,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test
-    @Ignore("Old atom typing method - see new Mmff class")
+    @Disabled("Old atom typing method - see new Mmff class")
     public void testOar() throws Exception {
         setUpTestMolecule();
         assertAtomType(testedAtomTypes, "Oar", testMolecule.getAtom(198));
@@ -204,7 +204,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
      *  A unit test for JUnit with Methylamine
      */
     @Test
-    @Ignore("Old atom typing method - see new Mmff class")
+    @Disabled("Old atom typing method - see new Mmff class")
     public void testFindMatchingAtomType_IAtomContainer_IAtom_Methylamine() throws Exception {
         //System.out.println("**** START ATOMTYPE Methylamine TEST ******");
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -420,7 +420,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
      * method cannot Assert.assert anything.
      */
     @Test
-    @Ignore("Old atom typing method - see new Mmff class")
+    @Disabled("Old atom typing method - see new Mmff class")
     public void countTestedAtomTypes() {
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mmff94_atomtypes.xml",
                 SilentChemObjectBuilder.getInstance());

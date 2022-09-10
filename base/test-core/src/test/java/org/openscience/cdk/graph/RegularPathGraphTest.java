@@ -23,8 +23,10 @@
  */
 package org.openscience.cdk.graph;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,19 +41,28 @@ import static org.openscience.cdk.graph.RegularPathGraph.SimpleEdge;
 /** @cdk.module test-core */
 public class RegularPathGraphTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void nullMGraph() {
-        new RegularPathGraph(null, new int[0], 0);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new RegularPathGraph(null, new int[0], 0);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void limitTooLow() {
-        new RegularPathGraph(new int[4][], new int[0], -1);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new RegularPathGraph(new int[4][], new int[0], -1);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void limitTooHigh() {
-        new RegularPathGraph(new int[4][], new int[0], 5);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new RegularPathGraph(new int[4][], new int[0], 5);
+                                });
     }
 
     /* re-invoking the remove on the same vertex should not do anything */
@@ -95,27 +106,31 @@ public class RegularPathGraphTest {
     }
 
     /* graph with 3 vertices where each vertex is connected to every vertex. */
-    @Test(timeout = 200)
+    @Test
     public void k3() {
-        int ord = 3;
-        int[][] k3 = completeGraphOfSize(ord);
-        RegularPathGraph pg = new RegularPathGraph(k3, identity(3), ord);
-        List<int[]> cycles = new ArrayList<>();
-        for (int v = 0; v < ord; v++)
-            pg.remove(v, cycles);
-        assertThat(cycles.size(), is(1));
+        Assertions.assertTimeout(Duration.ofMillis(200), () -> {
+            int ord = 3;
+            int[][] k3 = completeGraphOfSize(ord);
+            RegularPathGraph pg = new RegularPathGraph(k3, identity(3), ord);
+            List<int[]> cycles = new ArrayList<>();
+            for (int v = 0; v < ord; v++)
+                pg.remove(v, cycles);
+            assertThat(cycles.size(), is(1));
+        });
     }
 
     /* graph with 8 vertices where each vertex is connected to every vertex. */
-    @Test(timeout = 200)
+    @Test
     public void k8() {
-        int ord = 8;
-        int[][] k8 = completeGraphOfSize(ord);
-        RegularPathGraph pg = new RegularPathGraph(k8, identity(8), ord);
-        List<int[]> cycles = new ArrayList<>();
-        for (int v = 0; v < ord; v++)
-            pg.remove(v, cycles);
-        assertThat(cycles.size(), is(8018));
+        Assertions.assertTimeout(Duration.ofMillis(200), () -> {
+            int ord = 8;
+            int[][] k8 = completeGraphOfSize(ord);
+            RegularPathGraph pg = new RegularPathGraph(k8, identity(8), ord);
+            List<int[]> cycles = new ArrayList<>();
+            for (int v = 0; v < ord; v++)
+                pg.remove(v, cycles);
+            assertThat(cycles.size(), is(8018));
+        });
     }
 
     public static int[] identity(int n) {

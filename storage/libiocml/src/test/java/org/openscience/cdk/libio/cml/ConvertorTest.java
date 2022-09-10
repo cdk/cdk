@@ -26,8 +26,8 @@ package org.openscience.cdk.libio.cml;
 import nu.xom.Document;
 import nu.xom.Serializer;
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond;
@@ -45,7 +45,7 @@ public class ConvertorTest extends CDKTestCase {
     /**
      * @cdk.bug 1748257
      */
-    @Ignore("moved to MDMoleculeTest")
+    @Disabled("moved to MDMoleculeTest")
     public void testBug1748257() {}
 
     @Test

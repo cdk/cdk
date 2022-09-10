@@ -19,9 +19,10 @@
 package org.openscience.cdk.smiles;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -38,6 +39,8 @@ import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.time.Duration;
+
 /**
  *
  * @author         Rajarshi Guha
@@ -48,7 +51,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
     private static DeduceBondSystemTool dbst;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         dbst = new DeduceBondSystemTool();
     }
@@ -69,76 +72,81 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         dbst.setInterrupted(false);
     }
 
-    @Test(timeout = 1000)
+    @Test
     public void testPyrrole() throws Exception {
-        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        smilesParser.kekulise(false);
-        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
-        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+            String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
+            SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+            smilesParser.kekulise(false);
+            IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+            AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            molecule = dbst.fixAromaticBondOrders(molecule);
+            Assert.assertNotNull(molecule);
 
-        molecule = dbst.fixAromaticBondOrders(molecule);
-        Assert.assertNotNull(molecule);
-
-        molecule = AtomContainerManipulator.removeHydrogens(molecule);
-        int doubleBondCount = 0;
-        for (int i = 0; i < molecule.getBondCount(); i++) {
-            IBond bond = molecule.getBond(i);
-            Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
-            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
-        }
-        Assert.assertEquals(6, doubleBondCount);
+            molecule = AtomContainerManipulator.removeHydrogens(molecule);
+            int doubleBondCount = 0;
+            for (int i = 0; i < molecule.getBondCount(); i++) {
+                IBond bond = molecule.getBond(i);
+                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
+            }
+            Assert.assertEquals(6, doubleBondCount);
+        });
     }
 
-    @Test(timeout = 1000)
+    @Test
     public void testPyrrole_Silent() throws Exception {
-        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-        SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        smilesParser.kekulise(false);
-        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
-        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        molecule = dbst.fixAromaticBondOrders(molecule);
-        Assert.assertNotNull(molecule);
+        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+            String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
+            SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+            smilesParser.kekulise(false);
+            IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+            AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            molecule = dbst.fixAromaticBondOrders(molecule);
+            Assert.assertNotNull(molecule);
 
-        molecule = AtomContainerManipulator.removeHydrogens(molecule);
+            molecule = AtomContainerManipulator.removeHydrogens(molecule);
 
-        int doubleBondCount = 0;
-        for (int i = 0; i < molecule.getBondCount(); i++) {
-            IBond bond = molecule.getBond(i);
-            Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
-            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
-        }
-        Assert.assertEquals(6, doubleBondCount);
+            int doubleBondCount = 0;
+            for (int i = 0; i < molecule.getBondCount(); i++) {
+                IBond bond = molecule.getBond(i);
+                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
+            }
+            Assert.assertEquals(6, doubleBondCount);
+        });
     }
 
     @Test
     public void testLargeRingSystem() throws Exception {
-        String smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+            String smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
+            SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+            IAtomContainer molecule = smilesParser.parseSmiles(smiles);
 
-        DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
-        molecule = dbst.fixAromaticBondOrders(molecule);
-        Assert.assertNotNull(molecule);
+            DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
+            molecule = dbst.fixAromaticBondOrders(molecule);
+            Assert.assertNotNull(molecule);
 
-        molecule = AtomContainerManipulator.removeHydrogens(molecule);
-        Assert.assertEquals(34, molecule.getAtomCount());
+            molecule = AtomContainerManipulator.removeHydrogens(molecule);
+            Assert.assertEquals(34, molecule.getAtomCount());
 
-        // we should have 14 double bonds
-        int doubleBondCount = 0;
-        for (int i = 0; i < molecule.getBondCount(); i++) {
-            IBond bond = molecule.getBond(i);
-            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
-        }
-        Assert.assertEquals(13, doubleBondCount);
+            // we should have 14 double bonds
+            int doubleBondCount = 0;
+            for (int i = 0; i < molecule.getBondCount(); i++) {
+                IBond bond = molecule.getBond(i);
+                if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
+            }
+            Assert.assertEquals(13, doubleBondCount);
+        });
     }
 
     /**
      * @cdk.bug 3506770
      */
-    @Ignore("This is an example structure where this class fails")
+    @Disabled("This is an example structure where this class fails")
     public void testLargeBioclipseUseCase() throws Exception {
         String smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -160,33 +168,35 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertEquals(10, doubleBondCount);
     }
 
-    @Test(timeout = 1000)
+    @Test
     public void testPyrrole_CustomRingFinder() throws Exception {
-        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        smilesParser.kekulise(false);
-        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
-        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+            String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
+            SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+            smilesParser.kekulise(false);
+            IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+            AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-        DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
-        molecule = dbst.fixAromaticBondOrders(molecule);
-        Assert.assertNotNull(molecule);
+            DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
+            molecule = dbst.fixAromaticBondOrders(molecule);
+            Assert.assertNotNull(molecule);
 
-        molecule = AtomContainerManipulator.removeHydrogens(molecule);
-        int doubleBondCount = 0;
-        for (int i = 0; i < molecule.getBondCount(); i++) {
-            IBond bond = molecule.getBond(i);
-            Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
-            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
-        }
-        Assert.assertEquals(6, doubleBondCount);
+            molecule = AtomContainerManipulator.removeHydrogens(molecule);
+            int doubleBondCount = 0;
+            for (int i = 0; i < molecule.getBondCount(); i++) {
+                IBond bond = molecule.getBond(i);
+                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
+            }
+            Assert.assertEquals(6, doubleBondCount);
+        });
     }
 
     /**
      * @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H
      */
-    @Ignore("previouls disabled 'xtest'")
+    @Disabled("previouls disabled 'xtest'")
     public void xtestQuinone() throws Exception {
         IAtomContainer enol = new AtomContainer();
 

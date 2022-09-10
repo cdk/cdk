@@ -22,7 +22,7 @@ import java.util.List;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;

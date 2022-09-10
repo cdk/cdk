@@ -23,7 +23,7 @@
 package org.openscience.cdk.smsd.tools;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.test.SlowTest;

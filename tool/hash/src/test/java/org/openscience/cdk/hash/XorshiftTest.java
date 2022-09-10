@@ -22,8 +22,8 @@
  */
 package org.openscience.cdk.hash;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -49,7 +49,7 @@ public class XorshiftTest {
     // randomly generated test made randomly fail, the distribution here is
     // good enough for hashing molecules but may sometimes not be uniformly
     // distributed
-    @Ignore("random fail")
+    @Disabled("random fail")
     public void testDistribution() throws Exception {
 
         int[] values = new int[10];

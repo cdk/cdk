@@ -19,8 +19,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
@@ -40,7 +40,7 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
 
     private CDKHydrogenAdder hydrogenAdder;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(ALOGPDescriptor.class);
         hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());

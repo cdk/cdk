@@ -24,7 +24,8 @@ package org.openscience.cdk.io.iterator;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -159,7 +160,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         Assert.assertEquals(5, molCount);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemove() {
         String filename = "test2.smi";
         InputStream ins1 = this.getClass().getResourceAsStream(filename);
@@ -170,7 +171,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
             molCount++;
             if (molCount > 2) break;
         }
-        reader.remove();
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                reader::remove);
     }
 
     @Test

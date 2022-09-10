@@ -21,8 +21,9 @@
 package org.openscience.cdk.smiles;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -38,6 +39,8 @@ import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.time.Duration;
+
 /**
  *
  * @author         Rajarshi Guha
@@ -48,7 +51,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 
     private static FixBondOrdersTool fbot;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         fbot = new FixBondOrdersTool();
     }
@@ -68,47 +71,51 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         fbot.setInterrupted(false);
     }
 
-    @Test(timeout = 1000)
+    @Test
     public void testPyrrole() throws Exception {
-        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        smilesParser.kekulise(false);
-        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
-        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+            String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
+            SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+            smilesParser.kekulise(false);
+            IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+            AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-        molecule = fbot.kekuliseAromaticRings(molecule);
-        Assert.assertNotNull(molecule);
+            molecule = fbot.kekuliseAromaticRings(molecule);
+            Assert.assertNotNull(molecule);
 
-        molecule = AtomContainerManipulator.removeHydrogens(molecule);
-        int doubleBondCount = 0;
-        for (int i = 0; i < molecule.getBondCount(); i++) {
-            IBond bond = molecule.getBond(i);
-            Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
-            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
-        }
-        Assert.assertEquals(6, doubleBondCount);
+            molecule = AtomContainerManipulator.removeHydrogens(molecule);
+            int doubleBondCount = 0;
+            for (int i = 0; i < molecule.getBondCount(); i++) {
+                IBond bond = molecule.getBond(i);
+                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
+            }
+            Assert.assertEquals(6, doubleBondCount);
+        });
     }
 
-    @Test(timeout = 1000)
+    @Test
     public void testPyrrole_Silent() throws Exception {
-        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-        SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        smilesParser.kekulise(false);
-        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
-        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+            String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
+            SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+            smilesParser.kekulise(false);
+            IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+            AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-        molecule = fbot.kekuliseAromaticRings(molecule);
-        Assert.assertNotNull(molecule);
-        molecule = AtomContainerManipulator.removeHydrogens(molecule);
-        int doubleBondCount = 0;
-        for (int i = 0; i < molecule.getBondCount(); i++) {
-            IBond bond = molecule.getBond(i);
-            Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
-            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
-        }
-        Assert.assertEquals(6, doubleBondCount);
+            molecule = fbot.kekuliseAromaticRings(molecule);
+            Assert.assertNotNull(molecule);
+            molecule = AtomContainerManipulator.removeHydrogens(molecule);
+            int doubleBondCount = 0;
+            for (int i = 0; i < molecule.getBondCount(); i++) {
+                IBond bond = molecule.getBond(i);
+                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
+            }
+            Assert.assertEquals(6, doubleBondCount);
+        });
     }
 
     @Test
@@ -354,14 +361,15 @@ public class FixBondOrdersToolTest extends CDKTestCase {
      * Just to ensure it doesn't throw exceptions
      * @throws Exception
      */
-    @Test(timeout = 1000)
+    @Test
     public void testAcyclic() throws Exception {
-        String smiles = "CCCCCCC";
-        SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+            String smiles = "CCCCCCC";
+            SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+            IAtomContainer molecule = smilesParser.parseSmiles(smiles);
 
-        molecule = fbot.kekuliseAromaticRings(molecule);
-        Assert.assertNotNull(molecule);
-
+            molecule = fbot.kekuliseAromaticRings(molecule);
+            Assert.assertNotNull(molecule);
+        });
     }
 }

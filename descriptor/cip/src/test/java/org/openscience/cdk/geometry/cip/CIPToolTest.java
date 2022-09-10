@@ -30,8 +30,8 @@ import javax.vecmath.Point3d;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
@@ -68,7 +68,7 @@ public class CIPToolTest extends CDKTestCase {
     static IAtomContainer molecule;
     static ILigand[]      ligands;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
         VisitedAtoms visitedAtoms = new VisitedAtoms();

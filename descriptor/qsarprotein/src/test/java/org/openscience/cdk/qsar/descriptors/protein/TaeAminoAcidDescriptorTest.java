@@ -20,10 +20,9 @@
 package org.openscience.cdk.qsar.descriptors.protein;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -42,12 +41,12 @@ public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
 
     private static IMolecularDescriptor descriptor;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         descriptor = new TaeAminoAcidDescriptor();
     }
 
-    @Before
+    @BeforeEach
     public void setDescriptor() throws Exception {
         super.setDescriptor(TaeAminoAcidDescriptor.class);
     }

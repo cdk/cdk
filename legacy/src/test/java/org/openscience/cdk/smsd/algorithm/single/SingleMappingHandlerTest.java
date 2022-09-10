@@ -27,8 +27,8 @@ import static org.junit.Assert.assertNotNull;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
@@ -51,7 +51,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  */
 public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setMCSAlgorithm() {
         AbstractMCSAlgorithmTest.setMCSAlgorithm(new SingleMappingHandler(true));
     }

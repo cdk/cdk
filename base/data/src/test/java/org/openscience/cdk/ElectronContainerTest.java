@@ -21,8 +21,8 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.test.interfaces.AbstractElectronContainerTest;
 
@@ -35,7 +35,7 @@ import org.openscience.cdk.test.interfaces.AbstractElectronContainerTest;
  */
 public class ElectronContainerTest extends AbstractElectronContainerTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(ElectronContainer::new);
     }

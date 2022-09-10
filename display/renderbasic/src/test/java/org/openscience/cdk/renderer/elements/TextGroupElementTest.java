@@ -23,14 +23,14 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * @cdk.module test-renderbasic
  */
 public class TextGroupElementTest extends AbstractElementTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         IRenderingElement element = new TextGroupElement(0, 0, "Red text", Color.RED);
         setRenderingElement(element);

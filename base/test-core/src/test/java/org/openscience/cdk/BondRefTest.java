@@ -23,8 +23,7 @@
 
 package org.openscience.cdk;
 
-import org.junit.Test;
-import org.openscience.cdk.BondRef;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 
 import static org.hamcrest.CoreMatchers.is;

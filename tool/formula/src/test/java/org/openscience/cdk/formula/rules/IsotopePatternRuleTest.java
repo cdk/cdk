@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -42,7 +42,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      *  The JUnit setup method
      */
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         ifac = Isotopes.getInstance();

@@ -24,7 +24,7 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.silent.Atom;
 
 import static org.junit.Assert.assertTrue;

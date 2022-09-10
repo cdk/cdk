@@ -19,8 +19,8 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -62,7 +62,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
     private UniversalIsomorphismTester    uiTester;
 
-    @Before
+    @BeforeEach
     public void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }

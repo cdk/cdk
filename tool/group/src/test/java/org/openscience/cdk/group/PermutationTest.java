@@ -25,7 +25,9 @@ package org.openscience.cdk.group;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -143,11 +145,13 @@ public class PermutationTest extends CDKTestCase {
         Assert.assertTrue(a.isIdentity());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setToTest_differentLength() {
-        Permutation a = new Permutation(1, 0, 2);
-        Permutation b = new Permutation(0, 1);
-        a.setTo(b);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Permutation a = new Permutation(1, 0, 2);
+            Permutation b = new Permutation(0, 1);
+            a.setTo(b);
+        });
     }
 
     @Test

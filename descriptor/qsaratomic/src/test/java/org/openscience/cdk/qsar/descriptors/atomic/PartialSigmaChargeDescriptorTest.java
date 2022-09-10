@@ -19,12 +19,11 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -57,7 +56,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *@return    The test suite
      */
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(PartialSigmaChargeDescriptor.class);
         Integer[] params = {6};

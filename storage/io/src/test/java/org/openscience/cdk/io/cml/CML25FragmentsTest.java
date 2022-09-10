@@ -25,7 +25,7 @@ package org.openscience.cdk.io.cml;
 import java.io.ByteArrayInputStream;
 
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,7 +46,7 @@ import org.openscience.cdk.silent.ChemFile;
  */
 public class CML25FragmentsTest extends CDKTestCase {
 
-    @Ignore("Functionality not yet implemented")
+    @Disabled("Functionality not yet implemented")
     public void testIsotopeRef() throws Exception {
         String cmlString = "<cml>" + "  <isotopeList>" + "    <isotope id='H1' number='1' elementType='H'>"
                 + "      <scalar dictRef='bo:relativeAbundance'>99.9885</scalar>"

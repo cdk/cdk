@@ -19,10 +19,10 @@
 package org.openscience.cdk.geometry.volume;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -37,7 +37,7 @@ public class VABCVolumeTest {
 
     private static SmilesParser smilesParser;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
@@ -50,11 +50,13 @@ public class VABCVolumeTest {
         Assert.assertEquals(25.8524433266667, volume, 0.01);
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void testIronChloride() throws CDKException {
-        IAtomContainer methane = smilesParser.parseSmiles("Cl[Fe]Cl");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
-        VABCVolume.calculate(methane);
+        Assertions.assertThrows(CDKException.class, () -> {
+            IAtomContainer methane = smilesParser.parseSmiles("Cl[Fe]Cl");
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
+            VABCVolume.calculate(methane);
+        });
     }
 
     @Test

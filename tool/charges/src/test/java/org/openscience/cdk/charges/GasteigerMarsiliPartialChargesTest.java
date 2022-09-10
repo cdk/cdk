@@ -19,7 +19,8 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -231,7 +232,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void testUndefinedPartialCharge() throws Exception {
         String filename = "burden_undefined.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -251,6 +252,8 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
         lpcheck.saturate(ac);
 
         GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-        peoe.calculateCharges(ac);
+        Assertions.assertThrows(CDKException.class, () -> {
+            peoe.calculateCharges(ac);
+        });
     }
 }

@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Vector;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -56,7 +56,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     private IRing                ring2          = null;
     private IRing                ring3          = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         builder = DefaultChemObjectBuilder.getInstance();
         ringset = builder.newInstance(IRingSet.class);

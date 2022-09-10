@@ -18,22 +18,22 @@
  */
 package org.openscience.cdk.dict;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @cdk.module test-dict
  */
 public class EntryTest extends AbstractEntryTest {
 
-    @Before
+    @BeforeEach
     public void setTestClass() {
         super.setTestClass(new Entry());
     }
 
-    @After
+    @AfterEach
     public void testTestedClass() {
         Assert.assertTrue(super.getTestClass().getClass().getName().endsWith(".Entry"));
     }

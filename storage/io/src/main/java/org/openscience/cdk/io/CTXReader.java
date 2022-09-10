@@ -220,6 +220,7 @@ public class CTXReader extends DefaultChemObjectReader {
 
     @Override
     public void close() throws IOException {
-        input.close();
+        if (input != null)
+            input.close();
     }
 }

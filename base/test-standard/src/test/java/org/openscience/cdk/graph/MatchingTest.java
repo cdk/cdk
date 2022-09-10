@@ -24,8 +24,9 @@
 
 package org.openscience.cdk.graph;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -46,7 +47,7 @@ public class MatchingTest {
     private final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
     private final SmilesParser       smipar = new SmilesParser(bldr);
 
-    @Ignore("no operation performed")
+    @Disabled("no operation performed")
     public void nop() {}
 
     @Test
@@ -78,13 +79,15 @@ public class MatchingTest {
         assertThat(matching.other(6), is(5));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void other() {
-        Matching matching = Matching.withCapacity(8);
-        matching.match(2, 5);
-        matching.match(6, 7);
-        matching.match(5, 6);
-        matching.other(2); // 2 is unmatched!
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Matching matching = Matching.withCapacity(8);
+            matching.match(2, 5);
+            matching.match(6, 7);
+            matching.match(5, 6);
+            matching.other(2); // 2 is unmatched!
+        });
     }
 
     @Test

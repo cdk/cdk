@@ -6,7 +6,8 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -88,11 +89,14 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
     /**
      * Overwrites the {@link AbstractPseudoAtomTest} version.
      */
-    @Test(expected = IllegalAccessError.class)
+    @Test
     @Override
     public void testSetExactMass_Double() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
-        atom.setExactMass(12.001);
+        Assertions.assertThrows(IllegalAccessError.class,
+                                () -> {
+                                    atom.setExactMass(12.001);
+                                });
     }
 
     @Test

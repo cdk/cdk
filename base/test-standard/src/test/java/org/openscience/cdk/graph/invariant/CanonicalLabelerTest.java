@@ -25,8 +25,8 @@ import java.io.StringWriter;
 import java.util.Iterator;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -64,7 +64,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         labeler = new CanonicalLabeler();

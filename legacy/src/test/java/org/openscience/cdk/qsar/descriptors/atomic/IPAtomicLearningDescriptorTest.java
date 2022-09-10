@@ -19,14 +19,13 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.SlowTest;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -58,7 +57,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         descriptor = new IPAtomicLearningDescriptor();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         descriptor = new IPAtomicLearningDescriptor();
     }
@@ -155,7 +154,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C3H5Cl/c1-2-3-4/h2H,1,3H2
      */
-    @Ignore("IonizationPotentialTool now deprecated due to bugs")
+    @Disabled("IonizationPotentialTool now deprecated due to bugs")
     public void testNotDB() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C=CCCl"); // not in db
@@ -212,7 +211,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  A unit test for JUnit with C-C-C-I
      *
      */
-    @Ignore("IonizationPotentialTool now deprecated due to bugs")
+    @Disabled("IonizationPotentialTool now deprecated due to bugs")
     public void testIPDescriptor_3() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-C-I");
@@ -561,7 +560,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      *
      */
-    @Ignore("IonizationPotentialTool now deprecated due to bugs")
+    @Disabled("IonizationPotentialTool now deprecated due to bugs")
     public void testFluorobenzene() throws Exception {
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);

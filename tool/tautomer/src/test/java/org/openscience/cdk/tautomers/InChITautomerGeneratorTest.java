@@ -26,7 +26,8 @@ import java.io.StringReader;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -148,20 +149,24 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         unitTestWithoutInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", InChITautomerGenerator.KETO_ENOL,  6);
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     // bail out on dots in formula
     public void testFail1() throws Exception {
-        unitTestWithInchiProvided("[I-].CCN1CCOC2=CC(NC3=NCCN3)=CC=C12",
-                "InChI=1S/C13H18N4O.HI/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13;"
-                        + "/h3-4,9H,2,5-8H2,1H3,(H2,14,15,16);1H/p-1", 2);
+        Assertions.assertThrows(CDKException.class, () -> {
+            unitTestWithInchiProvided("[I-].CCN1CCOC2=CC(NC3=NCCN3)=CC=C12",
+                                      "InChI=1S/C13H18N4O.HI/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13;"
+                                              + "/h3-4,9H,2,5-8H2,1H3,(H2,14,15,16);1H/p-1", 2);
+        });
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     // bail out on dots in formula
     public void testFail2() throws Exception {
-        unitTestWithInchiProvided("CN1C=C(C)C(=O)N2C1O[Pt]([NH3+])([NH3+])OC3N(C)C=C(C)C(=O)N3[Pt]2([NH3+])[NH3+]",
-                "InChI=1S/2C6H9N2O2.4H3N.2Pt/c2*1-4-3-8(2)6(10)7-5(4)9;;;;;;"
-                        + "/h2*3,6H,1-2H3,(H,7,9);4*1H3;;/q2*-1;;;;;2*+4/p-2", 10);
+        Assertions.assertThrows(CDKException.class, () -> {
+            unitTestWithInchiProvided("CN1C=C(C)C(=O)N2C1O[Pt]([NH3+])([NH3+])OC3N(C)C=C(C)C(=O)N3[Pt]2([NH3+])[NH3+]",
+                                      "InChI=1S/2C6H9N2O2.4H3N.2Pt/c2*1-4-3-8(2)6(10)7-5(4)9;;;;;;"
+                                              + "/h2*3,6H,1-2H3,(H,7,9);4*1H3;;/q2*-1;;;;;2*+4/p-2", 10);
+        });
     }
 
     @Test

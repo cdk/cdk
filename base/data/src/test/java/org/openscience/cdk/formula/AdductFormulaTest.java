@@ -20,8 +20,8 @@
 package org.openscience.cdk.formula;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.interfaces.AbstractAdductFormulaTest;
 import org.openscience.cdk.interfaces.IAdductFormula;
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  */
 public class AdductFormulaTest extends AbstractAdductFormulaTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
     }

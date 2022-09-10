@@ -6,8 +6,9 @@ import java.util.Random;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -64,7 +65,7 @@ public class ConformerContainerTest extends CDKTestCase {
         return ret;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws CloneNotSupportedException {
         base = getBaseAtomContainer(natom, "myMolecule");
         confs = getConformers(base, nconfs);
@@ -161,24 +162,33 @@ public class ConformerContainerTest extends CDKTestCase {
         Assert.assertEquals(2, index);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAdd_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         base.setTitle("junk");
-        container.add(base);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    container.add(base);
+                                });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGet_int() {
         ConformerContainer container = new ConformerContainer(confs);
-        container.get(100);
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                                () -> {
+                                    container.get(100);
+                                });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGet2() {
         ConformerContainer container = new ConformerContainer(confs);
-        for (int i = 0; i < container.size() + 1; i++)
-            container.get(i);
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                                () -> {
+                                    for (int i = 0; i < container.size() + 1; i++)
+                                        container.get(i);
+                                });
     }
 
     @Test
@@ -250,16 +260,22 @@ public class ConformerContainerTest extends CDKTestCase {
         Assert.assertTrue(container.contains(container.get(3)));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testAddAll_int_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
-        container.addAll(5, null);
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    container.addAll(5, null);
+                                });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testToArray_arrayObject() {
         ConformerContainer container = new ConformerContainer(confs);
-        container.toArray(new IAtomContainer[]{});
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    container.toArray(new IAtomContainer[]{});
+                                });
     }
 
     @Test
@@ -303,46 +319,62 @@ public class ConformerContainerTest extends CDKTestCase {
         Assert.assertEquals(location, container.indexOf(container.get(location + 1)));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testContainsAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assert.assertNotNull(container);
         Assert.assertEquals(nconfs, container.size());
-        Assert.assertTrue(container.containsAll(container));
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    Assert.assertTrue(container.containsAll(container));
+                                });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemoveAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assert.assertNotNull(container);
         Assert.assertEquals(nconfs, container.size());
-
-        container.removeAll(container);
-        Assert.assertEquals(0, container.size());
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    container.removeAll(container);
+                                });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRetainAll_Collection() {
         ConformerContainer container = new ConformerContainer(base);
-        container.retainAll(null);
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    container.retainAll(null);
+                                });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testSubList_int_int() {
         ConformerContainer container = new ConformerContainer(base);
-        container.subList(3, 4);
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    container.subList(3, 4);
+                                });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testListIterator() {
         ConformerContainer container = new ConformerContainer(base);
-        container.listIterator();
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    container.listIterator();
+                                });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testListIterator_int() {
         ConformerContainer container = new ConformerContainer(base);
-        container.listIterator(1);
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    container.listIterator(1);
+                                });
     }
 
     @Test

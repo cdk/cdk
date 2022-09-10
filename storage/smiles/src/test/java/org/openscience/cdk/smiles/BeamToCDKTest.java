@@ -24,7 +24,8 @@
 
 package org.openscience.cdk.smiles;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -459,19 +460,28 @@ public class BeamToCDKTest {
         assertThat(((IPseudoAtom) ac.getAtom(0)).getLabel(), is("now-[this]-is-mean"));
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void erroneousLabels_bad1() throws Exception {
-        convert("[this]-is-not-okay]CC");
+        Assertions.assertThrows(IOException.class,
+                                () -> {
+                                    convert("[this]-is-not-okay]CC");
+                                });
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void erroneousLabels_bad2() throws Exception {
-        convert("[this-[is-not-okay]CC");
+        Assertions.assertThrows(IOException.class,
+                                () -> {
+                                    convert("[this-[is-not-okay]CC");
+                                });
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void erroneousLabels_bad3() throws Exception {
-        convert("[this-[is]-not]-okay]CC");
+        Assertions.assertThrows(IOException.class,
+                                () -> {
+                                    convert("[this-[is]-not]-okay]CC");
+                                });
     }
 
     @Test
@@ -507,18 +517,21 @@ public class BeamToCDKTest {
                      "caffeine");
     }
 
-    @Test public void titleWithSpace() throws Exception {
+    @Test
+    public void titleWithSpace() throws Exception {
         assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getTitle(),
                      "caffeine");
     }
 
-    @Test public void titleWithMultipleSpace() throws Exception {
+    @Test
+    public void titleWithMultipleSpace() throws Exception {
         assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getTitle(),
                      "caffeine compound");
     }
 
     /** GitHub Issue #723 */
-    @Test public void cumulatedCycle() throws Exception {
+    @Test
+    public void cumulatedCycle() throws Exception {
         assertEquals(convert("C=1(=N(=C=1)(CC)CC)/N=C(/N1CCC(C2=CC=CC#C2)(CN2C(=NC3=C2C=CC=C3)C)CC1)\\NCC").getBondCount(),
                      39);
     }

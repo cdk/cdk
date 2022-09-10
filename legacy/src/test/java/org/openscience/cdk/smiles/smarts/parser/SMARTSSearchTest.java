@@ -22,9 +22,10 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -64,7 +65,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     private UniversalIsomorphismTester uiTester;
 
-    @Before
+    @BeforeEach
     public void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }
@@ -501,7 +502,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     }
 
-    @Ignore("This feature was removed - essential rings aren't useful really")
+    @Disabled("This feature was removed - essential rings aren't useful really")
     @Test
     public void testPropertyR2_essentialRings() throws Exception {
         SMARTSQueryTool sqt = smarts("[R2]");
@@ -511,7 +512,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(2, results[1]);
     }
 
-    @Ignore("This feature is pending but will be the combinded in an 'OpenSMARTS'"
+    @Disabled("This feature is pending but will be the combinded in an 'OpenSMARTS'"
             + " configuration which uses the relevant rings.")
     @Test
     public void testPropertyR2_relevantRings() throws Exception {
@@ -1680,29 +1681,39 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(3, results[1]);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testInvalidPeriodicGroupNumber() throws Exception {
-        match("[G19]", "CCN");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[G19]", "CCN");
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testInvalidPeriodicGroupNumber_2() throws Exception {
-        match("[G0]", "CCN");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[G0]", "CCN");
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testInvalidPeriodicGroupNumber_3() throws Exception {
-        match("[G345]", "CCN");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[G345]", "CCN");
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testNonPeriodicGroupNumber() throws Exception {
-        match("[G]", "CCN"); // Should throw an exception if G is not followed by a number
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[G]", "CCN"); // Should throw an exception if G is not followed by a number
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testNonPeriodicGroupNumber_2() throws Exception {
-        match("[GA]", "CCN"); // Should throw an exception if G is not followed by a number
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[GA]", "CCN"); // Should throw an exception if G is not followed by a number
+        });
     }
 
     @Test
@@ -1749,24 +1760,32 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testBadHybridizationNumber() throws Exception {
-    	match("[^]", "CCN"); // Should throw an exception if ^ is not followed by a number
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[^]", "CCN"); // Should throw an exception if ^ is not followed by a number
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testBadHybridizationNumber_2() throws Exception {
-    	match("[^X]", "CCN"); // Should throw an exception if ^ is not followed by a number
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[^X]", "CCN"); // Should throw an exception if ^ is not followed by a number
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testBadHybridizationNumber_3() throws Exception {
-    	match("[^0]", "CCN"); // Should throw an exception if ^ is not followed by a number
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[^0]", "CCN"); // Should throw an exception if ^ is not followed by a number
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testBadHybridizationNumber_4() throws Exception {
-    	match("[^9]", "CCN"); // Should throw an exception if ^ is not followed by a number
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            match("[^9]", "CCN"); // Should throw an exception if ^ is not followed by a number
+        });
     }
 
     /**

@@ -19,7 +19,8 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
@@ -1216,7 +1217,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
     }
 
-    @Test public void noNullPointerExceptionForExactMassOfRGroups() throws Exception {
+    @Test
+    public void noNullPointerExceptionForExactMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(new Isotope("C"));
         formula.addIsotope(new Isotope("H"), 3);
@@ -1234,7 +1236,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                    closeTo(15.0, 0.01));
     }
 
-    @Test public void noNullPointerExceptionForMajorMassOfRGroups() throws Exception {
+    @Test
+    public void noNullPointerExceptionForMajorMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(new Isotope("C"));
         formula.addIsotope(new Isotope("H"), 3);
@@ -1243,7 +1246,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                    closeTo(15.0234, 0.01));
     }
 
-    @Test public void noNullPointerForStaticIsotopes() throws Exception {
+    @Test
+    public void noNullPointerForStaticIsotopes() throws Exception {
         Isotopes is = Isotopes.getInstance();
         IIsotope carbon = is.getMajorIsotope("C");
         MolecularFormula mf = new MolecularFormula();
@@ -1251,7 +1255,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         MolecularFormulaManipulator.getNaturalExactMass(mf);
     }
 
-    @Test public void acceptMinusAsInput() throws Exception {
+    @Test
+    public void acceptMinusAsInput() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[PO4]3–",
                                                                                bldr);
@@ -1266,7 +1271,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(mf.getCharge(), is(-1));
     }
 
-    @Test public void protonatePhenolate() throws Exception {
+    @Test
+    public void protonatePhenolate() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[C6H5O]-", bldr);
         assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
@@ -1275,7 +1281,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(mf.getIsotopeCount(), is(3));
     }
 
-    @Test public void protonatePhenolateMajorIsotopes() throws Exception {
+    @Test
+    public void protonatePhenolateMajorIsotopes() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("[C6H5O]-", bldr);
         assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
@@ -1284,7 +1291,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(mf.getIsotopeCount(), is(3));
     }
 
-    @Test public void deprontateHCl() throws Exception {
+    @Test
+    public void deprontateHCl() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("HCl", bldr);
         assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
@@ -1293,7 +1301,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(mf.getIsotopeCount(), is(1));
     }
 
-    @Test public void prontateChloride() throws Exception {
+    @Test
+    public void prontateChloride() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[Cl]-", bldr);
         assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
@@ -1302,13 +1311,15 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(mf.getIsotopeCount(), is(2));
     }
 
-    @Test public void deprontateChloride() throws Exception {
+    @Test
+    public void deprontateChloride() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[Cl]-", bldr);
         assertFalse(MolecularFormulaManipulator.adjustProtonation(mf, -1));
     }
 
-    @Test public void protonateDeuteratedPhenolate() throws Exception {
+    @Test
+    public void protonateDeuteratedPhenolate() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
         // [C6DH4O]- (parser not good enough ATM so need to create like this)
@@ -1351,10 +1362,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                 is(9999999));
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test
     public void tooLargeNumberOfAtoms() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        getAtomCount(getMolecularFormula("C10000000", builder)); // should throw
+        Assertions.assertThrows(NumberFormatException.class,
+                                () -> {
+                                    getAtomCount(getMolecularFormula("C10000000", builder)); // should throw
+                                });
     }
 
     @Test
@@ -1374,7 +1388,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3Br[81]BrO3"));
     }
 
-    @Test public void parseMFMass() throws Exception {
+    @Test
+    public void parseMFMass() throws Exception {
         String str = "C7H3[81]BrBrO3";
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(str, builder);
@@ -1431,7 +1446,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                    is("[54]Fe6[56]Fe92[57]Fe2"));
     }
 
-    @Test public void getMassCranbin() {
+    @Test
+    public void getMassCranbin() {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf =
                 MolecularFormulaManipulator.getMolecularFormula("C202H315N55O64S6",
@@ -1446,7 +1462,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                           closeTo(4729.147, 0.001));
     }
 
-    @Test public void getMassCranbinSpecIsotopes() {
+    @Test
+    public void getMassCranbinSpecIsotopes() {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf =
                 MolecularFormulaManipulator.getMolecularFormula("[12]C200[13]C2[1]H315[14]N55[16]O64[32]S6",
@@ -1461,7 +1478,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                           closeTo(4729.147, 0.001));
     }
 
-    @Test public void getMassCranbinMixedSpecIsotopes() {
+    @Test
+    public void getMassCranbinMixedSpecIsotopes() {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf =
                 MolecularFormulaManipulator.getMolecularFormula("C200[13]C2H315N55O64S6",
@@ -1484,7 +1502,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         Assert.assertEquals(expected, actual);
     }
 
-    @Test public void testIsotopeAndChargeParsing() {
+    @Test
+    public void testIsotopeAndChargeParsing() {
         // proffered input
         roundtrip("[[2]H2]-", "[[2]H2]-");
         // missing outer brackets, isotope+element in square brackets

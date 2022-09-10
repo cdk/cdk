@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
@@ -60,7 +60,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
 
     private MoleculeSignature  molSig;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         this.builder = DefaultChemObjectBuilder.getInstance();

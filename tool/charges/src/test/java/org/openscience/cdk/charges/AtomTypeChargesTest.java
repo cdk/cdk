@@ -19,8 +19,8 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -34,7 +34,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      * Tests the initial assignment of partial charges of
      * atom types matching the HOSE code for pOC atom types.
      */
-    @Ignore
+    @Disabled
     @Test
     public void testCharges_pOC() throws Exception {
         Assert.fail("Not tested yet");
@@ -44,7 +44,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      * Tests the initial assignment of partial charges of
      * atom types matching the HOSE code for pOP atom types.
      */
-    @Ignore
+    @Disabled
     @Test
     public void testCharges_pOP() throws Exception {
         Assert.fail("Not tested yet");
@@ -54,7 +54,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      * Tests the initial assignment of partial charges of
      * atom types matching the HOSE code for pOS atom types.
      */
-    @Ignore
+    @Disabled
     @Test
     public void testCharges_pOS() throws Exception {
         Assert.fail("Not tested yet");
@@ -64,7 +64,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      * Tests the initial assignment of partial charges of
      * atom types matching the HOSE code for p_p atom types.
      */
-    @Ignore
+    @Disabled
     @Test
     public void testCharges_p_p() throws Exception {
         Assert.fail("Not tested yet");
@@ -74,7 +74,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      * Tests the initial assignment of partial charges of
      * atom types matching the HOSE code for p_n atom types.
      */
-    @Ignore
+    @Disabled
     @Test
     public void testCharges_p_n() throws Exception {
         Assert.fail("Not tested yet");

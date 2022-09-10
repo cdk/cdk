@@ -19,8 +19,8 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
@@ -45,7 +45,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     static EStateAtomTypeMatcher matcher;
     IAtomContainer               mol = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         matcher = new EStateAtomTypeMatcher();
     }

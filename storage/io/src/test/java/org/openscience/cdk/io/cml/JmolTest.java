@@ -27,8 +27,8 @@ import java.io.InputStream;
 import javax.vecmath.Vector3d;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -96,7 +96,7 @@ public class JmolTest extends CDKTestCase {
      * Special CML characteristics:
      * - Jmol Animation
      */
-    @Ignore("It is broken, but not used, AFAIK")
+    @Disabled("It is broken, but not used, AFAIK")
     public void testAnimation() throws Exception {
         String filename = "data/cml/SN1_reaction.cml";
         logger.info("Testing: " + filename);

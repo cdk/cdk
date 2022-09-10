@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,7 +45,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
 
     private AtomSignature  atomSignature;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         atomContainer = builder.newInstance(IAtomContainer.class);
         atomContainer.addAtom(builder.newInstance(IAtom.class, "C"));

@@ -23,8 +23,9 @@
 package org.openscience.cdk.stereo;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -54,7 +55,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     private static IAtomContainer molecule;
     private static IAtom[]        ligands;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         molecule = new AtomContainer();
         molecule.addAtom(new Atom("Cl"));
@@ -163,23 +164,24 @@ public class TetrahedralChiralityTest extends CDKTestCase {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMap_Null_Map() throws CloneNotSupportedException {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
-        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+                                    IAtom c1 = builder.newInstance(IAtom.class, "C");
+                                    IAtom o2 = builder.newInstance(IAtom.class, "O");
+                                    IAtom n3 = builder.newInstance(IAtom.class, "N");
+                                    IAtom c4 = builder.newInstance(IAtom.class, "C");
+                                    IAtom h5 = builder.newInstance(IAtom.class, "H");
 
-        IAtom c1 = builder.newInstance(IAtom.class, "C");
-        IAtom o2 = builder.newInstance(IAtom.class, "O");
-        IAtom n3 = builder.newInstance(IAtom.class, "N");
-        IAtom c4 = builder.newInstance(IAtom.class, "C");
-        IAtom h5 = builder.newInstance(IAtom.class, "H");
+                                    // new stereo element
+                                    ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
-        // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
-
-        // map the existing element a new element - should through an IllegalArgumentException
-        ITetrahedralChirality mapped = original.map(null, Collections.EMPTY_MAP);
-
+                                    // map the existing element a new element - should through an IllegalArgumentException
+                                    ITetrahedralChirality mapped = original.map(null, Collections.EMPTY_MAP);
+                                });
     }
 
     @Test

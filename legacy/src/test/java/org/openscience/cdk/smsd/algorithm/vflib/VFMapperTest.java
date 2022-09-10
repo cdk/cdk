@@ -51,8 +51,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
@@ -87,7 +87,7 @@ public class VFMapperTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         hexane = Molecules.createHexane();
         benzene = Molecules.createBenzene();

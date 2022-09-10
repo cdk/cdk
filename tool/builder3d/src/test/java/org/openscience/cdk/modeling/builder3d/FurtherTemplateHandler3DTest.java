@@ -37,7 +37,7 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for {@link TemplateHandler3D}.

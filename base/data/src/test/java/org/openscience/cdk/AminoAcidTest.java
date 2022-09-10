@@ -23,8 +23,8 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.test.interfaces.AbstractAminoAcidTest;
 
@@ -38,7 +38,7 @@ import org.openscience.cdk.test.interfaces.AbstractAminoAcidTest;
  */
 public class AminoAcidTest extends AbstractAminoAcidTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(AminoAcid::new);
     }

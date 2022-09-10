@@ -20,7 +20,7 @@
 package org.openscience.cdk.config.atomtypes;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 

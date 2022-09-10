@@ -23,7 +23,8 @@
 
 package org.openscience.cdk.stereo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -61,26 +62,32 @@ public class TrigonalBipyramidalTest {
         )));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void tooManyCarriers() {
-        IAtom a0 = Mockito.mock(IAtom.class);
-        IAtom a1 = Mockito.mock(IAtom.class);
-        IAtom a2 = Mockito.mock(IAtom.class);
-        IAtom a3 = Mockito.mock(IAtom.class);
-        IAtom a4 = Mockito.mock(IAtom.class);
-        IAtom a5 = Mockito.mock(IAtom.class);
-        IAtom a6 = Mockito.mock(IAtom.class);
-        new TrigonalBipyramidal(a0, new IAtom[]{a1,a2,a3,a4,a5,a6}, 1);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IAtom a0 = Mockito.mock(IAtom.class);
+                                    IAtom a1 = Mockito.mock(IAtom.class);
+                                    IAtom a2 = Mockito.mock(IAtom.class);
+                                    IAtom a3 = Mockito.mock(IAtom.class);
+                                    IAtom a4 = Mockito.mock(IAtom.class);
+                                    IAtom a5 = Mockito.mock(IAtom.class);
+                                    IAtom a6 = Mockito.mock(IAtom.class);
+                                    new TrigonalBipyramidal(a0, new IAtom[]{a1, a2, a3, a4, a5, a6}, 1);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void badConfigurationOrder() {
-        IAtom a0 = Mockito.mock(IAtom.class);
-        IAtom a1 = Mockito.mock(IAtom.class);
-        IAtom a2 = Mockito.mock(IAtom.class);
-        IAtom a3 = Mockito.mock(IAtom.class);
-        IAtom a4 = Mockito.mock(IAtom.class);
-        IAtom a5 = Mockito.mock(IAtom.class);
-        new TrigonalBipyramidal(a0, new IAtom[]{a1,a2,a3,a4,a5}, 32);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IAtom a0 = Mockito.mock(IAtom.class);
+                                    IAtom a1 = Mockito.mock(IAtom.class);
+                                    IAtom a2 = Mockito.mock(IAtom.class);
+                                    IAtom a3 = Mockito.mock(IAtom.class);
+                                    IAtom a4 = Mockito.mock(IAtom.class);
+                                    IAtom a5 = Mockito.mock(IAtom.class);
+                                    new TrigonalBipyramidal(a0, new IAtom[]{a1, a2, a3, a4, a5}, 32);
+                                });
     }
 }

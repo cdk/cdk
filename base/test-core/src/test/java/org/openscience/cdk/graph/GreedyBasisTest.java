@@ -36,9 +36,9 @@ import static org.openscience.cdk.graph.BitMatrixTest.toBitSet;
 import java.util.Arrays;
 import java.util.BitSet;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.graph.InitialCycles.Cycle;
-
-import org.junit.Test;
 
 /**
  * @author John May
@@ -72,12 +72,15 @@ public class GreedyBasisTest {
         assertThat(basis.members(), hasItems(c1, c2));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void unmodifiableMembers() {
-        Cycle c1 = mock(Cycle.class);
-        when(c1.edgeVector()).thenReturn(new BitSet());
-        GreedyBasis basis = new GreedyBasis(2, 0);
-        basis.members().add(c1);
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    Cycle c1 = mock(Cycle.class);
+                                    when(c1.edgeVector()).thenReturn(new BitSet());
+                                    GreedyBasis basis = new GreedyBasis(2, 0);
+                                    basis.members().add(c1);
+                                });
     }
 
     @Test

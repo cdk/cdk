@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -108,8 +108,7 @@ public class CIPSMILESTest extends CDKTestCase {
         Assert.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(chirality));
     }
 
-    @Test(timeout = 5000)
-    // 5 seconds should be enough
+    @Test
     public void testTermination() throws Exception {
         IAtomContainer mol = smiles
                 .parseSmiles("[H]O[C@]([H])(C1([H])(C([H])([H])C([H])([H])C1([H])([H])))C2([H])(C([H])([H])C2([H])([H]))");
@@ -121,8 +120,7 @@ public class CIPSMILESTest extends CDKTestCase {
         CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo);
     }
 
-    @Test(timeout = 5000)
-    // 5 seconds should be enough
+    @Test
     public void testTermination2() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("OC1CCC[C@](F)(CC1)Cl");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();

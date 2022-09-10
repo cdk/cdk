@@ -1,6 +1,6 @@
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;

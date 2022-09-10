@@ -23,8 +23,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractPseudoAtomTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  */
 public class PseudoAtomTest extends AbstractPseudoAtomTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(PseudoAtom::new);
     }

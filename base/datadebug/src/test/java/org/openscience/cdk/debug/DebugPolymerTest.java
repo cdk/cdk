@@ -20,8 +20,8 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractPolymerTest;
 import org.openscience.cdk.interfaces.IPolymer;
 
@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IPolymer;
  */
 public class DebugPolymerTest extends AbstractPolymerTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(DebugPolymer::new);
     }

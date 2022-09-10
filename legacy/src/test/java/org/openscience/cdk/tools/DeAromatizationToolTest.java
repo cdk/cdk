@@ -24,7 +24,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IBond;

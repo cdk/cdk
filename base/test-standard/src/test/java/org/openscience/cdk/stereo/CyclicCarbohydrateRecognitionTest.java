@@ -24,7 +24,7 @@
 
 package org.openscience.cdk.stereo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -51,7 +51,8 @@ import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Righ
 
 public class CyclicCarbohydrateRecognitionTest {
 
-    @Test public void haworthAnticlockwise() throws Exception {
+    @Test
+    public void haworthAnticlockwise() throws Exception {
         org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(4.1, 3.0),
                 new Point2d(3.3, 2.6),
@@ -63,7 +64,8 @@ public class CyclicCarbohydrateRecognitionTest {
     }
 
 
-    @Test public void haworthClockwise() throws Exception {
+    @Test
+    public void haworthClockwise() throws Exception {
         org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(4.1, 3.0),
                 new Point2d(4.8, 2.6),
@@ -74,7 +76,8 @@ public class CyclicCarbohydrateRecognitionTest {
         }), is(new Turn[]{Right,  Right,  Right,  Right,  Right,  Right}));
     }
 
-    @Test public void chairAnticlockwise() throws Exception {
+    @Test
+    public void chairAnticlockwise() throws Exception {
         org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(0.9, 2.6),
                 new Point2d(0.1, 2.4),
@@ -85,7 +88,8 @@ public class CyclicCarbohydrateRecognitionTest {
         }), is(new Turn[]{Left, Right, Right, Left, Right, Right}));
     }
 
-    @Test public void chairClockwise() throws Exception {
+    @Test
+    public void chairClockwise() throws Exception {
         org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(1.7, 2.4),
                 new Point2d(1.3, 3.1),
@@ -97,7 +101,8 @@ public class CyclicCarbohydrateRecognitionTest {
     }
     
 
-    @Test public void boatAnticlockwise() throws Exception {
+    @Test
+    public void boatAnticlockwise() throws Exception {
         org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(3.3, 3.8),
                 new Point2d(2.1, 3.8),
@@ -108,7 +113,8 @@ public class CyclicCarbohydrateRecognitionTest {
         }), is(new Turn[]{Right, Right, Right, Left, Left, Right}));
     }
 
-    @Test public void boatClockwise() throws Exception {
+    @Test
+    public void boatClockwise() throws Exception {
         org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(3.8, 4.8),
                 new Point2d(3.1, 4.2),
@@ -182,7 +188,8 @@ public class CyclicCarbohydrateRecognitionTest {
     /**
      * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
      */
-    @Test public void betaDGlucose_Chair() throws Exception {
+    @Test
+    public void betaDGlucose_Chair() throws Exception {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 1, -0.77d, 10.34d));
         m.addAtom(atom("C", 1, 0.03d, 10.13d));
@@ -244,7 +251,8 @@ public class CyclicCarbohydrateRecognitionTest {
     /**
      * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
      */
-    @Test public void betaDGlucoseWithExplicitHydrogens_Haworth() throws Exception {
+    @Test
+    public void betaDGlucoseWithExplicitHydrogens_Haworth() throws Exception {
         IAtomContainer m = new AtomContainer(17, 17, 0, 0);
         m.addAtom(atom("C", 0, 4.16d, 1.66d));
         m.addAtom(atom("C", 0, 3.75d, 0.94d));
@@ -317,7 +325,8 @@ public class CyclicCarbohydrateRecognitionTest {
      * Example from: http://www.google.com/patents/WO2008025160A1?cl=en
      * @cdk.inchi InChI=1S/C13H26O5/c1-4-10-7-11(17-6-5-16-3)9(2)18-12(8-14)13(10)15/h9-15H,4-8H2,1-3H3/t9-,10+,11+,12+,13-/m0/s1
      */
-    @Test public void oxpene() throws Exception {
+    @Test
+    public void oxpene() throws Exception {
         IAtomContainer m = new AtomContainer(18, 18, 0, 0);
         m.addAtom(atom("C", 1, 1.39d, 3.65d));
         m.addAtom(atom("C", 2, 2.22d, 3.65d));
@@ -487,7 +496,8 @@ public class CyclicCarbohydrateRecognitionTest {
      * avoid false positive
      * @cdk.inchi InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2
      */
-    @Test public void hexopyranose() {
+    @Test
+    public void hexopyranose() {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("O", 1, 0.00d, 2.48d));
         m.addAtom(atom("C", 2, 0.71d, 2.06d));
@@ -531,7 +541,8 @@ public class CyclicCarbohydrateRecognitionTest {
      * 
      * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5?,6-/s2
      */
-    @Test public void betaDGlucose_Chair_Rotated() throws Exception {
+    @Test
+    public void betaDGlucose_Chair_Rotated() throws Exception {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 1, -0.77d, 10.34d));
         m.addAtom(atom("C", 1, 0.03d, 10.13d));
@@ -602,7 +613,8 @@ public class CyclicCarbohydrateRecognitionTest {
      * p-menthane (CHEBI:25826)
      * @cdk.inchi InChI=1S/C10H20/c1-8(2)10-6-4-9(3)5-7-10/h8-10H,4-7H2,1-3H3
      */
-    @Test public void haworthFalsePositive() {
+    @Test
+    public void haworthFalsePositive() {
         IAtomContainer m = new AtomContainer(10, 10, 0, 0);
         m.addAtom(atom("C", 2, -0.71d, 0.41d));
         m.addAtom(atom("C", 2, 0.71d, -0.41d));
@@ -641,7 +653,8 @@ public class CyclicCarbohydrateRecognitionTest {
      * prolinate (CHEBI:32871)
      * @cdk.cite InChI=1S/C5H9NO2/c7-5(8)4-2-1-3-6-4/h4,6H,1-3H2,(H,7,8)/p-1
      */
-    @Test public void requireAtLeastTwoProjectedSubstituents() {
+    @Test
+    public void requireAtLeastTwoProjectedSubstituents() {
         IAtomContainer m = new AtomContainer(8, 8, 0, 0);
         m.addAtom(atom("O", 0, -0.71d, 1.24d));
         m.addAtom(atom("C", 0, 0.00d, 0.83d));

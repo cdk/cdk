@@ -24,8 +24,8 @@
 package org.openscience.cdk.isomorphism;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -70,7 +70,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
     final boolean                            standAlone = false;
     private UniversalIsomorphismTester uiTester;
 
-    @Before
+    @BeforeEach
     public void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }

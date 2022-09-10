@@ -23,8 +23,9 @@
 package org.openscience.cdk.stereo;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -58,7 +59,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     /**
      * This method creates <i>E</i>-but-2-ene.
      */
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
@@ -79,13 +80,16 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
      *
      * @cdk.bug 1273
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructor_TooManyBonds() {
-        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IBond b1 = builder.newBond();
-        IBond b2 = builder.newBond();
-        IBond b3 = builder.newBond();
-        new DoubleBondStereochemistry(builder.newInstance(IBond.class), new IBond[]{b1,b2,b3}, Conformation.OPPOSITE);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+                                    IBond b1 = builder.newBond();
+                                    IBond b2 = builder.newBond();
+                                    IBond b3 = builder.newBond();
+                                    new DoubleBondStereochemistry(builder.newInstance(IBond.class), new IBond[]{b1, b2, b3}, Conformation.OPPOSITE);
+                                });
     }
 
     @Test
@@ -203,26 +207,28 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMap_Null_Map() throws CloneNotSupportedException {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
-        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+                                    IAtom c1 = builder.newInstance(IAtom.class, "C");
+                                    IAtom c2 = builder.newInstance(IAtom.class, "C");
+                                    IAtom o3 = builder.newInstance(IAtom.class, "O");
+                                    IAtom o4 = builder.newInstance(IAtom.class, "O");
 
-        IAtom c1 = builder.newInstance(IAtom.class, "C");
-        IAtom c2 = builder.newInstance(IAtom.class, "C");
-        IAtom o3 = builder.newInstance(IAtom.class, "O");
-        IAtom o4 = builder.newInstance(IAtom.class, "O");
+                                    IBond c1c2 = builder.newInstance(IBond.class, c1, c2, Order.DOUBLE);
+                                    IBond c1o3 = builder.newInstance(IBond.class, c1, o3, Order.SINGLE);
+                                    IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
 
-        IBond c1c2 = builder.newInstance(IBond.class, c1, c2, Order.DOUBLE);
-        IBond c1o3 = builder.newInstance(IBond.class, c1, o3, Order.SINGLE);
-        IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
+                                    // new stereo element
+                                    IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
+                                                                                                        Conformation.OPPOSITE);
 
-        // new stereo element
-        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
-                Conformation.OPPOSITE);
-
-        // map the existing element a new element - should through an IllegalArgumentException
-        IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, null);
+                                    // map the existing element a new element - should through an IllegalArgumentException
+                                    IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, null);
+                                });
     }
 
     @Test

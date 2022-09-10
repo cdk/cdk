@@ -20,7 +20,8 @@ package org.openscience.cdk.smarts;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -1387,24 +1388,32 @@ public class ParserTest extends CDKTestCase {
         parse("[^1&N,^2&C]");
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testHybridizationNumber4() throws Exception {
-        parse("[^]");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[^]");
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testHybridizationNumber5() throws Exception {
-        parse("[^X]");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[^X]");
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testHybridizationNumber6() throws Exception {
-        parse("[^0]");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[^0]");
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testHybridizationNumber7() throws Exception {
-        parse("[^9]");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[^9]");
+        });
     }
 
     @Test
@@ -1427,29 +1436,39 @@ public class ParserTest extends CDKTestCase {
         parse("[G14,G15]", Smarts.FLAVOR_CDK_LEGACY);
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testPeriodicGroupNumber3() throws Exception {
-        parse("[G19]", Smarts.FLAVOR_CDK_LEGACY);
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[G19]", Smarts.FLAVOR_CDK_LEGACY);
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testPeriodicGroupNumber4() throws Exception {
-        parse("[G0]", Smarts.FLAVOR_CDK_LEGACY);
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[G0]", Smarts.FLAVOR_CDK_LEGACY);
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testPeriodicGroupNumber5() throws Exception {
-        parse("[G345]", Smarts.FLAVOR_CDK_LEGACY);
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[G345]", Smarts.FLAVOR_CDK_LEGACY);
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testPeriodicGroupNumber6() throws Exception {
-        parse("[G]", Smarts.FLAVOR_CDK_LEGACY);
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[G]", Smarts.FLAVOR_CDK_LEGACY);
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testPeriodicGroupNumber7() throws Exception {
-        parse("[GA]");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("[GA]");
+        });
     }
 
     @Test
@@ -1457,15 +1476,18 @@ public class ParserTest extends CDKTestCase {
         parse("[V,Cr,Mn,Nb,Mo,Tc,Ta,W,Re]");
     }
     
-    @Test public void endOnSpace() throws Exception {
+    @Test
+    public void endOnSpace() throws Exception {
         parse("C ");
     }
 
-    @Test public void endOnTab() throws Exception {
+    @Test
+    public void endOnTab() throws Exception {
         parse("C\t");
     }
 
-    @Test public void endOnNewline() throws Exception {
+    @Test
+    public void endOnNewline() throws Exception {
         parse("C\n");
     }
 
@@ -1473,24 +1495,32 @@ public class ParserTest extends CDKTestCase {
         parse("C\r");
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void badReaction1() throws Exception {
-        parse("C>");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("C>");
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void badReaction2() throws Exception {
-        parse(">");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse(">");
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void badReaction3() throws Exception {
-        parse(">C");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse(">C");
+        });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void badReaction4() throws Exception {
-        parse("CC(C>C)C>CC");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("CC(C>C)C>CC");
+        });
     }
 
     @Test
@@ -1531,18 +1561,23 @@ public class ParserTest extends CDKTestCase {
     /**
      * @cdk.bug 909
      */
-    @Test public void bug909() throws Exception {
+    @Test
+    public void bug909() throws Exception {
         parse("O=C1NCCSc2ccccc12");
     }
 
-    @Test(expected = InvalidSmarts.class)
+    @Test
     public void testBondPrefix() throws Exception {
-        parse("-CCO");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("-CCO");
+        });
     }
 
-    @Test(expected = InvalidSmarts.class)
+    @Test
     public void trailingBond() throws Exception {
-        parse("CCO-");
+        Assertions.assertThrows(InvalidSmarts.class, () -> {
+            parse("CCO-");
+        });
     }
 
 }

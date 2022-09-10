@@ -21,7 +21,7 @@ package org.openscience.cdk.validate;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.test.CDKTestCase;

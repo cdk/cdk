@@ -26,7 +26,7 @@ import java.util.List;
 import javax.vecmath.Point2d;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IElement;

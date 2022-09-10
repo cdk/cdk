@@ -24,15 +24,15 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.Color;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * @cdk.module test-renderbasic
  */
 public class WedgeLineElementTest extends AbstractElementTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         IRenderingElement element = new WedgeLineElement(0, 0, 1, 1, 1.0, WedgeLineElement.TYPE.DASHED,
                 WedgeLineElement.Direction.toFirst, Color.orange);

@@ -18,8 +18,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atompair;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
 
 public class PiContactDetectionDescriptorTest extends DescriptorTest<IAtomPairDescriptor> {
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(PiContactDetectionDescriptor.class);
     }

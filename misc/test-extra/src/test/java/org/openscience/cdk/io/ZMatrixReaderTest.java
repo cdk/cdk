@@ -25,8 +25,8 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.test.io.ChemObjectIOTest;
 
@@ -35,7 +35,7 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
  */
 public class ZMatrixReaderTest extends ChemObjectIOTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setChemObjectIO(new ZMatrixReader());
     }

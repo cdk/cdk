@@ -30,8 +30,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setSimpleChemObjectReader(new PDBReader(), "org/openscience/cdk/io/coffeine.pdb");
     }
@@ -648,7 +648,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 489
      */
     @Category(SlowTest.class)
-    @Test public void readFinalPump() throws Exception {
+    @Test
+    public void readFinalPump() throws Exception {
         IChemFile chemFile = new PDBReader(getClass().getResourceAsStream("finalPump96.09.06.pdb")).read(new ChemFile());
     }
 

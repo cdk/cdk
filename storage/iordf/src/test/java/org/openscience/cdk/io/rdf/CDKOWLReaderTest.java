@@ -23,8 +23,8 @@
 package org.openscience.cdk.io.rdf;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.silent.AtomContainer;
@@ -41,7 +41,7 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKOWLReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new CDKOWLReader(), "org/openscience/cdk/io/rdf/molecule.n3");
     }

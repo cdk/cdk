@@ -19,8 +19,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -55,7 +55,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      */
     public IPMolecularLearningDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         descriptor = new IPMolecularLearningDescriptor();
     }

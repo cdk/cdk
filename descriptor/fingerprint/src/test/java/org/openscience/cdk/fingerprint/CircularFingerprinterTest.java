@@ -63,7 +63,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import javax.vecmath.Point2d;
@@ -99,7 +99,8 @@ public class CircularFingerprinterTest extends CDKTestCase {
         logger.info("CircularFingerprinter test: completed without any problems");
     }
 
-    @Test public void testUseStereoElements() throws CDKException {
+    @Test
+    public void testUseStereoElements() throws CDKException {
         final String smiles1  = "CC[C@@H](C)O";
         final String smiles2  = "CC[C@H](O)C";
         final String molfile = "\n"
@@ -413,7 +414,8 @@ public class CircularFingerprinterTest extends CDKTestCase {
         return a;
     }
 
-    @Test public void testVersion() {
+    @Test
+    public void testVersion() {
         CircularFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
         String expected = "CDK-CircularFingerprinter/" + CDK.getVersion() +
                           " classType=ECFP4 perceiveStereochemistry=false";

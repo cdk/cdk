@@ -1,6 +1,9 @@
 package org.openscience.cdk.graph;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.time.Duration;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
@@ -40,11 +43,13 @@ public class AllCyclesTest {
         assertThat(ac.size(), is(7));
     }
 
-    @Test(timeout = 50)
+    @Test
     public void impractical() {
-        // k12 - ouch
-        AllCycles ac = new AllCycles(completeGraphOfSize(12), 12, 100);
-        assertFalse(ac.completed());
+        Assertions.assertTimeout(Duration.ofMillis(50), () -> {
+            // k12 - ouch
+            AllCycles ac = new AllCycles(completeGraphOfSize(12), 12, 100);
+            assertFalse(ac.completed());
+        });
     }
 
     @Test

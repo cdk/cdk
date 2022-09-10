@@ -124,7 +124,8 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     /** {@inheritDoc} */
     @Override
     public void close() throws IOException {
-        input.close();
+        if (input != null)
+            input.close();
     }
 
 }

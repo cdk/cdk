@@ -21,8 +21,9 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import javax.vecmath.Point2d;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
@@ -33,12 +34,14 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.io.IOException;
+
 /**
  * @cdk.module test-qsarmolecular
  */
 public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(AcidicGroupCountDescriptor.class,
                       DefaultChemObjectBuilder.getInstance());
@@ -49,9 +52,10 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertNotNull(new AcidicGroupCountDescriptor());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void uninitalisedError() {
-        new BasicGroupCountDescriptor().calculate(new AtomContainer());
+        Assertions.assertThrows(IllegalStateException.class,
+                                () -> {new BasicGroupCountDescriptor().calculate(new AtomContainer());});
     }
 
     @Test

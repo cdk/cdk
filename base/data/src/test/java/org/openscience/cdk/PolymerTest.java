@@ -22,14 +22,14 @@
  *  */
 package org.openscience.cdk;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.openscience.cdk.test.interfaces.AbstractPolymerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * TestCase for the Polymer class.
@@ -41,7 +41,7 @@ import org.junit.Test;
  */
 public class PolymerTest extends AbstractPolymerTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(Polymer::new);
     }

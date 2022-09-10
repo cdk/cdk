@@ -22,7 +22,7 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 

@@ -3,8 +3,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.fragment.MurckoFragmenter;
@@ -22,7 +22,7 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
 
     public FragmentComplexityDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         setDescriptor(FragmentComplexityDescriptor.class);
     }

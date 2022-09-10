@@ -22,7 +22,7 @@
 package org.openscience.cdk.smsd.interfaces;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test class to be extended by test classes for classes that

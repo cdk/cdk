@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -869,7 +869,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     /**
      * Test to find a single carbon.
      */
-    @Ignore("Demonstrates a deficiency in the implementation - use MolecularFormulaGenerator")
+    @Disabled("Demonstrates a deficiency in the implementation - use MolecularFormulaGenerator")
     public void testSingleCarbon() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
@@ -908,7 +908,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     /**
      * Test to find H2O in a range of 1-20.
      */
-    @Ignore("Demonstrates a deficiency in the implementation - use MolecularFormulaGenerator")
+    @Disabled("Demonstrates a deficiency in the implementation - use MolecularFormulaGenerator")
     public void testWater() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();

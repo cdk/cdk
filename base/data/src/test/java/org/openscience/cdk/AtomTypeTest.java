@@ -19,8 +19,8 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.interfaces.AbstractAtomTypeTest;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -36,7 +36,7 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
  */
 public class AtomTypeTest extends AbstractAtomTypeTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 

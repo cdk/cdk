@@ -3,8 +3,9 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import javax.vecmath.Point2d;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
@@ -12,6 +13,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import java.io.IOException;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -23,7 +26,7 @@ public class ChiPathDescriptorTest extends MolecularDescriptorTest {
 
     public ChiPathDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(ChiPathDescriptor.class);
     }
@@ -267,11 +270,13 @@ public class ChiPathDescriptorTest extends MolecularDescriptorTest {
     /**
      * @cdk.bug 3023326
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCovalentPlatinum() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
-        descriptor.calculate(mol).getValue();
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            descriptor.calculate(mol).getValue();
+        });
     }
 
     //    @Test public void testDan277() throws CDKException {

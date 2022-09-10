@@ -19,7 +19,7 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.vecmath.Point3d;
 

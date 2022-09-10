@@ -27,7 +27,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -845,17 +846,19 @@ public class GeometryToolsTest extends CDKTestCase {
         assertThat(GeometryTools.getBondLengthMedian(container), is(1.5));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void medianBondLengthNoBonds() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 1.5)));
         container.addAtom(atomAt(new Point2d(0, -1.5)));
         container.addAtom(atomAt(new Point2d(0, 5)));
-        GeometryTools.getBondLengthMedian(container);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            GeometryTools.getBondLengthMedian(container);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void medianBondLengthNoPoints() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
@@ -865,7 +868,9 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addBond(0, 1, IBond.Order.SINGLE);
         container.addBond(0, 2, IBond.Order.SINGLE);
         container.addBond(0, 3, IBond.Order.SINGLE);
-        GeometryTools.getBondLengthMedian(container);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            GeometryTools.getBondLengthMedian(container);
+        });
     }
 
     @Test

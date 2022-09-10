@@ -25,7 +25,7 @@
 package org.openscience.cdk.forcefield.mmff;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.interfaces.IAtomContainer;
 

@@ -19,9 +19,9 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -46,7 +46,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
 
     private static IAtomContainer mol;
 
-    @BeforeClass
+    @BeforeAll
     public static void makeMoleucle() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         mol = builder.newInstance(IAtomContainer.class);
@@ -186,7 +186,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
         Assert.assertEquals("Error in O electronegativity", 3.20, eneg[4], 0.01);
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testGetAtomicSoftness() throws Exception {
         InductivePartialCharges ipc = new InductivePartialCharges();

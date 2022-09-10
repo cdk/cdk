@@ -26,15 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -51,16 +50,16 @@ public class CDKRMapHandlerTest {
 
     public CDKRMapHandlerTest() {}
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {}
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {}
 
-    @Before
+    @BeforeEach
     public void setUp() {}
 
-    @After
+    @AfterEach
     public void tearDown() {}
 
     /**

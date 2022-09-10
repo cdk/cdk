@@ -25,8 +25,8 @@ package org.openscience.cdk.ringsearch.cyclebasis;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -41,7 +41,7 @@ public class SimpleCycleBasisTest extends CDKTestCase {
     private static SimpleGraph      g;
     private static SimpleCycleBasis basis;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         g = new SimpleGraph();
         g.addVertex("a");

@@ -20,8 +20,8 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
@@ -34,7 +34,7 @@ import org.openscience.cdk.test.interfaces.AbstractStrandTest;
  */
 public class StrandTest extends AbstractStrandTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(Strand::new);
     }

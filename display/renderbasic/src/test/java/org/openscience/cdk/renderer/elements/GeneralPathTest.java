@@ -24,14 +24,14 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * @cdk.module test-renderbasic
  */
 public class GeneralPathTest extends AbstractElementTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         IRenderingElement element = new GeneralPath(new ArrayList<>(), Color.black);
         setRenderingElement(element);

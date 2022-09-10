@@ -19,8 +19,8 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -36,7 +36,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class QueryAtomContainerCreatorTest extends CDKTestCase {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {}
 
     /**

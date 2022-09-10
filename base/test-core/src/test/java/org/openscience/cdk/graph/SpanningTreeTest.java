@@ -21,8 +21,8 @@ package org.openscience.cdk.graph;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -48,7 +48,7 @@ public class SpanningTreeTest extends CDKTestCase {
     private static SpanningTree azulene = null;
     private static SpanningTree ethane  = null;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         if (azulene == null) {
             // load azulene

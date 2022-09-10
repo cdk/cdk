@@ -15,7 +15,8 @@ import javax.vecmath.Point2d;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -1064,11 +1065,12 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                 Assert.assertFalse(mol.getSingleElectron(i) == mol.getSingleElectron(j));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testSetAtomOutOfRange() {
         IAtomContainer container = (IAtomContainer) newChemObject();
         IAtom c = container.getBuilder().newInstance(IAtom.class, "C");
-        container.setAtom(0, c);
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                                () -> { container.setAtom(0, c); });
     }
 
     @Test
@@ -1081,14 +1083,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(c2, container.getAtom(0));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSetAtomSameMolecule() {
         IAtomContainer container = (IAtomContainer) newChemObject();
         IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
         IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
         container.addAtom(c1);
         container.addAtom(c2);
-        container.setAtom(0, c2);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> { container.setAtom(0, c2); });
     }
 
     @Test
@@ -1239,7 +1242,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
      * This test we ensure there is backing array and then access the index,
      * we should get an exception rather than null
      */
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGetAtomOutOfBackedArray() {
         IAtomContainer     mol     = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder = mol.getBuilder();
@@ -1247,20 +1250,22 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
             mol.addAtom(builder.newAtom());
         for (int i = 9; i >=0; i--)
             mol.removeAtomOnly(i);
-        mol.getAtom(0); // fail rather than return null
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                                () -> { mol.getAtom(0);}); // fail rather than return null
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGetAtomOutOfRange() {
         IAtomContainer mol = (IAtomContainer) newChemObject();
-        mol.getAtom(99999);
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                                () -> {mol.getAtom(99999);});
     }
 
     /**
      * This test we ensure there is backing array and then access the index,
      * we should get an exception rather than null
      */
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGetBondOutOfRangeBackedArray() {
         IAtomContainer     mol     = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder = mol.getBuilder();
@@ -1270,13 +1275,19 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
             mol.addBond(i, i+1, IBond.Order.SINGLE);
         for (int i = 8; i >=0; i--)
             mol.removeBond(i);
-        mol.getBond(0); // fail rather than return null
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                                () -> {
+                                    mol.getBond(0); // fail rather than return null
+                                });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGetBondOutOfRange() {
         IAtomContainer mol = (IAtomContainer) newChemObject();
-        mol.getAtom(99999);
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                                () -> {
+                                    mol.getAtom(99999);
+                                });
     }
 
     @Test
@@ -1815,15 +1826,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                    is(IBond.Order.SINGLE));
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetMinBondOrderNoSuchAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              a1      = builder.newAtom();
         IAtom              a2      = builder.newAtom();
         container.addAtom(a1);
-        assertThat(container.getMinimumBondOrder(a2),
-                   is(IBond.Order.UNSET));
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> { container.getMinimumBondOrder(a2); });
     }
 
     @Test
@@ -1858,15 +1869,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                    is(IBond.Order.SINGLE));
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetMaxBondOrderNoSuchAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              a1      = builder.newAtom();
         IAtom              a2      = builder.newAtom();
         container.addAtom(a1);
-        assertThat(container.getMaximumBondOrder(a2),
-                   is(IBond.Order.UNSET));
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {container.getMaximumBondOrder(a2);});
     }
 
     @Test
@@ -3028,74 +3039,99 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetConnectedBondsMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              atom      = builder.newAtom();
-        container.getConnectedBondsList(atom);
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {container.getConnectedBondsList(atom);});
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetConnectedAtomsMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              atom      = builder.newAtom();
-        container.getConnectedAtomsList(atom);
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {
+                                    container.getConnectedAtomsList(atom);
+                                });
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetConnectedAtomCountMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              atom      = builder.newAtom();
-        container.getConnectedAtomsCount(atom);
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {
+                                    container.getConnectedAtomsCount(atom);
+                                });
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetConnectedBondCountMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              atom      = builder.newAtom();
-        container.getConnectedBondsCount(atom);
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {
+                                    container.getConnectedBondsCount(atom);
+                                });
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testGetConnectedBondCountMissingIdx() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
-        container.getConnectedBondsCount(0);
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                                () -> {
+                                    container.getConnectedBondsCount(0);
+                                });
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetConnectedLongPairsMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              atom      = builder.newAtom();
-        container.getConnectedLonePairsList(atom);
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {
+                                    container.getConnectedLonePairsList(atom);
+                                });
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetConnectedSingleElecsMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              atom      = builder.newAtom();
-        container.getConnectedSingleElectronsList(atom);
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {
+                                    container.getConnectedSingleElectronsList(atom);
+                                });
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetConnectedLongPairCountMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              atom      = builder.newAtom();
-        container.getConnectedLonePairsCount(atom);
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {
+                                    container.getConnectedLonePairsCount(atom);
+                                });
     }
 
-    @Test(expected = NoSuchAtomException.class)
+    @Test
     public void testGetConnectedSingleElecCountMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
         IAtom              atom      = builder.newAtom();
-        container.getConnectedSingleElectronsCount(atom);
+        Assertions.assertThrows(NoSuchAtomException.class,
+                                () -> {
+                                    container.getConnectedSingleElectronsCount(atom);
+                                });
     }
 
     @Test
@@ -3288,7 +3324,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertThat(mol.getBond(a1, a1), is(nullValue()));
     }
 
-    @Test public void removeSgroupWithAtom() throws CloneNotSupportedException {
+    @Test
+    public void removeSgroupWithAtom() throws CloneNotSupportedException {
         IAtomContainer mol = (IAtomContainer) newChemObject();
         IAtom          a1  = mol.getBuilder().newAtom();
         IAtom          a2  = mol.getBuilder().newAtom();

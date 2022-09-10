@@ -18,21 +18,21 @@
  */
 package org.openscience.cdk.dict;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * @cdk.module test-dict
  */
 public class OWLFileTest extends AbstractDictionaryTest {
 
-    @Before
+    @BeforeEach
     public void setTestClass() {
         super.setTestClass(new OWLFile());
     }
 
-    @After
+    @AfterEach
     public void testTestClass() {
         Assert.assertTrue(getTestClass().getClass().getName().endsWith(".OWLFile"));
     }

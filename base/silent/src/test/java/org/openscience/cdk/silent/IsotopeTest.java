@@ -21,8 +21,8 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractIsotopeTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
@@ -36,7 +36,7 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
  */
 public class IsotopeTest extends AbstractIsotopeTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 

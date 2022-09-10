@@ -23,7 +23,7 @@
 
 package org.openscience.cdk.smiles;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -106,7 +106,8 @@ public class CxSmilesGeneratorTest {
     }
 
 
-    @Test public void chembl367774() throws Exception {
+    @Test
+    public void chembl367774() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("CHEMBL367774.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
@@ -140,14 +141,16 @@ public class CxSmilesGeneratorTest {
         assertThat(smigen.create(mola), is(smigen.create(molb)));
     }
 
-    @Test public void outputRFlagWhenAllRac1() throws Exception {
+    @Test
+    public void outputRFlagWhenAllRac1() throws Exception {
         SmilesParser    smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](O)C1CCCCC1 |&1:1,3|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxEnhancedStereo);
         assertThat(smigen.create(mol), is("C[C@H](O)[C@H](O)C1CCCCC1 |r|"));
     }
 
-    @Test public void outputRFlagWhenAllRac3() throws Exception {
+    @Test
+    public void outputRFlagWhenAllRac3() throws Exception {
         SmilesParser    smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](O)C1CCCCC1 |&3:1,3|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxEnhancedStereo);
@@ -161,7 +164,8 @@ public class CxSmilesGeneratorTest {
         assertThat(smigen.create(mol), is("C[C@H](O)[C@H](O)C1CCCCC1"));
     }
 
-    @Test public void outputRFlagWhenAllRel1() throws Exception {
+    @Test
+    public void outputRFlagWhenAllRel1() throws Exception {
         SmilesParser    smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](O)C1CCCCC1 |o1:1,3|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxEnhancedStereo);
@@ -182,14 +186,16 @@ public class CxSmilesGeneratorTest {
         assertThat(smigen.create(mol), is("C[C@H](O)[C@H](O)C1CCCCC1 |o1:1,a:3|"));
     }
 
-    @Test public void outputRFlagWhenAllRel5Renumber() throws Exception {
+    @Test
+    public void outputRFlagWhenAllRel5Renumber() throws Exception {
         SmilesParser    smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](O)C1CCCCC1 |&5:3|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxEnhancedStereo);
         assertThat(smigen.create(mol), is("C[C@H](O)[C@H](O)C1CCCCC1 |a:1,&1:3|"));
     }
 
-    @Test public void noEnhancedStereoInIsomeric() throws Exception {
+    @Test
+    public void noEnhancedStereoInIsomeric() throws Exception {
         SmilesParser    smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](O)C1CCCCC1 |r|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);

@@ -23,14 +23,14 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * @cdk.module test-renderbasic
  */
 public class OvalElementTest extends AbstractElementTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         IRenderingElement element = new OvalElement(3, 4, Color.orange);
         setRenderingElement(element);

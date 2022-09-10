@@ -20,8 +20,8 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.test.interfaces.AbstractBioPolymerTest;
@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IStrand;
  */
 public class BioPolymerTest extends AbstractBioPolymerTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(BioPolymer::new);
     }

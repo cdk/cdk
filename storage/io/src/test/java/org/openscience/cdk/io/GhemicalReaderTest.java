@@ -26,8 +26,8 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -44,7 +44,7 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
  */
 public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new GhemicalMMReader(), "ethene.mm1gp");
     }

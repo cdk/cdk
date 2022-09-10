@@ -19,9 +19,9 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -54,7 +54,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     public PartialPiChargeDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(PartialPiChargeDescriptor.class);
     }
@@ -481,7 +481,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit. This molecule breaks with PETRA as well.
      *  @cdk.bug   1959099
      */
-    @Ignore("Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.")
+    @Disabled("Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.")
     public void testPartialPiChargeDescriptoCharge_3() throws Exception {
         double[] testResult = {-0.0379, -0.0032, 0.0, -0.0078, 0.0, 0.0488, 0.0, 0.0};/*
                                                                                        * from

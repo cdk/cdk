@@ -9,7 +9,9 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
@@ -68,17 +70,23 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         AbstractChemObjectBuilderTest.rootObject = rootObject;
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNewInstance_Class_arrayObject() {
         // throw random stuff; it should fail
         IChemObjectBuilder builder = rootObject.getBuilder();
-        builder.newInstance(IAtom.class, new Object[2]);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    builder.newInstance(IAtom.class, new Object[2]);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testIncorrectNumberOf() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        builder.newInstance(IAtom.class, builder.newInstance(IAtomContainer.class));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    builder.newInstance(IAtom.class, builder.newInstance(IAtomContainer.class));
+                                });
     }
 
     @Test
@@ -201,10 +209,13 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
     /**
      * @cdk.bug 3526870
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNewBond_IAtom_IAtomContainer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        builder.newInstance(IBond.class, builder.newInstance(IAtom.class), builder.newInstance(IAtomContainer.class));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    builder.newInstance(IBond.class, builder.newInstance(IAtom.class), builder.newInstance(IAtomContainer.class));
+                                });
     }
 
     @Test

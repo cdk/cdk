@@ -26,7 +26,7 @@ package org.openscience.cdk.fingerprint;
 import java.util.BitSet;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;

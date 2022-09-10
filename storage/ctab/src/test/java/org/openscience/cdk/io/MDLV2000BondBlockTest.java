@@ -24,7 +24,8 @@
 
 package org.openscience.cdk.io;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -183,32 +184,44 @@ public class MDLV2000BondBlockTest {
         assertThat(bond.getStereo(), is(IBond.Stereo.E_Z_BY_COORDINATES));
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void upDoubleBond() throws Exception {
         String input = "  1  3  2  1  0  0  0";
         reader.setReaderMode(IChemObjectReader.Mode.STRICT);
-        reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
+                                });
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void downDoubleBond() throws Exception {
         String input = "  1  3  2  1  0  0  0";
         reader.setReaderMode(IChemObjectReader.Mode.STRICT);
-        reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
+                                });
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void upOrDownDoubleBond() throws Exception {
         String input = "  1  3  2  4  0  0  0";
         reader.setReaderMode(IChemObjectReader.Mode.STRICT);
-        reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
+                                });
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void cisOrTransSingleBond() throws Exception {
         String input = "  1  3  1  3  0  0  0";
         reader.setReaderMode(IChemObjectReader.Mode.STRICT);
-        reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
+                                });
     }
 
     @Test

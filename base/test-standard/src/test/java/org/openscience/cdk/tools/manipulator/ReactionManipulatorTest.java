@@ -19,8 +19,8 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.test.CDKTestCase;
@@ -53,7 +53,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         String filename1 = "reaction-1.rxn";
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
@@ -302,12 +302,12 @@ public class ReactionManipulatorTest extends CDKTestCase {
                 is("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0|"));
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void perceiveAtomTypesAndConfigureAtomsReactionNullTest() throws CDKException {
         ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(null);
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void perceiveAtomTypesAndConfigureAtomsUnknownAtomTypeTest() throws CDKException {
         // arrange
         IAtomContainer reactant = new AtomContainer();
@@ -415,7 +415,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         }
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void perceiveAtomTypesAndConfigureUnsetPropertiesReactionNullTest() throws CDKException {
         ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(null);
     }
@@ -533,7 +533,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         }
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void clearAtomConfigurationsReactionNullTest() throws CDKException {
         ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(null);
     }

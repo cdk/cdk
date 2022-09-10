@@ -8,7 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IPDBAtom;
 

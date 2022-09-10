@@ -24,7 +24,8 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -41,9 +42,10 @@ import static org.mockito.Mockito.verify;
  */
 public class AbstractHashGeneratorTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testConstruction_Null() {
-        new AbstractHashGenerator(null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {new AbstractHashGenerator(null);});
     }
 
     @Test

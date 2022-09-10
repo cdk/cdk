@@ -24,8 +24,8 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -391,7 +391,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
      * match benzaldehyde twice. So according to the
      * supplied definition this answer is actually correct.
      */
-    @Ignore("the SMARTS pattern vinylogous ester is not strict enough - we can not fix this")
+    @Disabled("the SMARTS pattern vinylogous ester is not strict enough - we can not fix this")
     public void testVinylogousEster() throws Exception {
         String benzaldehyde = "c1ccccc1C=O";
         IFingerprinter fprinter = new SubstructureFingerprinter();

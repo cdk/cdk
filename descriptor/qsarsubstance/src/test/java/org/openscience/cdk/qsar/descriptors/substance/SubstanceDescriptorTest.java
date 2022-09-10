@@ -17,7 +17,7 @@
 package org.openscience.cdk.qsar.descriptors.substance;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Substance;
 import org.openscience.cdk.interfaces.ISubstance;
 import org.openscience.cdk.qsar.DescriptorValue;

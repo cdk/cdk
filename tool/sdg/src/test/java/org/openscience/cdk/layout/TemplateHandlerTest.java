@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -60,7 +60,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     /**
      *  The JUnit setup method
      */
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         sdg = new StructureDiagramGenerator();
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

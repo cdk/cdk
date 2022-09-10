@@ -19,8 +19,8 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
@@ -55,7 +55,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     private static final SmilesParser            sp         = new SmilesParser(SilentChemObjectBuilder.getInstance());
     private final AtomTypeAwareSaturationChecker atasc      = new AtomTypeAwareSaturationChecker();
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         satcheck = new SaturationChecker();
     }

@@ -6,7 +6,7 @@
 package org.openscience.cdk.test.io;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.io.IChemObjectReader;
 
 import java.io.InputStream;

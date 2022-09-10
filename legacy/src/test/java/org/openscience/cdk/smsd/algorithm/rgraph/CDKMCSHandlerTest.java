@@ -29,8 +29,8 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -52,7 +52,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  */
 public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setMCSAlgorithm() {
         AbstractMCSAlgorithmTest.setMCSAlgorithm(new CDKMCSHandler());
     }

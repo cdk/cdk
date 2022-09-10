@@ -19,9 +19,9 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,7 +46,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 
     private IDeduceBondOrderTool dboTool;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         dboTool = new SaturationChecker();
     }
@@ -355,7 +355,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
     /**
      * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>.
      */
-    @Ignore("previously disabled 'xtest'")
+    @Disabled("previously disabled 'xtest'")
     public void xtestPyridine() throws Exception {
         IAtomContainer enol = new AtomContainer();
 

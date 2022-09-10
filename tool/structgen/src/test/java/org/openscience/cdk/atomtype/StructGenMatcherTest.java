@@ -19,9 +19,9 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -43,7 +43,7 @@ import java.util.Map;
  *
  * @cdk.module test-structgen
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     private final static String          ATOMTYPE_LIST = "structgen_atomtypes.owl";

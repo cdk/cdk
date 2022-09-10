@@ -20,7 +20,7 @@ package org.openscience.cdk.graph.invariant;
 
 import io.github.dan2097.jnainchi.InchiFlag;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;

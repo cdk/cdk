@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -44,7 +44,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
 

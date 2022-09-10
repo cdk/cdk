@@ -28,6 +28,10 @@ import java.util.logging.Logger;
 
 import javax.vecmath.Point3d;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
@@ -41,12 +45,8 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Tests for AtomPlacer3D
@@ -58,16 +58,16 @@ public class AtomPlacer3DTest extends CDKTestCase {
 
     boolean standAlone = false;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {}
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {}
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {}
 
     /**

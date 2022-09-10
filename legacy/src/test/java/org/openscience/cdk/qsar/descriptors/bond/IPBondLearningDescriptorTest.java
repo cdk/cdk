@@ -19,9 +19,9 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -50,7 +50,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
         descriptor = new IPBondLearningDescriptor();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         descriptor = new IPBondLearningDescriptor();
     }
@@ -200,7 +200,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      * A unit test for JUnit with C=C(C=CC)C
      *
      */
-    @Ignore("IonizationPotentialTool now deprecated due to bugs")
+    @Disabled("IonizationPotentialTool now deprecated due to bugs")
     public void testIPConjugatedDescriptor1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
