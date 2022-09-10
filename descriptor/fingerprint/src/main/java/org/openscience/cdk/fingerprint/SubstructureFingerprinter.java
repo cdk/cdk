@@ -447,9 +447,10 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         final Map<Integer, Integer> map = new TreeMap<>();
         for (int i = 0; i < keys.size(); i++) {
             Pattern ptrn = keys.get(i).pattern;
-            map.put(i,
-                    ptrn.matchAll(atomContainer)
-                        .countUnique());
+            int count = ptrn.matchAll(atomContainer)
+                            .uniqueAtomSets()
+                            .count();
+            map.put(i, count);
         }
 
         final int length = keys.size();
