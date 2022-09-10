@@ -31,7 +31,6 @@ import java.io.StringReader;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

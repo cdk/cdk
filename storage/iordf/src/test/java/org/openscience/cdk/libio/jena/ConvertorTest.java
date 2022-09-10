@@ -23,7 +23,6 @@
 package org.openscience.cdk.libio.jena;
 
 import org.apache.jena.rdf.model.Model;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;

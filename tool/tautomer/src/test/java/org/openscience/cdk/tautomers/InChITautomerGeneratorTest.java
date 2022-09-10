@@ -25,7 +25,6 @@ package org.openscience.cdk.tautomers;
 import java.io.StringReader;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;

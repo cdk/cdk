@@ -25,7 +25,6 @@ package org.openscience.cdk.io.program;
 import java.io.StringWriter;
 import java.util.Properties;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

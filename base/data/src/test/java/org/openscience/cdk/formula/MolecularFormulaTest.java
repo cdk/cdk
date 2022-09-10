@@ -21,7 +21,6 @@ package org.openscience.cdk.formula;
 
 import java.io.IOException;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

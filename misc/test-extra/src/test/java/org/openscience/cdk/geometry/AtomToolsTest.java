@@ -17,7 +17,6 @@ import javax.vecmath.Point3d;
 import java.io.StringReader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 public class AtomToolsTest {
 

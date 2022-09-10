@@ -19,7 +19,6 @@
 package org.openscience.cdk.graph.invariant;
 
 import io.github.dan2097.jnainchi.InchiFlag;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

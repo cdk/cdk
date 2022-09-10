@@ -22,7 +22,6 @@ package org.openscience.cdk.tools;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.tools.AbstractLoggingToolTest;

@@ -21,7 +21,6 @@
  */
 package org.openscience.cdk.smsd.interfaces;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

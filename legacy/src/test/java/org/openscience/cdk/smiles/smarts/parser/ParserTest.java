@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -32,7 +31,6 @@ import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 
 import java.io.StringReader;
-import java.time.Duration;
 
 /**
  * JUnit test routines for the SMARTS parser.

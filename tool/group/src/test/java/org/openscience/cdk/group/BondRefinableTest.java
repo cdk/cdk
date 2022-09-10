@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.group;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.HashSet;
 import java.util.Set;
 

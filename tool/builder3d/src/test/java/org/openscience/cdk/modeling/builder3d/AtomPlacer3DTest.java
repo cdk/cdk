@@ -46,7 +46,6 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 
 /**

@@ -22,12 +22,8 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

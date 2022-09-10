@@ -19,7 +19,6 @@
 package org.openscience.cdk.dict;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 

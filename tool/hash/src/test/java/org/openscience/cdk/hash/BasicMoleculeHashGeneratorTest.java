@@ -26,7 +26,6 @@ package org.openscience.cdk.hash;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import static org.hamcrest.CoreMatchers.is;

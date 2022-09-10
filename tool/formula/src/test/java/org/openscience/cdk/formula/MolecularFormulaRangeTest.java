@@ -21,10 +21,8 @@ package org.openscience.cdk.formula;
 
 import java.util.Iterator;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;

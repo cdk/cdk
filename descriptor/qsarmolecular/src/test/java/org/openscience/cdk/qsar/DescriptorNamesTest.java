@@ -38,8 +38,6 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import org.junit.Assert;
-
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *

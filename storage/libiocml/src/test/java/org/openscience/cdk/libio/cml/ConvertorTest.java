@@ -25,7 +25,6 @@ package org.openscience.cdk.libio.cml;
 
 import nu.xom.Document;
 import nu.xom.Serializer;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

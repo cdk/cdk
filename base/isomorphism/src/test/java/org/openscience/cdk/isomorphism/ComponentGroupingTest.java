@@ -33,9 +33,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
  * @author John May
  * @cdk.module test-isomorphism

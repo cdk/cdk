@@ -20,7 +20,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

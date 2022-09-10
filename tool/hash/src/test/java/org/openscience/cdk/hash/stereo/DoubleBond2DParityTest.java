@@ -29,8 +29,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.vecmath.Point2d;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * @author John May
  * @cdk.module test-hash

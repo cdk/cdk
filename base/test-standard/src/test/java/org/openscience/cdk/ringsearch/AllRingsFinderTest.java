@@ -21,8 +21,6 @@ package org.openscience.cdk.ringsearch;
 import java.io.InputStream;
 import java.time.Duration;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Disabled;

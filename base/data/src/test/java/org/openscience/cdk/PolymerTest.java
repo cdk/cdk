@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 /**

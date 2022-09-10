@@ -30,7 +30,6 @@ package org.openscience.cdk.fingerprint;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

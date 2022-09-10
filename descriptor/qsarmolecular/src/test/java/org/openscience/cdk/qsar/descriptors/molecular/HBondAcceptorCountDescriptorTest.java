@@ -21,7 +21,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import javax.vecmath.Point3d;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

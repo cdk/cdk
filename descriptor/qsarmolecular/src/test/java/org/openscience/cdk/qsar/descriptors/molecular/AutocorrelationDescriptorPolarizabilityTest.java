@@ -2,7 +2,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.InputStream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.openscience.cdk.AtomContainer;

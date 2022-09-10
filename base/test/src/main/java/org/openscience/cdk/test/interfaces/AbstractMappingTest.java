@@ -7,7 +7,6 @@ package org.openscience.cdk.test.interfaces;
 
 import java.util.Iterator;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;

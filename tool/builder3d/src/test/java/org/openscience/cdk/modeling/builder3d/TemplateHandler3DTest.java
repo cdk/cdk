@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;

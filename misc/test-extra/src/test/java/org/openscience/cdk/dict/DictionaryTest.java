@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.dict;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;

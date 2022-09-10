@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

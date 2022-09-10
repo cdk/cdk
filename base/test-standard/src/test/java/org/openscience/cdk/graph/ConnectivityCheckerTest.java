@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.*;
@@ -49,7 +48,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Checks the functionality of the ConnectivityChecker

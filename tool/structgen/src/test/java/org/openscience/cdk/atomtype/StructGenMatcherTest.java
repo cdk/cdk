@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.atomtype;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;

@@ -5,7 +5,6 @@
  */
 package org.openscience.cdk.test.io;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;

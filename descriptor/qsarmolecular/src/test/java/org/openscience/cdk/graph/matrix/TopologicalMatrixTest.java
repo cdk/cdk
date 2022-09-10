@@ -2,7 +2,6 @@ package org.openscience.cdk.graph.matrix;
 
 import java.io.InputStream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.openscience.cdk.AtomContainer;

@@ -33,7 +33,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import net.sf.jniinchi.INCHI_OPTION;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;

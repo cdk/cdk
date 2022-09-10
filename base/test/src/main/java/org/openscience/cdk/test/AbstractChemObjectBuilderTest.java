@@ -8,10 +8,8 @@ package org.openscience.cdk.test;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;

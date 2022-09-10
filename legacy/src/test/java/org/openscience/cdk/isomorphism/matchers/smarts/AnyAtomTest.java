@@ -28,8 +28,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.silent.Atom;
 
-import static org.junit.Assert.assertTrue;
-
 public class AnyAtomTest {
 
     @Test

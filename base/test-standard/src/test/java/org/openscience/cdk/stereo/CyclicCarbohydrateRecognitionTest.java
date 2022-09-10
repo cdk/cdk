@@ -44,7 +44,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn;
 import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Left;

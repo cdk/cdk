@@ -20,7 +20,6 @@
 package org.openscience.cdk.tools;
 
 import org.apache.logging.log4j.core.config.Configurator;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

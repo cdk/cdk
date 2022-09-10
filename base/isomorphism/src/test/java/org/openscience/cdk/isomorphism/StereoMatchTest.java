@@ -36,9 +36,6 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
  * Some simple isolated tests on functionality.
  *

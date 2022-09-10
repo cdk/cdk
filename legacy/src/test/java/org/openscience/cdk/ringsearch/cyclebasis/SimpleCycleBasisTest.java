@@ -24,7 +24,6 @@
 package org.openscience.cdk.ringsearch.cyclebasis;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.smsd.ring;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Collection;
 import java.util.List;
 

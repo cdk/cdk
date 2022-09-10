@@ -35,7 +35,6 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 
 import javax.vecmath.Point2d;
 
-import static org.junit.Assert.assertEquals;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 

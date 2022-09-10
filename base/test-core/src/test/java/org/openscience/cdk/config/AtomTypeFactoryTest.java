@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.config;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -26,7 +25,6 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.test.CDKTestCase;
 import org.w3c.dom.Document;

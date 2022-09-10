@@ -30,9 +30,6 @@ import org.openscience.cdk.qsar.result.BooleanResult;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.test.qsar.DescriptorTest;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 public class PiContactDetectionDescriptorTest extends DescriptorTest<IAtomPairDescriptor> {
 
     @BeforeEach

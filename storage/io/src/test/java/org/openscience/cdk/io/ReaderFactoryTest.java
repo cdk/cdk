@@ -26,7 +26,6 @@ import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
