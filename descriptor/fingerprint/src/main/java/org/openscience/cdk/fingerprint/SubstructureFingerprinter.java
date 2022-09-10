@@ -448,8 +448,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         for (int i = 0; i < keys.size(); i++) {
             Pattern ptrn = keys.get(i).pattern;
             int count = ptrn.matchAll(atomContainer)
-                            .uniqueAtomSets()
-                            .count();
+                            .countUnique();
             map.put(i, count);
         }
 

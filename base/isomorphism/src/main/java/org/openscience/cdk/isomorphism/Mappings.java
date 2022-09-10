@@ -277,29 +277,12 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return fluent-api instance
      * @see #uniqueBonds()
-     * @see #uniqueAtomSets()
      * @see #exclusiveAtoms()
      */
     public Mappings uniqueAtoms() {
         // we need the unique predicate to be reset for each new iterator -
         // otherwise multiple iterations are always filtered (seen before)
         return new Mappings(query, target, () -> stream().filter(new UniqueAtomMatches()).iterator());
-    }
-
-    /**
-     * Filter the mappings for those which cover a unique set of atoms in the
-     * target. The unique atom mappings are a subset of the unique atom set
-     * matches.
-     *
-     * @return fluent-api instance
-     * @see #uniqueBonds()
-     * @see #uniqueAtomSets()
-     * @see #exclusiveAtoms()
-     */
-    public Mappings uniqueAtomSets() {
-        // we need the unique predicate to be reset for each new iterator -
-        // otherwise multiple iterations are always filtered (seen before)
-        return new Mappings(query, target, () -> stream().filter(new UniqueAtomSetMatches()).iterator());
     }
 
     /**
