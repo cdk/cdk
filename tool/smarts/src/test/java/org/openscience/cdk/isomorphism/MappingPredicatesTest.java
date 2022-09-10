@@ -52,6 +52,17 @@ public class MappingPredicatesTest {
     }
 
     @Test
+    public void uniqueAtomsUniqSet()  {
+        UniqueAtomMatches uam = new UniqueAtomMatches();
+        assertTrue(uam.apply(new int[]{1, 2, 3}));
+        assertTrue(uam.apply(new int[]{4, 2, 5}));
+        // seen 3 and 2 and 5 on their own before but not all together
+        // this matches other toolkits so is what most would expect but
+        // an alternative unique overall which would reject this as a duplicate.
+        assertTrue(uam.apply(new int[]{3, 2, 5}));
+    }
+
+    @Test
     public void uniqueBonds() throws Exception {
 
         IAtomContainer query = smi("C1CCC1");
