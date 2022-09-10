@@ -27,11 +27,28 @@ import java.util.BitSet;
 import java.util.function.Predicate;
 
 /**
- * A predicate for filtering atom-mapping results. This class is intended for
- * use with {@link Pattern}.
+ * A predicate for filtering atom-mapping results. This filter only returns
+ * exclusive (non-overlapping) matching. Note the order the mappings are added
+ * can impact if they are accepted or not by the filter: <br/>
+ *
+ * <pre>{@code
+ * [0, 1, 2]  => accept
+ * [0, 1, 3]  => reject (overlaps with 0 and 1)
+ * [2, 1, 4]  => reject (overlaps with 1 and 2)
+ * [5, 2, 6]  => reject (overlaps with 2)
+ * }</pre>
+ * vs.<br/>
+ * <pre>{@code
+ * [0, 1, 3]  => accept
+ * [0, 1, 2]  => reject (overlaps with 0 and 1)
+ * [2, 1, 4]  => reject (overlaps with 1 and 2)
+ * [5, 2, 6]  => accept
+ * }</pre>
+ *
+ * This class is intended for use with {@link Pattern}.
  *
  * <blockquote><pre>{@code
- *     Pattern     pattern = Ullmann.findSubstructure(query);
+ *     Pattern     pattern = Pattern.findSubstructure(query);
  *     List<int[]> unique  = FluentIterable.of(patter.matchAll(target))
  *                                         .filter(new ExclusiveAtomMatches())
  *                                         .toList();

@@ -298,6 +298,7 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return fluent-api instance
      * @see #uniqueAtoms()
+     * @see org.openscience.cdk.isomorphism.ExclusiveAtomMatches
      */
     public Mappings exclusiveAtoms() {
         // we need the unique predicate to be reset for each new iterator -
