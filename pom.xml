@@ -567,10 +567,6 @@
                         <exclude>**/TestMoleculeFactory.java</exclude>
                         <!-- missing functionality -->
                         <exclude>**/cdk/limitations/**</exclude>
-                        <!-- coverage tests need updating -->
-                        <exclude>**/*CoverageTest.java</exclude>
-                        <!-- module suites not needed -->
-                        <exclude>**/modulesuites/M*Tests.java</exclude>
                         <!-- format tests do not work (cyclic dependency) -->
                         <exclude>**/io/formats/*FormatTest.java</exclude>
                     </excludes>
