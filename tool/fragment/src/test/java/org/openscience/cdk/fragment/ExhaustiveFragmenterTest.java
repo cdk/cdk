@@ -20,8 +20,8 @@
 package org.openscience.cdk.fragment;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,7 +43,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     static ExhaustiveFragmenter fragmenter;
     static SmilesParser         smilesParser;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         fragmenter = new ExhaustiveFragmenter();
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());

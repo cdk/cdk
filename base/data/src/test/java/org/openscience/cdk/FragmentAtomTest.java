@@ -19,8 +19,8 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractFragmentAtomTest;
 import org.openscience.cdk.interfaces.IFragmentAtom;
 
@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
  */
 public class FragmentAtomTest extends AbstractFragmentAtomTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(FragmentAtom::new);
     }

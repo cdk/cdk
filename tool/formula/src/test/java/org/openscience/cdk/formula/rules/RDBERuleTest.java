@@ -21,10 +21,9 @@ package org.openscience.cdk.formula.rules;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
@@ -39,7 +38,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
     *  The JUnit setup method
     */
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         setRule(RDBERule.class);

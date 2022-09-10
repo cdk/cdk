@@ -24,7 +24,7 @@
 
 package org.openscience.cdk.aromaticity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ringsearch.RingSearch;

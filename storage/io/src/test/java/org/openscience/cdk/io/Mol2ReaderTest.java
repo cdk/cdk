@@ -31,8 +31,8 @@ import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -62,7 +62,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Mol2ReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new Mol2Reader(), "fromWebsite.mol2");
     }

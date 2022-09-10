@@ -19,7 +19,9 @@
 package org.openscience.cdk.formula;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
@@ -30,6 +32,8 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import java.time.Duration;
 
 /**
  * Checks the functionality of the MolecularFormulaGenerator.
@@ -145,69 +149,73 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test the cancel() method called from another thread. This test must
      * finish in 1000 ms.
      */
-    @Test(timeout = 1000)
+    @Test
     public void testCancel() throws Exception {
+        Assertions.assertTimeout(Duration.ofMillis(1000), () -> {
+            IsotopeFactory ifac = Isotopes.getInstance();
+            IIsotope c = ifac.getMajorIsotope("C");
+            IIsotope h = ifac.getMajorIsotope("H");
+            IIsotope n = ifac.getMajorIsotope("N");
+            IIsotope o = ifac.getMajorIsotope("O");
+            IIsotope p = ifac.getMajorIsotope("P");
+            IIsotope s = ifac.getMajorIsotope("S");
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
-        IIsotope p = ifac.getMajorIsotope("P");
-        IIsotope s = ifac.getMajorIsotope("S");
+            MolecularFormulaRange mfRange = new MolecularFormulaRange();
+            mfRange.addIsotope(c, 0, 1000);
+            mfRange.addIsotope(h, 0, 1000);
+            mfRange.addIsotope(o, 0, 1000);
+            mfRange.addIsotope(n, 0, 1000);
+            mfRange.addIsotope(p, 0, 1000);
+            mfRange.addIsotope(s, 0, 1000);
 
-        MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(c, 0, 1000);
-        mfRange.addIsotope(h, 0, 1000);
-        mfRange.addIsotope(o, 0, 1000);
-        mfRange.addIsotope(n, 0, 1000);
-        mfRange.addIsotope(p, 0, 1000);
-        mfRange.addIsotope(s, 0, 1000);
+            double minMass = 100000.0;
+            double maxMass = 100000.001;
 
-        double minMass = 100000.0;
-        double maxMass = 100000.001;
+            final MolecularFormulaGenerator gen = new MolecularFormulaGenerator(
+                    builder, minMass, maxMass, mfRange);
 
-        final MolecularFormulaGenerator gen = new MolecularFormulaGenerator(
-                builder, minMass, maxMass, mfRange);
-
-        Runnable cancelThread = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    LoggingToolFactory.createLoggingTool(MolecularFormulaCheckerTest.class)
-                                      .warn("Thread Interrupted:", e);
-                    Thread.currentThread().interrupt();
+            Runnable cancelThread = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(5);
+                    } catch (InterruptedException e) {
+                        LoggingToolFactory.createLoggingTool(MolecularFormulaCheckerTest.class)
+                                          .warn("Thread Interrupted:", e);
+                        Thread.currentThread().interrupt();
+                    }
+                    gen.cancel();
                 }
-                gen.cancel();
-            }
-        };
-        new Thread(cancelThread).run();
+            };
+            new Thread(cancelThread).run();
 
-        // We will get stuck in the next method call until the cancel thread
-        // calls the cancel() method
-        gen.getAllFormulas();
+            // We will get stuck in the next method call until the cancel thread
+            // calls the cancel() method
+            gen.getAllFormulas();
 
-        // Next getNextFormula() call should return null
-        IMolecularFormula f = gen.getNextFormula();
-        Assert.assertNull(f);
+            // Next getNextFormula() call should return null
+            IMolecularFormula f = gen.getNextFormula();
+            Assert.assertNull(f);
+        });
     }
 
     /**
      * Test empty molecular formula range
      *
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testEmptyMFRange() throws Exception {
-        new MolecularFormulaGenerator(builder, 0, 100,
-                new MolecularFormulaRange());
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new MolecularFormulaGenerator(builder, 0, 100,
+                                                                  new MolecularFormulaRange());
+                                });
     }
 
-    /**
+                                /**
      * Test negative mass
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNegativeMass() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
@@ -215,8 +223,11 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 100);
-        new MolecularFormulaGenerator(builder, -20, -10,
-                new MolecularFormulaRange());
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new MolecularFormulaGenerator(builder, -20, -10,
+                                                                  new MolecularFormulaRange());
+                                });
     }
 
     /**

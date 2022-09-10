@@ -23,8 +23,8 @@
 package org.openscience.cdk.io.rdf;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -40,7 +40,7 @@ import java.io.StringWriter;
  */
 public class CDKOWLWriterTest extends ChemObjectWriterTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setChemObjectWriter(new CDKOWLWriter());
     }

@@ -19,7 +19,7 @@
 package org.openscience.cdk.ringsearch;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**

@@ -20,8 +20,8 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractPDBMonomerTest;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 
@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
  */
 public class DebugPDBMonomerTest extends AbstractPDBMonomerTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(DebugPDBMonomer::new);
     }

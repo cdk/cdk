@@ -20,8 +20,8 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.test.interfaces.AbstractPDBStructureTest;
 
@@ -32,7 +32,7 @@ import org.openscience.cdk.test.interfaces.AbstractPDBStructureTest;
  */
 public class DebugPDBStructureTest extends AbstractPDBStructureTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setChemObject(new DebugPDBStructure());
     }

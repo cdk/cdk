@@ -19,10 +19,9 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -37,7 +36,7 @@ public class PeriodicTablePositionDescriptorTest extends AtomicDescriptorTest {
 
     public PeriodicTablePositionDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(PeriodicTablePositionDescriptor.class);
     }

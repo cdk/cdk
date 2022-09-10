@@ -26,8 +26,8 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -44,7 +44,7 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setSimpleChemObjectReader(new PCCompoundASNReader(), "cid1.asn");
     }

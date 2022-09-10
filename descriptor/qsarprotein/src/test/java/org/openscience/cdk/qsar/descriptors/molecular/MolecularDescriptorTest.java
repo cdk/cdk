@@ -20,8 +20,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.dict.Dictionary;
@@ -366,7 +366,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         IDescriptorResult v1 = descriptor.calculate(disconnected).getValue();
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testTakeIntoAccountBondHybridization() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();

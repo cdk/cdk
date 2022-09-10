@@ -1,6 +1,7 @@
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -20,9 +21,12 @@ import static org.mockito.Mockito.when;
  */
 public class SeedGeneratorTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testConstruct_Null() {
-        new SeedGenerator(null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new SeedGenerator(null);
+                                });
     }
 
     @Test

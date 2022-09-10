@@ -29,8 +29,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -50,7 +50,7 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new RGroupQueryWriter());

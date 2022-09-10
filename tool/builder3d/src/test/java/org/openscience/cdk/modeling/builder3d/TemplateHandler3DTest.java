@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.fingerprint.IBitFingerprint;

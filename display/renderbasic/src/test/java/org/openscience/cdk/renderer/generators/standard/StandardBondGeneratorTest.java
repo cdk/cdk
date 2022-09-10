@@ -25,7 +25,8 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -105,9 +106,9 @@ public class StandardBondGeneratorTest {
         assertThat(RingBondOffsetComparator.sizePreference(3), is(4));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void invalidRingSize() {
-        RingBondOffsetComparator.sizePreference(2);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {RingBondOffsetComparator.sizePreference(2); });
     }
 
     @Test

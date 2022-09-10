@@ -19,8 +19,8 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -58,7 +58,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
     private UniversalIsomorphismTester    uiTester;
 
-    @Before
+    @BeforeEach
     public void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }

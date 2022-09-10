@@ -26,7 +26,7 @@ package org.openscience.cdk.tools;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;

@@ -25,9 +25,11 @@
 package org.openscience.cdk.forcefield.mmff;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -47,7 +49,7 @@ public class MmffAtomTypeMatcherTest {
 
     static final MmffAtomTypeMatcher INSTANCE = new MmffAtomTypeMatcher();
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void hydrogenCountMustBeDefined() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("C"));
@@ -60,24 +62,30 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(0, 3, SINGLE);
         container.addBond(0, 4, SINGLE);
         container.getAtom(0).setImplicitHydrogenCount(null);
-        INSTANCE.symbolicTypes(container);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            INSTANCE.symbolicTypes(container);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void hydrogenCountMustBeExplicit() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("C"));
         container.getAtom(0).setImplicitHydrogenCount(4);
-        INSTANCE.symbolicTypes(container);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            INSTANCE.symbolicTypes(container);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void aromaticCompoundsAreRejected() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("C"));
         container.getAtom(0).setImplicitHydrogenCount(4);
         container.getAtom(0).setFlag(CDKConstants.ISAROMATIC, true);
-        INSTANCE.symbolicTypes(container);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            INSTANCE.symbolicTypes(container);
+        });
     }
 
     /**
@@ -381,23 +389,27 @@ public class MmffAtomTypeMatcherTest {
         Assert.assertArrayEquals(expected, actual);
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void invalidSmilesThrowsIOExceptionForTokenManagerError() throws IOException {
         String row = "INVALID.SMILES X";
         ByteArrayInputStream in = new ByteArrayInputStream(row.getBytes());
         try {
-            MmffAtomTypeMatcher.loadPatterns(in);
+            Assertions.assertThrows(IOException.class, () -> {
+                MmffAtomTypeMatcher.loadPatterns(in);
+            });
         } finally {
             in.close();
         }
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void invalidSmilesThrowsIOExceptionForIllegalArgument() throws IOException {
         String row = "23 X";
         ByteArrayInputStream in = new ByteArrayInputStream(row.getBytes());
         try {
-            MmffAtomTypeMatcher.loadPatterns(in);
+            Assertions.assertThrows(IOException.class, () -> {
+                MmffAtomTypeMatcher.loadPatterns(in);
+            });
         } finally {
             in.close();
         }

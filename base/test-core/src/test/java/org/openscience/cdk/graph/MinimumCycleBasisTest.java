@@ -31,7 +31,8 @@ import static org.openscience.cdk.graph.InitialCyclesTest.cyclophane_even;
 import static org.openscience.cdk.graph.InitialCyclesTest.naphthalene;
 import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author John May
@@ -39,14 +40,20 @@ import org.junit.Test;
  */
 public class MinimumCycleBasisTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void noGraph() {
-        new MinimumCycleBasis((int[][]) null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new MinimumCycleBasis((int[][]) null);
+                                });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void noInitialCycles() {
-        new MinimumCycleBasis((InitialCycles) null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new MinimumCycleBasis((InitialCycles) null);
+                                });
     }
 
     @Test

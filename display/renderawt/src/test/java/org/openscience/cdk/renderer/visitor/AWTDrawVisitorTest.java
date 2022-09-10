@@ -25,7 +25,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.TextElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;

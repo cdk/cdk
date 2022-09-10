@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -91,7 +91,7 @@ public class FingerprinterToolTest extends CDKTestCase {
         Assert.assertEquals(3, FingerprinterTool.differences(bs1, bs2).size());
     }
     
-    @Test 
+    @Test
     public void makeBitFingerprint() {
         Map<String,Integer> features = new HashMap<>();
         features.put("CCO", 1);
@@ -104,7 +104,7 @@ public class FingerprinterToolTest extends CDKTestCase {
         assertTrue(fp.get("C".hashCode() % 1024));
     }
     
-    @Test 
+    @Test
     public void makeCountFingerprint() {
         Map<String,Integer> features = new HashMap<>();
         features.put("CCO", 1);

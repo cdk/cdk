@@ -23,7 +23,8 @@
  */
 package org.openscience.cdk.graph;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
@@ -40,9 +41,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class AllPairsShortestPathsTest {
 
-    @Test(expected = NullPointerException.class)
-    public void testConstruction_Null() {
-        new AllPairsShortestPaths(null);
+    @Test
+    public void testConstruction_Null()
+    {
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new AllPairsShortestPaths(null);
+                                });
     }
 
     @Test

@@ -24,8 +24,9 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-import org.openscience.cdk.hash.stereo.Tetrahedral3DParity;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 
 import javax.vecmath.Point3d;
 
@@ -41,9 +42,12 @@ public class Tetrahedral3DParityTest {
     private static final int CLOCKWISE     = -1;
     private static final int ANTICLOCKWISE = +1;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstruction_Empty() throws Exception {
-        new Tetrahedral3DParity(new Point3d[0]);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new Tetrahedral3DParity(new Point3d[0]);
+                                });
     }
 
     @Test

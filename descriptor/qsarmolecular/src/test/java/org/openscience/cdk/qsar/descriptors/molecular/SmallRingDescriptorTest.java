@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -47,8 +48,7 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for small rings descriptor.
@@ -62,7 +62,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
     public SmallRingDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(SmallRingDescriptor.class);
     }

@@ -19,7 +19,8 @@
 package org.openscience.cdk.math;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -43,9 +44,9 @@ public class PrimesTest extends CDKTestCase {
         }
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test
     public void testArrayIndexOutOfBounds() {
-        Primes.getPrimeAt(-1);
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {Primes.getPrimeAt(-1);});
     }
 
 }

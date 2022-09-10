@@ -24,7 +24,9 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -41,14 +43,20 @@ import static org.mockito.Mockito.when;
  */
 public class BasicMoleculeHashGeneratorTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testConstruct_Null() {
-        new BasicMoleculeHashGenerator(null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new BasicMoleculeHashGenerator(null);
+                                });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testConstruct_NullPRNG() {
-        new BasicMoleculeHashGenerator(mock(AtomHashGenerator.class), null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new BasicMoleculeHashGenerator(mock(AtomHashGenerator.class), null);
+                                });
     }
 
     @Test

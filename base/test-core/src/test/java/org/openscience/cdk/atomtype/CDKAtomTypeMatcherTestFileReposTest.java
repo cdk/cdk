@@ -19,8 +19,8 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -50,7 +50,7 @@ import java.util.Objects;
  */
 public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
 
-    @Ignore
+    @Disabled
     @Test
     public void testPDBfiles() throws Exception {
         final String DIRNAME = "data/pdb/";

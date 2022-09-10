@@ -27,8 +27,8 @@ import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -125,7 +125,7 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
         expectReader("org/openscience/cdk/io/reaction_v3.rxn", MDLRXNV3000Format.getInstance(), -1, -1);
     }
     
-    @Ignore("test moved to cdk-test-pdb/PDBReaderFactoryTest")
+    @Disabled("test moved to cdk-test-pdb/PDBReaderFactoryTest")
     public void testPDB() throws Exception {
         expectReader("org/openscience/cdk/io/coffeine.pdb", PDBFormat.getInstance(), -1, -1);
     }

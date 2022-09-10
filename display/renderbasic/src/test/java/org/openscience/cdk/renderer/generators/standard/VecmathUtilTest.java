@@ -24,7 +24,8 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -162,9 +163,11 @@ public class VecmathUtilTest {
         assertThat(nearest.y, closeTo(-0.5d, 0.01));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetNearestVectorComplainsWhenNoVectorsProvided() throws Exception {
-        VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.emptyList());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.emptyList());
+        });
     }
 
     @Test

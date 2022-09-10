@@ -28,8 +28,8 @@ import java.util.HashSet;
 import java.util.Properties;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -53,7 +53,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class SMILESWriterTest extends ChemObjectIOTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setChemObjectIO(new SMILESWriter());
     }

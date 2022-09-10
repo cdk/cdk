@@ -1,8 +1,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -25,7 +25,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
     public LengthOverBreadthDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(LengthOverBreadthDescriptor.class);
     }

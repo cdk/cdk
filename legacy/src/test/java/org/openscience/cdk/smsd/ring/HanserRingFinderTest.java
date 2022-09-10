@@ -27,13 +27,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.vflib.Molecules;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
@@ -57,7 +57,7 @@ public class HanserRingFinderTest {
 
     private HanserRingFinder finder;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         finder = new HanserRingFinder();
     }

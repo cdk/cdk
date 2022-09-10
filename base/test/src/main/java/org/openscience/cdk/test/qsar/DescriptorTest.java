@@ -8,7 +8,7 @@ package org.openscience.cdk.test.qsar;
 import java.lang.reflect.Constructor;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;

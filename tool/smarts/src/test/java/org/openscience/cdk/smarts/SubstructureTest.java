@@ -24,7 +24,7 @@
 
 package org.openscience.cdk.smarts;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.interfaces.IAtomContainer;

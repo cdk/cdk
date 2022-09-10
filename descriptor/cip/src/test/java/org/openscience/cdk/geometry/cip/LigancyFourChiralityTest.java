@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -46,7 +46,7 @@ public class LigancyFourChiralityTest extends CDKTestCase {
     private static IAtomContainer molecule;
     private static ILigand[]      ligands;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         molecule = new AtomContainer();
         molecule.addAtom(new Atom("Cl"));

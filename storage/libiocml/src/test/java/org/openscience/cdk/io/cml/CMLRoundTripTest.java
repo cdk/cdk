@@ -29,9 +29,9 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
@@ -71,7 +71,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTest.class);
     private static Convertor    convertor;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         convertor = new Convertor(false, "");
     }
@@ -254,7 +254,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(CDKConstants.UNSET, roundTrippedAtom.getImplicitHydrogenCount());
     }
 
-    @Ignore("Have to figure out how to store partial charges in CML2")
+    @Disabled("Have to figure out how to store partial charges in CML2")
     public void testAtomPartialCharge() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
@@ -269,7 +269,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(atom.getCharge(), roundTrippedAtom.getCharge(), 0.0001);
     }
 
-    @Ignore("Have to figure out how to store atom parity in CML2")
+    @Disabled("Have to figure out how to store atom parity in CML2")
     public void testAtomStereoParity() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
@@ -300,7 +300,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     /**
      * @cdk.bug 1014344
      */
-    @Ignore("Functionality not yet implemented - exact mass can not be written/read")
+    @Disabled("Functionality not yet implemented - exact mass can not be written/read")
     public void testIsotope_ExactMass() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
@@ -318,7 +318,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     /**
      * @cdk.bug 1014344
      */
-    @Ignore("Functionality not yet implemented - natural abundance can not be written/read")
+    @Disabled("Functionality not yet implemented - natural abundance can not be written/read")
     public void testIsotope_Abundance() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");

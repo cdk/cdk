@@ -26,8 +26,9 @@ package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
@@ -106,7 +107,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new MDLV2000Reader(), "org/openscience/cdk/io/iterator/bug682233.mol");
     }
@@ -595,18 +596,20 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
      * Don't accept hydrogen isotopes D/T in strict mode.
      * @cdk.bug 1826577
      */
-    @Test(expected = CDKException.class)
+    @Test
     public void testHisotopes_Strict() throws Exception {
         String filename = "hisotopes.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
-        try (MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT)){
-            reader.read(new ChemFile());
-        }
-        Assert.fail("Expected invalid symbol: D");
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    try (MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT)) {
+                                        reader.read(new ChemFile());
+                                    }
+                                });
     }
 
-    /**
+                                /**
      * @cdk.bug 1826577
      */
     @Test
@@ -1459,13 +1462,16 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
      * The non-standard ACDLabs atom label property should throw a CDKException in STRICT mode.
      * @throws Exception
      */
-    @Test(expected=CDKException.class)
+    @Test
     public void testAcdChemSketchLabel_Strict() throws Exception {
 
         String filename = "chemsketch-all-labelled.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        reader.read(new AtomContainer());
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    reader.read(new AtomContainer());
+                                });
     }
 
     /**
@@ -1672,20 +1678,26 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void testSgroupInvalidConnectInStrictMode() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bad-scn.mol"))) {
-            mdlr.setReaderMode(Mode.STRICT);
-            IAtomContainer container = mdlr.read(new AtomContainer());
-        }
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bad-scn.mol"))) {
+                                        mdlr.setReaderMode(Mode.STRICT);
+                                        IAtomContainer container = mdlr.read(new AtomContainer());
+                                    }
+                                });
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void testSgroupDefOrderInStrictMode() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bad-def.mol"))) {
-            mdlr.setReaderMode(Mode.STRICT);
-            IAtomContainer container = mdlr.read(new AtomContainer());
-        }
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bad-def.mol"))) {
+                                        mdlr.setReaderMode(Mode.STRICT);
+                                        IAtomContainer container = mdlr.read(new AtomContainer());
+                                    }
+                                });
     }
 
     @Test
@@ -1738,12 +1750,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
      * default. Most tools will output an 'M  ISO' property, so can be specified
      * @throws Exception expected format error
      */
-    @Test(expected = CDKException.class)
+    @Test
     public void seaborgiumMassDelta() throws Exception {
-        try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
-            IAtomContainer mol = mdlr.read(new AtomContainer());
-        }
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
+                                         MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
+                                        IAtomContainer mol = mdlr.read(new AtomContainer());
+                                    }
+                                });
     }
 
     @Test

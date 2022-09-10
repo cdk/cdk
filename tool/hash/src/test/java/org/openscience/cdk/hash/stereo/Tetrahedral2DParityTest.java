@@ -24,9 +24,9 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-import org.openscience.cdk.hash.stereo.GeometricParity;
-import org.openscience.cdk.hash.stereo.Tetrahedral2DParity;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 
 import javax.vecmath.Point2d;
 
@@ -42,14 +42,20 @@ public class Tetrahedral2DParityTest {
     private static final int ANTICLOCKWISE = +1;
     private static final int NONE          = 0;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstruction_InvalidCoords() {
-        new Tetrahedral2DParity(new Point2d[0], new int[4]);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new Tetrahedral2DParity(new Point2d[0], new int[4]);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstruction_InvalidElev() {
-        new Tetrahedral2DParity(new Point2d[4], new int[0]);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new Tetrahedral2DParity(new Point2d[4], new int[0]);
+                                });
     }
 
     /**

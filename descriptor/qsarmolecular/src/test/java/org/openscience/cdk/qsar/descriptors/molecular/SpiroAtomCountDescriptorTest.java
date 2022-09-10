@@ -19,9 +19,9 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -39,12 +39,12 @@ public class SpiroAtomCountDescriptorTest extends MolecularDescriptorTest {
     public SpiroAtomCountDescriptorTest() {
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setupBeforeClass() throws Exception {
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(SpiroAtomCountDescriptor.class);
 

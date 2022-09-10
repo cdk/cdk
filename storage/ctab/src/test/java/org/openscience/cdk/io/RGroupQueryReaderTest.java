@@ -25,8 +25,9 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -64,7 +65,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new RGroupQueryReader(), "rgfile.1.mol");
     }
@@ -349,7 +350,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * This RGFile is incomplete, RGP lines are missing. We still want to
      * accept it (Symyx/ChemAxon software accepts it too).
      */
-    @Test(expected = CDKException.class)
+    @Test
     public void testRgroupQueryFile6() throws Exception {
         String filename = "rgfile.6.mol";
         logger.info("Testing: " + filename);
@@ -366,11 +367,14 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertFalse(rGroupQuery.areSubstituentsDefined());
 
         //Getting for all configurations won't happen, because not all groups were set
-        rGroupQuery.getAllConfigurations(); // Will raise exception
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    rGroupQuery.getAllConfigurations(); // Will raise exception
+                                });
 
     }
 
-    /**
+                                /**
      * Test parsing of RGFile rgfile.7.mol.
      * This RGFile has APO lines with value 3: both attachment points.<P>
      *

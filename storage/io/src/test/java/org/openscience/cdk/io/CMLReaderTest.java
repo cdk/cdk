@@ -29,8 +29,9 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -50,7 +51,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new CMLReader(), "org/openscience/cdk/io/3.cml");
     }
@@ -60,14 +61,18 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     @Override
     public void testSetReader_Reader() throws Exception {
-        InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
-        chemObjectIO.setReader(new InputStreamReader(ins));
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    InputStream ins = ChemObjectReaderTest.class.getClassLoader()
+                                                                                .getResourceAsStream(testFile);
+                                    chemObjectIO.setReader(new InputStreamReader(ins));
+                                });
     }
 
-    /**
+                                /**
      * Ensure stereoBond content is read if the usual "dictRef" attribute is not
      * supplied
      *

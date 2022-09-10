@@ -22,15 +22,15 @@
 package org.openscience.cdk.renderer.font;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * @cdk.module test-renderbasic
  */
 public class AWTFontManagerTest extends AbstractFontManagerTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setFontManager(new AWTFontManager());
     }

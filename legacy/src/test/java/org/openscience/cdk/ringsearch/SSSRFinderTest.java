@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;

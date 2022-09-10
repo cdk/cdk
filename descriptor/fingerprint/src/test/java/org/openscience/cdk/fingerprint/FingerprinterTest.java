@@ -33,7 +33,8 @@ import java.util.Random;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDK;
@@ -180,25 +181,26 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Assert.assertNotNull(fingerprinter.getBitFingerprint(product));
     }
 
-    @Test(expected = CDKException.class)
     @Category(SlowTest.class)
     public void testbug2917084() throws Exception {
-        String filename1 = "boronBuckyBall.mol";
-        logger.info("Testing: " + filename1);
-        InputStream ins1 = this.getClass().getResourceAsStream(filename1);
-        MDLV2000Reader reader = new MDLV2000Reader(ins1, Mode.STRICT);
-        IChemFile chemFile = reader.read(new ChemFile());
-        Assert.assertNotNull(chemFile);
-        IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        Assertions.assertThrows(CDKException.class, () -> {
+            String filename1 = "boronBuckyBall.mol";
+            logger.info("Testing: " + filename1);
+            InputStream ins1 = this.getClass().getResourceAsStream(filename1);
+            MDLV2000Reader reader = new MDLV2000Reader(ins1, Mode.STRICT);
+            IChemFile chemFile = reader.read(new ChemFile());
+            Assert.assertNotNull(chemFile);
+            IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
-        Assert.assertNotNull(fingerprinter.getBitFingerprint(mol));
+            Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
+            Assert.assertNotNull(fingerprinter.getBitFingerprint(mol));
+        });
     }
 
-    /**
-     * @cdk.bug 2819557
-     * @throws org.openscience.cdk.exception.CDKException
-     */
+                                /**
+                                 * @cdk.bug 2819557
+                                 * @throws org.openscience.cdk.exception.CDKException
+                                 */
     @Test
     public void testBug2819557() throws CDKException {
         IAtomContainer butane = makeButane();
@@ -362,7 +364,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         return mol;
     }
 
-    @Test public void pseudoAtomFingerprint() throws CDKException {
+    @Test
+    public void pseudoAtomFingerprint() throws CDKException {
         final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         final String query  = "*1CCCC1";
         final String indole = "N1CCCC1";
@@ -398,7 +401,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         assertFalse(FingerprinterTool.isSubset(fp3, fp4));
     }
 
-    @Test public void testVersion() {
+    @Test
+    public void testVersion() {
         Fingerprinter fpr = new Fingerprinter(1024, 7);
         fpr.setPathLimit(2000);
         fpr.setHashPseudoAtoms(true);
@@ -518,7 +522,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Assert.assertEquals(expected, actual);
     }
 
-    @Test public void rawFpTestDepth() throws CDKException {
+    @Test
+    public void rawFpTestDepth() throws CDKException {
         final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         Fingerprinter fpr = new Fingerprinter(1024, 7); // 7 bonds
         fpr.setPathLimit(2000);

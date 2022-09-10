@@ -20,8 +20,8 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractSingleElectronTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  */
 public class DebugSingleElectronTest extends AbstractSingleElectronTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(DebugSingleElectron::new);
     }

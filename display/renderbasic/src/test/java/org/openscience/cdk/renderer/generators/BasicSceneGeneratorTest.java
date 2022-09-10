@@ -28,8 +28,8 @@ import java.util.List;
 import javax.vecmath.Point2d;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
@@ -48,7 +48,7 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
         return null;
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setup() {
         super.setup();

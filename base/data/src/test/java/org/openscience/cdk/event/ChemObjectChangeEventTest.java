@@ -19,8 +19,8 @@
 package org.openscience.cdk.event;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class ChemObjectChangeEventTest extends CDKTestCase {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {}
 
     @Test

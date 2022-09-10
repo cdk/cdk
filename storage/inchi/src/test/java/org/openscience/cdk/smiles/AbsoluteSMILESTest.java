@@ -25,8 +25,9 @@
 package org.openscience.cdk.smiles;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -103,7 +104,7 @@ public class AbsoluteSMILESTest {
                 "N12[C@H](C)N3N([C@@H]3C)[C@H](C)N1[C@H]2C", "N12N([C@@H](C)N3N([C@H]3C)[C@H]1C)[C@H]2C");
     }
 
-    @Ignore("Random failure: to be resolved https://github.com/cdk/cdk/issues/336")
+    @Disabled("Random failure: to be resolved https://github.com/cdk/cdk/issues/336")
     public void dbStereoCanonGeneration() throws Exception {
         String in = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -123,9 +124,11 @@ public class AbsoluteSMILESTest {
         test("[Rf]");
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void problematic() throws Exception {
-        test("*[Rf]");
+        Assertions.assertThrows(CDKException.class, () -> {
+            test("*[Rf]");
+        });
     }
 
     static void test(String... inputs) throws Exception {

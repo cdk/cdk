@@ -1,6 +1,6 @@
 package org.openscience.cdk.fingerprint;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 

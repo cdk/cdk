@@ -23,7 +23,9 @@
 package org.openscience.cdk.io.cml;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemFile;
 
@@ -43,19 +45,22 @@ public class CMLModuleStackTest extends CDKTestCase {
         }
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test
     public void testPop() {
-        CMLModuleStack stack = new CMLModuleStack();
-        ICMLModule first = new CMLCoreModule((IChemFile) null);
-        ICMLModule second = new CMLCoreModule((IChemFile) null);
-        ICMLModule third = new CMLCoreModule((IChemFile) null);
-        stack.push(first);
-        stack.push(second);
-        stack.push(third);
-        Assert.assertEquals(third, stack.pop());
-        Assert.assertEquals(second, stack.pop());
-        Assert.assertEquals(first, stack.pop());
-        stack.pop();
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,
+                                () -> {
+                                    CMLModuleStack stack = new CMLModuleStack();
+                                    ICMLModule first = new CMLCoreModule((IChemFile) null);
+                                    ICMLModule second = new CMLCoreModule((IChemFile) null);
+                                    ICMLModule third = new CMLCoreModule((IChemFile) null);
+                                    stack.push(first);
+                                    stack.push(second);
+                                    stack.push(third);
+                                    Assert.assertEquals(third, stack.pop());
+                                    Assert.assertEquals(second, stack.pop());
+                                    Assert.assertEquals(first, stack.pop());
+                                    stack.pop();
+                                });
     }
 
     @Test

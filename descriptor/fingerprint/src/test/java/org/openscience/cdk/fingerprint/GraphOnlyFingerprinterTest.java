@@ -23,7 +23,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -115,7 +115,8 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
         return structure;
     }
 
-    @Test public void testGetRawFingerprint() throws CDKException {
+    @Test
+    public void testGetRawFingerprint() throws CDKException {
         final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         GraphOnlyFingerprinter fpr = new GraphOnlyFingerprinter(1024, 7); // 7 bonds
         fpr.setPathLimit(2000);

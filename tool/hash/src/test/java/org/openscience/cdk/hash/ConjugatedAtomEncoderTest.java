@@ -24,10 +24,9 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import org.openscience.cdk.hash.AtomEncoder;
-import org.openscience.cdk.hash.ConjugatedAtomEncoder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -48,14 +47,20 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 public class ConjugatedAtomEncoderTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testConstruction_Null() {
-        new ConjugatedAtomEncoder(null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new ConjugatedAtomEncoder(null);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstruction_Empty() {
-        new ConjugatedAtomEncoder(Collections.emptyList());
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new ConjugatedAtomEncoder(Collections.emptyList());
+                                });
     }
 
     /**
@@ -86,14 +91,20 @@ public class ConjugatedAtomEncoderTest {
         verifyNoMoreInteractions(a, b, c, atom, container);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCreate_Null() {
-        ConjugatedAtomEncoder.create(null, new AtomEncoder[0]);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    ConjugatedAtomEncoder.create(null, new AtomEncoder[0]);
+                                });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCreate_Null2() {
-        ConjugatedAtomEncoder.create(mock(AtomEncoder.class), null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    ConjugatedAtomEncoder.create(mock(AtomEncoder.class), null);
+                                });
     }
 
     @Test

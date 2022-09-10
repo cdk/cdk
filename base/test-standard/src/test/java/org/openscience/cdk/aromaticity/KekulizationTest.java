@@ -24,7 +24,8 @@
 
 package org.openscience.cdk.aromaticity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -118,20 +119,22 @@ public class KekulizationTest {
     }
 
     /** Hydrogens must be present - otherwise the kekulisation is ambiguous. */
-    @Test(expected = CDKException.class)
+    @Test
     public void pyrroleWithMissingHydrogen() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
-        m.addAtom(atom("N", 0, true));
-        m.addAtom(atom("C", 1, true));
-        m.addAtom(atom("C", 1, true));
-        m.addAtom(atom("C", 1, true));
-        m.addAtom(atom("C", 1, true));
-        m.addBond(bond(m, 0, 1, UNSET, true));
-        m.addBond(bond(m, 1, 2, UNSET, true));
-        m.addBond(bond(m, 2, 3, UNSET, true));
-        m.addBond(bond(m, 3, 4, UNSET, true));
-        m.addBond(bond(m, 4, 0, UNSET, true));
-        assertBondOrders(m);
+        Assertions.assertThrows(CDKException.class, () -> {
+            IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+            m.addAtom(atom("N", 0, true));
+            m.addAtom(atom("C", 1, true));
+            m.addAtom(atom("C", 1, true));
+            m.addAtom(atom("C", 1, true));
+            m.addAtom(atom("C", 1, true));
+            m.addBond(bond(m, 0, 1, UNSET, true));
+            m.addBond(bond(m, 1, 2, UNSET, true));
+            m.addBond(bond(m, 2, 3, UNSET, true));
+            m.addBond(bond(m, 3, 4, UNSET, true));
+            m.addBond(bond(m, 4, 0, UNSET, true));
+            assertBondOrders(m);
+        });
     }
 
     /** @cdk.inchi InChI=1S/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H */

@@ -21,11 +21,10 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -40,7 +39,7 @@ public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
 
     public DistanceToAtomDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(DistanceToAtomDescriptor.class);
     }

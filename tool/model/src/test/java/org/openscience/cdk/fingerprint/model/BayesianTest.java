@@ -30,7 +30,7 @@
 
 package org.openscience.cdk.fingerprint.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.SlowTest;

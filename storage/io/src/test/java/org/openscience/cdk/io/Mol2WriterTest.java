@@ -23,9 +23,9 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -56,7 +56,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new Mol2Writer());
@@ -73,7 +73,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
      * @throws IOException
      * @cdk.bug 2675188
      */
-    @Ignore("moved to SMILES2Mol2WriterTest")
+    @Disabled("moved to SMILES2Mol2WriterTest")
     public void testWriter1() throws Exception {
         IAtomContainer molecule = mock(IAtomContainer.class);
 
@@ -85,7 +85,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 1") > 0);
     }
 
-    @Ignore("moved to SMILES2Mol2WriterTest")
+    @Disabled("moved to SMILES2Mol2WriterTest")
     public void testWriter2() throws Exception {
         IAtomContainer molecule = mock(IAtomContainer.class);
         Aromaticity.cdkLegacy().apply(molecule);
@@ -103,7 +103,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 8 7 2") > 0);
     }
 
-    @Ignore("moved to SMILES2Mol2WriterTest")
+    @Disabled("moved to SMILES2Mol2WriterTest")
     public void testWriterForAmide() throws Exception {
         IAtomContainer molecule = mock(IAtomContainer.class);
         Aromaticity.cdkLegacy().apply(molecule);

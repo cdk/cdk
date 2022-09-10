@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Some isolated test of the cumulative encoder factory, check out {@link

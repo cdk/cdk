@@ -24,7 +24,7 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 
 import javax.vecmath.Point2d;

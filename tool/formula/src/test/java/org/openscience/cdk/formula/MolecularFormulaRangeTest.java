@@ -22,7 +22,9 @@ package org.openscience.cdk.formula;
 import java.util.Iterator;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -379,13 +381,16 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * Test what happens when null isotope is added to MF range.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testNull() throws Exception {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
         IIsotope nul = null;
         mfRange.addIsotope(carb, 2, 5);
-        mfRange.addIsotope(nul, 3, 7);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    mfRange.addIsotope(nul, 3, 7);
+                                });
     }
     
 }

@@ -24,7 +24,9 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,14 +38,18 @@ public class BasicPermutationParityTest {
 
     final BasicPermutationParity permutationParity = new BasicPermutationParity(new int[]{0, 1, 2, 3});
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testConstruction_Null() {
-        new BasicPermutationParity(null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {new BasicPermutationParity(null);});
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstruction_Empty() {
-        new BasicPermutationParity(new int[0]);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new BasicPermutationParity(new int[0]);
+                                });
     }
 
     @Test

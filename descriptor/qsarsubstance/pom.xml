@@ -25,6 +25,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-standard</artifactId>
             <version>${project.parent.version}</version>

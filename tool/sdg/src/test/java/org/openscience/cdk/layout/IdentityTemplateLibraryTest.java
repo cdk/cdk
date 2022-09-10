@@ -24,7 +24,7 @@
 
 package org.openscience.cdk.layout;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;

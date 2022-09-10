@@ -26,8 +26,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -70,7 +70,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIIsotope_NaturalAbundance() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -83,7 +83,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore("exact mass not currently supported in CML implmenetation")
+    @Disabled("exact mass not currently supported in CML implmenetation")
     @Test
     public void testIIsotope_ExactMass() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -108,7 +108,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIAtomType_Name() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -121,7 +121,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIAtomType_MaxBondOrder() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -134,7 +134,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIAtomType_BondOrderSum() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -159,7 +159,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIAtomType_FormalNeighborCount() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -172,7 +172,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIAtomType_Hybridization() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -185,7 +185,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIAtomType_CovalentRadius() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -198,7 +198,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIAtomType_Valency() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -285,7 +285,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testIAtom_StereoParity() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);

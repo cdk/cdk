@@ -26,8 +26,8 @@ package org.openscience.cdk.structgen;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -43,7 +43,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 
     private static SmilesParser parser;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }

@@ -29,6 +29,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -36,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author John May
@@ -77,18 +78,24 @@ public class GraphUtilTest {
         assertThat(path, is(new int[]{0, 1, 2, 3, 4, 5, 0}));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAcyclic() {
-        // 0-1-2-3-4-5 (5 and 0 not connected)
-        int[][] g = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
-        GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    // 0-1-2-3-4-5 (5 and 0 not connected)
+                                    int[][] g = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
+                                    GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAcyclic2() {
-        // 0-1-2 3-4-5- (2 and 3) not connected
-        int[][] g = new int[][]{{1}, {0, 2}, {1}, {4}, {3, 5}, {4}};
-        GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    // 0-1-2 3-4-5- (2 and 3) not connected
+                                    int[][] g = new int[][]{{1}, {0, 2}, {1}, {4}, {3, 5}, {4}};
+                                    GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
+                                });
     }
 
     @Test
@@ -182,15 +189,16 @@ public class GraphUtilTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testToAdjList_missingAtom() throws Exception {
 
         IAtomContainer container = simple();
 
         container.removeAtomOnly(4); // remove 'e'
-
-        GraphUtil.toAdjList(container);
-
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    GraphUtil.toAdjList(container);
+                                });
     }
 
     @Test
@@ -199,9 +207,12 @@ public class GraphUtilTest {
         assertThat(adjacent.length, is(0));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testToAdjList_Null() throws Exception {
-        GraphUtil.toAdjList(null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    GraphUtil.toAdjList(null);
+                                });
     }
 
     /**

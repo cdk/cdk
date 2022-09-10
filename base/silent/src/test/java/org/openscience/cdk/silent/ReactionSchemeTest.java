@@ -19,8 +19,8 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.test.interfaces.AbstractReactionSchemeTest;
 
@@ -31,7 +31,7 @@ import org.openscience.cdk.test.interfaces.AbstractReactionSchemeTest;
  */
 public class ReactionSchemeTest extends AbstractReactionSchemeTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(ReactionScheme::new);
     }

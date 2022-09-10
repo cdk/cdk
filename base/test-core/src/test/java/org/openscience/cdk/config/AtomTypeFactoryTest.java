@@ -19,7 +19,7 @@
 package org.openscience.cdk.config;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtom;

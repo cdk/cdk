@@ -22,13 +22,12 @@ package org.openscience.cdk.graph.invariant;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -60,7 +59,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
     private static final ILoggingTool            logger = LoggingToolFactory
                                                           .createLoggingTool(ConjugatedPiSystemsDetectorTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         builder = SilentChemObjectBuilder.getInstance();
         lpcheck = new LonePairElectronChecker();

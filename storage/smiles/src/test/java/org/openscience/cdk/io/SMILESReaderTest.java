@@ -23,8 +23,8 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
@@ -56,7 +56,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setSimpleChemObjectReader(new SMILESReader(), "org/openscience/cdk/io/smiles.smi");
     }
@@ -112,7 +112,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(5, som.getAtomContainerCount());
     }
     
-    @Test 
+    @Test
     public void badSmilesLine() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         String input = "C\nn1cccc1\nc1ccccc1\n";

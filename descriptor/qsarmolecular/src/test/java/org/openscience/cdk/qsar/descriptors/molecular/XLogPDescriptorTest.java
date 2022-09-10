@@ -19,13 +19,12 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -42,12 +41,12 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
 
     public XLogPDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(XLogPDescriptor.class);
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testno688() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
@@ -133,7 +132,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(4.62, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testno937() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};

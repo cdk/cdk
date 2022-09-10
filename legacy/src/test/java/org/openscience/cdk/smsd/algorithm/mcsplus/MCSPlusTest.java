@@ -24,14 +24,14 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.jupiter.api.AfterAll;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * @cdk.module test-smsd
@@ -41,16 +41,16 @@ public class MCSPlusTest {
 
     public MCSPlusTest() {}
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {}
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {}
 
-    @Before
+    @BeforeEach
     public void setUp() {}
 
-    @After
+    @AfterEach
     public void tearDown() {}
 
     @Test

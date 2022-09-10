@@ -17,8 +17,8 @@
 package org.openscience.cdk.qsar.descriptors.substance;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Substance;
 import org.openscience.cdk.interfaces.ISubstance;
@@ -29,7 +29,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 public class OxygenAtomCountDescriptorTest extends SubstanceDescriptorTest {
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(OxygenAtomCountDescriptor.class);
     }

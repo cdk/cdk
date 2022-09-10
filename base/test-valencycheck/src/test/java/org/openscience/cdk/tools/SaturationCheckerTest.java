@@ -19,8 +19,8 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -44,7 +44,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     SaturationChecker satcheck   = null;
     boolean           standAlone = false;
 
-    @Before
+    @BeforeEach
     @Test
     public void setUp() throws Exception {
         satcheck = new SaturationChecker();

@@ -24,8 +24,8 @@
 
 package org.openscience.cdk.smarts;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
@@ -132,7 +132,7 @@ public class SmartsPatternTest {
                    is(0));
     }
 
-    @Ignore("Not supported yet")
+    @Disabled("Not supported yet")
     public void optionalMapping() throws Exception {
         assertThat(SmartsPattern.create("[C:?1]>>[C:?1]", null).matchAll(rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).count(),
                    is(2));
@@ -164,12 +164,14 @@ public class SmartsPatternTest {
     }
 
     // map :1 in query binds only to :7 in target
-    @Test public void atomMapsWithOrLogic3() throws Exception {
+    @Test
+    public void atomMapsWithOrLogic3() throws Exception {
         assertThat(SmartsPattern.create("[C:1][C:1]>>[C:1]", null).matchAll(rsmi("[CH3:7][CH3:7]>>[CH3:7][CH3:8]")).count(),
                    is(2));
     }
 
-    @Test public void CCBondForming() throws Exception {
+    @Test
+    public void CCBondForming() throws Exception {
         assertThat(SmartsPattern.create("([C:1]).([C:2])>>[C:1][C:2]", null)
                                 .matchAll(rsmi("[C-:13]#[N:14].[K+].[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1]Br)[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2>>[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1][C:13]#[N:14])[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2 |f:0.1|")).count(),
                    is(2));

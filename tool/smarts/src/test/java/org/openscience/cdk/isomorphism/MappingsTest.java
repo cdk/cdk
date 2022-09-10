@@ -24,7 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;

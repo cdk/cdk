@@ -19,11 +19,10 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -47,7 +46,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
 
     public RotatableBondsCountDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(RotatableBondsCountDescriptor.class);
     }

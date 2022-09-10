@@ -25,7 +25,7 @@
 
 package org.openscience.cdk.io;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;

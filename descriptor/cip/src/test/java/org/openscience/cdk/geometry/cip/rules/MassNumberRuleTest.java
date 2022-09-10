@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.cip.ILigand;
 import org.openscience.cdk.geometry.cip.ImplicitHydrogenLigand;
@@ -45,7 +45,7 @@ public class MassNumberRuleTest extends CDKTestCase {
     static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IAtomContainer molecule;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         molecule = smiles.parseSmiles("CC([13C])([2H])[H]");
     }

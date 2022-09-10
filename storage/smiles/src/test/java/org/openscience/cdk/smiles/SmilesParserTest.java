@@ -27,8 +27,9 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
@@ -82,7 +83,7 @@ public class SmilesParserTest extends CDKTestCase {
 
     private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
-    @Test(timeout = 1000)
+    @Test
     public void testSingleOrDoubleFlag() throws Exception {
         String smiles = "c1cccn1c2cccn2";
 
@@ -126,12 +127,15 @@ public class SmilesParserTest extends CDKTestCase {
      * 1-(1H-pyrrol-2-yl)pyrrole
      * @cdk.inchi InChI=1/C8H8N2/c1-2-7-10(6-1)8-4-3-5-9-8/h1-7,9H
      */
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void pyrrolylpyrrole_invalid() throws InvalidSmilesException {
-        load("c1cccn1c2cccn2");
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    load("c1cccn1c2cccn2");
+                                });
     }
 
-    /**
+                                /**
      * 1-(1H-pyrrol-2-yl)pyrrole
      * @cdk.inchi InChI=1/C8H8N2/c1-2-7-10(6-1)8-4-3-5-9-8/h1-7,9H
      */
@@ -142,7 +146,7 @@ public class SmilesParserTest extends CDKTestCase {
     }
 
     /** @cdk.bug 1363882 */
-    @Test(timeout = 1000)
+    @Test
     public void testBug1363882() throws Exception {
         String smiles = "[H]c2c([H])c(c1c(nc(n1([H]))C(F)(F)F)c2Cl)Cl";
         IAtomContainer mol = load(smiles);
@@ -153,7 +157,7 @@ public class SmilesParserTest extends CDKTestCase {
     }
 
     /** @cdk.bug 1535587 */
-    @Test(timeout = 1000)
+    @Test
     public void testBug1535587() throws Exception {
         String smiles = "COC(=O)c2ccc3n([H])c1ccccc1c3(c2)";
         IAtomContainer mol = load(smiles);
@@ -166,7 +170,7 @@ public class SmilesParserTest extends CDKTestCase {
     }
 
     /** @cdk.bug 1579235 */
-    @Test(timeout = 1000)
+    @Test
     public void testBug1579235() throws Exception {
         String smiles = "c2cc1cccn1cc2";
         IAtomContainer mol = load(smiles);
@@ -184,7 +188,7 @@ public class SmilesParserTest extends CDKTestCase {
         }
     }
 
-    @Test(timeout = 1000)
+    @Test
     public void testBug1579229() throws Exception {
         String smiles = "c1c(c23)ccc(c34)ccc4ccc2c1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -198,7 +202,7 @@ public class SmilesParserTest extends CDKTestCase {
     }
 
     /** @cdk.bug 1579230 */
-    @Test(timeout = 1000)
+    @Test
     public void testBug1579230() throws Exception {
         String smiles = "Cc1cccc2sc3nncn3c12";
         IAtomContainer mol = load(smiles);
@@ -217,7 +221,7 @@ public class SmilesParserTest extends CDKTestCase {
         }
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testPyridine_N_oxideUncharged() throws Exception {
         String smiles = "O=n1ccccc1";
         IAtomContainer mol = loadExact(smiles);
@@ -226,7 +230,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(7, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testPyridine_N_oxideCharged() throws Exception {
         String smiles = "[O-][n+]1ccccc1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -234,7 +238,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(7, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testPositivePhosphor() throws Exception {
         String smiles = "[Cl+3]([O-])([O-])([O-])[O-].[P+]([O-])(c1ccccc1)(c1ccccc1)c1cc([nH0+](C)c(c1)c1ccccc1)c1ccccc1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -253,7 +257,7 @@ public class SmilesParserTest extends CDKTestCase {
      * a ring is aromatic if all the atoms in a ring have already been flagged
      * as aromatic from the testing of other rings in the system.
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testUnusualConjugatedRings() throws Exception {
         //7090-41-7:
         String smiles = "c1(Cl)cc2c3cc(Cl)c(Cl)cc3c2cc1Cl";
@@ -262,7 +266,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(16, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testUnusualConjugatedRings_2() throws Exception {
         //206-44-0:
         String smiles = "c(c(ccc1)ccc2)(c1c(c3ccc4)c4)c23";
@@ -271,7 +275,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(16, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testUnusualConjugatedRings_3() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
@@ -282,7 +286,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(20, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testUnusualConjugatedRings_4() throws Exception {
         //2693-46-1:
         String smiles = "Nc1c(c23)cccc3c4ccccc4c2cc1";
@@ -291,7 +295,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(17, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testUnusualConjugatedRings_5() throws Exception {
         //205-99-2:
         String smiles = "c12ccccc1cc3c4ccccc4c5c3c2ccc5";
@@ -300,7 +304,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(20, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void test187_78_0() throws Exception {
         // are all 4 rings aromatic? Is smiles correct?
         String smiles = "c1c(c23)ccc(c34)ccc4ccc2c1";
@@ -309,7 +313,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(14, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void test187_78_0_PubChem() throws Exception {
         // are all 4 rings aromatic? Is smiles correct?
         String smiles = "C1=CC2=C3C(=CC=C4C3=C1C=C4)C=C2";
@@ -318,7 +322,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(14, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void test41814_78_2() throws Exception {
         String smiles = "Cc1cccc2sc3nncn3c12";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -326,7 +330,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(13, mol.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void test239_64_5() throws Exception {
         String smiles = "c1ccc4c(c1)ccc5c3ccc2ccccc2c3[nH]c45";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -334,16 +338,19 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(21, mol.getAtomCount());
     }
 
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void test239_64_5_invalid() throws Exception {
-        load("c1ccc4c(c1)ccc5c3ccc2ccccc2c3nc45");
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    load("c1ccc4c(c1)ccc5c3ccc2ccccc2c3nc45");
+                                });
     }
 
     /*
      * Compounds like Indolizine (274-40-8) with a fused nitrogen as part of a 6
      * membered ring and another ring do not parse
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testIndolizine() throws Exception {
         String smiles = "c2cc1cccn1cc2";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -354,7 +361,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles1() throws Exception {
         String smiles = "C1c2c(c3c(c(O)cnc3)cc2)CC(=O)C1";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -365,7 +372,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles2() throws Exception {
         String smiles = "O=C(O3)C1=COC(OC4OC(CO)C(O)C(O)C4O)C2C1C3C=C2COC(C)=O";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -376,7 +383,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles3() throws Exception {
         String smiles = "CN1C=NC2=C1C(N(C)C(N2C)=O)=O";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -387,7 +394,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles4() throws Exception {
         String smiles = "CN(C)CCC2=CNC1=CC=CC(OP(O)(O)=O)=C12";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -398,7 +405,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles5() throws Exception {
         String smiles = "O=C(O)C1C(OC(C3=CC=CC=C3)=O)CC2N(C)C1CC2";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -409,7 +416,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles6() throws Exception {
         String smiles = "C1(C2(C)(C))C(C)=CCC2C1";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -417,7 +424,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(10, molecule.getAtomCount());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles7() throws Exception {
         String smiles = "C1(C=C(C=C(C=C(C=C(C=CC%35=C%36)C%31=C%35C%32=C%33C%36=C%34)C%22=C%31C%23=C%32C%24=C%25C%33=C%26C%34=CC%27=CC%28=CC=C%29)C%14=C%22C%15=C%23C%16=C%24C%17=C%18C%25=C%19C%26=C%27C%20=C%28C%29=C%21)C6=C%14C7=C%15C8=C%16C9=C%17C%12=C%11C%18=C%10C%19=C%20C%21=CC%10=CC%11=CC(C=C%30)=C%12%13)=C(C6=C(C7=C(C8=C(C9=C%13C%30=C5)C5=C4)C4=C3)C3=C2)C2=CC=C1";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -425,7 +432,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertNotNull(molecule);
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles8() throws Exception {
         String smiles = "CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -433,7 +440,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertNotNull(molecule);
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSmiles9() throws Exception {
         String smiles = "NC(C(C)C)C(NC(C(C)O)C(NC(C(C)C)C(NC(CCC(N)=O)C(NC(CC([O-])[O-])C(NCC(NC(CC(N)=O)C(NC(Cc1ccccc1)C(NC(CO)C(NC(Cc2ccccc2)C(NC(CO)C(NC(CC(C)C)C(NC(CCC([O-])[O-])C(NC(CO)C(NC(C(C)C)C(NC(CCCC[N+])C(NC(CCCC[N+])C(NC(CC(C)C)C(NC(CCCC[N+])C(NC(CC([O-])[O-])C(NC(CC(C)C)C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(N3CCCC3C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(N4CCCC4C(NC(CCCNC([N+])[N+])C(NC(C(C)C)C(NCC(NC(CCCC[N+])C(NC(CC(C)C)C(NC(CCCNC([N+])[N+])C(NC(CC(N)=O)C(NC(Cc5ccccc5)C(NC(C)C(N6CCCC6C(NC(C(C)CC)C(N7CCCC7C(NCC(NC(CCC([O-])[O-])C(N8CCCC8C(NC(C(C)C)C(NC(C(C)C)C(N9CCCC9C(NC(C(C)CC)C(NC(CC(C)C)C(NC%19C[S][S]CC(C(NC(CCCC[N+])C(NC(CCC([O-])[O-])C(N%10CCCC%10C(NC(CC(N)=O)C(NC(C)C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(NC(C(C)CC)C(NC(CC(C)C)C(NC(CCC(N)=O)C(NC(CCCNC([N+])[N+])C(NC(CC(C)C)C(NC(CCC([O-])[O-])C(NC(CCC([O-])[O-])C(NC(C(C)CC)C(NC(C)C(NC(CCC([O-])[O-])C(NC(CC([O-])[O-])C(N%11CCCC%11C(NCC(NC(C(C)O)C(NC%14C[S][S]CC%13C(NC(C(C)O)C(NCC(NC(C[S][S]CC(C(NC(C)C(NC(Cc%12ccc(O)cc%12)C(NC(C)C(NC(C)C(N%13)=O)=O)=O)=O)=O)NC(=O)C(C(C)CC)NC(=O)C(CCC([O-])[O-])NC%14=O)C(O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)NC(=O)C(CC(C)C)NC(=O)C%15CCCN%15C(=O)C(CCCC[N+])NC(=O)C(CC(C)C)NC(=O)C(CCC([O-])[O-])NC(=O)C(CCC([O-])[O-])NC(=O)C%16CCCN%16C(=O)C(Cc%17ccccc%17)NC(=O)C(CC(N)=O)NC(=O)C%18CCCN%18C(=O)C(CC(N)=O)NC(=O)C(CO)NC%19=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -444,7 +451,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1296113
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug1296113() throws Exception {
         String smiles = "S(=O)(=O)(-O)-c1c2c(c(ccc2-N-c2ccccc2)-N=N-c2c3c(c(cc2)-N=N-c2c4c(c(ccc4)-S(=O)(=O)-O)ccc2)cccc3)ccc1";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -455,7 +462,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1324105
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testAromaticSmiles2() throws Exception {
         String smiles = "n12:n:n:n:c:2:c:c:c:c:1";
         IAtomContainer molecule = loadExact(smiles);
@@ -468,8 +475,8 @@ public class SmilesParserTest extends CDKTestCase {
      * given is invalid: the negative has an implied zero hydrogen count,
      * making it have an unfilled valency.
      */
-    @Ignore
-    @Test(timeout = 1000)
+    @Disabled
+    @Test
     public void testAromaticSmilesWithCharge() throws Exception {
         String smiles = "c1cc[c-]c1";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -481,7 +488,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testAromaticSmiles() throws Exception {
         String smiles = "c1ccccc1";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -492,7 +499,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 630475
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug630475() throws Exception {
         String smiles = "CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -502,7 +509,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 585811
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug585811() throws Exception {
         String smiles = "CC(C(C8CCC(CC8)=O)C3C4C(CC5(CCC(C9=CC(C=CN%10)=C%10C=C9)CCCC5)C4)C2CCC1CCC7(CCC7)C6(CC6)C1C2C3)=O";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -512,7 +519,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 593648
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug593648() throws Exception {
         String smiles = "CC1=CCC2CC1C(C)2C";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -569,7 +576,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testReadingOfTwoCharElements() throws Exception {
         String smiles = "[Na+]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -577,7 +584,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("Na", mol.getAtom(0).getSymbol());
     }
 
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testReadingOfOneCharElements() throws Exception {
         String smiles = "[K+]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -588,7 +595,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testOrganicSubsetUnderstanding() throws Exception {
         String smiles = "[Ni+2]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -614,7 +621,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testMassNumberReading() throws Exception {
         String smiles = "[13C]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -626,7 +633,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testFormalChargeReading() throws Exception {
         String smiles = "[OH-]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -638,7 +645,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testReadingPartionedMolecules() throws Exception {
         String smiles = "[Na+].[OH-]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -649,7 +656,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testExplicitSingleBond() throws Exception {
         String smiles = "C-C";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -661,7 +668,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1175478
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug1175478() throws Exception {
         String smiles = "c1cc-2c(cc1)C(c3c4c2onc4c(cc3N5CCCC5)N6CCCC6)=O";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -672,7 +679,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testUnkownAtomType() throws Exception {
         String smiles = "*C";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -693,7 +700,7 @@ public class SmilesParserTest extends CDKTestCase {
      * @cdk.bug 2596061
      * @throws InvalidSmilesException
      */
-    @org.junit.Test
+    @Test
     public void testUnknownAtomType2() throws InvalidSmilesException {
         String smiles = "[12*H2-]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -708,7 +715,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBondCreation() throws Exception {
         String smiles = "CC";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -724,7 +731,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 784433
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug784433() throws Exception {
         String smiles = "c1cScc1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -735,7 +742,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 873783.
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testProton() throws Exception {
         String smiles = "[H+]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -746,7 +753,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 881330.
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSMILESFromXYZ() throws Exception {
         String smiles = "C.C.N.[Co].C.C.C.[H].[He].[H].[H].[H].[H].C.C.[H].[H].[H].[H].[H]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -756,7 +763,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSingleBracketH() throws Exception {
         String smiles = "[H]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -801,7 +808,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 862930.
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testHydroxonium() throws Exception {
         String smiles = "[H][O+]([H])[H]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -811,7 +818,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 809412
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug809412() throws Exception {
         String smiles = "Nc4cc3[n+](c2c(c1c(cccc1)cc2)nc3c5c4cccc5)c6c7c(ccc6)cccc7";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -823,7 +830,7 @@ public class SmilesParserTest extends CDKTestCase {
      *
      * @cdk.bug 956926
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug956926() throws Exception {
         String smiles = "[c+]1ccccc1";
         // C6H5+, phenyl cation
@@ -852,7 +859,7 @@ public class SmilesParserTest extends CDKTestCase {
      *
      * @see #testPyrrole()
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testPyrrole() throws Exception {
         String smiles = "c1ccc[NH]1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -870,7 +877,7 @@ public class SmilesParserTest extends CDKTestCase {
      * @cdk.bug 2679607
      * @throws Exception
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testHardCodedHydrogenCount() throws Exception {
         String smiles = "c1ccc[NH]1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -891,7 +898,7 @@ public class SmilesParserTest extends CDKTestCase {
      * @throws Exception
      * @cdk.bug 2679607
      */
-    @org.junit.Test
+    @Test
     public void testHardCodedHydrogenCount2() throws Exception {
         String smiles = "[CH2]CNC";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -903,7 +910,7 @@ public class SmilesParserTest extends CDKTestCase {
      *
      * @cdk.bug 956929
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug956929() throws Exception {
         String smiles = "Cn1cccc1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -924,7 +931,7 @@ public class SmilesParserTest extends CDKTestCase {
      *
      * @cdk.bug 956921
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug956921() throws Exception {
         String smiles = "[cH-]1cccc1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -941,7 +948,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1274464
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug1274464() throws Exception {
         IAtomContainer fromSmiles = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles("C1=CC=CC=C1");
         IAtomContainer fromFactory = TestMoleculeFactory.makeBenzene();
@@ -964,7 +971,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1095696
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testSFBug1095696() throws Exception {
         String smiles = "Nc1ncnc2[nH]cnc12";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -977,7 +984,7 @@ public class SmilesParserTest extends CDKTestCase {
      *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
      *  (Part I).
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testNonBond() throws Exception {
         String sodiumPhenoxide = "c1cc([O-].[Na+])ccc1";
         IAtomContainer mol = sp.parseSmiles(sodiumPhenoxide);
@@ -998,7 +1005,7 @@ public class SmilesParserTest extends CDKTestCase {
      *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
      *  (Part I).
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testConnectedByRingClosure() throws Exception {
         String sodiumPhenoxide = "C1.O2.C12";
         IAtomContainer mol = sp.parseSmiles(sodiumPhenoxide);
@@ -1030,7 +1037,7 @@ public class SmilesParserTest extends CDKTestCase {
      *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
      *  (Part I).
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testReaction() throws Exception {
         String reactionSmiles = "O>>[H+].[OH-]";
         IReaction reaction = sp.parseReactionSmiles(reactionSmiles);
@@ -1067,7 +1074,7 @@ public class SmilesParserTest extends CDKTestCase {
      *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 90
      *  (Part I).
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testReactionWithAgents() throws Exception {
         String reactionSmiles = "CCO.CC(=O)O>[H+]>CC(=O)OCC.O";
         IReaction reaction = sp.parseReactionSmiles(reactionSmiles);
@@ -1081,7 +1088,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testImplicitHydrogenCount() throws Exception {
         String smiles = "C";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1092,7 +1099,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 2028780
      */
-    @Test(timeout = 1000)
+    @Test
     public void testTungsten() throws Exception {
         String smiles = "[W]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1104,7 +1111,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testImplicitHydrogenCount2() throws Exception {
         String smiles = "CC";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1115,7 +1122,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testImplicitHydrogenCount2b() throws Exception {
         String smiles = "C=C";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1126,7 +1133,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testImplicitHydrogenCount2c() throws Exception {
         String smiles = "C#C";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1137,7 +1144,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testImplicitHydrogenCount3() throws Exception {
         String smiles = "CCC";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1148,7 +1155,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testImplicitHydrogenCount4() throws Exception {
         String smiles = "C1CCCCC1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1159,7 +1166,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testImplicitHydrogenCount4a() throws Exception {
         String smiles = "c1=cc=cc=c1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1170,7 +1177,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testImplicitHydrogenCount4b() throws Exception {
         String smiles = "c1ccccc1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1181,7 +1188,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testHOSECodeProblem() throws Exception {
         String smiles = "CC=CBr";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1192,7 +1199,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testPyridine() throws Exception {
         IAtomContainer mol = load("c1ccncc1");
         atomtype(mol);
@@ -1210,7 +1217,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1306780
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testParseK() throws Exception {
         IAtomContainer mol = sp.parseSmiles("C=CCC(=NOS(=O)(=O)[O-])SC1OC(CO)C(O)C(O)C1(O).[Na+]");
         Assert.assertNotNull(mol);
@@ -1228,7 +1235,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1459299
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1459299() throws Exception {
         IAtomContainer mol = sp.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
         Assert.assertNotNull(mol);
@@ -1238,7 +1245,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1365547
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1365547() throws Exception {
         IAtomContainer mol = loadExact("c2ccc1[nH]ccc1c2");
         Assert.assertNotNull(mol);
@@ -1249,7 +1256,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1365547
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1365547_2() throws Exception {
         IAtomContainer mol = loadExact("[H]c1c([H])c(c([H])c2c([H])c([H])n([H])c12)Br");
         Assert.assertNotNull(mol);
@@ -1269,7 +1276,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1235852
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1235852() throws Exception {
         //                                   0 1 234 56 7 890 12 3456 78
         IAtomContainer mol = sp.parseSmiles("O=C(CCS)CC(C)CCC2Cc1ccsc1CC2");
@@ -1287,7 +1294,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1519183
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1519183() throws Exception {
         //                             0    12345  6
         IAtomContainer mol = sp.parseSmiles("c%101ccccc1.O%10"); // phenol
@@ -1299,7 +1306,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1530926
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1530926() throws Exception {
         //                               0      12345   6
         IAtomContainer mol = loadExact("[n+]%101ccccc1.[O-]%10");
@@ -1319,7 +1326,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1541333
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1541333() throws Exception {
         //                              01  2 345  67  8 9 0 12 3 4  5 67 89  0  1 2
         IAtomContainer mol1 = sp.parseSmiles("OC(=O)CSC1=NC=2C=C(C=CC2N1C=3C=CC=CC3)N(=O)O");
@@ -1344,7 +1351,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1719287
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1719287() throws Exception {
         //                              01  2  3  4  5 67 8
         IAtomContainer mol = sp
@@ -1361,7 +1368,7 @@ public class SmilesParserTest extends CDKTestCase {
      * created.
      * @cdk.bug 1503541
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1503541() throws Exception {
         //                              0  1 23 45
         IAtomContainer mol = sp.parseSmiles("C=1C=CC=CC=1"); // benzene #1
@@ -1424,7 +1431,7 @@ public class SmilesParserTest extends CDKTestCase {
      *
      * @cdk.bug 1783367
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1783367() throws Exception {
         String smiles = "C=%10C=CC=C%02C=%10N(C)CCC%02";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1434,7 +1441,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1783547
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1783547() throws Exception {
         // easy case
         String smiles = "c1ccccc1C1=CC=CC=C1";
@@ -1459,7 +1466,7 @@ public class SmilesParserTest extends CDKTestCase {
      * closure double bond got lost.
      * @cdk.bug 1783546
      */
-    @org.junit.Test(timeout = 1000)
+    @Test
     public void testBug1783546() throws Exception {
         String smiles = "C=1C=CC=CC=1";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1471,7 +1478,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(mol.getAtom(5), mol.getAtom(0)).getOrder());
     }
 
-    @org.junit.Test
+    @Test
     public void testChargedAtoms() throws Exception {
         String smiles = "[C-]#[O+]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1484,7 +1491,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1872969
      */
-    @org.junit.Test
+    @Test
     public void bug1872969() throws Exception {
         String smiles = "CS(=O)(=O)[O-].[Na+]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1497,7 +1504,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1875949
      */
-    @org.junit.Test
+    @Test
     public void testResonanceStructure() throws Exception {
         String smiles = "[F+]=C-[C-]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1510,7 +1517,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1879589
      */
-    @org.junit.Test
+    @Test
     public void testSP2HybridizedSulphur() throws Exception {
         String smiles = "[s+]1c2c(nc3c1cccc3)cccc2";
         IAtomContainer mol = load(smiles);
@@ -1549,7 +1556,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1959516
      */
-    @org.junit.Test
+    @Test
     public void testPyrrole1() throws Exception {
         String smiles = "[nH]1cccc1";
         IAtomContainer mol = load(smiles);
@@ -1572,7 +1579,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1959516
      */
-    @org.junit.Test
+    @Test
     public void testPyrrole2() throws Exception {
         String smiles = "n1([H])cccc1";
         IAtomContainer mol = load(smiles);
@@ -1595,16 +1602,19 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1962419
      */
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void testPyrrole3() throws Exception {
-        String smiles = "n1cccc1";
-        sp.parseSmiles(smiles);
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    String smiles = "n1cccc1";
+                                    sp.parseSmiles(smiles);
+                                });
     }
 
     /**
      * @cdk.bug 1962398
      */
-    @org.junit.Test
+    @Test
     public void testPyrroleAnion1() throws Exception {
         String smiles = "[n-]1cccc1";
         IAtomContainer mol = load(smiles);
@@ -1627,7 +1637,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1960990
      */
-    @org.junit.Test
+    @Test
     public void testImidazole1() throws Exception {
         String smiles = "[nH]1cncc1";
         IAtomContainer mol = load(smiles);
@@ -1650,7 +1660,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1960990
      */
-    @org.junit.Test
+    @Test
     public void testImidazole2() throws Exception {
         String smiles = "n1([H])cncc1";
         IAtomContainer mol = load(smiles);
@@ -1673,16 +1683,19 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1962419
      */
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void testImidazole3() throws Exception {
         String smiles = "n1cncc1";
-        sp.parseSmiles(smiles);
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    sp.parseSmiles(smiles);
+                                });
     }
 
     /**
      * @cdk.bug 1960990
      */
-    @org.junit.Test
+    @Test
     public void testImidazole4() throws Exception {
         String smiles = "n1cc[nH]c1";
         IAtomContainer mol = load(smiles);
@@ -1704,7 +1717,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1959516
      */
-    @org.junit.Test
+    @Test
     public void testPyridine1() throws Exception {
         String smiles = "n1ccccc1";
         IAtomContainer mol = load(smiles);
@@ -1725,7 +1738,7 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.bug 1959516
      */
-    @org.junit.Test
+    @Test
     public void testPyrimidine1() throws Exception {
         String smiles = "n1cnccc1";
         IAtomContainer mol = load(smiles);
@@ -1863,20 +1876,26 @@ public class SmilesParserTest extends CDKTestCase {
      * @cdk.bug 2714283
      * @throws InvalidSmilesException
      */
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void testBadRingClosure1() throws InvalidSmilesException {
-        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        p.parseSmiles("c1ccccc1Cc1ccccc");
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+                                    p.parseSmiles("c1ccccc1Cc1ccccc");
+                                });
     }
 
     /**
      * @cdk.bug 2714283
      * @throws InvalidSmilesException
      */
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void testBadRingClosure2() throws InvalidSmilesException {
-        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        p.parseSmiles("NC1=CC=C(N)C=C");
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+                                    p.parseSmiles("NC1=CC=C(N)C=C");
+                                });
     }
 
     /**
@@ -2431,9 +2450,12 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * This molecule is actually invalid and there is no way to kekulise it.
      */
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void testAromaticBoron_invalid() throws CDKException {
-        load("c1cc2c3cc1.c1cb23cc1");
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    load("c1cc2c3cc1.c1cb23cc1");
+                                });
     }
 
     /**
@@ -2451,9 +2473,12 @@ public class SmilesParserTest extends CDKTestCase {
     }
 
     /** @cdk.bug 1234 */
-    @Test(expected = CDKException.class)
+    @Test
     public void testBug1234() throws Exception {
-        sp.parseSmiles("C1C1");
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    sp.parseSmiles("C1C1");
+                                });
     }
 
     @Test
@@ -2489,9 +2514,12 @@ public class SmilesParserTest extends CDKTestCase {
      * Okay exception for a non-SMILES string.
      * @cdk.bug 1375
      */
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void idNumber() throws Exception {
-        load("50-00-0");
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    load("50-00-0");
+                                });
     }
 
     @Test
@@ -2656,11 +2684,14 @@ public class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles("C/C=C/1.C/1");
     }
 
-    @Test(expected = InvalidSmilesException.class)
+    @Test
     public void failOnDirectionalBondsWhenStrict() throws InvalidSmilesException {
-        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        smipar.setStrict(true);
-        IAtomContainer mol = smipar.parseSmiles("C/C=C/1.C/1");
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {
+                                    SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+                                    smipar.setStrict(true);
+                                    IAtomContainer mol = smipar.parseSmiles("C/C=C/1.C/1");
+                                });
     }
 
     @Test

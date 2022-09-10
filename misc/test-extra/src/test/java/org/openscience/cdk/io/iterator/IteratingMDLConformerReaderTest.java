@@ -1,9 +1,11 @@
 package org.openscience.cdk.io.iterator;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -46,7 +48,7 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
         Assert.assertEquals(18, nconfs[2]);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemove() {
         String filename = "iterconftest.sdf";
         logger.info("Testing: " + filename);
@@ -56,7 +58,8 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
 
         reader.hasNext();
         reader.next();
-        reader.remove();
-
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            reader.remove();
+        });
     }
 }

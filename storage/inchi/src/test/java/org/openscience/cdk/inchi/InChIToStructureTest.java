@@ -21,7 +21,7 @@ package org.openscience.cdk.inchi;
 import net.sf.jniinchi.INCHI_RET;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;

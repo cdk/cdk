@@ -31,8 +31,8 @@ import java.util.Properties;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
@@ -71,7 +71,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
     private static IChemObjectBuilder builder;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectWriter(new SDFWriter());

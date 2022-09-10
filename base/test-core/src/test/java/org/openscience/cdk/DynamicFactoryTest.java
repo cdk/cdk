@@ -23,7 +23,8 @@
  */
 package org.openscience.cdk;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ICDKObject;
@@ -57,27 +58,31 @@ public class DynamicFactoryTest {
     /**
      * Ensure a negative size throws an exception.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructor() {
-        new DynamicFactory(-1);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {new DynamicFactory(-1);});
     }
 
-    /**
+                                 /**
      * Check we can't register an interface.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testRegister_Interface() throws Exception {
-
-        DynamicFactory factory = new DynamicFactory(0);
-        factory.register(IAtom.class);
-
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    DynamicFactory factory = new DynamicFactory(0);
+                                    factory.register(IAtom.class);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testRegister_AbstractClass() throws Exception {
-
-        DynamicFactory factory = new DynamicFactory(0);
-        factory.register(MockedAtom.class);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    DynamicFactory factory = new DynamicFactory(0);
+                                    factory.register(MockedAtom.class);
+                                });
     }
 
     @Test
@@ -193,20 +198,21 @@ public class DynamicFactoryTest {
      *
      * @throws Exception
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testRegister_Duplicate() throws Exception {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    DynamicFactory factory = new DynamicFactory(5);
 
-        DynamicFactory factory = new DynamicFactory(5);
+                                    IAtom atom = mock(MockedAtom.class);
+                                    IAtom pseudo = mock(MockedPseudoAtom.class);
 
-        IAtom atom = mock(MockedAtom.class);
-        IAtom pseudo = mock(MockedPseudoAtom.class);
+                                    assertTrue(factory.register(ICDKObject.class, pseudo.getClass()));
 
-        assertTrue(factory.register(ICDKObject.class, pseudo.getClass()));
-
-        // should throw an exception the mocked atom also has a constructor with
-        // a single String parameter
-        assertFalse(factory.register(ICDKObject.class, atom.getClass()));
-
+                                    // should throw an exception the mocked atom also has a constructor with
+                                    // a single String parameter
+                                    assertFalse(factory.register(ICDKObject.class, atom.getClass()));
+                                });
     }
 
     @Test
@@ -249,36 +255,38 @@ public class DynamicFactoryTest {
      * Check we get an exception when we try to build from a non-interface.
      * @throws Exception
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testOfConcrete_Params() throws Exception {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IAtom mock = mock(MockedAtom.class);
 
-        IAtom mock = mock(MockedAtom.class);
+                                    DynamicFactory factory = new DynamicFactory(5);
 
-        DynamicFactory factory = new DynamicFactory(5);
+                                    assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
-        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
+                                    // register the mock class
+                                    factory.register(IAtom.class, mock.getClass());
 
-        // register the mock class
-        factory.register(IAtom.class, mock.getClass());
-
-        // ofClass -> illegal argument, non-interface
-        IAtom instance = factory.ofClass(mock.getClass(), this);
-
+                                    // ofClass -> illegal argument, non-interface
+                                    IAtom instance = factory.ofClass(mock.getClass(), this);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testOfConcrete() throws Exception {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    DynamicFactory factory = new DynamicFactory(5);
 
-        DynamicFactory factory = new DynamicFactory(5);
+                                    assertTrue(factory.implementorsOf(ICDKObject.class).isEmpty());
 
-        assertTrue(factory.implementorsOf(ICDKObject.class).isEmpty());
+                                    // register the mock class
+                                    factory.register(ICDKObject.class, DynamicFactoryTestMock.class);
 
-        // register the mock class
-        factory.register(ICDKObject.class, DynamicFactoryTestMock.class);
-
-        // ofClass -> illegal argument, non-interface
-        ICDKObject instance = factory.ofClass(DynamicFactoryTestMock.class);
-
+                                    // ofClass -> illegal argument, non-interface
+                                    ICDKObject instance = factory.ofClass(DynamicFactoryTestMock.class);
+                                });
     }
 
     @Test

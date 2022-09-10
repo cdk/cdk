@@ -26,8 +26,8 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
@@ -43,7 +43,7 @@ public class ReactantsBoxGeneratorTest extends AbstractGeneratorTest {
         return null;
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setup() {
         super.setup();

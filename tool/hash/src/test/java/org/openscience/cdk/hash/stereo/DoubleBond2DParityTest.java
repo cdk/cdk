@@ -24,9 +24,7 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-import org.openscience.cdk.hash.stereo.DoubleBond2DParity;
-import org.openscience.cdk.hash.stereo.GeometricParity;
+import org.junit.jupiter.api.Test;
 
 import javax.vecmath.Point2d;
 

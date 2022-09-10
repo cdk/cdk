@@ -31,7 +31,8 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -288,19 +289,24 @@ public class MDLV2000AtomBlockTest {
         assertThat(reader.readMDLCoordinate("  -2.00120    7.8089", 0), is(closeTo(-2.00120, 0.1)));
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void readOldJmolCoordsFailOnStrictRead() throws Exception {
-        MDLV2000Reader reader = new MDLV2000Reader();
-        reader.setReaderMode(IChemObjectReader.Mode.STRICT);
-        reader.readMDLCoordinate("  -2.00120    7.8089", 0);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    MDLV2000Reader reader = new MDLV2000Reader();
+                                    reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+                                    reader.readMDLCoordinate("  -2.00120    7.8089", 0);
+                                });
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void readMDLCoordinates_wrong_decimal_position_strict() throws Exception {
-
-        MDLV2000Reader reader = new MDLV2000Reader();
-        reader.setReaderMode(IChemObjectReader.Mode.STRICT);
-        assertThat(reader.readMDLCoordinate("   -2.0012   7.8089 ", 10), is(closeTo(7.8089, 0.1)));
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    MDLV2000Reader reader = new MDLV2000Reader();
+                                    reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+                                    assertThat(reader.readMDLCoordinate("   -2.0012   7.8089 ", 10), is(closeTo(7.8089, 0.1)));
+                                });
     }
 
     @Test

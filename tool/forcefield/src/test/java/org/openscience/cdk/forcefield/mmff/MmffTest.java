@@ -22,9 +22,9 @@
  */
 package org.openscience.cdk.forcefield.mmff;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -46,17 +46,20 @@ public class MmffTest {
     private static SmilesParser smipar = null;
     private static Mmff         mmff   = null;
 
-    @BeforeClass public static void setUp() {
+    @BeforeAll
+    public static void setUp() {
         smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         mmff = new Mmff();
     }
 
-    @AfterClass public static void tearDown() {
+    @AfterAll
+    public static void tearDown() {
         smipar = null;
         mmff = null;
     }
 
-    @Test public void tetrazoleAnion() throws InvalidSmilesException {
+    @Test
+    public void tetrazoleAnion() throws InvalidSmilesException {
         IAtomContainer mol = loadSmi("[N-]1N=CN=N1");
         assertTrue(mmff.assignAtomTypes(mol));
         assertAtomTypes(mol, "N5M", "N5M", "C5", "N5M", "N5M", "HC");
@@ -83,7 +86,8 @@ public class MmffTest {
         assertPartialChargeSum(mol, 0);
     }
 
-    @Test public void clearProps() throws InvalidSmilesException {
+    @Test
+    public void clearProps() throws InvalidSmilesException {
         IAtomContainer mol = loadSmi("o1cccc1");
         int sizeBefore = mol.getProperties().size();
         assertTrue(mmff.assignAtomTypes(mol));
@@ -92,7 +96,8 @@ public class MmffTest {
         assertThat(mol.getProperties().size(), is(sizeBefore));
     }
 
-    @Test public void nitrobenzeneCovalent() throws InvalidSmilesException {
+    @Test
+    public void nitrobenzeneCovalent() throws InvalidSmilesException {
         IAtomContainer mol = loadSmi("c1ccccc1N(=O)=O");
         assertTrue(mmff.assignAtomTypes(mol));
         assertAtomTypes(mol, "CB", "CB", "CB", "CB", "CB", "CB", "NO2", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC");
@@ -121,7 +126,8 @@ public class MmffTest {
     }
 
     /* TABLE V - CH3NH2 */
-    @Test public void methylamine() throws Exception {
+    @Test
+    public void methylamine() throws Exception {
         IAtomContainer mol = loadSmi("CN");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -141,7 +147,8 @@ public class MmffTest {
     }
 
     /* TABLE V - CH3OCH3 */
-    @Test public void dimethylether() throws Exception {
+    @Test
+    public void dimethylether() throws Exception {
         IAtomContainer mol = loadSmi("COC");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -151,7 +158,8 @@ public class MmffTest {
     }
 
     /* TABLE V - CH3SH */
-    @Test public void methanethiol() throws Exception {
+    @Test
+    public void methanethiol() throws Exception {
         IAtomContainer mol = loadSmi("CS");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -161,7 +169,8 @@ public class MmffTest {
     }
 
     /* TABLE V - CH3Cl */
-    @Test public void chloromethane() throws Exception {
+    @Test
+    public void chloromethane() throws Exception {
         IAtomContainer mol = loadSmi("CCl");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -171,7 +180,8 @@ public class MmffTest {
     }
 
     /* TABLE V - C2H6 */
-    @Test public void ethane() throws Exception {
+    @Test
+    public void ethane() throws Exception {
         IAtomContainer mol = loadSmi("CC");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -181,7 +191,8 @@ public class MmffTest {
     }
 
     /* TABLE V - CH3CONH2 (note wrong formula) */
-    @Test public void acetamide() throws Exception {
+    @Test
+    public void acetamide() throws Exception {
         IAtomContainer mol = loadSmi("O=C(N)C");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -191,7 +202,8 @@ public class MmffTest {
     }
 
     /* TABLE V - CH3COOH */
-    @Test public void aceticAcid() throws Exception {
+    @Test
+    public void aceticAcid() throws Exception {
         IAtomContainer mol = loadSmi("CC(O)=O");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -221,7 +233,8 @@ public class MmffTest {
     }
 
     /* TABLE V - C6H6 */
-    @Test public void benzene() throws Exception {
+    @Test
+    public void benzene() throws Exception {
         IAtomContainer mol = loadSmi("c1ccccc1");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -231,7 +244,8 @@ public class MmffTest {
     }
 
     /* TABLE V - C5H5N */
-    @Test public void pyridine() throws Exception {
+    @Test
+    public void pyridine() throws Exception {
         IAtomContainer mol = loadSmi("C1=CC=NC=C1");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -241,7 +255,8 @@ public class MmffTest {
     }
 
     /* TABLE V - C6H5NH2 */
-    @Test public void aniline() throws Exception {
+    @Test
+    public void aniline() throws Exception {
         IAtomContainer mol = loadSmi("C1=CC=C(N)C=C1");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -261,7 +276,8 @@ public class MmffTest {
     }
 
     /* TABLE V - H2O */
-    @Test public void water() throws Exception {
+    @Test
+    public void water() throws Exception {
         IAtomContainer mol = loadSmi("O");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -271,7 +287,8 @@ public class MmffTest {
     }
 
     /* TABLE V - CH3CO2- */
-    @Test public void acetate() throws Exception {
+    @Test
+    public void acetate() throws Exception {
         IAtomContainer mol = loadSmi("CC([O-])=O");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -281,7 +298,8 @@ public class MmffTest {
     }
 
     /* TABLE V - CH3NH3(+)  */
-    @Test public void methanaminium() throws Exception {
+    @Test
+    public void methanaminium() throws Exception {
         IAtomContainer mol = loadSmi("C[NH3+]");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -291,7 +309,8 @@ public class MmffTest {
     }
 
     /* TABLE V - Imidazolium(+) */
-    @Test public void imidazolium() throws Exception {
+    @Test
+    public void imidazolium() throws Exception {
         IAtomContainer mol = loadSmi("[nH+]1c[nH]cc1");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -301,7 +320,8 @@ public class MmffTest {
     }
 
     /* TABLE V - (-)O2C(CH2)6NH3(+) */
-    @Test public void _7aminoheptanoicAcid() throws Exception {
+    @Test
+    public void _7aminoheptanoicAcid() throws Exception {
         IAtomContainer mol = loadSmi("[NH3+]CCCCCCC([O-])=O");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));
@@ -344,7 +364,8 @@ public class MmffTest {
     }
 
     /* [H2OPO3]- */
-    @Test public void dihydrogenPhosphate() throws Exception {
+    @Test
+    public void dihydrogenPhosphate() throws Exception {
         IAtomContainer mol = loadSmi("OP([O-])(O)=O");
         assertTrue(mmff.assignAtomTypes(mol));
         assertTrue(mmff.partialCharges(mol));

@@ -22,13 +22,13 @@ package org.openscience.cdk;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractPseudoAtomTest;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -37,7 +37,7 @@ import org.junit.Test;
  */
 public class PseudoAtomTest extends AbstractPseudoAtomTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(PseudoAtom::new);
     }

@@ -31,7 +31,7 @@ import static org.openscience.cdk.graph.InitialCyclesTest.cyclophane_even;
 import static org.openscience.cdk.graph.InitialCyclesTest.naphthalene;
 import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author John May

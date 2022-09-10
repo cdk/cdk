@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
@@ -75,7 +75,7 @@ public class FormatFactoryTest extends CDKTestCase {
 
     private static FormatFactory factory;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         factory = new FormatFactory();
     }

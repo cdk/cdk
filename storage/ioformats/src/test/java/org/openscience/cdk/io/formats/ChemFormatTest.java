@@ -23,8 +23,8 @@
 package org.openscience.cdk.io.formats;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -44,7 +44,7 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
         Assert.assertNotNull("You must use setChemFormat() to set the IChemFormat object.", chemFormat);
     }
 
-    @Ignore("Test cannot be run because it causes a circular dependency cycle")
+    @Disabled("Test cannot be run because it causes a circular dependency cycle")
     public void testGetReaderClassName() throws Exception {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getReaderClassName() != null) {
@@ -55,7 +55,7 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
         }
     }
 
-    @Ignore("Test cannot be run because it causes a circular dependency cycle")
+    @Disabled("Test cannot be run because it causes a circular dependency cycle")
     public void testGetWriterClassName() throws Exception {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getWriterClassName() != null) {

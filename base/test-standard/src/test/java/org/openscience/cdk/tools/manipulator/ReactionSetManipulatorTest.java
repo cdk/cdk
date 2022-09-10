@@ -22,8 +22,8 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -51,7 +51,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         String filename1 = "reaction-1.rxn";

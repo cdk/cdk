@@ -23,14 +23,14 @@ package org.openscience.cdk.renderer.elements.path;
 
 import javax.vecmath.Point2d;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * @cdk.module test-renderbasic
  */
 public class LineToTest extends AbstractPathElementTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setPathElement(new LineTo(new Point2d(0, 1)));
     }

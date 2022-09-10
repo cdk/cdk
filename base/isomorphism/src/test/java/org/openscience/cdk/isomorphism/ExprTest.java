@@ -23,11 +23,13 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -1080,11 +1082,14 @@ public class ExprTest {
         assertThat(count, is(2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void nonAtomExpr() {
         Expr  expr = new Expr(ALIPHATIC_ORDER, 2);
         IAtom atom = mock(IAtom.class);
-        assertFalse(expr.matches(atom));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    assertFalse(expr.matches(atom));
+                                });
     }
 
 //    @Ignore("to be added back in later")
@@ -1387,11 +1392,14 @@ public class ExprTest {
         assertFalse(expr.matches(bond));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNonBondExpr() {
         Expr  expr = new Expr(RING_COUNT, 1);
         IBond bond = mock(IBond.class);
-        expr.matches(bond);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    expr.matches(bond);
+                                });
     }
 
     @Test

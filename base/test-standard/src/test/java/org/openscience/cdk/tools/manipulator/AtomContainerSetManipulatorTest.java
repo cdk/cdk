@@ -21,8 +21,8 @@ package org.openscience.cdk.tools.manipulator;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
@@ -57,7 +57,7 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mol1 = new AtomContainer();
         atomInMol1 = new Atom("Cl");

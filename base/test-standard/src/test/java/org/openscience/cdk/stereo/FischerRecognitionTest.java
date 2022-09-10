@@ -25,7 +25,7 @@
 package org.openscience.cdk.stereo;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -54,7 +54,8 @@ public class FischerRecognitionTest {
     /**
      * @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
      */
-    @Test public void recogniseRightHandedGlyceraldehyde() throws Exception {
+    @Test
+    public void recogniseRightHandedGlyceraldehyde() throws Exception {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 0, 0.80d, 1.24d));
         m.addAtom(atom("C", 0, 0.80d, 0.42d));
@@ -89,7 +90,8 @@ public class FischerRecognitionTest {
     /**
      * @cdk.inchi InChI=1S/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/m1/s1
      */
-    @Test public void recogniseLeftHandedGlyceraldehyde() throws Exception {
+    @Test
+    public void recogniseLeftHandedGlyceraldehyde() throws Exception {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 0, 0.80d, 1.24d));
         m.addAtom(atom("C", 0, 0.80d, 0.42d));
@@ -124,7 +126,8 @@ public class FischerRecognitionTest {
     /**
      * @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
      */
-    @Test public void recogniseRightHandedGlyceraldehydeWithImplicitHydrogen() throws Exception {
+    @Test
+    public void recogniseRightHandedGlyceraldehydeWithImplicitHydrogen() throws Exception {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 0, 0.80d, 1.24d));
         m.addAtom(atom("C", 1, 0.80d, 0.42d));
@@ -157,7 +160,8 @@ public class FischerRecognitionTest {
     /**
      * @cdk.inchi InChI=1S/C6H14O6/c7-1-3(9)5(11)6(12)4(10)2-8/h3-12H,1-2H2/t3-,4-,5-,6-/m1/s1
      */
-    @Test public void mannitol() throws CDKException {
+    @Test
+    public void mannitol() throws CDKException {
         IAtomContainer m = new AtomContainer(12, 11, 0, 0);
         m.addAtom(atom("C", 2, -0.53d, 6.25d));
         m.addAtom(atom("C", 1, -0.53d, 5.42d));
@@ -212,7 +216,8 @@ public class FischerRecognitionTest {
         m.setStereoElements(elements);
     }
 
-    @Test public void obtainCardinalBonds() {
+    @Test
+    public void obtainCardinalBonds() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -241,7 +246,8 @@ public class FischerRecognitionTest {
      * In reality, bonds may not be perfectly orthogonal. Here the N, E, S, and
      * W atoms are all slightly offset from the focus.
      */
-    @Test public void obtainNonPerfectCardinalBonds() {
+    @Test
+    public void obtainNonPerfectCardinalBonds() {
 
         IAtom focus = atom("C", 0, -0.40d, 3.37d);
 
@@ -266,7 +272,8 @@ public class FischerRecognitionTest {
         org.hamcrest.MatcherAssert.assertThat(expected, is(actual));
     }
 
-    @Test public void createCenterWithFourNeighbors() {
+    @Test
+    public void createCenterWithFourNeighbors() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -292,7 +299,8 @@ public class FischerRecognitionTest {
         org.hamcrest.MatcherAssert.assertThat(element.getLigands()[3], is(sameInstance(west)));
     }
 
-    @Test public void createCenterWithThreeNeighbors_right() {
+    @Test
+    public void createCenterWithThreeNeighbors_right() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -340,7 +348,8 @@ public class FischerRecognitionTest {
         org.hamcrest.MatcherAssert.assertThat(element.getLigands()[3], is(sameInstance(west)));
     }
 
-    @Test public void doNotCreateCenterWhenNorthIsMissing() {
+    @Test
+    public void doNotCreateCenterWhenNorthIsMissing() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -359,7 +368,8 @@ public class FischerRecognitionTest {
         Assert.assertNull(element);
     }
 
-    @Test public void doNotCreateCenterWhenSouthIsMissing() {
+    @Test
+    public void doNotCreateCenterWhenSouthIsMissing() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -378,7 +388,8 @@ public class FischerRecognitionTest {
         Assert.assertNull(element);
     }
 
-    @Test public void doNotCreateCenterWhenNorthIsOffCenter() {
+    @Test
+    public void doNotCreateCenterWhenNorthIsOffCenter() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -399,7 +410,8 @@ public class FischerRecognitionTest {
         Assert.assertNull(element);
     }
 
-    @Test public void doNotCreateCenterWhenSouthIsOffCenter() {
+    @Test
+    public void doNotCreateCenterWhenSouthIsOffCenter() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -420,7 +432,8 @@ public class FischerRecognitionTest {
         Assert.assertNull(element);
     }
 
-    @Test public void doNotCreateCenterWhenEastIsOffCenter() {
+    @Test
+    public void doNotCreateCenterWhenEastIsOffCenter() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -442,7 +455,8 @@ public class FischerRecognitionTest {
     }
 
 
-    @Test public void doNotCreateCenterWhenWestIsOffCenter() {
+    @Test
+    public void doNotCreateCenterWhenWestIsOffCenter() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -463,7 +477,8 @@ public class FischerRecognitionTest {
         Assert.assertNull(element);
     }
 
-    @Test public void doNotCreateCenterWhenEastAndWestAreMissing() {
+    @Test
+    public void doNotCreateCenterWhenEastAndWestAreMissing() {
 
         IAtom focus = atom("C", 0, 0.80d, 0.42d);
 
@@ -481,7 +496,8 @@ public class FischerRecognitionTest {
     }
 
     // rotate
-    @Test public void doNotCreateCenterWhenRotated() {
+    @Test
+    public void doNotCreateCenterWhenRotated() {
 
         IAtom focus = atom("C", 0, 0.44d, 3.30d);
         
@@ -507,7 +523,8 @@ public class FischerRecognitionTest {
      * asperaculin A (CHEBI:68202)
      * @cdk.inchi InChI=1S/C15H20O5/c1-12(2)6-13(3)7-19-10(16)9-15(13)8(12)4-5-14(15,18)11(17)20-9/h8-9,18H,4-7H2,1-3H3/t8-,9+,13+,14+,15?/m0/s1 
      */
-    @Test public void ignoreCyclicStereocenters() {
+    @Test
+    public void ignoreCyclicStereocenters() {
         IAtomContainer m = new AtomContainer(22, 25, 0, 0);
         m.addAtom(atom("C", 0, 6.87d, -5.59d));
         m.addAtom(atom("C", 0, 6.87d, -6.61d));
@@ -570,7 +587,8 @@ public class FischerRecognitionTest {
      * atrolactic acid (CHEBI:50392)
      * @cdk.inchi InChI=1S/C9H10O3/c1-9(12,8(10)11)7-5-3-2-4-6-7/h2-6,12H,1H3,(H,10,11)
      */
-    @Test public void horizontalBondsMustBeTerminal() {
+    @Test
+    public void horizontalBondsMustBeTerminal() {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 0, 12.71d, -16.51d));
         m.addAtom(atom("C", 1, 12.30d, -17.22d));

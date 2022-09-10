@@ -24,8 +24,9 @@
 
 package org.openscience.cdk.layout;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -666,15 +667,17 @@ public class NonPlanarBondsTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void inconsistentStereoState() throws CDKException {
-        final String smi = "O[C@]([H])(C)CCC";
-        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol = smipar.parseSmiles(smi);
-        mol.removeBond(1);
-        mol.removeAtomOnly(2); // unsafe-removes
-        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        sdg.generateCoordinates(mol);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            final String smi = "O[C@]([H])(C)CCC";
+            SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+            IAtomContainer mol = smipar.parseSmiles(smi);
+            mol.removeBond(1);
+            mol.removeAtomOnly(2); // unsafe-removes
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            sdg.generateCoordinates(mol);
+        });
     }
 
     @Test public void avoidBondsToOtherStereoCentres() throws CDKException {
@@ -718,7 +721,7 @@ public class NonPlanarBondsTest {
         assertThat(wedgeCount, is(1));
     }
 
-    @Ignore
+    @Disabled
     public void wedgeExtendedTetrahedral() throws CDKException {
         final String smi = "C(=C=C=[C@@]=C=C=CC)C";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());

@@ -24,8 +24,8 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -58,7 +58,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new MDLRXNReader(), "reaction-1.rxn");
     }

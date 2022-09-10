@@ -19,7 +19,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @cdk.module test-diff

@@ -28,11 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
@@ -44,16 +44,16 @@ public class PostFilterTest {
 
     public PostFilterTest() {}
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {}
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {}
 
-    @Before
+    @BeforeEach
     public void setUp() {}
 
-    @After
+    @AfterEach
     public void tearDown() {}
 
     /**

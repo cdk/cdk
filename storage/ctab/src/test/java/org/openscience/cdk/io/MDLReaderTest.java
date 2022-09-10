@@ -27,8 +27,9 @@ import java.io.StringReader;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -48,6 +49,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -62,7 +64,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new MDLReader(), "Strychnine_nichtOK.mol");
     }
@@ -231,7 +233,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNull(mol.getAtom(2).getProperty(CDKConstants.ATOM_ATOM_MAPPING));
     }
 
-    @Test(expected = AssertionError.class)
+    @Test
     public void testHas2DCoordinates_With000() throws Exception {
         String filenameMol = "with000coordinate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
@@ -239,7 +241,9 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
         molOne = reader.read(new AtomContainer());
         reader.close();
-        assertNotNull(molOne.getAtom(0).getPoint2d());
+        // 0,0 or null no Coords, MDLV2000 will get this OK if there is 2D/3D
+        // in the headerO
+        assertNull(molOne.getAtom(0).getPoint2d());
     }
 
     /**
@@ -271,11 +275,14 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
             
     }
 
-    @Test(expected=CDKException.class)
+    @Test
     public void wrongFormat() throws CDKException {
         InputStream in = getClass().getResourceAsStream("bug1356.sdf");
         MDLReader reader = new MDLReader(in, Mode.STRICT);
-        IChemFile chemfile = DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class);
-        chemfile = reader.read(chemfile);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    IChemFile chemfile = DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class);
+                                    chemfile = reader.read(chemfile);
+                                });
     }
 }

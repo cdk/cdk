@@ -26,8 +26,8 @@ package org.openscience.cdk.io;
 import java.io.StringWriter;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,7 +44,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setChemObjectIO(new CDKSourceCodeWriter());
     }

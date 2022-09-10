@@ -24,9 +24,7 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
-import org.openscience.cdk.hash.AtomEncoder;
-import org.openscience.cdk.hash.BasicAtomEncoder;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;

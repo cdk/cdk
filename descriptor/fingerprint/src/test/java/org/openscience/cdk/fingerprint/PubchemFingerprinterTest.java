@@ -34,8 +34,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
@@ -61,7 +62,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         return new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
@@ -226,9 +227,12 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         return bytes;
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testDecode_invalid() {
-        PubchemFingerprinter.decode("a");
+    @Test
+    public void testDecode_invalid()
+    {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            PubchemFingerprinter.decode("a");
+        });
     }
 
     @Test

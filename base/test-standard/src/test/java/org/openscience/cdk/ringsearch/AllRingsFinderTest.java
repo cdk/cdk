@@ -19,11 +19,13 @@
 package org.openscience.cdk.ringsearch;
 
 import java.io.InputStream;
+import java.time.Duration;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -109,7 +111,7 @@ public class AllRingsFinderTest extends CDKTestCase {
         arf.findAllRings(molecule);
     }
 
-    @Ignore("timeout not longer used")
+    @Disabled("timeout not longer used")
     public void testSetTimeout_long() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(1);
@@ -117,14 +119,14 @@ public class AllRingsFinderTest extends CDKTestCase {
         arf.findAllRings(molecule);
     }
 
-    @Ignore("timeout not longer used")
+    @Disabled("timeout not longer used")
     public void testCheckTimeout() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(3);
         arf.checkTimeout();
     }
 
-    @Ignore("timeout not longer used")
+    @Disabled("timeout not longer used")
     public void testGetTimeout() {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(3);
@@ -148,24 +150,26 @@ public class AllRingsFinderTest extends CDKTestCase {
         Assert.assertEquals(20, ringSet.getAtomContainerCount());
     }
 
-    @Test(timeout = 500)
+    @Test
     public void testBigRingSystem() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+            Assume.assumeTrue(runSlowTests());
 
-        IRingSet ringSet;
-        AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_994);
+            IRingSet ringSet;
+            AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_994);
 
-        String filename = "ring_03419.mol";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IChemFile chemFile = reader.read(new ChemFile());
-        IChemSequence seq = chemFile.getChemSequence(0);
-        IChemModel model = seq.getChemModel(0);
-        IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
+            String filename = "ring_03419.mol";
+            InputStream ins = this.getClass().getResourceAsStream(filename);
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
+            IChemFile chemFile = reader.read(new ChemFile());
+            IChemSequence seq = chemFile.getChemSequence(0);
+            IChemModel model = seq.getChemModel(0);
+            IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
 
-        ringSet = arf.findAllRings(molecule);
-        // the 1976 value was empirically derived, and might not be accurate
-        Assert.assertEquals(1976, ringSet.getAtomContainerCount());
+            ringSet = arf.findAllRings(molecule);
+            // the 1976 value was empirically derived, and might not be accurate
+            Assert.assertEquals(1976, ringSet.getAtomContainerCount());
+        });
     }
 
     @Test

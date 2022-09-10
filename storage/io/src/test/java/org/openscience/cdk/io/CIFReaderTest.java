@@ -23,8 +23,8 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.ICrystal;
@@ -45,7 +45,7 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class CIFReaderTest extends ChemObjectIOTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setChemObjectIO(new CIFReader());
     }

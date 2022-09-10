@@ -9,7 +9,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.tools.diff.AtomDiff;

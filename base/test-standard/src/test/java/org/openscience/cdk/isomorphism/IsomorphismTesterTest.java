@@ -20,8 +20,8 @@
 package org.openscience.cdk.isomorphism;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -46,7 +46,7 @@ public class IsomorphismTesterTest extends CDKTestCase {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         pinene_1 = new AtomContainer();
         pinene_1.addAtom(new Atom("C")); // 1

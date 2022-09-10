@@ -21,8 +21,8 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -42,7 +42,7 @@ import org.openscience.cdk.test.interfaces.AbstractChemModelTest;
  */
 public class ChemModelTest extends AbstractChemModelTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(ChemModel::new);
     }

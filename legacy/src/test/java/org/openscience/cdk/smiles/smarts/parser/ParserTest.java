@@ -19,7 +19,8 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -31,6 +32,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 
 import java.io.StringReader;
+import java.time.Duration;
 
 /**
  * JUnit test routines for the SMARTS parser.
@@ -1415,24 +1417,32 @@ public class ParserTest extends CDKTestCase {
         parse("[^1&N,^2&C]");
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testHybridizationNumber4() throws Exception {
-        parse("[^]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[^]");
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testHybridizationNumber5() throws Exception {
-        parse("[^X]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[^X]");
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testHybridizationNumber6() throws Exception {
-        parse("[^0]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[^0]");
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testHybridizationNumber7() throws Exception {
-        parse("[^9]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[^9]");
+        });
     }
 
     @Test
@@ -1455,29 +1465,39 @@ public class ParserTest extends CDKTestCase {
         parse("[G14,G15]");
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testPeriodicGroupNumber3() throws Exception {
-        parse("[G19]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[G19]");
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testPeriodicGroupNumber4() throws Exception {
-        parse("[G0]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[G0]");
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testPeriodicGroupNumber5() throws Exception {
-        parse("[G345]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[G345]");
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testPeriodicGroupNumber6() throws Exception {
-        parse("[G]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[G]");
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void testPeriodicGroupNumber7() throws Exception {
-        parse("[GA]");
+        Assertions.assertThrows(ParseException.class, () -> {
+            parse("[GA]");
+        });
     }
 
     @Test
@@ -1485,11 +1505,13 @@ public class ParserTest extends CDKTestCase {
         parse("[V,Cr,Mn,Nb,Mo,Tc,Ta,W,Re]");
     }
     
-    @Test public void endOnSpace() throws Exception {
+    @Test
+    public void endOnSpace() throws Exception {
         parse("C ");
     }
 
-    @Test public void endOnTab() throws Exception {
+    @Test
+    public void endOnTab() throws Exception {
         parse("C\t");
     }
 
@@ -1497,7 +1519,8 @@ public class ParserTest extends CDKTestCase {
         parse("C\n");
     }
 
-    @Test public void endOnCarriageReturn() throws Exception {
+    @Test
+    public void endOnCarriageReturn() throws Exception {
         parse("C\r");
     }
 

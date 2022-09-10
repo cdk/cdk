@@ -28,8 +28,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
@@ -43,7 +43,7 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundXMLReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setSimpleChemObjectReader(new PCCompoundXMLReader(), "cid1145.xml");
     }

@@ -23,7 +23,7 @@
 package org.openscience.cdk.io.cml;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 import static org.hamcrest.CoreMatchers.is;

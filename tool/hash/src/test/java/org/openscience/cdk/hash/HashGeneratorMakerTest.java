@@ -24,7 +24,8 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -124,9 +125,10 @@ public class HashGeneratorMakerTest {
         assertThat(getEncoders(g1), is(getEncoders(g2)));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testEncode_Null() {
-        new HashGeneratorMaker().encode(null);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {new HashGeneratorMaker().encode(null);});
     }
 
     @Test
@@ -146,9 +148,12 @@ public class HashGeneratorMakerTest {
         assertThat(encoders.get(1), is(e1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNoDepth() {
-        new HashGeneratorMaker().atomic();
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new HashGeneratorMaker().atomic();
+                                });
     }
 
     @Test
@@ -161,19 +166,28 @@ public class HashGeneratorMakerTest {
         assertNotNull(new HashGeneratorMaker().depth(0).elemental().molecular());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testEnsemble() {
-        new HashGeneratorMaker().depth(0).elemental().ensemble();
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    new HashGeneratorMaker().depth(0).elemental().ensemble();
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMissingEncoders() {
-        new HashGeneratorMaker().depth(0).atomic();
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new HashGeneratorMaker().depth(0).atomic();
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInvalidDepth() {
-        new HashGeneratorMaker().depth(-1);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new HashGeneratorMaker().depth(-1);
+                                });
     }
 
     @Test

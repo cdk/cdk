@@ -24,8 +24,8 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -36,7 +36,7 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
  */
 public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new MoSSOutputReader(), "org/openscience/cdk/io/TKO.mossoutput");
     }

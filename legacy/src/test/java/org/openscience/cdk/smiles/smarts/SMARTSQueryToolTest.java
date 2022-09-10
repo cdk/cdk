@@ -22,11 +22,13 @@ import static java.util.Collections.sort;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -55,9 +57,11 @@ public class SMARTSQueryToolTest extends CDKTestCase {
      * @throws CDKException
      * @cdk.bug 2788357
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testLexicalError() throws Exception {
-        SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide", DefaultChemObjectBuilder.getInstance());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide", DefaultChemObjectBuilder.getInstance());
+        });
     }
 
     @Test
@@ -208,10 +212,12 @@ public class SMARTSQueryToolTest extends CDKTestCase {
 
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void nullAromaticity() {
-        SMARTSQueryTool sqt = new SMARTSQueryTool("CC", DefaultChemObjectBuilder.getInstance());
-        sqt.setAromaticity(null);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            SMARTSQueryTool sqt = new SMARTSQueryTool("CC", DefaultChemObjectBuilder.getInstance());
+            sqt.setAromaticity(null);
+        });
     }
 
     @Test

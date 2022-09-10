@@ -25,7 +25,8 @@ package org.openscience.cdk.geometry;
 
 import org.hamcrest.number.IsCloseTo;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -831,27 +832,31 @@ public class GeometryUtilTest extends CDKTestCase {
         assertThat(GeometryUtil.getBondLengthMedian(container), is(1.5));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void medianBondLengthNoBonds() {
-        IAtomContainer container = new AtomContainer();
-        container.addAtom(atomAt(new Point2d(0, 0)));
-        container.addAtom(atomAt(new Point2d(0, 1.5)));
-        container.addAtom(atomAt(new Point2d(0, -1.5)));
-        container.addAtom(atomAt(new Point2d(0, 5)));
-        GeometryUtil.getBondLengthMedian(container);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            IAtomContainer container = new AtomContainer();
+            container.addAtom(atomAt(new Point2d(0, 0)));
+            container.addAtom(atomAt(new Point2d(0, 1.5)));
+            container.addAtom(atomAt(new Point2d(0, -1.5)));
+            container.addAtom(atomAt(new Point2d(0, 5)));
+            GeometryUtil.getBondLengthMedian(container);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void medianBondLengthNoPoints() {
-        IAtomContainer container = new AtomContainer();
-        container.addAtom(atomAt(new Point2d(0, 0)));
-        container.addAtom(atomAt(new Point2d(0, 1.5)));
-        container.addAtom(atomAt(null));
-        container.addAtom(atomAt(new Point2d(0, 5)));
-        container.addBond(0, 1, IBond.Order.SINGLE);
-        container.addBond(0, 2, IBond.Order.SINGLE);
-        container.addBond(0, 3, IBond.Order.SINGLE);
-        GeometryUtil.getBondLengthMedian(container);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            IAtomContainer container = new AtomContainer();
+            container.addAtom(atomAt(new Point2d(0, 0)));
+            container.addAtom(atomAt(new Point2d(0, 1.5)));
+            container.addAtom(atomAt(null));
+            container.addAtom(atomAt(new Point2d(0, 5)));
+            container.addBond(0, 1, IBond.Order.SINGLE);
+            container.addBond(0, 2, IBond.Order.SINGLE);
+            container.addBond(0, 3, IBond.Order.SINGLE);
+            GeometryUtil.getBondLengthMedian(container);
+        });
     }
 
     @Test

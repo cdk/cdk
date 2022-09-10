@@ -24,7 +24,9 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,9 +44,12 @@ import static org.mockito.Mockito.when;
  */
 public class MultiStereoEncoderTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstruction_Empty() {
-        new MultiStereoEncoder(Collections.emptyList());
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    new MultiStereoEncoder(Collections.emptyList());
+                                });
     }
 
     @Test

@@ -23,7 +23,7 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -44,12 +44,14 @@ public class HydrogenSuppressionTest {
         assertThat(smaact, is(smaexp));
     }
 
-    @Test public void oneHydrogen() {
+    @Test
+    public void oneHydrogen() {
         test("[c!H0]", "c[H]");
         test("[c!H0]", "c[#1]");
     }
 
-    @Test public void twoHydrogens() {
+    @Test
+    public void twoHydrogens() {
         test("[c!H0!H1]", "c([H])[H]");
         test("[c!H0!H1]", "c([#1])[#1]");
     }

@@ -28,8 +28,8 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
@@ -53,7 +53,7 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000ReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new MDLRXNV3000Reader(), "reaction_v3.rxn");
     }

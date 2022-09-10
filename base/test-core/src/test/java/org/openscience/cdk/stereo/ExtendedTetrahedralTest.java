@@ -24,7 +24,8 @@
 
 package org.openscience.cdk.stereo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -73,15 +74,18 @@ public final class ExtendedTetrahedralTest {
         assertNotNull(element.peripherals()[3]);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void nonCumulatedAtomThrowsException() {
-        IAtomContainer ac = new AtomContainer();
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("C"));
-        ac.addBond(0, 1, IBond.Order.SINGLE);
-        ac.addBond(1, 2, IBond.Order.SINGLE);
-        ExtendedTetrahedral.findTerminalAtoms(ac, ac.getAtom(0));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IAtomContainer ac = new AtomContainer();
+                                    ac.addAtom(new Atom("C"));
+                                    ac.addAtom(new Atom("C"));
+                                    ac.addAtom(new Atom("C"));
+                                    ac.addBond(0, 1, IBond.Order.SINGLE);
+                                    ac.addBond(1, 2, IBond.Order.SINGLE);
+                                    ExtendedTetrahedral.findTerminalAtoms(ac, ac.getAtom(0));
+                                });
     }
 
     @Test
@@ -119,12 +123,15 @@ public final class ExtendedTetrahedralTest {
         assertThat(terminals[1], is(ac.getAtom(1)));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void noBuilder() {
-        IAtom focus = mock(IAtom.class);
-        IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
-        ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
-        element.getBuilder();
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+                                    IAtom focus = mock(IAtom.class);
+                                    IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
+                                    ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
+                                    element.getBuilder();
+                                });
     }
 
     @Test

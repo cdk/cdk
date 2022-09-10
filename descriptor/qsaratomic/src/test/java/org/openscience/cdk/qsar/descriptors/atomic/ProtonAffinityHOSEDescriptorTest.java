@@ -19,8 +19,8 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -51,7 +51,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
         descriptor = new ProtonAffinityHOSEDescriptor();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(ProtonAffinityHOSEDescriptor.class);
     }

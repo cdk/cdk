@@ -31,7 +31,7 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -517,7 +517,8 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         Assert.assertEquals(expected, actual);
     }
 
-    @Test public void testGetCountFingerprint() throws CDKException {
+    @Test
+    public void testGetCountFingerprint() throws CDKException {
         final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         ExtendedFingerprinter fpr = new ExtendedFingerprinter(1024, 7); // 7 bonds
         fpr.setPathLimit(2000);

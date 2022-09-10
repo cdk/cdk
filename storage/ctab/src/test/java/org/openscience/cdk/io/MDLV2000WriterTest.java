@@ -25,8 +25,9 @@ package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -76,7 +77,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new MDLV2000Writer());
@@ -316,14 +317,17 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.contains("2  3  1  3  0  0  0"));
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void testUnsupportedBondOrder() throws Exception {
         IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(new Bond(molecule.getAtom(0), molecule.getAtom(1), Order.QUADRUPLE));
         MDLV2000Writer mdlWriter = new MDLV2000Writer(new StringWriter());
-        mdlWriter.write(molecule);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    mdlWriter.write(molecule);
+                                });
         mdlWriter.close();
     }
 
@@ -805,7 +809,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         }
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void aromaticBondTypes() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -814,9 +818,12 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         bond.setIsAromatic(true);
         mol.addBond(bond);
         StringWriter sw = new StringWriter();
-        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mol);
-        }
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+                                        mdlw.write(mol);
+                                    }
+                                });
     }
 
     @Test

@@ -20,8 +20,8 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.test.interfaces.AbstractReactionTest;
 
@@ -32,7 +32,7 @@ import org.openscience.cdk.test.interfaces.AbstractReactionTest;
  */
 public class ReactionTest extends AbstractReactionTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(Reaction::new);
     }

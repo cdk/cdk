@@ -19,9 +19,9 @@
 package org.openscience.cdk.limitations.tools;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -47,12 +47,12 @@ import org.openscience.cdk.tools.SaturationChecker;
  *
  * @see org.openscience.cdk.tools.SaturationChecker
  */
-@Ignore("Limitations actually cause failing tests")
+@Disabled("Limitations actually cause failing tests")
 public class SaturationCheckerTest extends CDKTestCase {
 
     private static SaturationChecker satcheck = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         satcheck = new SaturationChecker();
     }

@@ -5,11 +5,13 @@
  */
 package org.openscience.cdk.test.interfaces;
 
+import java.time.Duration;
 import java.util.Hashtable;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -84,11 +86,14 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetProperty_Object_ClassCast() {
         IChemObject chemObject = newChemObject();
         chemObject.setProperty("dummy", 5);
-        Assert.assertNull(chemObject.getProperty("dummy", String.class));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    chemObject.getProperty("dummy", String.class);
+                                });
     }
 
     @Test
@@ -116,16 +121,22 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNull(chemObject.getID());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setFlagThatIsTooBig() {
         IChemObject chemObject = newChemObject();
-        chemObject.setFlag(1 << 17, true);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    chemObject.setFlag(1 << 17, true);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setFlagThatIsInvalid() {
         IChemObject chemObject = newChemObject();
-        chemObject.setFlag(999, true);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    chemObject.setFlag(999, true);
+                                });
     }
 
     @Test
@@ -302,14 +313,16 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     }
 
     /** @cdk.bug 1838820 */
-    @Test(timeout = 100)
+    @Test
     public void testDontCloneIChemObjectProperties() throws Exception {
-        IChemObject chemObject1 = newChemObject();
-        chemObject1.setProperty("RecursiveBastard", chemObject1);
+        Assertions.assertTimeout(Duration.ofMillis(100), () -> {
+            IChemObject chemObject1 = newChemObject();
+            chemObject1.setProperty("RecursiveBastard", chemObject1);
 
-        Object clone = chemObject1.clone();
-        Assert.assertNotNull(clone);
-        Assert.assertTrue(clone instanceof IChemObject);
+            Object clone = chemObject1.clone();
+            Assert.assertNotNull(clone);
+            Assert.assertTrue(clone instanceof IChemObject);
+        });
     }
 
     @Test

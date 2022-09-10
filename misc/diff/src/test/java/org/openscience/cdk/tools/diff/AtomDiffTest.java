@@ -20,8 +20,8 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
@@ -68,7 +68,7 @@ public class AtomDiffTest {
         Assert.assertNotNull(difference);
     }
 
-    @Ignore("unit test did not test AtomDiff but rather the ability of AtomContainer"
+    @Disabled("unit test did not test AtomDiff but rather the ability of AtomContainer"
             + "to be serialized. This is already tested in each respective domain module")
     public void testDiffFromSerialized() throws IOException, ClassNotFoundException {
         //        IAtom atom = new Atom("C");

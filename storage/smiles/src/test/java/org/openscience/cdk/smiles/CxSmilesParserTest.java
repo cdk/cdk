@@ -26,7 +26,7 @@ package org.openscience.cdk.smiles;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -190,35 +190,40 @@ public class CxSmilesParserTest {
         assertThat(CxSmilesParser.processCx("|H:0.1,2.3,C:6.7,3.4|", state), is(not(-1)));
     }
 
-    @Test public void positionalVariation() {
+    @Test
+    public void positionalVariation() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|m:2:5.6.7.8.9.10,m:4:5.6.7.8.9|", state), is(not(-1)));
         assertThat(state.positionVar, hasEntry(2, Arrays.asList(5,6,7,8,9,10)));
         assertThat(state.positionVar, hasEntry(4, Arrays.asList(5,6,7,8,9)));
     }
 
-    @Test public void positionalVariationImpliedLayer() {
+    @Test
+    public void positionalVariationImpliedLayer() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|m:2:5.6.7.8.9.10,4:5.6.7.8.9|", state), is(not(-1)));
         assertThat(state.positionVar, hasEntry(2, Arrays.asList(5,6,7,8,9,10)));
         assertThat(state.positionVar, hasEntry(4, Arrays.asList(5,6,7,8,9)));
     }
 
-    @Test public void multiAtomSRU() {
+    @Test
+    public void multiAtomSRU() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|Sg:n:1,2,3:m:ht|", state), is(not(-1)));
         assertThat(state.mysgroups,
                    hasItem(new CxSmilesState.CxPolymerSgroup("n", Arrays.asList(1, 2, 3), "m", "ht")));
     }
 
-    @Test public void dataSgroups() {
+    @Test
+    public void dataSgroups() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|SgD::cdk&#58;ReactionConditions:Heat&#10;Hv|", state), is(not(-1)));
         assertThat(state.mysgroups,
                    hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
     }
 
-    @Test public void unescape() {
+    @Test
+    public void unescape() {
         assertThat(CxSmilesParser.unescape("&#36;"), is("$"));
         assertThat(CxSmilesParser.unescape("&#127;"), is("\u007F")); // DEL
         assertThat(CxSmilesParser.unescape("&#9;"), is("\t")); // TAB
@@ -232,18 +237,21 @@ public class CxSmilesParserTest {
     }
 
 
-    @Test public void relativeStereoReaction() {
+    @Test
+    public void relativeStereoReaction() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|r:2,4,5|", state), is(not(-1)));
     }
 
-    @Test public void sgroupHierarchy() {
+    @Test
+    public void sgroupHierarchy() {
         String cxsmilayers = "|Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgH:3:4.0,4:2.1|";
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
     }
 
-    @Test public void cxSmiLay() {
+    @Test
+    public void cxSmiLay() {
         String cxsmilayers = "|Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgD::RATIO:1/3::,SgD::RATIO:2/3::,SgD::WEIGHT_PERCENT:15::%,SgH:3:4.0,0:7,4:2.1,1:5,2:6|";
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
@@ -255,7 +263,8 @@ public class CxSmilesParserTest {
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
     }
 
-    @Test public void stereogroups_and1() {
+    @Test
+    public void stereogroups_and1() {
         String cxsmilayers = "|&1:0,1|";
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
@@ -265,7 +274,8 @@ public class CxSmilesParserTest {
         assertThat(state.stereoGrps, is(expected));
     }
 
-    @Test public void stereogroups_or1() {
+    @Test
+    public void stereogroups_or1() {
         String cxsmilayers = "|o1:0,1|";
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
@@ -275,7 +285,8 @@ public class CxSmilesParserTest {
         assertThat(state.stereoGrps, is(expected));
     }
 
-    @Test public void stereogroups_or1_and1() {
+    @Test
+    public void stereogroups_or1_and1() {
         String cxsmilayers = "|o1:0,1,&5:6|";
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
@@ -286,21 +297,24 @@ public class CxSmilesParserTest {
         assertThat(state.stereoGrps, is(expected));
     }
 
-    @Test public void stereogroups_rac() {
+    @Test
+    public void stereogroups_rac() {
         String cxsmilayers = "|r|";
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
         assertTrue(state.racemic);
     }
 
-    @Test public void stereogroups_racFrags() {
+    @Test
+    public void stereogroups_racFrags() {
         String cxsmilayers = "|r:1,2|";
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
         assertThat(state.racemicFrags, is(Arrays.asList(1, 2)));
     }
 
-    @Test public void loadAnd1() throws InvalidSmilesException {
+    @Test
+    public void loadAnd1() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("CC[C@H](O)[C@H](O)CCCCCC |&1:2|");
         Iterable<IStereoElement> iter = mol.stereoElements();
@@ -315,7 +329,8 @@ public class CxSmilesParserTest {
         }
     }
 
-    @Test public void loadRacGlobal() throws InvalidSmilesException {
+    @Test
+    public void loadRacGlobal() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("CC[C@H](O)[C@H](O)CCCCCC |r|");
         Iterable<IStereoElement> iter = mol.stereoElements();
@@ -325,7 +340,8 @@ public class CxSmilesParserTest {
         }
     }
 
-    @Test public void loadRacComponents() throws InvalidSmilesException {
+    @Test
+    public void loadRacComponents() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReaction rxn = smipar.parseReactionSmiles("c1ccccc1[C@H](O)C>>CC[C@H](O)[C@H](O)CCCCCC |r:1|");
         for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
@@ -344,7 +360,8 @@ public class CxSmilesParserTest {
         }
     }
 
-    @Test public void loadRacComponentsWithFragGrouping() throws InvalidSmilesException {
+    @Test
+    public void loadRacComponentsWithFragGrouping() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReaction rxn = smipar.parseReactionSmiles("c1ccccc1[C@H](O)C>[Na+].[Cl-]>CC[C@H](O)[C@H](O)CCCCCC |f:1.2,r:3|");
         for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
@@ -363,7 +380,8 @@ public class CxSmilesParserTest {
         }
     }
 
-    @Test public void atomOrderingWithNonContiguousFragments() throws CDKException {
+    @Test
+    public void atomOrderingWithNonContiguousFragments() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReaction rxn = smipar.parseReactionSmiles("C.*.C>> |$;R1;$,f:0.2|");
         List<IAtomContainer> mols = ReactionManipulator.getAllAtomContainers(rxn);
@@ -374,7 +392,8 @@ public class CxSmilesParserTest {
                 is("R1"));
     }
 
-    @Test public void variableAttachCrossingBonds() throws CDKException {
+    @Test
+    public void variableAttachCrossingBonds() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[H]OCCO.C* |lp:1:2,4:2,m:6:3.2,Sg:n:1,2,3,5::ht|");
         List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);

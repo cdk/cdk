@@ -19,8 +19,8 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 
 /**
@@ -28,7 +28,7 @@ import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
  */
 public class Slf4jLoggingToolTest extends AbstractLoggingToolTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void ensureLog4JConfigured() {
         // Configurator.reconfigure();
     }

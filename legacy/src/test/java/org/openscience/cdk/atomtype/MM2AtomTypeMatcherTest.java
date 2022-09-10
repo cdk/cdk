@@ -23,9 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.test.SlowTest;
@@ -60,7 +60,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         if (testMolecule == null) {
             // read the test file and percieve atom types
@@ -158,7 +158,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
      * in the source. Ugly, but @AfterClass does not work because that
      * method cannot Assert.assert anything.
      */
-    @Ignore("Atom type matcher is incomplete")
+    @Disabled("Atom type matcher is incomplete")
     public void countTestedAtomTypes() {
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
                 SilentChemObjectBuilder.getInstance());

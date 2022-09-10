@@ -20,8 +20,8 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractReactionSetTest;
 import org.openscience.cdk.interfaces.IReactionSet;
 
@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  */
 public class DebugReactionSetTest extends AbstractReactionSetTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(DebugReactionSet::new);
     }

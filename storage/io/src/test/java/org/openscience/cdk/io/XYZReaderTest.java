@@ -25,8 +25,8 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,7 +46,7 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setSimpleChemObjectReader(new XYZReader(), "viagra.xyz");
     }

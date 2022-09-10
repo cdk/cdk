@@ -21,8 +21,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -38,7 +38,7 @@ public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(AutocorrelationDescriptorMass.class);
     }

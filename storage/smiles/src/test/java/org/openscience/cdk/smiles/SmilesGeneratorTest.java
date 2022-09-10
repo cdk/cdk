@@ -19,7 +19,8 @@
 package org.openscience.cdk.smiles;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -1200,15 +1201,18 @@ public class SmilesGeneratorTest extends CDKTestCase {
                    is(canon("Clc1ccc(Cl)c2[nH]c([nH0]c21)C(F)(F)F")));
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void warnOnBadInput() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         smipar.kekulise(false);
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1");
-        System.err.println(SmilesGenerator.isomeric().create(mol));
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    System.err.println(SmilesGenerator.isomeric().create(mol));
+                                });
     }
 
-    /**
+                                /**
      * @see https://tech.knime.org/forum/cdk/buggy-behavior-of-molecule-to-cdk-node
      */
     @Test
@@ -1229,14 +1233,17 @@ public class SmilesGeneratorTest extends CDKTestCase {
         assertThat(smigen.create(r2), is(smigen.create(r3)));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void inconsistentAromaticState() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1");
         for (IAtom atom : mol.atoms())
             atom.setIsAromatic(false);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
-        smigen.create(mol);
+        Assertions.assertThrows(IllegalStateException.class,
+                                () -> {
+                                    smigen.create(mol);
+                                });
     }
 
     @Test

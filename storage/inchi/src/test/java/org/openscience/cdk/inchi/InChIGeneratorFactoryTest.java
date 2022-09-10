@@ -29,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -46,7 +47,7 @@ import io.github.dan2097.jnainchi.InchiStatus;
 import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @cdk.module test-inchi
@@ -149,13 +150,15 @@ public class InChIGeneratorFactoryTest {
     /**
      * Because we are setting an options, we get a non-standard InChI.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetInChIGenerator_IAtomContainer_NullList() throws Exception {
-        IAtomContainer ac = new AtomContainer();
-        IAtom a = new Atom("Cl");
-        a.setImplicitHydrogenCount(1);
-        ac.addAtom(a);
-        InChIGeneratorFactory.getInstance().getInChIGenerator(ac, (List<INCHI_OPTION>) null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            IAtomContainer ac = new AtomContainer();
+            IAtom a = new Atom("Cl");
+            a.setImplicitHydrogenCount(1);
+            ac.addAtom(a);
+            InChIGeneratorFactory.getInstance().getInChIGenerator(ac, (List<INCHI_OPTION>) null);
+        });
     }
 
     @Test
@@ -165,16 +168,20 @@ public class InChIGeneratorFactoryTest {
         Assert.assertNotNull(parser);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetInChIToStructure_String_IChemObjectBuilder_NullString() throws CDKException {
-        InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
-                DefaultChemObjectBuilder.getInstance(), (String) null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
+                                                                    DefaultChemObjectBuilder.getInstance(), (String) null);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetInChIToStructure_String_IChemObjectBuilder_NullList() throws CDKException {
-        InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
-                DefaultChemObjectBuilder.getInstance(), (List<String>) null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
+                                                                    DefaultChemObjectBuilder.getInstance(), (List<String>) null);
+        });
     }
 
     /**

@@ -19,8 +19,8 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,7 +40,7 @@ public class AtomicNumberDifferenceDescriptorTest extends BondDescriptorTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(AtomicNumberDifferenceDescriptor.class);
     }

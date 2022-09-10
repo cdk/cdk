@@ -3,8 +3,8 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
@@ -28,7 +28,7 @@ public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
 
     public RDFProtonDescriptor_GHR_topolTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(RDFProtonDescriptor_GHR_topol.class);
     }

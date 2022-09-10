@@ -23,8 +23,8 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
@@ -34,7 +34,7 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
  */
 public class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new Mopac7Reader(), "ethylene.dat.out");
     }

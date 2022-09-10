@@ -23,8 +23,8 @@
 package org.openscience.cdk.smsd;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -49,7 +49,7 @@ public class SMSDBondInsensitiveTest {
     private static IAtomContainer Cyclohexane;
     private static IAtomContainer Benzene;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws CDKException {
         Napthalene = createNaphthalene();
         Cyclohexane = createCyclohexane();

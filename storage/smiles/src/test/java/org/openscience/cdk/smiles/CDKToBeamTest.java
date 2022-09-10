@@ -24,10 +24,12 @@
 
 package org.openscience.cdk.smiles;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -73,14 +75,20 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  */
 public class CDKToBeamTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void noImplicitHCount() throws Exception {
-        new CDKToBeam().toBeamAtom(new Atom("C"));
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new CDKToBeam().toBeamAtom(new Atom("C"));
+                                });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void noSymbol() throws Exception {
-        new CDKToBeam().toBeamAtom(new Atom());
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    new CDKToBeam().toBeamAtom(new Atom());
+                                });
     }
 
     @Test
@@ -171,41 +179,53 @@ public class CDKToBeamTest {
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected = CDKException.class)
+    @Test
     public void unsetBondOrder() throws Exception {
-        IAtom u = mock(IAtom.class);
-        IAtom v = mock(IAtom.class);
-        IBond b = new Bond(u, v, IBond.Order.UNSET);
-        Map<IAtom, Integer> mock = mock(Map.class);
-        when(mock.get(u)).thenReturn(0);
-        when(mock.get(v)).thenReturn(1);
-        new CDKToBeam().toBeamEdge(b, mock);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    IAtom u = mock(IAtom.class);
+                                    IAtom v = mock(IAtom.class);
+                                    IBond b = new Bond(u, v, IBond.Order.UNSET);
+                                    Map<IAtom, Integer> mock = mock(Map.class);
+                                    when(mock.get(u)).thenReturn(0);
+                                    when(mock.get(v)).thenReturn(1);
+                                    new CDKToBeam().toBeamEdge(b, mock);
+                                });
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected = CDKException.class)
+    @Test
     public void undefBondOrder() throws Exception {
-        IAtom u = mock(IAtom.class);
-        IAtom v = mock(IAtom.class);
-        IBond b = new Bond(u, v, null);
-        Map<IAtom, Integer> mock = mock(Map.class);
-        when(mock.get(u)).thenReturn(0);
-        when(mock.get(v)).thenReturn(1);
-        new CDKToBeam().toBeamEdge(b, mock);
+        Assertions.assertThrows(CDKException.class,
+                                () -> {
+                                    IAtom u = mock(IAtom.class);
+                                    IAtom v = mock(IAtom.class);
+                                    IBond b = new Bond(u, v, null);
+                                    Map<IAtom, Integer> mock = mock(Map.class);
+                                    when(mock.get(u)).thenReturn(0);
+                                    when(mock.get(v)).thenReturn(1);
+                                    new CDKToBeam().toBeamEdge(b, mock);
+                                });
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void tooFewAtoms() throws Exception {
-        IBond b = new Bond(new IAtom[]{mock(IAtom.class)});
-        new CDKToBeam().toBeamEdge(b, mock(Map.class));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IBond b = new Bond(new IAtom[]{mock(IAtom.class)});
+                                    new CDKToBeam().toBeamEdge(b, mock(Map.class));
+                                });
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void tooManyAtoms() throws Exception {
-        IBond b = new Bond(new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)});
-        new CDKToBeam().toBeamEdge(b, mock(Map.class));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IBond b = new Bond(new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)});
+                                    new CDKToBeam().toBeamEdge(b, mock(Map.class));
+                                });
     }
 
     @SuppressWarnings("unchecked")

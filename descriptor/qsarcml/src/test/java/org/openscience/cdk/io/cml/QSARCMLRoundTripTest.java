@@ -26,8 +26,8 @@ package org.openscience.cdk.io.cml;
 
 import nu.xom.Element;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -57,7 +57,7 @@ public class QSARCMLRoundTripTest {
 
     private static Convertor    convertor;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         convertor = new Convertor(false, "");
         // not needed QSARCustomizer is on by default

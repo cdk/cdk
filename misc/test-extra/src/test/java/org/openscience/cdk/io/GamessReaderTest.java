@@ -6,10 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
@@ -57,7 +57,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
      *
      * @see java.io.FileReader#FileReader(java.lang.String)
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         String filename = "Cl2O.log";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -69,7 +69,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
     /*
      * @see TestCase#tearDown()
      */
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         this.inputReader.close();
         this.gamessReaderUnderTest.close(); // TODO Answer the question : Is it necessary ?

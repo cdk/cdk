@@ -19,7 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -31,7 +31,7 @@ public class WHIMDescriptorTest extends MolecularDescriptorTest {
 
     public WHIMDescriptorTest() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         setDescriptor(WHIMDescriptor.class);
     }

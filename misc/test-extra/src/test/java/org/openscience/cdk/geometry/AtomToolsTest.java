@@ -7,7 +7,7 @@
 package org.openscience.cdk.geometry;
 
 import org.hamcrest.number.IsCloseTo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;

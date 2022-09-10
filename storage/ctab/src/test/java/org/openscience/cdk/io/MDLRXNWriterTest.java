@@ -24,8 +24,8 @@ package org.openscience.cdk.io;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.Reaction;
@@ -57,7 +57,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new MDLRXNWriter());

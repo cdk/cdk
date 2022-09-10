@@ -25,8 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -42,7 +43,7 @@ public class PharmacophoreUtilityTest {
 
     public static ConformerContainer conformers = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void loadConformerData() {
         String filename = "pcoretest1.sdf";
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
@@ -123,11 +124,13 @@ public class PharmacophoreUtilityTest {
         }
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     public void testInvalidPcoreXML() throws IOException, CDKException {
         String filename = "invalid1.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
-        PharmacophoreUtils.readPharmacophoreDefinitions(ins);
+        Assertions.assertThrows(CDKException.class, () -> {
+            PharmacophoreUtils.readPharmacophoreDefinitions(ins);
+        });
     }
 
     @Test

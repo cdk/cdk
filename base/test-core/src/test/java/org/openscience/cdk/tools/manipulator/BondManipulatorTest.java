@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Elements;
@@ -241,18 +242,24 @@ public class BondManipulatorTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, BondManipulator.getMaximumBondOrder(bond1, bond2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetMaximumBondOrder_IBond_IBond_null() {
-        IBond bond1 = new Bond();
-        bond1.setOrder(IBond.Order.UNSET);
-        IBond bond2 = new Bond();
-        bond2.setOrder(IBond.Order.DOUBLE);
-        BondManipulator.getMaximumBondOrder(null, bond2);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    IBond bond1 = new Bond();
+                                    bond1.setOrder(IBond.Order.UNSET);
+                                    IBond bond2 = new Bond();
+                                    bond2.setOrder(IBond.Order.DOUBLE);
+                                    BondManipulator.getMaximumBondOrder(null, bond2);
+                                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetMaximumBondOrder_Unset_Unset() {
-        BondManipulator.getMaximumBondOrder(IBond.Order.UNSET, IBond.Order.UNSET);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> {
+                                    BondManipulator.getMaximumBondOrder(IBond.Order.UNSET, IBond.Order.UNSET);
+                                });
     }
 
     @Test

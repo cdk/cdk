@@ -27,8 +27,8 @@ import java.io.StringReader;
 import java.util.Iterator;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
@@ -56,7 +56,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLRXNV2000Reader(), "0024.stg02.rxn");
     }
@@ -148,7 +148,8 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    @Test public void optionalSdfSeparator() throws Exception {
+    @Test
+    public void optionalSdfSeparator() throws Exception {
         String dummyRecord = "ethanol\n" +
                        "  Mrv1810 09251921392D          \n" +
                        "\n" +

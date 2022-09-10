@@ -19,7 +19,7 @@
 package org.openscience.cdk.templates;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.test.CDKTestCase;

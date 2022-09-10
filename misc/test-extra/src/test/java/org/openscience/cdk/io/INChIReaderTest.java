@@ -22,11 +22,13 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
@@ -48,7 +50,7 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReaderTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         setSimpleChemObjectReader(new INChIReader(), "guanine.inchi.xml");
     }
@@ -86,12 +88,14 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(12, molecule.getBondCount());
     }
 
-    @Test(expected = CDKException.class)
+    @Test
     @Override
     public void testSetReader_Reader() throws Exception {
         // CDKException expected as these INChI files are XML, which must
         // be read via InputStreams
-        super.testSetReader_Reader();
+        Assertions.assertThrows(CDKException.class, () -> {
+            super.testSetReader_Reader();
+        });
     }
 
 }

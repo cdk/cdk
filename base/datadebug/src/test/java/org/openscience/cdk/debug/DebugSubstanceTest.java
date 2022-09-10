@@ -18,7 +18,7 @@
  */
 package org.openscience.cdk.debug;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.openscience.cdk.test.interfaces.AbstractSubstanceTest;
 
 /**
@@ -28,7 +28,7 @@ import org.openscience.cdk.test.interfaces.AbstractSubstanceTest;
  */
 public class DebugSubstanceTest extends AbstractSubstanceTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setTestObjectBuilder(DebugSubstance::new);
     }

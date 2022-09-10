@@ -19,7 +19,8 @@
 package org.openscience.cdk.layout;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -45,16 +46,20 @@ public class HydrogenPlacerTest extends CDKTestCase {
     public boolean       standAlone = false;
     private final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(HydrogenPlacerTest.class);
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAtomWithoutCoordinates() {
-        HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-        hydrogenPlacer.placeHydrogens2D(new AtomContainer(), new Atom(), 1.5);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
+            hydrogenPlacer.placeHydrogens2D(new AtomContainer(), new Atom(), 1.5);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNullContainer() {
-        HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-        hydrogenPlacer.placeHydrogens2D(null, new Atom(), 1.5);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
+            hydrogenPlacer.placeHydrogens2D(null, new Atom(), 1.5);
+        });
     }
 
     @Test
@@ -82,18 +87,20 @@ public class HydrogenPlacerTest extends CDKTestCase {
         assertNotNull(h1.getPoint2d());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void unplacedNonHydrogen() {
-        HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
 
-        // c2 is unplaced
-        IAtom c1 = new Atom("C", new Point2d(0, 0));
-        IAtom c2 = new Atom("C");
-        IAtomContainer m = new AtomContainer();
-        m.addAtom(c1);
-        m.addAtom(c2);
-        m.addBond(new Bond(c1, c2));
-        hydrogenPlacer.placeHydrogens2D(m, 1.5);
+            // c2 is unplaced
+            IAtom c1 = new Atom("C", new Point2d(0, 0));
+            IAtom c2 = new Atom("C");
+            IAtomContainer m = new AtomContainer();
+            m.addAtom(c1);
+            m.addAtom(c2);
+            m.addBond(new Bond(c1, c2));
+            hydrogenPlacer.placeHydrogens2D(m, 1.5);
+        });
     }
 
     /** @cdk.bug 933572 */

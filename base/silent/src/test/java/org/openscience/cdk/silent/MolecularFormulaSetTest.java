@@ -20,8 +20,8 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractMolecularFormulaSetTest;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  */
 public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         setBuilder(SilentChemObjectBuilder.getInstance());
     }

@@ -5,7 +5,8 @@
  */
 package org.openscience.cdk.test.fingerprint;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -22,14 +23,20 @@ public abstract class AbstractFingerprinterTest extends CDKTestCase {
     }
 
     /* override if method is implemented */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testGetCountFingerprint() throws Exception {
-        getBitFingerprinter().getCountFingerprint(mock(IAtomContainer.class));
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+            getBitFingerprinter().getCountFingerprint(mock(IAtomContainer.class));
+        });
     }
 
     /* override if method is implemented */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testGetRawFingerprint() throws Exception {
-        getBitFingerprinter().getRawFingerprint(mock(IAtomContainer.class));
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                                () -> {
+            getBitFingerprinter().getRawFingerprint(mock(IAtomContainer.class));
+        });
     }
 }
