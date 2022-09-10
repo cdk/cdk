@@ -20,6 +20,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractMappingTest;
@@ -53,7 +54,7 @@ public class MappingTest extends AbstractMappingTest {
         IChemObject object = newChemObject();
         IMapping mapping = new Mapping(object.getBuilder().newInstance(IAtom.class), object.getBuilder().newInstance(
                 IAtom.class));
-        Assert.assertNotNull(mapping);
+        Assertions.assertNotNull(mapping);
     }
 
 }

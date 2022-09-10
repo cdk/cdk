@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -41,7 +42,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     public void testSize() {
         IMolecularFormulaSet mfS = getBuilder().newInstance(IMolecularFormulaSet.class);
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
-        Assert.assertEquals(1, mfS.size());
+        Assertions.assertEquals(1, mfS.size());
     }
 
     /**
@@ -56,7 +57,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(3, mfS.size());
+        Assertions.assertEquals(3, mfS.size());
     }
 
     /**
@@ -71,7 +72,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(3, mfS.size());
+        Assertions.assertEquals(3, mfS.size());
         Iterator<IMolecularFormula> iter = mfS.molecularFormulas().iterator();
         int count = 0;
         while (iter.hasNext()) {
@@ -79,9 +80,9 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
             ++count;
             iter.remove();
         }
-        Assert.assertEquals(0, mfS.size());
-        Assert.assertEquals(3, count);
-        Assert.assertFalse(iter.hasNext());
+        Assertions.assertEquals(0, mfS.size());
+        Assertions.assertEquals(3, count);
+        Assertions.assertFalse(iter.hasNext());
     }
 
     /**
@@ -96,13 +97,13 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(3, mfS.size());
+        Assertions.assertEquals(3, mfS.size());
         int count = 0;
         for (IMolecularFormula formula : mfS.molecularFormulas()) {
             ++count;
-            Assert.assertNotNull(formula);
+            Assertions.assertNotNull(formula);
         }
-        Assert.assertEquals(3, count);
+        Assertions.assertEquals(3, count);
     }
 
     /**
@@ -118,9 +119,9 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
         IMolecularFormulaSet tested = getBuilder().newInstance(IMolecularFormulaSet.class);
-        Assert.assertEquals(0, tested.size());
+        Assertions.assertEquals(0, tested.size());
         tested.add(mfS);
-        Assert.assertEquals(3, tested.size());
+        Assertions.assertEquals(3, tested.size());
     }
 
     /**
@@ -135,7 +136,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertNotNull(mfS.getMolecularFormula(2)); // third molecule should exist
+        Assertions.assertNotNull(mfS.getMolecularFormula(2)); // third molecule should exist
         //        Assert.assertNull(mfS.getMolecularFormula(3)); // fourth molecule must not exist
     }
 
@@ -153,13 +154,13 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(5, mfS.size());
+        Assertions.assertEquals(5, mfS.size());
 
         // now test it to make sure it properly grows the array
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(7, mfS.size());
+        Assertions.assertEquals(7, mfS.size());
     }
 
     /**
@@ -171,16 +172,16 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     public void testGetMolecularFormulas() {
         IMolecularFormulaSet mfS = getBuilder().newInstance(IMolecularFormulaSet.class);
 
-        Assert.assertEquals(0, mfS.size());
+        Assertions.assertEquals(0, mfS.size());
 
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(3, mfS.size());
-        Assert.assertNotNull(mfS.getMolecularFormula(0));
-        Assert.assertNotNull(mfS.getMolecularFormula(1));
-        Assert.assertNotNull(mfS.getMolecularFormula(2));
+        Assertions.assertEquals(3, mfS.size());
+        Assertions.assertNotNull(mfS.getMolecularFormula(0));
+        Assertions.assertNotNull(mfS.getMolecularFormula(1));
+        Assertions.assertNotNull(mfS.getMolecularFormula(2));
     }
 
     /**
@@ -203,7 +204,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
 
         mfS.addMolecularFormula(mf);
 
-        Assert.assertTrue(mfS.contains(mf));
+        Assertions.assertTrue(mfS.contains(mf));
     }
 
     /**
@@ -215,8 +216,8 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     public void testClone() throws Exception {
         IMolecularFormulaSet mfS = getBuilder().newInstance(IMolecularFormulaSet.class);
         Object clone = mfS.clone();
-        Assert.assertTrue(clone instanceof IMolecularFormulaSet);
-        Assert.assertNotSame(mfS, clone);
+        Assertions.assertTrue(clone instanceof IMolecularFormulaSet);
+        Assertions.assertNotSame(mfS, clone);
     }
 
     /**
@@ -246,12 +247,12 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(mf2);
 
         Object clone = mfS.clone();
-        Assert.assertTrue(clone instanceof IMolecularFormulaSet);
-        Assert.assertNotSame(mfS, clone);
-        Assert.assertEquals(mfS.size(), ((IMolecularFormulaSet) clone).size());
-        Assert.assertEquals(mfS.getMolecularFormula(0).getIsotopeCount(), ((IMolecularFormulaSet) clone)
+        Assertions.assertTrue(clone instanceof IMolecularFormulaSet);
+        Assertions.assertNotSame(mfS, clone);
+        Assertions.assertEquals(mfS.size(), ((IMolecularFormulaSet) clone).size());
+        Assertions.assertEquals(mfS.getMolecularFormula(0).getIsotopeCount(), ((IMolecularFormulaSet) clone)
                 .getMolecularFormula(0).getIsotopeCount());
-        Assert.assertEquals(mfS.getMolecularFormula(1).getIsotopeCount(), ((IMolecularFormulaSet) clone)
+        Assertions.assertEquals(mfS.getMolecularFormula(1).getIsotopeCount(), ((IMolecularFormulaSet) clone)
                 .getMolecularFormula(1).getIsotopeCount());
     }
 
@@ -268,8 +269,8 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         mfS.removeMolecularFormula(mf1);
-        Assert.assertEquals(1, mfS.size());
-        Assert.assertEquals(mf2, mfS.getMolecularFormula(0));
+        Assertions.assertEquals(1, mfS.size());
+        Assertions.assertEquals(mf2, mfS.getMolecularFormula(0));
     }
 
     /**
@@ -285,9 +286,9 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
 
-        Assert.assertEquals(2, mfS.size());
+        Assertions.assertEquals(2, mfS.size());
         mfS.removeAllMolecularFormulas();
-        Assert.assertEquals(0, mfS.size());
+        Assertions.assertEquals(0, mfS.size());
     }
 
     /**
@@ -303,8 +304,8 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         mfS.removeMolecularFormula(0);
-        Assert.assertEquals(1, mfS.size());
-        Assert.assertEquals(mf2, mfS.getMolecularFormula(0));
+        Assertions.assertEquals(1, mfS.size());
+        Assertions.assertEquals(mf2, mfS.getMolecularFormula(0));
     }
 
     /**
@@ -320,17 +321,17 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
         IMolecularFormula mf3 = getBuilder().newInstance(IMolecularFormula.class);
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
-        Assert.assertEquals(mf2, mfS.getMolecularFormula(1));
+        Assertions.assertEquals(mf2, mfS.getMolecularFormula(1));
         mfS.removeMolecularFormula(1);
         mfS.addMolecularFormula(mf3);
-        Assert.assertEquals(mf3, mfS.getMolecularFormula(1));
+        Assertions.assertEquals(mf3, mfS.getMolecularFormula(1));
     }
 
     @Test
     public void testGetBuilder() {
         IMolecularFormulaSet add = getBuilder().newInstance(IMolecularFormulaSet.class);
         IChemObjectBuilder builder = add.getBuilder();
-        Assert.assertNotNull(builder);
-        Assert.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
+        Assertions.assertNotNull(builder);
+        Assertions.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
     }
 }

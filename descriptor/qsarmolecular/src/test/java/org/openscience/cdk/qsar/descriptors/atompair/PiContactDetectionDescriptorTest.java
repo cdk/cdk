@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atompair;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
@@ -46,7 +47,7 @@ public class PiContactDetectionDescriptorTest extends DescriptorTest<IAtomPairDe
         mol.getBond(2).setOrder(IBond.Order.DOUBLE);
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++)
-                assertTrue(checkAtomAtom(mol, i, j));
+                Assertions.assertTrue(checkAtomAtom(mol, i, j));
     }
 
     @Test
@@ -57,14 +58,12 @@ public class PiContactDetectionDescriptorTest extends DescriptorTest<IAtomPairDe
         mol.getBond(6).setOrder(IBond.Order.DOUBLE);
         for (int i = 0; i < 5; i++)
             for (int j = 0; j < 5; j++)
-                assertTrue(i + "," + j + " should have pi contact",
-                        checkAtomAtom(mol, i, j));
+                Assertions.assertTrue(checkAtomAtom(mol, i, j), i + "," + j + " should have pi contact");
         for (int i = 0; i < 5; i++)
             for (int j = 5; j < 8; j++)
-                assertFalse(i + "," + j + " should NOT have pi contact",
-                        checkAtomAtom(mol, i, j));
+                Assertions.assertFalse(checkAtomAtom(mol, i, j), i + "," + j + " should NOT have pi contact");
         // a single double bond is not considered see
-        assertFalse(checkAtomAtom(mol, 6, 7));
+        Assertions.assertFalse(checkAtomAtom(mol, 6, 7));
     }
 
     private boolean checkAtomAtom(IAtomContainer mol, int i, int j) {

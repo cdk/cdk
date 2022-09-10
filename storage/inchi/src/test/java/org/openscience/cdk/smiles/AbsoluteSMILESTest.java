@@ -110,8 +110,7 @@ public class AbsoluteSMILESTest {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         final IAtomContainer mol = smipar.parseSmiles(in);
         final SmilesGenerator cansmi = SmilesGenerator.absolute();
-        Assert.assertEquals(cansmi.create(mol),
-                            cansmi.create(smipar.parseSmiles(cansmi.create(mol))));
+        Assertions.assertEquals(cansmi.create(mol), cansmi.create(smipar.parseSmiles(cansmi.create(mol))));
     }
 
     @Test

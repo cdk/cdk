@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -24,23 +25,23 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
     public void testGetBondOrderSum() {
         IChemObject object = newChemObject();
         IRing r = object.getBuilder().newInstance(IRing.class, 5, "C");
-        Assert.assertEquals(5, r.getBondOrderSum());
+        Assertions.assertEquals(5, r.getBondOrderSum());
 
         BondManipulator.increaseBondOrder(r.getBond(0));
-        Assert.assertEquals(6, r.getBondOrderSum());
+        Assertions.assertEquals(6, r.getBondOrderSum());
 
         BondManipulator.increaseBondOrder(r.getBond(0));
-        Assert.assertEquals(7, r.getBondOrderSum());
+        Assertions.assertEquals(7, r.getBondOrderSum());
 
         BondManipulator.increaseBondOrder(r.getBond(4));
-        Assert.assertEquals(8, r.getBondOrderSum());
+        Assertions.assertEquals(8, r.getBondOrderSum());
     }
 
     @Test
     public void testGetRingSize() {
         IChemObject object = newChemObject();
         IRing r = object.getBuilder().newInstance(IRing.class, 5, "C");
-        Assert.assertEquals(5, r.getRingSize());
+        Assertions.assertEquals(5, r.getRingSize());
     }
 
     @Test
@@ -59,12 +60,12 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
         ring.addBond(b2);
         ring.addBond(b3);
 
-        Assert.assertEquals(b1, ring.getNextBond(b2, c2));
-        Assert.assertEquals(b1, ring.getNextBond(b3, c1));
-        Assert.assertEquals(b2, ring.getNextBond(b1, c2));
-        Assert.assertEquals(b2, ring.getNextBond(b3, c3));
-        Assert.assertEquals(b3, ring.getNextBond(b1, c1));
-        Assert.assertEquals(b3, ring.getNextBond(b2, c3));
+        Assertions.assertEquals(b1, ring.getNextBond(b2, c2));
+        Assertions.assertEquals(b1, ring.getNextBond(b3, c1));
+        Assertions.assertEquals(b2, ring.getNextBond(b1, c2));
+        Assertions.assertEquals(b2, ring.getNextBond(b3, c3));
+        Assertions.assertEquals(b3, ring.getNextBond(b1, c1));
+        Assertions.assertEquals(b3, ring.getNextBond(b2, c3));
     }
 
     @Test
@@ -74,8 +75,8 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
         IRing r = object.getBuilder().newInstance(IRing.class, 5, "C");
         String description = r.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 }

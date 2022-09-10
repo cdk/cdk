@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -48,7 +49,7 @@ public class RingSearchTest_Fused {
     public void testCyclic_Int() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         for (int i = 0; i < fusedRings.getAtomCount(); i++)
-            assertTrue(ringSearch.cyclic(i));
+            Assertions.assertTrue(ringSearch.cyclic(i));
     }
 
     @Test
@@ -74,10 +75,10 @@ public class RingSearchTest_Fused {
         RingSearch ringSearch = new RingSearch(fusedRings);
         IAtomContainer fragment = ringSearch.ringFragments();
         for (IAtom atom : fusedRings.atoms()) {
-            assertTrue(fragment.contains(atom));
+            Assertions.assertTrue(fragment.contains(atom));
         }
         for (IBond bond : fusedRings.bonds()) {
-            assertTrue(fragment.contains(bond));
+            Assertions.assertTrue(fragment.contains(bond));
         }
     }
 
@@ -88,10 +89,10 @@ public class RingSearchTest_Fused {
         assertThat(fragments.size(), is(1));
         IAtomContainer fragment = fragments.get(0);
         for (IAtom atom : fusedRings.atoms()) {
-            assertTrue(fragment.contains(atom));
+            Assertions.assertTrue(fragment.contains(atom));
         }
         for (IBond bond : fusedRings.bonds()) {
-            assertTrue(fragment.contains(bond));
+            Assertions.assertTrue(fragment.contains(bond));
         }
     }
 

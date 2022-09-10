@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
@@ -102,7 +103,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
 
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
     }
 
@@ -152,7 +153,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 
-            Assert.assertEquals(testResult[i], result, 0.04);
+            Assertions.assertEquals(testResult[i], result, 0.04);
         }
     }
 
@@ -204,7 +205,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
 
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -269,7 +270,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
 
-            Assert.assertEquals(testResult[i], result, 0.012);
+            Assertions.assertEquals(testResult[i], result, 0.012);
         }
     }
 
@@ -328,7 +329,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
 
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -373,7 +374,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
 
-            Assert.assertEquals(testResult[i], result, 0.3);
+            Assertions.assertEquals(testResult[i], result, 0.3);
         }
     }
 }

@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -68,14 +69,14 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testGetInstance_IChemObjectBuilder() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
     }
 
     @Test
     public void testGetInstance_IChemObjectBuilder_int() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance(),
                 CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
     }
 
     @Test
@@ -103,7 +104,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+            Assertions.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
         }
     }
 
@@ -127,7 +128,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         IAtomType type = matcher.findMatchingAtomType(mol, atom);
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
         org.hamcrest.MatcherAssert.assertThat(type.getAtomTypeName(), is("X"));
     }
 
@@ -3026,7 +3027,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     public void testAllElementsRepresented() throws Exception {
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl",
                 SilentChemObjectBuilder.getInstance());
-        Assert.assertTrue("Could not read the atom types", factory.getSize() != 0);
+        Assertions.assertTrue(factory.getSize() != 0, "Could not read the atom types");
         String errorMessage = "Elements without atom type(s) defined in the XML:";
         final int testUptoAtomicNumber = 36; // TODO: 92 ?
         int elementsMissingTypes = 0;
@@ -3038,7 +3039,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
                 elementsMissingTypes++;
             }
         }
-        Assert.assertEquals(errorMessage, 0, elementsMissingTypes);
+        Assertions.assertEquals(0, elementsMissingTypes, errorMessage);
     }
 
     @Test
@@ -3050,7 +3051,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(new Atom("O"));
         mol.getAtom(0).setFormalCharge(+1);
         IAtomType type = atm.findMatchingAtomType(mol, mol.getAtom(0));
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
         org.hamcrest.MatcherAssert.assertThat(type.getAtomTypeName(), is("X"));
 
         for (int i = 0; i < 3; i++) {
@@ -3063,7 +3064,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
     }
 
     @Test
@@ -3099,7 +3100,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
         IAtomType foundType = atm.findMatchingAtomType(mol, atom);
-        Assert.assertEquals("X", foundType.getAtomTypeName());
+        Assertions.assertEquals("X", foundType.getAtomTypeName());
     }
 
     @Test
@@ -3716,7 +3717,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtomType type;
         for (IAtom atom : ac.atoms()) {
             type = CDKAtomTypeMatcher.getInstance(ac.getBuilder()).findMatchingAtomType(ac, atom);
-            Assert.assertNotNull(type);
+            Assertions.assertNotNull(type);
         }
     }
 
@@ -6540,7 +6541,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pyrrole);
 
-        Assert.assertEquals(pyrrole.getAtom(0).getHybridization().name(), "PLANAR3");
+        Assertions.assertEquals(pyrrole.getAtom(0).getHybridization().name(), "PLANAR3");
     }
 
     /**
@@ -6602,7 +6603,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pyrrole);
 
-        Assert.assertEquals(pyrrole.getAtom(0).getHybridization().name(), "PLANAR3");
+        Assertions.assertEquals(pyrrole.getAtom(0).getHybridization().name(), "PLANAR3");
     }
 
     @AfterAll

@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -56,7 +57,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no688:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(-1.69, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(-1.69, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -69,7 +70,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1596:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(0.86, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
+        Assertions.assertEquals(0.86, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test
@@ -81,7 +82,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no367:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(-3.30, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(-3.30, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -93,7 +94,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1837:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(-1.19, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(-1.19, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -105,7 +106,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no87:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(7.00, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(7.00, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -117,7 +118,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1782:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(1.84, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(1.84, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -129,7 +130,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no30:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(4.62, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(4.62, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Disabled
@@ -142,7 +143,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no937:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(0.66, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(0.66, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -154,7 +155,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no990:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(1.834, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
+        Assertions.assertEquals(1.834, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test
@@ -166,7 +167,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no10000:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(2.809, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
+        Assertions.assertEquals(2.809, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test
@@ -178,7 +179,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("Aspirin:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(1.422, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(1.422, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -190,7 +191,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1429:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(0.31, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
+        Assertions.assertEquals(0.31, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test
@@ -202,7 +203,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1274:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(-1.487, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
+        Assertions.assertEquals(-1.487, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test
@@ -217,7 +218,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no454:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(-2.11, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(-2.11, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -230,7 +231,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no498:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(-0.59, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(-0.59, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test
@@ -243,7 +244,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("Aprindine:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(5.03, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
+        Assertions.assertEquals(5.03, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test
@@ -256,7 +257,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1844:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(5.22, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
+        Assertions.assertEquals(5.22, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test
@@ -268,7 +269,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1810:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(4.56, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
+        Assertions.assertEquals(4.56, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     /**
@@ -283,7 +284,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1822:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(2.36, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assertions.assertEquals(2.36, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test

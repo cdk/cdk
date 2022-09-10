@@ -1,6 +1,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -42,8 +43,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(3.5029, result.get(0), 0.001);
-        Assert.assertEquals(3.5029, result.get(1), 0.001);
+        Assertions.assertEquals(3.5029, result.get(0), 0.001);
+        Assertions.assertEquals(3.5029, result.get(1), 0.001);
     }
 
     @Test
@@ -58,8 +59,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(1.1476784, result.get(0), 0.01);
-        Assert.assertEquals(1.0936984, result.get(1), 0.01);
+        Assertions.assertEquals(1.1476784, result.get(0), 0.01);
+        Assertions.assertEquals(1.0936984, result.get(1), 0.01);
     }
 
     @Test
@@ -75,8 +76,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(1.3083278, result.get(0), 0.01);
-        Assert.assertEquals(1.3083278, result.get(1), 0.01);
+        Assertions.assertEquals(1.3083278, result.get(0), 0.01);
+        Assertions.assertEquals(1.3083278, result.get(1), 0.01);
     }
 
     @Test
@@ -91,8 +92,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(2.0880171, result.get(0), 0.000001);
-        Assert.assertEquals(2.0880171, result.get(1), 0.000001);
+        Assertions.assertEquals(2.0880171, result.get(0), 0.000001);
+        Assertions.assertEquals(2.0880171, result.get(1), 0.000001);
     }
 
     /**
@@ -109,7 +110,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
 }

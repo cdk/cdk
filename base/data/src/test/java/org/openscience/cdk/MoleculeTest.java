@@ -21,6 +21,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,17 +48,17 @@ public class MoleculeTest extends AbstractMoleculeTest {
     @Test
     public void testMolecule() {
         IAtomContainer m = new AtomContainer();
-        Assert.assertNotNull(m);
+        Assertions.assertNotNull(m);
     }
 
     @Test
     public void testMolecule_int_int_int_int() {
         IAtomContainer m = new AtomContainer(5, 5, 1, 1);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(0, m.getAtomCount());
-        Assert.assertEquals(0, m.getBondCount());
-        Assert.assertEquals(0, m.getLonePairCount());
-        Assert.assertEquals(0, m.getSingleElectronCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(0, m.getAtomCount());
+        Assertions.assertEquals(0, m.getBondCount());
+        Assertions.assertEquals(0, m.getLonePairCount());
+        Assertions.assertEquals(0, m.getSingleElectronCount());
     }
 
     @Test
@@ -79,9 +80,9 @@ public class MoleculeTest extends AbstractMoleculeTest {
         acetone.addBond(b3);
 
         IAtomContainer m = new AtomContainer(acetone);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(4, m.getAtomCount());
-        Assert.assertEquals(3, m.getBondCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(4, m.getAtomCount());
+        Assertions.assertEquals(3, m.getBondCount());
     }
 
 }

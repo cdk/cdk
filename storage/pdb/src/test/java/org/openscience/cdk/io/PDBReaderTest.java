@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
@@ -91,7 +92,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         reader.read(object);
         reader.close();
         stringReader.close();
-        Assert.assertNotNull(object);
+        Assertions.assertNotNull(object);
         int bondCount = ((IChemFile) object).getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0)
                 .getBondCount();
         /*
@@ -100,7 +101,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
          * UseRebondTool=true then bondCount == 3 (just atoms within bonding
          * distance)
          */
-        Assert.assertEquals(1, bondCount);
+        Assertions.assertEquals(1, bondCount);
     }
 
     @Test
@@ -108,7 +109,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         String data = "HETATM 3486 MG    MG A 302      24.885  14.008  59.194  1.00 29.42          MG+2\n" + "END";
         IChemFile chemFile = getChemFileFromString(data);
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
-        Assert.assertEquals(new Double(2.0), atomContainer.getAtom(0).getCharge());
+        Assertions.assertEquals(new Double(2.0), atomContainer.getAtom(0).getCharge());
     }
 
     @Test
@@ -120,8 +121,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         IChemFile newFormatFile = getChemFileFromString(newFormat);
         IAtomContainer acOld = getFirstAtomContainer(oldFormatFile, 1, 1, 1);
         IAtomContainer acNew = getFirstAtomContainer(newFormatFile, 1, 1, 1);
-        Assert.assertEquals("H", acOld.getAtom(0).getSymbol());
-        Assert.assertEquals("H", acNew.getAtom(0).getSymbol());
+        Assertions.assertEquals("H", acOld.getAtom(0).getSymbol());
+        Assertions.assertEquals("H", acNew.getAtom(0).getSymbol());
     }
 
     @Test
@@ -145,7 +146,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         PDBReader reader = new PDBReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
@@ -154,62 +155,62 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
 
         ISimpleChemObjectReader oReader = new PDBReader(ins);
-        Assert.assertNotNull(oReader);
+        Assertions.assertNotNull(oReader);
 
         IChemFile oChemFile = oReader.read(new ChemFile());
-        Assert.assertNotNull(oChemFile);
-        Assert.assertEquals(oChemFile.getChemSequenceCount(), 1);
+        Assertions.assertNotNull(oChemFile);
+        Assertions.assertEquals(oChemFile.getChemSequenceCount(), 1);
 
         IChemSequence oSeq = oChemFile.getChemSequence(0);
-        Assert.assertNotNull(oSeq);
-        Assert.assertEquals(oSeq.getChemModelCount(), 1);
+        Assertions.assertNotNull(oSeq);
+        Assertions.assertEquals(oSeq.getChemModelCount(), 1);
 
         IChemModel oModel = oSeq.getChemModel(0);
-        Assert.assertNotNull(oModel);
-        Assert.assertEquals(1, oModel.getMoleculeSet().getAtomContainerCount());
+        Assertions.assertNotNull(oModel);
+        Assertions.assertEquals(1, oModel.getMoleculeSet().getAtomContainerCount());
 
         IAtomContainer container = oModel.getMoleculeSet().getAtomContainer(0);
-        Assert.assertFalse(container instanceof IBioPolymer);
-        Assert.assertTrue(container instanceof IAtomContainer);
+        Assertions.assertFalse(container instanceof IBioPolymer);
+        Assertions.assertTrue(container instanceof IAtomContainer);
         IAtomContainer oMol = container;
-        Assert.assertNotNull(oMol);
-        Assert.assertEquals(oMol.getAtomCount(), 14);
+        Assertions.assertNotNull(oMol);
+        Assertions.assertEquals(oMol.getAtomCount(), 14);
 
         IAtom nAtom = oMol.getAtom(0);
-        Assert.assertNotNull(nAtom);
-        Assert.assertTrue(nAtom instanceof IPDBAtom);
+        Assertions.assertNotNull(nAtom);
+        Assertions.assertTrue(nAtom instanceof IPDBAtom);
         IPDBAtom oAtom = (IPDBAtom) nAtom;
-        Assert.assertEquals("C", oAtom.getSymbol());
-        Assert.assertEquals(1, oAtom.getSerial().intValue());
-        Assert.assertEquals("C1", oAtom.getName());
-        Assert.assertEquals("MOL", oAtom.getResName());
-        Assert.assertEquals("1", oAtom.getResSeq());
-        Assert.assertEquals(1.0, oAtom.getOccupancy(), 0);
-        Assert.assertEquals(0.0, oAtom.getTempFactor(), 0);
+        Assertions.assertEquals("C", oAtom.getSymbol());
+        Assertions.assertEquals(1, oAtom.getSerial().intValue());
+        Assertions.assertEquals("C1", oAtom.getName());
+        Assertions.assertEquals("MOL", oAtom.getResName());
+        Assertions.assertEquals("1", oAtom.getResSeq());
+        Assertions.assertEquals(1.0, oAtom.getOccupancy(), 0);
+        Assertions.assertEquals(0.0, oAtom.getTempFactor(), 0);
 
         nAtom = oMol.getAtom(3);
-        Assert.assertNotNull(nAtom);
-        Assert.assertTrue(nAtom instanceof IPDBAtom);
+        Assertions.assertNotNull(nAtom);
+        Assertions.assertTrue(nAtom instanceof IPDBAtom);
         oAtom = (IPDBAtom) nAtom;
-        Assert.assertEquals("O", oAtom.getSymbol());
-        Assert.assertEquals(4, oAtom.getSerial().intValue());
-        Assert.assertEquals("O4", oAtom.getName());
-        Assert.assertEquals("MOL", oAtom.getResName());
-        Assert.assertEquals("1", oAtom.getResSeq());
-        Assert.assertEquals(1.0, oAtom.getOccupancy(), 0);
-        Assert.assertEquals(0.0, oAtom.getTempFactor(), 0);
+        Assertions.assertEquals("O", oAtom.getSymbol());
+        Assertions.assertEquals(4, oAtom.getSerial().intValue());
+        Assertions.assertEquals("O4", oAtom.getName());
+        Assertions.assertEquals("MOL", oAtom.getResName());
+        Assertions.assertEquals("1", oAtom.getResSeq());
+        Assertions.assertEquals(1.0, oAtom.getOccupancy(), 0);
+        Assertions.assertEquals(0.0, oAtom.getTempFactor(), 0);
 
         nAtom = oMol.getAtom(oMol.getAtomCount()-1);
-        Assert.assertNotNull(nAtom);
-        Assert.assertTrue(nAtom instanceof IPDBAtom);
+        Assertions.assertNotNull(nAtom);
+        Assertions.assertTrue(nAtom instanceof IPDBAtom);
         oAtom = (IPDBAtom) nAtom;
-        Assert.assertEquals("N", oAtom.getSymbol());
-        Assert.assertEquals(14, oAtom.getSerial().intValue());
-        Assert.assertEquals("N14", oAtom.getName());
-        Assert.assertEquals("MOL", oAtom.getResName());
-        Assert.assertEquals("1", oAtom.getResSeq());
-        Assert.assertEquals(1.0, oAtom.getOccupancy(), 0);
-        Assert.assertEquals(0.0, oAtom.getTempFactor(), 0);
+        Assertions.assertEquals("N", oAtom.getSymbol());
+        Assertions.assertEquals(14, oAtom.getSerial().intValue());
+        Assertions.assertEquals("N14", oAtom.getName());
+        Assertions.assertEquals("MOL", oAtom.getResName());
+        Assertions.assertEquals("1", oAtom.getResSeq());
+        Assertions.assertEquals(1.0, oAtom.getOccupancy(), 0);
+        Assertions.assertEquals(0.0, oAtom.getTempFactor(), 0);
     }
 
     /**
@@ -221,49 +222,49 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
 
         ISimpleChemObjectReader reader = new PDBReader(ins);
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
 
         ChemFile chemFile = reader.read(new ChemFile());
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
 
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
 
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
-        Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
+        Assertions.assertNotNull(model);
+        Assertions.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
 
         IAtomContainer container = model.getMoleculeSet().getAtomContainer(0);
-        Assert.assertTrue(container instanceof IBioPolymer);
+        Assertions.assertTrue(container instanceof IBioPolymer);
         IBioPolymer mol = (IBioPolymer) container;
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(327, mol.getAtomCount());
-        Assert.assertEquals(46, mol.getMonomerCount());
-        Assert.assertNotNull(mol.getMonomer("THRA1", "A"));
-        Assert.assertEquals(7, mol.getMonomer("THRA1", "A").getAtomCount());
-        Assert.assertNotNull(mol.getMonomer("ILEA7", "A"));
-        Assert.assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(327, mol.getAtomCount());
+        Assertions.assertEquals(46, mol.getMonomerCount());
+        Assertions.assertNotNull(mol.getMonomer("THRA1", "A"));
+        Assertions.assertEquals(7, mol.getMonomer("THRA1", "A").getAtomCount());
+        Assertions.assertNotNull(mol.getMonomer("ILEA7", "A"));
+        Assertions.assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
 
         IAtom nAtom = mol.getAtom(94);
-        Assert.assertNotNull(nAtom);
-        Assert.assertTrue(nAtom instanceof PDBAtom);
+        Assertions.assertNotNull(nAtom);
+        Assertions.assertTrue(nAtom instanceof PDBAtom);
         PDBAtom atom = (PDBAtom) nAtom;
-        Assert.assertEquals("C", atom.getSymbol());
-        Assert.assertEquals(95, atom.getSerial().intValue());
-        Assert.assertEquals("CZ", atom.getName());
-        Assert.assertEquals("PHE", atom.getResName());
-        Assert.assertEquals("13", atom.getResSeq());
-        Assert.assertEquals(1.0, atom.getOccupancy(), 0.001);
-        Assert.assertEquals(6.84, atom.getTempFactor(), 0.001);
+        Assertions.assertEquals("C", atom.getSymbol());
+        Assertions.assertEquals(95, atom.getSerial().intValue());
+        Assertions.assertEquals("CZ", atom.getName());
+        Assertions.assertEquals("PHE", atom.getResName());
+        Assertions.assertEquals("13", atom.getResSeq());
+        Assertions.assertEquals(1.0, atom.getOccupancy(), 0.001);
+        Assertions.assertEquals(6.84, atom.getTempFactor(), 0.001);
 
     }
 
     public IChemFile getChemFileFromString(String data) throws Exception {
         StringReader stringReader = new StringReader(data);
         PDBReader reader = new PDBReader(stringReader);
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
         return getChemFile(reader);
     }
 
@@ -286,47 +287,47 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     }
 
     public IChemFile getChemFile(ISimpleChemObjectReader reader, boolean useRebond, boolean useHetAtmDict) throws Exception {
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
 
         reader.getSetting("UseRebondTool").setSetting(String.valueOf(useRebond));
         reader.getSetting("UseHetDictionary").setSetting(String.valueOf(useHetAtmDict));
 
         IChemFile chemFile = reader.read(new ChemFile());
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         return chemFile;
     }
 
     public IAtomContainer getFirstAtomContainer(IChemFile chemFile, int chemSequenceCount, int chemModelCount,
             int moleculeCount) {
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(chemSequenceCount, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(chemSequenceCount, chemFile.getChemSequenceCount());
 
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(chemModelCount, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(chemModelCount, seq.getChemModelCount());
 
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
-        Assert.assertEquals(moleculeCount, model.getMoleculeSet().getAtomContainerCount());
+        Assertions.assertNotNull(model);
+        Assertions.assertEquals(moleculeCount, model.getMoleculeSet().getAtomContainerCount());
         return model.getMoleculeSet().getAtomContainer(0);
     }
 
     public void testObjectCountsChemFile(IChemFile chemFile, int chemSequenceCount, int chemModelCount,
             int moleculeCount, int atomCount, int strandCount, int monomerCount, int structureCount) throws Exception {
         IAtomContainer container = getFirstAtomContainer(chemFile, chemSequenceCount, chemModelCount, moleculeCount);
-        Assert.assertTrue(container instanceof IBioPolymer);
+        Assertions.assertTrue(container instanceof IBioPolymer);
         IBioPolymer polymer = (IBioPolymer) container;
 
         // chemical validation
-        Assert.assertEquals(atomCount, ChemFileManipulator.getAtomCount(chemFile));
-        Assert.assertEquals(strandCount, polymer.getStrandCount());
-        Assert.assertEquals(monomerCount, polymer.getMonomerCount());
+        Assertions.assertEquals(atomCount, ChemFileManipulator.getAtomCount(chemFile));
+        Assertions.assertEquals(strandCount, polymer.getStrandCount());
+        Assertions.assertEquals(monomerCount, polymer.getMonomerCount());
 
-        Assert.assertTrue(polymer instanceof PDBPolymer);
+        Assertions.assertTrue(polymer instanceof PDBPolymer);
         PDBPolymer pdb = (PDBPolymer) polymer;
 
         // PDB validation
-        Assert.assertEquals(structureCount, pdb.getStructures().size());
+        Assertions.assertEquals(structureCount, pdb.getStructures().size());
     }
 
     @Test
@@ -335,56 +336,56 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
 
         ISimpleChemObjectReader reader = new PDBReader(ins);
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
 
         IChemFile chemFile = reader.read(new ChemFile());
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
 
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
 
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
-        Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
+        Assertions.assertNotNull(model);
+        Assertions.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
 
         IAtomContainer container = model.getMoleculeSet().getAtomContainer(0);
-        Assert.assertTrue(container instanceof IBioPolymer);
+        Assertions.assertTrue(container instanceof IBioPolymer);
         IBioPolymer polymer = (IBioPolymer) container;
 
-        Assert.assertTrue("Strand A is not a PDBStrand", polymer.getStrand("A") instanceof PDBStrand);
+        Assertions.assertTrue(polymer.getStrand("A") instanceof PDBStrand, "Strand A is not a PDBStrand");
         PDBStrand strandA = (PDBStrand) polymer.getStrand("A");
         Iterator<String> lst = strandA.getMonomerNamesInSequentialOrder().iterator();
         String monomer1 = lst.next();
         IMonomer mono1 = strandA.getMonomer(monomer1);
-        Assert.assertNotNull(mono1);
-        Assert.assertNotNull(mono1.getMonomerName());
-        Assert.assertTrue("Monomer is not a PDBMonomer", mono1 instanceof PDBMonomer);
+        Assertions.assertNotNull(mono1);
+        Assertions.assertNotNull(mono1.getMonomerName());
+        Assertions.assertTrue(mono1 instanceof PDBMonomer, "Monomer is not a PDBMonomer");
         PDBMonomer pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals(pdbMonomer.getResSeq(), "1");
+        Assertions.assertEquals(pdbMonomer.getResSeq(), "1");
 
         String monomer2 = lst.next();
         IMonomer mono2 = strandA.getMonomer(monomer2);
-        Assert.assertTrue("Monomer is not a PDBMonomer", mono2 instanceof PDBMonomer);
+        Assertions.assertTrue(mono2 instanceof PDBMonomer, "Monomer is not a PDBMonomer");
         PDBMonomer pdbMonomer2 = (PDBMonomer) mono2;
-        Assert.assertEquals(pdbMonomer2.getResSeq(), "2");
+        Assertions.assertEquals(pdbMonomer2.getResSeq(), "2");
 
         // chemical validation
-        Assert.assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
-        Assert.assertEquals(2, polymer.getStrandCount());
-        Assert.assertEquals(24, polymer.getMonomerCount());
+        Assertions.assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
+        Assertions.assertEquals(2, polymer.getStrandCount());
+        Assertions.assertEquals(24, polymer.getMonomerCount());
 
-        Assert.assertTrue(polymer.getStrandNames().contains("A"));
-        Assert.assertTrue(polymer.getStrandNames().contains("B"));
-        Assert.assertFalse(polymer.getStrandNames().contains("C"));
-        Assert.assertEquals(24, polymer.getMonomerCount());
+        Assertions.assertTrue(polymer.getStrandNames().contains("A"));
+        Assertions.assertTrue(polymer.getStrandNames().contains("B"));
+        Assertions.assertFalse(polymer.getStrandNames().contains("C"));
+        Assertions.assertEquals(24, polymer.getMonomerCount());
 
-        Assert.assertTrue(polymer instanceof PDBPolymer);
+        Assertions.assertTrue(polymer instanceof PDBPolymer);
         PDBPolymer pdb = (PDBPolymer) polymer;
 
         // PDB validation
-        Assert.assertEquals(0, pdb.getStructures().size());
+        Assertions.assertEquals(0, pdb.getStructures().size());
 
     }
 
@@ -393,9 +394,9 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         String filename = "unk.pdb";
         IChemFile chemFile = getChemFile(filename);
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
-        Assert.assertEquals(5, atomContainer.getAtomCount());
+        Assertions.assertEquals(5, atomContainer.getAtomCount());
         for (IAtom atom : atomContainer.atoms()) {
-            Assert.assertFalse("Improper element symbol " + atom.getSymbol(), atom.getSymbol().equalsIgnoreCase("1h"));
+            Assertions.assertFalse(atom.getSymbol().equalsIgnoreCase("1h"), "Improper element symbol " + atom.getSymbol());
         }
     }
 
@@ -404,9 +405,9 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         String filename = "hetatm_only.pdb";
         IChemFile chemFile = getChemFile(filename, true);
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
-        Assert.assertTrue(atomContainer instanceof IAtomContainer);
-        Assert.assertEquals(14, atomContainer.getAtomCount());
-        Assert.assertEquals(15, atomContainer.getBondCount());
+        Assertions.assertTrue(atomContainer instanceof IAtomContainer);
+        Assertions.assertEquals(14, atomContainer.getAtomCount());
+        Assertions.assertEquals(15, atomContainer.getBondCount());
     }
 
     @Test
@@ -455,8 +456,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
                     actual.add(atom.getAtomTypeName());
             }
         }
-        Assert.assertArrayEquals("Unexpected HETATOM types for res=" + resName + " was=" + actual,
-                expected, actual.toArray(new String[0]));
+        Assertions.assertArrayEquals(expected, actual.toArray(new String[0]), "Unexpected HETATOM types for res=" + resName + " was=" + actual);
     }
 
     @Test
@@ -484,39 +484,39 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
 
         ISimpleChemObjectReader reader = new PDBReader(ins);
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
 
         IChemFile chemFile = reader.read(new ChemFile());
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
 
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
 
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
-        Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
+        Assertions.assertNotNull(model);
+        Assertions.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
 
         IAtomContainer container = model.getMoleculeSet().getAtomContainer(0);
-        Assert.assertTrue(container instanceof IBioPolymer);
+        Assertions.assertTrue(container instanceof IBioPolymer);
         IBioPolymer polymer = (IBioPolymer) container;
 
-        Assert.assertTrue(polymer instanceof PDBPolymer);
+        Assertions.assertTrue(polymer instanceof PDBPolymer);
         PDBPolymer pdb = (PDBPolymer) polymer;
-        Assert.assertEquals(4, pdb.getStrandCount());
+        Assertions.assertEquals(4, pdb.getStrandCount());
 
-        Assert.assertTrue(polymer.getStrandNames().contains("D"));
-        Assert.assertTrue("Strand D is not a PDBStrand", polymer.getStrand("D") instanceof PDBStrand);
-        Assert.assertTrue(polymer.getStrandNames().contains("E"));
-        Assert.assertTrue("Strand E is not a PDBStrand", polymer.getStrand("E") instanceof PDBStrand);
-        Assert.assertTrue(polymer.getStrandNames().contains("A"));
-        Assert.assertTrue("Strand A is not a PDBStrand", polymer.getStrand("A") instanceof PDBStrand);
-        Assert.assertTrue(polymer.getStrandNames().contains("B"));
-        Assert.assertTrue("Strand B is not a PDBStrand", polymer.getStrand("B") instanceof PDBStrand);
+        Assertions.assertTrue(polymer.getStrandNames().contains("D"));
+        Assertions.assertTrue(polymer.getStrand("D") instanceof PDBStrand, "Strand D is not a PDBStrand");
+        Assertions.assertTrue(polymer.getStrandNames().contains("E"));
+        Assertions.assertTrue(polymer.getStrand("E") instanceof PDBStrand, "Strand E is not a PDBStrand");
+        Assertions.assertTrue(polymer.getStrandNames().contains("A"));
+        Assertions.assertTrue(polymer.getStrand("A") instanceof PDBStrand, "Strand A is not a PDBStrand");
+        Assertions.assertTrue(polymer.getStrandNames().contains("B"));
+        Assertions.assertTrue(polymer.getStrand("B") instanceof PDBStrand, "Strand B is not a PDBStrand");
 
         //Check to pick up all 4 strands
-        Assert.assertEquals(polymer.getStrands().size(), 4);
+        Assertions.assertEquals(polymer.getStrands().size(), 4);
 
         //The following check is to see that the first monomers in a strand
         //can be accessed consecutively
@@ -527,120 +527,120 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         Collection<String> lst = strandA.getMonomerNamesInSequentialOrder();
 
         //Should be 57 monomers in strand A
-        Assert.assertEquals(57, lst.size());
+        Assertions.assertEquals(57, lst.size());
         Iterator<String> lstIter = lst.iterator();
 
         String monomer1 = lstIter.next();
         IMonomer mono1 = strandA.getMonomer(monomer1);
-        Assert.assertNotNull(mono1);
-        Assert.assertNotNull(mono1.getMonomerName());
-        Assert.assertTrue("Monomer is not a PDBMonomer", mono1 instanceof PDBMonomer);
+        Assertions.assertNotNull(mono1);
+        Assertions.assertNotNull(mono1.getMonomerName());
+        Assertions.assertTrue(mono1 instanceof PDBMonomer, "Monomer is not a PDBMonomer");
         PDBMonomer pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("A", pdbMonomer.getChainID());
-        Assert.assertEquals("8", pdbMonomer.getResSeq());
+        Assertions.assertEquals("A", pdbMonomer.getChainID());
+        Assertions.assertEquals("8", pdbMonomer.getResSeq());
 
         monomer1 = lstIter.next();
         mono1 = strandA.getMonomer(monomer1);
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("A", pdbMonomer.getChainID());
-        Assert.assertEquals("9", pdbMonomer.getResSeq());
+        Assertions.assertEquals("A", pdbMonomer.getChainID());
+        Assertions.assertEquals("9", pdbMonomer.getResSeq());
 
         monomer1 = lstIter.next();
         mono1 = strandA.getMonomer(monomer1);
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("A", pdbMonomer.getChainID());
-        Assert.assertEquals("10", pdbMonomer.getResSeq());
+        Assertions.assertEquals("A", pdbMonomer.getChainID());
+        Assertions.assertEquals("10", pdbMonomer.getResSeq());
 
         //Strand B
         PDBStrand strandB = (PDBStrand) polymer.getStrand("B");
         lst = strandB.getMonomerNamesInSequentialOrder();
 
         //Should be 57 monomers in strand B
-        Assert.assertEquals(57, lst.size());
+        Assertions.assertEquals(57, lst.size());
         lstIter = lst.iterator();
 
         monomer1 = lstIter.next();
         mono1 = strandB.getMonomer(monomer1);
-        Assert.assertNotNull(mono1);
-        Assert.assertNotNull(mono1.getMonomerName());
-        Assert.assertTrue("Monomer is not a PDBMonomer", mono1 instanceof PDBMonomer);
+        Assertions.assertNotNull(mono1);
+        Assertions.assertNotNull(mono1.getMonomerName());
+        Assertions.assertTrue(mono1 instanceof PDBMonomer, "Monomer is not a PDBMonomer");
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("B", pdbMonomer.getChainID());
-        Assert.assertEquals("8", pdbMonomer.getResSeq());
+        Assertions.assertEquals("B", pdbMonomer.getChainID());
+        Assertions.assertEquals("8", pdbMonomer.getResSeq());
 
         monomer1 = lstIter.next();
         mono1 = strandB.getMonomer(monomer1);
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("B", pdbMonomer.getChainID());
-        Assert.assertEquals("9", pdbMonomer.getResSeq());
+        Assertions.assertEquals("B", pdbMonomer.getChainID());
+        Assertions.assertEquals("9", pdbMonomer.getResSeq());
 
         monomer1 = lstIter.next();
         mono1 = strandB.getMonomer(monomer1);
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("B", pdbMonomer.getChainID());
-        Assert.assertEquals("10", pdbMonomer.getResSeq());
+        Assertions.assertEquals("B", pdbMonomer.getChainID());
+        Assertions.assertEquals("10", pdbMonomer.getResSeq());
 
         //Strand E
         PDBStrand strandE = (PDBStrand) polymer.getStrand("E");
         lst = strandE.getMonomerNamesInSequentialOrder();
 
         //Should be 19 monomers in strand E
-        Assert.assertEquals(19, lst.size());
+        Assertions.assertEquals(19, lst.size());
         lstIter = lst.iterator();
 
         monomer1 = lstIter.next();
         mono1 = strandE.getMonomer(monomer1);
-        Assert.assertNotNull(mono1);
-        Assert.assertNotNull(mono1.getMonomerName());
-        Assert.assertTrue("Monomer is not a PDBMonomer", mono1 instanceof PDBMonomer);
+        Assertions.assertNotNull(mono1);
+        Assertions.assertNotNull(mono1.getMonomerName());
+        Assertions.assertTrue(mono1 instanceof PDBMonomer, "Monomer is not a PDBMonomer");
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("E", pdbMonomer.getChainID());
-        Assert.assertEquals("20", pdbMonomer.getResSeq());
+        Assertions.assertEquals("E", pdbMonomer.getChainID());
+        Assertions.assertEquals("20", pdbMonomer.getResSeq());
 
         monomer1 = lstIter.next();
         mono1 = strandE.getMonomer(monomer1);
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("E", pdbMonomer.getChainID());
-        Assert.assertEquals("21", pdbMonomer.getResSeq());
+        Assertions.assertEquals("E", pdbMonomer.getChainID());
+        Assertions.assertEquals("21", pdbMonomer.getResSeq());
 
         monomer1 = lstIter.next();
         mono1 = strandE.getMonomer(monomer1);
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("E", pdbMonomer.getChainID());
-        Assert.assertEquals("22", pdbMonomer.getResSeq());
+        Assertions.assertEquals("E", pdbMonomer.getChainID());
+        Assertions.assertEquals("22", pdbMonomer.getResSeq());
 
         //Chain D should be 1,2,3...19
         PDBStrand strandD = (PDBStrand) polymer.getStrand("D");
         lst = strandD.getMonomerNamesInSequentialOrder();
 
         //Should be 19 monomers in strand D
-        Assert.assertEquals(19, lst.size());
+        Assertions.assertEquals(19, lst.size());
         lstIter = lst.iterator();
 
         monomer1 = lstIter.next();
         mono1 = strandD.getMonomer(monomer1);
-        Assert.assertNotNull(mono1);
-        Assert.assertNotNull(mono1.getMonomerName());
-        Assert.assertTrue("Monomer is not a PDBMonomer", mono1 instanceof PDBMonomer);
+        Assertions.assertNotNull(mono1);
+        Assertions.assertNotNull(mono1.getMonomerName());
+        Assertions.assertTrue(mono1 instanceof PDBMonomer, "Monomer is not a PDBMonomer");
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("D", pdbMonomer.getChainID());
-        Assert.assertEquals("1", pdbMonomer.getResSeq());
+        Assertions.assertEquals("D", pdbMonomer.getChainID());
+        Assertions.assertEquals("1", pdbMonomer.getResSeq());
 
         monomer1 = lstIter.next();
         mono1 = strandD.getMonomer(monomer1);
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("D", pdbMonomer.getChainID());
-        Assert.assertEquals("2", pdbMonomer.getResSeq());
+        Assertions.assertEquals("D", pdbMonomer.getChainID());
+        Assertions.assertEquals("2", pdbMonomer.getResSeq());
 
         monomer1 = lstIter.next();
         mono1 = strandD.getMonomer(monomer1);
         pdbMonomer = (PDBMonomer) mono1;
-        Assert.assertEquals("D", pdbMonomer.getChainID());
-        Assert.assertEquals("3", pdbMonomer.getResSeq());
+        Assertions.assertEquals("D", pdbMonomer.getChainID());
+        Assertions.assertEquals("3", pdbMonomer.getResSeq());
 
         // PDB Structures validation
         //Should have 6 helices
-        Assert.assertEquals(6, pdb.getStructures().size());
+        Assertions.assertEquals(6, pdb.getStructures().size());
 
     }
 

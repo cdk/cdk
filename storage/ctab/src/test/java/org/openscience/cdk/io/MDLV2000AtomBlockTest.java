@@ -227,44 +227,44 @@ public class MDLV2000AtomBlockTest {
 
     @Test
     public void lonePairAtomSymbol() throws Exception {
-        assertTrue(MDLV2000Reader.isPseudoElement("LP"));
+        Assertions.assertTrue(MDLV2000Reader.isPseudoElement("LP"));
     }
 
     @Test
     public void atomListAtomSymbol() throws Exception {
-        assertTrue(MDLV2000Reader.isPseudoElement("L"));
+        Assertions.assertTrue(MDLV2000Reader.isPseudoElement("L"));
     }
 
     @Test
     public void heavyAtomSymbol() throws Exception {
-        assertTrue(MDLV2000Reader.isPseudoElement("A"));
+        Assertions.assertTrue(MDLV2000Reader.isPseudoElement("A"));
     }
 
     @Test
     public void hetroAtomSymbol() throws Exception {
-        assertTrue(MDLV2000Reader.isPseudoElement("Q"));
+        Assertions.assertTrue(MDLV2000Reader.isPseudoElement("Q"));
     }
 
     @Test
     public void unspecifiedAtomSymbol() throws Exception {
-        assertTrue(MDLV2000Reader.isPseudoElement("*"));
+        Assertions.assertTrue(MDLV2000Reader.isPseudoElement("*"));
     }
 
     @Test
     public void rGroupAtomSymbol() throws Exception {
-        assertTrue(MDLV2000Reader.isPseudoElement("R"));
+        Assertions.assertTrue(MDLV2000Reader.isPseudoElement("R"));
     }
 
     @Test
     public void rGroupAtomSymbol_hash() throws Exception {
-        assertTrue(MDLV2000Reader.isPseudoElement("R#"));
+        Assertions.assertTrue(MDLV2000Reader.isPseudoElement("R#"));
     }
 
     @Test
     public void invalidAtomSymbol() throws Exception {
-        assertFalse(MDLV2000Reader.isPseudoElement("RNA"));
-        assertFalse(MDLV2000Reader.isPseudoElement("DNA"));
-        assertFalse(MDLV2000Reader.isPseudoElement("ACP"));
+        Assertions.assertFalse(MDLV2000Reader.isPseudoElement("RNA"));
+        Assertions.assertFalse(MDLV2000Reader.isPseudoElement("DNA"));
+        Assertions.assertFalse(MDLV2000Reader.isPseudoElement("ACP"));
     }
 
     @Test

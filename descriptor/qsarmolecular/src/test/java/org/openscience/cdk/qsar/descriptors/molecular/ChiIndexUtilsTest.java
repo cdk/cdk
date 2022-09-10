@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -55,7 +56,7 @@ public class ChiIndexUtilsTest extends CDKTestCase {
         m.addBond(b);
 
         double deltav = ChiIndexUtils.deltavSulphur(s, m);
-        Assert.assertEquals(1.33, deltav, 0.01);
+        Assertions.assertEquals(1.33, deltav, 0.01);
     }
 
     @Test
@@ -76,7 +77,7 @@ public class ChiIndexUtilsTest extends CDKTestCase {
         m.addBond(b2);
 
         double deltav = ChiIndexUtils.deltavSulphur(s, m);
-        Assert.assertEquals(2.67, deltav, 0.01);
+        Assertions.assertEquals(2.67, deltav, 0.01);
     }
 
 }

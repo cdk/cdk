@@ -23,6 +23,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -104,7 +105,7 @@ public class HybridizationFingerprinterTest extends AbstractFingerprinterTest {
         expected.put("O:C:C:C:C:C:C:C", 2);
         expected.put("C:C:C:C:C-O-C-C", 2);
         expected.put("C:C:C:C:C:C-O-C", 2);
-        Assert.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     private BitSet foldFp(ICountFingerprint fp, int size) {
@@ -127,9 +128,9 @@ public class HybridizationFingerprinterTest extends AbstractFingerprinterTest {
         IAtomContainer mol  = smipar.parseSmiles(smi);
         ICountFingerprint cntFp = fpr.getCountFingerprint(mol);
         IBitFingerprint expBitset = fpr.getBitFingerprint(mol);
-        Assert.assertEquals(50, cntFp.numOfPopulatedbins());
+        Assertions.assertEquals(50, cntFp.numOfPopulatedbins());
         BitSet actBitset = foldFp(cntFp, 1024);
-        Assert.assertEquals(expBitset.asBitSet(), actBitset);
+        Assertions.assertEquals(expBitset.asBitSet(), actBitset);
     }
 
 }

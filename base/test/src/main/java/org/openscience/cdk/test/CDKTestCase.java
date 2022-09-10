@@ -6,6 +6,7 @@
 package org.openscience.cdk.test;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -82,10 +83,10 @@ public class CDKTestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Point2d p1, Point2d p2, double error) {
-        Assert.assertNotNull("The expected Point2d is null", p1);
-        Assert.assertNotNull("The tested Point2d is null", p2);
-        Assert.assertEquals(p1.x, p2.x, error);
-        Assert.assertEquals(p1.y, p2.y, error);
+        Assertions.assertNotNull(p1, "The expected Point2d is null");
+        Assertions.assertNotNull(p2, "The tested Point2d is null");
+        Assertions.assertEquals(p1.x, p2.x, error);
+        Assertions.assertEquals(p1.y, p2.y, error);
     }
 
     /**
@@ -97,11 +98,11 @@ public class CDKTestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Point3d p1, Point3d p2, double error) {
-        Assert.assertNotNull("The expected Point3d is null", p1);
-        Assert.assertNotNull("The tested Point3d is null", p2);
-        Assert.assertEquals(p1.x, p2.x, error);
-        Assert.assertEquals(p1.y, p2.y, error);
-        Assert.assertEquals(p1.z, p2.z, error);
+        Assertions.assertNotNull(p1, "The expected Point3d is null");
+        Assertions.assertNotNull(p2, "The tested Point3d is null");
+        Assertions.assertEquals(p1.x, p2.x, error);
+        Assertions.assertEquals(p1.y, p2.y, error);
+        Assertions.assertEquals(p1.z, p2.z, error);
     }
 
     /**
@@ -113,11 +114,11 @@ public class CDKTestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Vector3d v1, Vector3d v2, double error) {
-        Assert.assertNotNull("The expected Vector3d is null", v1);
-        Assert.assertNotNull("The tested Vector3d is null", v2);
-        Assert.assertEquals(v1.x, v2.x, error);
-        Assert.assertEquals(v1.y, v2.y, error);
-        Assert.assertEquals(v1.z, v2.z, error);
+        Assertions.assertNotNull(v1, "The expected Vector3d is null");
+        Assertions.assertNotNull(v2, "The tested Vector3d is null");
+        Assertions.assertEquals(v1.x, v2.x, error);
+        Assertions.assertEquals(v1.y, v2.y, error);
+        Assertions.assertEquals(v1.z, v2.z, error);
     }
 
     /**
@@ -130,7 +131,7 @@ public class CDKTestCase {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         for (IAtom atom : container.atoms()) {
             IAtomType type = matcher.findMatchingAtomType(container, atom);
-            Assert.assertNotNull("Could not perceive atom type for: " + atom, type);
+            Assertions.assertNotNull(type, "Could not perceive atom type for: " + atom);
         }
     }
 
@@ -182,16 +183,14 @@ public class CDKTestCase {
     protected void assertAllSingleOrAromatic(IAtomContainer container) throws Exception {
         for (IBond bond : container.bonds()) {
             if (!bond.isAromatic())
-                Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+                Assertions.assertEquals(IBond.Order.SINGLE, bond.getOrder());
         }
 
         for (IAtom atom : container.atoms()) {
             if (atom.getAtomicNumber() == IElement.H)
-                Assert.assertFalse(atom.getSymbol() + container.indexOf(atom) + " was aromatic",
-                        atom.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC), atom.getSymbol() + container.indexOf(atom) + " was aromatic");
             else
-                Assert.assertTrue(atom.getSymbol() + container.indexOf(atom) + " was not aromatic",
-                        atom.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), atom.getSymbol() + container.indexOf(atom) + " was not aromatic");
         }
     }
 
@@ -205,7 +204,7 @@ public class CDKTestCase {
     protected void assertAtomSymbols(String[] symbols, IAtomContainer container) throws Exception {
         int i = 0;
         for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
-            Assert.assertEquals(symbols[i], atoms.next().getSymbol());
+            Assertions.assertEquals(symbols[i], atoms.next().getSymbol());
     }
 
     /**
@@ -219,7 +218,7 @@ public class CDKTestCase {
             throws Exception {
         int i = 0;
         for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
-            Assert.assertEquals(hybridizations[i], atoms.next().getHybridization());
+            Assertions.assertEquals(hybridizations[i], atoms.next().getHybridization());
     }
 
     /**
@@ -232,7 +231,7 @@ public class CDKTestCase {
     protected void assertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container) throws Exception {
         int i = 0;
         for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
-            Assert.assertEquals(hydrogenCounts[i], atoms.next().getImplicitHydrogenCount().intValue());
+            Assertions.assertEquals(hydrogenCounts[i], atoms.next().getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -241,8 +240,8 @@ public class CDKTestCase {
      * @param testString String to test the length of.
      */
     public void assertZeroLength(String testString) {
-        Assert.assertNotNull("Expected a non-null String.", testString);
-        Assert.assertEquals("Expected a zero-length String, but found '" + testString + "'", 0, testString.length());
+        Assertions.assertNotNull(testString, "Expected a non-null String.");
+        Assertions.assertEquals(0, testString.length(), "Expected a zero-length String, but found '" + testString + "'");
     }
 
     /**
@@ -252,11 +251,11 @@ public class CDKTestCase {
      * @param testString String to test.
      */
     public void assertOneLiner(String testString) {
-        Assert.assertNotNull("Expected a non-null String.", testString);
+        Assertions.assertNotNull(testString, "Expected a non-null String.");
         for (int i = 0; i < testString.length(); i++) {
             char c = testString.charAt(i);
-            Assert.assertNotSame("The String must not contain newline characters", '\n', c);
-            Assert.assertNotSame("The String must not contain newline characters", '\r', c);
+            Assertions.assertNotSame('\n', c, "The String must not contain newline characters");
+            Assertions.assertNotSame('\r', c, "The String must not contain newline characters");
         }
     }
 
@@ -271,7 +270,7 @@ public class CDKTestCase {
     @Test
     public void testedByOtherClass() {
         // several methods, like endElement() are not directly tested
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
     /**
@@ -281,10 +280,9 @@ public class CDKTestCase {
      * @param subString String that must be present in the fullString
      */
     public void assertContains(String fullString, String subString) {
-        Assert.assertNotNull("Expected a non-null String to test contains against.", fullString);
-        Assert.assertNotNull("Expected a non-null substring in contains test.", subString);
-        Assert.assertTrue("Expected the full string '" + fullString + "' to contain '" + subString + "'.",
-                fullString.contains(subString));
+        Assertions.assertNotNull(fullString, "Expected a non-null String to test contains against.");
+        Assertions.assertNotNull(subString, "Expected a non-null substring in contains test.");
+        Assertions.assertTrue(fullString.contains(subString), "Expected the full string '" + fullString + "' to contain '" + subString + "'.");
     }
 
 }

@@ -25,6 +25,7 @@
 package org.openscience.cdk.stereo;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.GraphUtil;
@@ -365,7 +366,7 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -385,7 +386,7 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -407,7 +408,7 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -429,7 +430,7 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -451,7 +452,7 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertNull(element);
+        Assertions.assertNull(element);
     }
 
 
@@ -474,7 +475,7 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertNull(element);
+        Assertions.assertNull(element);
     }
 
     @Test
@@ -492,7 +493,7 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertNull(element);
+        Assertions.assertNull(element);
     }
 
     // rotate
@@ -516,7 +517,7 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertNull(element);
+        Assertions.assertNull(element);
     }
 
     /**
@@ -580,7 +581,7 @@ public class FischerRecognitionTest {
                                                                graph,
                                                                bondMap,
                                                                Stereocenters.of(m));
-        Assert.assertTrue(recogniser.recognise(Collections.singleton(Projection.Fischer)).isEmpty());
+        Assertions.assertTrue(recogniser.recognise(Collections.singleton(Projection.Fischer)).isEmpty());
     }
 
     /**
@@ -621,7 +622,7 @@ public class FischerRecognitionTest {
                                                                graph,
                                                                bondMap,
                                                                Stereocenters.of(m));
-        Assert.assertTrue(recogniser.recognise(Collections.singleton(Projection.Fischer)).isEmpty());
+        Assertions.assertTrue(recogniser.recognise(Collections.singleton(Projection.Fischer)).isEmpty());
     }
 
     static void assertTetrahedralCenter(IStereoElement element,

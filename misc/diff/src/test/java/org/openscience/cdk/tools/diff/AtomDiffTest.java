@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -40,7 +41,7 @@ public class AtomDiffTest {
     public void testMatchAgainstItself() {
         IAtom atom1 = mock(IAtom.class);
         String result = AtomDiff.diff(atom1, atom1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -51,8 +52,8 @@ public class AtomDiffTest {
         when(atom2.getSymbol()).thenReturn("C");
 
         String result = AtomDiff.diff(atom1, atom2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString( "AtomDiff"));
         MatcherAssert.assertThat(result, containsString( "H/C"));
     }
@@ -65,7 +66,7 @@ public class AtomDiffTest {
         when(atom2.getSymbol()).thenReturn("C");
 
         IDifference difference = AtomDiff.difference(atom1, atom2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 
     @Disabled("unit test did not test AtomDiff but rather the ability of AtomContainer"

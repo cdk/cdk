@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.bond;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -63,10 +64,10 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         try {
             v = descriptor.calculate(mol.getBond(0), mol);
         } catch (Exception e) {
-            Assert.fail("A descriptor must not throw an exception");
+            Assertions.fail("A descriptor must not throw an exception");
         }
-        Assert.assertNotNull(v);
-        Assert.assertNotSame("The descriptor did not calculate any value.", 0, v.getValue().length());
+        Assertions.assertNotNull(v);
+        Assertions.assertNotSame(0, v.getValue().length(), "The descriptor did not calculate any value.");
     }
 
     /**
@@ -79,18 +80,18 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         IAtomContainer mol = someoneBringMeSomeWater();
 
         DescriptorValue v = descriptor.calculate(mol.getBond(0), mol);
-        Assert.assertNotNull(v);
+        Assertions.assertNotNull(v);
         String[] names = v.getNames();
-        Assert.assertNotNull("The descriptor must return labels using the getNames() method.", names);
-        Assert.assertNotSame("At least one label must be given.", 0, names.length);
+        Assertions.assertNotNull(names, "The descriptor must return labels using the getNames() method.");
+        Assertions.assertNotSame(0, names.length, "At least one label must be given.");
         for (String name : names) {
-            Assert.assertNotNull("A descriptor label may not be null.", name);
-            Assert.assertNotSame("The label string must not be empty.", 0, name.length());
+            Assertions.assertNotNull(name, "A descriptor label may not be null.");
+            Assertions.assertNotSame(0, name.length(), "The label string must not be empty.");
             //        	System.out.println("Label: " + names[i]);
         }
-        Assert.assertNotNull(v.getValue());
+        Assertions.assertNotNull(v.getValue());
         int valueCount = v.getValue().length();
-        Assert.assertEquals("The number of labels must equals the number of values.", names.length, valueCount);
+        Assertions.assertEquals(names.length, valueCount, "The number of labels must equals the number of values.");
     }
 
     /**
@@ -107,11 +108,11 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         DescriptorValue v = descriptor.calculate(mol.getBond(1), mol);
         String[] names2 = v.getNames();
 
-        Assert.assertEquals(names1.length, names2.length);
-        Assert.assertArrayEquals(names1, names2);
+        Assertions.assertEquals(names1.length, names2.length);
+        Assertions.assertArrayEquals(names1, names2);
 
         int valueCount = v.getValue().length();
-        Assert.assertEquals(valueCount, names1.length);
+        Assertions.assertEquals(valueCount, names1.length);
     }
 
     @Test
@@ -121,9 +122,8 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         IBond clone = mol.getBond(0).clone();
         descriptor.calculate(bond, mol);
         String diff = BondDiff.diff(clone, bond);
-        Assert.assertEquals("(" + descriptor.getClass().toString()
-                + ") The descriptor must not change the passed bond in any respect, but found this diff: " + diff, 0,
-                diff.length());
+        Assertions.assertEquals(0, diff.length(), "(" + descriptor.getClass().toString()
+                + ") The descriptor must not change the passed bond in any respect, but found this diff: " + diff);
     }
 
     private IAtomContainer someoneBringMeSomeWater() {

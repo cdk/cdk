@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,7 +47,7 @@ public class SgroupManipulatorTest {
 
     @Test
     public void copyNull() throws Exception {
-        assertNull(SgroupManipulator.copy(null, null));
+        Assertions.assertNull(SgroupManipulator.copy(null, null));
     }
 
     @Test
@@ -109,9 +110,9 @@ public class SgroupManipulatorTest {
         assertThat(copiedSgroup.getSubscript(), is(sgroup.getSubscript()));
         assertThat(copiedSgroup.getAtoms(), is(not(sgroup.getAtoms())));
         assertThat(copiedSgroup.getBonds(), is(not(sgroup.getBonds())));
-        assertTrue(copiedSgroup.getAtoms().contains(a1copy));
-        assertTrue(copiedSgroup.getAtoms().contains(a2copy));
-        assertTrue(copiedSgroup.getBonds().contains(b1copy));
-        assertTrue(copiedSgroup.getBonds().contains(b2copy));
+        Assertions.assertTrue(copiedSgroup.getAtoms().contains(a1copy));
+        Assertions.assertTrue(copiedSgroup.getAtoms().contains(a2copy));
+        Assertions.assertTrue(copiedSgroup.getBonds().contains(b1copy));
+        Assertions.assertTrue(copiedSgroup.getBonds().contains(b2copy));
     }
 }

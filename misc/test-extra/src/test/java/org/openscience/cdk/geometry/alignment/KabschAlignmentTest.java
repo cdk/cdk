@@ -1,6 +1,7 @@
 package org.openscience.cdk.geometry.alignment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
@@ -39,11 +40,11 @@ public class KabschAlignmentTest extends CDKTestCase {
         ac = cList.get(0);
 
         KabschAlignment ka = new KabschAlignment(ac, ac);
-        Assert.assertNotNull(ka);
+        Assertions.assertNotNull(ka);
         ka.align();
         double rmsd = ka.getRMSD();
-        Assert.assertTrue(1e-8 > rmsd);
-        Assert.assertNotNull(ka.getRotationMatrix());
+        Assertions.assertTrue(1e-8 > rmsd);
+        Assertions.assertNotNull(ka.getRotationMatrix());
 
         double[][] p1 = {{16.754, 20.462, 45.049}, {19.609, 18.145, 46.011}, {17.101, 17.256, 48.707},
                 {13.963, 18.314, 46.820}, {14.151, 15.343, 44.482}, {14.959, 12.459, 46.880}, {11.987, 13.842, 48.862},
@@ -71,7 +72,7 @@ public class KabschAlignmentTest extends CDKTestCase {
         ka = new KabschAlignment(a1, a2);
         ka.align();
         rmsd = ka.getRMSD();
-        Assert.assertEquals(0.13479726, rmsd, 0.00000001);
+        Assertions.assertEquals(0.13479726, rmsd, 0.00000001);
     }
 
 }

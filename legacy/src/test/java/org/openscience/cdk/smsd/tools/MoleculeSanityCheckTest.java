@@ -26,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -68,7 +69,7 @@ public class MoleculeSanityCheckTest {
         IAtomContainer molecule = sp.parseSmiles(fragmentMolSmiles);
         IAtomContainer expResult = sp.parseSmiles("C1=CC2=C(C=C1)C=CC=C2");
         IAtomContainer result = MoleculeSanityCheck.checkAndCleanMolecule(molecule);
-        assertEquals(expResult.getBondCount(), result.getBondCount());
+        Assertions.assertEquals(expResult.getBondCount(), result.getBondCount());
     }
 
     /**
@@ -87,6 +88,6 @@ public class MoleculeSanityCheckTest {
                 count++;
             }
         }
-        assertEquals(5, count);
+        Assertions.assertEquals(5, count);
     }
 }

@@ -22,6 +22,7 @@
 package org.openscience.cdk.renderer.elements.path;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,19 +38,19 @@ public abstract class AbstractPathElementTest {
 
     @Test
     public void testConstructor() {
-        Assert.assertNotNull(pathElement);
+        Assertions.assertNotNull(pathElement);
     }
 
     @Test
     public void testType() {
-        Assert.assertNotNull(pathElement.type());
+        Assertions.assertNotNull(pathElement.type());
     }
 
     @Test
     public void testPoints() {
         float[] points = pathElement.points();
-        Assert.assertNotNull(points);
-        Assert.assertNotSame(0, points.length);
+        Assertions.assertNotNull(points);
+        Assertions.assertNotSame(0, points.length);
     }
 
 }

@@ -19,6 +19,7 @@
 package org.openscience.cdk.formula.rules;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.test.CDKTestCase;
@@ -60,7 +61,7 @@ public abstract class FormulaRuleTest extends CDKTestCase {
      */
     @Test
     public void testHasSetSuperDotRule() {
-        Assert.assertNotNull("The extending class must set the super.rule in its setUp() method.", rule);
+        Assertions.assertNotNull(rule, "The extending class must set the super.rule in its setUp() method.");
     }
 
     @Test

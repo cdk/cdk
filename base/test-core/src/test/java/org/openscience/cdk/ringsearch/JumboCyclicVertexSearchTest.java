@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.BitSet;
@@ -41,7 +42,7 @@ public class JumboCyclicVertexSearchTest {
     @Test
     public void testEmpty() {
         CyclicVertexSearch search = new JumboCyclicVertexSearch(new int[0][0]);
-        assertNotNull(search);
+        Assertions.assertNotNull(search);
     }
 
     @Test
@@ -58,20 +59,20 @@ public class JumboCyclicVertexSearchTest {
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}};
         CyclicVertexSearch search = new JumboCyclicVertexSearch(g);
         for (int v = 0; v < g.length; v++)
-            assertTrue(search.cyclic(v));
+            Assertions.assertTrue(search.cyclic(v));
     }
 
     @Test
     public void testCyclic_IntInt() {
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0, 6}, {5}};
         CyclicVertexSearch search = new JumboCyclicVertexSearch(g);
-        assertTrue(search.cyclic(0, 1));
-        assertTrue(search.cyclic(1, 2));
-        assertTrue(search.cyclic(2, 3));
-        assertTrue(search.cyclic(3, 4));
-        assertTrue(search.cyclic(4, 5));
-        assertTrue(search.cyclic(5, 0));
-        assertFalse(search.cyclic(5, 6));
+        Assertions.assertTrue(search.cyclic(0, 1));
+        Assertions.assertTrue(search.cyclic(1, 2));
+        Assertions.assertTrue(search.cyclic(2, 3));
+        Assertions.assertTrue(search.cyclic(3, 4));
+        Assertions.assertTrue(search.cyclic(4, 5));
+        Assertions.assertTrue(search.cyclic(5, 0));
+        Assertions.assertFalse(search.cyclic(5, 6));
     }
 
     @Test
@@ -350,17 +351,17 @@ public class JumboCyclicVertexSearchTest {
 
         BitSet u = JumboCyclicVertexSearch.xor(s, t);
 
-        assertTrue(s.get(0));
-        assertTrue(s.get(1));
-        assertFalse(s.get(2));
+        Assertions.assertTrue(s.get(0));
+        Assertions.assertTrue(s.get(1));
+        Assertions.assertFalse(s.get(2));
 
-        assertFalse(t.get(0));
-        assertTrue(t.get(1));
-        assertTrue(t.get(2));
+        Assertions.assertFalse(t.get(0));
+        Assertions.assertTrue(t.get(1));
+        Assertions.assertTrue(t.get(2));
 
-        assertTrue(u.get(0));
-        assertFalse(u.get(1));
-        assertTrue(u.get(2));
+        Assertions.assertTrue(u.get(0));
+        Assertions.assertFalse(u.get(1));
+        Assertions.assertTrue(u.get(2));
 
     }
 
@@ -377,17 +378,17 @@ public class JumboCyclicVertexSearchTest {
 
         BitSet u = JumboCyclicVertexSearch.and(s, t);
 
-        assertTrue(s.get(0));
-        assertTrue(s.get(1));
-        assertFalse(s.get(2));
+        Assertions.assertTrue(s.get(0));
+        Assertions.assertTrue(s.get(1));
+        Assertions.assertFalse(s.get(2));
 
-        assertFalse(t.get(0));
-        assertTrue(t.get(1));
-        assertTrue(t.get(2));
+        Assertions.assertFalse(t.get(0));
+        Assertions.assertTrue(t.get(1));
+        Assertions.assertTrue(t.get(2));
 
-        assertFalse(u.get(0));
-        assertTrue(u.get(1));
-        assertFalse(u.get(2));
+        Assertions.assertFalse(u.get(0));
+        Assertions.assertTrue(u.get(1));
+        Assertions.assertFalse(u.get(2));
 
     }
 
@@ -396,8 +397,8 @@ public class JumboCyclicVertexSearchTest {
         BitSet set = new BitSet();
         set.set(5);
         BitSet cpy = JumboCyclicVertexSearch.copy(set);
-        assertTrue(cpy.get(5));
+        Assertions.assertTrue(cpy.get(5));
         set.set(6);
-        assertFalse(cpy.get(6));
+        Assertions.assertFalse(cpy.get(6));
     }
 }

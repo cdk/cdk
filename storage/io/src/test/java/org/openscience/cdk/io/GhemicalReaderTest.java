@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -51,7 +52,7 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testAccepts() {
-        Assert.assertTrue(chemObjectIO.accepts(ChemModel.class));
+        Assertions.assertTrue(chemObjectIO.accepts(ChemModel.class));
     }
 
     @Test
@@ -68,22 +69,22 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
         ChemModel model = (ChemModel) reader.read((ChemObject) new ChemModel());
         reader.close();
 
-        Assert.assertNotNull(model);
-        Assert.assertNotNull(model.getMoleculeSet());
+        Assertions.assertNotNull(model);
+        Assertions.assertNotNull(model.getMoleculeSet());
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(6, m.getAtomCount());
-        Assert.assertEquals(5, m.getBondCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(6, m.getAtomCount());
+        Assertions.assertEquals(5, m.getBondCount());
 
         // test reading of formal charges
         org.openscience.cdk.interfaces.IAtom a = m.getAtom(0);
-        Assert.assertNotNull(a);
-        Assert.assertEquals(6, a.getAtomicNumber().intValue());
-        Assert.assertEquals(-0.2, a.getCharge(), 0.01);
-        Assert.assertEquals(0.06677, a.getPoint3d().x, 0.01);
+        Assertions.assertNotNull(a);
+        Assertions.assertEquals(6, a.getAtomicNumber().intValue());
+        Assertions.assertEquals(-0.2, a.getCharge(), 0.01);
+        Assertions.assertEquals(0.06677, a.getPoint3d().x, 0.01);
     }
 
     @Test
@@ -94,20 +95,20 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(6, m.getAtomCount());
-        Assert.assertEquals(5, m.getBondCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(6, m.getAtomCount());
+        Assertions.assertEquals(5, m.getBondCount());
     }
 }

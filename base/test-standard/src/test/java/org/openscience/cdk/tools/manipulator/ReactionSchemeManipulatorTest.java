@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -60,7 +61,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reactionScheme.addReaction(reaction1); // 1
         reactionScheme.addReaction(reaction2); // 2
 
-        Assert.assertEquals(2, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme).getAtomContainerCount());
+        Assertions.assertEquals(2, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme).getAtomContainerCount());
 
     }
 
@@ -74,10 +75,8 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reactionScheme.addReaction(reaction1); // 1
         reactionScheme.addReaction(reaction2); // 2
 
-        Assert.assertEquals(
-                2,
-                ReactionSchemeManipulator.getAllAtomContainers(reactionScheme,
-                        builder.newInstance(IAtomContainerSet.class)).getAtomContainerCount());
+        Assertions.assertEquals(2, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme,
+                                                                                  builder.newInstance(IAtomContainerSet.class)).getAtomContainerCount());
 
     }
 
@@ -94,7 +93,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reaction2.addReactant(molecule);
         reactionScheme.addReaction(reaction2);
 
-        Assert.assertEquals(3, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme).getAtomContainerCount());
+        Assertions.assertEquals(3, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme).getAtomContainerCount());
 
     }
 
@@ -125,7 +124,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reaction11.addProduct(builder.newInstance(IAtomContainer.class));
         scheme1.addReaction(reaction11);
 
-        Assert.assertEquals(5, ReactionSchemeManipulator.getAllAtomContainers(scheme1).getAtomContainerCount());
+        Assertions.assertEquals(5, ReactionSchemeManipulator.getAllAtomContainers(scheme1).getAtomContainerCount());
 
     }
 
@@ -164,7 +163,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reaction11.addProduct(builder.newInstance(IAtomContainer.class));
         scheme1.addReaction(reaction11);
 
-        Assert.assertEquals(6, ReactionSchemeManipulator.getAllIDs(scheme1).size());
+        Assertions.assertEquals(6, ReactionSchemeManipulator.getAllIDs(scheme1).size());
 
     }
 
@@ -207,22 +206,22 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reactionSet.addReaction(reaction4);
 
         IReactionScheme scheme1 = ReactionSchemeManipulator.createReactionScheme(reactionSet);
-        Assert.assertEquals(1, scheme1.getReactionCount());
-        Assert.assertEquals("r1", scheme1.getReaction(0).getID());
-        Assert.assertEquals(1, scheme1.getReactionSchemeCount());
+        Assertions.assertEquals(1, scheme1.getReactionCount());
+        Assertions.assertEquals("r1", scheme1.getReaction(0).getID());
+        Assertions.assertEquals(1, scheme1.getReactionSchemeCount());
 
         Iterator<IReactionScheme> iter = scheme1.reactionSchemes().iterator();
         IReactionScheme scheme2 = iter.next();
-        Assert.assertEquals(2, scheme2.getReactionCount());
-        Assert.assertEquals("r2", scheme2.getReaction(0).getID());
-        Assert.assertEquals("r3", scheme2.getReaction(1).getID());
-        Assert.assertEquals(1, scheme2.getReactionSchemeCount());
+        Assertions.assertEquals(2, scheme2.getReactionCount());
+        Assertions.assertEquals("r2", scheme2.getReaction(0).getID());
+        Assertions.assertEquals("r3", scheme2.getReaction(1).getID());
+        Assertions.assertEquals(1, scheme2.getReactionSchemeCount());
 
         Iterator<IReactionScheme> iter2 = scheme2.reactionSchemes().iterator();
         IReactionScheme scheme3 = iter2.next();
-        Assert.assertEquals(1, scheme3.getReactionCount());
-        Assert.assertEquals("r4", scheme3.getReaction(0).getID());
-        Assert.assertEquals(0, scheme3.getReactionSchemeCount());
+        Assertions.assertEquals(1, scheme3.getReactionCount());
+        Assertions.assertEquals("r4", scheme3.getReaction(0).getID());
+        Assertions.assertEquals(0, scheme3.getReactionSchemeCount());
 
     }
 
@@ -264,11 +263,11 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 
         ArrayList<IAtomContainerSet> listSet = ReactionSchemeManipulator.getAtomContainerSet(startMol, finalMol,
                 scheme1);
-        Assert.assertEquals(1, listSet.size());
+        Assertions.assertEquals(1, listSet.size());
         IAtomContainerSet moleculeSet = listSet.get(0);
-        Assert.assertEquals("startMol", moleculeSet.getAtomContainer(0).getID());
-        Assert.assertEquals("mitMol", moleculeSet.getAtomContainer(1).getID());
-        Assert.assertEquals("finalMol", moleculeSet.getAtomContainer(2).getID());
+        Assertions.assertEquals("startMol", moleculeSet.getAtomContainer(0).getID());
+        Assertions.assertEquals("mitMol", moleculeSet.getAtomContainer(1).getID());
+        Assertions.assertEquals("finalMol", moleculeSet.getAtomContainer(2).getID());
     }
 
     @Test
@@ -304,11 +303,11 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         scheme1.addReaction(reaction11);
 
         IReactionSet reactionSet = ReactionSchemeManipulator.getAllReactions(scheme1);
-        Assert.assertEquals(4, reactionSet.getReactionCount());
-        Assert.assertEquals(reaction1, reactionSet.getReaction(0));
-        Assert.assertEquals(reaction2, reactionSet.getReaction(1));
-        Assert.assertEquals(reaction3, reactionSet.getReaction(2));
-        Assert.assertEquals(reaction11, reactionSet.getReaction(3));
+        Assertions.assertEquals(4, reactionSet.getReactionCount());
+        Assertions.assertEquals(reaction1, reactionSet.getReaction(0));
+        Assertions.assertEquals(reaction2, reactionSet.getReaction(1));
+        Assertions.assertEquals(reaction3, reactionSet.getReaction(2));
+        Assertions.assertEquals(reaction11, reactionSet.getReaction(3));
     }
 
     @Test
@@ -342,8 +341,8 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         scheme1.addReaction(reaction4);
 
         IReactionSet reactionSet = ReactionSchemeManipulator.extractTopReactions(scheme1);
-        Assert.assertEquals(2, reactionSet.getReactionCount());
-        Assert.assertEquals(reaction1, reactionSet.getReaction(0));
-        Assert.assertEquals(reaction4, reactionSet.getReaction(1));
+        Assertions.assertEquals(2, reactionSet.getReactionCount());
+        Assertions.assertEquals(reaction1, reactionSet.getReaction(0));
+        Assertions.assertEquals(reaction4, reactionSet.getReaction(1));
     }
 }

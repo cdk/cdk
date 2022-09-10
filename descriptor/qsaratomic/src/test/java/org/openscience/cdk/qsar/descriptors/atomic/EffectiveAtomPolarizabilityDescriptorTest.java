@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -56,7 +57,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 
         for (int i = 0; i < 6; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
     }
 
@@ -80,7 +81,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
         addExplicitHydrogens(mol);
         for (int i = 0; i < 3; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
     }
 
@@ -101,7 +102,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
         addExplicitHydrogens(mol);
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
-        Assert.assertEquals(testResult, result, 0.01);
+        Assertions.assertEquals(testResult, result, 0.01);
     }
 
     /**
@@ -144,7 +145,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 
         for (int i = 0; i < 6; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
     }
 
@@ -165,7 +166,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
         addExplicitHydrogens(mol);
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
-        Assert.assertEquals(testResult, result, 0.01);
+        Assertions.assertEquals(testResult, result, 0.01);
     }
 
     /**
@@ -190,7 +191,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
         addExplicitHydrogens(mol);
         for (int i = 0; i < 4; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
     }
 
@@ -216,7 +217,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
         addExplicitHydrogens(mol);
         for (int i = 0; i < 4; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.02);
+            Assertions.assertEquals(testResult[i], result, 0.02);
         }
     }
 }

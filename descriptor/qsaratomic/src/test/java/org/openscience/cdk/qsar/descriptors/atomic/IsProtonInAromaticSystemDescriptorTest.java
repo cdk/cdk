@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -59,11 +60,11 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
         assertThat(mol.getAtom(14).getSymbol(), is("H"));
         assertThat(mol.getAtom(15).getSymbol(), is("H"));
         assertThat(mol.getAtom(16).getSymbol(), is("H"));
-        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(11), mol).getValue()).intValue());
-        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(12), mol).getValue()).intValue());
-        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(13), mol).getValue()).intValue());
-        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(14), mol).getValue()).intValue());
-        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(15), mol).getValue()).intValue());
-        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(16), mol).getValue()).intValue());
+        Assertions.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(11), mol).getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(12), mol).getValue()).intValue());
+        Assertions.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(13), mol).getValue()).intValue());
+        Assertions.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(14), mol).getValue()).intValue());
+        Assertions.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(15), mol).getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(16), mol).getValue()).intValue());
     }
 }

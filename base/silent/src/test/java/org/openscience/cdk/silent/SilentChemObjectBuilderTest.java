@@ -19,6 +19,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.AbstractChemObjectBuilderTest;
@@ -39,9 +40,9 @@ public class SilentChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
     @Test
     public void testGetInstance() {
         Object builder = SilentChemObjectBuilder.getInstance();
-        Assert.assertNotNull(builder);
-        Assert.assertTrue(builder instanceof IChemObjectBuilder);
-        Assert.assertTrue(builder.getClass().getName().contains("SilentChemObjectBuilder"));
+        Assertions.assertNotNull(builder);
+        Assertions.assertTrue(builder instanceof IChemObjectBuilder);
+        Assertions.assertTrue(builder.getClass().getName().contains("SilentChemObjectBuilder"));
     }
 
 }

@@ -96,7 +96,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     public void testConstructor() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
-        Assert.assertNotNull(stereo);
+        Assertions.assertNotNull(stereo);
     }
 
     @Test
@@ -104,32 +104,32 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
         stereo.setBuilder(DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(DefaultChemObjectBuilder.getInstance(), stereo.getBuilder());
+        Assertions.assertEquals(DefaultChemObjectBuilder.getInstance(), stereo.getBuilder());
     }
 
     @Test
     public void testGetStereoBond() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
-        Assert.assertNotNull(stereo);
-        Assert.assertEquals(molecule.getBond(1), stereo.getStereoBond());
+        Assertions.assertNotNull(stereo);
+        Assertions.assertEquals(molecule.getBond(1), stereo.getStereoBond());
     }
 
     @Test
     public void testGetStereo() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
-        Assert.assertNotNull(stereo);
-        Assert.assertEquals(Conformation.OPPOSITE, stereo.getStereo());
+        Assertions.assertNotNull(stereo);
+        Assertions.assertEquals(Conformation.OPPOSITE, stereo.getStereo());
     }
 
     @Test
     public void testGetBonds() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
-        Assert.assertNotNull(stereo);
+        Assertions.assertNotNull(stereo);
         for (int i = 0; i < ligands.length; i++) {
-            Assert.assertEquals(ligands[i], stereo.getBonds()[i]);
+            Assertions.assertEquals(ligands[i], stereo.getBonds()[i]);
         }
     }
 
@@ -150,13 +150,13 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         DoubleBondStereochemistry element = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
                 Conformation.OPPOSITE);
 
-        assertTrue(element.contains(c1));
-        assertTrue(element.contains(c2));
-        assertTrue(element.contains(o3));
-        assertTrue(element.contains(o4));
+        Assertions.assertTrue(element.contains(c1));
+        Assertions.assertTrue(element.contains(c2));
+        Assertions.assertTrue(element.contains(o3));
+        Assertions.assertTrue(element.contains(o4));
 
-        assertFalse(element.contains(builder.newInstance(IAtom.class)));
-        assertFalse(element.contains(null));
+        Assertions.assertFalse(element.contains(builder.newInstance(IAtom.class)));
+        Assertions.assertFalse(element.contains(null));
     }
 
     @Test
@@ -260,7 +260,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
         String stringRepr = stereo.toString();
-        Assert.assertNotSame(0, stringRepr.length());
-        assertFalse(stringRepr.contains("\n"));
+        Assertions.assertNotSame(0, stringRepr.length());
+        Assertions.assertFalse(stringRepr.contains("\n"));
     }
 }

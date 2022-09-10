@@ -23,6 +23,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -42,12 +43,12 @@ public class CloneAtomContainerTest extends CDKTestCase {
     public void testClone() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         IAtomContainer clonedMol = molecule.clone();
-        Assert.assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
+        Assertions.assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             for (int g = 0; g < clonedMol.getAtomCount(); g++) {
-                Assert.assertNotNull(molecule.getAtom(f));
-                Assert.assertNotNull(clonedMol.getAtom(g));
-                Assert.assertTrue(molecule.getAtom(f) != clonedMol.getAtom(g));
+                Assertions.assertNotNull(molecule.getAtom(f));
+                Assertions.assertNotNull(clonedMol.getAtom(g));
+                Assertions.assertTrue(molecule.getAtom(f) != clonedMol.getAtom(g));
             }
         }
     }

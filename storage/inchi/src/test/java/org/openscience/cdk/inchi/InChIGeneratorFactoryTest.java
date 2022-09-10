@@ -57,7 +57,7 @@ public class InChIGeneratorFactoryTest {
     @Test
     public void testGetInstance() throws CDKException {
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
-        Assert.assertNotNull(factory);
+        Assertions.assertNotNull(factory);
     }
 
     /**
@@ -70,8 +70,8 @@ public class InChIGeneratorFactoryTest {
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac);
-        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assert.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
+        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assertions.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
     }
 
     /**
@@ -84,8 +84,8 @@ public class InChIGeneratorFactoryTest {
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, "FixedH");
-        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assert.assertEquals("InChI=1/ClH/h1H", gen.getInchi());
+        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assertions.assertEquals("InChI=1/ClH/h1H", gen.getInchi());
     }
 
     /**
@@ -98,8 +98,8 @@ public class InChIGeneratorFactoryTest {
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, (String) null);
-        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assert.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
+        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assertions.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
     }
     
     /**
@@ -124,11 +124,11 @@ public class InChIGeneratorFactoryTest {
         InChIGenerator genComma = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, commaSeparated);
         InChIGenerator genBoth = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, commaAndSpaceSeparated);
         
-        Assert.assertEquals(genSpace.getStatus(), InchiStatus.SUCCESS);
-        Assert.assertEquals(genComma.getStatus(), InchiStatus.SUCCESS);
-        Assert.assertEquals(genBoth.getStatus(), InchiStatus.SUCCESS);
-        Assert.assertEquals(genBoth.getInchi(),genSpace.getInchi());
-        Assert.assertEquals(genComma.getInchi(),genSpace.getInchi());
+        Assertions.assertEquals(genSpace.getStatus(), InchiStatus.SUCCESS);
+        Assertions.assertEquals(genComma.getStatus(), InchiStatus.SUCCESS);
+        Assertions.assertEquals(genBoth.getStatus(), InchiStatus.SUCCESS);
+        Assertions.assertEquals(genBoth.getInchi(), genSpace.getInchi());
+        Assertions.assertEquals(genComma.getInchi(), genSpace.getInchi());
     }
 
     /**
@@ -143,8 +143,8 @@ public class InChIGeneratorFactoryTest {
         List<INCHI_OPTION> options = new ArrayList<>();
         options.add(INCHI_OPTION.FixedH);
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, options);
-        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assert.assertEquals("InChI=1/ClH/h1H", gen.getInchi());
+        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assertions.assertEquals("InChI=1/ClH/h1H", gen.getInchi());
     }
 
     /**
@@ -165,7 +165,7 @@ public class InChIGeneratorFactoryTest {
     public void testGetInChIToStructure_String_IChemObjectBuilder() throws CDKException {
         InChIToStructure parser = InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
                 DefaultChemObjectBuilder.getInstance());
-        Assert.assertNotNull(parser);
+        Assertions.assertNotNull(parser);
     }
 
     @Test
@@ -191,7 +191,7 @@ public class InChIGeneratorFactoryTest {
     public void testGetInChIToStructure_String_IChemObjectBuilder_List() throws CDKException {
         InChIToStructure parser = InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
                 DefaultChemObjectBuilder.getInstance(), new ArrayList<>());
-        Assert.assertNotNull(parser);
+        Assertions.assertNotNull(parser);
     }
 
     @Test
@@ -206,7 +206,7 @@ public class InChIGeneratorFactoryTest {
         String expected = "InChI=1S/C9H20O3/c1-5(7(3)10)9(12)6(2)8(4)11/h5-12H,1-4H3/t5-,6-,7-,8+,9-/m1/s1";
         String actual = generator.getInchi();
 
-        Assert.assertEquals("Incorrect InCHI generated for topological centre", expected, actual);
+        Assertions.assertEquals(expected, actual, "Incorrect InCHI generated for topological centre");
 
     }
 
@@ -227,8 +227,8 @@ public class InChIGeneratorFactoryTest {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol  = smipar.parseSmiles("CC=C=C=[C@]=C=C=CC");
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(mol);
-        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assert.assertEquals("InChI=1S/C9H8/c1-3-5-7-9-8-6-4-2/h3-4H,1-2H3", gen.getInchi());
+        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assertions.assertEquals("InChI=1S/C9H8/c1-3-5-7-9-8-6-4-2/h3-4H,1-2H3", gen.getInchi());
     }
 
     /**
@@ -252,23 +252,22 @@ public class InChIGeneratorFactoryTest {
             InChIGenerator genAromaticity1 = inchiFactory.getInChIGenerator(tetrazole);
 
             // exclude aromatic bonds
-            assertFalse(inchiFactory.getIgnoreAromaticBonds());
+            Assertions.assertFalse(inchiFactory.getIgnoreAromaticBonds());
             inchiFactory.setIgnoreAromaticBonds(true);
-            assertTrue(inchiFactory.getIgnoreAromaticBonds());
+            Assertions.assertTrue(inchiFactory.getIgnoreAromaticBonds());
             InChIGenerator genNoAromaticity = inchiFactory.getInChIGenerator(tetrazole);
 
             // include aromatic bonds again
             inchiFactory.setIgnoreAromaticBonds(false);
-            assertFalse(inchiFactory.getIgnoreAromaticBonds());
+            Assertions.assertFalse(inchiFactory.getIgnoreAromaticBonds());
             InChIGenerator genAromaticity2 = inchiFactory.getInChIGenerator(tetrazole);
 
             // with the aromatic bonds included, no InChI can be generated
-            Assert.assertEquals("return status was not in error", INCHI_RET.ERROR, genAromaticity1.getReturnStatus());
-            Assert.assertEquals("return status was not in error", INCHI_RET.ERROR, genAromaticity2.getReturnStatus());
+            Assertions.assertEquals(INCHI_RET.ERROR, genAromaticity1.getReturnStatus(), "return status was not in error");
+            Assertions.assertEquals(INCHI_RET.ERROR, genAromaticity2.getReturnStatus(), "return status was not in error");
             // excluding the aromatic bonds gives the normal InChI
-            Assert.assertEquals("return status was not okay", INCHI_RET.OKAY, genNoAromaticity.getReturnStatus());
-            Assert.assertEquals("InChIs did not match", "InChI=1S/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)",
-                    genNoAromaticity.getInchi());
+            Assertions.assertEquals(INCHI_RET.OKAY, genNoAromaticity.getReturnStatus(), "return status was not okay");
+            Assertions.assertEquals("InChI=1S/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)", genNoAromaticity.getInchi(), "InChIs did not match");
         } finally {
             InChIGeneratorFactory.getInstance().setIgnoreAromaticBonds(true);
         }

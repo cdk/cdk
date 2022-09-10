@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -102,7 +103,7 @@ public class AtomContainerRendererTest {
         renderer.paint(square, visitor);
 
         for (IRenderingElement element : visitor.getElements()) {
-            Assert.assertTrue(visitor.toString(element).contains("Line") || visitor.toString(element).contains("Oval"));
+            Assertions.assertTrue(visitor.toString(element).contains("Line") || visitor.toString(element).contains("Oval"));
         }
     }
 

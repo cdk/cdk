@@ -20,6 +20,7 @@
 package org.openscience.cdk.config;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.test.CDKTestCase;
@@ -36,7 +37,7 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase {
     @Test
     public void testCDKBasedAtomTypeConfigurator() {
         CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
-        Assert.assertNotNull(configurator);
+        Assertions.assertNotNull(configurator);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase {
         String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         configurator.setInputStream(ins);
-        Assert.assertNotSame(0, configurator.readAtomTypes(new ChemObject().getBuilder()).size());
+        Assertions.assertNotSame(0, configurator.readAtomTypes(new ChemObject().getBuilder()).size());
     }
 
     @Test

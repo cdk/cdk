@@ -3,6 +3,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
@@ -32,12 +33,12 @@ public class AutocorrelationDescriptorChargeTest extends MolecularDescriptorTest
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer container = reader.read(new AtomContainer());
         DescriptorValue count = descriptor.calculate(container);
-        Assert.assertEquals(5, count.getValue().length());
-        Assert.assertTrue(count.getValue() instanceof DoubleArrayResult);
+        Assertions.assertEquals(5, count.getValue().length());
+        Assertions.assertTrue(count.getValue() instanceof DoubleArrayResult);
         DoubleArrayResult result = (DoubleArrayResult) count.getValue();
         for (int i = 0; i < 5; i++) {
-            Assert.assertFalse(Double.isNaN(result.get(i)));
-            Assert.assertTrue(0.0 != result.get(i));
+            Assertions.assertFalse(Double.isNaN(result.get(i)));
+            Assertions.assertTrue(0.0 != result.get(i));
         }
     }
 

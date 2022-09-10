@@ -236,7 +236,7 @@ public class StandardBondGeneratorTest {
         int count = 0;
         for (IRenderingElement child : annotations)
             ++count;
-        Assert.assertEquals(0, count);
+        Assertions.assertEquals(0, count);
         StandardBondGenerator.generateBonds(
                 furane,
                 new AtomSymbol[furane.getAtomCount()],
@@ -248,7 +248,7 @@ public class StandardBondGeneratorTest {
         count = 0;
         for (IRenderingElement child : annotations)
             ++count;
-        Assert.assertEquals(5, count);
+        Assertions.assertEquals(5, count);
     }
 
 }

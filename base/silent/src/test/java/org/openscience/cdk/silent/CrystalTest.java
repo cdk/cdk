@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,9 +44,9 @@ public class CrystalTest extends AbstractCrystalTest {
     @Test
     public void testCrystal() {
         ICrystal crystal = new Crystal();
-        Assert.assertNotNull(crystal);
-        Assert.assertEquals(0, crystal.getAtomCount());
-        Assert.assertEquals(0, crystal.getBondCount());
+        Assertions.assertNotNull(crystal);
+        Assertions.assertEquals(0, crystal.getAtomCount());
+        Assertions.assertEquals(0, crystal.getBondCount());
     }
 
     @Test
@@ -67,9 +68,9 @@ public class CrystalTest extends AbstractCrystalTest {
         acetone.addBond(b3);
 
         ICrystal crystal = new Crystal(acetone);
-        Assert.assertNotNull(crystal);
-        Assert.assertEquals(4, crystal.getAtomCount());
-        Assert.assertEquals(3, crystal.getBondCount());
+        Assertions.assertNotNull(crystal);
+        Assertions.assertEquals(4, crystal.getAtomCount());
+        Assertions.assertEquals(3, crystal.getBondCount());
     }
 
     // Overwrite default methods: no notifications are expected!

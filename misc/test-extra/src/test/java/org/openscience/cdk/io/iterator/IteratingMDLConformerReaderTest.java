@@ -37,15 +37,15 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
         int i = 0;
         while (reader.hasNext()) {
             ConformerContainer confContainer = (ConformerContainer) reader.next();
-            Assert.assertNotNull(confContainer);
+            Assertions.assertNotNull(confContainer);
             nconfs[i++] = confContainer.size();
             molCount++;
         }
 
-        Assert.assertEquals(3, molCount);
-        Assert.assertEquals(3, nconfs[0]);
-        Assert.assertEquals(18, nconfs[1]);
-        Assert.assertEquals(18, nconfs[2]);
+        Assertions.assertEquals(3, molCount);
+        Assertions.assertEquals(3, nconfs[0]);
+        Assertions.assertEquals(18, nconfs[1]);
+        Assertions.assertEquals(18, nconfs[2]);
     }
 
     @Test

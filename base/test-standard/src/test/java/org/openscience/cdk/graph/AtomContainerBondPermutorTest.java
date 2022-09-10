@@ -19,6 +19,7 @@
 package org.openscience.cdk.graph;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -44,7 +45,7 @@ public class AtomContainerBondPermutorTest extends CDKTestCase {
         atomContainer.addBond(0, 1, IBond.Order.SINGLE);
         atomContainer.addBond(0, 2, IBond.Order.SINGLE);
         AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(atomContainer);
-        Assert.assertNotNull(acbp);
+        Assertions.assertNotNull(acbp);
     }
 
     @Test
@@ -57,9 +58,9 @@ public class AtomContainerBondPermutorTest extends CDKTestCase {
         atomContainer.addBond(0, 2, IBond.Order.SINGLE);
         AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(atomContainer);
         IAtomContainer permuted = acbp.containerFromPermutation(new int[]{1, 0, 2});
-        Assert.assertNotNull(permuted);
-        Assert.assertEquals(atomContainer.getAtomCount(), permuted.getAtomCount());
-        Assert.assertEquals(atomContainer.getBondCount(), permuted.getBondCount());
+        Assertions.assertNotNull(permuted);
+        Assertions.assertEquals(atomContainer.getAtomCount(), permuted.getAtomCount());
+        Assertions.assertEquals(atomContainer.getBondCount(), permuted.getBondCount());
     }
 
     @Test
@@ -82,7 +83,7 @@ public class AtomContainerBondPermutorTest extends CDKTestCase {
             counter++;
             acap.next();
         }
-        Assert.assertEquals(119, counter);
+        Assertions.assertEquals(119, counter);
     }
 
 }

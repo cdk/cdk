@@ -20,6 +20,7 @@ package org.openscience.cdk.graph;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,8 +43,8 @@ public class MoleculeGraphsTest extends CDKTestCase {
     public void testGetMoleculeGraph_IAtomContainer() {
         IAtomContainer apinene = TestMoleculeFactory.makeAlphaPinene();
         SimpleGraph graph = MoleculeGraphs.getMoleculeGraph(apinene);
-        Assert.assertEquals(apinene.getAtomCount(), graph.vertexSet().size());
-        Assert.assertEquals(apinene.getBondCount(), graph.edgeSet().size());
+        Assertions.assertEquals(apinene.getAtomCount(), graph.vertexSet().size());
+        Assertions.assertEquals(apinene.getBondCount(), graph.edgeSet().size());
     }
 
 }

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -57,17 +58,17 @@ public class AtomSignatureTest extends AbstractSignatureTest {
     @Test
     public void getIntLabelTest() {
         atomContainer.getAtom(0).setMassNumber(12);
-        Assert.assertEquals(12, atomSignature.getIntLabel(0));
+        Assertions.assertEquals(12, atomSignature.getIntLabel(0));
     }
 
     @Test
     public void getConnectedTest() {
-        Assert.assertEquals(1, atomSignature.getConnected(0)[0]);
+        Assertions.assertEquals(1, atomSignature.getConnected(0)[0]);
     }
 
     @Test
     public void getEdgeLabelTest() {
-        Assert.assertEquals("=", atomSignature.getEdgeLabel(0, 1));
+        Assertions.assertEquals("=", atomSignature.getEdgeLabel(0, 1));
     }
 
     @Test
@@ -86,13 +87,13 @@ public class AtomSignatureTest extends AbstractSignatureTest {
 
         AtomSignature signature = new AtomSignature(0, benzeneRing);
         for (int i = 0; i < 6; i++) {
-            Assert.assertEquals("Failed for " + i, "p", signature.getEdgeLabel(i, (i + 1) % 6));
+            Assertions.assertEquals("p", signature.getEdgeLabel(i, (i + 1) % 6), "Failed for " + i);
         }
     }
 
     @Test
     public void getVertexSymbolTest() {
-        Assert.assertEquals("C", atomSignature.getVertexSymbol(0));
+        Assertions.assertEquals("C", atomSignature.getVertexSymbol(0));
     }
 
     //    @Test
@@ -135,7 +136,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         AtomSignature cubaneSignature = new AtomSignature(0, height, cubane);
         String cuneaneSigString = cuneaneSignature.toCanonicalString();
         String cubaneSigString = cubaneSignature.toCanonicalString();
-        Assert.assertEquals(cuneaneSigString, cubaneSigString);
+        Assertions.assertEquals(cuneaneSigString, cubaneSigString);
     }
 
     public void moleculeIsCarbon3Regular(IAtomContainer molecule) {
@@ -147,7 +148,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
                     count++;
                 }
             }
-            Assert.assertEquals("Failed for atom " + i, 3, count);
+            Assertions.assertEquals(3, count, "Failed for atom " + i);
             i++;
         }
     }
@@ -182,7 +183,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
                 sigfreq.put(canonicalSignature, 1);
             }
         }
-        Assert.assertEquals(1, sigfreq.keySet().size());
+        Assertions.assertEquals(1, sigfreq.keySet().size());
     }
 
     @Test
@@ -190,12 +191,12 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         IAtomContainer ac = makeBenzene(); // doesn't really matter
         AtomSignature atomSignature = new AtomSignature(0, ac);
         int aromaticColor = atomSignature.convertEdgeLabelToColor("p");
-        Assert.assertTrue(aromaticColor > 0);
+        Assertions.assertTrue(aromaticColor > 0);
         int singleColor = atomSignature.convertEdgeLabelToColor("");
         int doubleColor = atomSignature.convertEdgeLabelToColor("=");
         int tripleColor = atomSignature.convertEdgeLabelToColor("#");
-        Assert.assertTrue(singleColor < doubleColor);
-        Assert.assertTrue(doubleColor < tripleColor);
+        Assertions.assertTrue(singleColor < doubleColor);
+        Assertions.assertTrue(doubleColor < tripleColor);
     }
 
 }

@@ -23,6 +23,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractAtomContainerTest;
@@ -54,8 +55,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         // array lengths
         IAtomContainer container = new AtomContainer2(5, 6, 1, 2);
 
-        Assert.assertEquals(0, container.getAtomCount());
-        Assert.assertEquals(0, container.getElectronContainerCount());
+        Assertions.assertEquals(0, container.getAtomCount());
+        Assertions.assertEquals(0, container.getElectronContainerCount());
 
         // test whether the ElectronContainer is correctly initialized
         IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
@@ -73,8 +74,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         // create an empty container with in the constructor defined array lengths
         IAtomContainer container = new AtomContainer2();
 
-        Assert.assertEquals(0, container.getAtomCount());
-        Assert.assertEquals(0, container.getBondCount());
+        Assertions.assertEquals(0, container.getAtomCount());
+        Assertions.assertEquals(0, container.getBondCount());
 
         // test whether the ElectronContainer is correctly initialized
         IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
@@ -106,8 +107,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         acetone.addBond(b3);
 
         IAtomContainer container = new AtomContainer2(acetone);
-        Assert.assertEquals(4, container.getAtomCount());
-        Assert.assertEquals(3, container.getBondCount());
+        Assertions.assertEquals(4, container.getAtomCount());
+        Assertions.assertEquals(3, container.getBondCount());
     }
 
     // Overwrite default methods: no notifications are expected!
@@ -225,6 +226,6 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
                    is(mol.getAtom(0).getBond(mol.getAtom(1))));
         assertThat(mol.getBond(1),
                    is(mol.getAtom(1).getBond(mol.getAtom(2))));
-        assertNull(mol.getAtom(0).getBond(mol.getAtom(2)));
+        Assertions.assertNull(mol.getAtom(0).getBond(mol.getAtom(2)));
     }
 }

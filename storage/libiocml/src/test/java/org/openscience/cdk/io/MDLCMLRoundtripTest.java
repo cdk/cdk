@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -71,10 +72,10 @@ public class MDLCMLRoundtripTest {
         mdlWriter.close();
         String output = writermdl.toString();
         //if there would be 3 instances (as in the bug), the only instance wouldnt't be right at the end
-        Assert.assertEquals(2961, output.indexOf("M  END"));
+        Assertions.assertEquals(2961, output.indexOf("M  END"));
         //there would need some $$$$ to be in
-        Assert.assertEquals(-1, output.indexOf("$$$$"));
+        Assertions.assertEquals(-1, output.indexOf("$$$$"));
         //check atom/bond count
-        Assert.assertEquals(25, output.indexOf(" 31 33  0  0  0  0"));
+        Assertions.assertEquals(25, output.indexOf(" 31 33  0  0  0  0"));
     }
 }

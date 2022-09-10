@@ -57,7 +57,7 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testAccepts() {
-        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
+        Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
     /**
@@ -72,20 +72,20 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
         INChIReader reader = new INChIReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
+        Assertions.assertNotNull(moleculeSet);
         IAtomContainer molecule = moleculeSet.getAtomContainer(0);
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
-        Assert.assertEquals(11, molecule.getAtomCount());
-        Assert.assertEquals(12, molecule.getBondCount());
+        Assertions.assertEquals(11, molecule.getAtomCount());
+        Assertions.assertEquals(12, molecule.getBondCount());
     }
 
     @Test

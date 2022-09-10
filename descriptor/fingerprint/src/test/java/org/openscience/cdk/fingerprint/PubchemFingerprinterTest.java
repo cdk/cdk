@@ -70,7 +70,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     @Test
     public void testGetSize() throws Exception {
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(881, printer.getSize());
+        Assertions.assertEquals(881, printer.getSize());
     }
 
     @Test
@@ -96,10 +96,9 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
 
-        Assert.assertEquals(881, printer.getSize());
+        Assertions.assertEquals(881, printer.getSize());
 
-        Assert.assertFalse("c1ccccc1CC was detected as a subset of c1ccccc1CCc1ccccc1",
-                FingerprinterTool.isSubset(bs1, bs2));
+        Assertions.assertFalse(FingerprinterTool.isSubset(bs1, bs2), "c1ccccc1CC was detected as a subset of c1ccccc1CCc1ccccc1");
     }
 
     @Test
@@ -122,8 +121,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
         BitSet bs3 = printer.getBitFingerprint(mol3).asBitSet();
 
-        Assert.assertTrue(FingerprinterTool.isSubset(bs1, bs2));
-        Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs3));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs1, bs2));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs2, bs3));
     }
 
     /**
@@ -146,7 +145,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         BitSet ref = PubchemFingerprinter
                 .decode("AAADceBwPABAAAAAAAAAAAAAAAAAAAAAAAAkSAAAAAAAAAAAAAAAGgQACAAACBS0wAOCCAAABgQAAAAAAAAAAAAAAAAAAAAAAAAREAIAAAAiQAAFAAAHAAHAYAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
-        Assert.assertEquals(ref, fp);
+        Assertions.assertEquals(ref, fp);
     }
 
     /**
@@ -169,7 +168,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         BitSet ref = PubchemFingerprinter
                 .decode("AAADceB+AAAAAAAAAAAAAAAAAAAAAAAAAAA8YMGCAAAAAAAB1AAAHAAAAAAADAjBHgQwgJMMEACgAyRiRACCgCAhAiAI2CA4ZJgIIOLAkZGEIAhggADIyAcQgMAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
-        Assert.assertEquals(ref, fp);
+        Assertions.assertEquals(ref, fp);
     }
 
     /**
@@ -192,7 +191,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         BitSet ref = PubchemFingerprinter
                 .decode("AAADccBzMAAGAAAAAAAAAAAAAAAAAAAAAAA8QAAAAAAAAAABwAAAHgIYCAAADA6BniAwzpJqEgCoAyTyTASChCAnJiIYumGmTtgKJnLD1/PEdQhkwBHY3Qe82AAOIAAAAAAAAABAAAAAAAAAAAAAAAAAAA==");
 
-        Assert.assertEquals(ref, fp);
+        Assertions.assertEquals(ref, fp);
     }
 
     @Test
@@ -212,7 +211,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         byte[] actual = printer.getFingerprintAsBytes();
         byte[] expected = Arrays.copyOf(toByteArray(fp), actual.length);
 
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
 
     }
 
@@ -243,7 +242,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
                 470, 490, 516, 520, 524, 552, 556, 564, 570, 578, 582, 584, 595, 599, 603, 608, 618, 634, 640, 660,
                 664, 668, 677, 678, 679};
         for (int set : setBits) {
-            Assert.assertTrue("bit " + set + " was not set", bitSet.get(set));
+            Assertions.assertTrue(bitSet.get(set), "bit " + set + " was not set");
         }
     }
 
@@ -261,7 +260,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         BitSet ref = PubchemFingerprinter
                 .decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
-        Assert.assertEquals(ref, fp);
+        Assertions.assertEquals(ref, fp);
 
     }
 
@@ -321,13 +320,13 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         List<Future<BitSet>> ret = executor.invokeAll(tasks);
 
         BitSet fb1 = ret.get(0).get();
-        Assert.assertNotNull(fb1);
+        Assertions.assertNotNull(fb1);
 
         BitSet fb2 = ret.get(1).get();
-        Assert.assertNotNull(fb2);
+        Assertions.assertNotNull(fb2);
 
-        Assert.assertEquals(bs1, fb1);
-        Assert.assertEquals(bs2, fb2);
+        Assertions.assertEquals(bs1, fb1);
+        Assertions.assertEquals(bs2, fb2);
     }
 
     /**

@@ -21,6 +21,7 @@ package org.openscience.cdk.tools.manipulator;
 import java.util.Comparator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -50,7 +51,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
         // Assert.assert correct comparison
-        Assert.assertEquals("null <-> cycloPentane", 1, comparator.compare(null, cycloPentane));
+        Assertions.assertEquals(1, comparator.compare(null, cycloPentane), "null <-> cycloPentane");
     }
 
     @Test
@@ -59,7 +60,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
         // Assert.assert correct comparison
-        Assert.assertEquals("null <-> null", 0, comparator.compare(null, null));
+        Assertions.assertEquals(0, comparator.compare(null, null), "null <-> null");
     }
 
     @Test
@@ -75,8 +76,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 
         atomContainer2.addAtom(new PseudoAtom("*"));
 
-        Assert.assertEquals(atomContainer1 + " <-> " + atomContainer2, 1,
-                comparator.compare(atomContainer1, atomContainer2));
+        Assertions.assertEquals(1, comparator.compare(atomContainer1, atomContainer2), atomContainer1 + " <-> " + atomContainer2);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
         // Assert.assert correct comparison
-        Assert.assertEquals("cycloPentane <-> null", -1, comparator.compare(cycloPentane, null));
+        Assertions.assertEquals(-1, comparator.compare(cycloPentane, null), "cycloPentane <-> null");
     }
 
     @Test
@@ -101,9 +101,9 @@ public class AtomContainerComparatorTest extends CDKTestCase {
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
-        Assert.assertEquals("cycloPentane <-> cycloHexane", -1, comparator.compare(cycloPentane, cycloHexane));
-        Assert.assertEquals("cycloPentane <-> cycloPentane", 0, comparator.compare(cycloPentane, cycloPentane));
-        Assert.assertEquals("cycloHexane <-> cycloPentane", 1, comparator.compare(cycloHexane, cycloPentane));
+        Assertions.assertEquals(-1, comparator.compare(cycloPentane, cycloHexane), "cycloPentane <-> cycloHexane");
+        Assertions.assertEquals(0, comparator.compare(cycloPentane, cycloPentane), "cycloPentane <-> cycloPentane");
+        Assertions.assertEquals(1, comparator.compare(cycloHexane, cycloPentane), "cycloHexane <-> cycloPentane");
     }
 
     @Test
@@ -117,9 +117,9 @@ public class AtomContainerComparatorTest extends CDKTestCase {
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
-        Assert.assertEquals("cycloHexane <-> hexaneNitrogen", -1, comparator.compare(cycloHexane, hexaneNitrogen));
-        Assert.assertEquals("cycloHexane <-> cycloHexane", 0, comparator.compare(cycloHexane, cycloHexane));
-        Assert.assertEquals("hexaneNitrogen <-> cycloHexane", 1, comparator.compare(hexaneNitrogen, cycloHexane));
+        Assertions.assertEquals(-1, comparator.compare(cycloHexane, hexaneNitrogen), "cycloHexane <-> hexaneNitrogen");
+        Assertions.assertEquals(0, comparator.compare(cycloHexane, cycloHexane), "cycloHexane <-> cycloHexane");
+        Assertions.assertEquals(1, comparator.compare(hexaneNitrogen, cycloHexane), "hexaneNitrogen <-> cycloHexane");
     }
 
     @Test
@@ -133,11 +133,9 @@ public class AtomContainerComparatorTest extends CDKTestCase {
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
-        Assert.assertEquals("hexaneNitrogen <-> cycloHexaneNitrogen", -1,
-                comparator.compare(hexaneNitrogen, cycloHexaneNitrogen));
-        Assert.assertEquals("hexaneNitrogen <-> hexaneNitrogen", 0, comparator.compare(hexaneNitrogen, hexaneNitrogen));
-        Assert.assertEquals("cycloHexaneNitrogen <-> hexaneNitrogen", 1,
-                comparator.compare(cycloHexaneNitrogen, hexaneNitrogen));
+        Assertions.assertEquals(-1, comparator.compare(hexaneNitrogen, cycloHexaneNitrogen), "hexaneNitrogen <-> cycloHexaneNitrogen");
+        Assertions.assertEquals(0, comparator.compare(hexaneNitrogen, hexaneNitrogen), "hexaneNitrogen <-> hexaneNitrogen");
+        Assertions.assertEquals(1, comparator.compare(cycloHexaneNitrogen, hexaneNitrogen), "cycloHexaneNitrogen <-> hexaneNitrogen");
     }
 
     @Test
@@ -151,14 +149,10 @@ public class AtomContainerComparatorTest extends CDKTestCase {
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
-        Assert.assertEquals("cycloHexaneNitrogen <-> cycloHexeneNitrogen", -1,
-                comparator.compare(cycloHexaneNitrogen, cycloHexeneNitrogen));
-        Assert.assertEquals("cycloHexaneNitrogen <-> cycloHexaneNitrogen", 0,
-                comparator.compare(cycloHexaneNitrogen, cycloHexaneNitrogen));
-        Assert.assertEquals("cycloHexeneNitrogen <-> cycloHexeneNitrogen", 0,
-                comparator.compare(cycloHexeneNitrogen, cycloHexeneNitrogen));
-        Assert.assertEquals("cycloHexeneNitrogen <-> cycloHexaneNitrogen", 1,
-                comparator.compare(cycloHexeneNitrogen, cycloHexaneNitrogen));
+        Assertions.assertEquals(-1, comparator.compare(cycloHexaneNitrogen, cycloHexeneNitrogen), "cycloHexaneNitrogen <-> cycloHexeneNitrogen");
+        Assertions.assertEquals(0, comparator.compare(cycloHexaneNitrogen, cycloHexaneNitrogen), "cycloHexaneNitrogen <-> cycloHexaneNitrogen");
+        Assertions.assertEquals(0, comparator.compare(cycloHexeneNitrogen, cycloHexeneNitrogen), "cycloHexeneNitrogen <-> cycloHexeneNitrogen");
+        Assertions.assertEquals(1, comparator.compare(cycloHexeneNitrogen, cycloHexaneNitrogen), "cycloHexeneNitrogen <-> cycloHexaneNitrogen");
     }
 
 }

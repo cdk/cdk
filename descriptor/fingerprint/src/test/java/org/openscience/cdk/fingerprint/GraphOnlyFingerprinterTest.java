@@ -23,6 +23,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -63,7 +64,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
         IBitFingerprint bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N"));
         IBitFingerprint bs2 = printer.getBitFingerprint(parser.parseSmiles("CCCN"));
 
-        Assert.assertEquals(bs1, bs2);
+        Assertions.assertEquals(bs1, bs2);
     }
 
     /* ethanolamine */
@@ -92,12 +93,12 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
 
         IAtomContainer mol1 = createMolecule(molecule_test_2);
         IAtomContainer mol2 = createMolecule(ethanolamine);
-        Assert.assertTrue("SubGraph does NOT match", new UniversalIsomorphismTester().isSubgraph(mol1, mol2));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isSubgraph(mol1, mol2), "SubGraph does NOT match");
 
         BitSet bs1 = printer.getBitFingerprint(mol1.clone()).asBitSet();
         BitSet bs2 = printer.getBitFingerprint(mol2.clone()).asBitSet();
 
-        Assert.assertTrue("Subset (with fingerprint) does NOT match", FingerprinterTool.isSubset(bs1, bs2));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs1, bs2), "Subset (with fingerprint) does NOT match");
 
         // Match OK
         logger.debug("Subset (with fingerprint) does match");
@@ -107,7 +108,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
         IAtomContainer structure = null;
         if (molecule != null) {
             ISimpleChemObjectReader reader = new MDLV2000Reader(new StringReader(molecule));
-            Assert.assertNotNull("Could not create reader", reader);
+            Assertions.assertNotNull(reader, "Could not create reader");
             if (reader.accepts(AtomContainer.class)) {
                 structure = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
             }
@@ -159,7 +160,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
         expected.put("OCCCCCCC", 5);
         expected.put("OCOCCCCC", 2);
         expected.put("CCOCCCCC", 2);
-        Assert.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     private BitSet foldFp(ICountFingerprint fp, int size) {
@@ -182,8 +183,8 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
         IAtomContainer mol  = smipar.parseSmiles(smi);
         ICountFingerprint cntFp = fpr.getCountFingerprint(mol);
         IBitFingerprint expBitset = fpr.getBitFingerprint(mol);
-        Assert.assertEquals(35, cntFp.numOfPopulatedbins());
+        Assertions.assertEquals(35, cntFp.numOfPopulatedbins());
         BitSet actBitset = foldFp(cntFp, 1024);
-        Assert.assertEquals(expBitset.asBitSet(), actBitset);
+        Assertions.assertEquals(expBitset.asBitSet(), actBitset);
     }
 }

@@ -30,6 +30,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -55,7 +56,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
     @Test
     public void testAccepts() throws Exception {
         XYZWriter reader = new XYZWriter();
-        Assert.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test
@@ -81,7 +82,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
         BufferedReader reader = new BufferedReader(new StringReader(output));
         while (reader.readLine() != null)
             lineCount++;
-        Assert.assertEquals(4, lineCount);
+        Assertions.assertEquals(4, lineCount);
     }
 
     /**
@@ -101,7 +102,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
         writer.close();
 
         String output = writer.toString();
-        Assert.assertTrue(output.contains("0.000000\t 0.000000\t 0.000000"));
+        Assertions.assertTrue(output.contains("0.000000\t 0.000000\t 0.000000"));
     }
 
     /**
@@ -124,9 +125,9 @@ public class XYZWriterTest extends ChemObjectIOTest {
         writer.close();
 
         String output = writer.toString();
-        Assert.assertTrue(output.contains("1.000000"));
-        Assert.assertTrue(output.contains("2.000000"));
-        Assert.assertTrue(output.contains("3.000000"));
+        Assertions.assertTrue(output.contains("1.000000"));
+        Assertions.assertTrue(output.contains("2.000000"));
+        Assertions.assertTrue(output.contains("3.000000"));
     }
 
 }

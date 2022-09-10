@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemModel;
@@ -61,8 +62,8 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         MDLRXNV3000Reader reader = new MDLRXNV3000Reader();
-        Assert.assertTrue(reader.accepts(ChemModel.class));
-        Assert.assertTrue(reader.accepts(Reaction.class));
+        Assertions.assertTrue(reader.accepts(ChemModel.class));
+        Assertions.assertTrue(reader.accepts(Reaction.class));
     }
 
     /**
@@ -78,17 +79,17 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
         reaction1 = reader1.read(reaction1);
         reader1.close();
 
-        Assert.assertNotNull(reaction1);
-        Assert.assertEquals(1, reaction1.getReactantCount());
-        Assert.assertEquals(1, reaction1.getProductCount());
+        Assertions.assertNotNull(reaction1);
+        Assertions.assertEquals(1, reaction1.getReactantCount());
+        Assertions.assertEquals(1, reaction1.getProductCount());
         IAtomContainer reactant = reaction1.getReactants().getAtomContainer(0);
-        Assert.assertNotNull(reactant);
-        Assert.assertEquals(32, reactant.getAtomCount());
-        Assert.assertEquals(29, reactant.getBondCount());
+        Assertions.assertNotNull(reactant);
+        Assertions.assertEquals(32, reactant.getAtomCount());
+        Assertions.assertEquals(29, reactant.getBondCount());
         IAtomContainer product = reaction1.getProducts().getAtomContainer(0);
-        Assert.assertNotNull(product);
-        Assert.assertEquals(32, product.getAtomCount());
-        Assert.assertEquals(29, product.getBondCount());
+        Assertions.assertNotNull(product);
+        Assertions.assertEquals(32, product.getAtomCount());
+        Assertions.assertEquals(29, product.getBondCount());
 
     }
 
@@ -211,9 +212,9 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLRXNV3000Reader mdlr = new MDLRXNV3000Reader(new StringReader(rxnfile))) {
             IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
             IReaction reaction = mdlr.read(bldr.newInstance(IReaction.class));
-            Assert.assertEquals(2, reaction.getReactantCount());
-            Assert.assertEquals(1, reaction.getProductCount());
-            Assert.assertEquals(2, reaction.getAgents().getAtomContainerCount());
+            Assertions.assertEquals(2, reaction.getReactantCount());
+            Assertions.assertEquals(1, reaction.getProductCount());
+            Assertions.assertEquals(2, reaction.getAgents().getAtomContainerCount());
         }
     }
 }

@@ -23,6 +23,7 @@
 
 package org.openscience.cdk;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -36,7 +37,7 @@ public class BondRefTest {
 
     @Test
     public void dereferenceNullPointer() {
-        assertNull(BondRef.deref(null));
+        Assertions.assertNull(BondRef.deref(null));
     }
 
     @Test

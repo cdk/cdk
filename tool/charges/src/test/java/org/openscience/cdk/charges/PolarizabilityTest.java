@@ -19,6 +19,7 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -45,9 +46,9 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
         double result = pol.getPolarizabilitiyFactorForAtom(mol, mol.getAtom(0));
-        Assert.assertFalse(Double.isNaN(result));
+        Assertions.assertFalse(Double.isNaN(result));
         result = pol.getPolarizabilitiyFactorForAtom(mol, mol.getAtom(3));
-        Assert.assertFalse(Double.isNaN(result));
+        Assertions.assertFalse(Double.isNaN(result));
     }
 
     /**
@@ -60,9 +61,9 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
         double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(0), 100, true);
-        Assert.assertEquals(testResult[0], result, 0.01);
+        Assertions.assertEquals(testResult[0], result, 0.01);
         result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(3), 100, true);
-        Assert.assertEquals(testResult[1], result, 0.01);
+        Assertions.assertEquals(testResult[1], result, 0.01);
     }
 
     /**
@@ -71,7 +72,7 @@ public class PolarizabilityTest extends CDKTestCase {
     @Disabled
     @Test
     public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt() {
-        Assert.fail("Not tested yet");
+        Assertions.fail("Not tested yet");
     }
 
     /**
@@ -83,7 +84,7 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
         double result = pol.calculateBondPolarizability(mol, mol.getBond(0));
-        Assert.assertFalse(Double.isNaN(result));
+        Assertions.assertFalse(Double.isNaN(result));
     }
 
     /**
@@ -96,7 +97,7 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C");
         double result = pol.calculateKJMeanMolecularPolarizability(mol);
-        Assert.assertEquals(testResult, result, 0.01);
+        Assertions.assertEquals(testResult, result, 0.01);
     }
 
     /**
@@ -109,7 +110,7 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCl");
         double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(2), 100, true);
-        Assert.assertEquals(testResult, result, 0.01);
+        Assertions.assertEquals(testResult, result, 0.01);
     }
 
     /**
@@ -122,7 +123,7 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CCBr");
         double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(3), 100, true);
-        Assert.assertEquals(testResult, result, 0.01);
+        Assertions.assertEquals(testResult, result, 0.01);
     }
 
     /**
@@ -135,7 +136,7 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
         double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(5), 100, true);
-        Assert.assertEquals(testResult, result, 0.01);
+        Assertions.assertEquals(testResult, result, 0.01);
     }
 
     /**
@@ -148,7 +149,7 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCOCC");
         double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(2), 100, true);
-        Assert.assertEquals(testResult, result, 0.01);
+        Assertions.assertEquals(testResult, result, 0.01);
     }
 
     /**
@@ -164,9 +165,9 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCO");
         double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(3), 100, true);
-        Assert.assertEquals(testResult[1], result, 0.01);
+        Assertions.assertEquals(testResult[1], result, 0.01);
         result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(0), 100, true);
-        Assert.assertEquals(testResult[0], result, 0.01);
+        Assertions.assertEquals(testResult[0], result, 0.01);
     }
 
     /**
@@ -179,6 +180,6 @@ public class PolarizabilityTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CCS");
         double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(3), 100, true);
-        Assert.assertEquals(testResult, result, 0.01);
+        Assertions.assertEquals(testResult, result, 0.01);
     }
 }

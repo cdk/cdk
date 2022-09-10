@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -89,9 +90,9 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
         int countmodel2 = model2.getMoleculeSet().getAtomContainerCount();
         int countpolymer2 = polymer2.getAtomCount();
 
-        Assert.assertEquals(countchemFile1, countchemFile2);
-        Assert.assertEquals(countmodel1, countmodel2);
-        Assert.assertEquals(countpolymer1, countpolymer2);
+        Assertions.assertEquals(countchemFile1, countchemFile2);
+        Assertions.assertEquals(countmodel1, countmodel2);
+        Assertions.assertEquals(countpolymer1, countpolymer2);
 
         writer = new StringWriter();
         cmlWriter = new CMLWriter(writer);
@@ -102,7 +103,7 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
 
         String conte1 = cmlContent1.substring(0, 1000);
         String conte2 = cmlContent2.substring(0, 1000);
-        Assert.assertEquals(conte1, conte2);
+        Assertions.assertEquals(conte1, conte2);
     }
 
 }

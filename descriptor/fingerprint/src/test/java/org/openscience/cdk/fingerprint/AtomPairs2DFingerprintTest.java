@@ -8,6 +8,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -34,17 +35,17 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         IFingerprinter    printer = new AtomPairs2DFingerprinter();
         IAtomContainer    mol1    = parser.parseSmiles("cccccccccc");
         BitSetFingerprint bsfp    = (BitSetFingerprint) printer.getBitFingerprint(mol1);
-        Assert.assertEquals(9, bsfp.cardinality());
-        Assert.assertEquals(true, bsfp.get(0));        //Distance 1
-        Assert.assertEquals(true, bsfp.get(78));    //Distance 2
-        Assert.assertEquals(true, bsfp.get(156));    //Distance 3
-        Assert.assertEquals(true, bsfp.get(234));    //Distance 4
-        Assert.assertEquals(true, bsfp.get(312));    //Distance 5
-        Assert.assertEquals(true, bsfp.get(390));    //Distance 6
-        Assert.assertEquals(true, bsfp.get(468));    //Distance 7
-        Assert.assertEquals(true, bsfp.get(546));    //Distance 8
-        Assert.assertEquals(true, bsfp.get(624));    //Distance 9
-        Assert.assertEquals(false, bsfp.get(702));    //Distance 10
+        Assertions.assertEquals(9, bsfp.cardinality());
+        Assertions.assertEquals(true, bsfp.get(0));        //Distance 1
+        Assertions.assertEquals(true, bsfp.get(78));    //Distance 2
+        Assertions.assertEquals(true, bsfp.get(156));    //Distance 3
+        Assertions.assertEquals(true, bsfp.get(234));    //Distance 4
+        Assertions.assertEquals(true, bsfp.get(312));    //Distance 5
+        Assertions.assertEquals(true, bsfp.get(390));    //Distance 6
+        Assertions.assertEquals(true, bsfp.get(468));    //Distance 7
+        Assertions.assertEquals(true, bsfp.get(546));    //Distance 8
+        Assertions.assertEquals(true, bsfp.get(624));    //Distance 9
+        Assertions.assertEquals(false, bsfp.get(702));    //Distance 10
     }
 
     @Test
@@ -52,14 +53,14 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         IFingerprinter       printer = new AtomPairs2DFingerprinter();
         IAtomContainer       mol1    = parser.parseSmiles("Clc1ccccc1");
         Map<String, Integer> map     = printer.getRawFingerprint(mol1);
-        Assert.assertTrue(map.containsKey("1_X_C"));
-        Assert.assertTrue(map.containsKey("1_Cl_C"));
-        Assert.assertTrue(map.containsKey("2_X_C"));
-        Assert.assertTrue(map.containsKey("2_Cl_C"));
-        Assert.assertTrue(map.containsKey("3_X_C"));
-        Assert.assertTrue(map.containsKey("3_Cl_C"));
-        Assert.assertTrue(map.containsKey("4_X_C"));
-        Assert.assertTrue(map.containsKey("4_Cl_C"));
+        Assertions.assertTrue(map.containsKey("1_X_C"));
+        Assertions.assertTrue(map.containsKey("1_Cl_C"));
+        Assertions.assertTrue(map.containsKey("2_X_C"));
+        Assertions.assertTrue(map.containsKey("2_Cl_C"));
+        Assertions.assertTrue(map.containsKey("3_X_C"));
+        Assertions.assertTrue(map.containsKey("3_Cl_C"));
+        Assertions.assertTrue(map.containsKey("4_X_C"));
+        Assertions.assertTrue(map.containsKey("4_Cl_C"));
     }
 
     @Test
@@ -67,8 +68,8 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         IFingerprinter       printer = new AtomPairs2DFingerprinter();
         IAtomContainer       mol1    = parser.parseSmiles("[Te]1cccc1");
         Map<String, Integer> map     = printer.getRawFingerprint(mol1);
-        Assert.assertTrue(map.containsKey("1_C_C"));
-        Assert.assertTrue(map.containsKey("2_C_C"));
+        Assertions.assertTrue(map.containsKey("1_C_C"));
+        Assertions.assertTrue(map.containsKey("2_C_C"));
     }
 
     @Test
@@ -76,7 +77,7 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         IFingerprinter    printer = new AtomPairs2DFingerprinter();
         IAtomContainer    mol1    = parser.parseSmiles("cccccccccc");
         ICountFingerprint icfp    = printer.getCountFingerprint(mol1);
-        Assert.assertEquals(9, icfp.numOfPopulatedbins());
+        Assertions.assertEquals(9, icfp.numOfPopulatedbins());
 
     }
 

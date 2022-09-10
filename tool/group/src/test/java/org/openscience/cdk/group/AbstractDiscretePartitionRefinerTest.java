@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -99,7 +100,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     @Test
     public void emptyConstructor() {
         MockRefiner refiner = new MockRefiner(null);
-        Assert.assertNotNull(refiner);
+        Assertions.assertNotNull(refiner);
     }
 
     @Test
@@ -107,7 +108,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         int n = 10;
         Graph g = new Graph(n);
         MockRefiner refiner = new MockRefiner(g);
-        Assert.assertEquals(g.vertexCount, refiner.getVertexCount());
+        Assertions.assertEquals(g.vertexCount, refiner.getVertexCount());
     }
 
     @Test
@@ -116,7 +117,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
         MockRefiner refiner = new MockRefiner(g);
-        Assert.assertEquals(1, refiner.getConnectivity(0, 1));
+        Assertions.assertEquals(1, refiner.getConnectivity(0, 1));
     }
     
     private void setup(MockRefiner refiner, PermutationGroup group, Graph g) {
@@ -130,7 +131,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         Graph g = new Graph(n);
         MockRefiner refiner = new MockRefiner(g);
         setup(refiner, group, g);
-        Assert.assertEquals(group, refiner.getAutomorphismGroup());
+        Assertions.assertEquals(group, refiner.getAutomorphismGroup());
     }
 
     @Test
@@ -142,7 +143,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         MockRefiner refiner = new MockRefiner(g);
         setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
-        Assert.assertTrue(refiner.firstIsIdentity());
+        Assertions.assertTrue(refiner.firstIsIdentity());
     }
 
     @Test
@@ -156,7 +157,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(Partition.unit(n));
         Partition autPartition = refiner.getAutomorphismPartition();
         Partition expected = Partition.fromString("0|1,2");
-        Assert.assertEquals(expected, autPartition);
+        Assertions.assertEquals(expected, autPartition);
     }
 
     @Test
@@ -167,7 +168,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         MockRefiner refiner = new MockRefiner(g);
         String hms = refiner.getHalfMatrixString();
         String expected = "110";
-        Assert.assertEquals(expected, hms);
+        Assertions.assertEquals(expected, hms);
     }
 
     @Test
@@ -181,7 +182,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(Partition.unit(n));
         String hms = refiner.getFirstHalfMatrixString();
         String expected = "110";
-        Assert.assertEquals(expected, hms);
+        Assertions.assertEquals(expected, hms);
     }
 
     @Test
@@ -192,7 +193,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
         setup(refiner, group, g);
-        Assert.assertNotNull(refiner.getAutomorphismGroup());
+        Assertions.assertNotNull(refiner.getAutomorphismGroup());
     }
 
     @Test
@@ -206,7 +207,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(Partition.unit(n));
         Permutation best = refiner.getBest();
         Permutation expected = new Permutation(1, 0, 2);
-        Assert.assertEquals(expected, best);
+        Assertions.assertEquals(expected, best);
     }
 
     @Test
@@ -220,7 +221,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(Partition.unit(n));
         Permutation first = refiner.getFirst();
         Permutation expected = new Permutation(1, 0, 2);
-        Assert.assertEquals(expected, first);
+        Assertions.assertEquals(expected, first);
     }
 
     @Test
@@ -232,7 +233,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         MockRefiner refiner = new MockRefiner(g);
         setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
-        Assert.assertTrue(refiner.isCanonical());
+        Assertions.assertTrue(refiner.isCanonical());
     }
 
     @Test
@@ -244,7 +245,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         MockRefiner refiner = new MockRefiner(g);
         setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
-        Assert.assertFalse(refiner.isCanonical());
+        Assertions.assertFalse(refiner.isCanonical());
     }
 
     @Test
@@ -256,7 +257,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         MockRefiner refiner = new MockRefiner(g);
         setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
-        Assert.assertNotNull(refiner);
+        Assertions.assertNotNull(refiner);
     }
 
 }

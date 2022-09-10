@@ -22,6 +22,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
@@ -63,7 +64,7 @@ public class FractionalCSP3DescriptorTest extends MolecularDescriptorTest {
         for (SmilesValue e: table) {
             IAtomContainer mol = sp.parseSmiles(e.smiles);
             DoubleResult result = (DoubleResult)descriptor.calculate(mol).getValue();
-            Assert.assertEquals(e.value, result.doubleValue(), 0.01);
+            Assertions.assertEquals(e.value, result.doubleValue(), 0.01);
         }
     }
 }

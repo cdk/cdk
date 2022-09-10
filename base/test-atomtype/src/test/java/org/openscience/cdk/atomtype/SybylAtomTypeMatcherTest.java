@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -75,13 +76,13 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     @Test
     public void testGetInstance_IChemObjectBuilder() {
         IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
     }
 
     @Test
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
         IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
         IAtomContainer ethane = TestMoleculeFactory.makeAlkane(2);
         String[] expectedTypes = {"C.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, ethane);
@@ -99,7 +100,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+            Assertions.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
         }
     }
 
@@ -109,7 +110,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
         IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
@@ -118,8 +119,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
-            Assert.assertEquals("Perceived atom type does not match atom type in file", refAtoms.next()
-                    .getAtomTypeName(), atoms.next().getAtomTypeName());
+            Assertions.assertEquals(refAtoms.next()
+                                            .getAtomTypeName(), atoms.next().getAtomTypeName(), "Perceived atom type does not match atom type in file");
         }
     }
 
@@ -134,7 +135,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
         IAtomType[] types = matcher.findMatchingAtomTypes(benzene);
         for (IAtomType type : types) {
-            Assert.assertEquals("C.ar", type.getAtomTypeName());
+            Assertions.assertEquals("C.ar", type.getAtomTypeName());
         }
     }
 
@@ -160,7 +161,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
         IAtomType[] types = matcher.findMatchingAtomTypes(benzene);
         for (IAtomType type : types) {
-            Assert.assertEquals("C.ar", type.getAtomTypeName());
+            Assertions.assertEquals("C.ar", type.getAtomTypeName());
         }
     }
 
@@ -170,7 +171,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
         IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
@@ -180,8 +181,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
-            Assert.assertEquals("Perceived atom type does not match atom type in file", refAtom.getAtomTypeName(),
-                    atoms.next().getAtomTypeName());
+            Assertions.assertEquals(refAtom.getAtomTypeName(), atoms.next().getAtomTypeName(), "Perceived atom type does not match atom type in file");
         }
     }
 
@@ -195,7 +195,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom);
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         IAtomType type = matcher.findMatchingAtomType(mol, atom);
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
         org.hamcrest.MatcherAssert.assertThat(type.getAtomTypeName(), is("X"));
     }
 
@@ -205,7 +205,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
         IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
@@ -215,8 +215,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
-            Assert.assertEquals("Perceived atom type does not match atom type in file", refAtom.getAtomTypeName(),
-                    atoms.next().getAtomTypeName());
+            Assertions.assertEquals(refAtom.getAtomTypeName(), atoms.next().getAtomTypeName(), "Perceived atom type does not match atom type in file");
         }
     }
 
@@ -226,7 +225,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
         IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
@@ -236,8 +235,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
-            Assert.assertEquals("Perceived atom type does not match atom type in file", refAtom.getAtomTypeName(),
-                    atoms.next().getAtomTypeName());
+            Assertions.assertEquals(refAtom.getAtomTypeName(), atoms.next().getAtomTypeName(), "Perceived atom type does not match atom type in file");
         }
     }
 

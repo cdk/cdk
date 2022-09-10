@@ -31,6 +31,8 @@ import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
@@ -70,9 +72,9 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         Mol2Reader reader = new Mol2Reader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
-        Assert.assertTrue(reader.accepts(ChemModel.class));
-        Assert.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemModel.class));
+        Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     /**
@@ -88,26 +90,26 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(12, m.getAtomCount());
-        Assert.assertEquals(12, m.getBondCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(12, m.getAtomCount());
+        Assertions.assertEquals(12, m.getBondCount());
 
-        Assert.assertEquals("C.ar", m.getAtom(0).getAtomTypeName());
-        Assert.assertEquals("C", m.getAtom(0).getSymbol());
-        Assert.assertEquals("H", m.getAtom(6).getAtomTypeName());
-        Assert.assertEquals("H", m.getAtom(6).getSymbol());
+        Assertions.assertEquals("C.ar", m.getAtom(0).getAtomTypeName());
+        Assertions.assertEquals("C", m.getAtom(0).getSymbol());
+        Assertions.assertEquals("H", m.getAtom(6).getAtomTypeName());
+        Assertions.assertEquals("H", m.getAtom(6).getSymbol());
     }
 
     @Test
@@ -117,9 +119,9 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
         IAtomContainer reference = molecule.clone();
-        Assert.assertEquals("C1", reference.getAtom(0).getID());
+        Assertions.assertEquals("C1", reference.getAtom(0).getID());
     }
 
     /**
@@ -130,7 +132,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     @Category(SlowTest.class)
     @Test
     public void testNCIfeb03_2D() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         String filename = "NCI_feb03_2D.mol2.gz";
         InputStream in = new GZIPInputStream(Mol2ReaderTest.class.getResourceAsStream(filename));
@@ -151,7 +153,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testMultiMol() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
         String filename = "actives.mol2";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -159,14 +161,14 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(30, mols.size());
-        Assert.assertEquals(25, mols.get(0).getAtomCount());
-        Assert.assertEquals(24, mols.get(29).getAtomCount());
+        Assertions.assertEquals(30, mols.size());
+        Assertions.assertEquals(25, mols.get(0).getAtomCount());
+        Assertions.assertEquals(24, mols.get(29).getAtomCount());
     }
 
     @Test
     public void testMultiMolButSingle() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
         String filename = "fromWebsite.mol2";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -174,8 +176,8 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, mols.size());
-        Assert.assertEquals(12, mols.get(0).getAtomCount());
+        Assertions.assertEquals(1, mols.size());
+        Assertions.assertEquals(12, mols.get(0).getAtomCount());
 
     }
 
@@ -186,9 +188,9 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Mol2Reader reader = new Mol2Reader(in);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(12, mol.getAtomCount());
-        Assert.assertEquals(12, mol.getBondCount());
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(12, mol.getAtomCount());
+        Assertions.assertEquals(12, mol.getBondCount());
     }
 
     @Test
@@ -372,15 +374,15 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
         IChemModel model = r.read(SilentChemObjectBuilder.getInstance().newInstance(IChemModel.class));
         r.close();
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         List<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model);
-        Assert.assertEquals(1, containers.size());
+        Assertions.assertEquals(1, containers.size());
         IAtomContainer molecule = containers.get(0);
-        Assert.assertNotNull(molecule);
-        Assert.assertEquals(129, molecule.getAtomCount());
-        Assert.assertEquals(135, molecule.getBondCount());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertEquals(129, molecule.getAtomCount());
+        Assertions.assertEquals(135, molecule.getBondCount());
         for (IAtom atom : molecule.atoms()) {
-            Assert.assertNotNull(atom.getAtomTypeName());
+            Assertions.assertNotNull(atom.getAtomTypeName());
         }
     }
 
@@ -389,10 +391,10 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Mol2Reader reader = new Mol2Reader(sr);
         IChemFile mol = reader.read(SilentChemObjectBuilder.getInstance().newInstance(IChemFile.class));
         reader.close();
-        Assert.assertTrue(mol.getChemSequenceCount() > 0);
-        Assert.assertTrue(mol.getChemSequence(0).getChemModelCount() > 0);
-        Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainerCount() > 0);
-        Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0).getAtomCount() > 0);
+        Assertions.assertTrue(mol.getChemSequenceCount() > 0);
+        Assertions.assertTrue(mol.getChemSequence(0).getChemModelCount() > 0);
+        Assertions.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainerCount() > 0);
+        Assertions.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0).getAtomCount() > 0);
     }
 
     // CL --> Cl, NA --> Na etc.. /cdk/bug/1346
@@ -403,7 +405,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
             mol2Reader = new Mol2Reader(getClass().getResourceAsStream("CLMW1.mol2"));
             IAtomContainer container = mol2Reader.read(new AtomContainer());
             for (IAtom atom : container.atoms())
-                Assert.assertNotNull(atom.getAtomicNumber());
+                Assertions.assertNotNull(atom.getAtomicNumber());
         } finally {
             if (mol2Reader != null) mol2Reader.close();
         }

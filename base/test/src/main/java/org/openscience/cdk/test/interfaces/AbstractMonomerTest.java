@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IMonomer;
 
@@ -23,7 +24,7 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
     public void testSetMonomerName_String() {
         IMonomer m = (IMonomer) newChemObject();
         m.setMonomerName("TRP279");
-        Assert.assertEquals("TRP279", m.getMonomerName());
+        Assertions.assertEquals("TRP279", m.getMonomerName());
     }
 
     @Test
@@ -35,7 +36,7 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
     public void testSetMonomerType_String() {
         IMonomer oMonomer = (IMonomer) newChemObject();
         oMonomer.setMonomerType("TRP");
-        Assert.assertEquals("TRP", oMonomer.getMonomerType());
+        Assertions.assertEquals("TRP", oMonomer.getMonomerType());
     }
 
     @Test
@@ -53,8 +54,8 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
         oMonomer.setMonomerType("TRP");
         String description = oMonomer.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 
@@ -63,7 +64,7 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
     public void testClone() throws Exception {
         IMonomer oMonomer = (IMonomer) newChemObject();
         Object clone = oMonomer.clone();
-        Assert.assertTrue(clone instanceof IMonomer);
-        Assert.assertNotSame(oMonomer, clone);
+        Assertions.assertTrue(clone instanceof IMonomer);
+        Assertions.assertNotSame(oMonomer, clone);
     }
 }

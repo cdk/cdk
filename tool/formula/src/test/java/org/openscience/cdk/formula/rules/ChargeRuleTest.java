@@ -19,6 +19,7 @@
 package org.openscience.cdk.formula.rules;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -52,7 +53,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
     public void testChargeRule() throws Exception {
 
         IRule rule = new ChargeRule();
-        Assert.assertNotNull(rule);
+        Assertions.assertNotNull(rule);
 
     }
 
@@ -66,10 +67,10 @@ public class ChargeRuleTest extends FormulaRuleTest {
 
         IRule rule = new ChargeRule();
         Object[] objects = rule.getParameters();
-        Assert.assertEquals(1, objects.length);
+        Assertions.assertEquals(1, objects.length);
 
         double charge = (Double) objects[0];
-        Assert.assertEquals(0.0, charge, 0.00001);
+        Assertions.assertEquals(0.0, charge, 0.00001);
 
     }
 
@@ -89,10 +90,10 @@ public class ChargeRuleTest extends FormulaRuleTest {
         rule.setParameters(params);
 
         Object[] objects = rule.getParameters();
-        Assert.assertEquals(1, objects.length);
+        Assertions.assertEquals(1, objects.length);
 
         double charge = (Double) objects[0];
-        Assert.assertEquals(-1.0, charge, 0.00001);
+        Assertions.assertEquals(-1.0, charge, 0.00001);
 
     }
 
@@ -111,7 +112,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 200);
         formula.setCharge(1);
 
-        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(0.0, rule.validate(formula), 0.0001);
     }
 
     /**
@@ -133,7 +134,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
         params[0] = -1.0;
         rule.setParameters(params);
 
-        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(0.0, rule.validate(formula), 0.0001);
     }
 
     /**
@@ -151,7 +152,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 6);
         formula.setCharge(0);
 
-        Assert.assertEquals(1.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
     }
 
 }

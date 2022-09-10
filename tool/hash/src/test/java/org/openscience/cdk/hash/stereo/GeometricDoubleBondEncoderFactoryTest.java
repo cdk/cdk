@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.hash.stereo;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -125,7 +126,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         int[][] g = new int[][]{{1}, {0, 2, 4}, {1, 3, 5}, {2}, {1}, {2}};
 
-        assertTrue(factory.create(mol, g) instanceof MultiStereoEncoder);
+        Assertions.assertTrue(factory.create(mol, g) instanceof MultiStereoEncoder);
     }
 
     @Test
@@ -193,7 +194,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         int[][] g = new int[][]{{1}, {0, 2, 4}, {1, 3, 5}, {2}, {1}, {2}};
 
-        assertTrue(factory.create(mol, g) == StereoEncoder.EMPTY);
+        Assertions.assertTrue(factory.create(mol, g) == StereoEncoder.EMPTY);
     }
 
     @Test
@@ -222,7 +223,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
         when(r2.getPoint2d()).thenReturn(new Point2d());
 
         GeometricParity p = geometric(m, 0, 1, 2, 3, 4, 5);
-        assertTrue(p instanceof DoubleBond2DParity);
+        Assertions.assertTrue(p instanceof DoubleBond2DParity);
     }
 
     @Test
@@ -251,7 +252,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
         when(r2.getPoint3d()).thenReturn(new Point3d());
 
         GeometricParity p = geometric(m, 0, 1, 2, 3, 4, 5);
-        assertTrue(p instanceof DoubleBond3DParity);
+        Assertions.assertTrue(p instanceof DoubleBond3DParity);
     }
 
     @Test
@@ -264,10 +265,10 @@ public class GeometricDoubleBondEncoderFactoryTest {
     @Test
     public void testPermutation_TwoSubstituents() throws Exception {
         PermutationParity p = permutation(new int[]{1, 2, 0});
-        assertTrue(p instanceof BasicPermutationParity);
+        Assertions.assertTrue(p instanceof BasicPermutationParity);
         Field field = p.getClass().getDeclaredField("indices");
         field.setAccessible(true);
-        assertArrayEquals((int[]) field.get(p), new int[]{1, 2});
+        Assertions.assertArrayEquals((int[]) field.get(p), new int[]{1, 2});
     }
 
     @Test
@@ -289,11 +290,11 @@ public class GeometricDoubleBondEncoderFactoryTest {
         when(a.getOrder()).thenReturn(IBond.Order.DOUBLE);
 
         List<IBond> bonds = Arrays.asList(a, b, c);
-        assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
+        Assertions.assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
 
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP2);
 
-        assertTrue(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
+        Assertions.assertTrue(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
     }
 
     @Test
@@ -308,11 +309,11 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP2);
         when(a.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertTrue(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
+        Assertions.assertTrue(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
         when(b.getStereo()).thenReturn(IBond.Stereo.UP_OR_DOWN);
-        assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
+        Assertions.assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
         when(b.getStereo()).thenReturn(IBond.Stereo.UP_OR_DOWN_INVERTED);
-        assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
+        Assertions.assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
     }
 
     @Test
@@ -327,9 +328,9 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP2);
         when(a.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertTrue(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
+        Assertions.assertTrue(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
         when(b.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
+        Assertions.assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
     }
 
     @Test
@@ -342,6 +343,6 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP2);
         when(a.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
+        Assertions.assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
     }
 }

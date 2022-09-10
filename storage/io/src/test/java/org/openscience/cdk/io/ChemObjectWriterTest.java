@@ -22,6 +22,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -59,7 +60,7 @@ public abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.C
      */
     @Test
     public void testAcceptsWriteConsistency() throws CDKException {
-        Assert.assertNotNull("The IChemObjectWriter is not set.", chemObjectIO);
+        Assertions.assertNotNull(chemObjectIO, "The IChemObjectWriter is not set.");
         for (IChemObject object : allChemObjectsTypes) {
             if (chemObjectIO.accepts(object.getClass())) {
                 StringWriter writer = new StringWriter();
@@ -68,7 +69,7 @@ public abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.C
                     chemObjectIO.write(object);
                 } catch (CDKException exception) {
                     if (exception.getMessage().contains("Only supported")) {
-                        Assert.fail("IChemObject of type " + object.getClass().getName() + " is marked as "
+                        Assertions.fail("IChemObject of type " + object.getClass().getName() + " is marked as "
                                 + "accepted, but failed to be written.");
                     } else {
                         throw exception;
@@ -80,14 +81,14 @@ public abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.C
 
     @Test
     public void testSetWriter_Writer() throws Exception {
-        Assert.assertNotNull("No IChemObjectWriter has been set!", chemObjectIO);
+        Assertions.assertNotNull(chemObjectIO, "No IChemObjectWriter has been set!");
         StringWriter testWriter = new StringWriter();
         chemObjectIO.setWriter(testWriter);
     }
 
     @Test
     public void testSetWriter_OutputStream() throws Exception {
-        Assert.assertNotNull("No IChemObjectWriter has been set!", chemObjectIO);
+        Assertions.assertNotNull(chemObjectIO, "No IChemObjectWriter has been set!");
         ByteArrayOutputStream testStream = new ByteArrayOutputStream();
         chemObjectIO.setWriter(testStream);
     }

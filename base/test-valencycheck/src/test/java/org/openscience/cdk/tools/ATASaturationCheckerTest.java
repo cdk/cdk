@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -129,14 +130,14 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         // ...then we send it to the method we want to test...
         atasc.decideBondOrder(mol, false);
 
-        Assert.assertEquals(IBond.Order.DOUBLE, b0.getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, b1.getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, b3.getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, b4.getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, b5.getOrder());
+        Assertions.assertEquals(Order.DOUBLE, b0.getOrder());
+        Assertions.assertEquals(Order.SINGLE, b1.getOrder());
+        Assertions.assertEquals(Order.DOUBLE, b2.getOrder());
+        Assertions.assertEquals(Order.SINGLE, b3.getOrder());
+        Assertions.assertEquals(Order.DOUBLE, b4.getOrder());
+        Assertions.assertEquals(Order.SINGLE, b5.getOrder());
 
-        Assert.assertTrue(satcheck.isSaturated(a0, mol));
+        Assertions.assertTrue(satcheck.isSaturated(a0, mol));
 
     }
 
@@ -152,41 +153,41 @@ public class ATASaturationCheckerTest extends CDKTestCase {
 
         atasc.decideBondOrder(mol, true);
 
-        Assert.assertSame(IAtomType.Hybridization.SP2, mol.getAtom(1).getHybridization());
+        Assertions.assertSame(IAtomType.Hybridization.SP2, mol.getAtom(1).getHybridization());
 
-        Assert.assertEquals(IElement.C, (int) mol.getBond(0).getEnd().getAtomicNumber());
-        Assert.assertEquals(IElement.O, (int) mol.getBond(0).getBegin().getAtomicNumber());
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(0).getOrder());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(0).getEnd().getAtomicNumber());
+        Assertions.assertEquals(IElement.O, (int) mol.getBond(0).getBegin().getAtomicNumber());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(0).getOrder());
 
-        Assert.assertEquals(IElement.C, (int) mol.getBond(1).getBegin().getAtomicNumber());
-        Assert.assertEquals(IElement.C, (int) mol.getBond(1).getEnd().getAtomicNumber());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(1).getOrder());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(1).getBegin().getAtomicNumber());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(1).getEnd().getAtomicNumber());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(1).getOrder());
 
-        Assert.assertEquals(IElement.C, (int) mol.getBond(2).getBegin().getAtomicNumber());
-        Assert.assertEquals(IElement.C, (int) mol.getBond(2).getEnd().getAtomicNumber());
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(2).getOrder());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(2).getBegin().getAtomicNumber());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(2).getEnd().getAtomicNumber());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(2).getOrder());
 
-        Assert.assertEquals(IElement.C, (int) mol.getBond(3).getBegin().getAtomicNumber());
-        Assert.assertEquals(IElement.C, (int) mol.getBond(3).getEnd().getAtomicNumber());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(3).getOrder());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(3).getBegin().getAtomicNumber());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(3).getEnd().getAtomicNumber());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(3).getOrder());
 
-        Assert.assertEquals(IElement.O, (int) mol.getBond(4).getEnd().getAtomicNumber());
-        Assert.assertEquals(IElement.C, (int) mol.getBond(4).getBegin().getAtomicNumber());
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(4).getOrder());
+        Assertions.assertEquals(IElement.O, (int) mol.getBond(4).getEnd().getAtomicNumber());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(4).getBegin().getAtomicNumber());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(4).getOrder());
 
-        Assert.assertEquals(IElement.C, (int) mol.getBond(5).getBegin().getAtomicNumber());
-        Assert.assertEquals(IElement.C, (int) mol.getBond(5).getEnd().getAtomicNumber());
-        Assert.assertSame(Order.SINGLE, mol.getBond(5).getOrder());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(5).getBegin().getAtomicNumber());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(5).getEnd().getAtomicNumber());
+        Assertions.assertSame(Order.SINGLE, mol.getBond(5).getOrder());
 
-        Assert.assertEquals(IElement.C, (int) mol.getBond(6).getBegin().getAtomicNumber());
-        Assert.assertEquals(IElement.C, (int) mol.getBond(6).getEnd().getAtomicNumber());
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(6).getOrder());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(6).getBegin().getAtomicNumber());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(6).getEnd().getAtomicNumber());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(6).getOrder());
 
-        Assert.assertEquals(IElement.C, (int) mol.getBond(7).getBegin().getAtomicNumber());
-        Assert.assertEquals(IElement.C, (int) mol.getBond(7).getEnd().getAtomicNumber());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(7).getOrder());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(7).getBegin().getAtomicNumber());
+        Assertions.assertEquals(IElement.C, (int) mol.getBond(7).getEnd().getAtomicNumber());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(7).getOrder());
 
-        Assert.assertEquals(mol.getBond(0).getEnd(), mol.getBond(7).getBegin());
+        Assertions.assertEquals(mol.getBond(0).getEnd(), mol.getBond(7).getBegin());
     }
 
     /**
@@ -201,13 +202,13 @@ public class ATASaturationCheckerTest extends CDKTestCase {
 
         atasc.decideBondOrder(mol, true);
 
-        Assert.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
-        Assert.assertEquals(mol.getBond(0).getOrder(), IBond.Order.DOUBLE);
-        Assert.assertEquals(mol.getBond(1).getOrder(), IBond.Order.SINGLE);
-        Assert.assertEquals(mol.getBond(2).getOrder(), IBond.Order.DOUBLE);
-        Assert.assertEquals(mol.getBond(3).getOrder(), IBond.Order.SINGLE);
-        Assert.assertEquals(mol.getBond(4).getOrder(), IBond.Order.DOUBLE);
-        Assert.assertEquals(mol.getBond(5).getOrder(), IBond.Order.SINGLE);
+        Assertions.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
+        Assertions.assertEquals(mol.getBond(0).getOrder(), Order.DOUBLE);
+        Assertions.assertEquals(mol.getBond(1).getOrder(), Order.SINGLE);
+        Assertions.assertEquals(mol.getBond(2).getOrder(), Order.DOUBLE);
+        Assertions.assertEquals(mol.getBond(3).getOrder(), Order.SINGLE);
+        Assertions.assertEquals(mol.getBond(4).getOrder(), Order.DOUBLE);
+        Assertions.assertEquals(mol.getBond(5).getOrder(), Order.SINGLE);
     }
 
     /**
@@ -227,7 +228,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder().equals(Order.DOUBLE)) doubleBondCount++;
         }
-        Assert.assertEquals(13, doubleBondCount);
+        Assertions.assertEquals(13, doubleBondCount);
     }
 
     /**
@@ -246,7 +247,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder().equals(Order.DOUBLE)) doubleBondCount++;
         }
-        Assert.assertEquals(6, doubleBondCount);
+        Assertions.assertEquals(6, doubleBondCount);
     }
 
     @Test
@@ -260,7 +261,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder().equals(Order.DOUBLE)) doubleBondCount++;
         }
-        Assert.assertEquals(8, doubleBondCount);
+        Assertions.assertEquals(8, doubleBondCount);
     }
 
     @Test
@@ -282,8 +283,8 @@ public class ATASaturationCheckerTest extends CDKTestCase {
             if (bond.getOrder().equals(Order.DOUBLE)) doubleBondCount++;
             if (bond.contains(nitrogen)) if (bond.getOrder().equals(Order.SINGLE)) singleBondCount++;
         }
-        Assert.assertEquals(4, doubleBondCount);
-        Assert.assertEquals(3, singleBondCount);
+        Assertions.assertEquals(4, doubleBondCount);
+        Assertions.assertEquals(3, singleBondCount);
     }
 
     @Test
@@ -297,7 +298,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder().equals(Order.DOUBLE)) doubleBondCount++;
         }
-        Assert.assertEquals(17, doubleBondCount);
+        Assertions.assertEquals(17, doubleBondCount);
     }
 
     @Test
@@ -311,7 +312,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder().equals(Order.DOUBLE)) doubleBondCount++;
         }
-        Assert.assertEquals(18, doubleBondCount);
+        Assertions.assertEquals(18, doubleBondCount);
     }
 
     @Test
@@ -326,7 +327,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder().equals(Order.DOUBLE)) doubleBondCount++;
         }
-        Assert.assertEquals(24, doubleBondCount);
+        Assertions.assertEquals(24, doubleBondCount);
     }
 
     /**
@@ -347,7 +348,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
             IBond bond = molecule.getBond(i);
             if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(10, doubleBondCount);
+        Assertions.assertEquals(10, doubleBondCount);
     }
 
     @Test
@@ -356,11 +357,11 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         atasc.decideBondOrder(mol, true);
-        Assert.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(0).getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(1).getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(2).getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(3).getOrder());
+        Assertions.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(0).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(1).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(2).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(3).getOrder());
     }
 
     @Test
@@ -369,12 +370,12 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         atasc.decideBondOrder(mol, true);
-        Assert.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(0).getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(1).getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(2).getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(3).getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(4).getOrder());
+        Assertions.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(0).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(1).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(2).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(3).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(4).getOrder());
     }
 
     @Test
@@ -383,14 +384,14 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         atasc.decideBondOrder(mol, true);
-        Assert.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(0).getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(1).getOrder());
+        Assertions.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(0).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(1).getOrder());
         //bond to oxygen
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(2).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(2).getOrder());
         //bond to oxygen
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(3).getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(4).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(3).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(4).getOrder());
     }
 
     @Test
@@ -399,12 +400,12 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         atasc.decideBondOrder(mol, true);
-        Assert.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
+        Assertions.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
         int doubleBondCount = 0;
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(5, doubleBondCount);
+        Assertions.assertEquals(5, doubleBondCount);
     }
 
     @Test
@@ -415,12 +416,12 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("o2c1ccccc1c3c2cccc3");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         atasc.decideBondOrder(mol, true);
-        Assert.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
+        Assertions.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
         int doubleBondCount = 0;
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(6, doubleBondCount);
+        Assertions.assertEquals(6, doubleBondCount);
     }
 
     @Test
@@ -429,12 +430,12 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("O=c2c1ccccc1c3ccccc23");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         atasc.decideBondOrder(mol, true);
-        Assert.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
+        Assertions.assertEquals(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
         int doubleBondCount = 0;
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(7, doubleBondCount);
+        Assertions.assertEquals(7, doubleBondCount);
     }
 
     @Test
@@ -446,9 +447,9 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(5, doubleBondCount);
+        Assertions.assertEquals(5, doubleBondCount);
 
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(0).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(0).getOrder());
     }
 
     @Test
@@ -460,7 +461,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(2, doubleBondCount);
+        Assertions.assertEquals(2, doubleBondCount);
     }
 
     @Test
@@ -472,7 +473,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(2, doubleBondCount);
+        Assertions.assertEquals(2, doubleBondCount);
     }
 
     @Test
@@ -484,7 +485,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(5, doubleBondCount);
+        Assertions.assertEquals(5, doubleBondCount);
     }
 
     @Test
@@ -496,7 +497,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(6, doubleBondCount);
+        Assertions.assertEquals(6, doubleBondCount);
     }
 
     @Test
@@ -508,7 +509,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(13, doubleBondCount);
+        Assertions.assertEquals(13, doubleBondCount);
     }
 
     @Test
@@ -522,7 +523,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
 
-        Assert.assertEquals(12, doubleBondCount);
+        Assertions.assertEquals(12, doubleBondCount);
     }
 
     @Test
@@ -534,7 +535,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(10, doubleBondCount);
+        Assertions.assertEquals(10, doubleBondCount);
     }
 
     @Test
@@ -546,7 +547,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(4, doubleBondCount);
+        Assertions.assertEquals(4, doubleBondCount);
     }
 
     @Test
@@ -559,7 +560,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(11, doubleBondCount);
+        Assertions.assertEquals(11, doubleBondCount);
     }
 
     @Test
@@ -571,7 +572,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds())
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
 
-        Assert.assertEquals(4, doubleBondCount);
+        Assertions.assertEquals(4, doubleBondCount);
     }
 
     @Test
@@ -591,7 +592,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(2, doubleBondCount);
+        Assertions.assertEquals(2, doubleBondCount);
     }
 
     @Test
@@ -637,9 +638,9 @@ public class ATASaturationCheckerTest extends CDKTestCase {
 
         atasc.decideBondOrder(mol, true);
 
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(0).getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(1).getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(2).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(0).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(1).getOrder());
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(2).getOrder());
     }
 
     @Test
@@ -651,7 +652,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         for (IBond bond : mol.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
         }
-        Assert.assertEquals(4, doubleBondCount);
+        Assertions.assertEquals(4, doubleBondCount);
     }
 
     @Test
@@ -665,7 +666,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
         int preBondCount = mol.getBondCount();
         atasc.decideBondOrder(mol);
 
-        Assert.assertEquals(preBondCount, mol.getBondCount());
+        Assertions.assertEquals(preBondCount, mol.getBondCount());
     }
 
     @Test
@@ -675,9 +676,9 @@ public class ATASaturationCheckerTest extends CDKTestCase {
             mol = sp.parseSmiles("OCC1OC(O)C(O)C(Op2(OC3C(O)C(O)OC(CO)C3O)np(OC4C(O)C(O)OC(CO)C4O)(OC5C(O)C(O)OC(CO)C5O)np(OC6C(O)C(O)OC(CO)C6O)(OC7C(O)C(O)OC(CO)C7O)n2)C1O");
             atasc.decideBondOrder(mol);
         } catch (InvalidSmilesException e) {
-            Assert.fail("SMILES failed");
+            Assertions.fail("SMILES failed");
         } catch (CDKException e) {
-            Assert.fail("ATASatChecer failed");
+            Assertions.fail("ATASatChecer failed");
         }
 
     }

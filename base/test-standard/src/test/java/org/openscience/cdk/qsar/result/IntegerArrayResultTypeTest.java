@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.result;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -34,17 +35,17 @@ public class IntegerArrayResultTypeTest extends CDKTestCase {
     @Test
     public void testIntegerArrayResultType() {
         IDescriptorResult type = new IntegerArrayResultType(6);
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     @Test
     public void testToString() {
-        Assert.assertEquals("IntegerArrayResultType", new IntegerArrayResultType(7).toString());
+        Assertions.assertEquals("IntegerArrayResultType", new IntegerArrayResultType(7).toString());
     }
 
     @Test
     public void testLength() {
-        Assert.assertEquals(7, new IntegerArrayResultType(7).length());
+        Assertions.assertEquals(7, new IntegerArrayResultType(7).length());
     }
 
 }

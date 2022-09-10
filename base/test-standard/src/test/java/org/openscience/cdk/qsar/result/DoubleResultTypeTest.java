@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.result;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -34,17 +35,17 @@ public class DoubleResultTypeTest extends CDKTestCase {
     @Test
     public void testDoubleResultType() {
         IDescriptorResult type = new DoubleResultType();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     @Test
     public void testToString() {
-        Assert.assertEquals("DoubleResultType", new DoubleResultType().toString());
+        Assertions.assertEquals("DoubleResultType", new DoubleResultType().toString());
     }
 
     @Test
     public void testLength() {
-        Assert.assertEquals(1, new DoubleResultType().length());
+        Assertions.assertEquals(1, new DoubleResultType().length());
     }
 
 }

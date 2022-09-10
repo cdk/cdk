@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.aromaticity;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.Cycles;
@@ -102,9 +103,9 @@ public class AromaticityTest {
         IAtomContainer cyclobutadiene = smiles("c1ccc1");
         daylight.apply(cyclobutadiene);
         for (IBond bond : cyclobutadiene.bonds())
-            assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
         for (IAtom atom : cyclobutadiene.atoms())
-            assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -112,37 +113,37 @@ public class AromaticityTest {
         IAtomContainer quinone = smiles("O=c1ccc(=O)cc1");
         daylight.apply(quinone);
         for (IBond bond : quinone.bonds())
-            assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
         for (IAtom atom : quinone.atoms())
-            assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
     public void validSum() throws Exception {
         // aromatic
-        assertTrue(Aromaticity.validSum(2));
-        assertTrue(Aromaticity.validSum(6));
-        assertTrue(Aromaticity.validSum(10));
-        assertTrue(Aromaticity.validSum(14));
-        assertTrue(Aromaticity.validSum(18));
+        Assertions.assertTrue(Aromaticity.validSum(2));
+        Assertions.assertTrue(Aromaticity.validSum(6));
+        Assertions.assertTrue(Aromaticity.validSum(10));
+        Assertions.assertTrue(Aromaticity.validSum(14));
+        Assertions.assertTrue(Aromaticity.validSum(18));
 
         // anti-aromatic
-        assertFalse(Aromaticity.validSum(4));
-        assertFalse(Aromaticity.validSum(8));
-        assertFalse(Aromaticity.validSum(12));
-        assertFalse(Aromaticity.validSum(16));
-        assertFalse(Aromaticity.validSum(20));
+        Assertions.assertFalse(Aromaticity.validSum(4));
+        Assertions.assertFalse(Aromaticity.validSum(8));
+        Assertions.assertFalse(Aromaticity.validSum(12));
+        Assertions.assertFalse(Aromaticity.validSum(16));
+        Assertions.assertFalse(Aromaticity.validSum(20));
 
         // other numbers
-        assertFalse(Aromaticity.validSum(0));
-        assertFalse(Aromaticity.validSum(1));
-        assertFalse(Aromaticity.validSum(3));
-        assertFalse(Aromaticity.validSum(5));
-        assertFalse(Aromaticity.validSum(7));
-        assertFalse(Aromaticity.validSum(9));
-        assertFalse(Aromaticity.validSum(11));
-        assertFalse(Aromaticity.validSum(13));
-        assertFalse(Aromaticity.validSum(15));
+        Assertions.assertFalse(Aromaticity.validSum(0));
+        Assertions.assertFalse(Aromaticity.validSum(1));
+        Assertions.assertFalse(Aromaticity.validSum(3));
+        Assertions.assertFalse(Aromaticity.validSum(5));
+        Assertions.assertFalse(Aromaticity.validSum(7));
+        Assertions.assertFalse(Aromaticity.validSum(9));
+        Assertions.assertFalse(Aromaticity.validSum(11));
+        Assertions.assertFalse(Aromaticity.validSum(13));
+        Assertions.assertFalse(Aromaticity.validSum(15));
     }
 
     @Test
@@ -162,7 +163,7 @@ public class AromaticityTest {
                                            Cycles.all());
         arom.apply(a);
         arom.apply(b);
-        assertTrue(AtomContainerDiff.diff(a, b).isEmpty());
+        Assertions.assertTrue(AtomContainerDiff.diff(a, b).isEmpty());
     }
 
     static IAtomContainer smiles(String smi) throws Exception {

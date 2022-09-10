@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.io.ChemObjectReaderTest;
@@ -45,7 +46,7 @@ public abstract class SimpleChemObjectReaderTest extends org.openscience.cdk.tes
 
     @Test
     public void testRead_IChemObject() throws Exception {
-        Assert.assertNotNull("No test file has been set!", testFile);
+        Assertions.assertNotNull(testFile, "No test file has been set!");
 
         boolean read = false;
         for (IChemObject object : acceptableChemObjects()) {
@@ -56,12 +57,12 @@ public abstract class SimpleChemObjectReaderTest extends org.openscience.cdk.tes
                 chemObjectIO.setReader(ins);
                 IChemObject readObject = chemObjectIO.read(object);
                 chemObjectIO.close();
-                Assert.assertNotNull("Failed attempt to read the file as " + object.getClass().getName(), readObject);
+                Assertions.assertNotNull(readObject, "Failed attempt to read the file as " + object.getClass().getName());
                 read = true;
             }
         }
         if (!read) {
-            Assert.fail("Reading an IChemObject from the Reader did not work properly.");
+            Assertions.fail("Reading an IChemObject from the Reader did not work properly.");
         }
     }
 

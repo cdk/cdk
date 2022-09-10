@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -69,7 +70,7 @@ public class DescriptorNamesTest extends CDKTestCase {
         List<String> descNames = new ArrayList<>();
         for (IImplementationSpecification spec : specs) {
             DescriptorValue value = ac.getProperty(spec);
-            if (value == null) Assert.fail(spec.getImplementationTitle() + " was not calculated.");
+            if (value == null) Assertions.fail(spec.getImplementationTitle() + " was not calculated.");
             ncalc++;
             String[] names = value.getNames();
             descNames.addAll(Arrays.asList(names));
@@ -80,8 +81,8 @@ public class DescriptorNamesTest extends CDKTestCase {
         for (String name : descNames) {
             if (!uniqueNames.add(name)) dups.add(name);
         }
-        Assert.assertEquals(specs.size(), ncalc);
-        Assert.assertEquals(descNames.size(), uniqueNames.size());
+        Assertions.assertEquals(specs.size(), ncalc);
+        Assertions.assertEquals(descNames.size(), uniqueNames.size());
         if (dups.size() != 0) {
             System.out.println("Following names were duplicated");
             for (String dup : dups) {

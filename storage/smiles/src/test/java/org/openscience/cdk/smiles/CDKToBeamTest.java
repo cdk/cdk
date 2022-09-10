@@ -135,7 +135,7 @@ public class CDKToBeamTest {
     public void aliphaticAtom() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
-        assertFalse(new CDKToBeam().toBeamAtom(a).aromatic());
+        Assertions.assertFalse(new CDKToBeam().toBeamAtom(a).aromatic());
     }
 
     @Test
@@ -143,7 +143,7 @@ public class CDKToBeamTest {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
         a.setFlag(CDKConstants.ISAROMATIC, true);
-        assertTrue(new CDKToBeam().toBeamAtom(a).aromatic());
+        Assertions.assertTrue(new CDKToBeam().toBeamAtom(a).aromatic());
     }
 
     @Test

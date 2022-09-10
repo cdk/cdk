@@ -21,6 +21,7 @@ package org.openscience.cdk.geometry;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -43,7 +44,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     public void testRDFCalculator_double_double_double_double() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
 
-        Assert.assertNotNull(calculator);
+        Assertions.assertNotNull(calculator);
     }
 
     @Test
@@ -57,7 +58,7 @@ public class RDFCalculatorTest extends CDKTestCase {
             }
         });
 
-        Assert.assertNotNull(calculator);
+        Assertions.assertNotNull(calculator);
     }
 
     @Test
@@ -75,12 +76,12 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
         // test whether the double array length is ok
-        Assert.assertEquals(51, rdf1.length);
+        Assertions.assertEquals(51, rdf1.length);
 
         // test whether the RDFs are identical
-        Assert.assertEquals(rdf1.length, rdf2.length);
+        Assertions.assertEquals(rdf1.length, rdf2.length);
         for (int i = 0; i < rdf1.length; i++) {
-            Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
+            Assertions.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
 
     }
@@ -107,12 +108,12 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
         // test whether the double array length is ok
-        Assert.assertEquals(51, rdf1.length);
+        Assertions.assertEquals(51, rdf1.length);
 
         // test whether the RDFs are identical
-        Assert.assertEquals(rdf1.length, rdf2.length);
+        Assertions.assertEquals(rdf1.length, rdf2.length);
         for (int i = 0; i < rdf1.length; i++) {
-            Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
+            Assertions.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
 
     }
@@ -141,12 +142,12 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
         // test whether the double array length is ok
-        Assert.assertEquals(51, rdf1.length);
+        Assertions.assertEquals(51, rdf1.length);
 
         // test whether the RDFs are identical
-        Assert.assertEquals(rdf1.length, rdf2.length);
+        Assertions.assertEquals(rdf1.length, rdf2.length);
         for (int i = 0; i < rdf1.length; i++) {
-            Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
+            Assertions.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
 
     }
@@ -175,12 +176,12 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
         // test whether the double array length is ok
-        Assert.assertEquals(51, rdf1.length);
+        Assertions.assertEquals(51, rdf1.length);
 
         // test whether the RDFs are identical
-        Assert.assertEquals(rdf1.length, rdf2.length);
+        Assertions.assertEquals(rdf1.length, rdf2.length);
         for (int i = 0; i < rdf1.length; i++) {
-            Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
+            Assertions.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
     }
 }

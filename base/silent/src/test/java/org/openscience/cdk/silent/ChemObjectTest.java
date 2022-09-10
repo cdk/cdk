@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractChemObjectTest;
@@ -40,16 +41,16 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     @Test
     public void testChemObject() {
         IChemObject chemObject = new ChemObject();
-        Assert.assertNotNull(chemObject);
+        Assertions.assertNotNull(chemObject);
         String value = chemObject.getProperty("hello");
-        Assert.assertNull(value);
+        Assertions.assertNull(value);
     }
 
     @Test
     public void testChemObject_IChemObject() {
         IChemObject chemObject1 = new ChemObject();
         IChemObject chemObject = new ChemObject(chemObject1);
-        Assert.assertNotNull(chemObject);
+        Assertions.assertNotNull(chemObject);
     }
 
     // Overwrite default methods: no notifications are expected!
@@ -132,7 +133,7 @@ public class ChemObjectTest extends AbstractChemObjectTest {
         ChemObject co2 = new ChemObject();
         co1.setID("a1");
         co2.setID("a1");
-        Assert.assertTrue(co1.compare(co2));
+        Assertions.assertTrue(co1.compare(co2));
     }
 
     @Test
@@ -141,6 +142,6 @@ public class ChemObjectTest extends AbstractChemObjectTest {
         ChemObject co2 = new ChemObject();
         co1.setID("a1");
         co2.setID("a2");
-        Assert.assertFalse(co1.compare(co2));
+        Assertions.assertFalse(co1.compare(co2));
     }
 }

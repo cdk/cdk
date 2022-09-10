@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
@@ -38,7 +39,7 @@ public class LonePairDiffTest {
     public void testMatchAgainstItself() {
         ILonePair bond1 = mock(ILonePair.class);
         String result = LonePairDiff.diff(bond1, bond1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -57,8 +58,8 @@ public class LonePairDiffTest {
         when(bond2.getAtom()).thenReturn(oxygen);
 
         String result = LonePairDiff.diff(bond1, bond2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString( "LonePairDiff"));
         MatcherAssert.assertThat(result, containsString( "AtomDiff"));
         MatcherAssert.assertThat(result, containsString( "C/O"));
@@ -79,6 +80,6 @@ public class LonePairDiffTest {
         when(bond2.getAtom()).thenReturn(oxygen);
 
         IDifference difference = LonePairDiff.difference(bond1, bond2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 }

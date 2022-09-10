@@ -20,6 +20,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractRingTest;
@@ -44,23 +45,23 @@ public class RingTest extends AbstractRingTest {
     @Test
     public void testRing_int_String() {
         IRing r = new Ring(5, "C");
-        Assert.assertEquals(5, r.getAtomCount());
-        Assert.assertEquals(5, r.getBondCount());
+        Assertions.assertEquals(5, r.getAtomCount());
+        Assertions.assertEquals(5, r.getBondCount());
     }
 
     @Test
     public void testRing_int() {
         IRing r = new Ring(5); // This does not create a ring!
-        Assert.assertEquals(0, r.getAtomCount());
-        Assert.assertEquals(0, r.getBondCount());
+        Assertions.assertEquals(0, r.getAtomCount());
+        Assertions.assertEquals(0, r.getBondCount());
     }
 
     @Test
     public void testRing() {
         IRing ring = new Ring();
-        Assert.assertNotNull(ring);
-        Assert.assertEquals(0, ring.getAtomCount());
-        Assert.assertEquals(0, ring.getBondCount());
+        Assertions.assertNotNull(ring);
+        Assertions.assertEquals(0, ring.getAtomCount());
+        Assertions.assertEquals(0, ring.getBondCount());
     }
 
     @Test
@@ -70,9 +71,9 @@ public class RingTest extends AbstractRingTest {
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
 
         IRing ring = new Ring(container);
-        Assert.assertNotNull(ring);
-        Assert.assertEquals(2, ring.getAtomCount());
-        Assert.assertEquals(0, ring.getBondCount());
+        Assertions.assertNotNull(ring);
+        Assertions.assertEquals(2, ring.getAtomCount());
+        Assertions.assertEquals(0, ring.getBondCount());
     }
 
 }

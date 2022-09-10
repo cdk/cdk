@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -53,7 +54,7 @@ public class FingerprinterToolTest extends CDKTestCase {
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs, bs1));
     }
 
     @Test
@@ -70,9 +71,9 @@ public class FingerprinterToolTest extends CDKTestCase {
         bs2.set(4);
 
         // 2 bits set in bs1 which are clear in bs2
-        Assert.assertEquals(2, FingerprinterTool.listDifferences(bs2, bs1).size());
+        Assertions.assertEquals(2, FingerprinterTool.listDifferences(bs2, bs1).size());
         // 2 bits set in bs2 which are clear in bs1
-        Assert.assertEquals(1, FingerprinterTool.listDifferences(bs1, bs2).size());
+        Assertions.assertEquals(1, FingerprinterTool.listDifferences(bs1, bs2).size());
     }
 
     @Test
@@ -88,7 +89,7 @@ public class FingerprinterToolTest extends CDKTestCase {
         bs1.set(3);
         bs2.set(4);
 
-        Assert.assertEquals(3, FingerprinterTool.differences(bs1, bs2).size());
+        Assertions.assertEquals(3, FingerprinterTool.differences(bs1, bs2).size());
     }
     
     @Test
@@ -99,9 +100,9 @@ public class FingerprinterToolTest extends CDKTestCase {
         features.put("C", 1);
         IBitFingerprint fp = FingerprinterTool.makeBitFingerprint(features, 1024, 1);
         assertThat(fp.cardinality(), is(3));
-        assertTrue(fp.get("CCO".hashCode() % 1024));
-        assertTrue(fp.get("CC".hashCode() % 1024));
-        assertTrue(fp.get("C".hashCode() % 1024));
+        Assertions.assertTrue(fp.get("CCO".hashCode() % 1024));
+        Assertions.assertTrue(fp.get("CC".hashCode() % 1024));
+        Assertions.assertTrue(fp.get("C".hashCode() % 1024));
     }
     
     @Test

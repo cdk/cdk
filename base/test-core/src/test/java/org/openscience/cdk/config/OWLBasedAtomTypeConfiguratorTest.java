@@ -22,6 +22,7 @@ package org.openscience.cdk.config;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.silent.ChemObject;
@@ -36,7 +37,7 @@ public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
     @Test
     public void testCDKBasedAtomTypeConfigurator() {
         OWLBasedAtomTypeConfigurator configurator = new OWLBasedAtomTypeConfigurator();
-        Assert.assertNotNull(configurator);
+        Assertions.assertNotNull(configurator);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
         String configFile = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         configurator.setInputStream(ins);
-        Assert.assertNotSame(0, configurator.readAtomTypes(new ChemObject().getBuilder()).size());
+        Assertions.assertNotSame(0, configurator.readAtomTypes(new ChemObject().getBuilder()).size());
     }
 
     @Test

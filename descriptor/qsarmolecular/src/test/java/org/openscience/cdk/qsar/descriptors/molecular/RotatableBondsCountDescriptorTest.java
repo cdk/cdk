@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -57,7 +58,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
-        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assertions.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     private IAtomContainer makeEthane() {
@@ -83,7 +84,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{true, false});
         DescriptorValue result = descriptor.calculate(container);
-        Assert.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
     }
 
     @Test
@@ -92,7 +93,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{false, false});
         DescriptorValue result = descriptor.calculate(container);
-        Assert.assertEquals(0, ((IntegerResult) result.getValue()).intValue());
+        Assertions.assertEquals(0, ((IntegerResult) result.getValue()).intValue());
     }
 
     @Test
@@ -101,7 +102,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{true, false});
         DescriptorValue result = descriptor.calculate(container);
-        Assert.assertEquals(3, ((IntegerResult) result.getValue()).intValue());
+        Assertions.assertEquals(3, ((IntegerResult) result.getValue()).intValue());
     }
 
     @Test
@@ -110,7 +111,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{false, false});
         DescriptorValue result = descriptor.calculate(container);
-        Assert.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
     }
 
     /**
@@ -126,7 +127,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{true, false});
         DescriptorValue result = descriptor.calculate(container);
-        Assert.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
     }
 
     /**
@@ -142,7 +143,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{false, false});
         DescriptorValue result = descriptor.calculate(container);
-        Assert.assertEquals(0, ((IntegerResult) result.getValue()).intValue());
+        Assertions.assertEquals(0, ((IntegerResult) result.getValue()).intValue());
     }
 
     /**
@@ -158,7 +159,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{true, false});
         DescriptorValue result = descriptor.calculate(container);
-        Assert.assertEquals(3, ((IntegerResult) result.getValue()).intValue());
+        Assertions.assertEquals(3, ((IntegerResult) result.getValue()).intValue());
     }
 
     /**
@@ -174,7 +175,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{false, false});
         DescriptorValue result = descriptor.calculate(container);
-        Assert.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
     }
 
     @Test

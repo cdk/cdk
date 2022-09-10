@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.diff.tree.IDifference;
@@ -37,7 +38,7 @@ public class ElementDiffTest {
     public void testMatchAgainstItself() {
         IElement element1 = mock(IElement.class);
         String result = ElementDiff.diff(element1, element1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -48,8 +49,8 @@ public class ElementDiffTest {
         when(element2.getSymbol()).thenReturn("C");
 
         String result = ElementDiff.diff(element1, element2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString("ElementDiff"));
         MatcherAssert.assertThat(result, containsString("H/C"));
     }
@@ -62,6 +63,6 @@ public class ElementDiffTest {
         when(element2.getSymbol()).thenReturn("C");
 
         IDifference difference = ElementDiff.difference(element1, element2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 }

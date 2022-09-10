@@ -19,6 +19,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractFragmentAtomTest;
@@ -39,7 +40,7 @@ public class FragmentAtomTest extends AbstractFragmentAtomTest {
     @Test
     public void testFragmentAtom() {
         IFragmentAtom a = new FragmentAtom();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
 }

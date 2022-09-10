@@ -58,7 +58,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testAccepts() {
-        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
+        Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
     @Test
@@ -86,21 +86,21 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
 
-            Assert.assertNotNull("ChemFile was Null", cfile);
+            Assertions.assertNotNull(cfile, "ChemFile was Null");
 
             List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
 
-            Assert.assertEquals("Expected a single atom container", 1, containers.size());
+            Assertions.assertEquals(1, containers.size(), "Expected a single atom container");
 
             IAtomContainer container = containers.get(0);
 
-            Assert.assertNotNull("Null atom container read", container);
+            Assertions.assertNotNull(container, "Null atom container read");
 
             IBond bond = container.getBond(2);
 
-            Assert.assertNotNull("Null bond", bond);
+            Assertions.assertNotNull(bond, "Null bond");
 
-            Assert.assertEquals("Expected Wedge (Up) Bond", IBond.Stereo.UP, bond.getStereo());
+            Assertions.assertEquals(IBond.Stereo.UP, bond.getStereo(), "Expected Wedge (Up) Bond");
 
         } finally {
             reader.close();
@@ -121,19 +121,18 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
 
-            Assert.assertNotNull("ChemFile was Null", cfile);
+            Assertions.assertNotNull(cfile, "ChemFile was Null");
 
             List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
 
-            Assert.assertEquals("Expected a single atom container", 1, containers.size());
+            Assertions.assertEquals(1, containers.size(), "Expected a single atom container");
 
             IAtomContainer container = containers.get(0);
 
-            Assert.assertNotNull("Null atom container read", container);
+            Assertions.assertNotNull(container, "Null atom container read");
 
             for (IAtom atom : container.atoms()) {
-                Assert.assertEquals("Incorrect atomic number", PeriodicTable.getAtomicNumber(atom.getSymbol()),
-                        atom.getAtomicNumber());
+                Assertions.assertEquals(PeriodicTable.getAtomicNumber(atom.getSymbol()), atom.getAtomicNumber(), "Incorrect atomic number");
             }
 
         } finally {
@@ -175,21 +174,21 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
 
-            Assert.assertNotNull("ChemFile was null", cfile);
+            Assertions.assertNotNull(cfile, "ChemFile was null");
 
             List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
 
-            Assert.assertEquals("expected a single atom container", 1, containers.size());
+            Assertions.assertEquals(1, containers.size(), "expected a single atom container");
 
             IAtomContainer container = containers.get(0);
 
-            Assert.assertNotNull("null atom container read", container);
+            Assertions.assertNotNull(container, "null atom container read");
 
             // we check here that the charContent is not used and also that more then
             // one stereo isn't set
-            Assert.assertEquals("expected non-stereo bond", IBond.Stereo.NONE, container.getBond(0).getStereo());
-            Assert.assertEquals("expected Hatch (Down) Bond", IBond.Stereo.DOWN, container.getBond(1).getStereo());
-            Assert.assertEquals("expected non-stereo bond", IBond.Stereo.NONE, container.getBond(2).getStereo());
+            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo(), "expected non-stereo bond");
+            Assertions.assertEquals(IBond.Stereo.DOWN, container.getBond(1).getStereo(), "expected Hatch (Down) Bond");
+            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(2).getStereo(), "expected non-stereo bond");
 
         } finally {
             reader.close();
@@ -209,20 +208,20 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
 
-            Assert.assertNotNull("ChemFile was null", cfile);
+            Assertions.assertNotNull(cfile, "ChemFile was null");
 
             List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
 
-            Assert.assertEquals("expected a single atom container", 1, containers.size());
+            Assertions.assertEquals(1, containers.size(), "expected a single atom container");
 
             IAtomContainer container = containers.get(0);
 
-            Assert.assertNotNull("null atom container read", container);
+            Assertions.assertNotNull(container, "null atom container read");
 
             // we check here that the malformed dictRef doesn't throw an exception
-            Assert.assertEquals("expected non-stereo bond", IBond.Stereo.NONE, container.getBond(0).getStereo());
-            Assert.assertEquals("expected Wedge (Up) Bond", IBond.Stereo.UP, container.getBond(1).getStereo());
-            Assert.assertEquals("expected non-stereo bond", IBond.Stereo.NONE, container.getBond(2).getStereo());
+            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo(), "expected non-stereo bond");
+            Assertions.assertEquals(IBond.Stereo.UP, container.getBond(1).getStereo(), "expected Wedge (Up) Bond");
+            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(2).getStereo(), "expected non-stereo bond");
 
         } finally {
             reader.close();
@@ -236,29 +235,23 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         CMLReader reader = new CMLReader(in);
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
-            Assert.assertNotNull("ChemFile was null", cfile);
+            Assertions.assertNotNull(cfile, "ChemFile was null");
             List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
-            Assert.assertEquals("expected a single atom container", 1, containers.size());
+            Assertions.assertEquals(1, containers.size(), "expected a single atom container");
             IAtomContainer container = containers.get(0);
-            Assert.assertNotNull("null atom container read", container);
+            Assertions.assertNotNull(container, "null atom container read");
 
             // we check here that the malformed dictRef doesn't throw an exception
             for (int i = 0; i < 19; i++) {
-                Assert.assertEquals(
-                        "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                        IBond.Stereo.NONE, container.getBond(i).getStereo());
+                Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(i).getStereo(), "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo());
             }
-            Assert.assertEquals("expected a wedge bond", IBond.Stereo.DOWN, container.getBond(19).getStereo());
+            Assertions.assertEquals(IBond.Stereo.DOWN, container.getBond(19).getStereo(), "expected a wedge bond");
             for (int i = 20; i < 30; i++) {
-                Assert.assertEquals(
-                        "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                        IBond.Stereo.NONE, container.getBond(i).getStereo());
+                Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(i).getStereo(), "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo());
             }
-            Assert.assertEquals("expected a wedge bond", IBond.Stereo.UP, container.getBond(30).getStereo());
+            Assertions.assertEquals(IBond.Stereo.UP, container.getBond(30).getStereo(), "expected a wedge bond");
             for (int i = 31; i <= 37; i++) {
-                Assert.assertEquals(
-                        "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                        IBond.Stereo.NONE, container.getBond(i).getStereo());
+                Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(i).getStereo(), "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo());
             }
         } finally {
             reader.close();
@@ -304,14 +297,14 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlContent.getBytes()));
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
-            Assert.assertNotNull("ChemFile was null", cfile);
+            Assertions.assertNotNull(cfile, "ChemFile was null");
             List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
-            Assert.assertEquals("expected a single atom container", 1, containers.size());
+            Assertions.assertEquals(1, containers.size(), "expected a single atom container");
             IAtomContainer container = containers.get(0);
-            Assert.assertNotNull("null atom container read", container);
+            Assertions.assertNotNull(container, "null atom container read");
 
             // OK, now test that the residue identifier is properly read
-            Assert.assertEquals("ALAA116", container.getID());
+            Assertions.assertEquals("ALAA116", container.getID());
         } finally {
             reader.close();
         }
@@ -323,8 +316,8 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         CMLReader reader = new CMLReader(in);
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
-            Assert.assertEquals(34, ChemFileManipulator.getAtomCount(cfile));
-            Assert.assertEquals(39, ChemFileManipulator.getBondCount(cfile));
+            Assertions.assertEquals(34, ChemFileManipulator.getAtomCount(cfile));
+            Assertions.assertEquals(39, ChemFileManipulator.getBondCount(cfile));
         } finally {
             reader.close();
         }

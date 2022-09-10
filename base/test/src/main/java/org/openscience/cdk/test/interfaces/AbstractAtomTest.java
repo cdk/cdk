@@ -9,6 +9,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -30,7 +31,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         IAtom a = (IAtom) newChemObject();
         a.setCharge(charge);
-        Assert.assertEquals(charge, a.getCharge(), 0.001);
+        Assertions.assertEquals(charge, a.getCharge(), 0.001);
     }
 
     @Test
@@ -47,14 +48,14 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         IAtom a = (IAtom) newChemObject();
         a.setImplicitHydrogenCount(count);
-        Assert.assertEquals(count, a.getImplicitHydrogenCount());
+        Assertions.assertEquals(count, a.getImplicitHydrogenCount());
     }
 
     @Test
     public void testGetImplicitHydrogenCount() {
         // should be null by default
         IAtom a = (IAtom) newChemObject();
-        Assert.assertNull(a.getImplicitHydrogenCount());
+        Assertions.assertNull(a.getImplicitHydrogenCount());
     }
 
     /**
@@ -65,10 +66,10 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         IAtom a = (IAtom) newChemObject();
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
-        Assert.assertNotNull(fract);
-        Assert.assertEquals(0.5, fract.x, 0.001);
-        Assert.assertEquals(0.5, fract.y, 0.001);
-        Assert.assertEquals(0.5, fract.z, 0.001);
+        Assertions.assertNotNull(fract);
+        Assertions.assertEquals(0.5, fract.x, 0.001);
+        Assertions.assertEquals(0.5, fract.y, 0.001);
+        Assertions.assertEquals(0.5, fract.z, 0.001);
     }
 
     @Test
@@ -82,7 +83,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         IAtom a = (IAtom) newChemObject();
         a.setPoint3d(point3d);
-        Assert.assertNotNull(a.getPoint3d());
+        Assertions.assertNotNull(a.getPoint3d());
         assertEquals(point3d, a.getPoint3d(), 0.001);
     }
 
@@ -92,7 +93,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         IAtom a = (IAtom) newChemObject();
         a.setPoint3d(point3d);
-        Assert.assertEquals(point3d, a.getPoint3d());
+        Assertions.assertEquals(point3d, a.getPoint3d());
     }
 
     @Test
@@ -101,9 +102,9 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         IAtom a = (IAtom) newChemObject();
         a.setPoint2d(point2d);
-        Assert.assertNotNull(a.getPoint2d());
-        Assert.assertEquals(point2d.x, a.getPoint2d().x, 0.001);
-        Assert.assertEquals(point2d.y, a.getPoint2d().y, 0.001);
+        Assertions.assertNotNull(a.getPoint2d());
+        Assertions.assertEquals(point2d.x, a.getPoint2d().x, 0.001);
+        Assertions.assertEquals(point2d.y, a.getPoint2d().y, 0.001);
     }
 
     @Test
@@ -112,7 +113,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         IAtom a = (IAtom) newChemObject();
         a.setPoint2d(point2d);
-        Assert.assertEquals(point2d, a.getPoint2d());
+        Assertions.assertEquals(point2d, a.getPoint2d());
     }
 
     /**
@@ -124,7 +125,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         IAtom a = (IAtom) newChemObject();
         a.setStereoParity(parity);
-        Assert.assertEquals(parity, a.getStereoParity().intValue());
+        Assertions.assertEquals(parity, a.getStereoParity().intValue());
     }
 
     @Test
@@ -140,12 +141,12 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     public void testClone() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         Object clone = atom.clone();
-        Assert.assertTrue(clone instanceof IAtom);
+        Assertions.assertTrue(clone instanceof IAtom);
 
         // test that everything has been cloned properly
         String diff = AtomDiff.diff(atom, (IAtom) clone);
-        Assert.assertNotNull(diff);
-        Assert.assertEquals(0, diff.length());
+        Assertions.assertNotNull(diff);
+        Assertions.assertEquals(0, diff.length());
     }
 
     /**
@@ -156,7 +157,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         IAtom atom = (IAtom) newChemObject();
         atom.setPoint2d(new Point2d(2, 3));
         IAtom clone = atom.clone();
-        Assert.assertEquals(clone.getPoint2d().x, 2.0, 0.001);
+        Assertions.assertEquals(clone.getPoint2d().x, 2.0, 0.001);
     }
 
     /**
@@ -167,7 +168,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         IAtom atom = (IAtom) newChemObject();
         atom.setPoint3d(new Point3d(2, 3, 4));
         IAtom clone = atom.clone();
-        Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
+        Assertions.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
     /**
@@ -178,7 +179,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         IAtom atom = (IAtom) newChemObject();
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = atom.clone();
-        Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
+        Assertions.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 
     /**
@@ -192,7 +193,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         // test cloning
         atom.setImplicitHydrogenCount(4);
-        Assert.assertEquals(3, clone.getImplicitHydrogenCount().intValue());
+        Assertions.assertEquals(3, clone.getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -206,7 +207,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         // test cloning
         atom.setStereoParity(4);
-        Assert.assertEquals(3, clone.getStereoParity().intValue());
+        Assertions.assertEquals(3, clone.getStereoParity().intValue());
     }
 
     /**
@@ -220,7 +221,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
         // test cloning
         atom.setCharge(5.0);
-        Assert.assertEquals(1.0, clone.getCharge(), 0.001);
+        Assertions.assertEquals(1.0, clone.getCharge(), 0.001);
     }
 
     /**
@@ -232,8 +233,8 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         IAtom atom = (IAtom) newChemObject();
         String description = atom.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 
@@ -242,7 +243,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         IAtom atom = (IAtom) newChemObject();
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         String description = atom.toString();
-        Assert.assertTrue(description.contains("F3D"));
+        Assertions.assertTrue(description.contains("F3D"));
     }
 
     /**
@@ -251,7 +252,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     @Test
     public void testDefaultChargeValue() {
         IAtom atom = (IAtom) newChemObject();
-        Assert.assertEquals(CDKConstants.UNSET, atom.getCharge());
+        Assertions.assertEquals(CDKConstants.UNSET, atom.getCharge());
         //        Assert.assertEquals(0.0, atom.getCharge(), 0.00000001);
     }
 }

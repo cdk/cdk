@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -41,7 +42,7 @@ public class RegularCyclicVertexSearchTest {
     @Test
     public void testEmpty() {
         CyclicVertexSearch search = new RegularCyclicVertexSearch(new int[0][0]);
-        assertNotNull(search);
+        Assertions.assertNotNull(search);
     }
 
     @Test
@@ -58,20 +59,20 @@ public class RegularCyclicVertexSearchTest {
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
         for (int v = 0; v < g.length; v++)
-            assertTrue(search.cyclic(v));
+            Assertions.assertTrue(search.cyclic(v));
     }
 
     @Test
     public void testCyclic_IntInt() {
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0, 6}, {5}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
-        assertTrue(search.cyclic(0, 1));
-        assertTrue(search.cyclic(1, 2));
-        assertTrue(search.cyclic(2, 3));
-        assertTrue(search.cyclic(3, 4));
-        assertTrue(search.cyclic(4, 5));
-        assertTrue(search.cyclic(5, 0));
-        assertFalse(search.cyclic(5, 6));
+        Assertions.assertTrue(search.cyclic(0, 1));
+        Assertions.assertTrue(search.cyclic(1, 2));
+        Assertions.assertTrue(search.cyclic(2, 3));
+        Assertions.assertTrue(search.cyclic(3, 4));
+        Assertions.assertTrue(search.cyclic(4, 5));
+        Assertions.assertTrue(search.cyclic(5, 0));
+        Assertions.assertFalse(search.cyclic(5, 6));
     }
 
     @Test
@@ -359,7 +360,7 @@ public class RegularCyclicVertexSearchTest {
     public void testIsBitSet_Empty() throws Exception {
         long s = 0L;
         for (int i = 0; i < 64; i++) {
-            assertFalse(RegularCyclicVertexSearch.isBitSet(s, i));
+            Assertions.assertFalse(RegularCyclicVertexSearch.isBitSet(s, i));
         }
     }
 
@@ -367,25 +368,25 @@ public class RegularCyclicVertexSearchTest {
     public void testIsBitSet_Universe() throws Exception {
         long s = ~0L;
         for (int i = 0; i < 64; i++) {
-            assertTrue(RegularCyclicVertexSearch.isBitSet(s, i));
+            Assertions.assertTrue(RegularCyclicVertexSearch.isBitSet(s, i));
         }
     }
 
     @Test
     public void testIsBitSet_Singleton() throws Exception {
         long s = 1L;
-        assertTrue(RegularCyclicVertexSearch.isBitSet(s, 0));
+        Assertions.assertTrue(RegularCyclicVertexSearch.isBitSet(s, 0));
         for (int i = 1; i < 64; i++) {
-            assertFalse(RegularCyclicVertexSearch.isBitSet(s, i));
+            Assertions.assertFalse(RegularCyclicVertexSearch.isBitSet(s, i));
         }
     }
 
     @Test
     public void testIsBitSet() throws Exception {
         for (int i = 0; i < 62; i++) {
-            assertTrue(RegularCyclicVertexSearch.isBitSet(pow(2L, i), i));
+            Assertions.assertTrue(RegularCyclicVertexSearch.isBitSet(pow(2L, i), i));
         }
-        assertTrue(RegularCyclicVertexSearch.isBitSet(Long.MIN_VALUE, 63));
+        Assertions.assertTrue(RegularCyclicVertexSearch.isBitSet(Long.MIN_VALUE, 63));
     }
 
     static long pow(long val, int pow) {

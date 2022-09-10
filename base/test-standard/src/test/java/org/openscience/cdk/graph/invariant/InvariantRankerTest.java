@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.graph.invariant;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -126,7 +127,7 @@ public class InvariantRankerTest {
 
         // check they are sorted
         for (int i = 1; i < n; i++)
-            assertTrue(prev[vs[i]] > prev[vs[i - 1]]);
+            Assertions.assertTrue(prev[vs[i]] > prev[vs[i - 1]]);
     }
 
     @Test
@@ -150,7 +151,7 @@ public class InvariantRankerTest {
 
         // check they are sorted
         for (int i = 11; i < (n - 20); i++)
-            assertTrue(prev[vs[i]] > prev[vs[i - 1]]);
+            Assertions.assertTrue(prev[vs[i]] > prev[vs[i - 1]]);
 
         // other values weren't touched
         for (int i = 0; i < 10; i++)
@@ -190,12 +191,12 @@ public class InvariantRankerTest {
     public void less() throws Exception {
         long[] prev = new long[]{1, 1, 2, 2};
         long[] curr = new long[]{1, 1, 2, 2};
-        assertFalse(InvariantRanker.less(0, 1, curr, prev));
-        assertFalse(InvariantRanker.less(2, 3, curr, prev));
-        assertTrue(InvariantRanker.less(0, 2, curr, prev));
-        assertTrue(InvariantRanker.less(0, 3, curr, prev));
-        assertTrue(InvariantRanker.less(1, 2, curr, prev));
-        assertTrue(InvariantRanker.less(1, 3, curr, prev));
+        Assertions.assertFalse(InvariantRanker.less(0, 1, curr, prev));
+        Assertions.assertFalse(InvariantRanker.less(2, 3, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(0, 2, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(0, 3, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(1, 2, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(1, 3, curr, prev));
     }
 
     @Test
@@ -203,12 +204,12 @@ public class InvariantRankerTest {
         long[] prev = new long[]{1, 1, 2, 2};
         long[] curr = new long[]{1, 2, 1, 2};
         // 0,1 and 2,3 are only less is we inspect the 'curr' invariants
-        assertTrue(InvariantRanker.less(0, 1, curr, prev));
-        assertTrue(InvariantRanker.less(2, 3, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(0, 1, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(2, 3, curr, prev));
         // these values are only less inspecting the first invariants
-        assertTrue(InvariantRanker.less(0, 2, curr, prev));
-        assertTrue(InvariantRanker.less(0, 3, curr, prev));
-        assertTrue(InvariantRanker.less(1, 2, curr, prev));
-        assertTrue(InvariantRanker.less(1, 3, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(0, 2, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(0, 3, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(1, 2, curr, prev));
+        Assertions.assertTrue(InvariantRanker.less(1, 3, curr, prev));
     }
 }

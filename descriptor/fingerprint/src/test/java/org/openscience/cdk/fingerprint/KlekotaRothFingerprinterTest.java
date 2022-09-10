@@ -26,6 +26,7 @@ package org.openscience.cdk.fingerprint;
 import java.util.BitSet;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -44,7 +45,7 @@ public class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
     @Test
     public void testGetSize() throws Exception {
         IFingerprinter printer = getBitFingerprinter();
-        Assert.assertEquals(4860, printer.getSize());
+        Assertions.assertEquals(4860, printer.getSize());
     }
 
     @Test
@@ -58,8 +59,8 @@ public class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
         BitSet bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N")).asBitSet();
         BitSet bs2 = printer.getBitFingerprint(parser.parseSmiles("C=CCC(O)CC#N")).asBitSet();
 
-        Assert.assertEquals(4860, printer.getSize());
+        Assertions.assertEquals(4860, printer.getSize());
 
-        Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
     }
 }

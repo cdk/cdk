@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -65,7 +66,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
     @Test
     public void testElectronImpactSDBReaction() throws Exception {
         IReactionProcess type = new ElectronImpactSDBReaction();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     /**
@@ -93,7 +94,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
             }
         }
 
-        Assert.assertEquals(0, reactant.getSingleElectronCount());
+        Assertions.assertEquals(0, reactant.getSingleElectronCount());
 
         /* initiate */
         IReactionProcess type = new ElectronImpactSDBReaction();
@@ -104,30 +105,30 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(2, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(2, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer molecule1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);//[H][C+]=C([H])[H]
 
-        Assert.assertEquals(1, molecule1.getAtom(1).getFormalCharge().intValue());
-        Assert.assertEquals(0, molecule1.getSingleElectronCount());
+        Assertions.assertEquals(1, molecule1.getAtom(1).getFormalCharge().intValue());
+        Assertions.assertEquals(0, molecule1.getSingleElectronCount());
 
         IAtomContainer molecule2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);//[H][C*]([H])[H]
 
-        Assert.assertEquals(1, molecule2.getSingleElectronCount());
-        Assert.assertEquals(1, molecule2.getConnectedSingleElectronsCount(molecule2.getAtom(0)));
+        Assertions.assertEquals(1, molecule2.getSingleElectronCount());
+        Assertions.assertEquals(1, molecule2.getConnectedSingleElectronsCount(molecule2.getAtom(0)));
 
-        Assert.assertTrue(setOfReactions.getReaction(0).mappings().iterator().hasNext());
+        Assertions.assertTrue(setOfReactions.getReaction(0).mappings().iterator().hasNext());
 
-        Assert.assertEquals(2, setOfReactions.getReaction(1).getProductCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(1).getProductCount());
 
         molecule1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);//[H]C=[C*]([H])[H]
-        Assert.assertEquals(1, molecule1.getConnectedSingleElectronsCount(molecule1.getAtom(1)));
+        Assertions.assertEquals(1, molecule1.getConnectedSingleElectronsCount(molecule1.getAtom(1)));
 
         molecule2 = setOfReactions.getReaction(1).getProducts().getAtomContainer(1);//[H][C+]([H])[H]
 
-        Assert.assertEquals(0, molecule2.getSingleElectronCount());
-        Assert.assertEquals(1, molecule2.getAtom(0).getFormalCharge().intValue());
+        Assertions.assertEquals(0, molecule2.getSingleElectronCount());
+        Assertions.assertEquals(1, molecule2.getAtom(0).getFormalCharge().intValue());
 
     }
 
@@ -143,7 +144,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assertions.assertNotNull(matcher.findMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);
         }
     }
 

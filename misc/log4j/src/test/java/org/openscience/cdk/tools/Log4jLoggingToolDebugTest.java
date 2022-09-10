@@ -20,6 +20,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 
@@ -40,19 +41,19 @@ public class Log4jLoggingToolDebugTest extends AbstractLoggingToolTest {
     @Test
     public void testLoggingTool() throws Exception {
         Log4jLoggingTool logger = new Log4jLoggingTool();
-        Assert.assertNotNull(logger);
+        Assertions.assertNotNull(logger);
     }
 
     @Test
     public void testLoggingTool_Class() throws Exception {
         Log4jLoggingTool logger = new Log4jLoggingTool(this.getClass());
-        Assert.assertNotNull(logger);
+        Assertions.assertNotNull(logger);
     }
 
     @Test
     public void testClass$_String() throws Exception {
         // no idea why the Coverage test requires this test
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
     @Test
@@ -64,6 +65,6 @@ public class Log4jLoggingToolDebugTest extends AbstractLoggingToolTest {
     @Test
     public void testCreate() throws Exception {
         ILoggingTool logger = Log4jLoggingTool.create(this.getClass());
-        Assert.assertNotNull(logger);
+        Assertions.assertNotNull(logger);
     }
 }

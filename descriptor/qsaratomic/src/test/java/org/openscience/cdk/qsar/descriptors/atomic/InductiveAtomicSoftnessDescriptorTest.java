@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -83,7 +84,7 @@ public class InductiveAtomicSoftnessDescriptorTest extends AtomicDescriptorTest 
         IAtomicDescriptor descriptor = new InductiveAtomicSoftnessDescriptor();
 
         double retval = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
-        Assert.assertEquals(testResult[0], retval, 0.1);
+        Assertions.assertEquals(testResult[0], retval, 0.1);
 
         // F: expected is 0.32, calculated is 0.35
         // difference depends on different starting values (3D distances and small differences

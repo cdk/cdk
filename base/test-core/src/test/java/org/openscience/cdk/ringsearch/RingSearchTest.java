@@ -79,20 +79,20 @@ public class RingSearchTest {
 
     @Test
     public void testMatch() {
-        assertTrue(RingSearch.match(0, 0));
-        assertTrue(RingSearch.match(0, 1));
-        assertTrue(RingSearch.match(1, 0));
-        assertTrue(RingSearch.match(5, 0));
-        assertTrue(RingSearch.match(0, 5));
-        assertTrue(RingSearch.match(5, 5));
+        Assertions.assertTrue(RingSearch.match(0, 0));
+        Assertions.assertTrue(RingSearch.match(0, 1));
+        Assertions.assertTrue(RingSearch.match(1, 0));
+        Assertions.assertTrue(RingSearch.match(5, 0));
+        Assertions.assertTrue(RingSearch.match(0, 5));
+        Assertions.assertTrue(RingSearch.match(5, 5));
 
-        assertFalse(RingSearch.match(-1, -1));
-        assertFalse(RingSearch.match(6, 5));
-        assertFalse(RingSearch.match(5, 6));
-        assertFalse(RingSearch.match(-1, 5));
-        assertFalse(RingSearch.match(5, -1));
-        assertFalse(RingSearch.match(-1, 0));
-        assertFalse(RingSearch.match(0, -1));
+        Assertions.assertFalse(RingSearch.match(-1, -1));
+        Assertions.assertFalse(RingSearch.match(6, 5));
+        Assertions.assertFalse(RingSearch.match(5, 6));
+        Assertions.assertFalse(RingSearch.match(-1, 5));
+        Assertions.assertFalse(RingSearch.match(5, -1));
+        Assertions.assertFalse(RingSearch.match(-1, 0));
+        Assertions.assertFalse(RingSearch.match(0, -1));
     }
 
     @Test

@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.vecmath.Point3d;
@@ -33,7 +34,7 @@ public class Point3dDifferenceTest {
         Point3d foo = new Point3d(1.0, 2.0, 4.5);
         Point3d bar = new Point3d(1.0, 5.0, 8.3);
         IDifference result = Point3dDifference.construct("Foo", foo, bar);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
@@ -41,23 +42,23 @@ public class Point3dDifferenceTest {
         Point3d foo = new Point3d(1.0, 2.0, 4.5);
         Point3d bar = new Point3d(1.0, 2.0, 4.5);
         IDifference result = Point3dDifference.construct("Foo", foo, bar);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
     public void testTwoNull() {
         IDifference result = Point3dDifference.construct("Foo", null, null);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
     public void testOneNull() {
         Point3d bar = new Point3d(1.0, 5.0, 8.3);
         IDifference result = Point3dDifference.construct("Foo", null, bar);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
 
         result = Point3dDifference.construct("Foo", bar, null);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
@@ -65,7 +66,7 @@ public class Point3dDifferenceTest {
         Point3d bar = new Point3d(1.0, 5.0, 8.3);
         IDifference result = Point3dDifference.construct("Foo", null, bar);
         String diffString = result.toString();
-        Assert.assertNotNull(diffString);
+        Assertions.assertNotNull(diffString);
         StringDifferenceTest.assertOneLiner(diffString);
     }
 }

@@ -19,6 +19,7 @@
 package org.openscience.cdk.structgen;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -48,8 +49,8 @@ public class RandomStructureGeneratorTest extends CDKTestCase {
         IAtomContainer result;
         for (int f = 0; f < 50; f++) {
             result = rg.proposeStructure();
-            Assert.assertEquals(molecule.getAtomCount(), result.getAtomCount());
-            Assert.assertEquals(1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
+            Assertions.assertEquals(molecule.getAtomCount(), result.getAtomCount());
+            Assertions.assertEquals(1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
         }
     }
 

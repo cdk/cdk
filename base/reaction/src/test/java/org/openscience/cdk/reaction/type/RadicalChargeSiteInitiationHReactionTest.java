@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
@@ -67,7 +68,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
     @Test
     public void testRadicalChargeSiteInitiationHReaction() throws Exception {
         IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     /**
@@ -90,8 +91,8 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(2, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(2, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
@@ -135,8 +136,8 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
@@ -177,16 +178,16 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
-        Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(3).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(3).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getBond(2).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getBond(2).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(3).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(3).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(2).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(2).getFlag(CDKConstants.REACTIVE_CENTER));
     }
 
     /**
@@ -220,17 +221,17 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
-        Assert.assertEquals(9, setOfReactions.getReaction(0).getMappingCount());
+        Assertions.assertEquals(9, setOfReactions.getReaction(0).getMappingCount());
 
         IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(0));
-        Assert.assertEquals(mappedProductA1, product.getAtom(0));
+        Assertions.assertEquals(mappedProductA1, product.getAtom(0));
         IAtom mappedProductA2 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(1));
-        Assert.assertEquals(mappedProductA2, product.getAtom(1));
+        Assertions.assertEquals(mappedProductA2, product.getAtom(1));
         IAtom mappedProductA3 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(3));
-        Assert.assertEquals(mappedProductA3, product2.getAtom(0));
+        Assertions.assertEquals(mappedProductA3, product2.getAtom(0));
 
     }
 
@@ -337,7 +338,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assertions.assertNotNull(matcher.findMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);
         }
     }
 }

@@ -24,6 +24,7 @@ package org.openscience.cdk.smsd.algorithm.single;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
@@ -71,6 +72,6 @@ public class SingleMappingTest {
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMapping instance = new SingleMapping();
-        assertNotNull(instance.getOverLaps(source, target, removeHydrogen));
+        Assertions.assertNotNull(instance.getOverLaps(source, target, removeHydrogen));
     }
 }

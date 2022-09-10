@@ -26,6 +26,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,8 +76,8 @@ public class SMSDNormalizerTest {
 
         IAtomContainer result = SMSDNormalizer.makeDeepCopy(container);
         for (int i = 0; i < result.getAtomCount(); i++) {
-            assertEquals(result.getAtom(i).getSymbol(), container.getAtom(i).getSymbol());
-            assertEquals(result.getAtom(i).getID(), container.getAtom(i).getID());
+            Assertions.assertEquals(result.getAtom(i).getSymbol(), container.getAtom(i).getSymbol());
+            Assertions.assertEquals(result.getAtom(i).getID(), container.getAtom(i).getID());
         }
 
     }
@@ -97,7 +98,7 @@ public class SMSDNormalizerTest {
                 count++;
             }
         }
-        assertEquals(5, count);
+        Assertions.assertEquals(5, count);
     }
 
     /**
@@ -120,7 +121,7 @@ public class SMSDNormalizerTest {
 
         int expResult = 1;
         int result = SMSDNormalizer.getExplicitHydrogenCount(atomContainer, atom);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -143,7 +144,7 @@ public class SMSDNormalizerTest {
 
         int expResult = 1;
         int result = SMSDNormalizer.getImplicitHydrogenCount(atomContainer, atom);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -164,7 +165,7 @@ public class SMSDNormalizerTest {
         }
         int expResult = 2;
         int result = SMSDNormalizer.getHydrogenCount(atomContainer, atom);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -194,7 +195,7 @@ public class SMSDNormalizerTest {
             }
         }
 
-        assertEquals(afterAtom.getID(), beforeAtom.getID());
+        Assertions.assertEquals(afterAtom.getID(), beforeAtom.getID());
     }
 
     /**
@@ -208,7 +209,7 @@ public class SMSDNormalizerTest {
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
         int expResult = 11;
         IAtomContainer result = SMSDNormalizer.convertExplicitToImplicitHydrogens(atomContainer);
-        assertEquals(expResult, result.getAtomCount());
+        Assertions.assertEquals(expResult, result.getAtomCount());
     }
 
     /**
@@ -221,6 +222,6 @@ public class SMSDNormalizerTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
         SMSDNormalizer.percieveAtomTypesAndConfigureAtoms(atomContainer);
-        assertNotNull(atomContainer);
+        Assertions.assertNotNull(atomContainer);
     }
 }

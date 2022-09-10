@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -89,7 +90,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test
     public void testMMFF94AtomTypeMatcher() throws Exception {
         MMFF94AtomTypeMatcher matcher = new MMFF94AtomTypeMatcher();
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
 
     }
 
@@ -107,7 +108,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+            Assertions.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
         }
     }
 
@@ -115,8 +116,8 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
         setUpTestMolecule();
         for (int i = 0; i < testMolecule.getAtomCount(); i++) {
-            Assert.assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
-            Assert.assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
+            Assertions.assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
+            Assertions.assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
         }
     }
 
@@ -190,7 +191,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             logger.debug("atomNr:" + mol.getAtom(i).toString());
             IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertNotNull(matched);
+            Assertions.assertNotNull(matched);
             AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i = 0; i < testResult.length; i++) {
@@ -224,7 +225,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             logger.debug("atomNr:" + mol.getAtom(i).toString());
             IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertNotNull(matched);
+            Assertions.assertNotNull(matched);
             AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i = 0; i < testResult.length; i++) {
@@ -259,7 +260,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             logger.debug("atomNr:" + mol.getAtom(i).toString());
             IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertNotNull(matched);
+            Assertions.assertNotNull(matched);
             AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i = 0; i < testResult.length; i++) {
@@ -291,7 +292,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             logger.debug("atomNr:" + mol.getAtom(i).toString());
             IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertNotNull(matched);
+            Assertions.assertNotNull(matched);
             AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i = 0; i < testResult.length; i++) {
@@ -323,7 +324,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             logger.debug("atomNr:" + mol.getAtom(i).toString());
             IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertNotNull(matched);
+            Assertions.assertNotNull(matched);
             AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i = 0; i < testResult.length; i++) {
@@ -374,7 +375,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             logger.debug("atomNr:" + mol.getAtom(i).toString());
             IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertNotNull(matched);
+            Assertions.assertNotNull(matched);
             //System.out.println("MatchedTypeID:"+matched.getID()+" "+matched.getSymbol()+" "+matched.getAtomTypeName());
             AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
@@ -405,7 +406,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             logger.debug("atomNr:" + mol.getAtom(i).toString());
             IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertNotNull(matched);
+            Assertions.assertNotNull(matched);
             AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i = 0; i < testResult.length; i++) {
@@ -432,7 +433,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
                 if (!testedAtomTypes.containsKey(expectedType.getAtomTypeName()))
                     errorMessage += " " + expectedType.getAtomTypeName();
             }
-            Assert.assertEquals(errorMessage, factory.getAllAtomTypes().length, testedAtomTypes.size());
+            Assertions.assertEquals(factory.getAllAtomTypes().length, testedAtomTypes.size(), errorMessage);
         }
     }
 

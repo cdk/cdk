@@ -84,7 +84,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
         m.addAtom(h2);
         m.addBond(new Bond(h1, h2));
         hydrogenPlacer.placeHydrogens2D(m, 1.5);
-        assertNotNull(h1.getPoint2d());
+        Assertions.assertNotNull(h1.getPoint2d());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
         HydrogenPlacer hPlacer = new HydrogenPlacer();
         hPlacer.placeHydrogens2D(ac, 36);
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Assert.assertNotNull(ac.getAtom(i).getPoint2d());
+            Assertions.assertNotNull(ac.getAtom(i).getPoint2d());
         }
     }
 
@@ -142,8 +142,8 @@ public class HydrogenPlacerTest extends CDKTestCase {
         dichloromethane.addBond(new Bond(carbon, cl1));
         dichloromethane.addBond(new Bond(carbon, cl2));
 
-        Assert.assertNull(h1.getPoint2d());
-        Assert.assertNull(h2.getPoint2d());
+        Assertions.assertNull(h1.getPoint2d());
+        Assertions.assertNull(h2.getPoint2d());
 
         // generate new coords
         hydrogenPlacer.placeHydrogens2D(dichloromethane, carbon);
@@ -151,8 +151,8 @@ public class HydrogenPlacerTest extends CDKTestCase {
         assertEquals(carbonPos, carbon.getPoint2d(), 0.01);
         assertEquals(cl1Pos, cl1.getPoint2d(), 0.01);
         assertEquals(cl2Pos, cl2.getPoint2d(), 0.01);
-        Assert.assertNotNull(h1.getPoint2d());
-        Assert.assertNotNull(h2.getPoint2d());
+        Assertions.assertNotNull(h1.getPoint2d());
+        Assertions.assertNotNull(h2.getPoint2d());
     }
 
     /*

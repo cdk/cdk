@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -54,7 +55,7 @@ public class MassNumberRuleTest extends CDKTestCase {
     public void testCompare_Identity() {
         ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ISequenceSubRule<ILigand> rule = new MassNumberRule();
-        Assert.assertEquals(0, rule.compare(ligand, ligand));
+        Assertions.assertEquals(0, rule.compare(ligand, ligand));
     }
 
     @Test
@@ -62,8 +63,8 @@ public class MassNumberRuleTest extends CDKTestCase {
         ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ISequenceSubRule<ILigand> rule = new MassNumberRule();
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 
     @Test
@@ -80,13 +81,13 @@ public class MassNumberRuleTest extends CDKTestCase {
         ligands.add(ligand4);
 
         ligands.sort(new MassNumberRule());
-        Assert.assertNotNull(ligands.get(0));
-        Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
-        Assert.assertEquals("H", ligands.get(1).getLigandAtom().getSymbol());
-        Assert.assertEquals(2, ligands.get(1).getLigandAtom().getMassNumber().intValue());
-        Assert.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());
-        Assert.assertEquals("C", ligands.get(3).getLigandAtom().getSymbol());
-        Assert.assertEquals(13, ligands.get(3).getLigandAtom().getMassNumber().intValue());
+        Assertions.assertNotNull(ligands.get(0));
+        Assertions.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
+        Assertions.assertEquals("H", ligands.get(1).getLigandAtom().getSymbol());
+        Assertions.assertEquals(2, ligands.get(1).getLigandAtom().getMassNumber().intValue());
+        Assertions.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());
+        Assertions.assertEquals("C", ligands.get(3).getLigandAtom().getSymbol());
+        Assertions.assertEquals(13, ligands.get(3).getLigandAtom().getMassNumber().intValue());
     }
 
     @Test
@@ -94,8 +95,8 @@ public class MassNumberRuleTest extends CDKTestCase {
         ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
         ISequenceSubRule<ILigand> rule = new MassNumberRule();
-        Assert.assertEquals(0, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(0, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(0, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(0, rule.compare(ligand2, ligand1));
     }
 
     @Test
@@ -103,7 +104,7 @@ public class MassNumberRuleTest extends CDKTestCase {
         ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
         ISequenceSubRule<ILigand> rule = new MassNumberRule();
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 }

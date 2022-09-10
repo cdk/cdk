@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,7 +98,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
     }
 
     /**
@@ -115,7 +116,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
     }
 
     /**
@@ -142,7 +143,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
 
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
     }
 
     /**
@@ -160,7 +161,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         VFlibMCSHandler instance = new VFlibMCSHandler();
         instance.set(source, target);
         instance.searchMCS(true);
-        assertNotNull(instance.getFirstMapping());
+        Assertions.assertNotNull(instance.getFirstMapping());
     }
 
     /**
@@ -178,9 +179,9 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(4, smsd1.getAllAtomMapping().size());
+        Assertions.assertEquals(4, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -198,9 +199,9 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(4, smsd1.getAllMapping().size());
+        Assertions.assertEquals(4, smsd1.getAllMapping().size());
     }
 
     /**
@@ -218,9 +219,9 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(7, smsd1.getFirstAtomMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstAtomMapping().size());
     }
 
     /**
@@ -238,8 +239,8 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
         smsd1.searchMCS(true);
-        assertNotNull(smsd1.getFirstMapping());
+        Assertions.assertNotNull(smsd1.getFirstMapping());
 
-        assertEquals(7, smsd1.getFirstMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstMapping().size());
     }
 }

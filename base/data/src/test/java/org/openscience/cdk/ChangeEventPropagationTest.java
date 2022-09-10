@@ -19,6 +19,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -60,8 +61,8 @@ public class ChangeEventPropagationTest extends CDKTestCase {
         TestListener ts = new TestListener();
         cf.addListener(ts);
         a2.setSymbol("N");
-        Assert.assertTrue(ts.changedObject instanceof Atom);
-        Assert.assertEquals("N", ((Atom) ts.changedObject).getSymbol());
+        Assertions.assertTrue(ts.changedObject instanceof Atom);
+        Assertions.assertEquals("N", ((Atom) ts.changedObject).getSymbol());
     }
 
     class TestListener implements IChemObjectListener {

@@ -8,6 +8,7 @@ import java.io.Reader;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -102,9 +103,9 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
     //TODO Update method comments with appropriate information.
     @Test
     public void testGamessReader() {
-        Assert.assertNotNull("TEST: The inputReader is not null.", this.inputReader);
-        Assert.assertTrue("TEST: The inputReader is a Reader object.", this.inputReader instanceof Reader);
-        Assert.assertNotNull("TEST: The GamessReader object is constructed.", this.gamessReaderUnderTest);
+        Assertions.assertNotNull(this.inputReader, "TEST: The inputReader is not null.");
+        Assertions.assertTrue(this.inputReader instanceof Reader, "TEST: The inputReader is a Reader object.");
+        Assertions.assertNotNull(this.gamessReaderUnderTest, "TEST: The GamessReader object is constructed.");
         //		Assert.assertEquals("TEST: ", this.gr.input, this.inputReader);
     }
 
@@ -128,9 +129,8 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
     //TODO Update method comments with appropriate information.
     @Test
     public void testAccepts() {
-        Assert.assertNotNull("The GamessReader object is not constructed", this.gamessReaderUnderTest);
-        Assert.assertTrue("GamessReader should accept an IChemFile object.",
-                gamessReaderUnderTest.accepts(ChemFile.class));
+        Assertions.assertNotNull(this.gamessReaderUnderTest, "The GamessReader object is not constructed");
+        Assertions.assertTrue(gamessReaderUnderTest.accepts(ChemFile.class), "GamessReader should accept an IChemFile object.");
     }
 
     /**
@@ -157,9 +157,8 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
     //TODO Update method comments with appropriate information.
     @Test
     public void testRead() throws Exception {
-        Assert.assertNotNull("TEST: The GamessReader object is constructed.", this.gamessReaderUnderTest);
-        Assert.assertTrue("TEST: read(IChemObject) returns a IChemObject.",
-                this.gamessReaderUnderTest.read(new ChemFile()) instanceof ChemObject);
+        Assertions.assertNotNull(this.gamessReaderUnderTest, "TEST: The GamessReader object is constructed.");
+        Assertions.assertTrue(this.gamessReaderUnderTest.read(new ChemFile()) instanceof ChemObject, "TEST: read(IChemObject) returns a IChemObject.");
     }
 
 }

@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.stereo;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.GraphUtil;
@@ -531,7 +532,7 @@ public class CyclicCarbohydrateRecognitionTest {
         CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                 stereocenters);
 
-        assertTrue(recon.recognise(Collections.singleton(Projection.Haworth)).isEmpty());
+        Assertions.assertTrue(recon.recognise(Collections.singleton(Projection.Haworth)).isEmpty());
     }
 
     /**
@@ -646,7 +647,7 @@ public class CyclicCarbohydrateRecognitionTest {
 
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
-        assertTrue(elements.isEmpty());
+        Assertions.assertTrue(elements.isEmpty());
     }
 
     /**
@@ -680,7 +681,7 @@ public class CyclicCarbohydrateRecognitionTest {
                                                                                 stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
-        assertTrue(elements.isEmpty());
+        Assertions.assertTrue(elements.isEmpty());
     }
 
     static void assertTetrahedralCenter(IStereoElement element,

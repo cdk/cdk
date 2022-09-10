@@ -1,5 +1,6 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -27,7 +28,7 @@ public class TotalHCountAtomTest {
                 .thenReturn(
                         new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.emptySet(), 0,
                                 0, 0, 4));
-        assertTrue(matcher.matches(atom));
+        Assertions.assertTrue(matcher.matches(atom));
     }
 
     @Test

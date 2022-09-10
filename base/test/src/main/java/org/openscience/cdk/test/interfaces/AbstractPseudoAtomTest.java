@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -26,7 +27,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         String label = "Arg255";
         IPseudoAtom a = (IPseudoAtom) newChemObject();
         a.setLabel(label);
-        Assert.assertEquals(label, a.getLabel());
+        Assertions.assertEquals(label, a.getLabel());
     }
 
     @Test
@@ -36,14 +37,14 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         atom.setLabel(label);
         String label2 = "His66";
         atom.setLabel(label2);
-        Assert.assertEquals(label2, atom.getLabel());
+        Assertions.assertEquals(label2, atom.getLabel());
     }
 
     @Test
     @Override
     public void testGetFormalCharge() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
-        Assert.assertEquals(0, atom.getFormalCharge().intValue());
+        Assertions.assertEquals(0, atom.getFormalCharge().intValue());
     }
 
     @Test
@@ -51,14 +52,14 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     public void testSetFormalCharge_Integer() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setFormalCharge(+5);
-        Assert.assertEquals(+5, atom.getFormalCharge().intValue());
+        Assertions.assertEquals(+5, atom.getFormalCharge().intValue());
     }
 
     @Test
     public void testSetHydrogenCount_Integer() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setImplicitHydrogenCount(+5);
-        Assert.assertEquals(5, atom.getImplicitHydrogenCount().intValue());
+        Assertions.assertEquals(5, atom.getImplicitHydrogenCount().intValue());
     }
 
     @Test
@@ -66,7 +67,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     public void testSetCharge_Double() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setCharge(0.78);
-        Assert.assertEquals(0.78, atom.getCharge(), 0.001);
+        Assertions.assertEquals(0.78, atom.getCharge(), 0.001);
     }
 
     @Test
@@ -74,7 +75,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     public void testSetExactMass_Double() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setExactMass(12.001);
-        Assert.assertEquals(12.001, atom.getExactMass(), 0.001);
+        Assertions.assertEquals(12.001, atom.getExactMass(), 0.001);
     }
 
     @Test
@@ -82,7 +83,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     public void testSetStereoParity_Integer() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setStereoParity(-1);
-        Assert.assertEquals(0, atom.getStereoParity().intValue());
+        Assertions.assertEquals(0, atom.getStereoParity().intValue());
     }
 
     @Test
@@ -110,7 +111,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     public void testClone() throws Exception {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         Object clone = atom.clone();
-        Assert.assertTrue(clone instanceof IPseudoAtom);
+        Assertions.assertTrue(clone instanceof IPseudoAtom);
     }
 
     /**
@@ -122,8 +123,8 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         IAtom atom = (IPseudoAtom) newChemObject();
         String description = atom.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -138,8 +139,8 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     @Test
     public void testBug1778479DefaultLabel() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
-        Assert.assertNotNull("Test for PseudoAtom's default label", atom.getLabel());
-        Assert.assertEquals("Test for PseudoAtom's default label", "*", atom.getLabel());
+        Assertions.assertNotNull(atom.getLabel(), "Test for PseudoAtom's default label");
+        Assertions.assertEquals("*", atom.getLabel(), "Test for PseudoAtom's default label");
     }
 
     /**
@@ -155,7 +156,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
 
         // test cloning
         atom.setImplicitHydrogenCount(4);
-        Assert.assertEquals(3, clone.getImplicitHydrogenCount().intValue());
+        Assertions.assertEquals(3, clone.getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -166,11 +167,11 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     public void testGetHydrogenCount() {
         // expect zero by definition
         IAtom a = (IAtom) newChemObject();
-        Assert.assertNull(a.getImplicitHydrogenCount());
+        Assertions.assertNull(a.getImplicitHydrogenCount());
         a.setImplicitHydrogenCount(5);
-        Assert.assertEquals(5, a.getImplicitHydrogenCount().intValue());
+        Assertions.assertEquals(5, a.getImplicitHydrogenCount().intValue());
         a.setImplicitHydrogenCount(null);
-        Assert.assertNull(a.getImplicitHydrogenCount());
+        Assertions.assertNull(a.getImplicitHydrogenCount());
     }
 
     /**
@@ -186,7 +187,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
 
         // test cloning
         atom.setStereoParity(4);
-        Assert.assertEquals(0, clone.getStereoParity().intValue());
+        Assertions.assertEquals(0, clone.getStereoParity().intValue());
     }
 
     @Test
@@ -195,8 +196,8 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         IPseudoAtom a = (IPseudoAtom) newChemObject();
         a.setLabel(label);
         a.setFormalCharge(-1);
-        Assert.assertNotNull(a);
-        Assert.assertNotNull(a.getFormalCharge());
-        Assert.assertEquals(-1, a.getFormalCharge().intValue());
+        Assertions.assertNotNull(a);
+        Assertions.assertNotNull(a.getFormalCharge());
+        Assertions.assertEquals(-1, a.getFormalCharge().intValue());
     }
 }

@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -62,6 +63,6 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
         IntegerResult retval = (IntegerResult) descriptor.calculate(ac).getValue();
         //logger.debug(retval.intValue());
 
-        Assert.assertEquals(254, retval.intValue(), 0);
+        Assertions.assertEquals(254, retval.intValue(), 0);
     }
 }

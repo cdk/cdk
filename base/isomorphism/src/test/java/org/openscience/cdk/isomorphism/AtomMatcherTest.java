@@ -51,13 +51,13 @@ public class AtomMatcherTest {
         when(atom1.getAtomicNumber()).thenReturn(6);
         when(atom2.getAtomicNumber()).thenReturn(7);
         when(atom3.getAtomicNumber()).thenReturn(8);
-        assertTrue(matcher.matches(atom1, atom2));
-        assertTrue(matcher.matches(atom2, atom1));
-        assertTrue(matcher.matches(atom1, atom3));
-        assertTrue(matcher.matches(atom3, atom1));
-        assertTrue(matcher.matches(atom2, atom3));
-        assertTrue(matcher.matches(atom1, null));
-        assertTrue(matcher.matches(null, null));
+        Assertions.assertTrue(matcher.matches(atom1, atom2));
+        Assertions.assertTrue(matcher.matches(atom2, atom1));
+        Assertions.assertTrue(matcher.matches(atom1, atom3));
+        Assertions.assertTrue(matcher.matches(atom3, atom1));
+        Assertions.assertTrue(matcher.matches(atom2, atom3));
+        Assertions.assertTrue(matcher.matches(atom1, null));
+        Assertions.assertTrue(matcher.matches(null, null));
     }
 
     @Test
@@ -67,8 +67,8 @@ public class AtomMatcherTest {
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getAtomicNumber()).thenReturn(6);
         when(atom2.getAtomicNumber()).thenReturn(6);
-        assertTrue(matcher.matches(atom1, atom2));
-        assertTrue(matcher.matches(atom2, atom1));
+        Assertions.assertTrue(matcher.matches(atom1, atom2));
+        Assertions.assertTrue(matcher.matches(atom2, atom1));
     }
 
     @Test
@@ -78,8 +78,8 @@ public class AtomMatcherTest {
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getAtomicNumber()).thenReturn(6);
         when(atom2.getAtomicNumber()).thenReturn(8);
-        assertFalse(matcher.matches(atom1, atom2));
-        assertFalse(matcher.matches(atom2, atom1));
+        Assertions.assertFalse(matcher.matches(atom1, atom2));
+        Assertions.assertFalse(matcher.matches(atom2, atom1));
     }
 
     @Test
@@ -87,8 +87,8 @@ public class AtomMatcherTest {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IPseudoAtom.class);
         IAtom atom2 = mock(IPseudoAtom.class);
-        assertTrue(matcher.matches(atom1, atom2));
-        assertTrue(matcher.matches(atom2, atom1));
+        Assertions.assertTrue(matcher.matches(atom1, atom2));
+        Assertions.assertTrue(matcher.matches(atom2, atom1));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class AtomMatcherTest {
         IAtom atom3 = mock(IAtom.class);
         when(atom1.matches(atom2)).thenReturn(true);
         when(atom1.matches(atom3)).thenReturn(false);
-        assertTrue(matcher.matches(atom1, atom2));
-        assertFalse(matcher.matches(atom1, atom3));
+        Assertions.assertTrue(matcher.matches(atom1, atom2));
+        Assertions.assertFalse(matcher.matches(atom1, atom3));
     }
 }

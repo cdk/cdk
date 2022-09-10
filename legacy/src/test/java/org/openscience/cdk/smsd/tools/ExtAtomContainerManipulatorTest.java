@@ -25,6 +25,7 @@ package org.openscience.cdk.smsd.tools;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
@@ -76,8 +77,8 @@ public class ExtAtomContainerManipulatorTest {
 
         IAtomContainer result = ExtAtomContainerManipulator.makeDeepCopy(container);
         for (int i = 0; i < result.getAtomCount(); i++) {
-            assertEquals(result.getAtom(i).getSymbol(), container.getAtom(i).getSymbol());
-            assertEquals(result.getAtom(i).getID(), container.getAtom(i).getID());
+            Assertions.assertEquals(result.getAtom(i).getSymbol(), container.getAtom(i).getSymbol());
+            Assertions.assertEquals(result.getAtom(i).getID(), container.getAtom(i).getID());
         }
 
     }
@@ -98,7 +99,7 @@ public class ExtAtomContainerManipulatorTest {
                 count++;
             }
         }
-        assertEquals(5, count);
+        Assertions.assertEquals(5, count);
     }
 
     /**
@@ -121,7 +122,7 @@ public class ExtAtomContainerManipulatorTest {
 
         int expResult = 1;
         int result = ExtAtomContainerManipulator.getExplicitHydrogenCount(atomContainer, atom);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -144,7 +145,7 @@ public class ExtAtomContainerManipulatorTest {
 
         int expResult = 1;
         int result = ExtAtomContainerManipulator.getImplicitHydrogenCount(atom);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -165,7 +166,7 @@ public class ExtAtomContainerManipulatorTest {
         }
         int expResult = 2;
         int result = ExtAtomContainerManipulator.getHydrogenCount(atomContainer, atom);
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -195,7 +196,7 @@ public class ExtAtomContainerManipulatorTest {
             }
         }
 
-        assertEquals(afterAtom.getID(), beforeAtom.getID());
+        Assertions.assertEquals(afterAtom.getID(), beforeAtom.getID());
     }
 
     /**
@@ -209,7 +210,7 @@ public class ExtAtomContainerManipulatorTest {
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
         int expResult = 11;
         IAtomContainer result = ExtAtomContainerManipulator.convertExplicitToImplicitHydrogens(atomContainer);
-        assertEquals(expResult, result.getAtomCount());
+        Assertions.assertEquals(expResult, result.getAtomCount());
     }
 
     /**
@@ -222,6 +223,6 @@ public class ExtAtomContainerManipulatorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
-        assertNotNull(atomContainer);
+        Assertions.assertNotNull(atomContainer);
     }
 }

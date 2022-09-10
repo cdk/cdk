@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.io.IChemObjectReader;
 
@@ -30,7 +31,7 @@ public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
 
     @Test
     public void testSetReader_InputStream() throws Exception {
-        Assert.assertNotNull("No test file has been set!", testFile);
+        Assertions.assertNotNull(testFile, "No test file has been set!");
         InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         // try local path
         if (ins == null)
@@ -40,7 +41,7 @@ public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
 
     @Test
     public void testSetReader_Reader() throws Exception {
-        Assert.assertNotNull("No test file has been set!", testFile);
+        Assertions.assertNotNull(testFile, "No test file has been set!");
         InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         // try local path
         if (ins == null)

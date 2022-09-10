@@ -95,11 +95,11 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(accessor, 5);
 
-        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
+        Assertions.assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
         factory.register(mock.getClass());
 
-        assertFalse(factory.implementorsOf(IAtom.class).isEmpty());
+        Assertions.assertFalse(factory.implementorsOf(IAtom.class).isEmpty());
 
     }
 
@@ -115,7 +115,7 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(accessor, 5);
 
-        assertFalse(factory.register(mock.getClass()));
+        Assertions.assertFalse(factory.register(mock.getClass()));
 
     }
 
@@ -126,21 +126,21 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
+        Assertions.assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
         // register the mock class
         factory.register(IAtom.class, mock.getClass());
 
-        assertFalse(factory.implementorsOf(IAtom.class).isEmpty());
+        Assertions.assertFalse(factory.implementorsOf(IAtom.class).isEmpty());
 
         // Atom is a subclass of Element so we can actually register it as
         // element too
 
-        assertTrue(factory.implementorsOf(IElement.class).isEmpty());
+        Assertions.assertTrue(factory.implementorsOf(IElement.class).isEmpty());
 
         factory.register(IElement.class, mock.getClass());
 
-        assertFalse(factory.implementorsOf(IElement.class).isEmpty());
+        Assertions.assertFalse(factory.implementorsOf(IElement.class).isEmpty());
 
     }
 
@@ -149,7 +149,7 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.implementorsOf(ICDKObject.class).isEmpty());
+        Assertions.assertTrue(factory.implementorsOf(ICDKObject.class).isEmpty());
 
         // register the mock class
         factory.register(ICDKObject.class, DynamicFactoryTestMock.class);
@@ -169,7 +169,7 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.register(ICDKObject.class, DynamicFactoryTestMock.class.getConstructor(String.class)));
+        Assertions.assertTrue(factory.register(ICDKObject.class, DynamicFactoryTestMock.class.getConstructor(String.class)));
 
     }
 
@@ -182,10 +182,10 @@ public class DynamicFactoryTest {
 
         DynamicFactory.CreationModifier modifier = mock(DynamicFactory.CreationModifier.class);
 
-        assertTrue(factory.register(ICDKObject.class, DynamicFactoryTestMock.class.getConstructor(String.class),
-                modifier));
+        Assertions.assertTrue(factory.register(ICDKObject.class, DynamicFactoryTestMock.class.getConstructor(String.class),
+                                               modifier));
 
-        assertNotNull(factory.ofClass(ICDKObject.class, "empty"));
+        Assertions.assertNotNull(factory.ofClass(ICDKObject.class, "empty"));
 
         // verify the modifier was invoked once
         verify(modifier).modify(any());
@@ -207,11 +207,11 @@ public class DynamicFactoryTest {
                                     IAtom atom = mock(MockedAtom.class);
                                     IAtom pseudo = mock(MockedPseudoAtom.class);
 
-                                    assertTrue(factory.register(ICDKObject.class, pseudo.getClass()));
+                                    Assertions.assertTrue(factory.register(ICDKObject.class, pseudo.getClass()));
 
                                     // should throw an exception the mocked atom also has a constructor with
                                     // a single String parameter
-                                    assertFalse(factory.register(ICDKObject.class, atom.getClass()));
+                                    Assertions.assertFalse(factory.register(ICDKObject.class, atom.getClass()));
                                 });
     }
 
@@ -228,7 +228,7 @@ public class DynamicFactoryTest {
             }
         });
 
-        assertNotNull(factory.ofClass(IAtom.class));
+        Assertions.assertNotNull(factory.ofClass(IAtom.class));
 
     }
 
@@ -239,7 +239,7 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
+        Assertions.assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
         // register the mock class
         factory.register(IAtom.class, mock.getClass());
@@ -247,7 +247,7 @@ public class DynamicFactoryTest {
         // ofClass needs to know the inner class is coming from 'this'
         IAtom instance = factory.ofClass(IAtom.class, this);
 
-        assertNotNull(instance);
+        Assertions.assertNotNull(instance);
 
     }
 
@@ -263,7 +263,7 @@ public class DynamicFactoryTest {
 
                                     DynamicFactory factory = new DynamicFactory(5);
 
-                                    assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
+                                    Assertions.assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
                                     // register the mock class
                                     factory.register(IAtom.class, mock.getClass());
@@ -279,7 +279,7 @@ public class DynamicFactoryTest {
                                 () -> {
                                     DynamicFactory factory = new DynamicFactory(5);
 
-                                    assertTrue(factory.implementorsOf(ICDKObject.class).isEmpty());
+                                    Assertions.assertTrue(factory.implementorsOf(ICDKObject.class).isEmpty());
 
                                     // register the mock class
                                     factory.register(ICDKObject.class, DynamicFactoryTestMock.class);
@@ -296,7 +296,7 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
+        Assertions.assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
         // register the mock class
         factory.register(IAtom.class, mock.getClass());
@@ -304,9 +304,9 @@ public class DynamicFactoryTest {
         // ofClass needs to know the inner class is coming from 'this'
         IAtom instance = factory.ofClass(IAtom.class, this, "C");
 
-        assertNotNull(instance);
+        Assertions.assertNotNull(instance);
 
-        assertEquals("C", instance.getSymbol());
+        Assertions.assertEquals("C", instance.getSymbol());
 
     }
 
@@ -320,11 +320,11 @@ public class DynamicFactoryTest {
 
         IAtom atom = mock(MockedAtom.class);
 
-        assertFalse(factory.suggest(IAtom.class).hasNext());
+        Assertions.assertFalse(factory.suggest(IAtom.class).hasNext());
 
         factory.register(IAtom.class, atom.getClass());
 
-        assertTrue(factory.suggest(IAtom.class).hasNext());
+        Assertions.assertTrue(factory.suggest(IAtom.class).hasNext());
     }
 
     @Test
@@ -352,8 +352,8 @@ public class DynamicFactoryTest {
 
         DynamicFactory.ConstructorKey key = DynamicFactory.key(IAtom.class);
 
-        assertEquals(IAtom.class, key.intf());
-        assertEquals(0, key.n());
+        Assertions.assertEquals(IAtom.class, key.intf());
+        Assertions.assertEquals(0, key.n());
 
     }
 
@@ -362,10 +362,10 @@ public class DynamicFactoryTest {
 
         DynamicFactory.ConstructorKey key = DynamicFactory.key(IBond.class, IAtom.class, IAtom.class);
 
-        assertEquals(IBond.class, key.intf());
-        assertEquals(2, key.n());
-        assertEquals(IAtom.class, key.type(0));
-        assertEquals(IAtom.class, key.type(1));
+        Assertions.assertEquals(IBond.class, key.intf());
+        Assertions.assertEquals(2, key.n());
+        Assertions.assertEquals(IAtom.class, key.type(0));
+        Assertions.assertEquals(IAtom.class, key.type(1));
 
     }
 
@@ -373,10 +373,10 @@ public class DynamicFactoryTest {
     public void testKey_ArrayParameters() {
 
         DynamicFactory.ConstructorKey key = DynamicFactory.key(IBond.class, IAtom[].class);
-        assertEquals(IBond.class, key.intf());
-        assertEquals(1, key.n());
-        assertTrue(key.type(0).isArray());
-        assertEquals(IAtom[].class, key.type(0));
+        Assertions.assertEquals(IBond.class, key.intf());
+        Assertions.assertEquals(1, key.n());
+        Assertions.assertTrue(key.type(0).isArray());
+        Assertions.assertEquals(IAtom[].class, key.type(0));
 
     }
 
@@ -389,16 +389,16 @@ public class DynamicFactoryTest {
         DynamicFactory.ConstructorKey key = DynamicFactory.key(IAtom.class, boolean.class, byte.class, char.class,
                 short.class, int.class, float.class, long.class, double.class);
 
-        assertEquals(IAtom.class, key.intf());
-        assertEquals(8, key.n());
-        assertEquals(Boolean.class, key.type(0));
-        assertEquals(Byte.class, key.type(1));
-        assertEquals(Character.class, key.type(2));
-        assertEquals(Short.class, key.type(3));
-        assertEquals(Integer.class, key.type(4));
-        assertEquals(Float.class, key.type(5));
-        assertEquals(Long.class, key.type(6));
-        assertEquals(Double.class, key.type(7));
+        Assertions.assertEquals(IAtom.class, key.intf());
+        Assertions.assertEquals(8, key.n());
+        Assertions.assertEquals(Boolean.class, key.type(0));
+        Assertions.assertEquals(Byte.class, key.type(1));
+        Assertions.assertEquals(Character.class, key.type(2));
+        Assertions.assertEquals(Short.class, key.type(3));
+        Assertions.assertEquals(Integer.class, key.type(4));
+        Assertions.assertEquals(Float.class, key.type(5));
+        Assertions.assertEquals(Long.class, key.type(6));
+        Assertions.assertEquals(Double.class, key.type(7));
 
     }
 
@@ -422,14 +422,14 @@ public class DynamicFactoryTest {
         });
 
         // uniform parameter array
-        assertNotNull(factory.ofClass(ICDKObject.class, new IAtom[]{mock(IAtom.class), mock(IAtom.class),
+        Assertions.assertNotNull(factory.ofClass(ICDKObject.class, new IAtom[]{mock(IAtom.class), mock(IAtom.class),
                 mock(IAtom.class)}));
 
         // is equivalent to just using varargs...
-        assertNotNull(factory.ofClass(ICDKObject.class, mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)));
+        Assertions.assertNotNull(factory.ofClass(ICDKObject.class, mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)));
 
         // unless we double wrap it (which resolves to the same instantiator)
-        assertNotNull(factory.ofClass(ICDKObject.class, new Object[]{new IAtom[]{mock(IAtom.class), mock(IAtom.class),
+        Assertions.assertNotNull(factory.ofClass(ICDKObject.class, new Object[]{new IAtom[]{mock(IAtom.class), mock(IAtom.class),
                 mock(IAtom.class)}}));
 
     }
@@ -451,7 +451,7 @@ public class DynamicFactoryTest {
         // ignore compiler warnings here... we're mocking so don't have a set type
         factory.register(IAtom.class, mock.getClass(), modifier);
 
-        assertNotNull(factory.ofClass(IAtom.class));
+        Assertions.assertNotNull(factory.ofClass(IAtom.class));
 
         // verify the modify method was called once
         verify(modifier, times(1)).modify(any());

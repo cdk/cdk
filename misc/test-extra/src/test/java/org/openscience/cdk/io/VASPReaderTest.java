@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -47,7 +48,7 @@ public class VASPReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         VASPReader reader = new VASPReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
@@ -57,17 +58,17 @@ public class VASPReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         VASPReader reader = new VASPReader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         org.openscience.cdk.interfaces.IChemSequence sequence = chemFile.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(6, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(6, sequence.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
-        Assert.assertNotNull(crystal);
-        Assert.assertEquals(16, crystal.getAtomCount());
+        Assertions.assertNotNull(crystal);
+        Assertions.assertEquals(16, crystal.getAtomCount());
         org.openscience.cdk.interfaces.IAtom atom = crystal.getAtom(0);
-        Assert.assertNotNull(atom);
-        Assert.assertNotNull(atom.getFractionalPoint3d());
+        Assertions.assertNotNull(atom);
+        Assertions.assertNotNull(atom.getFractionalPoint3d());
     }
 }

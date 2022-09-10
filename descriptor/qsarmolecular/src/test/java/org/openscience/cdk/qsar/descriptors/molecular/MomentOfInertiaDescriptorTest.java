@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -61,7 +62,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertNotNull("The Exception should be non-null since we don't have 3D coords", value.getException());
+        Assertions.assertNotNull(value.getException(), "The Exception should be non-null since we don't have 3D coords");
 
     }
 
@@ -76,13 +77,13 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(1820.692519, retval.get(0), 0.00001);
-        Assert.assertEquals(1274.532522, retval.get(1), 0.00001);
-        Assert.assertEquals(979.210423, retval.get(2), 0.00001);
-        Assert.assertEquals(1.428517, retval.get(3), 0.00001);
-        Assert.assertEquals(1.859347, retval.get(4), 0.00001);
-        Assert.assertEquals(1.301592, retval.get(5), 0.00001);
-        Assert.assertEquals(5.411195, retval.get(6), 0.00001);
+        Assertions.assertEquals(1820.692519, retval.get(0), 0.00001);
+        Assertions.assertEquals(1274.532522, retval.get(1), 0.00001);
+        Assertions.assertEquals(979.210423, retval.get(2), 0.00001);
+        Assertions.assertEquals(1.428517, retval.get(3), 0.00001);
+        Assertions.assertEquals(1.859347, retval.get(4), 0.00001);
+        Assertions.assertEquals(1.301592, retval.get(5), 0.00001);
+        Assertions.assertEquals(5.411195, retval.get(6), 0.00001);
     }
 
     @Test
@@ -96,13 +97,13 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(10068.419360, retval.get(0), 0.00001);
-        Assert.assertEquals(9731.078356, retval.get(1), 0.00001);
-        Assert.assertEquals(773.612799, retval.get(2), 0.00001);
-        Assert.assertEquals(1.034666, retval.get(3), 0.00001);
-        Assert.assertEquals(13.014804, retval.get(4), 0.00001);
-        Assert.assertEquals(12.578745, retval.get(5), 0.00001);
-        Assert.assertEquals(8.2966226, retval.get(6), 0.00001);
+        Assertions.assertEquals(10068.419360, retval.get(0), 0.00001);
+        Assertions.assertEquals(9731.078356, retval.get(1), 0.00001);
+        Assertions.assertEquals(773.612799, retval.get(2), 0.00001);
+        Assertions.assertEquals(1.034666, retval.get(3), 0.00001);
+        Assertions.assertEquals(13.014804, retval.get(4), 0.00001);
+        Assertions.assertEquals(12.578745, retval.get(5), 0.00001);
+        Assertions.assertEquals(8.2966226, retval.get(6), 0.00001);
     }
 
 }

@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -34,7 +35,7 @@ public class ElementComparatorTest extends CDKTestCase {
     @Test
     public void testElementComparator() {
         ElementComparator comp = new ElementComparator();
-        Assert.assertNotNull(comp);
+        Assertions.assertNotNull(comp);
     }
 
     /**
@@ -44,11 +45,11 @@ public class ElementComparatorTest extends CDKTestCase {
     public void testCompare_Object_Object() {
         ElementComparator comp = new ElementComparator();
 
-        Assert.assertTrue(comp.compare("C", "H") < 0);
-        Assert.assertTrue(comp.compare("H", "O") < 0);
-        Assert.assertTrue(comp.compare("N", "O") < 0);
-        Assert.assertEquals(0, comp.compare("Cl", "Cl"));
-        Assert.assertTrue(comp.compare("Cl", "C") > 0);
+        Assertions.assertTrue(comp.compare("C", "H") < 0);
+        Assertions.assertTrue(comp.compare("H", "O") < 0);
+        Assertions.assertTrue(comp.compare("N", "O") < 0);
+        Assertions.assertEquals(0, comp.compare("Cl", "Cl"));
+        Assertions.assertTrue(comp.compare("Cl", "C") > 0);
     }
 
 }

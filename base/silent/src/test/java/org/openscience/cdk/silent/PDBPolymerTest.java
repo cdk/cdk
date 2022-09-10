@@ -22,6 +22,7 @@ package org.openscience.cdk.silent;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -45,8 +46,8 @@ public class PDBPolymerTest extends AbstractPDBPolymerTest {
     @Test
     public void testPDBPolymer() {
         IPDBPolymer pdbPolymer = new PDBPolymer();
-        Assert.assertNotNull(pdbPolymer);
-        Assert.assertEquals(pdbPolymer.getMonomerCount(), 0);
+        Assertions.assertNotNull(pdbPolymer);
+        Assertions.assertEquals(pdbPolymer.getMonomerCount(), 0);
 
         IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
@@ -69,37 +70,37 @@ public class PDBPolymerTest extends AbstractPDBPolymerTest {
         pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom4, oMono2, oStrand2);
         pdbPolymer.addAtom(oPDBAtom5, oMono3, oStrand2);
-        Assert.assertNotNull(pdbPolymer.getAtom(0));
-        Assert.assertNotNull(pdbPolymer.getAtom(1));
-        Assert.assertNotNull(pdbPolymer.getAtom(2));
-        Assert.assertNotNull(pdbPolymer.getAtom(3));
-        Assert.assertNotNull(pdbPolymer.getAtom(4));
-        Assert.assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
-        Assert.assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
-        Assert.assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
-        Assert.assertEquals(oPDBAtom4, pdbPolymer.getAtom(3));
-        Assert.assertEquals(oPDBAtom5, pdbPolymer.getAtom(4));
+        Assertions.assertNotNull(pdbPolymer.getAtom(0));
+        Assertions.assertNotNull(pdbPolymer.getAtom(1));
+        Assertions.assertNotNull(pdbPolymer.getAtom(2));
+        Assertions.assertNotNull(pdbPolymer.getAtom(3));
+        Assertions.assertNotNull(pdbPolymer.getAtom(4));
+        Assertions.assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
+        Assertions.assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
+        Assertions.assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
+        Assertions.assertEquals(oPDBAtom4, pdbPolymer.getAtom(3));
+        Assertions.assertEquals(oPDBAtom5, pdbPolymer.getAtom(4));
 
-        Assert.assertNull(pdbPolymer.getMonomer("0815", "A"));
-        Assert.assertNull(pdbPolymer.getMonomer("0815", "B"));
-        Assert.assertNull(pdbPolymer.getMonomer("0815", ""));
-        Assert.assertNull(pdbPolymer.getStrand(""));
-        Assert.assertNotNull(pdbPolymer.getMonomer("TRP279", "A"));
-        Assert.assertEquals(oMono1, pdbPolymer.getMonomer("TRP279", "A"));
-        Assert.assertEquals(pdbPolymer.getMonomer("TRP279", "A").getAtomCount(), 1);
-        Assert.assertNotNull(pdbPolymer.getMonomer("HOH", "B"));
-        Assert.assertEquals(oMono2, pdbPolymer.getMonomer("HOH", "B"));
-        Assert.assertEquals(pdbPolymer.getMonomer("HOH", "B").getAtomCount(), 1);
-        Assert.assertEquals(pdbPolymer.getStrand("B").getAtomCount(), 2);
-        Assert.assertEquals(pdbPolymer.getStrand("B").getMonomerCount(), 2);
-        Assert.assertNull(pdbPolymer.getStrand("C"));
-        Assert.assertNotNull(pdbPolymer.getStrand("B"));
+        Assertions.assertNull(pdbPolymer.getMonomer("0815", "A"));
+        Assertions.assertNull(pdbPolymer.getMonomer("0815", "B"));
+        Assertions.assertNull(pdbPolymer.getMonomer("0815", ""));
+        Assertions.assertNull(pdbPolymer.getStrand(""));
+        Assertions.assertNotNull(pdbPolymer.getMonomer("TRP279", "A"));
+        Assertions.assertEquals(oMono1, pdbPolymer.getMonomer("TRP279", "A"));
+        Assertions.assertEquals(pdbPolymer.getMonomer("TRP279", "A").getAtomCount(), 1);
+        Assertions.assertNotNull(pdbPolymer.getMonomer("HOH", "B"));
+        Assertions.assertEquals(oMono2, pdbPolymer.getMonomer("HOH", "B"));
+        Assertions.assertEquals(pdbPolymer.getMonomer("HOH", "B").getAtomCount(), 1);
+        Assertions.assertEquals(pdbPolymer.getStrand("B").getAtomCount(), 2);
+        Assertions.assertEquals(pdbPolymer.getStrand("B").getMonomerCount(), 2);
+        Assertions.assertNull(pdbPolymer.getStrand("C"));
+        Assertions.assertNotNull(pdbPolymer.getStrand("B"));
     }
 
     @Test
     public void testGetMonomerNamesInSequentialOrder() {
         PDBPolymer pdbPolymer = new PDBPolymer();
-        Assert.assertEquals(0, pdbPolymer.getMonomerNames().size());
+        Assertions.assertEquals(0, pdbPolymer.getMonomerNames().size());
 
         IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
@@ -111,14 +112,14 @@ public class PDBPolymerTest extends AbstractPDBPolymerTest {
         IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand1);
-        Assert.assertNotNull(pdbPolymer.getAtom(0));
-        Assert.assertNotNull(pdbPolymer.getAtom(1));
-        Assert.assertEquals(oPDBAtom2, pdbPolymer.getAtom(0));
-        Assert.assertEquals(oPDBAtom3, pdbPolymer.getAtom(1));
+        Assertions.assertNotNull(pdbPolymer.getAtom(0));
+        Assertions.assertNotNull(pdbPolymer.getAtom(1));
+        Assertions.assertEquals(oPDBAtom2, pdbPolymer.getAtom(0));
+        Assertions.assertEquals(oPDBAtom3, pdbPolymer.getAtom(1));
 
         Iterator<String> monomers = pdbPolymer.getMonomerNamesInSequentialOrder().iterator();
-        Assert.assertEquals("TRP279", monomers.next());
-        Assert.assertEquals("CYS280", monomers.next());
+        Assertions.assertEquals("TRP279", monomers.next());
+        Assertions.assertEquals("CYS280", monomers.next());
     }
 
     // Overwrite default methods: no notifications are expected!

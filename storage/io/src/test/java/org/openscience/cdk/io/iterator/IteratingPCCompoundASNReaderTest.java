@@ -23,6 +23,7 @@
 package org.openscience.cdk.io.iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -50,13 +51,13 @@ public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
         reader.close();
 
-        Assert.assertEquals(2, molCount);
+        Assertions.assertEquals(2, molCount);
     }
 
 }

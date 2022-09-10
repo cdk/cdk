@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.mechanism;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.reaction.IReactionMechanism;
@@ -54,7 +55,7 @@ public class RadicalSiteRearrangementMechanismTest extends ReactionMechanismTest
     @Test
     public void testRadicalSiteRearrangementMechanism() {
         IReactionMechanism mechanism = new RadicalSiteRearrangementMechanism();
-        Assert.assertNotNull(mechanism);
+        Assertions.assertNotNull(mechanism);
     }
 
     /**
@@ -67,6 +68,6 @@ public class RadicalSiteRearrangementMechanismTest extends ReactionMechanismTest
     public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
         IReactionMechanism mechanism = new RadicalSiteRearrangementMechanism();
 
-        Assert.assertNotNull(mechanism);
+        Assertions.assertNotNull(mechanism);
     }
 }

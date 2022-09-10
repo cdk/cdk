@@ -19,6 +19,7 @@
 package org.openscience.cdk.structgen.stochastic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -41,8 +42,8 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
         acs.addAtomContainer(sp.parseSmiles("[C]1=C(C1)C[CH2]"));
         PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
         IAtomContainer result = pfsm.generate(acs);
-        Assert.assertTrue(ConnectivityChecker.isConnected(result));
-        Assert.assertTrue(new SaturationChecker().allSaturated(result));
+        Assertions.assertTrue(ConnectivityChecker.isConnected(result));
+        Assertions.assertTrue(new SaturationChecker().allSaturated(result));
     }
 
     @Test
@@ -53,8 +54,8 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
         acs.addAtomContainer(sp.parseSmiles("[C]([CH2])=C1CC1"));
         PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
         IAtomContainer result = pfsm.generate(acs);
-        Assert.assertTrue(ConnectivityChecker.isConnected(result));
-        Assert.assertTrue(new SaturationChecker().allSaturated(result));
+        Assertions.assertTrue(ConnectivityChecker.isConnected(result));
+        Assertions.assertTrue(new SaturationChecker().allSaturated(result));
     }
 
     @Test
@@ -66,8 +67,8 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
         acs.addAtomContainer(sp.parseSmiles("[CH2][CH2]"));
         PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
         IAtomContainer result = pfsm.generate(acs);
-        Assert.assertTrue(ConnectivityChecker.isConnected(result));
-        Assert.assertTrue(new SaturationChecker().allSaturated(result));
+        Assertions.assertTrue(ConnectivityChecker.isConnected(result));
+        Assertions.assertTrue(new SaturationChecker().allSaturated(result));
     }
 
     @Test
@@ -79,8 +80,8 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
         acs.addAtomContainer(sp.parseSmiles("[CH2]"));
         PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
         IAtomContainer result = pfsm.generate(acs);
-        Assert.assertTrue(ConnectivityChecker.isConnected(result));
-        Assert.assertTrue(new SaturationChecker().allSaturated(result));
+        Assertions.assertTrue(ConnectivityChecker.isConnected(result));
+        Assertions.assertTrue(new SaturationChecker().allSaturated(result));
     }
 
     @Test
@@ -92,7 +93,7 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
         acs.addAtomContainer(sp.parseSmiles("[CH2]"));
         PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
         IAtomContainer result = pfsm.generate(acs);
-        Assert.assertTrue(ConnectivityChecker.isConnected(result));
-        Assert.assertTrue(new SaturationChecker().allSaturated(result));
+        Assertions.assertTrue(ConnectivityChecker.isConnected(result));
+        Assertions.assertTrue(new SaturationChecker().allSaturated(result));
     }
 }

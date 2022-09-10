@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IFragmentAtom;
@@ -40,7 +41,7 @@ public class FragmentAtomTest extends AbstractFragmentAtomTest {
     @Test
     public void testFragmentAtom() {
         IFragmentAtom a = new FragmentAtom();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     // Overwrite default methods: no notifications are expected!

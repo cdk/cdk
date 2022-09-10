@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -40,35 +41,35 @@ public class ReactionSpecificationTest extends CDKTestCase {
     public void testReactionSpecification_String_String_String_String() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
-        Assert.assertNotNull(spec);
+        Assertions.assertNotNull(spec);
     }
 
     @Test
     public void testGetImplementationVendor() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
-        Assert.assertEquals(REAC_IMPL_VENDOR, spec.getImplementationVendor());
+        Assertions.assertEquals(REAC_IMPL_VENDOR, spec.getImplementationVendor());
     }
 
     @Test
     public void testGetSpecificationReference() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
-        Assert.assertEquals(REAC_REF, spec.getSpecificationReference());
+        Assertions.assertEquals(REAC_REF, spec.getSpecificationReference());
     }
 
     @Test
     public void testGetImplementationIdentifier() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
-        Assert.assertEquals(REAC_IMPL_ID, spec.getImplementationIdentifier());
+        Assertions.assertEquals(REAC_IMPL_ID, spec.getImplementationIdentifier());
     }
 
     @Test
     public void testGetImplementationTitle() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
-        Assert.assertEquals(REAC_IMPL_TITLE, spec.getImplementationTitle());
+        Assertions.assertEquals(REAC_IMPL_TITLE, spec.getImplementationTitle());
     }
 
 }

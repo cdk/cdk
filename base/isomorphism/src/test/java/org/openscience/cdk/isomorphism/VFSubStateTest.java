@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -54,7 +55,7 @@ public class VFSubStateTest {
         VFSubState state = createBenzeneToNaphthalene(mock, mock(BondMatcher.class));
         for (int i = 0; i < state.nMax(); i++) {
             for (int j = 0; j < state.mMax(); j++) {
-                assertFalse(state.feasible(i, j));
+                Assertions.assertFalse(state.feasible(i, j));
             }
         }
     }
@@ -72,7 +73,7 @@ public class VFSubStateTest {
         state.m1[4] = 4;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                assertFalse(state.feasible(i, j));
+                Assertions.assertFalse(state.feasible(i, j));
             }
         }
     }
@@ -81,24 +82,24 @@ public class VFSubStateTest {
     @Test
     public void infeasibleTerminalCount() throws Exception {
         VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
-        assertTrue(state.feasible(0, 0)); // 0,0 is feasible
+        Assertions.assertTrue(state.feasible(0, 0)); // 0,0 is feasible
         // XXX: depends on molecule order not changing
         state.t1[1] = 1;
         state.t1[5] = 1;
-        assertFalse(state.feasible(0, 0)); // 0,0 is infeasible
+        Assertions.assertFalse(state.feasible(0, 0)); // 0,0 is infeasible
     }
 
     // 2-look-ahead
     @Test
     public void infeasibleRemainCount() throws Exception {
         VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
-        assertTrue(state.feasible(0, 0)); // 0,0 is feasible
+        Assertions.assertTrue(state.feasible(0, 0)); // 0,0 is feasible
         // XXX: depends on molecule order not changing
         state.m1[1] = 1;
         state.m1[5] = 5;
         state.t2[1] = 1;
         state.t2[9] = 1;
-        assertFalse(state.feasible(0, 0)); // 0,0 is infeasible
+        Assertions.assertFalse(state.feasible(0, 0)); // 0,0 is infeasible
     }
 
     /**

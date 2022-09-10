@@ -1,5 +1,6 @@
 package org.openscience.cdk.fingerprint;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -45,21 +46,21 @@ public class IntArrayCountFingerprintTest {
 
         fp1.merge(fp2);
 
-        assertEquals(fp1.numOfPopulatedbins(), hashCounts.size());
+        Assertions.assertEquals(fp1.numOfPopulatedbins(), hashCounts.size());
 
         for (int i = 0; i < fp1.numOfPopulatedbins(); i++) {
             Integer hash = fp1.getHash(i);
             Integer count = fp1.getCount(i);
-            assertTrue(hashCounts.containsKey(hash));
-            assertEquals(count, hashCounts.get(hash));
+            Assertions.assertTrue(hashCounts.containsKey(hash));
+            Assertions.assertEquals(count, hashCounts.get(hash));
         }
 
         int Aindex = Arrays.binarySearch(fp1.hitHashes, "A".hashCode());
-        assertTrue("A should be in the fingerprint", Aindex >= 0);
-        assertEquals(fp1.numOfHits[Aindex], 2);
+        Assertions.assertTrue(Aindex >= 0, "A should be in the fingerprint");
+        Assertions.assertEquals(fp1.numOfHits[Aindex], 2);
         int Cindex = Arrays.binarySearch(fp1.hitHashes, "C".hashCode());
-        assertTrue("C should be in the fingerprint", Cindex >= 0);
-        assertEquals(fp1.numOfHits[Cindex], 3);
+        Assertions.assertTrue(Cindex >= 0, "C should be in the fingerprint");
+        Assertions.assertEquals(fp1.numOfHits[Cindex], 3);
     }
 
 }

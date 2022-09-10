@@ -19,6 +19,7 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.vecmath.Point3d;
@@ -31,10 +32,10 @@ public class PharmacophoreAtomTest {
     @Test
     public void testGetterSetter() {
         PharmacophoreAtom patom = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
-        Assert.assertEquals("[CX2]N", patom.getSmarts());
+        Assertions.assertEquals("[CX2]N", patom.getSmarts());
 
         patom.setSmarts("[OX2]");
-        Assert.assertEquals("[OX2]", patom.getSmarts());
+        Assertions.assertEquals("[OX2]", patom.getSmarts());
     }
 
     @Test
@@ -42,9 +43,9 @@ public class PharmacophoreAtomTest {
         PharmacophoreAtom patom = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
         patom.setMatchingAtoms(new int[]{1, 4, 5});
         int[] indices = patom.getMatchingAtoms();
-        Assert.assertEquals(1, indices[0]);
-        Assert.assertEquals(4, indices[1]);
-        Assert.assertEquals(5, indices[2]);
+        Assertions.assertEquals(1, indices[0]);
+        Assertions.assertEquals(4, indices[1]);
+        Assertions.assertEquals(5, indices[2]);
     }
 
     @Test
@@ -61,8 +62,8 @@ public class PharmacophoreAtomTest {
         PharmacophoreAtom patom4 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
         patom4.setMatchingAtoms(new int[]{1, 4, 6});
 
-        Assert.assertEquals(patom2, patom1);
-        Assert.assertNotSame(patom3, patom1);
-        Assert.assertNotSame(patom4, patom1);
+        Assertions.assertEquals(patom2, patom1);
+        Assertions.assertNotSame(patom3, patom1);
+        Assertions.assertNotSame(patom4, patom1);
     }
 }

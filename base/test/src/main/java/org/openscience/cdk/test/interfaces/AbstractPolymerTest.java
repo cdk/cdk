@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -34,8 +35,8 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oPolymer.addAtom(oAtom1);
         oPolymer.addAtom(oAtom2);
 
-        Assert.assertEquals(2, oPolymer.getAtomCount());
-        Assert.assertEquals(0, oPolymer.getMonomerCount());
+        Assertions.assertEquals(2, oPolymer.getAtomCount());
+        Assertions.assertEquals(0, oPolymer.getMonomerCount());
     }
 
     @Test
@@ -51,24 +52,24 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oPolymer.addAtom(oAtom1);
         oPolymer.addAtom(oAtom2, oMono1);
         oPolymer.addAtom(oAtom3, oMono2);
-        Assert.assertNotNull(oPolymer.getAtom(0));
-        Assert.assertNotNull(oPolymer.getAtom(1));
-        Assert.assertNotNull(oPolymer.getAtom(2));
-        Assert.assertEquals(oAtom1, oPolymer.getAtom(0));
-        Assert.assertEquals(oAtom2, oPolymer.getAtom(1));
-        Assert.assertEquals(oAtom3, oPolymer.getAtom(2));
-        Assert.assertEquals(3, oPolymer.getAtomCount());
-        Assert.assertEquals(1, oPolymer.getMonomer("TRP279").getAtomCount());
-        Assert.assertEquals(1, oPolymer.getMonomerCount());
+        Assertions.assertNotNull(oPolymer.getAtom(0));
+        Assertions.assertNotNull(oPolymer.getAtom(1));
+        Assertions.assertNotNull(oPolymer.getAtom(2));
+        Assertions.assertEquals(oAtom1, oPolymer.getAtom(0));
+        Assertions.assertEquals(oAtom2, oPolymer.getAtom(1));
+        Assertions.assertEquals(oAtom3, oPolymer.getAtom(2));
+        Assertions.assertEquals(3, oPolymer.getAtomCount());
+        Assertions.assertEquals(1, oPolymer.getMonomer("TRP279").getAtomCount());
+        Assertions.assertEquals(1, oPolymer.getMonomerCount());
 
-        Assert.assertNotNull(oPolymer.getMonomer("TRP279"));
-        Assert.assertEquals(oMono1, oPolymer.getMonomer("TRP279"));
+        Assertions.assertNotNull(oPolymer.getMonomer("TRP279"));
+        Assertions.assertEquals(oMono1, oPolymer.getMonomer("TRP279"));
     }
 
     @Test
     public void testGetMonomerCount() {
         IPolymer oPolymer = (IPolymer) newChemObject();
-        Assert.assertEquals(0, oPolymer.getMonomerCount());
+        Assertions.assertEquals(0, oPolymer.getMonomerCount());
 
         IMonomer oMono1 = oPolymer.getBuilder().newInstance(IMonomer.class);
         oMono1.setMonomerName("TRP279");
@@ -81,8 +82,8 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oPolymer.addAtom(oAtom2, oMono1);
         oPolymer.addAtom(oAtom3, oMono2);
 
-        Assert.assertEquals(3, oPolymer.getAtomCount());
-        Assert.assertEquals(2, oPolymer.getMonomerCount());
+        Assertions.assertEquals(3, oPolymer.getAtomCount());
+        Assertions.assertEquals(2, oPolymer.getMonomerCount());
     }
 
     @Test
@@ -100,15 +101,15 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oPolymer.addAtom(oAtom2, oMono1);
         oPolymer.addAtom(oAtom3, oMono2);
 
-        Assert.assertEquals(oMono1, oPolymer.getMonomer("TRP279"));
-        Assert.assertEquals(oMono2, oPolymer.getMonomer("HOH"));
-        Assert.assertNull(oPolymer.getMonomer("Mek"));
+        Assertions.assertEquals(oMono1, oPolymer.getMonomer("TRP279"));
+        Assertions.assertEquals(oMono2, oPolymer.getMonomer("HOH"));
+        Assertions.assertNull(oPolymer.getMonomer("Mek"));
     }
 
     @Test
     public void testGetMonomerNames() {
         IPolymer oPolymer = (IPolymer) newChemObject();
-        Assert.assertEquals(0, oPolymer.getMonomerNames().size());
+        Assertions.assertEquals(0, oPolymer.getMonomerNames().size());
 
         IMonomer oMono1 = oPolymer.getBuilder().newInstance(IMonomer.class);
         oMono1.setMonomerName("TRP279");
@@ -125,10 +126,10 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         monomers.put("TRP279", oMono1);
         monomers.put("HOH", oMono2);
 
-        Assert.assertEquals(2, oPolymer.getMonomerNames().size());
-        Assert.assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
-        Assert.assertTrue(oPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
-        Assert.assertEquals(monomers.keySet(), oPolymer.getMonomerNames());
+        Assertions.assertEquals(2, oPolymer.getMonomerNames().size());
+        Assertions.assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
+        Assertions.assertTrue(oPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
+        Assertions.assertEquals(monomers.keySet(), oPolymer.getMonomerNames());
     }
 
     @Test
@@ -138,12 +139,12 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
         oPolymer.addAtom(oAtom1, oMono1);
-        Assert.assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
-        Assert.assertEquals(1, oPolymer.getAtomCount());
+        Assertions.assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
+        Assertions.assertEquals(1, oPolymer.getAtomCount());
 
         oPolymer.removeMonomer("TRP279");
-        Assert.assertFalse(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
-        Assert.assertEquals(0, oPolymer.getAtomCount());
+        Assertions.assertFalse(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
+        Assertions.assertEquals(0, oPolymer.getAtomCount());
     }
 
     /**
@@ -163,8 +164,8 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         polymer.addAtom(oAtom3, oMono2);
         String description = polymer.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 
@@ -176,7 +177,7 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
     public void testClone() throws Exception {
         IPolymer polymer = (IPolymer) newChemObject();
         Object clone = polymer.clone();
-        Assert.assertNotNull(clone);
+        Assertions.assertNotNull(clone);
     }
 
 }

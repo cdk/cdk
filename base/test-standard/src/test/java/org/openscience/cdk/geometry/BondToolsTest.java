@@ -21,6 +21,7 @@ package org.openscience.cdk.geometry;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -49,14 +50,14 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertTrue(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(0)));
-        Assert.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(1)));
-        Assert.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(2)));
-        Assert.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(3)));
-        Assert.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(4)));
-        Assert.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(5)));
-        Assert.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(6)));
-        Assert.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(7)));
+        Assertions.assertTrue(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(0)));
+        Assertions.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(1)));
+        Assertions.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(2)));
+        Assertions.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(3)));
+        Assertions.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(4)));
+        Assertions.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(5)));
+        Assertions.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(6)));
+        Assertions.assertFalse(BondTools.isValidDoubleBondConfiguration(mol, mol.getBond(7)));
     }
 
     @Test
@@ -66,7 +67,7 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertFalse(BondTools.isCisTrans(mol.getAtom(2), mol.getAtom(0), mol.getAtom(1), mol.getAtom(4), mol));
+        Assertions.assertFalse(BondTools.isCisTrans(mol.getAtom(2), mol.getAtom(0), mol.getAtom(1), mol.getAtom(4), mol));
     }
 
     @Test
@@ -76,7 +77,7 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertFalse(BondTools.isLeft(mol.getAtom(1), mol.getAtom(0), mol.getAtom(2)));
+        Assertions.assertFalse(BondTools.isLeft(mol.getAtom(1), mol.getAtom(0), mol.getAtom(2)));
     }
 
     @Test
@@ -86,10 +87,8 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(2.0943946986086157,
-                BondTools.giveAngleBothMethods(mol.getAtom(0), mol.getAtom(2), mol.getAtom(3), true), 0.2);
-        Assert.assertEquals(2.0943946986086157,
-                BondTools.giveAngleBothMethods(mol.getAtom(0), mol.getAtom(2), mol.getAtom(3), false), 0.2);
+        Assertions.assertEquals(2.0943946986086157, BondTools.giveAngleBothMethods(mol.getAtom(0), mol.getAtom(2), mol.getAtom(3), true), 0.2);
+        Assertions.assertEquals(2.0943946986086157, BondTools.giveAngleBothMethods(mol.getAtom(0), mol.getAtom(2), mol.getAtom(3), false), 0.2);
     }
 
     /**
@@ -107,8 +106,8 @@ public class BondToolsTest extends CDKTestCase {
         for (IAtom iAtom : mol.atoms()) {
             atf.configure(iAtom);
         }
-        Assert.assertTrue(BondTools.closeEnoughToBond(mol.getAtom(0), mol.getAtom(1), 1));
-        Assert.assertFalse(BondTools.closeEnoughToBond(mol.getAtom(0), mol.getAtom(8), 1));
+        Assertions.assertTrue(BondTools.closeEnoughToBond(mol.getAtom(0), mol.getAtom(1), 1));
+        Assertions.assertFalse(BondTools.closeEnoughToBond(mol.getAtom(0), mol.getAtom(8), 1));
     }
 
     @Test
@@ -118,9 +117,9 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(2.0943946986086157, BondTools.giveAngleBothMethods(mol.getAtom(0).getPoint2d(), mol
+        Assertions.assertEquals(2.0943946986086157, BondTools.giveAngleBothMethods(mol.getAtom(0).getPoint2d(), mol
                 .getAtom(2).getPoint2d(), mol.getAtom(3).getPoint2d(), true), 0.2);
-        Assert.assertEquals(2.0943946986086157, BondTools.giveAngleBothMethods(mol.getAtom(0).getPoint2d(), mol
+        Assertions.assertEquals(2.0943946986086157, BondTools.giveAngleBothMethods(mol.getAtom(0).getPoint2d(), mol
                 .getAtom(2).getPoint2d(), mol.getAtom(3).getPoint2d(), false), 0.2);
     }
 
@@ -131,15 +130,15 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(BondTools.isTetrahedral(mol, mol.getAtom(0), true), 1);
-        Assert.assertEquals(BondTools.isTetrahedral(mol, mol.getAtom(1), true), 0);
+        Assertions.assertEquals(BondTools.isTetrahedral(mol, mol.getAtom(0), true), 1);
+        Assertions.assertEquals(BondTools.isTetrahedral(mol, mol.getAtom(1), true), 0);
         filename = "tetrahedral_1_lazy.mol";
         ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins);
         chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(BondTools.isTetrahedral(mol, mol.getAtom(0), true), 0);
-        Assert.assertEquals(BondTools.isTetrahedral(mol, mol.getAtom(0), false), 3);
+        Assertions.assertEquals(BondTools.isTetrahedral(mol, mol.getAtom(0), true), 0);
+        Assertions.assertEquals(BondTools.isTetrahedral(mol, mol.getAtom(0), false), 3);
     }
 
     @Test
@@ -149,8 +148,8 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(BondTools.isTrigonalBipyramidalOrOctahedral(mol, mol.getAtom(0)), 1);
-        Assert.assertEquals(BondTools.isTrigonalBipyramidalOrOctahedral(mol, mol.getAtom(1)), 0);
+        Assertions.assertEquals(BondTools.isTrigonalBipyramidalOrOctahedral(mol, mol.getAtom(0)), 1);
+        Assertions.assertEquals(BondTools.isTrigonalBipyramidalOrOctahedral(mol, mol.getAtom(1)), 0);
     }
 
     @Test
@@ -160,8 +159,8 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertTrue(BondTools.isStereo(mol, mol.getAtom(0)));
-        Assert.assertFalse(BondTools.isStereo(mol, mol.getAtom(1)));
+        Assertions.assertTrue(BondTools.isStereo(mol, mol.getAtom(0)));
+        Assertions.assertFalse(BondTools.isStereo(mol, mol.getAtom(1)));
     }
 
     @Test
@@ -174,8 +173,8 @@ public class BondToolsTest extends CDKTestCase {
         for (int i = 1; i < 6; i++) {
             mol.getAtom(i).setSymbol("C");
         }
-        Assert.assertFalse(BondTools.isStereo(mol, mol.getAtom(0)));
-        Assert.assertFalse(BondTools.isStereo(mol, mol.getAtom(1)));
+        Assertions.assertFalse(BondTools.isStereo(mol, mol.getAtom(0)));
+        Assertions.assertFalse(BondTools.isStereo(mol, mol.getAtom(1)));
     }
 
     @Test
@@ -185,8 +184,8 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertTrue(BondTools.isSquarePlanar(mol, mol.getAtom(0)));
-        Assert.assertFalse(BondTools.isSquarePlanar(mol, mol.getAtom(1)));
+        Assertions.assertTrue(BondTools.isSquarePlanar(mol, mol.getAtom(0)));
+        Assertions.assertFalse(BondTools.isSquarePlanar(mol, mol.getAtom(1)));
     }
 
     @Test
@@ -196,13 +195,13 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertFalse(BondTools.stereosAreOpposite(mol, mol.getAtom(0)));
+        Assertions.assertFalse(BondTools.stereosAreOpposite(mol, mol.getAtom(0)));
         filename = "tetrahedral_with_four_wedges.mol";
         ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins);
         chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertTrue(BondTools.stereosAreOpposite(mol, mol.getAtom(0)));
+        Assertions.assertTrue(BondTools.stereosAreOpposite(mol, mol.getAtom(0)));
     }
 
     @Test
@@ -213,7 +212,7 @@ public class BondToolsTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         BondTools.makeUpDownBonds(mol);
-        Assert.assertEquals(IBond.Stereo.DOWN, mol.getBond(3).getStereo());
+        Assertions.assertEquals(IBond.Stereo.DOWN, mol.getBond(3).getStereo());
     }
 
     @Test
@@ -223,8 +222,7 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(2.0943946986086157, BondTools.giveAngle(mol.getAtom(0), mol.getAtom(2), mol.getAtom(3)),
-                0.2);
+        Assertions.assertEquals(2.0943946986086157, BondTools.giveAngle(mol.getAtom(0), mol.getAtom(2), mol.getAtom(3)), 0.2);
     }
 
     @Test
@@ -234,8 +232,7 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(2.0943946986086157,
-                BondTools.giveAngleFromMiddle(mol.getAtom(0), mol.getAtom(2), mol.getAtom(3)), 0.2);
+        Assertions.assertEquals(2.0943946986086157, BondTools.giveAngleFromMiddle(mol.getAtom(0), mol.getAtom(2), mol.getAtom(3)), 0.2);
     }
 
     /**
@@ -248,6 +245,6 @@ public class BondToolsTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertTrue(BondTools.isStereo(mol, mol.getAtom(5)));
+        Assertions.assertTrue(BondTools.isStereo(mol, mol.getAtom(5)));
     }
 }

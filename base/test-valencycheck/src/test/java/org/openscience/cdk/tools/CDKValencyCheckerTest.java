@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -46,7 +47,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
     @Test
     public void testInstance() {
         CDKValencyChecker checker = CDKValencyChecker.getInstance(DefaultChemObjectBuilder.getInstance());
-        Assert.assertNotNull(checker);
+        Assertions.assertNotNull(checker);
     }
 
     @Test
@@ -69,7 +70,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         mol.addBond(new Bond(c, h3));
         mol.addBond(new Bond(c, h4));
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
 
         // test methane with implicit hydrogen
         mol = new AtomContainer();
@@ -77,7 +78,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         c.setImplicitHydrogenCount(4);
         mol.addAtom(c);
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
     }
 
     @Test
@@ -100,7 +101,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         mol.addBond(new Bond(c, h3));
         mol.addBond(new Bond(c, h4));
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
 
         // test methane with implicit hydrogen
         mol = new AtomContainer();
@@ -109,7 +110,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         mol.addAtom(c);
         findAndConfigureAtomTypesForAllAtoms(mol);
         for (IAtom atom : mol.atoms()) {
-            Assert.assertTrue(checker.isSaturated(atom, mol));
+            Assertions.assertTrue(checker.isSaturated(atom, mol));
         }
     }
 
@@ -122,7 +123,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         mol.addAtom(c);
         c.setImplicitHydrogenCount(3);
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertFalse(checker.isSaturated(mol));
+        Assertions.assertFalse(checker.isSaturated(mol));
     }
 
     /**
@@ -149,7 +150,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         mol.addBond(new Bond(c, h3));
         mol.addBond(new Bond(c, o));
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
     }
 
     /**
@@ -177,7 +178,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         mol.addBond(new Bond(n, h3));
         mol.addBond(new Bond(n, h4));
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
     }
 
     /**
@@ -209,7 +210,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         mol.addBond(new Bond(h1, o3, IBond.Order.SINGLE));
         mol.addBond(new Bond(h2, o4, IBond.Order.SINGLE));
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
     }
 
     /**
@@ -224,7 +225,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         hydrogen.setFormalCharge(+1);
         mol.addAtom(hydrogen);
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
     }
 
     /** TODO: check who added this test. I think Miguel; it seems to be a
@@ -245,7 +246,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
         findAndConfigureAtomTypesForAllAtoms(mol);
         mol.getAtom(2).setImplicitHydrogenCount(2); // third atom
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
     }
 
     @Test
@@ -264,12 +265,12 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         IBond bond = new Bond(c1, c2, Order.SINGLE);
         mol.addBond(bond);
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertFalse(checker.isSaturated(mol));
+        Assertions.assertFalse(checker.isSaturated(mol));
 
         // sanity check
         bond.setOrder(Order.DOUBLE);
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertTrue(checker.isSaturated(mol));
+        Assertions.assertTrue(checker.isSaturated(mol));
     }
 
     private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws Exception {

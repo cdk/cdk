@@ -48,7 +48,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testConstructor() throws Exception {
-        Assert.assertNotNull(new BasicGroupCountDescriptor());
+        Assertions.assertNotNull(new BasicGroupCountDescriptor());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NC");
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
-        Assert.assertEquals(1, result.intValue());
+        Assertions.assertEquals(1, result.intValue());
     }
 
     @Test
@@ -109,6 +109,6 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
         // two SMARTS matches
-        Assert.assertEquals(2, result.intValue());
+        Assertions.assertEquals(2, result.intValue());
     }
 }

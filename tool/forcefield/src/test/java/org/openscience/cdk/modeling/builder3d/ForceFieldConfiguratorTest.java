@@ -29,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -59,11 +60,11 @@ public class ForceFieldConfiguratorTest {
     */
     @Test
     public void testCheckForceFieldType_String() {
-        assertEquals(2, forceFieldConfigurator.getFfTypes().length);
+        Assertions.assertEquals(2, forceFieldConfigurator.getFfTypes().length);
         String validForceFieldType = "mm2";
         String invalidForceFieldType = "mmff2001";
-        assertTrue(forceFieldConfigurator.checkForceFieldType(validForceFieldType));
-        assertFalse(forceFieldConfigurator.checkForceFieldType(invalidForceFieldType));
+        Assertions.assertTrue(forceFieldConfigurator.checkForceFieldType(validForceFieldType));
+        Assertions.assertFalse(forceFieldConfigurator.checkForceFieldType(invalidForceFieldType));
 
     }
 
@@ -72,44 +73,44 @@ public class ForceFieldConfiguratorTest {
         String forceFieldName = "mmff94";
         forceFieldConfigurator.setForceFieldConfigurator(forceFieldName, DefaultChemObjectBuilder.getInstance());
         List<IAtomType> mmff94AtomTypes = forceFieldConfigurator.getAtomTypes();
-        assertNotNull(mmff94AtomTypes);
+        Assertions.assertNotNull(mmff94AtomTypes);
         IAtomType atomtype0 = mmff94AtomTypes.get(0);
-        assertEquals("C", atomtype0.getAtomTypeName());
+        Assertions.assertEquals("C", atomtype0.getAtomTypeName());
         IAtomType atomtype1 = mmff94AtomTypes.get(1);
-        assertEquals("Csp2", atomtype1.getAtomTypeName());
+        Assertions.assertEquals("Csp2", atomtype1.getAtomTypeName());
 
         forceFieldName = "mm2";
         forceFieldConfigurator.setForceFieldConfigurator(forceFieldName, DefaultChemObjectBuilder.getInstance());
         List<IAtomType> mm2AtomTypes = forceFieldConfigurator.getAtomTypes();
-        assertNotNull(mm2AtomTypes);
+        Assertions.assertNotNull(mm2AtomTypes);
         IAtomType atomtype2 = mm2AtomTypes.get(2);
-        assertEquals("C=", atomtype2.getAtomTypeName());
+        Assertions.assertEquals("C=", atomtype2.getAtomTypeName());
         IAtomType atomtype3 = mm2AtomTypes.get(3);
-        assertEquals("Csp", atomtype3.getAtomTypeName());
+        Assertions.assertEquals("Csp", atomtype3.getAtomTypeName());
 
     }
 
     @Test
     public void testSetMM2Parameters() throws CDKException {
         forceFieldConfigurator.setMM2Parameters(DefaultChemObjectBuilder.getInstance());
-        assertNotNull(forceFieldConfigurator.getParameterSet());
+        Assertions.assertNotNull(forceFieldConfigurator.getParameterSet());
         List<IAtomType> atomtypeList = forceFieldConfigurator.getAtomTypes();
         IAtomType atomtype1 = atomtypeList.get(1);
-        assertEquals("Csp2", atomtype1.getAtomTypeName());
-        assertEquals(6, (int) atomtype1.getAtomicNumber());
-        assertEquals(12, (int) atomtype1.getMassNumber());
+        Assertions.assertEquals("Csp2", atomtype1.getAtomTypeName());
+        Assertions.assertEquals(6, (int) atomtype1.getAtomicNumber());
+        Assertions.assertEquals(12, (int) atomtype1.getMassNumber());
     }
 
     @Test
     public void testSetMMFF94Parameters() throws Exception {
         forceFieldConfigurator.setMMFF94Parameters(DefaultChemObjectBuilder.getInstance());
-        assertNotNull(forceFieldConfigurator.getParameterSet());
+        Assertions.assertNotNull(forceFieldConfigurator.getParameterSet());
         List<IAtomType> atomtypeList = forceFieldConfigurator.getAtomTypes();
         IAtomType atomtype4 = atomtypeList.get(4);
-        assertEquals("CO2M", atomtype4.getAtomTypeName());
-        assertEquals(6, (int) atomtype4.getAtomicNumber());
-        assertEquals(3, (int) atomtype4.getFormalNeighbourCount());
-        assertEquals(12, (int) atomtype4.getMassNumber());
+        Assertions.assertEquals("CO2M", atomtype4.getAtomTypeName());
+        Assertions.assertEquals(6, (int) atomtype4.getAtomicNumber());
+        Assertions.assertEquals(3, (int) atomtype4.getFormalNeighbourCount());
+        Assertions.assertEquals(12, (int) atomtype4.getMassNumber());
 
     }
 
@@ -117,10 +118,10 @@ public class ForceFieldConfiguratorTest {
     public void testRemoveAromaticityFlagsFromHoseCode_String() {
         String hosecode1 = "***HO*SE*CODE***";
         String cleanHoseCode = forceFieldConfigurator.removeAromaticityFlagsFromHoseCode(hosecode1);
-        assertEquals("HOSECODE", cleanHoseCode);
+        Assertions.assertEquals("HOSECODE", cleanHoseCode);
         String hosecode2 = "HOSECODE";
         cleanHoseCode = forceFieldConfigurator.removeAromaticityFlagsFromHoseCode(hosecode2);
-        assertEquals("HOSECODE", cleanHoseCode);
+        Assertions.assertEquals("HOSECODE", cleanHoseCode);
 
     }
 
@@ -140,8 +141,8 @@ public class ForceFieldConfiguratorTest {
         IAtom N2 = hu.getAtom(3);
         ffc.configureAtom(N1, new HOSECodeGenerator().getHOSECode(hu, N1, 3), false);
         ffc.configureAtom(N2, new HOSECodeGenerator().getHOSECode(hu, N2, 3), false);
-        assertEquals("NC=O", N1.getAtomTypeName());
-        assertEquals("N2OX", N2.getAtomTypeName());
+        Assertions.assertEquals("NC=O", N1.getAtomTypeName());
+        Assertions.assertEquals("N2OX", N2.getAtomTypeName());
 
     }
 
@@ -155,7 +156,7 @@ public class ForceFieldConfiguratorTest {
         ffc.setForceFieldConfigurator("mmff94", builder);
         IAtom amideN = pa.getAtom(0);
         ffc.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator().getHOSECode(pa, amideN, 3), false);
-        assertEquals("NC=O", amideN.getAtomTypeName());
+        Assertions.assertEquals("NC=O", amideN.getAtomTypeName());
 
     }
 
@@ -173,7 +174,7 @@ public class ForceFieldConfiguratorTest {
         IAtom amideN = urea.getAtom(0);
         ffc.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator().getHOSECode(urea, amideN, 3), false);
         //		System.err.println(amideN.getAtomTypeName());
-        assertEquals("NC=O", amideN.getAtomTypeName());
+        Assertions.assertEquals("NC=O", amideN.getAtomTypeName());
 
     }
 
@@ -195,18 +196,18 @@ public class ForceFieldConfiguratorTest {
         ffAtomTypes = new String[molecule.getAtomCount()];
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            assertEquals(originalAtomTypes[i], molecule.getAtom(i).getAtomTypeName());
+            Assertions.assertEquals(originalAtomTypes[i], molecule.getAtom(i).getAtomTypeName());
         }
         forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
         IRingSet moleculeRingSet = forceFieldConfigurator.assignAtomTyps(molecule);
         //no rings
-        assertEquals(0, moleculeRingSet.getAtomContainerCount());
+        Assertions.assertEquals(0, moleculeRingSet.getAtomContainerCount());
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             IAtom mmff94atom = molecule.getAtom(i);
-            assertTrue(mmff94atom.getFlag(CDKConstants.ISALIPHATIC));
+            Assertions.assertTrue(mmff94atom.getFlag(CDKConstants.ISALIPHATIC));
             ffAtomTypes[i] = mmff94atom.getAtomTypeName();
         }
-        assertEquals(expectedAtomTypes, ffAtomTypes);
+        Assertions.assertEquals(expectedAtomTypes, ffAtomTypes);
 
     }
 
@@ -225,7 +226,7 @@ public class ForceFieldConfiguratorTest {
         forceFieldConfigurator.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator().getHOSECode(bugmol, amideN, 3),
                 false);
         //		System.err.println(amideN.getAtomTypeName());
-        assertEquals("NC=O", amideN.getAtomTypeName());
+        Assertions.assertEquals("NC=O", amideN.getAtomTypeName());
     }
 
     /**
@@ -243,7 +244,7 @@ public class ForceFieldConfiguratorTest {
         forceFieldConfigurator.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator().getHOSECode(bugmol, amideN, 3),
                 false);
         //		System.err.println(amideN.getAtomTypeName());
-        assertEquals("NO3", amideN.getAtomTypeName());
+        Assertions.assertEquals("NO3", amideN.getAtomTypeName());
 
     }
 
@@ -261,7 +262,7 @@ public class ForceFieldConfiguratorTest {
         IAtom sulphur = bugmol.getAtom(1);
         HOSECodeGenerator hscodegen = new HOSECodeGenerator();
         forceFieldConfigurator.configureAtom(sulphur, hscodegen.getHOSECode(bugmol, sulphur, 3), false);
-        assertEquals("SO2", sulphur.getAtomTypeName());
+        Assertions.assertEquals("SO2", sulphur.getAtomTypeName());
     }
 
     /**
@@ -282,8 +283,8 @@ public class ForceFieldConfiguratorTest {
         forceFieldConfigurator.configureAtom(nitrogen1, hscodegen.getHOSECode(bugmol, nitrogen1, 3), false);
         forceFieldConfigurator.configureAtom(nitrogen2, hscodegen.getHOSECode(bugmol, nitrogen2, 3), false);
         forceFieldConfigurator.configureAtom(nitrogen3, hscodegen.getHOSECode(bugmol, nitrogen3, 3), false);
-        assertEquals("NC=O", nitrogen1.getAtomTypeName());
-        assertEquals("NC=O", nitrogen2.getAtomTypeName());
+        Assertions.assertEquals("NC=O", nitrogen1.getAtomTypeName());
+        Assertions.assertEquals("NC=O", nitrogen2.getAtomTypeName());
 
     }
 
@@ -300,7 +301,7 @@ public class ForceFieldConfiguratorTest {
         IAtom nitrogen1 = bugmol.getAtom(2);
         HOSECodeGenerator hscodegen = new HOSECodeGenerator();
         forceFieldConfigurator.configureAtom(nitrogen1, hscodegen.getHOSECode(bugmol, nitrogen1, 3), false);
-        assertEquals("NC=O", nitrogen1.getAtomTypeName());
+        Assertions.assertEquals("NC=O", nitrogen1.getAtomTypeName());
 
     }
 

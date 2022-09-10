@@ -17,6 +17,7 @@
 package org.openscience.cdk.qsar.descriptors.substance;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -43,10 +44,10 @@ public class OxygenAtomCountDescriptorTest extends SubstanceDescriptorTest {
             )
         );
         DescriptorValue value = descriptor.calculate(material);
-        Assert.assertNotNull(value);
+        Assertions.assertNotNull(value);
         IDescriptorResult result = value.getValue();
-        Assert.assertNotNull(result);
-        Assert.assertEquals(1, ((IntegerResult)result).intValue());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(1, ((IntegerResult)result).intValue());
     }
 
     @Test
@@ -58,10 +59,10 @@ public class OxygenAtomCountDescriptorTest extends SubstanceDescriptorTest {
             )
         );
         DescriptorValue value = descriptor.calculate(material);
-        Assert.assertNotNull(value);
+        Assertions.assertNotNull(value);
         IDescriptorResult result = value.getValue();
-        Assert.assertNotNull(result);
-        Assert.assertEquals(4, ((IntegerResult)result).intValue());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(4, ((IntegerResult)result).intValue());
     }
 
 }

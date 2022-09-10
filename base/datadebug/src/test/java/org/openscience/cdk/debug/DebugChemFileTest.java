@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractChemFileTest;
@@ -40,6 +41,6 @@ public class DebugChemFileTest extends AbstractChemFileTest {
     @Test
     public void testDebugChemFile() {
         IChemFile cs = new DebugChemFile();
-        Assert.assertNotNull(cs);
+        Assertions.assertNotNull(cs);
     }
 }

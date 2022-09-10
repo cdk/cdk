@@ -1,6 +1,7 @@
 package org.openscience.cdk.formula;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -29,7 +30,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     @Test
     public void testIsotopePatternSimilarity() {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
-        Assert.assertNotNull(is);
+        Assertions.assertNotNull(is);
     }
 
     /**
@@ -41,7 +42,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     public void testSeTolerance_double() {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
         is.seTolerance(0.001);
-        Assert.assertNotNull(is);
+        Assertions.assertNotNull(is);
     }
 
     /**
@@ -53,7 +54,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     public void testGetTolerance() {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
         is.seTolerance(0.001);
-        Assert.assertEquals(0.001, is.getTolerance(), 0.000001);
+        Assertions.assertEquals(0.001, is.getTolerance(), 0.000001);
     }
 
     /**
@@ -76,7 +77,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
         IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
         IsotopePattern patternIsoNormalize = IsotopePatternManipulator.normalize(patternIsoPredicted);
         double score = is.compare(spExp, patternIsoNormalize);
-        Assert.assertNotSame(0.0, score);
+        Assertions.assertNotSame(0.0, score);
     }
 
     /**
@@ -111,7 +112,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
                 score = tempScore;
             }
         }
-        Assert.assertEquals("C6H10N3O2", mfString);
+        Assertions.assertEquals("C6H10N3O2", mfString);
     }
 
     /**
@@ -137,7 +138,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
         double score = is.compare(spExp, patternIsoPredicted);
 
-        Assert.assertEquals(0.97, score, .01);
+        Assertions.assertEquals(0.97, score, .01);
     }
 
 }

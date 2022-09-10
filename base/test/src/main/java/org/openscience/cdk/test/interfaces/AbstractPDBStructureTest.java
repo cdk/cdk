@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -40,7 +41,7 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
     @Test
     public void testGetEndChainID() {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
-        Assert.assertNull(structure.getEndChainID());
+        Assertions.assertNull(structure.getEndChainID());
     }
 
     @Test
@@ -48,13 +49,13 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         char endChainID = 'x';
         structure.setEndChainID(endChainID);
-        Assert.assertEquals(endChainID, structure.getEndChainID().charValue());
+        Assertions.assertEquals(endChainID, structure.getEndChainID().charValue());
     }
 
     @Test
     public void testGetEndInsertionCode() {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
-        Assert.assertNull(structure.getEndInsertionCode());
+        Assertions.assertNull(structure.getEndInsertionCode());
     }
 
     @Test
@@ -62,13 +63,13 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         char endInsertionCode = 'x';
         structure.setEndInsertionCode(endInsertionCode);
-        Assert.assertEquals(endInsertionCode, structure.getEndInsertionCode().charValue());
+        Assertions.assertEquals(endInsertionCode, structure.getEndInsertionCode().charValue());
     }
 
     @Test
     public void testGetEndSequenceNumber() {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
-        Assert.assertNull(structure.getEndSequenceNumber());
+        Assertions.assertNull(structure.getEndSequenceNumber());
     }
 
     @Test
@@ -76,13 +77,13 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         int endSequenceNumber = 5;
         structure.setEndSequenceNumber(endSequenceNumber);
-        Assert.assertEquals(endSequenceNumber, structure.getEndSequenceNumber().intValue());
+        Assertions.assertEquals(endSequenceNumber, structure.getEndSequenceNumber().intValue());
     }
 
     @Test
     public void testGetStartChainID() {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
-        Assert.assertNull(structure.getStartChainID());
+        Assertions.assertNull(structure.getStartChainID());
     }
 
     @Test
@@ -90,13 +91,13 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         char startChainID = 'x';
         structure.setStartChainID(startChainID);
-        Assert.assertEquals(startChainID, structure.getStartChainID().charValue());
+        Assertions.assertEquals(startChainID, structure.getStartChainID().charValue());
     }
 
     @Test
     public void testGetStartInsertionCode() {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
-        Assert.assertNull(structure.getStartInsertionCode());
+        Assertions.assertNull(structure.getStartInsertionCode());
     }
 
     @Test
@@ -104,13 +105,13 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         char startInsertionCode = 'x';
         structure.setStartInsertionCode(startInsertionCode);
-        Assert.assertEquals(startInsertionCode, structure.getStartInsertionCode().charValue());
+        Assertions.assertEquals(startInsertionCode, structure.getStartInsertionCode().charValue());
     }
 
     @Test
     public void testGetStartSequenceNumber() {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
-        Assert.assertNull(structure.getStartSequenceNumber());
+        Assertions.assertNull(structure.getStartSequenceNumber());
     }
 
     @Test
@@ -118,14 +119,14 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         int startSequenceNumber = 5;
         structure.setStartSequenceNumber(startSequenceNumber);
-        Assert.assertEquals(startSequenceNumber, structure.getStartSequenceNumber().intValue());
+        Assertions.assertEquals(startSequenceNumber, structure.getStartSequenceNumber().intValue());
     }
 
     @Test
     public void testGetStructureType() {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         String type = structure.getStructureType();
-        Assert.assertNull(type);
+        Assertions.assertNull(type);
     }
 
     @Test
@@ -133,7 +134,7 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         String type = "alpha-barrel";
         structure.setStructureType(type);
-        Assert.assertEquals(type, structure.getStructureType());
+        Assertions.assertEquals(type, structure.getStructureType());
     }
 
     /**
@@ -144,8 +145,8 @@ public abstract class AbstractPDBStructureTest extends CDKTestCase {
         IPDBStructure structure = getBuilder().newInstance(IPDBStructure.class);
         String description = structure.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 }

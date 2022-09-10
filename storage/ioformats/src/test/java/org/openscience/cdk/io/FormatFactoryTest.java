@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -222,14 +223,14 @@ public class FormatFactoryTest extends CDKTestCase {
 
     private void expectFormat(String filename, IResourceFormat expectedFormat) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        Assert.assertNotNull("Cannot find file: " + filename, ins);
+        Assertions.assertNotNull(ins, "Cannot find file: " + filename);
         if (expectedFormat instanceof IChemFormatMatcher) {
             factory.registerFormat((IChemFormatMatcher) expectedFormat);
         }
         ins = new BufferedInputStream(ins);
         IChemFormat format = factory.guessFormat(ins);
-        Assert.assertNotNull(format);
-        Assert.assertEquals(expectedFormat.getFormatName(), format.getFormatName());
+        Assertions.assertNotNull(format);
+        Assertions.assertEquals(expectedFormat.getFormatName(), format.getFormatName());
     }
 
     /**
@@ -241,15 +242,15 @@ public class FormatFactoryTest extends CDKTestCase {
         InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
         input = new BufferedInputStream(input);
         IChemFormat format = factory.guessFormat(input);
-        Assert.assertNotNull(format);
+        Assertions.assertNotNull(format);
         // make sure the InputStream is properly reset
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line = reader.readLine();
-        Assert.assertNotNull(line);
-        Assert.assertEquals("4", line);
+        Assertions.assertNotNull(line);
+        Assertions.assertEquals("4", line);
         line = reader.readLine();
-        Assert.assertNotNull(line);
-        Assert.assertEquals("Bortrifluorid", line);
+        Assertions.assertNotNull(line);
+        Assertions.assertEquals("Bortrifluorid", line);
     }
 
     @Test
@@ -258,15 +259,15 @@ public class FormatFactoryTest extends CDKTestCase {
         InputStream input = new BufferedInputStream(new GZIPInputStream(this.getClass().getClassLoader()
                 .getResourceAsStream(filename)));
         IChemFormat format = factory.guessFormat(input);
-        Assert.assertNotNull(format);
+        Assertions.assertNotNull(format);
         // make sure the InputStream is properly reset
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line = reader.readLine();
-        Assert.assertNotNull(line);
-        Assert.assertEquals("4", line);
+        Assertions.assertNotNull(line);
+        Assertions.assertEquals("4", line);
         line = reader.readLine();
-        Assert.assertNotNull(line);
-        Assert.assertEquals("Bortrifluorid", line);
+        Assertions.assertNotNull(line);
+        Assertions.assertEquals("Bortrifluorid", line);
     }
 
     @Test
@@ -275,23 +276,23 @@ public class FormatFactoryTest extends CDKTestCase {
         InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         IChemFormat format = factory.guessFormat(reader);
-        Assert.assertNotNull(format);
+        Assertions.assertNotNull(format);
         // make sure the Reader is properly reset
         String line = reader.readLine();
-        Assert.assertNotNull(line);
-        Assert.assertEquals("4", line);
+        Assertions.assertNotNull(line);
+        Assertions.assertEquals("4", line);
         line = reader.readLine();
-        Assert.assertNotNull(line);
-        Assert.assertEquals("Bortrifluorid", line);
+        Assertions.assertNotNull(line);
+        Assertions.assertEquals("Bortrifluorid", line);
     }
 
     @Test
     public void testGetFormats() {
         List<IChemFormatMatcher> formats = factory.getFormats();
-        Assert.assertNotNull(formats);
-        Assert.assertNotSame(0, formats.size());
+        Assertions.assertNotNull(formats);
+        Assertions.assertNotSame(0, formats.size());
         for (IChemFormatMatcher matcher : formats) {
-            Assert.assertNotNull(matcher);
+            Assertions.assertNotNull(matcher);
         }
     }
 
@@ -356,7 +357,7 @@ public class FormatFactoryTest extends CDKTestCase {
         factory.registerFormat(new DummyFormat());
         StringReader reader = new StringReader("DummyFormat:");
         IChemFormat format = factory.guessFormat(reader);
-        Assert.assertNotNull(format);
-        Assert.assertTrue(format instanceof DummyFormat);
+        Assertions.assertNotNull(format);
+        Assertions.assertTrue(format instanceof DummyFormat);
     }
 }

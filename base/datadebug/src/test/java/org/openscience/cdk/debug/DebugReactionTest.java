@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractReactionTest;
@@ -40,6 +41,6 @@ public class DebugReactionTest extends AbstractReactionTest {
     @Test
     public void testDebugReaction() {
         IReaction polymer = new DebugReaction();
-        Assert.assertTrue(polymer instanceof DebugReaction);
+        Assertions.assertTrue(polymer instanceof DebugReaction);
     }
 }

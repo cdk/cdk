@@ -17,6 +17,7 @@
 package org.openscience.cdk.qsar.descriptors.substance;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Substance;
 import org.openscience.cdk.interfaces.ISubstance;
@@ -44,19 +45,19 @@ public abstract class SubstanceDescriptorTest {
     public void testCalculate_Empty() throws Exception {
         ISubstance material = new Substance();
         DescriptorValue value = descriptor.calculate(material);
-        Assert.assertNotNull(value);
+        Assertions.assertNotNull(value);
         IDescriptorResult result = value.getValue();
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
     }
     
     @Test
     public void testCalculate_Null() throws Exception {
         DescriptorValue value = descriptor.calculate(null);
-        Assert.assertNotNull(value);
+        Assertions.assertNotNull(value);
         IDescriptorResult result = value.getValue();
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
     }
 
 }

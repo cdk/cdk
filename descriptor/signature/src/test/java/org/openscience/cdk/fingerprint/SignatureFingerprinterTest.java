@@ -23,6 +23,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,8 +45,8 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
     @Test
     public void testGetSize() throws Exception {
         IFingerprinter fingerprinter = new SignatureFingerprinter();
-        Assert.assertNotNull(fingerprinter);
-        Assert.assertEquals(-1, fingerprinter.getSize());
+        Assertions.assertNotNull(fingerprinter);
+        Assertions.assertEquals(-1, fingerprinter.getSize());
     }
 
     @Test
@@ -55,10 +56,10 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");
         Map<String, Integer> map = fingerprinter.getRawFingerprint(mol);
-        Assert.assertEquals(3, map.size());
+        Assertions.assertEquals(3, map.size());
         String[] expectedPrints = {"[O]", "[C]", "[N]"};
         for (String print : expectedPrints) {
-            Assert.assertTrue(map.containsKey(print));
+            Assertions.assertTrue(map.containsKey(print));
         }
     }
 
@@ -68,8 +69,8 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");
         IBitFingerprint bitFP = fingerprinter.getBitFingerprint(mol);
-        Assert.assertNotNull(bitFP);
-        Assert.assertNotSame(0, bitFP.size());
+        Assertions.assertNotNull(bitFP);
+        Assertions.assertNotSame(0, bitFP.size());
     }
 
     @Test
@@ -79,7 +80,7 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");
         ICountFingerprint bitFP = fingerprinter.getCountFingerprint(mol);
-        Assert.assertNotNull(bitFP);
-        Assert.assertNotSame(0, bitFP.size());
+        Assertions.assertNotNull(bitFP);
+        Assertions.assertNotSame(0, bitFP.size());
     }
 }

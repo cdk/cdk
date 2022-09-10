@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.result;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -36,19 +37,19 @@ public class BooleanResultTest extends CDKTestCase {
     @Test
     public void testBooleanResult_boolean() {
         BooleanResult result = new BooleanResult(true);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
     public void testBooleanValue() {
-        Assert.assertTrue(new BooleanResult(true).booleanValue());
-        Assert.assertFalse(new BooleanResult(false).booleanValue());
+        Assertions.assertTrue(new BooleanResult(true).booleanValue());
+        Assertions.assertFalse(new BooleanResult(false).booleanValue());
     }
 
     @Test
     public void testToString() {
-        Assert.assertEquals("true", new BooleanResult(true).toString());
-        Assert.assertEquals("false", new BooleanResult(false).toString());
+        Assertions.assertEquals("true", new BooleanResult(true).toString());
+        Assertions.assertEquals("false", new BooleanResult(false).toString());
     }
 
 }

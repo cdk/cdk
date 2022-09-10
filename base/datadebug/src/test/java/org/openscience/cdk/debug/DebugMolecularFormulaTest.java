@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractMolecularFormulaTest;
@@ -40,6 +41,6 @@ public class DebugMolecularFormulaTest extends AbstractMolecularFormulaTest {
     @Test
     public void testDebugMolecularFormula() {
         IMolecularFormula mf = new DebugMolecularFormula();
-        Assert.assertNotNull(mf);
+        Assertions.assertNotNull(mf);
     }
 }

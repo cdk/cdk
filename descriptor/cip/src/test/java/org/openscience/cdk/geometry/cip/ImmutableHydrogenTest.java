@@ -28,6 +28,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
@@ -47,9 +48,9 @@ public class ImmutableHydrogenTest extends CDKTestCase {
     @Test
     public void testExpectedValues() throws Exception {
         IAtom hydrogen = new ImmutableHydrogen();
-        Assert.assertEquals("H", hydrogen.getSymbol());
-        Assert.assertEquals(1, hydrogen.getAtomicNumber().intValue());
-        Assert.assertEquals(1, hydrogen.getMassNumber().intValue());
+        Assertions.assertEquals("H", hydrogen.getSymbol());
+        Assertions.assertEquals(1, hydrogen.getAtomicNumber().intValue());
+        Assertions.assertEquals(1, hydrogen.getMassNumber().intValue());
     }
 
     @Test
@@ -58,62 +59,62 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         hydrogen.setSymbol("C");
         hydrogen.setAtomicNumber(12);
         hydrogen.setMassNumber(13);
-        Assert.assertEquals("H", hydrogen.getSymbol());
-        Assert.assertEquals(1, hydrogen.getAtomicNumber().intValue());
-        Assert.assertEquals(1, hydrogen.getMassNumber().intValue());
+        Assertions.assertEquals("H", hydrogen.getSymbol());
+        Assertions.assertEquals(1, hydrogen.getAtomicNumber().intValue());
+        Assertions.assertEquals(1, hydrogen.getMassNumber().intValue());
     }
 
     @Test
     public void testListenerStuff() throws Exception {
         IAtom hydrogen = new ImmutableHydrogen();
-        Assert.assertEquals(0, hydrogen.getListenerCount());
+        Assertions.assertEquals(0, hydrogen.getListenerCount());
         hydrogen.addListener(new IChemObjectListener() {
 
             @Override
             public void stateChanged(IChemObjectChangeEvent event) {}
         });
-        Assert.assertEquals(0, hydrogen.getListenerCount());
+        Assertions.assertEquals(0, hydrogen.getListenerCount());
         hydrogen.removeListener(new IChemObjectListener() {
 
             @Override
             public void stateChanged(IChemObjectChangeEvent event) {}
         });
-        Assert.assertEquals(0, hydrogen.getListenerCount());
+        Assertions.assertEquals(0, hydrogen.getListenerCount());
 
         hydrogen.notifyChanged();
         hydrogen.notifyChanged(String::new);
 
-        Assert.assertFalse(hydrogen.getNotification());
+        Assertions.assertFalse(hydrogen.getNotification());
         hydrogen.setNotification(true);
-        Assert.assertFalse(hydrogen.getNotification());
+        Assertions.assertFalse(hydrogen.getNotification());
     }
 
     @Test
     public void testReturnsNull() {
         IAtom hydrogen = new ImmutableHydrogen();
-        Assert.assertNull(hydrogen.getCharge());
-        Assert.assertNull(hydrogen.getImplicitHydrogenCount());
-        Assert.assertNull(hydrogen.getPoint2d());
-        Assert.assertNull(hydrogen.getPoint3d());
-        Assert.assertNull(hydrogen.getStereoParity());
-        Assert.assertNull(hydrogen.getAtomTypeName());
-        Assert.assertNull(hydrogen.getBondOrderSum());
-        Assert.assertNull(hydrogen.getCovalentRadius());
-        Assert.assertNull(hydrogen.getFormalCharge());
-        Assert.assertNull(hydrogen.getFormalNeighbourCount());
-        Assert.assertNull(hydrogen.getHybridization());
-        Assert.assertNull(hydrogen.getMaxBondOrder());
-        Assert.assertNull(hydrogen.getValency());
-        Assert.assertNull(hydrogen.getExactMass());
-        Assert.assertNull(hydrogen.getNaturalAbundance());
-        Assert.assertNull(hydrogen.getFlags());
-        Assert.assertNull(hydrogen.getFlagValue());
-        Assert.assertFalse(hydrogen.getFlag(CDKConstants.ISPLACED));
-        Assert.assertNull(hydrogen.getID());
-        Assert.assertNull(hydrogen.getProperties());
-        Assert.assertNull(hydrogen.getProperty(""));
-        Assert.assertNull(hydrogen.getProperty("", String.class));
-        Assert.assertNull(hydrogen.getBuilder());
+        Assertions.assertNull(hydrogen.getCharge());
+        Assertions.assertNull(hydrogen.getImplicitHydrogenCount());
+        Assertions.assertNull(hydrogen.getPoint2d());
+        Assertions.assertNull(hydrogen.getPoint3d());
+        Assertions.assertNull(hydrogen.getStereoParity());
+        Assertions.assertNull(hydrogen.getAtomTypeName());
+        Assertions.assertNull(hydrogen.getBondOrderSum());
+        Assertions.assertNull(hydrogen.getCovalentRadius());
+        Assertions.assertNull(hydrogen.getFormalCharge());
+        Assertions.assertNull(hydrogen.getFormalNeighbourCount());
+        Assertions.assertNull(hydrogen.getHybridization());
+        Assertions.assertNull(hydrogen.getMaxBondOrder());
+        Assertions.assertNull(hydrogen.getValency());
+        Assertions.assertNull(hydrogen.getExactMass());
+        Assertions.assertNull(hydrogen.getNaturalAbundance());
+        Assertions.assertNull(hydrogen.getFlags());
+        Assertions.assertNull(hydrogen.getFlagValue());
+        Assertions.assertFalse(hydrogen.getFlag(CDKConstants.ISPLACED));
+        Assertions.assertNull(hydrogen.getID());
+        Assertions.assertNull(hydrogen.getProperties());
+        Assertions.assertNull(hydrogen.getProperty(""));
+        Assertions.assertNull(hydrogen.getProperty("", String.class));
+        Assertions.assertNull(hydrogen.getBuilder());
     }
 
     @Test
@@ -144,12 +145,12 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         hydrogen.setProperties(new Properties());
         hydrogen.setProperty("", "");
         hydrogen.removeProperty("");
-        Assert.assertTrue(true); // to indicate we made it
+        Assertions.assertTrue(true); // to indicate we made it
     }
 
     @Test
     public void testClone() throws Exception {
         IAtom hydrogen = new ImmutableHydrogen();
-        Assert.assertEquals(hydrogen, hydrogen.clone());
+        Assertions.assertEquals(hydrogen, hydrogen.clone());
     }
 }

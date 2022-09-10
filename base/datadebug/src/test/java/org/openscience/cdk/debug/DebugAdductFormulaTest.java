@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractAdductFormulaTest;
@@ -41,12 +42,12 @@ public class DebugAdductFormulaTest extends AbstractAdductFormulaTest {
     @Test
     public void testDebugAdductFormula() {
         IAdductFormula mfS = new DebugAdductFormula();
-        Assert.assertNotNull(mfS);
+        Assertions.assertNotNull(mfS);
     }
 
     @Test
     public void testDebugAdductFormula_IMolecularFormula() {
         IAdductFormula mfS = new DebugAdductFormula(getBuilder().newInstance(IMolecularFormula.class));
-        Assert.assertEquals(1, mfS.size());
+        Assertions.assertEquals(1, mfS.size());
     }
 }

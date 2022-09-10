@@ -21,6 +21,7 @@ package org.openscience.cdk.validate;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -42,7 +43,7 @@ public class Geometry3DValidatorTest extends CDKTestCase {
         ValidatorEngine engine = new ValidatorEngine();
         engine.addValidator(new Geometry3DValidator());
         ValidationReport report = engine.validateChemFile(chemFile);
-        Assert.assertEquals(0, report.getErrorCount());
-        Assert.assertEquals(0, report.getWarningCount());
+        Assertions.assertEquals(0, report.getErrorCount());
+        Assertions.assertEquals(0, report.getWarningCount());
     }
 }

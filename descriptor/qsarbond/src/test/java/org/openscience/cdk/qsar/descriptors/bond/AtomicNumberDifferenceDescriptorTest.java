@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -50,7 +51,7 @@ public class AtomicNumberDifferenceDescriptorTest extends BondDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("CC");
         double value = ((DoubleResult) descriptor.calculate(mol1.getBond(0), mol1).getValue()).doubleValue();
-        Assert.assertEquals(0, value, 0.0000);
+        Assertions.assertEquals(0, value, 0.0000);
     }
 
     @Test
@@ -58,7 +59,7 @@ public class AtomicNumberDifferenceDescriptorTest extends BondDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("CO");
         double value = ((DoubleResult) descriptor.calculate(mol1.getBond(0), mol1).getValue()).doubleValue();
-        Assert.assertEquals(2, value, 0.0000);
+        Assertions.assertEquals(2, value, 0.0000);
     }
 
 }

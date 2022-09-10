@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.test.CDKTestCase;
@@ -48,7 +49,7 @@ public class CrossoverMachineTest extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
-        Assert.assertEquals("We must have read 99 structures", 99, som.getAtomContainerCount());
+        Assertions.assertEquals(99, som.getAtomContainerCount(), "We must have read 99 structures");
         CrossoverMachine cm = new CrossoverMachine();
         String correctFormula = "C10H16";
         int errorcount = 0;
@@ -64,13 +65,12 @@ public class CrossoverMachineTest extends CDKTestCase {
                     for (IAtom atom : som.getAtomContainer(k).atoms()) {
                         hydrogencount2[atom.getImplicitHydrogenCount()]++;
                     }
-                    Assert.assertEquals("Result size must be 2", 2, result.size());
+                    Assertions.assertEquals(2, result.size(), "Result size must be 2");
                     for (int l = 0; l < 2; l++) {
                         IAtomContainer ac = result.get(l);
-                        Assert.assertTrue("Result must be connected", ConnectivityChecker.isConnected(ac));
-                        Assert.assertEquals("Molecular formula must be the same as" + "of the input",
-                                MolecularFormulaManipulator.getString(MolecularFormulaManipulator
-                                        .getMolecularFormula(ac)), correctFormula);
+                        Assertions.assertTrue(ConnectivityChecker.isConnected(ac), "Result must be connected");
+                        Assertions.assertEquals(MolecularFormulaManipulator.getString(MolecularFormulaManipulator
+                                .getMolecularFormula(ac)), correctFormula, "Molecular formula must be the same as" + "of the input");
                         int[] hydrogencountresult = new int[4];
                         int hcounttotal = 0;
                         for (IAtom atom : result.get(l).atoms()) {
@@ -78,24 +78,20 @@ public class CrossoverMachineTest extends CDKTestCase {
                             hcounttotal += atom.getImplicitHydrogenCount();
                         }
                         if (hydrogencount1[0] == hydrogencount2[0])
-                            Assert.assertEquals("Hydrogen count of the result must" + " be same as of input",
-                                    hydrogencount1[0], hydrogencountresult[0]);
+                            Assertions.assertEquals(hydrogencount1[0], hydrogencountresult[0], "Hydrogen count of the result must" + " be same as of input");
                         if (hydrogencount1[1] == hydrogencount2[1])
-                            Assert.assertEquals("Hydrogen count of the result must" + " be same as of input",
-                                    hydrogencount1[1], hydrogencountresult[1]);
+                            Assertions.assertEquals(hydrogencount1[1], hydrogencountresult[1], "Hydrogen count of the result must" + " be same as of input");
                         if (hydrogencount1[2] == hydrogencount2[2])
-                            Assert.assertEquals("Hydrogen count of the result must" + " be same as of input",
-                                    hydrogencount1[2], hydrogencountresult[2]);
+                            Assertions.assertEquals(hydrogencount1[2], hydrogencountresult[2], "Hydrogen count of the result must" + " be same as of input");
                         if (hydrogencount1[3] == hydrogencount2[3])
-                            Assert.assertEquals("Hydrogen count of the result must" + " be same as of input",
-                                    hydrogencount1[3], hydrogencountresult[3]);
-                        Assert.assertEquals(16, hcounttotal);
+                            Assertions.assertEquals(hydrogencount1[3], hydrogencountresult[3], "Hydrogen count of the result must" + " be same as of input");
+                        Assertions.assertEquals(16, hcounttotal);
                     }
                 } catch (CDKException ex) {
                     errorcount++;
                 }
             }
         }
-        Assert.assertTrue("We tolerate up to 300 errors", errorcount < 300);
+        Assertions.assertTrue(errorcount < 300, "We tolerate up to 300 errors");
     }
 }

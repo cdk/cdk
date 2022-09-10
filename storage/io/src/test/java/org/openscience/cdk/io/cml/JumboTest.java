@@ -25,6 +25,7 @@ package org.openscience.cdk.io.cml;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -66,22 +67,22 @@ public class JumboTest extends CDKTestCase {
         reader.close();
 
         // test the resulting ChemFile content
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(chemFile.getChemSequenceCount(), 1);
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(seq.getChemModelCount(), 1);
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(seq.getChemModelCount(), 1);
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
-        Assert.assertEquals(model.getMoleculeSet().getAtomContainerCount(), 1);
+        Assertions.assertNotNull(model);
+        Assertions.assertEquals(model.getMoleculeSet().getAtomContainerCount(), 1);
 
         // test the molecule
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(mol.getAtomCount(), 24);
-        Assert.assertEquals(mol.getBondCount(), 28);
-        Assert.assertFalse(GeometryUtil.has3DCoordinates(mol));
-        Assert.assertTrue(GeometryUtil.has2DCoordinates(mol));
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(mol.getAtomCount(), 24);
+        Assertions.assertEquals(mol.getBondCount(), 28);
+        Assertions.assertFalse(GeometryUtil.has3DCoordinates(mol));
+        Assertions.assertTrue(GeometryUtil.has2DCoordinates(mol));
     }
 
     /**
@@ -99,22 +100,22 @@ public class JumboTest extends CDKTestCase {
         reader.close();
 
         // test the resulting ChemFile content
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(chemFile.getChemSequenceCount(), 1);
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(seq.getChemModelCount(), 1);
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(seq.getChemModelCount(), 1);
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
-        Assert.assertEquals(model.getMoleculeSet().getAtomContainerCount(), 1);
+        Assertions.assertNotNull(model);
+        Assertions.assertEquals(model.getMoleculeSet().getAtomContainerCount(), 1);
 
         // test the molecule
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(mol.getAtomCount(), 15);
-        Assert.assertEquals(mol.getBondCount(), 16);
-        Assert.assertFalse(GeometryUtil.has3DCoordinates(mol));
-        Assert.assertTrue(GeometryUtil.has2DCoordinates(mol));
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(mol.getAtomCount(), 15);
+        Assertions.assertEquals(mol.getBondCount(), 16);
+        Assertions.assertFalse(GeometryUtil.has3DCoordinates(mol));
+        Assertions.assertTrue(GeometryUtil.has2DCoordinates(mol));
     }
 
     /**
@@ -133,22 +134,22 @@ public class JumboTest extends CDKTestCase {
         reader.close();
 
         // test the resulting ChemFile content
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(chemFile.getChemSequenceCount(), 1);
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(seq.getChemModelCount(), 1);
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(seq.getChemModelCount(), 1);
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
-        Assert.assertEquals(model.getMoleculeSet().getAtomContainerCount(), 1);
+        Assertions.assertNotNull(model);
+        Assertions.assertEquals(model.getMoleculeSet().getAtomContainerCount(), 1);
 
         // test the molecule
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
-        Assert.assertNotNull(mol);
-        Assert.assertEquals("Incorrect number of atoms", 11, mol.getAtomCount());
-        Assert.assertEquals("Incorrect number of bonds", 12, mol.getBondCount());
-        Assert.assertFalse("File does not have 3D coordinates", GeometryUtil.has3DCoordinates(mol));
-        Assert.assertFalse("File does not have 2D coordinates", GeometryUtil.has2DCoordinates(mol));
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(11, mol.getAtomCount(), "Incorrect number of atoms");
+        Assertions.assertEquals(12, mol.getBondCount(), "Incorrect number of bonds");
+        Assertions.assertFalse(GeometryUtil.has3DCoordinates(mol), "File does not have 3D coordinates");
+        Assertions.assertFalse(GeometryUtil.has2DCoordinates(mol), "File does not have 2D coordinates");
     }
 
 }

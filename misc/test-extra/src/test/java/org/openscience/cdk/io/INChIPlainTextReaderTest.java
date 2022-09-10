@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -57,7 +58,7 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() throws IOException {
         INChIPlainTextReader reader = new INChIPlainTextReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
         reader.close();
     }
 
@@ -74,20 +75,20 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
+        Assertions.assertNotNull(moleculeSet);
         IAtomContainer molecule = moleculeSet.getAtomContainer(0);
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
-        Assert.assertEquals(11, molecule.getAtomCount());
-        Assert.assertEquals(12, molecule.getBondCount());
+        Assertions.assertEquals(11, molecule.getAtomCount());
+        Assertions.assertEquals(12, molecule.getBondCount());
     }
 
     @Test
@@ -98,20 +99,20 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
+        Assertions.assertNotNull(moleculeSet);
         IAtomContainer molecule = moleculeSet.getAtomContainer(0);
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
-        Assert.assertEquals(40, molecule.getAtomCount());
-        Assert.assertEquals(39, molecule.getBondCount());
+        Assertions.assertEquals(40, molecule.getAtomCount());
+        Assertions.assertEquals(39, molecule.getBondCount());
     }
 
     @Test
@@ -122,19 +123,19 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
+        Assertions.assertNotNull(moleculeSet);
         IAtomContainer molecule = moleculeSet.getAtomContainer(0);
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
-        Assert.assertEquals(1, molecule.getAtomCount());
-        Assert.assertEquals(0, molecule.getBondCount());
+        Assertions.assertEquals(1, molecule.getAtomCount());
+        Assertions.assertEquals(0, molecule.getBondCount());
     }
 }

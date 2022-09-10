@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -50,6 +51,6 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends AtomicDescriptor
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CNC=CC=C");
         addExplicitHydrogens(mol);
-        Assert.assertTrue(((BooleanResult) descriptor.calculate(mol.getAtom(13), mol).getValue()).booleanValue());
+        Assertions.assertTrue(((BooleanResult) descriptor.calculate(mol.getAtom(13), mol).getValue()).booleanValue());
     }
 }

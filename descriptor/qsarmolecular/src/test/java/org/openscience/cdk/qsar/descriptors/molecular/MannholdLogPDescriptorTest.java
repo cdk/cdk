@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -50,8 +51,8 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
         methanol.addAtom(builder.newInstance(IAtom.class, "O"));
         methanol.addBond(0, 1, IBond.Order.SINGLE);
         IDescriptorResult result = descriptor.calculate(methanol).getValue();
-        Assert.assertTrue(result instanceof DoubleResult);
-        Assert.assertEquals(1.46, ((DoubleResult) result).doubleValue(), 0.01);
+        Assertions.assertTrue(result instanceof DoubleResult);
+        Assertions.assertEquals(1.46, ((DoubleResult) result).doubleValue(), 0.01);
     }
 
     @Test
@@ -60,8 +61,8 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer methane = builder.newInstance(IAtomContainer.class);
         methane.addAtom(builder.newInstance(IAtom.class, "C"));
         IDescriptorResult result = descriptor.calculate(methane).getValue();
-        Assert.assertTrue(result instanceof DoubleResult);
-        Assert.assertEquals(1.57, ((DoubleResult) result).doubleValue(), 0.01);
+        Assertions.assertTrue(result instanceof DoubleResult);
+        Assertions.assertEquals(1.57, ((DoubleResult) result).doubleValue(), 0.01);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
             chloroform.addBond(0, (i + 1), IBond.Order.SINGLE);
         }
         IDescriptorResult result = descriptor.calculate(chloroform).getValue();
-        Assert.assertTrue(result instanceof DoubleResult);
-        Assert.assertEquals(1.24, ((DoubleResult) result).doubleValue(), 0.01);
+        Assertions.assertTrue(result instanceof DoubleResult);
+        Assertions.assertEquals(1.24, ((DoubleResult) result).doubleValue(), 0.01);
     }
 }

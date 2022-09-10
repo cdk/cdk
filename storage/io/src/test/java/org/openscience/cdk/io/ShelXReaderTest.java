@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -49,8 +50,8 @@ public class ShelXReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         ShelXReader reader = new ShelXReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
-        Assert.assertTrue(reader.accepts(Crystal.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(Crystal.class));
     }
 
     @Test
@@ -61,14 +62,14 @@ public class ShelXReaderTest extends SimpleChemObjectReaderTest {
         ShelXReader reader = new ShelXReader(ins);
         Crystal crystal = reader.read(new Crystal());
         reader.close();
-        Assert.assertNotNull(crystal);
-        Assert.assertEquals(42, crystal.getAtomCount());
+        Assertions.assertNotNull(crystal);
+        Assertions.assertEquals(42, crystal.getAtomCount());
         double[] notional = CrystalGeometryTools.cartesianToNotional(crystal.getA(), crystal.getB(), crystal.getC());
-        Assert.assertEquals(7.97103, notional[0], 0.001);
-        Assert.assertEquals(18.77220, notional[1], 0.001);
-        Assert.assertEquals(10.26222, notional[2], 0.001);
-        Assert.assertEquals(90.0000, notional[3], 0.001);
-        Assert.assertEquals(90.0000, notional[4], 0.001);
-        Assert.assertEquals(90.0000, notional[5], 0.001);
+        Assertions.assertEquals(7.97103, notional[0], 0.001);
+        Assertions.assertEquals(18.77220, notional[1], 0.001);
+        Assertions.assertEquals(10.26222, notional[2], 0.001);
+        Assertions.assertEquals(90.0000, notional[3], 0.001);
+        Assertions.assertEquals(90.0000, notional[4], 0.001);
+        Assertions.assertEquals(90.0000, notional[5], 0.001);
     }
 }

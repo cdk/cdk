@@ -19,6 +19,7 @@
 package org.openscience.cdk.isomorphism.mcss;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -30,9 +31,9 @@ public class RNodeTest extends CDKTestCase {
     @Test
     public void testRNode_int_int() {
         RNode node = new RNode(1, 2);
-        Assert.assertNotNull(node);
-        Assert.assertNotNull(node.getExtension());
-        Assert.assertNotNull(node.getForbidden());
+        Assertions.assertNotNull(node);
+        Assertions.assertNotNull(node.getExtension());
+        Assertions.assertNotNull(node.getForbidden());
     }
 
 }

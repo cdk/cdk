@@ -23,6 +23,7 @@
 package org.openscience.cdk.io.rdf;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -48,7 +49,7 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testAccepts() {
-        Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
+        Assertions.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
 
     @Test
@@ -60,9 +61,9 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
 
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(1, mol.getBondCount());
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getBondCount());
     }
 
 }

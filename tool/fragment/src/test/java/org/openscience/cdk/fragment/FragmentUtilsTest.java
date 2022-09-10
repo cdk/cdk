@@ -20,6 +20,7 @@
 package org.openscience.cdk.fragment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -77,7 +78,7 @@ public class FragmentUtilsTest extends CDKTestCase {
         for (IAtomContainer frag : frags) {
             uniqueFrags.add(sg.create(frag));
         }
-        Assert.assertEquals(2, uniqueFrags.size());
+        Assertions.assertEquals(2, uniqueFrags.size());
         // You can put the fragments back together with a ring closure and dot
         // [CH]12CC1.[CH]12CCC1
         org.hamcrest.MatcherAssert.assertThat(uniqueFrags, hasItems("[CH]1CC1", "[CH]1CCC1"));
@@ -103,13 +104,13 @@ public class FragmentUtilsTest extends CDKTestCase {
         assertThat(part.getAtomCount(), is(3));
         assertThat(part.getBondCount(), is(2));
 
-        Assert.assertTrue(part.contains(atom));
-        Assert.assertTrue(part.contains(a1));
-        Assert.assertTrue(part.contains(a2));
-        Assert.assertFalse(part.contains(exclude));
+        Assertions.assertTrue(part.contains(atom));
+        Assertions.assertTrue(part.contains(a1));
+        Assertions.assertTrue(part.contains(a2));
+        Assertions.assertFalse(part.contains(exclude));
 
-        Assert.assertTrue(part.contains(bonds[1]));
-        Assert.assertTrue(part.contains(bonds[2]));
+        Assertions.assertTrue(part.contains(bonds[1]));
+        Assertions.assertTrue(part.contains(bonds[2]));
     }
 
     @Test

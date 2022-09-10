@@ -31,6 +31,8 @@ import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
@@ -108,7 +110,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         addExplicitHydrogens(mol);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            assertNotNull(mol.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
         }
         checkAverageBondLength(mol);
         //logger.debug("Layout molecule with SMILE: "+smile);
@@ -116,7 +118,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     public void testModelBuilder3D_c1ccccc1C0() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "c1ccccc1C=O";
@@ -125,7 +127,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         addExplicitHydrogens(mol);
         mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            assertNotNull(mol.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
         }
         checkAverageBondLength(mol);
     }
@@ -133,7 +135,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     @Test
     @Category(SlowTest.class)
     public void testModelBuilder3D_Konstanz() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
@@ -142,14 +144,14 @@ public class ModelBuilder3DTest extends CDKTestCase {
         addExplicitHydrogens(mol);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            assertNotNull(mol.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
         }
         checkAverageBondLength(mol);
     }
 
     @Test
     public void xtestModelBuilder3D_Konstanz2() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
@@ -158,14 +160,14 @@ public class ModelBuilder3DTest extends CDKTestCase {
         addExplicitHydrogens(mol);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            assertNotNull(mol.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
         }
         checkAverageBondLength(mol);
     }
 
     @Test
     public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "C1CCCCCCC1CC";
@@ -174,7 +176,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         addExplicitHydrogens(mol);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            assertNotNull(mol.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
         }
         checkAverageBondLength(mol);
     }
@@ -186,7 +188,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      */
     @Test
     public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "CCCCCCCCCC";
@@ -198,7 +200,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         addExplicitHydrogens(mol);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            assertNotNull(mol.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
         }
         checkAverageBondLength(mol);
     }
@@ -209,7 +211,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     @Test
     @Category(SlowTest.class)
     public void testModelBuilder3D_232() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "allmol232.mol";
@@ -221,7 +223,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         IAtomContainer ac = new AtomContainer(containersList.get(0));
         addExplicitHydrogens(ac);
         ac = mb3d.generate3DCoordinates(ac, false);
-        assertNotNull(ac.getAtom(0).getPoint3d());
+        Assertions.assertNotNull(ac.getAtom(0).getPoint3d());
         checkAverageBondLength(ac);
     }
 
@@ -229,14 +231,14 @@ public class ModelBuilder3DTest extends CDKTestCase {
         double avlength = GeometryUtil.getBondLengthAverage3D(ac);
         for (int i = 0; i < ac.getBondCount(); i++) {
             double distance = ac.getBond(i).getBegin().getPoint3d().distance(ac.getBond(i).getEnd().getPoint3d());
-            Assert.assertTrue("Unreasonable bond length (" + distance + ") for bond " + i, distance >= avlength / 2
-                    && distance <= avlength * 2);
+            Assertions.assertTrue(distance >= avlength / 2
+                    && distance <= avlength * 2, "Unreasonable bond length (" + distance + ") for bond " + i);
         }
     }
 
     @Test
     public void testModelBuilder3D_231() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "allmol231.mol";
@@ -249,7 +251,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         addExplicitHydrogens(ac);
         ac = mb3d.generate3DCoordinates(ac, false);
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            assertNotNull(ac.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(ac.getAtom(i).getPoint3d());
         }
         checkAverageBondLength(ac);
     }
@@ -281,14 +283,14 @@ public class ModelBuilder3DTest extends CDKTestCase {
         methanol.addAtom(hydrogen);
         methanol.addBond(builder.newInstance(IBond.class, hydrogen, oxygen1, IBond.Order.SINGLE));
 
-        Assert.assertEquals(6, methanol.getAtomCount());
-        Assert.assertEquals(5, methanol.getBondCount());
+        Assertions.assertEquals(6, methanol.getAtomCount());
+        Assertions.assertEquals(5, methanol.getBondCount());
 
         mb3d.generate3DCoordinates(methanol, false);
 
         checkAverageBondLength(methanol);
-        Assert.assertEquals("carbon1", carbon1.getID());
-        Assert.assertEquals("oxygen1", oxygen1.getID());
+        Assertions.assertEquals("carbon1", carbon1.getID());
+        Assertions.assertEquals("oxygen1", oxygen1.getID());
     }
 
     /*
@@ -297,7 +299,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      */
     @Test
     public void testModel3D_bug_1610997() throws Exception {
-        Assume.assumeTrue(runSlowTests());
+        Assumptions.assumeTrue(runSlowTests());
 
         boolean notCalculatedResults = false;
         List<IAtomContainer> inputList = new ArrayList<>();
@@ -347,12 +349,12 @@ public class ModelBuilder3DTest extends CDKTestCase {
             try {
                 mol = mb3d.generate3DCoordinates(mol, false);
                 for (IAtom a : mol.atoms())
-                    assertNotNull(smiles[0] + " has unplaced atom", a.getPoint3d());
+                    Assertions.assertNotNull(a.getPoint3d(), smiles[0] + " has unplaced atom");
                 checkAverageBondLength(mol);
             } catch (CDKException | CloneNotSupportedException | IOException e) {
                 StringWriter stackTrace = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTrace));
-                Assert.fail("3D coordinated could not be generator for " + smiles[i] + ": " + stackTrace);
+                Assertions.fail("3D coordinated could not be generator for " + smiles[i] + ": " + stackTrace);
             }
         }
     }
@@ -389,7 +391,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         IAtomContainer ac = new AtomContainer(containersList.get(0));
         ac = mb3d.generate3DCoordinates(ac, false);
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            assertNotNull(ac.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(ac.getAtom(i).getPoint3d());
         }
         checkAverageBondLength(ac);
     }
@@ -414,7 +416,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(SilentChemObjectBuilder.getInstance());
         mb3d.generate3DCoordinates(methane, false);
         for (IAtom atom : methane.atoms())
-            assertNotNull(atom.getPoint3d());
+            Assertions.assertNotNull(atom.getPoint3d());
     }
 
     @Test
@@ -425,7 +427,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(SilentChemObjectBuilder.getInstance());
         mb3d.generate3DCoordinates(ethane, false);
         for (IAtom atom : ethane.atoms())
-            assertNotNull(atom.getPoint3d());
+            Assertions.assertNotNull(atom.getPoint3d());
     }       
 
 }

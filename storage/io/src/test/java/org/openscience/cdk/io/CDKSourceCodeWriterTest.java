@@ -26,6 +26,7 @@ package org.openscience.cdk.io;
 import java.io.StringWriter;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -51,7 +52,7 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
     @Test
     public void testAccepts() throws Exception {
-        Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
+        Assertions.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
 
     @Test

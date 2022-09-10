@@ -63,7 +63,7 @@ public class PharmacophoreMatcherTest {
 
     @Test
     public void testMatcherQuery1() throws Exception {
-        Assert.assertNotNull(conformers);
+        Assertions.assertNotNull(conformers);
 
         // make a query
         PharmacophoreQuery query = new PharmacophoreQuery();
@@ -106,13 +106,13 @@ public class PharmacophoreMatcherTest {
 
         int[] expected = {0, 1, 2, 5, 6, 7, 8, 9, 10, 20, 23, 48, 62, 64, 66, 70, 76, 87};
         for (i = 0; i < expected.length; i++) {
-            Assert.assertEquals("Hit " + i + " didn't match", expected[i], hits[i]);
+            Assertions.assertEquals(expected[i], hits[i], "Hit " + i + " didn't match");
         }
     }
 
     @Test
     public void testMatchedAtoms() throws Exception {
-        Assert.assertNotNull(conformers);
+        Assertions.assertNotNull(conformers);
 
         // make a query
         PharmacophoreQuery query = new PharmacophoreQuery();
@@ -136,19 +136,19 @@ public class PharmacophoreMatcherTest {
         IAtomContainer conf1 = conformers.get(0);
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(conf1);
-        Assert.assertTrue(status);
+        Assertions.assertTrue(status);
 
         List<List<PharmacophoreAtom>> pmatches = matcher.getMatchingPharmacophoreAtoms();
-        Assert.assertEquals(2, pmatches.size());
+        Assertions.assertEquals(2, pmatches.size());
 
         List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
-        Assert.assertEquals(1, upmatches.size());
+        Assertions.assertEquals(1, upmatches.size());
 
     }
 
     @Test
     public void testMatchedBonds() throws Exception {
-        Assert.assertNotNull(conformers);
+        Assertions.assertNotNull(conformers);
 
         // make a query
         PharmacophoreQuery query = new PharmacophoreQuery();
@@ -172,24 +172,24 @@ public class PharmacophoreMatcherTest {
         IAtomContainer conf1 = conformers.get(0);
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(conf1);
-        Assert.assertTrue(status);
+        Assertions.assertTrue(status);
 
         List<List<IBond>> bMatches = matcher.getMatchingPharmacophoreBonds();
-        Assert.assertEquals(2, bMatches.size()); // 2 since we haven't gotten a unique set
-        Assert.assertEquals(3, bMatches.get(0).size());
+        Assertions.assertEquals(2, bMatches.size()); // 2 since we haven't gotten a unique set
+        Assertions.assertEquals(3, bMatches.get(0).size());
 
         PharmacophoreBond pbond = (PharmacophoreBond) BondRef.deref(bMatches.get(0).get(0));
         PharmacophoreAtom patom1 = (PharmacophoreAtom) AtomRef.deref(pbond.getBegin());
         PharmacophoreAtom patom2 = (PharmacophoreAtom) AtomRef.deref(pbond.getEnd());
-        Assert.assertEquals("D", patom1.getSymbol());
-        Assert.assertEquals("A", patom2.getSymbol());
+        Assertions.assertEquals("D", patom1.getSymbol());
+        Assertions.assertEquals("A", patom2.getSymbol());
 
         List<HashMap<IBond, IBond>> bondMap = matcher.getTargetQueryBondMappings();
-        Assert.assertEquals(2, bondMap.size());
+        Assertions.assertEquals(2, bondMap.size());
         HashMap<IBond, IBond> mapping = bondMap.get(0);
         // get the 'BondRef' for lookup
         IBond value = mapping.get(bMatches.get(0).get(0));
-        Assert.assertEquals(b1, value);
+        Assertions.assertEquals(b1, value);
     }
 
     @Test
@@ -237,13 +237,13 @@ public class PharmacophoreMatcherTest {
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);
-        Assert.assertTrue(status);
+        Assertions.assertTrue(status);
 
         List<List<PharmacophoreAtom>> pmatches = matcher.getMatchingPharmacophoreAtoms();
-        Assert.assertEquals(1, pmatches.size());
+        Assertions.assertEquals(1, pmatches.size());
 
         List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
-        Assert.assertEquals(1, upmatches.size());
+        Assertions.assertEquals(1, upmatches.size());
     }
 
     @Test
@@ -266,20 +266,20 @@ public class PharmacophoreMatcherTest {
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);
-        Assert.assertTrue(status);
+        Assertions.assertTrue(status);
 
         List<List<PharmacophoreAtom>> pmatches = matcher.getMatchingPharmacophoreAtoms();
-        Assert.assertEquals(1, pmatches.size());
+        Assertions.assertEquals(1, pmatches.size());
 
         List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
-        Assert.assertEquals(1, upmatches.size());
+        Assertions.assertEquals(1, upmatches.size());
 
         List<List<IBond>> bmatches = matcher.getMatchingPharmacophoreBonds();
-        Assert.assertEquals(1, bmatches.size());
+        Assertions.assertEquals(1, bmatches.size());
         List<IBond> bmatch = bmatches.get(0);
-        Assert.assertEquals(1, bmatch.size());
+        Assertions.assertEquals(1, bmatch.size());
         PharmacophoreBond pbond = (PharmacophoreBond) BondRef.deref(bmatch.get(0));
-        Assert.assertEquals(5.63, pbond.getBondLength(), 0.01);
+        Assertions.assertEquals(5.63, pbond.getBondLength(), 0.01);
     }
 
     @Test
@@ -304,7 +304,7 @@ public class PharmacophoreMatcherTest {
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);
-        Assert.assertTrue(status);
+        Assertions.assertTrue(status);
     }
 
     @Test
@@ -329,12 +329,12 @@ public class PharmacophoreMatcherTest {
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);
-        Assert.assertTrue(status);
+        Assertions.assertTrue(status);
     }
 
     @Test
     public void testAngleMatch3() throws Exception {
-        Assert.assertNotNull(conformers);
+        Assertions.assertNotNull(conformers);
 
         // make a query
         PharmacophoreQuery query = new PharmacophoreQuery();
@@ -362,7 +362,7 @@ public class PharmacophoreMatcherTest {
                 statuses[i] = matcher.matches(conf, false);
             i++;
         }
-        Assert.assertEquals(100, statuses.length);
+        Assertions.assertEquals(100, statuses.length);
 
         int[] hits = new int[9];
         int idx = 0;
@@ -372,7 +372,7 @@ public class PharmacophoreMatcherTest {
 
         int[] expected = {0, 6, 32, 33, 48, 54, 60, 62, 69};
         for (i = 0; i < expected.length; i++) {
-            Assert.assertEquals("Hit " + i + " didn't match", expected[i], hits[i]);
+            Assertions.assertEquals(expected[i], hits[i], "Hit " + i + " didn't match");
         }
     }
 
@@ -389,8 +389,8 @@ public class PharmacophoreMatcherTest {
         PharmacophoreMatcher matcher = new PharmacophoreMatcher();
         matcher.setPharmacophoreQuery(query);
         PharmacophoreQuery retQuery = matcher.getPharmacophoreQuery();
-        Assert.assertEquals(2, retQuery.getAtomCount());
-        Assert.assertEquals(1, retQuery.getBondCount());
+        Assertions.assertEquals(2, retQuery.getAtomCount());
+        Assertions.assertEquals(1, retQuery.getBondCount());
     }
 
     @Test
@@ -412,18 +412,18 @@ public class PharmacophoreMatcherTest {
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         IAtomContainer mol = reader.next();
-        Assert.assertTrue(matcher.matches(mol));
-        Assert.assertEquals(1, matcher.getUniqueMatchingPharmacophoreAtoms().size());
-        Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(0).size());
+        Assertions.assertTrue(matcher.matches(mol));
+        Assertions.assertEquals(1, matcher.getUniqueMatchingPharmacophoreAtoms().size());
+        Assertions.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(0).size());
 
         mol = reader.next();
-        Assert.assertTrue(matcher.matches(mol));
-        Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().size());
-        Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(0).size());
-        Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(1).size());
+        Assertions.assertTrue(matcher.matches(mol));
+        Assertions.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().size());
+        Assertions.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(0).size());
+        Assertions.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(1).size());
 
         mol = reader.next();
         reader.close();
-        Assert.assertFalse(matcher.matches(mol));
+        Assertions.assertFalse(matcher.matches(mol));
     }
 }

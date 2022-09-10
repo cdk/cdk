@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -49,7 +50,7 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
         addExplicitHydrogens(mol);
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
         for (int i = 0; i < testResult.length; ++i) {
-            Assert.assertEquals(testResult[i], retval.get(i), 0.00001);
+            Assertions.assertEquals(testResult[i], retval.get(i), 0.00001);
         }
     }
 
@@ -63,8 +64,8 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
         IAtomContainer mol = sp.parseSmiles("C(F)(F)");
         addExplicitHydrogens(mol);
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
-        Assert.assertEquals(5, retval.length());
-        Assert.assertTrue(Double.isNaN(retval.get(3)));
-        Assert.assertTrue(Double.isNaN(retval.get(4)));
+        Assertions.assertEquals(5, retval.length());
+        Assertions.assertTrue(Double.isNaN(retval.get(3)));
+        Assertions.assertTrue(Double.isNaN(retval.get(4)));
     }
 }

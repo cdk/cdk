@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.diff.ElementDiff;
@@ -25,28 +26,28 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
     public void testSetSymbol_String() {
         IElement e = (IElement) newChemObject();
         e.setSymbol("C");
-        Assert.assertEquals("C", e.getSymbol());
+        Assertions.assertEquals("C", e.getSymbol());
     }
 
     @Test
     public void testGetSymbol() {
         IElement e = (IElement) newChemObject();
         e.setSymbol("Ir");
-        Assert.assertEquals("Ir", e.getSymbol());
+        Assertions.assertEquals("Ir", e.getSymbol());
     }
 
     @Test
     public void testSetAtomicNumber_Integer() {
         IElement e = (IElement) newChemObject();
         e.setAtomicNumber(1);
-        Assert.assertEquals(1, e.getAtomicNumber().intValue());
+        Assertions.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test
     public void testGetAtomicNumber() {
         IElement e = (IElement) newChemObject();
         e.setAtomicNumber(1);
-        Assert.assertEquals(1, e.getAtomicNumber().intValue());
+        Assertions.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test
@@ -54,19 +55,19 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
     public void testClone() throws Exception {
         IElement elem = (IElement) newChemObject();
         Object clone = elem.clone();
-        Assert.assertTrue(clone instanceof IElement);
+        Assertions.assertTrue(clone instanceof IElement);
 
         // test that everything has been cloned properly
         String diff = ElementDiff.diff(elem, (IElement) clone);
-        Assert.assertNotNull(diff);
-        Assert.assertEquals(0, diff.length());
+        Assertions.assertNotNull(diff);
+        Assertions.assertEquals(0, diff.length());
     }
 
     @Test
     public void testCloneDiff() throws Exception {
         IElement elem = (IElement) newChemObject();
         IElement clone = (IElement) elem.clone();
-        Assert.assertEquals("", ElementDiff.diff(elem, clone));
+        Assertions.assertEquals("", ElementDiff.diff(elem, clone));
     }
 
     @Test
@@ -77,7 +78,7 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
 
         // test cloning of symbol
         elem.setSymbol("H");
-        Assert.assertEquals("C", clone.getSymbol());
+        Assertions.assertEquals("C", clone.getSymbol());
     }
 
     @Test
@@ -88,7 +89,7 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
 
         // test cloning of atomic number
         elem.setAtomicNumber(5); // don't care about symbol
-        Assert.assertEquals(6, clone.getAtomicNumber().intValue());
+        Assertions.assertEquals(6, clone.getAtomicNumber().intValue());
     }
 
     /** Test for RFC #9 */
@@ -97,8 +98,8 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
         IElement elem = (IElement) newChemObject();
         String description = elem.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 }

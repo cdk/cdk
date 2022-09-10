@@ -8,6 +8,7 @@ package org.openscience.cdk.test.qsar;
 import java.lang.reflect.Constructor;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.IImplementationSpecification;
@@ -56,7 +57,7 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
      */
     @Test
     public void testHasSetSuperDotDescriptor() {
-        Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", descriptor);
+        Assertions.assertNotNull(descriptor, "The extending class must set the super.descriptor in its setUp() method.");
     }
 
     /**
@@ -69,8 +70,8 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
         String[] paramNames = descriptor.getParameterNames();
         if (paramNames == null) paramNames = new String[0];
         for (String paramName : paramNames) {
-            Assert.assertNotNull("A parameter name must not be null.", paramName);
-            Assert.assertNotSame("A parameter name String must not be empty.", 0, paramName.length());
+            Assertions.assertNotNull(paramName, "A parameter name must not be null.");
+            Assertions.assertNotSame(0, paramName.length(), "A parameter name String must not be empty.");
         }
     }
 
@@ -81,12 +82,11 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
     public void testGetParameters() {
         Object[] params = descriptor.getParameters();
         if (params == null) {
-            Assert.assertEquals("For all parameters a default or actual value must be returned.", 0,
-                    descriptor.getParameterNames() == null ? 0 : descriptor.getParameterNames().length);
+            Assertions.assertEquals(0, descriptor.getParameterNames() == null ? 0 : descriptor.getParameterNames().length, "For all parameters a default or actual value must be returned.");
             params = new Object[0];
         }
         for (Object param : params) {
-            Assert.assertNotNull("A parameter default must not be null.", param);
+            Assertions.assertNotNull(param, "A parameter default must not be null.");
         }
     }
 
@@ -102,11 +102,11 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
 
         for (int i = 0; i < paramNames.length; i++) {
             Object type = descriptor.getParameterType(paramNames[i]);
-            Assert.assertNotNull("The getParameterType(String) return type is null for the " + "parameter: "
-                    + paramNames[i], type);
-            Assert.assertEquals("The getParameterType(String) return type is not consistent "
-                    + "with the getParameters() types for parameter " + i, type.getClass().getName(), params[i]
-                    .getClass().getName());
+            Assertions.assertNotNull(type, "The getParameterType(String) return type is null for the " + "parameter: "
+                    + paramNames[i]);
+            Assertions.assertEquals(type.getClass().getName(), params[i]
+            .getClass().getName(), "The getParameterType(String) return type is not consistent "
+                    + "with the getParameters() types for parameter " + i);
         }
     }
 
@@ -119,28 +119,27 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
         //      FIXME: see testGetParameters() comment on the same line
         if (params == null) params = new Object[0];
 
-        Assert.assertEquals("The number of returned parameter names must equate the number of returned parameters",
-                paramNames.length, params.length);
+        Assertions.assertEquals(paramNames.length, params.length, "The number of returned parameter names must equate the number of returned parameters");
     }
 
     @Test
     public void testGetSpecification() {
         IImplementationSpecification spec = descriptor.getSpecification();
-        Assert.assertNotNull("The descriptor specification returned must not be null.", spec);
+        Assertions.assertNotNull(spec, "The descriptor specification returned must not be null.");
 
-        Assert.assertNotNull("The specification identifier must not be null.", spec.getImplementationIdentifier());
-        Assert.assertNotSame("The specification identifier must not be empty.", 0, spec.getImplementationIdentifier()
-                .length());
+        Assertions.assertNotNull(spec.getImplementationIdentifier(), "The specification identifier must not be null.");
+        Assertions.assertNotSame(0, spec.getImplementationIdentifier()
+                                        .length(), "The specification identifier must not be empty.");
 
-        Assert.assertNotNull("The specification title must not be null.", spec.getImplementationTitle());
-        Assert.assertNotSame("The specification title must not be empty.", 0, spec.getImplementationTitle().length());
+        Assertions.assertNotNull(spec.getImplementationTitle(), "The specification title must not be null.");
+        Assertions.assertNotSame(0, spec.getImplementationTitle().length(), "The specification title must not be empty.");
 
-        Assert.assertNotNull("The specification vendor must not be null.", spec.getImplementationVendor());
-        Assert.assertNotSame("The specification vendor must not be empty.", 0, spec.getImplementationVendor().length());
+        Assertions.assertNotNull(spec.getImplementationVendor(), "The specification vendor must not be null.");
+        Assertions.assertNotSame(0, spec.getImplementationVendor().length(), "The specification vendor must not be empty.");
 
-        Assert.assertNotNull("The specification reference must not be null.", spec.getSpecificationReference());
-        Assert.assertNotSame("The specification reference must not be empty.", 0, spec.getSpecificationReference()
-                .length());
+        Assertions.assertNotNull(spec.getSpecificationReference(), "The specification reference must not be null.");
+        Assertions.assertNotSame(0, spec.getSpecificationReference()
+                                        .length(), "The specification reference must not be empty.");
     }
 
     /**
@@ -150,7 +149,7 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
     @Test
     public void testGetSpecification_IdentifierNonDefault() {
         IImplementationSpecification spec = descriptor.getSpecification();
-        Assert.assertNotSame("$Id$", spec.getImplementationIdentifier());
+        Assertions.assertNotSame("$Id$", spec.getImplementationIdentifier());
     }
 
     @Test
@@ -162,10 +161,10 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
     @Test
     public void testGetDescriptorNames() {
         String[] descNames = descriptor.getDescriptorNames();
-        Assert.assertNotNull(descNames);
-        Assert.assertTrue("One or more descriptor names must be provided", descNames.length >= 1);
+        Assertions.assertNotNull(descNames);
+        Assertions.assertTrue(descNames.length >= 1, "One or more descriptor names must be provided");
         for (String s : descNames) {
-            Assert.assertTrue("Descriptor name must be non-zero length", s.length() != 0);
+            Assertions.assertTrue(s.length() != 0, "Descriptor name must be non-zero length");
         }
     }
 

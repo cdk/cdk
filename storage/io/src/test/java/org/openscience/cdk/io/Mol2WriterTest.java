@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     @Test
     public void testAccepts() throws Exception {
         Mol2Writer writer = new Mol2Writer();
-        Assert.assertTrue(writer.accepts(AtomContainer.class));
+        Assertions.assertTrue(writer.accepts(AtomContainer.class));
     }
 
     /**
@@ -81,8 +82,8 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         Mol2Writer writer = new Mol2Writer(swriter);
         writer.write(molecule);
         writer.close();
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 1") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 1") > 0);
     }
 
     @Disabled("moved to SMILES2Mol2WriterTest")
@@ -95,12 +96,11 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         writer.write(molecule);
         writer.close();
 
-        Assert.assertTrue("Aromatic atom not properly reported",
-                swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.ar") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 O8 0.000 0.000 0.000 O.2") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("7 C7 0.000 0.000 0.000 C.2") > 0);
-        Assert.assertTrue("Aromatic bond not properly reported", swriter.getBuffer().toString().indexOf("1 2 1 ar") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 8 7 2") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.ar") > 0, "Aromatic atom not properly reported");
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("8 O8 0.000 0.000 0.000 O.2") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("7 C7 0.000 0.000 0.000 C.2") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 ar") > 0, "Aromatic bond not properly reported");
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("8 8 7 2") > 0);
     }
 
     @Disabled("moved to SMILES2Mol2WriterTest")
@@ -113,12 +113,12 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         writer.write(molecule);
         writer.close();
 
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("3 O3 0.000 0.000 0.000 O.") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 N4 0.000 0.000 0.000 N.a") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 1") > 0);
-        Assert.assertTrue("Amide bond not properly reported", swriter.getBuffer().toString().indexOf("3 4 2 am") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 5 4 1") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("3 O3 0.000 0.000 0.000 O.") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("4 N4 0.000 0.000 0.000 N.a") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 1") > 0);
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("3 4 2 am") > 0, "Amide bond not properly reported");
+        Assertions.assertTrue(swriter.getBuffer().toString().indexOf("4 5 4 1") > 0);
     }
 
     /**
@@ -146,6 +146,6 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         molwriter.close();
 
         String mol2file = writer.getBuffer().toString();
-        Assert.assertTrue(mol2file.contains("-1.209 -18.043 49.44 X"));
+        Assertions.assertTrue(mol2file.contains("-1.209 -18.043 49.44 X"));
     }
 }

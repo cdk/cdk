@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractChemFileTest;
@@ -40,7 +41,7 @@ public class ChemFileTest extends AbstractChemFileTest {
     @Test
     public void testChemFile() {
         IChemFile cs = new ChemFile();
-        Assert.assertNotNull(cs);
+        Assertions.assertNotNull(cs);
     }
 
     // Overwrite default methods: no notifications are expected!

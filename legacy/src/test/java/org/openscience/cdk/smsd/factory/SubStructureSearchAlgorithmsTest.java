@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -49,8 +50,8 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testSubStructureSearchAlgorithms() {
-        Assert.assertNotNull(new Isomorphism(Algorithm.CDKMCS, true));
-        Assert.assertNotNull(new Isomorphism(Algorithm.CDKMCS, false));
+        Assertions.assertNotNull(new Isomorphism(Algorithm.CDKMCS, true));
+        Assertions.assertNotNull(new Isomorphism(Algorithm.CDKMCS, false));
     }
 
     /**
@@ -67,8 +68,8 @@ public class SubStructureSearchAlgorithmsTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        assertNotNull(smsd1.getReactantMolecule());
-        assertNotNull(smsd1.getProductMolecule());
+        Assertions.assertNotNull(smsd1.getReactantMolecule());
+        Assertions.assertNotNull(smsd1.getProductMolecule());
     }
 
     /**
@@ -85,8 +86,8 @@ public class SubStructureSearchAlgorithmsTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        assertNotNull(smsd1.getReactantMolecule());
-        assertNotNull(smsd1.getProductMolecule());
+        Assertions.assertNotNull(smsd1.getReactantMolecule());
+        Assertions.assertNotNull(smsd1.getProductMolecule());
     }
 
     /**
@@ -104,8 +105,8 @@ public class SubStructureSearchAlgorithmsTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        assertNotNull(smsd1.getReactantMolecule());
-        assertNotNull(smsd1.getProductMolecule());
+        Assertions.assertNotNull(smsd1.getReactantMolecule());
+        Assertions.assertNotNull(smsd1.getProductMolecule());
 
     }
 
@@ -123,7 +124,7 @@ public class SubStructureSearchAlgorithmsTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertEquals(1, smsd1.getAllAtomMapping().size());
+        Assertions.assertEquals(1, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -141,7 +142,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, true, false);
         Integer score = 2;
-        assertEquals(score, smsd1.getFragmentSize(0));
+        Assertions.assertEquals(score, smsd1.getFragmentSize(0));
     }
 
     /**
@@ -159,7 +160,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
         Integer score = 1048;
-        assertEquals(score, smsd1.getStereoScore(0));
+        Assertions.assertEquals(score, smsd1.getStereoScore(0));
     }
 
     /**
@@ -177,7 +178,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, false, true);
         Double score = 610.0;
-        assertEquals(score, smsd1.getEnergyScore(0));
+        Assertions.assertEquals(score, smsd1.getEnergyScore(0));
     }
 
     /**
@@ -195,7 +196,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
-        assertEquals(7, smsd1.getFirstMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstMapping().size());
     }
 
     /**
@@ -218,7 +219,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
-        assertEquals(2, smsd1.getAllMapping().size());
+        Assertions.assertEquals(2, smsd1.getAllMapping().size());
     }
 
     /**
@@ -236,7 +237,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
-        assertEquals(7, smsd1.getFirstAtomMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstAtomMapping().size());
     }
 
     /**
@@ -259,7 +260,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
-        assertEquals(2, smsd1.getAllAtomMapping().size());
+        Assertions.assertEquals(2, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -277,7 +278,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
-        assertEquals(7, smsd1.getReactantMolecule().getAtomCount());
+        Assertions.assertEquals(7, smsd1.getReactantMolecule().getAtomCount());
     }
 
     /**
@@ -295,7 +296,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
-        assertEquals(20, smsd1.getProductMolecule().getAtomCount());
+        Assertions.assertEquals(20, smsd1.getProductMolecule().getAtomCount());
     }
 
     /**
@@ -313,7 +314,7 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.setChemFilters(true, true, true);
 
         double score = 0.35;
-        assertEquals(score, smsd1.getTanimotoSimilarity(), 0);
+        Assertions.assertEquals(score, smsd1.getTanimotoSimilarity(), 0);
     }
 
     /**
@@ -330,7 +331,7 @@ public class SubStructureSearchAlgorithmsTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertEquals(false, smsd1.isStereoMisMatch());
+        Assertions.assertEquals(false, smsd1.isStereoMisMatch());
     }
 
     /**
@@ -346,7 +347,7 @@ public class SubStructureSearchAlgorithmsTest {
         Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, false);
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
-        assertEquals(true, smsd1.isSubgraph());
+        Assertions.assertEquals(true, smsd1.isSubgraph());
     }
 
     /**
@@ -364,12 +365,12 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.setChemFilters(true, true, true);
 
         double score = 3.605;
-        assertEquals(score, smsd1.getEuclideanDistance(), 0.005);
+        Assertions.assertEquals(score, smsd1.getEuclideanDistance(), 0.005);
 
         Isomorphism smsd2 = new Isomorphism(Algorithm.VFLibMCS, true);
         smsd2.init(queryac, target, true, true);
         smsd2.setChemFilters(true, true, true);
 
-        assertEquals(score, smsd2.getEuclideanDistance(), 0.005);
+        Assertions.assertEquals(score, smsd2.getEuclideanDistance(), 0.005);
     }
 }

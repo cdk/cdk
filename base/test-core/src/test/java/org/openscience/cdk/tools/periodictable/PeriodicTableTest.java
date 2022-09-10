@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.periodictable;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
@@ -34,18 +35,17 @@ public class PeriodicTableTest extends CDKTestCase {
 
     @Test
     public void testTable() {
-        Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getVdwRadius("Co"));
-        Assert.assertEquals(1.7, PeriodicTable.getVdwRadius("C"), 0.001);
-        Assert.assertEquals(39, PeriodicTable.getAtomicNumber("Y"), 0.001);
-        Assert.assertEquals(2.55, PeriodicTable.getPaulingElectronegativity("C"), 0.001);
-        Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getPaulingElectronegativity("He"));
-        Assert.assertEquals(CDKConstants.UNSET,
-                org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius("Pu"));
-        Assert.assertEquals(0.32, PeriodicTable.getCovalentRadius("He"), 0.001);
-        Assert.assertEquals(14, PeriodicTable.getGroup("C"), 0.01);
+        Assertions.assertEquals(CDKConstants.UNSET, PeriodicTable.getVdwRadius("Co"));
+        Assertions.assertEquals(1.7, PeriodicTable.getVdwRadius("C"), 0.001);
+        Assertions.assertEquals(39, PeriodicTable.getAtomicNumber("Y"), 0.001);
+        Assertions.assertEquals(2.55, PeriodicTable.getPaulingElectronegativity("C"), 0.001);
+        Assertions.assertEquals(CDKConstants.UNSET, PeriodicTable.getPaulingElectronegativity("He"));
+        Assertions.assertEquals(CDKConstants.UNSET, PeriodicTable.getCovalentRadius("Pu"));
+        Assertions.assertEquals(0.32, PeriodicTable.getCovalentRadius("He"), 0.001);
+        Assertions.assertEquals(14, PeriodicTable.getGroup("C"), 0.01);
 
-        Assert.assertEquals("H", PeriodicTable.getSymbol(1));
-        Assert.assertEquals("C", PeriodicTable.getSymbol(6));
+        Assertions.assertEquals("H", PeriodicTable.getSymbol(1));
+        Assertions.assertEquals("C", PeriodicTable.getSymbol(6));
     }
 
 }

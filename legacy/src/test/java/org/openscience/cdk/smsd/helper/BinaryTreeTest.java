@@ -26,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,7 @@ public class BinaryTreeTest {
         BinaryTree instance = new BinaryTree(15);
         int expResult = 15;
         int result = instance.getValue();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -74,7 +75,7 @@ public class BinaryTreeTest {
         instance.setNotEqual(new BinaryTree(10));
         BinaryTree expResult = equal;
         BinaryTree result = instance.getEqual();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -88,7 +89,7 @@ public class BinaryTreeTest {
         instance.setNotEqual(new BinaryTree(10));
         BinaryTree expResult = equal;
         BinaryTree result = instance.getEqual();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -103,7 +104,7 @@ public class BinaryTreeTest {
         instance.setNotEqual(notEqual);
         BinaryTree expResult = notEqual;
         BinaryTree result = instance.getNotEqual();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -118,6 +119,6 @@ public class BinaryTreeTest {
         instance.setNotEqual(notEqual);
         BinaryTree expResult = notEqual;
         BinaryTree result = instance.getNotEqual();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 }

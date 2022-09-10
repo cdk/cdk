@@ -20,6 +20,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IReactionScheme;
@@ -47,7 +48,7 @@ public class ReactionSchemeTest extends AbstractReactionSchemeTest {
     @Test
     public void testReactionScheme() {
         IReactionScheme scheme = new ReactionScheme();
-        Assert.assertNotNull(scheme);
+        Assertions.assertNotNull(scheme);
     }
 
 }

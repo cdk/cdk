@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -46,11 +47,11 @@ public class BondMatcherTest {
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
         IBond bond3 = mock(IBond.class);
-        assertTrue(matcher.matches(bond1, bond2));
-        assertTrue(matcher.matches(bond2, bond1));
-        assertTrue(matcher.matches(bond1, bond3));
-        assertTrue(matcher.matches(bond1, null));
-        assertTrue(matcher.matches(null, null));
+        Assertions.assertTrue(matcher.matches(bond1, bond2));
+        Assertions.assertTrue(matcher.matches(bond2, bond1));
+        Assertions.assertTrue(matcher.matches(bond1, bond3));
+        Assertions.assertTrue(matcher.matches(bond1, null));
+        Assertions.assertTrue(matcher.matches(null, null));
     }
 
     @Test
@@ -62,8 +63,8 @@ public class BondMatcherTest {
         when(bond2.getFlag(ISAROMATIC)).thenReturn(true);
         when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(bond2.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertTrue(matcher.matches(bond1, bond2));
-        assertTrue(matcher.matches(bond2, bond1));
+        Assertions.assertTrue(matcher.matches(bond1, bond2));
+        Assertions.assertTrue(matcher.matches(bond2, bond1));
     }
 
     @Test
@@ -75,8 +76,8 @@ public class BondMatcherTest {
         when(bond2.getFlag(ISAROMATIC)).thenReturn(false);
         when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(bond2.getOrder()).thenReturn(IBond.Order.SINGLE);
-        assertTrue(matcher.matches(bond1, bond2));
-        assertTrue(matcher.matches(bond2, bond1));
+        Assertions.assertTrue(matcher.matches(bond1, bond2));
+        Assertions.assertTrue(matcher.matches(bond2, bond1));
     }
 
     @Test
@@ -88,8 +89,8 @@ public class BondMatcherTest {
         when(bond2.getFlag(ISAROMATIC)).thenReturn(true);
         when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(bond2.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertTrue(matcher.matches(bond1, bond2));
-        assertTrue(matcher.matches(bond2, bond1));
+        Assertions.assertTrue(matcher.matches(bond1, bond2));
+        Assertions.assertTrue(matcher.matches(bond2, bond1));
     }
 
     @Test
@@ -101,8 +102,8 @@ public class BondMatcherTest {
         when(bond2.getFlag(ISAROMATIC)).thenReturn(false);
         when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(bond2.getOrder()).thenReturn(IBond.Order.SINGLE);
-        assertTrue(matcher.matches(bond1, bond2));
-        assertTrue(matcher.matches(bond2, bond1));
+        Assertions.assertTrue(matcher.matches(bond1, bond2));
+        Assertions.assertTrue(matcher.matches(bond2, bond1));
     }
 
     @Test
@@ -114,8 +115,8 @@ public class BondMatcherTest {
         when(bond2.getFlag(ISAROMATIC)).thenReturn(false);
         when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(bond2.getOrder()).thenReturn(IBond.Order.SINGLE);
-        assertTrue(matcher.matches(bond1, bond2));
-        assertTrue(matcher.matches(bond2, bond1));
+        Assertions.assertTrue(matcher.matches(bond1, bond2));
+        Assertions.assertTrue(matcher.matches(bond2, bond1));
     }
 
     @Test
@@ -127,8 +128,8 @@ public class BondMatcherTest {
         when(bond2.getFlag(ISAROMATIC)).thenReturn(false);
         when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(bond2.getOrder()).thenReturn(IBond.Order.SINGLE);
-        assertFalse(matcher.matches(bond1, bond2));
-        assertFalse(matcher.matches(bond2, bond1));
+        Assertions.assertFalse(matcher.matches(bond1, bond2));
+        Assertions.assertFalse(matcher.matches(bond2, bond1));
     }
 
     @Test
@@ -140,8 +141,8 @@ public class BondMatcherTest {
         when(bond2.getFlag(ISAROMATIC)).thenReturn(false);
         when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(bond2.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertFalse(matcher.matches(bond1, bond2));
-        assertFalse(matcher.matches(bond2, bond1));
+        Assertions.assertFalse(matcher.matches(bond1, bond2));
+        Assertions.assertFalse(matcher.matches(bond2, bond1));
     }
 
     @Test
@@ -153,8 +154,8 @@ public class BondMatcherTest {
         when(bond2.getFlag(ISAROMATIC)).thenReturn(false);
         when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
         when(bond2.getOrder()).thenReturn(IBond.Order.DOUBLE);
-        assertFalse(matcher.matches(bond1, bond2));
-        assertFalse(matcher.matches(bond2, bond1));
+        Assertions.assertFalse(matcher.matches(bond1, bond2));
+        Assertions.assertFalse(matcher.matches(bond2, bond1));
     }
 
     @Test
@@ -165,7 +166,7 @@ public class BondMatcherTest {
         IBond bond3 = mock(IBond.class);
         when(bond1.matches(bond2)).thenReturn(true);
         when(bond1.matches(bond3)).thenReturn(false);
-        assertTrue(matcher.matches(bond1, bond2));
-        assertFalse(matcher.matches(bond1, bond3));
+        Assertions.assertTrue(matcher.matches(bond1, bond2));
+        Assertions.assertFalse(matcher.matches(bond1, bond3));
     }
 }

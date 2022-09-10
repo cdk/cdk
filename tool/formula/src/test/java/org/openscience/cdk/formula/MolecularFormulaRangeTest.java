@@ -59,7 +59,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-        Assert.assertNotNull(mfRange);
+        Assertions.assertNotNull(mfRange);
     }
 
     /**
@@ -72,7 +72,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-        Assert.assertEquals(0, mfRange.getIsotopeCount());
+        Assertions.assertEquals(0, mfRange.getIsotopeCount());
     }
 
     /**
@@ -87,7 +87,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(builder.newInstance(IIsotope.class, "C"), 0, 10);
         mfRange.addIsotope(builder.newInstance(IIsotope.class, "H"), 0, 10);
 
-        Assert.assertEquals(2, mfRange.getIsotopeCount());
+        Assertions.assertEquals(2, mfRange.getIsotopeCount());
     }
 
     /**
@@ -106,7 +106,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         hy.setNaturalAbundance(2.00342342);
         mfRange.addIsotope(hy, 0, 10);
 
-        Assert.assertEquals(3, mfRange.getIsotopeCount());
+        Assertions.assertEquals(3, mfRange.getIsotopeCount());
     }
 
     /**
@@ -123,9 +123,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(carb, 0, 10);
         mfRange.addIsotope(h1, 0, 10);
 
-        Assert.assertEquals(2, mfRange.getIsotopeCount());
-        Assert.assertEquals(10, mfRange.getIsotopeCountMax(carb));
-        Assert.assertEquals(10, mfRange.getIsotopeCountMax(h1));
+        Assertions.assertEquals(2, mfRange.getIsotopeCount());
+        Assertions.assertEquals(10, mfRange.getIsotopeCountMax(carb));
+        Assertions.assertEquals(10, mfRange.getIsotopeCountMax(h1));
     }
 
     /**
@@ -143,10 +143,10 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(carb, 0, 10);
         mfRange.addIsotope(h1, 0, 10);
 
-        Assert.assertEquals(2, mfRange.getIsotopeCount());
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(carb));
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(h1));
-        Assert.assertEquals(-1, mfRange.getIsotopeCountMin(flu));
+        Assertions.assertEquals(2, mfRange.getIsotopeCount());
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(carb));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(h1));
+        Assertions.assertEquals(-1, mfRange.getIsotopeCountMin(flu));
     }
 
     /**
@@ -166,9 +166,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(carb, 5, 10);
         mfRange.addIsotope(h1, 5, 10);
 
-        Assert.assertEquals(2, mfRange.getIsotopeCount());
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(carb));
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(h1));
+        Assertions.assertEquals(2, mfRange.getIsotopeCount());
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(carb));
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(h1));
 
     }
 
@@ -193,11 +193,11 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(carb2, 5, 10);
         mfRange.addIsotope(h2, 5, 10);
 
-        Assert.assertEquals(2, mfRange.getIsotopeCount());
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(carb1));
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(h1));
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(carb2));
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(h2));
+        Assertions.assertEquals(2, mfRange.getIsotopeCount());
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(carb1));
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(h1));
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(carb2));
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(h2));
 
     }
 
@@ -224,11 +224,11 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(carb2, 5, 10);
         mfRange.addIsotope(h2, 5, 10);
 
-        Assert.assertEquals(4, mfRange.getIsotopeCount());
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(carb1));
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(h1));
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(carb2));
-        Assert.assertEquals(5, mfRange.getIsotopeCountMin(h2));
+        Assertions.assertEquals(4, mfRange.getIsotopeCount());
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(carb1));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(h1));
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(carb2));
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMin(h2));
 
     }
 
@@ -250,7 +250,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
             istoIter.next();
             counter++;
         }
-        Assert.assertEquals(2, counter);
+        Assertions.assertEquals(2, counter);
     }
 
     /**
@@ -271,10 +271,10 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(carb, 0, 10);
         mfRange.addIsotope(h1, 0, 10);
 
-        Assert.assertTrue(mfRange.contains(carb));
-        Assert.assertFalse(mfRange.contains(cl));
-        Assert.assertTrue(mfRange.contains(h1));
-        Assert.assertFalse(mfRange.contains(h2));
+        Assertions.assertTrue(mfRange.contains(carb));
+        Assertions.assertFalse(mfRange.contains(cl));
+        Assertions.assertTrue(mfRange.contains(h1));
+        Assertions.assertFalse(mfRange.contains(h2));
     }
 
     /**
@@ -295,9 +295,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         // remove the Fluorine
         mfRange.removeIsotope(flu);
 
-        Assert.assertEquals(2, mfRange.getIsotopeCount());
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(carb));
-        Assert.assertEquals(-1, mfRange.getIsotopeCountMin(flu));
+        Assertions.assertEquals(2, mfRange.getIsotopeCount());
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(carb));
+        Assertions.assertEquals(-1, mfRange.getIsotopeCountMin(flu));
 
     }
 
@@ -319,10 +319,10 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         // remove the Fluorine
         mfRange.removeAllIsotopes();
 
-        Assert.assertEquals(0, mfRange.getIsotopeCount());
-        Assert.assertEquals(-1, mfRange.getIsotopeCountMin(carb));
-        Assert.assertEquals(-1, mfRange.getIsotopeCountMin(h1));
-        Assert.assertEquals(-1, mfRange.getIsotopeCountMin(flu));
+        Assertions.assertEquals(0, mfRange.getIsotopeCount());
+        Assertions.assertEquals(-1, mfRange.getIsotopeCountMin(carb));
+        Assertions.assertEquals(-1, mfRange.getIsotopeCountMin(h1));
+        Assertions.assertEquals(-1, mfRange.getIsotopeCountMin(flu));
 
     }
 
@@ -336,8 +336,8 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testClone() throws Exception {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         Object clone = mfRange.clone();
-        Assert.assertTrue(clone instanceof MolecularFormulaRange);
-        Assert.assertEquals(mfRange.getIsotopeCount(), ((MolecularFormulaRange) clone).getIsotopeCount());
+        Assertions.assertTrue(clone instanceof MolecularFormulaRange);
+        Assertions.assertEquals(mfRange.getIsotopeCount(), ((MolecularFormulaRange) clone).getIsotopeCount());
 
     }
 
@@ -355,27 +355,27 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(flu, 2, 8);
         mfRange.addIsotope(h1, 4, 10);
 
-        Assert.assertEquals(3, mfRange.getIsotopeCount());
-        Assert.assertEquals(0, mfRange.getIsotopeCountMin(carb));
-        Assert.assertEquals(2, mfRange.getIsotopeCountMin(flu));
-        Assert.assertEquals(4, mfRange.getIsotopeCountMin(h1));
-        Assert.assertEquals(5, mfRange.getIsotopeCountMax(carb));
-        Assert.assertEquals(8, mfRange.getIsotopeCountMax(flu));
-        Assert.assertEquals(10, mfRange.getIsotopeCountMax(h1));
+        Assertions.assertEquals(3, mfRange.getIsotopeCount());
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(carb));
+        Assertions.assertEquals(2, mfRange.getIsotopeCountMin(flu));
+        Assertions.assertEquals(4, mfRange.getIsotopeCountMin(h1));
+        Assertions.assertEquals(5, mfRange.getIsotopeCountMax(carb));
+        Assertions.assertEquals(8, mfRange.getIsotopeCountMax(flu));
+        Assertions.assertEquals(10, mfRange.getIsotopeCountMax(h1));
 
         Object clone = mfRange.clone();
-        Assert.assertTrue(clone instanceof MolecularFormulaRange);
-        Assert.assertEquals(mfRange.getIsotopeCount(), ((MolecularFormulaRange) clone).getIsotopeCount());
+        Assertions.assertTrue(clone instanceof MolecularFormulaRange);
+        Assertions.assertEquals(mfRange.getIsotopeCount(), ((MolecularFormulaRange) clone).getIsotopeCount());
 
-        Assert.assertEquals(3, ((MolecularFormulaRange) clone).getIsotopeCount());
+        Assertions.assertEquals(3, ((MolecularFormulaRange) clone).getIsotopeCount());
 
-        Assert.assertEquals(3, ((MolecularFormulaRange) clone).getIsotopeCount());
-        Assert.assertEquals(0, ((MolecularFormulaRange) clone).getIsotopeCountMin(carb));
-        Assert.assertEquals(2, ((MolecularFormulaRange) clone).getIsotopeCountMin(flu));
-        Assert.assertEquals(4, ((MolecularFormulaRange) clone).getIsotopeCountMin(h1));
-        Assert.assertEquals(5, ((MolecularFormulaRange) clone).getIsotopeCountMax(carb));
-        Assert.assertEquals(8, ((MolecularFormulaRange) clone).getIsotopeCountMax(flu));
-        Assert.assertEquals(10, ((MolecularFormulaRange) clone).getIsotopeCountMax(h1));
+        Assertions.assertEquals(3, ((MolecularFormulaRange) clone).getIsotopeCount());
+        Assertions.assertEquals(0, ((MolecularFormulaRange) clone).getIsotopeCountMin(carb));
+        Assertions.assertEquals(2, ((MolecularFormulaRange) clone).getIsotopeCountMin(flu));
+        Assertions.assertEquals(4, ((MolecularFormulaRange) clone).getIsotopeCountMin(h1));
+        Assertions.assertEquals(5, ((MolecularFormulaRange) clone).getIsotopeCountMax(carb));
+        Assertions.assertEquals(8, ((MolecularFormulaRange) clone).getIsotopeCountMax(flu));
+        Assertions.assertEquals(10, ((MolecularFormulaRange) clone).getIsotopeCountMax(h1));
     }
     
     /**

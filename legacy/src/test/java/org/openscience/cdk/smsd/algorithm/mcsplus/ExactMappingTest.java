@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,7 @@ public class ExactMappingTest {
     @Test
     public void testSomeMethod() {
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(ExactMapping.extractMapping(new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>()));
+        Assertions.assertNotNull(ExactMapping.extractMapping(new ArrayList<>(), new ArrayList<>(),
+                                                             new ArrayList<>()));
     }
 }

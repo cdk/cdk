@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -302,7 +303,7 @@ public class CxSmilesParserTest {
         String cxsmilayers = "|r|";
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
-        assertTrue(state.racemic);
+        Assertions.assertTrue(state.racemic);
     }
 
     @Test
@@ -318,7 +319,7 @@ public class CxSmilesParserTest {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("CC[C@H](O)[C@H](O)CCCCCC |&1:2|");
         Iterable<IStereoElement> iter = mol.stereoElements();
-        assertTrue(iter.iterator().hasNext());
+        Assertions.assertTrue(iter.iterator().hasNext());
         for (IStereoElement<?,?> se : iter) {
             IAtom focus = (IAtom)se.getFocus();
             if (focus.getIndex() == 2) {
@@ -334,7 +335,7 @@ public class CxSmilesParserTest {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("CC[C@H](O)[C@H](O)CCCCCC |r|");
         Iterable<IStereoElement> iter = mol.stereoElements();
-        assertTrue(iter.iterator().hasNext());
+        Assertions.assertTrue(iter.iterator().hasNext());
         for (IStereoElement<?,?> se : iter) {
             assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
         }
@@ -346,14 +347,14 @@ public class CxSmilesParserTest {
         IReaction rxn = smipar.parseReactionSmiles("c1ccccc1[C@H](O)C>>CC[C@H](O)[C@H](O)CCCCCC |r:1|");
         for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
             Iterable<IStereoElement> iter = mol.stereoElements();
-            assertTrue(iter.iterator().hasNext());
+            Assertions.assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?, ?> se : iter) {
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
             }
         }
         for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
             Iterable<IStereoElement> iter = mol.stereoElements();
-            assertTrue(iter.iterator().hasNext());
+            Assertions.assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?, ?> se : iter) {
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
@@ -366,14 +367,14 @@ public class CxSmilesParserTest {
         IReaction rxn = smipar.parseReactionSmiles("c1ccccc1[C@H](O)C>[Na+].[Cl-]>CC[C@H](O)[C@H](O)CCCCCC |f:1.2,r:3|");
         for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
             Iterable<IStereoElement> iter = mol.stereoElements();
-            assertTrue(iter.iterator().hasNext());
+            Assertions.assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?, ?> se : iter) {
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
             }
         }
         for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
             Iterable<IStereoElement> iter = mol.stereoElements();
-            assertTrue(iter.iterator().hasNext());
+            Assertions.assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?, ?> se : iter) {
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
@@ -404,9 +405,9 @@ public class CxSmilesParserTest {
                 break;
             }
         }
-        Assert.assertNotNull(sru);
-        Assert.assertEquals(4, sru.getAtoms().size());
-        Assert.assertEquals(2, sru.getBonds().size());
+        Assertions.assertNotNull(sru);
+        Assertions.assertEquals(4, sru.getAtoms().size());
+        Assertions.assertEquals(2, sru.getBonds().size());
     }
 
 

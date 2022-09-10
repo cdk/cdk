@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -55,7 +56,7 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
     public void testZagrebIndexDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
-        Assert.assertEquals(16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
+        Assertions.assertEquals(16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
 
         double value3D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
 
-        Assert.assertEquals(value2D, value3D, 0.001);
+        Assertions.assertEquals(value2D, value3D, 0.001);
 
     }
 }

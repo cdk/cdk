@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.IOException;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.AtomContainer;
 
 import org.junit.jupiter.api.AfterEach;
@@ -57,6 +58,6 @@ public class GenerateCompatibilityGraphTest {
     @Test
     public void testSomeMethod() throws IOException {
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(new GenerateCompatibilityGraph(new AtomContainer(), new AtomContainer(), true));
+        Assertions.assertNotNull(new GenerateCompatibilityGraph(new AtomContainer(), new AtomContainer(), true));
     }
 }

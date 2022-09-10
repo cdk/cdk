@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -26,7 +27,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
     @Override
     public void testGetMonomerCount() {
         IBioPolymer oBioPolymer = (IBioPolymer) newChemObject();
-        Assert.assertEquals(0, oBioPolymer.getMonomerCount());
+        Assertions.assertEquals(0, oBioPolymer.getMonomerCount());
 
         IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
@@ -42,21 +43,21 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         oBioPolymer.addAtom(oAtom1);
         oBioPolymer.addAtom(oAtom2, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom3, oMono2, oStrand2);
-        Assert.assertNotNull(oBioPolymer.getAtom(0));
-        Assert.assertNotNull(oBioPolymer.getAtom(1));
-        Assert.assertNotNull(oBioPolymer.getAtom(2));
-        Assert.assertEquals(oAtom1, oBioPolymer.getAtom(0));
-        Assert.assertEquals(oAtom2, oBioPolymer.getAtom(1));
-        Assert.assertEquals(oAtom3, oBioPolymer.getAtom(2));
+        Assertions.assertNotNull(oBioPolymer.getAtom(0));
+        Assertions.assertNotNull(oBioPolymer.getAtom(1));
+        Assertions.assertNotNull(oBioPolymer.getAtom(2));
+        Assertions.assertEquals(oAtom1, oBioPolymer.getAtom(0));
+        Assertions.assertEquals(oAtom2, oBioPolymer.getAtom(1));
+        Assertions.assertEquals(oAtom3, oBioPolymer.getAtom(2));
 
-        Assert.assertEquals(2, oBioPolymer.getMonomerCount());
+        Assertions.assertEquals(2, oBioPolymer.getMonomerCount());
     }
 
     @Test
     @Override
     public void testGetMonomerNames() {
         IBioPolymer oBioPolymer = (IBioPolymer) newChemObject();
-        Assert.assertEquals(0, oBioPolymer.getMonomerNames().size());
+        Assertions.assertEquals(0, oBioPolymer.getMonomerNames().size());
 
         IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
@@ -72,16 +73,16 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         oBioPolymer.addAtom(oAtom1);
         oBioPolymer.addAtom(oAtom2, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom3, oMono2, oStrand2);
-        Assert.assertNotNull(oBioPolymer.getAtom(0));
-        Assert.assertNotNull(oBioPolymer.getAtom(1));
-        Assert.assertNotNull(oBioPolymer.getAtom(2));
-        Assert.assertEquals(oAtom1, oBioPolymer.getAtom(0));
-        Assert.assertEquals(oAtom2, oBioPolymer.getAtom(1));
-        Assert.assertEquals(oAtom3, oBioPolymer.getAtom(2));
+        Assertions.assertNotNull(oBioPolymer.getAtom(0));
+        Assertions.assertNotNull(oBioPolymer.getAtom(1));
+        Assertions.assertNotNull(oBioPolymer.getAtom(2));
+        Assertions.assertEquals(oAtom1, oBioPolymer.getAtom(0));
+        Assertions.assertEquals(oAtom2, oBioPolymer.getAtom(1));
+        Assertions.assertEquals(oAtom3, oBioPolymer.getAtom(2));
 
-        Assert.assertEquals(3, oBioPolymer.getMonomerNames().size());
-        Assert.assertTrue(oBioPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
-        Assert.assertTrue(oBioPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
+        Assertions.assertEquals(3, oBioPolymer.getMonomerNames().size());
+        Assertions.assertTrue(oBioPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
+        Assertions.assertTrue(oBioPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
     }
 
     @Test
@@ -103,8 +104,8 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         oBioPolymer.addAtom(oAtom2, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom3, oMono2, oStrand2);
 
-        Assert.assertEquals(oMono1, oBioPolymer.getMonomer("TRP279", "A"));
-        Assert.assertEquals(oMono2, oBioPolymer.getMonomer("HOH", "B"));
+        Assertions.assertEquals(oMono1, oBioPolymer.getMonomer("TRP279", "A"));
+        Assertions.assertEquals(oMono2, oBioPolymer.getMonomer("HOH", "B"));
     }
 
     @Test
@@ -117,7 +118,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         oBioPolymer.addAtom(oAtom1);
         oBioPolymer.addAtom(oAtom2);
 
-        Assert.assertEquals(2, oBioPolymer.getAtomCount());
+        Assertions.assertEquals(2, oBioPolymer.getAtomCount());
     }
 
     @Test
@@ -134,9 +135,9 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         oBioPolymer.addAtom(oAtom2, oStrand1);
         oBioPolymer.addAtom(oAtom3, oMono1, oStrand1);
 
-        Assert.assertEquals(2, oBioPolymer.getMonomer("", "A").getAtomCount());
-        Assert.assertEquals(1, oBioPolymer.getMonomer("TRP279", "A").getAtomCount());
-        Assert.assertEquals(3, oBioPolymer.getAtomCount());
+        Assertions.assertEquals(2, oBioPolymer.getMonomer("", "A").getAtomCount());
+        Assertions.assertEquals(1, oBioPolymer.getMonomer("TRP279", "A").getAtomCount());
+        Assertions.assertEquals(3, oBioPolymer.getAtomCount());
     }
 
     @Test
@@ -152,8 +153,8 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         oBioPolymer.addAtom(oAtom2, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom1, null, oStrand1);
 
-        Assert.assertEquals(2, oBioPolymer.getMonomer("TRP279", "A").getAtomCount());
-        Assert.assertEquals(0, oBioPolymer.getMonomer("", "A").getAtomCount());
+        Assertions.assertEquals(2, oBioPolymer.getMonomer("TRP279", "A").getAtomCount());
+        Assertions.assertEquals(0, oBioPolymer.getMonomer("", "A").getAtomCount());
     }
 
     @Test
@@ -166,7 +167,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 
-        Assert.assertEquals(1, oBioPolymer.getStrandCount());
+        Assertions.assertEquals(1, oBioPolymer.getStrandCount());
     }
 
     @Test
@@ -179,7 +180,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 
-        Assert.assertEquals(oStrand1, oBioPolymer.getStrand("A"));
+        Assertions.assertEquals(oStrand1, oBioPolymer.getStrand("A"));
     }
 
     @Test
@@ -201,7 +202,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         strands.put("A", oStrand1);
         strands.put("B", oStrand2);
 
-        Assert.assertEquals(strands.keySet(), oBioPolymer.getStrandNames());
+        Assertions.assertEquals(strands.keySet(), oBioPolymer.getStrandNames());
     }
 
     @Test
@@ -214,11 +215,11 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 
-        Assert.assertTrue(oBioPolymer.getStrandNames().contains(oStrand1.getStrandName()));
-        Assert.assertEquals(1, oBioPolymer.getAtomCount());
+        Assertions.assertTrue(oBioPolymer.getStrandNames().contains(oStrand1.getStrandName()));
+        Assertions.assertEquals(1, oBioPolymer.getAtomCount());
         oBioPolymer.removeStrand("A");
-        Assert.assertFalse(oBioPolymer.getStrandNames().contains(oStrand1.getStrandName()));
-        Assert.assertEquals(0, oBioPolymer.getAtomCount());
+        Assertions.assertFalse(oBioPolymer.getStrandNames().contains(oStrand1.getStrandName()));
+        Assertions.assertEquals(0, oBioPolymer.getAtomCount());
     }
 
     @Test
@@ -240,7 +241,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         strands.put("A", oStrand1);
         strands.put("B", oStrand2);
 
-        Assert.assertEquals(strands, oBioPolymer.getStrands());
+        Assertions.assertEquals(strands, oBioPolymer.getStrands());
     }
 
     /**
@@ -252,8 +253,8 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IBioPolymer bp = (IBioPolymer) newChemObject();
         String description = bp.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 
@@ -265,7 +266,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
     public void testClone() throws Exception {
         IBioPolymer polymer = (IBioPolymer) newChemObject();
         Object clone = polymer.clone();
-        Assert.assertTrue(clone instanceof IBioPolymer);
+        Assertions.assertTrue(clone instanceof IBioPolymer);
     }
 
 }

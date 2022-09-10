@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.hash;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.BitSet;
@@ -41,7 +42,7 @@ public class SuppressedTest {
     public void none() throws Exception {
         Suppressed suppressed = Suppressed.none();
         for (int i = 0; i < 1000; i++) {
-            assertFalse(suppressed.contains(i));
+            Assertions.assertFalse(suppressed.contains(i));
         }
     }
 
@@ -56,23 +57,23 @@ public class SuppressedTest {
         set.set(42);
         Suppressed suppressed = Suppressed.fromBitSet(set);
 
-        assertTrue(suppressed.contains(2));
-        assertTrue(suppressed.contains(3));
-        assertTrue(suppressed.contains(5));
-        assertTrue(suppressed.contains(7));
-        assertTrue(suppressed.contains(11));
-        assertTrue(suppressed.contains(42));
+        Assertions.assertTrue(suppressed.contains(2));
+        Assertions.assertTrue(suppressed.contains(3));
+        Assertions.assertTrue(suppressed.contains(5));
+        Assertions.assertTrue(suppressed.contains(7));
+        Assertions.assertTrue(suppressed.contains(11));
+        Assertions.assertTrue(suppressed.contains(42));
 
-        assertFalse(suppressed.contains(0));
-        assertFalse(suppressed.contains(1));
-        assertFalse(suppressed.contains(4));
-        assertFalse(suppressed.contains(6));
-        assertFalse(suppressed.contains(8));
-        assertFalse(suppressed.contains(9));
-        assertFalse(suppressed.contains(10));
-        assertFalse(suppressed.contains(12));
-        assertFalse(suppressed.contains(13));
-        assertFalse(suppressed.contains(14));
+        Assertions.assertFalse(suppressed.contains(0));
+        Assertions.assertFalse(suppressed.contains(1));
+        Assertions.assertFalse(suppressed.contains(4));
+        Assertions.assertFalse(suppressed.contains(6));
+        Assertions.assertFalse(suppressed.contains(8));
+        Assertions.assertFalse(suppressed.contains(9));
+        Assertions.assertFalse(suppressed.contains(10));
+        Assertions.assertFalse(suppressed.contains(12));
+        Assertions.assertFalse(suppressed.contains(13));
+        Assertions.assertFalse(suppressed.contains(14));
 
     }
 }

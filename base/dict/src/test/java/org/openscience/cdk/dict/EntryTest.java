@@ -20,6 +20,7 @@ package org.openscience.cdk.dict;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,37 +36,37 @@ public class EntryTest extends AbstractEntryTest {
 
     @AfterEach
     public void testTestedClass() {
-        Assert.assertTrue(super.getTestClass().getClass().getName().endsWith(".Entry"));
+        Assertions.assertTrue(super.getTestClass().getClass().getName().endsWith(".Entry"));
     }
 
     @Test
     public void testConstructor() {
         Entry entry = new Entry();
-        Assert.assertNotNull(entry);
+        Assertions.assertNotNull(entry);
     }
 
     @Test
     public void testConstructor_String_String() {
         Entry entry = new Entry("testid", "testTerm");
-        Assert.assertNotNull(entry);
-        Assert.assertEquals(entry.getID(), "testid");
-        Assert.assertEquals(entry.getLabel(), "testTerm");
+        Assertions.assertNotNull(entry);
+        Assertions.assertEquals(entry.getID(), "testid");
+        Assertions.assertEquals(entry.getLabel(), "testTerm");
     }
 
     @Test
     public void testConstructor_String() {
         Entry entry = new Entry("testid");
-        Assert.assertNotNull(entry);
-        Assert.assertEquals(entry.getID(), "testid");
-        Assert.assertEquals(entry.getLabel(), "");
+        Assertions.assertNotNull(entry);
+        Assertions.assertEquals(entry.getID(), "testid");
+        Assertions.assertEquals(entry.getLabel(), "");
     }
 
     @Test
     public void testConstructor_IDLowerCasing() {
         Entry entry = new Entry("testID", "testTerm");
-        Assert.assertNotNull(entry);
-        Assert.assertEquals(entry.getID(), "testid");
-        Assert.assertEquals(entry.getLabel(), "testTerm");
+        Assertions.assertNotNull(entry);
+        Assertions.assertEquals(entry.getID(), "testid");
+        Assertions.assertEquals(entry.getLabel(), "testTerm");
     }
 
 }

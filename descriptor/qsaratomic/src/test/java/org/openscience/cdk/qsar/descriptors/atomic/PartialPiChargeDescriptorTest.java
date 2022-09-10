@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -90,7 +91,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.0001);
+            Assertions.assertEquals(testResult[i], result, 0.0001);
         }
     }
 
@@ -135,7 +136,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -177,7 +178,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
 
         }
     }
@@ -229,7 +230,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -291,7 +292,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -353,7 +354,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.3);
+            Assertions.assertEquals(testResult[i], result, 0.3);
         }
     }
 
@@ -411,7 +412,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < 6; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.2);
+            Assertions.assertEquals(testResult[i], result, 0.2);
         }
     }
 
@@ -473,7 +474,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -518,7 +519,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -546,7 +547,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[0], result, 0.0001);
+            Assertions.assertEquals(testResult[0], result, 0.0001);
         }
     }
 
@@ -596,7 +597,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -671,7 +672,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.15);
+            Assertions.assertEquals(testResult[i], result, 0.15);
         }
     }
 
@@ -722,7 +723,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -752,9 +753,9 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
             double result1 = ((DoubleResult) descriptor1.calculate(mol1.getAtom(i), mol1).getValue()).doubleValue();
             double result2 = ((DoubleResult) descriptor2.calculate(mol2.getAtom(5 - i - 1), mol2).getValue())
                     .doubleValue();
-            Assert.assertFalse(Double.isNaN(result1));
-            Assert.assertFalse(Double.isNaN(result2));
-            Assert.assertEquals(result1, result2, 0.0001);
+            Assertions.assertFalse(Double.isNaN(result1));
+            Assertions.assertFalse(Double.isNaN(result2));
+            Assertions.assertEquals(result1, result2, 0.0001);
         }
     }
 
@@ -803,7 +804,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.02);
+            Assertions.assertEquals(testResult[i], result, 0.02);
         }
     }
 
@@ -851,7 +852,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.29);
+            Assertions.assertEquals(testResult[i], result, 0.29);
         }
     }
 
@@ -876,7 +877,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertFalse(Double.isNaN(result));
+            Assertions.assertFalse(Double.isNaN(result));
         }
     }
 }

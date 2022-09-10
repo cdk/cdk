@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.test.SlowTest;
@@ -401,13 +402,12 @@ public abstract class SubstructureTest {
     }
 
     void assertMatch(IAtomContainer query, IAtomContainer target) {
-        assertTrue(query.getTitle() + " should match " + target.getTitle(),
-                create(query).matches(target));
+        Assertions.assertTrue(create(query).matches(target), query.getTitle() + " should match " + target.getTitle());
     }
 
     void assertMismatch(IAtomContainer query, IAtomContainer target) {
-        assertFalse(query.getTitle() + " should not matched " + target.getTitle(), create(query)
-                .matches(target));
+        Assertions.assertFalse(create(query)
+                .matches(target), query.getTitle() + " should not matched " + target.getTitle());
     }
 
     private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());

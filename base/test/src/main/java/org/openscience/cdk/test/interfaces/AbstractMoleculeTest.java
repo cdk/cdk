@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -24,8 +25,8 @@ public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
     public void testClone() throws Exception {
         IAtomContainer molecule = (IAtomContainer) newChemObject();
         Object clone = molecule.clone();
-        Assert.assertTrue(clone instanceof IAtomContainer);
-        Assert.assertNotSame(molecule, clone);
+        Assertions.assertTrue(clone instanceof IAtomContainer);
+        Assertions.assertNotSame(molecule, clone);
     }
 
     /** Test for RFC #9 */
@@ -35,8 +36,8 @@ public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
         IAtomContainer m = (IAtomContainer) newChemObject();
         String description = m.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -64,6 +65,6 @@ public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
         acetone.addLonePair(lp1);
         acetone.addLonePair(lp2);
 
-        Assert.assertEquals(2, acetone.getLonePairCount());
+        Assertions.assertEquals(2, acetone.getLonePairCount());
     }
 }

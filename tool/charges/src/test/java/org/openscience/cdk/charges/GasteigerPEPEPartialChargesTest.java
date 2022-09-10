@@ -19,6 +19,7 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
@@ -73,7 +74,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         peoe.calculateCharges(molecule);
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             //logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
-            Assert.assertEquals(testResult[i], molecule.getAtom(i).getCharge(), 0.01);
+            Assertions.assertEquals(testResult[i], molecule.getAtom(i).getCharge(), 0.01);
         }
     }
 
@@ -105,7 +106,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
             newBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
 
         for (int i = 0; i < oldBondOrders.size(); i++) {
-            Assert.assertEquals("bond " + i + " does not match", oldBondOrders.get(i), newBondOrders.get(i));
+            Assertions.assertEquals(oldBondOrders.get(i), newBondOrders.get(i), "bond " + i + " does not match");
         }
     }
 
@@ -135,8 +136,8 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         peoe.calculateCharges(mol1);
         peoe.calculateCharges(mol2);
         for (int i = 0; i < mol1.getAtomCount(); i++) {
-            Assert.assertEquals("charge on atom " + i + " does not match", mol1.getAtom(i).getCharge(), mol2.getAtom(i)
-                    .getCharge(), 0.01);
+            Assertions.assertEquals(mol1.getAtom(i).getCharge(), mol2.getAtom(i)
+                                                                     .getCharge(), 0.01, "charge on atom " + i + " does not match");
         }
 
     }
@@ -162,7 +163,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         peoe.assignGasteigerPiPartialCharges(molecule, true);
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             //logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
-            Assert.assertEquals(testResult[i], molecule.getAtom(i).getCharge(), 0.01);
+            Assertions.assertEquals(testResult[i], molecule.getAtom(i).getCharge(), 0.01);
         }
 
     }
@@ -175,7 +176,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
-        Assert.assertEquals(8, peoe.getMaxGasteigerIters());
+        Assertions.assertEquals(8, peoe.getMaxGasteigerIters());
 
     }
 
@@ -187,7 +188,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
-        Assert.assertEquals(50, peoe.getMaxResoStruc());
+        Assertions.assertEquals(50, peoe.getMaxResoStruc());
 
     }
 
@@ -198,7 +199,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
     public void testGetStepSize() throws Exception {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-        Assert.assertEquals(5, peoe.getStepSize());
+        Assertions.assertEquals(5, peoe.getStepSize());
 
     }
 
@@ -211,7 +212,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
         int MX_ITERATIONS = 10;
         peoe.setMaxGasteigerIters(MX_ITERATIONS);
-        Assert.assertEquals(MX_ITERATIONS, peoe.getMaxGasteigerIters());
+        Assertions.assertEquals(MX_ITERATIONS, peoe.getMaxGasteigerIters());
 
     }
 
@@ -224,7 +225,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
         int MX_RESON = 1;
         peoe.setMaxResoStruc(MX_RESON);
-        Assert.assertEquals(MX_RESON, peoe.getMaxResoStruc());
+        Assertions.assertEquals(MX_RESON, peoe.getMaxResoStruc());
 
     }
 
@@ -237,7 +238,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
         int STEP_SIZE = 22;
         peoe.setStepSize(STEP_SIZE);
-        Assert.assertEquals(STEP_SIZE, peoe.getStepSize());
+        Assertions.assertEquals(STEP_SIZE, peoe.getStepSize());
 
     }
 
@@ -266,7 +267,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
-        Assert.assertNotNull(peoe.assignrPiMarsilliFactors(set));
+        Assertions.assertNotNull(peoe.assignrPiMarsilliFactors(set));
 
     }
 }

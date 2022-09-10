@@ -1,6 +1,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -29,23 +30,21 @@ public class SimpleAtomCanonicalizerTest {
 
         List<IAtom> mutable = new ArrayList<>(atoms);
         for (IAtom atom : mutable.subList(0, 5)) {
-            Assert.assertEquals("expect sp2 carbons in first 4 entries", "C", atom.getSymbol());
-            Assert.assertEquals("expect sp2 carbons in first 4 entries", IAtomType.Hybridization.SP2,
-                    atom.getHybridization());
+            Assertions.assertEquals("C", atom.getSymbol(), "expect sp2 carbons in first 4 entries");
+            Assertions.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization(), "expect sp2 carbons in first 4 entries");
         }
         for (IAtom atom : mutable.subList(5, 8)) {
-            Assert.assertEquals("expect sp2 nitrogen at indices 5-7", "N", atom.getSymbol());
-            Assert.assertEquals("expect sp2 nitrogen at indices 5-7", IAtomType.Hybridization.SP2,
-                    atom.getHybridization());
+            Assertions.assertEquals("N", atom.getSymbol(), "expect sp2 nitrogen at indices 5-7");
+            Assertions.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization(), "expect sp2 nitrogen at indices 5-7");
         }
 
-        Assert.assertEquals("expect nitrogen at indices 8", "N", mutable.get(8).getSymbol());
-        Assert.assertEquals("expect sp3 nitrogen at indices 8", IAtomType.Hybridization.SP3, mutable.get(8)
-                .getHybridization());
+        Assertions.assertEquals("N", mutable.get(8).getSymbol(), "expect nitrogen at indices 8");
+        Assertions.assertEquals(IAtomType.Hybridization.SP3, mutable.get(8)
+                                                                    .getHybridization(), "expect sp3 nitrogen at indices 8");
 
-        Assert.assertEquals("expect nitrogen at indices 9", "N", mutable.get(9).getSymbol());
-        Assert.assertEquals("expect sp3 nitrogen at indices 9", IAtomType.Hybridization.PLANAR3, mutable.get(9)
-                .getHybridization());
+        Assertions.assertEquals("N", mutable.get(9).getSymbol(), "expect nitrogen at indices 9");
+        Assertions.assertEquals(IAtomType.Hybridization.PLANAR3, mutable.get(9)
+                                                                        .getHybridization(), "expect sp3 nitrogen at indices 9");
 
     }
 

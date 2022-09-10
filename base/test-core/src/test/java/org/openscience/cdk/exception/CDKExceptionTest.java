@@ -20,6 +20,7 @@
 package org.openscience.cdk.exception;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -36,8 +37,8 @@ public class CDKExceptionTest extends CDKTestCase {
     public void testCDKException_String() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         CDKException exception = new CDKException(EXPLANATION);
-        Assert.assertNotNull(exception);
-        Assert.assertEquals(EXPLANATION, exception.getMessage());
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals(EXPLANATION, exception.getMessage());
     }
 
     @Test
@@ -47,11 +48,11 @@ public class CDKExceptionTest extends CDKTestCase {
             int[] array = new int[0];
             int dummy = array[50];
             dummy = dummy + 1;
-            Assert.fail("Should not have reached this place. The test *requires* the error to occur!");
+            Assertions.fail("Should not have reached this place. The test *requires* the error to occur!");
         } catch (Exception exception) {
             CDKException cdkException = new CDKException(EXPLANATION, exception);
-            Assert.assertNotNull(cdkException);
-            Assert.assertEquals(EXPLANATION, cdkException.getMessage());
+            Assertions.assertNotNull(cdkException);
+            Assertions.assertEquals(EXPLANATION, cdkException.getMessage());
         }
     }
 }

@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -49,7 +50,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         descriptor.setParameters(params);
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = smilesParser.parseSmiles("CCC");
-        Assert.assertEquals(44.095, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
+        Assertions.assertEquals(44.095, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
     }
 
     /**
@@ -62,7 +63,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
-        Assert.assertEquals(12.0107, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
+        Assertions.assertEquals(12.0107, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
     }
 
     /**
@@ -83,7 +84,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(0, 2, Order.SINGLE);
         mol.addBond(0, 3, Order.SINGLE);
         mol.addBond(0, 4, Order.SINGLE);
-        Assert.assertEquals(16.042, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
+        Assertions.assertEquals(16.042, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
     }
 
     /**
@@ -97,7 +98,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.getAtom(0).setImplicitHydrogenCount(4);
-        Assert.assertEquals(16.042, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
+        Assertions.assertEquals(16.042, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
     }
 
 }

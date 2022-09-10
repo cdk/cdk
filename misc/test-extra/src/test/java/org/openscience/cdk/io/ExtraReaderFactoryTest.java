@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
@@ -53,25 +54,24 @@ public class ExtraReaderFactoryTest {
                       IResourceFormat expectedFormat)
             throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        Assert.assertNotNull("Cannot find file: " + filename, ins);
+        Assertions.assertNotNull(ins, "Cannot find file: " + filename);
         if (expectedFormat instanceof IChemFormatMatcher) {
             factory.registerFormat((IChemFormatMatcher) expectedFormat);
         }
         ISimpleChemObjectReader reader = factory.createReader(ins);
-        Assert.assertNotNull(reader);
-        Assert.assertEquals(((IChemFormat) expectedFormat).getReaderClassName(), reader.getClass().getName());
+        Assertions.assertNotNull(reader);
+        Assertions.assertEquals(((IChemFormat) expectedFormat).getReaderClassName(), reader.getClass().getName());
         // now try reading something from it
         IChemObject[] objects = {new ChemFile(), new ChemModel(), new AtomContainer(), new Reaction()};
         boolean read = false;
         for (int i = 0; (i < objects.length && !read); i++) {
             if (reader.accepts(objects[i].getClass())) {
                 IChemObject chemObject = reader.read(objects[i]);
-                Assert.assertNotNull("Reader accepted a " + objects[i].getClass().getName() + " but failed to read it",
-                        chemObject);
+                Assertions.assertNotNull(chemObject, "Reader accepted a " + objects[i].getClass().getName() + " but failed to read it");
                 read = true;
             }
         }
-        Assert.assertTrue("Reading an IChemObject from the Reader did not work properly.", read);
+        Assertions.assertTrue(read, "Reading an IChemObject from the Reader did not work properly.");
     }
 
     @Test

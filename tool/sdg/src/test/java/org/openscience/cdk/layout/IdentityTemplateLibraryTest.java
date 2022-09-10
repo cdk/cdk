@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.layout;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -91,7 +92,7 @@ public class IdentityTemplateLibraryTest {
         container.addBond(0, 1, IBond.Order.SINGLE);
         container.addBond(1, 2, IBond.Order.SINGLE);
 
-        assertFalse(IdentityTemplateLibrary.empty().assignLayout(container));
+        Assertions.assertFalse(IdentityTemplateLibrary.empty().assignLayout(container));
     }
 
     @Test
@@ -108,7 +109,7 @@ public class IdentityTemplateLibraryTest {
 
         IdentityTemplateLibrary lib = IdentityTemplateLibrary.empty();
         lib.add(IdentityTemplateLibrary.decodeEntry("OCC 4, 5, 2, 3, 0, 1"));
-        assertTrue(lib.assignLayout(container));
+        Assertions.assertTrue(lib.assignLayout(container));
         assertThat(container.getAtom(0).getPoint2d().x, closeTo(4, 0.01));
         assertThat(container.getAtom(0).getPoint2d().y, closeTo(5, 0.01));
         assertThat(container.getAtom(1).getPoint2d().x, closeTo(2, 0.01));

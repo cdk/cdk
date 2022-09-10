@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -77,7 +78,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
     @Test
     public void testHeterolyticCleavagePBReaction() throws Exception {
         IReactionProcess type = new HeterolyticCleavagePBReaction();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     /**
@@ -130,7 +131,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(2, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -159,7 +160,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
 
         //Smiles("C[C-][C+]")
         expected1.getAtom(1).setFormalCharge(-1);
@@ -168,7 +169,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
         product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
 
     }
 
@@ -229,7 +230,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(2, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -254,7 +255,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
 
         //Smiles("C=[C-][C+]")
         expected1.getAtom(1).setFormalCharge(-1);
@@ -263,7 +264,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
         product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, expected1));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, expected1));
     }
 
     /**
@@ -311,7 +312,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(2, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -335,7 +336,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
 
         //Smiles("C[C-]=[C+]")
         expected1.getAtom(1).setFormalCharge(-1);
@@ -344,7 +345,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
         product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
     }
 
     /**
@@ -394,7 +395,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -421,7 +422,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
     }
 
     /**
@@ -461,7 +462,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -478,7 +479,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
     }
 
     /**
@@ -520,7 +521,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
 
         // expected products
 
@@ -539,7 +540,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
+        Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
     }
 
     /**
@@ -582,16 +583,16 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
-        Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
     }
 
     /**
@@ -620,13 +621,13 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        Assert.assertEquals(4, setOfReactions.getReaction(0).getMappingCount());
+        Assertions.assertEquals(4, setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(0));
-        Assert.assertEquals(mappedProductA1, product.getAtom(0));
+        Assertions.assertEquals(mappedProductA1, product.getAtom(0));
         IAtom mappedProductA2 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(1));
-        Assert.assertEquals(mappedProductA2, product.getAtom(1));
+        Assertions.assertEquals(mappedProductA2, product.getAtom(1));
     }
 
     /**
@@ -641,7 +642,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assertions.assertNotNull(matcher.findMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);
         }
     }
 
@@ -672,13 +673,13 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         makeSureAtomTypesAreRecognized(molecule);
 
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
 
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        Assert.assertTrue(uiTester.isIsomorph(getExpectedProducts().getAtomContainer(0), product));
+        Assertions.assertTrue(uiTester.isIsomorph(getExpectedProducts().getAtomContainer(0), product));
 
     }
 

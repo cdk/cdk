@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
@@ -62,7 +63,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
 
     @Test
     public void testIPMolecularLearningDescriptor() throws Exception {
-        Assert.assertNotNull(descriptor);
+        Assertions.assertNotNull(descriptor);
     }
 
     /**
@@ -95,7 +96,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 0.0;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.0001);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.0001);
     }
 
     /**
@@ -116,7 +117,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.53);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.53);
     }
 
     /**
@@ -137,8 +138,8 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
 
         double resultAccordingNIST = 9.37;
 
-        Assert.assertEquals(2, dar.length());
-        Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.3);
+        Assertions.assertEquals(2, dar.length());
+        Assertions.assertEquals(resultAccordingNIST, dar.get(0), 0.3);
     }
 
     /**
@@ -159,8 +160,8 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
                                                                .getValue());
 
         double resultAccordingNIST = 9.50;
-        Assert.assertEquals(2, dar.length());
-        Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.6);
+        Assertions.assertEquals(2, dar.length());
+        Assertions.assertEquals(resultAccordingNIST, dar.get(0), 0.6);
 
     }
 
@@ -306,6 +307,6 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
         DoubleArrayResult dar = ((DoubleArrayResult) descriptor.calculatePlus(mol)
                                                                .getValue());
 
-        Assert.assertEquals(6, dar.length());
+        Assertions.assertEquals(6, dar.length());
     }
 }

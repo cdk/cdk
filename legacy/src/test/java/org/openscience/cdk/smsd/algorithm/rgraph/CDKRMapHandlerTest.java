@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,7 +71,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         handler.setSource(expResult);
         IAtomContainer result = handler.getSource();
-        Assert.assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -81,7 +82,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         handler.setSource(expResult);
         IAtomContainer result = handler.getSource();
-        Assert.assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -92,7 +93,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         handler.setTarget(expResult);
         IAtomContainer result = handler.getTarget();
-        Assert.assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -103,7 +104,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         handler.setTarget(expResult);
         IAtomContainer result = handler.getTarget();
-        Assert.assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -117,8 +118,8 @@ public class CDKRMapHandlerTest {
         IAtomContainer Molecule2 = sp.parseSmiles("C1CCCC1");
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.calculateOverlapsAndReduce(Molecule1, Molecule2, true);
-        Assert.assertNotNull(FinalMappings.getInstance());
-        Assert.assertNotEquals(0, FinalMappings.getInstance().getSize());
+        Assertions.assertNotNull(FinalMappings.getInstance());
+        Assertions.assertNotEquals(0, FinalMappings.getInstance().getSize());
     }
 
     /**
@@ -133,8 +134,8 @@ public class CDKRMapHandlerTest {
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.calculateOverlapsAndReduceExactMatch(Molecule1, Molecule2, true);
         // TODO review the generated test code and remove the default call to fail.
-        Assert.assertNotNull(FinalMappings.getInstance());
-        Assert.assertNotEquals(0, FinalMappings.getInstance().getSize());
+        Assertions.assertNotNull(FinalMappings.getInstance());
+        Assertions.assertNotEquals(0, FinalMappings.getInstance().getSize());
     }
 
     /**
@@ -149,7 +150,7 @@ public class CDKRMapHandlerTest {
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.calculateOverlapsAndReduceExactMatch(Molecule1, Molecule2, true);
         List<Map<Integer, Integer>> result = instance.getMappings();
-        Assert.assertEquals(2, result.size());
+        Assertions.assertEquals(2, result.size());
     }
 
     /**
@@ -165,7 +166,7 @@ public class CDKRMapHandlerTest {
         mappings.add(map);
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.setMappings(mappings);
-        Assert.assertNotNull(instance.getMappings());
+        Assertions.assertNotNull(instance.getMappings());
     }
 
     /**
@@ -177,7 +178,7 @@ public class CDKRMapHandlerTest {
         boolean expResult = true;
         instance.setTimeoutFlag(true);
         boolean result = instance.isTimeoutFlag();
-        Assert.assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -188,6 +189,6 @@ public class CDKRMapHandlerTest {
         boolean timeoutFlag = false;
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.setTimeoutFlag(timeoutFlag);
-        Assert.assertNotSame(true, instance.isTimeoutFlag());
+        Assertions.assertNotSame(true, instance.isTimeoutFlag());
     }
 }

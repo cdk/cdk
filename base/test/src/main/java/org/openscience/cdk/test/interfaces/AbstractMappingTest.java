@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
@@ -26,8 +27,8 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         IMapping mapping = (IMapping) newChemObject();
         String description = mapping.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -35,7 +36,7 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
     public void testClone() throws Exception {
         IMapping mapping = (IMapping) newChemObject();
         Object clone = mapping.clone();
-        Assert.assertTrue(clone instanceof IMapping);
+        Assertions.assertTrue(clone instanceof IMapping);
     }
 
     public void testGetChemObject_int() {
@@ -43,8 +44,8 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         IAtom atom0 = object.getBuilder().newInstance(IAtom.class);
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class);
         IMapping mapping = object.getBuilder().newInstance(IMapping.class, atom0, atom1);
-        Assert.assertEquals(atom0, mapping.getChemObject(0));
-        Assert.assertEquals(atom1, mapping.getChemObject(1));
+        Assertions.assertEquals(atom0, mapping.getChemObject(0));
+        Assertions.assertEquals(atom1, mapping.getChemObject(1));
     }
 
     public void testRelatedChemObjects() {
@@ -54,11 +55,11 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         IMapping mapping = object.getBuilder().newInstance(IMapping.class, atom0, atom1);
 
         Iterator<IChemObject> iter = mapping.relatedChemObjects().iterator();
-        Assert.assertTrue(iter.hasNext());
-        Assert.assertEquals(atom0, iter.next());
-        Assert.assertTrue(iter.hasNext());
-        Assert.assertEquals(atom1, iter.next());
-        Assert.assertFalse(iter.hasNext());
+        Assertions.assertTrue(iter.hasNext());
+        Assertions.assertEquals(atom0, iter.next());
+        Assertions.assertTrue(iter.hasNext());
+        Assertions.assertEquals(atom1, iter.next());
+        Assertions.assertFalse(iter.hasNext());
     }
 
     public void testClone_ChemObject() throws Exception {
@@ -70,9 +71,9 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         //assertEquals(map.length, mapClone.length);
         for (int f = 0; f < 2; f++) {
             for (int g = 0; g < 2; g++) {
-                Assert.assertNotNull(mapping.getChemObject(f));
-                Assert.assertNotNull(clone.getChemObject(g));
-                Assert.assertNotSame(mapping.getChemObject(f), clone.getChemObject(g));
+                Assertions.assertNotNull(mapping.getChemObject(f));
+                Assertions.assertNotNull(clone.getChemObject(g));
+                Assertions.assertNotSame(mapping.getChemObject(f), clone.getChemObject(g));
             }
         }
     }

@@ -19,6 +19,7 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -120,8 +121,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
         InductivePartialCharges ipc = new InductivePartialCharges();
         ipc.assignInductivePartialCharges(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            Assert.assertEquals(testResult[i],
-                    (Double) mol.getAtom(i).getProperty("InductivePartialCharge"), 0.1);
+            Assertions.assertEquals(testResult[i], (Double) mol.getAtom(i).getProperty("InductivePartialCharge"), 0.1);
             //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
         }
     }
@@ -168,8 +168,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
         InductivePartialCharges ipc = new InductivePartialCharges();
         ipc.assignInductivePartialCharges(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            Assert.assertEquals(testResult[i],
-                    (Double) mol.getAtom(i).getProperty("InductivePartialCharge"), 0.1);
+            Assertions.assertEquals(testResult[i], (Double) mol.getAtom(i).getProperty("InductivePartialCharge"), 0.1);
             //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
         }
     }
@@ -179,11 +178,11 @@ public class InductivePartialChargesTest extends CDKTestCase {
         InductivePartialCharges ipc = new InductivePartialCharges();
         double[] eneg = ipc.getPaulingElectronegativities(mol, true);
         long[] expected = {};
-        Assert.assertEquals("Error in C electronegativity", 2.20, eneg[0], 0.01);
-        Assert.assertEquals("Error in Cl electronegativity", 3.28, eneg[1], 0.01);
-        Assert.assertEquals("Error in Br electronegativity", 3.13, eneg[2], 0.01);
-        Assert.assertEquals("Error in H electronegativity", 2.10, eneg[3], 0.01);
-        Assert.assertEquals("Error in O electronegativity", 3.20, eneg[4], 0.01);
+        Assertions.assertEquals(2.20, eneg[0], 0.01, "Error in C electronegativity");
+        Assertions.assertEquals(3.28, eneg[1], 0.01, "Error in Cl electronegativity");
+        Assertions.assertEquals(3.13, eneg[2], 0.01, "Error in Br electronegativity");
+        Assertions.assertEquals(2.10, eneg[3], 0.01, "Error in H electronegativity");
+        Assertions.assertEquals(3.20, eneg[4], 0.01, "Error in O electronegativity");
     }
 
     @Disabled
@@ -191,7 +190,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
     public void testGetAtomicSoftness() throws Exception {
         InductivePartialCharges ipc = new InductivePartialCharges();
         double softness = ipc.getAtomicSoftnessCore(mol, 0);
-        Assert.fail("Not validated - need known values");
+        Assertions.fail("Not validated - need known values");
     }
 
 }

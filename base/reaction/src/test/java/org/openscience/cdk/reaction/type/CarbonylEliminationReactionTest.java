@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -70,7 +71,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
     @Test
     public void testCarbonylEliminationReaction() throws Exception {
         IReactionProcess type = new CarbonylEliminationReaction();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     /**
@@ -95,16 +96,16 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);//Smiles("[C+]");
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1, product1));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1, product1));
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);//Smiles("[C-]#[O+]");
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, product2));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, product2));
 
     }
 
@@ -137,16 +138,16 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);//Smiles("[C+]");
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1, product1));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1, product1));
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);//Smiles("[C-]#[O+]");
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, product2));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, product2));
 
     }
 
@@ -175,13 +176,13 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
-        Assert.assertEquals(6, setOfReactions.getReaction(0).getMappingCount());
+        Assertions.assertEquals(6, setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(0));
-        Assert.assertEquals(mappedProductA1, product1.getAtom(0));
+        Assertions.assertEquals(mappedProductA1, product1.getAtom(0));
         IAtom mappedProductA2 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
                 molecule.getAtom(4));
-        Assert.assertEquals(mappedProductA2, product2.getAtom(0));
+        Assertions.assertEquals(mappedProductA2, product2.getAtom(0));
 
     }
 
@@ -197,7 +198,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assertions.assertNotNull(matcher.findMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);
         }
     }
 

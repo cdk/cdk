@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -27,7 +28,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         IStrand oStrand = (IStrand) newChemObject();
         oStrand.setStrandName("A");
 
-        Assert.assertEquals("A", oStrand.getStrandName());
+        Assertions.assertEquals("A", oStrand.getStrandName());
     }
 
     @Test
@@ -35,7 +36,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         IStrand oStrand = (IStrand) newChemObject();
         oStrand.setStrandType("DNA");
 
-        Assert.assertEquals("DNA", oStrand.getStrandType());
+        Assertions.assertEquals("DNA", oStrand.getStrandType());
     }
 
     /** The methods above effectively test SetStrandName and
@@ -48,7 +49,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         IStrand oStrand = (IStrand) newChemObject();
         oStrand.setStrandName("A");
 
-        Assert.assertEquals("A", oStrand.getStrandName());
+        Assertions.assertEquals("A", oStrand.getStrandName());
     }
 
     @Test
@@ -56,7 +57,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         IStrand oStrand = (IStrand) newChemObject();
         oStrand.setStrandType("DNA");
 
-        Assert.assertEquals("DNA", oStrand.getStrandType());
+        Assertions.assertEquals("DNA", oStrand.getStrandType());
     }
 
     @Test
@@ -68,7 +69,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         oStrand.addAtom(oAtom1);
         oStrand.addAtom(oAtom2);
 
-        Assert.assertEquals(2, oStrand.getAtomCount());
+        Assertions.assertEquals(2, oStrand.getAtomCount());
     }
 
     @Test
@@ -83,8 +84,8 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         oStrand.addAtom(oAtom2);
         oStrand.addAtom(oAtom3, oMono1);
 
-        Assert.assertEquals(2, oStrand.getMonomer("").getAtomCount());
-        Assert.assertEquals(1, oStrand.getMonomer("TRP279").getAtomCount());
+        Assertions.assertEquals(2, oStrand.getMonomer("").getAtomCount());
+        Assertions.assertEquals(1, oStrand.getMonomer("TRP279").getAtomCount());
     }
 
     @Test
@@ -99,7 +100,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         oStrand.addAtom(oAtom2, oMono1);
         oStrand.addAtom(oAtom3, oMono2);
 
-        Assert.assertEquals(2, oStrand.getMonomerCount());
+        Assertions.assertEquals(2, oStrand.getMonomerCount());
     }
 
     @Test
@@ -114,9 +115,9 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         oStrand.addAtom(oAtom2, oMono1);
         oStrand.addAtom(oAtom3, oMono2);
 
-        Assert.assertEquals(oMono1, oStrand.getMonomer("TRP279"));
-        Assert.assertEquals(oMono2, oStrand.getMonomer("HOH"));
-        Assert.assertNull(oStrand.getMonomer("TEST"));
+        Assertions.assertEquals(oMono1, oStrand.getMonomer("TRP279"));
+        Assertions.assertEquals(oMono2, oStrand.getMonomer("HOH"));
+        Assertions.assertNull(oStrand.getMonomer("TEST"));
     }
 
     @Test
@@ -138,7 +139,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         monomers.put("TRP279", oMono1);
         monomers.put("HOH", oMono2);
 
-        Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
+        Assertions.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
         /*
          * Assert.assertEquals(3, oStrand.getMonomerNames().size());
          * Assert.assertTrue
@@ -156,11 +157,11 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom1, oMono1);
-        Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
-        Assert.assertEquals(1, oStrand.getAtomCount());
+        Assertions.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+        Assertions.assertEquals(1, oStrand.getAtomCount());
         oStrand.removeMonomer("TRP279");
-        Assert.assertFalse(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
-        Assert.assertEquals(0, oStrand.getAtomCount());
+        Assertions.assertFalse(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+        Assertions.assertEquals(0, oStrand.getAtomCount());
     }
 
     @Test
@@ -182,7 +183,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         monomers.put("TRP279", oMono1);
         monomers.put("HOH", oMono2);
 
-        Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
+        Assertions.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
     }
 
     /**
@@ -205,8 +206,8 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         oMon.setMonomerType("UNKNOWN");
         String description = oStrand.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 
@@ -218,7 +219,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testClone() throws Exception {
         IStrand strand = (IStrand) newChemObject();
         Object clone = strand.clone();
-        Assert.assertNotNull(clone);
+        Assertions.assertNotNull(clone);
     }
 
 }

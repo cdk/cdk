@@ -22,6 +22,7 @@ package org.openscience.cdk.graph.rebond;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -43,7 +44,7 @@ public class RebondToolTest extends CDKTestCase {
     @Test
     public void testRebondTool_double_double_double() {
         RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-        Assert.assertNotNull(rebonder);
+        Assertions.assertNotNull(rebonder);
     }
 
     @Test
@@ -66,7 +67,7 @@ public class RebondToolTest extends CDKTestCase {
         // rebond
         rebonder.rebond(methane);
 
-        Assert.assertEquals(5, methane.getAtomCount());
-        Assert.assertEquals(4, methane.getBondCount());
+        Assertions.assertEquals(5, methane.getAtomCount());
+        Assertions.assertEquals(4, methane.getBondCount());
     }
 }

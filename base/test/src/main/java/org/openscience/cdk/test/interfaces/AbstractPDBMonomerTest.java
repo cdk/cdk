@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.interfaces;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 
@@ -20,48 +21,48 @@ public abstract class AbstractPDBMonomerTest extends AbstractMonomerTest {
     public void testSetICode_String() {
         IPDBMonomer monomer = (IPDBMonomer) newChemObject();
         monomer.setICode(null);
-        Assert.assertNull(monomer.getICode());
+        Assertions.assertNull(monomer.getICode());
     }
 
     @Test
     public void testGetICode() {
         IPDBMonomer monomer = (IPDBMonomer) newChemObject();
-        Assert.assertNull(monomer.getICode());
+        Assertions.assertNull(monomer.getICode());
         monomer.setICode("iCode");
-        Assert.assertNotNull(monomer.getICode());
-        Assert.assertEquals("iCode", monomer.getICode());
+        Assertions.assertNotNull(monomer.getICode());
+        Assertions.assertEquals("iCode", monomer.getICode());
     }
 
     @Test
     public void testSetChainID_String() {
         IPDBMonomer monomer = (IPDBMonomer) newChemObject();
         monomer.setChainID(null);
-        Assert.assertNull(monomer.getChainID());
+        Assertions.assertNull(monomer.getChainID());
     }
 
     @Test
     public void testGetChainID() {
         IPDBMonomer monomer = (IPDBMonomer) newChemObject();
-        Assert.assertNull(monomer.getChainID());
+        Assertions.assertNull(monomer.getChainID());
         monomer.setChainID("chainA");
-        Assert.assertNotNull(monomer.getChainID());
-        Assert.assertEquals("chainA", monomer.getChainID());
+        Assertions.assertNotNull(monomer.getChainID());
+        Assertions.assertEquals("chainA", monomer.getChainID());
     }
 
     @Test
     public void testSetResSeq_String() {
         IPDBMonomer monomer = (IPDBMonomer) newChemObject();
         monomer.setResSeq(null);
-        Assert.assertNull(monomer.getResSeq());
+        Assertions.assertNull(monomer.getResSeq());
     }
 
     @Test
     public void testGetResSeq() {
         IPDBMonomer monomer = (IPDBMonomer) newChemObject();
-        Assert.assertNull(monomer.getResSeq());
+        Assertions.assertNull(monomer.getResSeq());
         monomer.setResSeq("reqSeq");
-        Assert.assertNotNull(monomer.getResSeq());
-        Assert.assertEquals("reqSeq", monomer.getResSeq());
+        Assertions.assertNotNull(monomer.getResSeq());
+        Assertions.assertEquals("reqSeq", monomer.getResSeq());
     }
 
     @Test
@@ -70,8 +71,8 @@ public abstract class AbstractPDBMonomerTest extends AbstractMonomerTest {
         IPDBMonomer monomer = (IPDBMonomer) newChemObject();
         String description = monomer.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
+            Assertions.assertTrue('\n' != description.charAt(i));
+            Assertions.assertTrue('\r' != description.charAt(i));
         }
     }
 

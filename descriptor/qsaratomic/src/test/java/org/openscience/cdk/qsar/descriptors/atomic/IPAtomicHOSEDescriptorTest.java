@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -59,7 +60,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPAtomicHOSEDescriptor() throws Exception {
         IAtomicDescriptor descriptor = new IPAtomicHOSEDescriptor();
-        Assert.assertNotNull(descriptor);
+        Assertions.assertNotNull(descriptor);
     }
 
     /**
@@ -78,7 +79,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.8;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.00001);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
     /**
@@ -97,7 +98,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(4), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.57; //value for CC(C)Cl
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.00001);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
     /**
@@ -116,7 +117,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.8; //value for CCCCl aprox.
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.00001);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
     /**
@@ -135,7 +136,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.42);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.42);
     }
 
     /**
@@ -153,7 +154,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.29;
 
-        Assert.assertEquals(resultAccordingNIST, result, 1.95);
+        Assertions.assertEquals(resultAccordingNIST, result, 1.95);
     }
 
     /**
@@ -171,7 +172,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.27;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.02);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.02);
     }
     //    /**
     //	 *  A unit test for JUnit with C-C-O

@@ -20,6 +20,7 @@ package org.openscience.cdk.dict;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +36,7 @@ public class EntryReactTest extends AbstractEntryTest {
 
     @AfterEach
     public void testTestedClass() {
-        Assert.assertTrue(super.getTestClass() instanceof EntryReact);
+        Assertions.assertTrue(super.getTestClass() instanceof EntryReact);
     }
 
     @Test
@@ -43,9 +44,9 @@ public class EntryReactTest extends AbstractEntryTest {
     // customize because there is no constructor without any parameters
     public void testID() {
         Entry entry = getTestClass();
-        Assert.assertEquals("someid", entry.getID());
+        Assertions.assertEquals("someid", entry.getID());
         entry.setID("identifier");
-        Assert.assertEquals("identifier", entry.getID());
+        Assertions.assertEquals("identifier", entry.getID());
     }
 
 }

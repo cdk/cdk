@@ -23,6 +23,7 @@
 package org.openscience.cdk.io.rdf;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -57,6 +58,6 @@ public class CDKOWLWriterTest extends ChemObjectWriterTest {
         writer.write(mol);
         writer.close();
         String outputString = output.toString();
-        Assert.assertTrue(outputString.contains("http://cdk.sourceforge.net/model.owl#"));
+        Assertions.assertTrue(outputString.contains("http://cdk.sourceforge.net/model.owl#"));
     }
 }

@@ -21,6 +21,7 @@ package org.openscience.cdk.tools;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -32,19 +33,19 @@ public class HOSECodeAnalyserTest extends CDKTestCase {
     @Test
     public void testGetElements_String() {
         List<String> elements = HOSECodeAnalyser.getElements("CCY(CF,C,/C,,&/&)//");
-        Assert.assertEquals(3, elements.size());
-        Assert.assertTrue(elements.contains("C"));
-        Assert.assertTrue(elements.contains("F"));
-        Assert.assertTrue(elements.contains("Br"));
+        Assertions.assertEquals(3, elements.size());
+        Assertions.assertTrue(elements.contains("C"));
+        Assertions.assertTrue(elements.contains("F"));
+        Assertions.assertTrue(elements.contains("Br"));
     }
 
     @Test
     public void testCode1() {
         List<String> elements = HOSECodeAnalyser.getElements("*C*CC(*C,*C,=C/*C,*&,CC/*&O,=OO,%N),C,,C,/");
-        Assert.assertEquals(3, elements.size());
-        Assert.assertTrue(elements.contains("C"));
-        Assert.assertTrue(elements.contains("O"));
-        Assert.assertTrue(elements.contains("N"));
+        Assertions.assertEquals(3, elements.size());
+        Assertions.assertTrue(elements.contains("C"));
+        Assertions.assertTrue(elements.contains("O"));
+        Assertions.assertTrue(elements.contains("N"));
     }
 
 }

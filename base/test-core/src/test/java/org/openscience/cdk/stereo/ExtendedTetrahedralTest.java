@@ -53,10 +53,10 @@ public final class ExtendedTetrahedralTest {
 
         // modifying this array does not change the one in the structure
         peripherals[0] = peripherals[1] = peripherals[2] = peripherals[3] = null;
-        assertNotNull(element.peripherals()[0]);
-        assertNotNull(element.peripherals()[1]);
-        assertNotNull(element.peripherals()[2]);
-        assertNotNull(element.peripherals()[3]);
+        Assertions.assertNotNull(element.peripherals()[0]);
+        Assertions.assertNotNull(element.peripherals()[1]);
+        Assertions.assertNotNull(element.peripherals()[2]);
+        Assertions.assertNotNull(element.peripherals()[3]);
     }
 
     @Test
@@ -68,10 +68,10 @@ public final class ExtendedTetrahedralTest {
         // modifying this array does not change the one in the structure
         peripherals = element.peripherals();
         peripherals[0] = peripherals[1] = peripherals[2] = peripherals[3] = null;
-        assertNotNull(element.peripherals()[0]);
-        assertNotNull(element.peripherals()[1]);
-        assertNotNull(element.peripherals()[2]);
-        assertNotNull(element.peripherals()[3]);
+        Assertions.assertNotNull(element.peripherals()[0]);
+        Assertions.assertNotNull(element.peripherals()[1]);
+        Assertions.assertNotNull(element.peripherals()[2]);
+        Assertions.assertNotNull(element.peripherals()[3]);
     }
 
     @Test
@@ -139,13 +139,13 @@ public final class ExtendedTetrahedralTest {
         IAtom focus = mock(IAtom.class);
         IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
         ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
-        assertTrue(element.contains(focus));
-        assertTrue(element.contains(peripherals[0]));
-        assertTrue(element.contains(peripherals[1]));
-        assertTrue(element.contains(peripherals[2]));
-        assertTrue(element.contains(peripherals[3]));
+        Assertions.assertTrue(element.contains(focus));
+        Assertions.assertTrue(element.contains(peripherals[0]));
+        Assertions.assertTrue(element.contains(peripherals[1]));
+        Assertions.assertTrue(element.contains(peripherals[2]));
+        Assertions.assertTrue(element.contains(peripherals[3]));
 
-        assertFalse(element.contains(mock(IAtom.class)));
+        Assertions.assertFalse(element.contains(mock(IAtom.class)));
     }
 
     // trival access

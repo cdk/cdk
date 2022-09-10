@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -54,7 +55,7 @@ public class VFStateTest {
         VFState state = createBenzeneToNaphthalene(mock, mock(BondMatcher.class));
         for (int i = 0; i < state.nMax(); i++) {
             for (int j = 0; j < state.mMax(); j++) {
-                assertFalse(state.feasible(i, j));
+                Assertions.assertFalse(state.feasible(i, j));
             }
         }
     }
@@ -72,7 +73,7 @@ public class VFStateTest {
         state.m1[4] = 4;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                assertFalse(state.feasible(i, j));
+                Assertions.assertFalse(state.feasible(i, j));
             }
         }
     }
@@ -81,12 +82,12 @@ public class VFStateTest {
     @Test
     public void infeasibleTerminalCount() throws Exception {
         VFState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
-        assertTrue(state.feasible(4, 4)); // 4, 4 is feasible
+        Assertions.assertTrue(state.feasible(4, 4)); // 4, 4 is feasible
         state.add(0, 0);
         state.add(1, 1);
         state.add(2, 2);
         state.add(3, 3);
-        assertFalse(state.feasible(4, 4)); // 4, 4 is infeasible
+        Assertions.assertFalse(state.feasible(4, 4)); // 4, 4 is infeasible
     }
 
     /**

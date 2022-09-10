@@ -25,6 +25,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -43,7 +44,7 @@ public class ZMatrixReaderTest extends ChemObjectIOTest {
     @Test
     public void testAccepts() {
         ZMatrixReader reader = new ZMatrixReader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
 }

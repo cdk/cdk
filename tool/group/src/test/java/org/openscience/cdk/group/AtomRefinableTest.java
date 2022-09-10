@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,7 +50,7 @@ public class AtomRefinableTest {
     public void getVertexCount() {
         IAtomContainer ac = makeAtomContainer("CCCC");
         AtomRefinable refinable = new AtomRefinable(ac);
-        assertEquals(ac.getAtomCount(), refinable.getVertexCount());
+        Assertions.assertEquals(ac.getAtomCount(), refinable.getVertexCount());
     }
     
     @Test
@@ -57,9 +58,9 @@ public class AtomRefinableTest {
         String acpString = "C0C1C2C3 0:1(1),1:2(2),2:3(3)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomRefinable refinable = new AtomRefinable(ac);
-        assertEquals(1, refinable.getConnectivity(0, 1));
-        assertEquals(2, refinable.getConnectivity(1, 2));
-        assertEquals(3, refinable.getConnectivity(2, 3));
+        Assertions.assertEquals(1, refinable.getConnectivity(0, 1));
+        Assertions.assertEquals(2, refinable.getConnectivity(1, 2));
+        Assertions.assertEquals(3, refinable.getConnectivity(2, 3));
     }
     
     @Test
@@ -69,8 +70,8 @@ public class AtomRefinableTest {
         AtomRefinable refinable = new AtomRefinable(ac);
         
         Invariant invariant = refinable.neighboursInBlock(set(0, 2), 1);
-        assertTrue(invariant instanceof IntegerInvariant);
-        assertEquals(new IntegerInvariant(2), invariant);
+        Assertions.assertTrue(invariant instanceof IntegerInvariant);
+        Assertions.assertEquals(new IntegerInvariant(2), invariant);
     }
     
     @Test
@@ -80,8 +81,8 @@ public class AtomRefinableTest {
         AtomRefinable refinable = new AtomRefinable(ac);
         
         Invariant invariant = refinable.neighboursInBlock(set(1, 2), 0);
-        assertTrue(invariant instanceof IntegerListInvariant);
-        assertEquals(new IntegerListInvariant(new int[] {1, 1}), invariant);
+        Assertions.assertTrue(invariant instanceof IntegerListInvariant);
+        Assertions.assertEquals(new IntegerListInvariant(new int[] {1, 1}), invariant);
     }
     
     @Test
@@ -91,8 +92,8 @@ public class AtomRefinableTest {
         AtomRefinable refinable = new AtomRefinable(ac, false, true);
         
         Invariant invariant = refinable.neighboursInBlock(set(1, 2), 0);
-        assertTrue(invariant instanceof IntegerInvariant);
-        assertEquals(new IntegerInvariant(2), invariant);
+        Assertions.assertTrue(invariant instanceof IntegerInvariant);
+        Assertions.assertEquals(new IntegerInvariant(2), invariant);
     }
     
     private Set<Integer> set(int... elements) {
@@ -112,7 +113,7 @@ public class AtomRefinableTest {
         AtomRefinable refinable = new AtomRefinable(ac);
         
         Partition elPartition = refinable.getInitialPartition();
-        Assert.assertEquals(expected, elPartition);
+        Assertions.assertEquals(expected, elPartition);
     }
     
     @Test
@@ -123,7 +124,7 @@ public class AtomRefinableTest {
         AtomRefinable refinable = new AtomRefinable(ac);
         
         Partition elPartition = refinable.getInitialPartition();
-        Assert.assertEquals(expected, elPartition);
+        Assertions.assertEquals(expected, elPartition);
     }
     
     @Test
@@ -134,7 +135,7 @@ public class AtomRefinableTest {
         AtomRefinable refinable = new AtomRefinable(ac);
         
         Partition elPartition = refinable.getInitialPartition();
-        Assert.assertEquals(expected, elPartition);
+        Assertions.assertEquals(expected, elPartition);
     }
     
     @Test
@@ -145,7 +146,7 @@ public class AtomRefinableTest {
         AtomRefinable refinable = new AtomRefinable(ac);
         
         Partition elPartition = refinable.getInitialPartition();
-        Assert.assertEquals(expected, elPartition);
+        Assertions.assertEquals(expected, elPartition);
     }
     
     private IAtomContainer makeAtomContainer(String elements) {

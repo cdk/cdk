@@ -21,6 +21,7 @@ package org.openscience.cdk.structgen.maygen;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,21 +38,21 @@ public class BoundaryConditionsTest {
 
     @Test
     public void detectTripleBonds() {
-        assertFalse(BoundaryConditions.detectTripleBonds(new int[][] {}));
+        Assertions.assertFalse(BoundaryConditions.detectTripleBonds(new int[][] {}));
     }
 
     @Test
     public void detectAdjacentDoubleBonds() {
-        assertFalse(BoundaryConditions.detectAdjacentDoubleBonds(new int[][] {}));
+        Assertions.assertFalse(BoundaryConditions.detectAdjacentDoubleBonds(new int[][] {}));
     }
 
     @Test
     public void detectAllenes() {
-        assertFalse(BoundaryConditions.detectAllenes(new int[][] {}, new String[] {}));
+        Assertions.assertFalse(BoundaryConditions.detectAllenes(new int[][] {}, new String[] {}));
     }
 
     @Test
     public void boundaryConditionCheck() {
-        assertTrue(BoundaryConditions.boundaryConditionCheck(new int[][] {}, new String[] {}));
+        Assertions.assertTrue(BoundaryConditions.boundaryConditionCheck(new int[][] {}, new String[] {}));
     }
 }

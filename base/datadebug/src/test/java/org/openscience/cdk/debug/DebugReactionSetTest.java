@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractReactionSetTest;
@@ -40,6 +41,6 @@ public class DebugReactionSetTest extends AbstractReactionSetTest {
     @Test
     public void testDebugReactionSet() {
         IReactionSet rs = new DebugReactionSet();
-        Assert.assertNotNull(rs);
+        Assertions.assertNotNull(rs);
     }
 }

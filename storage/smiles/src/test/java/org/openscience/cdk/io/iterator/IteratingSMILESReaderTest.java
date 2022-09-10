@@ -65,12 +65,12 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
-        Assert.assertEquals(5, molCount);
+        Assertions.assertEquals(5, molCount);
 
         reader.close();
     }
@@ -85,12 +85,12 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
-        Assert.assertEquals(5, molCount);
+        Assertions.assertEquals(5, molCount);
 
         reader.close();
     }
@@ -106,7 +106,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
             IAtomContainer mol = reader.next();
             String title = mol.getProperty(CDKConstants.TITLE);
-            Assert.assertNotNull(title);
+            Assertions.assertNotNull(title);
         }
 
     }
@@ -121,12 +121,12 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
-        Assert.assertEquals(5, molCount);
+        Assertions.assertEquals(5, molCount);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
         IResourceFormat format = reader.getFormat();
-        assertTrue(format instanceof SMILESFormat);
+        Assertions.assertTrue(format instanceof SMILESFormat);
     }
 
     @Test
@@ -157,7 +157,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
             reader.next();
             molCount++;
         }
-        Assert.assertEquals(5, molCount);
+        Assertions.assertEquals(5, molCount);
     }
 
     @Test
@@ -179,15 +179,15 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     public void empty() {
         Reader reader = new StringReader(" empty1\n empty2");
         IteratingSMILESReader smis = new IteratingSMILESReader(reader, SilentChemObjectBuilder.getInstance());
-        assertTrue(smis.hasNext());
+        Assertions.assertTrue(smis.hasNext());
         IAtomContainer m1 = smis.next();
         assertThat(m1.getAtomCount(), is(0));
         assertThat(m1.getProperty(CDKConstants.TITLE, String.class), CoreMatchers.is("empty1"));
-        assertTrue(smis.hasNext());
+        Assertions.assertTrue(smis.hasNext());
         IAtomContainer m2 = smis.next();
         assertThat(m2.getAtomCount(), is(0));
         assertThat(m2.getProperty(CDKConstants.TITLE, String.class), CoreMatchers.is("empty2"));
-        assertFalse(smis.hasNext());
+        Assertions.assertFalse(smis.hasNext());
     }
 
     @Test
@@ -195,11 +195,11 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
         Reader reader = new StringReader(" okay\nn1cccc1 bad\n okay");
         IteratingSMILESReader smis = new IteratingSMILESReader(reader, SilentChemObjectBuilder.getInstance());
-        assertTrue(smis.hasNext());
+        Assertions.assertTrue(smis.hasNext());
         IAtomContainer m1 = smis.next();
         assertThat(m1.getAtomCount(), is(0));
         assertThat(m1.getProperty(CDKConstants.TITLE, String.class), CoreMatchers.is("okay"));
-        assertTrue(smis.hasNext());
+        Assertions.assertTrue(smis.hasNext());
         IAtomContainer m2 = smis.next();
         assertThat(m2.getAtomCount(), is(0));
         assertThat(m2.getProperty(CDKConstants.TITLE, String.class), CoreMatchers.is("bad"));
@@ -207,6 +207,6 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         IAtomContainer m3 = smis.next();
         assertThat(m3.getAtomCount(), is(0));
         assertThat(m3.getProperty(CDKConstants.TITLE, String.class), CoreMatchers.is("okay"));
-        assertFalse(smis.hasNext());
+        Assertions.assertFalse(smis.hasNext());
     }
 }

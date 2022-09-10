@@ -3,6 +3,7 @@ package org.openscience.cdk.graph.matrix;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -22,7 +23,7 @@ public class TopologicalMatrixTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer container = reader.read(new AtomContainer());
         int[][] matrix = TopologicalMatrix.getMatrix(container);
-        Assert.assertEquals(12, matrix.length);
+        Assertions.assertEquals(12, matrix.length);
         for (int[] ints : matrix) {
 
             System.out.println("");

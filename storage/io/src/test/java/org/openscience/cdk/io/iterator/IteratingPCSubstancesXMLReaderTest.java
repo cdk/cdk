@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -54,16 +55,16 @@ public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
         IChemSequence set = DefaultChemObjectBuilder.getInstance().newInstance(IChemSequence.class);
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IChemModel);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IChemModel);
             set.addChemModel((IChemModel) object);
             modelCount++;
         }
 
-        Assert.assertEquals(77, modelCount);
+        Assertions.assertEquals(77, modelCount);
         IChemModel first = set.getChemModel(0);
-        Assert.assertEquals(63, ChemModelManipulator.getAtomCount(first));
-        Assert.assertEquals(69, ChemModelManipulator.getBondCount(first));
+        Assertions.assertEquals(63, ChemModelManipulator.getAtomCount(first));
+        Assertions.assertEquals(69, ChemModelManipulator.getBondCount(first));
     }
 
 }

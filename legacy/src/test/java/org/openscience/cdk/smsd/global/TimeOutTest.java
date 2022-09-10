@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,16 +41,16 @@ public class TimeOutTest {
 
     @Test
     public void testGetInstance() {
-        Assert.assertNotNull(TimeOut.getInstance());
+        Assertions.assertNotNull(TimeOut.getInstance());
     }
 
     @Test
     public void testSetTimeOut() {
         TimeOut timeOut = TimeOut.getInstance();
         timeOut.setTimeOut(0.1);
-        Assert.assertEquals(0.1, timeOut.getTimeOut(), 0.0001);
+        Assertions.assertEquals(0.1, timeOut.getTimeOut(), 0.0001);
         timeOut.setTimeOut(0.2);
-        Assert.assertEquals(0.2, timeOut.getTimeOut(), 0.0001);
+        Assertions.assertEquals(0.2, timeOut.getTimeOut(), 0.0001);
     }
 
     /**
@@ -61,7 +62,7 @@ public class TimeOutTest {
         instance.setTimeOut(10);
         double expResult = 10.0;
         double result = instance.getTimeOut();
-        Assert.assertEquals(expResult, result, 10.0);
+        Assertions.assertEquals(expResult, result, 10.0);
     }
 
     /**
@@ -74,7 +75,7 @@ public class TimeOutTest {
         instance.setTimeOutFlag(true);
         boolean expResult = true;
         boolean result = instance.isTimeOutFlag();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 
     /**
@@ -88,6 +89,6 @@ public class TimeOutTest {
         instance.setTimeOutFlag(timeOut);
         boolean expResult = false;
         boolean result = instance.isTimeOutFlag();
-        assertNotSame(expResult, result);
+        Assertions.assertNotSame(expResult, result);
     }
 }

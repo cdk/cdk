@@ -20,6 +20,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractMappingTest;
@@ -50,7 +51,7 @@ public class MappingTest extends AbstractMappingTest {
     public void testMapping_IChemObject_IChemObject() {
         IMapping mapping = new Mapping(newChemObject().getBuilder().newInstance(IAtom.class), newChemObject()
                 .getBuilder().newInstance(IAtom.class));
-        Assert.assertNotNull(mapping);
+        Assertions.assertNotNull(mapping);
     }
 
     // Overwrite default methods: no notifications are expected!

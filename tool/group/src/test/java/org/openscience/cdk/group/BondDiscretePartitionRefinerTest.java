@@ -26,6 +26,7 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -46,14 +47,14 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
     @Test
     public void defaultConstructorTest() {
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-        Assert.assertNotNull(refiner);
+        Assertions.assertNotNull(refiner);
     }
 
     @Test
     public void advancedConstructorTest() {
         boolean ignoreBondOrder = true;
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner(ignoreBondOrder);
-        Assert.assertNotNull(refiner);
+        Assertions.assertNotNull(refiner);
     }
 
     @Test
@@ -62,14 +63,14 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         IAtomContainer ac1 = AtomContainerPrinter.fromString(acpString1, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(ac1);
-        Assert.assertEquals(refiner.getConnectivity(0, 1), 1);
-        Assert.assertEquals(refiner.getVertexCount(), 2);
+        Assertions.assertEquals(refiner.getConnectivity(0, 1), 1);
+        Assertions.assertEquals(refiner.getVertexCount(), 2);
 
         String acpString2 = "C0C1C2 0:1(1),0:2(1),1:2(1)";
         IAtomContainer ac2 = AtomContainerPrinter.fromString(acpString2, builder);
         refiner.refine(ac2);
-        Assert.assertEquals(refiner.getConnectivity(0, 2), 1);
-        Assert.assertEquals(refiner.getVertexCount(), 3);
+        Assertions.assertEquals(refiner.getConnectivity(0, 2), 1);
+        Assertions.assertEquals(refiner.getVertexCount(), 3);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(ac, partition);
         PermutationGroup autG = refiner.getAutomorphismGroup();
-        Assert.assertEquals(2, autG.order());
+        Assertions.assertEquals(2, autG.order());
     }
 
     @Test
@@ -91,7 +92,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner(ignoreBondOrder);
         refiner.refine(ac);
         PermutationGroup autG = refiner.getAutomorphismGroup();
-        Assert.assertEquals(8, autG.order());
+        Assertions.assertEquals(8, autG.order());
     }
 
     @Test
@@ -101,7 +102,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(ac);
         PermutationGroup autG = refiner.getAutomorphismGroup();
-        Assert.assertEquals(2, autG.order());
+        Assertions.assertEquals(2, autG.order());
     }
 
     @Test
@@ -109,7 +110,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         String acpString = "C0C1C2O3 0:1(2),0:2(1),1:3(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-        Assert.assertTrue(refiner.isCanonical(ac));
+        Assertions.assertTrue(refiner.isCanonical(ac));
     }
 
     @Test
@@ -117,7 +118,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         String acpString = "C0C1C2O3 0:1(2),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-        Assert.assertFalse(refiner.isCanonical(ac));
+        Assertions.assertFalse(refiner.isCanonical(ac));
     }
 
     @Test
@@ -126,8 +127,8 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         PermutationGroup autG = refiner.getAutomorphismGroup(ac);
-        Assert.assertNotNull(autG);
-        Assert.assertEquals(1, autG.order());
+        Assertions.assertNotNull(autG);
+        Assertions.assertEquals(1, autG.order());
     }
 
     @Test
@@ -138,8 +139,8 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         PermutationGroup autG = new PermutationGroup(4, Arrays.asList(flip));
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.getAutomorphismGroup(ac, autG);
-        Assert.assertNotNull(autG);
-        Assert.assertEquals(8, autG.order());
+        Assertions.assertNotNull(autG);
+        Assertions.assertEquals(8, autG.order());
     }
 
     @Test
@@ -149,7 +150,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         PermutationGroup autG = refiner.getAutomorphismGroup(ac, partition);
-        Assert.assertEquals(2, autG.order());
+        Assertions.assertEquals(2, autG.order());
     }
 
     @Test
@@ -158,7 +159,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(ac);
-        Assert.assertEquals(ac.getAtomCount(), refiner.getVertexCount());
+        Assertions.assertEquals(ac.getAtomCount(), refiner.getVertexCount());
     }
 
     @Test
@@ -167,7 +168,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(ac);
-        Assert.assertEquals(1, refiner.getConnectivity(0, 1));
+        Assertions.assertEquals(1, refiner.getConnectivity(0, 1));
     }
 
     @Test
@@ -178,7 +179,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         Partition autP = refiner.getAutomorphismPartition(ac);
         Partition expected = Partition.fromString("0|1|2|3|4|5|6|7|8|9|10");
-        Assert.assertEquals(expected, autP);
+        Assertions.assertEquals(expected, autP);
     }
 
     // NOTE : the following tests are from bug 1250 by Luis F. de Figueiredo
@@ -188,7 +189,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
     public void testAzulene() throws Exception {
 
         IAtomContainer mol = TestMoleculeFactory.makeAzulene();
-        Assert.assertNotNull("Created molecule was null", mol);
+        Assertions.assertNotNull(mol, "Created molecule was null");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -197,9 +198,9 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(mol);
         Partition autP = refiner.getAutomorphismPartition();
 
-        Assert.assertEquals("Wrong number of equivalent classes", 6, autP.size());
+        Assertions.assertEquals(6, autP.size(), "Wrong number of equivalent classes");
         Partition expected = Partition.fromString("0,3|1,2|4,10|5,8|6,7|9");
-        Assert.assertEquals("Wrong class assignment", expected, autP);
+        Assertions.assertEquals(expected, autP, "Wrong class assignment");
     }
 
     /**
@@ -214,15 +215,15 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makePyrimidine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        Assert.assertNotNull("Created molecule was null", mol);
+        Assertions.assertNotNull(mol, "Created molecule was null");
 
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(mol);
         Partition autP = refiner.getAutomorphismPartition();
 
-        Assert.assertEquals("Wrong number of equivalent classes", 3, autP.size());
+        Assertions.assertEquals(3, autP.size(), "Wrong number of equivalent classes");
         Partition expected = Partition.fromString("0,3|1,2|4,5");
-        Assert.assertEquals("Wrong class assignment", expected, autP);
+        Assertions.assertEquals(expected, autP, "Wrong class assignment");
     }
 
     /**
@@ -236,15 +237,15 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        Assert.assertNotNull("Created molecule was null", mol);
+        Assertions.assertNotNull(mol, "Created molecule was null");
 
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(mol);
         Partition autP = refiner.getAutomorphismPartition();
 
-        Assert.assertEquals("Wrong number of equivalent classes", 4, autP.size());
+        Assertions.assertEquals(4, autP.size(), "Wrong number of equivalent classes");
         Partition expected = Partition.fromString("0,5,7,12|1,4,8,11|2,3,9,10|6");
-        Assert.assertEquals("Wrong class assignment", expected, autP);
+        Assertions.assertEquals(expected, autP, "Wrong class assignment");
     }
 
 }

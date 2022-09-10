@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
@@ -54,9 +55,9 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         MDLV2000Reader reader = new MDLV2000Reader();
-        Assert.assertTrue(reader.accepts(ChemFile.class));
-        Assert.assertTrue(reader.accepts(ChemModel.class));
-        Assert.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemModel.class));
+        Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test
@@ -66,12 +67,12 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = reader.read(new ChemFile());
         reader.close();
-        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        Assertions.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(9, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(9, sequence.getChemModelCount());
         for (int i = 0; i < sequence.getChemModelCount(); i++) {
-            Assert.assertNotNull(sequence.getChemModel(i));
+            Assertions.assertNotNull(sequence.getChemModel(i));
         }
     }
 
@@ -82,20 +83,20 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = reader.read(new ChemFile());
         reader.close();
-        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        Assertions.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(9, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(9, sequence.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals("1", m.getProperty("E_NSC"));
-        Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals("1", m.getProperty("E_NSC"));
+        Assertions.assertEquals("553-97-9", m.getProperty("E_CAS"));
     }
 
     @Test
@@ -105,22 +106,22 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile fileContents = reader.read(new ChemFile());
         reader.close();
-        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        Assertions.assertEquals(1, fileContents.getChemSequenceCount());
         IChemSequence sequence = fileContents.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(1, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(1, sequence.getChemModelCount());
         IChemModel model = sequence.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals("B02", m.getProperty("id_no"));
-        Assert.assertEquals("2-2", m.getProperty("eductkey"));
-        Assert.assertEquals("1", m.getProperty("Step"));
-        Assert.assertEquals("2", m.getProperty("Pos"));
-        Assert.assertEquals("B02", m.getProperty("Tag"));
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals("B02", m.getProperty("id_no"));
+        Assertions.assertEquals("2-2", m.getProperty("eductkey"));
+        Assertions.assertEquals("1", m.getProperty("Step"));
+        Assertions.assertEquals("2", m.getProperty("Pos"));
+        Assertions.assertEquals("B02", m.getProperty("Tag"));
     }
 
     @Test
@@ -130,12 +131,12 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = reader.read(new ChemFile());
         reader.close();
-        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        Assertions.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(2, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(2, sequence.getChemModelCount());
         for (int i = 0; i < sequence.getChemModelCount(); i++) {
-            Assert.assertNotNull(sequence.getChemModel(i));
+            Assertions.assertNotNull(sequence.getChemModel(i));
         }
     }
 
@@ -146,12 +147,12 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = reader.read(new ChemFile());
         reader.close();
-        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        Assertions.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(2, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(2, sequence.getChemModelCount());
         for (int i = 0; i < sequence.getChemModelCount(); i++) {
-            Assert.assertNotNull(sequence.getChemModel(i));
+            Assertions.assertNotNull(sequence.getChemModel(i));
         }
     }
 
@@ -162,12 +163,12 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = reader.read(new ChemFile());
         reader.close();
-        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        Assertions.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(2, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(2, sequence.getChemModelCount());
         for (int i = 0; i < sequence.getChemModelCount(); i++) {
-            Assert.assertNotNull(sequence.getChemModel(i));
+            Assertions.assertNotNull(sequence.getChemModel(i));
         }
     }
 
@@ -183,22 +184,22 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = reader.read(new ChemFile());
         reader.close();
-        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        Assertions.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
-        Assert.assertNotNull(sequence);
-        Assert.assertEquals(3, sequence.getChemModelCount());
+        Assertions.assertNotNull(sequence);
+        Assertions.assertEquals(3, sequence.getChemModelCount());
         for (int i = 0; i < sequence.getChemModelCount(); i++) {
-            Assert.assertNotNull(sequence.getChemModel(i));
+            Assertions.assertNotNull(sequence.getChemModel(i));
         }
 
         IChemModel model = sequence.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals("ola11", m.getProperty("STRUCTURE ID"));
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals("ola11", m.getProperty("STRUCTURE ID"));
     }
 
     /**
@@ -213,16 +214,16 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile fileContents = reader.read(new ChemFile());
         reader.close();
-        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        Assertions.assertEquals(1, fileContents.getChemSequenceCount());
         IChemSequence sequence = fileContents.getChemSequence(0);
         IChemModel model = sequence.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(">1", m.getProperty("IC50_uM"));
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(">1", m.getProperty("IC50_uM"));
     }
 
 }

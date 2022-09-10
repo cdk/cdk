@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -26,7 +27,7 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
     public void testClone() throws Exception {
         IReactionSet reactionSet = (IReactionSet) newChemObject();
         Object clone = reactionSet.clone();
-        Assert.assertTrue(clone instanceof IReactionSet);
+        Assertions.assertTrue(clone instanceof IReactionSet);
     }
 
     @Test
@@ -38,7 +39,7 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 4
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 5
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 6 (force growing)
-        Assert.assertEquals(6, reactionSet.getReactionCount());
+        Assertions.assertEquals(6, reactionSet.getReactionCount());
     }
 
     @Test
@@ -46,7 +47,7 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         IReactionSet reactionSet = (IReactionSet) newChemObject();
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class));
         reactionSet.removeAllReactions();
-        Assert.assertEquals(0, reactionSet.getReactionCount());
+        Assertions.assertEquals(0, reactionSet.getReactionCount());
     }
 
     @Test
@@ -58,14 +59,14 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 4
 
         Iterator<IReaction> reactionIter = reactionSet.reactions().iterator();
-        Assert.assertNotNull(reactionIter);
+        Assertions.assertNotNull(reactionIter);
         int count = 0;
 
         while (reactionIter.hasNext()) {
-            Assert.assertNotNull(reactionIter.next());
+            Assertions.assertNotNull(reactionIter.next());
             ++count;
         }
-        Assert.assertEquals(4, count);
+        Assertions.assertEquals(4, count);
     }
 
     @Test
@@ -77,7 +78,7 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 4
 
         for (int i = 0; i < reactionSet.getReactionCount(); i++) {
-            Assert.assertNotNull(reactionSet.getReaction(i));
+            Assertions.assertNotNull(reactionSet.getReaction(i));
         }
     }
 
@@ -90,8 +91,8 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         reactionSet.addReaction(third); // 3
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 4
 
-        Assert.assertEquals(4, reactionSet.getReactionCount());
-        Assert.assertEquals(third, reactionSet.getReaction(2));
+        Assertions.assertEquals(4, reactionSet.getReactionCount());
+        Assertions.assertEquals(third, reactionSet.getReaction(2));
     }
 
     @Test
@@ -100,11 +101,11 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 1
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 2
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 3
-        Assert.assertEquals(3, reactionSet.getReactionCount());
+        Assertions.assertEquals(3, reactionSet.getReactionCount());
         reactionSet.removeReaction(1);
-        Assert.assertEquals(2, reactionSet.getReactionCount());
-        Assert.assertNotNull(reactionSet.getReaction(0));
-        Assert.assertNotNull(reactionSet.getReaction(1));
+        Assertions.assertEquals(2, reactionSet.getReactionCount());
+        Assertions.assertNotNull(reactionSet.getReaction(0));
+        Assertions.assertNotNull(reactionSet.getReaction(1));
     }
 
     @Test
@@ -116,12 +117,12 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 4
 
         IReactionSet clone = (IReactionSet) reactionSet.clone();
-        Assert.assertEquals(reactionSet.getReactionCount(), clone.getReactionCount());
+        Assertions.assertEquals(reactionSet.getReactionCount(), clone.getReactionCount());
         for (int f = 0; f < reactionSet.getReactionCount(); f++) {
             for (int g = 0; g < clone.getReactionCount(); g++) {
-                Assert.assertNotNull(reactionSet.getReaction(f));
-                Assert.assertNotNull(clone.getReaction(g));
-                Assert.assertNotSame(reactionSet.getReaction(f), clone.getReaction(g));
+                Assertions.assertNotNull(reactionSet.getReaction(f));
+                Assertions.assertNotNull(clone.getReaction(g));
+                Assertions.assertNotSame(reactionSet.getReaction(f), clone.getReaction(g));
             }
         }
     }
@@ -134,16 +135,16 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         IReactionSet reactionSet = (IReactionSet) newChemObject();
         String description = reactionSet.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
 
         IReaction reaction = reactionSet.getBuilder().newInstance(IReaction.class);
         reactionSet.addReaction(reaction);
         description = reactionSet.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -155,10 +156,10 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         chemObject.addListener(listener);
 
         chemObject.addReaction(chemObject.getBuilder().newInstance(IReaction.class));
-        Assert.assertTrue(listener.changed);
+        Assertions.assertTrue(listener.changed);
 
         listener.reset();
-        Assert.assertFalse(listener.changed);
+        Assertions.assertFalse(listener.changed);
 
     }
 
@@ -171,16 +172,16 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         IReaction relevantReaction = reactionSet.getBuilder().newInstance(IReaction.class);
         relevantReaction.setID("2");
         reactionSet.addReaction(relevantReaction);
-        Assert.assertEquals(2, reactionSet.getReactionCount());
+        Assertions.assertEquals(2, reactionSet.getReactionCount());
         reactionSet.removeReaction(relevantReaction);
-        Assert.assertEquals(1, reactionSet.getReactionCount());
-        Assert.assertEquals("1", reactionSet.getReaction(0).getID());
+        Assertions.assertEquals(1, reactionSet.getReactionCount());
+        Assertions.assertEquals("1", reactionSet.getReaction(0).getID());
         reactionSet.addReaction(relevantReaction);
         reactionSet.addReaction(relevantReaction);
-        Assert.assertEquals(3, reactionSet.getReactionCount());
+        Assertions.assertEquals(3, reactionSet.getReactionCount());
         reactionSet.removeReaction(relevantReaction);
-        Assert.assertEquals(1, reactionSet.getReactionCount());
-        Assert.assertEquals("1", reactionSet.getReaction(0).getID());
+        Assertions.assertEquals(1, reactionSet.getReactionCount());
+        Assertions.assertEquals("1", reactionSet.getReaction(0).getID());
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
@@ -206,15 +207,15 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
 
         IReactionSet set = (IReactionSet) newChemObject();
 
-        Assert.assertTrue("new reaction set should be empty", set.isEmpty());
+        Assertions.assertTrue(set.isEmpty(), "new reaction set should be empty");
 
         set.addReaction(set.getBuilder().newInstance(IReaction.class));
 
-        Assert.assertFalse("reaction set with a single reaction should not be empty", set.isEmpty());
+        Assertions.assertFalse(set.isEmpty(), "reaction set with a single reaction should not be empty");
 
         set.removeAllReactions();
 
-        Assert.assertTrue("reaction set with all reactions removed should be empty", set.isEmpty());
+        Assertions.assertTrue(set.isEmpty(), "reaction set with all reactions removed should be empty");
 
     }
 

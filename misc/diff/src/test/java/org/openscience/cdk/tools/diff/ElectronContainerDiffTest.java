@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.tools.diff.tree.IDifference;
@@ -37,7 +38,7 @@ public class ElectronContainerDiffTest {
     public void testMatchAgainstItself() {
         IElectronContainer atom1 = mock(IElectronContainer.class);
         String result = ElectronContainerDiff.diff(atom1, atom1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -48,8 +49,8 @@ public class ElectronContainerDiffTest {
         when(ec2.getElectronCount()).thenReturn(3);
 
         String result = ElectronContainerDiff.diff(ec1, ec2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString("ElectronContainerDiff"));
         MatcherAssert.assertThat(result, containsString("eCount"));
         MatcherAssert.assertThat(result, containsString("2/3"));
@@ -63,6 +64,6 @@ public class ElectronContainerDiffTest {
         when(ec2.getElectronCount()).thenReturn(3);
 
         IDifference difference = ElectronContainerDiff.difference(ec1, ec2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 }

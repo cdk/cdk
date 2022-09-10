@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,6 +50,6 @@ public class TotalRingConnectionAtomTest {
                 .thenReturn(
                         new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.emptySet(), 2,
                                 0, 0, 0));
-        assertTrue(matcher.matches(atom));
+        Assertions.assertTrue(matcher.matches(atom));
     }
 }

@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -43,7 +44,7 @@ public class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
     public void testAccepts() {
         Mopac7Reader reader = new Mopac7Reader();
         reader.setReaderMode(Mode.STRICT);
-        Assert.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
 }

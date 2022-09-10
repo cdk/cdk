@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.*;
@@ -73,10 +74,10 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addProduct(new AtomContainer());
 
         Reaction reversedReaction = (Reaction) ReactionManipulator.reverse(reaction);
-        Assert.assertEquals(IReaction.Direction.FORWARD, reversedReaction.getDirection());
-        Assert.assertEquals(2, reversedReaction.getProductCount());
-        Assert.assertEquals(1, reversedReaction.getReactantCount());
-        Assert.assertEquals(3.0, reversedReaction.getProductCoefficient(water), 0.00001);
+        Assertions.assertEquals(IReaction.Direction.FORWARD, reversedReaction.getDirection());
+        Assertions.assertEquals(2, reversedReaction.getProductCount());
+        Assertions.assertEquals(1, reversedReaction.getReactantCount());
+        Assertions.assertEquals(3.0, reversedReaction.getProductCoefficient(water), 0.00001);
     }
 
     @Test
@@ -92,8 +93,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addProduct(water);
 
         List<String> ids = ReactionManipulator.getAllIDs(reaction);
-        Assert.assertNotNull(ids);
-        Assert.assertEquals(5, ids.size());
+        Assertions.assertNotNull(ids);
+        Assertions.assertEquals(5, ids.size());
     }
 
     /**
@@ -116,10 +117,10 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addProduct(product);
 
         IAtom mappedAtom = (IAtom) ReactionManipulator.getMappedChemObject(reaction, reactant.getAtom(0));
-        Assert.assertEquals(mappedAtom, product.getAtom(0));
+        Assertions.assertEquals(mappedAtom, product.getAtom(0));
 
         mappedAtom = (IAtom) ReactionManipulator.getMappedChemObject(reaction, product.getAtom(1));
-        Assert.assertEquals(mappedAtom, reactant.getAtom(1));
+        Assertions.assertEquals(mappedAtom, reactant.getAtom(1));
 
     }
 
@@ -144,25 +145,25 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addProduct(product);
 
         IBond mappedBond = (IBond) ReactionManipulator.getMappedChemObject(reaction, reactant.getBond(0));
-        Assert.assertEquals(mappedBond, product.getBond(0));
+        Assertions.assertEquals(mappedBond, product.getBond(0));
 
         mappedBond = (IBond) ReactionManipulator.getMappedChemObject(reaction, product.getBond(1));
-        Assert.assertEquals(mappedBond, reactant.getBond(1));
+        Assertions.assertEquals(mappedBond, reactant.getBond(1));
     }
 
     @Test
     public void testGetAtomCount_IReaction() throws Exception {
-        Assert.assertEquals(19, ReactionManipulator.getAtomCount(reaction));
+        Assertions.assertEquals(19, ReactionManipulator.getAtomCount(reaction));
     }
 
     @Test
     public void testGetBondCount_IReaction() throws Exception {
-        Assert.assertEquals(18, ReactionManipulator.getBondCount(reaction));
+        Assertions.assertEquals(18, ReactionManipulator.getBondCount(reaction));
     }
 
     @Test
     public void testGetAllAtomContainers_IReaction() throws Exception {
-        Assert.assertEquals(3, ReactionManipulator.getAllAtomContainers(reaction).size());
+        Assertions.assertEquals(3, ReactionManipulator.getAllAtomContainers(reaction).size());
     }
 
     @Test
@@ -170,8 +171,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         ReactionManipulator.setAtomProperties(reaction, "test", "ok");
         for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             for (IAtom atom : container.atoms()) {
-                Assert.assertNotNull(atom.getProperty("test"));
-                Assert.assertEquals("ok", atom.getProperty("test"));
+                Assertions.assertNotNull(atom.getProperty("test"));
+                Assertions.assertEquals("ok", atom.getProperty("test"));
             }
         }
     }
@@ -181,14 +182,14 @@ public class ReactionManipulatorTest extends CDKTestCase {
         List<IChemObject> allObjects = ReactionManipulator.getAllChemObjects(reaction);
         // does not recurse beyond the IAtomContainer, so:
         // reaction, 2xreactant, 1xproduct
-        Assert.assertEquals(4, allObjects.size());
+        Assertions.assertEquals(4, allObjects.size());
     }
 
     @Test
     public void testGetRelevantAtomContainer_IReaction_IAtom() {
         for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             IAtom anAtom = container.getAtom(0);
-            Assert.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, anAtom));
+            Assertions.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, anAtom));
         }
     }
 
@@ -196,7 +197,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     public void testGetRelevantAtomContainer_IReaction_IBond() {
         for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             IBond aBond = container.getBond(0);
-            Assert.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, aBond));
+            Assertions.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, aBond));
         }
     }
 
@@ -207,8 +208,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addBond(0, 1, Order.SINGLE);
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(1, mol.getBondCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getBondCount());
         reaction.addReactant(mol);
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
@@ -216,8 +217,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         ReactionManipulator.removeElectronContainer(reaction, mol.getBond(0));
 
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(0, mol.getBondCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(0, mol.getBondCount());
 
     }
 
@@ -228,8 +229,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addBond(0, 1, Order.SINGLE);
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertEquals(1, mol.getBondCount());
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getBondCount());
         reaction.addReactant(mol);
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
@@ -237,8 +238,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         ReactionManipulator.removeAtomAndConnectedElectronContainers(reaction, mol.getAtom(0));
 
-        Assert.assertEquals(1, mol.getAtomCount());
-        Assert.assertEquals(0, mol.getBondCount());
+        Assertions.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(0, mol.getBondCount());
     }
 
     @Test
@@ -249,7 +250,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
-        Assert.assertEquals(5, ReactionManipulator.getAllMolecules(reaction).getAtomContainerCount());
+        Assertions.assertEquals(5, ReactionManipulator.getAllMolecules(reaction).getAtomContainerCount());
     }
 
     @Test
@@ -260,7 +261,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
-        Assert.assertEquals(3, ReactionManipulator.getAllReactants(reaction).getAtomContainerCount());
+        Assertions.assertEquals(3, ReactionManipulator.getAllReactants(reaction).getAtomContainerCount());
     }
 
     @Test
@@ -271,7 +272,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
-        Assert.assertEquals(2, ReactionManipulator.getAllProducts(reaction).getAtomContainerCount());
+        Assertions.assertEquals(2, ReactionManipulator.getAllProducts(reaction).getAtomContainerCount());
     }
 
     @Test
@@ -391,7 +392,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
                         atom.getHybridization() != CDKConstants.UNSET ||
                         atom.getFormalNeighbourCount() != CDKConstants.UNSET
                 ) {
-                    Assert.fail("The atom types should not be configured.");
+                    Assertions.fail("The atom types should not be configured.");
                 }
             }
         }
@@ -409,7 +410,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
                         atom.getHybridization() == CDKConstants.UNSET ||
                         atom.getFormalNeighbourCount() == CDKConstants.UNSET
                 ) {
-                    Assert.fail("The atom types should be configured after calling the method ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(IReaction).");
+                    Assertions.fail("The atom types should be configured after calling the method ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(IReaction).");
                 }
             }
         }
@@ -490,7 +491,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
                             atom.getValency() != CDKConstants.UNSET ||
                             atom.getHybridization() != CDKConstants.UNSET
                     ) {
-                        Assert.fail("The atom types should not be configured.");
+                        Assertions.fail("The atom types should not be configured.");
                     }
                 } else {
                     if (atom.getAtomTypeName() != CDKConstants.UNSET ||
@@ -500,7 +501,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
                             atom.getHybridization() != CDKConstants.UNSET ||
                             atom.getFormalNeighbourCount() != CDKConstants.UNSET
                     ) {
-                        Assert.fail("The atom types should not be configured.");
+                        Assertions.fail("The atom types should not be configured.");
                     }
                 }
             }
@@ -516,7 +517,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
                 // assert that the atom property of the two atoms that has been pre-configured hasn't been changed
                 if (atom.equals(reactantOneAtomThree) || atom.equals(productOneAtomFour)) {
                     if (atom.getFormalNeighbourCount() != 2) {
-                        Assert.fail("An already configured atom property should not have been modified.");
+                        Assertions.fail("An already configured atom property should not have been modified.");
                     }
                 }
 
@@ -527,7 +528,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
                         atom.getHybridization() == CDKConstants.UNSET ||
                         atom.getFormalNeighbourCount() == CDKConstants.UNSET
                 ) {
-                    Assert.fail("The atom types should be configured after calling the method ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(IReaction).");
+                    Assertions.fail("The atom types should be configured after calling the method ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(IReaction).");
                 }
             }
         }
@@ -607,7 +608,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
                         atom.getHybridization() == CDKConstants.UNSET ||
                         atom.getFormalNeighbourCount() == CDKConstants.UNSET
                 ) {
-                    Assert.fail("The atom types should be configured after calling the method ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(IReaction).");
+                    Assertions.fail("The atom types should be configured after calling the method ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(IReaction).");
                 }
             }
         }
@@ -625,7 +626,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
                         atom.getHybridization() != CDKConstants.UNSET ||
                         atom.getFormalNeighbourCount() != CDKConstants.UNSET
                 ) {
-                    Assert.fail("The atom types should have been cleared.");
+                    Assertions.fail("The atom types should have been cleared.");
                 }
             }
         }

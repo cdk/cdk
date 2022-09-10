@@ -23,6 +23,7 @@
 package org.openscience.cdk.io.formats;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,6 +37,6 @@ public class MOPAC97FormatTest extends ChemFormatMatcherTest {
 
     @Test
     public void testMatchesMopac97() throws Exception {
-        Assert.assertTrue(((MOPAC97Format) MOPAC97Format.getInstance()).matches(0, "MOPAC  97.00"));
+        Assertions.assertTrue(((MOPAC97Format) MOPAC97Format.getInstance()).matches(0, "MOPAC  97.00"));
     }
 }

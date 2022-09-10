@@ -25,6 +25,7 @@
 package org.openscience.cdk.forcefield.mmff;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,7 +45,7 @@ public class MmffAromaticTypeMappingTest {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[0]] = 2;
-        Assert.assertEquals(0, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
+        Assertions.assertEquals(0, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
     }
 
     @Test
@@ -52,7 +53,7 @@ public class MmffAromaticTypeMappingTest {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[1]] = 2;
-        Assert.assertEquals(1, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
+        Assertions.assertEquals(1, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
     }
 
     @Test
@@ -60,7 +61,7 @@ public class MmffAromaticTypeMappingTest {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[2]] = 2;
-        Assert.assertEquals(2, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
+        Assertions.assertEquals(2, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
     }
 
     @Test
@@ -68,7 +69,7 @@ public class MmffAromaticTypeMappingTest {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[3]] = 2;
-        Assert.assertEquals(3, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
+        Assertions.assertEquals(3, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
     }
 
     @Test
@@ -76,14 +77,14 @@ public class MmffAromaticTypeMappingTest {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[4]] = 2;
-        Assert.assertEquals(4, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
+        Assertions.assertEquals(4, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
     }
 
     @Test
     public void indexOfNoHetroAtom() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
-        Assert.assertEquals(-1, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
+        Assertions.assertEquals(-1, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
     }
 
     @Test
@@ -92,14 +93,14 @@ public class MmffAromaticTypeMappingTest {
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[0]] = 2;
         contr[cycle[4]] = 2;
-        Assert.assertEquals(-2, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
+        Assertions.assertEquals(-2, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
     }
 
     @Test
     public void normaliseNoHetro() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
-        assertFalse(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
+        Assertions.assertFalse(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
     }
 
     @Test
@@ -107,8 +108,8 @@ public class MmffAromaticTypeMappingTest {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[3]] = 2;
-        Assert.assertTrue(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
-        Assert.assertArrayEquals(new int[]{4, 5, 3, 2, 1, 4}, cycle);
+        Assertions.assertTrue(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
+        Assertions.assertArrayEquals(new int[]{4, 5, 3, 2, 1, 4}, cycle);
     }
 
     @Test
@@ -116,8 +117,8 @@ public class MmffAromaticTypeMappingTest {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[2]] = 2;
-        Assert.assertTrue(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
-        Assert.assertArrayEquals(new int[]{1, 4, 5, 3, 2, 1}, cycle);
+        Assertions.assertTrue(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
+        Assertions.assertArrayEquals(new int[]{1, 4, 5, 3, 2, 1}, cycle);
     }
 
     @Test
@@ -161,7 +162,7 @@ public class MmffAromaticTypeMappingTest {
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 3, 2, 5, 4};
         boolean[] arom = new boolean[contr.length];
-        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
+        Assertions.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test
@@ -170,7 +171,7 @@ public class MmffAromaticTypeMappingTest {
         int[] contr = new int[]{2, 1, 1, 1, 1};
         int[] dbs = new int[]{-1, 2, 1, 4, 3};
         boolean[] arom = new boolean[contr.length];
-        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
+        Assertions.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test
@@ -179,7 +180,7 @@ public class MmffAromaticTypeMappingTest {
         int[] contr = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 6, 7, 5, 4};
         boolean[] arom = new boolean[contr.length];
-        assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
+        Assertions.assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test
@@ -189,7 +190,7 @@ public class MmffAromaticTypeMappingTest {
         int[] dbs = new int[]{1, 0, 6, 7, 5, 4};
         boolean[] arom = new boolean[contr.length];
         arom[2] = arom[3] = arom[6] = arom[7] = true; // adjacent ring is aromatic
-        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
+        Assertions.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test
@@ -279,7 +280,7 @@ public class MmffAromaticTypeMappingTest {
         int[] cycle = new int[]{0, 1, 2, 3, 4, 5, 0};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 3, -1, 5, 4};
-        assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, new boolean[contr.length]));
+        Assertions.assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, new boolean[contr.length]));
     }
 
     @Test

@@ -24,6 +24,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
@@ -47,9 +48,9 @@ public class DeAromatizationToolTest extends CDKTestCase {
         Ring benzene = new Ring(6, "C");
         for (IBond iBond : benzene.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, true);
         boolean success = DeAromatizationTool.deAromatize(benzene);
-        Assert.assertTrue(success);
+        Assertions.assertTrue(success);
         double bondOrderSum = AtomContainerManipulator.getSingleBondEquivalentSum(benzene);
-        Assert.assertEquals(9.0, bondOrderSum, 0.00001);
+        Assertions.assertEquals(9.0, bondOrderSum, 0.00001);
     }
 
     @Test
@@ -58,16 +59,16 @@ public class DeAromatizationToolTest extends CDKTestCase {
         pyridine.getAtom(0).setSymbol("N");
         for (IBond iBond : pyridine.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, true);
         boolean success = DeAromatizationTool.deAromatize(pyridine);
-        Assert.assertTrue(success);
+        Assertions.assertTrue(success);
         double bondOrderSum = AtomContainerManipulator.getSingleBondEquivalentSum(pyridine);
-        Assert.assertEquals(9.0, bondOrderSum, 0.00001);
+        Assertions.assertEquals(9.0, bondOrderSum, 0.00001);
     }
 
     @Test
     public void testDeAromatize_IRing() {
         Ring butadiene = new Ring(4, "C");
         boolean success = DeAromatizationTool.deAromatize(butadiene);
-        Assert.assertFalse(success);
+        Assertions.assertFalse(success);
     }
 
 }

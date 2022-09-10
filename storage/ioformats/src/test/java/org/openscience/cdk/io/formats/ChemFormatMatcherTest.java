@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -46,7 +47,7 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
 
     @Test
     public void testChemFormatMatcherSet() {
-        Assert.assertNotNull("You must use setChemFormatMatcher() to set the IChemFormatMatcher object.", matcher);
+        Assertions.assertNotNull(matcher, "You must use setChemFormatMatcher() to set the IChemFormatMatcher object.");
     }
 
     protected boolean matches(String header) throws IOException {
@@ -56,24 +57,24 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
 
     @Test
     public void testMatches() throws Exception {
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
         // positive testing is done by the ReaderFactoryTest, and
         // negative tests are given below
     }
 
     @Test
     public void testNoLines() {
-        Assert.assertFalse(matcher.matches(Collections.emptyList()).matched());
+        Assertions.assertFalse(matcher.matches(Collections.emptyList()).matched());
     }
 
     @Test
     public void testMatchesEmptyString() {
-        Assert.assertFalse(matcher.matches(Arrays.asList("")).matched());
+        Assertions.assertFalse(matcher.matches(Arrays.asList("")).matched());
     }
 
     @Test
     public void testMatchesLoremIpsum() {
-        Assert.assertFalse(matcher
+        Assertions.assertFalse(matcher
                 .matches(
                         Arrays.asList("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam accumsan metus ut nulla."))
                 .matched());

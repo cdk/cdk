@@ -24,6 +24,7 @@
 package org.openscience.cdk.smiles;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -100,21 +101,21 @@ public class CxSmilesTest {
     @Test
     public void nonCXSMILESLayer() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |<benzene>|");
-        assertNotNull(mol);
+        Assertions.assertNotNull(mol);
         assertThat(mol.getTitle(), is("|<benzene>|"));
     }
 
     @Test
     public void truncatedCXSMILES() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |");
-        assertNotNull(mol);
+        Assertions.assertNotNull(mol);
         assertThat(mol.getTitle(), is("|"));
     }
 
     @Test
     public void correctTitle() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |c:1,3,4| benzene");
-        assertNotNull(mol);
+        Assertions.assertNotNull(mol);
         assertThat(mol.getTitle(), is("benzene"));
     }
 

@@ -20,6 +20,7 @@
 package org.openscience.cdk.protein.data;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IPDBStructure;
@@ -42,6 +43,6 @@ public class PDBStructureTest extends AbstractPDBStructureTest {
     @Test
     public void testPDBStructure() {
         IPDBStructure structure = new PDBStructure();
-        Assert.assertNotNull(structure);
+        Assertions.assertNotNull(structure);
     }
 }

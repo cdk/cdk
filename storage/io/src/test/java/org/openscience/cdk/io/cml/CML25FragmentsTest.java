@@ -25,6 +25,7 @@ package org.openscience.cdk.io.cml;
 import java.io.ByteArrayInputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
@@ -58,13 +59,13 @@ public class CML25FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
-        Assert.assertEquals("a1", atom.getID());
-        Assert.assertNotNull(atom.getNaturalAbundance());
-        Assert.assertEquals(99.9885, atom.getNaturalAbundance(), 0.0001);
-        Assert.assertNotNull(atom.getExactMass());
-        Assert.assertEquals(1.007825032, atom.getExactMass(), 0.0000001);
+        Assertions.assertEquals("a1", atom.getID());
+        Assertions.assertNotNull(atom.getNaturalAbundance());
+        Assertions.assertEquals(99.9885, atom.getNaturalAbundance(), 0.0001);
+        Assertions.assertNotNull(atom.getExactMass());
+        Assertions.assertEquals(1.007825032, atom.getExactMass(), 0.0000001);
     }
 
     private IChemFile parseCMLString(String cmlString) throws Exception {
@@ -83,24 +84,24 @@ public class CML25FragmentsTest extends CDKTestCase {
     }
 
     private IAtomContainer checkForXMoleculeFile(IChemFile chemFile, int numberOfMolecules) {
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
 
-        Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
+        Assertions.assertEquals(chemFile.getChemSequenceCount(), 1);
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
+        Assertions.assertNotNull(seq);
 
-        Assert.assertEquals(seq.getChemModelCount(), 1);
+        Assertions.assertEquals(seq.getChemModelCount(), 1);
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
+        Assertions.assertNotNull(moleculeSet);
 
-        Assert.assertEquals(moleculeSet.getAtomContainerCount(), numberOfMolecules);
+        Assertions.assertEquals(moleculeSet.getAtomContainerCount(), numberOfMolecules);
         IAtomContainer mol = null;
         for (int i = 0; i < numberOfMolecules; i++) {
             mol = moleculeSet.getAtomContainer(i);
-            Assert.assertNotNull(mol);
+            Assertions.assertNotNull(mol);
         }
         return mol;
     }

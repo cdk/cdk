@@ -26,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -82,7 +83,7 @@ public abstract class AbstractSubGraphTest {
         MolHandler mol1 = new MolHandler(queryac, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
-        assertEquals(true, smsd1.isSubgraph(true));
+        Assertions.assertEquals(true, smsd1.isSubgraph(true));
     }
 
     public class ISubGraphImpl extends AbstractSubGraph {

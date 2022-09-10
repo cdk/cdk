@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -91,10 +92,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //			logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.03);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.03);
             }
         }
     }
@@ -131,10 +132,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //			logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.01);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.01);
             }
         }
     }
@@ -171,10 +172,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //			logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.01);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.01);
             }
         }
     }
@@ -210,10 +211,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //			logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.03);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.03);
             }
         }
     }
@@ -249,10 +250,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //			logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.01);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.01);
             }
         }
     }
@@ -289,10 +290,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //			logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.55);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.55);
             }
         }
     }
@@ -346,10 +347,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 
             //	        logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.02);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.02);
             }
         }
     }
@@ -391,10 +392,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //	        logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.7);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.7);
             }
         }
     }
@@ -431,10 +432,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //			logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 2);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 2);
             }
         }
     }
@@ -487,10 +488,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //	        logger.debug("result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.5);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.5);
             }
         }
     }
@@ -542,10 +543,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //	        logger.debug(mol.getAtomAt(i).getSymbol()+"-result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 2.0);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 2.0);
             }
         }
     }
@@ -576,10 +577,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             //	        logger.debug(mol.getAtom(i).getSymbol()+"-result: "+result);
             if (result == 0.0)
-                Assert.assertEquals(testResult[i], result, 0.0001);
+                Assertions.assertEquals(testResult[i], result, 0.0001);
             else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(testResult[i], result, 0.2);
+                Assertions.assertTrue(result != 0.0);
+                Assertions.assertEquals(testResult[i], result, 0.2);
             }
         }
     }
@@ -624,14 +625,14 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molB);
         lpcheck.saturate(molB);
 
-        Assert.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
-        Assert.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
-        Assert.assertEquals(2, molB.getLonePairCount(), 0.00001);
+        Assertions.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
+        Assertions.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
+        Assertions.assertEquals(2, molB.getLonePairCount(), 0.00001);
 
         IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         double resultB = ((DoubleResult) descriptor.calculate(molB.getAtom(3), molB).getValue()).doubleValue();
 
-        Assert.assertEquals(resultA, resultB, 0.00001);
+        Assertions.assertEquals(resultA, resultB, 0.00001);
     }
 
 }

@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,7 +50,7 @@ public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() throws Exception {
         PCSubstanceXMLReader reader = new PCSubstanceXMLReader();
-        Assert.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test
@@ -59,14 +60,14 @@ public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         PCSubstanceXMLReader reader = new PCSubstanceXMLReader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
-        Assert.assertNotNull(molecule);
+        Assertions.assertNotNull(molecule);
 
         // check atom stuff
-        Assert.assertEquals(19, molecule.getAtomCount());
-        Assert.assertTrue(molecule.getAtom(0) instanceof IPseudoAtom);
+        Assertions.assertEquals(19, molecule.getAtomCount());
+        Assertions.assertTrue(molecule.getAtom(0) instanceof IPseudoAtom);
 
         // check bond stuff
-        Assert.assertEquals(19, molecule.getBondCount());
-        Assert.assertNotNull(molecule.getBond(3));
+        Assertions.assertEquals(19, molecule.getBondCount());
+        Assertions.assertNotNull(molecule.getBond(3));
     }
 }

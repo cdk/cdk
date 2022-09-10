@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -49,7 +50,7 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Oc1ccccc1"); //
-        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     /**
@@ -109,7 +110,7 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
         IBond b8 = builder.newInstance(IBond.class, a5, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
 
-        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assertions.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
 }

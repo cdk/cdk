@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
@@ -56,7 +57,7 @@ public class IonizationPotentialToolTest extends CDKTestCase {
     @Test
     public void testIonizationPotentialTool() {
 
-        Assert.assertNotNull(new IonizationPotentialTool());
+        Assertions.assertNotNull(new IonizationPotentialTool());
     }
 
     @Test
@@ -77,7 +78,7 @@ public class IonizationPotentialToolTest extends CDKTestCase {
 
         double firstIP = carbonIPs.get(0);
         for (double ip : carbonIPs) {
-            Assert.assertEquals(firstIP, ip, 0.0001);
+            Assertions.assertEquals(firstIP, ip, 0.0001);
         }
     }
 

@@ -28,6 +28,7 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -62,14 +63,13 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
-            Assert.assertEquals("Molecule # was not in MDL V2000 format: " + molCount, MDLV2000Format.getInstance(),
-                    reader.getFormat());
+            Assertions.assertEquals(MDLV2000Format.getInstance(), reader.getFormat(), "Molecule # was not in MDL V2000 format: " + molCount);
         }
 
-        Assert.assertEquals(6, molCount);
+        Assertions.assertEquals(6, molCount);
         reader.close();
     }
 
@@ -91,14 +91,13 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
-            Assert.assertEquals("Molecule # was not in MDL V2000 format: " + molCount, MDLV2000Format.getInstance(),
-                    reader.getFormat());
+            Assertions.assertEquals(MDLV2000Format.getInstance(), reader.getFormat(), "Molecule # was not in MDL V2000 format: " + molCount);
         }
 
-        Assert.assertEquals(6, molCount);
+        Assertions.assertEquals(6, molCount);
         reader.close();
     }
 
@@ -110,12 +109,12 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         //int molCount = 0;
-        Assert.assertTrue(reader.hasNext());
+        Assertions.assertTrue(reader.hasNext());
         Object object = reader.next();
-        Assert.assertNotNull(object);
-        Assert.assertTrue(object instanceof IAtomContainer);
-        Assert.assertEquals("2-methylbenzo-1,4-quinone", ((IAtomContainer) object).getTitle());
-        Assert.assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
+        Assertions.assertNotNull(object);
+        Assertions.assertTrue(object instanceof IAtomContainer);
+        Assertions.assertEquals("2-methylbenzo-1,4-quinone", ((IAtomContainer) object).getTitle());
+        Assertions.assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
         reader.close();
     }
 
@@ -127,13 +126,13 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         //int molCount = 0;
-        Assert.assertTrue(reader.hasNext());
+        Assertions.assertTrue(reader.hasNext());
         Object object = reader.next();
-        Assert.assertNotNull(object);
-        Assert.assertTrue(object instanceof IAtomContainer);
+        Assertions.assertNotNull(object);
+        Assertions.assertTrue(object instanceof IAtomContainer);
         IAtomContainer m = (IAtomContainer) object;
-        Assert.assertEquals("1", m.getProperty("E_NSC"));
-        Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
+        Assertions.assertEquals("1", m.getProperty("E_NSC"));
+        Assertions.assertEquals("553-97-9", m.getProperty("E_CAS"));
         reader.close();
     }
 
@@ -144,9 +143,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer m = reader.next();
-        Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
+        Assertions.assertEquals("553-97-9", m.getProperty("E_CAS"));
         m = reader.next();
-        Assert.assertEquals("120-78-5", m.getProperty("E_CAS"));
+        Assertions.assertEquals("120-78-5", m.getProperty("E_CAS"));
         reader.close();
     }
 
@@ -160,12 +159,12 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
-        Assert.assertEquals(1, molCount);
+        Assertions.assertEquals(1, molCount);
         reader.close();
     }
 
@@ -179,12 +178,12 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
-        Assert.assertEquals(1, molCount);
+        Assertions.assertEquals(1, molCount);
         reader.close();
     }
 
@@ -197,18 +196,18 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
 
             if (molCount == 2) {
                 IAtomContainer mol = (IAtomContainer) object;
                 String s = mol.getProperty("Species");
-                Assert.assertEquals("rat", s);
+                Assertions.assertEquals("rat", s);
             }
         }
 
-        Assert.assertEquals(2, molCount);
+        Assertions.assertEquals(2, molCount);
         reader.close();
     }
 
@@ -229,13 +228,13 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
             boolean has3d = GeometryUtil.has3DCoordinates((IAtomContainer) object);
-            Assert.assertTrue(has3d);
+            Assertions.assertTrue(has3d);
         }
-        Assert.assertNotSame(0, molCount);
+        Assertions.assertNotSame(0, molCount);
         reader.close();
     }
 
@@ -250,15 +249,15 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         IAtomContainer mol = null;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
             mol = (IAtomContainer) object;
         }
 
-        Assert.assertEquals(2, molCount);
-        Assert.assertNotNull(mol.getAtom(0).getPoint2d());
-        Assert.assertNull(mol.getAtom(0).getPoint3d());
+        Assertions.assertEquals(2, molCount);
+        Assertions.assertNotNull(mol.getAtom(0).getPoint2d());
+        Assertions.assertNull(mol.getAtom(0).getPoint3d());
         reader.close();
 
         // Now test forced 3D coordinates
@@ -271,15 +270,15 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         mol = null;
         while (reader.hasNext()) {
             Object object = reader.next();
-            Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            Assertions.assertNotNull(object);
+            Assertions.assertTrue(object instanceof IAtomContainer);
             molCount++;
             mol = (IAtomContainer) object;
         }
 
-        Assert.assertEquals(2, molCount);
-        Assert.assertNull(mol.getAtom(0).getPoint2d());
-        Assert.assertNotNull(mol.getAtom(0).getPoint3d());
+        Assertions.assertEquals(2, molCount);
+        Assertions.assertNull(mol.getAtom(0).getPoint2d());
+        Assertions.assertNotNull(mol.getAtom(0).getPoint3d());
         reader.close();
     }
 
@@ -321,7 +320,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
         reader.close();
 
-        Assert.assertEquals(3, count);
+        Assertions.assertEquals(3, count);
 
     }
 
@@ -344,7 +343,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
         reader.close();
 
-        Assert.assertEquals(1, count);
+        Assertions.assertEquals(1, count);
 
     }
 

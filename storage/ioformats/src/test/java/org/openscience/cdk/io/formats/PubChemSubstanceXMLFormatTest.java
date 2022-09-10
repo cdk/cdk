@@ -23,6 +23,7 @@
 package org.openscience.cdk.io.formats;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -41,13 +42,13 @@ public class PubChemSubstanceXMLFormatTest extends ChemFormatMatcherTest {
     @Override
     public void testMatches() throws Exception {
         String header = "<?xml version=\"\"?><PC-Substance/>";
-        Assert.assertTrue(matches(header));
+        Assertions.assertTrue(matches(header));
     }
 
     @Test
     public void testFalsePositive() throws Exception {
         String header = "<?xml version=\"\"?><PC-Substances><PC-Substance/></PC-Substances>";
-        Assert.assertFalse(matches(header));
+        Assertions.assertFalse(matches(header));
     }
 
     /**
@@ -56,7 +57,7 @@ public class PubChemSubstanceXMLFormatTest extends ChemFormatMatcherTest {
     @Test
     public void testFalsePositiveWithNewlines() throws Exception {
         String header = "<PC-Substances>\n<PC-Substance/>\n</PC-Substances>";
-        Assert.assertFalse(matches(header));
+        Assertions.assertFalse(matches(header));
     }
 
 }

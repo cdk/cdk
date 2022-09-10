@@ -58,14 +58,14 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        Assert.assertEquals(0.2887, ret.get(0), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(1), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(2), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(3), 0.0001);
-        Assert.assertEquals(0.1667, ret.get(4), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(5), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(6), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(7), 0.0001);
+        Assertions.assertEquals(0.2887, ret.get(0), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(1), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(2), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(3), 0.0001);
+        Assertions.assertEquals(0.1667, ret.get(4), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(5), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(6), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(7), 0.0001);
     }
 
     @Test
@@ -115,14 +115,14 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        Assert.assertEquals(0.5774, ret.get(0), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(1), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(2), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(3), 0.0001);
-        Assert.assertEquals(0.3780, ret.get(4), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(5), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(6), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(7), 0.0001);
+        Assertions.assertEquals(0.5774, ret.get(0), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(1), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(2), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(3), 0.0001);
+        Assertions.assertEquals(0.3780, ret.get(4), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(5), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(6), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(7), 0.0001);
     }
 
     @Test
@@ -182,14 +182,14 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        Assert.assertEquals(1.7845, ret.get(0), 0.0001);
-        Assert.assertEquals(0.2500, ret.get(1), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(2), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(3), 0.0001);
-        Assert.assertEquals(1.4946, ret.get(4), 0.0001);
-        Assert.assertEquals(0.2500, ret.get(5), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(6), 0.0001);
-        Assert.assertEquals(0.0000, ret.get(7), 0.0001);
+        Assertions.assertEquals(1.7845, ret.get(0), 0.0001);
+        Assertions.assertEquals(0.2500, ret.get(1), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(2), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(3), 0.0001);
+        Assertions.assertEquals(1.4946, ret.get(4), 0.0001);
+        Assertions.assertEquals(0.2500, ret.get(5), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(6), 0.0001);
+        Assertions.assertEquals(0.0000, ret.get(7), 0.0001);
     }
 
     /**
@@ -200,7 +200,7 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-        Assert.assertNotNull(ret);
+        Assertions.assertNotNull(ret);
     }
 
     /**

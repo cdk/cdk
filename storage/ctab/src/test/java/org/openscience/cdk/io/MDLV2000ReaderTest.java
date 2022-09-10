@@ -115,9 +115,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         MDLV2000Reader reader = new MDLV2000Reader();
-        assertTrue(reader.accepts(ChemFile.class));
-        assertTrue(reader.accepts(ChemModel.class));
-        assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(ChemFile.class));
+        Assertions.assertTrue(reader.accepts(ChemModel.class));
+        Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     /**
@@ -132,15 +132,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
 
         List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(10, mols.size());
+        Assertions.assertEquals(10, mols.size());
 
         IAtomContainer mol = mols.get(0);
         Map<Object, Object> props = mol.getProperties();
-        Assert.assertNotNull(props);
-        Assert.assertEquals(5, props.size());
+        Assertions.assertNotNull(props);
+        Assertions.assertEquals(5, props.size());
 
         String[] keys = {"DatabaseID", "cdk:Title", "PeaksExplained", "cdk:Remark", "Score"};
         for (String s : keys) {
@@ -151,7 +151,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                     break;
                 }
             }
-            assertTrue(s + " was not read from the file", found);
+            Assertions.assertTrue(found, s + " was not read from the file");
         }
     }
 
@@ -167,31 +167,31 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(4, m.getAtomCount());
-        Assert.assertEquals(2, m.getBondCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(4, m.getAtomCount());
+        Assertions.assertEquals(2, m.getBondCount());
 
         // test reading of formal charges
         org.openscience.cdk.interfaces.IAtom a = m.getAtom(0);
-        Assert.assertNotNull(a);
-        Assert.assertEquals("Na", a.getSymbol());
-        Assert.assertEquals(1, a.getFormalCharge().intValue());
+        Assertions.assertNotNull(a);
+        Assertions.assertEquals("Na", a.getSymbol());
+        Assertions.assertEquals(1, a.getFormalCharge().intValue());
         a = m.getAtom(2);
-        Assert.assertNotNull(a);
-        Assert.assertEquals("O", a.getSymbol());
-        Assert.assertEquals(-1, a.getFormalCharge().intValue());
+        Assertions.assertNotNull(a);
+        Assertions.assertEquals("O", a.getSymbol());
+        Assertions.assertEquals(-1, a.getFormalCharge().intValue());
     }
 
     @Test
@@ -202,11 +202,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -217,11 +217,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        Assert.assertEquals(210, containersList.get(0).getAtom(0).getMassNumber().intValue());
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertEquals(210, containersList.get(0).getAtom(0).getMassNumber().intValue());
     }
 
     /**
@@ -235,12 +235,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        Assert.assertEquals(3, containersList.get(0).getAtomCount());
-        Assert.assertEquals(2, containersList.get(0).getAtom(1).getMassNumber().intValue());
-        Assert.assertEquals(3, containersList.get(0).getAtom(2).getMassNumber().intValue());
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertEquals(3, containersList.get(0).getAtomCount());
+        Assertions.assertEquals(2, containersList.get(0).getAtom(1).getMassNumber().intValue());
+        Assertions.assertEquals(3, containersList.get(0).getAtom(2).getMassNumber().intValue());
     }
 
     @Test
@@ -251,17 +251,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
+        Assertions.assertEquals(1, containersList.size());
         IAtomContainer container = containersList.get(0);
-        Assert.assertEquals(10, container.getAtomCount());
-        Assert.assertEquals(9, container.getBondCount());
+        Assertions.assertEquals(10, container.getAtomCount());
+        Assertions.assertEquals(9, container.getBondCount());
         for (IAtom iAtom : container.atoms()) {
-            Assert.assertEquals("C", iAtom.getSymbol());
+            Assertions.assertEquals("C", iAtom.getSymbol());
         }
         for (IBond iBond : container.bonds()) {
-            Assert.assertEquals(Order.SINGLE, iBond.getOrder());
+            Assertions.assertEquals(Order.SINGLE, iBond.getOrder());
         }
     }
 
@@ -273,7 +273,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertEquals("a-pinen.mol", mol.getTitle());
+        Assertions.assertEquals("a-pinen.mol", mol.getTitle());
     }
 
     @Test
@@ -284,11 +284,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -299,11 +299,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -314,11 +314,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -329,11 +329,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -344,11 +344,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -359,11 +359,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -374,11 +374,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -389,11 +389,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue(containersList.get(0).getAtomCount() > 0);
-        assertTrue(containersList.get(0).getBondCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue(containersList.get(0).getAtomCount() > 0);
+        Assertions.assertTrue(containersList.get(0).getBondCount() > 0);
     }
 
     @Test
@@ -405,7 +405,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         superspiro.setID("superspiro");
         IAtomContainer result = reader.read(superspiro);
         reader.close();
-        Assert.assertEquals(superspiro.getID(), result.getID());
+        Assertions.assertEquals(superspiro.getID(), result.getID());
     }
 
     /**
@@ -429,21 +429,21 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
 
         IAtomContainerSet som = model.getMoleculeSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(1, som.getAtomContainerCount());
         IAtomContainer m = som.getAtomContainer(0);
-        Assert.assertNotNull(m);
-        Assert.assertEquals(9, m.getAtomCount());
-        Assert.assertEquals(9, m.getBondCount());
+        Assertions.assertNotNull(m);
+        Assertions.assertEquals(9, m.getAtomCount());
+        Assertions.assertEquals(9, m.getBondCount());
     }
 
     @Test
@@ -454,7 +454,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertEquals("R2", ((IPseudoAtom) mol.getAtom(19)).getLabel());
+        Assertions.assertEquals("R2", ((IPseudoAtom) mol.getAtom(19)).getLabel());
     }
 
     @Test
@@ -466,8 +466,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
         IAtom atom = mol.getAtom(0);
-        assertTrue(atom instanceof IPseudoAtom);
-        Assert.assertEquals("R\\1", ((IPseudoAtom) atom).getLabel());
+        Assertions.assertTrue(atom instanceof IPseudoAtom);
+        Assertions.assertEquals("R\\1", ((IPseudoAtom) atom).getLabel());
     }
 
     /**
@@ -481,11 +481,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        Assert.assertEquals(15, containersList.get(0).getAtomCount());
-        Assert.assertEquals(16, containersList.get(0).getBondCount());
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertEquals(15, containersList.get(0).getAtomCount());
+        Assertions.assertEquals(16, containersList.get(0).getBondCount());
     }
 
     @Test
@@ -495,12 +495,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(1, mol.getAtomCount());
-        Assert.assertEquals(0, mol.getBondCount());
-        Assert.assertEquals(1, AtomContainerManipulator.getTotalFormalCharge(mol));
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(1, mol.getAtomCount());
+        Assertions.assertEquals(0, mol.getBondCount());
+        Assertions.assertEquals(1, AtomContainerManipulator.getTotalFormalCharge(mol));
         IAtom atom = mol.getAtom(0);
-        Assert.assertEquals(1, atom.getFormalCharge().intValue());
+        Assertions.assertEquals(1, atom.getFormalCharge().intValue());
     }
 
     @Test
@@ -512,8 +512,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         IAtomContainer container = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Assert.assertEquals(1, container.getAtom(6).getFormalCharge().intValue());
-        Assert.assertEquals(-1, container.getAtom(8).getFormalCharge().intValue());
+        Assertions.assertEquals(1, container.getAtom(6).getFormalCharge().intValue());
+        Assertions.assertEquals(-1, container.getAtom(8).getFormalCharge().intValue());
     }
 
     @Test
@@ -522,7 +522,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(emptyString));
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNull(mol);
+        Assertions.assertNull(mol);
     }
 
     @Test
@@ -533,21 +533,21 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
+        Assertions.assertEquals(1, containersList.size());
 
         IAtomContainer container = containersList.get(0);
-        Assert.assertNotNull(container);
-        Assert.assertEquals(0, container.getAtomCount());
-        Assert.assertEquals(0, container.getBondCount());
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(0, container.getAtomCount());
+        Assertions.assertEquals(0, container.getBondCount());
 
         Map<Object, Object> props = container.getProperties();
         Set<Object> keys = props.keySet();
 
-        assertTrue(keys.contains("SubstanceType"));
-        assertTrue(keys.contains("TD50 Rat"));
-        assertTrue(keys.contains("ChemCount"));
+        Assertions.assertTrue(keys.contains("SubstanceType"));
+        Assertions.assertTrue(keys.contains("TD50 Rat"));
+        Assertions.assertTrue(keys.contains("ChemCount"));
     }
 
     /**
@@ -567,11 +567,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         reader.close();
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(5, mol.getAtomCount());
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(5, mol.getAtomCount());
 
         boolean has3d = GeometryUtil.has3DCoordinates(mol);
-        assertTrue(has3d);
+        Assertions.assertTrue(has3d);
     }
 
     /**
@@ -585,11 +585,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         reader.close();
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(5, mol.getAtomCount());
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(5, mol.getAtomCount());
 
         boolean has3d = GeometryUtil.has3DCoordinates(mol);
-        assertTrue(has3d);
+        Assertions.assertTrue(has3d);
     }
 
     /**
@@ -620,11 +620,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.RELAXED);
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertNotNull(containersList.get(0));
-        assertFalse((containersList.get(0)).getAtom(1) instanceof IPseudoAtom);
-        assertFalse((containersList.get(0)).getAtom(2) instanceof IPseudoAtom);
+        Assertions.assertNotNull(containersList.get(0));
+        Assertions.assertFalse((containersList.get(0)).getAtom(1) instanceof IPseudoAtom);
+        Assertions.assertFalse((containersList.get(0)).getAtom(2) instanceof IPseudoAtom);
     }
 
     /**
@@ -639,12 +639,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
-        assertTrue((containersList.get(0)).getAtomCount() > 0);
-        assertTrue((containersList.get(0)).getBondCount() > 0);
-        assertTrue((containersList.get(0)).getSingleElectronCount() > 0);
+        Assertions.assertEquals(1, containersList.size());
+        Assertions.assertTrue((containersList.get(0)).getAtomCount() > 0);
+        Assertions.assertTrue((containersList.get(0)).getBondCount() > 0);
+        Assertions.assertTrue((containersList.get(0)).getSingleElectronCount() > 0);
     }
 
     /**
@@ -668,12 +668,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
         IAtomContainer molecule = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(molecule);
-        Assert.assertEquals(9, molecule.getAtomCount());
-        Assert.assertEquals(9, molecule.getBondCount());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertEquals(9, molecule.getAtomCount());
+        Assertions.assertEquals(9, molecule.getBondCount());
         for (IAtom atom : molecule.atoms()) {
-            Assert.assertNull(atom.getPoint2d());
-            Assert.assertNull(atom.getPoint2d());
+            Assertions.assertNull(atom.getPoint2d());
+            Assertions.assertNull(atom.getPoint2d());
         }
     }
 
@@ -685,10 +685,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(1).getStereo());
-        Assert.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(6).getStereo());
-        Assert.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(7).getStereo());
-        Assert.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(11).getStereo());
+        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(1).getStereo());
+        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(6).getStereo());
+        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(7).getStereo());
+        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(11).getStereo());
     }
 
     @Test
@@ -698,7 +698,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertEquals(IBond.Stereo.UP_OR_DOWN, mol.getBond(1).getStereo());
+        Assertions.assertEquals(IBond.Stereo.UP_OR_DOWN, mol.getBond(1).getStereo());
     }
 
     /**
@@ -713,11 +713,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
+        Assertions.assertEquals(1, containersList.size());
         IAtomContainer container = containersList.get(0);
-        Assert.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo());
+        Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo());
     }
 
     @Test
@@ -738,11 +738,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(9, mol.getAtomCount());
-        Assert.assertEquals(9, mol.getBondCount());
-        Assert.assertEquals(IBond.Stereo.DOWN, mol.getBond(0).getStereo());
-        Assert.assertEquals(IBond.Stereo.UP, mol.getBond(3).getStereo());
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(9, mol.getAtomCount());
+        Assertions.assertEquals(9, mol.getBondCount());
+        Assertions.assertEquals(IBond.Stereo.DOWN, mol.getBond(0).getStereo());
+        Assertions.assertEquals(IBond.Stereo.UP, mol.getBond(3).getStereo());
     }
 
     @Test
@@ -753,12 +753,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        Assert.assertEquals(1, containersList.size());
+        Assertions.assertEquals(1, containersList.size());
         IAtomContainer container = containersList.get(0);
-        Assert.assertEquals(IBond.Stereo.E_Z_BY_COORDINATES, container.getBond(0).getStereo());
-        Assert.assertEquals(IBond.Stereo.E_OR_Z, container.getBond(2).getStereo());
+        Assertions.assertEquals(IBond.Stereo.E_Z_BY_COORDINATES, container.getBond(0).getStereo());
+        Assertions.assertEquals(IBond.Stereo.E_OR_Z, container.getBond(2).getStereo());
     }
 
     /**
@@ -784,13 +784,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 rGroup = (IPseudoAtom) bond.getEnd();
             }
             if (partner.getAtomicNumber() == IElement.N) {
-                Assert.assertEquals(rGroup.getLabel(), "R4");
+                Assertions.assertEquals(rGroup.getLabel(), "R4");
             } else if (partner.getAtomicNumber() == IElement.P) {
-                Assert.assertEquals(rGroup.getLabel(), "R1");
+                Assertions.assertEquals(rGroup.getLabel(), "R1");
             } else if (partner.getAtomicNumber() == IElement.As) {
-                Assert.assertEquals(rGroup.getLabel(), "R4");
+                Assertions.assertEquals(rGroup.getLabel(), "R4");
             } else if (partner.getAtomicNumber() == IElement.Si) {
-                Assert.assertEquals(rGroup.getLabel(), "R");
+                Assertions.assertEquals(rGroup.getLabel(), "R");
             }
         }
     }
@@ -817,13 +817,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 rGroup = (IPseudoAtom) bond.getEnd();
 
             if (bond.getOrder() == IBond.Order.DOUBLE) {
-                Assert.assertEquals(rGroup.getLabel(), "R32");
+                Assertions.assertEquals(rGroup.getLabel(), "R32");
             } else if (bond.getStereo() == IBond.Stereo.DOWN) {
-                Assert.assertEquals(rGroup.getLabel(), "R2");
+                Assertions.assertEquals(rGroup.getLabel(), "R2");
             } else if (bond.getStereo() == IBond.Stereo.UP) {
-                Assert.assertEquals(rGroup.getLabel(), "R20");
+                Assertions.assertEquals(rGroup.getLabel(), "R20");
             } else
-                Assert.assertEquals(rGroup.getLabel(), "R5");
+                Assertions.assertEquals(rGroup.getLabel(), "R5");
         }
     }
 
@@ -836,12 +836,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(2, mol.getAtom(0).getValency().intValue());
-        Assert.assertEquals(3, mol.getAtom(1).getValency().intValue());
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(2, mol.getAtom(0).getValency().intValue());
+        Assertions.assertEquals(3, mol.getAtom(1).getValency().intValue());
         org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(not(0)));
         org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(4));
-        Assert.assertEquals(0, mol.getAtom(3).getValency().intValue());
+        Assertions.assertEquals(0, mol.getAtom(3).getValency().intValue());
     }
 
     @Test
@@ -858,9 +858,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, mode);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(mol.getAtomCount(), 5);
-        Assert.assertEquals(mol.getBondCount(), 4);
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(mol.getAtomCount(), 5);
+        Assertions.assertEquals(mol.getBondCount(), 4);
     }
 
     @Test
@@ -871,10 +871,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(1, ((Integer) mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
-        Assert.assertEquals(15, ((Integer) mol.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
-        Assert.assertNull(mol.getAtom(2).getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(1, ((Integer) mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
+        Assertions.assertEquals(15, ((Integer) mol.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
+        Assertions.assertNull(mol.getAtom(2).getProperty(CDKConstants.ATOM_ATOM_MAPPING));
     }
 
     /**
@@ -888,8 +888,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertNotNull(molOne.getAtom(0).getPoint2d());
-        Assert.assertNotNull(molOne.getAtom(0).getPoint3d());
+        Assertions.assertNotNull(molOne.getAtom(0).getPoint2d());
+        Assertions.assertNotNull(molOne.getAtom(0).getPoint3d());
     }
 
     @Test
@@ -901,8 +901,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer result = reader.read(testMolecule);
         reader.close();
         IAtom oxygen = result.getAtom(0);
-        Assert.assertEquals(IElement.O, (int) oxygen.getAtomicNumber());
-        Assert.assertEquals(oxygen.getProperty(CDKConstants.COMMENT), "Oxygen comment");
+        Assertions.assertEquals(IElement.O, (int) oxygen.getAtomicNumber());
+        Assertions.assertEquals(oxygen.getProperty(CDKConstants.COMMENT), "Oxygen comment");
     }
 
     @Test
@@ -924,7 +924,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         for (IAtom atom : molecule.atoms())
             if (atom.getAtomicNumber() == IElement.H && atom.getMassNumber() != null && atom.getMassNumber() == 2)
                 deuteriumCount++;
-        Assert.assertEquals(3, deuteriumCount);
+        Assertions.assertEquals(3, deuteriumCount);
     }
 
     @Test
@@ -936,8 +936,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         molecule = reader.read(molecule);
         reader.close();
         IAtom deuterium = molecule.getAtom(molecule.getAtomCount() - 1);
-        assertTrue(1 == deuterium.getAtomicNumber());
-        assertTrue(2 == deuterium.getMassNumber());
+        Assertions.assertTrue(1 == deuterium.getAtomicNumber());
+        Assertions.assertTrue(2 == deuterium.getMassNumber());
     }
 
     @Test
@@ -952,7 +952,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         for (IAtom atom : molecule.atoms())
             if (atom.getAtomicNumber() == IElement.H && atom.getMassNumber() != null && atom.getMassNumber() == 3)
                 tritiumCount++;
-        Assert.assertEquals(1, tritiumCount);
+        Assertions.assertEquals(1, tritiumCount);
     }
 
     @Test
@@ -964,8 +964,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         molecule = reader.read(molecule);
         reader.close();
         IAtom tritium = molecule.getAtom(molecule.getAtomCount() - 1);
-        assertTrue(1 == tritium.getAtomicNumber());
-        assertTrue(3 == tritium.getMassNumber());
+        Assertions.assertTrue(1 == tritium.getAtomicNumber());
+        Assertions.assertTrue(3 == tritium.getMassNumber());
     }
 
     /**
@@ -991,7 +991,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 }
             }
         }
-        Assert.assertEquals("Expecting three 'query' bond types to 'Ir'", 3, queryBondCount);
+        Assertions.assertEquals(3, queryBondCount, "Expecting three 'query' bond types to 'Ir'");
     }
 
     /**
@@ -1013,7 +1013,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 }
             }
         }
-        Assert.assertEquals("Expecting six 'query' bond types", 6, queryBondCount);
+        Assertions.assertEquals(6, queryBondCount, "Expecting six 'query' bond types");
     }
 
     /**
@@ -1028,7 +1028,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         IAtom atom = molecule.getAtom(55);
         org.hamcrest.MatcherAssert.assertThat(atom, CoreMatchers.instanceOf(IPseudoAtom.class));
-        Assert.assertEquals("R", ((IPseudoAtom)atom).getLabel());
+        Assertions.assertEquals("R", ((IPseudoAtom)atom).getLabel());
     }
 
     @Test
@@ -1044,11 +1044,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         int r1Count = 0;
         for (IAtom atom : atoms) {
             if (atom instanceof IPseudoAtom) {
-                Assert.assertEquals("R1", ((IPseudoAtom) atom).getLabel());
+                Assertions.assertEquals("R1", ((IPseudoAtom) atom).getLabel());
                 r1Count++;
             }
         }
-        Assert.assertEquals(2, r1Count);
+        Assertions.assertEquals(2, r1Count);
     }
 
     @Test
@@ -1058,10 +1058,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        assertTrue(molecule.getAtom(4) instanceof IPseudoAtom);
-        Assert.assertEquals("R", molecule.getAtom(4).getSymbol());
+        Assertions.assertTrue(molecule.getAtom(4) instanceof IPseudoAtom);
+        Assertions.assertEquals("R", molecule.getAtom(4).getSymbol());
         IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(4);
-        Assert.assertEquals("Gln", pa.getLabel());
+        Assertions.assertEquals("Gln", pa.getLabel());
     }
 
     /**
@@ -1074,7 +1074,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        Assert.assertEquals(9, molecule.getAtomCount());
+        Assertions.assertEquals(9, molecule.getAtomCount());
     }
 
     @Test
@@ -1084,11 +1084,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        Assert.assertEquals(9, molecule.getAtomCount());
-        Assert.assertEquals(IBond.Order.UNSET, molecule.getBond(0).getOrder());
-        assertTrue(molecule.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assert.assertEquals(IBond.Order.SINGLE, molecule.getBond(1).getOrder());
-        assertFalse(molecule.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertEquals(9, molecule.getAtomCount());
+        Assertions.assertEquals(Order.UNSET, molecule.getBond(0).getOrder());
+        Assertions.assertTrue(molecule.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertEquals(Order.SINGLE, molecule.getBond(1).getOrder());
+        Assertions.assertFalse(molecule.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -1100,7 +1100,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         molecule = reader.read(molecule);
         reader.close();
 
-        Assert.assertEquals(6, molecule.getAtomCount());
+        Assertions.assertEquals(6, molecule.getAtomCount());
         boolean chiralCentre = false;
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(molecule);
         for (IAtom atom : atoms) {
@@ -1110,7 +1110,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             }
         }
 
-        assertTrue(chiralCentre);
+        Assertions.assertTrue(chiralCentre);
 
     }
 
@@ -1199,7 +1199,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        assertTrue(molecule.stereoElements().iterator().hasNext());
+        Assertions.assertTrue(molecule.stereoElements().iterator().hasNext());
     }
 
     // when there are no coordinates stereo perception should not be done
@@ -1210,8 +1210,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        assertNotNull(molecule);
-        assertFalse(molecule.stereoElements().iterator().hasNext());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertFalse(molecule.stereoElements().iterator().hasNext());
     }
 
     // forcing as 3D is problematic for stereo perception as we put 2D coordinates
@@ -1231,8 +1231,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        assertNotNull(molecule);
-        assertFalse(molecule.stereoElements().iterator().hasNext());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertFalse(molecule.stereoElements().iterator().hasNext());
     }
 
     @Test
@@ -1249,8 +1249,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        assertNotNull(molecule);
-        assertTrue(molecule.stereoElements().iterator().hasNext());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertTrue(molecule.stereoElements().iterator().hasNext());
     }
 
     // turn off adding stereoelements
@@ -1268,8 +1268,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        assertNotNull(molecule);
-        assertFalse(molecule.stereoElements().iterator().hasNext());
+        Assertions.assertNotNull(molecule);
+        Assertions.assertFalse(molecule.stereoElements().iterator().hasNext());
     }
 
     @Test
@@ -1527,7 +1527,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         Iterable<IAtom> atoms = mol.atoms();
         for (IAtom atom : atoms){
-            Assert.assertNotNull(atom.getProperty(CDKConstants.ACDLABS_LABEL));
+            Assertions.assertNotNull(atom.getProperty(CDKConstants.ACDLABS_LABEL));
         }
     }
 
@@ -1591,7 +1591,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-abbrv.mol"))) {
             final IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-            assertNotNull(sgroups);
+            Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(1));
             Sgroup sgroup = sgroups.get(0);
             assertThat(sgroup.getType(), is(SgroupType.CtabAbbreviation));
@@ -1605,7 +1605,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-            assertNotNull(sgroups);
+            Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(1));
             Sgroup sgroup = sgroups.get(0);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
@@ -1634,7 +1634,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-unord-mixture.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-            assertNotNull(sgroups);
+            Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(3));
             // first sgroup
             Sgroup sgroup = sgroups.get(0);
@@ -1658,23 +1658,23 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("triphenyl-phosphate-expanded.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-            assertNotNull(sgroups);
+            Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(3));
             // first sgroup
             Sgroup sgroup = sgroups.get(0);
             assertThat(sgroup.getType(), is(SgroupType.CtabAbbreviation));
             assertThat(sgroup.getSubscript(), is("Ph"));
-            assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
+            Assertions.assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
             // second sgroup
             sgroup = sgroups.get(1);
             assertThat(sgroup.getType(), is(SgroupType.CtabAbbreviation));
             assertThat(sgroup.getSubscript(), is("Ph"));
-            assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
+            Assertions.assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
             // third sgroup
             sgroup = sgroups.get(2);
             assertThat(sgroup.getType(), is(SgroupType.CtabAbbreviation));
             assertThat(sgroup.getSubscript(), is("Ph"));
-            assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
+            Assertions.assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
         }
     }
 
@@ -1705,7 +1705,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bracketstyles.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-            assertNotNull(sgroups);
+            Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(2));
             Sgroup sgroup = sgroups.get(0);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
@@ -1721,12 +1721,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             IAtomContainer container = mdlr.read(new AtomContainer());
             Iterable<IStereoElement> selements = container.stereoElements();
             Iterator<IStereoElement> siter = selements.iterator();
-            assertTrue(siter.hasNext());
+            Assertions.assertTrue(siter.hasNext());
             IStereoElement se = siter.next();
             assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
             assertThat(((ITetrahedralChirality) se).getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
             assertThat(((ITetrahedralChirality) se).getLigands(), is(new IAtom[]{container.getAtom(1), container.getAtom(3), container.getAtom(4), container.getAtom(0)}));
-            assertFalse(siter.hasNext());
+            Assertions.assertFalse(siter.hasNext());
         }
     }
 
@@ -1736,12 +1736,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             IAtomContainer container = mdlr.read(new AtomContainer());
             Iterable<IStereoElement> selements = container.stereoElements();
             Iterator<IStereoElement> siter = selements.iterator();
-            assertTrue(siter.hasNext());
+            Assertions.assertTrue(siter.hasNext());
             IStereoElement se = siter.next();
             assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
             assertThat(((ITetrahedralChirality) se).getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
             assertThat(((ITetrahedralChirality) se).getLigands(), is(new IAtom[]{container.getAtom(0), container.getAtom(2), container.getAtom(3), container.getAtom(4)}));
-            assertFalse(siter.hasNext());
+            Assertions.assertFalse(siter.hasNext());
         }
     }
 
@@ -1779,8 +1779,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl), Mode.STRICT);
             IAtomContainer mol = reader.read(new AtomContainer());
             IAtom atom = mol.getAtom(0);
-            Assert.assertEquals(1, atom.getAtomicNumber().intValue());
-            Assert.assertEquals(2, atom.getMassNumber().intValue());
+            Assertions.assertEquals(1, atom.getAtomicNumber().intValue());
+            Assertions.assertEquals(2, atom.getMassNumber().intValue());
         }
     }
 
@@ -1831,7 +1831,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         final MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new ByteArrayInputStream(mol.getBytes(StandardCharsets.UTF_8)));
         mdlv2000Reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
         final org.openscience.cdk.silent.AtomContainer atomContainer = mdlv2000Reader.read(new org.openscience.cdk.silent.AtomContainer());
-        Assert.assertEquals(17, atomContainer.getAtomCount());
+        Assertions.assertEquals(17, atomContainer.getAtomCount());
     }
 
     @Test public void test() throws Exception {
@@ -1961,7 +1961,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                     break;
                 }
             }
-            assertNotNull(dataSgroup);
+            Assertions.assertNotNull(dataSgroup);
             assertThat(dataSgroup.getValue(SgroupKey.DataFieldName),
                        CoreMatchers.is("WEIGHT_PERCENT"));
             // note it looks like MDL/Accelys/BIOVIA simply omit units/format
@@ -2003,7 +2003,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
             Iterable<IStereoElement> iter = mol.stereoElements();
-            assertTrue(iter.iterator().hasNext());
+            Assertions.assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?,?> se : iter) {
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
@@ -2035,7 +2035,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
             Iterable<IStereoElement> iter = mol.stereoElements();
-            assertTrue(iter.iterator().hasNext());
+            Assertions.assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?,?> se : iter) {
                 // Grp Abs is actually just 0
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));

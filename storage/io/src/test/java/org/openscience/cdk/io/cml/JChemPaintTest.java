@@ -25,6 +25,7 @@ package org.openscience.cdk.io.cml;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -61,22 +62,22 @@ public class JChemPaintTest extends CDKTestCase {
         reader.close();
 
         // test the resulting ChemFile content
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         //logger.debug("NO sequences: " + chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         //logger.debug("NO models: " + seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
-        Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
+        Assertions.assertNotNull(model);
+        Assertions.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
 
         // test the molecule
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(4, mol.getAtomCount());
-        Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(4, mol.getAtomCount());
+        Assertions.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 
     /**
@@ -92,21 +93,21 @@ public class JChemPaintTest extends CDKTestCase {
         reader.close();
 
         // test the resulting ChemFile content
-        Assert.assertNotNull(chemFile);
-        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
-        Assert.assertNotNull(seq);
-        Assert.assertEquals(1, seq.getChemModelCount());
+        Assertions.assertNotNull(seq);
+        Assertions.assertEquals(1, seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
-        Assert.assertNotNull(model);
+        Assertions.assertNotNull(model);
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
-        Assert.assertNotNull(moleculeSet);
-        Assert.assertEquals(1, moleculeSet.getAtomContainerCount());
+        Assertions.assertNotNull(moleculeSet);
+        Assertions.assertEquals(1, moleculeSet.getAtomContainerCount());
 
         // test the molecule
         IAtomContainer mol = moleculeSet.getAtomContainer(0);
-        Assert.assertNotNull(mol);
-        Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(2, mol.getAtomCount());
+        Assertions.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 }

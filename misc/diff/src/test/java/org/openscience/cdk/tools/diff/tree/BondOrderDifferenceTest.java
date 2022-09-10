@@ -19,6 +19,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -30,35 +31,35 @@ public class BondOrderDifferenceTest {
     @Test
     public void testDiff() {
         IDifference result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.DOUBLE);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
     public void testSame() {
         IDifference result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.SINGLE);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
     public void testTwoNull() {
         IDifference result = BondOrderDifference.construct("Foo", null, null);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
     public void testOneNull() {
         IDifference result = BondOrderDifference.construct("Foo", null, IBond.Order.SINGLE);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
 
         result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, null);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
     public void testToString() {
         IDifference result = BondOrderDifference.construct("Foo", null, IBond.Order.SINGLE);
         String diffString = result.toString();
-        Assert.assertNotNull(diffString);
+        Assertions.assertNotNull(diffString);
         StringDifferenceTest.assertOneLiner(diffString);
     }
 }

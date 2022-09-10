@@ -20,6 +20,7 @@
 package org.openscience.cdk.config.atomtypes;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.test.CDKTestCase;
@@ -37,23 +38,23 @@ public class OWLAtomTypeHandlerTest extends CDKTestCase {
     @Test
     public void testAtomTypeHandler_IChemObjectBuilder() {
         OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
-        Assert.assertNotNull(handler);
+        Assertions.assertNotNull(handler);
     }
 
     @Test
     public void testGetAtomTypes() {
         OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read
-        Assert.assertNotNull(handler);
-        Assert.assertNull(handler.getAtomTypes());
+        Assertions.assertNotNull(handler);
+        Assertions.assertNull(handler.getAtomTypes());
     }
 
     @Test
     public void testStartDocument() {
         OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
-        Assert.assertNotNull(handler);
-        Assert.assertNull(handler.getAtomTypes());
+        Assertions.assertNotNull(handler);
+        Assertions.assertNull(handler.getAtomTypes());
     }
 
 }

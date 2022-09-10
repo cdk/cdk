@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -68,7 +69,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
     @Test
     public void testIPAtomicLearningDescriptor() throws Exception {
         IAtomicDescriptor descriptor = new IPAtomicLearningDescriptor();
-        Assert.assertNotNull(descriptor);
+        Assertions.assertNotNull(descriptor);
     }
 
     /**
@@ -99,7 +100,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 0.0;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.0001);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.0001);
     }
 
     /**
@@ -126,7 +127,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.8;
-        Assert.assertEquals(resultAccordingNIST, result, 0.4);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.4);
     }
 
     /**
@@ -146,7 +147,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(4), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.57; //value for CC(C)Cl
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.35);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.35);
     }
 
     /**
@@ -165,7 +166,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.05; //value for CCCCl aprox.
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.5);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.5);
     }
 
     /**
@@ -185,7 +186,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.3);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.3);
     }
 
     /**
@@ -204,7 +205,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.29;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.8);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.8);
     }
 
     /**
@@ -222,7 +223,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.27;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.4);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.4);
     }
 
     /**
@@ -242,7 +243,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.48;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.5);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.5);
     }
 
     /**
@@ -263,7 +264,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 7.77;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.3);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.3);
     }
 
     /**
@@ -285,7 +286,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.24;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.5);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.5);
     }
 
     /**
@@ -307,7 +308,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.9;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.35);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.35);
     }
 
     /**
@@ -329,7 +330,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.5;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.38);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.38);
     }
 
     /**
@@ -349,7 +350,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.3;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.4);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.4);
     }
 
     /**
@@ -369,7 +370,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.01;
 
-        Assert.assertEquals(resultAccordingNIST, result, 0.3);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.3);
     }
 
     /**
@@ -387,9 +388,9 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
         lpcheck.saturate(mol);
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
-        Assert.assertFalse(Double.isNaN(result));
+        Assertions.assertFalse(Double.isNaN(result));
         result = ((DoubleResult) descriptor.calculate(mol.getAtom(7), mol).getValue()).doubleValue();
-        Assert.assertFalse(Double.isNaN(result));
+        Assertions.assertFalse(Double.isNaN(result));
     }
 
     //    /**
@@ -468,7 +469,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.03;
-        Assert.assertEquals(resultAccordingNIST, result, 0.8);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.8);
 
         //        IReactionSet reactionSet = descriptor.getReactionSet();
         //		assertEquals(5, reactionSet.getReactionCount());
@@ -493,7 +494,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.64;
-        Assert.assertEquals(resultAccordingNIST, result, 0.21);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.21);
 
         //        IReactionSet reactionSet = descriptor.getReactionSet();
         //		assertEquals(3, reactionSet.getReactionCount());
@@ -518,7 +519,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(5), mol).getValue()).doubleValue();
         double resultAccordingNIST = 7.77;
-        Assert.assertEquals(resultAccordingNIST, result, 0.7);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.7);
 
         //        IReactionSet reactionSet = descriptor.getReactionSet();
         //		assertEquals(3, reactionSet.getReactionCount());
@@ -585,7 +586,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
         double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).doubleValue();
         double resultAccordingNIST = 9.20;
-        Assert.assertEquals(resultAccordingNIST, result, 0.2);
+        Assertions.assertEquals(resultAccordingNIST, result, 0.2);
     }
 
 }

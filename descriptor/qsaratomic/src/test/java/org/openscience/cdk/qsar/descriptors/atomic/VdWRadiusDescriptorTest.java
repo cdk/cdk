@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -47,6 +48,6 @@ public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
         double retval = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
 
-        Assert.assertEquals(testResult[0], retval, 0.01);
+        Assertions.assertEquals(testResult[0], retval, 0.01);
     }
 }

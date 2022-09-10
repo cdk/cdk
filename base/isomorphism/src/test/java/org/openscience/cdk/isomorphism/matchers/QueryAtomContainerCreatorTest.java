@@ -19,6 +19,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -77,7 +78,7 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
         query1.addBond(0, 4, IBond.Order.SINGLE);
         query1.addBond(1, 5, IBond.Order.SINGLE);
         QueryAtomContainer queryContainer1 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isSubgraph(molecule, queryContainer1));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isSubgraph(molecule, queryContainer1));
 
         // 2,3-dimethyl-2-butene does not match
         IAtomContainer query2 = builder.newInstance(IAtomContainer.class);
@@ -93,7 +94,7 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
         query2.addBond(0, 4, IBond.Order.SINGLE);
         query2.addBond(1, 5, IBond.Order.SINGLE);
         QueryAtomContainer queryContainer2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query2);
-        Assert.assertFalse(new UniversalIsomorphismTester().isSubgraph(molecule, queryContainer2));
+        Assertions.assertFalse(new UniversalIsomorphismTester().isSubgraph(molecule, queryContainer2));
     }
 
 }

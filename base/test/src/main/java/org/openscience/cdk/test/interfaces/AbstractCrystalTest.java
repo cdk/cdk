@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import javax.vecmath.Vector3d;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,8 +44,8 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         acetone.addBond(b3);
 
         crystal.add(acetone);
-        Assert.assertEquals(4, crystal.getAtomCount());
-        Assert.assertEquals(3, crystal.getBondCount());
+        Assertions.assertEquals(4, crystal.getAtomCount());
+        Assertions.assertEquals(3, crystal.getBondCount());
     }
 
     @Test
@@ -53,7 +54,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         ICrystal crystal = (ICrystal) newChemObject();
         IAtom c1 = crystal.getBuilder().newInstance(IAtom.class, "C");
         crystal.addAtom(c1);
-        Assert.assertEquals(1, crystal.getAtomCount());
+        Assertions.assertEquals(1, crystal.getAtomCount());
     }
 
     @Test
@@ -62,9 +63,9 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
-        Assert.assertEquals(1.0, a.x, 0.001);
-        Assert.assertEquals(2.0, a.y, 0.001);
-        Assert.assertEquals(3.0, a.z, 0.001);
+        Assertions.assertEquals(1.0, a.x, 0.001);
+        Assertions.assertEquals(2.0, a.y, 0.001);
+        Assertions.assertEquals(3.0, a.z, 0.001);
     }
 
     @Test
@@ -73,7 +74,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @Test
@@ -82,7 +83,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
         crystal.setB(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getB();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @Test
@@ -91,7 +92,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
         crystal.setC(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getC();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @Test
@@ -100,9 +101,9 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
         crystal.setB(new Vector3d(1.0, 2.0, 3.0));
         Vector3d b = crystal.getB();
-        Assert.assertEquals(1.0, b.x, 0.001);
-        Assert.assertEquals(2.0, b.y, 0.001);
-        Assert.assertEquals(3.0, b.z, 0.001);
+        Assertions.assertEquals(1.0, b.x, 0.001);
+        Assertions.assertEquals(2.0, b.y, 0.001);
+        Assertions.assertEquals(3.0, b.z, 0.001);
     }
 
     @Test
@@ -111,9 +112,9 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
         crystal.setC(new Vector3d(1.0, 2.0, 3.0));
         Vector3d c = crystal.getC();
-        Assert.assertEquals(1.0, c.x, 0.001);
-        Assert.assertEquals(2.0, c.y, 0.001);
-        Assert.assertEquals(3.0, c.z, 0.001);
+        Assertions.assertEquals(1.0, c.x, 0.001);
+        Assertions.assertEquals(2.0, c.y, 0.001);
+        Assertions.assertEquals(3.0, c.z, 0.001);
     }
 
     @Test
@@ -121,7 +122,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         ICrystal crystal = (ICrystal) newChemObject();
         String spacegroup = "P 2_1 2_1 2_1";
         crystal.setSpaceGroup(spacegroup);
-        Assert.assertEquals(spacegroup, crystal.getSpaceGroup());
+        Assertions.assertEquals(spacegroup, crystal.getSpaceGroup());
     }
 
     @Test
@@ -129,8 +130,8 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         ICrystal crystal = (ICrystal) newChemObject();
         String spacegroup = "P 2_1 2_1 2_1";
         crystal.setSpaceGroup(spacegroup);
-        Assert.assertNotNull(crystal.getSpaceGroup());
-        Assert.assertEquals(spacegroup, crystal.getSpaceGroup());
+        Assertions.assertNotNull(crystal.getSpaceGroup());
+        Assertions.assertEquals(spacegroup, crystal.getSpaceGroup());
     }
 
     @Test
@@ -138,7 +139,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         ICrystal crystal = (ICrystal) newChemObject();
         int z = 2;
         crystal.setZ(z);
-        Assert.assertEquals(z, crystal.getZ().intValue());
+        Assertions.assertEquals(z, crystal.getZ().intValue());
     }
 
     @Test
@@ -155,8 +156,8 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         ICrystal crystal = (ICrystal) newChemObject();
         String description = crystal.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            Assertions.assertTrue(description.charAt(i) != '\n');
+            Assertions.assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -165,7 +166,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
     public void testClone() throws Exception {
         ICrystal crystal = (ICrystal) newChemObject();
         Object clone = crystal.clone();
-        Assert.assertTrue(clone instanceof ICrystal);
+        Assertions.assertTrue(clone instanceof ICrystal);
     }
 
     @Test
@@ -177,7 +178,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
         // test cloning of axes
         crystal1.getA().x = 5.0;
-        Assert.assertEquals(1.0, crystal2.getA().x, 0.001);
+        Assertions.assertEquals(1.0, crystal2.getA().x, 0.001);
     }
 
     @Test
@@ -186,7 +187,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
 }

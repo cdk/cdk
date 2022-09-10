@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -56,7 +57,7 @@ public final class RingSearchTest_Bicyclo {
 
         RingSearch ringSearch = new RingSearch(bicyclo);
         for (int i = 0; i < n; i++)
-            assertTrue("all atoms should be cyclic", ringSearch.cyclic(i));
+            Assertions.assertTrue(ringSearch.cyclic(i), "all atoms should be cyclic");
 
     }
 
@@ -87,7 +88,7 @@ public final class RingSearchTest_Bicyclo {
         int n = bicyclo.getAtomCount();
 
         List<IAtomContainer> fragments = new RingSearch(bicyclo).isolatedRingFragments();
-        assertTrue(fragments.isEmpty());
+        Assertions.assertTrue(fragments.isEmpty());
 
     }
 

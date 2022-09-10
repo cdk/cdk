@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Isotopes;
@@ -68,7 +69,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     @Test
     public void testMolecularFormulaChecker_List() {
 
-        Assert.assertNotNull(new MolecularFormulaChecker(new ArrayList<>()));
+        Assertions.assertNotNull(new MolecularFormulaChecker(new ArrayList<>()));
     }
 
     /**
@@ -81,7 +82,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(new ArrayList<>());
 
-        Assert.assertNotNull(MFChecker.getRules());
+        Assertions.assertNotNull(MFChecker.getRules());
     }
 
     /**
@@ -101,7 +102,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
-        Assert.assertEquals(0.0, MFChecker.isValidSum(formula), 0.001);
+        Assertions.assertEquals(0.0, MFChecker.isValidSum(formula), 0.001);
 
     }
 
@@ -124,9 +125,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(0.0d,
-                formulaWith.getProperty((new MMElementRule()).getClass()),
-                            0.01);
+        Assertions.assertEquals(0.0d, formulaWith.getProperty((new MMElementRule()).getClass()), 0.01);
 
     }
 
@@ -149,7 +148,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
-        Assert.assertEquals(0.0, MFChecker.isValidSum(formula), 0.001);
+        Assertions.assertEquals(0.0, MFChecker.isValidSum(formula), 0.001);
 
     }
 
@@ -174,8 +173,8 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(0.0, formulaWith.getProperty((new MMElementRule()).getClass()), 0.01);
-        Assert.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()), 0.01);
+        Assertions.assertEquals(0.0, formulaWith.getProperty((new MMElementRule()).getClass()), 0.01);
+        Assertions.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()), 0.01);
 
     }
 
@@ -198,7 +197,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
-        Assert.assertEquals(1.0, MFChecker.isValidSum(formula), 0.001);
+        Assertions.assertEquals(1.0, MFChecker.isValidSum(formula), 0.001);
 
     }
 
@@ -223,8 +222,8 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(1.0, formulaWith.getProperty((new MMElementRule()).getClass()), 0.01);
-        Assert.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()), 0.01);
+        Assertions.assertEquals(1.0, formulaWith.getProperty((new MMElementRule()).getClass()), 0.01);
+        Assertions.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()), 0.01);
 
     }
 }

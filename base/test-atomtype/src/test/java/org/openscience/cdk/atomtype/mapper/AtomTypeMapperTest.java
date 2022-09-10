@@ -19,6 +19,7 @@
 package org.openscience.cdk.atomtype.mapper;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -33,7 +34,7 @@ public class AtomTypeMapperTest extends CDKTestCase {
     @Test
     public void testGetInstance_String() {
         AtomTypeMapper mapper = AtomTypeMapper.getInstance("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl");
-        Assert.assertNotNull(mapper);
+        Assertions.assertNotNull(mapper);
     }
 
     @Test
@@ -41,23 +42,23 @@ public class AtomTypeMapperTest extends CDKTestCase {
         AtomTypeMapper mapper = AtomTypeMapper.getInstance("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl", this
                 .getClass().getClassLoader()
                 .getResourceAsStream("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"));
-        Assert.assertNotNull(mapper);
+        Assertions.assertNotNull(mapper);
     }
 
     @Test
     public void testGetMapping() {
         final String mapping = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
         AtomTypeMapper mapper = AtomTypeMapper.getInstance(mapping);
-        Assert.assertNotNull(mapper);
-        Assert.assertEquals(mapping, mapper.getMapping());
+        Assertions.assertNotNull(mapper);
+        Assertions.assertEquals(mapping, mapper.getMapping());
     }
 
     @Test
     public void testMapAtomType_String() {
         final String mapping = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
         AtomTypeMapper mapper = AtomTypeMapper.getInstance(mapping);
-        Assert.assertNotNull(mapper);
-        Assert.assertEquals("C.3", mapper.mapAtomType("C.sp3"));
+        Assertions.assertNotNull(mapper);
+        Assertions.assertEquals("C.3", mapper.mapAtomType("C.sp3"));
     }
 
 }

@@ -20,6 +20,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,7 +39,7 @@ public class CDKConstantsTest extends CDKTestCase {
 
     @Test
     public void testCDKConstants() {
-        Assert.assertFalse(CDKConstants.ISAROMATIC == -1);
+        Assertions.assertFalse(CDKConstants.ISAROMATIC == -1);
     }
 
     @Test
@@ -77,11 +78,11 @@ public class CDKConstantsTest extends CDKTestCase {
         }
 
         // Now we have created a molecule, so let's test it...
-        Assert.assertTrue(atom1.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assert.assertTrue(bond1.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assert.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assert.assertTrue(mol.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(atom1.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(bond1.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
 
     }
 

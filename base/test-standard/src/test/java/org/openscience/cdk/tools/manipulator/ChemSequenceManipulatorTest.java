@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -98,19 +99,19 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
     @Test
     public void testGetAtomCount_IChemSequence() {
         int count = ChemSequenceManipulator.getAtomCount(chemSequence);
-        Assert.assertEquals(6, count);
+        Assertions.assertEquals(6, count);
     }
 
     @Test
     public void testGetBondCount_IChemSequence() {
         int count = ChemSequenceManipulator.getBondCount(chemSequence);
-        Assert.assertEquals(2, count);
+        Assertions.assertEquals(2, count);
     }
 
     @Test
     public void testGetAllAtomContainers_IChemSequence() {
         List<IAtomContainer> list = ChemSequenceManipulator.getAllAtomContainers(chemSequence);
-        Assert.assertEquals(4, list.size());
+        Assertions.assertEquals(4, list.size());
     }
 
     @Test
@@ -135,25 +136,25 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
             else if (o instanceof IChemModel)
                 ++chemModelCount;
             else
-                Assert.fail("Unexpected Object of type " + o.getClass());
+                Assertions.fail("Unexpected Object of type " + o.getClass());
         }
         //Assert.assertEquals(3, atomCount);
         //Assert.assertEquals(1, bondCount);
-        Assert.assertEquals(2, molCount);
-        Assert.assertEquals(1, molSetCount);
-        Assert.assertEquals(1, reactionCount);
-        Assert.assertEquals(1, reactionSetCount);
-        Assert.assertEquals(2, chemModelCount);
+        Assertions.assertEquals(2, molCount);
+        Assertions.assertEquals(1, molSetCount);
+        Assertions.assertEquals(1, reactionCount);
+        Assertions.assertEquals(1, reactionSetCount);
+        Assertions.assertEquals(2, chemModelCount);
     }
 
     @Test
     public void testGetAllIDs_IChemSequence() {
-        Assert.assertEquals(0, ChemSequenceManipulator.getAllIDs(chemSequence).size());
+        Assertions.assertEquals(0, ChemSequenceManipulator.getAllIDs(chemSequence).size());
         IDCreator.createIDs(chemSequence);
         List<String> allIDs = ChemSequenceManipulator.getAllIDs(chemSequence);
-        Assert.assertEquals(18, ChemSequenceManipulator.getAllIDs(chemSequence).size());
+        Assertions.assertEquals(18, ChemSequenceManipulator.getAllIDs(chemSequence).size());
         Set<String> uniq = new HashSet<>(allIDs);
-        Assert.assertEquals(12, uniq.size());
+        Assertions.assertEquals(12, uniq.size());
     }
 
 }

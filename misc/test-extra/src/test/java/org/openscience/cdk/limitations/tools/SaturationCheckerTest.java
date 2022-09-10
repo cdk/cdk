@@ -19,6 +19,7 @@
 package org.openscience.cdk.limitations.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -128,8 +129,8 @@ public class SaturationCheckerTest extends CDKTestCase {
         Bond b16 = new Bond(a14, a16, IBond.Order.SINGLE);
         mol.addBond(b16);
         satcheck.saturate(mol);
-        Assert.assertEquals(IBond.Order.DOUBLE, b1.getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
+        Assertions.assertEquals(IBond.Order.DOUBLE, b1.getOrder());
+        Assertions.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
     }
 
     /**
@@ -235,8 +236,8 @@ public class SaturationCheckerTest extends CDKTestCase {
         Bond b24 = new Bond(a22, a24, IBond.Order.SINGLE);
         mol.addBond(b24);
         satcheck.saturate(mol);
-        Assert.assertEquals(IBond.Order.DOUBLE, b6.getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, b7.getOrder());
+        Assertions.assertEquals(IBond.Order.DOUBLE, b6.getOrder());
+        Assertions.assertEquals(IBond.Order.DOUBLE, b7.getOrder());
     }
 
     /**
@@ -282,11 +283,11 @@ public class SaturationCheckerTest extends CDKTestCase {
         Bond b9 = new Bond(a5, a9, IBond.Order.SINGLE);
         mol.addBond(b9);
         satcheck.saturate(mol);
-        Assert.assertEquals(IBond.Order.SINGLE, b1.getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, b6.getOrder());
-        Assert.assertEquals(IBond.Order.SINGLE, b8.getOrder());
-        Assert.assertEquals(IBond.Order.DOUBLE, b4.getOrder());
+        Assertions.assertEquals(IBond.Order.SINGLE, b1.getOrder());
+        Assertions.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
+        Assertions.assertEquals(IBond.Order.SINGLE, b6.getOrder());
+        Assertions.assertEquals(IBond.Order.SINGLE, b8.getOrder());
+        Assertions.assertEquals(IBond.Order.DOUBLE, b4.getOrder());
     }
 
     /**
@@ -299,7 +300,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         Atom h = new Atom("H");
         h.setFormalCharge(+1);
         m.addAtom(h);
-        Assert.assertTrue(satcheck.isSaturated(h, m));
+        Assertions.assertTrue(satcheck.isSaturated(h, m));
     }
 
     @Test
@@ -311,8 +312,8 @@ public class SaturationCheckerTest extends CDKTestCase {
         for (int j = 0; j < ring.getBondCount(); j++) {
             ring.getBond(j).setFlag(CDKConstants.ISAROMATIC, true);
         }
-        Assert.assertEquals(5, ring.getBondCount());
-        Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));
+        Assertions.assertEquals(5, ring.getBondCount());
+        Assertions.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));
     }
 
 }

@@ -25,6 +25,7 @@ import java.io.StringWriter;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
@@ -73,7 +74,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
     @Test
     public void testCanonicalLabeler() {
         // assume setup worked
-        Assert.assertNotNull(labeler);
+        Assertions.assertNotNull(labeler);
     }
 
     @Test
@@ -82,14 +83,14 @@ public class CanonicalLabelerTest extends CDKTestCase {
 
         labeler.canonLabel(molecule);
         for (IAtom atom : molecule.atoms()) {
-            Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
+            Assertions.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
         }
 
-        Assert.assertEquals(3, ((Long) molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-        Assert.assertEquals(2, ((Long) molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-        Assert.assertEquals(1, ((Long) molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-        Assert.assertEquals(4, ((Long) molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-        Assert.assertEquals(5, ((Long) molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(3, ((Long) molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(2, ((Long) molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(1, ((Long) molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(4, ((Long) molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(5, ((Long) molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
     }
 
     /**
@@ -104,13 +105,13 @@ public class CanonicalLabelerTest extends CDKTestCase {
         IAtomContainer molecule = parser.parseSmiles("O=C(C)CBr");
         labeler.canonLabel(molecule);
         for (IAtom atom : molecule.atoms()) {
-            Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
+            Assertions.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
         }
-        Assert.assertEquals(1, ((Long) molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-        Assert.assertEquals(2, ((Long) molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-        Assert.assertEquals(3, ((Long) molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-        Assert.assertEquals(4, ((Long) molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-        Assert.assertEquals(5, ((Long) molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(1, ((Long) molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(2, ((Long) molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(3, ((Long) molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(4, ((Long) molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        Assertions.assertEquals(5, ((Long) molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
     }
 
     /**
@@ -138,7 +139,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
         while (atoms1.hasNext()) {
             IAtom atom1 = atoms1.next();
             IAtom atom2 = atoms2.next();
-            Assert.assertEquals(atom1.<Long>getProperty(InvPair.CANONICAL_LABEL), atom2.<Long>getProperty(InvPair.CANONICAL_LABEL));
+            Assertions.assertEquals(atom1.<Long>getProperty(InvPair.CANONICAL_LABEL), atom2.<Long>getProperty(InvPair.CANONICAL_LABEL));
         }
     }
 
@@ -176,9 +177,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
         ac2.addAtom(ac2.getBuilder().newInstance(IAtom.class, "C"));
         ac2.addBond(0, 1, IBond.Order.SINGLE);
         canLabler.canonLabel(ac2);
-        Assert.assertSame(ac.getAtom(0).getProperty(InvPair.CANONICAL_LABEL),
-                ac2.getAtom(1).getProperty(InvPair.CANONICAL_LABEL));
-        Assert.assertSame(ac.getAtom(1).getProperty(InvPair.CANONICAL_LABEL),
-                ac2.getAtom(0).getProperty(InvPair.CANONICAL_LABEL));
+        Assertions.assertSame(ac.getAtom(0).getProperty(InvPair.CANONICAL_LABEL), ac2.getAtom(1).getProperty(InvPair.CANONICAL_LABEL));
+        Assertions.assertSame(ac.getAtom(1).getProperty(InvPair.CANONICAL_LABEL), ac2.getAtom(0).getProperty(InvPair.CANONICAL_LABEL));
     }
 }

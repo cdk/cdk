@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -48,7 +49,7 @@ public class FMFDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
-        Assert.assertEquals(0.353, result.doubleValue(), 0.01);
+        Assertions.assertEquals(0.353, result.doubleValue(), 0.01);
     }
 
     @Test
@@ -58,7 +59,7 @@ public class FMFDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
-        Assert.assertEquals(0.65, result.doubleValue(), 0.01);
+        Assertions.assertEquals(0.65, result.doubleValue(), 0.01);
     }
 
     @Test
@@ -68,7 +69,7 @@ public class FMFDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
-        Assert.assertEquals(0.55, result.doubleValue(), 0.01);
+        Assertions.assertEquals(0.55, result.doubleValue(), 0.01);
     }
 
     @Test
@@ -78,7 +79,7 @@ public class FMFDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
-        Assert.assertEquals(0.862, result.doubleValue(), 0.001);
+        Assertions.assertEquals(0.862, result.doubleValue(), 0.001);
     }
 
 }

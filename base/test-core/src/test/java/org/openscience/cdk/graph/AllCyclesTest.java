@@ -39,7 +39,7 @@ public class AllCyclesTest {
     @Test
     public void completed() {
         AllCycles ac = new AllCycles(completeGraphOfSize(4), 4, 100);
-        assertTrue(ac.completed());
+        Assertions.assertTrue(ac.completed());
         assertThat(ac.size(), is(7));
     }
 
@@ -48,7 +48,7 @@ public class AllCyclesTest {
         Assertions.assertTimeout(Duration.ofMillis(50), () -> {
             // k12 - ouch
             AllCycles ac = new AllCycles(completeGraphOfSize(12), 12, 100);
-            assertFalse(ac.completed());
+            Assertions.assertFalse(ac.completed());
         });
     }
 

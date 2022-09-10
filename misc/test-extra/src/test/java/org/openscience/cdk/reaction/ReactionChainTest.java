@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -50,7 +51,7 @@ public class ReactionChainTest extends CDKTestCase {
     @Test
     public void testReactionChain() {
         IReactionSet chain = new ReactionChain();
-        Assert.assertNotNull(chain);
+        Assertions.assertNotNull(chain);
     }
 
     /**
@@ -71,7 +72,7 @@ public class ReactionChainTest extends CDKTestCase {
         chain.addReaction(reaction2, 1);
         chain.addReaction(reaction3, 2);
 
-        Assert.assertNotNull(chain);
+        Assertions.assertNotNull(chain);
 
     }
 
@@ -94,7 +95,7 @@ public class ReactionChainTest extends CDKTestCase {
         chain.addReaction(reaction2, 1);
         chain.addReaction(reaction3, 2);
 
-        Assert.assertEquals(1, chain.getReactionStep(reaction2));
+        Assertions.assertEquals(1, chain.getReactionStep(reaction2));
     }
 
     /**
@@ -116,7 +117,7 @@ public class ReactionChainTest extends CDKTestCase {
         chain.addReaction(reaction2, 1);
         chain.addReaction(reaction3, 2);
 
-        Assert.assertEquals(reaction2, chain.getReaction(1));
+        Assertions.assertEquals(reaction2, chain.getReaction(1));
 
     }
 }

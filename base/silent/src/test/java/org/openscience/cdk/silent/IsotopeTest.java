@@ -21,6 +21,7 @@
 package org.openscience.cdk.silent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractIsotopeTest;
@@ -50,40 +51,40 @@ public class IsotopeTest extends AbstractIsotopeTest {
     @Test
     public void testIsotope_String() {
         IIsotope i = new Isotope("C");
-        Assert.assertEquals("C", i.getSymbol());
+        Assertions.assertEquals("C", i.getSymbol());
     }
 
     @Test
     public void testIsotope_IElement() {
         IElement element = newChemObject().getBuilder().newInstance(IElement.class, "C");
         IIsotope i = new Isotope(element);
-        Assert.assertEquals("C", i.getSymbol());
+        Assertions.assertEquals("C", i.getSymbol());
     }
 
     @Test
     public void testIsotope_int_String_int_double_double() {
         IIsotope i = new Isotope(6, "C", 12, 12.001, 80.0);
-        Assert.assertEquals(12, i.getMassNumber().intValue());
-        Assert.assertEquals("C", i.getSymbol());
-        Assert.assertEquals(6, i.getAtomicNumber().intValue());
-        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
-        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+        Assertions.assertEquals(12, i.getMassNumber().intValue());
+        Assertions.assertEquals("C", i.getSymbol());
+        Assertions.assertEquals(6, i.getAtomicNumber().intValue());
+        Assertions.assertEquals(12.001, i.getExactMass(), 0.001);
+        Assertions.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
 
     @Test
     public void testIsotope_String_int() {
         IIsotope i = new Isotope("C", 12);
-        Assert.assertEquals(12, i.getMassNumber().intValue());
-        Assert.assertEquals("C", i.getSymbol());
+        Assertions.assertEquals(12, i.getMassNumber().intValue());
+        Assertions.assertEquals("C", i.getSymbol());
     }
 
     @Test
     public void testIsotope_int_String_double_double() {
         IIsotope i = new Isotope(6, "C", 12.001, 80.0);
-        Assert.assertEquals("C", i.getSymbol());
-        Assert.assertEquals(6, i.getAtomicNumber().intValue());
-        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
-        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+        Assertions.assertEquals("C", i.getSymbol());
+        Assertions.assertEquals(6, i.getAtomicNumber().intValue());
+        Assertions.assertEquals(12.001, i.getExactMass(), 0.001);
+        Assertions.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
 
     @Test
@@ -92,7 +93,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
         iso.setMassNumber(12);
         Isotope iso2 = new Isotope("C");
         iso2.setMassNumber((int) 12.0);
-        Assert.assertTrue(iso.compare(iso2));
+        Assertions.assertTrue(iso.compare(iso2));
     }
 
     @Test
@@ -101,7 +102,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
         iso.setMassNumber(12);
         Isotope iso2 = new Isotope("C");
         iso2.setMassNumber(12);
-        Assert.assertTrue(iso.compare(iso2));
+        Assertions.assertTrue(iso.compare(iso2));
     }
 
     @Test
@@ -110,7 +111,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
         iso.setMassNumber(12);
         Isotope iso2 = new Isotope("C");
         iso2.setMassNumber(12);
-        Assert.assertTrue(iso.compare(iso2));
+        Assertions.assertTrue(iso.compare(iso2));
     }
 
     @Test
@@ -119,7 +120,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
         iso.setExactMass(12.000000);
         Isotope iso2 = new Isotope("C");
         iso2.setExactMass(12.0);
-        Assert.assertTrue(iso.compare(iso2));
+        Assertions.assertTrue(iso.compare(iso2));
     }
 
     @Test
@@ -128,7 +129,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
         iso.setNaturalAbundance(12.000000);
         Isotope iso2 = new Isotope("C");
         iso2.setNaturalAbundance(12.0);
-        Assert.assertTrue(iso.compare(iso2));
+        Assertions.assertTrue(iso.compare(iso2));
     }
 
     // Overwrite default methods: no notifications are expected!

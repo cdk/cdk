@@ -21,6 +21,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -50,8 +51,8 @@ public class ChemModelTest extends AbstractChemModelTest {
     @Test
     public void testChemModel() {
         IChemModel chemModel = new ChemModel();
-        Assert.assertNotNull(chemModel);
-        Assert.assertTrue(chemModel.isEmpty());
+        Assertions.assertNotNull(chemModel);
+        Assertions.assertTrue(chemModel.isEmpty());
 
         IAtom atom = new Atom("N");
         IAtomContainer mol = new AtomContainer();
@@ -59,11 +60,11 @@ public class ChemModelTest extends AbstractChemModelTest {
         mol.addAtom(atom);
         mset.addAtomContainer(mol);
         chemModel.setMoleculeSet(mset);
-        Assert.assertFalse(chemModel.isEmpty());
+        Assertions.assertFalse(chemModel.isEmpty());
         mol.removeAtomOnly(atom);
-        Assert.assertFalse(chemModel.isEmpty());
+        Assertions.assertFalse(chemModel.isEmpty());
         chemModel.setMoleculeSet(null);
-        Assert.assertTrue(chemModel.isEmpty());
+        Assertions.assertTrue(chemModel.isEmpty());
 
         IChemModel model1 = new ChemModel();
         mol.addAtom(atom);
@@ -72,32 +73,32 @@ public class ChemModelTest extends AbstractChemModelTest {
         IReactionSet rset = new ReactionSet();
         rset.addReaction(react);
         model1.setReactionSet(rset);
-        Assert.assertFalse(model1.isEmpty());
+        Assertions.assertFalse(model1.isEmpty());
         mol.removeAtomOnly(atom);
-        Assert.assertFalse(model1.isEmpty());
+        Assertions.assertFalse(model1.isEmpty());
         model1.setReactionSet(null);
-        Assert.assertTrue(model1.isEmpty());
+        Assertions.assertTrue(model1.isEmpty());
 
         IChemModel model2 = new ChemModel();
         mol.addAtom(atom);
         IRingSet ringset = new RingSet();
         ringset.add(mset);
         model2.setRingSet(ringset);
-        Assert.assertFalse(model2.isEmpty());
+        Assertions.assertFalse(model2.isEmpty());
         mol.removeAtomOnly(atom);
-        Assert.assertFalse(model2.isEmpty());
+        Assertions.assertFalse(model2.isEmpty());
         model2.setRingSet(null);
-        Assert.assertTrue(model2.isEmpty());
+        Assertions.assertTrue(model2.isEmpty());
 
         IChemModel model3 = new ChemModel();
         mol.addAtom(atom);
         ICrystal cry = new Crystal(mol);
         model3.setCrystal(cry);
-        Assert.assertFalse(model3.isEmpty());
+        Assertions.assertFalse(model3.isEmpty());
         mol.removeAtomOnly(atom);
-        Assert.assertFalse(model3.isEmpty());
+        Assertions.assertFalse(model3.isEmpty());
         model3.setCrystal(null);
-        Assert.assertTrue(model3.isEmpty());
+        Assertions.assertTrue(model3.isEmpty());
     }
 
 }

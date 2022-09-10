@@ -26,6 +26,7 @@ package org.openscience.cdk.libio.cml;
 import nu.xom.Document;
 import nu.xom.Serializer;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -70,7 +71,7 @@ public class ConvertorTest extends CDKTestCase {
         String expected = "<bondStereo dictRef=\"cml:W\">W</bondStereo>";
         String actual = new String(out.toByteArray());
 
-        Assert.assertTrue(actual.contains(expected));
+        Assertions.assertTrue(actual.contains(expected));
 
     }
 
@@ -96,7 +97,7 @@ public class ConvertorTest extends CDKTestCase {
         String expected = "<bondStereo dictRef=\"cml:H\">H</bondStereo>";
         String actual = new String(out.toByteArray());
 
-        Assert.assertTrue(actual.contains(expected));
+        Assertions.assertTrue(actual.contains(expected));
 
     }
 

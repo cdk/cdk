@@ -34,7 +34,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         String cDescription = "description";
         String cProperty = "property";
         chemObject.setProperty(cDescription, cProperty);
-        Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
+        Assertions.assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
     @Test
@@ -44,8 +44,8 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Map<Object, Object> props = new Hashtable<>();
         props.put("keep", "me");
         chemObject.setProperties(props);
-        Assert.assertEquals("me", chemObject.getProperty("keep"));
-        Assert.assertNull(chemObject.getProperty("remove"));
+        Assertions.assertEquals("me", chemObject.getProperty("keep"));
+        Assertions.assertNull(chemObject.getProperty("remove"));
     }
 
     @Test
@@ -56,14 +56,14 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         String cProperty = "property";
         props.put(cDescription, cProperty);
         chemObject.addProperties(props);
-        Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
+        Assertions.assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
     @Test
     public void testGetProperties() {
         IChemObject chemObject = newChemObject();
-        Assert.assertNotNull(chemObject.getProperties());
-        Assert.assertEquals(0, chemObject.getProperties().size());
+        Assertions.assertNotNull(chemObject.getProperties());
+        Assertions.assertEquals(0, chemObject.getProperties().size());
     }
 
     @Test
@@ -74,15 +74,15 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testGetProperty_Object() {
         IChemObject chemObject = newChemObject();
-        Assert.assertNull(chemObject.getProperty("dummy"));
+        Assertions.assertNull(chemObject.getProperty("dummy"));
     }
 
     @Test
     public void testGetProperty_Object_Class() {
         IChemObject chemObject = newChemObject();
-        Assert.assertNull(chemObject.getProperty("dummy", String.class));
+        Assertions.assertNull(chemObject.getProperty("dummy", String.class));
         chemObject.setProperty("dummy", 5);
-        Assert.assertNotNull(chemObject.getProperty("dummy", Integer.class));
+        Assertions.assertNotNull(chemObject.getProperty("dummy", Integer.class));
 
     }
 
@@ -102,9 +102,9 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         String cDescription = "description";
         String cProperty = "property";
         chemObject.setProperty(cDescription, cProperty);
-        Assert.assertNotNull(chemObject.getProperty(cDescription));
+        Assertions.assertNotNull(chemObject.getProperty(cDescription));
         chemObject.removeProperty(cDescription);
-        Assert.assertNull(chemObject.getProperty(cDescription));
+        Assertions.assertNull(chemObject.getProperty(cDescription));
     }
 
     @Test
@@ -112,13 +112,13 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         IChemObject chemObject = newChemObject();
         String id = "objectX";
         chemObject.setID(id);
-        Assert.assertEquals(id, chemObject.getID());
+        Assertions.assertEquals(id, chemObject.getID());
     }
 
     @Test
     public void testGetID() {
         IChemObject chemObject = newChemObject();
-        Assert.assertNull(chemObject.getID());
+        Assertions.assertNull(chemObject.getID());
     }
 
     @Test
@@ -145,7 +145,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.setFlag(CDKConstants.ISINRING, true);
         IChemObject chemObject2 = newChemObject();
         chemObject2.setFlags(chemObject.getFlags());
-        Assert.assertTrue(chemObject2.getFlag(CDKConstants.ISINRING));
+        Assertions.assertTrue(chemObject2.getFlag(CDKConstants.ISINRING));
     }
 
     @Test
@@ -154,20 +154,20 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.setFlag(CDKConstants.ISINRING, true);
         IChemObject chemObject2 = newChemObject();
         chemObject2.setFlags(chemObject.getFlags());
-        Assert.assertTrue(chemObject2.getFlag(CDKConstants.ISINRING));
+        Assertions.assertTrue(chemObject2.getFlag(CDKConstants.ISINRING));
     }
 
     @Test
     public void testGetFlagValueZeroDefault() {
         IChemObject chemObject = newChemObject();
-        Assert.assertEquals((short) 0, chemObject.getFlagValue());
+        Assertions.assertEquals((short) 0, chemObject.getFlagValue());
     }
 
     @Test
     public void testGetFlagValue() {
         IChemObject chemObject = newChemObject();
         chemObject.setFlag(CDKConstants.ISALIPHATIC, true);
-        Assert.assertNotSame((short) 0, chemObject.getFlagValue());
+        Assertions.assertNotSame((short) 0, chemObject.getFlagValue());
     }
 
     /**
@@ -179,7 +179,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.setFlag(CDKConstants.ISALIPHATIC, true);
         IChemObject chemObject2 = newChemObject();
         chemObject2.setFlag(CDKConstants.VISITED, true);
-        Assert.assertNotSame(chemObject.getFlagValue(), chemObject2.getFlagValue());
+        Assertions.assertNotSame(chemObject.getFlagValue(), chemObject2.getFlagValue());
     }
 
     /**
@@ -191,7 +191,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.setFlag(CDKConstants.ISPLACED, true);
         IChemObject chemObject2 = newChemObject();
         chemObject2.setFlag(CDKConstants.ISPLACED, true);
-        Assert.assertEquals(chemObject.getFlagValue(), chemObject2.getFlagValue());
+        Assertions.assertEquals(chemObject.getFlagValue(), chemObject2.getFlagValue());
     }
 
     @Test
@@ -199,17 +199,17 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         IChemObject chemObject = newChemObject();
         chemObject.setFlag(CDKConstants.ISINRING, true);
         boolean[] flags = chemObject.getFlags();
-        Assert.assertTrue(flags[1]);
+        Assertions.assertTrue(flags[1]);
     }
 
     @Test
     public void testSetFlag_int_boolean() {
         IChemObject chemObject = newChemObject();
-        Assert.assertFalse(chemObject.getFlag(CDKConstants.ISPLACED));
+        Assertions.assertFalse(chemObject.getFlag(CDKConstants.ISPLACED));
         chemObject.setFlag(CDKConstants.ISPLACED, true);
-        Assert.assertTrue(chemObject.getFlag(CDKConstants.ISPLACED));
+        Assertions.assertTrue(chemObject.getFlag(CDKConstants.ISPLACED));
         chemObject.setFlag(CDKConstants.ISPLACED, false);
-        Assert.assertFalse(chemObject.getFlag(CDKConstants.ISPLACED));
+        Assertions.assertFalse(chemObject.getFlag(CDKConstants.ISPLACED));
     }
 
     @Test
@@ -224,12 +224,12 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
         // test cloning of itself
         Object clone = chemObject.clone();
-        Assert.assertTrue(clone instanceof IChemObject);
+        Assertions.assertTrue(clone instanceof IChemObject);
 
         // test that everything has been cloned properly
         String diff = ChemObjectDiff.diff(chemObject, (IChemObject) clone);
-        Assert.assertNotNull(diff);
-        Assert.assertEquals(0, diff.length());
+        Assertions.assertNotNull(diff);
+        Assertions.assertEquals(0, diff.length());
     }
 
     @Test
@@ -240,7 +240,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
         // test cloning of flags field
         chemObject2.setFlag(CDKConstants.ISALIPHATIC, false);
-        Assert.assertTrue(chemObject1.getFlag(CDKConstants.ISALIPHATIC));
+        Assertions.assertTrue(chemObject1.getFlag(CDKConstants.ISALIPHATIC));
     }
 
     @Test
@@ -251,7 +251,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
         // test cloning of identifier field
         chemObject2.setID("co2");
-        Assert.assertEquals("co1", chemObject1.getID());
+        Assertions.assertEquals("co1", chemObject1.getID());
     }
 
     @Test
@@ -265,9 +265,9 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Map<Object, Object> props2 = new Hashtable<>();
         props2.put("key", "value");
         chemObject2.addProperties(props2);
-        Assert.assertEquals(props1, chemObject1.getProperties());
-        Assert.assertEquals(1, chemObject2.getProperties().size());
-        Assert.assertEquals(0, chemObject1.getProperties().size());
+        Assertions.assertEquals(props1, chemObject1.getProperties());
+        Assertions.assertEquals(1, chemObject2.getProperties().size());
+        Assertions.assertEquals(0, chemObject1.getProperties().size());
     }
 
     @Test
@@ -282,11 +282,11 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         // test cloning of properties field
         Map<Object, Object> props2 = new Hashtable<>();
         chemObject2.addProperties(props2);
-        Assert.assertEquals(props1, chemObject1.getProperties());
-        Assert.assertEquals(1, chemObject2.getProperties().size());
-        Assert.assertEquals(1, chemObject1.getProperties().size());
+        Assertions.assertEquals(props1, chemObject1.getProperties());
+        Assertions.assertEquals(1, chemObject2.getProperties().size());
+        Assertions.assertEquals(1, chemObject1.getProperties().size());
         // ok, copied hashtable item, but this item should be cloned
-        Assert.assertEquals(atom, chemObject2.getProperties().get("atom"));
+        Assertions.assertEquals(atom, chemObject2.getProperties().get("atom"));
     }
 
     /**
@@ -308,8 +308,8 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         IChemObject chemObject2 = (IChemObject) chemObject1.clone();
 
         // test lack of cloning of listeners
-        Assert.assertEquals(1, chemObject1.getListenerCount());
-        Assert.assertEquals(0, chemObject2.getListenerCount());
+        Assertions.assertEquals(1, chemObject1.getListenerCount());
+        Assertions.assertEquals(0, chemObject2.getListenerCount());
     }
 
     /** @cdk.bug 1838820 */
@@ -320,18 +320,18 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
             chemObject1.setProperty("RecursiveBastard", chemObject1);
 
             Object clone = chemObject1.clone();
-            Assert.assertNotNull(clone);
-            Assert.assertTrue(clone instanceof IChemObject);
+            Assertions.assertNotNull(clone);
+            Assertions.assertTrue(clone instanceof IChemObject);
         });
     }
 
     @Test
     public void testAddListener_IChemObjectListener() {
         IChemObject chemObject1 = newChemObject();
-        Assert.assertEquals(0, chemObject1.getListenerCount());
+        Assertions.assertEquals(0, chemObject1.getListenerCount());
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
-        Assert.assertEquals(1, chemObject1.getListenerCount());
+        Assertions.assertEquals(1, chemObject1.getListenerCount());
     }
 
     @Test
@@ -339,9 +339,9 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
-        Assert.assertEquals(1, chemObject1.getListenerCount());
+        Assertions.assertEquals(1, chemObject1.getListenerCount());
         chemObject1.removeListener(listener);
-        Assert.assertEquals(0, chemObject1.getListenerCount());
+        Assertions.assertEquals(0, chemObject1.getListenerCount());
     }
 
     @Test
@@ -349,7 +349,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
-        Assert.assertEquals(1, chemObject1.getListenerCount());
+        Assertions.assertEquals(1, chemObject1.getListenerCount());
     }
 
     class DummyChemObjectListener implements IChemObjectListener {
@@ -363,8 +363,8 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     public void testShallowCopy() throws Exception {
         IChemObject chemObject = newChemObject();
         Object clone = chemObject.clone();
-        Assert.assertNotNull(clone);
-        Assert.assertTrue(clone instanceof IChemObject);
+        Assertions.assertNotNull(clone);
+        Assertions.assertTrue(clone instanceof IChemObject);
     }
 
     @Test
@@ -374,17 +374,17 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.addListener(listener);
 
         chemObject.setID("Changed");
-        Assert.assertTrue(listener.changed);
+        Assertions.assertTrue(listener.changed);
 
         listener.reset();
-        Assert.assertFalse(listener.changed);
+        Assertions.assertFalse(listener.changed);
         chemObject.setProperty("Changed", "Again");
-        Assert.assertTrue(listener.changed);
+        Assertions.assertTrue(listener.changed);
 
         listener.reset();
-        Assert.assertFalse(listener.changed);
+        Assertions.assertFalse(listener.changed);
         chemObject.setFlag(CDKConstants.ISALIPHATIC, true);
-        Assert.assertTrue(listener.changed);
+        Assertions.assertTrue(listener.changed);
     }
 
     @Test
@@ -394,14 +394,14 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.addListener(listener);
 
         chemObject.setID("Changed");
-        Assert.assertTrue(listener.changed);
+        Assertions.assertTrue(listener.changed);
     }
 
     @Test
     public void testSetNotification_boolean() {
         IChemObject chemObject = newChemObject();
         chemObject.setNotification(false);
-        Assert.assertFalse(chemObject.getNotification());
+        Assertions.assertFalse(chemObject.getNotification());
     }
 
     @Test
@@ -417,7 +417,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.setNotification(false);
 
         chemObject.setID("Changed");
-        Assert.assertFalse(listener.changed);
+        Assertions.assertFalse(listener.changed);
     }
 
     @Test
@@ -428,7 +428,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.setNotification(true);
 
         chemObject.setID("Changed");
-        Assert.assertTrue(listener.changed);
+        Assertions.assertTrue(listener.changed);
     }
 
     @Test
@@ -438,7 +438,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.addListener(listener);
 
         chemObject.setID("Changed");
-        Assert.assertNotNull(listener.event);
+        Assertions.assertNotNull(listener.event);
     }
 
     @Test
@@ -448,7 +448,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.addListener(listener);
 
         chemObject.setProperty("Changed", "Yes");
-        Assert.assertNotNull(listener.event);
+        Assertions.assertNotNull(listener.event);
     }
 
     /**
@@ -460,9 +460,9 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
 
-        Assert.assertNull(listener.event);
+        Assertions.assertNull(listener.event);
         chemObject.setFlag(CDKConstants.DUMMY_POINTER, true);
-        Assert.assertNotNull(listener.event);
+        Assertions.assertNotNull(listener.event);
     }
 
     /**
@@ -474,9 +474,9 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
 
-        Assert.assertNull(listener.event);
+        Assertions.assertNull(listener.event);
         chemObject.setFlags(new boolean[chemObject.getFlags().length]);
-        Assert.assertNotNull(listener.event);
+        Assertions.assertNotNull(listener.event);
     }
 
     @Test
@@ -488,7 +488,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.addListener(listener);
 
         chemObject.removeProperty("Changed");
-        Assert.assertNotNull(listener.event);
+        Assertions.assertNotNull(listener.event);
     }
 
     @Test
@@ -498,14 +498,14 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.addListener(listener);
 
         chemObject.removeProperty("Changed");
-        Assert.assertNull(listener.event);
+        Assertions.assertNull(listener.event);
     }
 
     @Test
     public void testCompare_Object() {
         // Added to keep the Coverage checker happy, but since the
         // compare(Object) method is not part of the interface, nothing is tested
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {

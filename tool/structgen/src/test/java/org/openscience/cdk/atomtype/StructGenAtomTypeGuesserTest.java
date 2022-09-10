@@ -19,6 +19,7 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -48,16 +49,16 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
 
         StructGenAtomTypeGuesser atm = new StructGenAtomTypeGuesser();
         List<IAtomType> matched = atm.possibleAtomTypes(mol, atom);
-        Assert.assertNotNull(matched);
-        Assert.assertTrue(matched.size() > 0);
-        Assert.assertTrue(matched.get(0) instanceof IAtomType);
+        Assertions.assertNotNull(matched);
+        Assertions.assertTrue(matched.size() > 0);
+        Assertions.assertTrue(matched.get(0) instanceof IAtomType);
 
-        Assert.assertEquals("C", matched.get(0).getSymbol());
+        Assertions.assertEquals("C", matched.get(0).getSymbol());
     }
 
     @Test
     public void testStructGenAtomTypeGuesser() throws Exception {
         StructGenAtomTypeGuesser matcher = new StructGenAtomTypeGuesser();
-        Assert.assertNotNull(matcher);
+        Assertions.assertNotNull(matcher);
     }
 }

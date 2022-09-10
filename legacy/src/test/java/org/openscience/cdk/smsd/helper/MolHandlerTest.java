@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,7 +64,7 @@ public class MolHandlerTest {
     public void testGetMolecule() {
         MolHandler instance = new MolHandler(new AtomContainer(), true, true);
         IAtomContainer result = instance.getMolecule();
-        assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     /**
@@ -74,6 +75,6 @@ public class MolHandlerTest {
         MolHandler instance = new MolHandler(new AtomContainer(), true, true);
         boolean expResult = true;
         boolean result = instance.getRemoveHydrogenFlag();
-        assertEquals(expResult, result);
+        Assertions.assertEquals(expResult, result);
     }
 }

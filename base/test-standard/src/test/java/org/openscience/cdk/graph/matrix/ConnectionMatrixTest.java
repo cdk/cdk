@@ -19,6 +19,7 @@
 package org.openscience.cdk.graph.matrix;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,8 +45,8 @@ public class ConnectionMatrixTest extends CDKTestCase {
     public void testGetMatrix_IAtomContainer() throws Exception {
         IAtomContainer container = sp.parseSmiles("C1CC1");
         double[][] matrix = ConnectionMatrix.getMatrix(container);
-        Assert.assertEquals(3, matrix.length);
-        Assert.assertEquals(3, matrix[0].length);
+        Assertions.assertEquals(3, matrix.length);
+        Assertions.assertEquals(3, matrix[0].length);
     }
 
     @Test
@@ -57,8 +58,8 @@ public class ConnectionMatrixTest extends CDKTestCase {
         container.getBuilder().newInstance(IBond.class, container.getAtom(0), container.getAtom(1), IBond.Order.SINGLE);
 
         double[][] matrix = ConnectionMatrix.getMatrix(container);
-        Assert.assertEquals(2, matrix.length);
-        Assert.assertEquals(2, matrix[0].length);
+        Assertions.assertEquals(2, matrix.length);
+        Assertions.assertEquals(2, matrix[0].length);
     }
 
 }

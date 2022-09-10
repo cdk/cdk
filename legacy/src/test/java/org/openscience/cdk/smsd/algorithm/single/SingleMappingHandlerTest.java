@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -73,7 +74,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol1 = new MolHandler(source, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         instance.set(mol1, mol2);
-        assertNotNull(instance.getFirstAtomMapping());
+        Assertions.assertNotNull(instance.getFirstAtomMapping());
     }
 
     /**
@@ -99,7 +100,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         smsd1.init(query, target, true, true);
         smsd1.setChemFilters(true, true, true);
         double score = 1.0;
-        assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
+        Assertions.assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
     }
 
     /**
@@ -120,7 +121,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
         instance.set(source1, target1);
         instance.searchMCS(true);
-        assertNotNull(instance.getFirstAtomMapping());
+        Assertions.assertNotNull(instance.getFirstAtomMapping());
     }
 
     /**
@@ -141,8 +142,8 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         instance.set(mol1, mol2);
         instance.searchMCS(true);
-        assertNotNull(instance.getAllMapping());
-        assertEquals(1, instance.getAllMapping().size());
+        Assertions.assertNotNull(instance.getAllMapping());
+        Assertions.assertEquals(1, instance.getAllMapping().size());
     }
 
     /**
@@ -162,7 +163,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         instance.set(mol1, mol2);
         instance.searchMCS(true);
-        assertNotNull(instance.getAllMapping());
+        Assertions.assertNotNull(instance.getAllMapping());
     }
 
     /**
@@ -182,7 +183,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         instance.set(mol1, mol2);
         instance.searchMCS(true);
-        assertNotNull(instance.getFirstMapping());
+        Assertions.assertNotNull(instance.getFirstMapping());
     }
 
     /**
@@ -202,7 +203,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         instance.set(mol1, mol2);
         instance.searchMCS(true);
-        assertNotNull(instance.getAllAtomMapping());
+        Assertions.assertNotNull(instance.getAllAtomMapping());
     }
 
     /**
@@ -222,6 +223,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         MolHandler mol2 = new MolHandler(target, true, true);
         instance.set(mol1, mol2);
         instance.searchMCS(true);
-        assertNotNull(instance.getFirstAtomMapping());
+        Assertions.assertNotNull(instance.getFirstAtomMapping());
     }
 }

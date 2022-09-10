@@ -19,6 +19,7 @@
 package org.openscience.cdk;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -41,8 +42,8 @@ public class AtomContainerSetTest extends AbstractAtomContainerSetTest {
     @Test
     public void testAtomContainerSet() {
         IAtomContainerSet som = new AtomContainerSet();
-        Assert.assertNotNull(som);
-        Assert.assertEquals(0, som.getAtomContainerCount());
+        Assertions.assertNotNull(som);
+        Assertions.assertEquals(0, som.getAtomContainerCount());
     }
 
 }

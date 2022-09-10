@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.graph;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -192,8 +193,8 @@ public final class EdmondsMaximumMatchingTest {
     }
 
     void assertMatch(Matching m, int u, int v) {
-        assertTrue(m.matched(u));
-        assertTrue(m.matched(v));
+        Assertions.assertTrue(m.matched(u));
+        Assertions.assertTrue(m.matched(v));
         assertThat(m.other(u), is(v));
     }
 

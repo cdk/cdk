@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -54,7 +55,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         TemplateHandler3D th3d = TemplateHandler3D.getInstance();
         // need to trigger a load of the templates
         th3d.mapTemplates(new AtomContainer(), 0);
-        Assert.assertEquals(10751, th3d.getTemplateCount());
+        Assertions.assertEquals(10751, th3d.getTemplateCount());
     }
 
     private static BitSet parseBitSet(String str) throws Exception {
@@ -83,7 +84,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         obj.getBuilder();
         for (int i = 0; i < data.size(); i++) {
             IBitFingerprint bs = data.get(i);
-            Assert.assertEquals(expected[i], bs.asBitSet());
+            Assertions.assertEquals(expected[i], bs.asBitSet());
         }
     }
 
@@ -109,7 +110,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         obj.getBuilder();
         for (int i = 0; i < data.size(); i++) {
             IBitFingerprint bs = data.get(i);
-            Assert.assertEquals(expected[i], bs.asBitSet());
+            Assertions.assertEquals(expected[i], bs.asBitSet());
         }
     }
 
@@ -125,7 +126,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         IAtomContainer largestRingSetContainer = RingSetManipulator.getAllInOneContainer(largestRingSet);
         th3d.mapTemplates(largestRingSetContainer, largestRingSetContainer.getAtomCount());
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Assert.assertNotNull(ac.getAtom(i).getPoint3d());
+            Assertions.assertNotNull(ac.getAtom(i).getPoint3d());
         }
         ModelBuilder3DTest.checkAverageBondLength(ac);
     }

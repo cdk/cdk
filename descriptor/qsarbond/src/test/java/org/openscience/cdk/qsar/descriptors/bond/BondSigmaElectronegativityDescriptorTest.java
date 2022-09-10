@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -70,7 +71,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
             params[0] = 6;
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assertions.assertEquals(testResult[i], result, 0.01);
         }
 
     }
@@ -94,7 +95,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
         addExplicitHydrogens(mol);
         for (int i = 0; i < 2; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.05);
+            Assertions.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -138,7 +139,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 
         for (int i = 0; i < 8; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.03);
+            Assertions.assertEquals(testResult[i], result, 0.03);
         }
     }
 
@@ -159,7 +160,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
         addExplicitHydrogens(mol);
 
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
-        Assert.assertEquals(testResult, result, 0.001);
+        Assertions.assertEquals(testResult, result, 0.001);
     }
 
     /**
@@ -202,7 +203,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 
         for (int i = 0; i < 8; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.002);
+            Assertions.assertEquals(testResult[i], result, 0.002);
         }
     }
 
@@ -240,7 +241,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 
         for (int i = 0; i < 5; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.06);
+            Assertions.assertEquals(testResult[i], result, 0.06);
         }
     }
 
@@ -284,7 +285,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 
         for (int i = 0; i < 4; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
-            Assert.assertEquals(testResult[i], result, 0.005);
+            Assertions.assertEquals(testResult[i], result, 0.005);
         }
     }
 }

@@ -47,14 +47,14 @@ public class RGroupListTest extends CDKTestCase {
     public void testOccurrenceCorrect() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence("1, 3-7, 9, >11");
-        Assert.assertEquals(rgrLst.getOccurrence(), "1,3-7,9,>11");
+        Assertions.assertEquals(rgrLst.getOccurrence(), "1,3-7,9,>11");
     }
 
     @Test
     public void testOccurrenceNull() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence(null);
-        Assert.assertEquals(rgrLst.getOccurrence(), RGroupList.DEFAULT_OCCURRENCE);
+        Assertions.assertEquals(rgrLst.getOccurrence(), RGroupList.DEFAULT_OCCURRENCE);
     }
 
     @Test

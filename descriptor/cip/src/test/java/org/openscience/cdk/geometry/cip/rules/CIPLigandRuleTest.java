@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.cip.CIPTool;
@@ -52,12 +53,12 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ILigand ligandCl = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
         ILigand ligandI = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(-1, rule.compare(ligandF, ligandI));
-        Assert.assertEquals(-1, rule.compare(ligandF, ligandBr));
-        Assert.assertEquals(-1, rule.compare(ligandF, ligandCl));
-        Assert.assertEquals(-1, rule.compare(ligandCl, ligandI));
-        Assert.assertEquals(-1, rule.compare(ligandCl, ligandBr));
-        Assert.assertEquals(-1, rule.compare(ligandBr, ligandI));
+        Assertions.assertEquals(-1, rule.compare(ligandF, ligandI));
+        Assertions.assertEquals(-1, rule.compare(ligandF, ligandBr));
+        Assertions.assertEquals(-1, rule.compare(ligandF, ligandCl));
+        Assertions.assertEquals(-1, rule.compare(ligandCl, ligandI));
+        Assertions.assertEquals(-1, rule.compare(ligandCl, ligandBr));
+        Assertions.assertEquals(-1, rule.compare(ligandBr, ligandI));
 
         List<ILigand> ligands = new ArrayList<>();
         ligands.add(ligandI);
@@ -66,10 +67,10 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ligands.add(ligandCl);
         ligands.sort(new CIPLigandRule());
 
-        Assert.assertEquals("F", ligands.get(0).getLigandAtom().getSymbol());
-        Assert.assertEquals("Cl", ligands.get(1).getLigandAtom().getSymbol());
-        Assert.assertEquals("Br", ligands.get(2).getLigandAtom().getSymbol());
-        Assert.assertEquals("I", ligands.get(3).getLigandAtom().getSymbol());
+        Assertions.assertEquals("F", ligands.get(0).getLigandAtom().getSymbol());
+        Assertions.assertEquals("Cl", ligands.get(1).getLigandAtom().getSymbol());
+        Assertions.assertEquals("Br", ligands.get(2).getLigandAtom().getSymbol());
+        Assertions.assertEquals("I", ligands.get(3).getLigandAtom().getSymbol());
     }
 
     @Test
@@ -77,7 +78,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
         ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(0, rule.compare(ligand, ligand));
+        Assertions.assertEquals(0, rule.compare(ligand, ligand));
     }
 
     @Test
@@ -86,8 +87,8 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 
     @Test
@@ -101,11 +102,11 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 0));
 
         ligands.sort(new CIPLigandRule());
-        Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
-        Assert.assertEquals("C", ligands.get(1).getLigandAtom().getSymbol());
-        Assert.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());
-        Assert.assertEquals(13, ligands.get(2).getLigandAtom().getMassNumber().intValue());
-        Assert.assertEquals("Br", ligands.get(3).getLigandAtom().getSymbol());
+        Assertions.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
+        Assertions.assertEquals("C", ligands.get(1).getLigandAtom().getSymbol());
+        Assertions.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());
+        Assertions.assertEquals(13, ligands.get(2).getLigandAtom().getMassNumber().intValue());
+        Assertions.assertEquals("Br", ligands.get(3).getLigandAtom().getSymbol());
     }
 
     /**
@@ -117,8 +118,8 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ILigand ligand1 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         ILigand ligand2 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 
     /**
@@ -131,8 +132,8 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ILigand ligand1 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         ILigand ligand2 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 
     /**
@@ -146,8 +147,8 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ILigand ligand1 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand ligand2 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 
     /**
@@ -159,8 +160,8 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ILigand ligand1 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 1, 3);
         ILigand ligand2 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 1, 13);
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(-1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(-1, rule.compare(ligand2, ligand1));
     }
 
     @Test
@@ -169,8 +170,8 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(0, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(0, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(0, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(0, rule.compare(ligand2, ligand1));
     }
 
     @Test
@@ -179,11 +180,11 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
 
         ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
-        Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
-        Assert.assertEquals(1, rule.compare(ligand2, ligand1));
+        Assertions.assertEquals(-1, rule.compare(ligand1, ligand2));
+        Assertions.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 }

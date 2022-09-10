@@ -23,6 +23,7 @@
 
 package org.openscience.cdk;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 
@@ -35,7 +36,7 @@ import static org.mockito.Mockito.mock;
 public class AtomRefTest {
 
     @Test public void dereferenceNullPointer() {
-        assertNull(AtomRef.deref(null));
+        Assertions.assertNull(AtomRef.deref(null));
     }
 
     @Test public void dereferenceNonPointer() {

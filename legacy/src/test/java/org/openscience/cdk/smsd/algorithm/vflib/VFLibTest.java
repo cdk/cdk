@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Bond;
@@ -64,12 +65,12 @@ public class VFLibTest extends CDKTestCase {
     @BeforeAll
     public static void setUp() throws CDKException {
         hexane = createHexane();
-        Assert.assertEquals(6, hexane.getAtomCount());
+        Assertions.assertEquals(6, hexane.getAtomCount());
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(hexane);
         hexane = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(hexane);
         Aromaticity.cdkLegacy().apply(hexane);
         hexaneQuery = new QueryCompiler(hexane, true).compile();
-        Assert.assertEquals(6, hexaneQuery.countNodes());
+        Assertions.assertEquals(6, hexaneQuery.countNodes());
         benzene = createBenzene();
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
         hexane = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(benzene);
@@ -87,7 +88,7 @@ public class VFLibTest extends CDKTestCase {
             state.nextCandidate();
             count++;
         }
-        Assert.assertEquals(benzene.getAtomCount() * benzene.getAtomCount(), count);
+        Assertions.assertEquals(benzene.getAtomCount() * benzene.getAtomCount(), count);
     }
 
     @Test
@@ -101,7 +102,7 @@ public class VFLibTest extends CDKTestCase {
             candidates.add(newState.nextCandidate());
         }
 
-        Assert.assertEquals(4, candidates.size());
+        Assertions.assertEquals(4, candidates.size());
     }
 
     @Test
@@ -117,7 +118,7 @@ public class VFLibTest extends CDKTestCase {
             candidates.add(state2.nextCandidate());
         }
 
-        Assert.assertEquals(1, candidates.size());
+        Assertions.assertEquals(1, candidates.size());
     }
 
     @Test
@@ -130,9 +131,9 @@ public class VFLibTest extends CDKTestCase {
 
         Map<INode, IAtom> map = state2.getMap();
 
-        Assert.assertEquals(2, map.size());
-        Assert.assertEquals(benzene.getAtom(0), map.get(benzeneQuery.getNode(0)));
-        Assert.assertEquals(benzene.getAtom(1), map.get(benzeneQuery.getNode(1)));
+        Assertions.assertEquals(2, map.size());
+        Assertions.assertEquals(benzene.getAtom(0), map.get(benzeneQuery.getNode(0)));
+        Assertions.assertEquals(benzene.getAtom(1), map.get(benzeneQuery.getNode(1)));
     }
 
     @Test
@@ -150,7 +151,7 @@ public class VFLibTest extends CDKTestCase {
             candidates.add(state3.nextCandidate());
         }
 
-        Assert.assertEquals(1, candidates.size());
+        Assertions.assertEquals(1, candidates.size());
     }
 
     @Test
@@ -164,10 +165,10 @@ public class VFLibTest extends CDKTestCase {
         IState state3 = state2.nextState(match2);
         Map<INode, IAtom> map = state3.getMap();
 
-        Assert.assertEquals(3, map.size());
-        Assert.assertEquals(benzene.getAtom(0), map.get(benzeneQuery.getNode(0)));
-        Assert.assertEquals(benzene.getAtom(1), map.get(benzeneQuery.getNode(1)));
-        Assert.assertEquals(benzene.getAtom(2), map.get(benzeneQuery.getNode(2)));
+        Assertions.assertEquals(3, map.size());
+        Assertions.assertEquals(benzene.getAtom(0), map.get(benzeneQuery.getNode(0)));
+        Assertions.assertEquals(benzene.getAtom(1), map.get(benzeneQuery.getNode(1)));
+        Assertions.assertEquals(benzene.getAtom(2), map.get(benzeneQuery.getNode(2)));
     }
 
     @Test
@@ -184,12 +185,12 @@ public class VFLibTest extends CDKTestCase {
         Match match4 = new Match(benzeneQuery.getNode(4), benzene.getAtom(4));
         IState state5 = state4.nextState(match4);
 
-        Assert.assertFalse(state5.isGoal());
+        Assertions.assertFalse(state5.isGoal());
 
         Match match5 = new Match(benzeneQuery.getNode(5), benzene.getAtom(5));
         IState state6 = state5.nextState(match5);
 
-        Assert.assertTrue(state6.isGoal());
+        Assertions.assertTrue(state6.isGoal());
     }
 
     @Test
@@ -197,7 +198,7 @@ public class VFLibTest extends CDKTestCase {
         IState state = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState nextState = state.nextState(match);
-        Assert.assertTrue(nextState.hasNextCandidate());
+        Assertions.assertTrue(nextState.hasNextCandidate());
     }
 
     /**
@@ -206,7 +207,7 @@ public class VFLibTest extends CDKTestCase {
     @Test
     public void testItShouldMatchHexaneToHexaneWhenUsingMolecule() {
         IMapper mapper = new VFMapper(hexane, true);
-        Assert.assertTrue(mapper.hasMap(hexane));
+        Assertions.assertTrue(mapper.hasMap(hexane));
     }
 
     public static IAtomContainer createHexane() throws CDKException {

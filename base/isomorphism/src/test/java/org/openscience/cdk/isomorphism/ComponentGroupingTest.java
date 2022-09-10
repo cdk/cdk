@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
@@ -44,36 +45,36 @@ public class ComponentGroupingTest {
     // mock matching [#8].[#8]
     @Test
     public void ungrouped() {
-        assertTrue(create(null, oxidanone()).apply(new int[]{0, 1}));
-        assertTrue(create(null, oxidanone()).apply(new int[]{1, 0}));
-        assertTrue(create(null, ethyleneGlycol()).apply(new int[]{0, 3}));
-        assertTrue(create(null, ethyleneGlycol()).apply(new int[]{3, 0}));
-        assertTrue(create(null, ethylAlcoholHydrate()).apply(new int[]{0, 3}));
-        assertTrue(create(null, ethylAlcoholHydrate()).apply(new int[]{3, 0}));
+        Assertions.assertTrue(create(null, oxidanone()).apply(new int[]{0, 1}));
+        Assertions.assertTrue(create(null, oxidanone()).apply(new int[]{1, 0}));
+        Assertions.assertTrue(create(null, ethyleneGlycol()).apply(new int[]{0, 3}));
+        Assertions.assertTrue(create(null, ethyleneGlycol()).apply(new int[]{3, 0}));
+        Assertions.assertTrue(create(null, ethylAlcoholHydrate()).apply(new int[]{0, 3}));
+        Assertions.assertTrue(create(null, ethylAlcoholHydrate()).apply(new int[]{3, 0}));
     }
 
     // mock matching ([#8].[#8])
     @Test
     public void grouped() {
         int[] grouping = {1, 1, 1};
-        assertTrue(create(grouping, oxidanone()).apply(new int[]{0, 1}));
-        assertTrue(create(grouping, oxidanone()).apply(new int[]{1, 0}));
-        assertTrue(create(grouping, ethyleneGlycol()).apply(new int[]{0, 3}));
-        assertTrue(create(grouping, ethyleneGlycol()).apply(new int[]{3, 0}));
-        assertFalse(create(grouping, ethylAlcoholHydrate()).apply(new int[]{0, 3}));
-        assertFalse(create(grouping, ethylAlcoholHydrate()).apply(new int[]{3, 0}));
+        Assertions.assertTrue(create(grouping, oxidanone()).apply(new int[]{0, 1}));
+        Assertions.assertTrue(create(grouping, oxidanone()).apply(new int[]{1, 0}));
+        Assertions.assertTrue(create(grouping, ethyleneGlycol()).apply(new int[]{0, 3}));
+        Assertions.assertTrue(create(grouping, ethyleneGlycol()).apply(new int[]{3, 0}));
+        Assertions.assertFalse(create(grouping, ethylAlcoholHydrate()).apply(new int[]{0, 3}));
+        Assertions.assertFalse(create(grouping, ethylAlcoholHydrate()).apply(new int[]{3, 0}));
     }
 
     // mock matching ([#8]).([#8])
     @Test
     public void multipleGroups() {
         int[] grouping = {1, 2, 2};
-        assertFalse(create(grouping, oxidanone()).apply(new int[]{0, 1}));
-        assertFalse(create(grouping, oxidanone()).apply(new int[]{1, 0}));
-        assertFalse(create(grouping, ethyleneGlycol()).apply(new int[]{0, 3}));
-        assertFalse(create(grouping, ethyleneGlycol()).apply(new int[]{3, 0}));
-        assertTrue(create(grouping, ethylAlcoholHydrate()).apply(new int[]{0, 3}));
-        assertTrue(create(grouping, ethylAlcoholHydrate()).apply(new int[]{3, 0}));
+        Assertions.assertFalse(create(grouping, oxidanone()).apply(new int[]{0, 1}));
+        Assertions.assertFalse(create(grouping, oxidanone()).apply(new int[]{1, 0}));
+        Assertions.assertFalse(create(grouping, ethyleneGlycol()).apply(new int[]{0, 3}));
+        Assertions.assertFalse(create(grouping, ethyleneGlycol()).apply(new int[]{3, 0}));
+        Assertions.assertTrue(create(grouping, ethylAlcoholHydrate()).apply(new int[]{0, 3}));
+        Assertions.assertTrue(create(grouping, ethylAlcoholHydrate()).apply(new int[]{3, 0}));
     }
 
     /** @cdk.inchi InChI=1/O2/c1-2 */

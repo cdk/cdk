@@ -67,10 +67,10 @@ public class MultiStereoEncoderTest {
         when(b.encode(current, next)).thenReturn(true);
 
         // configured once
-        assertTrue(encoder.encode(current, next));
+        Assertions.assertTrue(encoder.encode(current, next));
 
         // not configured again
-        assertFalse(encoder.encode(current, next));
+        Assertions.assertFalse(encoder.encode(current, next));
 
         verify(a, times(1)).encode(current, next);
         verify(b, times(1)).encode(current, next);
@@ -91,17 +91,17 @@ public class MultiStereoEncoderTest {
         when(b.encode(current, next)).thenReturn(true);
 
         // configured once
-        assertTrue(encoder.encode(current, next));
+        Assertions.assertTrue(encoder.encode(current, next));
 
         // not configured again
-        assertFalse(encoder.encode(current, next));
+        Assertions.assertFalse(encoder.encode(current, next));
 
         verify(a, times(1)).encode(current, next);
         verify(b, times(1)).encode(current, next);
 
         encoder.reset();
 
-        assertTrue(encoder.encode(current, next));
+        Assertions.assertTrue(encoder.encode(current, next));
 
         verify(a, times(2)).encode(current, next);
         verify(b, times(2)).encode(current, next);

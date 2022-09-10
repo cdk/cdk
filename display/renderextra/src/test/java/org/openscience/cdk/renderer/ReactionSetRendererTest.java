@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.font.AWTFontManager;
@@ -46,7 +47,7 @@ public class ReactionSetRendererTest {
         generators.add(new BasicBondGenerator());
 
         ReactionSetRenderer renderer = new ReactionSetRenderer(generators, new AWTFontManager());
-        Assert.assertNotNull(renderer);
+        Assertions.assertNotNull(renderer);
     }
 
 }

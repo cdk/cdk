@@ -20,6 +20,7 @@ package org.openscience.cdk.tools.diff;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -38,7 +39,7 @@ public class BondDiffTest {
     public void testMatchAgainstItself() {
         IBond bond1 = mock(IBond.class);
         String result = BondDiff.diff(bond1, bond1);
-        Assert.assertEquals("", result);
+        Assertions.assertEquals("", result);
     }
 
     @Test
@@ -68,8 +69,8 @@ public class BondDiffTest {
         bond2.setOrder(IBond.Order.DOUBLE);
 
         String result = BondDiff.diff(bond1, bond2);
-        Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
+        Assertions.assertNotNull(result);
+        Assertions.assertNotSame(0, result.length());
         MatcherAssert.assertThat(result, containsString("BondDiff"));
         MatcherAssert.assertThat(result, containsString("SINGLE/DOUBLE"));
         MatcherAssert.assertThat(result, containsString("AtomDiff"));
@@ -102,6 +103,6 @@ public class BondDiffTest {
         bond2.setOrder(IBond.Order.DOUBLE);
 
         IDifference difference = BondDiff.difference(bond1, bond2);
-        Assert.assertNotNull(difference);
+        Assertions.assertNotNull(difference);
     }
 }

@@ -29,6 +29,7 @@ import java.math.BigInteger;
 import java.util.BitSet;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -67,20 +68,16 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter();
         IBitFingerprint bs1 = fingerprinter.getBitFingerprint(mol1);
-        Assert.assertEquals(
-                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 22,
-                bs1.cardinality());
+        Assertions.assertEquals(22, bs1.cardinality(), "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!");
         IBitFingerprint bs2 = fingerprinter.getBitFingerprint(mol2);
-        Assert.assertEquals(
-                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 11,
-                bs2.cardinality());
+        Assertions.assertEquals(11, bs2.cardinality(), "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!");
     }
 
     @Test
     public void testGetSize() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ShortestPathFingerprinter(512);
-        Assert.assertNotNull(fingerprinter);
-        Assert.assertEquals(512, fingerprinter.getSize());
+        Assertions.assertNotNull(fingerprinter);
+        Assertions.assertEquals(512, fingerprinter.getSize());
     }
 
     /**
@@ -100,8 +97,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        org.junit.Assert.assertEquals(134, fingerprint1.cardinality());
-        org.junit.Assert.assertEquals(1024, fingerprint1.size());
+        Assertions.assertEquals(134, fingerprint1.cardinality());
+        Assertions.assertEquals(1024, fingerprint1.size());
     }
 
     /**
@@ -128,7 +125,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         fingerprintQ = fingerprint.getBitFingerprint(moleculeQ).asBitSet();
         fingerprintT = fingerprint.getBitFingerprint(moleculeT).asBitSet();
 
-        org.junit.Assert.assertTrue(FingerprinterTool.isSubset(fingerprintT, fingerprintQ));
+        Assertions.assertTrue(FingerprinterTool.isSubset(fingerprintT, fingerprintQ));
     }
 
     /**
@@ -158,7 +155,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         BitSet fingerprintT;
         fingerprintQ = fingerprint.getBitFingerprint(moleculeQ).asBitSet();
         fingerprintT = fingerprint.getBitFingerprint(moleculeT).asBitSet();
-        org.junit.Assert.assertFalse(FingerprinterTool.isSubset(fingerprintT, fingerprintQ));
+        Assertions.assertFalse(FingerprinterTool.isSubset(fingerprintT, fingerprintQ));
     }
 
     @Test
@@ -172,7 +169,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        org.junit.Assert.assertEquals(10, fingerprint1.cardinality());
+        Assertions.assertEquals(10, fingerprint1.cardinality());
     }
 
     @Test
@@ -186,7 +183,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        org.junit.Assert.assertEquals(8, fingerprint1.cardinality());
+        Assertions.assertEquals(8, fingerprint1.cardinality());
     }
 
     @Test
@@ -201,7 +198,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        org.junit.Assert.assertEquals(15, fingerprint1.cardinality());
+        Assertions.assertEquals(15, fingerprint1.cardinality());
     }
 
     @Test
@@ -211,14 +208,14 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         IBitFingerprint bs = fingerprinter.getBitFingerprint(mol);
-        Assert.assertNotNull(bs);
-        Assert.assertEquals(fingerprinter.getSize(), bs.size());
+        Assertions.assertNotNull(bs);
+        Assertions.assertEquals(fingerprinter.getSize(), bs.size());
     }
 
     @Test
     public void testFingerprinter() throws java.lang.Exception {
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter();
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -226,13 +223,13 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs, bs1));
     }
 
     @Test
     public void testFingerprinter_int() throws java.lang.Exception {
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter(512);
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -240,13 +237,13 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs, bs1));
     }
 
     @Test
     public void testFingerprinter_int_int() throws java.lang.Exception {
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter(1024);
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -254,18 +251,18 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        Assertions.assertTrue(FingerprinterTool.isSubset(bs, bs1));
     }
 
     @Test
     public void testFingerprinterBitSetSize() throws Exception {
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter(1024);
-        Assert.assertNotNull(fingerprinter);
+        Assertions.assertNotNull(fingerprinter);
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        Assert.assertEquals(1022, bs.length()); // highest set bit
-        Assert.assertEquals(1024, bs.size()); // actual bit set size
+        Assertions.assertEquals(1022, bs.length()); // highest set bit
+        Assertions.assertEquals(1024, bs.size()); // actual bit set size
     }
 
     /**
@@ -282,7 +279,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         BitSet b1 = fp.getBitFingerprint(butane).asBitSet();
         BitSet b2 = fp.getBitFingerprint(propylAmine).asBitSet();
 
-        Assert.assertFalse("butane should not be a substructure of propylamine", FingerprinterTool.isSubset(b2, b1));
+        Assertions.assertFalse(FingerprinterTool.isSubset(b2, b1), "butane should not be a substructure of propylamine");
     }
 
     @Test
@@ -295,7 +292,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         while (acp.hasNext()) {
             IAtomContainer container = acp.next();
             IBitFingerprint bs2 = fp.getBitFingerprint(container);
-            Assert.assertTrue(bs1.equals(bs2));
+            Assertions.assertTrue(bs1.equals(bs2));
         }
     }
 
@@ -309,7 +306,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         while (acp.hasNext()) {
             IAtomContainer container = acp.next();
             IBitFingerprint bs2 = fp.getBitFingerprint(container);
-            Assert.assertTrue(bs1.equals(bs2));
+            Assertions.assertTrue(bs1.equals(bs2));
         }
     }
 
@@ -324,7 +321,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         while (acp.hasNext()) {
             IAtomContainer container = acp.next();
             IBitFingerprint bs2 = fp.getBitFingerprint(container);
-            Assert.assertTrue(bs1.equals(bs2));
+            Assertions.assertTrue(bs1.equals(bs2));
         }
     }
 
@@ -339,7 +336,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         while (acp.hasNext()) {
             IAtomContainer container = acp.next();
             IBitFingerprint bs2 = fp.getBitFingerprint(container);
-            Assert.assertTrue(bs1.equals(bs2));
+            Assertions.assertTrue(bs1.equals(bs2));
         }
     }
 

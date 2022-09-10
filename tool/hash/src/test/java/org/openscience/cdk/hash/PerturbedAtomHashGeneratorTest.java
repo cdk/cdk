@@ -25,6 +25,7 @@
 package org.openscience.cdk.hash;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -82,7 +83,7 @@ public class PerturbedAtomHashGeneratorTest {
         long _3 = 2 ^ prng.next(2) ^ prng.next(prng.next(2)) ^ prng.next(prng.next(prng.next(2)));
 
         long[] values = generator.combine(perturbed);
-        Assert.assertArrayEquals(values, new long[]{_0, _1, _2, _3});
+        Assertions.assertArrayEquals(values, new long[]{_0, _1, _2, _3});
     }
 
     public IAtomContainer cyclopentylcyclopentane() {

@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.dict.Dictionary;
@@ -141,7 +142,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      */
     @Test
     public void testHasSetSuperDotDescriptor() {
-        Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", reaction);
+        Assertions.assertNotNull(reaction, "The extending class must set the super.descriptor in its setUp() method.");
     }
 
     /**
@@ -155,7 +156,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
         entryString = reaction.getSpecification().getSpecificationReference();
         entryString = entryString.substring(entryString.indexOf("#") + 1, entryString.length());
 
-        Assert.assertNotSame("The Entry ID from  [" + reaction.getClass() + "] doesn't exist.", "nothing", entryString);
+        Assertions.assertNotSame("nothing", entryString, "The Entry ID from  [" + reaction.getClass() + "] doesn't exist.");
     }
 
     /**
@@ -167,7 +168,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     public void testGetDictionaryEntry() throws Exception {
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-        Assert.assertNotNull("The Entry [" + entryString + "] doesn't exist in OWL Dictionary.", entry);
+        Assertions.assertNotNull(entry, "The Entry [" + entryString + "] doesn't exist in OWL Dictionary.");
 
     }
 
@@ -181,7 +182,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
 
-        Assert.assertNotNull("The definition entry for [" + entryString + "] must not be null.", entry.getDefinition());
+        Assertions.assertNotNull(entry.getDefinition(), "The definition entry for [" + entryString + "] must not be null.");
 
     }
 
@@ -197,12 +198,10 @@ public abstract class ReactionProcessTest extends CDKTestCase {
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
         List<List<String>> paramDic = entry.getParameterClass();
 
-        Assert.assertNotNull("The parameters entry for [" + entryString + "]  must contain at least one parameter.",
-                paramObj);
-        Assert.assertNotNull("The parameters entry for [" + entryString + "]  must contain at least one parameter.",
-                paramDic);
-        Assert.assertSame("The parameters entry for [" + entryString
-                + "]  must contain the same lenght as the reaction object.", paramObj.size(), paramDic.size());
+        Assertions.assertNotNull(paramObj, "The parameters entry for [" + entryString + "]  must contain at least one parameter.");
+        Assertions.assertNotNull(paramDic, "The parameters entry for [" + entryString + "]  must contain at least one parameter.");
+        Assertions.assertSame(paramObj.size(), paramDic.size(), "The parameters entry for [" + entryString
+                + "]  must contain the same lenght as the reaction object.");
     }
 
     /**
@@ -212,21 +211,21 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     @Test
     public void testGetSpecification() {
         ReactionSpecification spec = reaction.getSpecification();
-        Assert.assertNotNull("The descriptor specification returned must not be null.", spec);
+        Assertions.assertNotNull(spec, "The descriptor specification returned must not be null.");
 
-        Assert.assertNotNull("The specification identifier must not be null.", spec.getImplementationIdentifier());
-        Assert.assertNotSame("The specification identifier must not be empty.", 0, spec.getImplementationIdentifier()
-                .length());
+        Assertions.assertNotNull(spec.getImplementationIdentifier(), "The specification identifier must not be null.");
+        Assertions.assertNotSame(0, spec.getImplementationIdentifier()
+                                        .length(), "The specification identifier must not be empty.");
 
-        Assert.assertNotNull("The specification title must not be null.", spec.getImplementationTitle());
-        Assert.assertNotSame("The specification title must not be empty.", 0, spec.getImplementationTitle().length());
+        Assertions.assertNotNull(spec.getImplementationTitle(), "The specification title must not be null.");
+        Assertions.assertNotSame(0, spec.getImplementationTitle().length(), "The specification title must not be empty.");
 
-        Assert.assertNotNull("The specification vendor must not be null.", spec.getImplementationVendor());
-        Assert.assertNotSame("The specification vendor must not be empty.", 0, spec.getImplementationVendor().length());
+        Assertions.assertNotNull(spec.getImplementationVendor(), "The specification vendor must not be null.");
+        Assertions.assertNotSame(0, spec.getImplementationVendor().length(), "The specification vendor must not be empty.");
 
-        Assert.assertNotNull("The specification reference must not be null.", spec.getSpecificationReference());
-        Assert.assertNotSame("The specification reference must not be empty.", 0, spec.getSpecificationReference()
-                .length());
+        Assertions.assertNotNull(spec.getSpecificationReference(), "The specification reference must not be null.");
+        Assertions.assertNotSame(0, spec.getSpecificationReference()
+                                        .length(), "The specification reference must not be empty.");
     }
 
     /**
@@ -239,8 +238,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
 
-        Assert.assertNotNull("The description entry for [" + entryString + "] must not be null.",
-                entry.getDescription());
+        Assertions.assertNotNull(entry.getDescription(), "The description entry for [" + entryString + "] must not be null.");
     }
 
     /**
@@ -253,8 +251,8 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
 
-        Assert.assertNotSame("The representation entry for [" + entryString
-                + "]  must contain at least one representation.", 0, entry.getRepresentations().size());
+        Assertions.assertNotSame(0, entry.getRepresentations().size(), "The representation entry for [" + entryString
+                + "]  must contain at least one representation.");
     }
 
     /**
@@ -267,8 +265,8 @@ public abstract class ReactionProcessTest extends CDKTestCase {
         IReactionProcess type = reaction;
 
         IParameterReact ipr = type.getParameterClass(SetReactionCenter.class);
-        Assert.assertNotNull(ipr);
-        Assert.assertFalse(ipr.isSetParameter());
+        Assertions.assertNotNull(ipr);
+        Assertions.assertFalse(ipr.isSetParameter());
 
         List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
@@ -277,7 +275,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
         type.setParameterList(paramList);
 
         IParameterReact ipr2 = type.getParameterClass(SetReactionCenter.class);
-        Assert.assertTrue(ipr2.isSetParameter());
+        Assertions.assertTrue(ipr2.isSetParameter());
     }
 
     /**
@@ -321,10 +319,10 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
         List<String> xmlList = entry.getExampleReactions();
-        Assert.assertTrue("The representation entry for [" + entryString
-                + "]  must contain at least one example of reaction.", xmlList.size() != 0);
-        Assert.assertTrue("The representation entry for [" + entryString
-                + "]  must contain at least one example of reaction.", xmlList.size() > 0);
+        Assertions.assertTrue(xmlList.size() != 0, "The representation entry for [" + entryString
+                + "]  must contain at least one example of reaction.");
+        Assertions.assertTrue(xmlList.size() > 0, "The representation entry for [" + entryString
+                + "]  must contain at least one example of reaction.");
         for (String xml : xmlList) {
             CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
             IChemFile chemFile = reader.read(builder.newInstance(IChemFile.class));
@@ -337,12 +335,11 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 
             IReactionSet reactions = reaction.initiate(reactants, agents);
 
-            Assert.assertTrue("The products for [" + entryString + "] reaction is at least one reaction expected.",
-                    reactions.getReactionCount() > 0);
+            Assertions.assertTrue(reactions.getReactionCount() > 0, "The products for [" + entryString + "] reaction is at least one reaction expected.");
 
-            Assert.assertSame("The products for [" + entryString + "] reaction is not the expected.", products
+            Assertions.assertSame(products
                     .getAtomContainer(0).getAtomCount(), reactions.getReaction(0).getProducts().getAtomContainer(0)
-                                                                  .getAtomCount());
+                                                                  .getAtomCount(), "The products for [" + entryString + "] reaction is not the expected.");
 
         }
     }

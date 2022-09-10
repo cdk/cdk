@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.Properties;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
@@ -61,8 +62,8 @@ public class SMILESWriterTest extends ChemObjectIOTest {
     @Test
     public void testAccepts() throws Exception {
         SMILESWriter reader = new SMILESWriter();
-        Assert.assertTrue(reader.accepts(AtomContainer.class));
-        Assert.assertTrue(reader.accepts(AtomContainerSet.class));
+        Assertions.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test
@@ -73,7 +74,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
         SMILESWriter smilesWriter = new SMILESWriter(stringWriter);
         smilesWriter.write(benzene);
         smilesWriter.close();
-        Assert.assertTrue(stringWriter.toString().contains("C=C"));
+        Assertions.assertTrue(stringWriter.toString().contains("C=C"));
     }
 
     @Test
@@ -91,8 +92,8 @@ public class SMILESWriterTest extends ChemObjectIOTest {
         smilesWriter.customizeJob();
         smilesWriter.write(benzene);
         smilesWriter.close();
-        Assert.assertFalse(stringWriter.toString().contains("C=C"));
-        Assert.assertTrue(stringWriter.toString().contains("ccc"));
+        Assertions.assertFalse(stringWriter.toString().contains("C=C"));
+        Assertions.assertTrue(stringWriter.toString().contains("ccc"));
     }
 
     @Test

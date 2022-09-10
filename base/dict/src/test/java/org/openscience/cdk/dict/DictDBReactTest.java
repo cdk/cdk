@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -38,7 +39,7 @@ public class DictDBReactTest extends CDKTestCase {
     @Test
     public void testDictDBReact() {
         DictionaryDatabase db = new DictionaryDatabase();
-        Assert.assertTrue(db.hasDictionary("reaction-processes"));
+        Assertions.assertTrue(db.hasDictionary("reaction-processes"));
     }
 
     @Test
@@ -53,8 +54,7 @@ public class DictDBReactTest extends CDKTestCase {
             if (!idList.contains(entries[i].getID()))
                 idList.add(entries[i].getID());
             else
-                Assert.assertFalse("The entry is contained " + entries[i] + "two times",
-                        idList.contains(entries[i].getID()));
+                Assertions.assertFalse(idList.contains(entries[i].getID()), "The entry is contained " + entries[i] + "two times");
 
         }
     }

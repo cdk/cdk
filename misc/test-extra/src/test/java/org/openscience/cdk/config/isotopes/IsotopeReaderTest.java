@@ -20,6 +20,7 @@
 package org.openscience.cdk.config.isotopes;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemObject;
@@ -39,17 +40,17 @@ public class IsotopeReaderTest extends CDKTestCase {
     @Test
     public void testIsotopeReader_InputStream_IChemObjectBuilder() {
         IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(new byte[0]), new ChemObject().getBuilder());
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
     }
 
     @Test
     public void testReadIsotopes() {
         IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream("<?xml version=\"1.0\"?><list></list>".getBytes(StandardCharsets.UTF_8)),
                                                  new ChemObject().getBuilder());
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
         List<IIsotope> isotopes = reader.readIsotopes();
-        Assert.assertNotNull(isotopes);
-        Assert.assertEquals(0, isotopes.size());
+        Assertions.assertNotNull(isotopes);
+        Assertions.assertEquals(0, isotopes.size());
     }
 
     @Test
@@ -74,10 +75,10 @@ public class IsotopeReaderTest extends CDKTestCase {
 
         IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(isotopeData.getBytes()),
                 new ChemObject().getBuilder());
-        Assert.assertNotNull(reader);
+        Assertions.assertNotNull(reader);
         List<IIsotope> isotopes = reader.readIsotopes();
-        Assert.assertNotNull(isotopes);
-        Assert.assertEquals(3, isotopes.size());
+        Assertions.assertNotNull(isotopes);
+        Assertions.assertEquals(3, isotopes.size());
     }
 
 }

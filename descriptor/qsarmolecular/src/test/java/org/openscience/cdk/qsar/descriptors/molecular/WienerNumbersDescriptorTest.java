@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -46,8 +47,8 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
         AtomContainerManipulator.removeHydrogens(mol);
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-        Assert.assertEquals(testResult[0], retval.get(0), 0.0001);
-        Assert.assertEquals(testResult[1], retval.get(1), 0.0001);
+        Assertions.assertEquals(testResult[0], retval.get(0), 0.0001);
+        Assertions.assertEquals(testResult[1], retval.get(1), 0.0001);
     }
 
     /**
@@ -59,8 +60,8 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-        Assert.assertEquals(testResult[0], retval.get(0), 0.0001);
-        Assert.assertEquals(testResult[1], retval.get(1), 0.0001);
+        Assertions.assertEquals(testResult[0], retval.get(0), 0.0001);
+        Assertions.assertEquals(testResult[1], retval.get(1), 0.0001);
     }
 
     /**
@@ -75,7 +76,7 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
             smiles += "C"; // create the matching paraffin
             IAtomContainer mol = sp.parseSmiles(smiles);
             DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-            Assert.assertEquals(v, retval.get(0), 0.0001);
+            Assertions.assertEquals(v, retval.get(0), 0.0001);
         }
     }
 }

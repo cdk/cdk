@@ -88,9 +88,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"));
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 3);
 
-        Assert.assertEquals(2, formula.getIsotopeCount());
+        Assertions.assertEquals(2, formula.getIsotopeCount());
 
-        Assert.assertEquals(4, getAtomCount(formula));
+        Assertions.assertEquals(4, getAtomCount(formula));
     }
 
     /**
@@ -109,17 +109,14 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(h1, 3);
         formula.addIsotope(h2, 4);
 
-        Assert.assertEquals(10, getAtomCount(formula));
-        Assert.assertEquals(4, formula.getIsotopeCount());
-        Assert.assertEquals(3, formula.getIsotopeCount(h1));
-        Assert.assertEquals(4, formula.getIsotopeCount(h2));
+        Assertions.assertEquals(10, getAtomCount(formula));
+        Assertions.assertEquals(4, formula.getIsotopeCount());
+        Assertions.assertEquals(3, formula.getIsotopeCount(h1));
+        Assertions.assertEquals(4, formula.getIsotopeCount(h2));
 
-        Assert.assertEquals(2,
-                MolecularFormulaManipulator.getElementCount(formula, builder.newInstance(IElement.class, carb)));
-        Assert.assertEquals(1,
-                MolecularFormulaManipulator.getElementCount(formula, builder.newInstance(IElement.class, flu)));
-        Assert.assertEquals(7,
-                MolecularFormulaManipulator.getElementCount(formula, builder.newInstance(IElement.class, h1)));
+        Assertions.assertEquals(2, getElementCount(formula, builder.newInstance(IElement.class, carb)));
+        Assertions.assertEquals(1, getElementCount(formula, builder.newInstance(IElement.class, flu)));
+        Assertions.assertEquals(7, getElementCount(formula, builder.newInstance(IElement.class, h1)));
     }
 
     /**
@@ -140,7 +137,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         List<IIsotope> isotopes = MolecularFormulaManipulator.getIsotopes(formula,
                 builder.newInstance(IElement.class, "H"));
-        Assert.assertEquals(2, isotopes.size());
+        Assertions.assertEquals(2, isotopes.size());
     }
 
     @Test
@@ -156,16 +153,16 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(h1, 1);
         formula.addIsotope(h2, 2);
 
-        Assert.assertTrue(MolecularFormulaManipulator.containsElement(formula, builder.newInstance(IElement.class, "C")));
-        Assert.assertTrue(MolecularFormulaManipulator.containsElement(formula, builder.newInstance(IElement.class, "H")));
-        Assert.assertTrue(MolecularFormulaManipulator.containsElement(formula, builder.newInstance(IElement.class, "F")));
+        Assertions.assertTrue(containsElement(formula, builder.newInstance(IElement.class, "C")));
+        Assertions.assertTrue(containsElement(formula, builder.newInstance(IElement.class, "H")));
+        Assertions.assertTrue(containsElement(formula, builder.newInstance(IElement.class, "F")));
     }
 
     @Test
     public void testGetString_IMolecularFormula_Empty() {
         String stringMF = MolecularFormulaManipulator.getString(new MolecularFormula());
-        Assert.assertNotNull(stringMF);
-        Assert.assertEquals("", stringMF);
+        Assertions.assertNotNull(stringMF);
+        Assertions.assertEquals("", stringMF);
     }
 
     /** Test if formula re-ordering to a user-specified element order works */
@@ -174,13 +171,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 2);
-        Assert.assertEquals("C2H2", MolecularFormulaManipulator.getString(formula));
+        Assertions.assertEquals("C2H2", getString(formula));
 
         String[] newOrder = new String[2];
         newOrder[0] = "H";
         newOrder[1] = "C";
 
-        Assert.assertEquals("H2C2", MolecularFormulaManipulator.getString(formula, newOrder, true));
+        Assertions.assertEquals("H2C2", getString(formula, newOrder, true));
 
     }
 
@@ -196,26 +193,26 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         newOrder[1] = "C";
 
         List<IIsotope> list = MolecularFormulaManipulator.putInOrder(newOrder, formula);
-        Assert.assertEquals("H", list.get(0).getSymbol());
-        Assert.assertEquals("C", list.get(1).getSymbol());
+        Assertions.assertEquals("H", list.get(0).getSymbol());
+        Assertions.assertEquals("C", list.get(1).getSymbol());
 
         newOrder = new String[2];
         newOrder[0] = "C";
         newOrder[1] = "H";
 
         list = MolecularFormulaManipulator.putInOrder(newOrder, formula);
-        Assert.assertEquals("C", list.get(0).getSymbol());
-        Assert.assertEquals("H", list.get(1).getSymbol());
+        Assertions.assertEquals("C", list.get(0).getSymbol());
+        Assertions.assertEquals("H", list.get(1).getSymbol());
 
     }
 
     @Test
     public void testGetString__String_IMolecularFormula() {
-        Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16", new MolecularFormula()));
-        Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16", builder));
+        Assertions.assertNotNull(getMolecularFormula("C10H16", new MolecularFormula()));
+        Assertions.assertNotNull(getMolecularFormula("C10H16", builder));
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("O3(Fe(O2))3", builder);
-        Assert.assertEquals( formula.getIsotopeCount( new Atom("Fe") ), 3);
-        Assert.assertEquals( formula.getIsotopeCount( new Atom("O") ), 9);
+        Assertions.assertEquals(formula.getIsotopeCount(new Atom("Fe") ), 3);
+        Assertions.assertEquals(formula.getIsotopeCount(new Atom("O") ), 9);
     }
 
     /** Test if formula-order is independent of isotope-insertion order */
@@ -225,15 +222,15 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 16);
 
-        Assert.assertEquals("C10H16", MolecularFormulaManipulator.getString(mf1));
+        Assertions.assertEquals("C10H16", getString(mf1));
 
         IMolecularFormula mf2 = new MolecularFormula();
         mf2.addIsotope(builder.newInstance(IAtom.class, "H"), 16);
         mf2.addIsotope(builder.newInstance(IAtom.class, "C"), 10);
 
-        Assert.assertEquals("C10H16", MolecularFormulaManipulator.getString(mf2));
+        Assertions.assertEquals("C10H16", getString(mf2));
 
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf2), MolecularFormulaManipulator.getString(mf1));
+        Assertions.assertEquals(getString(mf2), getString(mf1));
 
     }
 
@@ -246,7 +243,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 1);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
 
-        Assert.assertEquals("CH4", MolecularFormulaManipulator.getString(mf1));
+        Assertions.assertEquals("CH4", getString(mf1));
     }
 
     /**
@@ -258,7 +255,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 1);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
 
-        Assert.assertEquals("C1H4", MolecularFormulaManipulator.getString(mf1, true));
+        Assertions.assertEquals("C1H4", getString(mf1, true));
     }
 
     /** Test if formulae group elements when not inserted simultaneously */
@@ -269,15 +266,15 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C", 13), 1);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 16);
 
-        Assert.assertEquals("C10H16", MolecularFormulaManipulator.getString(mf1));
+        Assertions.assertEquals("C10H16", getString(mf1));
     }
 
     @Test
     public void testGetMolecularFormula_String_IChemObjectBuilder() {
         IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula("C10H16", builder);
 
-        Assert.assertEquals(26, getAtomCount(molecularFormula));
-        Assert.assertEquals(2, molecularFormula.getIsotopeCount());
+        Assertions.assertEquals(26, getAtomCount(molecularFormula));
+        Assertions.assertEquals(2, molecularFormula.getIsotopeCount());
 
     }
 
@@ -289,13 +286,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 16);
 
-        Assert.assertEquals(26, getAtomCount(mf1));
-        Assert.assertEquals(2, mf1.getIsotopeCount());
+        Assertions.assertEquals(26, getAtomCount(mf1));
+        Assertions.assertEquals(2, mf1.getIsotopeCount());
 
         IMolecularFormula mf2 = MolecularFormulaManipulator.getMolecularFormula("C11H17", mf1);
 
-        Assert.assertEquals(54, getAtomCount(mf2));
-        Assert.assertEquals(2, mf2.getIsotopeCount());
+        Assertions.assertEquals(54, getAtomCount(mf2));
+        Assertions.assertEquals(2, mf2.getIsotopeCount());
     }
 
     /** Test formula mass calculation */
@@ -303,13 +300,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void testGetMajorIsotopeMolecularFormula_String_IChemObjectBuilder() throws Exception {
         IMolecularFormula mf2 = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C11H17", builder);
 
-        Assert.assertEquals(28, getAtomCount(mf2));
-        Assert.assertEquals(2, mf2.getIsotopeCount());
+        Assertions.assertEquals(28, getAtomCount(mf2));
+        Assertions.assertEquals(2, mf2.getIsotopeCount());
         IIsotope carbon = Isotopes.getInstance().getMajorIsotope("C");
         IIsotope hydrogen = Isotopes.getInstance().getMajorIsotope("H");
         double totalMass = carbon.getExactMass() * 11;
         totalMass += hydrogen.getExactMass() * 17;
-        Assert.assertEquals(totalMass, MolecularFormulaManipulator.getTotalExactMass(mf2), 0.0000001);
+        Assertions.assertEquals(totalMass, getTotalExactMass(mf2), 0.0000001);
     }
 
     /** test @link {@link MolecularFormulaManipulator#removeElement(IMolecularFormula, IElement)} */
@@ -325,17 +322,17 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(hy1, 2);
         formula.addIsotope(hy2, 1);
 
-        Assert.assertEquals(4, formula.getIsotopeCount());
+        Assertions.assertEquals(4, formula.getIsotopeCount());
 
         formula = MolecularFormulaManipulator.removeElement(formula, builder.newInstance(IElement.class, "F"));
 
-        Assert.assertEquals(3, formula.getIsotopeCount());
-        Assert.assertEquals(4, getAtomCount(formula));
+        Assertions.assertEquals(3, formula.getIsotopeCount());
+        Assertions.assertEquals(4, getAtomCount(formula));
 
         formula = MolecularFormulaManipulator.removeElement(formula, builder.newInstance(IElement.class, "H"));
 
-        Assert.assertEquals(1, getAtomCount(formula));
-        Assert.assertEquals(1, formula.getIsotopeCount());
+        Assertions.assertEquals(1, getAtomCount(formula));
+        Assertions.assertEquals(1, formula.getIsotopeCount());
 
     }
 
@@ -356,7 +353,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
 
-        Assert.assertEquals(46.96885268, totalExactMass, 0.000001);
+        Assertions.assertEquals(46.96885268, totalExactMass, 0.000001);
     }
 
     /**
@@ -372,11 +369,11 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("CH5O", builder);
 
         double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
-        Assert.assertEquals(33.034040, totalExactMass, 0.0001);
+        Assertions.assertEquals(33.034040, totalExactMass, 0.0001);
 
         formula.setCharge(1);
         double totalExactMass2 = MolecularFormulaManipulator.getTotalExactMass(formula);
-        Assert.assertEquals(33.03349, totalExactMass2, 0.0001);
+        Assertions.assertEquals(33.03349, totalExactMass2, 0.0001);
     }
 
     /**
@@ -392,7 +389,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("H2PO4", builder);
         formula.setCharge(-1);
         double totalExactMass2 = MolecularFormulaManipulator.getTotalExactMass(formula);
-        Assert.assertEquals(96.96961875390926, totalExactMass2, 0.0001);
+        Assertions.assertEquals(96.96961875390926, totalExactMass2, 0.0001);
     }
 
     @Test
@@ -406,7 +403,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class, "Cl"));
 
         double totalExactMass = MolecularFormulaManipulator.getNaturalExactMass(formula);
-        Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
+        Assertions.assertEquals(expectedMass, totalExactMass, 0.000001);
     }
 
     @Test
@@ -416,7 +413,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(builder.newInstance(IIsotope.class, "O"));
 
         double totalExactMass = MolecularFormulaManipulator.getTotalMassNumber(formula);
-        Assert.assertEquals(28, totalExactMass, 0.000001);
+        Assertions.assertEquals(28, totalExactMass, 0.000001);
     }
 
     @Test
@@ -430,7 +427,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         expectedMass += 4.0 * Isotopes.getInstance().getMajorIsotope("H").getExactMass();
 
         double totalExactMass = MolecularFormulaManipulator.getMajorIsotopeMass(formula);
-        Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
+        Assertions.assertEquals(expectedMass, totalExactMass, 0.000001);
     }
 
     /**
@@ -446,11 +443,11 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         formula.addIsotope(carb);
 
-        Assert.assertEquals("C1", MolecularFormulaManipulator.getString(formula, true));
+        Assertions.assertEquals("C1", getString(formula, true));
 
         double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
 
-        Assert.assertEquals(12.0, totalExactMass, 0.000001);
+        Assertions.assertEquals(12.0, totalExactMass, 0.000001);
     }
 
     /**
@@ -469,7 +466,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula);
 
-        Assert.assertEquals(0.74969154, totalAbudance, 0.000001);
+        Assertions.assertEquals(0.74969154, totalAbudance, 0.000001);
     }
 
     /**
@@ -486,9 +483,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula1.addIsotope(br1);
         formula1.addIsotope(br2);
 
-        Assert.assertEquals(2, formula1.getIsotopeCount(), 0.000001);
+        Assertions.assertEquals(2, formula1.getIsotopeCount(), 0.000001);
         double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula1);
-        Assert.assertEquals(0.24995235, totalAbudance, 0.000001);
+        Assertions.assertEquals(0.24995235, totalAbudance, 0.000001);
     }
 
     @Test
@@ -501,10 +498,10 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula2.addIsotope(br1);
         formula2.addIsotope(br2);
 
-        Assert.assertEquals(1, formula2.getIsotopeCount(), 0.000001);
+        Assertions.assertEquals(1, formula2.getIsotopeCount(), 0.000001);
         double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);
 
-        Assert.assertEquals(0.25694761, totalAbudance, 0.000001);
+        Assertions.assertEquals(0.25694761, totalAbudance, 0.000001);
     }
 
     @Test
@@ -515,10 +512,10 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula2.addIsotope(br1);
         formula2.addIsotope(br1);
 
-        Assert.assertEquals(1, formula2.getIsotopeCount());
+        Assertions.assertEquals(1, formula2.getIsotopeCount());
         double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);
 
-        Assert.assertEquals(0.25694761, totalAbudance, 0.000001);
+        Assertions.assertEquals(0.25694761, totalAbudance, 0.000001);
     }
 
     /** Test Double-Bond-Equivalent (DBE) calculation */
@@ -528,27 +525,27 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 22);
 
-        Assert.assertEquals(0.0, MolecularFormulaManipulator.getDBE(formula), 0.01);
+        Assertions.assertEquals(0.0, getDBE(formula), 0.01);
 
         formula = new MolecularFormula();
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 16);
 
-        Assert.assertEquals(3.0, MolecularFormulaManipulator.getDBE(formula), 0.01);
+        Assertions.assertEquals(3.0, getDBE(formula), 0.01);
 
         formula = new MolecularFormula();
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 16);
         formula.addIsotope(builder.newInstance(IIsotope.class, "O"));
 
-        Assert.assertEquals(3.0, MolecularFormulaManipulator.getDBE(formula), 0.01);
+        Assertions.assertEquals(3.0, getDBE(formula), 0.01);
 
         formula = new MolecularFormula();
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 19);
         formula.addIsotope(builder.newInstance(IIsotope.class, "N"));
 
-        Assert.assertEquals(2.0, MolecularFormulaManipulator.getDBE(formula), 0.01);
+        Assertions.assertEquals(2.0, getDBE(formula), 0.01);
 
     }
 
@@ -560,8 +557,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(builder.newInstance(IIsotope.class, "Cl"), 2);
         formula.addIsotope(builder.newInstance(IIsotope.class, "O"), 2);
 
-        Assert.assertEquals("C<sub>8</sub>H<sub>10</sub>Cl<sub>2</sub>O<sub>2</sub>",
-                MolecularFormulaManipulator.getHTML(formula));
+        Assertions.assertEquals("C<sub>8</sub>H<sub>10</sub>Cl<sub>2</sub>O<sub>2</sub>", getHTML(formula));
     }
 
     @Test
@@ -570,7 +566,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 1);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
 
-        Assert.assertEquals("CH<sub>4</sub>", MolecularFormulaManipulator.getHTML(formula));
+        Assertions.assertEquals("CH<sub>4</sub>", getHTML(formula));
     }
 
     @Test
@@ -578,11 +574,11 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         MolecularFormula formula = new MolecularFormula();
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
 
-        Assert.assertEquals("C<sub>10</sub>", MolecularFormulaManipulator.getHTML(formula, true, false));
+        Assertions.assertEquals("C<sub>10</sub>", getHTML(formula, true, false));
         formula.setCharge(1);
-        Assert.assertEquals("C<sub>10</sub><sup>+</sup>", MolecularFormulaManipulator.getHTML(formula, true, false));
+        Assertions.assertEquals("C<sub>10</sub><sup>+</sup>", getHTML(formula, true, false));
         formula.setCharge(formula.getCharge() - 2);
-        Assert.assertEquals("C<sub>10</sub><sup>–</sup>", MolecularFormulaManipulator.getHTML(formula, true, false));
+        Assertions.assertEquals("C<sub>10</sub><sup>–</sup>", getHTML(formula, true, false));
     }
 
     @Test
@@ -590,11 +586,11 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         MolecularFormula formula = new MolecularFormula();
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
 
-        Assert.assertEquals("C<sub>10</sub>", MolecularFormulaManipulator.getHTML(formula, true, false));
+        Assertions.assertEquals("C<sub>10</sub>", getHTML(formula, true, false));
         formula.setCharge(1);
-        Assert.assertEquals("C<sub>10</sub><sup>+</sup>", MolecularFormulaManipulator.getHTML(formula, true, true));
+        Assertions.assertEquals("C<sub>10</sub><sup>+</sup>", getHTML(formula, true, true));
         formula.setCharge(formula.getCharge() - 2);
-        Assert.assertEquals("C<sub>10</sub><sup>–</sup>", MolecularFormulaManipulator.getHTML(formula, true, true));
+        Assertions.assertEquals("C<sub>10</sub><sup>–</sup>", getHTML(formula, true, true));
     }
 
     @Test
@@ -607,8 +603,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         newOrder[0] = "H";
         newOrder[1] = "C";
 
-        Assert.assertEquals("H<sub>2</sub>C<sub>2</sub>",
-                MolecularFormulaManipulator.getHTML(formula, newOrder, false, false));
+        Assertions.assertEquals("H<sub>2</sub>C<sub>2</sub>", getHTML(formula, newOrder, false, false));
     }
 
     @Test
@@ -616,8 +611,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         MolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 2);
         formula.addIsotope(ifac.getMajorIsotope("H"), 6);
-        Assert.assertEquals("<sup>12</sup>C<sub>2</sub><sup>1</sup>H<sub>6</sub>",
-                MolecularFormulaManipulator.getHTML(formula, false, true));
+        Assertions.assertEquals("<sup>12</sup>C<sub>2</sub><sup>1</sup>H<sub>6</sub>", getHTML(formula, false, true));
     }
 
     @Test
@@ -626,8 +620,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(ifac.getMajorIsotope("C"), 2);
         formula.addIsotope(ifac.getMajorIsotope("H"), 6);
         formula.setCharge(1);
-        Assert.assertEquals("<sup>12</sup>C<sub>2</sub><sup>1</sup>H<sub>6</sub><sup>+</sup>",
-                MolecularFormulaManipulator.getHTML(formula, true, true));
+        Assertions.assertEquals("<sup>12</sup>C<sub>2</sub><sup>1</sup>H<sub>6</sub><sup>+</sup>", getHTML(formula, true, true));
     }
 
     @Test
@@ -646,19 +639,14 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
         mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
 
-        Assert.assertEquals(getAtomCount(mf2),
-                getAtomCount(mf1));
-        Assert.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
+        Assertions.assertEquals(getAtomCount(mf2), getAtomCount(mf1));
+        Assertions.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
         IElement elemC = builder.newInstance(IElement.class, "C");
         IElement elemH = builder.newInstance(IElement.class, "H");
-        Assert.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)),
-                mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)));
-        Assert.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)),
-                mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)));
-        Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemC),
-                MolecularFormulaManipulator.getElementCount(mf1, elemC));
-        Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemH),
-                MolecularFormulaManipulator.getElementCount(mf1, elemH));
+        Assertions.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)), mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)));
+        Assertions.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)), mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)));
+        Assertions.assertEquals(getElementCount(mf2, elemC), getElementCount(mf1, elemC));
+        Assertions.assertEquals(getElementCount(mf2, elemH), getElementCount(mf1, elemH));
 
     }
 
@@ -674,7 +662,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         ac.addAtom(builder.newInstance(IAtom.class, "H"));
 
         IMolecularFormula mf1 = MolecularFormulaManipulator.getMolecularFormula(ac);
-        Assert.assertNotNull(mf1);
+        Assertions.assertNotNull(mf1);
     }
 
     @Test
@@ -689,7 +677,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         IMolecularFormula mf1 = MolecularFormulaManipulator.getMolecularFormula(ac);
 
-        Assert.assertEquals(1, mf1.getCharge(), 0.000);
+        Assertions.assertEquals(1, mf1.getCharge(), 0.000);
     }
 
     @Test
@@ -708,19 +696,14 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
         mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
 
-        Assert.assertEquals(getAtomCount(mf2),
-                getAtomCount(mf1));
-        Assert.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
+        Assertions.assertEquals(getAtomCount(mf2), getAtomCount(mf1));
+        Assertions.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
         IElement elemC = builder.newInstance(IElement.class, "C");
         IElement elemH = builder.newInstance(IElement.class, "H");
-        Assert.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)),
-                mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)));
-        Assert.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)),
-                mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)));
-        Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemC),
-                MolecularFormulaManipulator.getElementCount(mf1, elemC));
-        Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemH),
-                MolecularFormulaManipulator.getElementCount(mf1, elemH));
+        Assertions.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)), mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)));
+        Assertions.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)), mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)));
+        Assertions.assertEquals(getElementCount(mf2, elemC), getElementCount(mf1, elemC));
+        Assertions.assertEquals(getElementCount(mf2, elemH), getElementCount(mf1, elemH));
 
     }
 
@@ -744,19 +727,14 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
         mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 9);
 
-        Assert.assertEquals(getAtomCount(mf2),
-                getAtomCount(mf1));
-        Assert.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
+        Assertions.assertEquals(getAtomCount(mf2), getAtomCount(mf1));
+        Assertions.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
         IElement elemC = builder.newInstance(IElement.class, "C");
         IElement elemH = builder.newInstance(IElement.class, "H");
-        Assert.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)),
-                mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)));
-        Assert.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)),
-                mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)));
-        Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemC),
-                MolecularFormulaManipulator.getElementCount(mf1, elemC));
-        Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemH),
-                MolecularFormulaManipulator.getElementCount(mf1, elemH));
+        Assertions.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)), mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemC)));
+        Assertions.assertEquals(mf2.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)), mf1.getIsotopeCount(builder.newInstance(IIsotope.class, elemH)));
+        Assertions.assertEquals(getElementCount(mf2, elemC), getElementCount(mf1, elemC));
+        Assertions.assertEquals(getElementCount(mf2, elemH), getElementCount(mf1, elemH));
 
     }
 
@@ -769,7 +747,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         IAtomContainer ac = MolecularFormulaManipulator.getAtomContainer(mf2);
 
-        Assert.assertEquals(6, ac.getAtomCount());
+        Assertions.assertEquals(6, ac.getAtomCount());
 
     }
 
@@ -783,7 +761,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IAtomContainer ac = MolecularFormulaManipulator
                 .getAtomContainer(mf2, builder.newInstance(IAtomContainer.class));
 
-        Assert.assertEquals(6, ac.getAtomCount());
+        Assertions.assertEquals(6, ac.getAtomCount());
 
     }
 
@@ -792,7 +770,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         String mf = "C2H4";
         IAtomContainer atomContainer = MolecularFormulaManipulator.getAtomContainer(mf,
                 DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(6, atomContainer.getAtomCount());
+        Assertions.assertEquals(6, atomContainer.getAtomCount());
     }
 
     /**
@@ -805,15 +783,15 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
         IAtomContainer ac = MolecularFormulaManipulator
                 .getAtomContainer(mf2, builder.newInstance(IAtomContainer.class));
-        Assert.assertEquals(6, ac.getAtomCount());
-        Assert.assertNotNull(ac.getAtom(0).getAtomicNumber());
+        Assertions.assertEquals(6, ac.getAtomCount());
+        Assertions.assertNotNull(ac.getAtom(0).getAtomicNumber());
         for (IAtom atom : ac.atoms()) {
             if (atom.getAtomicNumber() == IElement.C)
-                Assert.assertEquals(6, atom.getAtomicNumber().intValue());
+                Assertions.assertEquals(6, atom.getAtomicNumber().intValue());
             else if (atom.getAtomicNumber() == IElement.H)
-                Assert.assertEquals(1, atom.getAtomicNumber().intValue());
+                Assertions.assertEquals(1, atom.getAtomicNumber().intValue());
             else
-                Assert.fail("Unexcepted element: " + atom.getSymbol());
+                Assertions.fail("Unexcepted element: " + atom.getSymbol());
         }
     }
 
@@ -834,9 +812,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IAtomContainer ac2 = MolecularFormulaManipulator.getAtomContainer(mf2,
                 builder.newInstance(IAtomContainer.class));
 
-        Assert.assertEquals(ac2.getAtomCount(), ac2.getAtomCount());
-        Assert.assertEquals(ac2.getAtom(0).getSymbol(), ac2.getAtom(0).getSymbol());
-        Assert.assertEquals(ac2.getAtom(5).getSymbol(), ac2.getAtom(5).getSymbol());
+        Assertions.assertEquals(ac2.getAtomCount(), ac2.getAtomCount());
+        Assertions.assertEquals(ac2.getAtom(0).getSymbol(), ac2.getAtom(0).getSymbol());
+        Assertions.assertEquals(ac2.getAtom(5).getSymbol(), ac2.getAtom(5).getSymbol());
 
     }
 
@@ -856,8 +834,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         List<IElement> elements = MolecularFormulaManipulator.elements(formula);
 
-        Assert.assertEquals(5, getAtomCount(formula));
-        Assert.assertEquals(3, elements.size());
+        Assertions.assertEquals(5, getAtomCount(formula));
+        Assertions.assertEquals(3, elements.size());
     }
 
     @Test
@@ -876,8 +854,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula3.addIsotope(builder.newInstance(IIsotope.class, "H"), 2);
         formula3.setCharge(0);
 
-        Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, formula2));
-        Assert.assertFalse(MolecularFormulaManipulator.compare(formula1, formula3));
+        Assertions.assertTrue(compare(formula1, formula2));
+        Assertions.assertFalse(compare(formula1, formula3));
 
     }
 
@@ -896,8 +874,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula3.addIsotope(builder.newInstance(IIsotope.class, "C"), 1);
         formula3.addIsotope(builder.newInstance(IIsotope.class, "H"), 3);
 
-        Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, formula2));
-        Assert.assertFalse(MolecularFormulaManipulator.compare(formula1, formula3));
+        Assertions.assertTrue(compare(formula1, formula2));
+        Assertions.assertFalse(compare(formula1, formula3));
 
     }
 
@@ -918,8 +896,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         hyd.setExactMass(2.002334234);
         formula3.addIsotope(hyd, 2);
 
-        Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, formula2));
-        Assert.assertFalse(MolecularFormulaManipulator.compare(formula1, formula3));
+        Assertions.assertTrue(compare(formula1, formula2));
+        Assertions.assertFalse(compare(formula1, formula3));
 
     }
 
@@ -928,13 +906,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 16);
-        Assert.assertEquals(1, MolecularFormulaManipulator.getHeavyElements(formula).size());
+        Assertions.assertEquals(1, getHeavyElements(formula).size());
     }
 
     @Test
     public void testGetHeavyElements_IMolecularFormula_2() {
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH", builder);
-        Assert.assertEquals(2, MolecularFormulaManipulator.getHeavyElements(formula).size());
+        Assertions.assertEquals(2, getHeavyElements(formula).size());
     }
 
     /**
@@ -963,10 +941,10 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         String[] arrayGenerated = MolecularFormulaManipulator.generateOrderEle();
         List<String> listGenerated = Arrays.asList(arrayGenerated);
-        Assert.assertEquals(113, listGenerated.size());
+        Assertions.assertEquals(113, listGenerated.size());
 
         for (String element : listElements) {
-            Assert.assertTrue("Element missing from generateOrderEle: " + element, listGenerated.contains(element));
+            Assertions.assertTrue(listGenerated.contains(element), "Element missing from generateOrderEle: " + element);
         }
     }
 
@@ -979,19 +957,19 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void testGetHillString_IMolecularFormula() {
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH", builder);
         String listGenerated = MolecularFormulaManipulator.getHillString(formula);
-        Assert.assertEquals("CH4O", listGenerated);
+        Assertions.assertEquals("CH4O", listGenerated);
 
         formula = MolecularFormulaManipulator.getMolecularFormula("CH3CH2Br", builder);
         listGenerated = MolecularFormulaManipulator.getHillString(formula);
-        Assert.assertEquals("C2H5Br", listGenerated);
+        Assertions.assertEquals("C2H5Br", listGenerated);
 
         formula = MolecularFormulaManipulator.getMolecularFormula("HCl", builder);
         listGenerated = MolecularFormulaManipulator.getHillString(formula);
-        Assert.assertEquals("ClH", listGenerated);
+        Assertions.assertEquals("ClH", listGenerated);
 
         formula = MolecularFormulaManipulator.getMolecularFormula("HBr", builder);
         listGenerated = MolecularFormulaManipulator.getHillString(formula);
-        Assert.assertEquals("BrH", listGenerated);
+        Assertions.assertEquals("BrH", listGenerated);
     }
 
     /**
@@ -1010,29 +988,28 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(mol);
         double exactMass = MolecularFormulaManipulator.getTotalExactMass(mf);
-        Assert.assertEquals(16.0313, exactMass, 0.0001);
+        Assertions.assertEquals(16.0313, exactMass, 0.0001);
     }
 
     @Test
     public void testSingleAtom() {
         String formula = "CH4";
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
-        Assert.assertEquals(1,
-                MolecularFormulaManipulator.getIsotopes(mf, mf.getBuilder().newInstance(IElement.class, "C")).size());
+        Assertions.assertEquals(1, getIsotopes(mf, mf.getBuilder().newInstance(IElement.class, "C")).size());
     }
 
     @Test
     public void testSimplifyMolecularFormula_String() {
         String formula = "C1H41.H2O";
         String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
-        Assert.assertEquals("C1H43O", simplifyMF);
+        Assertions.assertEquals("C1H43O", simplifyMF);
     }
 
     @Test
     public void testSimplifyMolecularFormula_String2() {
         String formula = "CH41.H2O";
         String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
-        Assert.assertEquals("CH43O", simplifyMF);
+        Assertions.assertEquals("CH43O", simplifyMF);
     }
 
     @Test
@@ -1043,16 +1020,16 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula1.addIsotope(builder.newInstance(IIsotope.class, "H"), 6);
         formula1.addIsotope(builder.newInstance(IIsotope.class, "O"), 1);
         IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
-        Assert.assertTrue(MolecularFormulaManipulator.compare(formula1,
-                MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-        Assert.assertEquals("CH6O", MolecularFormulaManipulator.getString(ff));
+        Assertions.assertTrue(compare(formula1,
+                                      getMolecularFormula(formula, builder)));
+        Assertions.assertEquals("CH6O", getString(ff));
     }
 
     @Test
     public void testSpace() {
         String formula = "C17H21NO. C7H6O3";
         String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
-        Assert.assertEquals("C24H27NO4", simplifyMF);
+        Assertions.assertEquals("C24H27NO4", simplifyMF);
     }
 
     /** Test molecule simplification */
@@ -1060,7 +1037,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void test0() {
         String formula = "Fe.(C6H11O7)3";
         String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
-        Assert.assertEquals("FeC18H33O21", simplifyMF);
+        Assertions.assertEquals("FeC18H33O21", simplifyMF);
     }
 
     /** Test molecule simplification */
@@ -1068,7 +1045,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void test1() {
         String formula = "(C6H11O7)3.Fe";
         String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
-        Assert.assertEquals("C18H33O21Fe", simplifyMF);
+        Assertions.assertEquals("C18H33O21Fe", simplifyMF);
     }
 
     /** Test molecule simplification */
@@ -1076,7 +1053,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void test2() {
         String formula = "C14H14N2.2HCl";
         String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
-        Assert.assertEquals("C14H16N2Cl2", simplifyMF);
+        Assertions.assertEquals("C14H16N2Cl2", simplifyMF);
     }
 
     /** Test molecule simplification */
@@ -1084,7 +1061,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void test3() {
         String formula = "(C27H33N3O8)2.2HNO3.3H2O";
         String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
-        Assert.assertEquals("C54H74N8O25", simplifyMF);
+        Assertions.assertEquals("C54H74N8O25", simplifyMF);
     }
 
     /** Test if formula-comparison is simplify-independant */
@@ -1097,9 +1074,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula1.addIsotope(builder.newInstance(IIsotope.class, "O"), 25);
         formula1.addIsotope(builder.newInstance(IIsotope.class, "N"), 8);
         IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
-        Assert.assertTrue(MolecularFormulaManipulator.compare(formula1,
-                MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-        Assert.assertEquals("C54H74N8O25", MolecularFormulaManipulator.getString(ff));
+        Assertions.assertTrue(compare(formula1,
+                                      getMolecularFormula(formula, builder)));
+        Assertions.assertEquals("C54H74N8O25", getString(ff));
     }
 
     /** Test if formula-comparison is simplify-independant */
@@ -1111,10 +1088,10 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula1.addIsotope(builder.newInstance(IIsotope.class, "O"), 3);
         formula1.setCharge(-2);
         IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
-        Assert.assertTrue(MolecularFormulaManipulator.compare(formula1,
-                MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-        Assert.assertEquals("[O3S]2-", MolecularFormulaManipulator.getString(ff));
-        Assert.assertEquals(-2, ff.getCharge(), 0.00001);
+        Assertions.assertTrue(compare(formula1,
+                                      getMolecularFormula(formula, builder)));
+        Assertions.assertEquals("[O3S]2-", getString(ff));
+        Assertions.assertEquals(-2, ff.getCharge(), 0.00001);
     }
 
     /** Test if formula-comparison is simplify-independant */
@@ -1125,9 +1102,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula1.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
         formula1.addIsotope(builder.newInstance(IIsotope.class, "H"), 6);
         IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
-        Assert.assertTrue(MolecularFormulaManipulator.compare(formula1,
-                MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-        Assert.assertEquals("C2H6", MolecularFormulaManipulator.getString(ff));
+        Assertions.assertTrue(compare(formula1,
+                                      getMolecularFormula(formula, builder)));
+        Assertions.assertEquals("C2H6", getString(ff));
     }
 
     /** Test if formula-comparison is simplify-independant */
@@ -1140,9 +1117,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula1.addIsotope(builder.newInstance(IIsotope.class, "N"), 1);
         formula1.addIsotope(builder.newInstance(IIsotope.class, "O"), 2);
         IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
-        Assert.assertTrue(MolecularFormulaManipulator.compare(formula1,
-                MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-        Assert.assertEquals("C5H13NO2", MolecularFormulaManipulator.getString(ff));
+        Assertions.assertTrue(compare(formula1,
+                                      getMolecularFormula(formula, builder)));
+        Assertions.assertEquals("C5H13NO2", getString(ff));
     }
 
     /**
@@ -1155,7 +1132,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        Assert.assertNotNull(chemFile);
+        Assertions.assertNotNull(chemFile);
         List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
         IAtomContainer mol = mols.get(0);
 
@@ -1166,7 +1143,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
         String formula2 = MolecularFormulaManipulator.getString(molecularFormula);
-        Assert.assertTrue(formula2.equals("C35H64N3O21P3S"));
+        Assertions.assertTrue(formula2.equals("C35H64N3O21P3S"));
     }
 
     /**
@@ -1178,8 +1155,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         helium.addAtom(new Atom("He"));
 
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);
-        Assert.assertNotNull(formula);
-        Assert.assertEquals("He", MolecularFormulaManipulator.getString(formula));
+        Assertions.assertNotNull(formula);
+        Assertions.assertEquals("He", getString(formula));
     }
 
     /**
@@ -1191,8 +1168,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         helium.addAtom(new Atom("Am"));
 
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);
-        Assert.assertNotNull(formula);
-        Assert.assertEquals("Am", MolecularFormulaManipulator.getString(formula));
+        Assertions.assertNotNull(formula);
+        Assertions.assertEquals("Am", getString(formula));
     }
 
     /**
@@ -1206,14 +1183,14 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
 
         IMolecularFormula f = MolecularFormulaManipulator.getMolecularFormula(mol);
-        Assert.assertEquals("C6", MolecularFormulaManipulator.getString(f));
+        Assertions.assertEquals("C6", getString(f));
 
-        Assert.assertEquals(6, mol.getAtomCount());
+        Assertions.assertEquals(6, mol.getAtomCount());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         adder.addImplicitHydrogens(mol);
-        Assert.assertEquals(6, mol.getAtomCount());
+        Assertions.assertEquals(6, mol.getAtomCount());
         f = MolecularFormulaManipulator.getMolecularFormula(mol);
-        Assert.assertEquals("C6H6", MolecularFormulaManipulator.getString(f));
+        Assertions.assertEquals("C6H6", getString(f));
 
     }
 
@@ -1266,7 +1243,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     @Test public void deprotonatePhenol() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("C6H6O", bldr);
-        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
+        Assertions.assertTrue(adjustProtonation(mf, -1));
         assertThat(MolecularFormulaManipulator.getString(mf), is("[C6H5O]-"));
         assertThat(mf.getCharge(), is(-1));
     }
@@ -1275,7 +1252,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void protonatePhenolate() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[C6H5O]-", bldr);
-        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
+        Assertions.assertTrue(adjustProtonation(mf, +1));
         assertThat(MolecularFormulaManipulator.getString(mf), is("C6H6O"));
         assertThat(mf.getCharge(), is(0));
         assertThat(mf.getIsotopeCount(), is(3));
@@ -1285,7 +1262,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void protonatePhenolateMajorIsotopes() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("[C6H5O]-", bldr);
-        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
+        Assertions.assertTrue(adjustProtonation(mf, +1));
         assertThat(MolecularFormulaManipulator.getString(mf), is("C6H6O"));
         assertThat(mf.getCharge(), is(0));
         assertThat(mf.getIsotopeCount(), is(3));
@@ -1295,7 +1272,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void deprontateHCl() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("HCl", bldr);
-        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
+        Assertions.assertTrue(adjustProtonation(mf, -1));
         assertThat(MolecularFormulaManipulator.getString(mf), is("[Cl]-"));
         assertThat(mf.getCharge(), is(-1));
         assertThat(mf.getIsotopeCount(), is(1));
@@ -1305,7 +1282,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void prontateChloride() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[Cl]-", bldr);
-        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
+        Assertions.assertTrue(adjustProtonation(mf, +1));
         assertThat(MolecularFormulaManipulator.getString(mf), is("ClH"));
         assertThat(mf.getCharge(), is(0));
         assertThat(mf.getIsotopeCount(), is(2));
@@ -1315,7 +1292,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void deprontateChloride() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[Cl]-", bldr);
-        assertFalse(MolecularFormulaManipulator.adjustProtonation(mf, -1));
+        Assertions.assertFalse(adjustProtonation(mf, -1));
     }
 
     @Test
@@ -1330,7 +1307,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf.addIsotope(Isotopes.getInstance().getMajorIsotope(6), 6);
         mf.addIsotope(Isotopes.getInstance().getMajorIsotope(8), 1);
         mf.setCharge(-1);
-        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
+        Assertions.assertTrue(adjustProtonation(mf, +1));
         assertThat(MolecularFormulaManipulator.getString(mf), is("C6H6O"));
         assertThat(mf.getCharge(), is(0));
         assertThat(mf.getIsotopeCount(), is(4));
@@ -1499,7 +1476,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula mf =
             MolecularFormulaManipulator.getMolecularFormula(mfStr, bldr);
         String actual = getString(mf, false, true);
-        Assert.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test

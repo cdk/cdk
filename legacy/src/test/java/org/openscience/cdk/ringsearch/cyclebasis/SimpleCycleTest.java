@@ -20,6 +20,7 @@ package org.openscience.cdk.ringsearch.cyclebasis;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -38,13 +39,13 @@ public class SimpleCycleTest extends CDKTestCase {
     @Test
     public void testSimpleCycle_UndirectedGraph_Collection() {
         SimpleCycle cycle = new SimpleCycle(new SimpleGraph(), new ArrayList());
-        Assert.assertNotNull(cycle);
+        Assertions.assertNotNull(cycle);
     }
 
     @Test
     public void testSimpleCycle_UndirectedGraph_Set() {
         SimpleCycle cycle = new SimpleCycle(new SimpleGraph(), new HashSet());
-        Assert.assertNotNull(cycle);
+        Assertions.assertNotNull(cycle);
     }
 
 }

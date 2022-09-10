@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.silent.Atom;
 
@@ -33,6 +34,6 @@ public class AnyAtomTest {
 
     @Test
     public void matchHydrogen() throws Exception {
-        assertTrue(new AnyAtom(null).matches(new Atom("H")));
+        Assertions.assertTrue(new AnyAtom(null).matches(new Atom("H")));
     }
 }

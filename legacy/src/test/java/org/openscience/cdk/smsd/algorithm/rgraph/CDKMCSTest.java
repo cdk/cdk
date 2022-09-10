@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -80,7 +81,7 @@ public class CDKMCSTest extends CDKTestCase {
         if (standAlone) {
             System.out.println("Cyclohexene is a subgraph of alpha-Pinen: " + CDKMCS.isSubgraph(mol, frag1, true));
         } else {
-            Assert.assertTrue(CDKMCS.isSubgraph(mol, frag1, true));
+            Assertions.assertTrue(CDKMCS.isSubgraph(mol, frag1, true));
         }
 
     }
@@ -119,7 +120,7 @@ public class CDKMCSTest extends CDKTestCase {
 
         List<List<CDKRMap>> list = CDKMCS.getSubgraphMaps(atomContainer, query, true);
 
-        Assert.assertTrue(list.isEmpty());
+        Assertions.assertTrue(list.isEmpty());
     }
 
     @Test
@@ -134,7 +135,7 @@ public class CDKMCSTest extends CDKTestCase {
         if (standAlone) {
             System.out.println("Cyclohexane is a subgraph of alpha-Pinen: " + CDKMCS.isSubgraph(mol, frag1, true));
         } else {
-            Assert.assertTrue(!CDKMCS.isSubgraph(mol, frag1, true));
+            Assertions.assertTrue(!CDKMCS.isSubgraph(mol, frag1, true));
         }
     }
 
@@ -154,7 +155,7 @@ public class CDKMCSTest extends CDKTestCase {
         if (standAlone) {
             System.out.println("Pyrrole is a subgraph of Indole: " + CDKMCS.isSubgraph(mol, frag1, true));
         } else {
-            Assert.assertTrue(CDKMCS.isSubgraph(mol, frag1, true));
+            Assertions.assertTrue(CDKMCS.isSubgraph(mol, frag1, true));
         }
     }
 
@@ -165,7 +166,7 @@ public class CDKMCSTest extends CDKTestCase {
         IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
         QueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
 
-        Assert.assertTrue(CDKMCS.isSubgraph(atomContainer, query, true));
+        Assertions.assertTrue(CDKMCS.isSubgraph(atomContainer, query, true));
     }
 
     @Test
@@ -188,8 +189,8 @@ public class CDKMCSTest extends CDKTestCase {
         List<CDKRMap> first = list.get(0);
         for (int i = 0; i < first.size(); i++) {
             CDKRMap rmap = first.get(i);
-            Assert.assertEquals(rmap.getId1(), result1[i]);
-            Assert.assertEquals(rmap.getId2(), result2[i]);
+            Assertions.assertEquals(rmap.getId1(), result1[i]);
+            Assertions.assertEquals(rmap.getId2(), result2[i]);
         }
     }
 
@@ -215,10 +216,10 @@ public class CDKMCSTest extends CDKTestCase {
         query2 = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
 
         List<CDKRMap> list = CDKMCS.getSubgraphMap(mol, query1, true);
-        Assert.assertEquals(11, list.size());
+        Assertions.assertEquals(11, list.size());
 
         list = CDKMCS.getSubgraphMap(mol, query2, true);
-        Assert.assertEquals(6, list.size());
+        Assertions.assertEquals(6, list.size());
 
     }
 
@@ -249,12 +250,12 @@ public class CDKMCSTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(mol2);
 
         List<IAtomContainer> list = CDKMCS.getOverlaps(mol1, mol2, true);
-        Assert.assertEquals(1, list.size());
-        Assert.assertEquals(11, (list.get(0)).getAtomCount());
+        Assertions.assertEquals(1, list.size());
+        Assertions.assertEquals(11, (list.get(0)).getAtomCount());
 
         list = CDKMCS.getOverlaps(mol2, mol1, true);
-        Assert.assertEquals(1, list.size());
-        Assert.assertEquals(11, (list.get(0)).getAtomCount());
+        Assertions.assertEquals(1, list.size());
+        Assertions.assertEquals(11, (list.get(0)).getAtomCount());
     }
 
     /**
@@ -287,10 +288,9 @@ public class CDKMCSTest extends CDKTestCase {
 
         List<IAtomContainer> list1 = CDKMCS.getOverlaps(mol1, mol2, true);
         List<IAtomContainer> list2 = CDKMCS.getOverlaps(mol2, mol1, true);
-        Assert.assertEquals(1, list1.size());
-        Assert.assertEquals(1, list2.size());
-        Assert.assertEquals((list1.get(0)).getAtomCount(),
-                (list2.get(0)).getAtomCount());
+        Assertions.assertEquals(1, list1.size());
+        Assertions.assertEquals(1, list2.size());
+        Assertions.assertEquals((list1.get(0)).getAtomCount(), (list2.get(0)).getAtomCount());
     }
 
     @Test
@@ -310,7 +310,7 @@ public class CDKMCSTest extends CDKTestCase {
             System.out.println("QueryAtomContainer matched: " + matched);
         }
         if (!standAlone) {
-            Assert.assertTrue(matched);
+            Assertions.assertTrue(matched);
         }
     }
 
@@ -320,8 +320,8 @@ public class CDKMCSTest extends CDKTestCase {
         ac1.addAtom(new Atom("C"));
         AtomContainer ac2 = new AtomContainer();
         ac2.addAtom(new Atom("C"));
-        Assert.assertTrue(CDKMCS.isIsomorph(ac1, ac2, true));
-        Assert.assertTrue(CDKMCS.isSubgraph(ac1, ac2, true));
+        Assertions.assertTrue(CDKMCS.isIsomorph(ac1, ac2, true));
+        Assertions.assertTrue(CDKMCS.isSubgraph(ac1, ac2, true));
     }
 
     @Test
@@ -331,8 +331,8 @@ public class CDKMCSTest extends CDKTestCase {
         IAtomContainer queryac = sp.parseSmiles("C1CCCC1");
         QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(queryac, false);
 
-        Assert.assertTrue("C1CCCC1 should be a subgraph of O1C=CC=C1", CDKMCS.isSubgraph(target, query, true));
-        Assert.assertTrue("C1CCCC1 should be a isomorph of O1C=CC=C1", CDKMCS.isIsomorph(target, query, true));
+        Assertions.assertTrue(CDKMCS.isSubgraph(target, query, true), "C1CCCC1 should be a subgraph of O1C=CC=C1");
+        Assertions.assertTrue(CDKMCS.isIsomorph(target, query, true), "C1CCCC1 should be a isomorph of O1C=CC=C1");
     }
 
     /**
@@ -348,7 +348,7 @@ public class CDKMCSTest extends CDKTestCase {
 
         try {
             CDKMCS.isSubgraph(query, target, true);
-            Assert.fail("The UniversalIsomorphism should check when the first arguments is a QueryAtomContainer");
+            Assertions.fail("The UniversalIsomorphism should check when the first arguments is a QueryAtomContainer");
         } catch (Exception e) {
             // OK, it must Assert.fail!
         }
@@ -366,13 +366,13 @@ public class CDKMCSTest extends CDKTestCase {
         QueryAtomContainer query = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(queryac);
 
         List<List<CDKRMap>> matches = CDKMCS.getIsomorphMaps(target, query, true);
-        Assert.assertEquals(1, matches.size());
-        Assert.assertEquals(1, matches.get(0).size());
+        Assertions.assertEquals(1, matches.size());
+        Assertions.assertEquals(1, matches.get(0).size());
         CDKRMap mapping = matches.get(0).get(0);
-        Assert.assertEquals(0, mapping.getId1());
-        Assert.assertEquals(0, mapping.getId2());
+        Assertions.assertEquals(0, mapping.getId1());
+        Assertions.assertEquals(0, mapping.getId2());
         List<List<CDKRMap>> atomMappings = CDKMCS.makeAtomsMapsOfBondsMaps(matches, target, query);
-        Assert.assertEquals(matches, atomMappings);
+        Assertions.assertEquals(matches, atomMappings);
     }
 
     /**
@@ -387,20 +387,20 @@ public class CDKMCSTest extends CDKTestCase {
         QueryAtomContainer query = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(queryac);
 
         List<List<CDKRMap>> matches = CDKMCS.getIsomorphMaps(target, query, true);
-        Assert.assertEquals(2, matches.size());
-        Assert.assertEquals(1, matches.get(0).size());
-        Assert.assertEquals(1, matches.get(1).size());
+        Assertions.assertEquals(2, matches.size());
+        Assertions.assertEquals(1, matches.get(0).size());
+        Assertions.assertEquals(1, matches.get(1).size());
         CDKRMap map1 = matches.get(0).get(0);
         CDKRMap map2 = matches.get(1).get(0);
 
-        Assert.assertEquals(0, map1.getId1());
-        Assert.assertEquals(0, map1.getId2());
+        Assertions.assertEquals(0, map1.getId1());
+        Assertions.assertEquals(0, map1.getId2());
 
-        Assert.assertEquals(2, map2.getId1());
-        Assert.assertEquals(0, map2.getId2());
+        Assertions.assertEquals(2, map2.getId1());
+        Assertions.assertEquals(0, map2.getId2());
 
         List<List<CDKRMap>> atomMappings = CDKMCS.makeAtomsMapsOfBondsMaps(matches, target, query);
-        Assert.assertEquals(matches, atomMappings);
+        Assertions.assertEquals(matches, atomMappings);
     }
 
     /**
@@ -409,7 +409,7 @@ public class CDKMCSTest extends CDKTestCase {
     @Test
     public void testGetTimeManager() {
         TimeManager expResult = new TimeManager();
-        Assert.assertNotNull(expResult);
+        Assertions.assertNotNull(expResult);
     }
 
     /**
@@ -419,6 +419,6 @@ public class CDKMCSTest extends CDKTestCase {
     public void testSetTimeManager() {
         TimeManager aTimeManager = new TimeManager();
         CDKMCS.setTimeManager(aTimeManager);
-        Assert.assertNotNull(CDKMCS.getTimeManager());
+        Assertions.assertNotNull(CDKMCS.getTimeManager());
     }
 }

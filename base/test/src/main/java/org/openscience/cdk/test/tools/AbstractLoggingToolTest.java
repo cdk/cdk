@@ -6,6 +6,7 @@
 package org.openscience.cdk.test.tools;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -20,7 +21,7 @@ public abstract class AbstractLoggingToolTest extends CDKTestCase {
     @Test
     public void testLoggingTool_Object() throws Exception {
         ILoggingTool logger = getLoggingTool();
-        Assert.assertNotNull(logger);
+        Assertions.assertNotNull(logger);
     }
 
     @Test

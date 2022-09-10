@@ -19,6 +19,7 @@
 package org.openscience.cdk.aromaticity;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -44,8 +45,8 @@ public class AromaticityCalculatorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("c1ccncc1");
         IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 
-        Assert.assertEquals(1, rs.getAtomContainerCount());
-        Assert.assertTrue(AromaticityCalculator.isAromatic((IRing) rs.getAtomContainer(0), mol));
+        Assertions.assertEquals(1, rs.getAtomContainerCount());
+        Assertions.assertTrue(AromaticityCalculator.isAromatic((IRing) rs.getAtomContainer(0), mol));
     }
 
 }

@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
@@ -53,7 +54,7 @@ public class CIPSMILESTest extends CDKTestCase {
     public void test() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 1, 4, 0, 2, 3, Stereo.CLOCKWISE);
-        Assert.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
+        Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
     }
 
     /**
@@ -67,7 +68,7 @@ public class CIPSMILESTest extends CDKTestCase {
     public void test2methylbutanol_R() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("OCC([H])(C)CC");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 2, 3, 1, 4, 5, Stereo.CLOCKWISE);
-        Assert.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
+        Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
     }
 
     /**
@@ -82,14 +83,14 @@ public class CIPSMILESTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("OCC([H])(C)CC");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 2, 3, 1, 4, 5,
                 Stereo.ANTI_CLOCKWISE);
-        Assert.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(chirality));
+        Assertions.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(chirality));
     }
 
     @Test
     public void testTwoVersusDoubleBondedOxygen_R() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("OC(O)C([H])(C)C=O");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 3, 4, 5, 1, 6, Stereo.CLOCKWISE);
-        Assert.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
+        Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
     }
 
     @Test
@@ -97,7 +98,7 @@ public class CIPSMILESTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("OC(O)C([H])(C)C=O");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 3, 4, 5, 1, 6,
                 Stereo.ANTI_CLOCKWISE);
-        Assert.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(chirality));
+        Assertions.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(chirality));
     }
 
     @Test
@@ -105,7 +106,7 @@ public class CIPSMILESTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("CCC(C)CCC");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 2, CIPTool.HYDROGEN, 3, 1, 4,
                 Stereo.ANTI_CLOCKWISE);
-        Assert.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(chirality));
+        Assertions.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(chirality));
     }
 
     @Test
@@ -113,10 +114,10 @@ public class CIPSMILESTest extends CDKTestCase {
         IAtomContainer mol = smiles
                 .parseSmiles("[H]O[C@]([H])(C1([H])(C([H])([H])C([H])([H])C1([H])([H])))C2([H])(C([H])([H])C2([H])([H]))");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        Assertions.assertTrue(stereoElements.hasNext());
         IStereoElement stereo = stereoElements.next();
-        Assert.assertNotNull(stereo);
-        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
+        Assertions.assertNotNull(stereo);
+        Assertions.assertTrue(stereo instanceof ITetrahedralChirality);
         CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo);
     }
 
@@ -124,10 +125,10 @@ public class CIPSMILESTest extends CDKTestCase {
     public void testTermination2() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("OC1CCC[C@](F)(CC1)Cl");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        Assertions.assertTrue(stereoElements.hasNext());
         IStereoElement stereo = stereoElements.next();
-        Assert.assertNotNull(stereo);
-        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
+        Assertions.assertNotNull(stereo);
+        Assertions.assertTrue(stereo instanceof ITetrahedralChirality);
         CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo);
     }
 
@@ -136,7 +137,7 @@ public class CIPSMILESTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("FC(Br)(Cl)I");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 1, 0, 4, 2, 3,
                 Stereo.ANTI_CLOCKWISE);
-        Assert.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
+        Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
     }
 
     /**
@@ -146,11 +147,11 @@ public class CIPSMILESTest extends CDKTestCase {
     public void testCID42475007_R() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("C[NH+](C)CCN(C1=NC2=C(S1)C=C(C=C2)Br)C(=O)[C@H]3COC4=CC=CC=C4O3");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        Assertions.assertTrue(stereoElements.hasNext());
         IStereoElement stereo = stereoElements.next();
-        Assert.assertNotNull(stereo);
-        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
-        Assert.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo));
+        Assertions.assertNotNull(stereo);
+        Assertions.assertTrue(stereo instanceof ITetrahedralChirality);
+        Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo));
     }
 
     /**
@@ -160,11 +161,11 @@ public class CIPSMILESTest extends CDKTestCase {
     public void testCID42475007_S() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("C[NH+](C)CCN(C1=NC2=C(S1)C=C(C=C2)Br)C(=O)[C@@H]3COC4=CC=CC=C4O3");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        Assertions.assertTrue(stereoElements.hasNext());
         IStereoElement stereo = stereoElements.next();
-        Assert.assertNotNull(stereo);
-        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
-        Assert.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo));
+        Assertions.assertNotNull(stereo);
+        Assertions.assertTrue(stereo instanceof ITetrahedralChirality);
+        Assertions.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo));
     }
 
     /**
@@ -174,11 +175,11 @@ public class CIPSMILESTest extends CDKTestCase {
     public void r_sulfinyl() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("CCC[S@@](C)=O");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        Assertions.assertTrue(stereoElements.hasNext());
         IStereoElement stereo = stereoElements.next();
-        Assert.assertNotNull(stereo);
-        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
-        Assert.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo));
+        Assertions.assertNotNull(stereo);
+        Assertions.assertTrue(stereo instanceof ITetrahedralChirality);
+        Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo));
     }
 
     /**
@@ -188,11 +189,11 @@ public class CIPSMILESTest extends CDKTestCase {
     public void s_sulfinyl() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("CCC[S@](C)=O");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        Assertions.assertTrue(stereoElements.hasNext());
         IStereoElement stereo = stereoElements.next();
-        Assert.assertNotNull(stereo);
-        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
-        Assert.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo));
+        Assertions.assertNotNull(stereo);
+        Assertions.assertTrue(stereo instanceof ITetrahedralChirality);
+        Assertions.assertEquals(CIP_CHIRALITY.S, CIPTool.getCIPChirality(mol, (ITetrahedralChirality) stereo));
     }
 
     @Test
@@ -262,7 +263,7 @@ public class CIPSMILESTest extends CDKTestCase {
             elements.add(element);
         }
 
-        if (elements.size() != 1) Assert.fail("expected 1 stereo-element, found - " + elements.size());
+        if (elements.size() != 1) Assertions.fail("expected 1 stereo-element, found - " + elements.size());
 
         for (IStereoElement element : elements) {
             if (element instanceof ITetrahedralChirality) {

@@ -34,6 +34,7 @@ import java.util.Collections;
 
 import javax.vecmath.Point2d;
 
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -85,7 +86,7 @@ public class GeometricCumulativeDoubleBondFactoryTest {
         IAtom end = mock(IAtom.class);
         when(container.getConnectedBondsList(start)).thenReturn(Collections.emptyList());
         when(container.getConnectedBondsList(end)).thenReturn(Collections.emptyList());
-        assertNull(GeometricCumulativeDoubleBondFactory.axialEncoder(container, start, end));
+        Assertions.assertNull(GeometricCumulativeDoubleBondFactory.axialEncoder(container, start, end));
     }
 
     @Test

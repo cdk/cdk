@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -31,7 +32,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     @Override
     public void testSize() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
-        Assert.assertEquals(0, mfS.size());
+        Assertions.assertEquals(0, mfS.size());
     }
 
     /**
@@ -46,7 +47,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(3, mfS.size());
+        Assertions.assertEquals(3, mfS.size());
     }
 
     /**
@@ -64,7 +65,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfSet.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         adduct.add(mfSet);
 
-        Assert.assertEquals(3, adduct.size());
+        Assertions.assertEquals(3, adduct.size());
     }
 
     /**
@@ -80,7 +81,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(3, mfS.size());
+        Assertions.assertEquals(3, mfS.size());
         Iterator<IMolecularFormula> iter = mfS.molecularFormulas().iterator();
         int count = 0;
         while (iter.hasNext()) {
@@ -88,9 +89,9 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
             ++count;
             iter.remove();
         }
-        Assert.assertEquals(0, mfS.size());
-        Assert.assertEquals(3, count);
-        Assert.assertFalse(iter.hasNext());
+        Assertions.assertEquals(0, mfS.size());
+        Assertions.assertEquals(3, count);
+        Assertions.assertFalse(iter.hasNext());
     }
 
     /**
@@ -106,13 +107,13 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(3, mfS.size());
+        Assertions.assertEquals(3, mfS.size());
         int count = 0;
         for (IMolecularFormula formula : mfS.molecularFormulas()) {
             ++count;
-            Assert.assertNotNull(formula);
+            Assertions.assertNotNull(formula);
         }
-        Assert.assertEquals(3, count);
+        Assertions.assertEquals(3, count);
     }
 
     /**
@@ -128,9 +129,9 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
         IAdductFormula tested = getBuilder().newInstance(IAdductFormula.class);
-        Assert.assertEquals(0, tested.size());
+        Assertions.assertEquals(0, tested.size());
         tested.add(mfS);
-        Assert.assertEquals(3, tested.size());
+        Assertions.assertEquals(3, tested.size());
     }
 
     /**
@@ -146,7 +147,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertNotNull(mfS.getMolecularFormula(2)); // third molecule should exist
+        Assertions.assertNotNull(mfS.getMolecularFormula(2)); // third molecule should exist
     }
 
     /**
@@ -164,13 +165,13 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(5, mfS.size());
+        Assertions.assertEquals(5, mfS.size());
 
         // now test it to make sure it properly grows the array
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(7, mfS.size());
+        Assertions.assertEquals(7, mfS.size());
     }
 
     /**
@@ -182,16 +183,16 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     public void testGetMolecularFormulas_int() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
 
-        Assert.assertEquals(0, mfS.size());
+        Assertions.assertEquals(0, mfS.size());
 
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
 
-        Assert.assertEquals(3, mfS.size());
-        Assert.assertNotNull(mfS.getMolecularFormula(0));
-        Assert.assertNotNull(mfS.getMolecularFormula(1));
-        Assert.assertNotNull(mfS.getMolecularFormula(2));
+        Assertions.assertEquals(3, mfS.size());
+        Assertions.assertNotNull(mfS.getMolecularFormula(0));
+        Assertions.assertNotNull(mfS.getMolecularFormula(1));
+        Assertions.assertNotNull(mfS.getMolecularFormula(2));
     }
 
     /**
@@ -214,9 +215,9 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
         add.addMolecularFormula(mf);
 
-        Assert.assertTrue(mf.contains(carb));
-        Assert.assertTrue(mf.contains(h1));
-        Assert.assertFalse(mf.contains(h2));
+        Assertions.assertTrue(mf.contains(carb));
+        Assertions.assertTrue(mf.contains(h1));
+        Assertions.assertFalse(mf.contains(h2));
     }
 
     /**
@@ -240,7 +241,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
         add.addMolecularFormula(mf);
 
-        Assert.assertTrue(add.contains(mf));
+        Assertions.assertTrue(add.contains(mf));
     }
 
     /**
@@ -256,7 +257,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mf1.setCharge(1);
         add.addMolecularFormula(mf1);
 
-        Assert.assertEquals(1.0, add.getCharge(), 0.01);
+        Assertions.assertEquals(1.0, add.getCharge(), 0.01);
 
     }
 
@@ -281,8 +282,8 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     public void testClone() throws Exception {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         Object clone = mfS.clone();
-        Assert.assertTrue(clone instanceof IAdductFormula);
-        Assert.assertNotSame(mfS, clone);
+        Assertions.assertTrue(clone instanceof IAdductFormula);
+        Assertions.assertNotSame(mfS, clone);
     }
 
     /**
@@ -299,8 +300,8 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         mfS.removeMolecularFormula(mf1);
-        Assert.assertEquals(1, mfS.size());
-        Assert.assertEquals(mf2, mfS.getMolecularFormula(0));
+        Assertions.assertEquals(1, mfS.size());
+        Assertions.assertEquals(mf2, mfS.getMolecularFormula(0));
     }
 
     /**
@@ -317,9 +318,9 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
 
-        Assert.assertEquals(2, mfS.size());
+        Assertions.assertEquals(2, mfS.size());
         mfS.removeAllMolecularFormulas();
-        Assert.assertEquals(0, mfS.size());
+        Assertions.assertEquals(0, mfS.size());
     }
 
     /**
@@ -336,8 +337,8 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         mfS.removeMolecularFormula(0);
-        Assert.assertEquals(1, mfS.size());
-        Assert.assertEquals(mf2, mfS.getMolecularFormula(0));
+        Assertions.assertEquals(1, mfS.size());
+        Assertions.assertEquals(mf2, mfS.getMolecularFormula(0));
     }
 
     /**
@@ -354,10 +355,10 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         IMolecularFormula mf3 = getBuilder().newInstance(IMolecularFormula.class);
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
-        Assert.assertEquals(mf2, mfS.getMolecularFormula(1));
+        Assertions.assertEquals(mf2, mfS.getMolecularFormula(1));
         mfS.removeMolecularFormula(1);
         mfS.addMolecularFormula(mf3);
-        Assert.assertEquals(mf3, mfS.getMolecularFormula(1));
+        Assertions.assertEquals(mf3, mfS.getMolecularFormula(1));
     }
 
     /**
@@ -369,7 +370,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     public void testGetIsotopeCount() {
 
         IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
-        Assert.assertEquals(0, add.getIsotopeCount());
+        Assertions.assertEquals(0, add.getIsotopeCount());
 
         IMolecularFormula formula = getBuilder().newInstance(IMolecularFormula.class);
         formula.addIsotope(getBuilder().newInstance(IIsotope.class, "C"));
@@ -377,7 +378,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
         add.addMolecularFormula(formula);
 
-        Assert.assertEquals(2, add.getIsotopeCount());
+        Assertions.assertEquals(2, add.getIsotopeCount());
     }
 
     /**
@@ -403,7 +404,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         for (IIsotope iIsotope : add.isotopes()) {
             ++count;
         }
-        Assert.assertEquals(3, count);
+        Assertions.assertEquals(3, count);
     }
 
     /**
@@ -415,7 +416,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     public void testGetIsotopeCount_Sum() {
 
         IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
-        Assert.assertEquals(0, add.getIsotopeCount());
+        Assertions.assertEquals(0, add.getIsotopeCount());
 
         IMolecularFormula adduct1 = getBuilder().newInstance(IMolecularFormula.class);
         adduct1.addIsotope(getBuilder().newInstance(IIsotope.class, "C"));
@@ -427,7 +428,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         formula.addIsotope(h);
         add.addMolecularFormula(adduct1);
 
-        Assert.assertEquals(2, add.getIsotopeCount());
+        Assertions.assertEquals(2, add.getIsotopeCount());
     }
 
     /**
@@ -439,7 +440,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     public void testGetIsotopeCount_IIsotope() {
 
         IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
-        Assert.assertEquals(0, add.getIsotopeCount());
+        Assertions.assertEquals(0, add.getIsotopeCount());
 
         IMolecularFormula formula = getBuilder().newInstance(IMolecularFormula.class);
         IIsotope C = getBuilder().newInstance(IIsotope.class, "C");
@@ -449,10 +450,10 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
         add.addMolecularFormula(formula);
 
-        Assert.assertEquals(2, formula.getIsotopeCount());
-        Assert.assertEquals(2, add.getIsotopeCount());
-        Assert.assertEquals(1, add.getIsotopeCount(C));
-        Assert.assertEquals(4, add.getIsotopeCount(h));
+        Assertions.assertEquals(2, formula.getIsotopeCount());
+        Assertions.assertEquals(2, add.getIsotopeCount());
+        Assertions.assertEquals(1, add.getIsotopeCount(C));
+        Assertions.assertEquals(4, add.getIsotopeCount(h));
     }
 
     /**
@@ -464,7 +465,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     public void testGetIsotopeCount_Sum_Isotope() {
 
         IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
-        Assert.assertEquals(0, add.getIsotopeCount());
+        Assertions.assertEquals(0, add.getIsotopeCount());
 
         IMolecularFormula adduct1 = getBuilder().newInstance(IMolecularFormula.class);
         IIsotope C = getBuilder().newInstance(IIsotope.class, "C");
@@ -477,8 +478,8 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         adduct2.addIsotope(h);
         add.addMolecularFormula(adduct2);
 
-        Assert.assertEquals(1, add.getIsotopeCount(C));
-        Assert.assertEquals(5, add.getIsotopeCount(h));
+        Assertions.assertEquals(1, add.getIsotopeCount(C));
+        Assertions.assertEquals(5, add.getIsotopeCount(h));
     }
 
     @Test
@@ -486,7 +487,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     public void testGetBuilder() {
         IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
         IChemObjectBuilder builder = add.getBuilder();
-        Assert.assertNotNull(builder);
-        Assert.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
+        Assertions.assertNotNull(builder);
+        Assertions.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
     }
 }

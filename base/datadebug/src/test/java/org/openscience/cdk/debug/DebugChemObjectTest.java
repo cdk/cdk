@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.interfaces.AbstractChemObjectTest;
@@ -40,14 +41,14 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
     @Test
     public void testDebugChemObject() {
         IChemObject chemObject = new DebugChemObject();
-        Assert.assertNotNull(chemObject);
+        Assertions.assertNotNull(chemObject);
     }
 
     @Test
     public void testDebugChemObject_IChemObject() {
         IChemObject chemObject1 = new DebugChemObject();
         IChemObject chemObject = new DebugChemObject(chemObject1);
-        Assert.assertNotNull(chemObject);
+        Assertions.assertNotNull(chemObject);
     }
 
     @Test
@@ -56,7 +57,7 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
         DebugChemObject co2 = new DebugChemObject();
         co1.setID("a1");
         co2.setID("a1");
-        Assert.assertTrue(co1.compare(co2));
+        Assertions.assertTrue(co1.compare(co2));
     }
 
     @Test
@@ -65,6 +66,6 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
         DebugChemObject co2 = new DebugChemObject();
         co1.setID("a1");
         co2.setID("a2");
-        Assert.assertFalse(co1.compare(co2));
+        Assertions.assertFalse(co1.compare(co2));
     }
 }

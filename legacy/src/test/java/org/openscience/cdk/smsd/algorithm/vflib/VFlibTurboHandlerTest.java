@@ -29,6 +29,7 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -82,7 +83,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler mol1 = new MolHandler(queryac, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
-        assertTrue(smsd1.isSubgraph(true));
+        Assertions.assertTrue(smsd1.isSubgraph(true));
     }
 
     /**
@@ -99,7 +100,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler mol1 = new MolHandler(queryac, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
-        assertTrue(smsd1.isSubgraph(true));
+        Assertions.assertTrue(smsd1.isSubgraph(true));
     }
 
     /**
@@ -124,7 +125,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler mol1 = new MolHandler(query, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
-        assertTrue(smsd1.isSubgraph(true));
+        Assertions.assertTrue(smsd1.isSubgraph(true));
     }
 
     /**
@@ -141,7 +142,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler target = new MolHandler(target1, true, true);
         VFlibSubStructureHandler instance = new VFlibSubStructureHandler();
         instance.set(source, target);
-        assertTrue(instance.isSubgraph(true));
+        Assertions.assertTrue(instance.isSubgraph(true));
     }
 
     /**
@@ -160,7 +161,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         smsd1.set(mol1, mol2);
         smsd1.isSubgraph(true);
 
-        assertEquals(4, smsd1.getAllAtomMapping().size());
+        Assertions.assertEquals(4, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -179,7 +180,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         smsd1.set(mol1, mol2);
         smsd1.isSubgraph(true);
 
-        assertEquals(4, smsd1.getAllMapping().size());
+        Assertions.assertEquals(4, smsd1.getAllMapping().size());
     }
 
     /**
@@ -198,7 +199,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         smsd1.set(mol1, mol2);
         smsd1.isSubgraph(true);
 
-        assertEquals(7, smsd1.getFirstAtomMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstAtomMapping().size());
     }
 
     /**
@@ -217,6 +218,6 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         smsd1.set(mol1, mol2);
         smsd1.isSubgraph(true);
 
-        assertEquals(7, smsd1.getFirstMapping().size());
+        Assertions.assertEquals(7, smsd1.getFirstMapping().size());
     }
 }

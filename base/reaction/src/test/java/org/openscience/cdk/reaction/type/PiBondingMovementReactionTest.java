@@ -19,6 +19,7 @@
 package org.openscience.cdk.reaction.type;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -70,7 +71,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
     @Test
     public void testPiBondingMovementReaction() {
         IReactionProcess type = new PiBondingMovementReaction();
-        Assert.assertNotNull(type);
+        Assertions.assertNotNull(type);
     }
 
     /**
@@ -114,13 +115,13 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule, queryAtom));
 
     }
 
@@ -168,8 +169,8 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
@@ -197,7 +198,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         makeSureAtomTypesAreRecognized(molecule2);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
 
     }
 
@@ -228,13 +229,13 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(2, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(2, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
 
-        Assert.assertEquals(1, setOfReactions.getReaction(1).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(1).getProductCount());
 
         IAtomContainer product2 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         //C1=CC(=CC2=CC=CC=C12)C
@@ -269,7 +270,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         // order depends on ring perception order (may change between versions) we check both
         // combinations just in case
-        Assert.assertTrue((matches(molecule2, product1) && matches(molecule1, product2))
+        Assertions.assertTrue((matches(molecule2, product1) && matches(molecule1, product2))
                 || (matches(molecule1, product1) && matches(molecule2, product2)));
 
     }
@@ -308,15 +309,15 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+        Assertions.assertEquals(1, setOfReactions.getReactionCount());
+        Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
+        Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
 
     }
 
@@ -427,7 +428,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assertions.assertNotNull(matcher.findMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);
         }
     }
 }
