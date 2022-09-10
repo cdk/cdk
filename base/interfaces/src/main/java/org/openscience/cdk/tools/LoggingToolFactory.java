@@ -38,8 +38,10 @@ import java.lang.reflect.Method;
  */
 public class LoggingToolFactory {
 
-    /** Default logging tool. Currently, the log4j based one. */
-    public final static String DEFAULT_LOGGING_TOOL_CLASS = "org.openscience.cdk.tools.Log4jLoggingTool";
+    /** Default logging tool. Currently, the slf4j based one. */
+    public final static String DEFAULT_LOGGING_TOOL_CLASS = "org.openscience.cdk.tools.Slf4jLoggingTool";
+    /** Backup logging tool. Currently, the lof4j based one. */
+    private final static String BACKUP_LOGGING_TOOL_CLASS = "org.openscience.cdk.tools.Log4jLoggingTool";
 
     private static Class<? extends ILoggingTool> userSetILoggerTool;
 
@@ -79,6 +81,9 @@ public class LoggingToolFactory {
         }
         if (tool == null) {
             tool = initializeLoggingTool(sourceClass, DEFAULT_LOGGING_TOOL_CLASS);
+        }
+        if (tool == null) {
+            tool = initializeLoggingTool(sourceClass, BACKUP_LOGGING_TOOL_CLASS);
         }
         if (tool == null) {
             tool = new StdErrLogger(sourceClass);
