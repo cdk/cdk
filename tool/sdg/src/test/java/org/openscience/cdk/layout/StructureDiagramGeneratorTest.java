@@ -768,7 +768,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     */
     @Test
     public void testBug2843445NaNCoords() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2000), () -> {
             SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
             String smiles = "CCCC[C@H](NC(=O)[C@H](CCC(O)=O)NC(=O)[C@@H](NC(=O)[C@@H](CCCC)NC"
                     + "(=O)[C@H](CC(N)=O)NC(=O)[C@H](CCC\\N=C(\\N)N)NC(=O)[C@H](CC(C)C)NC"
