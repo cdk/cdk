@@ -122,7 +122,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBugLecture2007() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             //IAtomContainer mol = sp.parseSmiles("Oc1nc(nc2c(nn(c12)C)CCC)c3cc(ccc3(OCC))S(=O)(=O)N4CCN(C)CC4");
             IAtomContainer mol = sp.parseSmiles("O=C(N1CCN(CC1)CCCN(C)C)C3(C=2C=CC(=CC=2)C)(CCCCC3)");
@@ -140,7 +140,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
                                   */
     @Test
     public void testAlphaPinene() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeAlphaPinene();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -149,7 +149,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
 
     @Test
     public void testBridgedHydrogen() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer mol = new AtomContainer();
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
@@ -169,7 +169,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBiphenyl() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeBiphenyl();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -181,7 +181,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void test4x3CondensedRings() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.make4x3CondensedRings();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -193,7 +193,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testPhenylEthylBenzene() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makePhenylEthylBenzene();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -205,7 +205,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSpiroRings() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeSpiroRings();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -217,7 +217,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testMethylDecaline() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeMethylDecaline();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -229,7 +229,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBranchedAliphatic() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeBranchedAliphatic();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -241,7 +241,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testDiamantane() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeDiamantane();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -256,7 +256,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug1670871() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             IAtomContainer mol = sp.parseSmiles("CC(=O)OC1C=CC(SC23CC4CC(CC(C4)C2)C3)N(C1SC56CC7CC(CC(C7)C5)C6)C(C)=O");
             IAtomContainer ac = layout(mol);
@@ -270,7 +270,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testEthylCyclohexane() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeEthylCyclohexane();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -282,7 +282,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBicycloRings() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeBicycloRings();
             IAtomContainer ac = layout(m);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -312,7 +312,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBenzene() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             IAtomContainer mol = sp.parseSmiles("c1ccccc1");
             IAtomContainer ac = layout(mol);
@@ -325,7 +325,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug780545() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer mol = new AtomContainer();
             mol.addAtom(new Atom("C"));
             IAtomContainer ac = layout(mol);
@@ -338,7 +338,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug1598409() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             String smiles = "c1(:c(:c2-C(-c3:c(-C(=O)-c:2:c(:c:1-[H])-[H]):c(:c(:c(:c:3-[H])-[H])-N(-[H])-[H])-[H])=O)-[H])-[H]";
             SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
             IAtomContainer cdkMol = parser.parseSmiles(smiles);
@@ -351,7 +351,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug1572062() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             String filename = "sdg_test.mol";
 
             //		set up molecule reader
@@ -386,7 +386,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug1677912SDGHangs() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             // Parse the SMILES
             String smiles = "[NH](-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3)-C(=O)-C(=O)-[CH2]-c1:n:c(:c(:[cH]:c:1-C(=O)-O-[CH3])-C(=O)-O-[CH3])-[CH2]-C(=O)-C(=O)-[NH]-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3";
             SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -404,7 +404,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug1714794() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             String problematicMol2AsSmiles = "N1c2c(c3c(c4c(c(c3O)C)OC(OC=CC(C(C(C(C(C(C(C(C=CC=C(C1=O)C)C)O)C)O)C)OC(=O)C)C)OC)(C4=O)C)c(c2C=NN(C12CC3CC(C1)CC(C2)C3)C)O)O";
             SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
             IAtomContainer cdkMol = parser.parseSmiles(problematicMol2AsSmiles);
@@ -708,7 +708,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testNPEWithBridgedRingsBug1772609() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             // set up molecule reader
             String filename = "bug1772609.mol";
             InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -742,7 +742,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug1784850InfiniteLoop() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             // set up molecule reader
             String filename = "bug1784850.mol";
             InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -829,7 +829,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug1269() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
             String smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
             IAtomContainer mol = sp.parseSmiles(smiles);
@@ -846,7 +846,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug1279() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(500), () -> {
+        Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
             String smiles = "[NH4+].CP(=O)(O)CCC(N)C(=O)[O-]";
 
