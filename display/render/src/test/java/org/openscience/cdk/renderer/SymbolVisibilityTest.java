@@ -36,33 +36,33 @@ import javax.vecmath.Point2d;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class SymbolVisibilityTest {
+class SymbolVisibilityTest {
 
     @Test
-    public void anyAtom() {
+    void anyAtom() {
         Assertions.assertTrue(SymbolVisibility.all().visible(null, null, null));
     }
 
     @Test
-    public void iupacOxygen() {
+    void iupacOxygen() {
         Assertions.assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("O"), Collections.emptyList(),
                                                                               new RendererModel()));
     }
 
     @Test
-    public void iupacNitrogen() {
+    void iupacNitrogen() {
         Assertions.assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("N"), Collections.emptyList(),
                                                                               new RendererModel()));
     }
 
     @Test
-    public void iupacMethane() {
+    void iupacMethane() {
         Assertions.assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("C"), Collections.emptyList(),
                                                                               new RendererModel()));
     }
 
     @Test
-    public void iupacMethylPreferred() {
+    void iupacMethylPreferred() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IBond bond = new Bond(a1, a2);
@@ -72,7 +72,7 @@ public class SymbolVisibilityTest {
     }
 
     @Test
-    public void iupacMethylAcceptable() {
+    void iupacMethylAcceptable() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(null);
@@ -85,7 +85,7 @@ public class SymbolVisibilityTest {
     }
 
     @Test
-    public void iupacUnlabelledCarbon() {
+    void iupacUnlabelledCarbon() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -106,7 +106,7 @@ public class SymbolVisibilityTest {
     }
 
     @Test
-    public void iupacCarbonIon() {
+    void iupacCarbonIon() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -128,7 +128,7 @@ public class SymbolVisibilityTest {
     }
 
     @Test
-    public void iupacCarbonParallel() {
+    void iupacCarbonParallel() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -150,7 +150,7 @@ public class SymbolVisibilityTest {
 
     // produces an NaN internally
     @Disabled("Multiple Group Sgroup rendering can have zero length C-C bonds (e.g. overlaid coords), we don't want to show the symbols")
-    public void iupacCarbonCornerCase() {
+    void iupacCarbonCornerCase() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -171,7 +171,7 @@ public class SymbolVisibilityTest {
     }
 
     @Test
-    public void carbonIsotope() {
+    void carbonIsotope() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -194,7 +194,7 @@ public class SymbolVisibilityTest {
     }
 
     @Test
-    public void ethaneNonTerminal() {
+    void ethaneNonTerminal() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
 
@@ -211,7 +211,7 @@ public class SymbolVisibilityTest {
     }
 
     @Test
-    public void alwaysDisplayCharges() {
+    void alwaysDisplayCharges() {
         IAtom a1 = new Atom("CH-");
         IAtom a2 = new Atom("CH2");
         IAtom a3 = new Atom("CH3");
@@ -228,7 +228,7 @@ public class SymbolVisibilityTest {
     }
 
     @Test
-    public void delocalisedCarbons() {
+    void delocalisedCarbons() {
         IAtom a1 = new Atom("CH");
         IAtom a2 = new Atom("CH");
         IAtom a3 = new Atom("CH");

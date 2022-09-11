@@ -38,7 +38,7 @@ import java.time.Duration;
  *
  * @cdk.module test-formula
  */
-public class MolecularFormulaGeneratorTest extends CDKTestCase {
+class MolecularFormulaGeneratorTest extends CDKTestCase {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder
             .getInstance();
@@ -47,7 +47,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test the getNextFormula() method
      */
     @Test
-    public void testGetNextFormula() throws Exception {
+    void testGetNextFormula() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -75,7 +75,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test the getAllFormulas() method
      */
     @Test
-    public void testGetAllFormulas() throws Exception {
+    void testGetAllFormulas() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -104,7 +104,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test the getFinishedPercentage() method
      */
     @Test
-    public void testGetFinishedPercentage() throws Exception {
+    void testGetFinishedPercentage() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -148,7 +148,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * finish in 1000 ms.
      */
     @Test
-    public void testCancel() throws Exception {
+    void testCancel() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(1000), () -> {
             IsotopeFactory ifac = Isotopes.getInstance();
             IIsotope c = ifac.getMajorIsotope("C");
@@ -202,7 +202,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testEmptyMFRange() throws Exception {
+    void testEmptyMFRange() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     new MolecularFormulaGenerator(builder, 0, 100,
@@ -214,7 +214,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test negative mass
      */
     @Test
-    public void testNegativeMass() throws Exception {
+    void testNegativeMass() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -233,7 +233,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMinCounts() throws Exception {
+    void testMinCounts() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -270,7 +270,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMaxCounts() throws Exception {
+    void testMaxCounts() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -305,7 +305,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test to find a single carbon.
      */
     @Test
-    public void testSingleCarbon() throws Exception {
+    void testSingleCarbon() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -330,7 +330,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test to find MF=C10000, MW=120000.0 using only carbons.
      */
     @Test
-    public void testCarbons() throws Exception {
+    void testCarbons() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -355,7 +355,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test to find H2O in a range of 1-20.
      */
     @Test
-    public void testWater() throws Exception {
+    void testWater() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -397,7 +397,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * MolecularFormulaGenerator should use full enumeration method when smallest element has large weight
      */
     @Test
-    public void testUseFullEnumerationWhenNoHydrogen() throws Exception {
+    void testUseFullEnumerationWhenNoHydrogen() throws Exception {
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
         IIsotope n = ifac.getMajorIsotope("N");
@@ -417,7 +417,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * large as the smallest weight)
      */
     @Test
-    public void testUseFullEnumerationWhenSuperLargeMassDeviation() throws Exception {
+    void testUseFullEnumerationWhenSuperLargeMassDeviation() throws Exception {
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
         IIsotope h = ifac.getMajorIsotope("H");
@@ -440,7 +440,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * it as 32 bit integer with default blowup factor
      */
     @Test
-    public void testUseFullEnumerationWhenExceedIntegerSpace() throws Exception {
+    void testUseFullEnumerationWhenExceedIntegerSpace() throws Exception {
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
         IIsotope h = ifac.getMajorIsotope("H");
@@ -462,7 +462,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * MolecularFormulaGenerator should use Round Robin when using proper input
      */
     @Test
-    public void testUseRoundRobinWheneverPossible() throws Exception {
+    void testUseRoundRobinWheneverPossible() throws Exception {
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
         IIsotope h = ifac.getMajorIsotope("H");
@@ -483,7 +483,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test to find MF=C5H11N2O, MW=115.08714
      */
     @Test
-    public void testSmallMass() throws Exception {
+    void testSmallMass() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -515,7 +515,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * 
      */
     @Test
-    public void testMiddleMass() throws Exception {
+    void testMiddleMass() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -547,7 +547,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testHighMass() throws Exception {
+    void testHighMass() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -587,7 +587,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testFormulaFoundInRange() throws Exception {
+    void testFormulaFoundInRange() throws Exception {
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
         IIsotope h = ifac.getMajorIsotope("H");
@@ -624,7 +624,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testFormulaFoundInRange2() throws Exception {
+    void testFormulaFoundInRange2() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -663,7 +663,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testCompoundWith7Elements() throws Exception {
+    void testCompoundWith7Elements() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -701,7 +701,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test if C13 isotope-containing formula is found. MF=C(^12)3C(^13)H5
      */
     @Test
-    public void testDifferentIsotopes() throws Exception {
+    void testDifferentIsotopes() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -743,7 +743,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * element counts
      */
     @Test
-    public void testFixedElementCounts() throws Exception {
+    void testFixedElementCounts() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -776,7 +776,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * high
      */
     @Test
-    public void testMassRangeTooHigh() throws Exception {
+    void testMassRangeTooHigh() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -807,7 +807,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * low
      */
     @Test
-    public void testMassRangeTooLow() throws Exception {
+    void testMassRangeTooLow() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");

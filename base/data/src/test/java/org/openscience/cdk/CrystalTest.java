@@ -34,15 +34,15 @@ import org.openscience.cdk.interfaces.ICrystal;
  *
  * @cdk.module test-data
  */
-public class CrystalTest extends AbstractCrystalTest {
+class CrystalTest extends AbstractCrystalTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Crystal::new);
     }
 
     @Test
-    public void testCrystal() {
+    void testCrystal() {
         ICrystal crystal = new Crystal();
         Assertions.assertNotNull(crystal);
         Assertions.assertEquals(0, crystal.getAtomCount());
@@ -50,7 +50,7 @@ public class CrystalTest extends AbstractCrystalTest {
     }
 
     @Test
-    public void testCrystal_IAtomContainer() {
+    void testCrystal_IAtomContainer() {
         IChemObject object = newChemObject();
         IAtomContainer acetone = object.getBuilder().newInstance(IAtomContainer.class);
         IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");

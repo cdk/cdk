@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * @cdk.module test-formula
  */
-public class MMElementRuleTest extends FormulaRuleTest {
+class MMElementRuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
 
@@ -38,7 +38,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     *  The JUnit setup method
     */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         setRule(MMElementRule.class);
     }
@@ -49,7 +49,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testMMElementRule() throws Exception {
+    void testMMElementRule() throws Exception {
 
         IRule rule = new MMElementRule();
         Assertions.assertNotNull(rule);
@@ -62,7 +62,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefault() throws Exception {
+    void testDefault() throws Exception {
 
         IRule rule = new MMElementRule();
         Object[] objects = rule.getParameters();
@@ -78,7 +78,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testSetParameters() throws Exception {
+    void testSetParameters() throws Exception {
 
         IRule rule = new MMElementRule();
 
@@ -100,7 +100,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse() throws Exception {
+    void testDefaultValidFalse() throws Exception {
 
         IRule rule = new MMElementRule();
 
@@ -117,7 +117,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidTrue() throws Exception {
+    void testDefaultValidTrue() throws Exception {
 
         IRule rule = new MMElementRule();
 

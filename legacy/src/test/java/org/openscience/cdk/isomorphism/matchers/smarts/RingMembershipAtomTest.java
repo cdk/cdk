@@ -39,10 +39,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-smarts
  */
-public class RingMembershipAtomTest {
+class RingMembershipAtomTest {
 
     @Test
-    public void matches() throws Exception {
+    void matches() throws Exception {
         RingMembershipAtom matcher = new RingMembershipAtom(2, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
@@ -53,7 +53,7 @@ public class RingMembershipAtomTest {
     }
 
     @Test
-    public void mismatches() throws Exception {
+    void mismatches() throws Exception {
         RingMembershipAtom matcher = new RingMembershipAtom(2, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
@@ -64,7 +64,7 @@ public class RingMembershipAtomTest {
     }
 
     @Test
-    public void none() throws Exception {
+    void none() throws Exception {
         RingMembershipAtom matcher = new RingMembershipAtom(0, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
@@ -75,7 +75,7 @@ public class RingMembershipAtomTest {
     }
 
     @Test
-    public void any() throws Exception {
+    void any() throws Exception {
         RingMembershipAtom matcher = new RingMembershipAtom(-1, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))

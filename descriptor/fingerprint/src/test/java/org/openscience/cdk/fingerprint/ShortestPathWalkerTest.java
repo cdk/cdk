@@ -15,10 +15,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-fingerprint
  */
-public class ShortestPathWalkerTest {
+class ShortestPathWalkerTest {
 
     @Test
-    public void testPaths() throws Exception {
+    void testPaths() throws Exception {
         IAtomContainer triazole = TestMoleculeFactory.make123Triazole();
         ShortestPathWalker walker = new ShortestPathWalker(triazole);
         Set<String> expected = new TreeSet<>(Arrays.asList("C", "N2N1N", "N", "N1N1C", "N1C2C", "C1N", "N2N1C",
@@ -28,7 +28,7 @@ public class ShortestPathWalkerTest {
     }
 
     @Test
-    public void testToString() throws Exception {
+    void testToString() throws Exception {
         IAtomContainer triazole = TestMoleculeFactory.make123Triazole();
         ShortestPathWalker walker = new ShortestPathWalker(triazole);
         assertThat(walker.toString(),

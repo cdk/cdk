@@ -37,10 +37,10 @@ import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
  * @author John May
  * @cdk.module test-core
  */
-public class EdgeShortCyclesTest {
+class EdgeShortCyclesTest {
 
     @Test
-    public void paths_norbornane() {
+    void paths_norbornane() {
         int[][] norbornane = norbornane();
         EdgeShortCycles esc = new EdgeShortCycles(norbornane);
         int[][] paths = esc.paths();
@@ -49,7 +49,7 @@ public class EdgeShortCyclesTest {
     }
 
     @Test
-    public void paths_bicyclo() {
+    void paths_bicyclo() {
         int[][] bicyclo = bicyclo();
         EdgeShortCycles esc = new EdgeShortCycles(bicyclo);
         int[][] paths = esc.paths();
@@ -58,7 +58,7 @@ public class EdgeShortCyclesTest {
     }
 
     @Test
-    public void paths_napthalene() {
+    void paths_napthalene() {
         int[][] napthalene = naphthalene();
         EdgeShortCycles esc = new EdgeShortCycles(napthalene);
         int[][] paths = esc.paths();
@@ -67,7 +67,7 @@ public class EdgeShortCyclesTest {
     }
 
     @Test
-    public void paths_anthracene() {
+    void paths_anthracene() {
         int[][] anthracene = anthracene();
         EdgeShortCycles esc = new EdgeShortCycles(anthracene);
         int[][] paths = esc.paths();
@@ -76,7 +76,7 @@ public class EdgeShortCyclesTest {
     }
 
     @Test
-    public void paths_cyclophane_even() {
+    void paths_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         EdgeShortCycles esc = new EdgeShortCycles(cyclophane_even);
         int[][] paths = esc.paths();
@@ -86,7 +86,7 @@ public class EdgeShortCyclesTest {
     }
 
     @Test
-    public void paths_cyclophane_odd() {
+    void paths_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         EdgeShortCycles esc = new EdgeShortCycles(cyclophane_even);
         int[][] paths = esc.paths();
@@ -96,7 +96,7 @@ public class EdgeShortCyclesTest {
     }
 
     @Test
-    public void size_norbornane() {
+    void size_norbornane() {
         int[][] norbornane = norbornane();
         EdgeShortCycles esc = new EdgeShortCycles(norbornane);
         int[][] paths = esc.paths();
@@ -104,42 +104,42 @@ public class EdgeShortCyclesTest {
     }
 
     @Test
-    public void size_bicyclo() {
+    void size_bicyclo() {
         int[][] bicyclo = bicyclo();
         EdgeShortCycles esc = new EdgeShortCycles(bicyclo);
         assertThat(esc.size(), is(3));
     }
 
     @Test
-    public void size_napthalene() {
+    void size_napthalene() {
         int[][] napthalene = naphthalene();
         EdgeShortCycles esc = new EdgeShortCycles(napthalene);
         assertThat(esc.size(), is(2));
     }
 
     @Test
-    public void size_anthracene() {
+    void size_anthracene() {
         int[][] anthracene = anthracene();
         EdgeShortCycles esc = new EdgeShortCycles(anthracene);
         assertThat(esc.size(), is(3));
     }
 
     @Test
-    public void size_cyclophane_even() {
+    void size_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         EdgeShortCycles esc = new EdgeShortCycles(cyclophane_even);
         assertThat(esc.size(), is(3));
     }
 
     @Test
-    public void size_cyclophane_odd() {
+    void size_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         EdgeShortCycles esc = new EdgeShortCycles(cyclophane_even);
         assertThat(esc.size(), is(3));
     }
 
     @Test
-    public void paths_cyclophanelike1() throws Exception {
+    void paths_cyclophanelike1() throws Exception {
         int[][] g = cyclophanelike1();
         EdgeShortCycles esc = new EdgeShortCycles(g);
         int[][] paths = esc.paths();
@@ -149,7 +149,7 @@ public class EdgeShortCyclesTest {
     }
 
     @Test
-    public void paths_cyclophanelike2() throws Exception {
+    void paths_cyclophanelike2() throws Exception {
         int[][] g = cyclophanelike2();
         EdgeShortCycles esc = new EdgeShortCycles(g);
         int[][] paths = esc.paths();

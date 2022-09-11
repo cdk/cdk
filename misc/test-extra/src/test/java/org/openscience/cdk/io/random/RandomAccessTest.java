@@ -41,12 +41,12 @@ import java.io.InputStream;
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.module test-extra
  */
-public class RandomAccessTest extends CDKTestCase {
+class RandomAccessTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         String path = "test2.sdf";
         logger.info("Testing: " + path);
         InputStream in = getClass().getResourceAsStream(path);

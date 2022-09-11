@@ -26,14 +26,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-core
  */
-public class PeriodicTableTest extends CDKTestCase {
+class PeriodicTableTest extends CDKTestCase {
 
-    public PeriodicTableTest() {
+    PeriodicTableTest() {
         super();
     }
 
     @Test
-    public void testTable() {
+    void testTable() {
         Assertions.assertEquals(CDKConstants.UNSET, PeriodicTable.getVdwRadius("Co"));
         Assertions.assertEquals(1.7, PeriodicTable.getVdwRadius("C"), 0.001);
         Assertions.assertEquals(39, PeriodicTable.getAtomicNumber("Y"), 0.001);

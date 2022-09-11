@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class DOCK5FormatTest extends ChemFormatTest {
+class DOCK5FormatTest extends ChemFormatTest {
 
-    public DOCK5FormatTest() {
+    DOCK5FormatTest() {
         super.setChemFormat((IChemFormat) DOCK5Format.getInstance());
     }
 

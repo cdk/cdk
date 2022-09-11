@@ -9,9 +9,9 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-formula
  */
-public class IsotopePatternTest extends CDKTestCase {
+class IsotopePatternTest extends CDKTestCase {
 
-    public IsotopePatternTest() {
+    IsotopePatternTest() {
         super();
     }
 
@@ -21,7 +21,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsotopePattern() {
+    void testIsotopePattern() {
         IsotopePattern isoP = new IsotopePattern();
         Assertions.assertNotNull(isoP);
     }
@@ -32,7 +32,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetMonoIsotope_IsotopeContainer() {
+    void testSetMonoIsotope_IsotopeContainer() {
         IsotopePattern isoP = new IsotopePattern();
         isoP.setMonoIsotope(new IsotopeContainer());
         Assertions.assertNotNull(isoP);
@@ -45,7 +45,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testAddIsotope_IsotopeContainer() {
+    void testAddIsotope_IsotopeContainer() {
         IsotopePattern isoP = new IsotopePattern();
         isoP.addIsotope(new IsotopeContainer());
         Assertions.assertNotNull(isoP);
@@ -57,7 +57,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMonoIsotope() {
+    void testGetMonoIsotope() {
         IsotopePattern isoP = new IsotopePattern();
         IsotopeContainer isoC = new IsotopeContainer();
         isoP.setMonoIsotope(isoC);
@@ -70,7 +70,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIsotopes() {
+    void testGetIsotopes() {
 
         IsotopePattern isoP = new IsotopePattern();
         IsotopeContainer iso1 = new IsotopeContainer();
@@ -87,7 +87,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIsotope_int() {
+    void testGetIsotope_int() {
 
         IsotopePattern isoP = new IsotopePattern();
         IsotopeContainer iso1 = new IsotopeContainer();
@@ -104,7 +104,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetNumberOfIsotopes() {
+    void testGetNumberOfIsotopes() {
         IsotopePattern isoP = new IsotopePattern();
         IsotopeContainer iso1 = new IsotopeContainer();
         isoP.setMonoIsotope(iso1);
@@ -119,7 +119,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetCharge_double() {
+    void testSetCharge_double() {
         IsotopePattern isoP = new IsotopePattern();
         isoP.setCharge(1.0);
         Assertions.assertEquals(1.0, isoP.getCharge(), 0.000001);
@@ -132,7 +132,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetCharge() {
+    void testGetCharge() {
         IsotopePattern isoP = new IsotopePattern();
         Assertions.assertEquals(0, isoP.getCharge(), 0.000001);
 
@@ -144,7 +144,7 @@ public class IsotopePatternTest extends CDKTestCase {
      *
      */
     @Test
-    public void testClone() throws Exception {
+    void testClone() throws Exception {
         IsotopePattern spExp = new IsotopePattern();
         spExp.setMonoIsotope(new IsotopeContainer(156.07770, 1));
         spExp.addIsotope(new IsotopeContainer(157.07503, 0.0004));

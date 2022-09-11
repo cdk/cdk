@@ -27,12 +27,12 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-reaction
  */
-public class ParameterReactTest extends CDKTestCase {
+class ParameterReactTest extends CDKTestCase {
 
     /**
      *  Constructor for the ParameterReactTest object.
      */
-    public ParameterReactTest() {
+    ParameterReactTest() {
         super();
     }
 
@@ -42,7 +42,7 @@ public class ParameterReactTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testParameterReact() {
+    void testParameterReact() {
         IParameterReact paramSet = new ParameterReact();
         Assertions.assertNotNull(paramSet);
     }
@@ -53,7 +53,7 @@ public class ParameterReactTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSetParameter_boolean() {
+    void testSetParameter_boolean() {
         IParameterReact paramSet = new ParameterReact();
 
         paramSet.setParameter(Boolean.TRUE);
@@ -67,7 +67,7 @@ public class ParameterReactTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testIsSetParameter() {
+    void testIsSetParameter() {
         IParameterReact paramSet = new ParameterReact();
         Assertions.assertFalse(paramSet.isSetParameter());
     }
@@ -78,7 +78,7 @@ public class ParameterReactTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSetValue_object() {
+    void testSetValue_object() {
         IParameterReact paramSet = new ParameterReact();
         paramSet.setValue(null);
         Assertions.assertNull(paramSet.getValue());
@@ -91,7 +91,7 @@ public class ParameterReactTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetValue() {
+    void testGetValue() {
         IParameterReact paramSet = new ParameterReact();
         paramSet.setValue(new Object());
         Assertions.assertNotNull(paramSet.getValue());

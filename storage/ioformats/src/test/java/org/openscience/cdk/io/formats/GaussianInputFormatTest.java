@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class GaussianInputFormatTest extends ChemFormatTest {
+class GaussianInputFormatTest extends ChemFormatTest {
 
-    public GaussianInputFormatTest() {
+    GaussianInputFormatTest() {
         super.setChemFormat((IChemFormat) GaussianInputFormat.getInstance());
     }
 

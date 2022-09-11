@@ -42,7 +42,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
  * @author     steinbeck
  * @cdk.created    2002-11-16
  */
-public class BremserPredictorTest extends CDKTestCase {
+class BremserPredictorTest extends CDKTestCase {
 
     static boolean standAlone = false;
 
@@ -52,7 +52,7 @@ public class BremserPredictorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
         Assertions.assertNotNull(bp);
     }
@@ -63,7 +63,7 @@ public class BremserPredictorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testPrediction() throws Exception {
+    void testPrediction() throws Exception {
         String[] data = {"=C(//)", "=OCC(//)", "CC(//)", "CC(//)", "CCC(//)", "CC(//)", "CC(//)", "CCC(//)", "CCC(//)",
                 "CC(//)", "CC(//)", "CC(//)", "CC(//)", "CCO(//)", "CC(//)", "CCO(//)", "CCO(//)", "CC(//)", "O(//)",
                 "CC(//)", "CCC(//)", "CCC(//)", "CCC(//)"};
@@ -87,7 +87,7 @@ public class BremserPredictorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testGetConfidenceLimit() throws Exception {
+    void testGetConfidenceLimit() throws Exception {
         double[] result = {28.5, 25.7, 28.5, 34.9, 28.5, 25.7, 25.4, 28.5, 28.5, 14.8, 13.3, 23.0, 34.9, 25.7, 25.7,
                 28.5, 25.7, 25.7, 13.3, 14.4, 14.4, 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3, 14.4, 14.4,
                 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3};
@@ -112,7 +112,7 @@ public class BremserPredictorTest extends CDKTestCase {
     }
 
     @Test
-    public void testFailure1() {
+    void testFailure1() {
         boolean correct = false;
         BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
         try {
@@ -126,7 +126,7 @@ public class BremserPredictorTest extends CDKTestCase {
     }
 
     @Test
-    public void testFailure2() {
+    void testFailure2() {
         boolean correct = false;
         BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
         try {
@@ -140,7 +140,7 @@ public class BremserPredictorTest extends CDKTestCase {
     }
 
     @Test
-    public void testFailure3() {
+    void testFailure3() {
         boolean correct = false;
         String test = null;
         BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();

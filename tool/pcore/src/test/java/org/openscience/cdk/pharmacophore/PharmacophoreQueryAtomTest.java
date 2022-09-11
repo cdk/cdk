@@ -26,16 +26,16 @@ import javax.vecmath.Point3d;
 /**
  * @cdk.module test-pcore
  */
-public class PharmacophoreQueryAtomTest {
+class PharmacophoreQueryAtomTest {
 
     @Test
-    public void testGetSmarts() {
+    void testGetSmarts() {
         PharmacophoreQueryAtom qatom = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
         Assertions.assertEquals("c1ccccc1", qatom.getSmarts());
     }
 
     @Test
-    public void testMatches() {
+    void testMatches() {
         PharmacophoreQueryAtom qatom = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
 
         PharmacophoreAtom patom1 = new PharmacophoreAtom("c1ccccc1", "aromatic", new Point3d(0, 0, 0));
@@ -51,7 +51,7 @@ public class PharmacophoreQueryAtomTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         PharmacophoreQueryAtom qatom = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
         String repr = qatom.toString();
         Assertions.assertEquals("aromatic [c1ccccc1]", repr);

@@ -50,12 +50,12 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-libiocml
  * @cdk.require java1.5+
  */
-public class CML2Test extends CDKTestCase {
+class CML2Test extends CDKTestCase {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CML2Test.class);
 
     @Test
-    public void testFile3() throws Exception {
+    void testFile3() throws Exception {
         String filename = "3.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -78,7 +78,7 @@ public class CML2Test extends CDKTestCase {
      * @cdk.bug 2114987
      */
     @Test
-    public void testCMLTestCase() throws Exception {
+    void testCMLTestCase() throws Exception {
         String filename = "olaCmlAtomType.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -92,7 +92,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCOONa() throws Exception {
+    void testCOONa() throws Exception {
         String filename = "COONa.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -124,7 +124,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testNitrate() throws Exception {
+    void testNitrate() throws Exception {
         String filename = "nitrate.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -156,7 +156,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK1() throws Exception {
+    void testCMLOK1() throws Exception {
         String filename = "cs2a.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -184,7 +184,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK2() throws Exception {
+    void testCMLOK2() throws Exception {
         String filename = "cs2a.mol.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -212,7 +212,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK3() throws Exception {
+    void testCMLOK3() throws Exception {
         String filename = "nsc2dmol.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -240,7 +240,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK4() throws Exception {
+    void testCMLOK4() throws Exception {
         String filename = "nsc2dmol.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -268,7 +268,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK5() throws Exception {
+    void testCMLOK5() throws Exception {
         String filename = "nsc2dmol.a1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -296,7 +296,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK6() throws Exception {
+    void testCMLOK6() throws Exception {
         String filename = "nsc2dmol.a2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -324,7 +324,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK7() throws Exception {
+    void testCMLOK7() throws Exception {
         String filename = "nsc3dcml.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -352,7 +352,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK8() throws Exception {
+    void testCMLOK8() throws Exception {
         String filename = "nsc2dcml.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -380,7 +380,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK9() throws Exception {
+    void testCMLOK9() throws Exception {
         String filename = "nsc3dmol.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -408,7 +408,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK10() throws Exception {
+    void testCMLOK10() throws Exception {
         String filename = "nsc3dmol.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -436,7 +436,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK11() throws Exception {
+    void testCMLOK11() throws Exception {
         String filename = "nsc3dmol.a1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -464,7 +464,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     @Test
-    public void testCMLOK12() throws Exception {
+    void testCMLOK12() throws Exception {
         String filename = "nsc3dmol.a2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -496,7 +496,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the molecule.
      */
     @Test
-    public void testCMLSpectMolExtraction() throws Exception {
+    void testCMLSpectMolExtraction() throws Exception {
         String filename = "molAndspect.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -528,7 +528,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the reaction.
      */
     @Test
-    public void testCMLReaction() throws Exception {
+    void testCMLReaction() throws Exception {
         String filename = "reaction.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -561,7 +561,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the reaction.
      */
     @Test
-    public void testCMLReactionWithAgents() throws Exception {
+    void testCMLReactionWithAgents() throws Exception {
         String filename = "reaction.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -595,7 +595,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the reaction.
      */
     @Test
-    public void testCMLReactionList() throws Exception {
+    void testCMLReactionList() throws Exception {
         String filename = "reactionList.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -627,7 +627,7 @@ public class CML2Test extends CDKTestCase {
      * @cdk.bug 1560486
      */
     @Test
-    public void testCMLWithFormula() throws Exception {
+    void testCMLWithFormula() throws Exception {
         String filename = "cmlWithFormula.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -656,7 +656,7 @@ public class CML2Test extends CDKTestCase {
      * Only Molecule with concise MolecularFormula
      */
     @Test
-    public void testCMLConciseFormula() throws Exception {
+    void testCMLConciseFormula() throws Exception {
         String filename = "cmlConciseFormula.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -684,7 +684,7 @@ public class CML2Test extends CDKTestCase {
      * Only Molecule with concise MolecularFormula
      */
     @Test
-    public void testCMLConciseFormula2() throws Exception {
+    void testCMLConciseFormula2() throws Exception {
         String filename = "cmlConciseFormula2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -713,7 +713,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the reaction.
      */
     @Test
-    public void testCMLScheme1() throws Exception {
+    void testCMLScheme1() throws Exception {
         String filename = "reactionScheme.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -752,7 +752,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the reaction.
      */
     @Test
-    public void testCMLScheme2() throws Exception {
+    void testCMLScheme2() throws Exception {
         String filename = "reactionScheme.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -791,7 +791,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the reaction.
      */
     @Test
-    public void testCMLSchemeStepList1() throws Exception {
+    void testCMLSchemeStepList1() throws Exception {
         String filename = "reactionSchemeStepList.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -831,7 +831,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the reaction.
      */
     @Test
-    public void testCMLStepList() throws Exception {
+    void testCMLStepList() throws Exception {
         String filename = "reactionStepList.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -871,7 +871,7 @@ public class CML2Test extends CDKTestCase {
      * references to list of molecules.
      */
     @Test
-    public void testCMLSchemeMoleculeSet() throws Exception {
+    void testCMLSchemeMoleculeSet() throws Exception {
         String filename = "reactionSchemeMoleculeSet.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -913,7 +913,7 @@ public class CML2Test extends CDKTestCase {
      * @cdk.bug 2697568
      */
     @Test
-    public void testReadReactionWithPointersToMoleculeSet() throws Exception {
+    void testReadReactionWithPointersToMoleculeSet() throws Exception {
         String filename = "AlanineTree.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -928,7 +928,7 @@ public class CML2Test extends CDKTestCase {
      * @cdk.bug 2697568
      */
     @Test
-    public void testBug2697568() throws Exception {
+    void testBug2697568() throws Exception {
         String filename = "AlanineTreeReverse.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -942,7 +942,7 @@ public class CML2Test extends CDKTestCase {
     /**
      */
     @Test
-    public void testReactionProperties() throws Exception {
+    void testReactionProperties() throws Exception {
         String filename = "reaction.2.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);

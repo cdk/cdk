@@ -36,14 +36,14 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * @cdk.module test-standard
  */
-public class BondToolsTest extends CDKTestCase {
+class BondToolsTest extends CDKTestCase {
 
-    public BondToolsTest() {
+    BondToolsTest() {
         super();
     }
 
     @Test
-    public void testIsValidDoubleBondConfiguration_IAtomContainer_IBond() throws Exception {
+    void testIsValidDoubleBondConfiguration_IAtomContainer_IBond() throws Exception {
         String filename = "testdoublebondconfig.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -60,7 +60,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsCisTrans_IAtom_IAtom_IAtom_IAtom_IAtomContainer() throws Exception {
+    void testIsCisTrans_IAtom_IAtom_IAtom_IAtom_IAtomContainer() throws Exception {
         String filename = "testdoublebondconfig.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -70,7 +70,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsLeft_IAtom_IAtom_IAtom() throws Exception {
+    void testIsLeft_IAtom_IAtom_IAtom() throws Exception {
         String filename = "testdoublebondconfig.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -80,7 +80,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGiveAngleBothMethods_IAtom_IAtom_IAtom_boolean() throws Exception {
+    void testGiveAngleBothMethods_IAtom_IAtom_IAtom_boolean() throws Exception {
         String filename = "testdoublebondconfig.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -94,7 +94,7 @@ public class BondToolsTest extends CDKTestCase {
      * Make sure the the rebonding is working.
      */
     @Test
-    public void testCloseEnoughToBond_IAtom_IAtom_double() throws Exception {
+    void testCloseEnoughToBond_IAtom_IAtom_double() throws Exception {
         String filename = "viagra.xyz";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         XYZReader reader = new XYZReader(ins);
@@ -110,7 +110,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGiveAngleBothMethods_Point2d_Point2d_Point2d_boolean() throws Exception {
+    void testGiveAngleBothMethods_Point2d_Point2d_Point2d_boolean() throws Exception {
         String filename = "testdoublebondconfig.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -123,7 +123,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsTetrahedral_IAtomContainer_IAtom_boolean() throws Exception {
+    void testIsTetrahedral_IAtomContainer_IAtom_boolean() throws Exception {
         String filename = "tetrahedral_1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -141,7 +141,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsTrigonalBipyramidalOrOctahedral_IAtomContainer_IAtom() throws Exception {
+    void testIsTrigonalBipyramidalOrOctahedral_IAtomContainer_IAtom() throws Exception {
         String filename = "trigonal_bipyramidal.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -152,7 +152,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsStereo_IAtomContainer_IAtom() throws Exception {
+    void testIsStereo_IAtomContainer_IAtom() throws Exception {
         String filename = "trigonal_bipyramidal.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -163,7 +163,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsStereo_IAtomContainer_IAtom_forinvalid() throws Exception {
+    void testIsStereo_IAtomContainer_IAtom_forinvalid() throws Exception {
         String filename = "trigonal_bipyramidal.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -177,7 +177,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsSquarePlanar_IAtomContainer_IAtom() throws Exception {
+    void testIsSquarePlanar_IAtomContainer_IAtom() throws Exception {
         String filename = "squareplanar.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -188,7 +188,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testStereosAreOpposite_IAtomContainer_IAtom() throws Exception {
+    void testStereosAreOpposite_IAtomContainer_IAtom() throws Exception {
         String filename = "squareplanar.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -204,7 +204,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testMakeUpDownBonds_IAtomContainer() throws Exception {
+    void testMakeUpDownBonds_IAtomContainer() throws Exception {
         String filename = "tetrahedral_2_lazy.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -215,7 +215,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGiveAngle_IAtom_IAtom_IAtom() throws Exception {
+    void testGiveAngle_IAtom_IAtom_IAtom() throws Exception {
         String filename = "testdoublebondconfig.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -225,7 +225,7 @@ public class BondToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGiveAngleFromMiddle_IAtom_IAtom_IAtom() throws Exception {
+    void testGiveAngleFromMiddle_IAtom_IAtom_IAtom() throws Exception {
         String filename = "testdoublebondconfig.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -238,7 +238,7 @@ public class BondToolsTest extends CDKTestCase {
      * @cdk.bug 2831420
      */
     @Test
-    public void testBug2831420() throws Exception {
+    void testBug2831420() throws Exception {
         String filename = "bug2831420.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);

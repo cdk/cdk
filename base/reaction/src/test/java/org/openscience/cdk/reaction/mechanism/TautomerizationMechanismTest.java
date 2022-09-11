@@ -29,13 +29,13 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  *
  * @cdk.module test-reaction
  */
-public class TautomerizationMechanismTest extends ReactionMechanismTest {
+class TautomerizationMechanismTest extends ReactionMechanismTest {
 
     /**
      *  The JUnit setup method
      */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         setMechanism(TautomerizationMechanism.class);
     }
 
@@ -45,7 +45,7 @@ public class TautomerizationMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testTautomerizationMechanism() {
+    void testTautomerizationMechanism() {
         IReactionMechanism mechanism = new TautomerizationMechanism();
         Assertions.assertNotNull(mechanism);
     }
@@ -57,7 +57,7 @@ public class TautomerizationMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+    void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
         IReactionMechanism mechanism = new TautomerizationMechanism();
 
         Assertions.assertNotNull(mechanism);

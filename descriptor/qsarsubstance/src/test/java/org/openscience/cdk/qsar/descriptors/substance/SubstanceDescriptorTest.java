@@ -23,12 +23,12 @@ import org.openscience.cdk.interfaces.ISubstance;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
-public abstract class SubstanceDescriptorTest {
+abstract class SubstanceDescriptorTest {
 
 	ISubstanceDescriptor descriptor;
     
     @SuppressWarnings("rawtypes")
-    public void setDescriptor(Class descriptorClass) throws Exception {
+    void setDescriptor(Class descriptorClass) throws Exception {
         if (descriptor == null) {
             Object descriptor = descriptorClass.newInstance();
             if (!(descriptor instanceof ISubstanceDescriptor)) {
@@ -41,7 +41,7 @@ public abstract class SubstanceDescriptorTest {
     }
     
     @Test
-    public void testCalculate_Empty() throws Exception {
+    void testCalculate_Empty() throws Exception {
         ISubstance material = new Substance();
         DescriptorValue value = descriptor.calculate(material);
         Assertions.assertNotNull(value);
@@ -51,7 +51,7 @@ public abstract class SubstanceDescriptorTest {
     }
     
     @Test
-    public void testCalculate_Null() throws Exception {
+    void testCalculate_Null() throws Exception {
         DescriptorValue value = descriptor.calculate(null);
         Assertions.assertNotNull(value);
         IDescriptorResult result = value.getValue();

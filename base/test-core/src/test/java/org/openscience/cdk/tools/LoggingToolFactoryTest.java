@@ -24,23 +24,23 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-core
  */
-public class LoggingToolFactoryTest {
+class LoggingToolFactoryTest {
 
     @Test
-    public void testSetGetLoggingToolClass() {
+    void testSetGetLoggingToolClass() {
         Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
         Assertions.assertEquals(Log4jLoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
     }
 
     @Test
-    public void testCreateLoggingTool() {
+    void testCreateLoggingTool() {
         ILoggingTool logger = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
         Assertions.assertNotNull(logger);
     }
 
     @Test
-    public void testCreateLog4jLoggingTool() {
+    void testCreateLog4jLoggingTool() {
         Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
         ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
@@ -48,7 +48,7 @@ public class LoggingToolFactoryTest {
     }
 
     @Test
-    public void testCustomLogger() {
+    void testCustomLogger() {
         LoggingToolFactory.setLoggingToolClass(CustomLogger.class);
         ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
         Assertions.assertTrue(instance instanceof CustomLogger);

@@ -39,17 +39,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public final class RingSearchTest_SpiroRings {
+final class RingSearchTest_SpiroRings {
 
     private final IAtomContainer spiro = TestMoleculeFactory.makeSpiroRings();
 
     @Test
-    public void testCyclic() {
+    void testCyclic() {
         assertThat(new RingSearch(spiro).cyclic().length, is(spiro.getAtomCount()));
     }
 
     @Test
-    public void testCyclic_Int() {
+    void testCyclic_Int() {
         int n = spiro.getAtomCount();
         RingSearch ringSearch = new RingSearch(spiro);
         for (int i = 0; i < n; i++) {
@@ -58,7 +58,7 @@ public final class RingSearchTest_SpiroRings {
     }
 
     @Test
-    public void testIsolated() {
+    void testIsolated() {
         RingSearch search = new RingSearch(spiro);
         int[][] isolated = search.isolated();
         assertThat(isolated.length, is(2));
@@ -67,19 +67,19 @@ public final class RingSearchTest_SpiroRings {
     }
 
     @Test
-    public void testFused() {
+    void testFused() {
         assertThat(new RingSearch(spiro).fused().length, is(0));
     }
 
     @Test
-    public void testRingFragments() {
+    void testRingFragments() {
         IAtomContainer fragment = new RingSearch(spiro).ringFragments();
         assertThat(fragment.getAtomCount(), is(spiro.getAtomCount()));
         assertThat(fragment.getBondCount(), is(spiro.getBondCount()));
     }
 
     @Test
-    public void testIsolatedRingFragments() {
+    void testIsolatedRingFragments() {
         RingSearch search = new RingSearch(spiro);
         List<IAtomContainer> isolated = search.isolatedRingFragments();
         assertThat(isolated.size(), is(2));
@@ -88,7 +88,7 @@ public final class RingSearchTest_SpiroRings {
     }
 
     @Test
-    public void testFusedRingFragments() {
+    void testFusedRingFragments() {
         RingSearch search = new RingSearch(spiro);
         List<IAtomContainer> fused = search.fusedRingFragments();
         assertThat(fused.size(), is(0));

@@ -34,10 +34,10 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.created    2003-07-01
  * @cdk.require java1.4+
  */
-public class CASNumberTest extends CDKTestCase {
+class CASNumberTest extends CDKTestCase {
 
     @Test
-    public void testValidNumbers() {
+    void testValidNumbers() {
         // valid cas numbers
         Assertions.assertTrue(CASNumber.isValid("36-88-4"));
         Assertions.assertTrue(CASNumber.isValid("50-00-0")); // formaldehyde
@@ -48,7 +48,7 @@ public class CASNumberTest extends CDKTestCase {
     }
 
     @Test
-    public void testInvalidCheckDigits() {
+    void testInvalidCheckDigits() {
         // invalid R value
         Assertions.assertFalse(CASNumber.isValid("50-00-1"));
         Assertions.assertFalse(CASNumber.isValid("50-00-2"));
@@ -62,7 +62,7 @@ public class CASNumberTest extends CDKTestCase {
     }
 
     @Test
-    public void testWrongHyphenPositions() {
+    void testWrongHyphenPositions() {
         // invalid format due to invalid hyphen positions
         Assertions.assertFalse(CASNumber.isValid("3-21-40"));
         Assertions.assertFalse(CASNumber.isValid("3-210-4"));
@@ -71,7 +71,7 @@ public class CASNumberTest extends CDKTestCase {
     }
 
     @Test
-    public void testInvalidCharacters() {
+    void testInvalidCharacters() {
         // invalid characters
         Assertions.assertFalse(CASNumber.isValid("a-21-4"));
         Assertions.assertFalse(CASNumber.isValid("3-a1-4"));
@@ -81,13 +81,13 @@ public class CASNumberTest extends CDKTestCase {
     }
 
     @Test
-    public void testSanity() {
+    void testSanity() {
         // completely stupid value
         Assertions.assertFalse(CASNumber.isValid("0&z003-!0>/-0a"));
     }
 
     @Test
-    public void testCharacterSet() {
+    void testCharacterSet() {
         // invalid value even with the '0' unicode character '\u0030'
         Assertions.assertFalse(CASNumber.isValid("\u0030-21-4"));
     }

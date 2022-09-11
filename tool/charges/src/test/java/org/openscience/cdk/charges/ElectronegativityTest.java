@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 *
 * @cdk.module test-charges
 */
-public class ElectronegativityTest extends CDKTestCase {
+class ElectronegativityTest extends CDKTestCase {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -42,7 +42,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * Constructor of the ElectronegativityTest.
      */
-    public ElectronegativityTest() {
+    ElectronegativityTest() {
         super();
     }
 
@@ -52,7 +52,7 @@ public class ElectronegativityTest extends CDKTestCase {
      *
      */
     @Test
-    public void testElectronegativity() {
+    void testElectronegativity() {
 
         Assertions.assertNotNull(new Electronegativity());
     }
@@ -63,7 +63,7 @@ public class ElectronegativityTest extends CDKTestCase {
      *
      */
     @Test
-    public void testElectronegativity_Int_Int() {
+    void testElectronegativity_Int_Int() {
 
         Assertions.assertNotNull(new Electronegativity(6, 50));
     }
@@ -77,7 +77,7 @@ public class ElectronegativityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testCalculateSigmaElectronegativity_IAtomContainer_IAtom() throws Exception {
+    void testCalculateSigmaElectronegativity_IAtomContainer_IAtom() throws Exception {
         double[] testResult = {11.308338, 8.7184094, 7.5289848, 7.5289848, 7.5289848};
         Electronegativity pe = new Electronegativity();
 
@@ -104,7 +104,7 @@ public class ElectronegativityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testCalculateSigmaElectronegativity_IAtomContainer_IAtom_Int_Int() throws Exception {
+    void testCalculateSigmaElectronegativity_IAtomContainer_IAtom_Int_Int() throws Exception {
         double[] testResult = {11.308338, 8.7184094, 7.5289848, 7.5289848, 7.5289848};
         Electronegativity pe = new Electronegativity();
 
@@ -130,7 +130,7 @@ public class ElectronegativityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetMaxIterations() throws Exception {
+    void testGetMaxIterations() throws Exception {
 
         Electronegativity pe = new Electronegativity();
         Assertions.assertSame(6, pe.getMaxIterations());
@@ -143,7 +143,7 @@ public class ElectronegativityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetMaxResonStruc() throws Exception {
+    void testGetMaxResonStruc() throws Exception {
 
         Electronegativity pe = new Electronegativity();
         Assertions.assertSame(50, pe.getMaxResonStruc());
@@ -156,7 +156,7 @@ public class ElectronegativityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSetMaxIterations_Int() throws Exception {
+    void testSetMaxIterations_Int() throws Exception {
 
         Electronegativity pe = new Electronegativity();
         int maxIter = 10;
@@ -171,7 +171,7 @@ public class ElectronegativityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSetMaxResonStruc_Int() throws Exception {
+    void testSetMaxResonStruc_Int() throws Exception {
 
         Electronegativity pe = new Electronegativity();
         int maxRes = 10;

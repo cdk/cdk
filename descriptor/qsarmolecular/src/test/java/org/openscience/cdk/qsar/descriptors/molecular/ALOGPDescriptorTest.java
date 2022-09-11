@@ -36,12 +36,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-public class ALOGPDescriptorTest extends MolecularDescriptorTest {
+class ALOGPDescriptorTest extends MolecularDescriptorTest {
 
     private CDKHydrogenAdder hydrogenAdder;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(ALOGPDescriptor.class);
         hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
     }
@@ -51,7 +51,7 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
-    public void testChloroButane() throws Exception {
+    void testChloroButane() throws Exception {
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");

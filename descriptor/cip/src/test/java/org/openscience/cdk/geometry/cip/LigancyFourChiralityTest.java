@@ -41,13 +41,13 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 /**
  * @cdk.module test-cip
  */
-public class LigancyFourChiralityTest extends CDKTestCase {
+class LigancyFourChiralityTest extends CDKTestCase {
 
     private static IAtomContainer molecule;
     private static ILigand[]      ligands;
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         molecule = new AtomContainer();
         molecule.addAtom(new Atom("Cl"));
         molecule.addAtom(new Atom("C"));
@@ -66,7 +66,7 @@ public class LigancyFourChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         LigancyFourChirality chirality = new LigancyFourChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assertions.assertNotNull(chirality);
         Assertions.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
@@ -77,7 +77,7 @@ public class LigancyFourChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testConstructor_ILigancyFourChirality() {
+    void testConstructor_ILigancyFourChirality() {
         List<IAtom> ligandAtoms = new ArrayList<>();
         for (ILigand ligand : ligands)
             ligandAtoms.add(ligand.getLigandAtom());
@@ -98,14 +98,14 @@ public class LigancyFourChiralityTest extends CDKTestCase {
      * Checks if projecting onto itself does not change the stereochemistry.
      */
     @Test
-    public void testProject() {
+    void testProject() {
         LigancyFourChirality chirality = new LigancyFourChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         chirality.project(ligands);
         Assertions.assertEquals(Stereo.CLOCKWISE, chirality.getStereo());
     }
 
     @Test
-    public void testProject_OneChange() {
+    void testProject_OneChange() {
         LigancyFourChirality chirality = new LigancyFourChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         ILigand[] newLigands = new ILigand[]{ligands[0], ligands[1], ligands[3], ligands[2]};
         chirality = chirality.project(newLigands);
@@ -113,7 +113,7 @@ public class LigancyFourChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testProject_TwoChanges() {
+    void testProject_TwoChanges() {
         LigancyFourChirality chirality = new LigancyFourChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         ILigand[] newLigands = new ILigand[]{ligands[1], ligands[0], ligands[3], ligands[2]};
         chirality = chirality.project(newLigands);

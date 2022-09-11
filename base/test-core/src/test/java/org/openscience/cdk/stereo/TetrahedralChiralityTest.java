@@ -47,13 +47,13 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 /**
  * @cdk.module test-core
  */
-public class TetrahedralChiralityTest extends CDKTestCase {
+class TetrahedralChiralityTest extends CDKTestCase {
 
     private static IAtomContainer molecule;
     private static IAtom[]        ligands;
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         molecule = new AtomContainer();
         molecule.addAtom(new Atom("Cl"));
         molecule.addAtom(new Atom("C"));
@@ -68,27 +68,27 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testTetrahedralChirality_IAtom_arrayIAtom_ITetrahedralChirality_Stereo() {
+    void testTetrahedralChirality_IAtom_arrayIAtom_ITetrahedralChirality_Stereo() {
         TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assertions.assertNotNull(chirality);
     }
 
     @Test
-    public void testBuilder() {
+    void testBuilder() {
         TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         chirality.setBuilder(DefaultChemObjectBuilder.getInstance());
         Assertions.assertEquals(DefaultChemObjectBuilder.getInstance(), chirality.getBuilder());
     }
 
     @Test
-    public void testGetChiralAtom() {
+    void testGetChiralAtom() {
         TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assertions.assertNotNull(chirality);
         Assertions.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
     }
 
     @Test
-    public void testGetStereo() {
+    void testGetStereo() {
         TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assertions.assertNotNull(chirality);
         Assertions.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
@@ -99,7 +99,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetLigands() {
+    void testGetLigands() {
         TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assertions.assertNotNull(chirality);
         for (int i = 0; i < ligands.length; i++) {
@@ -108,7 +108,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testMap_Map_Map() throws CloneNotSupportedException {
+    void testMap_Map_Map() throws CloneNotSupportedException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -162,7 +162,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testMap_Null_Map() throws CloneNotSupportedException {
+    void testMap_Null_Map() throws CloneNotSupportedException {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -182,7 +182,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testMap_Map_Map_EmptyMapping() throws CloneNotSupportedException {
+    void testMap_Map_Map_EmptyMapping() throws CloneNotSupportedException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -202,7 +202,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void contains() throws Exception {
+    void contains() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         IAtom c1 = builder.newInstance(IAtom.class, "C");
@@ -225,7 +225,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         String stringRepr = chirality.toString();
         Assertions.assertNotSame(0, stringRepr.length());

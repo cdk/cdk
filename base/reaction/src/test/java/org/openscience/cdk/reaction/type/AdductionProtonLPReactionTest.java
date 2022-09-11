@@ -59,14 +59,14 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
     private UniversalIsomorphismTester    uiTester;
 
     @BeforeEach
-    public void setUpUITester() {
+    void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }
 
     /**
      *  The JUnit setup method
      */
-    public AdductionProtonLPReactionTest() throws Exception {
+    AdductionProtonLPReactionTest() throws Exception {
         setReaction(AdductionProtonLPReaction.class);
     }
 
@@ -74,7 +74,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testAdductionProtonLPReaction() throws Exception {
+    void testAdductionProtonLPReaction() throws Exception {
         IReactionProcess type = new AdductionProtonLPReaction();
         Assertions.assertNotNull(type);
     }
@@ -124,7 +124,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new AdductionProtonLPReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
 
@@ -159,7 +159,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new AdductionProtonLPReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
 
@@ -206,7 +206,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new AdductionProtonLPReaction();
 
         /* automatic looking for active center */

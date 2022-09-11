@@ -38,7 +38,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AbbreviationsTest {
+class AbbreviationsTest {
 
     private static final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
@@ -47,7 +47,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void potassiumCarbonate() throws Exception {
+    void potassiumCarbonate() throws Exception {
         IAtomContainer mol = smi("[K+].[O-]C(=O)[O-].[K+]");
         Abbreviations factory = new Abbreviations();
         factory.add("[K+].[O-]C(=O)[O-].[K+] K2CO3");
@@ -59,7 +59,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void phenyl() throws Exception {
+    void phenyl() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("CCCCCCC(c1ccccc1)(c1ccccc1)c1ccccc1");
         factory.add("*c1ccccc1 Ph");
@@ -77,7 +77,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void phenylShouldNotMatchBenzene() throws Exception {
+    void phenylShouldNotMatchBenzene() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("c1ccccc1");
         factory.add("*c1ccccc1 Ph");
@@ -86,7 +86,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void TFASaltDisconnected() throws Exception {
+    void TFASaltDisconnected() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("c1ccccc1c1ccccc1.FC(F)(F)C(=O)O");
         factory.add("*C(F)(F)F CF3");
@@ -98,7 +98,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void TFASaltConnected() throws Exception {
+    void TFASaltConnected() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("FC(F)(F)C(=O)O");
         factory.add("*C(F)(F)F CF3");
@@ -115,7 +115,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void DcmAndTfa() throws Exception {
+    void DcmAndTfa() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("ClCCl.FC(F)(F)C(=O)O");
         factory.add("ClCCl DCM");
@@ -127,7 +127,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void DcmAndTfaNoSingleFrag() throws Exception {
+    void DcmAndTfaNoSingleFrag() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("ClCCl.FC(F)(F)C(=O)O");
         factory.add("ClCCl DCM");
@@ -139,7 +139,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void avoidOverZealousAbbreviations() throws Exception {
+    void avoidOverZealousAbbreviations() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("Clc1ccccc1");
         factory.add("*c1ccccc1 Ph");
@@ -147,7 +147,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void phenylShouldNotMatchC4H6() throws Exception {
+    void phenylShouldNotMatchC4H6() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("Oc1ccc(O)cc1");
         factory.add("*c1ccccc1 Ph");
@@ -156,7 +156,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void phenylShouldAbbreviateExplicitHydrogens() throws Exception {
+    void phenylShouldAbbreviateExplicitHydrogens() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("CCCCc1ccc([H])cc1");
         factory.add("*c1ccccc1 Ph");
@@ -169,7 +169,7 @@ public class AbbreviationsTest {
 
     // some SMARTS foo here :-)
     @Test
-    public void phenylShouldMatchKekuleForm() throws Exception {
+    void phenylShouldMatchKekuleForm() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("CCCCC1=CC=CC=C1");
         factory.add("*c1ccccc1 Ph");
@@ -182,7 +182,7 @@ public class AbbreviationsTest {
 
     // SMARTS foo not that good
     @Test
-    public void nitroGroups() throws Exception {
+    void nitroGroups() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("O=N(=O)CCCC[N+]([O-])=O");
         factory.add("*N(=O)(=O) NO2");
@@ -198,7 +198,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void abbreviationsHavePriority() throws Exception {
+    void abbreviationsHavePriority() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("c1ccccc1CCC");
         factory.add("*CCC Pr");
@@ -209,7 +209,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void dontOverwriteExistingSgroups() throws Exception {
+    void dontOverwriteExistingSgroups() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*CCC Bu");
         IAtomContainer mol = smi("c1ccccc1CCC");
@@ -224,7 +224,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.size(), is(0));
     }
 
-    @Test public void NHBocFromHeteroCollapse() throws Exception {
+    @Test
+    void NHBocFromHeteroCollapse() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*C(=O)OC(C)(C)C Boc");
         IAtomContainer mol = smi("c1ccccc1NC(=O)OC(C)(C)C");
@@ -235,7 +236,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getAtoms().size(), is(8));
     }
 
-    @Test public void NHBocFromHeteroCollapseExplicitH() throws Exception {
+    @Test
+    void NHBocFromHeteroCollapseExplicitH() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*C(=O)OC(C)(C)C Boc");
         IAtomContainer mol = smi("c1ccccc1N([H])C(=O)OC(C)(C)C");
@@ -246,7 +248,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getAtoms().size(), is(9));
     }
 
-    @Test public void NBocClFromHeteroCollapseExplicit() throws Exception {
+    @Test
+    void NBocClFromHeteroCollapseExplicit() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*C(=O)OC(C)(C)C Boc");
         IAtomContainer mol = smi("c1ccccc1N(Cl)C(=O)OC(C)(C)C");
@@ -257,7 +260,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getAtoms().size(), is(9));
     }
 
-    @Test public void NBoc2FromHeteroCollapse() throws Exception {
+    @Test
+    void NBoc2FromHeteroCollapse() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*C(=O)OC(C)(C)C Boc");
         IAtomContainer mol = smi("c1cc2ccccc2cc1N(C(=O)OC(C)(C)C)C(=O)OC(C)(C)C");
@@ -268,7 +272,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getAtoms().size(), is(15));
     }
 
-    @Test public void iPrFromHeteroCollapse() throws Exception {
+    @Test
+    void iPrFromHeteroCollapse() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*C(C)C iPr");
         IAtomContainer mol = smi("[CH3:27][CH:19]([CH3:28])[C:20]1=[N:26][C:23](=[CH:22][S:21]1)[C:24](=[O:25])O");
@@ -279,7 +284,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getAtoms().size(), is(3));
     }
 
-    @Test public void NBocFromHeteroCollapseExplicitH() throws Exception {
+    @Test
+    void NBocFromHeteroCollapseExplicitH() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*C(=O)OC(C)(C)C Boc");
         IAtomContainer mol = smi("c1cc2ccccc2ccn1C(=O)OC(C)(C)C");
@@ -290,7 +296,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getAtoms().size(), is(8));
     }
 
-    @Test public void SO3minusFromHeteroCollapseNone() throws Exception {
+    @Test
+    void SO3minusFromHeteroCollapseNone() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*S(=O)(=O)[O-] SO3-");
         IAtomContainer mol = smi("c1ccccc1N(S(=O)(=O)[O-])S(=O)(=O)[O-]");
@@ -300,7 +307,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(1).getSubscript(), is("SO3-"));
     }
 
-    @Test public void hclSaltOfEdci() throws Exception {
+    @Test
+    void hclSaltOfEdci() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("CCN=C=NCCCN(C)C EDCI");
         factory.setContractToSingleLabel(true);
@@ -310,7 +318,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getSubscript(), is("EDCI·HCl"));
     }
 
-    @Test public void SnCl2() throws Exception {
+    @Test
+    void SnCl2() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("Cl[Sn]Cl");
         List<Sgroup> sgroups = factory.generate(mol);
@@ -318,7 +327,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getSubscript(), is("SnCl2"));
     }
 
-    @Test public void HOOH() throws Exception {
+    @Test
+    void HOOH() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("OO");
         List<Sgroup> sgroups = factory.generate(mol);
@@ -326,7 +336,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getSubscript(), is("HOOH"));
     }
 
-    @Test public void multipleDisconnectedAbbreviations() throws Exception {
+    @Test
+    void multipleDisconnectedAbbreviations() throws Exception {
         String smi = "ClCCl.Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1";
         Abbreviations factory = new Abbreviations();
         factory.add("ClCCl DCM");
@@ -338,7 +349,8 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getSubscript(), is("Pd(dppf)Cl2·DCM"));
     }
 
-    @Test public void multipleDisconnectedAbbreviations2() throws Exception {
+    @Test
+    void multipleDisconnectedAbbreviations2() throws Exception {
         String smi = "ClCCl.Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1";
         Abbreviations factory = new Abbreviations();
         factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
@@ -351,7 +363,8 @@ public class AbbreviationsTest {
     }
 
     // Don't generate NiPr
-    @Test public void avoidAmbiguity() throws Exception {
+    @Test
+    void avoidAmbiguity() throws Exception {
         String smi = "C1CCCCC1=NC(C)C";
         Abbreviations factory = new Abbreviations();
         factory.add("*C(C)C iPr");
@@ -362,7 +375,7 @@ public class AbbreviationsTest {
     }
 
     @Test
-    public void loadFromFile() throws Exception {
+    void loadFromFile() throws Exception {
         Abbreviations factory = new Abbreviations();
         assertThat(factory.loadFromFile("obabel_superatoms.smi"), is(27));
         assertThat(factory.loadFromFile("/org/openscience/cdk/depict/obabel_superatoms.smi"), is(27));

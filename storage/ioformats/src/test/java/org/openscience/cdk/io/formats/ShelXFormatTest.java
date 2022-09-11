@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class ShelXFormatTest extends ChemFormatMatcherTest {
+class ShelXFormatTest extends ChemFormatMatcherTest {
 
-    public ShelXFormatTest() {
+    ShelXFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) ShelXFormat.getInstance());
     }
 

@@ -35,15 +35,15 @@ import org.junit.jupiter.api.BeforeAll;
  *
  * @cdk.module test-data
  */
-public class PseudoAtomTest extends AbstractPseudoAtomTest {
+class PseudoAtomTest extends AbstractPseudoAtomTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(PseudoAtom::new);
     }
 
     @Test
-    public void testPseudoAtom() {
+    void testPseudoAtom() {
         IPseudoAtom a = new PseudoAtom();
         Assertions.assertEquals("R", a.getSymbol());
         Assertions.assertNull(a.getPoint3d());
@@ -52,7 +52,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
-    public void testPseudoAtom_IElement() {
+    void testPseudoAtom_IElement() {
         IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IPseudoAtom a = new PseudoAtom(element);
         Assertions.assertEquals("R", a.getSymbol());
@@ -62,7 +62,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
-    public void testPseudoAtom_String() {
+    void testPseudoAtom_String() {
         String label = "Arg255";
         IPseudoAtom a = new PseudoAtom(label);
         Assertions.assertEquals("R", a.getSymbol());
@@ -73,7 +73,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
-    public void testPseudoAtom_String_Point2d() {
+    void testPseudoAtom_String_Point2d() {
         Point2d point = new Point2d(1.0, 2.0);
         String label = "Arg255";
         IPseudoAtom a = new PseudoAtom(label, point);
@@ -85,7 +85,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
-    public void testPseudoAtom_String_Point3d() {
+    void testPseudoAtom_String_Point3d() {
         Point3d point = new Point3d(1.0, 2.0, 3.0);
         String label = "Arg255";
         IPseudoAtom a = new PseudoAtom(label, point);

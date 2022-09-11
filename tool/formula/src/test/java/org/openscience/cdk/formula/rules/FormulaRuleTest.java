@@ -30,12 +30,12 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *
  * @cdk.module test-formula
  */
-public abstract class FormulaRuleTest extends CDKTestCase {
+abstract class FormulaRuleTest extends CDKTestCase {
 
-    protected static IRule rule;
+    private static IRule rule;
     private static Class<? extends IRule> ruleClass;
 
-    public static void setRule(Class<? extends IRule> ruleClass) throws Exception {
+    static void setRule(Class<? extends IRule> ruleClass) throws Exception {
         FormulaRuleTest.ruleClass = ruleClass;
         FormulaRuleTest.rule = getRule();
     }
@@ -59,12 +59,12 @@ public abstract class FormulaRuleTest extends CDKTestCase {
      * </pre>
      */
     @Test
-    public void testHasSetSuperDotRule() {
+    void testHasSetSuperDotRule() {
         Assertions.assertNotNull(rule, "The extending class must set the super.rule in its setUp() method.");
     }
 
     @Test
-    public void testValidate_IMolecularFormula() throws Exception {
+    void testValidate_IMolecularFormula() throws Exception {
         IRule rule = getRule();
     	
         IMolecularFormula mf = new MolecularFormula();

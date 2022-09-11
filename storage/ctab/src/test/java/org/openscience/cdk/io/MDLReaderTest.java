@@ -58,17 +58,17 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * @see org.openscience.cdk.io.MDLReader
  * @see org.openscience.cdk.io.SDFReaderTest
  */
-public class MDLReaderTest extends SimpleChemObjectReaderTest {
+class MDLReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new MDLReader(), "Strychnine_nichtOK.mol");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         MDLReader reader = new MDLReader();
         reader.setReaderMode(Mode.STRICT);
         Assertions.assertTrue(reader.accepts(ChemFile.class));
@@ -77,7 +77,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadFromStringReader() throws Exception {
+    void testReadFromStringReader() throws Exception {
         String mdl = "cyclopropane.mol\n" + "\n" + "\n" + "  9  9  0  0\n"
                 + "   -0.0073   -0.5272    0.9655 C   0  0  0  0  0\n"
                 + "   -0.6776   -0.7930   -0.3498 C   0  0  0  0  0\n"
@@ -111,7 +111,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
     
     @Test
-    public void testMassDiff() throws Exception {
+    void testMassDiff() throws Exception {
         String mdl = "deuterium.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1\n"
                 + "    0.0000    0.0000    0.0000 H  +1  0  0  0  0\n";
         try (MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT)) {
@@ -126,7 +126,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1542467
      */
     @Test
-    public void testBug1542467() throws Exception {
+    void testBug1542467() throws Exception {
         String filename = "Strychnine_nichtOK.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -141,7 +141,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadProton() throws Exception {
+    void testReadProton() throws Exception {
         String mdl = "proton.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1\n"
                 + "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
         MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
@@ -158,7 +158,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      * The corrupt file is really ok; it is just not V2000 material.
      */
     @Test
-    public void testSDF() throws Exception {
+    void testSDF() throws Exception {
         String filename = "prev2000.sd";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -179,7 +179,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      * is read is 'no stereochemistry involved'.
      */
     @Test
-    public void testStereoReadZeroDefault() throws Exception {
+    void testStereoReadZeroDefault() throws Exception {
         String filename = "prev2000.sd";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -194,7 +194,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testEmptyString() throws Exception {
+    void testEmptyString() throws Exception {
         String emptyString = "";
         MDLReader reader = new MDLReader(new StringReader(emptyString), Mode.STRICT);
         IAtomContainer mol = reader.read(new AtomContainer());
@@ -203,7 +203,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testUndefinedStereo() throws Exception {
+    void testUndefinedStereo() throws Exception {
         String filename = "ChEBI_26120.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -217,7 +217,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadAtomAtomMapping() throws Exception {
+    void testReadAtomAtomMapping() throws Exception {
         String filename = "a-pinene-with-atom-atom-mapping.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -232,7 +232,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testHas2DCoordinates_With000() throws Exception {
+    void testHas2DCoordinates_With000() throws Exception {
         String filenameMol = "with000coordinate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne;
@@ -248,7 +248,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 3485634
      */
     @Test
-    public void testMissingAtomProperties() throws Exception {
+    void testMissingAtomProperties() throws Exception {
         InputStream in = getClass().getResourceAsStream("bug3485634.mol");
         MDLReader reader = new MDLReader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -261,7 +261,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1356
      */
     @Test
-    public void properties() throws Exception {
+    void properties() throws Exception {
         InputStream in = getClass().getResourceAsStream("bug1356.sdf");
         MDLReader reader = new MDLReader(in);
         IChemFile chemfile = DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class);
@@ -274,7 +274,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void wrongFormat() throws CDKException {
+    void wrongFormat() throws CDKException {
         InputStream in = getClass().getResourceAsStream("bug1356.sdf");
         MDLReader reader = new MDLReader(in, Mode.STRICT);
         Assertions.assertThrows(CDKException.class,

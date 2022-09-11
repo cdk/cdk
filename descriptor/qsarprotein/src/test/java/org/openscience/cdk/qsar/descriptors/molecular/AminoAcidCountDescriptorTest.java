@@ -33,18 +33,18 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  *
  * @cdk.module test-qsarprotein
  */
-public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
+class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
 
     private IMolecularDescriptor descriptor;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         descriptor = new AminoAcidCountDescriptor();
         setDescriptor(AminoAcidCountDescriptor.class);
     }
 
     @Test
-    public void testAACount() throws Exception {
+    void testAACount() throws Exception {
         IBioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW",
                 SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
@@ -57,7 +57,7 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testFCount() throws Exception {
+    void testFCount() throws Exception {
         IBioPolymer protein = ProteinBuilderTool.createProtein("FF", SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assertions.assertTrue(result instanceof IntegerArrayResult);
@@ -67,7 +67,7 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testTCount() throws Exception {
+    void testTCount() throws Exception {
         IBioPolymer protein = ProteinBuilderTool.createProtein("TT", SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assertions.assertTrue(result instanceof IntegerArrayResult);

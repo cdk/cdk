@@ -43,12 +43,12 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-public class DescriptorNamesTest extends CDKTestCase {
+class DescriptorNamesTest extends CDKTestCase {
 
-    public DescriptorNamesTest() {}
+    DescriptorNamesTest() {}
 
     @Test
-    public void checkUniqueMolecularDescriptorNames() throws Exception {
+    void checkUniqueMolecularDescriptorNames() throws Exception {
         DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                 DefaultChemObjectBuilder.getInstance());
         List<IImplementationSpecification> specs = engine.getDescriptorSpecifications();

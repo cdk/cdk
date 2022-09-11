@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class ZMatrixFormatTest extends ChemFormatMatcherTest {
+class ZMatrixFormatTest extends ChemFormatMatcherTest {
 
-    public ZMatrixFormatTest() {
+    ZMatrixFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) ZMatrixFormat.getInstance());
     }
 

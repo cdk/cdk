@@ -33,7 +33,7 @@ import org.openscience.cdk.smarts.Smarts;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class HydrogenSuppressionTest {
+class HydrogenSuppressionTest {
 
     private static void test(String smaexp,
                              String smainp) {
@@ -45,23 +45,25 @@ public class HydrogenSuppressionTest {
     }
 
     @Test
-    public void oneHydrogen() {
+    void oneHydrogen() {
         test("[c!H0]", "c[H]");
         test("[c!H0]", "c[#1]");
     }
 
     @Test
-    public void twoHydrogens() {
+    void twoHydrogens() {
         test("[c!H0!H1]", "c([H])[H]");
         test("[c!H0!H1]", "c([#1])[#1]");
     }
 
-    @Test public void deuteriumIsKept() {
+    @Test
+    void deuteriumIsKept() {
         test("[c!H0][2#1]", "c([2H])[H]");
         test("[c!H0][2#1]", "c([2#1])[#1]");
     }
 
-    @Test public void bridgingIsKept() {
+    @Test
+    void bridgingIsKept() {
         test("B[#1]B", "B[H]B");
     }
 }

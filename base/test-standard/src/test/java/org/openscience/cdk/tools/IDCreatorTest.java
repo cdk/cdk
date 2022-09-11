@@ -35,14 +35,14 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 /**
  * @cdk.module test-standard
  */
-public class IDCreatorTest extends CDKTestCase {
+class IDCreatorTest extends CDKTestCase {
 
-    public IDCreatorTest() {
+    IDCreatorTest() {
         super();
     }
 
     @Test
-    public void testCreateIDs_IChemObject() {
+    void testCreateIDs_IChemObject() {
         IAtomContainer mol = new AtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
@@ -59,7 +59,7 @@ public class IDCreatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testKeepingIDs() {
+    void testKeepingIDs() {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setID("atom1");
@@ -74,7 +74,7 @@ public class IDCreatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testNoDuplicateCreation() {
+    void testNoDuplicateCreation() {
         IAtomContainer mol = new AtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
@@ -92,7 +92,7 @@ public class IDCreatorTest extends CDKTestCase {
      * @cdk.bug 1455341
      */
     @Test
-    public void testCallingTwice() {
+    void testCallingTwice() {
         IAtomContainerSet molSet = new AtomContainerSet();
         IAtomContainer mol = new AtomContainer();
         Atom atom0 = new Atom("C");

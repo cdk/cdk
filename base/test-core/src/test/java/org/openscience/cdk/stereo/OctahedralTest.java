@@ -40,10 +40,11 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class OctahedralTest {
+class OctahedralTest {
 
 
-    @Test public void normalizeOh() throws InvalidSmilesException {
+    @Test
+    void normalizeOh() throws InvalidSmilesException {
         SmilesParser             smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer           mol    = smipar.parseSmiles("C[Co@OH8](F)(Br)(Cl)(I)S");
         Iterator<IStereoElement> ses    = mol.stereoElements().iterator();
@@ -64,7 +65,7 @@ public class OctahedralTest {
     }
 
     @Test
-    public void tooManyCarriers() {
+    void tooManyCarriers() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IAtom a0 = Mockito.mock(IAtom.class);
@@ -80,7 +81,7 @@ public class OctahedralTest {
     }
 
     @Test
-    public void badConfigurationOrder() {
+    void badConfigurationOrder() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IAtom a0 = Mockito.mock(IAtom.class);

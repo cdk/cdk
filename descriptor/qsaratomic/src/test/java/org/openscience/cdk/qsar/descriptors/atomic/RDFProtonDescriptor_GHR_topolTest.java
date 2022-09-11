@@ -24,17 +24,17 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 /**
  * @cdk.module test-qsaratomic
  */
-public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
+class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
 
-    public RDFProtonDescriptor_GHR_topolTest() {}
+    RDFProtonDescriptor_GHR_topolTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(RDFProtonDescriptor_GHR_topol.class);
     }
 
     @Test
-    public void testExample1() throws Exception {
+    void testExample1() throws Exception {
         //firstly read file to molecule
         String filename = "hydroxyamino.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -61,7 +61,7 @@ public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testReturnsNaNForNonHydrogen() throws Exception {
+    void testReturnsNaNForNonHydrogen() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
         mol.addAtom(atom);

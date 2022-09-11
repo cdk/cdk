@@ -41,10 +41,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-hash
  */
-public class GeometryEncoderTest {
+class GeometryEncoderTest {
 
     @Test
-    public void testConstruction_Empty() {
+    void testConstruction_Empty() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     new GeometryEncoder(new int[0], mock(PermutationParity.class), mock(GeometricParity.class));
@@ -52,7 +52,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testConstruction_Singleton() {
+    void testConstruction_Singleton() {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
 
@@ -73,7 +73,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testEncode_Clockwise() throws Exception {
+    void testEncode_Clockwise() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
@@ -96,7 +96,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testEncode_Clockwise_Alt() throws Exception {
+    void testEncode_Clockwise_Alt() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
@@ -119,7 +119,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testEncode_Clockwise_Two() throws Exception {
+    void testEncode_Clockwise_Two() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
@@ -142,7 +142,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testEncode_Anticlockwise() throws Exception {
+    void testEncode_Anticlockwise() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
@@ -165,7 +165,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testEncode_Anticlockwise_Alt() throws Exception {
+    void testEncode_Anticlockwise_Alt() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
@@ -188,7 +188,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testEncode_Anticlockwise_Two() throws Exception {
+    void testEncode_Anticlockwise_Two() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
@@ -211,7 +211,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testEncode_NoGeometry() {
+    void testEncode_NoGeometry() {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
 
@@ -233,7 +233,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testEncode_NoPermutation() {
+    void testEncode_NoPermutation() {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity geometric = mock(GeometricParity.class);
 
@@ -257,7 +257,7 @@ public class GeometryEncoderTest {
     }
 
     @Test
-    public void testReset() throws Exception {
+    void testReset() throws Exception {
         // no method body to test
     }
 }

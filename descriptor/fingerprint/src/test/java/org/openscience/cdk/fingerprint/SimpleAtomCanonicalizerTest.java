@@ -17,10 +17,10 @@ import java.util.List;
  * @author John May
  * @cdk.module test-fingerprint
  */
-public class SimpleAtomCanonicalizerTest {
+class SimpleAtomCanonicalizerTest {
 
     @Test
-    public void testCanonicalizeAtoms() throws CDKException {
+    void testCanonicalizeAtoms() throws CDKException {
 
         IAtomContainer container = TestMoleculeFactory.makeAdenine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);

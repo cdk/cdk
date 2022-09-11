@@ -50,17 +50,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @cdk.module test-fragment
  */
-public class FragmentUtilsTest extends CDKTestCase {
+class FragmentUtilsTest extends CDKTestCase {
 
-    static SmilesParser smilesParser;
+    private static SmilesParser smilesParser;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testSplit() throws CDKException {
+    void testSplit() throws CDKException {
         IAtomContainer mol = smilesParser.parseSmiles("C1CC1C2CCC2");
         SpanningTree st = new SpanningTree(mol);
         IRingSet rings = st.getAllRings();
@@ -84,7 +84,7 @@ public class FragmentUtilsTest extends CDKTestCase {
     }
 
     @Test
-    public void testMakeAtomContainer() {
+    void testMakeAtomContainer() {
 
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
@@ -113,7 +113,7 @@ public class FragmentUtilsTest extends CDKTestCase {
     }
 
     @Test
-    public void testTraversal_Chain() {
+    void testTraversal_Chain() {
 
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

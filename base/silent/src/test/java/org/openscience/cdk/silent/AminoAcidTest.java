@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IAminoAcid;
  *
  * @cdk.module test-silent
  */
-public class AminoAcidTest extends AbstractAminoAcidTest {
+class AminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(AminoAcid::new);
     }
 
     @Test
-    public void testAminoAcid() {
+    void testAminoAcid() {
         IAminoAcid oAminoAcid = new AminoAcid();
         Assertions.assertNotNull(oAminoAcid);
     }

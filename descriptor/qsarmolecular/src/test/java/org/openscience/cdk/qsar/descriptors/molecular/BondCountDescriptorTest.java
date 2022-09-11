@@ -33,24 +33,24 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsarmolecular
  */
 
-public class BondCountDescriptorTest extends MolecularDescriptorTest {
+class BondCountDescriptorTest extends MolecularDescriptorTest {
 
     private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
-    public BondCountDescriptorTest() {}
+    BondCountDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BondCountDescriptor.class);
     }
 
     @Test
-    public void testBondCountDescriptor() throws Exception {
+    void testBondCountDescriptor() throws Exception {
         Assertions.assertNotNull(descriptor);
     }
 
     @Test
-    public void testSingleBondCount() throws java.lang.Exception {
+    void testSingleBondCount() throws java.lang.Exception {
         descriptor.setParameters(new String[]{"s"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assertions.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
@@ -59,7 +59,7 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testDoubleBondCount() throws java.lang.Exception {
+    void testDoubleBondCount() throws java.lang.Exception {
         descriptor.setParameters(new String[]{"d"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assertions.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
@@ -74,7 +74,7 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.bug 1651263
      */
     @Test
-    public void testDefaultSetting() throws Exception {
+    void testDefaultSetting() throws Exception {
         IMolecularDescriptor descriptor = new BondCountDescriptor();
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assertions.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());

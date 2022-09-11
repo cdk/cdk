@@ -46,15 +46,15 @@ import org.junit.jupiter.api.Test;
  * @version 09/05/2012
  * @cdk.module test-forcefield
  */
-public class ForceFieldConfiguratorTest {
+class ForceFieldConfiguratorTest {
 
-    final ForceFieldConfigurator forceFieldConfigurator = new ForceFieldConfigurator();
+    private final ForceFieldConfigurator forceFieldConfigurator = new ForceFieldConfigurator();
 
     /**
      * @cdk.bug : ArrayIndexOutOfBoundsException because of wrong for loop
     */
     @Test
-    public void testCheckForceFieldType_String() {
+    void testCheckForceFieldType_String() {
         Assertions.assertEquals(2, forceFieldConfigurator.getFfTypes().length);
         String validForceFieldType = "mm2";
         String invalidForceFieldType = "mmff2001";
@@ -64,7 +64,7 @@ public class ForceFieldConfiguratorTest {
     }
 
     @Test
-    public void testSetForceFieldConfigurator_String() throws CDKException {
+    void testSetForceFieldConfigurator_String() throws CDKException {
         String forceFieldName = "mmff94";
         forceFieldConfigurator.setForceFieldConfigurator(forceFieldName, DefaultChemObjectBuilder.getInstance());
         List<IAtomType> mmff94AtomTypes = forceFieldConfigurator.getAtomTypes();
@@ -86,7 +86,7 @@ public class ForceFieldConfiguratorTest {
     }
 
     @Test
-    public void testSetMM2Parameters() throws CDKException {
+    void testSetMM2Parameters() throws CDKException {
         forceFieldConfigurator.setMM2Parameters(DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(forceFieldConfigurator.getParameterSet());
         List<IAtomType> atomtypeList = forceFieldConfigurator.getAtomTypes();
@@ -97,7 +97,7 @@ public class ForceFieldConfiguratorTest {
     }
 
     @Test
-    public void testSetMMFF94Parameters() throws Exception {
+    void testSetMMFF94Parameters() throws Exception {
         forceFieldConfigurator.setMMFF94Parameters(DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(forceFieldConfigurator.getParameterSet());
         List<IAtomType> atomtypeList = forceFieldConfigurator.getAtomTypes();
@@ -110,7 +110,7 @@ public class ForceFieldConfiguratorTest {
     }
 
     @Test
-    public void testRemoveAromaticityFlagsFromHoseCode_String() {
+    void testRemoveAromaticityFlagsFromHoseCode_String() {
         String hosecode1 = "***HO*SE*CODE***";
         String cleanHoseCode = forceFieldConfigurator.removeAromaticityFlagsFromHoseCode(hosecode1);
         Assertions.assertEquals("HOSECODE", cleanHoseCode);
@@ -125,7 +125,7 @@ public class ForceFieldConfiguratorTest {
      */
     @Test
     @Disabled("Old atom typing method - see new Mmff class")
-    public void testConfigureMMFF94BasedAtom_IAtom_String_boolean_hydroxyurea() throws CDKException {
+    void testConfigureMMFF94BasedAtom_IAtom_String_boolean_hydroxyurea() throws CDKException {
         String husmi = "NC(=O)NO";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
@@ -142,7 +142,7 @@ public class ForceFieldConfiguratorTest {
     }
 
     @Test
-    public void testConfigureMMFF94BasedAtom_IAtom_String_boolean_propanamide() throws CDKException {
+    void testConfigureMMFF94BasedAtom_IAtom_String_boolean_propanamide() throws CDKException {
         String pasmi = "NC(=O)CC";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
@@ -159,7 +159,7 @@ public class ForceFieldConfiguratorTest {
      * @cdk.bug  #3515122 : mmff94 atomtype N instead of NC=O
      */
     @Test
-    public void testConfigureMMFF94BasedAtom_IAtom_String_boolean_urea() throws CDKException {
+    void testConfigureMMFF94BasedAtom_IAtom_String_boolean_urea() throws CDKException {
         String usmi = "NC(N)=O";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
@@ -178,7 +178,7 @@ public class ForceFieldConfiguratorTest {
      */
     @Test
     @Disabled("Old atom typing method - see new Mmff class")
-    public void testAssignAtomTyps_test4_hydroxyurea() throws CDKException {
+    void testAssignAtomTyps_test4_hydroxyurea() throws CDKException {
         String smiles = "C(=O)(NO)N";
         String[] originalAtomTypes = {"C.sp2", "O.sp2", "N.amide", "O.sp3", "N.amide"};
         String[] expectedAtomTypes = {"C=", "O=", "NC=O", "O", "N2OX"};
@@ -211,7 +211,7 @@ public class ForceFieldConfiguratorTest {
      */
     @Test
     @Disabled("Old atom typing method - see new Mmff class")
-    public void testAssignAtomTyps_bug() throws Exception {
+    void testAssignAtomTyps_bug() throws Exception {
         String smiles = "CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
@@ -229,7 +229,7 @@ public class ForceFieldConfiguratorTest {
      */
     @Test
     @Disabled("Old atom typing method - see new Mmff class")
-    public void testAssignAtomTyps_bug_no2() throws Exception {
+    void testAssignAtomTyps_bug_no2() throws Exception {
         String smiles = "CC[N+](=O)[O-]";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
@@ -248,7 +248,7 @@ public class ForceFieldConfiguratorTest {
      * @cdk.bug #3525096
      */
     @Test
-    public void testAssignAtomTyps_bug_so2() throws Exception {
+    void testAssignAtomTyps_bug_so2() throws Exception {
         String smiles = "CS(=O)(=O)NC(=O)NN1CC2CCCC2C1";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
@@ -265,7 +265,7 @@ public class ForceFieldConfiguratorTest {
      */
     @Test
     @Disabled("Old atom typing method - see new Mmff class")
-    public void testAssignAtomTyps_bug_nitrogenatomType() throws Exception {
+    void testAssignAtomTyps_bug_nitrogenatomType() throws Exception {
         String smiles = "CNC(=O)N(C)N=O";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
@@ -287,7 +287,7 @@ public class ForceFieldConfiguratorTest {
      * @cdk.bug #3526295
      */
     @Test
-    public void testAssignAtomTyps_bug_amideRingAtomType() throws Exception {
+    void testAssignAtomTyps_bug_amideRingAtomType() throws Exception {
         String smiles = "O=C1N(C(=O)C(C(=O)N1)(CC)CC)C";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);

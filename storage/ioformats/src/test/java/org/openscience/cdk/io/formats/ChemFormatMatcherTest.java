@@ -35,44 +35,44 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-ioformats
  */
-abstract public class ChemFormatMatcherTest extends ChemFormatTest {
+abstract class ChemFormatMatcherTest extends ChemFormatTest {
 
     private IChemFormatMatcher matcher;
 
-    public void setChemFormatMatcher(IChemFormatMatcher matcher) {
+    void setChemFormatMatcher(IChemFormatMatcher matcher) {
         super.setChemFormat(matcher);
         this.matcher = matcher;
     }
 
     @Test
-    public void testChemFormatMatcherSet() {
+    void testChemFormatMatcherSet() {
         Assertions.assertNotNull(matcher, "You must use setChemFormatMatcher() to set the IChemFormatMatcher object.");
     }
 
-    protected boolean matches(String header) throws IOException {
+    boolean matches(String header) throws IOException {
         BufferedReader reader = new BufferedReader(new StringReader(header));
         return matcher.matches(reader.lines().collect(Collectors.toList())).matched();
     }
 
     @Test
-    public void testMatches() throws Exception {
+    void testMatches() throws Exception {
         Assertions.assertTrue(true);
         // positive testing is done by the ReaderFactoryTest, and
         // negative tests are given below
     }
 
     @Test
-    public void testNoLines() {
+    void testNoLines() {
         Assertions.assertFalse(matcher.matches(Collections.emptyList()).matched());
     }
 
     @Test
-    public void testMatchesEmptyString() {
+    void testMatchesEmptyString() {
         Assertions.assertFalse(matcher.matches(Arrays.asList("")).matched());
     }
 
     @Test
-    public void testMatchesLoremIpsum() {
+    void testMatchesLoremIpsum() {
         Assertions.assertFalse(matcher
                 .matches(
                         Arrays.asList("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam accumsan metus ut nulla."))

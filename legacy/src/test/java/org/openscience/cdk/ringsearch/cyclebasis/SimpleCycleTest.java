@@ -29,20 +29,20 @@ import java.util.HashSet;
 /**
  * @cdk.module test-standard
  */
-public class SimpleCycleTest extends CDKTestCase {
+class SimpleCycleTest extends CDKTestCase {
 
-    public SimpleCycleTest() {
+    SimpleCycleTest() {
         super();
     }
 
     @Test
-    public void testSimpleCycle_UndirectedGraph_Collection() {
+    void testSimpleCycle_UndirectedGraph_Collection() {
         SimpleCycle cycle = new SimpleCycle(new SimpleGraph(), new ArrayList());
         Assertions.assertNotNull(cycle);
     }
 
     @Test
-    public void testSimpleCycle_UndirectedGraph_Set() {
+    void testSimpleCycle_UndirectedGraph_Set() {
         SimpleCycle cycle = new SimpleCycle(new SimpleGraph(), new HashSet());
         Assertions.assertNotNull(cycle);
     }

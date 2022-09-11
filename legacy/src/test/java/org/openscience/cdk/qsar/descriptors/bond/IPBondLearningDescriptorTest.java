@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarionpot
  */
-public class IPBondLearningDescriptorTest extends CDKTestCase {
+class IPBondLearningDescriptorTest extends CDKTestCase {
 
     private IPBondLearningDescriptor descriptor;
     private final LonePairElectronChecker  lpcheck = new LonePairElectronChecker();
@@ -45,12 +45,12 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *  Constructor for the IPBondLearningDescriptorTest object
      *
      */
-    public IPBondLearningDescriptorTest() {
+    IPBondLearningDescriptorTest() {
         descriptor = new IPBondLearningDescriptor();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         descriptor = new IPBondLearningDescriptor();
     }
 
@@ -58,7 +58,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
     *  A unit test for JUnit
     */
     @Test
-    public void testIPBondLearningDescriptor() {
+    void testIPBondLearningDescriptor() {
         Assertions.assertNotNull(descriptor);
     }
 
@@ -67,7 +67,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptor_1() throws Exception {
+    void testIPDescriptor_1() throws Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC=CCCCC");
@@ -85,7 +85,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptor_2() throws java.lang.Exception {
+    void testIPDescriptor_2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC1CCC=C1");
@@ -103,7 +103,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptor_3() throws java.lang.Exception {
+    void testIPDescriptor_3() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CCCCC");
@@ -122,7 +122,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptorReaction1() throws java.lang.Exception {
+    void testIPDescriptorReaction1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CCCCC");
@@ -143,7 +143,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptorReaction2() throws java.lang.Exception {
+    void testIPDescriptorReaction2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCCCC");
@@ -163,7 +163,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPTripleDescriptor1() throws java.lang.Exception {
+    void testIPTripleDescriptor1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C#CCC");
@@ -182,7 +182,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPTripleDescriptor2() throws java.lang.Exception {
+    void testIPTripleDescriptor2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(#CC(C)(C)C)C(C)(C)C");
@@ -200,7 +200,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Disabled("IonizationPotentialTool now deprecated due to bugs")
-    public void testIPConjugatedDescriptor1() throws java.lang.Exception {
+    void testIPConjugatedDescriptor1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=C(C=CC)C");
@@ -223,7 +223,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPPySystemReaction1() throws java.lang.Exception {
+    void testIPPySystemReaction1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CC=C");

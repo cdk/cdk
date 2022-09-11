@@ -27,26 +27,26 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-renderbasic
  */
-public abstract class AbstractPathElementTest {
+abstract class AbstractPathElementTest {
 
     private static PathElement pathElement;
 
-    public static void setPathElement(PathElement element) {
+    static void setPathElement(PathElement element) {
         pathElement = element;
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         Assertions.assertNotNull(pathElement);
     }
 
     @Test
-    public void testType() {
+    void testType() {
         Assertions.assertNotNull(pathElement.type());
     }
 
     @Test
-    public void testPoints() {
+    void testPoints() {
         float[] points = pathElement.points();
         Assertions.assertNotNull(points);
         Assertions.assertNotSame(0, points.length);

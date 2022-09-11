@@ -17,10 +17,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-smarts
  */
-public class TotalHCountAtomTest {
+class TotalHCountAtomTest {
 
     @Test
-    public void matches() throws Exception {
+    void matches() throws Exception {
         TotalHCountAtom matcher = new TotalHCountAtom(4, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
@@ -31,7 +31,7 @@ public class TotalHCountAtomTest {
     }
 
     @Test
-    public void testToString() throws Exception {
+    void testToString() throws Exception {
         TotalHCountAtom total = new TotalHCountAtom(4, mock(IChemObjectBuilder.class));
         assertThat(total.toString(), is("H4"));
     }

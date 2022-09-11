@@ -32,15 +32,15 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @cdk.module test-datadebug
  */
-public class DebugStrandTest extends AbstractStrandTest {
+class DebugStrandTest extends AbstractStrandTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugStrand::new);
     }
 
     @Test
-    public void testDebugStrand() {
+    void testDebugStrand() {
         IStrand oStrand = new DebugStrand();
         Assertions.assertNotNull(oStrand);
         Assertions.assertEquals(oStrand.getMonomerCount(), 0);

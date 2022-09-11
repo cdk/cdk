@@ -33,15 +33,15 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @cdk.module test-datadebug
  */
-public class DebugBioPolymerTest extends AbstractBioPolymerTest {
+class DebugBioPolymerTest extends AbstractBioPolymerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugBioPolymer::new);
     }
 
     @Test
-    public void testDebugBioPolymer() {
+    void testDebugBioPolymer() {
         IBioPolymer oBioPolymer = new DebugBioPolymer();
         Assertions.assertNotNull(oBioPolymer);
         Assertions.assertEquals(oBioPolymer.getMonomerCount(), 0);

@@ -27,10 +27,10 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * @cdk.module test-pdb
  */
-public class ProteinBuilderToolTest extends CDKTestCase {
+class ProteinBuilderToolTest extends CDKTestCase {
 
     @Test
-    public void testCreateProtein() throws Exception {
+    void testCreateProtein() throws Exception {
         IBioPolymer protein = ProteinBuilderTool.createProtein("GAGA", SilentChemObjectBuilder.getInstance());
         Assertions.assertNotNull(protein);
         Assertions.assertEquals(4, protein.getMonomerCount());

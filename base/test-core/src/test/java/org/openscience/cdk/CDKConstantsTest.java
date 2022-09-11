@@ -34,15 +34,15 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-public class CDKConstantsTest extends CDKTestCase {
+class CDKConstantsTest extends CDKTestCase {
 
     @Test
-    public void testCDKConstants() {
+    void testCDKConstants() {
         Assertions.assertFalse(CDKConstants.ISAROMATIC == -1);
     }
 
     @Test
-    public void testSingleOrDoubleFlag() throws Exception {
+    void testSingleOrDoubleFlag() throws Exception {
         AtomContainer mol = new AtomContainer();
 
         IAtom atom1 = new Atom(Elements.CARBON);

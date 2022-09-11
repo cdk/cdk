@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module test-io
  */
-public class JumboTest extends CDKTestCase {
+class JumboTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(JumboTest.class);
 
@@ -57,7 +57,7 @@ public class JumboTest extends CDKTestCase {
      * - X2D only
      */
     @Test
-    public void testCuran() throws Exception {
+    void testCuran() throws Exception {
         String filename = "curan.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -90,7 +90,7 @@ public class JumboTest extends CDKTestCase {
      * - X2D only
      */
     @Test
-    public void testCephNS() throws Exception {
+    void testCephNS() throws Exception {
         String filename = "ceph-ns.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -124,7 +124,7 @@ public class JumboTest extends CDKTestCase {
      * - no coords
      */
     @Test
-    public void testNucleustest() throws Exception {
+    void testNucleustest() throws Exception {
         String filename = "nucleustest.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

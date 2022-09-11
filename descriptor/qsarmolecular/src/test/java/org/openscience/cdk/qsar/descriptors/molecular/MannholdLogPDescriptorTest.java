@@ -35,15 +35,15 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.module test-qsarmolecular
  * @see MannholdLogPDescriptor
  */
-public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
+class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(MannholdLogPDescriptor.class);
     }
 
     @Test
-    public void testMethanol() {
+    void testMethanol() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer methanol = builder.newInstance(IAtomContainer.class);
         methanol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -55,7 +55,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testMethane() {
+    void testMethane() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer methane = builder.newInstance(IAtomContainer.class);
         methane.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -65,7 +65,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testChloroform() {
+    void testChloroform() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer chloroform = builder.newInstance(IAtomContainer.class);
         chloroform.addAtom(builder.newInstance(IAtom.class, "C"));

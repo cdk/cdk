@@ -64,14 +64,14 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @author John May
  * @cdk.module test-hash
  */
-public class HashCodeScenariosTest {
+class HashCodeScenariosTest {
 
     /**
      * Two molecules with identical Racid identification numbers, these hash
      * codes should be different.
      */
     @Test
-    public void figure2a() {
+    void figure2a() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-2a.sdf", 2);
 
@@ -91,7 +91,7 @@ public class HashCodeScenariosTest {
      * codes should be different.
      */
     @Test
-    public void figure2b() {
+    void figure2b() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-2b.sdf", 2);
 
@@ -111,7 +111,7 @@ public class HashCodeScenariosTest {
      * codes should be different.
      */
     @Test
-    public void figure2c() {
+    void figure2c() {
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-2c.sdf", 2);
 
         IAtomContainer a = mols.get(0);
@@ -131,7 +131,7 @@ public class HashCodeScenariosTest {
      * different using this method.
      */
     @Test
-    public void figure3() {
+    void figure3() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-3.sdf", 2);
 
@@ -152,7 +152,7 @@ public class HashCodeScenariosTest {
      * demonstrates the size the molecule is considered when hashing.
      */
     @Test
-    public void figure7() {
+    void figure7() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-7.sdf", 2);
 
@@ -173,7 +173,7 @@ public class HashCodeScenariosTest {
      * hash code identifies that the two molecules are the same.
      */
     @Test
-    public void figure10() {
+    void figure10() {
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-10.sdf", 2);
 
         IAtomContainer a = mols.get(0);
@@ -194,7 +194,7 @@ public class HashCodeScenariosTest {
      * used. Please refer to the original article for the exact method.
      */
     @Test
-    public void figure11() {
+    void figure11() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-11.sdf", 1);
 
@@ -218,7 +218,7 @@ public class HashCodeScenariosTest {
      * configuration  and (S)- configuration values are invariant
      */
     @Test
-    public void figure12() {
+    void figure12() {
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-12.sdf", 2);
 
         MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(1).chiral().molecular();
@@ -250,7 +250,7 @@ public class HashCodeScenariosTest {
      * codes.
      */
     @Test
-    public void figure13a() {
+    void figure13a() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-13a.sdf", 2);
 
@@ -271,7 +271,7 @@ public class HashCodeScenariosTest {
      * codes.
      */
     @Test
-    public void figure13b() {
+    void figure13b() {
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-13b.sdf", 2);
 
         IAtomContainer a = mols.get(0);
@@ -289,7 +289,7 @@ public class HashCodeScenariosTest {
      * two molecules are in fact the same and generate the same hash code.
      */
     @Test
-    public void figure14() {
+    void figure14() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-14.sdf", 2);
 
@@ -310,7 +310,7 @@ public class HashCodeScenariosTest {
      * code.
      */
     @Test
-    public void figure15() {
+    void figure15() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-15.sdf", 2);
 
@@ -336,7 +336,7 @@ public class HashCodeScenariosTest {
      * hash code, allows us to discriminate them.
      */
     @Test
-    public void figure16a() {
+    void figure16a() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-16a.sdf", 2);
 
@@ -376,7 +376,7 @@ public class HashCodeScenariosTest {
      * apart as well as the 3 different chlorination locations on the cuneane
      */
     @Test
-    public void figure16b() {
+    void figure16b() {
 
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-16b.sdf", 4);
 
@@ -409,7 +409,7 @@ public class HashCodeScenariosTest {
      * propagate  the environments from the ends of both chains.
      */
     @Test
-    public void aminotetracosanone() {
+    void aminotetracosanone() {
 
         List<IAtomContainer> aminotetracosanones = sdf("aminotetracosanones.sdf", 2);
 
@@ -438,7 +438,7 @@ public class HashCodeScenariosTest {
      *      Isomers</a>
      */
     @Test
-    public void inositols() {
+    void inositols() {
 
         List<IAtomContainer> inositols = sdf("inositols.sdf", 9);
 
@@ -480,7 +480,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void allenesWithImplicitHydrogens() {
+    void allenesWithImplicitHydrogens() {
 
         List<IAtomContainer> allenes = sdf("allene-implicit-h.sdf", 2);
 
@@ -515,7 +515,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void allenesWithExplicitHydrogens() {
+    void allenesWithExplicitHydrogens() {
 
         List<IAtomContainer> allenes = sdf("allene-explicit-h.sdf", 2);
 
@@ -550,7 +550,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void allenes2Dand3D() {
+    void allenes2Dand3D() {
 
         List<IAtomContainer> allenes2D = sdf("allene-explicit-h.sdf", 2);
         List<IAtomContainer> allenes3D = sdf("allene-explicit-3d-h.sdf", 2);
@@ -585,7 +585,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void allenesWithUnspecifiedConfiguration() {
+    void allenesWithUnspecifiedConfiguration() {
         List<IAtomContainer> allenes = sdf("allene-implicit-h.sdf", 2);
         List<IAtomContainer> unspecified = sdf("allene-unspecified.sdf", 2);
 
@@ -614,7 +614,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void cumulenes() {
+    void cumulenes() {
 
         List<IAtomContainer> cumulenes = sdf("cumulenes.sdf", 2);
 
@@ -633,7 +633,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void suppressedHydrogens() {
+    void suppressedHydrogens() {
 
         List<IAtomContainer> implicits = sdf("butan-2-ols.sdf", 2);
         List<IAtomContainer> explicits = sdf("butan-2-ols-explicit-hydrogens.sdf", 2);
@@ -652,7 +652,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void suppressedHydrogens_chiral() {
+    void suppressedHydrogens_chiral() {
 
         List<IAtomContainer> implicits = sdf("butan-2-ols.sdf", 2);
         List<IAtomContainer> explicits = sdf("butan-2-ols-explicit-hydrogens.sdf", 2);
@@ -681,7 +681,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void inositols_suppressedHydrogens() {
+    void inositols_suppressedHydrogens() {
 
         List<IAtomContainer> implicits = sdf("inositols.sdf", 9);
         List<IAtomContainer> explicits = sdf("inositols-explicit-hydrogens.sdf", 9);
@@ -709,7 +709,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void inositols_suppressedHydrogens_chiral() {
+    void inositols_suppressedHydrogens_chiral() {
 
         List<IAtomContainer> implicits = sdf("inositols.sdf", 9);
         List<IAtomContainer> explicits = sdf("inositols-explicit-hydrogens.sdf", 9);
@@ -741,7 +741,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void suppressedHydrogens_dicholorethenes() {
+    void suppressedHydrogens_dicholorethenes() {
 
         List<IAtomContainer> implicits = sdf("dichloroethenes.sdf", 2);
         List<IAtomContainer> explicits = sdf("dichloroethenes-explicit-hydrogens.sdf", 2);
@@ -773,7 +773,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void suppressedHydrogens_allenes() {
+    void suppressedHydrogens_allenes() {
 
         List<IAtomContainer> implicits = sdf("allene-implicit-h.sdf", 2);
         List<IAtomContainer> explicits = sdf("allene-explicit-h.sdf", 2);
@@ -805,7 +805,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void butan2ol_UsingStereoElement() {
+    void butan2ol_UsingStereoElement() {
 
         // C[CH](O)CC
         IAtomContainer butan2ol = new AtomContainer();
@@ -873,7 +873,7 @@ public class HashCodeScenariosTest {
     }
 
     @Test
-    public void dichloroethenes_stereoElements() {
+    void dichloroethenes_stereoElements() {
 
         // CLC=CCL
         IAtomContainer dichloroethene = new AtomContainer();
@@ -914,7 +914,7 @@ public class HashCodeScenariosTest {
      * hydrogens)
      */
     @Test
-    public void dichloroethenes_stereoElements_explicitH() {
+    void dichloroethenes_stereoElements_explicitH() {
 
         // CLC=CCL
         IAtomContainer dichloroethene = new AtomContainer();
@@ -1012,7 +1012,7 @@ public class HashCodeScenariosTest {
      * using 2D coordinates (implicit hydrogens)
      */
     @Test
-    public void dichloroethenes_stereoElements_explicitH_suppressed() {
+    void dichloroethenes_stereoElements_explicitH_suppressed() {
 
         // CLC=CCL
         IAtomContainer dichloroethene = new AtomContainer();

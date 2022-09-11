@@ -34,15 +34,15 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *
  * @cdk.module test-datadebug
  */
-public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
+class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugPseudoAtom::new);
     }
 
     @Test
-    public void testDebugPseudoAtom() {
+    void testDebugPseudoAtom() {
         IPseudoAtom a = new DebugPseudoAtom();
         Assertions.assertEquals("R", a.getSymbol());
         Assertions.assertNull(a.getPoint3d());
@@ -51,7 +51,7 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
-    public void testDebugPseudoAtom_IElement() {
+    void testDebugPseudoAtom_IElement() {
         IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IPseudoAtom a = new DebugPseudoAtom(element);
         Assertions.assertEquals("R", a.getSymbol());
@@ -61,7 +61,7 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
-    public void testDebugPseudoAtom_String() {
+    void testDebugPseudoAtom_String() {
         String label = "Arg255";
         IPseudoAtom a = new DebugPseudoAtom(label);
         Assertions.assertEquals("R", a.getSymbol());
@@ -72,7 +72,7 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
-    public void testDebugPseudoAtom_String_Point2d() {
+    void testDebugPseudoAtom_String_Point2d() {
         Point2d point = new Point2d(1.0, 2.0);
         String label = "Arg255";
         IPseudoAtom a = new DebugPseudoAtom(label, point);
@@ -84,7 +84,7 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
-    public void testDebugPseudoAtom_String_Point3d() {
+    void testDebugPseudoAtom_String_Point3d() {
         Point3d point = new Point3d(1.0, 2.0, 3.0);
         String label = "Arg255";
         IPseudoAtom a = new DebugPseudoAtom(label, point);

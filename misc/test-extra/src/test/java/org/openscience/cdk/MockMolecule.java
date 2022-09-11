@@ -33,7 +33,7 @@ import javax.vecmath.Point3d;
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */
-public class MockMolecule extends AtomContainer {
+class MockMolecule extends AtomContainer {
 
     private static final long serialVersionUID = -3475592461591784619L;
 

@@ -58,7 +58,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public HyperconjugationReactionTest() throws Exception {
+    HyperconjugationReactionTest() throws Exception {
         setReaction(HyperconjugationReaction.class);
     }
 
@@ -66,7 +66,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testHyperconjugationReaction() throws Exception {
+    void testHyperconjugationReaction() throws Exception {
         IReactionProcess type = new HyperconjugationReaction();
         Assertions.assertNotNull(type);
     }
@@ -154,7 +154,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new HyperconjugationReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -196,7 +196,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testWithNegativeCharge() throws Exception {
+    void testWithNegativeCharge() throws Exception {
         IReactionProcess type = new HyperconjugationReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -237,7 +237,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new HyperconjugationReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -279,7 +279,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new HyperconjugationReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();

@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module test-io
  */
-public class JmolTest extends CDKTestCase {
+class JmolTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(JmolTest.class);
 
@@ -61,7 +61,7 @@ public class JmolTest extends CDKTestCase {
      * <ul><li> &lt;crystal></li></ul>
      */
     @Test
-    public void testEstron() throws Exception {
+    void testEstron() throws Exception {
         String filename = "/org/openscience/cdk/io/estron.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -97,7 +97,7 @@ public class JmolTest extends CDKTestCase {
      * - Jmol Animation
      */
     @Disabled("It is broken, but not used, AFAIK")
-    public void testAnimation() throws Exception {
+    void testAnimation() throws Exception {
         String filename = "data/cml/SN1_reaction.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -128,7 +128,7 @@ public class JmolTest extends CDKTestCase {
      * No special CML code, just regression test for Jmol releases
      */
     @Test
-    public void testMethanolTwo() throws Exception {
+    void testMethanolTwo() throws Exception {
         String filename = "methanol2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -159,7 +159,7 @@ public class JmolTest extends CDKTestCase {
      * No special CML code, just regression test for Jmol releases
      */
     @Test
-    public void testMethanolOne() throws Exception {
+    void testMethanolOne() throws Exception {
         String filename = "methanol1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

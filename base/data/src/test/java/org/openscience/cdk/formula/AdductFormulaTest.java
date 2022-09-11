@@ -34,10 +34,10 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *
  * @see AdductFormula
  */
-public class AdductFormulaTest extends AbstractAdductFormulaTest {
+class AdductFormulaTest extends AbstractAdductFormulaTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
@@ -47,7 +47,7 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
      *
      */
     @Test
-    public void testAdductFormula() {
+    void testAdductFormula() {
         IAdductFormula mfS = new AdductFormula();
         Assertions.assertNotNull(mfS);
     }
@@ -58,7 +58,7 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
      *
      */
     @Test
-    public void testAdductFormula_IMolecularFormula() {
+    void testAdductFormula_IMolecularFormula() {
         IAdductFormula mfS = new AdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assertions.assertEquals(1, mfS.size());
     }

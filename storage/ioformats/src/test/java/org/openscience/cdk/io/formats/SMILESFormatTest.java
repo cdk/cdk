@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class SMILESFormatTest extends ChemFormatTest {
+class SMILESFormatTest extends ChemFormatTest {
 
-    public SMILESFormatTest() {
+    SMILESFormatTest() {
         super.setChemFormat((IChemFormat) SMILESFormat.getInstance());
     }
 

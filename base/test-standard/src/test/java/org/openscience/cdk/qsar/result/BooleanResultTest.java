@@ -25,28 +25,28 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class BooleanResultTest extends CDKTestCase {
+class BooleanResultTest extends CDKTestCase {
 
-    public BooleanResultTest() {
+    BooleanResultTest() {
         super();
     }
 
     // well, these tests are not shocking...
 
     @Test
-    public void testBooleanResult_boolean() {
+    void testBooleanResult_boolean() {
         BooleanResult result = new BooleanResult(true);
         Assertions.assertNotNull(result);
     }
 
     @Test
-    public void testBooleanValue() {
+    void testBooleanValue() {
         Assertions.assertTrue(new BooleanResult(true).booleanValue());
         Assertions.assertFalse(new BooleanResult(false).booleanValue());
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Assertions.assertEquals("true", new BooleanResult(true).toString());
         Assertions.assertEquals("false", new BooleanResult(false).toString());
     }

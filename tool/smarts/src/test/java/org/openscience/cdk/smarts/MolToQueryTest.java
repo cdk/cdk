@@ -36,7 +36,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class MolToQueryTest {
+class MolToQueryTest {
 
     private final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
@@ -49,12 +49,12 @@ public class MolToQueryTest {
     }
 
     @Test
-    public void noOptsSpecified() throws InvalidSmilesException {
+    void noOptsSpecified() throws InvalidSmilesException {
         test("*1~*~*~*~*~*~1~*", "c1cccnc1C");
     }
 
     @Test
-    public void aromaticWithBonds() throws InvalidSmilesException {
+    void aromaticWithBonds() throws InvalidSmilesException {
         test("a1:a:a:a:a:a:1-A", "c1cccnc1C",
              Expr.Type.IS_AROMATIC,
              Expr.Type.IS_ALIPHATIC,
@@ -62,7 +62,7 @@ public class MolToQueryTest {
     }
 
     @Test
-    public void aromaticElementWithBonds() throws InvalidSmilesException {
+    void aromaticElementWithBonds() throws InvalidSmilesException {
         test("c1:c:c:c:n:c:1-*", "c1cccnc1C",
              Expr.Type.AROMATIC_ELEMENT,
              Expr.Type.SINGLE_OR_AROMATIC);
@@ -73,37 +73,37 @@ public class MolToQueryTest {
     }
 
     @Test
-    public void pseudoAtoms() throws InvalidSmilesException {
+    void pseudoAtoms() throws InvalidSmilesException {
         test("[#6]~[#6]~*", "CC*",
              Expr.Type.ELEMENT);
     }
 
     @Test
-    public void elementAndDegree() throws InvalidSmilesException {
+    void elementAndDegree() throws InvalidSmilesException {
         test("[#6D2]1~[#6D2]~[#6D2]~[#6D2]~[#7D2]~[#6D3]~1~[#6D]", "c1cccnc1C",
              Expr.Type.ELEMENT, Expr.Type.DEGREE);
     }
 
     @Test
-    public void elementAndConnectivityDegree() throws InvalidSmilesException {
+    void elementAndConnectivityDegree() throws InvalidSmilesException {
         test("[#6X3]1~[#6X3]~[#6X3]~[#6X3]~[#7X2]~[#6X3]~1~[#6X4]", "c1cccnc1C",
                 Expr.Type.ELEMENT, Expr.Type.TOTAL_DEGREE);
     }
 
     @Test
-    public void elementAndConnectivityAndTotHydrogenCount() throws InvalidSmilesException {
+    void elementAndConnectivityAndTotHydrogenCount() throws InvalidSmilesException {
         test("[#6X3H1]1~[#6X3H1]~[#6X3H1]~[#6X3H1]~[#7X2H0]~[#6X3H0]~1~[#6X4H3]", "c1cccnc1C",
                 Expr.Type.ELEMENT, Expr.Type.TOTAL_DEGREE, Expr.Type.TOTAL_H_COUNT);
     }
 
     @Test
-    public void elementAndConnectivityAndImplHydrogenCount() throws InvalidSmilesException {
+    void elementAndConnectivityAndImplHydrogenCount() throws InvalidSmilesException {
         test("[#6X3h1]1~[#6X3h1]~[#6X3h1]~[#6X3h1]~[#7X2h0]~[#6X3h0]~1~[#6X4h3]", "c1cccnc1C",
                 Expr.Type.ELEMENT, Expr.Type.TOTAL_DEGREE, Expr.Type.IMPL_H_COUNT);
     }
 
     @Test
-    public void complexDocExample() throws InvalidSmilesException {
+    void complexDocExample() throws InvalidSmilesException {
         test("[nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&x0+0]):[cx2+0]:[cx2+0]:1",
              "[nH]1ccc(=O)cc1",
              Expr.Type.ALIPHATIC_ELEMENT,

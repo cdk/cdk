@@ -33,10 +33,10 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomTypeTest extends AbstractAtomTypeTest {
+class DebugAtomTypeTest extends AbstractAtomTypeTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
             @Override
@@ -47,27 +47,27 @@ public class DebugAtomTypeTest extends AbstractAtomTypeTest {
     }
 
     @Test
-    public void testDebugAtomType_String() {
+    void testDebugAtomType_String() {
         IAtomType at = new DebugAtomType("C");
         Assertions.assertEquals("C", at.getSymbol());
     }
 
     @Test
-    public void testDebugAtomType_IElement() {
+    void testDebugAtomType_IElement() {
         IElement element = new DebugElement("C");
         IAtomType at = element.getBuilder().newInstance(IAtomType.class, element);
         Assertions.assertEquals("C", at.getSymbol());
     }
 
     @Test
-    public void testDebugAtomType_String_String() {
+    void testDebugAtomType_String_String() {
         IAtomType at = new DebugAtomType("C4", "C");
         Assertions.assertEquals("C", at.getSymbol());
         Assertions.assertEquals("C4", at.getAtomTypeName());
     }
 
     @Test
-    public void testCompare_AtomTypeName() {
+    void testCompare_AtomTypeName() {
         DebugAtomType at1 = new DebugAtomType("C");
         DebugAtomType at2 = new DebugAtomType("C");
         at1.setAtomTypeName("C4");
@@ -76,7 +76,7 @@ public class DebugAtomTypeTest extends AbstractAtomTypeTest {
     }
 
     @Test
-    public void testCompare_DiffAtomTypeName() {
+    void testCompare_DiffAtomTypeName() {
         DebugAtomType at1 = new DebugAtomType("C");
         DebugAtomType at2 = new DebugAtomType("C");
         at1.setAtomTypeName("C4");
@@ -85,7 +85,7 @@ public class DebugAtomTypeTest extends AbstractAtomTypeTest {
     }
 
     @Test
-    public void testCompare_BondOrderSum() {
+    void testCompare_BondOrderSum() {
         DebugAtomType at1 = new DebugAtomType("C");
         DebugAtomType at2 = new DebugAtomType("C");
         at1.setBondOrderSum(1.5);
@@ -94,7 +94,7 @@ public class DebugAtomTypeTest extends AbstractAtomTypeTest {
     }
 
     @Test
-    public void testCompare_DiffBondOrderSum() {
+    void testCompare_DiffBondOrderSum() {
         DebugAtomType at1 = new DebugAtomType("C");
         DebugAtomType at2 = new DebugAtomType("C");
         at1.setBondOrderSum(1.5);

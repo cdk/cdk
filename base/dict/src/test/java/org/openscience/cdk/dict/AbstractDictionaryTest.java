@@ -24,25 +24,25 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-dict
  */
-public abstract class AbstractDictionaryTest {
+abstract class AbstractDictionaryTest {
 
     private Dictionary testClass;
 
-    protected void setTestClass(Dictionary testClass) {
+    void setTestClass(Dictionary testClass) {
         this.testClass = testClass;
     }
 
-    protected Dictionary getTestClass() {
+    Dictionary getTestClass() {
         return this.testClass;
     }
 
     @Test
-    public void testSetTestClass() {
+    void testSetTestClass() {
         Assertions.assertNotNull(this.testClass);
     }
 
     @Test
-    public void testNS() {
+    void testNS() {
         Dictionary dict = getTestClass();
         Assertions.assertNotNull(dict);
         Assertions.assertNull(dict.getNS());
@@ -51,7 +51,7 @@ public abstract class AbstractDictionaryTest {
     }
 
     @Test
-    public void testAddEntry() {
+    void testAddEntry() {
         Dictionary dict = getTestClass();
         Assertions.assertNotNull(dict);
         Assertions.assertEquals(0, dict.size());

@@ -49,13 +49,13 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
     }
 
     @Test
-    public void testGetSize() throws Exception {
+    void testGetSize() throws Exception {
         IFingerprinter printer = new EStateFingerprinter();
         Assertions.assertEquals(79, printer.getSize());
     }
 
     @Test
-    public void testFingerprint() throws Exception {
+    void testFingerprint() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new EStateFingerprinter();
 
@@ -76,7 +76,7 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
      */
     @Test
     @Override
-    public void testBug706786() throws Exception {
+    void testBug706786() throws Exception {
 
         IAtomContainer superStructure = bug706786_1();
         IAtomContainer subStructure = bug706786_2();

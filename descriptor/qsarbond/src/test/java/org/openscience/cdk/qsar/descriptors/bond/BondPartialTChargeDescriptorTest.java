@@ -34,18 +34,18 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarbond
  */
-public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
+class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 
     /**
      *  Constructor for the BondPartialTChargeDescriptorTest object
      *
      */
-    public BondPartialTChargeDescriptorTest() {
+    BondPartialTChargeDescriptorTest() {
         descriptor = new BondPartialTChargeDescriptor();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BondPartialTChargeDescriptor.class);
     }
 
@@ -53,7 +53,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit
      */
     @Test
-    public void testBondTElectronegativityDescriptor() throws java.lang.Exception {
+    void testBondTElectronegativityDescriptor() throws java.lang.Exception {
         double[] testResult = {0.3323, 0.0218};/*
                                                 * from Petra online:
                                                 * http://www2.
@@ -82,7 +82,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Allyl bromide
      */
     @Test
-    public void testBondTElectronegativityDescriptor_Allyl_bromide() throws
+    void testBondTElectronegativityDescriptor_Allyl_bromide() throws
             java.lang.Exception {
         double[] testResult = {0.0243, 0.1279, 0.1872, 0.1553, 0.1553, 0.1358, 0.0013, 0.0013}; /*
                                                                                                  * from
@@ -129,7 +129,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Isopentyl iodide
      */
     @Test
-    public void testBondTElectronegativityDescriptor_Isopentyl_iodide() throws
+    void testBondTElectronegativityDescriptor_Isopentyl_iodide() throws
             java.lang.Exception {
         double testResult = 0.0165; /*
                                      * from Petra online:
@@ -149,7 +149,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Allyl mercaptan
      */
     @Test
-    public void testBondTElectronegativityDescriptor_Allyl_mercaptan() throws
+    void testBondTElectronegativityDescriptor_Allyl_mercaptan() throws
             java.lang.Exception {
         double[] testResult = {0.0197, 0.0924, 0.1835, 0.1566, 0.1566, 0.1412, 0.0323, 0.0323, 0.2761}; /*
                                                                                                          * from

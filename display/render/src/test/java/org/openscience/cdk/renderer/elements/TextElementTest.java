@@ -30,10 +30,10 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-render
  */
-public class TextElementTest {
+class TextElementTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         TextElement elem = new TextElement(0, 0, "Foo", Color.ORANGE);
         Assertions.assertNotNull(elem);
     }
@@ -54,7 +54,7 @@ public class TextElementTest {
     }
 
     @Test
-    public void testAccept() {
+    void testAccept() {
         TextElement elem = new TextElement(0, 0, "Foo", Color.ORANGE);
         MockVisitor visitor = new MockVisitor();
         Assertions.assertFalse(visitor.isVisited);

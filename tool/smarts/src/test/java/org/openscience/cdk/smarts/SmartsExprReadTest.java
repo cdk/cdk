@@ -44,7 +44,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
-public class SmartsExprReadTest {
+class SmartsExprReadTest {
 
     static Expr expr(Expr.Type type) {
         return new Expr(type);
@@ -91,7 +91,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void trailingOperator() {
+    void trailingOperator() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "[a#6,]"));
         Assertions.assertFalse(Smarts.parse(mol, "[a#6;]"));
@@ -100,7 +100,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void leadingOperator() {
+    void leadingOperator() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "[,a#6]"));
         Assertions.assertFalse(Smarts.parse(mol, "[;a#6]"));
@@ -109,7 +109,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void trailingBondOperator() {
+    void trailingBondOperator() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "*-,*"));
         Assertions.assertFalse(Smarts.parse(mol, "*-;*"));
@@ -118,7 +118,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void leadingBondOperator() {
+    void leadingBondOperator() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "*,-*"));
         Assertions.assertFalse(Smarts.parse(mol, "*;-*"));
@@ -127,7 +127,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void opPrecedence1() {
+    void opPrecedence1() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[a#6,a#7]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -137,7 +137,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void opPrecedence2() {
+    void opPrecedence2() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[a;#6,#7]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -147,7 +147,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void opPrecedence3() {
+    void opPrecedence3() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[#6,#7;a]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -157,7 +157,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void opPrecedence4() {
+    void opPrecedence4() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[#6,#7a]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -167,7 +167,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void opPrecedence5() {
+    void opPrecedence5() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[#6&a,#7]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -177,7 +177,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void orList() {
+    void orList() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[F,Cl,Br,I]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -189,7 +189,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void explicitHydrogen() {
+    void explicitHydrogen() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2H+]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -199,7 +199,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void explicitHydrogenNeg() {
+    void explicitHydrogenNeg() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[H-]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -209,7 +209,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void explicitHydrogenWithAtomMap() {
+    void explicitHydrogenWithAtomMap() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2H+:2]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -223,13 +223,13 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void explicitHydrogenWithBadAtomMap() {
+    void explicitHydrogenWithBadAtomMap() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "[2H+:]"));
     }
 
     @Test
-    public void nonExplicitHydrogen() {
+    void nonExplicitHydrogen() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2&H+]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -240,7 +240,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void nonExplicitHydrogen2() {
+    void nonExplicitHydrogen2() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2,H+]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -251,7 +251,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void nonExplicitHydrogen3() {
+    void nonExplicitHydrogen3() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2H1+]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
@@ -262,147 +262,147 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void specifiedIsotope() {
+    void specifiedIsotope() {
         Expr actual   = getAtomExpr("[!0]");
         Expr expected = expr(HAS_ISOTOPE);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void unspecifiedIsotope() {
+    void unspecifiedIsotope() {
         Expr actual   = getAtomExpr("[0]");
         Expr expected = expr(HAS_UNSPEC_ISOTOPE);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringMembership() {
+    void ringMembership() {
         Expr actual   = getAtomExpr("[R]");
         Expr expected = expr(IS_IN_RING);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringMembership2() {
+    void ringMembership2() {
         Expr actual   = getAtomExpr("[!R0]");
         Expr expected = expr(IS_IN_RING);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void chainMembership() {
+    void chainMembership() {
         Expr actual   = getAtomExpr("[R0]");
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void chainMembership2() {
+    void chainMembership2() {
         Expr actual   = getAtomExpr("[!R]");
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void chainMembership3() {
+    void chainMembership3() {
         Expr actual   = getAtomExpr("[r0]");
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void chainMembership4() {
+    void chainMembership4() {
         Expr actual   = getAtomExpr("[x0]");
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void aromatic() {
+    void aromatic() {
         Expr actual   = getAtomExpr("[a]");
         Expr expected = expr(IS_AROMATIC);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void aromatic2() {
+    void aromatic2() {
         Expr actual   = getAtomExpr("[!A]");
         Expr expected = expr(IS_AROMATIC);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void aliphatic() {
+    void aliphatic() {
         Expr actual   = getAtomExpr("[A]");
         Expr expected = expr(IS_ALIPHATIC);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void aliphatic2() {
+    void aliphatic2() {
         Expr actual   = getAtomExpr("[!a]");
         Expr expected = expr(IS_ALIPHATIC);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void notTrue() {
+    void notTrue() {
         Expr actual   = getAtomExpr("[!*]");
         Expr expected = expr(FALSE);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void notNotTrue() {
+    void notNotTrue() {
         Expr actual   = getAtomExpr("[!!*]");
         Expr expected = expr(TRUE);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringCountDefault() {
+    void ringCountDefault() {
         Expr actual   = getAtomExpr("[R]");
         Expr expected = expr(IS_IN_RING);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringCount0() {
+    void ringCount0() {
         Expr actual   = getAtomExpr("[R0]");
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringCount() {
+    void ringCount() {
         Expr actual   = getAtomExpr("[R1]");
         Expr expected = expr(RING_COUNT, 1);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringCountOEChem() {
+    void ringCountOEChem() {
         Expr actual   = getAtomExpr("[R2]", Smarts.FLAVOR_OECHEM);
         Expr expected = expr(RING_BOND_COUNT, 2);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringSmallest() {
+    void ringSmallest() {
         Expr actual   = getAtomExpr("[r5]");
         Expr expected = expr(RING_SMALLEST, 5);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringSmallestDefault() {
+    void ringSmallestDefault() {
         Expr actual   = getAtomExpr("[r]");
         Expr expected = expr(IS_IN_RING);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringSmallestInvalid() {
+    void ringSmallestInvalid() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[r0]")); // not in ring
         Assertions.assertFalse(Smarts.parse(mol, "[r1]"));
@@ -412,21 +412,21 @@ public class SmartsExprReadTest {
 
     // make sure not read as C & r
     @Test
-    public void chromium() {
+    void chromium() {
         Expr actual   = getAtomExpr("[Cr]");
         Expr expected = expr(ELEMENT, Elements.Chromium.number());
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void hetero() {
+    void hetero() {
         Expr actual   = getAtomExpr("[#X]");
         Expr expected = expr(IS_HETERO);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringSize() {
+    void ringSize() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z8]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
@@ -435,7 +435,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void ringSize0() {
+    void ringSize0() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z0]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
@@ -444,7 +444,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void ringSizeDefault() {
+    void ringSizeDefault() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
@@ -453,7 +453,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void adjacentHeteroCount() {
+    void adjacentHeteroCount() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z2]", Smarts.FLAVOR_CACTVS));
         Expr actual   = getAtomExpr(mol.getAtom(0));
@@ -462,7 +462,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void adjacentHetero() {
+    void adjacentHetero() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z]", Smarts.FLAVOR_CACTVS));
         Expr actual   = getAtomExpr(mol.getAtom(0));
@@ -471,7 +471,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void adjacentHetero0() {
+    void adjacentHetero0() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z0]", Smarts.FLAVOR_CACTVS));
         Expr actual   = getAtomExpr(mol.getAtom(0));
@@ -480,138 +480,138 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void valence() {
+    void valence() {
         Expr actual   = getAtomExpr("[v4]");
         Expr expected = expr(VALENCE, 4);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void valenceDefault() {
+    void valenceDefault() {
         Expr actual   = getAtomExpr("[v]");
         Expr expected = expr(VALENCE, 1);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void degree() {
+    void degree() {
         Expr actual   = getAtomExpr("[D4]");
         Expr expected = expr(DEGREE, 4);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void degreeDefault() {
+    void degreeDefault() {
         Expr actual   = getAtomExpr("[D]");
         Expr expected = expr(DEGREE, 1);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void degreeCDKLegacy() {
+    void degreeCDKLegacy() {
         Expr actual   = getAtomExpr("[D4]", Smarts.FLAVOR_CDK_LEGACY);
         Expr expected = expr(HEAVY_DEGREE, 4);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void degreeCDKLegacyDefault() {
+    void degreeCDKLegacyDefault() {
         Expr actual   = getAtomExpr("[D]", Smarts.FLAVOR_CDK_LEGACY);
         Expr expected = expr(HEAVY_DEGREE, 1);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void connectivity() {
+    void connectivity() {
         Expr actual   = getAtomExpr("[X4]");
         Expr expected = expr(TOTAL_DEGREE, 4);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void connectivityDefault() {
+    void connectivityDefault() {
         Expr actual   = getAtomExpr("[X]");
         Expr expected = expr(TOTAL_DEGREE, 1);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void totalHCount() {
+    void totalHCount() {
         Expr actual   = getAtomExpr("[H2]");
         Expr expected = expr(TOTAL_H_COUNT, 2);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void implHCount() {
+    void implHCount() {
         Expr actual   = getAtomExpr("[h2]");
         Expr expected = expr(IMPL_H_COUNT, 2);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void hasImplHCount() {
+    void hasImplHCount() {
         Expr actual   = getAtomExpr("[h]");
         Expr expected = expr(HAS_IMPLICIT_HYDROGEN);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringBondCount() {
+    void ringBondCount() {
         Expr actual   = getAtomExpr("[x2]");
         Expr expected = expr(RING_BOND_COUNT, 2);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringBondCount0() {
+    void ringBondCount0() {
         Expr actual   = getAtomExpr("[x0]");
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void ringBondCount1() {
+    void ringBondCount1() {
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null), "[x1]"));
     }
 
     @Test
-    public void ringBondCountDefault() {
+    void ringBondCountDefault() {
         Expr actual   = getAtomExpr("[x]");
         Expr expected = expr(IS_IN_RING);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void formalChargeNeg() {
+    void formalChargeNeg() {
         Expr actual   = getAtomExpr("[-1]");
         Expr expected = expr(FORMAL_CHARGE, -1);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void formalChargeNegNeg() {
+    void formalChargeNegNeg() {
         Expr actual   = getAtomExpr("[--]");
         Expr expected = expr(FORMAL_CHARGE, -2);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void formalChargePos() {
+    void formalChargePos() {
         Expr actual   = getAtomExpr("[+]");
         Expr expected = expr(FORMAL_CHARGE, +1);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void formalChargePosPos() {
+    void formalChargePosPos() {
         Expr actual   = getAtomExpr("[++]");
         Expr expected = expr(FORMAL_CHARGE, +2);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void atomMaps() {
+    void atomMaps() {
         IAtomContainer mol = new QueryAtomContainer(null);
         Assertions.assertFalse(Smarts.parse(mol, "[:10]"));
         Assertions.assertTrue(Smarts.parse(mol, "[*:10]"));
@@ -620,28 +620,28 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void periodicTableGroup() {
+    void periodicTableGroup() {
         Expr actual   = getAtomExpr("[#G16]", Smarts.FLAVOR_MOE);
         Expr expected = expr(PERIODIC_GROUP, 16);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void periodicTableGroupCDKLegacy() {
+    void periodicTableGroupCDKLegacy() {
         Expr actual   = getAtomExpr("[G16]", Smarts.FLAVOR_CDK_LEGACY);
         Expr expected = expr(PERIODIC_GROUP, 16);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void insaturationCactvs() {
+    void insaturationCactvs() {
         Expr actual   = getAtomExpr("[G1]", Smarts.FLAVOR_CACTVS);
         Expr expected = expr(INSATURATION, 1);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void insaturationCactvsOrMoe() {
+    void insaturationCactvsOrMoe() {
         assertThat(getAtomExpr("[i1]", Smarts.FLAVOR_CACTVS),
                    is(expr(INSATURATION, 1)));
         assertThat(getAtomExpr("[i1]", Smarts.FLAVOR_MOE),
@@ -649,7 +649,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void heteroSubCountCactvs() {
+    void heteroSubCountCactvs() {
         assertThat(getAtomExpr("[z]", Smarts.FLAVOR_CACTVS),
                    is(expr(HAS_HETERO_SUBSTITUENT)));
         assertThat(getAtomExpr("[z1]", Smarts.FLAVOR_CACTVS),
@@ -657,35 +657,35 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void hybridisationNumber() {
+    void hybridisationNumber() {
         Expr actual   = getAtomExpr("[^2]", Smarts.FLAVOR_OECHEM);
         Expr expected = expr(HYBRIDISATION_NUMBER, 2);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void hybridisationNumberDaylight() {
+    void hybridisationNumberDaylight() {
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null),
                                             "[^2]",
                                             Smarts.FLAVOR_DAYLIGHT));
     }
 
     @Test
-    public void atomStereoLeft() {
+    void atomStereoLeft() {
         Expr actual   = getAtomExpr("[@]");
         Expr expected = expr(STEREOCHEMISTRY, IStereoElement.LEFT);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void atomStereoRight() {
+    void atomStereoRight() {
         Expr actual   = getAtomExpr("[@@]");
         Expr expected = expr(STEREOCHEMISTRY, IStereoElement.RIGHT);
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void atomStereoLeftOrUnspec() {
+    void atomStereoLeftOrUnspec() {
         Expr actual   = getAtomExpr("[@?]");
         Expr expected = or(expr(STEREOCHEMISTRY, IStereoElement.LEFT),
                            expr(STEREOCHEMISTRY, 0));
@@ -693,7 +693,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void atomStereoSimpleLeft() {
+    void atomStereoSimpleLeft() {
         Expr actual   = getAtomExpr("[C@H]");
         assertThat(actual, is(new Expr(ALIPHATIC_ELEMENT, 6)
                                       .and(new Expr(STEREOCHEMISTRY, 1))
@@ -701,7 +701,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void badExprs() {
+    void badExprs() {
         IAtomContainer mol = new AtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "*-,*"));
         Assertions.assertFalse(Smarts.parse(mol, "*-;*"));
@@ -715,70 +715,70 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void singleOrAromatic() {
+    void singleOrAromatic() {
         Expr actual   = getBondExpr("**");
         Expr expected = expr(SINGLE_OR_AROMATIC);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void singleBond() {
+    void singleBond() {
         Expr actual   = getBondExpr("*-*");
         Expr expected = expr(ALIPHATIC_ORDER, 1);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void doubleBond() {
+    void doubleBond() {
         Expr actual   = getBondExpr("*=*");
         Expr expected = expr(ALIPHATIC_ORDER, 2);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void tripleBond() {
+    void tripleBond() {
         Expr actual   = getBondExpr("*#*");
         Expr expected = expr(ALIPHATIC_ORDER, 3);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void quadBond() {
+    void quadBond() {
         Expr actual   = getBondExpr("*$*");
         Expr expected = expr(ALIPHATIC_ORDER, 4);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void aromaticBond() {
+    void aromaticBond() {
         Expr actual   = getBondExpr("*:*");
         Expr expected = expr(IS_AROMATIC);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void aliphaticBond() {
+    void aliphaticBond() {
         Expr actual   = getBondExpr("*!:*");
         Expr expected = expr(IS_ALIPHATIC);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void chainBond() {
+    void chainBond() {
         Expr actual   = getBondExpr("*!@*");
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void anyBond() {
+    void anyBond() {
         Expr actual   = getBondExpr("*~*");
         Expr expected = expr(TRUE);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void singleOrDouble() {
+    void singleOrDouble() {
         Expr actual = getBondExpr("*-,=*");
         Expr expected = or(expr(ALIPHATIC_ORDER, 1),
                            expr(ALIPHATIC_ORDER, 2));
@@ -786,7 +786,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void operatorPrecedence() {
+    void operatorPrecedence() {
         Expr actual = getBondExpr("*@;-,=*");
         Expr expected = and(expr(IS_IN_RING),
                             or(expr(ALIPHATIC_ORDER, 1),
@@ -795,28 +795,28 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void notInRing() {
+    void notInRing() {
         Expr actual   = getBondExpr("*!@*");
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void notAromatic() {
+    void notAromatic() {
         Expr actual   = getBondExpr("*!:*");
         Expr expected = expr(IS_ALIPHATIC);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void notNotWildcard() {
+    void notNotWildcard() {
         Expr actual   = getBondExpr("*!!~*");
         Expr expected = expr(TRUE);
         assertThat(expected, is(actual));
     }
 
     @Test
-    public void testAliphaticSymbols() {
+    void testAliphaticSymbols() {
         for (Elements e : Elements.values()) {
             int len = e.symbol().length();
             if (len == 1 || len == 2) {
@@ -831,7 +831,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void testAromaticSymbols() {
+    void testAromaticSymbols() {
         assertThat(getAtomExpr("[b]"), is(new Expr(AROMATIC_ELEMENT, 5)));
         assertThat(getAtomExpr("[c]"), is(new Expr(AROMATIC_ELEMENT, 6)));
         assertThat(getAtomExpr("[n]"), is(new Expr(AROMATIC_ELEMENT, 7)));
@@ -847,7 +847,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void testBadSymbols() {
+    void testBadSymbols() {
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null), "[L]"));
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null), "[J]"));
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null), "[Q]"));
@@ -860,7 +860,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void testRecursive() {
+    void testRecursive() {
         Assertions.assertTrue(Smarts.parse(new QueryAtomContainer(null), "[$(*OC)]"));
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null), "[$*OC)]"));
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null), "[$(*OC]"));
@@ -871,7 +871,7 @@ public class SmartsExprReadTest {
     // recursive SMARTS with single atoms should be 'lifted' up to a single
     // non-recursive expression
     @Test
-    public void testTrivialRecursive() {
+    void testTrivialRecursive() {
         Expr expr = getAtomExpr("[$(F),$(Cl),$(Br)]");
         assertThat(expr, is(or(expr(ELEMENT, 9),
                                or(expr(ELEMENT, 17),
@@ -881,7 +881,7 @@ public class SmartsExprReadTest {
     // must always be read/written in SMARTS as recursive but we can lift
     // the expression up to the top level
     @Test
-    public void testTrivialRecursive2() {
+    void testTrivialRecursive2() {
         Expr expr = getAtomExpr("[!$([F,Cl,Br])]");
         assertThat(expr, is(or(expr(ELEMENT, 9),
                                 or(expr(ELEMENT, 17),
@@ -889,19 +889,19 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void ringOpenCloseInconsistency() {
+    void ringOpenCloseInconsistency() {
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null), "C=1CC-,=1"));
         Assertions.assertFalse(Smarts.parse(new QueryAtomContainer(null), "C=1CC-1"));
     }
 
     @Test
-    public void ringOpenCloseConsistency() {
+    void ringOpenCloseConsistency() {
         Assertions.assertTrue(Smarts.parse(new QueryAtomContainer(null), "C-,=1CC-,=1"));
         Assertions.assertTrue(Smarts.parse(new QueryAtomContainer(null), "C!~1CC!~1"));
     }
 
     @Test
-    public void degreeRange() {
+    void degreeRange() {
         Expr expr = getAtomExpr("[D{1-3}]");
         assertThat(expr, is(or(expr(DEGREE, 1),
                                or(expr(DEGREE, 2),
@@ -909,7 +909,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void implHRange() {
+    void implHRange() {
         Expr expr = getAtomExpr("[h{1-3}]");
         assertThat(expr, is(or(expr(IMPL_H_COUNT, 1),
                                or(expr(IMPL_H_COUNT, 2),
@@ -917,7 +917,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void totalHCountRange() {
+    void totalHCountRange() {
         Expr expr = getAtomExpr("[H{1-3}]");
         assertThat(expr, is(or(expr(TOTAL_H_COUNT, 1),
                                or(expr(TOTAL_H_COUNT, 2),
@@ -925,7 +925,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void valenceRange() {
+    void valenceRange() {
         Expr expr = getAtomExpr("[v{1-3}]");
         assertThat(expr, is(or(expr(VALENCE, 1),
                                or(expr(VALENCE, 2),
@@ -933,7 +933,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void ringBondCountRange() {
+    void ringBondCountRange() {
         Expr expr = getAtomExpr("[x{2-4}]");
         assertThat(expr, is(or(expr(RING_BOND_COUNT, 2),
                                or(expr(RING_BOND_COUNT, 3),
@@ -941,7 +941,7 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void ringSmallestSizeCountRange() {
+    void ringSmallestSizeCountRange() {
         Expr expr = getAtomExpr("[r{5-7}]");
         assertThat(expr, is(or(expr(RING_SMALLEST, 5),
                                or(expr(RING_SMALLEST, 6),
@@ -949,34 +949,34 @@ public class SmartsExprReadTest {
     }
 
     @Test
-    public void supportInsaturatedByDefault() {
+    void supportInsaturatedByDefault() {
         Expr expr = getAtomExpr("[i]");
         assertThat(expr, is(expr(UNSATURATED)));
     }
 
     @Test
-    public void supportHGt() {
+    void supportHGt() {
         Expr expr = getAtomExpr("[H>1]");
         assertThat(expr, is(and(expr(TOTAL_H_COUNT, 0).negate(),
                                 expr(TOTAL_H_COUNT, 1).negate())));
     }
 
     @Test
-    public void supportHLt() {
+    void supportHLt() {
         Expr expr = getAtomExpr("[H<2]");
         assertThat(expr, is(or(expr(TOTAL_H_COUNT, 0),
                                expr(TOTAL_H_COUNT, 1))));
     }
 
     @Test
-    public void supportDGt() {
+    void supportDGt() {
         Expr expr = getAtomExpr("[D>1]");
         assertThat(expr, is(and(expr(DEGREE, 0).negate(),
                                 expr(DEGREE, 1).negate())));
     }
 
     @Test
-    public void supportDLt() {
+    void supportDLt() {
         Expr expr = getAtomExpr("[D<2]");
         assertThat(expr, is(or(expr(DEGREE, 0),
                                expr(DEGREE, 1))));

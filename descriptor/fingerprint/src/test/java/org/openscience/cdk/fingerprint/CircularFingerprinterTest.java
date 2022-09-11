@@ -71,7 +71,7 @@ import javax.vecmath.Point3d;
 /**
  * @cdk.module test-standard
  */
-public class CircularFingerprinterTest extends CDKTestCase {
+class CircularFingerprinterTest extends CDKTestCase {
 
     private static final ILoggingTool   logger     = LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
 
@@ -86,7 +86,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
 
     @Test
     @Tag("SlowTest")
-    public void testFingerprints() throws Exception {
+    void testFingerprints() throws Exception {
         logger.info("CircularFingerprinter test: loading source materials");
 
         String fnzip = "data/cdd/circular_validation.zip";
@@ -99,7 +99,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test
-    public void testUseStereoElements() throws CDKException {
+    void testUseStereoElements() throws CDKException {
         final String smiles1  = "CC[C@@H](C)O";
         final String smiles2  = "CC[C@H](O)C";
         final String molfile = "\n"
@@ -138,7 +138,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetBitFingerprint() throws Exception {
+    void testGetBitFingerprint() throws Exception {
         assert (trivialMol != null);
         CircularFingerprinter circ = new CircularFingerprinter();
         IBitFingerprint result = circ.getBitFingerprint(trivialMol);
@@ -151,7 +151,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetCountFingerprint() throws Exception {
+    void testGetCountFingerprint() throws Exception {
         assert (trivialMol != null);
         CircularFingerprinter circ = new CircularFingerprinter();
         ICountFingerprint result = circ.getCountFingerprint(trivialMol);
@@ -182,7 +182,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetRawFingerprint() throws Exception {
+    void testGetRawFingerprint() throws Exception {
         // currently no-op
     }
 
@@ -319,7 +319,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test
-    public void protonsDontCauseNPE() throws Exception {
+    void protonsDontCauseNPE() throws Exception {
         IAtomContainer proton = new AtomContainer(1, 0, 0, 0);
         proton.addAtom(atom("H", +1, 0));
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
@@ -327,7 +327,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test
-    public void iminesDetectionDoesntCauseNPE() throws Exception {
+    void iminesDetectionDoesntCauseNPE() throws Exception {
         IAtomContainer pyrazole = new AtomContainer(6, 6, 0, 0);
         pyrazole.addAtom(atom("H", 0, 0));
         pyrazole.addAtom(atom("N", 0, 0));
@@ -349,7 +349,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
      * @cdk.bug 1357
      */
     @Test
-    public void partialCoordinatesDontCauseNPE() throws Exception {
+    void partialCoordinatesDontCauseNPE() throws Exception {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 3, 0.000, 0.000));
         m.addAtom(atom("C", 0, 1.299, -0.750));
@@ -367,7 +367,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
 	@Test
-	public void testNonZZeroPlaner() throws Exception {
+    void testNonZZeroPlaner() throws Exception {
 	    IAtomContainer mol = new AtomContainer();
 	    Atom[] atoms = new Atom[] {
 	        new Atom("C"),
@@ -414,7 +414,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test
-    public void testVersion() {
+    void testVersion() {
         CircularFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
         String expected = "CDK-CircularFingerprinter/" + CDK.getVersion() +
                           " classType=ECFP4 perceiveStereochemistry=false";

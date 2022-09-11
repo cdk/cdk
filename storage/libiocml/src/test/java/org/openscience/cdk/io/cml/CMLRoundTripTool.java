@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */
-public class CMLRoundTripTool extends CDKTestCase {
+class CMLRoundTripTool extends CDKTestCase {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
 

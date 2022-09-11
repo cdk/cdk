@@ -33,10 +33,10 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 @Tag("SlowTest")
 // test uses Thread.sleep...
-public class TimeManagerTest extends CDKTestCase {
+class TimeManagerTest extends CDKTestCase {
 
     @Test
-    public void testTimeManager() throws Exception {
+    void testTimeManager() throws Exception {
         TimeManager tMan = new TimeManager();
         Assertions.assertNotNull(tMan);
     }
@@ -45,7 +45,7 @@ public class TimeManagerTest extends CDKTestCase {
      * Test of getElapsedTimeInHours method, of class TimeManager.
      */
     @Test
-    public void testGetElapsedTimeInHours() {
+    void testGetElapsedTimeInHours() {
         TimeManager instance = new TimeManager();
         double expResult = 0.0001;
         myMethod(360);
@@ -57,7 +57,7 @@ public class TimeManagerTest extends CDKTestCase {
      * Test of getElapsedTimeInMinutes method, of class TimeManager.
      */
     @Test
-    public void testGetElapsedTimeInMinutes() {
+    void testGetElapsedTimeInMinutes() {
         TimeManager instance = new TimeManager();
         double expResult = 0.006;
         myMethod(360);
@@ -69,7 +69,7 @@ public class TimeManagerTest extends CDKTestCase {
      * Test of getElapsedTimeInSeconds method, of class TimeManager.
      */
     @Test
-    public void testGetElapsedTimeInSeconds() {
+    void testGetElapsedTimeInSeconds() {
         TimeManager instance = new TimeManager();
         double expResult = 0.36;
         myMethod(360);
@@ -81,7 +81,7 @@ public class TimeManagerTest extends CDKTestCase {
      * Test of getElapsedTimeInMilliSeconds method, of class TimeManager.
      */
     @Test
-    public void testGetElapsedTimeInMilliSeconds() {
+    void testGetElapsedTimeInMilliSeconds() {
         TimeManager instance = new TimeManager();
         double expResult = 360;
         myMethod(360);
@@ -89,7 +89,7 @@ public class TimeManagerTest extends CDKTestCase {
         Assertions.assertEquals(expResult, result, 360);
     }
 
-    public void myMethod(long timeMillis) {
+    void myMethod(long timeMillis) {
         try {
             Thread.sleep(timeMillis);
         } catch (InterruptedException e) {

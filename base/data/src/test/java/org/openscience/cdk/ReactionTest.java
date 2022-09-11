@@ -33,15 +33,15 @@ import org.openscience.cdk.test.interfaces.AbstractReactionTest;
  *
  * @cdk.module test-data
  */
-public class ReactionTest extends AbstractReactionTest {
+class ReactionTest extends AbstractReactionTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Reaction::new);
     }
 
     @Test
-    public void testReaction() {
+    void testReaction() {
         IReaction reaction = new Reaction();
         Assertions.assertNotNull(reaction);
         Assertions.assertEquals(0, reaction.getReactantCount());

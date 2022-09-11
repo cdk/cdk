@@ -38,17 +38,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public final class RingSearchTest_Biphenyl {
+final class RingSearchTest_Biphenyl {
 
     private final IAtomContainer biphenyl = TestMoleculeFactory.makeBiphenyl();
 
     @Test
-    public void testCyclic() {
+    void testCyclic() {
         assertThat(new RingSearch(biphenyl).cyclic().length, is(biphenyl.getAtomCount()));
     }
 
     @Test
-    public void testCyclic_Int() {
+    void testCyclic_Int() {
         int n = biphenyl.getAtomCount();
         RingSearch ringSearch = new RingSearch(biphenyl);
         for (int i = 0; i < n; i++) {
@@ -57,7 +57,7 @@ public final class RingSearchTest_Biphenyl {
     }
 
     @Test
-    public void testIsolated() {
+    void testIsolated() {
         RingSearch search = new RingSearch(biphenyl);
         int[][] isolated = search.isolated();
         assertThat(isolated.length, is(2));
@@ -66,19 +66,19 @@ public final class RingSearchTest_Biphenyl {
     }
 
     @Test
-    public void testFused() {
+    void testFused() {
         assertThat(new RingSearch(biphenyl).fused().length, is(0));
     }
 
     @Test
-    public void testRingFragments() {
+    void testRingFragments() {
         IAtomContainer fragment = new RingSearch(biphenyl).ringFragments();
         assertThat(fragment.getAtomCount(), is(biphenyl.getAtomCount()));
         assertThat(fragment.getBondCount(), is(biphenyl.getBondCount() - 1));
     }
 
     @Test
-    public void testIsolatedRingFragments() {
+    void testIsolatedRingFragments() {
         RingSearch search = new RingSearch(biphenyl);
         List<IAtomContainer> isolated = search.isolatedRingFragments();
         assertThat(isolated.size(), is(2));
@@ -89,7 +89,7 @@ public final class RingSearchTest_Biphenyl {
     }
 
     @Test
-    public void testFusedRingFragments() {
+    void testFusedRingFragments() {
         RingSearch search = new RingSearch(biphenyl);
         List<IAtomContainer> fused = search.fusedRingFragments();
         assertThat(fused.size(), is(0));

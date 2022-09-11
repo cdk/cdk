@@ -48,15 +48,15 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.created 2012-04-18
  * @cdk.module  test-valencycheck
  */
-public class ATASaturationCheckerTest extends CDKTestCase {
+class ATASaturationCheckerTest extends CDKTestCase {
 
-    SaturationChecker                      satcheck   = null;
+    private SaturationChecker                      satcheck   = null;
     boolean                                standAlone = false;
     private static final SmilesParser            sp         = new SmilesParser(SilentChemObjectBuilder.getInstance());
     private final AtomTypeAwareSaturationChecker atasc      = new AtomTypeAwareSaturationChecker();
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         satcheck = new SaturationChecker();
     }
 
@@ -66,7 +66,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testASimpleCarbonRing() throws Exception {
+    void testASimpleCarbonRing() throws Exception {
         // First we create a simple carbon ring to play with...
         IAtomContainer mol = new AtomContainer();
         IAtomType carbon = new AtomType(Elements.CARBON);
@@ -146,7 +146,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testQuinone() throws Exception {
+    void testQuinone() throws Exception {
         IAtomContainer mol = sp.parseSmiles("O=c1ccc(=O)cc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
@@ -195,7 +195,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
      * @throws CDKException
      */
     @Test
-    public void testASimpleCarbonRing2() throws CDKException {
+    void testASimpleCarbonRing2() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
@@ -216,7 +216,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testALargeRingSystem() throws Exception {
+    void testALargeRingSystem() throws Exception {
         // Should have 13 double bonds.
         String smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -236,7 +236,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testLargeRingSystem1() throws Exception {
+    void testLargeRingSystem1() throws Exception {
         // Should have 6 double bonds
         String smiles = "c1ccc2c(c1)CC4NCCc3cccc2c34";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -250,7 +250,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testLargeRingSystem2() throws Exception {
+    void testLargeRingSystem2() throws Exception {
         // Should have 8 double bonds
         String smiles = "Oc1ccc(cc1)c1coc2c(c1=O)c(O)cc(c2)O";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -264,7 +264,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testADoubleRingWithANitrogenAtom() throws Exception {
+    void testADoubleRingWithANitrogenAtom() throws Exception {
         /*
          * Should have 4 double bonds and all three bonds to/from the nitrogen
          * should be single
@@ -287,7 +287,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testLargeRingSystem3() throws Exception {
+    void testLargeRingSystem3() throws Exception {
         // Should have 17 double bonds
         String smiles = "O=C5C=C(O)C(N=Nc1ccc(cc1)Nc2ccccc2)=CC5(=NNc3ccc(cc3)Nc4ccccc4)";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -301,7 +301,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testLargeRingSystem4() throws Exception {
+    void testLargeRingSystem4() throws Exception {
         // Should have 18 double bonds
         String smiles = "c1ccc(cc1)[Sn](c2ccccc2)(c3ccccc3)S[Sn](c4ccccc4)(c5ccccc5)c6ccccc6";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -315,7 +315,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testLargeRingSystem5() throws Exception {
+    void testLargeRingSystem5() throws Exception {
         // Should have 24 double bonds
         String smiles = "O=C1c2ccccc2C(=O)c3c1ccc4c3[nH]c5c6C(=O)c7ccccc7C(=O)c6c8[nH]c9c%10C(=O)c%11ccccc%11C(=O)c%10ccc9c8c45";
 
@@ -335,7 +335,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testLargeBioclipseUseCase() throws Exception {
+    void testLargeBioclipseUseCase() throws Exception {
         // Should have 14 double bonds
         String smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
         IAtomContainer molecule = sp.parseSmiles(smiles);
@@ -351,7 +351,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testCyclobutadiene() throws CDKException {
+    void testCyclobutadiene() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c1ccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
@@ -364,7 +364,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testPyrrole() throws CDKException {
+    void testPyrrole() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c1c[nH]cc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
@@ -378,7 +378,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testFurane() throws CDKException {
+    void testFurane() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c1cocc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
@@ -394,7 +394,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testAnOtherDoubleRing() throws CDKException {
+    void testAnOtherDoubleRing() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c1cccc2cccc2c1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
@@ -408,7 +408,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testAnOtherRingSystem() throws CDKException {
+    void testAnOtherRingSystem() throws CDKException {
         // Should have 7 double bonds
         //    	IAtomContainer mol = sp.parseSmiles("O=c2c1ccccc1c3ccccc23");
         // Should have 6 double bonds
@@ -424,7 +424,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testAnOtherRingSystem2() throws CDKException {
+    void testAnOtherRingSystem2() throws CDKException {
         // Should have 7 double bonds
         IAtomContainer mol = sp.parseSmiles("O=c2c1ccccc1c3ccccc23");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -438,7 +438,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testAzulene() throws CDKException {
+    void testAzulene() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c12c(ccccc2)ccc1");
         atasc.decideBondOrder(mol, true);
 
@@ -452,7 +452,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void mailCase1a() throws CDKException {
+    void mailCase1a() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("o1cccc1");
         atasc.decideBondOrder(mol, true);
 
@@ -464,7 +464,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void mailCase1b() throws CDKException {
+    void mailCase1b() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("O1cccc1");
         atasc.decideBondOrder(mol, true);
 
@@ -476,7 +476,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void mailCase3b() throws CDKException {
+    void mailCase3b() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c1ccccc1Oc1cOcc1");
         atasc.decideBondOrder(mol, true);
 
@@ -488,7 +488,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void mailCase4() throws CDKException {
+    void mailCase4() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("o2c1ccccc1c3c2cccc3");
         atasc.decideBondOrder(mol, true);
 
@@ -500,7 +500,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void mailCase5a() throws CDKException {
+    void mailCase5a() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c5cc2ccc1ccccc1c2c6c4c3ccccc3ccc4ccc56");
         atasc.decideBondOrder(mol, true);
 
@@ -512,7 +512,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void mailCase5b() throws CDKException {
+    void mailCase5b() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c1cc2ccc3ccc4ccc5ccc6ccc1c7c2c3c4c5c67");
 
         atasc.decideBondOrder(mol, true);
@@ -526,7 +526,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void mailCase6() throws CDKException {
+    void mailCase6() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("c1ccc2c(c1)cc-3c4c2cccc4-c5c3cccc5");
         atasc.decideBondOrder(mol, true);
 
@@ -538,7 +538,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testNPolycyclicCompounds() throws CDKException {
+    void testNPolycyclicCompounds() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("n12cncc1cccc2");
         atasc.decideBondOrder(mol, true);
 
@@ -550,7 +550,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testIndoles2() throws CDKException {
+    void testIndoles2() throws CDKException {
         IAtomContainer mol = sp
                 .parseSmiles("Cl.Cl.Oc1ccc2CC3[C@](Cc4c(-c5ccccc5)c(C)[nH0](Cc5ccccc5)c4[C@@H]([C@](CCN3CC3CC3)(c2c1O1)2)1)2(O)");
         atasc.decideBondOrder(mol, true);
@@ -563,7 +563,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void someOtherWieredDoubleRing() throws CDKException {
+    void someOtherWieredDoubleRing() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("CCc2c3ccccc3[nH]c2");
         atasc.decideBondOrder(mol, true);
 
@@ -575,7 +575,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testButadieneSmile() throws Exception {
+    void testButadieneSmile() throws Exception {
         IAtomContainer mol = sp.parseSmiles("cccc");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         /*
@@ -595,7 +595,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testButadiene() throws Exception {
+    void testButadiene() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtomType carbon = new AtomType(Elements.CARBON);
 
@@ -643,7 +643,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testMolFromSdf() throws CDKException {
+    void testMolFromSdf() throws CDKException {
         IAtomContainer mol = sp.parseSmiles("OC(COc1ccccc1CC=C)CNC(C)C");
         atasc.decideBondOrder(mol, true);
 
@@ -655,7 +655,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testOnlyOneAtom() throws CDKException {
+    void testOnlyOneAtom() throws CDKException {
         /*
          * If all bonds in the molecule are implicit, then it was noticed that
          * the SatChecker failed
@@ -669,7 +669,7 @@ public class ATASaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testBug3394() {
+    void testBug3394() {
         IAtomContainer mol;
         try {
             mol = sp.parseSmiles("OCC1OC(O)C(O)C(Op2(OC3C(O)C(O)OC(CO)C3O)np(OC4C(O)C(O)OC(CO)C4O)(OC5C(O)C(O)OC(CO)C5O)np(OC6C(O)C(O)OC(CO)C6O)(OC7C(O)C(O)OC(CO)C7O)n2)C1O");

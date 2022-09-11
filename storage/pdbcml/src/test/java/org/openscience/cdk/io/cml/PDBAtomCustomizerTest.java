@@ -48,7 +48,7 @@ import org.openscience.cdk.protein.data.PDBPolymer;
  *
  * @cdk.module test-pdbcml
  */
-public class PDBAtomCustomizerTest extends CDKTestCase {
+class PDBAtomCustomizerTest extends CDKTestCase {
 
     /**
      * A roundtripping test to see of PDB atom customization works.
@@ -56,7 +56,7 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
      * @cdk.bug 1085912
      */
     @Test
-    public void testSFBug1085912_1() throws Exception {
+    void testSFBug1085912_1() throws Exception {
         String filename_pdb = "1CKV.pdb";
         InputStream ins1 = this.getClass().getResourceAsStream(filename_pdb);
 

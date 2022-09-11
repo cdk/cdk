@@ -30,10 +30,10 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-public class HuLuIndexToolTest {
+class HuLuIndexToolTest {
 
     @Test
-    public void testFigure2Weights() throws Exception {
+    void testFigure2Weights() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("hulu_fig2.mol"))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
@@ -46,7 +46,7 @@ public class HuLuIndexToolTest {
     }
 
     @Test
-    public void testFigure2ExtendedMatrix() throws Exception {
+    void testFigure2ExtendedMatrix() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("hulu_fig2.mol"))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
@@ -69,7 +69,7 @@ public class HuLuIndexToolTest {
     }
 
     @Test
-    public void testFigure2EAID() throws Exception {
+    void testFigure2EAID() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("hulu_fig2.mol"))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
@@ -81,7 +81,7 @@ public class HuLuIndexToolTest {
      * https://github.com/cdk/cdk/issues/737
      */
     @Test
-    public void bug737() throws InvalidSmilesException {
+    void bug737() throws InvalidSmilesException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("Cl.O=S(=O)(C1=CC=C(NN)C(=C1)C)C");

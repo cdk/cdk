@@ -33,10 +33,10 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
  *
  * @cdk.module test-silent
  */
-public class MappingTest extends AbstractMappingTest {
+class MappingTest extends AbstractMappingTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
             @Override
@@ -47,7 +47,7 @@ public class MappingTest extends AbstractMappingTest {
     }
 
     @Test
-    public void testMapping_IChemObject_IChemObject() {
+    void testMapping_IChemObject_IChemObject() {
         IMapping mapping = new Mapping(newChemObject().getBuilder().newInstance(IAtom.class), newChemObject()
                 .getBuilder().newInstance(IAtom.class));
         Assertions.assertNotNull(mapping);

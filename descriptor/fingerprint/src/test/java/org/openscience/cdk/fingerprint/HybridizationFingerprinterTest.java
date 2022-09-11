@@ -38,7 +38,7 @@ import java.util.Random;
 /**
  * @cdk.module test-standard
  */
-public class HybridizationFingerprinterTest extends AbstractFingerprinterTest {
+class HybridizationFingerprinterTest extends AbstractFingerprinterTest {
 
     @Override
     public IFingerprinter getBitFingerprinter() {

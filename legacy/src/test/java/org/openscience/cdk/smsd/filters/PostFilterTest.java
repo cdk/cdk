@@ -39,27 +39,27 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class PostFilterTest {
+class PostFilterTest {
 
     public PostFilterTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of filter method, of class PostFilter.
      */
     @Test
-    public void testFilter() {
+    void testFilter() {
 
         List<Integer> l1 = new ArrayList<>(6);
         l1.add(1);

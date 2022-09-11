@@ -55,7 +55,7 @@ public class DynamicFactoryTest {
      * Ensure a negative size throws an exception.
      */
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {new DynamicFactory(-1);});
     }
@@ -64,7 +64,7 @@ public class DynamicFactoryTest {
      * Check we can't register an interface.
      */
     @Test
-    public void testRegister_Interface() throws Exception {
+    void testRegister_Interface() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     DynamicFactory factory = new DynamicFactory(0);
@@ -73,7 +73,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testRegister_AbstractClass() throws Exception {
+    void testRegister_AbstractClass() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     DynamicFactory factory = new DynamicFactory(0);
@@ -82,7 +82,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testRegister() throws Exception {
+    void testRegister() throws Exception {
 
         DynamicFactory.InterfaceProvider accessor = mock(DynamicFactory.InterfaceProvider.class);
         IAtom mock = mock(MockedAtom.class);
@@ -100,7 +100,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testRegister_NonCDKInterface() throws Exception {
+    void testRegister_NonCDKInterface() throws Exception {
 
         DynamicFactory.InterfaceProvider accessor = mock(DynamicFactory.InterfaceProvider.class);
         IAtom mock = mock(MockedAtom.class);
@@ -116,7 +116,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testRegister_Explicit() throws Exception {
+    void testRegister_Explicit() throws Exception {
 
         IAtom mock = mock(MockedAtom.class);
 
@@ -141,7 +141,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testRegister_PrivateConstructor() throws Exception {
+    void testRegister_PrivateConstructor() throws Exception {
 
         DynamicFactory factory = new DynamicFactory(5);
 
@@ -161,7 +161,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testRegister_Constructor() throws Exception {
+    void testRegister_Constructor() throws Exception {
 
         DynamicFactory factory = new DynamicFactory(5);
 
@@ -172,7 +172,7 @@ public class DynamicFactoryTest {
     @SuppressWarnings("unchecked")
     // mocking generics
     @Test
-    public void testRegister_Constructor_Modifier() throws Exception {
+    void testRegister_Constructor_Modifier() throws Exception {
 
         DynamicFactory factory = new DynamicFactory(5);
 
@@ -195,7 +195,7 @@ public class DynamicFactoryTest {
      * @throws Exception
      */
     @Test
-    public void testRegister_Duplicate() throws Exception {
+    void testRegister_Duplicate() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     DynamicFactory factory = new DynamicFactory(5);
@@ -212,7 +212,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testOfClass_Instantiator() throws Exception {
+    void testOfClass_Instantiator() throws Exception {
 
         DynamicFactory factory = new DynamicFactory(5);
 
@@ -229,7 +229,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testOfClass() throws Exception {
+    void testOfClass() throws Exception {
 
         IAtom mock = mock(MockedAtom.class);
 
@@ -252,7 +252,7 @@ public class DynamicFactoryTest {
      * @throws Exception
      */
     @Test
-    public void testOfConcrete_Params() throws Exception {
+    void testOfConcrete_Params() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IAtom mock = mock(MockedAtom.class);
@@ -270,7 +270,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testOfConcrete() throws Exception {
+    void testOfConcrete() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     DynamicFactory factory = new DynamicFactory(5);
@@ -286,7 +286,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testOfClass_WithParams() throws Exception {
+    void testOfClass_WithParams() throws Exception {
 
         IAtom mock = mock(MockedAtom.class);
 
@@ -310,7 +310,7 @@ public class DynamicFactoryTest {
      * Kind of already tested in other methods.
      */
     @Test
-    public void testSuggest() throws Exception {
+    void testSuggest() throws Exception {
 
         DynamicFactory factory = new DynamicFactory(5);
 
@@ -324,7 +324,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testImplementationsOf() throws Exception {
+    void testImplementationsOf() throws Exception {
 
         DynamicFactory factory = new DynamicFactory(5);
 
@@ -344,7 +344,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testKey_Default() {
+    void testKey_Default() {
 
         DynamicFactory.ConstructorKey key = DynamicFactory.key(IAtom.class);
 
@@ -354,7 +354,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testKey_Parameters() {
+    void testKey_Parameters() {
 
         DynamicFactory.ConstructorKey key = DynamicFactory.key(IBond.class, IAtom.class, IAtom.class);
 
@@ -366,7 +366,7 @@ public class DynamicFactoryTest {
     }
 
     @Test
-    public void testKey_ArrayParameters() {
+    void testKey_ArrayParameters() {
 
         DynamicFactory.ConstructorKey key = DynamicFactory.key(IBond.class, IAtom[].class);
         Assertions.assertEquals(IBond.class, key.intf());
@@ -380,7 +380,7 @@ public class DynamicFactoryTest {
      * Ensures primitive types are converted.
      */
     @Test
-    public void testKey_Primitives() {
+    void testKey_Primitives() {
 
         DynamicFactory.ConstructorKey key = DynamicFactory.key(IAtom.class, boolean.class, byte.class, char.class,
                 short.class, int.class, float.class, long.class, double.class);
@@ -404,7 +404,7 @@ public class DynamicFactoryTest {
      * converted to actual varargs - this test checks both cases.
      */
     @Test
-    public void testOfClass_Wrapping() {
+    void testOfClass_Wrapping() {
 
         DynamicFactory factory = new DynamicFactory(5);
 
@@ -437,7 +437,7 @@ public class DynamicFactoryTest {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testRegister_WithModifier() {
+    void testRegister_WithModifier() {
 
         DynamicFactory factory = new DynamicFactory(5);
 
@@ -460,9 +460,9 @@ public class DynamicFactoryTest {
 
         private String symbol;
 
-        public MockedAtom() {}
+        MockedAtom() {}
 
-        public MockedAtom(String symbol) {
+        MockedAtom(String symbol) {
             this.symbol = symbol;
         }
 
@@ -479,7 +479,7 @@ public class DynamicFactoryTest {
 
     public abstract class MockedPseudoAtom implements IAtom {
 
-        public MockedPseudoAtom(String ignored) {}
+        MockedPseudoAtom(String ignored) {}
 
         @Override
         public abstract IAtom clone() throws CloneNotSupportedException;
@@ -487,7 +487,7 @@ public class DynamicFactoryTest {
 
     public abstract class MockedElement implements IElement {
 
-        public MockedElement(IElement element) {}
+        MockedElement(IElement element) {}
 
         @Override
         public abstract IAtom clone() throws CloneNotSupportedException;

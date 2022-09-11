@@ -33,17 +33,17 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization.SP3;
 /**
  * @cdk.module test-diff
  */
-public class AtomTypeDiffTest {
+class AtomTypeDiffTest {
 
     @Test
-    public void testMatchAgainstItself() {
+    void testMatchAgainstItself() {
         IAtomType element1 = mock(IAtomType.class);
         String result = AtomTypeDiff.diff(element1, element1);
         Assertions.assertEquals("", result);
     }
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IAtomType element1 = mock(IAtomType.class);
         IAtomType element2 = mock(IAtomType.class);
         when(element1.getHybridization()).thenReturn(PLANAR3);
@@ -57,7 +57,7 @@ public class AtomTypeDiffTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         IAtomType element1 = mock(IAtomType.class);
         IAtomType element2 = mock(IAtomType.class);
         when(element1.getHybridization()).thenReturn(PLANAR3);

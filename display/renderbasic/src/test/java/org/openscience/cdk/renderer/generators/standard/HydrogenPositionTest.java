@@ -43,78 +43,78 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Right;
 
-public class HydrogenPositionTest {
+class HydrogenPositionTest {
 
     @Test
-    public void cardinalDirectionForNorthIsBelow() throws Exception {
+    void cardinalDirectionForNorthIsBelow() throws Exception {
         assertThat(HydrogenPosition.usingCardinalDirection(new Vector2d(0, 1)), is(Below));
     }
 
     @Test
-    public void cardinalDirectionForNorthEastIsLeft() throws Exception {
+    void cardinalDirectionForNorthEastIsLeft() throws Exception {
         assertThat(HydrogenPosition.usingCardinalDirection(new Vector2d(1, 1)), is(Left));
     }
 
     @Test
-    public void cardinalDirectionForEastIsLeft() throws Exception {
+    void cardinalDirectionForEastIsLeft() throws Exception {
         assertThat(HydrogenPosition.usingCardinalDirection(new Vector2d(1, 0)), is(Left));
     }
 
     @Test
-    public void cardinalDirectionForSouthEastIsLeft() throws Exception {
+    void cardinalDirectionForSouthEastIsLeft() throws Exception {
         assertThat(HydrogenPosition.usingCardinalDirection(new Vector2d(1, -1)), is(Left));
     }
 
     @Test
-    public void cardinalDirectionForSouthIsAbove() throws Exception {
+    void cardinalDirectionForSouthIsAbove() throws Exception {
         assertThat(HydrogenPosition.usingCardinalDirection(new Vector2d(0, -1)), is(Above));
     }
 
     @Test
-    public void cardinalDirectionForSouthWestIsRight() throws Exception {
+    void cardinalDirectionForSouthWestIsRight() throws Exception {
         assertThat(HydrogenPosition.usingCardinalDirection(new Vector2d(-1, -1)), is(Right));
     }
 
     @Test
-    public void cardinalDirectionForWestIsRight() throws Exception {
+    void cardinalDirectionForWestIsRight() throws Exception {
         assertThat(HydrogenPosition.usingCardinalDirection(new Vector2d(-1, 0)), is(Right));
     }
 
     @Test
-    public void cardinalDirectionForNorthWestIsRight() throws Exception {
+    void cardinalDirectionForNorthWestIsRight() throws Exception {
         assertThat(HydrogenPosition.usingCardinalDirection(new Vector2d(-1, 0)), is(Right));
     }
 
     @Test
-    public void hydrogensAppearBeforeOxygen() throws Exception {
+    void hydrogensAppearBeforeOxygen() throws Exception {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(8);
         assertThat(HydrogenPosition.usingDefaultPlacement(atom), is(Left));
     }
 
     @Test
-    public void hydrogensAppearBeforeSulfur() throws Exception {
+    void hydrogensAppearBeforeSulfur() throws Exception {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(16);
         assertThat(HydrogenPosition.usingDefaultPlacement(atom), is(Left));
     }
 
     @Test
-    public void hydrogensAppearAfterNitrogen() throws Exception {
+    void hydrogensAppearAfterNitrogen() throws Exception {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(7);
         assertThat(HydrogenPosition.usingDefaultPlacement(atom), is(Right));
     }
 
     @Test
-    public void hydrogensAppearAfterCarbon() throws Exception {
+    void hydrogensAppearAfterCarbon() throws Exception {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(6);
         assertThat(HydrogenPosition.usingDefaultPlacement(atom), is(Right));
     }
 
     @Test
-    public void hydrogensAppearAfterWhenBondIsFromLeft() throws Exception {
+    void hydrogensAppearAfterWhenBondIsFromLeft() throws Exception {
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getPoint2d()).thenReturn(new Point2d(0, 0));
@@ -123,7 +123,7 @@ public class HydrogenPositionTest {
     }
 
     @Test
-    public void hydrogensAppearBeforeWhenBondIsFromRight() throws Exception {
+    void hydrogensAppearBeforeWhenBondIsFromRight() throws Exception {
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getPoint2d()).thenReturn(new Point2d(0, 0));
@@ -132,7 +132,7 @@ public class HydrogenPositionTest {
     }
 
     @Test
-    public void usingCardinalDirection() throws Exception {
+    void usingCardinalDirection() throws Exception {
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
         IAtom atom3 = mock(IAtom.class);
@@ -143,24 +143,24 @@ public class HydrogenPositionTest {
     }
 
     @Test
-    public void useDefaultPlacementWithNoBonds() throws Exception {
+    void useDefaultPlacementWithNoBonds() throws Exception {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(8);
         assertThat(HydrogenPosition.position(atom, Collections.emptyList()), is(Left));
     }
 
     @Test
-    public void values() throws Exception {
+    void values() throws Exception {
         assertThat(HydrogenPosition.values(), is(new HydrogenPosition[]{Right, Left, Above, Below}));
     }
 
     @Test
-    public void valueOf() throws Exception {
+    void valueOf() throws Exception {
         assertThat(HydrogenPosition.valueOf("Above"), is(HydrogenPosition.Above));
     }
 
     @Test
-    public void angularExtentRight() throws Exception {
+    void angularExtentRight() throws Exception {
         double theta = Math.toRadians(60);
         List<Vector2d> vectors = Arrays.asList(new Vector2d(-1, 0), new Vector2d(Math.cos(theta), Math.sin(theta)),
                 new Vector2d(Math.cos(-theta), Math.sin(-theta)));
@@ -168,7 +168,7 @@ public class HydrogenPositionTest {
     }
 
     @Test
-    public void angularExtentLeft() throws Exception {
+    void angularExtentLeft() throws Exception {
         double theta = Math.toRadians(120);
         List<Vector2d> vectors = Arrays.asList(new Vector2d(1, 0), new Vector2d(Math.cos(theta), Math.sin(theta)),
                 new Vector2d(Math.cos(-theta), Math.sin(-theta)));
@@ -176,7 +176,7 @@ public class HydrogenPositionTest {
     }
 
     @Test
-    public void angularExtentBelow() throws Exception {
+    void angularExtentBelow() throws Exception {
         double theta1 = Math.toRadians(210);
         double theta2 = Math.toRadians(330);
         List<Vector2d> vectors = Arrays.asList(new Vector2d(0, 1), new Vector2d(Math.cos(theta1), Math.sin(theta1)),
@@ -185,7 +185,7 @@ public class HydrogenPositionTest {
     }
 
     @Test
-    public void angularExtentAbove() throws Exception {
+    void angularExtentAbove() throws Exception {
         double theta1 = Math.toRadians(30);
         double theta2 = Math.toRadians(150);
         List<Vector2d> vectors = Arrays.asList(new Vector2d(0, -1), new Vector2d(Math.cos(theta1), Math.sin(theta1)),
@@ -194,7 +194,7 @@ public class HydrogenPositionTest {
     }
 
     @Test
-    public void symmetric() throws Exception {
+    void symmetric() throws Exception {
         // all extents are the same so 'Right' is chosen in preference
         List<Vector2d> vectors = Arrays.asList(new Vector2d(1, 1), new Vector2d(1, -1), new Vector2d(-1, 1),
                 new Vector2d(-1, -1));
@@ -202,7 +202,7 @@ public class HydrogenPositionTest {
     }
 
     @Test
-    public void largestExtent() throws Exception {
+    void largestExtent() throws Exception {
         // the largest extents here are above and below
         List<Vector2d> vectors = Arrays.asList(
                 new Vector2d(Math.cos(Math.toRadians(30)), Math.sin(Math.toRadians(30))),

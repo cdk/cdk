@@ -34,9 +34,9 @@ import java.util.stream.Stream;
  * This parameterized test-suite runs the checks of how many isomers we exepect
  * for each formula.
  */
-public class MaygenExpectedCountTest {
+class MaygenExpectedCountTest {
 
-    public static Stream<Arguments> data() {
+    static Stream<Arguments> data() {
         return Stream.of(
                 Arguments.arguments("C3Cl2H4", 7),
                 Arguments.arguments("CClH10", 0),
@@ -97,7 +97,7 @@ public class MaygenExpectedCountTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testExpectedCountMultithreaded(String formula, int expectedCount) throws CDKException, IOException, CloneNotSupportedException {
+    void testExpectedCountMultithreaded(String formula, int expectedCount) throws CDKException, IOException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         if (formula.contains("val="))
             maygen.setSetElement(true);
@@ -117,7 +117,7 @@ public class MaygenExpectedCountTest {
     @ParameterizedTest
     @MethodSource("data")
     @Tag("SlowTest")
-    public void testExpectedCount(String formula, int expectedCount) throws CDKException, IOException, CloneNotSupportedException {
+    void testExpectedCount(String formula, int expectedCount) throws CDKException, IOException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         if (formula.contains("val="))
             maygen.setSetElement(true);

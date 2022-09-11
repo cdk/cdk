@@ -51,7 +51,7 @@ import org.junit.jupiter.api.Test;
  * @author John May
  * @cdk.module test-hash
  */
-public class GeometricCumulativeDoubleBondFactoryTest {
+class GeometricCumulativeDoubleBondFactoryTest {
 
     private static IAtom carbonAt(double x, double y) {
         IAtom atom = new Atom("C");
@@ -60,7 +60,7 @@ public class GeometricCumulativeDoubleBondFactoryTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         IAtomContainer m = new AtomContainer();
         m.addAtom(carbonAt(-0.2994, 3.2084));
         m.addAtom(carbonAt(-1.1244, 3.2084));
@@ -79,7 +79,7 @@ public class GeometricCumulativeDoubleBondFactoryTest {
     }
 
     @Test
-    public void testAxialEncoder_Empty() throws Exception {
+    void testAxialEncoder_Empty() throws Exception {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom start = mock(IAtom.class);
         IAtom end = mock(IAtom.class);
@@ -89,7 +89,7 @@ public class GeometricCumulativeDoubleBondFactoryTest {
     }
 
     @Test
-    public void testElevation_Atom_Up() throws Exception {
+    void testElevation_Atom_Up() throws Exception {
         IAtom a1 = mock(IAtom.class);
         IAtom a2 = mock(IAtom.class);
         IBond bond = mock(IBond.class);
@@ -101,7 +101,7 @@ public class GeometricCumulativeDoubleBondFactoryTest {
     }
 
     @Test
-    public void testElevation_Atom_Down() throws Exception {
+    void testElevation_Atom_Down() throws Exception {
         IAtom a1 = mock(IAtom.class);
         IAtom a2 = mock(IAtom.class);
         IBond bond = mock(IBond.class);
@@ -113,20 +113,20 @@ public class GeometricCumulativeDoubleBondFactoryTest {
     }
 
     @Test
-    public void testElevation_null() throws Exception {
+    void testElevation_null() throws Exception {
         IBond bond = mock(IBond.class);
         assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond), is(0));
     }
 
     @Test
-    public void testElevation_Up() throws Exception {
+    void testElevation_Up() throws Exception {
         IBond bond = mock(IBond.class);
         when(bond.getStereo()).thenReturn(IBond.Stereo.UP);
         assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond), is(+1));
     }
 
     @Test
-    public void testElevation_Down() throws Exception {
+    void testElevation_Down() throws Exception {
         IBond bond = mock(IBond.class);
         when(bond.getStereo()).thenReturn(IBond.Stereo.DOWN);
         assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond), is(-1));

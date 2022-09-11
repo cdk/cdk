@@ -25,30 +25,30 @@ import org.openscience.cdk.interfaces.IAtomType;
 /**
  * @cdk.module test-diff
  */
-public class AtomTypeHybridizationDifferenceTest {
+class AtomTypeHybridizationDifferenceTest {
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1,
                 IAtomType.Hybridization.SP2);
         Assertions.assertNotNull(result);
     }
 
     @Test
-    public void testSame() {
+    void testSame() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1,
                 IAtomType.Hybridization.SP1);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testTwoNull() {
+    void testTwoNull() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, null);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testOneNull() {
+    void testOneNull() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
         Assertions.assertNotNull(result);
 
@@ -57,7 +57,7 @@ public class AtomTypeHybridizationDifferenceTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
         String diffString = result.toString();
         Assertions.assertNotNull(diffString);

@@ -59,7 +59,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public AdductionProtonPBReactionTest() throws Exception {
+    AdductionProtonPBReactionTest() throws Exception {
         setReaction(AdductionProtonPBReaction.class);
     }
 
@@ -67,7 +67,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testAdductionProtonPBReaction() throws Exception {
+    void testAdductionProtonPBReaction() throws Exception {
         IReactionProcess type = new AdductionProtonPBReaction();
         Assertions.assertNotNull(type);
     }
@@ -119,7 +119,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new AdductionProtonPBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -158,7 +158,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
     * @return    The test suite
     */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new AdductionProtonPBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -195,7 +195,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new AdductionProtonPBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();

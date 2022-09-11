@@ -39,19 +39,19 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
+class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    private final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the PartialTChargePEOEDescriptorTest object
      *
      */
-    public PartialTChargePEOEDescriptorTest() {}
+    PartialTChargePEOEDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(PartialTChargePEOEDescriptor.class);
     }
 
@@ -62,7 +62,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialTChargeDescriptor_Methyl_Fluoride() throws
+    void testPartialTChargeDescriptor_Methyl_Fluoride() throws
             java.lang.Exception {
         double[] testResult = {-0.2527, 0.0795, 0.0577, 0.0577, 0.0577};/*
                                                                          * from
@@ -110,7 +110,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialTChargeDescriptor_Fluoroethylene() throws
+    void testPartialTChargeDescriptor_Fluoroethylene() throws
             java.lang.Exception {
         double[] testResult = {-0.1839, 0.079, -0.1019, 0.0942, 0.0563, 0.0563};/*
                                                                                  * from
@@ -162,7 +162,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialTChargeDescriptor_FormicAcid() throws
+    void testPartialTChargeDescriptor_FormicAcid() throws
             java.lang.Exception {
         double[] testResult = {0.2672, -0.3877, -0.2365, 0.1367, 0.2203};/*
                                                                           * from
@@ -214,7 +214,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialTChargeDescriptor_Fluorobenzene() throws
+    void testPartialTChargeDescriptor_Fluorobenzene() throws
             java.lang.Exception {
         double[] testResult = {-0.1785, 0.1227, -0.0373, -0.0598, -0.0683};/*
                                                                             * from
@@ -279,7 +279,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialTChargeDescriptor_Methoxyethylene() throws
+    void testPartialTChargeDescriptor_Methoxyethylene() throws
             java.lang.Exception {
         double[] testResult = {-0.1211, 0.0314, -0.3121, 0.0429, 0.056, 0.056, 0.0885, 0.056, 0.056, 0.056};/*
                                                                                                              * from
@@ -338,7 +338,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialTChargeDescriptor_1_Methoxybutadiene() throws
+    void testPartialTChargeDescriptor_1_Methoxybutadiene() throws
             java.lang.Exception {
         double[] testResult = {-0.1331, -0.0678, -0.0803, 0.0385, -0.2822, 0.0429, 0.0541, 0.0541, 0.0619, 0.0644,
                 0.0891, 0.0528, 0.0528, 0.0528, 0.0528};/*

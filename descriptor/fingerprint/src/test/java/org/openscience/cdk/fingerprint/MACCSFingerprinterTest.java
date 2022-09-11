@@ -52,13 +52,13 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
     }
 
     @Test
-    public void getsize() throws Exception {
+    void getsize() throws Exception {
         IFingerprinter printer = new MACCSFingerprinter(SilentChemObjectBuilder.getInstance());
         Assertions.assertEquals(166, printer.getSize());
     }
 
     @Test
-    public void testFingerprint() throws Exception {
+    void testFingerprint() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new MACCSFingerprinter();
 
@@ -90,7 +90,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
     }
 
     @Test
-    public void testfp2() throws Exception {
+    void testfp2() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new MACCSFingerprinter();
 
@@ -125,7 +125,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
      */
     @Test
     @Override
-    public void testBug706786() throws Exception {
+    void testBug706786() throws Exception {
 
         IAtomContainer superStructure = bug706786_1();
         IAtomContainer subStructure = bug706786_2();

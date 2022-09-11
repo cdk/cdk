@@ -49,10 +49,10 @@ import static org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory.
  * @author John May
  * @cdk.module test-hash
  */
-public class GeometricDoubleBondEncoderFactoryTest {
+class GeometricDoubleBondEncoderFactoryTest {
 
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
 
         IAtomContainer mol = mock(IAtomContainer.class);
 
@@ -127,7 +127,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testCreate_NoCoordinates() throws Exception {
+    void testCreate_NoCoordinates() throws Exception {
 
         IAtomContainer mol = mock(IAtomContainer.class);
 
@@ -195,7 +195,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testGeometric_2D() throws Exception {
+    void testGeometric_2D() throws Exception {
         IAtom l = mock(IAtom.class); // 0
         IAtom r = mock(IAtom.class); // 1
         IAtom l1 = mock(IAtom.class); // 2
@@ -224,7 +224,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testGeometric_3D() throws Exception {
+    void testGeometric_3D() throws Exception {
         IAtom l = mock(IAtom.class); // 0
         IAtom r = mock(IAtom.class); // 1
         IAtom l1 = mock(IAtom.class); // 2
@@ -253,14 +253,14 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testPermutation_SingleSubstituents() throws Exception {
+    void testPermutation_SingleSubstituents() throws Exception {
         // for a double atom with only one substituent the permutation parity
         // should be the identity (i.e. 1)
         assertThat(permutation(new int[]{1, 2}), is(PermutationParity.IDENTITY));
     }
 
     @Test
-    public void testPermutation_TwoSubstituents() throws Exception {
+    void testPermutation_TwoSubstituents() throws Exception {
         PermutationParity p = permutation(new int[]{1, 2, 0});
         Assertions.assertTrue(p instanceof BasicPermutationParity);
         Field field = p.getClass().getDeclaredField("indices");
@@ -269,7 +269,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testMoveToBack() throws Exception {
+    void testMoveToBack() throws Exception {
         assertThat(moveToBack(new int[]{0, 1, 2}, 0), is(new int[]{1, 2, 0}));
         assertThat(moveToBack(new int[]{0, 1, 2}, 1), is(new int[]{0, 2, 1}));
         assertThat(moveToBack(new int[]{0, 1, 2}, 2), is(new int[]{0, 1, 2}));
@@ -277,7 +277,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testAccept_Hybridization() throws Exception {
+    void testAccept_Hybridization() throws Exception {
 
         IAtom atom = mock(IAtom.class);
         IBond a = mock(IBond.class);
@@ -295,7 +295,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testAccept_QueryBond() throws Exception {
+    void testAccept_QueryBond() throws Exception {
 
         IAtom atom = mock(IAtom.class);
         IBond a = mock(IBond.class);
@@ -314,7 +314,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testAccept_CumulatedDoubleBond() throws Exception {
+    void testAccept_CumulatedDoubleBond() throws Exception {
 
         IAtom atom = mock(IAtom.class);
         IBond a = mock(IBond.class);
@@ -331,7 +331,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     }
 
     @Test
-    public void testAccept_NoSubstituents() throws Exception {
+    void testAccept_NoSubstituents() throws Exception {
 
         IAtom atom = mock(IAtom.class);
         IBond a = mock(IBond.class);

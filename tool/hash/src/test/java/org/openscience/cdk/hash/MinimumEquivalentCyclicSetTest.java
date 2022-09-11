@@ -38,13 +38,13 @@ import static org.mockito.Mockito.mock;
  * @author John May
  * @cdk.module test-hash
  */
-public class MinimumEquivalentCyclicSetTest {
+class MinimumEquivalentCyclicSetTest {
 
     /**
      * @cdk.inchi InChI=1S/C8H16/c1-7-3-5-8(2)6-4-7/h7-8H,3-6H2,1-2H3
      */
     @Test
-    public void testFind_OneChoice() throws Exception {
+    void testFind_OneChoice() throws Exception {
 
         IAtomContainer dummy = mock(IAtomContainer.class);
         int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
@@ -65,7 +65,7 @@ public class MinimumEquivalentCyclicSetTest {
      * @cdk.inchi InChI=1S/C24H36/c1-2-13(1)19-20(14-3-4-14)22(16-7-8-16)24(18-11-12-18)23(17-9-10-17)21(19)15-5-6-15/h13-24H,1-12H2
      */
     @Test
-    public void testFind_TwoChoices() throws Exception {
+    void testFind_TwoChoices() throws Exception {
 
         IAtomContainer dummy = mock(IAtomContainer.class);
         int[][] g = new int[][]{{1, 5, 6}, {0, 2, 8}, {1, 3, 9}, {2, 4, 7}, {3, 5, 10}, {0, 4, 11}, {0, 14, 15},
@@ -104,7 +104,7 @@ public class MinimumEquivalentCyclicSetTest {
      * @cdk.inchi InChI=1S/C10H22/c1-7(2)10(8(3)4)9(5)6/h7-10H,1-6H3
      */
     @Test
-    public void testFind_NoChoice() throws Exception {
+    void testFind_NoChoice() throws Exception {
 
         IAtomContainer dummy = mock(IAtomContainer.class);
         int[][] g = new int[][]{{1, 2, 3}, {0, 4, 9}, {0, 5, 6}, {0, 7, 8}, {1}, {2}, {2}, {3}, {3}, {1}};

@@ -62,7 +62,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public SharingChargeSBReactionTest() throws Exception {
+    SharingChargeSBReactionTest() throws Exception {
         setReaction(SharingChargeSBReaction.class);
     }
 
@@ -70,7 +70,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testSharingChargeSBReaction() throws Exception {
+    void testSharingChargeSBReaction() throws Exception {
         IReactionProcess type = new SharingChargeSBReaction();
         Assertions.assertNotNull(type);
     }
@@ -122,7 +122,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new SharingChargeSBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -162,7 +162,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new SharingChargeSBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -197,7 +197,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new SharingChargeSBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -235,7 +235,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer1() throws Exception {
+    void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
@@ -245,7 +245,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer2() throws Exception {
+    void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
@@ -364,7 +364,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp3ChargeSingleB() throws Exception {
+    void testNsp3ChargeSingleB() throws Exception {
         //Smiles("C[N+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -459,7 +459,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp2ChargeSingleB() throws Exception {
+    void testNsp2ChargeSingleB() throws Exception {
         //Smiles("C=[N+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -545,7 +545,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testFspChargeSingleB() throws Exception {
+    void testFspChargeSingleB() throws Exception {
         //Smiles("[F+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "F"));

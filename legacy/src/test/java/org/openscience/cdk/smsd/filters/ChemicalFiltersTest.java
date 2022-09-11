@@ -46,28 +46,28 @@ import org.junit.jupiter.api.BeforeAll;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class ChemicalFiltersTest {
+class ChemicalFiltersTest {
 
     public ChemicalFiltersTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of sortResultsByStereoAndBondMatch method, of class ChemicalFilters.
      * @throws Exception
      */
     @Test
-    public void testSortResultsByStereoAndBondMatch() throws Exception {
+    void testSortResultsByStereoAndBondMatch() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -89,7 +89,7 @@ public class ChemicalFiltersTest {
      * @throws CDKException
      */
     @Test
-    public void testSortResultsByFragments() throws InvalidSmilesException, CDKException {
+    void testSortResultsByFragments() throws InvalidSmilesException, CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -110,7 +110,7 @@ public class ChemicalFiltersTest {
      * @throws Exception
      */
     @Test
-    public void testSortResultsByEnergies() throws Exception {
+    void testSortResultsByEnergies() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -130,7 +130,7 @@ public class ChemicalFiltersTest {
      * Test of sortMapByValueInAccendingOrder method, of class ChemicalFilters.
      */
     @Test
-    public void testSortMapByValueInAccendingOrder() {
+    void testSortMapByValueInAccendingOrder() {
 
         Map<Integer, Double> map = new TreeMap<>();
         map.put(1, 3.0);
@@ -151,7 +151,7 @@ public class ChemicalFiltersTest {
      * Test of sortMapByValueInDecendingOrder method, of class ChemicalFilters.
      */
     @Test
-    public void testSortMapByValueInDecendingOrder() {
+    void testSortMapByValueInDecendingOrder() {
         Map<Integer, Double> map = new TreeMap<>();
         map.put(1, 3.0);
         map.put(2, 2.0);
@@ -173,7 +173,7 @@ public class ChemicalFiltersTest {
      * @throws CDKException
      */
     @Test
-    public void testGetSortedEnergy() throws InvalidSmilesException, CDKException {
+    void testGetSortedEnergy() throws InvalidSmilesException, CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -191,7 +191,7 @@ public class ChemicalFiltersTest {
      * @throws CDKException
      */
     @Test
-    public void testGetSortedFragment() throws InvalidSmilesException, CDKException {
+    void testGetSortedFragment() throws InvalidSmilesException, CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -209,7 +209,7 @@ public class ChemicalFiltersTest {
      * @throws CDKException
      */
     @Test
-    public void testGetStereoMatches() throws InvalidSmilesException, CDKException {
+    void testGetStereoMatches() throws InvalidSmilesException, CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");

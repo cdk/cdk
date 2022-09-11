@@ -24,9 +24,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class MoSSOutputFormatTest extends ChemFormatMatcherTest {
+class MoSSOutputFormatTest extends ChemFormatMatcherTest {
 
-    public MoSSOutputFormatTest() {
+    MoSSOutputFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) MoSSOutputFormat.getInstance());
     }
 

@@ -46,24 +46,24 @@ import java.time.Duration;
  * @cdk.created    2006-09-18
  * @cdk.module     test-smiles
  */
-public class DeduceBondSystemToolTest extends CDKTestCase {
+class DeduceBondSystemToolTest extends CDKTestCase {
 
     private static DeduceBondSystemTool dbst;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         dbst = new DeduceBondSystemTool();
     }
 
     @Test
-    public void testConstructors() {
+    void testConstructors() {
         // basically: just test that no exception is thrown
         Assertions.assertNotNull(new DeduceBondSystemTool());
         Assertions.assertNotNull(new DeduceBondSystemTool(new AllRingsFinder()));
     }
 
     @Test
-    public void testInterruption() {
+    void testInterruption() {
         dbst.setInterrupted(false);
         Assertions.assertFalse(dbst.isInterrupted());
         dbst.setInterrupted(true);
@@ -72,7 +72,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testPyrrole() throws Exception {
+    void testPyrrole() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(500), () -> {
             String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
             SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -95,7 +95,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testPyrrole_Silent() throws Exception {
+    void testPyrrole_Silent() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(500), () -> {
             String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
             SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -119,7 +119,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testLargeRingSystem() throws Exception {
+    void testLargeRingSystem() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(500), () -> {
             String smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
             SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -146,7 +146,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
      * @cdk.bug 3506770
      */
     @Disabled("This is an example structure where this class fails")
-    public void testLargeBioclipseUseCase() throws Exception {
+    void testLargeBioclipseUseCase() throws Exception {
         String smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
@@ -168,7 +168,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testPyrrole_CustomRingFinder() throws Exception {
+    void testPyrrole_CustomRingFinder() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(500), () -> {
             String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
             SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -196,7 +196,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H
      */
     @Disabled("previouls disabled 'xtest'")
-    public void xtestQuinone() throws Exception {
+    void xtestQuinone() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block
@@ -267,7 +267,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
      */
     @Test
-    public void xtestPyrrole() throws Exception {
+    void xtestPyrrole() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block
@@ -318,7 +318,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     }
 
     @Test
-    public void xtestPyridine() throws Exception {
+    void xtestPyridine() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block
@@ -390,7 +390,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
      * @cdk.bug   1931262
      */
     @Test
-    public void xtestBenzene() throws Exception {
+    void xtestBenzene() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block

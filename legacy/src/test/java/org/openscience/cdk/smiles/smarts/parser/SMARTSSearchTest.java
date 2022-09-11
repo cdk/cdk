@@ -58,14 +58,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
-public class SMARTSSearchTest extends CDKTestCase {
+class SMARTSSearchTest extends CDKTestCase {
 
     private static final ILoggingTool        logger = LoggingToolFactory.createLoggingTool(SMARTSSearchTest.class);
 
     private UniversalIsomorphismTester uiTester;
 
     @BeforeEach
-    public void setUpUITester() {
+    void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }
 
@@ -104,7 +104,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testMoleculeFromSDF() throws CDKException {
+    void testMoleculeFromSDF() throws CDKException {
         String filename = "cnssmarts.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         DefaultChemObjectReader reader = new MDLV2000Reader(ins);
@@ -129,7 +129,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testRGraphBond() throws Exception {
+    void testRGraphBond() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("CC=O", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query c:c: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -139,7 +139,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testAromaticBond() throws Exception {
+    void testAromaticBond() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("c:c", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query c:c: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -152,7 +152,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testSingleBond() throws Exception {
+    void testSingleBond() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("C-C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C-C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -168,7 +168,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testDoubleBond() throws Exception {
+    void testDoubleBond() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("C=C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C=C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -184,7 +184,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testTripleBond() throws Exception {
+    void testTripleBond() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("C#C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C#C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -200,7 +200,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testAnyOrderBond() throws Exception {
+    void testAnyOrderBond() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("C~C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C~C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -216,7 +216,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testAnyAtom() throws Exception {
+    void testAnyAtom() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("C*C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C*C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -232,7 +232,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testAliphaticAtom() throws Exception {
+    void testAliphaticAtom() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("CAC", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query CAC: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -248,7 +248,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testAromaticAtom() throws Exception {
+    void testAromaticAtom() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("aaa", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query CaC: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -262,7 +262,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testSymbolQueryAtom() throws Exception {
+    void testSymbolQueryAtom() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("CCC", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query CAC: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -281,182 +281,182 @@ public class SMARTSSearchTest extends CDKTestCase {
      * From http://www.daylight.com/dayhtml_tutorials/languages/smarts/index.html
      */
     @Test
-    public void testPropertyCharge1() throws Exception {
+    void testPropertyCharge1() throws Exception {
         int[] results = match("[+1]", "[OH-].[Mg+2]");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyCharge2() throws Exception {
+    void testPropertyCharge2() throws Exception {
         int[] results = match("[+1]", "COCC(O)Cn1ccnc1[N+](=O)[O-]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyCharge3() throws Exception {
+    void testPropertyCharge3() throws Exception {
         int[] results = match("[+1]", "[NH4+]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyCharge4() throws Exception {
+    void testPropertyCharge4() throws Exception {
         int[] results = match("[+1]", "CN1C(=O)N(C)C(=O)C(N(C)C=N2)=C12");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyCharge5() throws Exception {
+    void testPropertyCharge5() throws Exception {
         int[] results = match("[+1]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyAromatic1() throws Exception {
+    void testPropertyAromatic1() throws Exception {
         int[] results = match("[a]", "c1cc(C)c(N)cc1");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testPropertyAromatic2() throws Exception {
+    void testPropertyAromatic2() throws Exception {
         int[] results = match("[a]", "c1c(C)c(N)cnc1");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testPropertyAromatic3() throws Exception {
+    void testPropertyAromatic3() throws Exception {
         int[] results = match("[a]", "c1(C)c(N)cco1");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void testPropertyAromatic4() throws Exception {
+    void testPropertyAromatic4() throws Exception {
         int[] results = match("[a]", "c1c(C)c(N)c[nH]1");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void testPropertyAromatic5() throws Exception {
+    void testPropertyAromatic5() throws Exception {
         int[] results = match("[a]", "O=n1ccccc1");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testPropertyAromatic6() throws Exception {
+    void testPropertyAromatic6() throws Exception {
         int[] results = match("[a]", "[O-][n+]1ccccc1");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testPropertyAromatic7() throws Exception {
+    void testPropertyAromatic7() throws Exception {
         int[] results = match("[a]", "c1ncccc1C1CCCN1C");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testPropertyAromatic8() throws Exception {
+    void testPropertyAromatic8() throws Exception {
         int[] results = match("[a]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testPropertyAliphatic1() throws Exception {
+    void testPropertyAliphatic1() throws Exception {
         int[] results = match("[A]", "c1cc(C)c(N)cc1");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyAliphatic2() throws Exception {
+    void testPropertyAliphatic2() throws Exception {
         int[] results = match("[A]", "CCO");
         Assertions.assertEquals(3, results[0]);
         Assertions.assertEquals(3, results[1]);
     }
 
     @Test
-    public void testPropertyAliphatic3() throws Exception {
+    void testPropertyAliphatic3() throws Exception {
         int[] results = match("[A]", "C=CC=CC=C");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testPropertyAliphatic4() throws Exception {
+    void testPropertyAliphatic4() throws Exception {
         int[] results = match("[A]", "CC(C)(C)C");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void testPropertyAliphatic5() throws Exception {
+    void testPropertyAliphatic5() throws Exception {
         int[] results = match("[A]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
         Assertions.assertEquals(15, results[0]);
         Assertions.assertEquals(15, results[1]);
     }
 
     @Test
-    public void testPropertyAliphatic6() throws Exception {
+    void testPropertyAliphatic6() throws Exception {
         int[] results = match("[A]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
         Assertions.assertEquals(19, results[0]);
         Assertions.assertEquals(19, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicNumber1() throws Exception {
+    void testPropertyAtomicNumber1() throws Exception {
         int[] results = match("[#6]", "c1cc(C)c(N)cc1");
         Assertions.assertEquals(7, results[0]);
         Assertions.assertEquals(7, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicNumber2() throws Exception {
+    void testPropertyAtomicNumber2() throws Exception {
         int[] results = match("[#6]", "CCO");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicNumber3() throws Exception {
+    void testPropertyAtomicNumber3() throws Exception {
         int[] results = match("[#6]", "C=CC=CC=C-O");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicNumber4() throws Exception {
+    void testPropertyAtomicNumber4() throws Exception {
         int[] results = match("[#6]", "CC(C)(C)C");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicNumber5() throws Exception {
+    void testPropertyAtomicNumber5() throws Exception {
         int[] results = match("[#6]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
         Assertions.assertEquals(20, results[0]);
         Assertions.assertEquals(20, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicNumber6() throws Exception {
+    void testPropertyAtomicNumber6() throws Exception {
         int[] results = match("[#6]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assertions.assertEquals(17, results[0]);
         Assertions.assertEquals(17, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicNumber7() throws Exception {
+    void testPropertyAtomicNumber7() throws Exception {
         int[] results = match("[#6]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5");
         Assertions.assertEquals(21, results[0]);
         Assertions.assertEquals(21, results[1]);
@@ -467,7 +467,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testPropertyAtomicNumber8() throws Exception {
+    void testPropertyAtomicNumber8() throws Exception {
         int[] results = match("[#16]", "COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -478,21 +478,21 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testPropertyAtomicNumber9() throws Exception {
+    void testPropertyAtomicNumber9() throws Exception {
         int[] results = match("[#6]", "[*]");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyR1() throws Exception {
+    void testPropertyR1() throws Exception {
         int[] results = match("[R2]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
         Assertions.assertEquals(7, results[0]);
         Assertions.assertEquals(7, results[1]);
     }
 
     @Test
-    public void testPropertyR2() throws Exception {
+    void testPropertyR2() throws Exception {
         SMARTSQueryTool sqt = smarts("[R2]");
         sqt.useSmallestSetOfSmallestRings(); // default for daylight
         int[] results = match(sqt, smiles("COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34"));
@@ -503,7 +503,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     @Disabled("This feature was removed - essential rings aren't useful really")
     @Test
-    public void testPropertyR2_essentialRings() throws Exception {
+    void testPropertyR2_essentialRings() throws Exception {
         SMARTSQueryTool sqt = smarts("[R2]");
         sqt.useEssentialRings();
         int[] results = match(sqt, smiles("COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34"));
@@ -514,7 +514,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     @Disabled("This feature is pending but will be the combinded in an 'OpenSMARTS'"
             + " configuration which uses the relevant rings.")
     @Test
-    public void testPropertyR2_relevantRings() throws Exception {
+    void testPropertyR2_relevantRings() throws Exception {
         SMARTSQueryTool sqt = smarts("[R2]");
         sqt.useRelevantRings();
         int[] results = match(sqt, smiles("COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34"));
@@ -523,177 +523,177 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testPropertyR3() throws Exception {
+    void testPropertyR3() throws Exception {
         int[] results = match("[R2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assertions.assertEquals(4, results[0]);
         Assertions.assertEquals(4, results[1]);
     }
 
     @Test
-    public void testPropertyR4() throws Exception {
+    void testPropertyR4() throws Exception {
         int[] results = match("[R2]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5");
         Assertions.assertEquals(4, results[0]);
         Assertions.assertEquals(4, results[1]);
     }
 
     @Test
-    public void testPropertyR5() throws Exception {
+    void testPropertyR5() throws Exception {
         int[] results = match("[R2]", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyr1() throws Exception {
+    void testPropertyr1() throws Exception {
         int[] results = match("[r5]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
         Assertions.assertEquals(9, results[0]);
         Assertions.assertEquals(9, results[1]);
     }
 
     @Test
-    public void testPropertyr2() throws Exception {
+    void testPropertyr2() throws Exception {
         int[] results = match("[r5]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyr3() throws Exception {
+    void testPropertyr3() throws Exception {
         int[] results = match("[r5]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void testPropertyr4() throws Exception {
+    void testPropertyr4() throws Exception {
         int[] results = match("[r5]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void testPropertyr5() throws Exception {
+    void testPropertyr5() throws Exception {
         int[] results = match("[r5]", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void quadBond() throws Exception {
+    void quadBond() throws Exception {
         int[] results = match("*$*", "[Re]$[Re]");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
     
     @Test
-    public void testPropertyValence1() throws Exception {
+    void testPropertyValence1() throws Exception {
         int[] results = match("[v4]", "C");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyValence2() throws Exception {
+    void testPropertyValence2() throws Exception {
         int[] results = match("[v4]", "CCO");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyValence3() throws Exception {
+    void testPropertyValence3() throws Exception {
         int[] results = match("[v4]", "[NH4+]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyValence4() throws Exception {
+    void testPropertyValence4() throws Exception {
         int[] results = match("[v4]", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O");
         Assertions.assertEquals(16, results[0]);
         Assertions.assertEquals(16, results[1]);
     }
 
     @Test
-    public void testPropertyValence5() throws Exception {
+    void testPropertyValence5() throws Exception {
         int[] results = match("[v4]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2");
         Assertions.assertEquals(16, results[0]);
         Assertions.assertEquals(16, results[1]);
     }
 
     @Test
-    public void testPropertyX1() throws Exception {
+    void testPropertyX1() throws Exception {
         int[] results = match("[X2]", "CCO");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyX2() throws Exception {
+    void testPropertyX2() throws Exception {
         int[] results = match("[X2]", "O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyX3() throws Exception {
+    void testPropertyX3() throws Exception {
         int[] results = match("[X2]", "CCC(=O)CC");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyX4() throws Exception {
+    void testPropertyX4() throws Exception {
         int[] results = match("[X2]", "FC(Cl)=C=C(Cl)F");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyX5() throws Exception {
+    void testPropertyX5() throws Exception {
         int[] results = match("[X2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
         Assertions.assertEquals(3, results[0]);
         Assertions.assertEquals(3, results[1]);
     }
 
     @Test
-    public void testPropertyX6() throws Exception {
+    void testPropertyX6() throws Exception {
         int[] results = match("[X2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assertions.assertEquals(3, results[0]);
         Assertions.assertEquals(3, results[1]);
     }
 
     @Test
-    public void testPropertyD1() throws Exception {
+    void testPropertyD1() throws Exception {
         int[] results = match("[D2]", "CCO");
         Assertions.assertEquals(1, results[0]);
     }
 
     @Test
-    public void testPropertyD2() throws Exception {
+    void testPropertyD2() throws Exception {
         int[] results = match("[D2]", "O");
         Assertions.assertEquals(0, results[0]);
     }
 
     @Test
-    public void testPropertyD3() throws Exception {
+    void testPropertyD3() throws Exception {
         int[] results = match("[D2]", "CCC(=O)CC");
         Assertions.assertEquals(2, results[0]);
     }
 
     @Test
-    public void testPropertyD4() throws Exception {
+    void testPropertyD4() throws Exception {
         int[] results = match("[D2]", "FC(Cl)=C=C(Cl)F");
         Assertions.assertEquals(1, results[0]);
     }
 
     @Test
-    public void testPropertyD5() throws Exception {
+    void testPropertyD5() throws Exception {
         int[] results = match("[D2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
         Assertions.assertEquals(12, results[0]);
     }
 
     @Test
-    public void testPropertyD6() throws Exception {
+    void testPropertyD6() throws Exception {
         int[] results = match("[D2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assertions.assertEquals(8, results[0]);
     }
@@ -703,7 +703,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489417
      */
     @Test
-    public void testPropertyD7() throws Exception {
+    void testPropertyD7() throws Exception {
         int[] results = match("[ND3]", "CCN([H])([H])");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
@@ -714,7 +714,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489417
      */
     @Test
-    public void testPropertyD8() throws Exception {
+    void testPropertyD8() throws Exception {
         int[] results = match("[OD1]", "CO[H]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -725,7 +725,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489417
      */
     @Test
-    public void testPropertyD9() throws Exception {
+    void testPropertyD9() throws Exception {
         int[] results;
 
         results = match("[OD1H]", "CO");
@@ -738,7 +738,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489417
      */
     @Test
-    public void testPropertyD10() throws Exception {
+    void testPropertyD10() throws Exception {
         int[] results;
 
         results = match("[OD1H]", "CO[H]");
@@ -751,7 +751,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489417
      */
     @Test
-    public void testPropertyD11() throws Exception {
+    void testPropertyD11() throws Exception {
         int[] results;
 
         results = match("[OD1H]-*", "CCO");
@@ -764,7 +764,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489417
      */
     @Test
-    public void testPropertyD12() throws Exception {
+    void testPropertyD12() throws Exception {
         int[] results;
 
         results = match("[OD1H]-*", "CCO[H]");
@@ -774,112 +774,112 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testPropertyHAtom1() throws Exception {
+    void testPropertyHAtom1() throws Exception {
         int[] results = match("[H]", "[H+].[Cl-]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyHAtom2() throws Exception {
+    void testPropertyHAtom2() throws Exception {
         int[] results = match("[H]", "[2H]");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyHAtom3() throws Exception {
+    void testPropertyHAtom3() throws Exception {
         int[] results = match("[H]", "[H][H]");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyHAtom4() throws Exception {
+    void testPropertyHAtom4() throws Exception {
         int[] results = match("[H]", "[CH4]");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyHAtom5() throws Exception {
+    void testPropertyHAtom5() throws Exception {
         int[] results = match("[H]", "[H]C([H])([H])[H]");
         Assertions.assertEquals(4, results[0]);
         Assertions.assertEquals(4, results[1]);
     }
 
     @Test
-    public void testPropertyHTotal1() throws Exception {
+    void testPropertyHTotal1() throws Exception {
         int[] results = match("[H1]", "CCO");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyHTotal2() throws Exception {
+    void testPropertyHTotal2() throws Exception {
         int[] results = match("[H1]", "[2H]C#C");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyHTotal3() throws Exception {
+    void testPropertyHTotal3() throws Exception {
         int[] results = match("[H1]", "[H]C(C)(C)C");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyHTotal4() throws Exception {
+    void testPropertyHTotal4() throws Exception {
         int[] results = match("[H1]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
         Assertions.assertEquals(11, results[0]);
         Assertions.assertEquals(11, results[1]);
     }
 
     @Test
-    public void testPropertyHTotal5() throws Exception {
+    void testPropertyHTotal5() throws Exception {
         int[] results = match("[H1]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assertions.assertEquals(10, results[0]);
         Assertions.assertEquals(10, results[1]);
     }
 
     @Test
-    public void testPropertyHTotal6() throws Exception {
+    void testPropertyHTotal6() throws Exception {
         int[] results = match("[H1]", "[H][H]");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyAnyAtom1() throws Exception {
+    void testPropertyAnyAtom1() throws Exception {
         int[] results = match("[*]", "C");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyAnyAtom2() throws Exception {
+    void testPropertyAnyAtom2() throws Exception {
         int[] results = match("[*]", "[2H]C");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyAnyAtom3() throws Exception {
+    void testPropertyAnyAtom3() throws Exception {
         int[] results = match("[*]", "[1H][1H]");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testPropertyAnyAtom4() throws Exception {
+    void testPropertyAnyAtom4() throws Exception {
         int[] results = match("[*]", "[1H]C([1H])([1H])[1H]");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void testPropertyAnyAtom5() throws Exception {
+    void testPropertyAnyAtom5() throws Exception {
         int[] results = match("[*]", "[H][H]");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
@@ -890,7 +890,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489533
      */
     @Test
-    public void testPropertyAnyAtom6() throws Exception {
+    void testPropertyAnyAtom6() throws Exception {
         int[] result = match("*", "CO");
         Assertions.assertEquals(2, result[0]);
         Assertions.assertEquals(2, result[1]);
@@ -904,7 +904,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489533
      */
     @Test
-    public void testPropertyAnyAtom7() throws Exception {
+    void testPropertyAnyAtom7() throws Exception {
         int[] result = match("*", "CO[H]");
         Assertions.assertEquals(3, result[0]);
         Assertions.assertEquals(3, result[1]);
@@ -918,7 +918,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489533
      */
     @Test
-    public void testPropertyAnyAtom8() throws Exception {
+    void testPropertyAnyAtom8() throws Exception {
         int[] result = match("*", "[H]C([H])([H])[H]");
         Assertions.assertEquals(5, result[0]);
         Assertions.assertEquals(5, result[1]);
@@ -932,35 +932,35 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489533
      */
     @Test
-    public void testPropertyAnyAtom9() throws Exception {
+    void testPropertyAnyAtom9() throws Exception {
         int[] result = match("*", "CCCC([2H])[H]");
         Assertions.assertEquals(6, result[0]);
         Assertions.assertEquals(6, result[1]);
     }
 
     @Test
-    public void testPropertyAtomicMass1() throws Exception {
+    void testPropertyAtomicMass1() throws Exception {
         int[] results = match("[13C]", "[13C]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicMass2() throws Exception {
+    void testPropertyAtomicMass2() throws Exception {
         int[] results = match("[13C]", "[C]");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicMass3() throws Exception {
+    void testPropertyAtomicMass3() throws Exception {
         int[] results = match("[13*]", "[13C]Cl");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicMass4() throws Exception {
+    void testPropertyAtomicMass4() throws Exception {
         int[] results = match("[12C]", "CCl");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
@@ -971,384 +971,384 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testPropertyAtomicMass5() throws Exception {
+    void testPropertyAtomicMass5() throws Exception {
         int[] results = match("[2H]", "CCCC([2H])[H]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicMass6() throws Exception {
+    void testPropertyAtomicMass6() throws Exception {
         int[] results = match("[H]", "CCCC([2H])[H]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPropertyAtomicMass7() throws Exception {
+    void testPropertyAtomicMass7() throws Exception {
         int[] results = match("[3H]", "CCCC([2H])([3H])[3H]");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testBondSingle1() throws Exception {
+    void testBondSingle1() throws Exception {
         int[] results = match("CC", "C=C");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testBondSingle2() throws Exception {
+    void testBondSingle2() throws Exception {
         int[] results = match("CC", "C#C");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testBondSingle3() throws Exception {
+    void testBondSingle3() throws Exception {
         int[] results = match("CC", "CCO");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testBondSingle4() throws Exception {
+    void testBondSingle4() throws Exception {
         int[] results = match("CC", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1");
         Assertions.assertEquals(28, results[0]);
         Assertions.assertEquals(14, results[1]);
     }
 
     @Test
-    public void testBondSingle5() throws Exception {
+    void testBondSingle5() throws Exception {
         int[] results = match("CC", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O");
         Assertions.assertEquals(14, results[0]);
         Assertions.assertEquals(7, results[1]);
     }
 
     @Test
-    public void testBondAny1() throws Exception {
+    void testBondAny1() throws Exception {
         int[] results = match("C~C", "C=C");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testBondAny2() throws Exception {
+    void testBondAny2() throws Exception {
         int[] results = match("C~C", "C#C");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testBondAny3() throws Exception {
+    void testBondAny3() throws Exception {
         int[] results = match("C~C", "CCO");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testBondAny4() throws Exception {
+    void testBondAny4() throws Exception {
         int[] results = match("C~C", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1");
         Assertions.assertEquals(38, results[0]);
         Assertions.assertEquals(19, results[1]);
     }
 
     @Test
-    public void testBondAny5() throws Exception {
+    void testBondAny5() throws Exception {
         int[] results = match("[C,c]~[C,c]", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O");
         Assertions.assertEquals(28, results[0]);
         Assertions.assertEquals(14, results[1]);
     }
 
     @Test
-    public void testBondRing1() throws Exception {
+    void testBondRing1() throws Exception {
         int[] results = match("C@C", "C=C");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testBondRing2() throws Exception {
+    void testBondRing2() throws Exception {
         int[] results = match("C@C", "C#C");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testBondRing3() throws Exception {
+    void testBondRing3() throws Exception {
         int[] results = match("C@C", "C1CCCCC1");
         Assertions.assertEquals(12, results[0]);
         Assertions.assertEquals(6, results[1]);
     }
 
     @Test
-    public void testBondRing4() throws Exception {
+    void testBondRing4() throws Exception {
         int[] results = match("[C,c]@[C,c]", "c1ccccc1Cc1ccccc1");
         Assertions.assertEquals(24, results[0]);
         Assertions.assertEquals(12, results[1]);
     }
 
     @Test
-    public void testBondRing5() throws Exception {
+    void testBondRing5() throws Exception {
         int[] results = match("[C,c]@[C,c]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
         Assertions.assertEquals(30, results[0]);
         Assertions.assertEquals(15, results[1]);
     }
 
     @Test
-    public void testBondRing6() throws Exception {
+    void testBondRing6() throws Exception {
         int[] results = match("[C,c]@[C,c]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
         Assertions.assertEquals(44, results[0]);
         Assertions.assertEquals(22, results[1]);
     }
 
     @Test
-    public void testBondStereo1() throws Exception {
+    void testBondStereo1() throws Exception {
         int[] results = match("F/?C=C/Cl", "F/C=C/Cl");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testBondStereo2() throws Exception {
+    void testBondStereo2() throws Exception {
         int[] results = match("F/?C=C/Cl", "FC=C/Cl");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testBondStereo3() throws Exception {
+    void testBondStereo3() throws Exception {
         int[] results = match("F/?C=C/Cl", "FC=CCl");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testBondStereo4() throws Exception {
+    void testBondStereo4() throws Exception {
         int[] results = match("F/?C=C/Cl", "F\\C=C/Cl");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testLogicalNot1() throws Exception {
+    void testLogicalNot1() throws Exception {
         int[] results = match("[!c]", "c1cc(C)c(N)cc1");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testLogicalNot2() throws Exception {
+    void testLogicalNot2() throws Exception {
         int[] results = match("[!c]", "c1c(C)c(N)cnc1");
         Assertions.assertEquals(3, results[0]);
         Assertions.assertEquals(3, results[1]);
     }
 
     @Test
-    public void testLogicalNot3() throws Exception {
+    void testLogicalNot3() throws Exception {
         int[] results = match("[!c]", "c1(C)c(N)cco1");
         Assertions.assertEquals(3, results[0]);
         Assertions.assertEquals(3, results[1]);
     }
 
     @Test
-    public void testLogicalNot4() throws Exception {
+    void testLogicalNot4() throws Exception {
         int[] results = match("[!c]", "c1c(C)c(N)c[nH]1");
         Assertions.assertEquals(3, results[0]);
         Assertions.assertEquals(3, results[1]);
     }
 
     @Test
-    public void testLogicalNot5() throws Exception {
+    void testLogicalNot5() throws Exception {
         int[] results = match("[!c]", "O=n1ccccc1");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testLogicalNot6() throws Exception {
+    void testLogicalNot6() throws Exception {
         int[] results = match("[!c]", "[O-][n+]1ccccc1");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testLogicalNot7() throws Exception {
+    void testLogicalNot7() throws Exception {
         int[] results = match("[!c]", "c1ncccc1C1CCCN1C");
         Assertions.assertEquals(7, results[0]);
         Assertions.assertEquals(7, results[1]);
     }
 
     @Test
-    public void testLogicalNot8() throws Exception {
+    void testLogicalNot8() throws Exception {
         int[] results = match("[!c]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC");
         Assertions.assertEquals(16, results[0]);
         Assertions.assertEquals(16, results[1]);
     }
 
     @Test
-    public void testLogicalOr1() throws Exception {
+    void testLogicalOr1() throws Exception {
         int[] results = match("[N,O,o]", "c1cc(C)c(N)cc1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testLogicalOr2() throws Exception {
+    void testLogicalOr2() throws Exception {
         int[] results = match("[N,O,o]", "c1c(C)c(N)cnc1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testLogicalOr3() throws Exception {
+    void testLogicalOr3() throws Exception {
         int[] results = match("[N,O,o]", "c1(C)c(N)cco1");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testLogicalOr4() throws Exception {
+    void testLogicalOr4() throws Exception {
         int[] results = match("[N,O,o]", "c1c(C)c(N)c[nH]1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testLogicalOr5() throws Exception {
+    void testLogicalOr5() throws Exception {
         int[] results = match("[N,O,o]", "O=n1ccccc1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testLogicalOr6() throws Exception {
+    void testLogicalOr6() throws Exception {
         int[] results = match("[N,O,o]", "[O-][n+]1ccccc1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testLogicalOr7() throws Exception {
+    void testLogicalOr7() throws Exception {
         int[] results = match("[N,O,o]", "c1ncccc1C1CCCN1C");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testLogicalOr8() throws Exception {
+    void testLogicalOr8() throws Exception {
         int[] results = match("[N,O,o]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
     }
 
     @Test
-    public void testLogicalOr9() throws Exception {
+    void testLogicalOr9() throws Exception {
         int[] results = match("[N]=[N]-,=[N]", "CCCC(=O)C=C");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testLogicalOr10() throws Exception {
+    void testLogicalOr10() throws Exception {
         int[] results = match("[N;$([N!X4])]!@;-[N;$([N!X4])]", "CCCC(=O)C=C");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testLogicalOr11() throws Exception {
+    void testLogicalOr11() throws Exception {
         int[] results = match("[#6]!:;=[#6][#6](=O)[!O]", "CCCC(=O)C=C");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testLogicalOr12() throws Exception {
+    void testLogicalOr12() throws Exception {
         int[] results = match("C=,#C", "C=CCC#C");
         Assertions.assertEquals(4, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testLogicalOrHighAnd1() throws Exception {
+    void testLogicalOrHighAnd1() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
         Assertions.assertEquals(24, results[0]);
         Assertions.assertEquals(24, results[1]);
     }
 
     @Test
-    public void testLogicalOrHighAnd2() throws Exception {
+    void testLogicalOrHighAnd2() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
         Assertions.assertEquals(25, results[0]);
         Assertions.assertEquals(25, results[1]);
     }
 
     @Test
-    public void testLogicalOrHighAnd3() throws Exception {
+    void testLogicalOrHighAnd3() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
         Assertions.assertEquals(24, results[0]);
         Assertions.assertEquals(24, results[1]);
     }
 
     @Test
-    public void testLogicalOrHighAnd4() throws Exception {
+    void testLogicalOrHighAnd4() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assertions.assertEquals(21, results[0]);
         Assertions.assertEquals(21, results[1]);
     }
 
     @Test
-    public void testLogicalOrHighAnd5() throws Exception {
+    void testLogicalOrHighAnd5() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "N1N([Hg-][O+]=C1N=Nc2ccccc2)c3ccccc3");
         Assertions.assertEquals(17, results[0]);
         Assertions.assertEquals(17, results[1]);
     }
 
     @Test
-    public void testLogicalOrHighAnd6() throws Exception {
+    void testLogicalOrHighAnd6() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
         Assertions.assertEquals(23, results[0]);
     }
 
     @Test
-    public void testLogicalOrHighAnd7() throws Exception {
+    void testLogicalOrHighAnd7() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1");
         Assertions.assertEquals(12, results[0]);
         Assertions.assertEquals(12, results[1]);
     }
 
     @Test
-    public void testLogicalOrLowAnd1() throws Exception {
+    void testLogicalOrLowAnd1() throws Exception {
         int[] results = match("[#7,C;+0,+1]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
         Assertions.assertEquals(15, results[0]);
         Assertions.assertEquals(15, results[1]);
     }
 
     @Test
-    public void testLogicalOrLowAnd2() throws Exception {
+    void testLogicalOrLowAnd2() throws Exception {
         int[] results = match("[#7,C;+0,+1]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
         Assertions.assertEquals(17, results[0]);
         Assertions.assertEquals(17, results[1]);
     }
 
     @Test
-    public void testLogicalOrLowAnd3() throws Exception {
+    void testLogicalOrLowAnd3() throws Exception {
         int[] results = match("[#7,C;+0,+1]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
         Assertions.assertEquals(13, results[0]);
         Assertions.assertEquals(13, results[1]);
     }
 
     @Test
-    public void testLogicalOrLowAnd4() throws Exception {
+    void testLogicalOrLowAnd4() throws Exception {
         int[] results = match("[#7,C;+0,+1]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assertions.assertEquals(12, results[0]);
         Assertions.assertEquals(12, results[1]);
     }
 
     @Test
-    public void testLogicalOrLowAnd5() throws Exception {
+    void testLogicalOrLowAnd5() throws Exception {
         int[] results = match("[#7,C;+0,+1]", "N1N([Hg-][O+]=C1N=Nc2ccccc2)c3ccccc3");
         Assertions.assertEquals(5, results[0]);
         Assertions.assertEquals(5, results[1]);
@@ -1357,7 +1357,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     /** The CDK aromaticity detection differs from Daylight - by persevering
      *  aromaticity from the SMILES we can match correctly.  */
     @Test
-    public void testLogicalOrLowAnd6() throws Exception {
+    void testLogicalOrLowAnd6() throws Exception {
         SMARTSQueryTool sqt = smarts("[#7,C;+0,+1]");
         IAtomContainer smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
         int[] results = match(sqt, smi);
@@ -1365,7 +1365,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testLogicalOrLowAnd6_cdkAromaticity() throws Exception {
+    void testLogicalOrLowAnd6_cdkAromaticity() throws Exception {
         SMARTSQueryTool sqt = smarts("[#7,C;+0,+1]");
         IAtomContainer smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
         sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
@@ -1375,245 +1375,245 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testLogicalOrLowAnd7() throws Exception {
+    void testLogicalOrLowAnd7() throws Exception {
         int[] results = match("[#7,C;+0,+1]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testRing1() throws Exception {
+    void testRing1() throws Exception {
         int[] results = match("C1CCCCC1", "C1CCCCC1CCCC");
         Assertions.assertEquals(12, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testRing2() throws Exception {
+    void testRing2() throws Exception {
         int[] results = match("C1CCCCC1", "C1CCCCC1C1CCCCC1");
         Assertions.assertEquals(24, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testRing3() throws Exception {
+    void testRing3() throws Exception {
         int[] results = match("C1CCCCC1", "C1CCCC12CCCCC2");
         Assertions.assertEquals(12, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testRing4() throws Exception {
+    void testRing4() throws Exception {
         int[] results = match("C1CCCCC1", "c1ccccc1O");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testRing5() throws Exception {
+    void testRing5() throws Exception {
         int[] results = match("C1CCCCC1", "c1ccccc1CCCCCC");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testRing_large() throws Exception {
+    void testRing_large() throws Exception {
         int[] results = match("C%10CCCCC%10", "C1CCCCC1O");
         Assertions.assertEquals(12, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testRing_large2() throws Exception {
+    void testRing_large2() throws Exception {
         int[] results = match("C%99CCCCC%99", "C1CCCCC1O");
         Assertions.assertEquals(12, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testRing_large3() throws Exception {
+    void testRing_large3() throws Exception {
         int[] results = match("C%991CCCCC%99CCCC1", "C12CCCCC2CCCC1");
         Assertions.assertEquals(4, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testRing6() throws Exception {
+    void testRing6() throws Exception {
         int[] results = match("C1CCCCC1", "CCCCCC");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testAromaticRing1() throws Exception {
+    void testAromaticRing1() throws Exception {
         int[] results = match("c1ccccc1", "c1ccccc1");
         Assertions.assertEquals(12, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAromaticRing2() throws Exception {
+    void testAromaticRing2() throws Exception {
         int[] results = match("c1ccccc1", "c1cccc2c1cccc2");
         Assertions.assertEquals(24, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testAromaticRing3() throws Exception {
+    void testAromaticRing3() throws Exception {
         int[] results = match("c1ccccn1", "c1cccc2c1cccc2");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testAromaticRing4() throws Exception {
+    void testAromaticRing4() throws Exception {
         int[] results = match("c1ccccn1", "c1cccc2c1cccn2");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid1() throws Exception {
+    void testAminoAcid1() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid2() throws Exception {
+    void testAminoAcid2() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCCNC(N)=N)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid3() throws Exception {
+    void testAminoAcid3() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC(N)=O)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid4() throws Exception {
+    void testAminoAcid4() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC(O)=O)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid5() throws Exception {
+    void testAminoAcid5() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CS)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid6() throws Exception {
+    void testAminoAcid6() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCC(N)=O)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid7() throws Exception {
+    void testAminoAcid7() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCC(O)=O)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid8() throws Exception {
+    void testAminoAcid8() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC([H])C(O)=O");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
     }
 
     @Test
-    public void testAminoAcid9() throws Exception {
+    void testAminoAcid9() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC1=CNC=N1)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid10() throws Exception {
+    void testAminoAcid10() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C(CC)C)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid11() throws Exception {
+    void testAminoAcid11() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC(C)C)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid12() throws Exception {
+    void testAminoAcid12() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCCCN)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid13() throws Exception {
+    void testAminoAcid13() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCSC)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid14() throws Exception {
+    void testAminoAcid14() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC1=CC=CC=C1)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid15() throws Exception {
+    void testAminoAcid15() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "OC(C1CCCN1)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid16() throws Exception {
+    void testAminoAcid16() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CO)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid17() throws Exception {
+    void testAminoAcid17() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C(C)O)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid18() throws Exception {
+    void testAminoAcid18() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC1=CNC2=C1C=CC=C2)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid19() throws Exception {
+    void testAminoAcid19() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC1=CC=C(O)C=C1)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testAminoAcid20() throws Exception {
+    void testAminoAcid20() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C(C)C)C(O)=O");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testCyclicUreas() throws Exception {
+    void testCyclicUreas() throws Exception {
         int[] results = match("[$(C1CNC(=O)N1)]", "N1C(=O)NCC1");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
@@ -1624,7 +1624,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 1967468
      */
     @Test
-    public void testAcyclicUreas() throws Exception {
+    void testAcyclicUreas() throws Exception {
         int[] results = match("[$(CC);$(C1CNC(=O)N1)]", "C1CC1NC(=O)Nc2ccccc2");
         //        int[] results = match("[$([CR][NR][CR](=O)[NR])]", "C1CC1NC(=O)Nc2ccccc2");
         Assertions.assertEquals(0, results[0]);
@@ -1636,7 +1636,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testIndoleAgainstIndole() throws Exception {
+    void testIndoleAgainstIndole() throws Exception {
         int[] results = match("c1ccc2cc[nH]c2(c1)", "C1(NC=C2)=C2C=CC=C1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -1652,7 +1652,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testPyridineAgainstPyridine() throws Exception {
+    void testPyridineAgainstPyridine() throws Exception {
         int[] results = match("c1ccncc1", "c1ccncc1");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -1663,14 +1663,14 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testGroup5Elements() throws Exception {
+    void testGroup5Elements() throws Exception {
         int[] results = match("[V,Cr,Mn,Nb,Mo,Tc,Ta,W,Re]", "[W]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testPeriodicGroupNumber() throws Exception {
+    void testPeriodicGroupNumber() throws Exception {
         int[] results = match("[G14]", "CCN");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
@@ -1681,42 +1681,42 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testInvalidPeriodicGroupNumber() throws Exception {
+    void testInvalidPeriodicGroupNumber() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[G19]", "CCN");
         });
     }
 
     @Test
-    public void testInvalidPeriodicGroupNumber_2() throws Exception {
+    void testInvalidPeriodicGroupNumber_2() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[G0]", "CCN");
         });
     }
 
     @Test
-    public void testInvalidPeriodicGroupNumber_3() throws Exception {
+    void testInvalidPeriodicGroupNumber_3() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[G345]", "CCN");
         });
     }
 
     @Test
-    public void testNonPeriodicGroupNumber() throws Exception {
+    void testNonPeriodicGroupNumber() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[G]", "CCN"); // Should throw an exception if G is not followed by a number
         });
     }
 
     @Test
-    public void testNonPeriodicGroupNumber_2() throws Exception {
+    void testNonPeriodicGroupNumber_2() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[GA]", "CCN"); // Should throw an exception if G is not followed by a number
         });
     }
 
     @Test
-    public void testNonCHHeavyAtom() throws Exception {
+    void testNonCHHeavyAtom() throws Exception {
         int[] results = match("[#X]", "CCN");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -1736,7 +1736,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testHybridizationNumber() throws Exception {
+    void testHybridizationNumber() throws Exception {
         int[] results = match(smarts("[^1]"), smilesAtomTyped("CCN"));
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
@@ -1760,28 +1760,28 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testBadHybridizationNumber() throws Exception {
+    void testBadHybridizationNumber() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[^]", "CCN"); // Should throw an exception if ^ is not followed by a number
         });
     }
 
     @Test
-    public void testBadHybridizationNumber_2() throws Exception {
+    void testBadHybridizationNumber_2() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[^X]", "CCN"); // Should throw an exception if ^ is not followed by a number
         });
     }
 
     @Test
-    public void testBadHybridizationNumber_3() throws Exception {
+    void testBadHybridizationNumber_3() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[^0]", "CCN"); // Should throw an exception if ^ is not followed by a number
         });
     }
 
     @Test
-    public void testBadHybridizationNumber_4() throws Exception {
+    void testBadHybridizationNumber_4() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             match("[^9]", "CCN"); // Should throw an exception if ^ is not followed by a number
         });
@@ -1792,7 +1792,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testAromAliArom() throws Exception {
+    void testAromAliArom() throws Exception {
         int[] results = match("c-c", "COC1CN(CCC1NC(=O)C2=CC(=C(C=C2OC)N)Cl)CCCOC3=CC=C(C=C3)F");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
@@ -1826,7 +1826,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testUnspecifiedBond() throws Exception {
+    void testUnspecifiedBond() throws Exception {
         int[] results = match("CC", "CCc1ccccc1");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -1861,7 +1861,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2587204
      */
     @Test
-    public void testLactamSimple() throws Exception {
+    void testLactamSimple() throws Exception {
         int[] results = match("[R0][ND3R][CR]=O", "N1(CC)C(=O)CCCC1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -1872,14 +1872,14 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2587204
      */
     @Test
-    public void testLactamRecursive() throws Exception {
+    void testLactamRecursive() throws Exception {
         int[] results = match("[R0]-[$([NRD3][CR]=O)]", "N1(CC)C(=O)CCCC1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
     }
 
     @Test
-    public void testLactamRecursiveAlternate() throws Exception {
+    void testLactamRecursiveAlternate() throws Exception {
         int[] results = match("[!R]-[$([NRD3][CR]=O)]", "N1(CC)C(=O)CCCC1");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -1890,7 +1890,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testHydrogen() throws Exception {
+    void testHydrogen() throws Exception {
         int[] results = match("[H]", "[H]");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -1901,7 +1901,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testLeadingHydrogen() throws Exception {
+    void testLeadingHydrogen() throws Exception {
         int[] results = match("[H][C@@]1(CCC(C)=CC1=O)C(C)=C", "[H][C@@]1(CCC(C)=CC1=O)C(C)=C");
         Assertions.assertEquals(1, results[0]);
         Assertions.assertEquals(1, results[1]);
@@ -1915,7 +1915,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * esters
      */
     @Test
-    public void testVinylogousEster() throws Exception {
+    void testVinylogousEster() throws Exception {
         int[] results = match("[#6X3](=[OX1])[#6X3]=,:[#6X3][#6;!$(C=[O,N,S])]", "c1ccccc1C=O");
         Assertions.assertEquals(2, results[0]);
         Assertions.assertEquals(2, results[1]);
@@ -1927,7 +1927,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testBondOrderQueryKekuleVsSmiles() throws Exception {
+    void testBondOrderQueryKekuleVsSmiles() throws Exception {
         int[] results = match("[#6]=[#6]", "c1ccccc1c2ccccc2");
         Assertions.assertEquals(0, results[0]);
         Assertions.assertEquals(0, results[1]);
@@ -1938,14 +1938,14 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void testSubstructureBug20141125() throws Exception {
+    void testSubstructureBug20141125() throws Exception {
         int[] results = match("[#6]S[#6]", "CSCCSCO");
         Assertions.assertEquals(4, results[0]);
         Assertions.assertEquals(2, results[1]);
     }
 
     @Test
-    public void testSubstructureBug20141125_2() throws Exception {
+    void testSubstructureBug20141125_2() throws Exception {
         int[] results = match("[#6]S[#6]", "CSCCSC(O)CCCSCC");
         Assertions.assertEquals(6, results[0]);
         Assertions.assertEquals(3, results[1]);
@@ -1958,17 +1958,17 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 1168
      */
     @Test
-    public void unspecifiedRingMembership() throws Exception {
+    void unspecifiedRingMembership() throws Exception {
         assertThat(match("[#6+0&R]=[#6+0&!R]", "C1=C2CCCC2CCC1"), is(new int[]{0, 0}));
     }
 
     @Test
-    public void cyclopropane() throws Exception {
+    void cyclopropane() throws Exception {
         assertThat(match("**(*)*", "C1CC1"), is(new int[]{0, 0}));
     }
 
     @Test
-    public void componentGrouping1() throws Exception {
+    void componentGrouping1() throws Exception {
         assertThat(match("[#8].[#8]", "O"), is(new int[]{0, 0}));
         assertThat(match("[#8].[#8]", "O=O"), is(new int[]{2, 1}));
         assertThat(match("[#8].[#8]", "OCCO"), is(new int[]{2, 1}));
@@ -1976,7 +1976,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void componentGrouping2() throws Exception {
+    void componentGrouping2() throws Exception {
         assertThat(match("([#8].[#8])", "O"), is(new int[]{0, 0}));
         assertThat(match("([#8].[#8])", "O=O"), is(new int[]{2, 1}));
         assertThat(match("([#8].[#8])", "OCCO"), is(new int[]{2, 1}));
@@ -1984,7 +1984,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
-    public void componentGrouping3() throws Exception {
+    void componentGrouping3() throws Exception {
         assertThat(match("([#8]).([#8])", "O"), is(new int[]{0, 0}));
         assertThat(match("([#8]).([#8])", "O=O"), is(new int[]{0, 0}));
         assertThat(match("([#8]).([#8])", "OCCO"), is(new int[]{0, 0}));
@@ -1996,7 +1996,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 1364
      */
     @Test
-    public void bug1364() throws Exception {
+    void bug1364() throws Exception {
         assertThat(match("[!R0!R1]", "C[C@]12CC3CC([NH2+]CC(=O)NCC4CC4)(C1)C[C@@](C)(C3)C2"),
                    is(new int[]{7, 7}));
         assertThat(match("[R!R1]", "C[C@]12CC3CC([NH2+]CC(=O)NCC4CC4)(C1)C[C@@](C)(C3)C2"),

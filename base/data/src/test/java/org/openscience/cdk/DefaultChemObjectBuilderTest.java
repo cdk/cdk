@@ -29,15 +29,15 @@ import org.openscience.cdk.test.AbstractChemObjectBuilderTest;
  *
  * @cdk.module test-data
  */
-public class DefaultChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
+class DefaultChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setRootObject(new ChemObject());
     }
 
     @Test
-    public void testGetInstance() {
+    void testGetInstance() {
         Object builder = DefaultChemObjectBuilder.getInstance();
         Assertions.assertNotNull(builder);
         Assertions.assertTrue(builder instanceof IChemObjectBuilder);

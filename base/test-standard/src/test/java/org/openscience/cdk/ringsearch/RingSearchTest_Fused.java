@@ -40,37 +40,37 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public class RingSearchTest_Fused {
+class RingSearchTest_Fused {
 
     private final IAtomContainer fusedRings = TestMoleculeFactory.makeFusedRings();
 
     @Test
-    public void testCyclic_Int() {
+    void testCyclic_Int() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         for (int i = 0; i < fusedRings.getAtomCount(); i++)
             Assertions.assertTrue(ringSearch.cyclic(i));
     }
 
     @Test
-    public void testCyclic() {
+    void testCyclic() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         assertThat(ringSearch.cyclic().length, is(fusedRings.getAtomCount()));
     }
 
     @Test
-    public void testFused() {
+    void testFused() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         assertThat(ringSearch.fused().length, is(1));
     }
 
     @Test
-    public void testIsolated() {
+    void testIsolated() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         assertThat(ringSearch.isolated().length, is(0));
     }
 
     @Test
-    public void testRingFragments() {
+    void testRingFragments() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         IAtomContainer fragment = ringSearch.ringFragments();
         for (IAtom atom : fusedRings.atoms()) {
@@ -82,7 +82,7 @@ public class RingSearchTest_Fused {
     }
 
     @Test
-    public void testFusedRingFragments() {
+    void testFusedRingFragments() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         List<IAtomContainer> fragments = ringSearch.fusedRingFragments();
         assertThat(fragments.size(), is(1));
@@ -96,7 +96,7 @@ public class RingSearchTest_Fused {
     }
 
     @Test
-    public void testIsolatedRingFragments() {
+    void testIsolatedRingFragments() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         List<IAtomContainer> fragments = ringSearch.isolatedRingFragments();
         assertThat(fragments.size(), is(0));

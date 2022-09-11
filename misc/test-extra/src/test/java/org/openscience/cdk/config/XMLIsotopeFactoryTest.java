@@ -43,27 +43,27 @@ import java.io.InputStream;
  *
  * @cdk.module test-extra
  */
-public class XMLIsotopeFactoryTest extends CDKTestCase {
+class XMLIsotopeFactoryTest extends CDKTestCase {
 
-    final boolean standAlone = false;
+    private final boolean standAlone = false;
     final static AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
     private static final String CML_XSD_FILENAME = "cml25b1.xsd";
     private static final String CML_XSD_ABSOLUTE_PATH = "/org/openscience/cdk/io/cml/data" + "/" + CML_XSD_FILENAME;
 
     @Test
-    public void testGetInstance_IChemObjectBuilder() throws Exception {
+    void testGetInstance_IChemObjectBuilder() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         Assertions.assertNotNull(isofac);
     }
 
     @Test
-    public void testGetSize() throws Exception {
+    void testGetSize() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         Assertions.assertTrue(isofac.getSize() > 0);
     }
 
     @Test
-    public void testConfigure_IAtom() throws Exception {
+    void testConfigure_IAtom() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         Atom atom = new Atom("H");
         isofac.configure(atom);
@@ -71,7 +71,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testConfigure_IAtom_IIsotope() throws Exception {
+    void testConfigure_IAtom_IIsotope() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         Atom atom = new Atom("H");
         IIsotope isotope = new org.openscience.cdk.Isotope("H", 2);
@@ -80,7 +80,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMajorIsotope_String() throws Exception {
+    void testGetMajorIsotope_String() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope isotope = isofac.getMajorIsotope("Te");
         if (standAlone) System.out.println("Isotope: " + isotope);
@@ -88,56 +88,56 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMajorIsotope_Nonelement() throws Exception {
+    void testGetMajorIsotope_Nonelement() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope isotope = isofac.getMajorIsotope("E");
         Assertions.assertNull(isotope);
     }
 
     @Test
-    public void testGetMajorIsotope_int() throws Exception {
+    void testGetMajorIsotope_int() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope isotope = isofac.getMajorIsotope(17);
         Assertions.assertEquals("Cl", isotope.getSymbol());
     }
 
     @Test
-    public void testGetElement_String() throws Exception {
+    void testGetElement_String() throws Exception {
         XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement("Br");
         Assertions.assertEquals(35, element.getAtomicNumber().intValue());
     }
 
     @Test
-    public void testGetElement_Nonelement() throws Exception {
+    void testGetElement_Nonelement() throws Exception {
         XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement("E");
         Assertions.assertNull(element);
     }
 
     @Test
-    public void testGetElement_int() throws Exception {
+    void testGetElement_int() throws Exception {
         XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement(6);
         Assertions.assertEquals("C", element.getSymbol());
     }
 
     @Test
-    public void testGetElementSymbol_int() throws Exception {
+    void testGetElementSymbol_int() throws Exception {
         XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         String symbol = elfac.getElementSymbol(8);
         Assertions.assertEquals("O", symbol);
     }
 
     @Test
-    public void testGetIsotopes_String() throws Exception {
+    void testGetIsotopes_String() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope[] list = isofac.getIsotopes("He");
         Assertions.assertEquals(8, list.length);
     }
 
     @Test
-    public void testGetIsotopes_Nonelement() throws Exception {
+    void testGetIsotopes_Nonelement() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope[] list = isofac.getIsotopes("E");
         Assertions.assertNotNull(list);
@@ -145,14 +145,14 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetIsotopes() throws Exception {
+    void testGetIsotopes() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope[] list = isofac.getIsotopes();
         Assertions.assertTrue(list.length > 200);
     }
 
     @Test
-    public void testGetIsotopes_double_double() throws Exception {
+    void testGetIsotopes_double_double() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope[] list = isofac.getIsotopes(87.90, 0.01);
         //        should return:
@@ -164,13 +164,13 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsElement_String() throws Exception {
+    void testIsElement_String() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         Assertions.assertTrue(isofac.isElement("C"));
     }
 
     @Test
-    public void testConfigureAtoms_IAtomContainer() throws Exception {
+    void testConfigureAtoms_IAtomContainer() throws Exception {
         AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("H"));
@@ -186,7 +186,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testXMLValidityHybrid() throws Exception {
+    void testXMLValidityHybrid() throws Exception {
         assertValidCML("/org/openscience/cdk/config/data/isotopes.xml", "Isotopes");
     }
 
@@ -214,7 +214,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testCanReadCMLSchema() throws Exception {
+    void testCanReadCMLSchema() throws Exception {
         try (InputStream cmlSchema = getClass().getResourceAsStream(CML_XSD_ABSOLUTE_PATH)) {
             Assertions.assertNotNull(cmlSchema, "Could not find the CML schema");
 
@@ -231,7 +231,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
 
         private final String atomTypeList;
 
-        public SAXValidityErrorHandler(String atomTypeList) {
+        SAXValidityErrorHandler(String atomTypeList) {
             this.atomTypeList = atomTypeList;
         }
 
@@ -253,19 +253,19 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetNaturalMass_IElement() throws Exception {
+    void testGetNaturalMass_IElement() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         Assertions.assertEquals(1.0079760, isofac.getNaturalMass(new Element("H")), 0.1);
     }
 
     @Test
-    public void testGetIsotope() throws Exception {
+    void testGetIsotope() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         Assertions.assertEquals(13.00335484, isofac.getIsotope("C", 13).getExactMass(), 0.0000001);
     }
 
     @Test
-    public void testGetIsotopeFromExactMass() throws Exception {
+    void testGetIsotopeFromExactMass() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope carbon13 = isofac.getIsotope("C", 13);
         IIsotope match = isofac.getIsotope(carbon13.getSymbol(), carbon13.getExactMass(), 0.0001);
@@ -274,14 +274,14 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testYeahSure() throws Exception {
+    void testYeahSure() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope match = isofac.getIsotope("H", 13.00001, 0.0001);
         Assertions.assertNull(match);
     }
 
     @Test
-    public void testGetIsotopeFromExactMass_LargeTolerance() throws Exception {
+    void testGetIsotopeFromExactMass_LargeTolerance() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope carbon13 = isofac.getIsotope("C", 13);
         IIsotope match = isofac.getIsotope(carbon13.getSymbol(), carbon13.getExactMass(), 2.0);
@@ -293,7 +293,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
      * @cdk.bug 3534288
      */
     @Test
-    public void testNonexistingElement() throws Exception {
+    void testNonexistingElement() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtom xxAtom = new Atom("Xx");

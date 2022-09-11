@@ -89,7 +89,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public RearrangementAnionReactionTest() throws Exception {
+    RearrangementAnionReactionTest() throws Exception {
         setReaction(RearrangementAnionReaction.class);
     }
 
@@ -97,7 +97,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testRearrangementAnionReaction() throws Exception {
+    void testRearrangementAnionReaction() throws Exception {
         IReactionProcess type = new RearrangementAnionReaction();
         Assertions.assertNotNull(type);
     }
@@ -146,7 +146,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new RearrangementAnionReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -188,7 +188,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new RearrangementAnionReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -229,7 +229,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new RearrangementAnionReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -268,7 +268,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testAutomaticSearchCentreActiveExample3() throws Exception {
+    void testAutomaticSearchCentreActiveExample3() throws Exception {
         IReactionProcess type = new RearrangementAnionReaction();
 
         /* [F+]=C1-[C-]-C=C-C=C1 */
@@ -373,7 +373,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer1() throws Exception {
+    void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
         makeSureAtomTypesAreRecognized(moleculeTest);
@@ -384,7 +384,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer2() throws Exception {
+    void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
         makeSureAtomTypesAreRecognized(moleculeTest);

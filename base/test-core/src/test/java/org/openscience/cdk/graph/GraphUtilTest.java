@@ -41,10 +41,10 @@ import org.junit.jupiter.api.Test;
  * @author John May
  * @cdk.module test-core
  */
-public class GraphUtilTest {
+class GraphUtilTest {
 
     @Test
-    public void sequentialSubgraph() throws Exception {
+    void sequentialSubgraph() throws Exception {
         int[][] graph = new int[][]{{1, 2}, {0, 2}, {0, 1}};
         int[][] subgraph = GraphUtil.subgraph(graph, new int[]{0, 1});
         int[][] expected = new int[][]{{1}, {0}};
@@ -52,7 +52,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void intermittentSubgraph() throws Exception {
+    void intermittentSubgraph() throws Exception {
         int[][] graph = new int[][]{{1, 2}, {0, 2, 3}, {0, 1}, {1}};
         int[][] subgraph = GraphUtil.subgraph(graph, new int[]{0, 2, 3});
         int[][] expected = new int[][]{{1}, {0}, {}};
@@ -60,7 +60,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void resizeSubgraph() throws Exception {
+    void resizeSubgraph() throws Exception {
         int[][] graph = new int[][]{{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
                 {0}, {0}, {0}, {0}, {0}, {0}, {0}};
         int[][] subgraph = GraphUtil.subgraph(graph, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
@@ -69,7 +69,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void testCycle() {
+    void testCycle() {
         // 0-1-2-3-4-5-
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}};
         int[] path = GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
@@ -77,7 +77,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void testAcyclic() {
+    void testAcyclic() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     // 0-1-2-3-4-5 (5 and 0 not connected)
@@ -87,7 +87,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void testAcyclic2() {
+    void testAcyclic2() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     // 0-1-2 3-4-5- (2 and 3) not connected
@@ -97,14 +97,14 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void firstMarked() {
+    void firstMarked() {
         assertThat(GraphUtil.firstMarked(new int[]{0, 1, 2}, new boolean[]{false, true, false}), is(1));
         assertThat(GraphUtil.firstMarked(new int[]{2, 1, 0}, new boolean[]{true, false, false}), is(0));
         assertThat(GraphUtil.firstMarked(new int[]{2, 1, 0}, new boolean[]{false, false, false}), is(-1));
     }
 
     @Test
-    public void testToAdjList() throws Exception {
+    void testToAdjList() throws Exception {
 
         IAtomContainer container = simple();
 
@@ -127,7 +127,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void testToAdjList_withMap() throws Exception {
+    void testToAdjList_withMap() throws Exception {
 
         IAtomContainer container = simple();
 
@@ -156,7 +156,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void testToAdjList_resize() throws Exception {
+    void testToAdjList_resize() throws Exception {
 
         IAtomContainer container = new AtomContainer();
 
@@ -188,7 +188,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void testToAdjList_missingAtom() throws Exception {
+    void testToAdjList_missingAtom() throws Exception {
 
         IAtomContainer container = simple();
 
@@ -200,13 +200,13 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void testToAdjList_Empty() throws Exception {
+    void testToAdjList_Empty() throws Exception {
         int[][] adjacent = GraphUtil.toAdjList(new AtomContainer());
         assertThat(adjacent.length, is(0));
     }
 
     @Test
-    public void testToAdjList_Null() throws Exception {
+    void testToAdjList_Null() throws Exception {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     GraphUtil.toAdjList(null);

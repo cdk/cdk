@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
 /**
  * @cdk.module test-reaction
  */
-public class ResonanceStructuresTest extends CDKTestCase {
+class ResonanceStructuresTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder;
     private final static CDKAtomTypeMatcher matcher;
@@ -46,7 +46,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
     /**
      * Constructor of the ResonanceStructuresTest.
      */
-    public ResonanceStructuresTest() {
+    ResonanceStructuresTest() {
         super();
     }
 
@@ -58,7 +58,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
      */
     @Test
-    public void testGetAllStructures_IAtomContainer() throws Exception {
+    void testGetAllStructures_IAtomContainer() throws Exception {
 
         //COMPOUND
         //O=C([H])C(=[O+])C([H])([H])[H]
@@ -141,7 +141,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
      */
     @Test
-    public void test12DimethylBenzene() throws Exception {
+    void test12DimethylBenzene() throws Exception {
 
         //COMPOUND
         //[H]C1=C([H])C([H])=C(C(=C1([H]))C([H])([H])[H])C([H])([H])[H]

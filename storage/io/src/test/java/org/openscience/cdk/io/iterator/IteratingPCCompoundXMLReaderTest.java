@@ -37,12 +37,12 @@ import java.io.InputStreamReader;
 /**
  * @cdk.module test-io
  */
-public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
+class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundXMLReaderTest.class);
 
     @Test
-    public void testList() throws Exception {
+    void testList() throws Exception {
         String filename = "org/openscience/cdk/io/aceticAcids38.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

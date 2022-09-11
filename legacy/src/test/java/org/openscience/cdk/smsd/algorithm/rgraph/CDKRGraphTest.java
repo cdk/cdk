@@ -27,10 +27,10 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */
-public class CDKRGraphTest extends CDKTestCase {
+class CDKRGraphTest extends CDKTestCase {
 
     @Test
-    public void testRGraph() {
+    void testRGraph() {
         CDKRGraph graph = new CDKRGraph();
         Assertions.assertNotNull(graph);
     }

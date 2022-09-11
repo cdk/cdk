@@ -31,17 +31,17 @@ import static org.mockito.Mockito.when;
 /**
  * @cdk.module test-diff
  */
-public class ElementDiffTest {
+class ElementDiffTest {
 
     @Test
-    public void testMatchAgainstItself() {
+    void testMatchAgainstItself() {
         IElement element1 = mock(IElement.class);
         String result = ElementDiff.diff(element1, element1);
         Assertions.assertEquals("", result);
     }
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IElement element1 = mock(IElement.class);
         IElement element2 = mock(IElement.class);
         when(element1.getSymbol()).thenReturn("H");
@@ -55,7 +55,7 @@ public class ElementDiffTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         IElement element1 = mock(IElement.class);
         IElement element2 = mock(IElement.class);
         when(element1.getSymbol()).thenReturn("H");

@@ -34,17 +34,17 @@ import java.io.InputStream;
  *
  * @cdk.module test-io
  */
-public abstract class SimpleChemObjectReaderTest extends org.openscience.cdk.test.io.ChemObjectReaderTest {
+abstract class SimpleChemObjectReaderTest extends org.openscience.cdk.test.io.ChemObjectReaderTest {
 
-    protected static ISimpleChemObjectReader chemObjectIO;
+    private static ISimpleChemObjectReader chemObjectIO;
 
-    public static void setSimpleChemObjectReader(ISimpleChemObjectReader aSimpelChemObjectReader, String testFile) {
+    static void setSimpleChemObjectReader(ISimpleChemObjectReader aSimpelChemObjectReader, String testFile) {
         ChemObjectReaderTest.setChemObjectReader(aSimpelChemObjectReader, testFile);
         SimpleChemObjectReaderTest.chemObjectIO = aSimpelChemObjectReader;
     }
 
     @Test
-    public void testRead_IChemObject() throws Exception {
+    void testRead_IChemObject() throws Exception {
         Assertions.assertNotNull(testFile, "No test file has been set!");
 
         boolean read = false;

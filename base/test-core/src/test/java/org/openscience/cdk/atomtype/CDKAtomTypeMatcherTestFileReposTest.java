@@ -48,11 +48,11 @@ import java.util.Objects;
  *
  * @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
  */
-public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
+class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
 
     @Disabled
     @Test
-    public void testPDBfiles() throws Exception {
+    void testPDBfiles() throws Exception {
         final String DIRNAME = "data/pdb/";
         String[] testFiles = {"114D.pdb", "1CRN.pdb", "1D66.pdb", "1IHA.pdb", "1PN8.pdb",};
         int tested = 0;
@@ -67,7 +67,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
     }
 
     @Test
-    public void testMOL2files() throws Exception {
+    void testMOL2files() throws Exception {
         final String DIRNAME = "data/mol2/";
         String[] testFiles = {"fromWebsite.mol2",};
         int tested = 0;
@@ -82,7 +82,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
     }
 
     @Test
-    public void testASNfiles() throws Exception {
+    void testASNfiles() throws Exception {
         final String DIRNAME = "data/asn/pubchem/";
         String[] testFiles = {"cid1.asn",};
         int tested = 0;
@@ -99,7 +99,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
     // this test is a bit of a "defeat device" for modularising testdata, hey ho, let's just dupe
     // them all locally for now and perhaps replace with an SDF
     @Test
-    public void testMDLMolfiles() throws Exception {
+    void testMDLMolfiles() throws Exception {
         final String DIRNAME = "data/mdl/";
         String[] testFiles = {"2,5-dimethyl-furan.mol", "5SD.mol", "9553.mol", "9554.mol", "ADN.mol", "allmol231.mol",
                 "allmol232.mol", "a-pinene.mol", "azulene.mol", "big.mol", "BremserPredictionTest.mol",

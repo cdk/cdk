@@ -52,7 +52,7 @@ import org.xmlcml.cml.element.CMLAtom;
 /**
  * @cdk.module test-libiomd
  */
-public class MDMoleculeTest extends CDKTestCase {
+class MDMoleculeTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDMoleculeTest.class);
 
@@ -60,7 +60,7 @@ public class MDMoleculeTest extends CDKTestCase {
      * @cdk.bug 1748257
      */
     @Test
-    public void testBug1748257() {
+    void testBug1748257() {
 
         MDMolecule mol = new MDMolecule();
         mol.addAtom(new Atom("C")); // 0
@@ -86,7 +86,7 @@ public class MDMoleculeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMDMolecule() {
+    void testMDMolecule() {
 
         MDMolecule mol = new MDMolecule();
         mol.addAtom(new Atom("C")); // 0
@@ -161,7 +161,7 @@ public class MDMoleculeTest extends CDKTestCase {
     }
 
     @Test
-    public void testMDMoleculeCustomizationRoundtripping() throws Exception {
+    void testMDMoleculeCustomizationRoundtripping() throws Exception {
         StringWriter writer = new StringWriter();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
@@ -233,7 +233,7 @@ public class MDMoleculeTest extends CDKTestCase {
     }
 
     @Test
-    public void testMDMoleculeCustomization() {
+    void testMDMoleculeCustomization() {
         StringWriter writer = new StringWriter();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
@@ -267,7 +267,7 @@ public class MDMoleculeTest extends CDKTestCase {
      * Create a benzene molecule with 2 residues and 2 charge groups
      * @return
      */
-    public MDMolecule makeMDBenzene() {
+    MDMolecule makeMDBenzene() {
 
         MDMolecule mol = new MDMolecule();
         mol.addAtom(new Atom("C")); // 0

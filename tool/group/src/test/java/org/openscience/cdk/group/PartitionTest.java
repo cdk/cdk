@@ -36,16 +36,16 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-group
  *
  */
-public class PartitionTest extends CDKTestCase {
+class PartitionTest extends CDKTestCase {
 
     @Test
-    public void emptyConstructor() {
+    void emptyConstructor() {
         Partition p = new Partition();
         Assertions.assertEquals(0, p.size());
     }
 
     @Test
-    public void copyConstructor() {
+    void copyConstructor() {
         Partition p = new Partition();
         p.addCell(0, 1);
         p.addCell(2, 3);
@@ -54,7 +54,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void cellDataConstructor() {
+    void cellDataConstructor() {
         int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         Assertions.assertEquals(cellData.length, p.size());
@@ -62,7 +62,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void unitStaticConstructor() {
+    void unitStaticConstructor() {
         int size = 5;
         Partition p = Partition.unit(size);
         Assertions.assertEquals(1, p.size());
@@ -70,7 +70,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void sizeTest() {
+    void sizeTest() {
         Partition p = new Partition();
         p.addCell(0, 1);
         p.addCell(2, 3);
@@ -80,7 +80,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void numberOfElementsTest() {
+    void numberOfElementsTest() {
         Partition p = new Partition();
         p.addCell(0, 1);
         p.addCell(2, 3);
@@ -88,7 +88,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void isDiscreteTest() {
+    void isDiscreteTest() {
         int size = 5;
         Partition p = new Partition();
         for (int i = 0; i < size; i++) {
@@ -98,7 +98,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void toPermutationTest() {
+    void toPermutationTest() {
         int size = 5;
         Partition partition = new Partition();
         for (int i = 0; i < size; i++) {
@@ -112,14 +112,14 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void inOrderTest() {
+    void inOrderTest() {
         int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         Assertions.assertTrue(p.inOrder());
     }
 
     @Test
-    public void getFirstInCellTest() {
+    void getFirstInCellTest() {
         int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         for (int i = 0; i < cellData.length; i++) {
@@ -128,7 +128,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void getCellTest() {
+    void getCellTest() {
         int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         for (int i = 0; i < cellData.length; i++) {
@@ -141,7 +141,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void splitBeforeTest() {
+    void splitBeforeTest() {
         int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         int cellIndex = 1;
@@ -155,7 +155,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void splitAfterTest() {
+    void splitAfterTest() {
         int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         int cellIndex = 1;
@@ -169,7 +169,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void setAsPermutationTest() {
+    void setAsPermutationTest() {
         int partitionSize = 5;
         int permutationSize = 3;
         Partition partition = new Partition();
@@ -183,7 +183,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void isDiscreteCellTest() {
+    void isDiscreteCellTest() {
         int[][] cellData = new int[][]{{0}, {1}, {2}, {3}, {4}, {5}};
         Partition p = new Partition(cellData);
         for (int i = 0; i < p.size(); i++) {
@@ -192,14 +192,14 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void getIndexOfFirstNonDiscreteCellTest() {
+    void getIndexOfFirstNonDiscreteCellTest() {
         int[][] cellData = new int[][]{{0}, {1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         Assertions.assertEquals(2, p.getIndexOfFirstNonDiscreteCell());
     }
 
     @Test
-    public void addSingletonCellTest() {
+    void addSingletonCellTest() {
         Partition p = new Partition();
         p.addSingletonCell(0);
         Assertions.assertEquals(1, p.size());
@@ -207,7 +207,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void removeCellTest() {
+    void removeCellTest() {
         int size = 5;
         Partition p = Partition.unit(size);
         p.removeCell(0);
@@ -215,7 +215,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void addCell_VarArgsTest() {
+    void addCell_VarArgsTest() {
         Partition p = new Partition();
         p.addCell(0, 1, 2);
         Assertions.assertEquals(1, p.size());
@@ -223,7 +223,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void addCell_CollectionTest() {
+    void addCell_CollectionTest() {
         Partition p = new Partition();
         List<Integer> cell = new ArrayList<>();
         cell.add(0);
@@ -235,7 +235,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void addToCellTest() {
+    void addToCellTest() {
         Partition p = new Partition();
         p.addToCell(0, 0);
         Assertions.assertEquals(1, p.size());
@@ -246,7 +246,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void insertCellTest() {
+    void insertCellTest() {
         int[][] cellData = new int[][]{{0}, {2}, {3}};
         Partition p = new Partition(cellData);
         SortedSet<Integer> cell = new TreeSet<>();
@@ -256,7 +256,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void copyBlockTest() {
+    void copyBlockTest() {
         int[][] cellData = new int[][]{{0}, {1}, {2}};
         Partition p = new Partition(cellData);
         int cellIndex = 1;
@@ -266,41 +266,41 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void fromStringTest() {
+    void fromStringTest() {
         Partition p = Partition.fromString("[0,1|2,3]");
         Assertions.assertEquals(2, p.size());
         Assertions.assertEquals(4, p.numberOfElements());
     }
 
     @Test
-    public void fromStringTest2() {
+    void fromStringTest2() {
         Partition p = Partition.fromString("[0|1,2,3]");
         Assertions.assertEquals(2, p.size());
         Assertions.assertEquals(4, p.numberOfElements());
     }
 
     @Test
-    public void equalsTest_null() {
+    void equalsTest_null() {
         Partition p = new Partition(new int[][]{{0}, {1}});
         Assertions.assertNotSame(p, null);
     }
 
     @Test
-    public void equalsTest_different() {
+    void equalsTest_different() {
         Partition p = new Partition(new int[][]{{0}, {1}});
         Partition o = new Partition(new int[][]{{1}, {0}});
         Assertions.assertNotSame(p, o);
     }
 
     @Test
-    public void equalsTest() {
+    void equalsTest() {
         Partition p = new Partition(new int[][]{{0}, {1}});
         Partition o = new Partition(new int[][]{{0}, {1}});
         Assertions.assertEquals(p, o);
     }
 
     @Test
-    public void orderTest() {
+    void orderTest() {
         Partition p = new Partition(new int[][]{{1, 3}, {0, 2}});
         p.order();
         SortedSet<Integer> cell0 = p.getCell(0);
@@ -310,7 +310,7 @@ public class PartitionTest extends CDKTestCase {
     }
 
     @Test
-    public void inSameCellTest() {
+    void inSameCellTest() {
         Partition p = new Partition(new int[][]{{0, 2}, {1, 3}});
         Assertions.assertTrue(p.inSameCell(1, 3));
     }

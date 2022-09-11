@@ -36,27 +36,27 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
+class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(AcidicGroupCountDescriptor.class,
                       DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testConstructor() throws Exception {
+    void testConstructor() throws Exception {
         Assertions.assertNotNull(new AcidicGroupCountDescriptor());
     }
 
     @Test
-    public void uninitalisedError() {
+    void uninitalisedError() {
         Assertions.assertThrows(IllegalStateException.class,
                                 () -> {new BasicGroupCountDescriptor().calculate(new AtomContainer());});
     }
 
     @Test
-    public void testOneAcidGroup() throws Exception {
+    void testOneAcidGroup() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC(=O)O");
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
@@ -64,7 +64,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testSulphurAcidGroup() throws Exception {
+    void testSulphurAcidGroup() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("OS(=O)(=O)O");
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
@@ -72,7 +72,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testPhosphorusAcidGroup() throws Exception {
+    void testPhosphorusAcidGroup() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=P(=O)O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -81,7 +81,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testFancyGroup() throws Exception {
+    void testFancyGroup() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[NH](S(=O)=O)C(F)(F)F");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -90,7 +90,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testNitroRing() throws Exception {
+    void testNitroRing() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[nH]1nnnc1");
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
@@ -101,7 +101,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C2H2N4O2/c7-2(8)1-3-5-6-4-1/h(H,7,8)(H,3,4,5,6)
      */
     @Test
-    public void testTwoGroup() throws Exception {
+    void testTwoGroup() throws Exception {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "O");
         a1.setFormalCharge(0);
@@ -175,7 +175,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C6H12O10S/c7-2(1-16-17(13,14)15)3(8)4(9)5(10)6(11)12/h2-5,7-10H,1H2,(H,11,12)(H,13,14,15)/t2-,3-,4+,5-/m1/s1
      */
     @Test
-    public void testCID() throws Exception {
+    void testCID() throws Exception {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "S");
         a1.setFormalCharge(0);

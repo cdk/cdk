@@ -30,14 +30,14 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 /**
  * @cdk.module test-standard
  */
-public class BFSShortestPathTest extends CDKTestCase {
+class BFSShortestPathTest extends CDKTestCase {
 
-    public BFSShortestPathTest() {
+    BFSShortestPathTest() {
         super();
     }
 
     @Test
-    public void testFindPathBetween_Graph_Object_Object() {
+    void testFindPathBetween_Graph_Object_Object() {
         IAtomContainer apinene = TestMoleculeFactory.makeAlphaPinene();
         SimpleGraph graph = MoleculeGraphs.getMoleculeGraph(apinene);
         Object startVertex = graph.vertexSet().toArray()[0];

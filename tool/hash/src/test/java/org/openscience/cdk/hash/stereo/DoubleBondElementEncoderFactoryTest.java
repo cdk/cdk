@@ -47,10 +47,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-hash
  */
-public class DoubleBondElementEncoderFactoryTest {
+class DoubleBondElementEncoderFactoryTest {
 
     @Test
-    public void opposite() throws Exception {
+    void opposite() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(4);
@@ -89,7 +89,7 @@ public class DoubleBondElementEncoderFactoryTest {
     }
 
     @Test
-    public void together() throws Exception {
+    void together() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(4);

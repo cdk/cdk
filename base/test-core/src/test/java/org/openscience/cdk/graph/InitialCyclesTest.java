@@ -41,42 +41,42 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-core
  */
-public class InitialCyclesTest {
+class InitialCyclesTest {
 
     @Test
-    public void lengths_empty() {
+    void lengths_empty() {
         Assertions.assertFalse(new InitialCycles(new int[0][0]).lengths().iterator().hasNext());
     }
 
     @Test
-    public void cyclesOfLength_empty() {
+    void cyclesOfLength_empty() {
         Assertions.assertTrue(new InitialCycles(new int[0][0]).cyclesOfLength(0).isEmpty());
     }
 
     @Test
-    public void graph() {
+    void graph() {
         int[][] g = new int[0][0];
         assertThat(new InitialCycles(g).graph(), is(sameInstance(g)));
     }
 
     @Test
-    public void lengths_K1() {
+    void lengths_K1() {
         Assertions.assertFalse(new InitialCycles(k1()).lengths().iterator().hasNext());
     }
 
     @Test
-    public void cycles_K1() {
+    void cycles_K1() {
         InitialCycles initial = new InitialCycles(k1());
         assertThat(initial.cycles().size(), is(0));
     }
 
     @Test
-    public void lengths_K4() {
+    void lengths_K4() {
         assertThat(new InitialCycles(k4()).lengths(), hasItem(3));
     }
 
     @Test
-    public void cycles_K4() {
+    void cycles_K4() {
         InitialCycles initial = new InitialCycles(k4());
         // todo replace with hasSize (hamcrest)
         assertThat(initial.cycles().size(), is(4));
@@ -84,17 +84,17 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void numberOfCycles_K4() {
+    void numberOfCycles_K4() {
         assertThat(new InitialCycles(k4()).numberOfCycles(), is(4));
     }
 
     @Test
-    public void numberOfEdges_K4() {
+    void numberOfEdges_K4() {
         assertThat(new InitialCycles(k4()).numberOfEdges(), is(6));
     }
 
     @Test
-    public void indexOfEdge_K4() {
+    void indexOfEdge_K4() {
         InitialCycles initial = new InitialCycles(k4());
         assertThat(initial.indexOfEdge(0, 1), is(0));
         assertThat(initial.indexOfEdge(1, 0), is(0));
@@ -111,7 +111,7 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void edge_K4() {
+    void edge_K4() {
         InitialCycles initial = new InitialCycles(k4());
         assertThat(initial.edge(0), is(new InitialCycles.Edge(0, 1)));
         assertThat(initial.edge(1), is(new InitialCycles.Edge(0, 2)));
@@ -122,19 +122,19 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void toEdgeVector_K4() {
+    void toEdgeVector_K4() {
         InitialCycles initial = new InitialCycles(k4());
         assertThat(initial.toEdgeVector(new int[]{0, 1, 2, 3, 0}), is(BitMatrixTest.toBitSet("101101")));
         assertThat(initial.toEdgeVector(new int[]{0, 1, 2, 0}), is(BitMatrixTest.toBitSet("110100")));
     }
 
     @Test
-    public void lengths_naphthalene() throws IOException {
+    void lengths_naphthalene() throws IOException {
         assertThat(new InitialCycles(naphthalene()).lengths(), hasItem(6));
     }
 
     @Test
-    public void cycles_naphthalene() throws IOException {
+    void cycles_naphthalene() throws IOException {
         InitialCycles initial = new InitialCycles(naphthalene());
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(2));
@@ -143,12 +143,12 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void lengths_anthracene() throws IOException {
+    void lengths_anthracene() throws IOException {
         assertThat(new InitialCycles(anthracene()).lengths(), hasItem(6));
     }
 
     @Test
-    public void cycles_anthracene() throws IOException {
+    void cycles_anthracene() throws IOException {
         InitialCycles initial = new InitialCycles(anthracene());
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(3));
@@ -158,12 +158,12 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void lengths_bicyclo() throws IOException {
+    void lengths_bicyclo() throws IOException {
         assertThat(new InitialCycles(bicyclo()).lengths(), hasItem(6));
     }
 
     @Test
-    public void cycles_bicyclo() throws IOException {
+    void cycles_bicyclo() throws IOException {
         InitialCycles initial = new InitialCycles(bicyclo());
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(3));
@@ -173,7 +173,7 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void lengths_cyclophane() throws IOException {
+    void lengths_cyclophane() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
         assertThat(initial.lengths(), hasItems(6, 9));
         Iterator<Integer> it = initial.lengths().iterator();
@@ -183,7 +183,7 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void cycles_cyclophane() throws IOException {
+    void cycles_cyclophane() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(2));
@@ -192,14 +192,14 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void cycles_cyclophane_odd_limit_5() throws IOException {
+    void cycles_cyclophane_odd_limit_5() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 5);
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(0));
     }
 
     @Test
-    public void cycles_cyclophane_odd_limit_6() throws IOException {
+    void cycles_cyclophane_odd_limit_6() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 6);
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(1));
@@ -207,7 +207,7 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void cycles_cyclophane_odd_limit_7() throws IOException {
+    void cycles_cyclophane_odd_limit_7() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 7);
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(1));
@@ -215,7 +215,7 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void cycles_family_odd() {
+    void cycles_family_odd() {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.get(1).path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
@@ -226,7 +226,7 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void cycles_family_even() {
+    void cycles_family_even() {
         InitialCycles initial = new InitialCycles(cyclophane_even());
         List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.get(1).path(), is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
@@ -239,67 +239,67 @@ public class InitialCyclesTest {
     // ensure using the biconnected optimisation will still find the cycle in
     // a simple cycle, cylcohexane (there are no vertices with deg 3)
     @Test
-    public void bioconnected_simpleCycle() {
+    void bioconnected_simpleCycle() {
         InitialCycles ic = InitialCycles.ofBiconnectedComponent(cyclohexane());
         assertThat(ic.numberOfCycles(), is(1));
     }
 
     @Test
-    public void bioconnected_simpleCycle_limit_5() {
+    void bioconnected_simpleCycle_limit_5() {
         InitialCycles ic = InitialCycles.ofBiconnectedComponent(cyclohexane(), 5);
         assertThat(ic.numberOfCycles(), is(0));
     }
 
     @Test
-    public void bioconnected_simpleCycle_limit_6() {
+    void bioconnected_simpleCycle_limit_6() {
         InitialCycles ic = InitialCycles.ofBiconnectedComponent(cyclohexane(), 6);
         assertThat(ic.numberOfCycles(), is(1));
     }
 
     @Test
-    public void join() {
+    void join() {
         int[] a = new int[]{0, 1, 2};
         int[] b = new int[]{0, 3, 4};
         assertThat(InitialCycles.join(a, b), is(new int[]{0, 1, 2, 4, 3, 0}));
     }
 
     @Test
-    public void joinWith() {
+    void joinWith() {
         int[] a = new int[]{0, 1, 2};
         int[] b = new int[]{0, 3, 4};
         assertThat(InitialCycles.join(a, 5, b), is(new int[]{0, 1, 2, 5, 4, 3, 0}));
     }
 
     @Test
-    public void singleton() {
+    void singleton() {
         int[] a = new int[]{0, 1, 3, 5, 7, 9};
         int[] b = new int[]{0, 2, 4, 6, 8, 10};
         Assertions.assertTrue(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
-    public void startOverlap() {
+    void startOverlap() {
         int[] a = new int[]{0, 1, 2, 3, 4, 6};
         int[] b = new int[]{0, 1, 2, 3, 5, 7};
         Assertions.assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
-    public void middleOverlap() {
+    void middleOverlap() {
         int[] a = new int[]{0, 1, 3, 5, 6, 7, 9};
         int[] b = new int[]{0, 2, 4, 5, 6, 8, 10};
         Assertions.assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
-    public void endOverlap() {
+    void endOverlap() {
         int[] a = new int[]{0, 1, 3, 5, 7, 9, 10};
         int[] b = new int[]{0, 2, 4, 6, 8, 9, 10};
         Assertions.assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
-    public void edgeIsTransitive() {
+    void edgeIsTransitive() {
         InitialCycles.Edge p = new InitialCycles.Edge(0, 1);
         InitialCycles.Edge q = new InitialCycles.Edge(1, 0);
         assertThat(p.hashCode(), is(q.hashCode()));
@@ -307,7 +307,7 @@ public class InitialCyclesTest {
     }
 
     @Test
-    public void edgeToString() {
+    void edgeToString() {
         InitialCycles.Edge p = new InitialCycles.Edge(0, 1);
         assertThat(p.toString(), is("{0, 1}"));
     }

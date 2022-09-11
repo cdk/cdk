@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
+class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -47,7 +47,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  Constructor for the PiElectronegativityDescriptorTest object
      *
      */
-    public PiElectronegativityDescriptorTest() {}
+    PiElectronegativityDescriptorTest() {}
 
     /**
      *  A unit test suite for JUnit
@@ -56,7 +56,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      */
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(PiElectronegativityDescriptor.class);
     }
 
@@ -64,7 +64,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Methyl Fluoride
      */
     @Test
-    public void testPiElectronegativityDescriptor_Methyl_Fluoride() throws
+    void testPiElectronegativityDescriptor_Methyl_Fluoride() throws
             java.lang.Exception {
         double[] testResult = {3.9608, 0.0, 0.0, 0.0, 0.0};/*
                                                             * from Petra online:
@@ -103,7 +103,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Methyl Chloride
      */
     @Test
-    public void testPiElectronegativityDescriptor_Methyl_Chloride() throws
+    void testPiElectronegativityDescriptor_Methyl_Chloride() throws
             java.lang.Exception {
         double[] testResult = {4.7054, 0.0, 0.0, 0.0, 0.0};/*
                                                             * from Petra
@@ -143,7 +143,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Methyl iodide
      */
     @Test
-    public void testPiElectronegativityDescriptor_Methyl_Iodide() throws
+    void testPiElectronegativityDescriptor_Methyl_Iodide() throws
             java.lang.Exception {
         double[] testResult = {4.1951, 0.0, 0.0, 0.0, 0.0};/*
                                                             * from Petra
@@ -183,7 +183,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Methyl Bromide
      */
     @Test
-    public void testPiElectronegativityDescriptor_Methyl_Bromide() throws
+    void testPiElectronegativityDescriptor_Methyl_Bromide() throws
             java.lang.Exception {
         double[] testResult = {3.8922, 0.0, 0.0, 0.0, 0.0};/*
                                                             * from Petra online:
@@ -222,7 +222,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Methyl Alcohol
      */
     @Test
-    public void testPiElectronegativityDescriptor_Methyl_Alcohol() throws
+    void testPiElectronegativityDescriptor_Methyl_Alcohol() throws
             java.lang.Exception {
         double[] testResult = {3.1138, 0.0, 0.0, 0.0, 0.0};/*
                                                             * from Petra online:
@@ -261,7 +261,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Formaldehyde
      */
     @Test
-    public void testPiElectronegativityDescriptor_Formaldehyde() throws
+    void testPiElectronegativityDescriptor_Formaldehyde() throws
             java.lang.Exception {
         double[] testResult = {6.3012, 8.0791, 0.0, 0.0, 0.0};/*
                                                                * from Petra
@@ -301,7 +301,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Ethylene
      */
     @Test
-    public void testPiElectronegativityDescriptor_Ethylene() throws
+    void testPiElectronegativityDescriptor_Ethylene() throws
             java.lang.Exception {
 
         double[] testResult = {5.1519, 5.1519, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
@@ -358,7 +358,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Fluoroethylene
      */
     @Test
-    public void testPiElectronegativityDescriptor_Fluoroethylene() throws
+    void testPiElectronegativityDescriptor_Fluoroethylene() throws
             java.lang.Exception {
         double[] testResult = {4.7796, 5.9414, 5.0507, 0.0, 0.0, 0.0};/*
                                                                        * from
@@ -403,7 +403,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Formic Acid
      */
     @Test
-    public void testPiElectronegativityDescriptor_FormicAcid() throws
+    void testPiElectronegativityDescriptor_FormicAcid() throws
             java.lang.Exception {
         double[] testResult = {6.8954, 7.301, 4.8022, 0.0, 0.0};/*
                                                                  * from Petra
@@ -443,7 +443,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Methoxyethylene
      */
     @Test
-    public void testPiElectronegativityDescriptor_Methoxyethylene() throws
+    void testPiElectronegativityDescriptor_Methoxyethylene() throws
             java.lang.Exception {
         double[] testResult = {4.916, 5.7345, 3.971, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                          * from
@@ -499,7 +499,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with F[C+][C-]
      */
     @Test
-    public void testPiElectronegativity1() throws java.lang.Exception {
+    void testPiElectronegativity1() throws java.lang.Exception {
         double[] testResult = {5.1788, 5.465, 5.2475, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                           * from
                                                                                           * Petra
@@ -554,7 +554,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with CCOCCCO
      */
     @Test
-    public void testPiElectronegativity2() throws java.lang.Exception {
+    void testPiElectronegativity2() throws java.lang.Exception {
         double[] testResult = {0.0, 0.0, 3.2849, 0.0, 0.0, 0.0, 3.2849, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0};/*
                                 * from Petra online:
@@ -590,7 +590,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
-    public void testCompareIonized() throws java.lang.Exception {
+    void testCompareIonized() throws java.lang.Exception {
 
         IAtomContainer molA = builder.newInstance(IAtomContainer.class);
         molA.addAtom(builder.newInstance(IAtom.class, "C"));

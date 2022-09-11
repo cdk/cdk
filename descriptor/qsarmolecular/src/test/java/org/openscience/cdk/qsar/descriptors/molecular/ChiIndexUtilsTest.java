@@ -31,19 +31,19 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class ChiIndexUtilsTest extends CDKTestCase {
+class ChiIndexUtilsTest extends CDKTestCase {
 
-    IChemObjectBuilder builder;
+    private IChemObjectBuilder builder;
 
-    public ChiIndexUtilsTest() {}
+    ChiIndexUtilsTest() {}
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
     }
 
     @Test
-    public void testDeltaVSulphurSO() {
+    void testDeltaVSulphurSO() {
         IAtom s = builder.newInstance(IAtom.class, "S");
         IAtom o = builder.newInstance(IAtom.class, "O");
         IBond b = builder.newInstance(IBond.class, s, o);
@@ -59,7 +59,7 @@ public class ChiIndexUtilsTest extends CDKTestCase {
     }
 
     @Test
-    public void testDeltaVSulphurSO2() {
+    void testDeltaVSulphurSO2() {
         IAtom s = builder.newInstance(IAtom.class, "S");
         IAtom o1 = builder.newInstance(IAtom.class, "O");
         IAtom o2 = builder.newInstance(IAtom.class, "O");

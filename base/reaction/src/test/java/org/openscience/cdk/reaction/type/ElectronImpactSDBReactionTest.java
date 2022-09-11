@@ -55,7 +55,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public ElectronImpactSDBReactionTest() throws Exception {
+    ElectronImpactSDBReactionTest() throws Exception {
         setReaction(ElectronImpactSDBReaction.class);
     }
 
@@ -63,7 +63,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testElectronImpactSDBReaction() throws Exception {
+    void testElectronImpactSDBReaction() throws Exception {
         IReactionProcess type = new ElectronImpactSDBReaction();
         Assertions.assertNotNull(type);
     }
@@ -179,7 +179,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
      *
      * @return The IAtomContainerSet
      */
-    private IAtomContainerSet getExpectedProducts() {
+    IAtomContainerSet getExpectedProducts() {
         IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
         setOfProducts.addAtomContainer(null);

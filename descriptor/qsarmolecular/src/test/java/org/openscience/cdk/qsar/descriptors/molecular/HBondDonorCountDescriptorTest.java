@@ -34,17 +34,17 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
+class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
 
-    public HBondDonorCountDescriptorTest() {}
+    HBondDonorCountDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(HBondDonorCountDescriptor.class);
     }
 
     @Test
-    public void testHBondDonorCountDescriptor() throws java.lang.Exception {
+    void testHBondDonorCountDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -57,7 +57,7 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C2H3N3/c1-3-2-5-4-1/h1-2H,(H,3,4,5)
      */
     @Test
-    public void testCID9257() {
+    void testCID9257() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a1 = builder.newInstance(IAtom.class, "N");

@@ -35,17 +35,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @cdk.module test-qsaratomic
  */
-public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest {
+class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest {
 
-    public IsProtonInAromaticSystemDescriptorTest() {}
+    IsProtonInAromaticSystemDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(IsProtonInAromaticSystemDescriptor.class);
     }
 
     @Test
-    public void testIsProtonInAromaticSystemDescriptor() throws
+    void testIsProtonInAromaticSystemDescriptor() throws
             java.lang.Exception {
         IAtomicDescriptor descriptor = new IsProtonInAromaticSystemDescriptor();
         Object[] params = {Boolean.TRUE};

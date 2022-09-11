@@ -34,16 +34,16 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  *
  * @cdk.module test-isomorphism
  */
-public class QueryAtomContainerCreatorTest extends CDKTestCase {
+class QueryAtomContainerCreatorTest extends CDKTestCase {
 
     @BeforeAll
-    public static void setUp() {}
+    static void setUp() {}
 
     /**
      * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
      */
     @Test
-    public void test12DimethylBenzene() throws Exception {
+    void test12DimethylBenzene() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));

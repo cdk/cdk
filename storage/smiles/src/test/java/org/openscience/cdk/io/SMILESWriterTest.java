@@ -51,22 +51,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.module test-smiles
  * @see org.openscience.cdk.io.SMILESWriter
  */
-public class SMILESWriterTest extends ChemObjectIOTest {
+class SMILESWriterTest extends ChemObjectIOTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setChemObjectIO(new SMILESWriter());
     }
 
     @Test
-    public void testAccepts() throws Exception {
+    void testAccepts() throws Exception {
         SMILESWriter reader = new SMILESWriter();
         Assertions.assertTrue(reader.accepts(AtomContainer.class));
         Assertions.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test
-    public void testWriteSMILESFile() throws Exception {
+    void testWriteSMILESFile() throws Exception {
         StringWriter stringWriter = new StringWriter();
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
@@ -77,7 +77,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testWriteAromatic() throws Exception {
+    void testWriteAromatic() throws Exception {
         StringWriter stringWriter = new StringWriter();
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
@@ -96,7 +96,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testWriteNonCanon() throws Exception {
+    void testWriteNonCanon() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smipar.parseSmiles("CCO");
         IAtomContainer mol2 = smipar.parseSmiles("OCC");
@@ -111,7 +111,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testWriteCanon() throws Exception {
+    void testWriteCanon() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smipar.parseSmiles("CCO");
         IAtomContainer mol2 = smipar.parseSmiles("OCC");
@@ -127,7 +127,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testWriteWithTitle() throws Exception {
+    void testWriteWithTitle() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smipar.parseSmiles("CCO mol 1");
         IAtomContainer mol2 = smipar.parseSmiles("OCC mol 2");
@@ -143,7 +143,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testWriteWithoutTitle() throws Exception {
+    void testWriteWithoutTitle() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smipar.parseSmiles("CCO mol 1");
         IAtomContainer mol2 = smipar.parseSmiles("OCC mol 2");
@@ -159,7 +159,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
     }
     
     @Test
-    public void testWriteSmiFlavor() throws Exception {
+    void testWriteSmiFlavor() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smipar.parseSmiles("c1ccccc1");
         StringWriter wtr = new StringWriter();

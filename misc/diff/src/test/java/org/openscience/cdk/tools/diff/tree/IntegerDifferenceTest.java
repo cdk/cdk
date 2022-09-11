@@ -24,28 +24,28 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-diff
  */
-public class IntegerDifferenceTest {
+class IntegerDifferenceTest {
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IDifference result = IntegerDifference.construct("Foo", 1, 2);
         Assertions.assertNotNull(result);
     }
 
     @Test
-    public void testSame() {
+    void testSame() {
         IDifference result = IntegerDifference.construct("Foo", 1, 1);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testTwoNull() {
+    void testTwoNull() {
         IDifference result = IntegerDifference.construct("Foo", null, null);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testOneNull() {
+    void testOneNull() {
         IDifference result = IntegerDifference.construct("Foo", null, 1);
         Assertions.assertNotNull(result);
 
@@ -54,7 +54,7 @@ public class IntegerDifferenceTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         IDifference result = IntegerDifference.construct("Foo", 1, 2);
         String diffString = result.toString();
         Assertions.assertNotNull(diffString);
@@ -62,7 +62,7 @@ public class IntegerDifferenceTest {
     }
 
     @Test
-    public void testRefs() {
+    void testRefs() {
         Integer x = 1;
         Integer y = 1;
         IDifference diff = IntegerDifference.construct("foo", x, y);

@@ -31,11 +31,11 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * @cdk.module test-renderbasic
  */
-public class PathElementTest extends AbstractElementTest {
+class PathElementTest extends AbstractElementTest {
 
     @SuppressWarnings("serial")
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         IRenderingElement element = new PathElement(new ArrayList<Point2d>() {
 
             {

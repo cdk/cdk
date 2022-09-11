@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @see MM2AtomTypeMatcher
  */
 @Tag("SlowTest")
-public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
+class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     private static final ILoggingTool         logger          = LoggingToolFactory
                                                                 .createLoggingTool(MM2AtomTypeMatcherTest.class);
@@ -60,7 +60,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         if (testMolecule == null) {
             // read the test file and percieve atom types
             AtomTypeTools att = new AtomTypeTools();
@@ -83,13 +83,13 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test
-    public void testMMFF94AtomTypeMatcher() {
+    void testMMFF94AtomTypeMatcher() {
         MM2AtomTypeMatcher matcher = new MM2AtomTypeMatcher();
         Assertions.assertNotNull(matcher);
     }
 
     @Test
-    public void testFindMatchingAtomType_IAtomContainer() throws Exception {
+    void testFindMatchingAtomType_IAtomContainer() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
         final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
@@ -108,7 +108,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test
-    public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
+    void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
         for (int i = 0; i < testMolecule.getAtomCount(); i++) {
             Assertions.assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
             Assertions.assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
@@ -118,37 +118,37 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     // FIXME: Below should be tests for *all* atom types in the MM2 atom type specificiation
 
     @Test
-    public void testSthi() {
+    void testSthi() {
         assertAtomType(testedAtomTypes, "Sthi", testMolecule.getAtom(0));
     }
 
     @Test
-    public void testCsp2() {
+    void testCsp2() {
         assertAtomType(testedAtomTypes, "Csp2", testMolecule.getAtom(7));
     }
 
     @Test
-    public void testCsp() {
+    void testCsp() {
         assertAtomType(testedAtomTypes, "Csp", testMolecule.getAtom(51));
     }
 
     @Test
-    public void testNdbC() {
+    void testNdbC() {
         assertAtomType(testedAtomTypes, "N=C", testMolecule.getAtom(148));
     }
 
     @Test
-    public void testOar() {
+    void testOar() {
         assertAtomType(testedAtomTypes, "Oar", testMolecule.getAtom(198));
     }
 
     @Test
-    public void testN2OX() {
+    void testN2OX() {
         assertAtomType(testedAtomTypes, "N2OX", testMolecule.getAtom(233));
     }
 
     @Test
-    public void testNsp2() {
+    void testNsp2() {
         assertAtomType(testedAtomTypes, "Nsp2", testMolecule.getAtom(256));
     }
 
@@ -158,7 +158,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
      * method cannot Assert.assert anything.
      */
     @Disabled("Atom type matcher is incomplete")
-    public void countTestedAtomTypes() {
+    void countTestedAtomTypes() {
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
                 SilentChemObjectBuilder.getInstance());
 

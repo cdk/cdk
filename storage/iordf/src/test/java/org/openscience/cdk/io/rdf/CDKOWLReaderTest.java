@@ -37,22 +37,22 @@ import java.io.InputStreamReader;
 /**
  * @cdk.module test-iordf
  */
-public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
+class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKOWLReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new CDKOWLReader(), "org/openscience/cdk/io/rdf/molecule.n3");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Assertions.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
 
     @Test
-    public void testMolecule() throws Exception {
+    void testMolecule() throws Exception {
         String filename = "molecule.n3";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

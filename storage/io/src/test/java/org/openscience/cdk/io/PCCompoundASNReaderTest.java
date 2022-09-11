@@ -40,23 +40,23 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * @cdk.module test-io
  */
-public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
+class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new PCCompoundASNReader(), "cid1.asn");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         PCCompoundASNReader reader = new PCCompoundASNReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
-    public void testReading() throws Exception {
+    void testReading() throws Exception {
         String filename = "cid1.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

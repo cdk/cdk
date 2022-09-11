@@ -46,19 +46,19 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 /**
  * @cdk.module test-core
  */
-public class PathToolsTest extends CDKTestCase {
+class PathToolsTest extends CDKTestCase {
 
     private static IAtomContainer molecule;
     private static SmilesParser   sp;
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         molecule = TestMoleculeFactory.makeAlphaPinene();
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testBreadthFirstTargetSearch_IAtomContainer_List_IAtom_int_int() {
+    void testBreadthFirstTargetSearch_IAtomContainer_List_IAtom_int_int() {
         org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtom(0);
         org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtom(8);
         List<IAtom> sphere = new ArrayList<>();
@@ -69,7 +69,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testResetFlags_IAtomContainer() throws Exception {
+    void testResetFlags_IAtomContainer() throws Exception {
         IAtomContainer atomContainer = new AtomContainer();
         IAtom atom1 = new Atom("C");
         atom1.setFlag(CDKConstants.VISITED, true);
@@ -92,7 +92,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetShortestPath_IAtomContainer_IAtom_IAtom() throws Exception {
+    void testGetShortestPath_IAtomContainer_IAtom_IAtom() throws Exception {
         IAtomContainer atomContainer;
         IAtom start;
         IAtom end;
@@ -118,7 +118,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetShortestPath_Middle() throws Exception {
+    void testGetShortestPath_Middle() throws Exception {
         String filename = "shortest_path_test.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -136,7 +136,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetPathsOfLength_IAtomContainer_IAtom_int() throws Exception {
+    void testGetPathsOfLength_IAtomContainer_IAtom_int() throws Exception {
         IAtomContainer atomContainer;
         IAtom start;
         List<List<IAtom>> paths;
@@ -152,7 +152,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllPaths_IAtomContainer_IAtom_IAtom() throws Exception {
+    void testGetAllPaths_IAtomContainer_IAtom_IAtom() throws Exception {
         IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
 
         IAtom start = atomContainer.getAtom(0);
@@ -178,14 +178,14 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetVertexCountAtDistance_IAtomContainer_int() throws Exception {
+    void testGetVertexCountAtDistance_IAtomContainer_int() throws Exception {
         IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
         Assertions.assertEquals(11, PathTools.getVertexCountAtDistance(atomContainer, 1));
         Assertions.assertEquals(14, PathTools.getVertexCountAtDistance(atomContainer, 2));
     }
 
     @Test
-    public void testGetInt2DColumnSum_arrayintint() {
+    void testGetInt2DColumnSum_arrayintint() {
         int[][] start = new int[2][2];
         start[0][0] = 5;
         start[0][1] = 3;
@@ -197,7 +197,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMolecularGraphRadius_IAtomContainer() throws Exception {
+    void testGetMolecularGraphRadius_IAtomContainer() throws Exception {
         IAtomContainer atomContainer = sp.parseSmiles("CCCC");
         Assertions.assertEquals(2, PathTools.getMolecularGraphRadius(atomContainer));
         atomContainer = sp.parseSmiles("C1C(N)CC1");
@@ -207,7 +207,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMolecularGraphDiameter_IAtomContainer() throws Exception {
+    void testGetMolecularGraphDiameter_IAtomContainer() throws Exception {
         IAtomContainer atomContainer = sp.parseSmiles("CCCC");
         Assertions.assertEquals(3, PathTools.getMolecularGraphDiameter(atomContainer));
         atomContainer = sp.parseSmiles("C1C(N)CC1");
@@ -217,7 +217,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testComputeFloydAPSP_arrayintint() {
+    void testComputeFloydAPSP_arrayintint() {
         int[][] start = new int[5][5]; // default to all zeros
         start[0][1] = 1;
         start[1][2] = 1;
@@ -245,7 +245,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testComputeFloydAPSP_arraydoubledouble() {
+    void testComputeFloydAPSP_arraydoubledouble() {
         double[][] start = new double[5][5]; // default to all zeros
         start[0][1] = 1.0;
         start[1][2] = 1.0;
@@ -273,7 +273,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() throws Exception {
+    void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() throws Exception {
         IAtomContainer molecule = sp.parseSmiles("C(COF)(Br)NC");
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
@@ -301,7 +301,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testBreadthFirstSearch_IAtomContainer_List_IAtomContainer() throws Exception {
+    void testBreadthFirstSearch_IAtomContainer_List_IAtomContainer() throws Exception {
         IAtomContainer atomContainer;
         IAtom start;
         atomContainer = sp.parseSmiles("CCCC");
@@ -315,7 +315,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testBreadthFirstSearch_IAtomContainer_List_IAtomContainer_int() throws Exception {
+    void testBreadthFirstSearch_IAtomContainer_List_IAtomContainer_int() throws Exception {
         IAtomContainer atomContainer;
         IAtom start;
         atomContainer = sp.parseSmiles("CCCC");
@@ -339,7 +339,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testFindClosestByBond() throws InvalidSmilesException {
+    void testFindClosestByBond() throws InvalidSmilesException {
         IAtomContainer container = sp.parseSmiles("CCN(CSCP)CCCOF");
         IAtom queryAtom = null;
         for (IAtom atom : container.atoms()) {
@@ -355,7 +355,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetPathsOfLengthUpto() throws InvalidSmilesException {
+    void testGetPathsOfLengthUpto() throws InvalidSmilesException {
         IAtomContainer container = sp.parseSmiles("CCCC");
         List<List<IAtom>> paths = PathTools.getPathsOfLengthUpto(container, container.getAtom(0), 2);
         Assertions.assertEquals(3, paths.size());
@@ -366,7 +366,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetLimitedPathsOfLengthUpto() throws InvalidSmilesException {
+    void testGetLimitedPathsOfLengthUpto() throws InvalidSmilesException {
         IAtomContainer container = sp.parseSmiles("CCCC");
         List<List<IAtom>> paths = PathTools.getPathsOfLengthUpto(container, container.getAtom(0), 2);
         Assertions.assertEquals(3, paths.size());
@@ -377,7 +377,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetLimitedPathsOfLengthUpto_Exception() throws CDKException {
+    void testGetLimitedPathsOfLengthUpto_Exception() throws CDKException {
         IAtomContainer container = sp
                 .parseSmiles("[B]1234[B]567[B]89%10[B]%11%12%13[B]%14%15%16[B]11([B]%17%18%19[B]%20%21%22[B]22%23[B]%24%25%26[B]%27%28%29[B]55([B]%30%31%32[B]88%33[B]%34%35%36[B]%37%38%39[B]%11%11([B]%40%41%42[B]%14%14%43[B]%44%45%46[B]%17%17([B]%47%48%49[B]%50%51%52[B]%20%20([B]%53%54%55[B]%24%24([B]%56%57%58[B]%27%27%59[B]%60%61%62[B]%30%30([B]%63%64%65[B]%34%34([B]%66%67%68[B]%37%37%69[B]%70%71%72[B]%40%40([B]%73%74%75[B]%44%44([B]%47%47%76[B]%77%78%79[B]%80%81%82[B]%50%50([B]%53%53%83[B]%84%85%86[B]%56%56([B]%87%88%89[B]%60%60([B]%63%63%90[B]%91%92%93[B]%66%66([B]%94%95%96[B]%70%70([B]%73%73%97[B]%77%77([B]%98%99%100[B]%80%80%101[B]%84%84([B]%87%87%102[B]%91%91([B]%94%98([B]%95%70%73%77%99)[B]%100%80%84%87%91)[B]%88%60%63%92%102)[B]%81%50%53%85%101)[B]%74%44%47%78%97)[B]%67%37%71%66%96)[B]%64%34%68%90%93)[B]%57%27%61%56%89)[B]%54%24%58%83%86)[B]%48%51%76%79%82)[B]%41%14%45%40%75)[B]%38%11%42%69%72)[B]%318%35%30%65)[B]%285%32%59%62)[B]%212%25%20%55)[B]%18%22%17%49%52)[B]%151%19%43%46)[B]9%12%33%36%39)[B]36%23%26%29)[B]47%10%13%16");
         Assertions.assertThrows(CDKException.class,

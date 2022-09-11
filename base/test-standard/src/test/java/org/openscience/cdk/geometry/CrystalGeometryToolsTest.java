@@ -38,9 +38,9 @@ import javax.vecmath.Vector3d;
  *
  * @see org.openscience.cdk.geometry.CrystalGeometryTools
  */
-public class CrystalGeometryToolsTest extends CDKTestCase {
+class CrystalGeometryToolsTest extends CDKTestCase {
 
-    public CrystalGeometryToolsTest() {
+    CrystalGeometryToolsTest() {
         super();
     }
 
@@ -51,7 +51,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * places the a axis on the x axis and the b axis in the xy plane.
      */
     @Test
-    public void testNotionalToCartesian_double_double_double_double_double_double() {
+    void testNotionalToCartesian_double_double_double_double_double_double() {
         Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(1.0, 2.0, 3.0, 90.0, 90.0, 90.0);
         // the a axis
         Assertions.assertEquals(1.0, cardAxes[0].x, 0.001);
@@ -84,7 +84,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * notional coordinates.
      */
     @Test
-    public void testCartesianToNotional_Vector3d_Vector3d_Vector3d() {
+    void testCartesianToNotional_Vector3d_Vector3d_Vector3d() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
@@ -102,7 +102,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * cartesian coordinates.
      */
     @Test
-    public void testFractionalToCartesian_Vector3d_Vector3d_Vector3d_Point3d() {
+    void testFractionalToCartesian_Vector3d_Vector3d_Vector3d_Point3d() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
@@ -118,7 +118,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * cartesian coordinates. The specific numbers are taken from 9603.res.
      */
     @Test
-    public void testFractionalToCartesian2() {
+    void testFractionalToCartesian2() {
         Vector3d[] cardAxes = CrystalGeometryTools
                 .notionalToCartesian(9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821);
         Vector3d a = cardAxes[0];
@@ -137,7 +137,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * fractional coordinates.
      */
     @Test
-    public void testCartesianToFractional_Vector3d_Vector3d_Vector3d_Point3d() {
+    void testCartesianToFractional_Vector3d_Vector3d_Vector3d_Point3d() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
@@ -152,7 +152,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * This method tests the calculation of axis lengths.
      */
     @Test
-    public void testCalcAxisLength() {
+    void testCalcAxisLength() {
         Vector3d a = new Vector3d(1.0, 1.0, 1.0);
         double length = a.length();
         Assertions.assertEquals(Math.sqrt(3.0), length, 0.001);
@@ -163,7 +163,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * <code>testCalcAxisLength()</code>.
      */
     @Test
-    public void testCalcAxisLength2() {
+    void testCalcAxisLength2() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
         double length = a.length();
         Assertions.assertEquals(1.0, length, 0.001);
@@ -179,7 +179,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * This method tests the calculation of the angle between two axes.
      */
     @Test
-    public void testCalcAngle() {
+    void testCalcAngle() {
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
         double angle = b.angle(c) * 180.0 / Math.PI;
@@ -190,7 +190,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * This method tests the calculation of the angle between two axes too.
      */
     @Test
-    public void testCalcAngle2() {
+    void testCalcAngle2() {
         Vector3d b = new Vector3d(0.0, 1.0, 1.0);
         Vector3d c = new Vector3d(0.0, 0.0, 1.0);
         double angle = b.angle(c) * 180.0 / Math.PI;
@@ -202,7 +202,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * and itself, which should be zero by definition.
      */
     @Test
-    public void testCalcAngle3() {
+    void testCalcAngle3() {
         Vector3d b = new Vector3d(4.5, 3.1, 1.7);
         double angle = b.angle(b) * 180.0 / Math.PI;
         Assertions.assertEquals(0.0, angle, 0.001);
@@ -213,7 +213,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * cartesian and back to notional.
      */
     @Test
-    public void testRoundTripUnitCellNotionalCoordinates() {
+    void testRoundTripUnitCellNotionalCoordinates() {
         Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(7.6, 3.9, 10.3, 67.0, 91.2, 110.5);
         Vector3d a = cardAxes[0];
         Vector3d b = cardAxes[1];
@@ -232,7 +232,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * gives back the original axes.
      */
     @Test
-    public void testCalcInvertedAxes_Vector3d_Vector3d_Vector3d() {
+    void testCalcInvertedAxes_Vector3d_Vector3d_Vector3d() {
         Vector3d a = new Vector3d(3.4, 7.6, 5.5);
         Vector3d b = new Vector3d(2.8, 4.0, 6.3);
         Vector3d c = new Vector3d(1.9, 3.9, 9.1);

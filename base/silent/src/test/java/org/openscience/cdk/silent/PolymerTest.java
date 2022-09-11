@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IPolymer;
  *
  * @cdk.module test-silent
  */
-public class PolymerTest extends AbstractPolymerTest {
+class PolymerTest extends AbstractPolymerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Polymer::new);
     }
 
     @Test
-    public void testPolymer() {
+    void testPolymer() {
         IPolymer polymer = new Polymer();
         Assertions.assertNotNull(polymer);
         Assertions.assertTrue(polymer instanceof Polymer);

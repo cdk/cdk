@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
  *
  * @cdk.module test-datadebug
  */
-public class DebugPDBMonomerTest extends AbstractPDBMonomerTest {
+class DebugPDBMonomerTest extends AbstractPDBMonomerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugPDBMonomer::new);
     }
 
     @Test
-    public void testDebugPDBMonomer() {
+    void testDebugPDBMonomer() {
         IPDBMonomer monomer = new DebugPDBMonomer();
         Assertions.assertNotNull(monomer);
         Assertions.assertEquals(monomer.getICode(), null);

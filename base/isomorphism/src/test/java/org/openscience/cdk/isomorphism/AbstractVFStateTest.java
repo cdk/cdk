@@ -37,18 +37,18 @@ import static org.openscience.cdk.isomorphism.AbstractVFState.UNMAPPED;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class AbstractVFStateTest {
+class AbstractVFStateTest {
 
     // size = 0, always the first vertex
     @Test
-    public void nextNAt0() {
+    void nextNAt0() {
         AbstractVFState state = create(5, 10);
         assertThat(state.nextN(-1), is(0));
     }
 
     // size > 0, select the first unmapped terminal vertex
     @Test
-    public void nextNTerminal() {
+    void nextNTerminal() {
         AbstractVFState state = create(5, 10);
         state.size = 2;
         state.m1[0] = 1;
@@ -59,7 +59,7 @@ public class AbstractVFStateTest {
 
     // no terminal mappings, select the first unmapped
     @Test
-    public void nextNNonTerminal() {
+    void nextNNonTerminal() {
         AbstractVFState state = create(5, 10);
         state.size = 2;
         state.m1[0] = 1;
@@ -69,7 +69,7 @@ public class AbstractVFStateTest {
 
     // size = 0, always the next vertex
     @Test
-    public void nextMAt0() {
+    void nextMAt0() {
         AbstractVFState state = create(5, 10);
         assertThat(state.nextM(0, -1), is(0));
         assertThat(state.nextM(0, 0), is(1));
@@ -79,7 +79,7 @@ public class AbstractVFStateTest {
 
     // size > 0, select the first unmapped terminal vertex
     @Test
-    public void nextMTerminal() {
+    void nextMTerminal() {
         AbstractVFState state = create(5, 10);
         state.size = 2;
         state.m2[0] = 1;
@@ -91,7 +91,7 @@ public class AbstractVFStateTest {
 
     // no terminal mappings, select the first unmapped
     @Test
-    public void nextMNonTerminal() {
+    void nextMNonTerminal() {
         AbstractVFState state = create(5, 10);
         state.size = 2;
         state.m2[0] = 1;
@@ -100,7 +100,7 @@ public class AbstractVFStateTest {
     }
 
     @Test
-    public void addNonFeasible() {
+    void addNonFeasible() {
         AbstractVFState state = new AbstractVFState(new int[4][], new int[6][]) {
 
             @Override
@@ -117,7 +117,7 @@ public class AbstractVFStateTest {
     }
 
     @Test
-    public void add() {
+    void add() {
         int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
         int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
@@ -136,7 +136,7 @@ public class AbstractVFStateTest {
     }
 
     @Test
-    public void remove() {
+    void remove() {
         int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
         int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
@@ -173,7 +173,7 @@ public class AbstractVFStateTest {
     }
 
     @Test
-    public void copyMapping() {
+    void copyMapping() {
         int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
         int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
@@ -186,7 +186,7 @@ public class AbstractVFStateTest {
     }
 
     @Test
-    public void accessors() {
+    void accessors() {
         int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
         int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
@@ -197,11 +197,11 @@ public class AbstractVFStateTest {
         assertThat(state.size(), is(2));
     }
 
-    public AbstractVFState create(int g1Size, int g2Size) {
+    AbstractVFState create(int g1Size, int g2Size) {
         return create(new int[g1Size][0], new int[g2Size][0]);
     }
 
-    public AbstractVFState create(int[][] g1, int[][] g2) {
+    AbstractVFState create(int[][] g1, int[][] g2) {
         return new AbstractVFState(g1, g2) {
 
             @Override

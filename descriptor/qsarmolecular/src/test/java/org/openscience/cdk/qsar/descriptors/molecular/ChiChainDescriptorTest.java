@@ -19,17 +19,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsarmolecular
  */
 
-public class ChiChainDescriptorTest extends MolecularDescriptorTest {
+class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
-    public ChiChainDescriptorTest() {}
+    ChiChainDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(ChiChainDescriptor.class);
     }
 
     @Test
-    public void testDan64() throws Exception {
+    void testDan64() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.7500000000000004, 2.799038105676658));
@@ -65,7 +65,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testDan80() throws Exception {
+    void testDan80() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
@@ -107,7 +107,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testDan81() throws Exception {
+    void testDan81() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
@@ -148,7 +148,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testDan82() throws Exception {
+    void testDan82() throws Exception {
 
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -190,7 +190,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testDan154() throws Exception {
+    void testDan154() throws Exception {
 
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -250,7 +250,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
      * @cdk.bug 3023326
      */
     @Test
-    public void testCovalentMetal() throws Exception {
+    void testCovalentMetal() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
@@ -261,7 +261,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
      * @cdk.bug 3023326
      */
     @Test
-    public void testCovalentPlatinum() throws Exception {
+    void testCovalentPlatinum() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
         Assertions.assertThrows(NullPointerException.class, () -> {

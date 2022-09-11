@@ -29,19 +29,19 @@ import org.junit.jupiter.api.Test;
 public class EntryReactTest extends AbstractEntryTest {
 
     @BeforeEach
-    public void setTestClass() {
+    void setTestClass() {
         super.setTestClass(new EntryReact("someID"));
     }
 
     @AfterEach
-    public void testTestedClass() {
+    void testTestedClass() {
         Assertions.assertTrue(super.getTestClass() instanceof EntryReact);
     }
 
     @Test
     @Override
     // customize because there is no constructor without any parameters
-    public void testID() {
+    void testID() {
         Entry entry = getTestClass();
         Assertions.assertEquals("someid", entry.getID());
         entry.setID("identifier");

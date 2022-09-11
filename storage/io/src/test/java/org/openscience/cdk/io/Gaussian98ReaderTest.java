@@ -22,20 +22,20 @@ import java.util.List;
  *
  * @author Christoph Steinbeck
  */
-public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
+class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new Gaussian98Reader(), "g98ReaderNMRTest.log");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
     @Test
-    public void testNMRReading() throws Exception {
+    void testNMRReading() throws Exception {
         IAtomContainer atomContainer;
         //boolean foundOneShieldingEntry = false;
         //Double shielding = null;

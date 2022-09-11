@@ -37,18 +37,18 @@ import static org.hamcrest.Matchers.closeTo;
  *
  * @cdk.module test-qsarmolecular
  */
-public class XLogPDescriptorTest extends MolecularDescriptorTest {
+class XLogPDescriptorTest extends MolecularDescriptorTest {
 
-    public XLogPDescriptorTest() {}
+    XLogPDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(XLogPDescriptor.class);
     }
 
     @Disabled
     @Test
-    public void testno688() throws java.lang.Exception {
+    void testno688() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -60,7 +60,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1596() throws java.lang.Exception {
+    void testno1596() throws java.lang.Exception {
         // the xlogp program value is 0.44 because of paralleled donor pair correction factor
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
@@ -73,7 +73,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno367() throws java.lang.Exception {
+    void testno367() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -85,7 +85,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1837() throws java.lang.Exception {
+    void testno1837() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -97,7 +97,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno87() throws java.lang.Exception {
+    void testno87() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -109,7 +109,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1782() throws java.lang.Exception {
+    void testno1782() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -121,7 +121,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno30() throws java.lang.Exception {
+    void testno30() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -134,7 +134,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
 
     @Disabled
     @Test
-    public void testno937() throws java.lang.Exception {
+    void testno937() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -146,7 +146,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno990() throws java.lang.Exception {
+    void testno990() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -158,7 +158,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1000() throws java.lang.Exception {
+    void testno1000() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -170,7 +170,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testApirinBug1296383() throws java.lang.Exception {
+    void testApirinBug1296383() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -182,7 +182,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1429() throws java.lang.Exception {
+    void testno1429() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -194,7 +194,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1274() throws java.lang.Exception {
+    void testno1274() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -206,7 +206,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno454() throws java.lang.Exception {
+    void testno454() throws java.lang.Exception {
         //xlogp program gives a result of -0.89, because one N is classified as in ring and not as amid
         //if one takes a 5 or 7 ring than the program assignes amid ... strange
         //sometimes amid is O=C-N-C=O sometimes not...
@@ -221,7 +221,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno498() throws java.lang.Exception {
+    void testno498() throws java.lang.Exception {
         //even here the amid assignment is very strange
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
@@ -234,7 +234,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testAprindine() throws java.lang.Exception {
+    void testAprindine() throws java.lang.Exception {
         //even here the amid assignment is very strange
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
@@ -247,7 +247,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test1844() throws java.lang.Exception {
+    void test1844() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -260,7 +260,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test1810() throws java.lang.Exception {
+    void test1810() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -275,7 +275,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1/C23H20N2O3S/c26-22-21(16-17-29(28)20-14-8-3-9-15-20)23(27)25(19-12-6-2-7-13-19)24(22)18-10-4-1-5-11-18/h1-15,21H,16-17H2
      */
     @Test
-    public void test1822() throws java.lang.Exception {
+    void test1822() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -287,7 +287,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testAromaticBenzene() throws java.lang.Exception {
+    void testAromaticBenzene() throws java.lang.Exception {
         Object[] params = {false, true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -300,7 +300,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testNonAromaticBenzene() throws java.lang.Exception {
+    void testNonAromaticBenzene() throws java.lang.Exception {
         Object[] params = {false, true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -311,7 +311,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testPerceivedAromaticBenzene() throws java.lang.Exception {
+    void testPerceivedAromaticBenzene() throws java.lang.Exception {
         Object[] params = {true, true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

@@ -89,7 +89,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public RearrangementLonePairReactionTest() throws Exception {
+    RearrangementLonePairReactionTest() throws Exception {
         setReaction(RearrangementLonePairReaction.class);
     }
 
@@ -97,7 +97,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testRearrangementLonePairReaction() throws Exception {
+    void testRearrangementLonePairReaction() throws Exception {
         IReactionProcess type = new RearrangementLonePairReaction();
         Assertions.assertNotNull(type);
     }
@@ -148,7 +148,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new RearrangementLonePairReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -190,7 +190,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new RearrangementLonePairReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -231,7 +231,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new RearrangementLonePairReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -267,7 +267,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer1() throws Exception {
+    void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
@@ -277,7 +277,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer2() throws Exception {
+    void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
@@ -376,7 +376,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testFluorobenzene() throws Exception {
+    void testFluorobenzene() throws Exception {
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "F"));

@@ -30,17 +30,17 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-qsaratomic
  */
-public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
+class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
 
-    public VdWRadiusDescriptorTest() {}
+    VdWRadiusDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(VdWRadiusDescriptor.class);
     }
 
     @Test
-    public void testVdWRadiusDescriptor() throws java.lang.Exception {
+    void testVdWRadiusDescriptor() throws java.lang.Exception {
         double[] testResult = {1.7};
         IAtomicDescriptor descriptor = new VdWRadiusDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

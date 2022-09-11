@@ -33,12 +33,12 @@ import org.openscience.cdk.io.formats.IChemFormat;
  *
  * @cdk.module test-libiocml
  */
-public class CMLWriterFactoryTest {
+class CMLWriterFactoryTest {
 
     private final WriterFactory factory = new WriterFactory();
 
     @Test
-    public void testCMLWriter() {
+    void testCMLWriter() {
         WriterFactory factory = new WriterFactory();
         factory.registerWriter(CMLWriter.class);
         IChemObjectWriter writer = factory.createWriter((IChemFormat) CMLFormat.getInstance());

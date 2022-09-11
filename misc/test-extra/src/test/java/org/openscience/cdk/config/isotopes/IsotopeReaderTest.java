@@ -34,16 +34,16 @@ import java.util.List;
  *
  * @cdk.module test-extra
  */
-public class IsotopeReaderTest extends CDKTestCase {
+class IsotopeReaderTest extends CDKTestCase {
 
     @Test
-    public void testIsotopeReader_InputStream_IChemObjectBuilder() {
+    void testIsotopeReader_InputStream_IChemObjectBuilder() {
         IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(new byte[0]), new ChemObject().getBuilder());
         Assertions.assertNotNull(reader);
     }
 
     @Test
-    public void testReadIsotopes() {
+    void testReadIsotopes() {
         IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream("<?xml version=\"1.0\"?><list></list>".getBytes(StandardCharsets.UTF_8)),
                                                  new ChemObject().getBuilder());
         Assertions.assertNotNull(reader);
@@ -53,7 +53,7 @@ public class IsotopeReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testReadIsotopes2() {
+    void testReadIsotopes2() {
         String isotopeData = "<?xml version=\"1.0\"?>" + "<list xmlns=\"http://www.xml-cml.org/schema/cml2/core\""
                 + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
                 + "    xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlCore.xsd\">"

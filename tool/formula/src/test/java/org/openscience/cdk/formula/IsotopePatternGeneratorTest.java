@@ -40,7 +40,7 @@ import static org.hamcrest.CoreMatchers.is;
  * @author         Miguel Rojas
  * @cdk.created    2007-03-01
  */
-public class IsotopePatternGeneratorTest extends CDKTestCase {
+class IsotopePatternGeneratorTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
@@ -48,7 +48,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      *  Constructor for the IsotopePatternGeneratorTest object
      *
      */
-    public IsotopePatternGeneratorTest() {
+    IsotopePatternGeneratorTest() {
         super();
     }
 
@@ -58,7 +58,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testIsotopePatternGenerator() {
+    void testIsotopePatternGenerator() {
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
         Assertions.assertNotNull(isotopeGe);
     }
@@ -69,7 +69,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testIsotopePatternGenerator_double() {
+    void testIsotopePatternGenerator_double() {
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
         Assertions.assertNotNull(isotopeGe);
     }
@@ -80,7 +80,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testGetIsotopes_IMolecularFormula() {
+    void testGetIsotopes_IMolecularFormula() {
         IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C41H79N8O3P1", builder);
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
         IsotopePattern isos = isotopeGe.getIsotopes(molFor);
@@ -93,7 +93,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testGetIsotopes_IMolecularFormula_withoutONE() {
+    void testGetIsotopes_IMolecularFormula_withoutONE() {
         IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C41H79N8O3P", builder);
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
         IsotopePattern isos = isotopeGe.getIsotopes(molFor);
@@ -106,7 +106,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testGetIsotopes1() {
+    void testGetIsotopes1() {
         IMolecularFormula molFor = new MolecularFormula();
         molFor.addIsotope(builder.newInstance(IIsotope.class, "Br"));
         molFor.addIsotope(builder.newInstance(IIsotope.class, "Br"));
@@ -124,7 +124,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testCalculateIsotopesAllBromine() {
+    void testCalculateIsotopesAllBromine() {
         // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
         double[] massResults = {157.836669, 159.834630, 161.832580};
         double[] abundResults = {.512, 1.00, .487};
@@ -154,7 +154,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testCalculateIsotopesIodemethylidyne() {
+    void testCalculateIsotopesIodemethylidyne() {
         // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
         double[] massResults = {138.904480, 139.907839};
         double[] abundResults = {1.00, .011};
@@ -184,7 +184,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testCalculateIsotopesnCarbono() {
+    void testCalculateIsotopesnCarbono() {
         // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
         double[] massResults = {120.000000, 121.003360, 122.006709};
         double[] abundResults = {1.00, .108, 0.005};
@@ -213,7 +213,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @return    Description of the Return Value
      */
     @Test
-    public void testCalculateIsotopesOrthinine() {
+    void testCalculateIsotopesOrthinine() {
         // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
         double[] massResults = {133.097720, 134.094750, 134.101079, 134.103990, 135.101959, 135.104430};
         double[] abundResults = {1.00, .006, .054, 0.002, 0.004, 0.001};
@@ -249,7 +249,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * @cdk.bug 3273205
      */
     @Test
-    public void testCalculateIsotopesMn() {
+    void testCalculateIsotopesMn() {
 
         IMolecularFormula molFor = new MolecularFormula();
         molFor.addIsotope(builder.newInstance(IIsotope.class, "Mn"), 1);
@@ -265,7 +265,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * Calculate isotopes for C10000 (failed in CDK 1.5.12).
      */
     @Test
-    public void testCalculateIsotopesC10000() {
+    void testCalculateIsotopesC10000() {
         IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C10000", builder);
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
         IsotopePattern isos = isotopeGe.getIsotopes(molFor);
@@ -279,7 +279,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
      * sometimes returns 34 and sometimes 35 isotopes, non-deterministically).
      */
     @Disabled("Non-deterministic test value is bad! This likely depends on our current isotope data which is also bad.")
-    public void testCalculateIsotopesC20H30Fe2P2S4Cl4() {
+    void testCalculateIsotopesC20H30Fe2P2S4Cl4() {
         IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C20H30Fe2P2S4Cl4", builder);
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
         IsotopePattern isos = isotopeGe.getIsotopes(molFor);
@@ -287,7 +287,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGeneratorSavesState() {
+    void testGeneratorSavesState() {
         IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
 
         IMolecularFormula mf1 = MolecularFormulaManipulator.getMolecularFormula("C6H12O6", builder);
@@ -300,7 +300,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetIsotopes_IMolecularFormula_Charged() {
+    void testGetIsotopes_IMolecularFormula_Charged() {
         IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
         
         IMolecularFormula mfPositive = MolecularFormulaManipulator.getMolecularFormula("C6H11O6Na", builder);
@@ -318,7 +318,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetIsotopes_IMolecularFormula_deprotonate() {
+    void testGetIsotopes_IMolecularFormula_deprotonate() {
         IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
 
         IMolecularFormula mf1 = MolecularFormulaManipulator.getMolecularFormula("C6H12O6", builder);
@@ -335,7 +335,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testMultipleFormulasForAMass() {
+    void testMultipleFormulasForAMass() {
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("C6Cl2", builder);
         IsotopePatternGenerator isogen = new IsotopePatternGenerator(0.1).setMinIntensity(0.01)
                                                                          .setMinResolution(0.01)

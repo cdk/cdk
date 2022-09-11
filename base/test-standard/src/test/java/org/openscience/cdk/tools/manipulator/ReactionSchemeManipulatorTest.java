@@ -36,22 +36,22 @@ import org.openscience.cdk.interfaces.IReactionSet;
 /**
  * @cdk.module test-standard
  */
-public class ReactionSchemeManipulatorTest extends CDKTestCase {
+class ReactionSchemeManipulatorTest extends CDKTestCase {
 
     private IChemObjectBuilder builder;
 
-    public ReactionSchemeManipulatorTest() {
+    ReactionSchemeManipulatorTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
 
     }
 
     @Test
-    public void testGetAllMolecules_IReactionScheme() {
+    void testGetAllMolecules_IReactionScheme() {
         IReactionScheme reactionScheme = builder.newInstance(IReactionScheme.class);
         IReaction reaction1 = builder.newInstance(IReaction.class);
         reaction1.addProduct(builder.newInstance(IAtomContainer.class));
@@ -65,7 +65,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllMolecules_IReactionScheme_IAtomContainerSet() {
+    void testGetAllMolecules_IReactionScheme_IAtomContainerSet() {
         IReactionScheme reactionScheme = builder.newInstance(IReactionScheme.class);
         IReaction reaction1 = builder.newInstance(IReaction.class);
         reaction1.addProduct(builder.newInstance(IAtomContainer.class));
@@ -80,7 +80,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllMolecules_IReactionScheme2() {
+    void testGetAllMolecules_IReactionScheme2() {
         IReactionScheme reactionScheme = builder.newInstance(IReactionScheme.class);
         IReaction reaction1 = builder.newInstance(IReaction.class);
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -97,7 +97,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllMolecules_IReactionScheme3() {
+    void testGetAllMolecules_IReactionScheme3() {
         IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
 
         IReactionScheme scheme11 = builder.newInstance(IReactionScheme.class);
@@ -128,7 +128,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllIDs_IReactionScheme() {
+    void testGetAllIDs_IReactionScheme() {
         IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
         scheme1.setID("scheme1");
 
@@ -167,7 +167,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCreateReactionScheme_IReactionSet() {
+    void testCreateReactionScheme_IReactionSet() {
         IAtomContainer molA = builder.newInstance(IAtomContainer.class);
         molA.setID("A");
         IAtomContainer molB = builder.newInstance(IAtomContainer.class);
@@ -225,7 +225,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMoleculeSet_IAtomContainer_IAtomContainer_IReactionScheme() {
+    void testGetMoleculeSet_IAtomContainer_IAtomContainer_IReactionScheme() {
         IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
 
         IReactionScheme scheme11 = builder.newInstance(IReactionScheme.class);
@@ -270,7 +270,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllReactions_IReactionScheme() {
+    void testGetAllReactions_IReactionScheme() {
         IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
 
         IReactionScheme scheme11 = builder.newInstance(IReactionScheme.class);
@@ -310,7 +310,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testExtractTopReactions_IReactionScheme() {
+    void testExtractTopReactions_IReactionScheme() {
         IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
         IReaction reaction1 = builder.newInstance(IReaction.class);
         IAtomContainer molA = builder.newInstance(IAtomContainer.class);

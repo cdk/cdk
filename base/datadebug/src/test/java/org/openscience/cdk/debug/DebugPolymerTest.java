@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IPolymer;
  *
  * @cdk.module test-datadebug
  */
-public class DebugPolymerTest extends AbstractPolymerTest {
+class DebugPolymerTest extends AbstractPolymerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugPolymer::new);
     }
 
     @Test
-    public void testDebugPolymer() {
+    void testDebugPolymer() {
         IPolymer polymer = new DebugPolymer();
         Assertions.assertTrue(polymer instanceof DebugPolymer);
     }

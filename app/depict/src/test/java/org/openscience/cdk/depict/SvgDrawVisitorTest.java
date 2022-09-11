@@ -38,10 +38,10 @@ import java.awt.geom.RoundRectangle2D;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SvgDrawVisitorTest {
+class SvgDrawVisitorTest {
 
     @Test
-    public void empty() {
+    void empty() {
         String empty = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM).toString();
         assertThat(empty, is("<?xml version='1.0' encoding='UTF-8'?>\n"
                              + "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
@@ -51,7 +51,7 @@ public class SvgDrawVisitorTest {
     }
 
     @Test
-    public void markedElement() {
+    void markedElement() {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.visit(MarkedElement.markup(new LineElement(0, 0, 1, 1, 0.5, Color.RED),
                                            "test-class"));
@@ -66,7 +66,7 @@ public class SvgDrawVisitorTest {
     }
 
     @Test
-    public void translatedLine() {
+    void translatedLine() {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.visit(new LineElement(0, 0, 1, 1, 0.5, Color.RED));
         visitor.setTransform(AffineTransform.getTranslateInstance(10, 10));
@@ -83,7 +83,7 @@ public class SvgDrawVisitorTest {
     }
 
     @Test
-    public void scaledStroke() {
+    void scaledStroke() {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.visit(new LineElement(0, 0, 1, 1, 0.5, Color.RED));
         visitor.setTransform(AffineTransform.getScaleInstance(2, 2));
@@ -100,7 +100,7 @@ public class SvgDrawVisitorTest {
     }
 
     @Test
-    public void filledPath() {
+    void filledPath() {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.visit(GeneralPath.shapeOf(new RoundRectangle2D.Double(0,0,10,10,2,2), Color.BLUE));
         assertThat(visitor.toString(), is("<?xml version='1.0' encoding='UTF-8'?>\n"
@@ -114,7 +114,7 @@ public class SvgDrawVisitorTest {
     }
 
     @Test
-    public void transformedPath() {
+    void transformedPath() {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.setTransform(AffineTransform.getTranslateInstance(15, 15));
         visitor.visit(GeneralPath.shapeOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2), Color.BLUE));
@@ -129,7 +129,7 @@ public class SvgDrawVisitorTest {
     }
 
     @Test
-    public void textElements() {
+    void textElements() {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100, Depiction.UNITS_MM);
         visitor.visit(new TextElement(50, 50, "PNG < EPS < SVG", Color.RED));
         assertThat(visitor.toString(), is("<?xml version='1.0' encoding='UTF-8'?>\n"
@@ -143,7 +143,7 @@ public class SvgDrawVisitorTest {
     }
 
     @Test
-    public void rectElements() {
+    void rectElements() {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100, Depiction.UNITS_MM);
         visitor.visit(new RectangleElement(0,0,100,100, Color.WHITE));
         assertThat(visitor.toString(), is("<?xml version='1.0' encoding='UTF-8'?>\n"
@@ -157,7 +157,7 @@ public class SvgDrawVisitorTest {
     }
 
     @Test
-    public void testTransparencyLocaleEncoding() {
+    void testTransparencyLocaleEncoding() {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.setTransform(AffineTransform.getTranslateInstance(15, 15));
         visitor.visit(GeneralPath.shapeOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2), new Color(255,0,0,126)));

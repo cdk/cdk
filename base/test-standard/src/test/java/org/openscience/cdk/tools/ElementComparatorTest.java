@@ -25,14 +25,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class ElementComparatorTest extends CDKTestCase {
+class ElementComparatorTest extends CDKTestCase {
 
-    public ElementComparatorTest() {
+    ElementComparatorTest() {
         super();
     }
 
     @Test
-    public void testElementComparator() {
+    void testElementComparator() {
         ElementComparator comp = new ElementComparator();
         Assertions.assertNotNull(comp);
     }
@@ -41,7 +41,7 @@ public class ElementComparatorTest extends CDKTestCase {
      * @cdk.bug 1638375
      */
     @Test
-    public void testCompare_Object_Object() {
+    void testCompare_Object_Object() {
         ElementComparator comp = new ElementComparator();
 
         Assertions.assertTrue(comp.compare("C", "H") < 0);

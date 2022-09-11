@@ -35,20 +35,20 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
  * @author John May
  * @cdk.module test-renderbasic
  */
-public class BoundsTest extends AbstractElementTest {
+class BoundsTest extends AbstractElementTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setRenderingElement(new Bounds(0, 0, 0, 0));
     }
 
     @Test
-    public void width() throws Exception {
+    void width() throws Exception {
         assertThat(new Bounds(2, 2, 7, 6).width(), is(closeTo(5d, 0.1)));
     }
 
     @Test
-    public void testHeight() throws Exception {
+    void testHeight() throws Exception {
         assertThat(new Bounds(2, 2, 7, 6).height(), is(closeTo(4d, 0.1)));
     }
 }

@@ -27,23 +27,23 @@ import org.openscience.cdk.test.CDKTestCase;
 
 import org.junit.jupiter.api.Test;
 
-public abstract class AbstractBitFingerprintTest extends CDKTestCase {
+abstract class AbstractBitFingerprintTest extends CDKTestCase {
 
-    protected IBitFingerprint                bitsetFP;
+    private IBitFingerprint                bitsetFP;
     private final Class<? extends IBitFingerprint> C;
 
-    public AbstractBitFingerprintTest(Class<? extends IBitFingerprint> C) throws Exception {
+    AbstractBitFingerprintTest(Class<? extends IBitFingerprint> C) throws Exception {
         this.C = C;
         bitsetFP = C.newInstance();
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         Assertions.assertFalse(bitsetFP.get(0));
     }
 
     @Test
-    public void testGetAndSet() {
+    void testGetAndSet() {
         testCreate();
         bitsetFP.set(1, true);
         Assertions.assertTrue(bitsetFP.get(1));
@@ -60,7 +60,7 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
     }
 
     @Test
-    public void testAnd() throws Exception {
+    void testAnd() throws Exception {
         testGetAndSet();
         bitsetFP.and(createFP2());
         Assertions.assertFalse(bitsetFP.get(0));
@@ -70,7 +70,7 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
     }
 
     @Test
-    public void testOr() throws Exception {
+    void testOr() throws Exception {
         testGetAndSet();
         bitsetFP.or(createFP2());
         Assertions.assertFalse(bitsetFP.get(0));
@@ -80,7 +80,7 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
     }
 
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() throws Exception {
         IBitFingerprint fp1 = C.newInstance();
         IBitFingerprint fp2 = C.newInstance();
 

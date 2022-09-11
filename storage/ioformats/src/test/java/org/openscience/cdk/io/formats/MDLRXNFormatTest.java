@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class MDLRXNFormatTest extends ChemFormatMatcherTest {
+class MDLRXNFormatTest extends ChemFormatMatcherTest {
 
-    public MDLRXNFormatTest() {
+    MDLRXNFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) MDLRXNFormat.getInstance());
     }
 

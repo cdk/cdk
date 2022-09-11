@@ -40,10 +40,10 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
 /**
  * @author John May
  */
-public final class ExtendedTetrahedralTest {
+final class ExtendedTetrahedralTest {
 
     @Test
-    public void peripheralsAreCopied() {
+    void peripheralsAreCopied() {
         IAtom focus = mock(IAtom.class);
         IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
         ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
@@ -57,7 +57,7 @@ public final class ExtendedTetrahedralTest {
     }
 
     @Test
-    public void peripheralsAreNotModifable() {
+    void peripheralsAreNotModifable() {
         IAtom focus = mock(IAtom.class);
         IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
         ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
@@ -72,7 +72,7 @@ public final class ExtendedTetrahedralTest {
     }
 
     @Test
-    public void nonCumulatedAtomThrowsException() {
+    void nonCumulatedAtomThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IAtomContainer ac = new AtomContainer();
@@ -86,7 +86,7 @@ public final class ExtendedTetrahedralTest {
     }
 
     @Test
-    public void terminalAtomsAreFoundUnordered() {
+    void terminalAtomsAreFoundUnordered() {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
@@ -100,7 +100,7 @@ public final class ExtendedTetrahedralTest {
     }
 
     @Test
-    public void terminalAtomsAreFoundOrdered() {
+    void terminalAtomsAreFoundOrdered() {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
@@ -121,7 +121,7 @@ public final class ExtendedTetrahedralTest {
     }
 
     @Test
-    public void noBuilder() {
+    void noBuilder() {
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
                                     IAtom focus = mock(IAtom.class);
@@ -132,7 +132,7 @@ public final class ExtendedTetrahedralTest {
     }
 
     @Test
-    public void containsAnAtom() {
+    void containsAnAtom() {
         IAtom focus = mock(IAtom.class);
         IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
         ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
@@ -147,6 +147,6 @@ public final class ExtendedTetrahedralTest {
 
     // trival access
     @Test
-    public void noOperation() {}
+    void noOperation() {}
 
 }

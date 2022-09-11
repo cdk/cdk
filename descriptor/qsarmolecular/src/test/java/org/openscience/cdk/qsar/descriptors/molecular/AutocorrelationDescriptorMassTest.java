@@ -32,19 +32,19 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
+class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 
-    public AutocorrelationDescriptorMassTest() {
+    AutocorrelationDescriptorMassTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(AutocorrelationDescriptorMass.class);
     }
 
     @Test
-    public void test1() throws Exception {
+    void test1() throws Exception {
         String filename = "chlorobenzene.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);

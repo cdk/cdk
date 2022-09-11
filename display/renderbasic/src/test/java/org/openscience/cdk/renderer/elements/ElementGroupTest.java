@@ -26,10 +26,10 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * @cdk.module test-renderbasic
  */
-public class ElementGroupTest extends AbstractElementTest {
+class ElementGroupTest extends AbstractElementTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         IRenderingElement element = new ElementGroup();
         setRenderingElement(element);
     }

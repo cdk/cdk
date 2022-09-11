@@ -32,17 +32,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsaratomic
  */
-public class IsProtonInConjugatedPiSystemDescriptorTest extends AtomicDescriptorTest {
+class IsProtonInConjugatedPiSystemDescriptorTest extends AtomicDescriptorTest {
 
-    public IsProtonInConjugatedPiSystemDescriptorTest() {}
+    IsProtonInConjugatedPiSystemDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(IsProtonInConjugatedPiSystemDescriptor.class);
     }
 
     @Test
-    public void testIsProtonInConjugatedPiSystemDescriptor() throws
+    void testIsProtonInConjugatedPiSystemDescriptor() throws
             java.lang.Exception {
         IAtomicDescriptor descriptor = new IsProtonInConjugatedPiSystemDescriptor();
         Object[] params = {Boolean.TRUE};

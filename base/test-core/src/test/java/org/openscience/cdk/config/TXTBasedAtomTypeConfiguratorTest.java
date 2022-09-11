@@ -31,16 +31,16 @@ import java.io.InputStream;
  *
  * @cdk.module test-core
  */
-public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase {
+class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase {
 
     @Test
-    public void testTXTBasedAtomTypeConfigurator() {
+    void testTXTBasedAtomTypeConfigurator() {
         TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();
         Assertions.assertNotNull(configurator);
     }
 
     @Test
-    public void testReadAtomTypes_IChemObjectBuilder() throws Exception {
+    void testReadAtomTypes_IChemObjectBuilder() throws Exception {
         String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.xml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();
@@ -49,7 +49,7 @@ public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetInputStream_InputStream() throws Exception {
+    void testSetInputStream_InputStream() throws Exception {
         testReadAtomTypes_IChemObjectBuilder();
     }
 

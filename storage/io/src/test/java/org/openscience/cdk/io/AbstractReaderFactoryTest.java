@@ -47,7 +47,7 @@ import java.io.InputStream;
  *
  * @cdk.module test-io
  */
-public class AbstractReaderFactoryTest {
+class AbstractReaderFactoryTest {
 
     private final ReaderFactory factory = new ReaderFactory();
 
@@ -81,7 +81,7 @@ public class AbstractReaderFactoryTest {
         }
     }
 
-    void assertBondCount(int expectedBondCount, IChemObject chemObject) {
+    private void assertBondCount(int expectedBondCount, IChemObject chemObject) {
         if (expectedBondCount != -1) {
             if (chemObject instanceof IChemFile) {
                 Assertions.assertEquals(expectedBondCount, ChemFileManipulator.getBondCount((IChemFile) chemObject));
@@ -95,7 +95,7 @@ public class AbstractReaderFactoryTest {
         }
     }
 
-    void assertAtomCount(int expectedAtomCount, IChemObject chemObject) {
+    private void assertAtomCount(int expectedAtomCount, IChemObject chemObject) {
         if (expectedAtomCount != -1) {
             if (chemObject instanceof IChemFile) {
                 Assertions.assertEquals(expectedAtomCount, ChemFileManipulator.getAtomCount((IChemFile) chemObject));

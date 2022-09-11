@@ -37,17 +37,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
+class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    private final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
-    public StabilizationPlusChargeDescriptorTest() {
+    StabilizationPlusChargeDescriptorTest() {
         descriptor = new StabilizationPlusChargeDescriptor();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(StabilizationPlusChargeDescriptor.class);
     }
 
@@ -58,7 +58,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      */
     @Test
     @Tag("SlowTest")
-    public void testStabilizationPlusChargeDescriptor() throws Exception {
+    void testStabilizationPlusChargeDescriptor() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -83,7 +83,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      */
     @Test
     @Tag("SlowTest")
-    public void testNotCharged() throws Exception {
+    void testNotCharged() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -110,7 +110,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      */
     @Test
     @Tag("SlowTest")
-    public void testStabilizationPlusChargeDescriptor2() throws Exception {
+    void testStabilizationPlusChargeDescriptor2() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -138,7 +138,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      */
     @Test
     @Tag("SlowTest")
-    public void testStabilizationComparative() throws Exception {
+    void testStabilizationComparative() throws Exception {
 
         IAtomContainer mol1 = builder.newInstance(IAtomContainer.class);
         mol1.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -192,7 +192,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      */
     @Test
     @Tag("SlowTest")
-    public void testCompareIonized() throws Exception {
+    void testCompareIonized() throws Exception {
 
         IAtomContainer molA = builder.newInstance(IAtomContainer.class);
         molA.addAtom(builder.newInstance(IAtom.class, "C"));

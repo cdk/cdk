@@ -37,10 +37,10 @@ import org.junit.jupiter.api.Test;
  * @author John May
  * @cdk.module test-core
  */
-public class EssentialCyclesTest {
+class EssentialCyclesTest {
 
     @Test
-    public void paths_bicyclo() {
+    void paths_bicyclo() {
         int[][] bicyclo = bicyclo();
         EssentialCycles essential = new EssentialCycles(bicyclo);
         int[][] paths = essential.paths();
@@ -48,7 +48,7 @@ public class EssentialCyclesTest {
     }
 
     @Test
-    public void paths_norbornane() {
+    void paths_norbornane() {
         int[][] norbornane = norbornane();
         EssentialCycles essential = new EssentialCycles(norbornane);
         int[][] paths = essential.paths();
@@ -58,7 +58,7 @@ public class EssentialCyclesTest {
     }
 
     @Test
-    public void paths_napthalene() {
+    void paths_napthalene() {
         int[][] napthalene = naphthalene();
         EssentialCycles essential = new EssentialCycles(napthalene);
         int[][] paths = essential.paths();
@@ -67,7 +67,7 @@ public class EssentialCyclesTest {
     }
 
     @Test
-    public void paths_anthracene() {
+    void paths_anthracene() {
         int[][] anthracene = anthracene();
         EssentialCycles essential = new EssentialCycles(anthracene);
         int[][] paths = essential.paths();
@@ -76,7 +76,7 @@ public class EssentialCyclesTest {
     }
 
     @Test
-    public void paths_cyclophane_even() {
+    void paths_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         EssentialCycles essential = new EssentialCycles(cyclophane_even);
         int[][] paths = essential.paths();
@@ -85,7 +85,7 @@ public class EssentialCyclesTest {
     }
 
     @Test
-    public void paths_cyclophane_odd() {
+    void paths_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         EssentialCycles essential = new EssentialCycles(cyclophane_even);
         int[][] paths = essential.paths();
@@ -94,42 +94,42 @@ public class EssentialCyclesTest {
     }
 
     @Test
-    public void size_norbornane() {
+    void size_norbornane() {
         int[][] norbornane = norbornane();
         EssentialCycles essential = new EssentialCycles(norbornane);
         assertThat(essential.size(), is(2));
     }
 
     @Test
-    public void size_bicyclo() {
+    void size_bicyclo() {
         int[][] bicyclo = bicyclo();
         EssentialCycles essential = new EssentialCycles(bicyclo);
         assertThat(essential.size(), is(0));
     }
 
     @Test
-    public void size_napthalene() {
+    void size_napthalene() {
         int[][] napthalene = naphthalene();
         EssentialCycles essential = new EssentialCycles(napthalene);
         assertThat(essential.size(), is(2));
     }
 
     @Test
-    public void size_anthracene() {
+    void size_anthracene() {
         int[][] anthracene = anthracene();
         EssentialCycles essential = new EssentialCycles(anthracene);
         assertThat(essential.size(), is(3));
     }
 
     @Test
-    public void size_cyclophane_even() {
+    void size_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         EssentialCycles relevant = new EssentialCycles(cyclophane_even);
         assertThat(relevant.size(), is(1));
     }
 
     @Test
-    public void size_cyclophane_odd() {
+    void size_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         EssentialCycles essential = new EssentialCycles(cyclophane_even);
         assertThat(essential.size(), is(1));

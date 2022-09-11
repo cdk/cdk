@@ -26,14 +26,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 
-public class IntArrayFingerprintTest extends AbstractBitFingerprintTest {
+class IntArrayFingerprintTest extends AbstractBitFingerprintTest {
 
-    public IntArrayFingerprintTest() throws Exception {
+    IntArrayFingerprintTest() throws Exception {
         super(IntArrayFingerprint.class);
     }
 
     @Test
-    public void testSetBit() {
+    void testSetBit() {
         IntArrayFingerprint fp = new IntArrayFingerprint();
         fp.set(1, true);
         fp.set(55, true);

@@ -31,35 +31,35 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictRef
  */
-public class DictRefTest extends CDKTestCase {
+class DictRefTest extends CDKTestCase {
 
-    public DictRefTest() {
+    DictRefTest() {
         super();
     }
 
     // test constructors
 
     @Test
-    public void testDictRef_String_String() {
+    void testDictRef_String_String() {
         DictRef dictRef = new DictRef("bar:foo", "bla");
         Assertions.assertNotNull(dictRef);
     }
 
     @Test
-    public void testGetType() {
+    void testGetType() {
         DictRef dictRef = new DictRef("bar:foo", "bla");
         Assertions.assertEquals("bar:foo", dictRef.getType());
     }
 
     @Test
-    public void testGetDictRef() {
+    void testGetDictRef() {
         DictRef dictRef = new DictRef("bar:foo", "bla");
         Assertions.assertEquals("bla", dictRef.getReference());
     }
 
     /** Test for RFC #9 */
     @Test
-    public void testToString() {
+    void testToString() {
         DictRef dictRef = new DictRef("bar:foo", "bla");
         String description = dictRef.toString();
         for (int i = 0; i < description.length(); i++) {

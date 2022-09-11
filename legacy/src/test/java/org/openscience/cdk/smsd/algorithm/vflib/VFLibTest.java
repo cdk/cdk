@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @cdk.module test-smsd
  */
-public class VFLibTest extends CDKTestCase {
+class VFLibTest extends CDKTestCase {
 
     private static IAtomContainer hexane;
     private static IQuery         hexaneQuery;
@@ -62,7 +62,7 @@ public class VFLibTest extends CDKTestCase {
     private static IQuery         benzeneQuery;
 
     @BeforeAll
-    public static void setUp() throws CDKException {
+    static void setUp() throws CDKException {
         hexane = createHexane();
         Assertions.assertEquals(6, hexane.getAtomCount());
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(hexane);
@@ -78,7 +78,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     @Test
-    public void testItShouldFindAllMatchCandidatesInTheRootState() {
+    void testItShouldFindAllMatchCandidatesInTheRootState() {
 
         IState state = new VFState(benzeneQuery, new TargetProperties(benzene));
         int count = 0;
@@ -91,7 +91,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     @Test
-    public void testItShoudFindAllMatchCandidatesInThePrimaryState() {
+    void testItShoudFindAllMatchCandidatesInThePrimaryState() {
         IState state = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState newState = state.nextState(match);
@@ -105,7 +105,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     @Test
-    public void testItShouldFindAllMatchCandidatesInTheSecondaryState() {
+    void testItShouldFindAllMatchCandidatesInTheSecondaryState() {
         IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
@@ -121,7 +121,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     @Test
-    public void testItShouldMapAllAtomsInTheSecondaryState() {
+    void testItShouldMapAllAtomsInTheSecondaryState() {
         IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
@@ -136,7 +136,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     @Test
-    public void testItShouldFindAllMatchCandidatesFromTheTeriaryState() {
+    void testItShouldFindAllMatchCandidatesFromTheTeriaryState() {
         IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
@@ -154,7 +154,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     @Test
-    public void testItShouldMapAllAtomsInTheTertiaryState() {
+    void testItShouldMapAllAtomsInTheTertiaryState() {
         IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
@@ -171,7 +171,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     @Test
-    public void testItShouldReachGoalWhenAllAtomsAreMapped() {
+    void testItShouldReachGoalWhenAllAtomsAreMapped() {
         IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
@@ -193,7 +193,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     @Test
-    public void testItShouldHaveANextCandidateInTheSecondaryState() {
+    void testItShouldHaveANextCandidateInTheSecondaryState() {
         IState state = new VFState(benzeneQuery, new TargetProperties(benzene));
         Match match = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState nextState = state.nextState(match);
@@ -204,12 +204,12 @@ public class VFLibTest extends CDKTestCase {
      *
      */
     @Test
-    public void testItShouldMatchHexaneToHexaneWhenUsingMolecule() {
+    void testItShouldMatchHexaneToHexaneWhenUsingMolecule() {
         IMapper mapper = new VFMapper(hexane, true);
         Assertions.assertTrue(mapper.hasMap(hexane));
     }
 
-    public static IAtomContainer createHexane() throws CDKException {
+    static IAtomContainer createHexane() throws CDKException {
         IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
@@ -248,7 +248,7 @@ public class VFLibTest extends CDKTestCase {
         return result;
     }
 
-    public static IAtomContainer createBenzene() throws CDKException {
+    static IAtomContainer createBenzene() throws CDKException {
         IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");

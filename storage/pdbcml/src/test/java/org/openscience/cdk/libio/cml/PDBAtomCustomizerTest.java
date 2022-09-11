@@ -16,12 +16,12 @@ import java.io.StringWriter;
  * @author John May
  * @cdk.module test-pdbcml
  */
-public class PDBAtomCustomizerTest {
+class PDBAtomCustomizerTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PDBAtomCustomizerTest.class);
 
     @Test
-    public void testPDBAtomCustomization() throws Exception {
+    void testPDBAtomCustomization() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         IPDBAtom atom = new PDBAtom("C");

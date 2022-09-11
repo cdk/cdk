@@ -34,14 +34,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class RingManipulatorTest extends CDKTestCase {
+class RingManipulatorTest extends CDKTestCase {
 
-    public RingManipulatorTest() {
+    RingManipulatorTest() {
         super();
     }
 
     @Test
-    public void testMarkAromaticRings() {
+    void testMarkAromaticRings() {
         IRing ring = new Ring(3, "C");
         Assertions.assertNotNull(ring);
         RingManipulator.markAromaticRings(ring);

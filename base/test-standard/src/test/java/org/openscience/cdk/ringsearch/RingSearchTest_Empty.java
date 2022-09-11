@@ -36,17 +36,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public final class RingSearchTest_Empty {
+final class RingSearchTest_Empty {
 
     private final IAtomContainer empty = new AtomContainer(0, 0, 0, 0);
 
     @Test
-    public void testCyclic() {
+    void testCyclic() {
         assertThat(new RingSearch(empty).cyclic().length, is(0));
     }
 
     @Test
-    public void testCyclic_Int() {
+    void testCyclic_Int() {
         int n = empty.getAtomCount();
         RingSearch ringSearch = new RingSearch(empty);
         for (int i = 0; i < n; i++) {
@@ -55,27 +55,27 @@ public final class RingSearchTest_Empty {
     }
 
     @Test
-    public void testIsolated() {
+    void testIsolated() {
         assertThat(new RingSearch(empty).isolated().length, is(0));
     }
 
     @Test
-    public void testFused() {
+    void testFused() {
         assertThat(new RingSearch(empty).fused().length, is(0));
     }
 
     @Test
-    public void testRingFragments() {
+    void testRingFragments() {
         Assertions.assertTrue(new RingSearch(empty).ringFragments().isEmpty());
     }
 
     @Test
-    public void testIsolatedRingFragments() {
+    void testIsolatedRingFragments() {
         Assertions.assertTrue(new RingSearch(empty).isolatedRingFragments().isEmpty());
     }
 
     @Test
-    public void testFusedRingFragments() {
+    void testFusedRingFragments() {
         Assertions.assertTrue(new RingSearch(empty).fusedRingFragments().isEmpty());
     }
 

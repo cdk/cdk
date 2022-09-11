@@ -35,7 +35,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  *
  * @cdk.module test-formula
  */
-public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
+class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
@@ -43,7 +43,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *  Constructor for the MolecularFormulaSetManipulatorTest object.
      *
      */
-    public MolecularFormulaSetManipulatorTest() {
+    MolecularFormulaSetManipulatorTest() {
 
         super();
     }
@@ -54,7 +54,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMaxOccurrenceElements_IMolecularFormulaSet() {
+    void testGetMaxOccurrenceElements_IMolecularFormulaSet() {
         IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);
@@ -96,7 +96,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMinOccurrenceElements_IMolecularFormulaSet() {
+    void testGetMinOccurrenceElements_IMolecularFormulaSet() {
         IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);
@@ -138,7 +138,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testRemove_IMolecularFormulaSet_IMolecularFormula_IMolecularFormula() {
+    void testRemove_IMolecularFormulaSet_IMolecularFormula_IMolecularFormula() {
 
         IMolecularFormula formulaMin = new MolecularFormula();
         formulaMin.addIsotope(builder.newInstance(IIsotope.class, "C"), 1);
@@ -170,7 +170,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testRemove_1() {
+    void testRemove_1() {
 
         IMolecularFormula formulaMin = new MolecularFormula();
         formulaMin.addIsotope(builder.newInstance(IIsotope.class, "C"), 1);
@@ -224,7 +224,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testRemove_2() {
+    void testRemove_2() {
 
         IMolecularFormula formulaMin = new MolecularFormula();
         formulaMin.addIsotope(builder.newInstance(IIsotope.class, "C"), 1);
@@ -263,7 +263,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testRemove_3() {
+    void testRemove_3() {
 
         IMolecularFormula formulaMin = new MolecularFormula();
         formulaMin.addIsotope(builder.newInstance(IIsotope.class, "C"), 1);
@@ -303,7 +303,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testRemove_IMolecularFormulaSet_MolecularFormulaRange() {
+    void testRemove_IMolecularFormulaSet_MolecularFormulaRange() {
 
         MolecularFormulaRange formulaRange = new MolecularFormulaRange();
         formulaRange.addIsotope(builder.newInstance(IIsotope.class, "C"), 0, 4);
@@ -336,7 +336,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testContains_IMolecularFormulaSet_IMolecularFormula() {
+    void testContains_IMolecularFormulaSet_IMolecularFormula() {
         IMolecularFormula mf1 = new MolecularFormula();
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);

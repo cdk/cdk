@@ -24,28 +24,28 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-diff
  */
-public class BooleanDifferenceTest {
+class BooleanDifferenceTest {
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IDifference result = BooleanDifference.construct("Foo", true, false);
         Assertions.assertNotNull(result);
     }
 
     @Test
-    public void testSame() {
+    void testSame() {
         IDifference result = BooleanDifference.construct("Foo", false, false);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testTwoNull() {
+    void testTwoNull() {
         IDifference result = BooleanDifference.construct("Foo", null, null);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testOneNull() {
+    void testOneNull() {
         IDifference result = BooleanDifference.construct("Foo", null, false);
         Assertions.assertNotNull(result);
 
@@ -54,7 +54,7 @@ public class BooleanDifferenceTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         IDifference result = BooleanDifference.construct("Foo", true, false);
         String diffString = result.toString();
         Assertions.assertNotNull(diffString);

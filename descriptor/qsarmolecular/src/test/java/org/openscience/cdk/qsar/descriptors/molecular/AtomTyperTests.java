@@ -29,12 +29,12 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-public class AtomTyperTests {
+class AtomTyperTests {
 
-	static SmilesParser parser = null;
+	private static SmilesParser parser = null;
 	
 	@Test
-	public void testIsPolar() throws CDKException 
+    void testIsPolar() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		Assertions.assertTrue(desc.jplogp.isPolar(new Atom("O")));
@@ -45,7 +45,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testIsElectronWithdrawing() throws CDKException 
+    void testIsElectronWithdrawing() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		Assertions.assertTrue(desc.jplogp.electronWithdrawing(new Atom("O")));
@@ -60,7 +60,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testNonHNeighbours() throws CDKException
+    void testNonHNeighbours() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("CC");
@@ -87,7 +87,7 @@ public class AtomTyperTests {
 	
 	
 	@Test
-	public void testDoubleBondHetero() throws CDKException
+    void testDoubleBondHetero() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("c1nnccc1");
@@ -100,7 +100,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testCarbonylConjugated() throws CDKException
+    void testCarbonylConjugated() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("c1nnccc1");
@@ -117,7 +117,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testNextToAromatic() throws CDKException
+    void testNextToAromatic() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("c1nnccc1");
@@ -134,7 +134,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testGetPolarBondArray() throws CDKException
+    void testGetPolarBondArray() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("c1nnccc1");
@@ -155,7 +155,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testBoundTo() throws CDKException
+    void testBoundTo() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("CO");
@@ -165,7 +165,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testCheckAlphaCarbonyl() throws CDKException
+    void testCheckAlphaCarbonyl() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("O=CN");
@@ -175,7 +175,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testGetHydrogenSpecial() throws CDKException
+    void testGetHydrogenSpecial() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("HO");
@@ -224,7 +224,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testGetDefaultSpecial() throws CDKException
+    void testGetDefaultSpecial() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("P(=O)(O)(O)C");
@@ -237,7 +237,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testGetFluorineSpecial() throws CDKException
+    void testGetFluorineSpecial() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("FS");
@@ -274,7 +274,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testGetOxygenSpecial() throws CDKException
+    void testGetOxygenSpecial() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("ON");
@@ -319,7 +319,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testGetNitrogenSpecial() throws CDKException
+    void testGetNitrogenSpecial() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("[N+](C)(C)(C)C");
@@ -364,7 +364,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testGetCarbonSpecial() throws CDKException
+    void testGetCarbonSpecial() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("CC");
@@ -425,7 +425,7 @@ public class AtomTyperTests {
 	}
 	
 	@Test
-	public void testGetNumMoreElectronegativeThanCarbon() throws CDKException
+    void testGetNumMoreElectronegativeThanCarbon() throws CDKException
 	{
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		IAtomContainer molecule = parseSmiles("c1ncccc1");
@@ -448,7 +448,7 @@ public class AtomTyperTests {
 	
 	
 	@Test
-	public void testDefaultSpecial() throws CDKException 
+    void testDefaultSpecial() throws CDKException
 	{
 		IAtomContainer molecule = parseSmiles("P(=O)(O)(O)O");
 		JPlogPDescriptor desc = new JPlogPDescriptor();

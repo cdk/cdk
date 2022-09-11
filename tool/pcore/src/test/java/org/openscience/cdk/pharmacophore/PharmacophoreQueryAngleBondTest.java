@@ -26,10 +26,10 @@ import javax.vecmath.Point3d;
 /**
  * @cdk.module test-pcore
  */
-public class PharmacophoreQueryAngleBondTest {
+class PharmacophoreQueryAngleBondTest {
 
     @Test
-    public void testMatches() {
+    void testMatches() {
         PharmacophoreAtom patom1 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(1, 1, 1));
         PharmacophoreAtom patom2 = new PharmacophoreAtom("c1ccccc1", "Aromatic", new Point3d(0, 0, 0));
         PharmacophoreAtom patom3 = new PharmacophoreAtom("C", "Blah", new Point3d(1, 0, 0));
@@ -50,7 +50,7 @@ public class PharmacophoreQueryAngleBondTest {
     }
 
     @Test
-    public void testUpper() {
+    void testUpper() {
         PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
         PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
         PharmacophoreQueryAtom qatom3 = new PharmacophoreQueryAtom("blah", "C");
@@ -62,7 +62,7 @@ public class PharmacophoreQueryAngleBondTest {
     }
 
     @Test
-    public void testLower() {
+    void testLower() {
         PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
         PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
         PharmacophoreQueryAtom qatom3 = new PharmacophoreQueryAtom("blah", "C");
@@ -74,7 +74,7 @@ public class PharmacophoreQueryAngleBondTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
         PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
         PharmacophoreQueryAtom qatom3 = new PharmacophoreQueryAtom("blah", "C");

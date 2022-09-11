@@ -29,7 +29,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * @cdk.module test-formula
  */
-public class NitrogenRuleTest extends FormulaRuleTest {
+class NitrogenRuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
 
@@ -37,7 +37,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     *  The JUnit setup method
     */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         setRule(NitrogenRule.class);
     }
@@ -48,7 +48,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testNitrogenRule() throws Exception {
+    void testNitrogenRule() throws Exception {
 
         IRule rule = new NitrogenRule();
         Assertions.assertNotNull(rule);
@@ -61,7 +61,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefault() throws Exception {
+    void testDefault() throws Exception {
 
         IRule rule = new NitrogenRule();
         Object[] objects = rule.getParameters();
@@ -75,7 +75,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testSetParameters() throws Exception {
+    void testSetParameters() throws Exception {
 
         IRule rule = new NitrogenRule();
         rule.setParameters(null);
@@ -91,7 +91,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse() throws Exception {
+    void testDefaultValidFalse() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -106,7 +106,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse_SetParam() throws Exception {
+    void testDefaultValidFalse_SetParam() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -122,7 +122,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidTrue() throws Exception {
+    void testDefaultValidTrue() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -138,7 +138,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC45H75NO15() throws Exception {
+    void testC45H75NO15() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -154,7 +154,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC45H71N7O10() throws Exception {
+    void testC45H71N7O10() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -170,7 +170,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC49H75NO12() throws Exception {
+    void testC49H75NO12() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -186,7 +186,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC50H95NO10() throws Exception {
+    void testC50H95NO10() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -202,7 +202,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC47H75N5O10() throws Exception {
+    void testC47H75N5O10() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -218,7 +218,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC36H42N2O23() throws Exception {
+    void testC36H42N2O23() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -234,7 +234,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testN() throws Exception {
+    void testN() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -250,7 +250,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testNPlus() throws Exception {
+    void testNPlus() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -266,7 +266,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testNominalMass() throws Exception {
+    void testNominalMass() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -282,7 +282,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDoubleCharge() throws Exception {
+    void testDoubleCharge() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -298,7 +298,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testWithFe() throws Exception {
+    void testWithFe() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -314,7 +314,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testWithCo() throws Exception {
+    void testWithCo() throws Exception {
 
         IRule rule = new NitrogenRule();
 

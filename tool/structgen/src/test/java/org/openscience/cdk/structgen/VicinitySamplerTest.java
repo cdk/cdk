@@ -39,17 +39,17 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 /**
  * @cdk.module test-structgen
  */
-public class VicinitySamplerTest extends CDKTestCase {
+class VicinitySamplerTest extends CDKTestCase {
 
     private static SmilesParser parser;
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testVicinitySampler_sample() throws Exception {
+    void testVicinitySampler_sample() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeEthylPropylPhenantren();
 
         Isotopes.getInstance().configureAtoms(mol);
@@ -70,7 +70,7 @@ public class VicinitySamplerTest extends CDKTestCase {
     /**
      * @cdk.bug 1632610
      */
-    public void testCycloButene() throws Exception {
+    void testCycloButene() throws Exception {
         IAtomContainer mol = parser.parseSmiles("C=CC=C");
 
         Isotopes.getInstance().configureAtoms(mol);

@@ -40,10 +40,10 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @version 04/16/2012
  * @cdk.module test-forcefield
  */
-public class MMFF94BasedParameterSetReaderTest {
+class MMFF94BasedParameterSetReaderTest {
 
     @Test
-    public void testreadParameterSets() throws Exception {
+    void testreadParameterSets() throws Exception {
         MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader();
         mmff94bpsr.readParameterSets(DefaultChemObjectBuilder.getInstance());
         Map<String, Object> parameterSet;

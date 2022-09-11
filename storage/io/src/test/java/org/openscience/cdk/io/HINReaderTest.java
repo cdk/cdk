@@ -48,22 +48,22 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @see org.openscience.cdk.io.HINReader
  */
-public class HINReaderTest extends SimpleChemObjectReaderTest {
+class HINReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(HINReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new HINReader(), "org/openscience/cdk/io/benzene.hin");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
     @Test
-    public void testBenzene() throws Exception {
+    void testBenzene() throws Exception {
         String filename = "benzene.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -89,7 +89,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testMoleculeTwo() throws Exception {
+    void testMoleculeTwo() throws Exception {
         String filename = "molecule2.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -115,7 +115,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testMultiple() throws Exception {
+    void testMultiple() throws Exception {
         String filename = "multiple.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -137,7 +137,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testIsConnectedFromHINFile() throws Exception {
+    void testIsConnectedFromHINFile() throws Exception {
         String filename = "connectivity1.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -154,7 +154,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
      * @throws Exception
      */
     @Test
-    public void testAromaticRingsLine() throws Exception {
+    void testAromaticRingsLine() throws Exception {
         String filename = "bug2984581.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -169,7 +169,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
      * @throws Exception
      */
     @Test
-    public void testReadAromaticRingsKeyword() throws Exception {
+    void testReadAromaticRingsKeyword() throws Exception {
         String filename = "arorings.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

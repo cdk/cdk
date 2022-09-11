@@ -37,10 +37,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class AtomMatcherTest {
+class AtomMatcherTest {
 
     @Test
-    public void anyMatch() throws Exception {
+    void anyMatch() throws Exception {
         AtomMatcher matcher = AtomMatcher.forAny();
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
@@ -58,7 +58,7 @@ public class AtomMatcherTest {
     }
 
     @Test
-    public void elementMatch() throws Exception {
+    void elementMatch() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
@@ -69,7 +69,7 @@ public class AtomMatcherTest {
     }
 
     @Test
-    public void elementMismatch() throws Exception {
+    void elementMismatch() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
@@ -80,7 +80,7 @@ public class AtomMatcherTest {
     }
 
     @Test
-    public void elementPseudo() throws Exception {
+    void elementPseudo() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IPseudoAtom.class);
         IAtom atom2 = mock(IPseudoAtom.class);
@@ -89,7 +89,7 @@ public class AtomMatcherTest {
     }
 
     @Test
-    public void elementError() throws Exception {
+    void elementError() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
@@ -102,7 +102,7 @@ public class AtomMatcherTest {
     }
 
     @Test
-    public void queryMatch() throws Exception {
+    void queryMatch() throws Exception {
         AtomMatcher matcher = AtomMatcher.forQuery();
         IQueryAtom atom1 = mock(IQueryAtom.class);
         IAtom atom2 = mock(IAtom.class);

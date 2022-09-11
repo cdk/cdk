@@ -49,17 +49,17 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */
-public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
+class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000ReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new MDLRXNV3000Reader(), "reaction_v3.rxn");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         MDLRXNV3000Reader reader = new MDLRXNV3000Reader();
         Assertions.assertTrue(reader.accepts(ChemModel.class));
         Assertions.assertTrue(reader.accepts(Reaction.class));
@@ -69,7 +69,7 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1849925
      */
     @Test
-    public void testReadReactions1() throws Exception {
+    void testReadReactions1() throws Exception {
         String filename1 = "reaction_v3.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
@@ -92,7 +92,8 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     }
 
-    @Test public void readAgents() throws IOException, CDKException {
+    @Test
+    void readAgents() throws IOException, CDKException {
         String rxnfile = "$RXN V3000\n" +
                 "\n" +
                 "  Mrv1810      020601212219\n" +

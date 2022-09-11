@@ -44,9 +44,9 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 /**
  * @cdk.module test-standard
  */
-public class RingSetManipulatorTest extends CDKTestCase {
+class RingSetManipulatorTest extends CDKTestCase {
 
-    protected IChemObjectBuilder builder;
+    private IChemObjectBuilder builder;
 
     private IRingSet             ringset        = null;
     private IAtom                ring1Atom1     = null;
@@ -57,7 +57,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     private IRing                ring3          = null;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         builder = DefaultChemObjectBuilder.getInstance();
         ringset = builder.newInstance(IRingSet.class);
         ring1Atom1 = builder.newInstance(IAtom.class, "C"); // rather artificial molecule
@@ -128,13 +128,13 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsSameRing_IRingSet_IAtom_IAtom() {
+    void testIsSameRing_IRingSet_IAtom_IAtom() {
         Assertions.assertTrue(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring1Atom3));
         Assertions.assertFalse(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring2Atom3));
     }
 
     @Test
-    public void testRingAlreadyInSet_IRing_IRingSet() {
+    void testRingAlreadyInSet_IRing_IRingSet() {
         IRing r1 = builder.newInstance(IRing.class, 5, "C");
         IRing r2 = builder.newInstance(IRing.class, 3, "C");
 
@@ -152,7 +152,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllAtomContainers_IRingSet() {
+    void testGetAllAtomContainers_IRingSet() {
         IRingSet rs = builder.newInstance(IRingSet.class);
         rs.addAtomContainer(builder.newInstance(IRing.class));
         rs.addAtomContainer(builder.newInstance(IRing.class));
@@ -161,7 +161,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomCount_IRingSet() {
+    void testGetAtomCount_IRingSet() {
         IRingSet rs = builder.newInstance(IRingSet.class);
         IAtomContainer ac1 = builder.newInstance(IRing.class);
         ac1.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -176,19 +176,19 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetHeaviestRing_IRingSet_IBond() {
+    void testGetHeaviestRing_IRingSet_IBond() {
         IRing ring = RingSetManipulator.getHeaviestRing(ringset, bondRing2Ring3);
         Assertions.assertEquals(ring2, ring);
     }
 
     @Test
-    public void testGetMostComplexRing_IRingSet() {
+    void testGetMostComplexRing_IRingSet() {
         IRing ring = RingSetManipulator.getMostComplexRing(ringset);
         Assertions.assertEquals(ring3, ring);
     }
 
     @Test
-    public void testSort_IRingSet() {
+    void testSort_IRingSet() {
         RingSetManipulator.sort(ringset);
         Assertions.assertEquals(4, ringset.getAtomContainerCount());
         int currentSize = ringset.getAtomContainer(0).getAtomCount();
@@ -199,7 +199,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetBondCount() throws Exception {
+    void testGetBondCount() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAdenine();
         AllRingsFinder arf = new AllRingsFinder();
         IRingSet ringSet = arf.findAllRings(mol);
@@ -213,7 +213,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void markAromatic() throws Exception {
+    void markAromatic() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -230,13 +230,13 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllInOneContainer_IRingSet() {
+    void testGetAllInOneContainer_IRingSet() {
         IAtomContainer ac = RingSetManipulator.getAllInOneContainer(ringset);
         Assertions.assertEquals(10, ac.getAtomCount());
     }
 
     @Test
-    public void testGetLargestRingSet_List_IRingSet() throws Exception {
+    void testGetLargestRingSet_List_IRingSet() throws Exception {
         List<IRingSet> list = new Vector<>();
         list.add(ringset);
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();

@@ -29,15 +29,15 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
+class DebugChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setRootObject(new DebugChemObject());
     }
 
     @Test
-    public void testGetInstance() {
+    void testGetInstance() {
         Object builder = DebugChemObjectBuilder.getInstance();
         Assertions.assertNotNull(builder);
         Assertions.assertTrue(builder instanceof IChemObjectBuilder);

@@ -43,7 +43,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
      *  The JUnit setup method
      */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         ifac = Isotopes.getInstance();
         setRule(IsotopePatternRule.class);
@@ -55,7 +55,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testIsotopePatternRule() throws Exception {
+    void testIsotopePatternRule() throws Exception {
 
         IRule rule = new IsotopePatternRule();
         Assertions.assertNotNull(rule);
@@ -68,7 +68,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefault() throws Exception {
+    void testDefault() throws Exception {
 
         IRule rule = new IsotopePatternRule();
         Object[] objects = rule.getParameters();
@@ -82,7 +82,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testSetParameters() throws Exception {
+    void testSetParameters() throws Exception {
 
         IRule rule = new IsotopePatternRule();
 
@@ -104,7 +104,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testValid_Bromine() throws Exception {
+    void testValid_Bromine() throws Exception {
 
         List<double[]> spectrum = new ArrayList<>();
         spectrum.add(new double[]{157.8367, 51.399});
@@ -131,7 +131,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testValidate_IMolecularFormula() throws Exception {
+    void testValidate_IMolecularFormula() throws Exception {
 
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 5);

@@ -43,10 +43,10 @@ import static org.hamcrest.CoreMatchers.is;
  *
  * @cdk.module test-io
  */
-public class CIFReaderTest extends ChemObjectIOTest {
+class CIFReaderTest extends ChemObjectIOTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setChemObjectIO(new CIFReader());
     }
 
@@ -55,7 +55,7 @@ public class CIFReaderTest extends ChemObjectIOTest {
      * Example input <a href="http://www.crystallography.net/1100784.cif">1100784</a>.
      */
     @Test
-    public void cod1100784() throws IOException, CDKException {
+    void cod1100784() throws IOException, CDKException {
         InputStream in = getClass().getResourceAsStream("1100784.cif");
         CIFReader cifReader = new CIFReader(in);
         //        try {
@@ -69,7 +69,7 @@ public class CIFReaderTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void cod1100784AtomCount() throws IOException, CDKException {
+    void cod1100784AtomCount() throws IOException, CDKException {
         InputStream in = getClass().getResourceAsStream("1100784.cif");
         CIFReader cifReader = new CIFReader(in);
         IChemFile chemFile = cifReader.read(new ChemFile());
@@ -79,7 +79,7 @@ public class CIFReaderTest extends ChemObjectIOTest {
     }
 
     @Test()
-    public void cod1100784CellLengths() throws IOException, CDKException {
+    void cod1100784CellLengths() throws IOException, CDKException {
         InputStream in = getClass().getResourceAsStream("1100784.cif");
         CIFReader cifReader = new CIFReader(in);
         IChemFile chemFile = cifReader.read(new ChemFile());
@@ -91,7 +91,7 @@ public class CIFReaderTest extends ChemObjectIOTest {
     }
 
     @Test()
-    public void cod1100784CellAngles() throws IOException, CDKException {
+    void cod1100784CellAngles() throws IOException, CDKException {
         InputStream in = getClass().getResourceAsStream("1100784.cif");
         CIFReader cifReader = new CIFReader(in);
         IChemFile chemFile = cifReader.read(new ChemFile());

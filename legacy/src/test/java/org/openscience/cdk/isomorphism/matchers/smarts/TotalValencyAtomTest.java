@@ -39,10 +39,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-smarts
  */
-public class TotalValencyAtomTest {
+class TotalValencyAtomTest {
 
     @Test
-    public void matches() throws Exception {
+    void matches() throws Exception {
         TotalValencyAtom matcher = new TotalValencyAtom(4, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))

@@ -26,10 +26,10 @@ import org.openscience.cdk.test.interfaces.AbstractSubstanceTest;
  *
  * @cdk.module test-data
  */
-public class SubstanceTest extends AbstractSubstanceTest {
+class SubstanceTest extends AbstractSubstanceTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Substance::new);
     }
 

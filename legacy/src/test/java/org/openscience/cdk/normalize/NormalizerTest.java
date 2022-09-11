@@ -32,10 +32,10 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class NormalizerTest extends CDKTestCase {
+class NormalizerTest extends CDKTestCase {
 
     @Test
-    public void testNormalize() throws Exception {
+    void testNormalize() throws Exception {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("N"));

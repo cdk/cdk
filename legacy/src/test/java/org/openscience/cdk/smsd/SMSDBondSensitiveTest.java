@@ -44,21 +44,21 @@ import org.openscience.cdk.smsd.tools.ExtAtomContainerManipulator;
  * @cdk.require java1.6+
  */
 @Tag("SlowTest")
-public class SMSDBondSensitiveTest {
+class SMSDBondSensitiveTest {
 
     private static IAtomContainer Napthalene;
     private static IAtomContainer Cyclohexane;
     private static IAtomContainer Benzene;
 
     @BeforeAll
-    public static void setUp() throws CDKException {
+    static void setUp() throws CDKException {
         Napthalene = Molecules.createNaphthalene();
         Cyclohexane = Molecules.createCyclohexane();
         Benzene = Molecules.createBenzene();
     }
 
     @Test
-    public void testSubgraph() throws Exception {
+    void testSubgraph() throws Exception {
 
         Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, true);
         sbf.init(Benzene, Napthalene, true, true);
@@ -68,7 +68,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testMatchCount() throws CDKException {
+    void testMatchCount() throws CDKException {
         Isomorphism smsd = new Isomorphism(Algorithm.VFLibMCS, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
@@ -86,7 +86,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testVFLib() throws Exception {
+    void testVFLib() throws Exception {
 
         Isomorphism sbf = new Isomorphism(Algorithm.VFLibMCS, true);
         sbf.init(Benzene, Benzene, true, true);
@@ -96,7 +96,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testSubStructure() throws Exception {
+    void testSubStructure() throws Exception {
         Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, true);
         sbf.init(Benzene, Benzene, true, true);
         sbf.setChemFilters(false, false, false);
@@ -104,7 +104,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testCDKMCS() throws Exception {
+    void testCDKMCS() throws Exception {
         Isomorphism ebimcs = new Isomorphism(Algorithm.CDKMCS, true);
         ebimcs.init(Benzene, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
@@ -113,7 +113,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testMCSPlus() throws Exception {
+    void testMCSPlus() throws Exception {
 
         Isomorphism ebimcs = new Isomorphism(Algorithm.MCSPlus, false);
         ebimcs.init(Cyclohexane, Benzene, true, true);
@@ -128,7 +128,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testSMSD() throws Exception {
+    void testSMSD() throws Exception {
 
         //        Isomorphism ebimcs = new Isomorphism(Algorithm.VFLibMCS, true);
         //        ebimcs.init(Cyclohexane, Benzene, true, true);
@@ -162,7 +162,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testSMSDCyclohexaneBenzeneSubgraph() throws Exception {
+    void testSMSDCyclohexaneBenzeneSubgraph() throws Exception {
 
         //        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(Cyclohexane);
 
@@ -173,7 +173,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testSMSDBondSensitive() throws Exception {
+    void testSMSDBondSensitive() throws Exception {
 
         Isomorphism ebimcs3 = new Isomorphism(Algorithm.CDKMCS, true);
         ebimcs3.init(Cyclohexane, Benzene, true, true);
@@ -207,7 +207,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testSMSDChemicalFilters() throws Exception {
+    void testSMSDChemicalFilters() throws Exception {
 
         Isomorphism ebimcs1 = new Isomorphism(Algorithm.DEFAULT, true);
         ebimcs1.init(Napthalene, Benzene, true, true);
@@ -248,7 +248,7 @@ public class SMSDBondSensitiveTest {
      * @throws Exception
      */
     @Test
-    public void testSMSDAdpAtpSubgraph() throws Exception {
+    void testSMSDAdpAtpSubgraph() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String adp = "NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](COP(O)(=O)OP(O)(O)=O)[C@@H](O)[C@H]1O";
         String atp = "NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](COP(O)(=O)OP(O)(=O)OP(O)(O)=O)[C@@H](O)[C@H]1O";
@@ -281,7 +281,7 @@ public class SMSDBondSensitiveTest {
     }
 
     @Test
-    public void testSMSDLargeSubgraph() throws Exception {
+    void testSMSDLargeSubgraph() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String c03374 = "CC1=C(C=C)\\C(NC1=O)=C" + "\\C1=C(C)C(CCC(=O)O[C@@H]2O[C@@H]"
                 + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)" + "=C(CC2=C(CCC(O)=O)C(C)=C(N2)" + "\\C=C2NC(=O)C(C=C)=C/2C)N1";

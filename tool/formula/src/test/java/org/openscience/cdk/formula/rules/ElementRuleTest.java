@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * @cdk.module test-formula
  */
-public class ElementRuleTest extends FormulaRuleTest {
+class ElementRuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
 
@@ -40,7 +40,7 @@ public class ElementRuleTest extends FormulaRuleTest {
     *  The JUnit setup method
     */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         setRule(ElementRule.class);
     }
@@ -51,7 +51,7 @@ public class ElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testElementRule() throws Exception {
+    void testElementRule() throws Exception {
 
         IRule rule = new ElementRule();
         Assertions.assertNotNull(rule);
@@ -64,7 +64,7 @@ public class ElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefault() throws Exception {
+    void testDefault() throws Exception {
 
         IRule rule = new ElementRule();
         Object[] objects = rule.getParameters();
@@ -94,7 +94,7 @@ public class ElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testSetParameters() throws Exception {
+    void testSetParameters() throws Exception {
 
         IRule rule = new ElementRule();
 
@@ -122,7 +122,7 @@ public class ElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse() throws Exception {
+    void testDefaultValidFalse() throws Exception {
 
         IRule rule = new ElementRule();
 
@@ -139,7 +139,7 @@ public class ElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse_SetParam() throws Exception {
+    void testDefaultValidFalse_SetParam() throws Exception {
 
         IRule rule = new ElementRule();
 
@@ -165,7 +165,7 @@ public class ElementRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidTrue() throws Exception {
+    void testDefaultValidTrue() throws Exception {
 
         IRule rule = new ElementRule();
 

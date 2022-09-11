@@ -34,17 +34,17 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  *
  * @cdk.module test-qsarmolecular
  */
-public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
+class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
 
-    public AromaticBondsCountDescriptorTest() {}
+    AromaticBondsCountDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(AromaticBondsCountDescriptor.class);
     }
 
     @Test
-    public void testAromaticBondsCountDescriptor() throws java.lang.Exception {
+    void testAromaticBondsCountDescriptor() throws java.lang.Exception {
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -53,7 +53,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testViaFlags() throws Exception {
+    void testViaFlags() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         for (IBond iBond : molecule.bonds()) {
             iBond.setFlag(CDKConstants.ISAROMATIC, true);

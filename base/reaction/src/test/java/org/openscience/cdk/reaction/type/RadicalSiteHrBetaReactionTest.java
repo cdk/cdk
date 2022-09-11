@@ -56,7 +56,7 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public RadicalSiteHrBetaReactionTest() throws Exception {
+    RadicalSiteHrBetaReactionTest() throws Exception {
         setReaction(RadicalSiteHrBetaReaction.class);
     }
 
@@ -64,7 +64,7 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testRadicalSiteHrBetaReaction() throws Exception {
+    void testRadicalSiteHrBetaReaction() throws Exception {
         IReactionProcess type = new RadicalSiteHrBetaReaction();
         Assertions.assertNotNull(type);
     }
@@ -189,7 +189,7 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new RadicalSiteHrBetaReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -227,7 +227,7 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new RadicalSiteHrBetaReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();

@@ -25,15 +25,15 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * @cdk.module test-dict
  */
-public class DictionaryTest extends AbstractDictionaryTest {
+class DictionaryTest extends AbstractDictionaryTest {
 
     @BeforeEach
-    public void setTestClass() {
+    void setTestClass() {
         super.setTestClass(new Dictionary());
     }
 
     @AfterEach
-    public void testTestClass() {
+    void testTestClass() {
         Assertions.assertTrue(getTestClass().getClass().getName().endsWith(".Dictionary"));
     }
 

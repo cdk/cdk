@@ -31,13 +31,13 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.event.ChemObjectChangeEvent
  */
-public class ChemObjectChangeEventTest extends CDKTestCase {
+class ChemObjectChangeEventTest extends CDKTestCase {
 
     @BeforeAll
-    public static void setUp() {}
+    static void setUp() {}
 
     @Test
-    public void testChemObjectChangeEvent_Object() {
+    void testChemObjectChangeEvent_Object() {
         ChemObjectChangeEvent event = new ChemObjectChangeEvent(new Atom());
         Assertions.assertNotNull(event);
     }

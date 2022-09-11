@@ -33,10 +33,10 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-group
  *
  */
-public class PermutationTest extends CDKTestCase {
+class PermutationTest extends CDKTestCase {
 
     @Test
-    public void sizeNConstructor() {
+    void sizeNConstructor() {
         int size = 4;
         Permutation p = new Permutation(size);
         for (int index = 0; index < size; index++) {
@@ -45,7 +45,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void valuesConstructor() {
+    void valuesConstructor() {
         int[] values = new int[]{1, 0, 3, 2};
         Permutation p = new Permutation(values);
         for (int index = 0; index < p.size(); index++) {
@@ -54,7 +54,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void cloneConstructor() {
+    void cloneConstructor() {
         int[] values = new int[]{1, 0, 3, 2};
         Permutation a = new Permutation(values);
         Permutation b = new Permutation(a);
@@ -62,54 +62,54 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void equalsTest() {
+    void equalsTest() {
         Permutation a = new Permutation(1, 2, 0, 3);
         Permutation b = new Permutation(1, 2, 0, 3);
         Assertions.assertEquals(a, b);
     }
 
     @Test
-    public void equalsTest_null() {
+    void equalsTest_null() {
         Permutation a = new Permutation(1, 2, 0, 3);
         Assertions.assertNotSame(a, null);
     }
 
     @Test
-    public void equalsTest_difference() {
+    void equalsTest_difference() {
         Permutation a = new Permutation(1, 2, 0, 3);
         Permutation b = new Permutation(1, 0, 2, 3);
         Assertions.assertNotSame(a, b);
     }
 
     @Test
-    public void isIdentityTest() {
+    void isIdentityTest() {
         int size = 4;
         Permutation p = new Permutation(size);
         Assertions.assertTrue(p.isIdentity());
     }
 
     @Test
-    public void sizeTest() {
+    void sizeTest() {
         int size = 4;
         Permutation p = new Permutation(size);
         Assertions.assertEquals(size, p.size());
     }
 
     @Test
-    public void getTest() {
+    void getTest() {
         Permutation p = new Permutation(1, 0);
         Assertions.assertEquals(1, p.get(0));
     }
 
     @Test
-    public void getValuesTest() {
+    void getValuesTest() {
         int[] values = new int[]{1, 0, 3, 2};
         Permutation p = new Permutation(values);
         Assertions.assertArrayEquals(values, p.getValues());
     }
 
     @Test
-    public void firstIndexDiffTest() {
+    void firstIndexDiffTest() {
         int[] valuesA = new int[]{1, 0, 3, 2};
         int[] valuesB = new int[]{1, 0, 2, 3};
         Permutation a = new Permutation(valuesA);
@@ -118,7 +118,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void getOrbitTest() {
+    void getOrbitTest() {
         Permutation p = new Permutation(4, 6, 1, 3, 2, 5, 0);
         List<Integer> orbit = p.getOrbit(1);
         Assertions.assertEquals(5, orbit.size());
@@ -126,7 +126,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void setTest() {
+    void setTest() {
         Permutation p = new Permutation(1, 0);
         p.set(0, 0);
         p.set(1, 1);
@@ -135,7 +135,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void setToTest() {
+    void setToTest() {
         int[] values = new int[]{1, 0, 3, 2};
         Permutation a = new Permutation(values);
         Permutation b = new Permutation(values.length);
@@ -144,7 +144,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void setToTest_differentLength() {
+    void setToTest_differentLength() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             Permutation a = new Permutation(1, 0, 2);
             Permutation b = new Permutation(0, 1);
@@ -153,7 +153,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void multiplyTest() {
+    void multiplyTest() {
         int[] valuesA = new int[]{1, 0, 2, 3};
         int[] valuesB = new int[]{0, 1, 3, 2};
         int[] expectC = new int[]{1, 0, 3, 2};
@@ -164,7 +164,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void invertTest() {
+    void invertTest() {
         int[] values = new int[]{3, 1, 0, 2};
         int[] invert = new int[]{2, 1, 3, 0};
         Permutation p = new Permutation(values);
@@ -173,7 +173,7 @@ public class PermutationTest extends CDKTestCase {
     }
 
     @Test
-    public void toCycleStringTest() {
+    void toCycleStringTest() {
         int[] values = new int[]{0, 2, 1, 4, 5, 3, 7, 8, 9, 6};
         String expected = "(0)(1, 2)(3, 4, 5)(6, 7, 8, 9)";
         Permutation p = new Permutation(values);

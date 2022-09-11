@@ -49,10 +49,10 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-inchi
  */
-public class InChIGeneratorFactoryTest {
+class InChIGeneratorFactoryTest {
 
     @Test
-    public void testGetInstance() throws CDKException {
+    void testGetInstance() throws CDKException {
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
         Assertions.assertNotNull(factory);
     }
@@ -61,7 +61,7 @@ public class InChIGeneratorFactoryTest {
      * Because we are not setting any options, we get an Standard InChI.
      */
     @Test
-    public void testGetInChIGenerator_IAtomContainer() throws Exception {
+    void testGetInChIGenerator_IAtomContainer() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
@@ -75,7 +75,7 @@ public class InChIGeneratorFactoryTest {
      * Because we are setting an options, we get a non-standard InChI.
      */
     @Test
-    public void testGetInChIGenerator_IAtomContainer_String() throws Exception {
+    void testGetInChIGenerator_IAtomContainer_String() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
@@ -89,7 +89,7 @@ public class InChIGeneratorFactoryTest {
      * Because we are setting no option, we get a Standard InChI.
      */
     @Test
-    public void testGetInChIGenerator_IAtomContainer_NullString() throws Exception {
+    void testGetInChIGenerator_IAtomContainer_NullString() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
@@ -103,7 +103,7 @@ public class InChIGeneratorFactoryTest {
      * We must get the same result from using space or comma delimited string
      */
     @Test
-    public void testGetInChIGenerator_IAtomContainer_StringSeparators() throws Exception {
+    void testGetInChIGenerator_IAtomContainer_StringSeparators() throws Exception {
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     	IAtomContainer ac = sp.parseSmiles("C[C@H](Cl)N");
         String spaceSeparated = "";
@@ -132,7 +132,7 @@ public class InChIGeneratorFactoryTest {
      * Because we are setting an options, we get a non-standard InChI.
      */
     @Test
-    public void testGetInChIGenerator_IAtomContainer_List() throws Exception {
+    void testGetInChIGenerator_IAtomContainer_List() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
@@ -148,7 +148,7 @@ public class InChIGeneratorFactoryTest {
      * Because we are setting an options, we get a non-standard InChI.
      */
     @Test
-    public void testGetInChIGenerator_IAtomContainer_NullList() throws Exception {
+    void testGetInChIGenerator_IAtomContainer_NullList() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("Cl");
@@ -159,14 +159,14 @@ public class InChIGeneratorFactoryTest {
     }
 
     @Test
-    public void testGetInChIToStructure_String_IChemObjectBuilder() throws CDKException {
+    void testGetInChIToStructure_String_IChemObjectBuilder() throws CDKException {
         InChIToStructure parser = InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
                 DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(parser);
     }
 
     @Test
-    public void testGetInChIToStructure_String_IChemObjectBuilder_NullString() throws CDKException {
+    void testGetInChIToStructure_String_IChemObjectBuilder_NullString() throws CDKException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
                                                                     DefaultChemObjectBuilder.getInstance(), (String) null);
@@ -174,7 +174,7 @@ public class InChIGeneratorFactoryTest {
     }
 
     @Test
-    public void testGetInChIToStructure_String_IChemObjectBuilder_NullList() throws CDKException {
+    void testGetInChIToStructure_String_IChemObjectBuilder_NullList() throws CDKException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
                                                                     DefaultChemObjectBuilder.getInstance(), (List<String>) null);
@@ -185,14 +185,14 @@ public class InChIGeneratorFactoryTest {
      * No options set.
      */
     @Test
-    public void testGetInChIToStructure_String_IChemObjectBuilder_List() throws CDKException {
+    void testGetInChIToStructure_String_IChemObjectBuilder_List() throws CDKException {
         InChIToStructure parser = InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
                 DefaultChemObjectBuilder.getInstance(), new ArrayList<>());
         Assertions.assertNotNull(parser);
     }
 
     @Test
-    public void testSMILESConversion_TopologicalCentre() throws CDKException {
+    void testSMILESConversion_TopologicalCentre() throws CDKException {
 
         // (2R,3R,4S,5R,6S)-3,5-dimethylheptane-2,4,6-triol
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -208,7 +208,7 @@ public class InChIGeneratorFactoryTest {
     }
 
     @Test
-    public void dontIgnoreMajorIsotopes() throws CDKException {
+    void dontIgnoreMajorIsotopes() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         InChIGeneratorFactory inchifact = InChIGeneratorFactory.getInstance();
         assertThat(inchifact.getInChIGenerator(smipar.parseSmiles("[12CH4]")).getInchi(),
@@ -220,7 +220,7 @@ public class InChIGeneratorFactoryTest {
     // InChI only supports cumulenes of length 2 (CC=[C@]=CC) and 3
     // (C/C=C=C=C/C) - longer ones should be ignored
     @Test
-    public void longerExtendedTetrahedralsIgnored() throws Exception {
+    void longerExtendedTetrahedralsIgnored() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol  = smipar.parseSmiles("CC=C=C=[C@]=C=C=CC");
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(mol);
@@ -232,7 +232,7 @@ public class InChIGeneratorFactoryTest {
      * Tests the aromatic bonds option in the InChI factory class.
      */
     @Test
-    public void testInChIGenerator_AromaticBonds() throws CDKException {
+    void testInChIGenerator_AromaticBonds() throws CDKException {
 
         try {
             // create a fairly complex aromatic molecule

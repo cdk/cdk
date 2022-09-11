@@ -31,17 +31,17 @@ import static org.mockito.Mockito.when;
 /**
  * @cdk.module test-diff
  */
-public class ElectronContainerDiffTest {
+class ElectronContainerDiffTest {
 
     @Test
-    public void testMatchAgainstItself() {
+    void testMatchAgainstItself() {
         IElectronContainer atom1 = mock(IElectronContainer.class);
         String result = ElectronContainerDiff.diff(atom1, atom1);
         Assertions.assertEquals("", result);
     }
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IElectronContainer ec1 = mock(IElectronContainer.class);
         IElectronContainer ec2 = mock(IElectronContainer.class);
         when(ec1.getElectronCount()).thenReturn(2);
@@ -56,7 +56,7 @@ public class ElectronContainerDiffTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         IElectronContainer ec1 = mock(IElectronContainer.class);
         IElectronContainer ec2 = mock(IElectronContainer.class);
         when(ec1.getElectronCount()).thenReturn(2);

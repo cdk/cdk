@@ -68,12 +68,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-libiocml
  * @cdk.require java1.5+
  */
-public class CML2WriterTest extends CDKTestCase {
+class CML2WriterTest extends CDKTestCase {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CML2WriterTest.class);
 
     @Test
-    public void testCMLWriterBenzene() throws Exception {
+    void testCMLWriterBenzene() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
@@ -94,7 +94,7 @@ public class CML2WriterTest extends CDKTestCase {
      * @cdk.bug 1655045
      */
     @Test
-    public void testHydrogenCount() throws Exception {
+    void testHydrogenCount() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer(); // methane
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.CARBON));
@@ -110,7 +110,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testNullFormalCharge() throws Exception {
+    void testNullFormalCharge() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer(); // methane
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.CARBON));
@@ -130,7 +130,7 @@ public class CML2WriterTest extends CDKTestCase {
     *
     */
     @Test
-    public void testMassNumber() throws Exception {
+    void testMassNumber() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
@@ -152,7 +152,7 @@ public class CML2WriterTest extends CDKTestCase {
      * @cdk.bug 1655045
      */
     @Test
-    public void testHydrogenCount_2() throws Exception {
+    void testHydrogenCount_2() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer(); // methane
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.CARBON));
@@ -170,7 +170,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testCMLCrystal() throws Exception {
+    void testCMLCrystal() throws Exception {
         StringWriter writer = new StringWriter();
         ICrystal crystal = new Crystal();
         IAtom silicon = new Atom("Si");
@@ -192,7 +192,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testReactionCustomization() throws Exception {
+    void testReactionCustomization() throws Exception {
         StringWriter writer = new StringWriter();
         IReaction reaction = new Reaction();
         reaction.setID("reaction1");
@@ -221,7 +221,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testReactionScheme1() throws Exception {
+    void testReactionScheme1() throws Exception {
         StringWriter writer = new StringWriter();
         IReactionScheme scheme1 = DefaultChemObjectBuilder.getInstance().newInstance(IReactionScheme.class);
         scheme1.setID("rs0");
@@ -266,7 +266,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testReactionScheme2() throws Exception {
+    void testReactionScheme2() throws Exception {
         StringWriter writer = new StringWriter();
         ReactionScheme scheme1 = new ReactionScheme();
         scheme1.setID("rs0");
@@ -307,7 +307,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testReactionSchemeWithFormula() throws Exception {
+    void testReactionSchemeWithFormula() throws Exception {
         StringWriter writer = new StringWriter();
         ReactionScheme scheme1 = new ReactionScheme();
         scheme1.setID("rs0");
@@ -356,7 +356,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testReactionSchemeWithFormula2() throws Exception {
+    void testReactionSchemeWithFormula2() throws Exception {
         StringWriter writer = new StringWriter();
         ReactionScheme scheme1 = new ReactionScheme();
         scheme1.setID("rs0");
@@ -399,7 +399,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testChemModeID() throws Exception {
+    void testChemModeID() throws Exception {
         StringWriter writer = new StringWriter();
         IChemModel chemModel = new ChemModel();
         chemModel.setID("cm0");
@@ -415,7 +415,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testMoleculeSetID() throws Exception {
+    void testMoleculeSetID() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet moleculeSet = new AtomContainerSet();
         moleculeSet.setID("ms0");
@@ -431,7 +431,7 @@ public class CML2WriterTest extends CDKTestCase {
     }
 
     @Test
-    public void testReactionProperty() throws Exception {
+    void testReactionProperty() throws Exception {
         StringWriter writer = new StringWriter();
         IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
         reaction.setID("r1");
@@ -560,7 +560,7 @@ public class CML2WriterTest extends CDKTestCase {
     //    }
 
     @Test
-    public void writeIsClosed() throws IOException {
+    void writeIsClosed() throws IOException {
         Writer mock = Mockito.mock(Writer.class);
         new CMLWriter(mock).close();
         Mockito.verify(mock).close();

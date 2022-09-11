@@ -19,17 +19,17 @@ import java.util.List;
  * @cdk.module test-qsarmolecular
  */
 
-public class MDEDescriptorTest extends MolecularDescriptorTest {
+class MDEDescriptorTest extends MolecularDescriptorTest {
 
-    public MDEDescriptorTest() {}
+    MDEDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(MDEDescriptor.class);
     }
 
     @Test
-    public void testMDE1() throws Exception {
+    void testMDE1() throws Exception {
         String filename = "mdeotest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);

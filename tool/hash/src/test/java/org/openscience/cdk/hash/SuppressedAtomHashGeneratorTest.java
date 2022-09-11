@@ -19,10 +19,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-hash
  */
-public class SuppressedAtomHashGeneratorTest {
+class SuppressedAtomHashGeneratorTest {
 
     @Test
-    public void testGenerate() throws Exception {
+    void testGenerate() throws Exception {
 
         AtomHashGenerator seedMock = mock(AtomHashGenerator.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -61,7 +61,7 @@ public class SuppressedAtomHashGeneratorTest {
     }
 
     @Test
-    public void testGenerate_ZeroDepth() throws Exception {
+    void testGenerate_ZeroDepth() throws Exception {
 
         AtomHashGenerator seedMock = mock(AtomHashGenerator.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -83,7 +83,7 @@ public class SuppressedAtomHashGeneratorTest {
     }
 
     @Test
-    public void testGenerate_Disconnected() throws Exception {
+    void testGenerate_Disconnected() throws Exception {
         AtomHashGenerator seedMock = mock(AtomHashGenerator.class);
         IAtomContainer container = mock(IAtomContainer.class);
 
@@ -103,7 +103,7 @@ public class SuppressedAtomHashGeneratorTest {
     }
 
     @Test
-    public void testGenerate_Simple() throws Exception {
+    void testGenerate_Simple() throws Exception {
         AtomHashGenerator seedMock = mock(AtomHashGenerator.class);
         IAtomContainer container = mock(IAtomContainer.class);
 
@@ -141,7 +141,7 @@ public class SuppressedAtomHashGeneratorTest {
     }
 
     @Test
-    public void testRotation() throws Exception {
+    void testRotation() throws Exception {
 
         AtomHashGenerator seedMock = mock(AtomHashGenerator.class);
         IAtomContainer container = mock(IAtomContainer.class);

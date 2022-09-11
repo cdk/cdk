@@ -32,15 +32,15 @@ import org.openscience.cdk.test.interfaces.AbstractStrandTest;
  *
  * @cdk.module test-silent
  */
-public class StrandTest extends AbstractStrandTest {
+class StrandTest extends AbstractStrandTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Strand::new);
     }
 
     @Test
-    public void testStrand() {
+    void testStrand() {
         IStrand oStrand = new Strand();
         Assertions.assertNotNull(oStrand);
         Assertions.assertEquals(oStrand.getMonomerCount(), 0);

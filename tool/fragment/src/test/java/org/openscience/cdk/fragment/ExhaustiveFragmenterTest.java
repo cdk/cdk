@@ -38,19 +38,19 @@ import static org.hamcrest.CoreMatchers.is;
  *
  * @cdk.module test-fragment
  */
-public class ExhaustiveFragmenterTest extends CDKTestCase {
+class ExhaustiveFragmenterTest extends CDKTestCase {
 
-    static ExhaustiveFragmenter fragmenter;
-    static SmilesParser         smilesParser;
+    private static ExhaustiveFragmenter fragmenter;
+    private static SmilesParser         smilesParser;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         fragmenter = new ExhaustiveFragmenter();
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testEF1() throws Exception {
+    void testEF1() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("CCC");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
@@ -58,7 +58,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testEF2() throws Exception {
+    void testEF2() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCC1");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
@@ -66,7 +66,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testEF3() throws Exception {
+    void testEF3() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
@@ -74,7 +74,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testEF4() throws Exception {
+    void testEF4() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1CC");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
@@ -83,7 +83,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testEF5() throws Exception {
+    void testEF5() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1Cc1ccccc1");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
@@ -95,7 +95,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testEF6() throws Exception {
+    void testEF6() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1c1ccccc1");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
@@ -108,7 +108,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testEF7() throws Exception {
+    void testEF7() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
         fragmenter.generateFragments(mol);
         List<String> frags = Arrays.asList(fragmenter.getFragments());
@@ -122,7 +122,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testMinSize() throws Exception {
+    void testMinSize() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCC1C2CCCCC2");
         fragmenter.setMinimumFragmentSize(6);
         fragmenter.generateFragments(mol);

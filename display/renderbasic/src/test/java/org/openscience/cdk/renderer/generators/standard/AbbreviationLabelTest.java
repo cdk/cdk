@@ -34,10 +34,10 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AbbreviationLabelTest {
+class AbbreviationLabelTest {
 
     @Test
-    public void carboxylicacid() {
+    void carboxylicacid() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("COOH", tokens));
         assertThat(tokens.size(), is(4));
@@ -45,7 +45,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void carboxylate() {
+    void carboxylate() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("COO-", tokens));
         assertThat(tokens.size(), is(4));
@@ -53,7 +53,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void trifluromethyl() {
+    void trifluromethyl() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("CF3", tokens));
         assertThat(tokens.size(), is(2));
@@ -61,7 +61,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void triphenylmethyl() {
+    void triphenylmethyl() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("CPh3", tokens));
         assertThat(tokens.size(), is(2));
@@ -69,7 +69,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void tertbutyls() {
+    void tertbutyls() {
         List<String> tokens = new ArrayList<>(1);
         for (String str : Arrays.asList("tBu", "tertBu", "t-Bu", "t-Butyl", "tertButyl")) {
             tokens.clear();
@@ -79,7 +79,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void peglinker() {
+    void peglinker() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("CH2CH2OCH2CH2O", tokens));
         assertThat(tokens.size(), is(10));
@@ -87,7 +87,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void parseFeacac3() {
+    void parseFeacac3() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("Fe(acac)3", tokens));
         assertThat(tokens.size(), is(5));
@@ -95,7 +95,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void formatFeacac3() {
+    void formatFeacac3() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("Fe(acac)3", tokens));
         List<AbbreviationLabel.FormattedText> formatted = AbbreviationLabel.format(tokens);
@@ -107,7 +107,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void formatRubpy3Cl2() {
+    void formatRubpy3Cl2() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("Ru(bpy)3Cl2", tokens));
         List<AbbreviationLabel.FormattedText> formatted = AbbreviationLabel.format(tokens);
@@ -123,7 +123,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void CO2Et() {
+    void CO2Et() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("CO2Et", tokens));
         assertThat(tokens.size(), is(3));
@@ -131,7 +131,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void parseBrackets() {
+    void parseBrackets() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("N(CH2CH2O)CH2", tokens));
         assertThat(tokens.size(), is(10));
@@ -139,7 +139,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void reversingBrackets() {
+    void reversingBrackets() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("N(CH2CH2O)CH2", tokens));
         AbbreviationLabel.reverse(tokens);
@@ -147,7 +147,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void reversingFormatPOOHOEt() {
+    void reversingFormatPOOHOEt() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("PO(OH)OEt", tokens));
         AbbreviationLabel.reverse(tokens);
@@ -156,7 +156,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void reversingBracketsWithNumbers() {
+    void reversingBracketsWithNumbers() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("B(OH)2", tokens));
         AbbreviationLabel.reverse(tokens);
@@ -164,21 +164,21 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void hydrateFormatting() {
+    void hydrateFormatting() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("SnCl4.2H2O", tokens));
         assertThat(tokens, is(Arrays.asList("Sn", "Cl4", ".", "2", "H2", "O")));
     }
 
     @Test
-    public void nonAbbreviationLabel() {
+    void nonAbbreviationLabel() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertFalse(AbbreviationLabel.parse("A Random Label - Don't Reverse", tokens));
         assertThat(tokens.size(), is(1));
     }
 
     @Test
-    public void formatOPO3() {
+    void formatOPO3() {
         List<String> tokens = Arrays.asList("O", "P", "O3", "-2");
         List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.format(tokens);
         AbbreviationLabel.reduce(texts, 0, texts.size());
@@ -192,7 +192,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void formatTBu() {
+    void formatTBu() {
         List<String> tokens = Arrays.asList("tBu");
         List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.format(tokens);
         assertThat(texts.size(), is(2));
@@ -203,7 +203,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void NEt3DotHCl() {
+    void NEt3DotHCl() {
         List<String> tokens = new ArrayList<>();
         Assertions.assertTrue(AbbreviationLabel.parse("NEt3·HCl", tokens));
         assertThat(tokens.size(), is(5));
@@ -224,7 +224,7 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void formatOPO3H2() {
+    void formatOPO3H2() {
         List<String> tokens = Arrays.asList("O", "P", "O3", "H2");
         List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.format(tokens);
         AbbreviationLabel.reduce(texts, 0, texts.size());
@@ -240,30 +240,30 @@ public class AbbreviationLabelTest {
     }
 
     @Test
-    public void hydrate() {
+    void hydrate() {
         List<String> tokens = new ArrayList<>();
         AbbreviationLabel.parse("•H2O", tokens);
         assertThat(tokens, is(Arrays.asList("•", "H2", "O")));
     }
 
     @Test
-    public void het() {
+    void het() {
         // 'Het' not 'He'lium and 't'erts
         Assertions.assertFalse(AbbreviationLabel.parse("Het", new ArrayList<>()));
     }
 
     @Test
-    public void parseChargeOnly() {
+    void parseChargeOnly() {
         Assertions.assertFalse(AbbreviationLabel.parse("+", new ArrayList<>()));
     }
 
     @Test
-    public void parseNumberOnly() {
+    void parseNumberOnly() {
         Assertions.assertFalse(AbbreviationLabel.parse("1", new ArrayList<>()));
     }
 
     @Test
-    public void nonAsciiLabel() {
+    void nonAsciiLabel() {
         // phenyl
         Assertions.assertFalse(AbbreviationLabel.parse("苯基", new ArrayList<>()));
     }

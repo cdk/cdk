@@ -37,27 +37,27 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class BondEnergyTest {
+class BondEnergyTest {
 
     public BondEnergyTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of getSymbolFirstAtom method, of class BondEnergy.
      */
     @Test
-    public void testGetSymbolFirstAtom() {
+    void testGetSymbolFirstAtom() {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         String expResult = "H";
         String result = instance.getSymbolFirstAtom();
@@ -68,7 +68,7 @@ public class BondEnergyTest {
      * Test of getSymbolSecondAtom method, of class BondEnergy.
      */
     @Test
-    public void testGetSymbolSecondAtom() {
+    void testGetSymbolSecondAtom() {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         String expResult = "I";
         String result = instance.getSymbolSecondAtom();
@@ -79,7 +79,7 @@ public class BondEnergyTest {
      * Test of getBondOrder method, of class BondEnergy.
      */
     @Test
-    public void testGetBondOrder() {
+    void testGetBondOrder() {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         Order expResult = Order.SINGLE;
         Order result = instance.getBondOrder();
@@ -90,7 +90,7 @@ public class BondEnergyTest {
      * Test of getEnergy method, of class BondEnergy.
      */
     @Test
-    public void testGetEnergy() {
+    void testGetEnergy() {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         int expResult = 295;
         int result = instance.getEnergy();

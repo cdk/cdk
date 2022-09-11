@@ -43,12 +43,12 @@ import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
  * failing cases from old implementations. The atom types of the MMFF validation suite is tested by
  * {@link MmffAtomTypeValidationSuiteTest}.
  */
-public class MmffAtomTypeMatcherTest {
+class MmffAtomTypeMatcherTest {
 
-    static final MmffAtomTypeMatcher INSTANCE = new MmffAtomTypeMatcher();
+    private static final MmffAtomTypeMatcher INSTANCE = new MmffAtomTypeMatcher();
 
     @Test
-    public void hydrogenCountMustBeDefined() {
+    void hydrogenCountMustBeDefined() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("H"));
@@ -66,7 +66,7 @@ public class MmffAtomTypeMatcherTest {
     }
 
     @Test
-    public void hydrogenCountMustBeExplicit() {
+    void hydrogenCountMustBeExplicit() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("C"));
         container.getAtom(0).setImplicitHydrogenCount(4);
@@ -76,7 +76,7 @@ public class MmffAtomTypeMatcherTest {
     }
 
     @Test
-    public void aromaticCompoundsAreRejected() {
+    void aromaticCompoundsAreRejected() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("C"));
         container.getAtom(0).setImplicitHydrogenCount(4);
@@ -93,7 +93,7 @@ public class MmffAtomTypeMatcherTest {
      * @cdk.bug #3523240
      */
     @Test
-    public void bug3523240IsResolved() throws Exception {
+    void bug3523240IsResolved() throws Exception {
         IAtomContainer container = new AtomContainer(50, 51, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("O", 0));
@@ -211,7 +211,7 @@ public class MmffAtomTypeMatcherTest {
      * @cdk.bug #3524734
      */
     @Test
-    public void bug3524734IsResolved() throws Exception {
+    void bug3524734IsResolved() throws Exception {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("C", 0));
@@ -244,7 +244,7 @@ public class MmffAtomTypeMatcherTest {
      * N2OX but this is for nitrogen cations so '*[NH+]([O-])*', NC=O is more likely to be correct.
      */
     @Test
-    public void hydroxyurea() {
+    void hydroxyurea() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("O", 0));
@@ -274,7 +274,7 @@ public class MmffAtomTypeMatcherTest {
      * break the assignment and are set to null.
      */
     @Test
-    public void molecularHydrogenDoesNotBreakAssignment() {
+    void molecularHydrogenDoesNotBreakAssignment() {
         IAtomContainer container = new AtomContainer(2, 1, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("H", 0));
@@ -290,7 +290,7 @@ public class MmffAtomTypeMatcherTest {
      * NITROGEN IN ALIPHATIC AMINES'.
      */
     @Test
-    public void methylamine() {
+    void methylamine() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("N", 0));
@@ -315,7 +315,7 @@ public class MmffAtomTypeMatcherTest {
      * case.
      */
     @Test
-    public void thiophene() {
+    void thiophene() {
         IAtomContainer container = new AtomContainer(9, 9, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("C", 0));
@@ -345,7 +345,7 @@ public class MmffAtomTypeMatcherTest {
      * case. Note the CDK used 'Oar' instead of the actual 'OFUR' type.
      */
     @Test
-    public void furane() {
+    void furane() {
         IAtomContainer container = new AtomContainer(9, 9, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("C", 0));
@@ -371,7 +371,7 @@ public class MmffAtomTypeMatcherTest {
     }
 
     @Test
-    public void methane() {
+    void methane() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(atom("C", 0));
         container.addAtom(atom("H", 0));
@@ -388,7 +388,7 @@ public class MmffAtomTypeMatcherTest {
     }
 
     @Test
-    public void invalidSmilesThrowsIOExceptionForTokenManagerError() throws IOException {
+    void invalidSmilesThrowsIOExceptionForTokenManagerError() throws IOException {
         String row = "INVALID.SMILES X";
         ByteArrayInputStream in = new ByteArrayInputStream(row.getBytes());
         try {
@@ -401,7 +401,7 @@ public class MmffAtomTypeMatcherTest {
     }
 
     @Test
-    public void invalidSmilesThrowsIOExceptionForIllegalArgument() throws IOException {
+    void invalidSmilesThrowsIOExceptionForIllegalArgument() throws IOException {
         String row = "23 X";
         ByteArrayInputStream in = new ByteArrayInputStream(row.getBytes());
         try {

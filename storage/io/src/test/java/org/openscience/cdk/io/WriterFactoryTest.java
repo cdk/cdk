@@ -34,24 +34,24 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @cdk.module test-io
  */
-public class WriterFactoryTest extends CDKTestCase {
+class WriterFactoryTest extends CDKTestCase {
 
     private final WriterFactory factory = new WriterFactory();
 
     @Test
-    public void testFormatCount() {
+    void testFormatCount() {
         Assertions.assertTrue(factory.formatCount() > 0);
     }
 
     @Test
-    public void testFindChemFormats() {
+    void testFindChemFormats() {
         IChemFormat[] formats = factory.findChemFormats(DataFeatures.HAS_3D_COORDINATES);
         Assertions.assertNotNull(formats);
         Assertions.assertTrue(formats.length > 0);
     }
 
     @Test
-    public void testCreateWriter_IChemFormat() {
+    void testCreateWriter_IChemFormat() {
         IChemFormat format = (IChemFormat) XYZFormat.getInstance();
         IChemObjectWriter writer = factory.createWriter(format);
         Assertions.assertNotNull(writer);
@@ -59,7 +59,7 @@ public class WriterFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testCustomWriter() {
+    void testCustomWriter() {
         WriterFactory factory = new WriterFactory();
         factory.registerWriter(CustomWriter.class);
         IChemObjectWriter writer = factory.createWriter(new CustomFormat());

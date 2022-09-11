@@ -44,15 +44,15 @@ import java.io.InputStream;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class SDFReaderTest extends SimpleChemObjectReaderTest {
+class SDFReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLV2000Reader(), "org/openscience/cdk/io/iterator/test.sdf");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         MDLV2000Reader reader = new MDLV2000Reader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(ChemModel.class));
@@ -60,7 +60,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testSDFFile() throws Exception {
+    void testSDFFile() throws Exception {
         String filename = "iterator/test.sdf"; // a multi molecule SDF file
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -76,7 +76,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testDataFromSDFReading() throws Exception {
+    void testDataFromSDFReading() throws Exception {
         String filename = "iterator/test.sdf"; // a multi molecule SDF file
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -99,7 +99,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testMultipleDataFields() throws Exception {
+    void testMultipleDataFields() throws Exception {
         String filename = "bug1587283.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -124,7 +124,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testSDFFile4() throws Exception {
+    void testSDFFile4() throws Exception {
         String filename = "test4.sdf"; // a multi molecule SDF file
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -140,7 +140,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testSDFFile3() throws Exception {
+    void testSDFFile3() throws Exception {
         String filename = "test3.sdf"; // a multi molecule SDF file
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -156,7 +156,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testSDFFile5() throws Exception {
+    void testSDFFile5() throws Exception {
         String filename = "test5.sdf"; // a multi molecule SDF file
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -177,7 +177,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1974826
      */
     @Test
-    public void testSDFFile6() throws Exception {
+    void testSDFFile6() throws Exception {
         String filename = "test6.sdf"; // a multi molecule SDF file
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -207,7 +207,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 2911300
      */
     @Test
-    public void testBug2911300() throws Exception {
+    void testBug2911300() throws Exception {
         String filename = "bug2911300.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);

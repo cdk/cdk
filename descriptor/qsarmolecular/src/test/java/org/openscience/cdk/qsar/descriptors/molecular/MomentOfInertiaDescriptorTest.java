@@ -43,12 +43,12 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsarmolecular
  */
 
-public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
+class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
 
-    public MomentOfInertiaDescriptorTest() {}
+    MomentOfInertiaDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(MomentOfInertiaDescriptor.class);
     }
 
@@ -57,7 +57,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testMOIFromSmiles() throws InvalidSmilesException {
+    void testMOIFromSmiles() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
         DescriptorValue value = descriptor.calculate(mol);
@@ -66,7 +66,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testMomentOfInertia1() throws java.lang.Exception {
+    void testMomentOfInertia1() throws java.lang.Exception {
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -86,7 +86,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testMomentOfInertia2() throws java.lang.Exception {
+    void testMomentOfInertia2() throws java.lang.Exception {
         String filename = "momi2.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

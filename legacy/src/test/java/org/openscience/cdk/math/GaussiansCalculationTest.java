@@ -59,9 +59,9 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.keyword command line util
  */
-public class GaussiansCalculationTest {
+class GaussiansCalculationTest {
 
-    public GaussiansCalculationTest(String inFile) {
+    private GaussiansCalculationTest(String inFile) {
         try {
             ISimpleChemObjectReader reader;
             if (inFile.endsWith(".xyz")) {

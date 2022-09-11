@@ -43,10 +43,10 @@ import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
  * @author John May
  * @cdk.module test-hash
  */
-public class PerturbedAtomHashGeneratorTest {
+class PerturbedAtomHashGeneratorTest {
 
     @Test
-    public void testGenerate() throws Exception {
+    void testGenerate() throws Exception {
 
         IAtomContainer m1 = cyclopentylcyclopentane();
         IAtomContainer m2 = decahydronaphthalene();
@@ -68,7 +68,7 @@ public class PerturbedAtomHashGeneratorTest {
     }
 
     @Test
-    public void testCombine() throws Exception {
+    void testCombine() throws Exception {
         Xorshift prng = new Xorshift();
         PerturbedAtomHashGenerator generator = new PerturbedAtomHashGenerator(new SeedGenerator(
                 BasicAtomEncoder.ATOMIC_NUMBER), new BasicAtomHashGenerator(new SeedGenerator(
@@ -85,7 +85,7 @@ public class PerturbedAtomHashGeneratorTest {
         Assertions.assertArrayEquals(values, new long[]{_0, _1, _2, _3});
     }
 
-    public IAtomContainer cyclopentylcyclopentane() {
+    IAtomContainer cyclopentylcyclopentane() {
         IAtom[] atoms = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),
                 new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),};
         IBond[] bonds = new IBond[]{new Bond(atoms[0], atoms[1], SINGLE), new Bond(atoms[0], atoms[4], SINGLE),
@@ -103,7 +103,7 @@ public class PerturbedAtomHashGeneratorTest {
     /**
      * @cdk.inchi InChI=1S/C10H18/c1-2-6-10-8-4-3-7-9(10)5-1/h9-10H,1-8H2
      */
-    public IAtomContainer decahydronaphthalene() {
+    IAtomContainer decahydronaphthalene() {
         IAtom[] atoms = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),
                 new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),};
         IBond[] bonds = new IBond[]{new Bond(atoms[0], atoms[1], SINGLE), new Bond(atoms[0], atoms[5], SINGLE),

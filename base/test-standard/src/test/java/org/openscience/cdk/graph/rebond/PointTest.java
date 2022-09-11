@@ -25,20 +25,20 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class PointTest extends CDKTestCase {
+class PointTest extends CDKTestCase {
 
-    public PointTest() {
+    PointTest() {
         super();
     }
 
     @Test
-    public void testPoint_double_double_double() {
+    void testPoint_double_double_double() {
         Point point = new Point(0.1, 0.2, 0.3);
         Assertions.assertNotNull(point);
     }
 
     @Test
-    public void testGetDimValue_int() {
+    void testGetDimValue_int() {
         Point point = new Point(0.1, 0.2, 0.3);
         Assertions.assertEquals(0.1, point.getDimValue(0), 0.0001);
         Assertions.assertEquals(0.2, point.getDimValue(1), 0.0001);
@@ -46,7 +46,7 @@ public class PointTest extends CDKTestCase {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Point point = new Point(0.1, 0.2, 0.3);
         Assertions.assertEquals("<0.1,0.2,0.3>", point.toString());
     }

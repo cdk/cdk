@@ -34,14 +34,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarbond
  */
-public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest {
+class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest {
 
-    public BondSigmaElectronegativityDescriptorTest() {
+    BondSigmaElectronegativityDescriptorTest() {
         descriptor = new BondSigmaElectronegativityDescriptor();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BondSigmaElectronegativityDescriptor.class);
     }
 
@@ -49,7 +49,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
      *  A unit test for JUnit
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor() throws java.lang.Exception {
+    void testBondSigmaElectronegativityDescriptor() throws java.lang.Exception {
         double[] testResult = {2.5882, 1.1894};/*
                                                 * from Petra online:
                                                 * http://www2.
@@ -79,7 +79,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
      *  A unit test for JUnit with Methyl chloride
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Methyl_chloride() throws java.lang.Exception {
+    void testBondSigmaElectronegativityDescriptor_Methyl_chloride() throws java.lang.Exception {
         double[] testResult = {2.1612, 0.8751};/*
                                                 * from Petra online:
                                                 * http://www2.
@@ -102,7 +102,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
      *  A unit test for JUnit with Allyl bromide
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Allyl_bromide() throws java.lang.Exception {
+    void testBondSigmaElectronegativityDescriptor_Allyl_bromide() throws java.lang.Exception {
         double[] testResult = {0.2396, 0.3635, 1.7086, 0.3635, 0.338, 0.574, 0.969, 0.969}; /*
                                                                                              * from
                                                                                              * Petra
@@ -146,7 +146,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
      *  A unit test for JUnit with Isopentyl iodide
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Isopentyl_iodide() throws java.lang.Exception {
+    void testBondSigmaElectronegativityDescriptor_Isopentyl_iodide() throws java.lang.Exception {
         double testResult = 0.1482; /*
                                      * from Petra online:
                                      * http://www2.chemie.uni-
@@ -166,7 +166,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
      *  A unit test for JUnit with Ethoxy ethane
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Ethoxy_ethane() throws java.lang.Exception {
+    void testBondSigmaElectronegativityDescriptor_Ethoxy_ethane() throws java.lang.Exception {
         double[] testResult = {0.7939, 1.0715, 1.0715, 0.7939, 0.2749, 0.2749, 0.2749, 0.8796, 0.8796}; /*
                                                                                                          * from
                                                                                                          * Petra
@@ -210,7 +210,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
      *  A unit test for JUnit with Ethanolamine
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Ethanolamine() throws java.lang.Exception {
+    void testBondSigmaElectronegativityDescriptor_Ethanolamine() throws java.lang.Exception {
         double[] testResult = {0.0074, 0.3728, 0.8547, 0.2367, 0.2367}; /*
                                                                          * from
                                                                          * Petra
@@ -248,7 +248,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
      *  A unit test for JUnit with Allyl mercaptan
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Allyl_mercaptan() throws java.lang.Exception {
+    void testBondSigmaElectronegativityDescriptor_Allyl_mercaptan() throws java.lang.Exception {
         double[] testResult = {0.1832, 0.0143, 0.5307, 0.3593, 0.3593, 8.5917}; /*
                                                                                  * from
                                                                                  * Petra

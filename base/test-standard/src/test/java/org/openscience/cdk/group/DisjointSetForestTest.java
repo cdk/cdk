@@ -31,17 +31,17 @@ import org.junit.jupiter.api.Test;
  * @author maclean
  * @cdk.module test-standard
  */
-public class DisjointSetForestTest {
+class DisjointSetForestTest {
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         int n = 10;
         DisjointSetForest forest = new DisjointSetForest(n);
         Assertions.assertNotNull(forest);
     }
 
     @Test
-    public void getTest() {
+    void getTest() {
         int n = 10;
         DisjointSetForest forest = new DisjointSetForest(n);
         for (int i = 0; i < n; i++) {
@@ -50,7 +50,7 @@ public class DisjointSetForestTest {
     }
 
     @Test
-    public void getRootTest() {
+    void getRootTest() {
         int n = 2;
         DisjointSetForest forest = new DisjointSetForest(n);
         forest.makeUnion(0, 1);
@@ -58,7 +58,7 @@ public class DisjointSetForestTest {
     }
 
     @Test
-    public void makeUnionTest() {
+    void makeUnionTest() {
         int n = 2;
         DisjointSetForest forest = new DisjointSetForest(n);
         forest.makeUnion(0, 1);
@@ -66,7 +66,7 @@ public class DisjointSetForestTest {
     }
 
     @Test
-    public void getSetsTest() {
+    void getSetsTest() {
         int n = 6;
         DisjointSetForest forest = new DisjointSetForest(n);
         forest.makeUnion(0, 1);

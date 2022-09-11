@@ -45,7 +45,7 @@ import java.io.InputStream;
  *
  * @cdk.module test-extra
  */
-public class ExtraReaderFactoryTest {
+class ExtraReaderFactoryTest {
 
     private final ReaderFactory factory = new ReaderFactory();
 
@@ -74,22 +74,22 @@ public class ExtraReaderFactoryTest {
     }
 
     @Test
-    public void testINChI() throws Exception {
+    void testINChI() throws Exception {
         expectReader("org/openscience/cdk/io/guanine.inchi.xml", INChIFormat.getInstance());
     }
 
     @Test
-    public void testINChIPlainText() throws Exception {
+    void testINChIPlainText() throws Exception {
         expectReader("org/openscience/cdk/io/guanine.inchi", INChIPlainTextFormat.getInstance());
     }
 
     @Test
-    public void testVASP() throws Exception {
+    void testVASP() throws Exception {
         expectReader("org/openscience/cdk/io/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance());
     }
 
     @Test
-    public void testGamess() throws Exception {
+    void testGamess() throws Exception {
         expectReader("org/openscience/cdk/io/ch3oh_gam.out", GamessFormat.getInstance());
     }
 

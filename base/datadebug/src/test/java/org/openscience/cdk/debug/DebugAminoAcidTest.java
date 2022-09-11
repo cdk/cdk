@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IAminoAcid;
  *
  * @cdk.module test-datadebug
  */
-public class DebugAminoAcidTest extends AbstractAminoAcidTest {
+class DebugAminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugAminoAcid::new);
     }
 
     @Test
-    public void testDebugAminoAcid() {
+    void testDebugAminoAcid() {
         IAminoAcid oAminoAcid = new DebugAminoAcid();
         Assertions.assertNotNull(oAminoAcid);
     }

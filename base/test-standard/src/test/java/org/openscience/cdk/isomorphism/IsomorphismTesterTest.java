@@ -38,16 +38,18 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-standard
  */
-public class IsomorphismTesterTest extends CDKTestCase {
+class IsomorphismTesterTest extends CDKTestCase {
 
-    IAtomContainer pinene_1 = null, pinene_2 = null, pinene_non = null;
+    private IAtomContainer pinene_1 = null;
+    private IAtomContainer pinene_2 = null;
+    private IAtomContainer pinene_non = null;
 
-    public IsomorphismTesterTest() {
+    IsomorphismTesterTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         pinene_1 = new AtomContainer();
         pinene_1.addAtom(new Atom("C")); // 1
         pinene_1.addAtom(new Atom("C")); // 2
@@ -122,33 +124,33 @@ public class IsomorphismTesterTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsomorphismTester_IAtomContainer() throws Exception {
+    void testIsomorphismTester_IAtomContainer() throws Exception {
         IsomorphismTester it = new IsomorphismTester(pinene_1);
         Assertions.assertNotNull(it);
     }
 
     @Test
-    public void testIsomorphismTester() throws Exception {
+    void testIsomorphismTester() throws Exception {
         IsomorphismTester it = new IsomorphismTester();
         Assertions.assertNotNull(it);
     }
 
     @Test
-    public void testIsIsomorphic_IAtomContainer() throws Exception {
+    void testIsIsomorphic_IAtomContainer() throws Exception {
         IsomorphismTester it = new IsomorphismTester(pinene_1);
         Assertions.assertTrue(it.isIsomorphic(pinene_2));
         Assertions.assertFalse(it.isIsomorphic(pinene_non));
     }
 
     @Test
-    public void testIsIsomorphic_IAtomContainer_IAtomContainer() throws Exception {
+    void testIsIsomorphic_IAtomContainer_IAtomContainer() throws Exception {
         IsomorphismTester it = new IsomorphismTester();
         Assertions.assertTrue(it.isIsomorphic(pinene_2, pinene_1));
         Assertions.assertFalse(it.isIsomorphic(pinene_2, pinene_non));
     }
 
     @Test
-    public void testBiphenyl() throws Exception {
+    void testBiphenyl() throws Exception {
 
         //get the biphenyl as aromatic smiles
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());

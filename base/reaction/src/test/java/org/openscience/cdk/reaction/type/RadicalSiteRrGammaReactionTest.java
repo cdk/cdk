@@ -56,7 +56,7 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public RadicalSiteRrGammaReactionTest() throws Exception {
+    RadicalSiteRrGammaReactionTest() throws Exception {
         setReaction(RadicalSiteRrGammaReaction.class);
     }
 
@@ -64,7 +64,7 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testRadicalSiteRrGammaReaction() throws Exception {
+    void testRadicalSiteRrGammaReaction() throws Exception {
         IReactionProcess type = new RadicalSiteRrGammaReaction();
         Assertions.assertNotNull(type);
     }
@@ -107,7 +107,7 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
     }
 
     @Test
-    public void testExampleSmiles() throws Exception {
+    void testExampleSmiles() throws Exception {
         assertReaction("[CH](C)CCCCC>>[CH2]CCCC(C)C |^1:0,7|");
     }
 
@@ -209,7 +209,7 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new RadicalSiteRrGammaReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -249,7 +249,7 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new RadicalSiteRrGammaReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();

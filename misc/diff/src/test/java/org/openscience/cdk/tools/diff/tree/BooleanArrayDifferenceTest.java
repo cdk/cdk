@@ -24,30 +24,30 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-diff
  */
-public class BooleanArrayDifferenceTest {
+class BooleanArrayDifferenceTest {
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{true, true}, new boolean[]{false,
                 false});
         Assertions.assertNotNull(result);
     }
 
     @Test
-    public void testSame() {
+    void testSame() {
         IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{false, false}, new boolean[]{false,
                 false});
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testTwoNull() {
+    void testTwoNull() {
         IDifference result = BooleanArrayDifference.construct("Foo", null, null);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testOneNull() {
+    void testOneNull() {
         IDifference result = BooleanArrayDifference.construct("Foo", null, new boolean[]{false, false});
         Assertions.assertNotNull(result);
 
@@ -56,7 +56,7 @@ public class BooleanArrayDifferenceTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{true}, new boolean[]{false});
         String diffString = result.toString();
         Assertions.assertNotNull(diffString);

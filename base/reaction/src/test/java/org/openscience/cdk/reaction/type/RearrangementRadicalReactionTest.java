@@ -57,7 +57,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public RearrangementRadicalReactionTest() throws Exception {
+    RearrangementRadicalReactionTest() throws Exception {
         setReaction(RearrangementRadicalReaction.class);
     }
 
@@ -65,7 +65,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testRearrangementRadicalReaction() throws Exception {
+    void testRearrangementRadicalReaction() throws Exception {
         IReactionProcess type = new RearrangementRadicalReaction();
         Assertions.assertNotNull(type);
     }
@@ -109,7 +109,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
 
         IReactionProcess type = new RearrangementRadicalReaction();
 
@@ -149,7 +149,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new RearrangementRadicalReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -190,7 +190,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new RearrangementRadicalReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -225,7 +225,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer1() throws Exception {
+    void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
@@ -235,7 +235,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer2() throws Exception {
+    void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 

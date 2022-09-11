@@ -54,28 +54,28 @@ import org.junit.jupiter.api.BeforeAll;
  * @cdk.module test-builder3d
  * @cdk.githash
  */
-public class AtomPlacer3DTest extends CDKTestCase {
+class AtomPlacer3DTest extends CDKTestCase {
 
-    boolean standAlone = false;
+    private boolean standAlone = false;
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() throws Exception {}
+    void setUp() throws Exception {}
 
     @AfterEach
-    public void tearDown() throws Exception {}
+    void tearDown() throws Exception {}
 
     /**
      *  Sets the standAlone attribute
      *
      *@param  standAlone  The new standAlone value
      */
-    public void setStandAlone(boolean standAlone) {
+    void setStandAlone(boolean standAlone) {
         this.standAlone = standAlone;
     }
 
@@ -134,7 +134,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testAllHeavyAtomsPlaced_IAtomContainer() {
+    void testAllHeavyAtomsPlaced_IAtomContainer() {
         IAtomContainer ac = makeAlphaPinene();
         Assertions.assertFalse(new AtomPlacer3D().allHeavyAtomsPlaced(ac));
         for (IAtom atom : ac.atoms()) {
@@ -144,7 +144,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testFindHeavyAtomsInChain_IAtomContainer_IAtomContainer() throws Exception {
+    void testFindHeavyAtomsInChain_IAtomContainer_IAtomContainer() throws Exception {
         String filename = "allmol232.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         // TODO: shk3-cleanuptests: best to use the STRICT IO mode here
@@ -166,7 +166,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testNumberOfUnplacedHeavyAtoms_IAtomContainer() {
+    void testNumberOfUnplacedHeavyAtoms_IAtomContainer() {
         IAtomContainer ac = makeAlphaPinene();
         int count = new AtomPlacer3D().numberOfUnplacedHeavyAtoms(ac);
         Assertions.assertEquals(10, count);
@@ -178,14 +178,14 @@ public class AtomPlacer3DTest extends CDKTestCase {
      *
      */
     @Test
-    public void testNumberOfUnplacedHeavyAtoms_IAtomContainerWithExplicitHydrogens() {
+    void testNumberOfUnplacedHeavyAtoms_IAtomContainerWithExplicitHydrogens() {
         IAtomContainer ac = makeMethaneWithExplicitHydrogens();
         int count = new AtomPlacer3D().numberOfUnplacedHeavyAtoms(ac);
         Assertions.assertEquals(1, count);
     }
 
     @Test
-    public void testGetPlacedHeavyAtoms_IAtomContainer_IAtom() {
+    void testGetPlacedHeavyAtoms_IAtomContainer_IAtom() {
         IAtomContainer ac = makeAlphaPinene();
         IAtomContainer acplaced = new AtomPlacer3D().getPlacedHeavyAtoms(ac, ac.getAtom(0));
         Assertions.assertEquals(0, acplaced.getAtomCount());
@@ -195,7 +195,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetPlacedHeavyAtom_IAtomContainer_IAtom_IAtom() {
+    void testGetPlacedHeavyAtom_IAtomContainer_IAtom_IAtom() {
         IAtomContainer ac = makeAlphaPinene();
         IAtom acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0), ac.getAtom(1));
         Assertions.assertNull(acplaced);
@@ -207,7 +207,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetPlacedHeavyAtom_IAtomContainer_IAtom() {
+    void testGetPlacedHeavyAtom_IAtomContainer_IAtom() {
         IAtomContainer ac = makeAlphaPinene();
         IAtom acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0));
         Assertions.assertNull(acplaced);
@@ -217,7 +217,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testGeometricCenterAllPlacedAtoms_IAtomContainer() throws Exception {
+    void testGeometricCenterAllPlacedAtoms_IAtomContainer() throws Exception {
         IAtomContainer ac = makeAlphaPinene();
         for (int i = 0; i < ac.getAtomCount(); i++) {
             ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
@@ -239,7 +239,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsUnplacedHeavyAtom() {
+    void testIsUnplacedHeavyAtom() {
 
         IAtomContainer ac = makeMethaneWithExplicitHydrogens();
         IAtom carbon = ac.getAtom(0);
@@ -261,7 +261,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsPlacedHeavyAtom() {
+    void testIsPlacedHeavyAtom() {
 
         IAtomContainer ac = makeMethaneWithExplicitHydrogens();
         IAtom carbon = ac.getAtom(0);
@@ -283,7 +283,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsAliphaticHeavyAtom() {
+    void testIsAliphaticHeavyAtom() {
 
         IAtomContainer ac = makeMethaneWithExplicitHydrogens();
         IAtom carbon = ac.getAtom(0);
@@ -305,7 +305,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsRingHeavyAtom() {
+    void testIsRingHeavyAtom() {
 
         IAtomContainer ac = makeMethaneWithExplicitHydrogens();
         IAtom carbon = ac.getAtom(0);
@@ -327,7 +327,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsHeavyAtom() {
+    void testIsHeavyAtom() {
 
         IAtomContainer ac = makeMethaneWithExplicitHydrogens();
         IAtom carbon = ac.getAtom(0);

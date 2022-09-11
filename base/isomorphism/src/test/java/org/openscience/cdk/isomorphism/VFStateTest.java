@@ -43,11 +43,11 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class VFStateTest {
+class VFStateTest {
 
     // 0-look-ahead
     @Test
-    public void infeasibleAtoms() throws Exception {
+    void infeasibleAtoms() throws Exception {
         AtomMatcher mock = mock(AtomMatcher.class);
         when(mock.matches(any(IAtom.class), any(IAtom.class))).thenReturn(false);
         VFState state = createBenzeneToNaphthalene(mock, mock(BondMatcher.class));
@@ -60,7 +60,7 @@ public class VFStateTest {
 
     // 0-look-ahead
     @Test
-    public void infeasibleBonds() throws Exception {
+    void infeasibleBonds() throws Exception {
         BondMatcher mock = mock(BondMatcher.class);
         when(mock.matches(any(IBond.class), any(IBond.class))).thenReturn(false);
         VFState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), mock);
@@ -78,7 +78,7 @@ public class VFStateTest {
 
     // 1-look-ahead
     @Test
-    public void infeasibleTerminalCount() throws Exception {
+    void infeasibleTerminalCount() throws Exception {
         VFState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         Assertions.assertTrue(state.feasible(4, 4)); // 4, 4 is feasible
         state.add(0, 0);

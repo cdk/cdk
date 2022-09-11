@@ -37,22 +37,22 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
+class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 
-    final ProtonAffinityHOSEDescriptor            descriptor;
-    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    private final ProtonAffinityHOSEDescriptor            descriptor;
+    private final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  Constructor for the ProtonAffinityHOSEDescriptorTest object
      *
      */
-    public ProtonAffinityHOSEDescriptorTest() {
+    ProtonAffinityHOSEDescriptorTest() {
         descriptor = new ProtonAffinityHOSEDescriptor();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(ProtonAffinityHOSEDescriptor.class);
     }
 
@@ -60,7 +60,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit
      */
     @Test
-    public void testProtonAffinityHOSEDescriptor() throws Exception {
+    void testProtonAffinityHOSEDescriptor() throws Exception {
         IAtomicDescriptor descriptor = new ProtonAffinityHOSEDescriptor();
         Assertions.assertNotNull(descriptor);
     }
@@ -71,7 +71,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi InChI=1/C6H5Cl/c7-6-4-2-1-3-5-6/h1-5H
      */
     @Test
-    public void testAffinityDescriptor1() throws Exception {
+    void testAffinityDescriptor1() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -106,7 +106,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi InChI=1/C2H5Cl/c1-2-3/h2H2,1H3
      */
     @Test
-    public void testAffinityDescriptor2() throws Exception {
+    void testAffinityDescriptor2() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));

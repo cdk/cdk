@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @cdk.module test-silent
  */
-public class ChemObjectTest extends AbstractChemObjectTest {
+class ChemObjectTest extends AbstractChemObjectTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ChemObject::new);
     }
 
     @Test
-    public void testChemObject() {
+    void testChemObject() {
         IChemObject chemObject = new ChemObject();
         Assertions.assertNotNull(chemObject);
         String value = chemObject.getProperty("hello");
@@ -46,7 +46,7 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     }
 
     @Test
-    public void testChemObject_IChemObject() {
+    void testChemObject_IChemObject() {
         IChemObject chemObject1 = new ChemObject();
         IChemObject chemObject = new ChemObject(chemObject1);
         Assertions.assertNotNull(chemObject);
@@ -127,7 +127,7 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     }
 
     @Test
-    public void compare() {
+    void compare() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
         co1.setID("a1");
@@ -136,7 +136,7 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     }
 
     @Test
-    public void compareDifferent() {
+    void compareDifferent() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
         co1.setID("a1");

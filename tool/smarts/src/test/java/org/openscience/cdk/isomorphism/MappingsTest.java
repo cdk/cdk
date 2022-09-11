@@ -51,11 +51,11 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-smarts
  */
-public class MappingsTest {
+class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void filter() throws Exception {
+    void filter() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -81,7 +81,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void map() throws Exception {
+    void map() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -122,7 +122,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void limit() throws Exception {
+    void limit() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -135,23 +135,23 @@ public class MappingsTest {
     }
 
     @Test
-    public void stereochemistry() throws Exception {
+    void stereochemistry() throws Exception {
         // tested by filter() + StereoMatchTest
     }
 
     @Test
-    public void uniqueAtoms() throws Exception {
+    void uniqueAtoms() throws Exception {
         // tested by filter() + MappingPredicatesTest
     }
 
     @Test
-    public void uniqueBonds() throws Exception {
+    void uniqueBonds() throws Exception {
         // tested by filter() + MappingPredicatesTest
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void toArray() throws Exception {
+    void toArray() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -169,7 +169,7 @@ public class MappingsTest {
     }
 
     @Test
-    public void toAtomMap() throws Exception {
+    void toAtomMap() throws Exception {
 
         IAtomContainer query = smi("CC");
         IAtomContainer target = smi("CC");
@@ -189,7 +189,7 @@ public class MappingsTest {
     }
 
     @Test
-    public void toBondMap() throws Exception {
+    void toBondMap() throws Exception {
         IAtomContainer query = smi("CCC");
         IAtomContainer target = smi("CCC");
 
@@ -208,7 +208,7 @@ public class MappingsTest {
     }
 
     @Test
-    public void toAtomBondMap() throws Exception {
+    void toAtomBondMap() throws Exception {
         IAtomContainer query = smi("CCC");
         IAtomContainer target = smi("CCC");
 
@@ -233,7 +233,7 @@ public class MappingsTest {
     }
 
     @Test
-    public void toSubstructures() throws Exception {
+    void toSubstructures() throws Exception {
         IAtomContainer query  = smi("O1CC1");
         IAtomContainer target = smi("C1OC1CCC");
 
@@ -258,7 +258,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void atLeast() throws Exception {
+    void atLeast() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -272,7 +272,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void first() throws Exception {
+    void first() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -289,7 +289,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void count() throws Exception {
+    void count() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -303,7 +303,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void countUnique() throws Exception {
+    void countUnique() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -324,7 +324,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void countUnique2() throws Exception {
+    void countUnique2() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -345,7 +345,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void countExclusive() throws Exception {
+    void countExclusive() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -366,7 +366,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void countExclusive2() throws Exception {
+    void countExclusive2() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -387,7 +387,7 @@ public class MappingsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void iterator() throws Exception {
+    void iterator() throws Exception {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
@@ -395,8 +395,8 @@ public class MappingsTest {
         assertThat(ms.iterator(), is(sameInstance(iterator)));
     }
 
-    final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    final SmilesParser       smipar = new SmilesParser(bldr);
+    private final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+    private final SmilesParser       smipar = new SmilesParser(bldr);
 
     IAtomContainer smi(String smi) throws Exception {
         return smipar.parseSmiles(smi);

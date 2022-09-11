@@ -27,10 +27,10 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-qsar
  */
-public class DescriptorExceptionTest extends CDKTestCase {
+class DescriptorExceptionTest extends CDKTestCase {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         DescriptorException exception = new DescriptorException("Message");
         Assertions.assertNotNull(exception);
         Assertions.assertEquals("Message", exception.getMessage());

@@ -34,10 +34,10 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  *
  * @see MolecularFormulaSet
  */
-public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
+class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
@@ -47,7 +47,7 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
      *
      */
     @Test
-    public void testMolecularFormulaSet() {
+    void testMolecularFormulaSet() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet();
         Assertions.assertNotNull(mfS);
     }
@@ -58,7 +58,7 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
      *
      */
     @Test
-    public void testMolecularFormulaSet_IMolecularFormula() {
+    void testMolecularFormulaSet_IMolecularFormula() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
         Assertions.assertEquals(1, mfS.size());
     }

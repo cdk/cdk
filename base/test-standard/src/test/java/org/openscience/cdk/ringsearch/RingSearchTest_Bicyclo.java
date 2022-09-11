@@ -39,19 +39,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public final class RingSearchTest_Bicyclo {
+final class RingSearchTest_Bicyclo {
 
     private static final IAtomContainer bicyclo = TestMoleculeFactory.makeBicycloRings();
 
     @Test
-    public void testCyclic() {
+    void testCyclic() {
         int n = bicyclo.getAtomCount();
         assertThat("cyclic vertices should be invariant for any ordering", new RingSearch(bicyclo).cyclic().length,
                 is(n));
     }
 
     @Test
-    public void testCyclic_Int() {
+    void testCyclic_Int() {
         int n = bicyclo.getAtomCount();
 
         RingSearch ringSearch = new RingSearch(bicyclo);
@@ -61,19 +61,19 @@ public final class RingSearchTest_Bicyclo {
     }
 
     @Test
-    public void testIsolated() {
+    void testIsolated() {
         assertThat("no isolated cycle should be found", new RingSearch(bicyclo).isolated().length, is(0));
 
     }
 
     @Test
-    public void testFused() {
+    void testFused() {
         assertThat("one fused cycle should be found", new RingSearch(bicyclo).fused().length, is(1));
 
     }
 
     @Test
-    public void testRingFragments() {
+    void testRingFragments() {
         int n = bicyclo.getAtomCount();
 
         IAtomContainer fragment = new RingSearch(bicyclo).ringFragments();
@@ -83,7 +83,7 @@ public final class RingSearchTest_Bicyclo {
     }
 
     @Test
-    public void testIsolatedRingFragments() {
+    void testIsolatedRingFragments() {
         int n = bicyclo.getAtomCount();
 
         List<IAtomContainer> fragments = new RingSearch(bicyclo).isolatedRingFragments();
@@ -92,7 +92,7 @@ public final class RingSearchTest_Bicyclo {
     }
 
     @Test
-    public void testFusedRingFragments() {
+    void testFusedRingFragments() {
 
         List<IAtomContainer> fragments = new RingSearch(bicyclo).fusedRingFragments();
         assertThat(fragments.size(), is(1));

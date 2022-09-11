@@ -37,10 +37,10 @@ import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
  * @author John May
  * @cdk.module test-core
  */
-public class VertexShortCyclesTest {
+class VertexShortCyclesTest {
 
     @Test
-    public void paths_norbornane() {
+    void paths_norbornane() {
         int[][] norbornane = norbornane();
         VertexShortCycles vsc = new VertexShortCycles(norbornane);
         int[][] paths = vsc.paths();
@@ -49,7 +49,7 @@ public class VertexShortCyclesTest {
     }
 
     @Test
-    public void paths_bicyclo() {
+    void paths_bicyclo() {
         int[][] bicyclo = bicyclo();
         VertexShortCycles vsc = new VertexShortCycles(bicyclo);
         int[][] paths = vsc.paths();
@@ -58,7 +58,7 @@ public class VertexShortCyclesTest {
     }
 
     @Test
-    public void paths_napthalene() {
+    void paths_napthalene() {
         int[][] napthalene = naphthalene();
         VertexShortCycles vsc = new VertexShortCycles(napthalene);
         int[][] paths = vsc.paths();
@@ -67,7 +67,7 @@ public class VertexShortCyclesTest {
     }
 
     @Test
-    public void paths_anthracene() {
+    void paths_anthracene() {
         int[][] anthracene = anthracene();
         VertexShortCycles vsc = new VertexShortCycles(anthracene);
         int[][] paths = vsc.paths();
@@ -76,7 +76,7 @@ public class VertexShortCyclesTest {
     }
 
     @Test
-    public void paths_cyclophane_even() {
+    void paths_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         VertexShortCycles vsc = new VertexShortCycles(cyclophane_even);
         int[][] paths = vsc.paths();
@@ -86,7 +86,7 @@ public class VertexShortCyclesTest {
     }
 
     @Test
-    public void paths_cyclophane_odd() {
+    void paths_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         VertexShortCycles vsc = new VertexShortCycles(cyclophane_even);
         int[][] paths = vsc.paths();
@@ -96,7 +96,7 @@ public class VertexShortCyclesTest {
     }
 
     @Test
-    public void size_norbornane() {
+    void size_norbornane() {
         int[][] norbornane = norbornane();
         VertexShortCycles vsc = new VertexShortCycles(norbornane);
         int[][] paths = vsc.paths();
@@ -104,42 +104,42 @@ public class VertexShortCyclesTest {
     }
 
     @Test
-    public void size_bicyclo() {
+    void size_bicyclo() {
         int[][] bicyclo = bicyclo();
         VertexShortCycles vsc = new VertexShortCycles(bicyclo);
         assertThat(vsc.size(), is(3));
     }
 
     @Test
-    public void size_napthalene() {
+    void size_napthalene() {
         int[][] napthalene = naphthalene();
         VertexShortCycles vsc = new VertexShortCycles(napthalene);
         assertThat(vsc.size(), is(2));
     }
 
     @Test
-    public void size_anthracene() {
+    void size_anthracene() {
         int[][] anthracene = anthracene();
         VertexShortCycles vsc = new VertexShortCycles(anthracene);
         assertThat(vsc.size(), is(3));
     }
 
     @Test
-    public void size_cyclophane_even() {
+    void size_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         VertexShortCycles vsc = new VertexShortCycles(cyclophane_even);
         assertThat(vsc.size(), is(3));
     }
 
     @Test
-    public void size_cyclophane_odd() {
+    void size_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         VertexShortCycles vsc = new VertexShortCycles(cyclophane_even);
         assertThat(vsc.size(), is(3));
     }
 
     @Test
-    public void paths_cyclophanelike1() {
+    void paths_cyclophanelike1() {
         int[][] g = cyclophanelike1();
         VertexShortCycles vsc = new VertexShortCycles(g);
         int[][] paths = vsc.paths();
@@ -149,7 +149,7 @@ public class VertexShortCyclesTest {
     }
 
     @Test
-    public void paths_cyclophanelike2() {
+    void paths_cyclophanelike2() {
         int[][] g = cyclophanelike2();
         VertexShortCycles vsc = new VertexShortCycles(g);
         int[][] paths = vsc.paths();

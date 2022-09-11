@@ -35,10 +35,10 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
  *
  * @see org.openscience.cdk.Mapping
  */
-public class MappingTest extends AbstractMappingTest {
+class MappingTest extends AbstractMappingTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
             @Override
@@ -49,7 +49,7 @@ public class MappingTest extends AbstractMappingTest {
     }
 
     @Test
-    public void testMapping_IChemObject_IChemObject() {
+    void testMapping_IChemObject_IChemObject() {
         IChemObject object = newChemObject();
         IMapping mapping = new Mapping(object.getBuilder().newInstance(IAtom.class), object.getBuilder().newInstance(
                 IAtom.class));

@@ -33,15 +33,15 @@ import org.openscience.cdk.interfaces.ILonePair;
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomContainerTest extends AbstractAtomContainerTest {
+class DebugAtomContainerTest extends AbstractAtomContainerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugAtomContainer::new);
     }
 
     @Test
-    public void testDebugAtomContainer_int_int_int_int() {
+    void testDebugAtomContainer_int_int_int_int() {
         // create an empty container with predefined
         // array lengths
         IAtomContainer ac = new DebugAtomContainer(5, 6, 1, 2);
@@ -56,7 +56,7 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
     }
 
     @Test
-    public void testDebugAtomContainer() {
+    void testDebugAtomContainer() {
         // create an empty container with in the constructor defined array lengths
         IAtomContainer container = new DebugAtomContainer();
 
@@ -72,7 +72,7 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
     }
 
     @Test
-    public void testDebugAtomContainer_IAtomContainer() {
+    void testDebugAtomContainer_IAtomContainer() {
         IChemObject object = newChemObject();
         IAtomContainer acetone = object.getBuilder().newInstance(IAtomContainer.class);
         IAtom c1 = object.getBuilder().newInstance(IAtom.class, "C");

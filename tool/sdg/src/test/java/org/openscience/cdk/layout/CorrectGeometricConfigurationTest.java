@@ -42,11 +42,11 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @author John May
  * @cdk.module test-sdg
  */
-public class CorrectGeometricConfigurationTest {
+class CorrectGeometricConfigurationTest {
 
     // C/C=C/CCC
     @Test
-    public void cis() {
+    void cis() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 3, -0.74d, 5.00d));
         m.addAtom(atom("C", 1, -1.49d, 3.70d));
@@ -69,7 +69,7 @@ public class CorrectGeometricConfigurationTest {
 
     // C/C=C\CCC
     @Test
-    public void trans() {
+    void trans() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 3, -0.74d, 5.00d));
         m.addAtom(atom("C", 1, -1.49d, 3.70d));

@@ -50,10 +50,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @cdk.module test-render
  */
-public class RendererModelTest {
+class RendererModelTest {
 
     @Test
-    public void testGetRenderingParameter() {
+    void testGetRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
             final IGeneratorParameter<Boolean> someParam = new SomeParam();
@@ -80,7 +80,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testHasParameter() {
+    void testHasParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
             final IGeneratorParameter<Boolean> someParam = new SomeParam();
@@ -108,7 +108,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testReturningTheRealParamaterValue() {
+    void testReturningTheRealParamaterValue() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
             final IGeneratorParameter<Boolean> someParam = new SomeParam();
@@ -139,7 +139,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testSetRenderingParameter() {
+    void testSetRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
             final IGeneratorParameter<Boolean> someParam = new SomeParam();
@@ -168,7 +168,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testGetDefaultRenderingParameter() {
+    void testGetDefaultRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
             final IGeneratorParameter<Boolean> someParam = new SomeParam();
@@ -195,7 +195,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testGetRenderingParameters() {
+    void testGetRenderingParameters() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
             final IGeneratorParameter<Boolean> someParam = new SomeParam();
@@ -231,7 +231,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testGetSetNotification() {
+    void testGetSetNotification() {
         RendererModel model = new RendererModel();
         // test the default setting
         Assertions.assertTrue(model.getNotification());
@@ -242,7 +242,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testNoDefaultToolTips() {
+    void testNoDefaultToolTips() {
         RendererModel model = new RendererModel();
         // test: no default tool tips
         Assertions.assertNull(model.getToolTipText(new Atom()));
@@ -251,7 +251,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testToolTipFunctionality() {
+    void testToolTipFunctionality() {
         Map<IAtom, String> tips = new HashMap<>();
         IAtom anonAtom = new Atom();
         tips.put(anonAtom, "Repelsteeltje");
@@ -262,7 +262,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testClipboardContent() {
+    void testClipboardContent() {
         RendererModel model = new RendererModel();
         // test default
         Assertions.assertNull(model.getClipboardContent());
@@ -274,7 +274,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testExternalSelectedPart() {
+    void testExternalSelectedPart() {
         RendererModel model = new RendererModel();
         // test default
         Assertions.assertNull(model.getExternalSelectedPart());
@@ -286,7 +286,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testHighlightedAtom() {
+    void testHighlightedAtom() {
         RendererModel model = new RendererModel();
         // test default
         Assertions.assertNull(model.getHighlightedAtom());
@@ -298,7 +298,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testHighlightedBond() {
+    void testHighlightedBond() {
         RendererModel model = new RendererModel();
         // test default
         Assertions.assertNull(model.getHighlightedBond());
@@ -336,7 +336,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testSelection() {
+    void testSelection() {
         RendererModel model = new RendererModel();
         // test default
         Assertions.assertNull(model.getSelection());
@@ -358,7 +358,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testListening() {
+    void testListening() {
         RendererModel model = new RendererModel();
         // test default
         MockListener listener = new MockListener();
@@ -376,7 +376,7 @@ public class RendererModelTest {
     }
 
     @Test
-    public void testMerge() {
+    void testMerge() {
         RendererModel model = new RendererModel();
         Assertions.assertNotNull(model.getMerge());
         // any further testing I can do here?

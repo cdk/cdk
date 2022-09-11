@@ -25,32 +25,32 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class DoubleResultTest extends CDKTestCase {
+class DoubleResultTest extends CDKTestCase {
 
-    public DoubleResultTest() {
+    DoubleResultTest() {
         super();
     }
 
     @Test
-    public void testDoubleResult_double() {
+    void testDoubleResult_double() {
         DoubleResult result = new DoubleResult(5.0);
         Assertions.assertNotNull(result);
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         DoubleResult result = new DoubleResult(5.0);
         Assertions.assertEquals("5.0", result.toString());
     }
 
     @Test
-    public void testDoubleValue() {
+    void testDoubleValue() {
         DoubleResult result = new DoubleResult(5);
         Assertions.assertEquals(5.0, result.doubleValue(), 0.000001);
     }
 
     @Test
-    public void testLength() {
+    void testLength() {
         DoubleResult result = new DoubleResult(5);
         Assertions.assertEquals(1, result.length());
     }

@@ -29,10 +29,10 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * @cdk.module test-renderbasic
  */
-public class GeneralPathTest extends AbstractElementTest {
+class GeneralPathTest extends AbstractElementTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         IRenderingElement element = new GeneralPath(new ArrayList<>(), Color.black);
         setRenderingElement(element);
     }

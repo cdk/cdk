@@ -44,17 +44,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.module test-standard
  * @cdk.created 2003-07-23
  */
-public class ReactionManipulatorTest extends CDKTestCase {
+class ReactionManipulatorTest extends CDKTestCase {
 
     private IReaction reaction;
     private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
-    public ReactionManipulatorTest() {
+    ReactionManipulatorTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         String filename1 = "reaction-1.rxn";
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNReader reader1 = new MDLRXNReader(ins1);
@@ -64,7 +64,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testReverse_IReaction() {
+    void testReverse_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setDirection(IReaction.Direction.BACKWARD);
         IAtomContainer water = new AtomContainer();
@@ -80,7 +80,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllIDs_IReaction() {
+    void testGetAllIDs_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setID("r1");
         IAtomContainer water = new AtomContainer();
@@ -100,7 +100,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
      * A unit test suite for JUnit. Test of mapped IAtoms
      */
     @Test
-    public void testGetMappedChemObject_IReaction_IAtom() throws Exception {
+    void testGetMappedChemObject_IReaction_IAtom() throws Exception {
         IReaction reaction = builder.newInstance(IReaction.class);
         IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
         IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
@@ -127,7 +127,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
      * A unit test suite for JUnit. Test of mapped IBond
      */
     @Test
-    public void testGetMappedChemObject_IReaction_IBond() throws
+    void testGetMappedChemObject_IReaction_IBond() throws
             java.lang.Exception {
         IReaction reaction = builder.newInstance(IReaction.class);
         IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
@@ -151,22 +151,22 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomCount_IReaction() throws Exception {
+    void testGetAtomCount_IReaction() throws Exception {
         Assertions.assertEquals(19, ReactionManipulator.getAtomCount(reaction));
     }
 
     @Test
-    public void testGetBondCount_IReaction() throws Exception {
+    void testGetBondCount_IReaction() throws Exception {
         Assertions.assertEquals(18, ReactionManipulator.getBondCount(reaction));
     }
 
     @Test
-    public void testGetAllAtomContainers_IReaction() throws Exception {
+    void testGetAllAtomContainers_IReaction() throws Exception {
         Assertions.assertEquals(3, ReactionManipulator.getAllAtomContainers(reaction).size());
     }
 
     @Test
-    public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
+    void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
         ReactionManipulator.setAtomProperties(reaction, "test", "ok");
         for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             for (IAtom atom : container.atoms()) {
@@ -177,7 +177,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllChemObjects_IReactionSet() {
+    void testGetAllChemObjects_IReactionSet() {
         List<IChemObject> allObjects = ReactionManipulator.getAllChemObjects(reaction);
         // does not recurse beyond the IAtomContainer, so:
         // reaction, 2xreactant, 1xproduct
@@ -185,7 +185,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetRelevantAtomContainer_IReaction_IAtom() {
+    void testGetRelevantAtomContainer_IReaction_IAtom() {
         for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             IAtom anAtom = container.getAtom(0);
             Assertions.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, anAtom));
@@ -193,7 +193,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetRelevantAtomContainer_IReaction_IBond() {
+    void testGetRelevantAtomContainer_IReaction_IBond() {
         for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             IBond aBond = container.getBond(0);
             Assertions.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, aBond));
@@ -201,7 +201,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemoveElectronContainer_IReaction_IElectronContainer() {
+    void testRemoveElectronContainer_IReaction_IElectronContainer() {
         IReaction reaction = builder.newInstance(IReaction.class);
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -222,7 +222,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemoveAtomAndConnectedElectronContainers_IReaction_IAtom() {
+    void testRemoveAtomAndConnectedElectronContainers_IReaction_IAtom() {
         IReaction reaction = builder.newInstance(IReaction.class);
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -242,7 +242,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllMolecules_IReaction() {
+    void testGetAllMolecules_IReaction() {
         IReaction reaction = builder.newInstance(IReaction.class);
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
@@ -253,7 +253,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllProducts_IReaction() {
+    void testGetAllProducts_IReaction() {
         IReaction reaction = builder.newInstance(IReaction.class);
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
@@ -264,7 +264,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllReactants_IReaction() {
+    void testGetAllReactants_IReaction() {
         IReaction reaction = builder.newInstance(IReaction.class);
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
@@ -275,7 +275,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void inliningReactions() throws CDKException {
+    void inliningReactions() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IReaction reaction = smipar.parseReactionSmiles("CCO.CC(=O)O>[H+]>CCOC(=O)C.O ethyl esterification");
@@ -289,7 +289,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void inliningReactionsWithRadicals() throws CDKException {
+    void inliningReactionsWithRadicals() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IReaction reaction = smipar.parseReactionSmiles("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0| ethyl esterification");
@@ -303,12 +303,12 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void perceiveAtomTypesAndConfigureAtomsReactionNullTest() throws CDKException {
+    void perceiveAtomTypesAndConfigureAtomsReactionNullTest() throws CDKException {
         ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(null);
     }
 
     @Test
-    public void perceiveAtomTypesAndConfigureAtomsUnknownAtomTypeTest() throws CDKException {
+    void perceiveAtomTypesAndConfigureAtomsUnknownAtomTypeTest() throws CDKException {
         // arrange
         IAtomContainer reactant = new AtomContainer();
         reactant.addAtom(new Atom("R"));
@@ -326,7 +326,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void perceiveAtomTypesAndConfigureAtomsSimpleReactionTest() throws CDKException {
+    void perceiveAtomTypesAndConfigureAtomsSimpleReactionTest() throws CDKException {
         // arrange
         // reactant one: CC=C
         IAtom reactantOneAtomOne = new Atom("C");
@@ -416,12 +416,12 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void perceiveAtomTypesAndConfigureUnsetPropertiesReactionNullTest() throws CDKException {
+    void perceiveAtomTypesAndConfigureUnsetPropertiesReactionNullTest() throws CDKException {
         ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(null);
     }
 
     @Test
-    public void perceiveAtomTypesAndConfigureUnsetPropertiesSimpleReactionTest() throws CDKException {
+    void perceiveAtomTypesAndConfigureUnsetPropertiesSimpleReactionTest() throws CDKException {
         // arrange
         // reactant one: CC=C
         IAtom reactantOneAtomOne = new Atom("C");
@@ -534,12 +534,12 @@ public class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void clearAtomConfigurationsReactionNullTest() throws CDKException {
+    void clearAtomConfigurationsReactionNullTest() throws CDKException {
         ReactionManipulator.perceiveAtomTypesAndConfigureAtoms(null);
     }
 
     @Test
-    public void clearAtomConfigurationsSimpleReactionTest() throws CDKException {
+    void clearAtomConfigurationsSimpleReactionTest() throws CDKException {
         // arrange
         // reactant one: CC=C
         IAtom reactantOneAtomOne = new Atom("C");

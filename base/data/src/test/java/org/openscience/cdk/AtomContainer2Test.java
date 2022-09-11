@@ -39,15 +39,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @cdk.module test-data
  */
-public class AtomContainer2Test extends AbstractAtomContainerTest {
+class AtomContainer2Test extends AbstractAtomContainerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(AtomContainer2::new);
     }
 
     @Test
-    public void testAtomContainer_int_int_int_int() {
+    void testAtomContainer_int_int_int_int() {
         // create an empty container with predefined
         // array lengths
         IAtomContainer ac = new AtomContainer2(5, 6, 1, 2);
@@ -65,7 +65,7 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
     }
 
     @Test
-    public void testAtomContainer() {
+    void testAtomContainer() {
         // create an empty container with in the constructor defined array lengths
         IAtomContainer container = new AtomContainer2();
 
@@ -85,7 +85,7 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
     }
 
     @Test
-    public void testAtomContainer_IAtomContainer() {
+    void testAtomContainer_IAtomContainer() {
         IAtomContainer acetone = newChemObject().getBuilder().newInstance(IAtomContainer.class);
         IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");
         IAtom c2 = acetone.getBuilder().newInstance(IAtom.class, "C");
@@ -108,7 +108,7 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
     }
 
     @Test
-    public void testAtomGetBond() {
+    void testAtomGetBond() {
         IAtomContainer mol = (IAtomContainer) newChemObject();
         IAtom          a1 = mol.getBuilder().newAtom();
         IAtom          a2 = mol.getBuilder().newAtom();

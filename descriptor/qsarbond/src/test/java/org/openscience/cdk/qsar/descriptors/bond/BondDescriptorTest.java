@@ -37,11 +37,11 @@ import org.openscience.cdk.tools.diff.BondDiff;
  *
  * @cdk.module test-qsarbond
  */
-public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor> {
+abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor> {
 
-    protected IBondDescriptor descriptor;
+    IBondDescriptor descriptor;
 
-    public BondDescriptorTest() {}
+    BondDescriptorTest() {}
 
     @Override
     public void setDescriptor(Class<? extends IBondDescriptor> descriptorClass) throws Exception {
@@ -56,7 +56,7 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
     }
 
     @Test
-    public void testCalculate_IBond_IAtomContainer() throws Exception {
+    void testCalculate_IBond_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         DescriptorValue v = null;
@@ -75,7 +75,7 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
      * @throws Exception Passed on from calculate.
      */
     @Test
-    public void testLabels() throws Exception {
+    void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         DescriptorValue v = descriptor.calculate(mol.getBond(0), mol);
@@ -100,7 +100,7 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
     * of the names
     */
     @Test
-    public void testNamesConsistency() {
+    void testNamesConsistency() {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         String[] names1 = descriptor.getDescriptorNames();
@@ -115,7 +115,7 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
     }
 
     @Test
-    public void testCalculate_NoModifications() throws Exception {
+    void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IBond bond = mol.getBond(0);
         IBond clone = mol.getBond(0).clone();

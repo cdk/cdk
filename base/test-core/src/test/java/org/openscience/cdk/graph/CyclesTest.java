@@ -33,10 +33,10 @@ import static org.openscience.cdk.templates.TestMoleculeFactory.makeNaphthalene;
  * @author John May
  * @cdk.module test-core
  */
-public class CyclesTest {
+class CyclesTest {
 
     @Test
-    public void all() throws Exception {
+    void all() throws Exception {
         checkSize(Cycles.all(makeBiphenyl()), 2);
         checkSize(Cycles.all(makeBicycloRings()), 3);
         checkSize(Cycles.all(makeNaphthalene()), 3);
@@ -46,7 +46,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void mcb() throws Exception {
+    void mcb() throws Exception {
         checkSize(Cycles.mcb(makeBiphenyl()), 2);
         checkSize(Cycles.mcb(makeBicycloRings()), 2);
         checkSize(Cycles.mcb(makeNaphthalene()), 2);
@@ -56,7 +56,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void relevant() throws Exception {
+    void relevant() throws Exception {
         checkSize(Cycles.relevant(makeBiphenyl()), 2);
         checkSize(Cycles.relevant(makeBicycloRings()), 3);
         checkSize(Cycles.relevant(makeNaphthalene()), 2);
@@ -66,7 +66,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void essential() throws Exception {
+    void essential() throws Exception {
         checkSize(Cycles.essential(makeBiphenyl()), 2);
         checkSize(Cycles.essential(makeBicycloRings()), 0);
         checkSize(Cycles.essential(makeNaphthalene()), 2);
@@ -75,7 +75,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void tripletShort() throws Exception {
+    void tripletShort() throws Exception {
         checkSize(Cycles.tripletShort(makeBiphenyl()), 2);
         checkSize(Cycles.tripletShort(makeBicycloRings()), 3);
         checkSize(Cycles.tripletShort(makeNaphthalene()), 3);
@@ -85,7 +85,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void edgeShort() throws Exception {
+    void edgeShort() throws Exception {
         checkSize(Cycles.edgeShort(makeBiphenyl()), 2);
         checkSize(Cycles.edgeShort(makeBicycloRings()), 3);
         checkSize(Cycles.edgeShort(makeNaphthalene()), 2);
@@ -95,7 +95,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void vertexShort() throws Exception {
+    void vertexShort() throws Exception {
         checkSize(Cycles.vertexShort(makeBiphenyl()), 2);
         checkSize(Cycles.vertexShort(makeBicycloRings()), 3);
         checkSize(Cycles.vertexShort(makeNaphthalene()), 2);
@@ -105,7 +105,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void cdkAromaticSet() throws Exception {
+    void cdkAromaticSet() throws Exception {
         checkSize(Cycles.cdkAromaticSet().find(makeBiphenyl()), 2);
         checkSize(Cycles.cdkAromaticSet().find(makeBicycloRings()), 3);
         checkSize(Cycles.cdkAromaticSet().find(makeNaphthalene()), 3);
@@ -115,7 +115,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void allOrVertexShort() throws Exception {
+    void allOrVertexShort() throws Exception {
         checkSize(Cycles.allOrVertexShort().find(makeBiphenyl()), 2);
         checkSize(Cycles.allOrVertexShort().find(makeBicycloRings()), 3);
         checkSize(Cycles.allOrVertexShort().find(makeNaphthalene()), 3);
@@ -126,7 +126,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void cdkAromaticSet_withGraph() throws Exception {
+    void cdkAromaticSet_withGraph() throws Exception {
         checkSize(Cycles.cdkAromaticSet().find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl()), Integer.MAX_VALUE),
                 2);
         checkSize(
@@ -147,7 +147,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void allOrVertexShort_withGraph() throws Exception {
+    void allOrVertexShort_withGraph() throws Exception {
         checkSize(Cycles.allOrVertexShort()
                 .find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl()), Integer.MAX_VALUE), 2);
         checkSize(
@@ -169,7 +169,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void allUpToLength() throws Exception {
+    void allUpToLength() throws Exception {
         checkSize(Cycles.all(6).find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl()), Integer.MAX_VALUE), 2);
         checkSize(Cycles.all(6).find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings()), Integer.MAX_VALUE), 3);
         checkSize(Cycles.all(6).find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene()), Integer.MAX_VALUE), 2);
@@ -177,7 +177,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void pathsAreCopy() throws Exception {
+    void pathsAreCopy() throws Exception {
         Cycles cs = Cycles.all(makeAnthracene());
         int[][] org = cs.paths();
         org[0][0] = -203; // modify
@@ -185,7 +185,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void toRingSet() throws Exception {
+    void toRingSet() throws Exception {
         IAtomContainer biphenyl = makeBiphenyl();
         IRingSet rs = Cycles.vertexShort(biphenyl).toRingSet();
         Iterator<IAtomContainer> it = rs.atomContainers().iterator();
@@ -225,7 +225,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void markAtomsAndBonds() throws Exception {
+    void markAtomsAndBonds() throws Exception {
         IAtomContainer biphenyl = makeBiphenyl();
         Cycles.markRingAtomsAndBonds(biphenyl);
         int cyclicAtoms = 0;
@@ -243,14 +243,14 @@ public class CyclesTest {
     }
 
     @Test
-    public void or() throws Exception {
+    void or() throws Exception {
         CycleFinder cf = Cycles.or(Cycles.all(), Cycles.all(3));
         IAtomContainer fullerene = fullerene();
         checkSize(cf.find(fullerene, fullerene.getAtomCount()), 120);
     }
 
     @Test
-    public void unchorded() throws Exception {
+    void unchorded() throws Exception {
         IAtomContainer container = TestMoleculeFactory.makeAnthracene();
         checkSize(Cycles.unchorded(Cycles.all()).find(container), 3);
     }
@@ -286,7 +286,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void testSmallRings() throws InvalidSmilesException {
+    void testSmallRings() throws InvalidSmilesException {
         assertRingSizes("C1CCCCC1", 6, 6, 6, 6, 6, 6);
         assertRingSizes("C1CCCC1", 5, 5, 5, 5, 5);
         // spiro
@@ -300,7 +300,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void testSmallRing_atom_simple() throws InvalidSmilesException {
+    void testSmallRing_atom_simple() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("C1CCCCC1");
         Cycles.markRingAtomsAndBonds(mol); // required
         Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(0)));
@@ -321,7 +321,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void testSmallRing_atom_acyclic() throws InvalidSmilesException {
+    void testSmallRing_atom_acyclic() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("CCCC");
         Cycles.markRingAtomsAndBonds(mol); // required
         Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(0)));
@@ -330,7 +330,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void testSmallRing_atom_indole() throws InvalidSmilesException {
+    void testSmallRing_atom_indole() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("[nH]1ccc2c1cccc2");
         Cycles.markRingAtomsAndBonds(mol); // required
         Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(0)));
@@ -345,7 +345,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void testSmallRing_atom_indole_lim() throws InvalidSmilesException {
+    void testSmallRing_atom_indole_lim() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("[nH]1ccc2c1cccc2");
         Cycles.markRingAtomsAndBonds(mol); // required
         Assertions.assertEquals(5, Cycles.smallRingSize(mol.getAtom(0), 5));
@@ -366,7 +366,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void testSmallRing_bond_indole() throws InvalidSmilesException {
+    void testSmallRing_bond_indole() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("[nH]1ccc2c1cccc2");
         Cycles.markRingAtomsAndBonds(mol); // required
         Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(0)));
@@ -381,7 +381,7 @@ public class CyclesTest {
     }
 
     @Test
-    public void testSmallRing_bond_spiro() throws InvalidSmilesException {
+    void testSmallRing_bond_spiro() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("C1CCCC11CCC1");
         Cycles.markRingAtomsAndBonds(mol); // required
         Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(0)));

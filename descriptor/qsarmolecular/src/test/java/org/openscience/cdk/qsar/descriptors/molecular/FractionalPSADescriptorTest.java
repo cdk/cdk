@@ -45,19 +45,19 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-qsarmolecular
  */
 
-public class FractionalPSADescriptorTest extends MolecularDescriptorTest {
+class FractionalPSADescriptorTest extends MolecularDescriptorTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(FractionalPSADescriptorTest.class);
 
-    public FractionalPSADescriptorTest() {}
+    FractionalPSADescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(FractionalPSADescriptor.class);
     }
 
     @Test
-    public void testDescriptors() throws Exception {
+    void testDescriptors() throws Exception {
         String fnmol = "data/cdd/pyridineacid.mol";
         MDLV2000Reader mdl = new MDLV2000Reader(this.getClass().getClassLoader().getResourceAsStream(fnmol));
         AtomContainer mol = new AtomContainer();
@@ -81,5 +81,5 @@ public class FractionalPSADescriptorTest extends MolecularDescriptorTest {
 
     // included to shutdown the warning messages for not having tests for trivial methods
     @Test
-    public void nop() throws Exception {}
+    void nop() throws Exception {}
 }

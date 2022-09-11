@@ -57,10 +57,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class MDLV3000WriterTest {
+class MDLV3000WriterTest {
 
     @Test
-    public void outputValencyWhenNeeded() throws IOException, CDKException {
+    void outputValencyWhenNeeded() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("Na"));
         mol.addAtom(new Atom("Na"));
@@ -72,7 +72,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void outputFormalCharge() throws IOException, CDKException {
+    void outputFormalCharge() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
@@ -86,7 +86,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void outputMassNumber() throws IOException, CDKException {
+    void outputMassNumber() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
@@ -101,7 +101,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void outputRadical() throws IOException, CDKException {
+    void outputRadical() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(3);
@@ -111,7 +111,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void nullBondOrder() throws IOException, CDKException {
+    void nullBondOrder() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
@@ -126,7 +126,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void unsetBondOrder() throws IOException, CDKException {
+    void unsetBondOrder() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
@@ -141,7 +141,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void solidWedgeBonds() throws IOException, CDKException {
+    void solidWedgeBonds() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
@@ -153,7 +153,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void hashedWedgeBonds() throws IOException, CDKException {
+    void hashedWedgeBonds() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
@@ -165,7 +165,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void solidWedgeInvBonds() throws IOException, CDKException {
+    void solidWedgeInvBonds() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
@@ -177,7 +177,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void hashedWedgeInvBonds() throws IOException, CDKException {
+    void hashedWedgeInvBonds() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
@@ -189,7 +189,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeLeadingZero() throws IOException, CDKException {
+    void writeLeadingZero() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         Atom           atom   = new Atom("C");
         atom.setPoint2d(new Point2d(0.5, 1.2));
@@ -198,7 +198,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeParity() throws IOException, CDKException {
+    void writeParity() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
@@ -228,7 +228,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeParityHNotLast() throws IOException, CDKException {
+    void writeParityHNotLast() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
@@ -260,7 +260,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeParityImplH() throws IOException, CDKException {
+    void writeParityImplH() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
@@ -287,7 +287,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeParityImplHInverted() throws IOException, CDKException {
+    void writeParityImplHInverted() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
@@ -314,7 +314,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeSRUs() throws IOException, CDKException {
+    void writeSRUs() throws IOException, CDKException {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -343,7 +343,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeMultipleGroup() throws IOException, CDKException {
+    void writeMultipleGroup() throws IOException, CDKException {
         final int repeatAtoms = 50;
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
@@ -376,7 +376,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void roundTripSRU() throws IOException, CDKException {
+    void roundTripSRU() throws IOException, CDKException {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bracketstyles.mol"))) {
             IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
             String res = writeToStr(mol);
@@ -390,7 +390,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void roundTripExpandedAbbrv() throws IOException, CDKException {
+    void roundTripExpandedAbbrv() throws IOException, CDKException {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("triphenyl-phosphate-expanded.mol"))) {
             IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
             String res = writeToStr(mol);
@@ -401,7 +401,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void roundTripOrderMixtures() throws IOException, CDKException {
+    void roundTripOrderMixtures() throws IOException, CDKException {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-ord-mixture.mol"))) {
             IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
             String res = writeToStr(mol);
@@ -417,7 +417,8 @@ public class MDLV3000WriterTest {
         }
     }
 
-    @Test public void positionalVariationRoundTrip() throws Exception {
+    @Test
+    void positionalVariationRoundTrip() throws Exception {
         try (MDLV3000Reader mdlr = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
             IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
             String res = writeToStr(mol);
@@ -426,7 +427,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeDimensionField() throws Exception {
+    void writeDimensionField() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newAtomContainer();
         IAtom atom = builder.newAtom();
@@ -442,7 +443,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeDimensionField3D() throws Exception {
+    void writeDimensionField3D() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newAtomContainer();
         IAtom atom = builder.newAtom();
@@ -458,7 +459,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void writeCustomTitle() throws Exception {
+    void writeCustomTitle() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newAtomContainer();
         IAtom atom = builder.newAtom();
@@ -486,7 +487,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void testNoChiralFlag() throws Exception {
+    void testNoChiralFlag() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052112362D          \n" +
                 "\n" +
@@ -526,7 +527,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void testChiralFlag() throws Exception {
+    void testChiralFlag() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052112362D          \n" +
                 "\n" +
@@ -566,7 +567,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void testStereoRac1() throws Exception {
+    void testStereoRac1() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052113162D          \n" +
                 "\n" +
@@ -609,7 +610,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void testStereoRel1() throws Exception {
+    void testStereoRel1() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052113162D          \n" +
                 "\n" +
@@ -651,7 +652,7 @@ public class MDLV3000WriterTest {
     }
 
     @Test
-    public void testStereoRac1And() throws Exception {
+    void testStereoRac1And() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02062121432D          \n" +
                 "\n" +

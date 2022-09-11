@@ -32,10 +32,10 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
  *
  * @cdk.module test-datadebug
  */
-public class DebugMappingTest extends AbstractMappingTest {
+class DebugMappingTest extends AbstractMappingTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
             @Override
@@ -46,7 +46,7 @@ public class DebugMappingTest extends AbstractMappingTest {
     }
 
     @Test
-    public void testDebugMapping_IChemObject_IChemObject() {
+    void testDebugMapping_IChemObject_IChemObject() {
         IMapping mapping = new DebugMapping(new DebugAtom(), new DebugAtom());
         Assertions.assertNotNull(mapping);
     }

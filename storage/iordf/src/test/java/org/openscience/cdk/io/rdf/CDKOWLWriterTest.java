@@ -38,15 +38,15 @@ import java.io.StringWriter;
  *
  * @cdk.module test-iordf
  */
-public class CDKOWLWriterTest extends ChemObjectWriterTest {
+class CDKOWLWriterTest extends ChemObjectWriterTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setChemObjectWriter(new CDKOWLWriter());
     }
 
     @Test
-    public void testWriteMolecule() throws Exception {
+    void testWriteMolecule() throws Exception {
         StringWriter output = new StringWriter();
         CDKOWLWriter writer = new CDKOWLWriter(output);
 

@@ -34,13 +34,13 @@ import org.openscience.cdk.smiles.SmilesParser;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class PolarizabilityTest extends CDKTestCase {
+class PolarizabilityTest extends CDKTestCase {
 
     /**
      *  A unit test for JUnit
      */
     @Test
-    public void testGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom() throws Exception {
+    void testGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom() throws Exception {
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
@@ -54,7 +54,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with n,n-dimethyl ethylendiamine
      */
     @Test
-    public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean() throws Exception {
+    void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean() throws Exception {
         double[] testResult = {4.73, 6.92};
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -70,7 +70,7 @@ public class PolarizabilityTest extends CDKTestCase {
      */
     @Disabled
     @Test
-    public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt() {
+    void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt() {
         Assertions.fail("Not tested yet");
     }
 
@@ -78,7 +78,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with n,n-dimethyl ethylendiamine
      */
     @Test
-    public void testCalculateBondPolarizability_IAtomContainer_IBond() throws Exception {
+    void testCalculateBondPolarizability_IAtomContainer_IBond() throws Exception {
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
@@ -90,7 +90,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with methane
      */
     @Test
-    public void testCalculateKJMeanMolecularPolarizability() throws Exception {
+    void testCalculateKJMeanMolecularPolarizability() throws Exception {
         double testResult = 2.61;
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -103,7 +103,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with Ethyl chloride
      */
     @Test
-    public void testcalculateGHEffectiveAtomPolarizability_Ethyl_chloride() throws Exception {
+    void testcalculateGHEffectiveAtomPolarizability_Ethyl_chloride() throws Exception {
         double testResult = 4.62; /* from thesis Wolfgang Hanebeck, TUM */
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -116,7 +116,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with Allyl bromide
      */
     @Test
-    public void testcalculateGHEffectiveAtomPolarizability_Allyl_bromide() throws Exception {
+    void testcalculateGHEffectiveAtomPolarizability_Allyl_bromide() throws Exception {
         double testResult = 6.17; /* from thesis Wolfgang Hanebeck, TUM */
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -129,7 +129,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with Isopentyl iodide
      */
     @Test
-    public void testcalculateGHEffectiveAtomPolarizability_Isopentyl_iodide() throws Exception {
+    void testcalculateGHEffectiveAtomPolarizability_Isopentyl_iodide() throws Exception {
         double testResult = 8.69; /* from thesis Wolfgang Hanebeck, TUM */
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -142,7 +142,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with Ethoxy ethane
      */
     @Test
-    public void testcalculateGHEffectiveAtomPolarizability_Ethoxy_ethane() throws Exception {
+    void testcalculateGHEffectiveAtomPolarizability_Ethoxy_ethane() throws Exception {
         double testResult = 5.21; /* from thesis Wolfgang Hanebeck, TUM */
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -155,7 +155,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with Ethanolamine
      */
     @Test
-    public void testcalculateGHEffectiveAtomPolarizability_Ethanolamine() throws Exception {
+    void testcalculateGHEffectiveAtomPolarizability_Ethanolamine() throws Exception {
         double[] testResult = {4.26, 3.60}; /*
                                              * from thesis Wolfgang Hanebeck,
                                              * TUM
@@ -173,7 +173,7 @@ public class PolarizabilityTest extends CDKTestCase {
      *  A unit test for JUnit with Allyl mercaptan
      */
     @Test
-    public void testcalculateGHEffectiveAtomPolarizability_Allyl_mercaptan() throws Exception {
+    void testcalculateGHEffectiveAtomPolarizability_Allyl_mercaptan() throws Exception {
         double testResult = 6.25; /* from thesis Wolfgang Hanebeck, TUM */
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

@@ -33,16 +33,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-core
  */
-public class IntractableTest {
+class IntractableTest {
 
     @Test
-    public void timeout() throws Exception {
+    void timeout() throws Exception {
         Intractable e = Intractable.timeout(12);
         assertThat(e.getMessage(), is("Operation did not finish after 12 ms."));
     }
 
     @Test
-    public void timeoutWithDesc() throws Exception {
+    void timeoutWithDesc() throws Exception {
         Intractable e = Intractable.timeout("MCS", 200);
         assertThat(e.getMessage(), is("MCS did not finish after 200 ms."));
     }

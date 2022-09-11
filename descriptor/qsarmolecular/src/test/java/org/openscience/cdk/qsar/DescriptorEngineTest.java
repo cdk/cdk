@@ -28,19 +28,19 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
  *
  * @cdk.module test-qsarmolecular
  */
-public class DescriptorEngineTest extends CDKTestCase {
+class DescriptorEngineTest extends CDKTestCase {
 
-    public DescriptorEngineTest() {}
+    DescriptorEngineTest() {}
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                 DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(engine);
     }
 
     @Test
-    public void testLoadingOfMolecularDescriptors() {
+    void testLoadingOfMolecularDescriptors() {
         DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                 DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(engine);
@@ -51,7 +51,7 @@ public class DescriptorEngineTest extends CDKTestCase {
     }
 
     @Test
-    public void testLoadingOfAtomicDescriptors() {
+    void testLoadingOfAtomicDescriptors() {
         DescriptorEngine engine = new DescriptorEngine(IAtomicDescriptor.class, DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size();
@@ -61,7 +61,7 @@ public class DescriptorEngineTest extends CDKTestCase {
     }
 
     @Test
-    public void testLoadingOfBondDescriptors() {
+    void testLoadingOfBondDescriptors() {
         DescriptorEngine engine = new DescriptorEngine(IBondDescriptor.class, DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size();
@@ -71,7 +71,7 @@ public class DescriptorEngineTest extends CDKTestCase {
     }
 
     @Test
-    public void testDictionaryType() {
+    void testDictionaryType() {
         DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                 DefaultChemObjectBuilder.getInstance());
 
@@ -85,7 +85,7 @@ public class DescriptorEngineTest extends CDKTestCase {
     }
 
     @Test
-    public void testDictionaryClass() {
+    void testDictionaryClass() {
         DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                 DefaultChemObjectBuilder.getInstance());
 
@@ -106,7 +106,7 @@ public class DescriptorEngineTest extends CDKTestCase {
     }
 
     @Test
-    public void testAvailableClass() {
+    void testAvailableClass() {
         DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                 DefaultChemObjectBuilder.getInstance());
         String[] availClasses = engine.getAvailableDictionaryClasses();
@@ -114,7 +114,7 @@ public class DescriptorEngineTest extends CDKTestCase {
     }
 
     @Test
-    public void testLoadingOfAtomPairDescriptors() {
+    void testLoadingOfAtomPairDescriptors() {
         DescriptorEngine engine = new DescriptorEngine(IAtomicDescriptor.class, DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size();

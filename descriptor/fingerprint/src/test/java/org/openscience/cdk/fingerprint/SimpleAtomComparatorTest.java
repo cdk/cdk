@@ -11,12 +11,12 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @author John May
  * @cdk.module test-fingerprint
  */
-public class SimpleAtomComparatorTest {
+class SimpleAtomComparatorTest {
 
     private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
     @Test
-    public void testCompare_NullHybridization() throws Exception {
+    void testCompare_NullHybridization() throws Exception {
 
         SimpleAtomComparator comparator = new SimpleAtomComparator();
 
@@ -28,7 +28,7 @@ public class SimpleAtomComparatorTest {
     }
 
     @Test
-    public void testCompare_SameHybridization() throws Exception {
+    void testCompare_SameHybridization() throws Exception {
 
         SimpleAtomComparator comparator = new SimpleAtomComparator();
 
@@ -43,7 +43,7 @@ public class SimpleAtomComparatorTest {
     }
 
     @Test
-    public void testCompare_DifferentHybridization() throws Exception {
+    void testCompare_DifferentHybridization() throws Exception {
 
         SimpleAtomComparator comparator = new SimpleAtomComparator();
 
@@ -58,7 +58,7 @@ public class SimpleAtomComparatorTest {
     }
 
     @Test
-    public void testCompare_DifferentSymbol() throws Exception {
+    void testCompare_DifferentSymbol() throws Exception {
 
         SimpleAtomComparator comparator = new SimpleAtomComparator();
 

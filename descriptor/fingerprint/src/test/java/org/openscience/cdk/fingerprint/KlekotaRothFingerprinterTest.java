@@ -34,7 +34,7 @@ import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;
 /**
  * @cdk.module test-fingerprint
  */
-public class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
+class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -42,7 +42,7 @@ public class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void testGetSize() throws Exception {
+    void testGetSize() throws Exception {
         IFingerprinter printer = getBitFingerprinter();
         Assertions.assertEquals(4860, printer.getSize());
     }
@@ -51,7 +51,7 @@ public class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
     public void testGetCountFingerprint() throws Exception {}
 
     @Test
-    public void testFingerprint() throws Exception {
+    void testFingerprint() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = getBitFingerprinter();
 

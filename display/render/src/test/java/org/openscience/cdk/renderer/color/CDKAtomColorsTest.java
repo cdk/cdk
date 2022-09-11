@@ -34,10 +34,10 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * @cdk.module test-render
  */
-public class CDKAtomColorsTest extends CDKTestCase {
+class CDKAtomColorsTest extends CDKTestCase {
 
     @Test
-    public void testGetAtomColor() {
+    void testGetAtomColor() {
         CDKAtomColors colors = new CDKAtomColors();
         Assertions.assertNotNull(colors);
         IAtom hydrogen = new Atom("H");
@@ -49,7 +49,7 @@ public class CDKAtomColorsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetDefaultAtomColor() {
+    void testGetDefaultAtomColor() {
         CDKAtomColors colors = new CDKAtomColors();
 
         Assertions.assertNotNull(colors);

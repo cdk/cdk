@@ -29,16 +29,16 @@ import java.util.Map;
 /**
  * @cdk.module test-pdb
  */
-public class AminoAcidsTest extends CDKTestCase {
+class AminoAcidsTest extends CDKTestCase {
 
     @Test
-    public void testCreateBondMatrix() {
+    void testCreateBondMatrix() {
         int[][] bonds = AminoAcids.aaBondInfo();
         Assertions.assertNotNull(bonds);
     }
 
     @Test
-    public void testCreateAAs() {
+    void testCreateAAs() {
         IAminoAcid[] aas = AminoAcids.createAAs();
         Assertions.assertNotNull(aas);
         Assertions.assertEquals(20, aas.length);
@@ -53,7 +53,7 @@ public class AminoAcidsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetHashMapBySingleCharCode() {
+    void testGetHashMapBySingleCharCode() {
         Map<String, IAminoAcid> map = AminoAcids.getHashMapBySingleCharCode();
         Assertions.assertNotNull(map);
         Assertions.assertEquals(20, map.size());
@@ -66,7 +66,7 @@ public class AminoAcidsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetHashMapByThreeLetterCode() {
+    void testGetHashMapByThreeLetterCode() {
         Map<String, IAminoAcid> map = AminoAcids.getHashMapByThreeLetterCode();
         Assertions.assertNotNull(map);
         Assertions.assertEquals(20, map.size());

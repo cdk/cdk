@@ -33,10 +33,10 @@ import static org.hamcrest.CoreMatchers.is;
  *
  * @cdk.module test-io
  */
-public class CMLStackTest extends CDKTestCase {
+class CMLStackTest extends CDKTestCase {
 
     @Test
-    public void testPush_String() {
+    void testPush_String() {
         // the class has a hardcoded default length. Test going beyond this.
         CMLStack stack = new CMLStack();
         for (int i = 0; i < 100; i++) {
@@ -45,7 +45,7 @@ public class CMLStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testPop() {
+    void testPop() {
         CMLStack stack = new CMLStack();
         stack.push("first");
         stack.push("second");
@@ -62,7 +62,7 @@ public class CMLStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testCurrent() {
+    void testCurrent() {
         CMLStack stack = new CMLStack();
         stack.push("first");
         Assertions.assertEquals("first", stack.current());
@@ -77,7 +77,7 @@ public class CMLStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testEndsWith_String() {
+    void testEndsWith_String() {
         CMLStack stack = new CMLStack();
         stack.push("first");
         Assertions.assertTrue(stack.endsWith("first"));
@@ -89,7 +89,7 @@ public class CMLStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testEndsWith_String_String() {
+    void testEndsWith_String_String() {
         CMLStack stack = new CMLStack();
         stack.push("first");
         stack.push("second");
@@ -100,7 +100,7 @@ public class CMLStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testEndsWith_String_String_String() {
+    void testEndsWith_String_String_String() {
         CMLStack stack = new CMLStack();
         stack.push("first");
         stack.push("second");
@@ -109,7 +109,7 @@ public class CMLStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         CMLStack stack = new CMLStack();
         org.hamcrest.MatcherAssert.assertThat(stack.size(), is(0));
         stack.push("first");

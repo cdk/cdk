@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  *
  * @cdk.module test-datadebug
  */
-public class DebugElectronContainerTest extends AbstractElectronContainerTest {
+class DebugElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugElectronContainer::new);
     }
 
     @Test
-    public void testDebugElectronContainer() {
+    void testDebugElectronContainer() {
         IElectronContainer ec = new DebugElectronContainer();
         Assertions.assertNotNull(ec);
         Assertions.assertEquals(0, ec.getElectronCount().intValue());

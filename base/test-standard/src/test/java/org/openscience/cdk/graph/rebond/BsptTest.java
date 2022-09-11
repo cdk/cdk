@@ -25,20 +25,20 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class BsptTest extends CDKTestCase {
+class BsptTest extends CDKTestCase {
 
-    public BsptTest() {
+    BsptTest() {
         super();
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Bspt bspt = new Bspt(3);
         Assertions.assertNotNull(bspt.toString());
     }
 
     @Test
-    public void testBspt() {
+    void testBspt() {
         Bspt bspt = new Bspt(3);
         Assertions.assertNotNull(bspt);
     }

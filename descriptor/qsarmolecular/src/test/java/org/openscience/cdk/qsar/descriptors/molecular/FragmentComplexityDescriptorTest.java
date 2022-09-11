@@ -18,17 +18,17 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @author      chhoppe from EUROSCREEN
  * @cdk.module  test-qsarmolecular
  */
-public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
+class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
 
-    public FragmentComplexityDescriptorTest() {}
+    FragmentComplexityDescriptorTest() {}
 
     @BeforeEach
-    public void setup() throws Exception {
+    void setup() throws Exception {
         setDescriptor(FragmentComplexityDescriptor.class);
     }
 
     @Test
-    public void test1FragmentComplexityDescriptor() throws Exception {
+    void test1FragmentComplexityDescriptor() throws Exception {
         IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
         String filename = "murckoTest1.mol";
         //System.out.println("\nFragmentComplexityTest: " + filename);
@@ -48,7 +48,7 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test2FragmentComplexityDescriptor() throws Exception {
+    void test2FragmentComplexityDescriptor() throws Exception {
         IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
         String filename = "murckoTest10.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);

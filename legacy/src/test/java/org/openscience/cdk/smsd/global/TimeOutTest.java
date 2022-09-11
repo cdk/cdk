@@ -33,15 +33,15 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class TimeOutTest {
+class TimeOutTest {
 
     @Test
-    public void testGetInstance() {
+    void testGetInstance() {
         Assertions.assertNotNull(TimeOut.getInstance());
     }
 
     @Test
-    public void testSetTimeOut() {
+    void testSetTimeOut() {
         TimeOut timeOut = TimeOut.getInstance();
         timeOut.setTimeOut(0.1);
         Assertions.assertEquals(0.1, timeOut.getTimeOut(), 0.0001);
@@ -53,7 +53,7 @@ public class TimeOutTest {
      * Test of getTimeOut method, of class TimeOut.
      */
     @Test
-    public void testGetTimeOut() {
+    void testGetTimeOut() {
         TimeOut instance = new TimeOut();
         instance.setTimeOut(10);
         double expResult = 10.0;
@@ -65,7 +65,7 @@ public class TimeOutTest {
      * Test of isTimeOutFlag method, of class TimeOut.
      */
     @Test
-    public void testIsTimeOutFlag() {
+    void testIsTimeOutFlag() {
         TimeOut instance = new TimeOut();
         instance.setTimeOut(10);
         instance.setTimeOutFlag(true);
@@ -78,7 +78,7 @@ public class TimeOutTest {
      * Test of setTimeOutFlag method, of class TimeOut.
      */
     @Test
-    public void testSetTimeOutFlag() {
+    void testSetTimeOutFlag() {
         boolean timeOut = true;
         TimeOut instance = new TimeOut();
         instance.setTimeOut(10);

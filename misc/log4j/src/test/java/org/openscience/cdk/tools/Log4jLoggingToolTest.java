@@ -28,10 +28,10 @@ import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 /**
  * @cdk.module test-log4j
  */
-public class Log4jLoggingToolTest extends AbstractLoggingToolTest {
+class Log4jLoggingToolTest extends AbstractLoggingToolTest {
 
     @BeforeAll
-    public static void ensureLog4JConfigured() {
+    static void ensureLog4JConfigured() {
         Configurator.reconfigure();
     }
 
@@ -45,31 +45,31 @@ public class Log4jLoggingToolTest extends AbstractLoggingToolTest {
     }
 
     @Test
-    public void testLoggingTool() throws Exception {
+    void testLoggingTool() throws Exception {
         Log4jLoggingTool logger = new Log4jLoggingTool();
         Assertions.assertNotNull(logger);
     }
 
     @Test
-    public void testLoggingTool_Class() throws Exception {
+    void testLoggingTool_Class() throws Exception {
         Log4jLoggingTool logger = new Log4jLoggingTool(this.getClass());
         Assertions.assertNotNull(logger);
     }
 
     @Test
-    public void testClass$_String() throws Exception {
+    void testClass$_String() throws Exception {
         // no idea why the Coverage test requires this test
         Assertions.assertTrue(true);
     }
 
     @Test
-    public void testDebug_Object() throws Exception {
+    void testDebug_Object() throws Exception {
         Log4jLoggingTool logger = getLoggingTool();
         logger.debug(this);
     }
 
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         ILoggingTool logger = Log4jLoggingTool.create(this.getClass());
         Assertions.assertNotNull(logger);
     }

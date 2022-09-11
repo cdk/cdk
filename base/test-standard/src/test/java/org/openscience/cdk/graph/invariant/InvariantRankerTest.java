@@ -36,10 +36,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public class InvariantRankerTest {
+class InvariantRankerTest {
 
     @Test
-    public void rank() {
+    void rank() {
 
         InvariantRanker ranker = new InvariantRanker(6);
         long[] prev = new long[]{1, 1, 1, 1, 1, 1};
@@ -61,7 +61,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void rank_all_equiv() {
+    void rank_all_equiv() {
 
         InvariantRanker ranker = new InvariantRanker(6);
         long[] prev = new long[]{1, 1, 1, 1, 1, 1};
@@ -83,7 +83,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void rank_all_unique() {
+    void rank_all_unique() {
 
         InvariantRanker ranker = new InvariantRanker(7);
         long[] prev = new long[]{1, 1, 1, 1, 1, 1, 1};
@@ -105,7 +105,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void mergeSort() {
+    void mergeSort() {
 
         int n = 100;
 
@@ -129,7 +129,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void mergeSort_range() {
+    void mergeSort_range() {
 
         int n = 100;
 
@@ -159,7 +159,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void insertionSort() {
+    void insertionSort() {
         long[] prev = new long[]{11, 10, 9, 8, 7};
         long[] curr = new long[]{11, 10, 9, 8, 7};
         int[] vs = new int[]{0, 1, 2, 3, 4};
@@ -168,7 +168,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void insertionSort_duplicate() {
+    void insertionSort_duplicate() {
         long[] prev = new long[]{11, 10, 10, 9, 8, 7};
         long[] curr = new long[]{11, 10, 10, 9, 8, 7};
         int[] vs = new int[]{0, 1, 2, 3, 4, 5};
@@ -177,7 +177,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void insertionSort_range() {
+    void insertionSort_range() {
         long[] prev = new long[]{12, 11, 10, 9, 8, 7};
         long[] curr = new long[]{12, 11, 10, 9, 8, 7};
         int[] vs = new int[]{0, 1, 2, 3, 4, 5};
@@ -186,7 +186,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void less() throws Exception {
+    void less() throws Exception {
         long[] prev = new long[]{1, 1, 2, 2};
         long[] curr = new long[]{1, 1, 2, 2};
         Assertions.assertFalse(InvariantRanker.less(0, 1, curr, prev));
@@ -198,7 +198,7 @@ public class InvariantRankerTest {
     }
 
     @Test
-    public void lessUsingPrev() throws Exception {
+    void lessUsingPrev() throws Exception {
         long[] prev = new long[]{1, 1, 2, 2};
         long[] curr = new long[]{1, 2, 1, 2};
         // 0,1 and 2,3 are only less is we inspect the 'curr' invariants

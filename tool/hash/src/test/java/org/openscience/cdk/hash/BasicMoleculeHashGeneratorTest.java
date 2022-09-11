@@ -40,10 +40,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-hash
  */
-public class BasicMoleculeHashGeneratorTest {
+class BasicMoleculeHashGeneratorTest {
 
     @Test
-    public void testConstruct_Null() {
+    void testConstruct_Null() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     new BasicMoleculeHashGenerator(null);
@@ -51,7 +51,7 @@ public class BasicMoleculeHashGeneratorTest {
     }
 
     @Test
-    public void testConstruct_NullPRNG() {
+    void testConstruct_NullPRNG() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     new BasicMoleculeHashGenerator(mock(AtomHashGenerator.class), null);
@@ -59,7 +59,7 @@ public class BasicMoleculeHashGeneratorTest {
     }
 
     @Test
-    public void testGenerate() {
+    void testGenerate() {
 
         AtomHashGenerator atomGenerator = mock(AtomHashGenerator.class);
         Pseudorandom prng = mock(Pseudorandom.class);
@@ -84,7 +84,7 @@ public class BasicMoleculeHashGeneratorTest {
     }
 
     @Test
-    public void testGenerate_Rotation() {
+    void testGenerate_Rotation() {
 
         AtomHashGenerator atomGenerator = mock(AtomHashGenerator.class);
         Xorshift xorshift = new Xorshift();

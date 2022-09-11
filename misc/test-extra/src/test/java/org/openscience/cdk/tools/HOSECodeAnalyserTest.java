@@ -27,10 +27,10 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-extra
  */
-public class HOSECodeAnalyserTest extends CDKTestCase {
+class HOSECodeAnalyserTest extends CDKTestCase {
 
     @Test
-    public void testGetElements_String() {
+    void testGetElements_String() {
         List<String> elements = HOSECodeAnalyser.getElements("CCY(CF,C,/C,,&/&)//");
         Assertions.assertEquals(3, elements.size());
         Assertions.assertTrue(elements.contains("C"));
@@ -39,7 +39,7 @@ public class HOSECodeAnalyserTest extends CDKTestCase {
     }
 
     @Test
-    public void testCode1() {
+    void testCode1() {
         List<String> elements = HOSECodeAnalyser.getElements("*C*CC(*C,*C,=C/*C,*&,CC/*&O,=OO,%N),C,,C,/");
         Assertions.assertEquals(3, elements.size());
         Assertions.assertTrue(elements.contains("C"));

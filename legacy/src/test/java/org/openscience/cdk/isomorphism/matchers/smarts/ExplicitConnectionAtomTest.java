@@ -39,10 +39,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-smarts
  */
-public class ExplicitConnectionAtomTest {
+class ExplicitConnectionAtomTest {
 
     @Test
-    public void matches() throws Exception {
+    void matches() throws Exception {
         ExplicitConnectionAtom matcher = new ExplicitConnectionAtom(2, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(

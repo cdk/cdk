@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IChemFile;
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemFileTest extends AbstractChemFileTest {
+class DebugChemFileTest extends AbstractChemFileTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugChemFile::new);
     }
 
     @Test
-    public void testDebugChemFile() {
+    void testDebugChemFile() {
         IChemFile cs = new DebugChemFile();
         Assertions.assertNotNull(cs);
     }

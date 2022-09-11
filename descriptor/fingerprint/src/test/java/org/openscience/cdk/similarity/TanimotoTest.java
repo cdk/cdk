@@ -51,12 +51,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @cdk.module test-fingerprint
  */
-public class TanimotoTest extends CDKTestCase {
+class TanimotoTest extends CDKTestCase {
 
-    final boolean standAlone = false;
+    private final boolean standAlone = false;
 
     @Test
-    public void testTanimoto1() throws java.lang.Exception {
+    void testTanimoto1() throws java.lang.Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
         Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
@@ -68,7 +68,7 @@ public class TanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void testTanimoto2() throws java.lang.Exception {
+    void testTanimoto2() throws java.lang.Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makeIndole();
         Fingerprinter fingerprinter = new Fingerprinter();
@@ -80,7 +80,7 @@ public class TanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void testCalculate_BitFingerprint() throws java.lang.Exception {
+    void testCalculate_BitFingerprint() throws java.lang.Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
         Fingerprinter fp = new Fingerprinter(1024, 8);
@@ -89,7 +89,7 @@ public class TanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void testExactMatch() throws Exception {
+    void testExactMatch() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makeIndole();
         addImplicitHydrogens(mol1);
@@ -105,7 +105,7 @@ public class TanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void testTanimoto3() throws java.lang.Exception {
+    void testTanimoto3() throws java.lang.Exception {
         double[] f1 = {1, 2, 3, 4, 5, 6, 7};
         double[] f2 = {1, 2, 3, 4, 5, 6, 7};
         float tanimoto = Tanimoto.calculate(f1, f2);
@@ -114,7 +114,7 @@ public class TanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void keggR00258() throws java.lang.Exception {
+    void keggR00258() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles1 = "O=C(O)CCC(=O)C(=O)O";
         String smiles2 = "O=C(O)C(N)CCC(=O)O";
@@ -139,7 +139,7 @@ public class TanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void method1() throws CDKException {
+    void method1() throws CDKException {
         ICountFingerprint fp1 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
 
             {
@@ -156,7 +156,7 @@ public class TanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void method2() throws CDKException {
+    void method2() throws CDKException {
         ICountFingerprint fp1 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
 
             {
@@ -173,7 +173,7 @@ public class TanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompareBitSetandBitFingerprintTanimoto() throws Exception {
+    void testCompareBitSetandBitFingerprintTanimoto() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.make123Triazole();
         IAtomContainer mol2 = TestMoleculeFactory.makeImidazole();
         Fingerprinter fingerprinter = new Fingerprinter(1024, 8);

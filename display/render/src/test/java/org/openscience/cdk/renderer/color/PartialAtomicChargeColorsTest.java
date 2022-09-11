@@ -33,10 +33,10 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * @cdk.module test-render
  */
-public class PartialAtomicChargeColorsTest extends CDKTestCase {
+class PartialAtomicChargeColorsTest extends CDKTestCase {
 
     @Test
-    public void testGetAtomColor() {
+    void testGetAtomColor() {
         PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
         Assertions.assertNotNull(colors);
         IAtom hydrogen = new Atom("H");
@@ -48,7 +48,7 @@ public class PartialAtomicChargeColorsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetDefaultAtomColor() {
+    void testGetDefaultAtomColor() {
         PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
 
         Assertions.assertNotNull(colors);

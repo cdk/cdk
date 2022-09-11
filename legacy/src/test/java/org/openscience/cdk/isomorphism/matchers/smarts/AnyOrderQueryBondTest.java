@@ -32,20 +32,20 @@ import static org.mockito.Mockito.mock;
  *
  * @cdk.module test-smarts
  */
-public class AnyOrderQueryBondTest extends CDKTestCase {
+class AnyOrderQueryBondTest extends CDKTestCase {
 
     /**
      * @cdk.bug 1305
      */
     @Test
-    public void testMatches() {
+    void testMatches() {
         IBond testBond = null;
         AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
         Assertions.assertFalse(matcher.matches(testBond));
     }
 
     @Test
-    public void testAnyOrder() {
+    void testAnyOrder() {
         AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
         IBond testBond = new Bond();
         for (IBond.Order order : IBond.Order.values()) {

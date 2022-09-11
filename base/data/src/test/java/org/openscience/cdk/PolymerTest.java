@@ -39,15 +39,15 @@ import org.junit.jupiter.api.Test;
  * @cdk.created 2001-08-09
  * @cdk.module  test-data
  */
-public class PolymerTest extends AbstractPolymerTest {
+class PolymerTest extends AbstractPolymerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Polymer::new);
     }
 
     @Test
-    public void testPolymer() {
+    void testPolymer() {
         IPolymer oPolymer = new Polymer();
         Assertions.assertNotNull(oPolymer);
         Assertions.assertEquals(oPolymer.getMonomerCount(), 0);
@@ -60,7 +60,7 @@ public class PolymerTest extends AbstractPolymerTest {
      * @cdk.bug 2454890
      */
     @Test
-    public void testPolymerClone() throws Exception {
+    void testPolymerClone() throws Exception {
         IPolymer oPolymer = new Polymer();
         Assertions.assertNotNull(oPolymer);
         Assertions.assertEquals(0, oPolymer.getMonomerCount());
@@ -89,7 +89,7 @@ public class PolymerTest extends AbstractPolymerTest {
      * @cdk.bug  2454890
      */
     @Test
-    public void testPolymerClone2() throws CloneNotSupportedException {
+    void testPolymerClone2() throws CloneNotSupportedException {
         IPolymer oPolymer = new Polymer();
         Assertions.assertNotNull(oPolymer);
         Assertions.assertEquals(0, oPolymer.getMonomerCount());

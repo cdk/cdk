@@ -31,22 +31,22 @@ import org.openscience.cdk.interfaces.ILonePair;
  *
  * @cdk.module test-datadebug
  */
-public class DebugLonePairTest extends AbstractLonePairTest {
+class DebugLonePairTest extends AbstractLonePairTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugLonePair::new);
     }
 
     @Test
-    public void testDebugLonePair() {
+    void testDebugLonePair() {
         ILonePair lp = new DebugLonePair();
         Assertions.assertNull(lp.getAtom());
         Assertions.assertEquals(2, lp.getElectronCount().intValue());
     }
 
     @Test
-    public void testDebugLonePair_IAtom() {
+    void testDebugLonePair_IAtom() {
         IAtom atom = newChemObject().getBuilder().newInstance(IAtom.class, "N");
         ILonePair lp = new DebugLonePair(atom);
         Assertions.assertEquals(2, lp.getElectronCount().intValue());

@@ -40,15 +40,15 @@ import org.openscience.cdk.test.interfaces.AbstractChemModelTest;
  *
  * @see org.openscience.cdk.ChemModel
  */
-public class ChemModelTest extends AbstractChemModelTest {
+class ChemModelTest extends AbstractChemModelTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ChemModel::new);
     }
 
     @Test
-    public void testChemModel() {
+    void testChemModel() {
         IChemModel chemModel = new ChemModel();
         Assertions.assertNotNull(chemModel);
         Assertions.assertTrue(chemModel.isEmpty());

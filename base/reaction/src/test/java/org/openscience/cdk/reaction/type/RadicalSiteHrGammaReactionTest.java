@@ -57,7 +57,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public RadicalSiteHrGammaReactionTest() throws Exception {
+    RadicalSiteHrGammaReactionTest() throws Exception {
         setReaction(RadicalSiteHrGammaReaction.class);
     }
 
@@ -65,7 +65,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testRadicalSiteHrGammaReaction() throws Exception {
+    void testRadicalSiteHrGammaReaction() throws Exception {
         IReactionProcess type = new RadicalSiteHrGammaReaction();
         Assertions.assertNotNull(type);
     }
@@ -194,7 +194,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new RadicalSiteHrGammaReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -231,7 +231,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new RadicalSiteHrGammaReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);

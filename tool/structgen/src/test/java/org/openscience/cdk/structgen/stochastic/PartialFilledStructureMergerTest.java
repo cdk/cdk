@@ -31,10 +31,10 @@ import org.openscience.cdk.tools.SaturationChecker;
 /**
  * @cdk.module test-structgen
  */
-public class PartialFilledStructureMergerTest extends CDKTestCase {
+class PartialFilledStructureMergerTest extends CDKTestCase {
 
     @Test
-    public void testGenerate_IAtomContainerSet() throws Exception {
+    void testGenerate_IAtomContainerSet() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainerSet acs = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         acs.addAtomContainer(sp.parseSmiles("[CH2]CCC[CH2]"));
@@ -46,7 +46,7 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
     }
 
     @Test
-    public void testPartialFilledStructureMerger2() throws Exception {
+    void testPartialFilledStructureMerger2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainerSet acs = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         acs.addAtomContainer(sp.parseSmiles("[C]=[C]CC[CH2]"));
@@ -58,7 +58,7 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
     }
 
     @Test
-    public void testPartialFilledStructureMerger3() throws Exception {
+    void testPartialFilledStructureMerger3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainerSet acs = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         acs.addAtomContainer(sp.parseSmiles("[CH2]CCC[CH2]"));
@@ -71,7 +71,7 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
     }
 
     @Test
-    public void testPartialFilledStructureMerger4() throws Exception {
+    void testPartialFilledStructureMerger4() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainerSet acs = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         acs.addAtomContainer(sp.parseSmiles("[C]CCC[CH2]"));
@@ -84,7 +84,7 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
     }
 
     @Test
-    public void testPartialFilledStructureMerger5() throws Exception {
+    void testPartialFilledStructureMerger5() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainerSet acs = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         acs.addAtomContainer(sp.parseSmiles("[C]1CCC1"));

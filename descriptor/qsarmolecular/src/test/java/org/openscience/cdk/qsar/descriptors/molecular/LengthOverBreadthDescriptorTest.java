@@ -21,17 +21,17 @@ import java.util.List;
  * @cdk.module test-qsarmolecular
  */
 
-public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
+class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
-    public LengthOverBreadthDescriptorTest() {}
+    LengthOverBreadthDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(LengthOverBreadthDescriptor.class);
     }
 
     @Test
-    public void testLOBDescriptorCholesterol() throws Exception {
+    void testLOBDescriptorCholesterol() throws Exception {
         String filename = "lobtest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -47,7 +47,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testLOBDescriptorCyclohexane() throws Exception {
+    void testLOBDescriptorCyclohexane() throws Exception {
         String filename = "lobtest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -63,7 +63,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testLOBDescriptorNaphthalene() throws Exception {
+    void testLOBDescriptorNaphthalene() throws Exception {
         String filename = "lobtest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -80,7 +80,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testLOBDescriptorNButane() throws Exception {
+    void testLOBDescriptorNButane() throws Exception {
         String filename = "lobtest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -99,7 +99,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
      * @cdk.bug 1965254
      */
     @Test
-    public void testLOBDescriptor2() throws Exception {
+    void testLOBDescriptor2() throws Exception {
         String filename = "lobtest2.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);

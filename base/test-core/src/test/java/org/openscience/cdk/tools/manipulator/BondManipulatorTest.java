@@ -34,10 +34,10 @@ import org.openscience.cdk.silent.Atom;
 /**
  * @cdk.module test-core
  */
-public class BondManipulatorTest extends CDKTestCase {
+class BondManipulatorTest extends CDKTestCase {
 
     @Test
-    public void testGetAtomArray_IBond() {
+    void testGetAtomArray_IBond() {
         IAtom atom1 = new Atom(Elements.CARBON);
         IAtom atom2 = new Atom(Elements.CARBON);
         IBond bond = new Bond(atom1, atom2, Order.TRIPLE);
@@ -48,7 +48,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsHigherOrder_IBond_Order_IBond_Order() {
+    void testIsHigherOrder_IBond_Order_IBond_Order() {
         Assertions.assertFalse(BondManipulator.isHigherOrder(Order.SINGLE, Order.SINGLE));
         Assertions.assertFalse(BondManipulator.isHigherOrder(Order.SINGLE, Order.DOUBLE));
         Assertions.assertFalse(BondManipulator.isHigherOrder(Order.SINGLE, Order.TRIPLE));
@@ -88,7 +88,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsLowerOrder_IBond_Order_IBond_Order() {
+    void testIsLowerOrder_IBond_Order_IBond_Order() {
         Assertions.assertFalse(BondManipulator.isLowerOrder(Order.SINGLE, Order.SINGLE));
         Assertions.assertTrue(BondManipulator.isLowerOrder(Order.SINGLE, Order.DOUBLE));
         Assertions.assertTrue(BondManipulator.isLowerOrder(Order.SINGLE, Order.TRIPLE));
@@ -128,7 +128,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testIncreaseBondOrder_IBond_Order() {
+    void testIncreaseBondOrder_IBond_Order() {
         Assertions.assertEquals(Order.DOUBLE, BondManipulator.increaseBondOrder(Order.SINGLE));
         Assertions.assertEquals(Order.TRIPLE, BondManipulator.increaseBondOrder(Order.DOUBLE));
         Assertions.assertEquals(Order.QUADRUPLE, BondManipulator.increaseBondOrder(Order.TRIPLE));
@@ -138,7 +138,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testIncreaseBondOrder_IBond() {
+    void testIncreaseBondOrder_IBond() {
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
         BondManipulator.increaseBondOrder(bond);
@@ -156,7 +156,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testDecreaseBondOrder_IBond_Order() {
+    void testDecreaseBondOrder_IBond_Order() {
         Assertions.assertEquals(Order.SINGLE, BondManipulator.decreaseBondOrder(Order.SINGLE));
         Assertions.assertEquals(Order.SINGLE, BondManipulator.decreaseBondOrder(Order.DOUBLE));
         Assertions.assertEquals(Order.DOUBLE, BondManipulator.decreaseBondOrder(Order.TRIPLE));
@@ -166,7 +166,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testDecreaseBondOrder_IBond() {
+    void testDecreaseBondOrder_IBond() {
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SEXTUPLE);
         BondManipulator.decreaseBondOrder(bond);
@@ -184,7 +184,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testDestroyBondOrder_IBond_Order() {
+    void testDestroyBondOrder_IBond_Order() {
         Assertions.assertEquals(1.0, BondManipulator.destroyBondOrder(Order.SINGLE), 0.00001);
         Assertions.assertEquals(2.0, BondManipulator.destroyBondOrder(Order.DOUBLE), 0.00001);
         Assertions.assertEquals(3.0, BondManipulator.destroyBondOrder(Order.TRIPLE), 0.00001);
@@ -194,7 +194,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMaximumBondOrder_List() {
+    void testGetMaximumBondOrder_List() {
         List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
@@ -209,7 +209,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMaximumBondOrder_Iterator() {
+    void testGetMaximumBondOrder_Iterator() {
         List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
@@ -224,7 +224,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMaximumBondOrder_IBond_IBond() {
+    void testGetMaximumBondOrder_IBond_IBond() {
         IBond bond1 = new Bond();
         bond1.setOrder(IBond.Order.SINGLE);
         IBond bond2 = new Bond();
@@ -233,7 +233,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMaximumBondOrder_IBond_IBond_Unset() {
+    void testGetMaximumBondOrder_IBond_IBond_Unset() {
         IBond bond1 = new Bond();
         bond1.setOrder(IBond.Order.UNSET);
         IBond bond2 = new Bond();
@@ -242,7 +242,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMaximumBondOrder_IBond_IBond_null() {
+    void testGetMaximumBondOrder_IBond_IBond_null() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IBond bond1 = new Bond();
@@ -254,7 +254,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMaximumBondOrder_Unset_Unset() {
+    void testGetMaximumBondOrder_Unset_Unset() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     BondManipulator.getMaximumBondOrder(IBond.Order.UNSET, IBond.Order.UNSET);
@@ -262,23 +262,23 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMaximumBondOrder_Order_Order() {
+    void testGetMaximumBondOrder_Order_Order() {
         Assertions.assertEquals(Order.QUADRUPLE, BondManipulator.getMaximumBondOrder(Order.SINGLE, Order.QUADRUPLE));
     }
 
     @Test
-    public void testGetMaximumBondOrder_Order_Order_Single() {
+    void testGetMaximumBondOrder_Order_Order_Single() {
         Assertions.assertEquals(Order.SINGLE, BondManipulator.getMaximumBondOrder(Order.SINGLE, Order.SINGLE));
     }
 
     @Test
-    public void testGetMaximumBondOrder_Order_Order_Unset() {
+    void testGetMaximumBondOrder_Order_Order_Unset() {
         Assertions.assertEquals(Order.SINGLE, BondManipulator.getMaximumBondOrder(Order.SINGLE, Order.UNSET));
         Assertions.assertEquals(Order.SINGLE, BondManipulator.getMaximumBondOrder(Order.UNSET, Order.SINGLE));
     }
 
     @Test
-    public void testGetMinimumBondOrder_List() {
+    void testGetMinimumBondOrder_List() {
         List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.DOUBLE);
@@ -293,7 +293,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMinimumBondOrder_Iterator() {
+    void testGetMinimumBondOrder_Iterator() {
         List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.DOUBLE);
@@ -308,7 +308,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMinimumBondOrder_HigherOrders() {
+    void testGetMinimumBondOrder_HigherOrders() {
         List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.QUINTUPLE);
@@ -320,7 +320,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetSingleBondEquivalentSum_List() {
+    void testGetSingleBondEquivalentSum_List() {
         List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
@@ -336,7 +336,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetSingleBondEquivalentSum_Iterator() {
+    void testGetSingleBondEquivalentSum_Iterator() {
         List<IBond> bonds = new ArrayList<>();
         IBond bond = new Bond();
         bond.setOrder(IBond.Order.SINGLE);
@@ -352,7 +352,7 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCreateBondOrder_double() {
+    void testCreateBondOrder_double() {
         Assertions.assertEquals(Order.SINGLE, BondManipulator.createBondOrder(1.0));
         Assertions.assertEquals(Order.DOUBLE, BondManipulator.createBondOrder(2.0));
         Assertions.assertEquals(Order.TRIPLE, BondManipulator.createBondOrder(3.0));

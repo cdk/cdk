@@ -44,10 +44,10 @@ import org.openscience.cdk.silent.ChemFile;
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-public class CML25FragmentsTest extends CDKTestCase {
+class CML25FragmentsTest extends CDKTestCase {
 
     @Disabled("Functionality not yet implemented")
-    public void testIsotopeRef() throws Exception {
+    void testIsotopeRef() throws Exception {
         String cmlString = "<cml>" + "  <isotopeList>" + "    <isotope id='H1' number='1' elementType='H'>"
                 + "      <scalar dictRef='bo:relativeAbundance'>99.9885</scalar>"
                 + "      <scalar dictRef='bo:exactMass' errorValue='0.0001E-6'>1.007825032</scalar>" + "    </isotope>"

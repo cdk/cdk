@@ -27,10 +27,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 /**
  * @cdk.module test-diff
  */
-public class ChemObjectDifferenceTest {
+class ChemObjectDifferenceTest {
 
     @Test
-    public void testToString() {
+    void testToString() {
         ChemObjectDifference diff = new ChemObjectDifference("AtomTypeDiff");
         String diffString = diff.toString();
         Assertions.assertNotNull(diffString);

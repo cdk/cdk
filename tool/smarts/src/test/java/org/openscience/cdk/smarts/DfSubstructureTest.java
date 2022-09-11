@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.DfPattern;
 import org.openscience.cdk.isomorphism.Pattern;
 
-public class DfSubstructureTest extends SubstructureTest {
+class DfSubstructureTest extends SubstructureTest {
 
     @Override
     Pattern create(IAtomContainer container) {
@@ -37,7 +37,7 @@ public class DfSubstructureTest extends SubstructureTest {
     }
 
     @Test
-    public void matchRoot() throws Exception {
+    void matchRoot() throws Exception {
         IAtomContainer mol  = smi("OC(=O)C(=O)O");
         IAtomContainer qry  = sma("O=*");
         DfPattern      ptrn = DfPattern.findSubstructure(qry);

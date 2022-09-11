@@ -37,15 +37,15 @@ import org.openscience.cdk.interfaces.IRingSet;
  *
  * @cdk.module test-silent
  */
-public class ChemModelTest extends AbstractChemModelTest {
+class ChemModelTest extends AbstractChemModelTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ChemModel::new);
     }
 
     @Test
-    public void testChemModel() {
+    void testChemModel() {
         IChemModel chemModel = new ChemModel();
         Assertions.assertNotNull(chemModel);
     }

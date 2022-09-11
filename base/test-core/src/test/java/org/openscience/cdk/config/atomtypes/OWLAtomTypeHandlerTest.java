@@ -29,19 +29,19 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-core
  */
-public class OWLAtomTypeHandlerTest extends CDKTestCase {
+class OWLAtomTypeHandlerTest extends CDKTestCase {
 
     // serious testing is done in OWLAtomTypeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
     @Test
-    public void testAtomTypeHandler_IChemObjectBuilder() {
+    void testAtomTypeHandler_IChemObjectBuilder() {
         OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
         Assertions.assertNotNull(handler);
     }
 
     @Test
-    public void testGetAtomTypes() {
+    void testGetAtomTypes() {
         OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read
         Assertions.assertNotNull(handler);
@@ -49,7 +49,7 @@ public class OWLAtomTypeHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testStartDocument() {
+    void testStartDocument() {
         OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
         Assertions.assertNotNull(handler);

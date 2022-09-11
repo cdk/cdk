@@ -36,10 +36,10 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class MmffAromaticTypeMappingTest {
+class MmffAromaticTypeMappingTest {
 
     @Test
-    public void indexOfHetroAt0() {
+    void indexOfHetroAt0() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[0]] = 2;
@@ -47,7 +47,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void indexOfHetroAt1() {
+    void indexOfHetroAt1() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[1]] = 2;
@@ -55,7 +55,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void indexOfHetroAt2() {
+    void indexOfHetroAt2() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[2]] = 2;
@@ -63,7 +63,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void indexOfHetroAt3() {
+    void indexOfHetroAt3() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[3]] = 2;
@@ -71,7 +71,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void indexOfHetroAt4() {
+    void indexOfHetroAt4() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[4]] = 2;
@@ -79,14 +79,14 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void indexOfNoHetroAtom() {
+    void indexOfNoHetroAtom() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         Assertions.assertEquals(-1, MmffAromaticTypeMapping.indexOfHetro(cycle, contr));
     }
 
     @Test
-    public void indexOfTwoHetroAtoms() {
+    void indexOfTwoHetroAtoms() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[0]] = 2;
@@ -95,14 +95,14 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void normaliseNoHetro() {
+    void normaliseNoHetro() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         Assertions.assertFalse(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
     }
 
     @Test
-    public void normaliseHetroAt3() {
+    void normaliseHetroAt3() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[3]] = 2;
@@ -111,7 +111,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void normaliseHetroAt2() {
+    void normaliseHetroAt2() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         contr[cycle[2]] = 2;
@@ -120,42 +120,42 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void tetravalentCarbonContributesOneElectron() {
+    void tetravalentCarbonContributesOneElectron() {
         assertThat(MmffAromaticTypeMapping.contribution(6, 3, 4), is(1));
     }
 
     @Test
-    public void tetravalentTricoordinateNitrogenContributesOneElectron() {
+    void tetravalentTricoordinateNitrogenContributesOneElectron() {
         assertThat(MmffAromaticTypeMapping.contribution(7, 3, 4), is(1));
     }
 
     @Test
-    public void trivalentBicoordinateNitrogenContributesOneElectron() {
+    void trivalentBicoordinateNitrogenContributesOneElectron() {
         assertThat(MmffAromaticTypeMapping.contribution(7, 2, 3), is(1));
     }
 
     @Test
-    public void trivalentTricoordinateNitrogenContributesTwoElectrons() {
+    void trivalentTricoordinateNitrogenContributesTwoElectrons() {
         assertThat(MmffAromaticTypeMapping.contribution(7, 3, 3), is(2));
     }
 
     @Test
-    public void bivalentBicoordinateNitrogenContributesTwoElectrons() {
+    void bivalentBicoordinateNitrogenContributesTwoElectrons() {
         assertThat(MmffAromaticTypeMapping.contribution(7, 2, 2), is(2));
     }
 
     @Test
-    public void divalentSulphurContributesTwoElectrons() {
+    void divalentSulphurContributesTwoElectrons() {
         assertThat(MmffAromaticTypeMapping.contribution(16, 2, 2), is(2));
     }
 
     @Test
-    public void divalentOxygenContributesTwoElectrons() {
+    void divalentOxygenContributesTwoElectrons() {
         assertThat(MmffAromaticTypeMapping.contribution(8, 2, 2), is(2));
     }
 
     @Test
-    public void benzeneIsAromatic() {
+    void benzeneIsAromatic() {
         int[] cycle = new int[]{0, 1, 2, 3, 4, 5, 0};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 3, 2, 5, 4};
@@ -164,7 +164,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void pyrroleIsAromatic() {
+    void pyrroleIsAromatic() {
         int[] cycle = new int[]{0, 1, 2, 3, 4, 0};
         int[] contr = new int[]{2, 1, 1, 1, 1};
         int[] dbs = new int[]{-1, 2, 1, 4, 3};
@@ -173,7 +173,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void exocyclicDoubleBondsBreakAromaticity() {
+    void exocyclicDoubleBondsBreakAromaticity() {
         int[] cycle = new int[]{0, 1, 2, 3, 4, 5, 0};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 6, 7, 5, 4};
@@ -182,7 +182,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void delocalisedExocyclicDoubleBondsMaintainAromaticity() {
+    void delocalisedExocyclicDoubleBondsMaintainAromaticity() {
         int[] cycle = new int[]{0, 1, 2, 3, 4, 5, 0};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 6, 7, 5, 4};
@@ -192,7 +192,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void updateN2OXtoNPOX() {
+    void updateN2OXtoNPOX() {
         int[] cycle = new int[]{2, 4, 3, 1, 0, 5, 2};
         String[] symbs = new String[10];
         Arrays.fill(symbs, "");
@@ -203,7 +203,7 @@ public class MmffAromaticTypeMappingTest {
 
     // NCN+,N+=C,N=+C -> NPD+
     @Test
-    public void updateToNPDPlus() {
+    void updateToNPDPlus() {
         int[] cycle = new int[]{2, 4, 3, 1, 0, 5, 2};
         String[] symbs = new String[10];
         Arrays.fill(symbs, "");
@@ -218,7 +218,7 @@ public class MmffAromaticTypeMappingTest {
 
     // N* -> NPYD
     @Test
-    public void updateNStarToNPYD() {
+    void updateNStarToNPYD() {
         int[] cycle = new int[]{2, 4, 3, 1, 0, 5, 2};
         String[] symbs = new String[10];
         Arrays.fill(symbs, "");
@@ -231,7 +231,7 @@ public class MmffAromaticTypeMappingTest {
 
     // C* -> CB
     @Test
-    public void updateCStarToCB() {
+    void updateCStarToCB() {
         int[] cycle = new int[]{2, 4, 3, 1, 0, 5, 2};
         String[] symbs = new String[10];
         Arrays.fill(symbs, "");
@@ -243,38 +243,38 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void imidazoleCarbonTypesAreNeitherAlphaOrBeta() {
+    void imidazoleCarbonTypesAreNeitherAlphaOrBeta() {
         Map<String, String> map = Collections.singletonMap("CB", "C5A");
         assertThat(MmffAromaticTypeMapping.getAromaticType(map, 'A', "CB", true, false), is("C5"));
     }
 
     @Test
-    public void imidazoleNitrogenTypesAreNeitherAlphaOrBeta() {
+    void imidazoleNitrogenTypesAreNeitherAlphaOrBeta() {
         Map<String, String> map = Collections.singletonMap("N=C", "N5A");
         assertThat(MmffAromaticTypeMapping.getAromaticType(map, 'A', "N=C", true, false), is("N5"));
     }
 
     @Test
-    public void anionCarbonTypesAreNeitherAlphaOrBeta() {
+    void anionCarbonTypesAreNeitherAlphaOrBeta() {
         Map<String, String> map = Collections.singletonMap("CB", "C5A");
         assertThat(MmffAromaticTypeMapping.getAromaticType(map, 'A', "CB", false, true), is("C5"));
     }
 
     @Test
-    public void anionNitrogensAreAlwaysN5M() {
+    void anionNitrogensAreAlwaysN5M() {
         Map<String, String> map = Collections.singletonMap("N=C", "N5A");
         assertThat(MmffAromaticTypeMapping.getAromaticType(map, 'A', "N=C", false, true), is("N5M"));
     }
 
     // IM = false + AN = false
     @Test
-    public void useMappingWhenNeitherFlagIsRaised() {
+    void useMappingWhenNeitherFlagIsRaised() {
         Map<String, String> map = Collections.singletonMap("N=C", "N5A");
         assertThat(MmffAromaticTypeMapping.getAromaticType(map, 'A', "N=C", false, false), is("N5A"));
     }
 
     @Test
-    public void elementContributingOneElectronRejectWhenNoDoubleBond() throws Exception {
+    void elementContributingOneElectronRejectWhenNoDoubleBond() throws Exception {
         int[] cycle = new int[]{0, 1, 2, 3, 4, 5, 0};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 3, -1, 5, 4};
@@ -282,7 +282,7 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void intractableNumberOfCycles() throws Exception {
+    void intractableNumberOfCycles() throws Exception {
 
         // to ensure intractable cycles are handled we create a complete graph
         // where every vertex is attached to every other vertex. K9 is sufficient
@@ -302,12 +302,12 @@ public class MmffAromaticTypeMappingTest {
     }
 
     @Test
-    public void contributionOfThreeValentCarbon() {
+    void contributionOfThreeValentCarbon() {
         assertThat(MmffAromaticTypeMapping.contribution(6, 3, 3), is(-1));
     }
 
     @Test
-    public void contributionOfFiveValentNitrogen() {
+    void contributionOfFiveValentNitrogen() {
         assertThat(MmffAromaticTypeMapping.contribution(7, 3, 5), is(-1));
     }
 }

@@ -44,29 +44,29 @@ import org.openscience.cdk.smsd.helper.FinalMappings;
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */
-public class CDKRMapHandlerTest {
+class CDKRMapHandlerTest {
 
     private final CDKRMapHandler handler = new CDKRMapHandler();
 
     public CDKRMapHandlerTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of getSource method, of class CDKRMapHandler.
      */
     @Test
-    public void testGetSource() {
+    void testGetSource() {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         handler.setSource(expResult);
         IAtomContainer result = handler.getSource();
@@ -77,7 +77,7 @@ public class CDKRMapHandlerTest {
      * Test of setSource method, of class CDKRMapHandler.
      */
     @Test
-    public void testSetSource() {
+    void testSetSource() {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         handler.setSource(expResult);
         IAtomContainer result = handler.getSource();
@@ -88,7 +88,7 @@ public class CDKRMapHandlerTest {
      * Test of getTarget method, of class CDKRMapHandler.
      */
     @Test
-    public void testGetTarget() {
+    void testGetTarget() {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         handler.setTarget(expResult);
         IAtomContainer result = handler.getTarget();
@@ -99,7 +99,7 @@ public class CDKRMapHandlerTest {
      * Test of setTarget method, of class CDKRMapHandler.
      */
     @Test
-    public void testSetTarget() {
+    void testSetTarget() {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         handler.setTarget(expResult);
         IAtomContainer result = handler.getTarget();
@@ -110,7 +110,7 @@ public class CDKRMapHandlerTest {
      * Test of calculateOverlapsAndReduce method, of class CDKRMapHandler.
      */
     @Test
-    public void testCalculateOverlapsAndReduce() throws Exception {
+    void testCalculateOverlapsAndReduce() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer Molecule1 = sp.parseSmiles("O1C=CC=C1");
@@ -125,7 +125,7 @@ public class CDKRMapHandlerTest {
      * Test of calculateOverlapsAndReduceExactMatch method, of class CDKRMapHandler.
      */
     @Test
-    public void testCalculateOverlapsAndReduceExactMatch() throws Exception {
+    void testCalculateOverlapsAndReduceExactMatch() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer Molecule1 = sp.parseSmiles("O1C=CC=C1");
@@ -141,7 +141,7 @@ public class CDKRMapHandlerTest {
      * Test of getMappings method, of class CDKRMapHandler.
      */
     @Test
-    public void testGetMappings() throws CDKException {
+    void testGetMappings() throws CDKException {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer Molecule1 = sp.parseSmiles("O1C=CC=C1");
@@ -156,7 +156,7 @@ public class CDKRMapHandlerTest {
      * Test of setMappings method, of class CDKRMapHandler.
      */
     @Test
-    public void testSetMappings() {
+    void testSetMappings() {
         Map<Integer, Integer> map = new TreeMap<>();
         map.put(0, 0);
         map.put(1, 1);
@@ -172,7 +172,7 @@ public class CDKRMapHandlerTest {
      * Test of isTimeoutFlag method, of class CDKRMapHandler.
      */
     @Test
-    public void testIsTimeoutFlag() {
+    void testIsTimeoutFlag() {
         CDKRMapHandler instance = new CDKRMapHandler();
         boolean expResult = true;
         instance.setTimeoutFlag(true);
@@ -184,7 +184,7 @@ public class CDKRMapHandlerTest {
      * Test of setTimeoutFlag method, of class CDKRMapHandler.
      */
     @Test
-    public void testSetTimeoutFlag() {
+    void testSetTimeoutFlag() {
         boolean timeoutFlag = false;
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.setTimeoutFlag(timeoutFlag);

@@ -31,15 +31,15 @@ import org.openscience.cdk.test.interfaces.AbstractAtomContainerSetTest;
  *
  * @see org.openscience.cdk.MoleculeSet
  */
-public class AtomContainerSetTest extends AbstractAtomContainerSetTest {
+class AtomContainerSetTest extends AbstractAtomContainerSetTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(AtomContainerSet::new);
     }
 
     @Test
-    public void testAtomContainerSet() {
+    void testAtomContainerSet() {
         IAtomContainerSet som = new AtomContainerSet();
         Assertions.assertNotNull(som);
         Assertions.assertEquals(0, som.getAtomContainerCount());

@@ -34,19 +34,19 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
  *
  * @cdk.module test-io
  */
-public abstract class ChemObjectReaderTest extends org.openscience.cdk.test.io.ChemObjectIOTest {
+abstract class ChemObjectReaderTest extends org.openscience.cdk.test.io.ChemObjectIOTest {
 
-    protected static IChemObjectReader chemObjectIO;
-    protected static String            testFile;
+    private static IChemObjectReader chemObjectIO;
+    private static String            testFile;
 
-    public static void setChemObjectReader(IChemObjectReader aChemObjectReader, String testFile) {
+    static void setChemObjectReader(IChemObjectReader aChemObjectReader, String testFile) {
         ChemObjectIOTest.setChemObjectIO(aChemObjectReader);
         org.openscience.cdk.io.ChemObjectReaderTest.chemObjectIO = aChemObjectReader;
         org.openscience.cdk.io.ChemObjectReaderTest.testFile = testFile;
     }
 
     @Test
-    public void testSetReader_InputStream() throws Exception {
+    void testSetReader_InputStream() throws Exception {
         Assertions.assertNotNull(testFile, "No test file has been set!");
         InputStream ins = org.openscience.cdk.test.io.ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         if (ins == null)
@@ -55,7 +55,7 @@ public abstract class ChemObjectReaderTest extends org.openscience.cdk.test.io.C
     }
 
     @Test
-    public void testSetReader_Reader() throws Exception {
+    void testSetReader_Reader() throws Exception {
         Assertions.assertNotNull(testFile, "No test file has been set!");
         InputStream ins = org.openscience.cdk.test.io.ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         if (ins == null)

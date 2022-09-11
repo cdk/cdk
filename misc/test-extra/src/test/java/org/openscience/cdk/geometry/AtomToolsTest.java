@@ -18,10 +18,10 @@ import java.io.StringReader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AtomToolsTest {
+class AtomToolsTest {
 
     @Test
-    public void calculate3DCoordinates3() throws Exception {
+    void calculate3DCoordinates3() throws Exception {
         String molfile = "\n" +
                 "  Mrv1810 12152010123D          \n" +
                 "\n" +

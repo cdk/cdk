@@ -34,20 +34,20 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @cdk.module test-standard
  */
-public class RebondToolTest extends CDKTestCase {
+class RebondToolTest extends CDKTestCase {
 
-    public RebondToolTest() {
+    RebondToolTest() {
         super();
     }
 
     @Test
-    public void testRebondTool_double_double_double() {
+    void testRebondTool_double_double_double() {
         RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
         Assertions.assertNotNull(rebonder);
     }
 
     @Test
-    public void testRebond_IAtomContainer() throws Exception {
+    void testRebond_IAtomContainer() throws Exception {
         RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
         IAtomContainer methane = new AtomContainer();
         methane.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));

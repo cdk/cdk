@@ -49,34 +49,34 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-core
  */
-public class RingSearchTest {
+class RingSearchTest {
 
     @Test
-    public void testNull() {
+    void testNull() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {new RingSearch(null);});
     }
 
     @Test
-    public void testNullContainer() {
+    void testNullContainer() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {new RingSearch(null, mock(CyclicVertexSearch.class));});
     }
 
     @Test
-    public void testNullCyclicSearch() {
+    void testNullCyclicSearch() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {new RingSearch(mock(IAtomContainer.class), (CyclicVertexSearch) null);});
     }
 
     @Test
-    public void testNullGraph() {
+    void testNullGraph() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {new RingSearch(mock(IAtomContainer.class), (int[][]) null);});
     }
 
     @Test
-    public void testMatch() {
+    void testMatch() {
         Assertions.assertTrue(RingSearch.match(0, 0));
         Assertions.assertTrue(RingSearch.match(0, 1));
         Assertions.assertTrue(RingSearch.match(1, 0));
@@ -94,7 +94,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testCyclic() throws Exception {
+    void testCyclic() throws Exception {
 
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -106,7 +106,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testCyclic_Int() throws Exception {
+    void testCyclic_Int() throws Exception {
 
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -118,7 +118,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testCyclic_IntInt() throws Exception {
+    void testCyclic_IntInt() throws Exception {
 
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -130,7 +130,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testCyclic_Atom() throws Exception {
+    void testCyclic_Atom() throws Exception {
 
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -147,7 +147,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testCyclic_Bond() throws Exception {
+    void testCyclic_Bond() throws Exception {
 
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -170,7 +170,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testCyclic_Atom_NotFound() throws Exception {
+    void testCyclic_Atom_NotFound() throws Exception {
         Assertions.assertThrows(NoSuchAtomException.class,
                                 () -> {
                                     CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
@@ -186,7 +186,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testIsolated() throws Exception {
+    void testIsolated() throws Exception {
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
@@ -199,7 +199,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testFused() throws Exception {
+    void testFused() throws Exception {
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
@@ -212,7 +212,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testRingFragments() throws Exception {
+    void testRingFragments() throws Exception {
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
         IChemObjectBuilder builder = mock(IChemObjectBuilder.class);
@@ -264,7 +264,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testIsolatedRingFragments() throws Exception {
+    void testIsolatedRingFragments() throws Exception {
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
         IChemObjectBuilder builder = mock(IChemObjectBuilder.class);
@@ -315,7 +315,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void testFusedRingFragments() throws Exception {
+    void testFusedRingFragments() throws Exception {
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
         IChemObjectBuilder builder = mock(IChemObjectBuilder.class);
@@ -365,7 +365,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void connectingEdge1() {
+    void connectingEdge1() {
         IAtomContainer mol = diSpiroPentane();
         RingSearch rs = new RingSearch(mol);
         IAtomContainer frag = rs.ringFragments();
@@ -374,7 +374,7 @@ public class RingSearchTest {
     }
 
     @Test
-    public void connectingEdge2() {
+    void connectingEdge2() {
         IAtomContainer mol = triSpiroPentane();
         RingSearch rs = new RingSearch(mol);
         IAtomContainer frag = rs.ringFragments();
@@ -387,7 +387,7 @@ public class RingSearchTest {
      *
      * @cdk.inchi InChI=1/C10H16/c1-2-9(1,3-4-9)10(5-6-10)7-8-10/h1-8H2
      */
-    public static IAtomContainer diSpiroPentane() {
+    static IAtomContainer diSpiroPentane() {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -455,7 +455,7 @@ public class RingSearchTest {
      *
      * @cdk.inchi InChI=1/C11H18/c1-2-10(1,3-4-10)9-11(10,5-6-11)7-8-11/h1-9H2
      */
-    public static IAtomContainer triSpiroPentane() {
+    static IAtomContainer triSpiroPentane() {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);

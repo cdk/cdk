@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-reaction
  */
-public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
+class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
     private static IChemObjectBuilder      builder;
     private static LonePairElectronChecker lpcheck;
@@ -60,13 +60,13 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
                                                           .createLoggingTool(ConjugatedPiSystemsDetectorTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         builder = SilentChemObjectBuilder.getInstance();
         lpcheck = new LonePairElectronChecker();
     }
 
     @Test
-    public void testDetectButadiene() throws Exception {
+    void testDetectButadiene() throws Exception {
         logger.info("Entering testDetectButadiene.");
         IAtomContainer mol;
         String filename = "butadiene.cml";
@@ -97,7 +97,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testDetectNaphtalene() throws Exception {
+    void testDetectNaphtalene() throws Exception {
         logger.info("Entering testDetectNaphtalene.");
         IAtomContainer mol;
         String filename = "naphtalene.cml";
@@ -128,7 +128,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testDetectToluene() throws Exception {
+    void testDetectToluene() throws Exception {
         logger.info("Entering testDetectToluene.");
         IAtomContainer mol;
         String filename = "toluene.cml";
@@ -159,7 +159,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testNonConnectedPiSystems() throws Exception {
+    void testNonConnectedPiSystems() throws Exception {
         logger.info("Entering testNonConnectedPiSystems.");
         IAtomContainer mol;
         String filename = "nonConnectedPiSystems.mol";
@@ -204,7 +204,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testPiSystemWithCarbokation() throws Exception {
+    void testPiSystemWithCarbokation() throws Exception {
         logger.info("Entering testPiSystemWithCarbokation.");
         IAtomContainer mol;
         String filename = "piSystemWithCarbokation.mol";
@@ -247,7 +247,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testPiSystemWithCumulativeDB() throws Exception {
+    void testPiSystemWithCumulativeDB() throws Exception {
         logger.info("Entering testPiSystemWithCumulativeDB.");
         IAtomContainer mol;
         String filename = "piSystemCumulative.mol";
@@ -296,7 +296,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testAceticAcid() throws Exception {
+    void testAceticAcid() throws Exception {
         IAtomContainer mol;
         mol = (new SmilesParser(builder)).parseSmiles("CC(=O)O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -327,7 +327,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testNN_dimethylaniline_cation() throws Exception {
+    void testNN_dimethylaniline_cation() throws Exception {
         IAtomContainer mol;
         String filename = "NN_dimethylaniline.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -355,7 +355,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void test1_fluorobutadienene() throws Exception {
+    void test1_fluorobutadienene() throws Exception {
         IAtomContainer mol = (new SmilesParser(builder)).parseSmiles("FC=CC=C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addImplicitHydrogens(mol);
@@ -379,7 +379,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testEthyne_difluoro() throws Exception {
+    void testEthyne_difluoro() throws Exception {
         IAtomContainer mol;
         mol = (new SmilesParser(builder)).parseSmiles("FC#CF");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -404,7 +404,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void test3Aminomethane_cation() throws Exception {
+    void test3Aminomethane_cation() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "N"));
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -480,7 +480,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testCyanoallene() throws Exception {
+    void testCyanoallene() throws Exception {
         IAtomContainer mol;
         mol = (new SmilesParser(builder)).parseSmiles("C=C=CC#N");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -509,7 +509,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *  A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
      */
     @Test
-    public void testChargeWithProtonExplicit() throws java.lang.Exception {
+    void testChargeWithProtonExplicit() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -536,7 +536,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *  A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
      */
     @Test
-    public void testChargeWithProtonImplicit() throws java.lang.Exception {
+    void testChargeWithProtonImplicit() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer mol = sp.parseSmiles("C=C[C+]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);

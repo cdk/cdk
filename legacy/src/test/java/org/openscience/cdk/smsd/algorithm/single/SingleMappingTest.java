@@ -41,27 +41,27 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class SingleMappingTest {
+class SingleMappingTest {
 
     public SingleMappingTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of getOverLaps method, of class SingleMapping.
      */
     @Test
-    public void testGetOverLaps() throws CDKException {
+    void testGetOverLaps() throws CDKException {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();

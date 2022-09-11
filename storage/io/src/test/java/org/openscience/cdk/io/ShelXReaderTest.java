@@ -37,24 +37,24 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module test-io
  */
-public class ShelXReaderTest extends SimpleChemObjectReaderTest {
+class ShelXReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReaderTest.class);
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new ShelXReader(), "frame_1.res");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         ShelXReader reader = new ShelXReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(Crystal.class));
     }
 
     @Test
-    public void testReading() throws Exception {
+    void testReading() throws Exception {
         String filename = "frame_1.res";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

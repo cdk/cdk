@@ -28,10 +28,10 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * @cdk.module test-renderbasic
  */
-public class CubicToTest extends AbstractPathElementTest {
+class CubicToTest extends AbstractPathElementTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setPathElement(new CubicTo(new Point2d(0, 1), new Point2d(2, 3), new Point2d(4, 5)));
     }
 

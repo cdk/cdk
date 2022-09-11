@@ -49,73 +49,73 @@ import static org.mockito.Mockito.verify;
  * @author John May
  * @cdk.module test-io
  */
-public class MDLV2000PropertiesBlockTest {
+class MDLV2000PropertiesBlockTest {
 
     private final MDLV2000Reader     reader  = new MDLV2000Reader();
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     @Test
-    public void m_end() throws Exception {
+    void m_end() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("M  END"), is(MDLV2000Reader.PropertyKey.M_END));
     }
 
     @Test
-    public void m_end_padding() throws Exception {
+    void m_end_padding() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("M  END  "), is(MDLV2000Reader.PropertyKey.M_END));
     }
 
     @Test
-    public void m_chg_padding() throws Exception {
+    void m_chg_padding() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("M  CHG  "), is(MDLV2000Reader.PropertyKey.M_CHG));
     }
 
     @Test
-    public void m_iso_padding() throws Exception {
+    void m_iso_padding() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("M  ISO  "), is(MDLV2000Reader.PropertyKey.M_ISO));
     }
 
     @Test
-    public void atom_alias() throws Exception {
+    void atom_alias() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("A    1"), is(MDLV2000Reader.PropertyKey.ATOM_ALIAS));
     }
 
     @Test
-    public void atom_value() throws Exception {
+    void atom_value() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("V    1"), is(MDLV2000Reader.PropertyKey.ATOM_VALUE));
     }
 
     @Test
-    public void group_abrv() throws Exception {
+    void group_abrv() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("G    1"), is(MDLV2000Reader.PropertyKey.GROUP_ABBREVIATION));
     }
 
     @Test
-    public void skip() throws Exception {
+    void skip() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("S  SKP  5"), is(MDLV2000Reader.PropertyKey.SKIP));
     }
 
     /** ACDLabs ChemSketch atom labels */
     @Test
-    public void m_zzc_padding() throws Exception {
+    void m_zzc_padding() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("M  ZZC  "), is(MDLV2000Reader.PropertyKey.M_ZZC));
     }
     
     @Test
-    public void anion() throws Exception {
+    void anion() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  CHG  1   1  -1", mock);
         verify(mock.getAtom(0)).setFormalCharge(-1);
     }
 
     @Test
-    public void cation() throws Exception {
+    void cation() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  CHG  1   1   1", mock);
         verify(mock.getAtom(0)).setFormalCharge(+1);
     }
 
     @Test
-    public void multipleCharges() throws Exception {
+    void multipleCharges() throws Exception {
         IAtomContainer mock = mock(6);
         read("M  CHG  2   2   1   5  -2", mock);
         verify(mock.getAtom(1)).setFormalCharge(+1);
@@ -123,21 +123,21 @@ public class MDLV2000PropertiesBlockTest {
     }
 
     @Test
-    public void multipleChargesTruncated() throws Exception {
+    void multipleChargesTruncated() throws Exception {
         IAtomContainer mock = mock(6);
         read("M  CHG  2   2  -3", mock);
         verify(mock.getAtom(1)).setFormalCharge(-3);
     }
 
     @Test
-    public void c13() throws Exception {
+    void c13() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  ISO  1   1  13", mock);
         verify(mock.getAtom(0)).setMassNumber(13);
     }
 
     @Test
-    public void c13n14() throws Exception {
+    void c13n14() throws Exception {
         IAtomContainer mock = mock(4);
         read("M  ISO  2   1  13   3  14", mock);
         verify(mock.getAtom(0)).setMassNumber(13);
@@ -145,14 +145,14 @@ public class MDLV2000PropertiesBlockTest {
     }
 
     @Test
-    public void atomValue() throws Exception {
+    void atomValue() throws Exception {
         IAtomContainer mock = mock(3);
         read("V    1 A Comment", mock);
         verify(mock.getAtom(0)).setProperty(CDKConstants.COMMENT, "A Comment");
     }
 
     @Test
-    public void atomAlias() throws Exception {
+    void atomAlias() throws Exception {
         IAtomContainer mock = mock(4);
         read("A    4\n" + "Gly", mock);
         assertThat(mock.getAtom(3), is(instanceOf(IPseudoAtom.class)));
@@ -160,7 +160,7 @@ public class MDLV2000PropertiesBlockTest {
     }
 
     @Test
-    public void acdAtomLabel() throws Exception {
+    void acdAtomLabel() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  ZZC   1 6", mock);
         verify(mock.getAtom(0)).setProperty(CDKConstants.ACDLABS_LABEL, "6");

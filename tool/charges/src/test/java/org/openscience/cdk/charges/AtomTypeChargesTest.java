@@ -28,7 +28,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author      egonw
  * @cdk.created 2008-01-04
  */
-public class AtomTypeChargesTest extends CDKTestCase {
+class AtomTypeChargesTest extends CDKTestCase {
 
     /**
      * Tests the initial assignment of partial charges of
@@ -36,7 +36,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      */
     @Disabled
     @Test
-    public void testCharges_pOC() throws Exception {
+    void testCharges_pOC() throws Exception {
         Assertions.fail("Not tested yet");
     }
 
@@ -46,7 +46,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      */
     @Disabled
     @Test
-    public void testCharges_pOP() throws Exception {
+    void testCharges_pOP() throws Exception {
         Assertions.fail("Not tested yet");
     }
 
@@ -56,7 +56,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      */
     @Disabled
     @Test
-    public void testCharges_pOS() throws Exception {
+    void testCharges_pOS() throws Exception {
         Assertions.fail("Not tested yet");
     }
 
@@ -66,7 +66,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      */
     @Disabled
     @Test
-    public void testCharges_p_p() throws Exception {
+    void testCharges_p_p() throws Exception {
         Assertions.fail("Not tested yet");
     }
 
@@ -76,7 +76,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
      */
     @Disabled
     @Test
-    public void testCharges_p_n() throws Exception {
+    void testCharges_p_n() throws Exception {
         Assertions.fail("Not tested yet");
     }
 

@@ -33,10 +33,10 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * @cdk.module test-render
  */
-public class RasmolColorsTest extends CDKTestCase {
+class RasmolColorsTest extends CDKTestCase {
 
     @Test
-    public void testGetAtomColor() {
+    void testGetAtomColor() {
         RasmolColors colors = new RasmolColors();
 
         Assertions.assertNotNull(colors);
@@ -48,7 +48,7 @@ public class RasmolColorsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetDefaultAtomColor() {
+    void testGetDefaultAtomColor() {
         RasmolColors colors = new RasmolColors();
 
         Assertions.assertNotNull(colors);

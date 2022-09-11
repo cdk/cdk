@@ -44,17 +44,17 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+
  */
-public class INChIReaderTest extends SimpleChemObjectReaderTest {
+class INChIReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new INChIReader(), "guanine.inchi.xml");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
@@ -63,7 +63,7 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
      * of guanine.
      */
     @Test
-    public void testGuanine() throws Exception {
+    void testGuanine() throws Exception {
         String filename = "guanine.inchi.xml";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

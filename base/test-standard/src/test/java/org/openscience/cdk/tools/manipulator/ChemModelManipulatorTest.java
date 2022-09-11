@@ -53,27 +53,27 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module test-standard
  */
-public class ChemModelManipulatorTest extends CDKTestCase {
+class ChemModelManipulatorTest extends CDKTestCase {
 
     private final static ILoggingTool logger      = LoggingToolFactory
                                                           .createLoggingTool(ChemModelManipulatorTest.class);
 
-    IAtomContainer                    molecule1   = null;
-    IAtomContainer                    molecule2   = null;
-    IAtom                             atomInMol1  = null;
-    IBond                             bondInMol1  = null;
-    IAtom                             atomInMol2  = null;
-    IAtomContainerSet                 moleculeSet = null;
-    IReaction                         reaction    = null;
-    IReactionSet                      reactionSet = null;
-    IChemModel                        chemModel   = null;
+    private IAtomContainer                    molecule1   = null;
+    private IAtomContainer                    molecule2   = null;
+    private IAtom                             atomInMol1  = null;
+    private IBond                             bondInMol1  = null;
+    private IAtom                             atomInMol2  = null;
+    private IAtomContainerSet                 moleculeSet = null;
+    private IReaction                         reaction    = null;
+    private IReactionSet                      reactionSet = null;
+    private IChemModel                        chemModel   = null;
 
-    public ChemModelManipulatorTest() {
+    ChemModelManipulatorTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         molecule1 = new AtomContainer();
         atomInMol1 = new Atom("Cl");
         atomInMol1.setCharge(-1.0);
@@ -101,7 +101,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllAtomContainers_IChemModel() throws Exception {
+    void testGetAllAtomContainers_IChemModel() throws Exception {
         String filename = "a-pinene.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -114,7 +114,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllAtomContainers_IChemModel_WithReactions() throws Exception {
+    void testGetAllAtomContainers_IChemModel_WithReactions() throws Exception {
         String filename = "0024.stg02.rxn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -128,7 +128,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testNewChemModel_IAtomContainer() {
+    void testNewChemModel_IAtomContainer() {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
         IChemModel model = ChemModelManipulator.newChemModel(ac);
@@ -138,19 +138,19 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomCount_IChemModel() {
+    void testGetAtomCount_IChemModel() {
         int count = ChemModelManipulator.getAtomCount(chemModel);
         Assertions.assertEquals(6, count);
     }
 
     @Test
-    public void testGetBondCount_IChemModel() {
+    void testGetBondCount_IChemModel() {
         int count = ChemModelManipulator.getBondCount(chemModel);
         Assertions.assertEquals(2, count);
     }
 
     @Test
-    public void testRemoveElectronContainer_IChemModel_IElectronContainer() {
+    void testRemoveElectronContainer_IChemModel_IElectronContainer() {
         IAtomContainer mol1 = new AtomContainer();
         mol1.addAtom(new Atom("Cl"));
         mol1.addAtom(new Atom("Cl"));
@@ -181,7 +181,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemoveAtomAndConnectedElectronContainers_IChemModel_IAtom() {
+    void testRemoveAtomAndConnectedElectronContainers_IChemModel_IAtom() {
         IAtomContainer mol1 = new AtomContainer();
         IAtom atom1 = new Atom("Cl");
         mol1.addAtom(atom1);
@@ -218,7 +218,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetAtomProperties_IChemModel_Object_Object() {
+    void testSetAtomProperties_IChemModel_Object_Object() {
         String key = "key";
         String value = "value";
         ChemModelManipulator.setAtomProperties(chemModel, key, value);
@@ -227,7 +227,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetRelevantAtomContainer_IChemModel_IAtom() {
+    void testGetRelevantAtomContainer_IChemModel_IAtom() {
         IAtomContainer ac1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInMol1);
         Assertions.assertEquals(molecule1, ac1);
         IAtomContainer ac2 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInMol2);
@@ -235,13 +235,13 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetRelevantAtomContainer_IChemModel_IBond() {
+    void testGetRelevantAtomContainer_IChemModel_IBond() {
         IAtomContainer ac1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, bondInMol1);
         Assertions.assertEquals(molecule1, ac1);
     }
 
     @Test
-    public void testGetAllChemObjects_IChemModel() {
+    void testGetAllChemObjects_IChemModel() {
         List<IChemObject> list = ChemModelManipulator.getAllChemObjects(chemModel);
         Assertions.assertEquals(5, list.size());
         //int atomCount = 0; // not traversed
@@ -273,7 +273,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCreateNewMolecule_IChemModel() {
+    void testCreateNewMolecule_IChemModel() {
         IChemModel model = new ChemModel();
         IAtomContainer ac = ChemModelManipulator.createNewMolecule(model);
         Assertions.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
@@ -281,14 +281,14 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetRelevantReaction_IChemModel_IAtom() {
+    void testGetRelevantReaction_IChemModel_IAtom() {
         IReaction r = ChemModelManipulator.getRelevantReaction(chemModel, atomInMol1);
         Assertions.assertNotNull(r);
         Assertions.assertEquals(reaction, r);
     }
 
     @Test
-    public void testGetAllIDs_IChemModel() {
+    void testGetAllIDs_IChemModel() {
         Assertions.assertEquals(0, ChemModelManipulator.getAllIDs(chemModel).size());
         IDCreator.createIDs(chemModel);
         List<String> allIDs = ChemModelManipulator.getAllIDs(chemModel);
@@ -301,7 +301,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
      * @cdk.bug 3530861
      */
     @Test
-    public void testGetRelevantAtomContainer_NonExistentAtom() {
+    void testGetRelevantAtomContainer_NonExistentAtom() {
         IChemModel model = new org.openscience.cdk.silent.ChemModel();
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             ChemModelManipulator.getRelevantAtomContainer(model, new org.openscience.cdk.silent.Atom());

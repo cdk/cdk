@@ -38,12 +38,12 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 /**
  * @cdk.module test-pcore
  */
-public class PharmacophoreUtilityTest {
+class PharmacophoreUtilityTest {
 
-    public static ConformerContainer conformers = null;
+    private static ConformerContainer conformers = null;
 
     @BeforeAll
-    public static void loadConformerData() {
+    static void loadConformerData() {
         String filename = "pcoretest1.sdf";
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
@@ -52,7 +52,7 @@ public class PharmacophoreUtilityTest {
     }
 
     @Test
-    public void testReadPcoreDef() throws Exception {
+    void testReadPcoreDef() throws Exception {
         String filename = "pcore.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
@@ -85,7 +85,7 @@ public class PharmacophoreUtilityTest {
     }
 
     @Test
-    public void testReadPcoreAngleDef() throws Exception {
+    void testReadPcoreAngleDef() throws Exception {
         String filename = "pcoreangle.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
@@ -124,7 +124,7 @@ public class PharmacophoreUtilityTest {
     }
 
     @Test
-    public void testInvalidPcoreXML() throws IOException, CDKException {
+    void testInvalidPcoreXML() throws IOException, CDKException {
         String filename = "invalid1.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         Assertions.assertThrows(CDKException.class, () -> {
@@ -133,7 +133,7 @@ public class PharmacophoreUtilityTest {
     }
 
     @Test
-    public void testPCoreWrite() throws Exception {
+    void testPCoreWrite() throws Exception {
         String filename = "pcore.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);

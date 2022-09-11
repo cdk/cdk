@@ -44,7 +44,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-io
  */
-public class MDLV2000BondBlockTest {
+class MDLV2000BondBlockTest {
 
     private final MDLV2000Reader     reader  = new MDLV2000Reader();
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
@@ -52,7 +52,7 @@ public class MDLV2000BondBlockTest {
             Mockito.mock(IAtom.class), Mockito.mock(IAtom.class), Mockito.mock(IAtom.class)};
 
     @Test
-    public void atomNumbers() throws Exception {
+    void atomNumbers() throws Exception {
         String input = "  1  3  1  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getBegin(), is(atoms[0]));
@@ -60,7 +60,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void singleBond() throws Exception {
+    void singleBond() throws Exception {
         String input = "  1  3  1  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
@@ -70,7 +70,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void doubleBond() throws Exception {
+    void doubleBond() throws Exception {
         String input = "  1  3  2  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.DOUBLE));
@@ -80,7 +80,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void tripleBond() throws Exception {
+    void tripleBond() throws Exception {
         String input = "  1  3  3  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.TRIPLE));
@@ -90,7 +90,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void aromaticBond() throws Exception {
+    void aromaticBond() throws Exception {
         String input = "  1  3  4  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -99,7 +99,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void singleOrDoubleBond() throws Exception {
+    void singleOrDoubleBond() throws Exception {
         String input = "  1  3  5  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -110,7 +110,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void singleOrAromaticBond() throws Exception {
+    void singleOrAromaticBond() throws Exception {
         String input = "  1  3  6  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -121,7 +121,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void doubleOrAromaticBond() throws Exception {
+    void doubleOrAromaticBond() throws Exception {
         String input = "  1  3  7  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -132,7 +132,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void anyBond() throws Exception {
+    void anyBond() throws Exception {
         String input = "  1  3  8  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -143,7 +143,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void upBond() throws Exception {
+    void upBond() throws Exception {
         String input = "  1  3  1  1  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
@@ -151,7 +151,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void downBond() throws Exception {
+    void downBond() throws Exception {
         String input = "  1  3  1  6  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
@@ -159,7 +159,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void upOrDownBond() throws Exception {
+    void upOrDownBond() throws Exception {
         String input = "  1  3  1  4  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
@@ -167,7 +167,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void cisOrTrans() throws Exception {
+    void cisOrTrans() throws Exception {
         String input = "  1  3  2  3  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.DOUBLE));
@@ -175,7 +175,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void cisOrTransByCoordinates() throws Exception {
+    void cisOrTransByCoordinates() throws Exception {
         String input = "  1  3  2  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.DOUBLE));
@@ -183,7 +183,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void upDoubleBond() throws Exception {
+    void upDoubleBond() throws Exception {
         String input = "  1  3  2  1  0  0  0";
         reader.setReaderMode(IChemObjectReader.Mode.STRICT);
         Assertions.assertThrows(CDKException.class,
@@ -193,7 +193,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void downDoubleBond() throws Exception {
+    void downDoubleBond() throws Exception {
         String input = "  1  3  2  1  0  0  0";
         reader.setReaderMode(IChemObjectReader.Mode.STRICT);
         Assertions.assertThrows(CDKException.class,
@@ -203,7 +203,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void upOrDownDoubleBond() throws Exception {
+    void upOrDownDoubleBond() throws Exception {
         String input = "  1  3  2  4  0  0  0";
         reader.setReaderMode(IChemObjectReader.Mode.STRICT);
         Assertions.assertThrows(CDKException.class,
@@ -213,7 +213,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void cisOrTransSingleBond() throws Exception {
+    void cisOrTransSingleBond() throws Exception {
         String input = "  1  3  1  3  0  0  0";
         reader.setReaderMode(IChemObjectReader.Mode.STRICT);
         Assertions.assertThrows(CDKException.class,
@@ -223,7 +223,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void longLine() throws Exception {
+    void longLine() throws Exception {
         String input = "  1  3  1  0  0  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getBegin(), is(atoms[0]));
@@ -235,7 +235,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void longLineWithPadding() throws Exception {
+    void longLineWithPadding() throws Exception {
         String input = "  1  3  1  0  0  0  0    ";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getBegin(), is(atoms[0]));
@@ -247,7 +247,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void shortLine() throws Exception {
+    void shortLine() throws Exception {
         String input = "  1  3  1  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getBegin(), is(atoms[0]));
@@ -259,7 +259,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void shortLineWithPadding() throws Exception {
+    void shortLineWithPadding() throws Exception {
         String input = "  1  3  1  0       ";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getBegin(), is(atoms[0]));
@@ -271,7 +271,7 @@ public class MDLV2000BondBlockTest {
     }
 
     @Test
-    public void shortLineNoStereo() throws Exception {
+    void shortLineNoStereo() throws Exception {
         String input = "  1  3  1";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getBegin(), is(atoms[0]));

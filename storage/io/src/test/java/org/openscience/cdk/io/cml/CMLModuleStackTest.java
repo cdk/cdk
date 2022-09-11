@@ -32,10 +32,10 @@ import org.openscience.cdk.interfaces.IChemFile;
  *
  * @cdk.module test-io
  */
-public class CMLModuleStackTest extends CDKTestCase {
+class CMLModuleStackTest extends CDKTestCase {
 
     @Test
-    public void testPush_String() {
+    void testPush_String() {
         // the class has a hardcoded default length. Test going beyond this.
         CMLModuleStack stack = new CMLModuleStack();
         for (int i = 0; i < 100; i++) {
@@ -44,7 +44,7 @@ public class CMLModuleStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testPop() {
+    void testPop() {
         Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,
                                 () -> {
                                     CMLModuleStack stack = new CMLModuleStack();
@@ -62,7 +62,7 @@ public class CMLModuleStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testCurrent() {
+    void testCurrent() {
         CMLModuleStack stack = new CMLModuleStack();
         ICMLModule first = new CMLCoreModule((IChemFile) null);
         stack.push(first);
@@ -70,7 +70,7 @@ public class CMLModuleStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testEndsWith_String() {
+    void testEndsWith_String() {
         CMLModuleStack stack = new CMLModuleStack();
         ICMLModule first = new CMLCoreModule((IChemFile) null);
         stack.push(first);
@@ -81,7 +81,7 @@ public class CMLModuleStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testEndsWith_String_String() {
+    void testEndsWith_String_String() {
         CMLModuleStack stack = new CMLModuleStack();
         ICMLModule first = new CMLCoreModule((IChemFile) null);
         stack.push(first);
@@ -94,7 +94,7 @@ public class CMLModuleStackTest extends CDKTestCase {
     }
 
     @Test
-    public void testEndsWith_String_String_String() {
+    void testEndsWith_String_String_String() {
         CMLModuleStack stack = new CMLModuleStack();
         ICMLModule first = new CMLCoreModule((IChemFile) null);
         stack.push(first);

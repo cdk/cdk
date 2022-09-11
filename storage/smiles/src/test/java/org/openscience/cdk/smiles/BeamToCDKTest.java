@@ -59,20 +59,20 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * @author John May
  * @cdk.module test-smiles
  */
-public class BeamToCDKTest {
+class BeamToCDKTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private final BeamToCDK          g2c     = new BeamToCDK(builder);
 
     @Test
-    public void newUnknownAtom() {
+    void newUnknownAtom() {
         IAtom a = g2c.newCDKAtom(AtomBuilder.aliphatic(Element.Unknown).build());
         assertThat(a, is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) a).getLabel(), is("*"));
     }
 
     @Test
-    public void newCarbonAtom() {
+    void newCarbonAtom() {
         IAtom a = g2c.newCDKAtom(AtomBuilder.aliphatic(Element.Carbon).build());
         assertThat(a, is(instanceOf(IAtom.class)));
         assertThat(a, is(not(instanceOf(IPseudoAtom.class))));
@@ -80,7 +80,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void newNitrogenAtom() {
+    void newNitrogenAtom() {
         IAtom a = g2c.newCDKAtom(AtomBuilder.aliphatic(Element.Nitrogen).build());
         assertThat(a, is(instanceOf(IAtom.class)));
         assertThat(a, is(not(instanceOf(IPseudoAtom.class))));
@@ -88,21 +88,21 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void methaneAtom() {
+    void methaneAtom() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).build(), 4);
         assertThat(a.getSymbol(), is("C"));
         assertThat(a.getImplicitHydrogenCount(), is(4));
     }
 
     @Test
-    public void waterAtom() {
+    void waterAtom() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Oxygen).hydrogens(2).build(), 2);
         assertThat(a.getSymbol(), is("O"));
         assertThat(a.getImplicitHydrogenCount(), is(2));
     }
 
     @Test
-    public void oxidanide() {
+    void oxidanide() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Oxygen).hydrogens(1).anion().build(), 1);
         assertThat(a.getSymbol(), is("O"));
         assertThat(a.getImplicitHydrogenCount(), is(1));
@@ -110,7 +110,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void azaniumAtom() {
+    void azaniumAtom() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Nitrogen).hydrogens(4).cation().build(), 4);
         assertThat(a.getSymbol(), is("N"));
         assertThat(a.getImplicitHydrogenCount(), is(4));
@@ -118,37 +118,37 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void unspecifiedMass() {
+    void unspecifiedMass() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).build(), 4);
         Assertions.assertNull(a.getMassNumber());
     }
 
     @Test
-    public void carbon_12() {
+    void carbon_12() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(12).build(), 4);
         assertThat(a.getMassNumber(), is(12));
     }
 
     @Test
-    public void carbon_13() {
+    void carbon_13() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(13).build(), 4);
         assertThat(a.getMassNumber(), is(13));
     }
 
     @Test
-    public void carbon_14() {
+    void carbon_14() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(14).build(), 4);
         assertThat(a.getMassNumber(), is(14));
     }
 
     @Test
-    public void aromatic() {
+    void aromatic() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aromatic(Element.Carbon).build(), 0);
         Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
-    public void benzene() throws IOException {
+    void benzene() throws IOException {
         IAtomContainer ac = convert("c1ccccc1");
         assertThat(ac.getAtomCount(), is(6));
         assertThat(ac.getBondCount(), is(6));
@@ -164,7 +164,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void benzene_kekule() throws IOException {
+    void benzene_kekule() throws IOException {
         IAtomContainer ac = convert("C=1C=CC=CC1");
         assertThat(ac.getAtomCount(), is(6));
         assertThat(ac.getBondCount(), is(6));
@@ -189,7 +189,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void imidazole() throws IOException {
+    void imidazole() throws IOException {
 
         IAtomContainer ac = convert("c1[nH]cnc1");
         assertThat(ac.getAtomCount(), is(5));
@@ -221,7 +221,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void imidazole_kekule() throws IOException {
+    void imidazole_kekule() throws IOException {
 
         IAtomContainer ac = convert("N1C=CN=C1");
         assertThat(ac.getAtomCount(), is(5));
@@ -263,7 +263,7 @@ public class BeamToCDKTest {
      * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
      */
     @Test
-    public void _2R_butan_2_ol() throws Exception {
+    void _2R_butan_2_ol() throws Exception {
         IAtomContainer ac = convert("CC[C@@](C)(O)[H]");
 
         IStereoElement se = getFirstStereoElement(ac);
@@ -290,7 +290,7 @@ public class BeamToCDKTest {
      * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
      */
     @Test
-    public void _2S_butan_2_ol() throws Exception {
+    void _2S_butan_2_ol() throws Exception {
         IAtomContainer ac = convert("CC[C@](C)(O)[H]");
 
         IStereoElement se = getFirstStereoElement(ac);
@@ -310,7 +310,7 @@ public class BeamToCDKTest {
      * @cdk.inchi InChI=1/C10H18O2/c11-9-5-1-2-6-10(9,12)8-4-3-7-9/h11-12H,1-8H2/t9-,10+
      */
     @Test
-    public void tetrahedralRingClosure() throws Exception {
+    void tetrahedralRingClosure() throws Exception {
         IAtomContainer ac = convert("O[C@]12CCCC[C@@]1(O)CCCC2");
 
         List<IStereoElement> ses = StreamSupport.stream(ac.stereoElements().spliterator(), false).collect(Collectors.toList());
@@ -350,7 +350,7 @@ public class BeamToCDKTest {
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
      */
     @Test
-    public void e_1_2_difluroethene() throws Exception {
+    void e_1_2_difluroethene() throws Exception {
 
         IAtomContainer ac = convert("F/C=C/F");
 
@@ -371,7 +371,7 @@ public class BeamToCDKTest {
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
      */
     @Test
-    public void z_1_2_difluroethene() throws Exception {
+    void z_1_2_difluroethene() throws Exception {
 
         IAtomContainer ac = convert("F/C=C\\F");
 
@@ -392,7 +392,7 @@ public class BeamToCDKTest {
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
      */
     @Test
-    public void e_1_2_difluroethene_explicit() throws Exception {
+    void e_1_2_difluroethene_explicit() throws Exception {
 
         IAtomContainer ac = convert("F/C([H])=C(\\[H])F");
 
@@ -414,7 +414,7 @@ public class BeamToCDKTest {
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
      */
     @Test
-    public void z_1_2_difluroethene_explicit() throws Exception {
+    void z_1_2_difluroethene_explicit() throws Exception {
 
         IAtomContainer ac = convert("FC(\\[H])=C([H])/F");
 
@@ -431,14 +431,14 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void readAtomClass() throws Exception {
+    void readAtomClass() throws Exception {
         IAtomContainer ac = convert("CC[C:2]C");
         Assertions.assertNotNull(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING));
         assertThat(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING, Integer.class), is(2));
     }
 
     @Test
-    public void erroneousLabels_tRNA() throws Exception {
+    void erroneousLabels_tRNA() throws Exception {
         IAtomContainer ac = convert("[tRNA]CC");
         assertThat(ac.getAtom(0).getSymbol(), is("R"));
         assertThat(ac.getAtom(0), is(instanceOf(IPseudoAtom.class)));
@@ -448,7 +448,7 @@ public class BeamToCDKTest {
     // believe it or not there are cases of this in the wild -checkout some
     // acyl-carrier-protein SMILES in MetaCyc
     @Test
-    public void erroneousLabels_nested() throws Exception {
+    void erroneousLabels_nested() throws Exception {
         IAtomContainer ac = convert("[now-[this]-is-mean]CC");
         assertThat(ac.getAtom(0).getSymbol(), is("R"));
         assertThat(ac.getAtom(0), is(instanceOf(IPseudoAtom.class)));
@@ -456,7 +456,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void erroneousLabels_bad1() throws Exception {
+    void erroneousLabels_bad1() throws Exception {
         Assertions.assertThrows(IOException.class,
                                 () -> {
                                     convert("[this]-is-not-okay]CC");
@@ -464,7 +464,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void erroneousLabels_bad2() throws Exception {
+    void erroneousLabels_bad2() throws Exception {
         Assertions.assertThrows(IOException.class,
                                 () -> {
                                     convert("[this-[is-not-okay]CC");
@@ -472,7 +472,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void erroneousLabels_bad3() throws Exception {
+    void erroneousLabels_bad3() throws Exception {
         Assertions.assertThrows(IOException.class,
                                 () -> {
                                     convert("[this-[is]-not]-okay]CC");
@@ -480,7 +480,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void extendedTetrahedral_ccw() throws Exception {
+    void extendedTetrahedral_ccw() throws Exception {
         IAtomContainer ac = convert("CC=[C@]=CC");
         Iterator<IStereoElement> elements = ac.stereoElements().iterator();
         Assertions.assertTrue(elements.hasNext());
@@ -494,7 +494,7 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void extendedTetrahedral_cw() throws Exception {
+    void extendedTetrahedral_cw() throws Exception {
         IAtomContainer ac = convert("CC=[C@@]=CC");
         Iterator<IStereoElement> elements = ac.stereoElements().iterator();
         Assertions.assertTrue(elements.hasNext());
@@ -507,23 +507,24 @@ public class BeamToCDKTest {
                 is(new IAtom[]{ac.getAtom(0), ac.getAtom(1), ac.getAtom(3), ac.getAtom(4)}));
     }
 
-    @Test public void titleWithTab() throws Exception {
+    @Test
+    void titleWithTab() throws Exception {
         Assertions.assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getTitle(), "caffeine");
     }
 
     @Test
-    public void titleWithSpace() throws Exception {
+    void titleWithSpace() throws Exception {
         Assertions.assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getTitle(), "caffeine");
     }
 
     @Test
-    public void titleWithMultipleSpace() throws Exception {
+    void titleWithMultipleSpace() throws Exception {
         Assertions.assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getTitle(), "caffeine compound");
     }
 
     /** GitHub Issue #723 */
     @Test
-    public void cumulatedCycle() throws Exception {
+    void cumulatedCycle() throws Exception {
         Assertions.assertEquals(convert("C=1(=N(=C=1)(CC)CC)/N=C(/N1CCC(C2=CC=CC#C2)(CN2C(=NC3=C2C=CC=C3)C)CC1)\\NCC").getBondCount(), 39);
     }
 

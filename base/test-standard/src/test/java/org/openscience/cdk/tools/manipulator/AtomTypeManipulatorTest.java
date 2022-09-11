@@ -34,14 +34,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @cdk.module test-standard
  */
-public class AtomTypeManipulatorTest extends CDKTestCase {
+class AtomTypeManipulatorTest extends CDKTestCase {
 
-    public AtomTypeManipulatorTest() {
+    AtomTypeManipulatorTest() {
         super();
     }
 
     @Test
-    public void testConfigure_IAtom_IAtomType() {
+    void testConfigure_IAtom_IAtomType() {
         IAtom atom = new Atom(Elements.CARBON);
         IAtomType atomType = new AtomType(Elements.CARBON);
         atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
@@ -50,7 +50,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testConfigureUnsetProperties_DontOverwriterSetProperties() {
+    void testConfigureUnsetProperties_DontOverwriterSetProperties() {
         IAtom atom = new Atom(Elements.CARBON);
         atom.setExactMass(13.0);
         IAtomType atomType = new AtomType(Elements.CARBON);
@@ -60,7 +60,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testConfigureUnsetProperties() {
+    void testConfigureUnsetProperties() {
         IAtom atom = new Atom(Elements.CARBON);
         IAtomType atomType = new AtomType(Elements.CARBON);
         atomType.setExactMass(12.0);
@@ -69,7 +69,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testConfigure_IAtom_Null() {
+    void testConfigure_IAtom_Null() {
         IAtom atom = new Atom(Elements.CARBON);
         IAtomType atomType = null;
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -78,7 +78,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void unknownAtomTypeDoesNotModifyProperties() {
+    void unknownAtomTypeDoesNotModifyProperties() {
         IAtom atom = new Atom(Elements.CARBON);
         IAtomType atomType = new AtomType(Elements.Unknown.toIElement());
         atomType.setAtomTypeName("X");
@@ -91,7 +91,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
      * @cdk.bug 1322
      */
     @Test
-    public void aromaticityIsNotOverwritten() {
+    void aromaticityIsNotOverwritten() {
         IAtom atom = new Atom(Elements.CARBON);
         atom.setFlag(CDKConstants.ISAROMATIC, true);
         IAtomType atomType = new AtomType(Elements.Unknown.toIElement());
@@ -105,7 +105,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
      * @cdk.bug 1322
      */
     @Test
-    public void aromaticitySetIfForType() {
+    void aromaticitySetIfForType() {
         IAtom atom = new Atom(Elements.CARBON);
         atom.setFlag(CDKConstants.ISAROMATIC, false);
         IAtomType atomType = new AtomType(Elements.Unknown.toIElement());

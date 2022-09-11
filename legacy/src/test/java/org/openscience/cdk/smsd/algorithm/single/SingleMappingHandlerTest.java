@@ -50,7 +50,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
 
     @BeforeAll
-    public static void setMCSAlgorithm() {
+    static void setMCSAlgorithm() {
         AbstractMCSAlgorithmTest.setMCSAlgorithm(new SingleMappingHandler(true));
     }
 
@@ -59,7 +59,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws Exception
      */
     @Test
-    public void testSet_IAtomContainer_IAtomContainer() throws Exception {
+    void testSet_IAtomContainer_IAtomContainer() throws Exception {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -80,7 +80,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws IOException
      */
     @Test
-    public void testSet_String_String() throws CDKException, IOException {
+    void testSet_String_String() throws CDKException, IOException {
         String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         IAtomContainer query = new AtomContainer();
@@ -104,7 +104,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      * Test of set method, of class SingleMappingHandler.
      */
     @Test
-    public void testSet_MolHandler_MolHandler() {
+    void testSet_MolHandler_MolHandler() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -147,7 +147,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      * Test of getAllMapping method, of class SingleMappingHandler.
      */
     @Test
-    public void testGetAllMapping() {
+    void testGetAllMapping() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -167,7 +167,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      * Test of getFirstMapping method, of class SingleMappingHandler.
      */
     @Test
-    public void testGetFirstMapping() {
+    void testGetFirstMapping() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -187,7 +187,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      * Test of getAllAtomMapping method, of class SingleMappingHandler.
      */
     @Test
-    public void testGetAllAtomMapping() {
+    void testGetAllAtomMapping() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -207,7 +207,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      * Test of getFirstAtomMapping method, of class SingleMappingHandler.
      */
     @Test
-    public void testGetFirstAtomMapping() {
+    void testGetFirstAtomMapping() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();

@@ -28,15 +28,15 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-renderbasic
  */
-public class AWTFontManagerTest extends AbstractFontManagerTest {
+class AWTFontManagerTest extends AbstractFontManagerTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setFontManager(new AWTFontManager());
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         IFontManager fontManager = new AWTFontManager();
         Assertions.assertNotNull(fontManager);
     }

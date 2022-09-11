@@ -31,21 +31,21 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author     egonw
  * @cdk.module test-standard
  */
-public class FormatStringBufferTest extends CDKTestCase {
+class FormatStringBufferTest extends CDKTestCase {
 
     private FormatStringBuffer fsb;
 
-    public FormatStringBufferTest() {
+    FormatStringBufferTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         fsb = new FormatStringBuffer("[%s]");
     }
 
     @Test
-    public void testFormat_String() {
+    void testFormat_String() {
         fsb.reset("[%s]").format("test");
         Assertions.assertEquals("[test]", fsb.toString());
 
@@ -54,7 +54,7 @@ public class FormatStringBufferTest extends CDKTestCase {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         fsb.reset("[%-5s]").format("test");
         Assertions.assertEquals("[test ]", fsb.toString());
 
@@ -66,7 +66,7 @@ public class FormatStringBufferTest extends CDKTestCase {
     }
 
     @Test
-    public void testFormat_char() {
+    void testFormat_char() {
         fsb.reset("[%c]").format('A');
         Assertions.assertEquals("[A]", fsb.toString());
 
@@ -78,7 +78,7 @@ public class FormatStringBufferTest extends CDKTestCase {
     }
 
     @Test
-    public void testFormat_double() {
+    void testFormat_double() {
         fsb.reset("[%f]").format(3.1415);
         Assertions.assertEquals("[3.1415]", fsb.toString());
 
@@ -117,7 +117,7 @@ public class FormatStringBufferTest extends CDKTestCase {
     }
 
     @Test
-    public void testFormat_int() {
+    void testFormat_int() {
         fsb.reset("[%d]").format(600);
         Assertions.assertEquals("[600]", fsb.toString());
 
@@ -162,7 +162,7 @@ public class FormatStringBufferTest extends CDKTestCase {
     }
 
     @Test
-    public void testFormat_long() {
+    void testFormat_long() {
         fsb.reset("[%d]").format((long) 600);
         Assertions.assertEquals("[600]", fsb.toString());
 
@@ -204,13 +204,13 @@ public class FormatStringBufferTest extends CDKTestCase {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         fsb.reset();
         Assertions.assertEquals("[%s]", fsb.toString());
     }
 
     @Test
-    public void testReset_String() {
+    void testReset_String() {
         fsb.reset("[%#04o]").format((long) 10);
         fsb.reset();
         Assertions.assertEquals("[%#04o]", fsb.toString());

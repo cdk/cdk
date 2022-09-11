@@ -37,10 +37,10 @@ import java.util.List;
  *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
-public class BiconnectivityInspectorTest extends CDKTestCase {
+class BiconnectivityInspectorTest extends CDKTestCase {
 
     @Test
-    public void testBiconnectedSets() {
+    void testBiconnectedSets() {
         SimpleGraph g = new SimpleGraph();
 
         g.addVertex("a");

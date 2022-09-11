@@ -36,10 +36,10 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *
  * @see MolecularFormula
  */
-public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
+class MolecularFormulaTest extends AbstractMolecularFormulaTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
@@ -49,14 +49,14 @@ public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
      *
      */
     @Test
-    public void testMolecularFormula() {
+    void testMolecularFormula() {
 
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
         Assertions.assertNotNull(mf);
     }
 
     @Test
-    public void testIsTheSame_IIsotope_IIsotope() throws IOException {
+    void testIsTheSame_IIsotope_IIsotope() throws IOException {
         MolecularFormula mf = new MolecularFormula();
         IIsotope carb = getBuilder().newInstance(IIsotope.class, "C");
         IIsotope anotherCarb = getBuilder().newInstance(IIsotope.class, "C");

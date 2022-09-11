@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module test-io
  */
-public class JChemPaintTest extends CDKTestCase {
+class JChemPaintTest extends CDKTestCase {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(JChemPaintTest.class);
 
@@ -52,7 +52,7 @@ public class JChemPaintTest extends CDKTestCase {
      * This one tests a CML2 file.
      */
     @Test
-    public void testSalt() throws Exception {
+    void testSalt() throws Exception {
         String filename = "COONa.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -83,7 +83,7 @@ public class JChemPaintTest extends CDKTestCase {
      * This one tests reading of output from the WWMM matrix (KEGG collection).
      */
     @Test
-    public void testWWMMOutput() throws Exception {
+    void testWWMMOutput() throws Exception {
         String filename = "keggtest.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

@@ -18,10 +18,10 @@ import java.awt.Color;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SelectionVisibilityTest {
+class SelectionVisibilityTest {
 
     @Test
-    public void noHighlightOrGlow() {
+    void noHighlightOrGlow() {
         IAtomContainer methyl = new AtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
         methyl.addAtom(atomAt("H", new Point2d(0, 1)));
@@ -38,7 +38,7 @@ public class SelectionVisibilityTest {
     }
 
     @Test
-    public void withHighlight() {
+    void withHighlight() {
         IAtomContainer methyl = new AtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
         methyl.addAtom(atomAt("H", new Point2d(0, 1)));
@@ -56,7 +56,7 @@ public class SelectionVisibilityTest {
     }
 
     @Test
-    public void isolated() {
+    void isolated() {
         IAtomContainer methyl = new AtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
         methyl.addAtom(atomAt("H", new Point2d(0, 1)));
@@ -74,7 +74,7 @@ public class SelectionVisibilityTest {
     }
 
     @Test
-    public void unIsolated() {
+    void unIsolated() {
         IAtomContainer methyl = new AtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
         methyl.addAtom(atomAt("H", new Point2d(0, 1)));
@@ -93,7 +93,7 @@ public class SelectionVisibilityTest {
     }
 
     @Test
-    public void highlightIsSelected() {
+    void highlightIsSelected() {
         IChemObject chemObject = mock(IChemObject.class);
         when(chemObject.getProperty(StandardGenerator.HIGHLIGHT_COLOR)).thenReturn(Color.RED);
         Assertions.assertTrue(SelectionVisibility.isSelected(chemObject, new RendererModel()));

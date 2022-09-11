@@ -29,20 +29,20 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  *
  * @cdk.module test-reaction
  */
-public class SharingElectronMechanismTest extends ReactionMechanismTest {
+class SharingElectronMechanismTest extends ReactionMechanismTest {
 
     /**
      *  The JUnit setup method
      */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         setMechanism(SharingElectronMechanism.class);
     }
 
     /**
      *  Constructor for the SharingElectronMechanismTest object.
      */
-    public SharingElectronMechanismTest() {
+    SharingElectronMechanismTest() {
         super();
     }
 
@@ -52,7 +52,7 @@ public class SharingElectronMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testSharingElectronMechanism() {
+    void testSharingElectronMechanism() {
         IReactionMechanism mechanism = new SharingElectronMechanism();
         Assertions.assertNotNull(mechanism);
     }
@@ -64,7 +64,7 @@ public class SharingElectronMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+    void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
         IReactionMechanism mechanism = new SharingElectronMechanism();
 
         Assertions.assertNotNull(mechanism);

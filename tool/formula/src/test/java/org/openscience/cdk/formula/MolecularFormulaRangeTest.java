@@ -35,7 +35,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  *
  * @see MolecularFormula
  */
-public class MolecularFormulaRangeTest extends CDKTestCase {
+class MolecularFormulaRangeTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
@@ -43,7 +43,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *  Constructor for the MolecularFormulaRangeTest object.
      *
      */
-    public MolecularFormulaRangeTest() {
+    MolecularFormulaRangeTest() {
         super();
     }
 
@@ -53,7 +53,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMolecularFormulaRange() {
+    void testMolecularFormulaRange() {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
@@ -66,7 +66,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIsotopeCount() {
+    void testGetIsotopeCount() {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
@@ -79,7 +79,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testAddIsotope_IIsotope_int_int() {
+    void testAddIsotope_IIsotope_int_int() {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(builder.newInstance(IIsotope.class, "C"), 0, 10);
@@ -94,7 +94,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testAddIsotope2() {
+    void testAddIsotope2() {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(builder.newInstance(IIsotope.class, "C"), 0, 10);
@@ -113,7 +113,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIsotopeCountMax_IIsotope() {
+    void testGetIsotopeCountMax_IIsotope() {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
@@ -132,7 +132,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIsotopeCountMin_IIsotope() {
+    void testGetIsotopeCountMin_IIsotope() {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
@@ -153,7 +153,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIsotopeCountMin_IIsotope2() {
+    void testGetIsotopeCountMin_IIsotope2() {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
@@ -176,7 +176,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIsotopeCountMin_IIsotope3() {
+    void testGetIsotopeCountMin_IIsotope3() {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
         IIsotope carb1 = builder.newInstance(IIsotope.class, "C");
@@ -205,7 +205,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIsotopeCountMin_IIsotope4() {
+    void testGetIsotopeCountMin_IIsotope4() {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
         IIsotope carb1 = builder.newInstance(IIsotope.class, "C");
@@ -236,7 +236,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsotopes() {
+    void testIsotopes() {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(builder.newInstance(IIsotope.class, "C"), 0, 10);
@@ -257,7 +257,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testContains_IIsotope() {
+    void testContains_IIsotope() {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
@@ -280,7 +280,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      *
      */
-    public void testRemoveIsotope_IIsotope() {
+    void testRemoveIsotope_IIsotope() {
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
@@ -305,7 +305,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
      */
     @Test
-    public void testRemoveAllIsotopes() {
+    void testRemoveAllIsotopes() {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
         IIsotope flu = builder.newInstance(IIsotope.class, "F");
@@ -331,7 +331,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      *
     */
     @Test
-    public void testClone() throws Exception {
+    void testClone() throws Exception {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         Object clone = mfRange.clone();
         Assertions.assertTrue(clone instanceof MolecularFormulaRange);
@@ -344,7 +344,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      * the MolecularFormula are correctly cloned.
     */
     @Test
-    public void testClone_Isotopes() throws Exception {
+    void testClone_Isotopes() throws Exception {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
         IIsotope flu = builder.newInstance(IIsotope.class, "F");
@@ -380,7 +380,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      * Test what happens when null isotope is added to MF range.
      */
     @Test
-    public void testNull() throws Exception {
+    void testNull() throws Exception {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
         IIsotope nul = null;

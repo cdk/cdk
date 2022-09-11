@@ -41,21 +41,21 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
  *
  * @see org.openscience.cdk.io.PMPReader
  */
-public class PMPReaderTest extends SimpleChemObjectReaderTest {
+class PMPReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new PMPReader(), "aceticacid.pmp");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         PMPReader reader = new PMPReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
-    public void testAceticAcid() throws Exception {
+    void testAceticAcid() throws Exception {
         String filename = "aceticacid.pmp";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         PMPReader reader = new PMPReader(ins);
@@ -82,7 +82,7 @@ public class PMPReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testTwoAceticAcid() throws Exception {
+    void testTwoAceticAcid() throws Exception {
         String filename = "two_aceticacid.pmp";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         PMPReader reader = new PMPReader(ins);

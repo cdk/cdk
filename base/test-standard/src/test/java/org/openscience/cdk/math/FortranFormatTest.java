@@ -25,14 +25,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class FortranFormatTest extends CDKTestCase {
+class FortranFormatTest extends CDKTestCase {
 
-    public FortranFormatTest() {
+    FortranFormatTest() {
         super();
     }
 
     @Test
-    public void testAtof_String() {
+    void testAtof_String() {
         Assertions.assertEquals(1.5, FortranFormat.atof("1.5"), 0.0001);
 
         // FIXME: need to add something here with a 'd'

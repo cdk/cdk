@@ -35,19 +35,19 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * @author maclean
  * @cdk.module group
  */
-public class BondRefinableTest {
+class BondRefinableTest {
     
-    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     
     @Test
-    public void getVertexCount() {
+    void getVertexCount() {
         String acpString = "C0C1C2C3 0:1(1),1:2(1),2:3(1)";
         BondRefinable bondRefinable = refinable(acpString);
         Assertions.assertEquals(3, bondRefinable.getVertexCount());
     }
     
     @Test
-    public void getConnectivity() {
+    void getConnectivity() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         BondRefinable bondRefinable = refinable(acpString);
         Assertions.assertEquals(1, bondRefinable.getConnectivity(0, 1));
@@ -57,7 +57,7 @@ public class BondRefinableTest {
     }
     
     @Test
-    public void neighboursInBlock() {
+    void neighboursInBlock() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         BondRefinable bondRefinable = refinable(acpString);
         Set<Integer> block = new HashSet<>();
@@ -68,7 +68,7 @@ public class BondRefinableTest {
     }
     
     @Test
-    public void getBondPartitionTest() {
+    void getBondPartitionTest() {
         String acpString = "C0C1C2C3O4 0:1(2),0:4(1),1:2(1),2:3(2),3:4(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondRefinable refinable = new BondRefinable(ac);

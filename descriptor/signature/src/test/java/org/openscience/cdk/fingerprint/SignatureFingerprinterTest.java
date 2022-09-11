@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @cdk.module test-signature
  */
-public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
+class SignatureFingerprinterTest extends AbstractFingerprinterTest {
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -42,7 +42,7 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void testGetSize() throws Exception {
+    void testGetSize() throws Exception {
         IFingerprinter fingerprinter = new SignatureFingerprinter();
         Assertions.assertNotNull(fingerprinter);
         Assertions.assertEquals(-1, fingerprinter.getSize());
@@ -63,7 +63,7 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void testBitFingerprint() throws Exception {
+    void testBitFingerprint() throws Exception {
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");

@@ -38,12 +38,12 @@ import java.util.List;
  *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
-public class MinimalPathIteratorTest extends CDKTestCase {
+class MinimalPathIteratorTest extends CDKTestCase {
 
-    public SimpleGraph g;
+    private SimpleGraph g;
 
     @BeforeEach
-    public void createGraph() {
+    void createGraph() {
         g = new SimpleGraph();
 
         g.addVertex("a");
@@ -90,7 +90,7 @@ public class MinimalPathIteratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testMinimalPathIterator() {
+    void testMinimalPathIterator() {
         int count = 0;
         for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
             Assertions.assertTrue(((List) i.next()).size() == 5);
@@ -100,7 +100,7 @@ public class MinimalPathIteratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemove() {
+    void testRemove() {
         for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
             Assertions.assertTrue(((List) i.next()).size() == 5);
             Assertions.assertThrows(UnsupportedOperationException.class, () -> {

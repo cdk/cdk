@@ -32,14 +32,14 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarbond
  */
-public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
+class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 
-    public BondPartialSigmaChargeDescriptorTest() {
+    BondPartialSigmaChargeDescriptorTest() {
         descriptor = new BondPartialSigmaChargeDescriptor();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BondPartialSigmaChargeDescriptor.class);
     }
 
@@ -47,7 +47,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor() throws
+    void testBondSigmaElectronegativityDescriptor() throws
             java.lang.Exception {
         double[] testResult = {0.3323, 0.0218};/*
                                                 * from Petra online:
@@ -72,7 +72,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Methyl chloride
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Methyl_chloride() throws
+    void testBondSigmaElectronegativityDescriptor_Methyl_chloride() throws
             java.lang.Exception {
         double[] testResult = {0.2137, 0.0075};/*
                                                 * from Petra online:
@@ -95,7 +95,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Allyl bromide
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Allyl_bromide() throws
+    void testBondSigmaElectronegativityDescriptor_Allyl_bromide() throws
             java.lang.Exception {
         double[] testResult = {0.0265, 0.1268, 0.1872, 0.1564, 0.1564, 0.1347, 0.0013, 0.0013}; /*
                                                                                                  * from
@@ -139,7 +139,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Isopentyl iodide
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Isopentyl_iodide() throws
+    void testBondSigmaElectronegativityDescriptor_Isopentyl_iodide() throws
             java.lang.Exception {
         double testResult = 0.0165; /*
                                      * from Petra online:
@@ -159,7 +159,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Ethoxy ethane
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Ethoxy_ethane() throws
+    void testBondSigmaElectronegativityDescriptor_Ethoxy_ethane() throws
             java.lang.Exception {
         double[] testResult = {0.0864, 0.4262, 0.4262, 0.0864, 0.0662, 0.0662, 0.0662, 0.0104, 0.0104}; /*
                                                                                                          * from
@@ -203,7 +203,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Ethanolamine
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Ethanolamine() throws
+    void testBondSigmaElectronegativityDescriptor_Ethanolamine() throws
             java.lang.Exception {
         double[] testResult = {0.3463, 0.0274, 0.448, 0.448, 0.448}; /*
                                                                       * from
@@ -235,7 +235,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Allyl mercaptan
      */
     @Test
-    public void testBondSigmaElectronegativityDescriptor_Allyl_mercaptan() throws
+    void testBondSigmaElectronegativityDescriptor_Allyl_mercaptan() throws
             java.lang.Exception {
         double[] testResult = {0.0203, 0.0921, 0.1835, 0.1569, 0.3593, 8.5917}; /*
                                                                                  * from

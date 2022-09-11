@@ -29,19 +29,19 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-core
  */
-public class AtomTypeHandlerTest extends CDKTestCase {
+class AtomTypeHandlerTest extends CDKTestCase {
 
     // serious testing is done in AtomTypeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
     @Test
-    public void testAtomTypeHandler_IChemObjectBuilder() {
+    void testAtomTypeHandler_IChemObjectBuilder() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         Assertions.assertNotNull(handler);
     }
 
     @Test
-    public void testGetAtomTypes() {
+    void testGetAtomTypes() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read
         Assertions.assertNotNull(handler);
@@ -49,7 +49,7 @@ public class AtomTypeHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testStartDocument() {
+    void testStartDocument() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
         Assertions.assertNotNull(handler);
@@ -57,19 +57,19 @@ public class AtomTypeHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testCharacters_arraychar_int_int() {
+    void testCharacters_arraychar_int_int() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
         Assertions.assertTrue(true);
     }
 
     @Test
-    public void testStartElement_String_String_String_Attributes() {
+    void testStartElement_String_String_String_Attributes() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
         Assertions.assertTrue(true);
     }
 
     @Test
-    public void testEndElement_String_String_String() {
+    void testEndElement_String_String_String() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
         Assertions.assertTrue(true);
     }

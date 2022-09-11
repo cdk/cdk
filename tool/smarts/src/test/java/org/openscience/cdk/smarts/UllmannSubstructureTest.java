@@ -32,7 +32,7 @@ import org.openscience.cdk.isomorphism.Ullmann;
  * @author John May
  * @cdk.module test-smarts
  */
-public class UllmannSubstructureTest extends SubstructureTest {
+class UllmannSubstructureTest extends SubstructureTest {
 
     @Override
     Pattern create(IAtomContainer container) {

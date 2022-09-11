@@ -40,10 +40,10 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class NumericalSurfaceTest {
+class NumericalSurfaceTest {
 
     @Test
-    public void testCranbinSurface() throws Exception {
+    void testCranbinSurface() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IChemFile chemFile;
         String path = "1CRN.pdb";

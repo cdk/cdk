@@ -42,12 +42,12 @@ import org.openscience.cdk.silent.Bond;
  * @cdk.module  test-valencycheck
  * @cdk.created 2006-08-16
  */
-public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
+class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 
     private IDeduceBondOrderTool dboTool;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         dboTool = new SaturationChecker();
     }
 
@@ -55,7 +55,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      * Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>.
      */
     @Test
-    public void testAcetylene() throws Exception {
+    void testAcetylene() throws Exception {
         IAtomContainer keto = new AtomContainer();
 
         // atom block
@@ -82,7 +82,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      * Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>.
      */
     @Test
-    public void testKeto() throws Exception {
+    void testKeto() throws Exception {
         IAtomContainer keto = new AtomContainer();
 
         // atom block
@@ -114,7 +114,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      * Test <div class="inchi">InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3</div>.
      */
     @Test
-    public void testEnol() throws Exception {
+    void testEnol() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block
@@ -147,7 +147,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      * Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>.
      */
     @Test
-    public void xtestButadiene() throws Exception {
+    void xtestButadiene() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block
@@ -186,7 +186,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      * Test <div class="inchi">InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H</div>.
      */
     @Test
-    public void testQuinone() throws Exception {
+    void testQuinone() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block
@@ -248,7 +248,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      * Test <div class="inchi">InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H</div>.
      */
     @Test
-    public void testBenzene() throws Exception {
+    void testBenzene() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block
@@ -308,7 +308,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      * Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>.
      */
     @Test
-    public void testPyrrole() throws Exception {
+    void testPyrrole() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block
@@ -356,7 +356,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>.
      */
     @Disabled("previously disabled 'xtest'")
-    public void xtestPyridine() throws Exception {
+    void xtestPyridine() throws Exception {
         IAtomContainer enol = new AtomContainer();
 
         // atom block

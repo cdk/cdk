@@ -31,10 +31,10 @@ import org.openscience.cdk.io.MDLV2000Reader;
 /**
  * @cdk.module test-extra
  */
-public class Geometry3DValidatorTest extends CDKTestCase {
+class Geometry3DValidatorTest extends CDKTestCase {
 
     @Test
-    public void testEthane() throws Exception {
+    void testEthane() throws Exception {
         String filename = "Heptane-TestFF-output.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

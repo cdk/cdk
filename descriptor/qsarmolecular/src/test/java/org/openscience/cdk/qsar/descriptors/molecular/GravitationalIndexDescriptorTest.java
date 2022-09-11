@@ -39,17 +39,17 @@ import java.util.List;
  * @cdk.module test-qsarmolecular
  */
 
-public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
+class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
 
-    public GravitationalIndexDescriptorTest() {}
+    GravitationalIndexDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(GravitationalIndexDescriptor.class);
     }
 
     @Test
-    public void testGravitationalIndex() throws java.lang.Exception {
+    void testGravitationalIndex() throws java.lang.Exception {
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

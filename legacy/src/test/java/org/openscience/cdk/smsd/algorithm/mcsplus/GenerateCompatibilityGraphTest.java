@@ -37,24 +37,24 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @author Asad
  */
-public class GenerateCompatibilityGraphTest {
+class GenerateCompatibilityGraphTest {
 
     public GenerateCompatibilityGraphTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     @Test
-    public void testSomeMethod() throws IOException {
+    void testSomeMethod() throws IOException {
         // TODO review the generated test code and remove the default call to fail.
         Assertions.assertNotNull(new GenerateCompatibilityGraph(new AtomContainer(), new AtomContainer(), true));
     }

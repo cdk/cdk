@@ -33,10 +33,10 @@ import java.util.List;
 /**
  * @cdk.module test-structgen
  */
-public class StructGenAtomTypeGuesserTest extends CDKTestCase {
+class StructGenAtomTypeGuesserTest extends CDKTestCase {
 
     @Test
-    public void testPossibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {
+    void testPossibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setImplicitHydrogenCount(3);
@@ -56,7 +56,7 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
     }
 
     @Test
-    public void testStructGenAtomTypeGuesser() throws Exception {
+    void testStructGenAtomTypeGuesser() throws Exception {
         StructGenAtomTypeGuesser matcher = new StructGenAtomTypeGuesser();
         Assertions.assertNotNull(matcher);
     }

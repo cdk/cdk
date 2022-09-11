@@ -53,24 +53,24 @@ import static org.hamcrest.Matchers.containsString;
  *
  * @see org.openscience.cdk.io.MDLRXNWriter
  */
-public class MDLRXNWriterTest extends ChemObjectIOTest {
+class MDLRXNWriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new MDLRXNWriter());
     }
 
     @Test
-    public void testAccepts() throws Exception {
+    void testAccepts() throws Exception {
         MDLRXNWriter reader = new MDLRXNWriter();
         Assertions.assertTrue(reader.accepts(Reaction.class));
     }
 
     @Test
-    public void testRoundtrip() throws Exception {
+    void testRoundtrip() throws Exception {
         IReaction reaction = builder.newInstance(IReaction.class);
         IAtomContainer hydroxide = builder.newInstance(IAtomContainer.class);
         hydroxide.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -105,7 +105,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testReactionSet_1() throws Exception {
+    void testReactionSet_1() throws Exception {
         IReaction reaction11 = builder.newInstance(IReaction.class);
         IAtomContainer hydroxide = builder.newInstance(IAtomContainer.class);
         hydroxide.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -145,7 +145,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testReactionSet_2() throws Exception {
+    void testReactionSet_2() throws Exception {
         IReaction reaction11 = builder.newInstance(IReaction.class);
         IAtomContainer hydroxide = builder.newInstance(IAtomContainer.class);
         hydroxide.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -198,7 +198,8 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         Assertions.assertEquals(1, reactionSetF.getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
     }
 
-    @Test public void writeAgentsFromV3000() throws IOException, CDKException {
+    @Test
+    void writeAgentsFromV3000() throws IOException, CDKException {
         String rxnfile = "$RXN V3000\n" +
                 "\n" +
                 "  Mrv1810      020601212219\n" +
@@ -341,7 +342,8 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
                 "M  END"));
     }
 
-    @Test public void writeAgentsFromV2000() throws IOException, CDKException {
+    @Test
+    void writeAgentsFromV2000() throws IOException, CDKException {
         String rxnfile = "$RXN\n" +
                 "\n" +
                 "\n" +

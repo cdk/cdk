@@ -71,152 +71,152 @@ import org.openscience.cdk.io.formats.XYZFormat;
  *
  * @cdk.module test-ioformats
  */
-public class FormatFactoryTest extends CDKTestCase {
+class FormatFactoryTest extends CDKTestCase {
 
     private static FormatFactory factory;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         factory = new FormatFactory();
     }
 
     @Test
-    public void testGaussian94() throws Exception {
+    void testGaussian94() throws Exception {
         expectFormat("org/openscience/cdk/io/4-cyanophenylnitrene-Benzazirine-TS.g94.out", Gaussian94Format.getInstance());
     }
 
     @Test
-    public void testGaussian98() throws Exception {
+    void testGaussian98() throws Exception {
         expectFormat("org/openscience/cdk/io/g98.out", Gaussian98Format.getInstance());
     }
 
     @Test
-    public void testGaussian92() throws Exception {
+    void testGaussian92() throws Exception {
         expectFormat("org/openscience/cdk/io/phenylnitrene.g92.out", Gaussian92Format.getInstance());
     }
 
     @Test
-    public void testGhemical() throws Exception {
+    void testGhemical() throws Exception {
         expectFormat("org/openscience/cdk/io/ethene.mm1gp", GhemicalSPMFormat.getInstance());
     }
 
     @Test
-    public void testJaguar() throws Exception {
+    void testJaguar() throws Exception {
         expectFormat("org/openscience/cdk/io/ch4-opt.out", JaguarFormat.getInstance());
     }
 
     @Test
-    public void testINChI() throws Exception {
+    void testINChI() throws Exception {
         expectFormat("org/openscience/cdk/io/guanine.inchi.xml", INChIFormat.getInstance());
     }
 
     @Test
-    public void testINChIPlainText() throws Exception {
+    void testINChIPlainText() throws Exception {
         expectFormat("org/openscience/cdk/io/guanine.inchi", INChIPlainTextFormat.getInstance());
     }
 
     @Test
-    public void testVASP() throws Exception {
+    void testVASP() throws Exception {
         expectFormat("org/openscience/cdk/io/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance());
     }
 
     @Test
-    public void testAces2() throws Exception {
+    void testAces2() throws Exception {
         expectFormat("org/openscience/cdk/io/ch3oh_ace.out", Aces2Format.getInstance());
     }
 
     @Test
-    public void testADF() throws Exception {
+    void testADF() throws Exception {
         expectFormat("org/openscience/cdk/io/ammonia.adf.out", ADFFormat.getInstance());
     }
 
     @Test
-    public void testGamess() throws Exception {
+    void testGamess() throws Exception {
         expectFormat("org/openscience/cdk/io/ch3oh_gam.out", GamessFormat.getInstance());
     }
 
     @Test
-    public void testABINIT() throws Exception {
+    void testABINIT() throws Exception {
         expectFormat("org/openscience/cdk/io/t54.in", ABINITFormat.getInstance());
     }
 
     @Test
-    public void testCML() throws Exception {
+    void testCML() throws Exception {
         expectFormat("org/openscience/cdk/io/estron.cml", CMLFormat.getInstance());
     }
 
     @Test
-    public void testXYZ() throws Exception {
+    void testXYZ() throws Exception {
         expectFormat("org/openscience/cdk/io/bf3.xyz", XYZFormat.getInstance());
     }
 
     @Test
-    public void testShelX() throws Exception {
+    void testShelX() throws Exception {
         expectFormat("org/openscience/cdk/io/frame_1.res", ShelXFormat.getInstance());
     }
 
     @Test
-    public void testMDLMol() throws Exception {
+    void testMDLMol() throws Exception {
         expectFormat("org/openscience/cdk/io/bug1014344-1.mol", MDLFormat.getInstance());
     }
 
     @Test
-    public void testMDLMolV2000() throws Exception {
+    void testMDLMolV2000() throws Exception {
         expectFormat("org/openscience/cdk/io/methylbenzol.mol", MDLV2000Format.getInstance());
     }
 
     @Test
-    public void testDetection() throws Exception {
+    void testDetection() throws Exception {
         expectFormat("org/openscience/cdk/io/withcharges.mol", MDLV2000Format.getInstance());
     }
 
     @Test
-    public void testMDLMolV3000() throws Exception {
+    void testMDLMolV3000() throws Exception {
         expectFormat("org/openscience/cdk/io/molV3000.mol", MDLV3000Format.getInstance());
     }
 
     @Test
-    public void testPDB() throws Exception {
+    void testPDB() throws Exception {
         expectFormat("org/openscience/cdk/io/coffeine.pdb", PDBFormat.getInstance());
     }
 
     @Test
-    public void testMol2() throws Exception {
+    void testMol2() throws Exception {
         expectFormat("org/openscience/cdk/io/fromWebsite.mol2", Mol2Format.getInstance());
     }
 
     @Test
-    public void testCTX() throws Exception {
+    void testCTX() throws Exception {
         expectFormat("org/openscience/cdk/io/methanol_with_descriptors.ctx", CTXFormat.getInstance());
     }
 
     @Test
-    public void testPubChemCompoundASN() throws Exception {
+    void testPubChemCompoundASN() throws Exception {
         expectFormat("org/openscience/cdk/io/cid1.asn", PubChemASNFormat.getInstance());
     }
 
     @Test
-    public void testPubChemSubstancesASN() throws Exception {
+    void testPubChemSubstancesASN() throws Exception {
         expectFormat("org/openscience/cdk/io/list.asn", PubChemSubstancesASNFormat.getInstance());
     }
 
     @Test
-    public void testPubChemCompoundsXML() throws Exception {
+    void testPubChemCompoundsXML() throws Exception {
         expectFormat("org/openscience/cdk/io/aceticAcids38.xml", PubChemCompoundsXMLFormat.getInstance());
     }
 
     @Test
-    public void testPubChemSubstancesXML() throws Exception {
+    void testPubChemSubstancesXML() throws Exception {
         expectFormat("org/openscience/cdk/io/taxols.xml", PubChemSubstancesXMLFormat.getInstance());
     }
 
     @Test
-    public void testPubChemSubstanceXML() throws Exception {
+    void testPubChemSubstanceXML() throws Exception {
         expectFormat("org/openscience/cdk/io/sid577309.xml", PubChemSubstanceXMLFormat.getInstance());
     }
 
     @Test
-    public void testPubChemCompoundXML() throws Exception {
+    void testPubChemCompoundXML() throws Exception {
         expectFormat("org/openscience/cdk/io/cid1145.xml", PubChemCompoundXMLFormat.getInstance());
     }
 
@@ -236,7 +236,7 @@ public class FormatFactoryTest extends CDKTestCase {
      * @cdk.bug 2153298
      */
     @Test
-    public void testGuessFormat() throws Exception {
+    void testGuessFormat() throws Exception {
         String filename = "org/openscience/cdk/io/bf3.xyz";
         InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
         input = new BufferedInputStream(input);
@@ -253,7 +253,7 @@ public class FormatFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGuessFormat_Gz() throws Exception {
+    void testGuessFormat_Gz() throws Exception {
         String filename = "org/openscience/cdk/io/bf3.xyz.gz";
         InputStream input = new BufferedInputStream(new GZIPInputStream(this.getClass().getClassLoader()
                 .getResourceAsStream(filename)));
@@ -270,7 +270,7 @@ public class FormatFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGuessFormat_Reader() throws Exception {
+    void testGuessFormat_Reader() throws Exception {
         String filename = "org/openscience/cdk/io/bf3.xyz";
         InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
@@ -286,7 +286,7 @@ public class FormatFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetFormats() {
+    void testGetFormats() {
         List<IChemFormatMatcher> formats = factory.getFormats();
         Assertions.assertNotNull(formats);
         Assertions.assertNotSame(0, formats.size());
@@ -352,7 +352,7 @@ public class FormatFactoryTest extends CDKTestCase {
     }
 
     @Test
-    public void testRegisterFormat() throws IOException {
+    void testRegisterFormat() throws IOException {
         factory.registerFormat(new DummyFormat());
         StringReader reader = new StringReader("DummyFormat:");
         IChemFormat format = factory.guessFormat(reader);

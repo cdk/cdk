@@ -32,31 +32,31 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarmolecular
  */
-public class HybridizationRatioDescriptorTest extends MolecularDescriptorTest {
+class HybridizationRatioDescriptorTest extends MolecularDescriptorTest {
 
-    public HybridizationRatioDescriptorTest() {}
+    HybridizationRatioDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(HybridizationRatioDescriptor.class);
     }
 
     @Test
-    public void testHybRatioDescriptor1() throws Exception {
+    void testHybRatioDescriptor1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCC");
         Assertions.assertEquals(1.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 
     @Test
-    public void testHybRatioDescriptor2() throws Exception {
+    void testHybRatioDescriptor2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccccc1");
         Assertions.assertEquals(0.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 
     @Test
-    public void testHybRatioDescriptor3() throws Exception {
+    void testHybRatioDescriptor3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C#N");
         Assertions.assertEquals(Double.NaN, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);

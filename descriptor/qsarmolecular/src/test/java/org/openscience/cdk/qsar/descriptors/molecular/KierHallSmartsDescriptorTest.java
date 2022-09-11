@@ -34,14 +34,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
+class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
 
     private String[] names;
 
-    public KierHallSmartsDescriptorTest() {}
+    KierHallSmartsDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(KierHallSmartsDescriptor.class);
         names = descriptor.getDescriptorNames();
     }
@@ -54,7 +54,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test1() throws Exception {
+    void test1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCO");
 
@@ -69,7 +69,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test2() throws Exception {
+    void test2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1c(CN)cc(CCNC)cc1C(CO)CC(=O)CCOCCCO");
 
@@ -88,7 +88,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test3() throws Exception {
+    void test3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C#CC(C)(C)C(C)(C)C#C");
 

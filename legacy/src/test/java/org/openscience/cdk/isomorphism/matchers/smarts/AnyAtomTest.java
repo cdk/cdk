@@ -28,10 +28,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.silent.Atom;
 
-public class AnyAtomTest {
+class AnyAtomTest {
 
     @Test
-    public void matchHydrogen() throws Exception {
+    void matchHydrogen() throws Exception {
         Assertions.assertTrue(new AnyAtom(null).matches(new Atom("H")));
     }
 }

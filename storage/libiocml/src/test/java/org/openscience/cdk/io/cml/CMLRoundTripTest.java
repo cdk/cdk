@@ -66,18 +66,18 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */
-public class CMLRoundTripTest extends CDKTestCase {
+class CMLRoundTripTest extends CDKTestCase {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTest.class);
     private static Convertor    convertor;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         convertor = new Convertor(false, "");
     }
 
     @Test
-    public void testAtom() throws Exception {
+    void testAtom() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         mol.addAtom(atom);
@@ -90,7 +90,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testAtomId() throws Exception {
+    void testAtomId() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         atom.setID("N1");
@@ -104,7 +104,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testAtom2D() throws Exception {
+    void testAtom2D() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         Point2d p2d = new Point2d(1.3, 1.4);
@@ -119,7 +119,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testAtom3D() throws Exception {
+    void testAtom3D() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(1.3, 1.4, 0.9);
@@ -134,7 +134,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testAtom2DAnd3D() throws Exception {
+    void testAtom2DAnd3D() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         Point2d p2d = new Point2d(1.3, 1.4);
@@ -152,7 +152,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testAtomFract3D() throws Exception {
+    void testAtomFract3D() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(0.3, 0.4, 0.9);
@@ -167,7 +167,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testPseudoAtom() throws Exception {
+    void testPseudoAtom() throws Exception {
         IAtomContainer mol = new AtomContainer();
         PseudoAtom atom = new PseudoAtom("N");
         atom.setLabel("Glu55");
@@ -186,7 +186,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1455346
      */
     @Test
-    public void testChemModel() throws Exception {
+    void testChemModel() throws Exception {
         ChemModel model = new ChemModel();
         IAtomContainerSet moleculeSet = new AtomContainerSet();
         IAtomContainer mol = new AtomContainer();
@@ -206,7 +206,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testAtomFormalCharge() throws Exception {
+    void testAtomFormalCharge() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         int formalCharge = +1;
@@ -224,7 +224,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1713398
      */
     @Test
-    public void testHydrogenCount() throws Exception {
+    void testHydrogenCount() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         atom.setImplicitHydrogenCount(3);
@@ -241,7 +241,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1713398
      */
     @Test
-    public void testHydrogenCount_UNSET() throws Exception {
+    void testHydrogenCount_UNSET() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         atom.setImplicitHydrogenCount((Integer) CDKConstants.UNSET);
@@ -255,7 +255,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Disabled("Have to figure out how to store partial charges in CML2")
-    public void testAtomPartialCharge() throws Exception {
+    void testAtomPartialCharge() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         double partialCharge = 0.5;
@@ -270,7 +270,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Disabled("Have to figure out how to store atom parity in CML2")
-    public void testAtomStereoParity() throws Exception {
+    void testAtomStereoParity() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         int stereo = CDKConstants.STEREO_ATOM_PARITY_PLUS;
@@ -285,7 +285,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsotope() throws Exception {
+    void testIsotope() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setMassNumber(13);
@@ -301,7 +301,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1014344
      */
     @Disabled("Functionality not yet implemented - exact mass can not be written/read")
-    public void testIsotope_ExactMass() throws Exception {
+    void testIsotope_ExactMass() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setExactMass(13.0);
@@ -319,7 +319,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1014344
      */
     @Disabled("Functionality not yet implemented - natural abundance can not be written/read")
-    public void testIsotope_Abundance() throws Exception {
+    void testIsotope_Abundance() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setNaturalAbundance(1.0);
@@ -338,7 +338,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testMassNumber() throws Exception {
+    void testMassNumber() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setMassNumber(12);
@@ -353,7 +353,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testBond() throws Exception {
+    void testBond() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -374,7 +374,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testBondID() throws Exception {
+    void testBondID() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -390,7 +390,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testBondStereo() throws Exception {
+    void testBondStereo() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -410,7 +410,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testBondAromatic() throws Exception {
+    void testBondAromatic() throws Exception {
         IAtomContainer mol = new AtomContainer();
         // surely, this bond is not aromatic... but fortunately, file formats do not care about chemistry
         Atom atom = new Atom("C");
@@ -434,7 +434,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1713398
      */
     @Test
-    public void testBondAromatic_Double() throws Exception {
+    void testBondAromatic_Double() throws Exception {
         IAtomContainer mol = new AtomContainer();
         // surely, this bond is not aromatic... but fortunately, file formats do not care about chemistry
         Atom atom = new Atom("C");
@@ -455,7 +455,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testPartialCharge() throws Exception {
+    void testPartialCharge() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         mol.addAtom(atom);
@@ -470,7 +470,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testInChI() throws Exception {
+    void testInChI() throws Exception {
         IAtomContainer mol = new AtomContainer();
         String inchi = "InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)";
         mol.setProperty(CDKConstants.INCHI, inchi);
@@ -482,7 +482,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testSpinMultiplicity() throws Exception {
+    void testSpinMultiplicity() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         mol.addAtom(atom);
@@ -497,7 +497,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testReaction() throws Exception {
+    void testReaction() throws Exception {
         logger.debug("********** TEST REACTION **********");
         IReaction reaction = new Reaction();
         reaction.setID("reaction.1");
@@ -547,7 +547,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testDescriptorValue() throws Exception {
+    void testDescriptorValue() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
 
         String[] propertyName = {"testKey1", "testKey2"};
@@ -569,7 +569,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testAromaticity() throws Exception {
+    void testAromaticity() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         for (IBond bond : molecule.bonds()) {
             bond.setFlag(CDKConstants.ISAROMATIC, true);
@@ -585,7 +585,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testAtomAromaticity() throws Exception {
+    void testAtomAromaticity() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         for (IAtom atom : molecule.atoms()) {
             atom.setFlag(CDKConstants.ISAROMATIC, true);
@@ -604,7 +604,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1930029
      */
     @Test
-    public void testAtomProperty() throws Exception {
+    void testAtomProperty() throws Exception {
         String[] key = {"customAtomProperty1", "customAtomProperty2"};
         String[] value = {"true", "false"};
 
@@ -634,7 +634,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1930029
      */
     @Test
-    public void testBondProperty() throws Exception {
+    void testBondProperty() throws Exception {
         String[] key = {"customBondProperty1", "customBondProperty2"};
         String[] value = {"true", "false"};
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
@@ -663,7 +663,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1930029
      */
     @Test
-    public void testMoleculeProperty() throws Exception {
+    void testMoleculeProperty() throws Exception {
         String[] key = {"customMoleculeProperty1", "customMoleculeProperty2"};
         String[] value = {"true", "false"};
 
@@ -682,7 +682,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test
-    public void testMoleculeSet() throws Exception {
+    void testMoleculeSet() throws Exception {
         IAtomContainerSet list = new AtomContainerSet();
         list.addAtomContainer(new AtomContainer());
         list.addAtomContainer(new AtomContainer());
@@ -701,7 +701,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1930029
      */
     @Test
-    public void testAtomProperties() throws Exception {
+    void testAtomProperties() throws Exception {
         String filename = "custompropertiestest.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -719,7 +719,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testUnsetHydrogenCount() throws Exception {
+    void testUnsetHydrogenCount() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setImplicitHydrogenCount(null);

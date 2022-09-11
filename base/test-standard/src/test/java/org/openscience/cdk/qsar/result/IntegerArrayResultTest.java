@@ -25,28 +25,28 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class IntegerArrayResultTest extends CDKTestCase {
+class IntegerArrayResultTest extends CDKTestCase {
 
-    public IntegerArrayResultTest() {
+    IntegerArrayResultTest() {
         super();
     }
 
     @Test
-    public void IntegerArrayResult_int() {
+    void IntegerArrayResult_int() {
         IntegerArrayResult result = new IntegerArrayResult(5);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(5, result.length());
     }
 
     @Test
-    public void testIntegerArrayResult() {
+    void testIntegerArrayResult() {
         IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         Assertions.assertEquals(0, result.length());
     }
 
     @Test
-    public void testAdd_int() {
+    void testAdd_int() {
         IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         result.add(5);
@@ -58,7 +58,7 @@ public class IntegerArrayResultTest extends CDKTestCase {
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         Assertions.assertEquals(0, result.length());
@@ -67,7 +67,7 @@ public class IntegerArrayResultTest extends CDKTestCase {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         Assertions.assertEquals("", result.toString());
@@ -80,7 +80,7 @@ public class IntegerArrayResultTest extends CDKTestCase {
     }
 
     @Test
-    public void testGet_int() {
+    void testGet_int() {
         IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         Assertions.assertEquals("", result.toString());

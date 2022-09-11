@@ -26,10 +26,10 @@ import java.util.List;
  *
  * @see org.openscience.cdk.geometry.alignment.KabschAlignment
  */
-public class KabschAlignmentTest extends CDKTestCase {
+class KabschAlignmentTest extends CDKTestCase {
 
     @Test
-    public void testAlign() throws java.lang.Exception {
+    void testAlign() throws java.lang.Exception {
         IAtomContainer ac;
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);

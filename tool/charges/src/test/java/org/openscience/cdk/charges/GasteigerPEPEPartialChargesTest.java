@@ -45,7 +45,7 @@ import java.util.List;
  * @cdk.module test-charges
  * @cdk.created 2008-18-05
  */
-public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
+class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -56,7 +56,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      */
     @Test
-    public void testCalculateCharges_IAtomContainer() throws Exception {
+    void testCalculateCharges_IAtomContainer() throws Exception {
         double[] testResult = {0.0, 0.0, 0.0, 0.0, 0.0};
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
@@ -82,7 +82,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testAromaticBondOrders() throws Exception {
+    void testAromaticBondOrders() throws Exception {
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
         String smiles1 = "c1ccccc1";
@@ -110,7 +110,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
     }
 
     @Test
-    public void testAromaticAndNonAromatic() throws Exception {
+    void testAromaticAndNonAromatic() throws Exception {
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
         String smiles1 = "c1ccccc1";
@@ -145,7 +145,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testAssignGasteigerPiPartialCharges_IAtomContainer_Boolean() throws Exception {
+    void testAssignGasteigerPiPartialCharges_IAtomContainer_Boolean() throws Exception {
         double[] testResult = {0.0, 0.0, 0.0, 0.0, 0.0};
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
@@ -171,7 +171,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMaxGasteigerIters() throws Exception {
+    void testGetMaxGasteigerIters() throws Exception {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
@@ -183,7 +183,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMaxResoStruc() throws Exception {
+    void testGetMaxResoStruc() throws Exception {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
@@ -195,7 +195,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetStepSize() throws Exception {
+    void testGetStepSize() throws Exception {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
         Assertions.assertEquals(5, peoe.getStepSize());
@@ -206,7 +206,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetMaxGasteigerIters_Double() throws Exception {
+    void testSetMaxGasteigerIters_Double() throws Exception {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
         int MX_ITERATIONS = 10;
@@ -219,7 +219,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetMaxResoStruc_Int() throws Exception {
+    void testSetMaxResoStruc_Int() throws Exception {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
         int MX_RESON = 1;
@@ -232,7 +232,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetStepSize() throws Exception {
+    void testSetStepSize() throws Exception {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
         int STEP_SIZE = 22;
@@ -245,7 +245,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testAssignrPiMarsilliFactors_IAtomContainerSet() throws Exception {
+    void testAssignrPiMarsilliFactors_IAtomContainerSet() throws Exception {
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);

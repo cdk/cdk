@@ -45,21 +45,21 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
  *
  * @see org.openscience.cdk.io.XYZWriter
  */
-public class XYZWriterTest extends ChemObjectIOTest {
+class XYZWriterTest extends ChemObjectIOTest {
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setChemObjectIO(new XYZWriter());
     }
 
     @Test
-    public void testAccepts() throws Exception {
+    void testAccepts() throws Exception {
         XYZWriter reader = new XYZWriter();
         Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test
-    public void testWriting() throws Exception {
+    void testWriting() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");
@@ -88,7 +88,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
      * @cdk.bug 2215774
      */
     @Test
-    public void testWriting_Point2d() throws Exception {
+    void testWriting_Point2d() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");
@@ -108,7 +108,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
      * @cdk.bug 2215775
      */
     @Test
-    public void testSixDecimalOuput() throws Exception {
+    void testSixDecimalOuput() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");

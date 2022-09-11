@@ -34,12 +34,12 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * @author maclean
  *
  */
-public class AtomEquitablePartitionRefinementTests {
+class AtomEquitablePartitionRefinementTests {
     
-    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     
     @Test
-    public void cube2eneWithoutBonds() {
+    void cube2eneWithoutBonds() {
         AtomRefinable ar = make(cubene(), true);
         EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(ar);
         Partition finer = refiner.refine(Partition.unit(8));
@@ -48,7 +48,7 @@ public class AtomEquitablePartitionRefinementTests {
     }
     
     @Test
-    public void cube2eneWithBonds() {
+    void cube2eneWithBonds() {
         AtomRefinable ar = make(cubene(), false);
         EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(ar);
         Partition finer = refiner.refine(Partition.unit(8));

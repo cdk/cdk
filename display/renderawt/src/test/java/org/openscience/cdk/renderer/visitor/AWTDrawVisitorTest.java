@@ -35,10 +35,10 @@ import org.openscience.cdk.renderer.font.AWTFontManager;
  * @cdk.githash
  *
  */
-public class AWTDrawVisitorTest {
+class AWTDrawVisitorTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
@@ -46,7 +46,7 @@ public class AWTDrawVisitorTest {
     }
 
     @Test
-    public void testSetFontManager() {
+    void testSetFontManager() {
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
@@ -56,7 +56,7 @@ public class AWTDrawVisitorTest {
     }
 
     @Test
-    public void testSetRendererModel() {
+    void testSetRendererModel() {
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
@@ -66,7 +66,7 @@ public class AWTDrawVisitorTest {
     }
 
     @Test
-    public void testGetRendererModel() {
+    void testGetRendererModel() {
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
@@ -76,7 +76,7 @@ public class AWTDrawVisitorTest {
     }
 
     @Test
-    public void testGetStrokeMap() {
+    void testGetStrokeMap() {
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
@@ -84,7 +84,7 @@ public class AWTDrawVisitorTest {
     }
 
     @Test
-    public void testVisit() {
+    void testVisit() {
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
@@ -96,7 +96,7 @@ public class AWTDrawVisitorTest {
     }
 
     @Test
-    public void testGetGraphics() {
+    void testGetGraphics() {
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);

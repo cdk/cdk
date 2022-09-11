@@ -34,17 +34,17 @@ import static org.hamcrest.Matchers.is;
  * @cdk.module test-qsarmolecular
  */
 
-public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
+class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
 
-    public RuleOfFiveDescriptorTest() {}
+    RuleOfFiveDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(RuleOfFiveDescriptor.class);
     }
 
     @Test
-    public void testRuleOfFiveDescriptor() throws java.lang.Exception {
+    void testRuleOfFiveDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -54,7 +54,7 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testRuleOfFiveRotatableBonds() throws java.lang.Exception {
+    void testRuleOfFiveRotatableBonds() throws java.lang.Exception {
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -64,7 +64,7 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testRuleOfFiveRotatableBondsViolated() throws java.lang.Exception {
+    void testRuleOfFiveRotatableBondsViolated() throws java.lang.Exception {
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

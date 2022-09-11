@@ -12,7 +12,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  *
  * @cdk.module test-formula
  */
-public class IsotopeContainerTest extends CDKTestCase {
+class IsotopeContainerTest extends CDKTestCase {
 
     private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
@@ -20,7 +20,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *  Constructor for the IsotopeContainerTest object.
      *
      */
-    public IsotopeContainerTest() {
+    IsotopeContainerTest() {
         super();
     }
 
@@ -30,7 +30,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsotopeContainer() {
+    void testIsotopeContainer() {
         IsotopeContainer isoC = new IsotopeContainer();
         Assertions.assertNotNull(isoC);
     }
@@ -41,7 +41,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsotopeContainer_IMolecularFormula_double() {
+    void testIsotopeContainer_IMolecularFormula_double() {
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
         double intensity = 130.00;
         IsotopeContainer isoC = new IsotopeContainer(formula, intensity);
@@ -57,7 +57,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsotopeContainer_double_double() {
+    void testIsotopeContainer_double_double() {
         double mass = 130.00;
         double intensity = 500000.00;
         IsotopeContainer isoC = new IsotopeContainer(mass, intensity);
@@ -73,7 +73,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetFormula_IMolecularFormula() {
+    void testSetFormula_IMolecularFormula() {
         IsotopeContainer isoC = new IsotopeContainer();
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
         isoC.setFormula(formula);
@@ -86,7 +86,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetMass_double() {
+    void testSetMass_double() {
         IsotopeContainer isoC = new IsotopeContainer();
         isoC.setMass(130.00);
         Assertions.assertNotNull(isoC);
@@ -98,7 +98,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetIntensity_double() {
+    void testSetIntensity_double() {
         IsotopeContainer isoC = new IsotopeContainer();
         isoC.setIntensity(5000000.0);
         Assertions.assertNotNull(isoC);
@@ -110,7 +110,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetFormula() {
+    void testGetFormula() {
         IsotopeContainer isoC = new IsotopeContainer();
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
         isoC.setFormula(formula);
@@ -123,7 +123,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMass() {
+    void testGetMass() {
         IsotopeContainer isoC = new IsotopeContainer();
         double mass = 130.00;
         isoC.setMass(mass);
@@ -137,7 +137,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetIntensity() {
+    void testGetIntensity() {
         IsotopeContainer isoC = new IsotopeContainer();
         double intensity = 130.00;
         isoC.setIntensity(intensity);
@@ -150,7 +150,7 @@ public class IsotopeContainerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testClone() throws Exception {
+    void testClone() throws Exception {
         IsotopeContainer isoC = new IsotopeContainer();
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
         isoC.setFormula(formula);

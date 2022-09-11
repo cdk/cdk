@@ -38,12 +38,12 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 /**
  * @cdk.module test-io
  */
-public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
+class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCSubstancesXMLReaderTest.class);
 
     @Test
-    public void testTaxols() throws Exception {
+    void testTaxols() throws Exception {
         String filename = "org/openscience/cdk/io/taxols.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

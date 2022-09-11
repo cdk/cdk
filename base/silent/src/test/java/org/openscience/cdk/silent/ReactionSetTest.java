@@ -30,15 +30,15 @@ import org.openscience.cdk.test.interfaces.AbstractReactionSetTest;
  *
  * @cdk.module test-silent
  */
-public class ReactionSetTest extends AbstractReactionSetTest {
+class ReactionSetTest extends AbstractReactionSetTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ReactionSet::new);
     }
 
     @Test
-    public void testReactionSet() {
+    void testReactionSet() {
         IReactionSet rs = new ReactionSet();
         Assertions.assertNotNull(rs);
     }

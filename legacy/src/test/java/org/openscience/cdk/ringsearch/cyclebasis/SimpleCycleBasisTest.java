@@ -36,13 +36,13 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
-public class SimpleCycleBasisTest extends CDKTestCase {
+class SimpleCycleBasisTest extends CDKTestCase {
 
     private static SimpleGraph      g;
     private static SimpleCycleBasis basis;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         g = new SimpleGraph();
         g.addVertex("a");
         g.addVertex("b");
@@ -74,12 +74,12 @@ public class SimpleCycleBasisTest extends CDKTestCase {
     }
 
     @Test
-    public void testSimpleCycleBasis() {
+    void testSimpleCycleBasis() {
         Assertions.assertTrue(basis.cycles().size() == g.edgeSet().size() - g.vertexSet().size() + 1);
     }
 
     @Test
-    public void testSimpleCycleBasisCompleteGraph() {
+    void testSimpleCycleBasisCompleteGraph() {
         g = new SimpleGraph();
         g.addVertex("a");
         g.addVertex("b");
@@ -107,27 +107,27 @@ public class SimpleCycleBasisTest extends CDKTestCase {
     }
 
     @Test
-    public void testWeightVector() {
+    void testWeightVector() {
         Assertions.assertArrayEquals(basis.weightVector(), new int[]{3, 3, 3, 3, 3, 3, 3, 3});
     }
 
     @Test
-    public void testRelevantCycles() {
+    void testRelevantCycles() {
         Assertions.assertEquals(10, basis.relevantCycles().size());
     }
 
     @Test
-    public void testEssentialCycles() {
+    void testEssentialCycles() {
         Assertions.assertEquals(2, basis.essentialCycles().size());
     }
 
     @Test
-    public void testEquivalenceClasses() {
+    void testEquivalenceClasses() {
         Assertions.assertEquals(4, basis.equivalenceClasses().size());
     }
 
     @Test
-    public void testEquivalenceClassesEmptyIntersection() {
+    void testEquivalenceClassesEmptyIntersection() {
         SimpleGraph h = new SimpleGraph();
 
         h.addVertex("a");

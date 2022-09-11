@@ -23,6 +23,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-structgen
  */
-public class ChemGraphTest extends CDKTestCase {
+class ChemGraphTest extends CDKTestCase {
 
 }

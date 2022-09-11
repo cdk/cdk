@@ -30,28 +30,28 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemObjectTest extends AbstractChemObjectTest {
+class DebugChemObjectTest extends AbstractChemObjectTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugChemObject::new);
     }
 
     @Test
-    public void testDebugChemObject() {
+    void testDebugChemObject() {
         IChemObject chemObject = new DebugChemObject();
         Assertions.assertNotNull(chemObject);
     }
 
     @Test
-    public void testDebugChemObject_IChemObject() {
+    void testDebugChemObject_IChemObject() {
         IChemObject chemObject1 = new DebugChemObject();
         IChemObject chemObject = new DebugChemObject(chemObject1);
         Assertions.assertNotNull(chemObject);
     }
 
     @Test
-    public void compare() {
+    void compare() {
         DebugChemObject co1 = new DebugChemObject();
         DebugChemObject co2 = new DebugChemObject();
         co1.setID("a1");
@@ -60,7 +60,7 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
     }
 
     @Test
-    public void compareDifferent() {
+    void compareDifferent() {
         DebugChemObject co1 = new DebugChemObject();
         DebugChemObject co2 = new DebugChemObject();
         co1.setID("a1");

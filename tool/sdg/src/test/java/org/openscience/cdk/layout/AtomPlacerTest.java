@@ -45,10 +45,10 @@ import static org.hamcrest.Matchers.closeTo;
  * @author maclean
  * @cdk.module test-sdg
  */
-public class AtomPlacerTest extends CDKTestCase {
+class AtomPlacerTest extends CDKTestCase {
 
     @Test
-    public void emptyAtomsListTest() {
+    void emptyAtomsListTest() {
         List<IAtom> atoms = new ArrayList<>();
         // switch on debugging, to see if NPE is thrown
         AtomPlacer placer = new AtomPlacer();
@@ -62,7 +62,7 @@ public class AtomPlacerTest extends CDKTestCase {
     }
 
     @Test
-    public void triangleTest() {
+    void triangleTest() {
         List<IAtom> atoms = new ArrayList<>();
         atoms.add(new Atom("C"));
         atoms.add(new Atom("C"));
@@ -75,7 +75,7 @@ public class AtomPlacerTest extends CDKTestCase {
     }
 
     @Test
-    public void cumulated_x2() {
+    void cumulated_x2() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 3));
         m.addAtom(atom("C", 1));
@@ -109,7 +109,7 @@ public class AtomPlacerTest extends CDKTestCase {
     }
 
     @Test
-    public void cumulated_x3() {
+    void cumulated_x3() {
         IAtomContainer m = new AtomContainer(6, 4, 0, 0);
         m.addAtom(atom("C", 3));
         m.addAtom(atom("C", 1));

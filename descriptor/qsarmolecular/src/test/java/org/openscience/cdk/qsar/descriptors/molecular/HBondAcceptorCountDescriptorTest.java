@@ -40,17 +40,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsarmolecular
  */
 
-public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
+class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
 
-    public HBondAcceptorCountDescriptorTest() {}
+    HBondAcceptorCountDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(HBondAcceptorCountDescriptor.class);
     }
 
     @Test
-    public void testHBondAcceptorCountDescriptor() throws java.lang.Exception {
+    void testHBondAcceptorCountDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -65,7 +65,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C2H3N3/c1-3-2-5-4-1/h1-2H,(H,3,4,5)
      */
     @Test
-    public void testCID9257() throws CDKException {
+    void testCID9257() throws CDKException {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a1 = builder.newInstance(IAtom.class, "N");
@@ -126,7 +126,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
      * @see <a href="https://github.com/cdk/cdk/issues/495">Issue 495</a>
      */
     @Test
-    public void exocyclicOxygenInAromaticRing() throws InvalidSmilesException {
+    void exocyclicOxygenInAromaticRing() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer m = sp.parseSmiles("Cn1c2nc([nH]c2c(=O)n(c1=O)C)C1CCCC1");
 
@@ -136,7 +136,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testPhenol() throws CDKException {
+    void testPhenol() throws CDKException {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

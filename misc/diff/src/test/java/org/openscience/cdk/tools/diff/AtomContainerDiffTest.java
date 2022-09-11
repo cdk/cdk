@@ -36,10 +36,10 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-diff
  */
-public class AtomContainerDiffTest {
+class AtomContainerDiffTest {
 
     @Test
-    public void testMatchAgainstItself() {
+    void testMatchAgainstItself() {
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getElectronContainerCount()).thenReturn(1);
         when(container.getElectronContainer(0)).thenReturn(mock(IBond.class));
@@ -48,7 +48,7 @@ public class AtomContainerDiffTest {
     }
 
     @Test
-    public void testDiff() {
+    void testDiff() {
 
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
@@ -88,7 +88,7 @@ public class AtomContainerDiffTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
 
@@ -122,7 +122,7 @@ public class AtomContainerDiffTest {
 
     @Disabled("unit test did not test AtomContainerDiff but rather the ability of AtomContainer"
             + "to be serialized. This is already tested in each respective domain module")
-    public void testDiffFromSerialized() throws IOException, ClassNotFoundException {
+    void testDiffFromSerialized() throws IOException, ClassNotFoundException {
         //        IAtomContainer atomContainer = new AtomContainer();
         //        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
         //        bond1.setOrder(IBond.Order.SINGLE);

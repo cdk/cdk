@@ -39,10 +39,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class UllmannStateTest {
+class UllmannStateTest {
 
     @Test
-    public void testNextN() throws Exception {
+    void testNextN() throws Exception {
         UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         assertThat(state.nextN(0), is(0));
         state.size = 1;
@@ -52,7 +52,7 @@ public class UllmannStateTest {
     }
 
     @Test
-    public void testNextM() throws Exception {
+    void testNextM() throws Exception {
         UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         assertThat(state.nextM(0, -1), is(0));
         assertThat(state.nextM(0, 0), is(1));
@@ -62,7 +62,7 @@ public class UllmannStateTest {
     }
 
     @Test
-    public void add() throws Exception {
+    void add() throws Exception {
         UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -100,7 +100,7 @@ public class UllmannStateTest {
     }
 
     @Test
-    public void remove() throws Exception {
+    void remove() throws Exception {
         UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -147,7 +147,7 @@ public class UllmannStateTest {
     }
 
     @Test
-    public void mapping() throws Exception {
+    void mapping() throws Exception {
         UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         state.m1[0] = 1;
         state.m1[1] = 2;
@@ -156,7 +156,7 @@ public class UllmannStateTest {
     }
 
     @Test
-    public void accessors() throws Exception {
+    void accessors() throws Exception {
         UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         state.size = 1;
         assertThat(state.size(), is(1));

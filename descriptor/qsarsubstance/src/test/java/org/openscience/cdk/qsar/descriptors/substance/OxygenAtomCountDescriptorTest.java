@@ -27,15 +27,15 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
-public class OxygenAtomCountDescriptorTest extends SubstanceDescriptorTest {
+class OxygenAtomCountDescriptorTest extends SubstanceDescriptorTest {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(OxygenAtomCountDescriptor.class);
     }
 
     @Test
-    public void testCalculate_ZnO() throws Exception {
+    void testCalculate_ZnO() throws Exception {
         ISubstance material = new Substance();
         material.addAtomContainer(
             MolecularFormulaManipulator.getAtomContainer(
@@ -50,7 +50,7 @@ public class OxygenAtomCountDescriptorTest extends SubstanceDescriptorTest {
     }
 
     @Test
-    public void testCalculate_IronOxide() throws Exception {
+    void testCalculate_IronOxide() throws Exception {
         ISubstance material = new Substance();
         material.addAtomContainer(
             MolecularFormulaManipulator.getAtomContainer(

@@ -64,18 +64,18 @@ import static org.openscience.cdk.CDKConstants.ISAROMATIC;
  *
  * @see org.openscience.cdk.io.SDFWriter
  */
-public class SDFWriterTest extends ChemObjectWriterTest {
+class SDFWriterTest extends ChemObjectWriterTest {
 
     private static IChemObjectBuilder builder;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectWriter(new SDFWriter());
     }
 
     @Test
-    public void testAccepts() throws Exception {
+    void testAccepts() throws Exception {
         SDFWriter reader = new SDFWriter();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(ChemModel.class));
@@ -83,7 +83,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWrite_IAtomContainerSet_Properties_Off() throws Exception {
+    void testWrite_IAtomContainerSet_Properties_Off() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
         IAtomContainer molecule = new AtomContainer();
@@ -106,7 +106,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
      * @cdk.bug 2827745
      */
     @Test
-    public void testWrite_IAtomContainerSet() throws Exception {
+    void testWrite_IAtomContainerSet() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = builder.newInstance(IAtomContainerSet.class);
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -120,7 +120,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWrite_IAtomContainerSet_Properties() throws Exception {
+    void testWrite_IAtomContainerSet_Properties() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
         IAtomContainer molecule = new AtomContainer();
@@ -136,7 +136,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWrite_IAtomContainerSet_CDKProperties() throws Exception {
+    void testWrite_IAtomContainerSet_CDKProperties() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
         IAtomContainer molecule = new AtomContainer();
@@ -151,7 +151,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWrite_IAtomContainerSet_SingleMolecule() throws Exception {
+    void testWrite_IAtomContainerSet_SingleMolecule() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
         IAtomContainer molecule = new AtomContainer();
@@ -165,7 +165,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWrite_IAtomContainerSet_MultIAtomContainer() throws Exception {
+    void testWrite_IAtomContainerSet_MultIAtomContainer() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
         IAtomContainer molecule = new AtomContainer();
@@ -182,7 +182,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWrite_IAtomContainer_MultIAtomContainer() throws Exception {
+    void testWrite_IAtomContainer_MultIAtomContainer() throws Exception {
         StringWriter writer = new StringWriter();
         SDFWriter sdfWriter = new SDFWriter(writer);
 
@@ -205,7 +205,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void invalidSDfileHeaderTags() throws Exception {
+    void invalidSDfileHeaderTags() throws Exception {
         StringWriter writer = new StringWriter();
         SDFWriter sdfWriter = new SDFWriter(writer);
 
@@ -219,7 +219,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void chooseFormatToWrite() throws Exception {
+    void chooseFormatToWrite() throws Exception {
         StringWriter writer = new StringWriter();
         SDFWriter sdfWriter = new SDFWriter(writer);
 
@@ -243,7 +243,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void chooseFormatToWrite2() throws Exception {
+    void chooseFormatToWrite2() throws Exception {
         StringWriter writer = new StringWriter();
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.setAlwaysV3000(true);
@@ -271,7 +271,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
      * @cdk.bug 3392485
      */
     @Test
-    public void testIOPropPropagation() throws Exception {
+    void testIOPropPropagation() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
         for (IAtom atom : mol.atoms()) {
             atom.setFlag(ISAROMATIC, true);
@@ -295,7 +295,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testPropertyOutput_All() throws CDKException, IOException {
+    void testPropertyOutput_All() throws CDKException, IOException {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         StringWriter sw = new StringWriter();
         SDFWriter sdf = new SDFWriter(sw);
@@ -309,7 +309,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testPropertyOutput_one() throws CDKException, IOException {
+    void testPropertyOutput_one() throws CDKException, IOException {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         StringWriter sw = new StringWriter();
         SDFWriter sdf = new SDFWriter(sw, Collections.singleton("one"));
@@ -323,7 +323,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testPropertyOutput_two() throws CDKException, IOException {
+    void testPropertyOutput_two() throws CDKException, IOException {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         StringWriter sw = new StringWriter();
         SDFWriter sdf = new SDFWriter(sw, Collections.singleton("two"));
@@ -337,7 +337,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testPropertyOutput_none() throws CDKException, IOException {
+    void testPropertyOutput_none() throws CDKException, IOException {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         StringWriter sw = new StringWriter();
         SDFWriter sdf = new SDFWriter(sw, Collections.emptySet());
@@ -351,7 +351,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void setProgramName() {
+    void setProgramName() {
         StringWriter sw = new StringWriter();
         try (SDFWriter sdfw = new SDFWriter(sw)) {
             sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
@@ -376,7 +376,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void optionallyTruncateLongProperties() {
+    void optionallyTruncateLongProperties() {
         StringWriter sw = new StringWriter();
         try (SDFWriter sdfw = new SDFWriter(sw)) {
             sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
@@ -407,7 +407,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
 
     @Test
-    public void testNoChiralFlag() throws Exception {
+    void testNoChiralFlag() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052112362D          \n" +
                 "\n" +
@@ -447,7 +447,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testChiralFlag() throws Exception {
+    void testChiralFlag() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052112362D          \n" +
                 "\n" +
@@ -484,7 +484,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testStereoRac1() throws Exception {
+    void testStereoRac1() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052113162D          \n" +
                 "\n" +
@@ -524,7 +524,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testStereoRel1() throws Exception {
+    void testStereoRel1() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052113162D          \n" +
                 "\n" +
@@ -566,7 +566,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testStereoRac1And() throws Exception {
+    void testStereoRac1And() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02062121432D          \n" +
                 "\n" +

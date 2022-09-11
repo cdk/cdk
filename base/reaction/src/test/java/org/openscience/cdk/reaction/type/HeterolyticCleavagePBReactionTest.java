@@ -63,11 +63,11 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
     private UniversalIsomorphismTester    uiTester;
 
     @BeforeEach
-    public void setUpUITester() {
+    void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }
 
-    public HeterolyticCleavagePBReactionTest() throws Exception {
+    HeterolyticCleavagePBReactionTest() throws Exception {
         setReaction(HeterolyticCleavagePBReaction.class);
     }
 
@@ -75,7 +75,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testHeterolyticCleavagePBReaction() throws Exception {
+    void testHeterolyticCleavagePBReaction() throws Exception {
         IReactionProcess type = new HeterolyticCleavagePBReaction();
         Assertions.assertNotNull(type);
     }
@@ -180,7 +180,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCspChargeDoubleB() throws Exception {
+    void testCspChargeDoubleB() throws Exception {
 
     }
 
@@ -194,7 +194,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCspDoubleB() throws Exception {
+    void testCspDoubleB() throws Exception {
         //Smiles("C=C=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -276,7 +276,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCspTripleB() throws Exception {
+    void testCspTripleB() throws Exception {
         //Smiles("CC#C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -356,7 +356,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp2DoubleB() throws Exception {
+    void testNsp2DoubleB() throws Exception {
         //Smiles("CN=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -433,7 +433,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNspTripleB() throws Exception {
+    void testNspTripleB() throws Exception {
         //Smiles("N#C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -490,7 +490,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testOspDoubleB() throws Exception {
+    void testOspDoubleB() throws Exception {
         //Smiles("O=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -551,7 +551,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new HeterolyticCleavagePBReaction();
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
@@ -603,7 +603,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new HeterolyticCleavagePBReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -655,7 +655,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
     * @return    The test suite
     */
     @Test
-    public void testBB_AutomaticSearchCentreActiveFormaldehyde() throws Exception {
+    void testBB_AutomaticSearchCentreActiveFormaldehyde() throws Exception {
         IReactionProcess type = new HeterolyticCleavagePBReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);

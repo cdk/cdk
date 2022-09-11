@@ -27,10 +27,10 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-io
  */
-public class ZMatrixToolsTest extends CDKTestCase {
+class ZMatrixToolsTest extends CDKTestCase {
 
     @Test
-    public void testZmatrixToCartesian_arraydouble_arrayint_arraydouble_arrayint_arraydouble_arrayint() {
+    void testZmatrixToCartesian_arraydouble_arrayint_arraydouble_arrayint_arraydouble_arrayint() {
         // acetaldehyde example from http://www.shodor.org/chemviz/zmatrices/babelex.html
         int[] first_atoms = {0, 0, 0, 0, 3, 3, 3};
         double[] distances = {0, 1.2, 1.1, 1.5, 1.1, 1.1, 1.1};

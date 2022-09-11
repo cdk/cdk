@@ -36,10 +36,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class VentoFoggiaTest {
+class VentoFoggiaTest {
 
     @Test
-    public void benzeneIdentical() throws Exception {
+    void benzeneIdentical() throws Exception {
         int[] match = VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene()).match(
                 TestMoleculeFactory.makeBenzene());
         assertThat(match, is(new int[]{0, 1, 2, 3, 4, 5}));
@@ -50,7 +50,7 @@ public class VentoFoggiaTest {
     }
 
     @Test
-    public void benzeneNonIdentical() throws Exception {
+    void benzeneNonIdentical() throws Exception {
         int[] match = VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene()).match(
                 TestMoleculeFactory.makeNaphthalene());
         assertThat(match, is(new int[0]));
@@ -61,7 +61,7 @@ public class VentoFoggiaTest {
     }
 
     @Test
-    public void benzeneSubsearch() throws Exception {
+    void benzeneSubsearch() throws Exception {
         int[] match = VentoFoggia.findSubstructure(TestMoleculeFactory.makeBenzene()).match(
                 TestMoleculeFactory.makeNaphthalene());
         assertThat(match, is(new int[]{2, 7, 6, 5, 4, 3}));
@@ -72,7 +72,7 @@ public class VentoFoggiaTest {
     }
 
     @Test
-    public void napthaleneSubsearch() throws Exception {
+    void napthaleneSubsearch() throws Exception {
         int[] match = VentoFoggia.findSubstructure(TestMoleculeFactory.makeNaphthalene()).match(
                 TestMoleculeFactory.makeBenzene());
         assertThat(match, is(new int[0]));

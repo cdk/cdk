@@ -49,7 +49,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testSize() throws Exception {
+    void testSize() throws Exception {
         SubstructureFingerprinter fp = new SubstructureFingerprinter();
         Assertions.assertEquals(307, fp.getSize());
 
@@ -62,7 +62,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
     @Test
     @Override
-    public void testBug706786() throws Exception {
+    void testBug706786() throws Exception {
 
         IAtomContainer superStructure = bug706786_1();
         IAtomContainer subStructure = bug706786_2();
@@ -86,7 +86,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testUserFunctionalGroups() throws Exception {
+    void testUserFunctionalGroups() throws Exception {
         String[] smarts = {"c1ccccc1", "[CX4H3][#6]", "[CX2]#[CX2]"};
         IFingerprinter printer = new SubstructureFingerprinter(smarts);
         Assertions.assertEquals(3, printer.getSize());
@@ -109,7 +109,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testFunctionalGroupsBinary() throws Exception {
+    void testFunctionalGroupsBinary() throws Exception {
         IFingerprinter printer = new SubstructureFingerprinter();
         Assertions.assertEquals(307, printer.getSize());
 
@@ -124,12 +124,12 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testFunctionalGroupsCount() throws Exception {
+    void testFunctionalGroupsCount() throws Exception {
         // TODO: Implement tests
     }
 
     @Test
-    public void testCountableMACCSBinary() throws Exception {
+    void testCountableMACCSBinary() throws Exception {
         // Tests are modified copy of the test included in the MACCS-FPs class
 
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -174,7 +174,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testCountableMACCSBinary2() throws Exception {
+    void testCountableMACCSBinary2() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
@@ -222,7 +222,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testCountableMACCSCount2() throws Exception {
+    void testCountableMACCSCount2() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
@@ -264,7 +264,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testCountableMACCSCount_Rings() throws Exception {
+    void testCountableMACCSCount_Rings() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
@@ -324,7 +324,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testCountableMACCSBinary_Rings() throws Exception {
+    void testCountableMACCSBinary_Rings() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
@@ -392,7 +392,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
      * supplied definition this answer is actually correct.
      */
     @Disabled("the SMARTS pattern vinylogous ester is not strict enough - we can not fix this")
-    public void testVinylogousEster() throws Exception {
+    void testVinylogousEster() throws Exception {
         String benzaldehyde = "c1ccccc1C=O";
         IFingerprinter fprinter = new SubstructureFingerprinter();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -401,7 +401,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testGetSubstructure() throws Exception {
+    void testGetSubstructure() throws Exception {
         String[] smarts = {"c1ccccc1", "[CX4H3][#6]", "[CX2]#[CX2]"};
         SubstructureFingerprinter printer = new SubstructureFingerprinter(smarts);
         Assertions.assertEquals(printer.getSubstructure(1), smarts[1]);

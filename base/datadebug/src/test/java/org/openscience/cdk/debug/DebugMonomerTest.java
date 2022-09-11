@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IMonomer;
  *
  * @cdk.module test-datadebug
  */
-public class DebugMonomerTest extends AbstractMonomerTest {
+class DebugMonomerTest extends AbstractMonomerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugMonomer::new);
     }
 
     @Test
-    public void testDebugMonomer() {
+    void testDebugMonomer() {
         IMonomer oMonomer = new DebugMonomer();
         Assertions.assertNotNull(oMonomer);
     }

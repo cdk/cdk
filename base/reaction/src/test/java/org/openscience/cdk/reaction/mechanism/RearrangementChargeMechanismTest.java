@@ -29,20 +29,20 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  *
  * @cdk.module test-reaction
  */
-public class RearrangementChargeMechanismTest extends ReactionMechanismTest {
+class RearrangementChargeMechanismTest extends ReactionMechanismTest {
 
     /**
      *  The JUnit setup method
      */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         setMechanism(RearrangementChargeMechanism.class);
     }
 
     /**
      *  Constructor for the RearrangementChargeMechanism object.
      */
-    public RearrangementChargeMechanismTest() {
+    RearrangementChargeMechanismTest() {
         super();
     }
 
@@ -52,7 +52,7 @@ public class RearrangementChargeMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testRearrangementChargeMechanism() {
+    void testRearrangementChargeMechanism() {
         IReactionMechanism mechanism = new RearrangementChargeMechanism();
         Assertions.assertNotNull(mechanism);
     }
@@ -64,7 +64,7 @@ public class RearrangementChargeMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+    void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
         IReactionMechanism mechanism = new RearrangementChargeMechanism();
 
         Assertions.assertNotNull(mechanism);

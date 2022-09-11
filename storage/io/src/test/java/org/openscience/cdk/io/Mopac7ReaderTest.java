@@ -32,15 +32,15 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 /**
  * @cdk.module test-io
  */
-public class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
+class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new Mopac7Reader(), "ethylene.dat.out");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Mopac7Reader reader = new Mopac7Reader();
         reader.setReaderMode(Mode.STRICT);
         Assertions.assertTrue(reader.accepts(AtomContainer.class));

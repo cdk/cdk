@@ -32,15 +32,15 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @cdk.module test-datadebug
  */
-public class DebugBondTest extends AbstractBondTest {
+class DebugBondTest extends AbstractBondTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugBond::new);
     }
 
     @Test
-    public void testDebugBond() {
+    void testDebugBond() {
         IBond bond = new DebugBond();
         Assertions.assertEquals(0, bond.getAtomCount());
         Assertions.assertNull(bond.getBegin());
@@ -50,7 +50,7 @@ public class DebugBondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testDebugBond_arrayIAtom() {
+    void testDebugBond_arrayIAtom() {
         IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
@@ -65,7 +65,7 @@ public class DebugBondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testDebugBond_arrayIAtom_IBond_Order() {
+    void testDebugBond_arrayIAtom_IBond_Order() {
         IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
@@ -81,7 +81,7 @@ public class DebugBondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testDebugBond_IAtom_IAtom() {
+    void testDebugBond_IAtom_IAtom() {
         IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom o = object.getBuilder().newInstance(IAtom.class, "O");
@@ -95,7 +95,7 @@ public class DebugBondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testDebugBond_IAtom_IAtom_IBond_Order() {
+    void testDebugBond_IAtom_IAtom_IBond_Order() {
         IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom o = object.getBuilder().newInstance(IAtom.class, "O");
@@ -109,7 +109,7 @@ public class DebugBondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testDebugBond_IAtom_IAtom_IBond_Order_IBond_Stereo() {
+    void testDebugBond_IAtom_IAtom_IBond_Order_IBond_Stereo() {
         IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom o = object.getBuilder().newInstance(IAtom.class, "O");

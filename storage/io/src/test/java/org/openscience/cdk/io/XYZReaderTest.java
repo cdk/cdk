@@ -42,23 +42,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @see org.openscience.cdk.io.XYZReader
  */
-public class XYZReaderTest extends SimpleChemObjectReaderTest {
+class XYZReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReaderTest.class);
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new XYZReader(), "viagra.xyz");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         XYZReader reader = new XYZReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
-    public void testViagra() throws Exception {
+    void testViagra() throws Exception {
         String filename = "viagra.xyz";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -90,7 +90,7 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testComment() throws Exception {
+    void testComment() throws Exception {
         String filename = "viagra_withComment.xyz";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

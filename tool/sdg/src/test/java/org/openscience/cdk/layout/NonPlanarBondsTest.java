@@ -57,11 +57,11 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @author John May
  * @cdk.module test-sdg
  */
-public class NonPlanarBondsTest {
+class NonPlanarBondsTest {
 
     // [C@H](C)(N)O
     @Test
-    public void clockwise_implH_1() {
+    void clockwise_implH_1() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, 0.00d, 1.50d));
         m.addAtom(atom("C", 3, 0.00d, 0.00d));
@@ -81,7 +81,7 @@ public class NonPlanarBondsTest {
     // [C@H](CC)(N)O
     // N is favoured over CC
     @Test
-    public void clockwise_implH_2() {
+    void clockwise_implH_2() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, -1.30d, 2.25d));
         m.addAtom(atom("C", 2, 0.00d, 1.50d));
@@ -103,7 +103,7 @@ public class NonPlanarBondsTest {
 
     // [C@H](C)(N)O
     @Test
-    public void anticlockwise_implH_1() {
+    void anticlockwise_implH_1() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, 0.00d, 1.50d));
         m.addAtom(atom("C", 3, 0.00d, 0.00d));
@@ -123,7 +123,7 @@ public class NonPlanarBondsTest {
     // [C@H](CC)(N)O
     // N is favoured over CC
     @Test
-    public void anticlockwise_implH_2() {
+    void anticlockwise_implH_2() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, -1.30d, 2.25d));
         m.addAtom(atom("C", 2, 0.00d, 1.50d));
@@ -145,7 +145,7 @@ public class NonPlanarBondsTest {
 
     // [C@@](CCC)(C)(N)O
     @Test
-    public void clockwise_1() {
+    void clockwise_1() {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 0, -1.47d, 3.62d));
         m.addAtom(atom("C", 2, -1.13d, 2.16d));
@@ -171,7 +171,7 @@ public class NonPlanarBondsTest {
 
     // [C@@](CCC)(C1)(C)C1 (favour acyclic)
     @Test
-    public void clockwise_2() {
+    void clockwise_2() {
         IAtomContainer m = new AtomContainer(8, 8, 0, 0);
         m.addAtom(atom("C", 0, -0.96d, -1.04d));
         m.addAtom(atom("C", 2, 0.18d, -0.08d));
@@ -200,7 +200,7 @@ public class NonPlanarBondsTest {
 
     // [C@](CCC)(C)(N)O
     @Test
-    public void anticlockwise_1() {
+    void anticlockwise_1() {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 0, -1.47d, 3.62d));
         m.addAtom(atom("C", 2, -1.13d, 2.16d));
@@ -226,7 +226,7 @@ public class NonPlanarBondsTest {
 
     // [C@](CCC)(C1)(C)C1 (favour acyclic)
     @Test
-    public void anticlockwise_2() {
+    void anticlockwise_2() {
         IAtomContainer m = new AtomContainer(8, 8, 0, 0);
         m.addAtom(atom("C", 0, -0.96d, -1.04d));
         m.addAtom(atom("C", 2, 0.18d, -0.08d));
@@ -254,7 +254,7 @@ public class NonPlanarBondsTest {
     }
 
     @Test
-    public void nonPlanarBondsForAntiClockwsieExtendedTetrahedral() throws CDKException {
+    void nonPlanarBondsForAntiClockwsieExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -277,7 +277,7 @@ public class NonPlanarBondsTest {
     }
 
     @Test
-    public void nonPlanarBondsForClockwsieExtendedTetrahedral() throws CDKException {
+    void nonPlanarBondsForClockwsieExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -300,7 +300,7 @@ public class NonPlanarBondsTest {
     }
 
     @Test
-    public void clockwiseSortShouldHandleExactlyOppositeAtoms() throws Exception {
+    void clockwiseSortShouldHandleExactlyOppositeAtoms() throws Exception {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 0, 4.50d, -14.84d));
         m.addAtom(atom("C", 3, 4.51d, -13.30d));
@@ -325,7 +325,8 @@ public class NonPlanarBondsTest {
     
     
     // ethene is left alone and not marked as crossed
-    @Test public void dontCrossEtheneDoubleBond() {
+    @Test
+    void dontCrossEtheneDoubleBond() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 2, 0.000, 0.000));
         m.addAtom(atom("C", 2, 1.299, -0.750));
@@ -337,7 +338,8 @@ public class NonPlanarBondsTest {
     /**
      * @cdk.inchi InChI=1S/C4H8O/c1-3-4(2)5/h3H2,1-2H3
      */
-    @Test public void dontMarkTerminalBonds() {
+    @Test
+    void dontMarkTerminalBonds() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 3, 0.000, 0.000));
         m.addAtom(atom("C", 0, 1.299, -0.750));
@@ -357,7 +359,8 @@ public class NonPlanarBondsTest {
     /**
      * @cdk.inchi InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3
      */
-    @Test public void markBut2eneWithWavyBond() {
+    @Test
+    void markBut2eneWithWavyBond() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 3, 0.000, 0.000));
         m.addAtom(atom("C", 1, 1.299, -0.750));
@@ -373,7 +376,8 @@ public class NonPlanarBondsTest {
     /**
      * @cdk.inchi InChI=1S/C8H12/c1-3-5-7-8-6-4-2/h3-8H,1-2H3/b5-3+,6-4+,8-7?
      */
-    @Test public void useCrossedBondIfNeeded() {
+    @Test
+    void useCrossedBondIfNeeded() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 3, 0.000, 0.000));
         m.addAtom(atom("C", 1, 1.299, -0.750));
@@ -410,7 +414,7 @@ public class NonPlanarBondsTest {
      * @cdk.inchi InChI=1S/C6H14S/c1-5-7(4)6(2)3/h5H2,1-4H3/t7-/m0/s1 
      */                                                                  
     @Test
-    public void dontMarkTetrahedralCentresWithDoubleBondsAsUnspecified() {
+    void dontMarkTetrahedralCentresWithDoubleBondsAsUnspecified() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 3, 2.598, 1.500));
         m.addAtom(atom("S", 0, 2.598, -0.000));
@@ -434,7 +438,7 @@ public class NonPlanarBondsTest {
     }
     
     @Test
-    public void dontMarkRingBondsInBezeneAsUnspecified() {
+    void dontMarkRingBondsInBezeneAsUnspecified() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 1, -1.299, 0.750));
         m.addAtom(atom("C", 1, 0.000, 1.500));
@@ -458,7 +462,7 @@ public class NonPlanarBondsTest {
      * {@code SMILES: *CN=C(N)N}
      */
     @Test
-    public void dontMarkGuanidineAsUnspecified() {
+    void dontMarkGuanidineAsUnspecified() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("R", 0, 0.00, 0.00));
         m.addAtom(atom("C", 2, 1.30, -0.75));
@@ -480,7 +484,7 @@ public class NonPlanarBondsTest {
      * {@code SMILES: *CN=C(CCC)CCC[H]}
      */
     @Test
-    public void dontUnspecifiedDueToHRepresentation() {
+    void dontUnspecifiedDueToHRepresentation() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("R", 0, 0.00, 0.00));
         m.addAtom(atom("C", 2, 1.30, -0.75));
@@ -512,7 +516,7 @@ public class NonPlanarBondsTest {
      * {@code SMILES: *CN=C(CCC)CCC}
      */
     @Test
-    public void dontMarkUnspecifiedForLinearEqualChains() {
+    void dontMarkUnspecifiedForLinearEqualChains() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("R", 0, 0.00, -0.00));
         m.addAtom(atom("C", 2, 1.30, -0.75));
@@ -542,7 +546,7 @@ public class NonPlanarBondsTest {
      * {@code SMILES: *CN=C1CCCCC1}
      */
     @Test
-    public void markUnspecifiedForCyclicLigands() {
+    void markUnspecifiedForCyclicLigands() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("R", 0, -4.22, 3.05));
         m.addAtom(atom("C", 2, -2.92, 2.30));
@@ -575,7 +579,7 @@ public class NonPlanarBondsTest {
      * {@code SMILES: *CN=C(CCC)CCN}
      */
     @Test
-    public void unspecifiedMarkedOnDifferentLigands() {
+    void unspecifiedMarkedOnDifferentLigands() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("R", 0, 0.00, -0.00));
         m.addAtom(atom("C", 2, 1.30, -0.75));
@@ -608,7 +612,7 @@ public class NonPlanarBondsTest {
      * {@code SMILES: O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4}
      */
     @Test
-    public void testosterone() throws CDKException {
+    void testosterone() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4");
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
@@ -624,7 +628,7 @@ public class NonPlanarBondsTest {
      * {@code SMILES: CN(C)(C)=CC}
      */
     @Test
-    public void noWavyBondForCisTransNv5() throws CDKException {
+    void noWavyBondForCisTransNv5() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("CN(C)(C)=CC");
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
@@ -636,7 +640,7 @@ public class NonPlanarBondsTest {
     }
 
     @Test
-    public void atropisomerWedgeBonds() throws CDKException {
+    void atropisomerWedgeBonds() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("OC1=CC=C2C=CC=CC2=C1C1=C(O)C=CC2=C1C=CC=C2");
 
@@ -665,7 +669,7 @@ public class NonPlanarBondsTest {
     }
 
     @Test
-    public void inconsistentStereoState() throws CDKException {
+    void inconsistentStereoState() throws CDKException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             final String smi = "O[C@]([H])(C)CCC";
             SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -677,7 +681,8 @@ public class NonPlanarBondsTest {
         });
     }
 
-    @Test public void avoidBondsToOtherStereoCentres() throws CDKException {
+    @Test
+    void avoidBondsToOtherStereoCentres() throws CDKException {
         final String smi = "[H][C@@]([C@H](C)N)([C@@H](C)O)[C@@H](C)OC";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -697,7 +702,8 @@ public class NonPlanarBondsTest {
         assertThat(wedgeCount, is(4));
     }
 
-    @Test public void avoidWedgingRingBond() throws CDKException {
+    @Test
+    void avoidWedgingRingBond() throws CDKException {
         final String smi = "CC(C)[C@@H]1CCCCO1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -719,7 +725,7 @@ public class NonPlanarBondsTest {
     }
 
     @Disabled
-    public void wedgeExtendedTetrahedral() throws CDKException {
+    void wedgeExtendedTetrahedral() throws CDKException {
         final String smi = "C(=C=C=[C@@]=C=C=CC)C";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -741,7 +747,8 @@ public class NonPlanarBondsTest {
 
     // this structure should be displayed with 7 wedges, for some reason the
     // atom order affects whether multiple wedges are used
-    @Test public void minWedges() throws CDKException {
+    @Test
+    void minWedges() throws CDKException {
         final String smi = "[C@](([C@@H](C)Cl)([C@H](C)Cl)[C@H](O)[C@](([C@@H](C)Cl)[C@H](C)Cl)[H])[H]";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);

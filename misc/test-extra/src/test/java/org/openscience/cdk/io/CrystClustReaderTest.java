@@ -43,23 +43,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @see org.openscience.cdk.io.CrystClustReader
  */
-public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
+class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new CrystClustReader(), "estron.crystclust");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
         Assertions.assertFalse(chemObjectIO.accepts(AtomContainer.class));
     }
 
     @Test
-    public void testEstrone() throws Exception {
+    void testEstrone() throws Exception {
         String filename = "estron.crystclust";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
