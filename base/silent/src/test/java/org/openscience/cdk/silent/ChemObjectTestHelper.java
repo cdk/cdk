@@ -19,7 +19,7 @@
  */
 package org.openscience.cdk.silent;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,7 +37,7 @@ public class ChemObjectTestHelper {
         chemObject.addListener(listener);
 
         chemObject.setID("Changed");
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
     }
 
     public static void testNotifyChanged_IChemObjectChangeEvent(IChemObject chemObject) {
@@ -45,7 +45,7 @@ public class ChemObjectTestHelper {
         chemObject.addListener(listener);
 
         chemObject.setID("Changed");
-        Assert.assertNull(listener.getEvent());
+        Assertions.assertNull(listener.getEvent());
     }
 
     public static void testStateChanged_IChemObjectChangeEvent(IChemObject chemObject) {
@@ -53,35 +53,35 @@ public class ChemObjectTestHelper {
         chemObject.addListener(listener);
 
         chemObject.setID("Changed");
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
 
         listener.reset();
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
         chemObject.setProperty("Changed", "Again");
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
 
         listener.reset();
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
         chemObject.setFlag(CDKConstants.ISALIPHATIC, true);
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
     }
 
     public static void testNotifyChanged_SetFlag(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
 
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
         chemObject.setFlag(CDKConstants.DUMMY_POINTER, true);
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
     }
 
     public static void testNotifyChanged_SetFlags(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
 
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
         chemObject.setFlags(new boolean[chemObject.getFlags().length]);
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
     }
 
     public static void testClone_ChemObjectListeners(IChemObject chemObject) throws Exception {
@@ -90,29 +90,29 @@ public class ChemObjectTestHelper {
         IChemObject chemObject2 = (IChemObject) chemObject.clone();
 
         // test lack of cloning of listeners
-        Assert.assertEquals(0, chemObject.getListenerCount());
-        Assert.assertEquals(0, chemObject2.getListenerCount());
+        Assertions.assertEquals(0, chemObject.getListenerCount());
+        Assertions.assertEquals(0, chemObject2.getListenerCount());
     }
 
     public static void testAddListener_IChemObjectListener(IChemObject chemObject) {
-        Assert.assertEquals(0, chemObject.getListenerCount());
+        Assertions.assertEquals(0, chemObject.getListenerCount());
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
-        Assert.assertEquals(0, chemObject.getListenerCount());
+        Assertions.assertEquals(0, chemObject.getListenerCount());
     }
 
     public static void testGetListenerCount(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
-        Assert.assertEquals(0, chemObject.getListenerCount());
+        Assertions.assertEquals(0, chemObject.getListenerCount());
     }
 
     public static void testRemoveListener_IChemObjectListener(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
-        Assert.assertEquals(0, chemObject.getListenerCount());
+        Assertions.assertEquals(0, chemObject.getListenerCount());
         chemObject.removeListener(listener);
-        Assert.assertEquals(0, chemObject.getListenerCount());
+        Assertions.assertEquals(0, chemObject.getListenerCount());
     }
 
     public static void testSetNotification_true(IChemObject chemObject) {
@@ -121,7 +121,7 @@ public class ChemObjectTestHelper {
         chemObject.setNotification(true);
 
         chemObject.setID("Changed");
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
     }
 
     public static void testNotifyChanged_SetProperty(IChemObject chemObject) {
@@ -129,7 +129,7 @@ public class ChemObjectTestHelper {
         chemObject.addListener(listener);
 
         chemObject.setProperty("Changed", "Yes");
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
     }
 
     public static void testNotifyChanged_RemoveProperty(IChemObject chemObject) {
@@ -139,7 +139,7 @@ public class ChemObjectTestHelper {
         chemObject.addListener(listener);
 
         chemObject.removeProperty("Changed");
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
     }
 
     public static void testSetAtoms_removeListener(IChemObject newChemObject) {
@@ -155,18 +155,18 @@ public class ChemObjectTestHelper {
         // if an atom changes, the atomcontainer will throw a change event too
         ChemObjectListener listener = new ChemObjectListener();
         container.addListener(listener);
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
 
         // ok, change the atom, and make sure we do get an event
         atoms[0].setAtomTypeName("C.sp2");
-        Assert.assertFalse(listener.getChanged());
+        Assertions.assertFalse(listener.getChanged());
 
         // reset the listener, overwrite the atoms, and change an old atom.
         // if all is well, we should not get a change event this time
         listener.reset();
-        Assert.assertFalse(listener.getChanged()); // make sure the reset worked
+        Assertions.assertFalse(listener.getChanged()); // make sure the reset worked
         container.setAtoms(new IAtom[0]);
         atoms[1].setAtomTypeName("C.sp2"); // make a change to an old atom
-        Assert.assertFalse(listener.getChanged()); // but no change event should happen
+        Assertions.assertFalse(listener.getChanged()); // but no change event should happen
     }
 }
