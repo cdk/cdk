@@ -174,6 +174,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     }
 
     @Tag("SlowTest")
+    @Test
     public void testbug2917084() throws Exception {
         String filename1 = "boronBuckyBall.mol";
         logger.info("Testing: " + filename1);
@@ -188,10 +189,10 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         });
     }
 
-                                /**
-                                 * @cdk.bug 2819557
-                                 * @throws org.openscience.cdk.exception.CDKException
-                                 */
+    /**
+     * @throws org.openscience.cdk.exception.CDKException
+     * @cdk.bug 2819557
+     */
     @Test
     public void testBug2819557() throws CDKException {
         IAtomContainer butane = makeButane();
