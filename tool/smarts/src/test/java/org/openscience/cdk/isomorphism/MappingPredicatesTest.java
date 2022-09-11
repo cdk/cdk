@@ -34,6 +34,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author John May
@@ -44,8 +45,8 @@ public class MappingPredicatesTest {
     @Test
     public void uniqueAtoms() throws Exception {
         UniqueAtomMatches uam = new UniqueAtomMatches();
-        Assertions.assertTrue(uam.apply(new int[]{1, 2, 3, 4}));
-        Assertions.assertTrue(uam.apply(new int[]{1, 2, 3, 5}));
+        assertTrue(uam.apply(new int[]{1, 2, 3, 4}));
+        assertTrue(uam.apply(new int[]{1, 2, 3, 5}));
         Assertions.assertFalse(uam.apply(new int[]{4, 3, 2, 1}));
         Assertions.assertFalse(uam.apply(new int[]{1, 5, 2, 3}));
     }
