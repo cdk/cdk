@@ -8,6 +8,7 @@ package org.openscience.cdk.test.interfaces;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
@@ -22,6 +23,7 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
     /**
      * Method to test whether the class complies with RFC #9.
      */
+    @Test
     public void testToString() {
         IMapping mapping = (IMapping) newChemObject();
         String description = mapping.toString();
@@ -32,12 +34,14 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
     }
 
     @Override
+    @Test
     public void testClone() throws Exception {
         IMapping mapping = (IMapping) newChemObject();
         Object clone = mapping.clone();
         Assertions.assertTrue(clone instanceof IMapping);
     }
 
+    @Test
     public void testGetChemObject_int() {
         IChemObject object = newChemObject();
         IAtom atom0 = object.getBuilder().newInstance(IAtom.class);
@@ -47,6 +51,7 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         Assertions.assertEquals(atom1, mapping.getChemObject(1));
     }
 
+    @Test
     public void testRelatedChemObjects() {
         IChemObject object = newChemObject();
         IAtom atom0 = object.getBuilder().newInstance(IAtom.class);
@@ -61,6 +66,7 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         Assertions.assertFalse(iter.hasNext());
     }
 
+    @Test
     public void testClone_ChemObject() throws Exception {
         IMapping mapping = (IMapping) newChemObject();
 
