@@ -19,97 +19,86 @@
 package org.openscience.cdk.structgen.maygen;
 
 
-import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.SlowTest;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
 /**
  * This parameterized test-suite runs the checks of how many isomers we exepect
  * for each formula.
  */
-@RunWith(Parameterized.class)
 public class MaygenExpectedCountTest {
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {"C3Cl2H4", 7},
-                {"CClH10", 0},
-                {"H3", 0},
-                {"N2", 1},
-                {"C4Cl2", 7},
-                {"H2", 1},
-                {"O13S7", 1980},
-                {"S27", 1},
-                {"O10S10", 4752},
-                {"O18", 1},
-                {"C2NO2H5", 84},
-                {"H2O", 1},
-                {"NH3", 1},
-                {"C6H6", 217},
-                {"C3O3H4", 152},
-                {"Cl2C5H4", 217},
-                {"C5H9ClO", 334},
-                {"C6OF2H12", 536},
-                {"C7H10", 575},
-                {"C6O2H12", 1313},
-                {"F2P3BrNO2H", 1958},
-                {"C6OH6", 2237},
-                {"C5H6BrN", 2325},
-                {"C6H7F2I", 3523},
-                {"C5F2O2H2", 7094},
-                {"C7OH10", 7166},
-                {"C4ClHF2O3", 7346},
-                {"C4O5H6", 8070},
-                {"C5ClHF2O2", 12400},
-                {"C5H10BrF2OP", 15009},
-                {"C9H12", 19983},
-                {"C10H16", 24938},
-                {"C6H10O2Br2", 24201},
-                {"C6H6ClOI", 30728},
-                {"C4H5O2Br2N", 41067},
-                {"C4H10NOSP", 52151},
-                {"C7O2H10", 54641},
-                {"P3O3NCl2", 665},
-                {"C5H5SI5", 2619},
-                {"C3O3NH5", 2644},
-                {"C5H9ClOS", 3763},
-                {"C3NO2SH7", 3838},
-                {"C4H8Cl3O2P", 9313},
-                {"C5H2F2SO", 13446},
-                {"C7H11ClS", 15093},
-                {"C4NO3H7", 18469},
-                {"C4H5O2F2P", 41067},
-                {"C3N3O2H7", 45626},
-                {"C5N3H9", 46125},
-                {"C3O6PH5", 51323},
-                {"C5H5POBr2", 62886},
-                {"C[1-2]H[3-8]", 3},
-                {"C[1-6]Cl2H[4-8]", 4141},
-                {"C(val=4)6H(val=1)6", 217} // user defined
-        });
+    public static Stream<Arguments> data() {
+        return Stream.of(
+                Arguments.arguments("C3Cl2H4", 7),
+                Arguments.arguments("CClH10", 0),
+                Arguments.arguments("H3", 0),
+                Arguments.arguments("N2", 1),
+                Arguments.arguments("C4Cl2", 7),
+                Arguments.arguments("H2", 1),
+                Arguments.arguments("O13S7", 1980),
+                Arguments.arguments("S27", 1),
+                Arguments.arguments("O10S10", 4752),
+                Arguments.arguments("O18", 1),
+                Arguments.arguments("C2NO2H5", 84),
+                Arguments.arguments("H2O", 1),
+                Arguments.arguments("NH3", 1),
+                Arguments.arguments("C6H6", 217),
+                Arguments.arguments("C3O3H4", 152),
+                Arguments.arguments("Cl2C5H4", 217),
+                Arguments.arguments("C5H9ClO", 334),
+                Arguments.arguments("C6OF2H12", 536),
+                Arguments.arguments("C7H10", 575),
+                Arguments.arguments("C6O2H12", 1313),
+                Arguments.arguments("F2P3BrNO2H", 1958),
+                Arguments.arguments("C6OH6", 2237),
+                Arguments.arguments("C5H6BrN", 2325),
+                Arguments.arguments("C6H7F2I", 3523),
+                Arguments.arguments("C5F2O2H2", 7094),
+                Arguments.arguments("C7OH10", 7166),
+                Arguments.arguments("C4ClHF2O3", 7346),
+                Arguments.arguments("C4O5H6", 8070),
+                Arguments.arguments("C5ClHF2O2", 12400),
+                Arguments.arguments("C5H10BrF2OP", 15009),
+                Arguments.arguments("C9H12", 19983),
+                Arguments.arguments("C10H16", 24938),
+                Arguments.arguments("C6H10O2Br2", 24201),
+                Arguments.arguments("C6H6ClOI", 30728),
+                Arguments.arguments("C4H5O2Br2N", 41067),
+                Arguments.arguments("C4H10NOSP", 52151),
+                Arguments.arguments("C7O2H10", 54641),
+                Arguments.arguments("P3O3NCl2", 665),
+                Arguments.arguments("C5H5SI5", 2619),
+                Arguments.arguments("C3O3NH5", 2644),
+                Arguments.arguments("C5H9ClOS", 3763),
+                Arguments.arguments("C3NO2SH7", 3838),
+                Arguments.arguments("C4H8Cl3O2P", 9313),
+                Arguments.arguments("C5H2F2SO", 13446),
+                Arguments.arguments("C7H11ClS", 15093),
+                Arguments.arguments("C4NO3H7", 18469),
+                Arguments.arguments("C4H5O2F2P", 41067),
+                Arguments.arguments("C3N3O2H7", 45626),
+                Arguments.arguments("C5N3H9", 46125),
+                Arguments.arguments("C3O6PH5", 51323),
+                Arguments.arguments("C5H5POBr2", 62886),
+                Arguments.arguments("C[1-2]H[3-8]", 3),
+                Arguments.arguments("C[1-6]Cl2H[4-8]", 4141),
+                Arguments.arguments("C(val=4)6H(val=1)6", 217) // user defined
+        );
     }
 
-
-    private final String formula;
-    private final int expectedCount;
-
-    public MaygenExpectedCountTest(String formula, int count) {
-        this.formula = formula;
-        this.expectedCount = count;
-    }
-
-    @Test
-    public void testExpectedCountMultithreaded() throws CDKException, IOException, CloneNotSupportedException {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testExpectedCountMultithreaded(String formula, int expectedCount) throws CDKException, IOException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         if (formula.contains("val="))
             maygen.setSetElement(true);
@@ -126,9 +115,10 @@ public class MaygenExpectedCountTest {
             Assertions.assertEquals(expectedCount, maygen.getCount());
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("data")
     @Category(SlowTest.class)
-    public void testExpectedCount() throws CDKException, IOException, CloneNotSupportedException {
+    public void testExpectedCount(String formula, int expectedCount) throws CDKException, IOException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         if (formula.contains("val="))
             maygen.setSetElement(true);
