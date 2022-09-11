@@ -175,17 +175,16 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Tag("SlowTest")
     public void testbug2917084() throws Exception {
+        String filename1 = "boronBuckyBall.mol";
+        logger.info("Testing: " + filename1);
+        InputStream ins1 = this.getClass().getResourceAsStream(filename1);
+        MDLV2000Reader reader = new MDLV2000Reader(ins1, Mode.STRICT);
+        IChemFile chemFile = reader.read(new ChemFile());
+        Assertions.assertNotNull(chemFile);
+        IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
         Assertions.assertThrows(CDKException.class, () -> {
-            String filename1 = "boronBuckyBall.mol";
-            logger.info("Testing: " + filename1);
-            InputStream ins1 = this.getClass().getResourceAsStream(filename1);
-            MDLV2000Reader reader = new MDLV2000Reader(ins1, Mode.STRICT);
-            IChemFile chemFile = reader.read(new ChemFile());
-            Assertions.assertNotNull(chemFile);
-            IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
-
-            Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
-            Assertions.assertNotNull(fingerprinter.getBitFingerprint(mol));
+            fingerprinter.getBitFingerprint(mol);
         });
     }
 
