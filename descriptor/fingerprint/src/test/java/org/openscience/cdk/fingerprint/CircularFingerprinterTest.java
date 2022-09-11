@@ -48,7 +48,6 @@ import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDK;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -64,7 +63,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -86,7 +85,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testFingerprints() throws Exception {
         logger.info("CircularFingerprinter test: loading source materials");
 

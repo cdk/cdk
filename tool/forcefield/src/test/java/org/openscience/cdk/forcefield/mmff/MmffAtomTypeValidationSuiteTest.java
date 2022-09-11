@@ -39,7 +39,7 @@ import static org.hamcrest.CoreMatchers.is;
  *
  * @author John May
  */
-// @Category(SlowTest.class) // waiting on SlowTest patch
+// @Tag("SlowTest") // waiting on SlowTest patch
 public class MmffAtomTypeValidationSuiteTest extends AbstractMmffAtomTypeValidationSuiteTest {
 
     static final MmffAtomTypeMatcher INSTANCE = new MmffAtomTypeMatcher();

@@ -19,14 +19,13 @@
 package org.openscience.cdk.structgen.maygen;
 
 
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -117,7 +116,7 @@ public class MaygenExpectedCountTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testExpectedCount(String formula, int expectedCount) throws CDKException, IOException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         if (formula.contains("val="))

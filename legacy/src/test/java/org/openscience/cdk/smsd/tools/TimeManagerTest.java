@@ -24,15 +24,14 @@ package org.openscience.cdk.smsd.tools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.test.SlowTest;
 
 /**
  * @author Asad
  * @cdk.module test-smsd
  */
-@Category(SlowTest.class)
+@Tag("SlowTest")
 // test uses Thread.sleep...
 public class TimeManagerTest extends CDKTestCase {
 

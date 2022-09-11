@@ -18,12 +18,11 @@
  */
 package org.openscience.cdk.charges;
 
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -68,7 +67,7 @@ public class StabilizationChargesTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testCalculatePositive_IAtomContainer_IAtom() throws Exception {
 
         StabilizationCharges sc = new StabilizationCharges();

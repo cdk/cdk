@@ -27,12 +27,11 @@ import java.util.Iterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -53,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.module test-standard
  */
-@Category(SlowTest.class)
+@Tag("SlowTest")
 // CanonicalLabeler is deprecated (slow)
 public class CanonicalLabelerTest extends CDKTestCase {
 

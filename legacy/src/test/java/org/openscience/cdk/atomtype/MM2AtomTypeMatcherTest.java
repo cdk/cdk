@@ -26,9 +26,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -51,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @see MM2AtomTypeMatcher
  */
-@Category(SlowTest.class)
+@Tag("SlowTest")
 public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     private static final ILoggingTool         logger          = LoggingToolFactory

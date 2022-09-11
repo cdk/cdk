@@ -26,13 +26,12 @@ package org.openscience.cdk.io;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -329,7 +328,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * to test mainly for getting all valid configurations.
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testRgroupQueryFile5() throws Exception {
         String filename = "rgfile.5.mol";
         logger.info("Testing: " + filename);

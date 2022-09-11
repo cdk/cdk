@@ -29,11 +29,10 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
@@ -416,7 +415,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
     }
 
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void ttprTest() {
         String expected = "[Rh]([P]([C]([C]([C]([C,6]))" + "[C]([C]([C,6])))[C]([C]([C]([C,3]))"
                 + "[C]([C]([C,3])))[C]([C]([C]([C,2]))" + "[C]([C]([C,2]))))[P]([C]([C]([C]([C,7]))"

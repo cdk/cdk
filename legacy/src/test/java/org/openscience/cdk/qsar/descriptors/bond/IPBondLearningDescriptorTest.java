@@ -22,10 +22,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -67,7 +66,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *  A unit test for JUnit with CCCC=CCCCC
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_1() throws Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -85,7 +84,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *  A unit test for JUnit with CC1CCC=C1
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -103,7 +102,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *  A unit test for JUnit with C=CCCCC
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_3() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -122,7 +121,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptorReaction1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -143,7 +142,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptorReaction2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -163,7 +162,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPTripleDescriptor1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -182,7 +181,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPTripleDescriptor2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -223,7 +222,7 @@ public class IPBondLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPPySystemReaction1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
