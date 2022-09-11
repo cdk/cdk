@@ -19,9 +19,9 @@
 package org.openscience.cdk.structgen.maygen;
 
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openscience.cdk.exception.CDKException;
@@ -121,9 +121,9 @@ public class MaygenExpectedCountTest {
         maygen.setMultiThread(true);
         maygen.run();
         if (fuzzy)
-            Assert.assertEquals(expectedCount, maygen.getFuzzyCount());
+            Assertions.assertEquals(expectedCount, maygen.getFuzzyCount());
         else
-            Assert.assertEquals(expectedCount, maygen.getCount());
+            Assertions.assertEquals(expectedCount, maygen.getCount());
     }
 
     @Test
@@ -140,9 +140,9 @@ public class MaygenExpectedCountTest {
         maygen.setMultiThread(false);
         maygen.run();
         if (fuzzy)
-            Assert.assertEquals(expectedCount, maygen.getFuzzyCount());
+            Assertions.assertEquals(expectedCount, maygen.getFuzzyCount());
         else
-            Assert.assertEquals(expectedCount, maygen.getCount());
+            Assertions.assertEquals(expectedCount, maygen.getCount());
     }
 
 }
