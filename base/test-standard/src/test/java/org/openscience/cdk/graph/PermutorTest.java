@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
  * @author maclean
  * @cdk.module test-standard
  */
-public class PermutorTest {
+class PermutorTest {
 
     private int factorial(int n) {
         if (n <= 1) {
@@ -40,7 +40,7 @@ public class PermutorTest {
     }
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
         int[] current = permutor.getCurrentPermutation();
@@ -48,14 +48,14 @@ public class PermutorTest {
     }
 
     @Test
-    public void hasNextTest() {
+    void hasNextTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
         Assertions.assertTrue(permutor.hasNext());
     }
 
     @Test
-    public void setRankTest() {
+    void setRankTest() {
         int size = 4;
         int[] reverse = new int[]{3, 2, 1, 0};
         Permutor permutor = new Permutor(size);
@@ -65,7 +65,7 @@ public class PermutorTest {
     }
 
     @Test
-    public void getRankTest() {
+    void getRankTest() {
         int size = 4;
         int rank = 10;
         Permutor permutor = new Permutor(size);
@@ -74,7 +74,7 @@ public class PermutorTest {
     }
 
     @Test
-    public void setPermutationTest() {
+    void setPermutationTest() {
         int size = 4;
         int[] target = new int[]{3, 1, 0, 2};
         Permutor permutor = new Permutor(size);
@@ -83,7 +83,7 @@ public class PermutorTest {
     }
 
     @Test
-    public void countGeneratedPermutations() {
+    void countGeneratedPermutations() {
         int size = 4;
         Permutor permutor = new Permutor(size);
         int count = 1; // the identity permutation is not generated
@@ -95,7 +95,7 @@ public class PermutorTest {
     }
 
     @Test
-    public void getCurrentPermutationTest() {
+    void getCurrentPermutationTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
         boolean allOk = true;
@@ -113,14 +113,14 @@ public class PermutorTest {
     }
 
     @Test
-    public void maxRankTest() {
+    void maxRankTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
         Assertions.assertEquals(factorial(size) - 1, permutor.calculateMaxRank());
     }
 
     @Test
-    public void getRandomNextTest() {
+    void getRandomNextTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
         int[] random = permutor.getRandomNextPermutation();

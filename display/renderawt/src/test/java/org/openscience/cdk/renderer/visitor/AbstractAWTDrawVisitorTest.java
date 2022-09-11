@@ -35,7 +35,7 @@ import org.openscience.cdk.renderer.font.IFontManager;
  * @cdk.module  test-renderawt
  * @cdk.githash
  */
-public class AbstractAWTDrawVisitorTest {
+class AbstractAWTDrawVisitorTest {
 
     private final class NestedAWTDrawVisitor extends AbstractAWTDrawVisitor {
 
@@ -50,20 +50,20 @@ public class AbstractAWTDrawVisitorTest {
     }
 
     @Test
-    public void testExtension() {
+    void testExtension() {
         AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
         Assertions.assertNotNull(visitor);
     }
 
     @Test
-    public void testSetAffineTransformation() {
+    void testSetAffineTransformation() {
         AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
         visitor.setTransform(new AffineTransform());
         Assertions.assertNotNull(visitor);
     }
 
     @Test
-    public void testGetTextBounds() {
+    void testGetTextBounds() {
         AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
         visitor.setTransform(new AffineTransform());
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
@@ -73,7 +73,7 @@ public class AbstractAWTDrawVisitorTest {
     }
 
     @Test
-    public void testTransformPoint() {
+    void testTransformPoint() {
         AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
         visitor.setTransform(new AffineTransform()); // no transform
         int[] transformed = visitor.transformPoint(1, 2);
@@ -82,7 +82,7 @@ public class AbstractAWTDrawVisitorTest {
     }
 
     @Test
-    public void testGetTextBasePoint() {
+    void testGetTextBasePoint() {
         AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
         visitor.setTransform(new AffineTransform());
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);

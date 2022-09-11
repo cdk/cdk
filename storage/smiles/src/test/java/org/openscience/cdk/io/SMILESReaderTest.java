@@ -52,24 +52,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class SMILESReaderTest extends SimpleChemObjectReaderTest {
+class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReaderTest.class);
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new SMILESReader(), "org/openscience/cdk/io/smiles.smi");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         SMILESReader reader = new SMILESReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test
-    public void testReading() throws Exception {
+    void testReading() throws Exception {
         String filename = "smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -79,7 +79,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadingSmiFile_1() throws Exception {
+    void testReadingSmiFile_1() throws Exception {
         String filename = "smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -92,7 +92,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadingSmiFile_2() throws Exception {
+    void testReadingSmiFile_2() throws Exception {
         String filename = "smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -103,7 +103,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadingSmiFile_3() throws Exception {
+    void testReadingSmiFile_3() throws Exception {
         String filename = "test3.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -113,7 +113,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
     }
     
     @Test
-    public void badSmilesLine() throws CDKException {
+    void badSmilesLine() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         String input = "C\nn1cccc1\nc1ccccc1\n";
         DefaultChemObjectReader cor = new SMILESReader(new StringReader(input));

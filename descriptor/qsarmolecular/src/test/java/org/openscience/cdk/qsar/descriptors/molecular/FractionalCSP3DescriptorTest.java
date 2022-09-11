@@ -30,21 +30,21 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-public class FractionalCSP3DescriptorTest extends MolecularDescriptorTest {
-    public FractionalCSP3DescriptorTest() {}
+class FractionalCSP3DescriptorTest extends MolecularDescriptorTest {
+    FractionalCSP3DescriptorTest() {}
     
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(FractionalCSP3Descriptor.class);
     }
     
     static class SmilesValue {
-        public SmilesValue(String smiles, double value) {
+        SmilesValue(String smiles, double value) {
             this.smiles = smiles;
             this.value = value;
         }
-        public final String smiles;
-        public final double value;
+        final String smiles;
+        final double value;
     }
     
     private static final SmilesValue[] table = new SmilesValue[] {
@@ -58,7 +58,7 @@ public class FractionalCSP3DescriptorTest extends MolecularDescriptorTest {
     };
     
     @Test
-    public void testFractionalCSP3Descriptor() throws CDKException {
+    void testFractionalCSP3Descriptor() throws CDKException {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         for (SmilesValue e: table) {
             IAtomContainer mol = sp.parseSmiles(e.smiles);

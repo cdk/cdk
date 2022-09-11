@@ -32,17 +32,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsarmolecular
  */
 
-public class BPolDescriptorTest extends MolecularDescriptorTest {
+class BPolDescriptorTest extends MolecularDescriptorTest {
 
-    public BPolDescriptorTest() {}
+    BPolDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BPolDescriptor.class);
     }
 
     @Test
-    public void testBPolDescriptor() throws java.lang.Exception {
+    void testBPolDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         addExplicitHydrogens(mol);

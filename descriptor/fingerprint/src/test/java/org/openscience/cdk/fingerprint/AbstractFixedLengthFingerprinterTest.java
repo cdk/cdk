@@ -48,7 +48,7 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * @cdk.module test-standard
  */
-public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterTest {
+abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterTest {
 
     // logical 'AND' or two bit sets (orginals are not modified)
     static BitSet and(BitSet a, BitSet b) {
@@ -61,7 +61,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      * @cdk.bug 706786
      */
     @Test
-    public void testBug706786() throws Exception {
+    void testBug706786() throws Exception {
         // inlined molecules - note this test fails if implicit hydrogens are
         // included. generally MACCS and ESTATE can't be used for substructure filter
         // check those subclasses which check the bits are set
@@ -84,7 +84,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      * @cdk.bug 853254
      */
     @Test
-    public void testBug853254() throws Exception {
+    void testBug853254() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         String filename = "bug853254-2.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -117,7 +117,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      * @cdk.bug 934819
      */
     @Test
-    public void testBug934819() throws Exception {
+    void testBug934819() throws Exception {
         // inlined molecules - note this test fails if implicit hydrogens are
         // included. generally PubCheMFingerprint can't be used for substructure filter
         IAtomContainer superStructure = bug934819_2();
@@ -141,7 +141,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      * @cdk.bug 771485
      */
     @Test
-    public void testBug771485() throws Exception {
+    void testBug771485() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         String filename = "bug771485-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -186,7 +186,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      * @cdk.bug 934819
      */
     @Test
-    public void testBug931608() throws Exception {
+    void testBug931608() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         String filename = "bug931608-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);

@@ -30,17 +30,17 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-renderbasic
  */
-public class WedgeLineElementTest extends AbstractElementTest {
+class WedgeLineElementTest extends AbstractElementTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         IRenderingElement element = new WedgeLineElement(0, 0, 1, 1, 1.0, WedgeLineElement.TYPE.DASHED,
                 WedgeLineElement.Direction.toFirst, Color.orange);
         setRenderingElement(element);
     }
 
     @Test
-    public void testConstructor_LineElement() {
+    void testConstructor_LineElement() {
         IRenderingElement element = new WedgeLineElement(new LineElement(0, 0, 1, 1, 1.0, Color.red),
                 WedgeLineElement.TYPE.DASHED, WedgeLineElement.Direction.toFirst, Color.orange);
         Assertions.assertNotNull(element);

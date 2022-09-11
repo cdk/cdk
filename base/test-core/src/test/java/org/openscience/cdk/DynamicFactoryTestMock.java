@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.module test-core
  * @see DynamicFactoryTest
  */
-public class DynamicFactoryTestMock implements ICDKObject {
+class DynamicFactoryTestMock implements ICDKObject {
 
     public DynamicFactoryTestMock(String ignored) {
 

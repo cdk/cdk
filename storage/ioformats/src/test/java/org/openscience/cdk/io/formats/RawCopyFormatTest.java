@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class RawCopyFormatTest extends ChemFormatTest {
+class RawCopyFormatTest extends ChemFormatTest {
 
-    public RawCopyFormatTest() {
+    RawCopyFormatTest() {
         super.setChemFormat((IChemFormat) RawCopyFormat.getInstance());
     }
 

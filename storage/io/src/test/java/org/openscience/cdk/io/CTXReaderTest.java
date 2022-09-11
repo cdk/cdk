@@ -45,23 +45,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @see org.openscience.cdk.io.CrystClustReader
  */
-public class CTXReaderTest extends SimpleChemObjectReaderTest {
+class CTXReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CTXReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new CTXReader(), "methanol_with_descriptors.ctx");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         CTXReader reader = new CTXReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
-    public void testMethanol() throws Exception {
+    void testMethanol() throws Exception {
         String filename = "methanol_with_descriptors.ctx";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

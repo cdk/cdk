@@ -33,10 +33,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-hash
  */
-public class GeometricParityTest {
+class GeometricParityTest {
 
     @Test
-    public void valueOf() throws Exception {
+    void valueOf() throws Exception {
         GeometricParity odd = GeometricParity.valueOf(-1);
         GeometricParity even = GeometricParity.valueOf(1);
         assertThat(odd.parity(), is(-1));

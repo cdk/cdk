@@ -25,25 +25,25 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class IntegerResultTypeTest extends CDKTestCase {
+class IntegerResultTypeTest extends CDKTestCase {
 
-    public IntegerResultTypeTest() {
+    IntegerResultTypeTest() {
         super();
     }
 
     @Test
-    public void testIntegerResultType() {
+    void testIntegerResultType() {
         IDescriptorResult type = new IntegerResultType();
         Assertions.assertNotNull(type);
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Assertions.assertEquals("IntegerResultType", new IntegerResultType().toString());
     }
 
     @Test
-    public void testLength() {
+    void testLength() {
         Assertions.assertEquals(1, new IntegerResultType().length());
     }
 

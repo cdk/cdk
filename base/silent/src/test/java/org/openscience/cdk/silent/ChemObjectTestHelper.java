@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @cdk.module test-silent
  */
-public class ChemObjectTestHelper {
+class ChemObjectTestHelper {
 
     public static void testNotifyChanged(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();

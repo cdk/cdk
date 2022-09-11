@@ -26,7 +26,7 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  */
 //TODO Update TestCase comments with appropriate information.
-public class GamessReaderTest extends SimpleChemObjectReaderTest {
+class GamessReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * The "BufferedReader" object used as input parameter for the "GamessReader" object.
@@ -58,7 +58,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
      * @see java.io.FileReader#FileReader(java.lang.String)
      */
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         String filename = "Cl2O.log";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         this.inputReader = new BufferedReader(new InputStreamReader(ins));
@@ -70,7 +70,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
      * @see TestCase#tearDown()
      */
     @AfterEach
-    public void tearDown() throws Exception {
+    void tearDown() throws Exception {
         this.inputReader.close();
         this.gamessReaderUnderTest.close(); // TODO Answer the question : Is it necessary ?
     }
@@ -101,7 +101,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
      */
     //TODO Update method comments with appropriate information.
     @Test
-    public void testGamessReader() {
+    void testGamessReader() {
         Assertions.assertNotNull(this.inputReader, "TEST: The inputReader is not null.");
         Assertions.assertTrue(this.inputReader instanceof Reader, "TEST: The inputReader is a Reader object.");
         Assertions.assertNotNull(this.gamessReaderUnderTest, "TEST: The GamessReader object is constructed.");
@@ -127,7 +127,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
      */
     //TODO Update method comments with appropriate information.
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Assertions.assertNotNull(this.gamessReaderUnderTest, "The GamessReader object is not constructed");
         Assertions.assertTrue(gamessReaderUnderTest.accepts(ChemFile.class), "GamessReader should accept an IChemFile object.");
     }
@@ -155,7 +155,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
      */
     //TODO Update method comments with appropriate information.
     @Test
-    public void testRead() throws Exception {
+    void testRead() throws Exception {
         Assertions.assertNotNull(this.gamessReaderUnderTest, "TEST: The GamessReader object is constructed.");
         Assertions.assertTrue(this.gamessReaderUnderTest.read(new ChemFile()) instanceof ChemObject, "TEST: read(IChemObject) returns a IChemObject.");
     }

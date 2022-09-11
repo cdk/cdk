@@ -57,19 +57,19 @@ import java.util.Map;
  * @cdk.module test-io
  * @author Mark Rijnbeek
  */
-public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
+class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
-    public RGroupQueryReaderTest() {}
+    RGroupQueryReaderTest() {}
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new RGroupQueryReader(), "rgfile.1.mol");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         RGroupQueryReader reader = new RGroupQueryReader();
         Assertions.assertFalse(reader.accepts(AtomContainer.class));
         Assertions.assertTrue(reader.accepts(RGroupQuery.class));
@@ -82,7 +82,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * @throws Exception
      */
     @Test
-    public void testRGFileFormat() throws Exception {
+    void testRGFileFormat() throws Exception {
         String filename = "rgfile.1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         IChemFormat format = new FormatFactory().guessFormat(new BufferedInputStream(ins));
@@ -94,7 +94,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * Simple R-group query file.
      */
     @Test
-    public void testRgroupQueryFile1() throws Exception {
+    void testRgroupQueryFile1() throws Exception {
         String filename = "rgfile.1.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -162,7 +162,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * More elaborate R-group query file.
      */
     @Test
-    public void testRgroupQueryFile2() throws Exception {
+    void testRgroupQueryFile2() throws Exception {
         String filename = "rgfile.2.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -250,7 +250,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * This R-group query has R1 bound double twice, and has AAL lines to parse.
      */
     @Test
-    public void testRgroupQueryFile3() throws Exception {
+    void testRgroupQueryFile3() throws Exception {
         String filename = "rgfile.3.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -292,7 +292,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * This R-group query has its R# atom detached, no bounds.
      */
     @Test
-    public void testRgroupQueryFile4() throws Exception {
+    void testRgroupQueryFile4() throws Exception {
         String filename = "rgfile.4.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -329,7 +329,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testRgroupQueryFile5() throws Exception {
+    void testRgroupQueryFile5() throws Exception {
         String filename = "rgfile.5.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -349,7 +349,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * accept it (Symyx/ChemAxon software accepts it too).
      */
     @Test
-    public void testRgroupQueryFile6() throws Exception {
+    void testRgroupQueryFile6() throws Exception {
         String filename = "rgfile.6.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -380,7 +380,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      * The parser should not trip over this, and make nice configurations.
      */
     @Test
-    public void testRgroupQueryFile7() throws Exception {
+    void testRgroupQueryFile7() throws Exception {
         String filename = "rgfile.7.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

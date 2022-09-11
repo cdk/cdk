@@ -41,15 +41,15 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SgroupManipulatorTest {
+class SgroupManipulatorTest {
 
     @Test
-    public void copyNull() throws Exception {
+    void copyNull() throws Exception {
         Assertions.assertNull(SgroupManipulator.copy(null, null));
     }
 
     @Test
-    public void copySgroups() throws Exception {
+    void copySgroups() throws Exception {
         List<Sgroup> sgroups = new ArrayList<>();
         IAtom a1 = Mockito.mock(IAtom.class);
         IAtom a2 = Mockito.mock(IAtom.class);
@@ -74,7 +74,7 @@ public class SgroupManipulatorTest {
 
 
     @Test
-    public void copySgroups2() throws Exception {
+    void copySgroups2() throws Exception {
         List<Sgroup>                 sgroups = new ArrayList<>();
         Map<IChemObject,IChemObject> replace = new HashMap<>();
 

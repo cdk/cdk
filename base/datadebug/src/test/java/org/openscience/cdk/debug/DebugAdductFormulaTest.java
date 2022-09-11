@@ -31,21 +31,21 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *
  * @cdk.module test-datadebug
  */
-public class DebugAdductFormulaTest extends AbstractAdductFormulaTest {
+class DebugAdductFormulaTest extends AbstractAdductFormulaTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testDebugAdductFormula() {
+    void testDebugAdductFormula() {
         IAdductFormula mfS = new DebugAdductFormula();
         Assertions.assertNotNull(mfS);
     }
 
     @Test
-    public void testDebugAdductFormula_IMolecularFormula() {
+    void testDebugAdductFormula_IMolecularFormula() {
         IAdductFormula mfS = new DebugAdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assertions.assertEquals(1, mfS.size());
     }

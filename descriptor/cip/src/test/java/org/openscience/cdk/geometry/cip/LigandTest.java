@@ -32,10 +32,10 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-cip
  */
-public class LigandTest extends CDKTestCase {
+class LigandTest extends CDKTestCase {
 
     @Test
-    public void testConstructorAndGetMethods() throws Exception {
+    void testConstructorAndGetMethods() throws Exception {
         SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
 
@@ -47,7 +47,7 @@ public class LigandTest extends CDKTestCase {
     }
 
     @Test
-    public void testVisitedTracking() throws Exception {
+    void testVisitedTracking() throws Exception {
         SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
 

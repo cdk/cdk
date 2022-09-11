@@ -39,10 +39,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-hash
  */
-public class MultiStereoEncoderTest {
+class MultiStereoEncoderTest {
 
     @Test
-    public void testConstruction_Empty() {
+    void testConstruction_Empty() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     new MultiStereoEncoder(Collections.emptyList());
@@ -50,7 +50,7 @@ public class MultiStereoEncoderTest {
     }
 
     @Test
-    public void testEncode() throws Exception {
+    void testEncode() throws Exception {
 
         StereoEncoder a = mock(StereoEncoder.class);
         StereoEncoder b = mock(StereoEncoder.class);
@@ -75,7 +75,7 @@ public class MultiStereoEncoderTest {
     }
 
     @Test
-    public void testReset() throws Exception {
+    void testReset() throws Exception {
         StereoEncoder a = mock(StereoEncoder.class);
         StereoEncoder b = mock(StereoEncoder.class);
 

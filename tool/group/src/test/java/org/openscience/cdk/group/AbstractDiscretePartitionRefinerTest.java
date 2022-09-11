@@ -15,19 +15,19 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
 
     public class Graph {
 
-        public final int     vertexCount;
-        public int[][] connectionTable;
+        final int     vertexCount;
+        int[][] connectionTable;
 
-        public Graph(int vertexCount) {
+        Graph(int vertexCount) {
             this.vertexCount = vertexCount;
         }
     }
 
-    public class MockRefiner extends AbstractDiscretePartitionRefiner {
+    class MockRefiner extends AbstractDiscretePartitionRefiner {
 
-        public final Graph graph;
+        final Graph graph;
 
-        public MockRefiner(Graph graph) {
+        MockRefiner(Graph graph) {
             super();
             this.graph = graph;
         }
@@ -48,7 +48,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         
         private final Graph graph;
         
-        public GraphRefinable(Graph graph) {
+        GraphRefinable(Graph graph) {
             this.graph = graph;
         }
 
@@ -97,13 +97,13 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void emptyConstructor() {
+    void emptyConstructor() {
         MockRefiner refiner = new MockRefiner(null);
         Assertions.assertNotNull(refiner);
     }
 
     @Test
-    public void getVertexCountTest() {
+    void getVertexCountTest() {
         int n = 10;
         Graph g = new Graph(n);
         MockRefiner refiner = new MockRefiner(g);
@@ -111,7 +111,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getConnectivityTest() {
+    void getConnectivityTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
@@ -124,7 +124,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void setupTest() {
+    void setupTest() {
         int n = 5;
         PermutationGroup group = new PermutationGroup(n);
         Graph g = new Graph(n);
@@ -134,7 +134,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void firstIsIdentityTest() {
+    void firstIsIdentityTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
@@ -146,7 +146,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getAutomorphismPartitionTest() {
+    void getAutomorphismPartitionTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
@@ -160,7 +160,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getHalfMatrixStringTest() {
+    void getHalfMatrixStringTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
@@ -171,7 +171,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getFirstHalfMatrixStringTest() {
+    void getFirstHalfMatrixStringTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 0, 1}, {0, 0, 1}, {1, 1, 0}};
@@ -185,7 +185,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getGroupTest() {
+    void getGroupTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
@@ -196,7 +196,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getBestTest() {
+    void getBestTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
@@ -210,7 +210,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getFirstTest() {
+    void getFirstTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
@@ -224,7 +224,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void isCanonical_TrueTest() {
+    void isCanonical_TrueTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
@@ -236,7 +236,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void isCanonical_FalseTest() {
+    void isCanonical_FalseTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
@@ -248,7 +248,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void refineTest() {
+    void refineTest() {
         int n = 3;
         Graph g = new Graph(n);
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};

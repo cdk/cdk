@@ -35,14 +35,14 @@ import org.openscience.cdk.interfaces.IBond.Order;
 /**
  * @cdk.module test-standard
  */
-public class AtomContainerComparatorTest extends CDKTestCase {
+class AtomContainerComparatorTest extends CDKTestCase {
 
-    public AtomContainerComparatorTest() {
+    AtomContainerComparatorTest() {
         super();
     }
 
     @Test
-    public void testCompare_Null_IAtomContainer() {
+    void testCompare_Null_IAtomContainer() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRing cycloPentane = builder.newInstance(IRing.class, 5, "C");
 
@@ -54,7 +54,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_Null_Null() {
+    void testCompare_Null_Null() {
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
@@ -63,7 +63,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_Atom_PseudoAtom() {
+    void testCompare_Atom_PseudoAtom() {
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
@@ -79,7 +79,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_IAtomContainer_Null() {
+    void testCompare_IAtomContainer_Null() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRing cycloPentane = builder.newInstance(IRing.class, 5, "C");
 
@@ -91,7 +91,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_RingSize() {
+    void testCompare_RingSize() {
         // Create some IAtomContainers
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRing cycloPentane = builder.newInstance(IRing.class, 5, "C");
@@ -106,7 +106,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_Ring_NonRing() {
+    void testCompare_Ring_NonRing() {
         // Create some IAtomContainers
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRing cycloHexane = builder.newInstance(IRing.class, 6, "C");
@@ -122,7 +122,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_Ring_NonRing2() {
+    void testCompare_Ring_NonRing2() {
         // Create some IAtomContainers
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer hexaneNitrogen = builder.newInstance(IRing.class, 6, "N");
@@ -138,7 +138,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_BondOrder() {
+    void testCompare_BondOrder() {
         // Create some IAtomContainers
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRing cycloHexaneNitrogen = builder.newInstance(IRing.class, 6, "N");

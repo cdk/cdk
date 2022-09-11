@@ -28,16 +28,16 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-atomtype
  */
-public class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
+class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
 
     @Test
-    public void testOWLAtomTypeMappingHandler() {
+    void testOWLAtomTypeMappingHandler() {
         OWLAtomTypeMappingHandler handler = new OWLAtomTypeMappingHandler();
         Assertions.assertNotNull(handler);
     }
 
     @Test
-    public void testGetAtomTypeMappings() {
+    void testGetAtomTypeMappings() {
         OWLAtomTypeMappingHandler handler = new OWLAtomTypeMappingHandler();
         // nothing is read
         Assertions.assertNotNull(handler);
@@ -45,7 +45,7 @@ public class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testStartDocument() {
+    void testStartDocument() {
         OWLAtomTypeMappingHandler handler = new OWLAtomTypeMappingHandler();
         // nothing is read, but Vector is initialized
         Assertions.assertNotNull(handler);
@@ -53,17 +53,17 @@ public class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testEndElement_String_String_String() {
+    void testEndElement_String_String_String() {
         Assertions.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 
     @Test
-    public void testStartElement_String_String_String_Attributes() {
+    void testStartElement_String_String_String_Attributes() {
         Assertions.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 
     @Test
-    public void testCharacters_arraychar_int_int() {
+    void testCharacters_arraychar_int_int() {
         Assertions.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 

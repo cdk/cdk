@@ -29,20 +29,20 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  *
  * @cdk.module test-reaction
  */
-public class AdductionPBMechanismTest extends ReactionMechanismTest {
+class AdductionPBMechanismTest extends ReactionMechanismTest {
 
     /**
      *  The JUnit setup method
      */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         setMechanism(AdductionPBMechanism.class);
     }
 
     /**
      *  Constructor for the AdductionPBMechanismTest object.
      */
-    public AdductionPBMechanismTest() {
+    AdductionPBMechanismTest() {
         super();
     }
 
@@ -52,7 +52,7 @@ public class AdductionPBMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testAdductionPBMechanism() {
+    void testAdductionPBMechanism() {
         IReactionMechanism mechanism = new AdductionPBMechanism();
         Assertions.assertNotNull(mechanism);
     }
@@ -64,7 +64,7 @@ public class AdductionPBMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+    void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
         IReactionMechanism mechanism = new AdductionPBMechanism();
 
         Assertions.assertNotNull(mechanism);

@@ -34,16 +34,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-core
  */
-public class RegularCyclicVertexSearchTest {
+class RegularCyclicVertexSearchTest {
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
         CyclicVertexSearch search = new RegularCyclicVertexSearch(new int[0][0]);
         Assertions.assertNotNull(search);
     }
 
     @Test
-    public void testCyclic() {
+    void testCyclic() {
         // cyclohexane like
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
@@ -51,7 +51,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testCyclic_Int() {
+    void testCyclic_Int() {
         // cyclohexane like
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
@@ -60,7 +60,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testCyclic_IntInt() {
+    void testCyclic_IntInt() {
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0, 6}, {5}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
         Assertions.assertTrue(search.cyclic(0, 1));
@@ -73,7 +73,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void vertexColor() {
+    void vertexColor() {
         // medium size spiro cyclo hexane like
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {0, 4, 7, 8}, {7, 10}, {5, 6}, {5, 9}, {8, 10},
                 {6, 9, 12, 13}, {12, 15}, {10, 11}, {10, 14}, {13, 15}, {11, 14, 17, 18}, {17, 20}, {15, 16}, {15, 19},
@@ -88,7 +88,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testIsolated() {
+    void testIsolated() {
         // cyclohexane like
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
@@ -96,14 +96,14 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testIsolated_NonCyclic() {
+    void testIsolated_NonCyclic() {
         int[][] g = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
         assertThat(search.cyclic(), is(new int[0]));
     }
 
     @Test
-    public void testIsolated_Empty() {
+    void testIsolated_Empty() {
         CyclicVertexSearch search = new RegularCyclicVertexSearch(new int[0][0]);
         assertThat(search.cyclic(), is(new int[0]));
         assertThat(search.isolated(), is(new int[0][0]));
@@ -114,7 +114,7 @@ public class RegularCyclicVertexSearchTest {
      * C1CCC2(CC1)CCCCC2
      */
     @Test
-    public void testIsolated_Spiro() {
+    void testIsolated_Spiro() {
         // spiro cyclo hexane like
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {0, 4, 7, 8}, {7, 10}, {5, 6}, {5, 9}, {8, 10},
                 {6, 9}};
@@ -129,7 +129,7 @@ public class RegularCyclicVertexSearchTest {
      * C1CCC2(CC1)CCC1(CC2)CCC2(CC1)CCC1(CC2)CCC2(CC1)CCC1(CC2)CCC2(CCC3(CCC4(CCC5(CCC6(CCCCC6)CC5)CC4)CC3)CC2)CC1
      */
     @Test
-    public void testIsolated_SpiroMedium() {
+    void testIsolated_SpiroMedium() {
         // medium size spiro cyclo hexane like
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {0, 4, 7, 8}, {7, 10}, {5, 6}, {5, 9}, {8, 10},
                 {6, 9, 12, 13}, {12, 15}, {10, 11}, {10, 14}, {13, 15}, {11, 14, 17, 18}, {17, 20}, {15, 16}, {15, 19},
@@ -157,7 +157,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testIsolated_Biphenyl() {
+    void testIsolated_Biphenyl() {
         // biphenyl like
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0, 6}, {11, 7, 5}, {6, 8}, {7, 9}, {8, 10},
                 {9, 11}, {10, 7}};
@@ -173,7 +173,7 @@ public class RegularCyclicVertexSearchTest {
      * C(C1CCCCC1)C1CCCCC1
      */
     @Test
-    public void testIsolated_BenzylBenzene() {
+    void testIsolated_BenzylBenzene() {
         // benzylbenzene like
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {0, 4, 12}, {7, 11}, {6, 8}, {7, 9, 12},
                 {8, 10}, {9, 11}, {6, 10}, {8, 5}};
@@ -185,7 +185,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testIsolatedFragments() {
+    void testIsolatedFragments() {
         // two disconnected cyclohexanes
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}, {11, 7}, {6, 8}, {7, 9}, {8, 10},
                 {9, 11}, {10, 7}};
@@ -201,7 +201,7 @@ public class RegularCyclicVertexSearchTest {
      * C1CC2CCC1CC2
      */
     @Test
-    public void testFused() {
+    void testFused() {
         int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0, 7}, {6, 3}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
         int[][] isolated = search.isolated();
@@ -216,7 +216,7 @@ public class RegularCyclicVertexSearchTest {
      * have a (non cyclic) edge which connects them C1CC2(CCC1CC2)C12CCC(CC1)CC2
      */
     @Test
-    public void testFused_BiocycloEdgeLinked() {
+    void testFused_BiocycloEdgeLinked() {
         // biocyclooctanylbiocylooctane like
         int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7, 8}, {3, 5}, {0, 4}, {0, 7}, {6, 3},
                 {9, 13, 14, 3}, {8, 10}, {9, 11}, {10, 12, 15}, {11, 13}, {8, 12}, {8, 15}, {11, 14}};
@@ -235,7 +235,7 @@ public class RegularCyclicVertexSearchTest {
      * cyclic vertex which is adjacent to both C(C12CCC(CC1)CC2)C12CCC(CC1)CC2
      */
     @Test
-    public void testFused_BiocycloVertexLinked() {
+    void testFused_BiocycloVertexLinked() {
         // biocyclooctanylbiocylooctane like
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3, 6, 16}, {2, 4}, {3, 5}, {4, 0, 7}, {2, 7}, {6, 5}, {9, 13},
                 {8, 10}, {9, 11, 14}, {10, 12}, {11, 13}, {12, 8, 15, 16}, {10, 15}, {14, 13}, {13, 2}};
@@ -252,7 +252,7 @@ public class RegularCyclicVertexSearchTest {
      * C1CCC2CCCCC2C1
      */
     @Test
-    public void testFused_Orthofused() {
+    void testFused_Orthofused() {
         // napthalene like
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5, 7}, {0, 6, 4}, {5, 9}, {4, 8}, {7, 9}, {6, 8}};
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
@@ -267,7 +267,7 @@ public class RegularCyclicVertexSearchTest {
      * C1CCC2CC3CCCCC3CC2C1
      */
     @Test
-    public void testFused_Biorthofused() {
+    void testFused_Biorthofused() {
         // 3 fused rings
         int[][] g = new int[][]{{1, 5}, {0, 2, 10}, {3, 13, 1}, {2, 4}, {3, 5, 7}, {0, 6, 4}, {5, 9}, {4, 8}, {7, 9},
                 {6, 8}, {1, 11}, {10, 12}, {11, 13}, {2, 12}};
@@ -283,7 +283,7 @@ public class RegularCyclicVertexSearchTest {
      * C1CC23CCC4(CC2)CCC2(CCCC5(CCCC6(CCC7(CCCC8(CCC9(CC8)CCC8(CCCC%10(CCCC%11(CCC(C1)(CC%11)C3)C%10)C8)CC9)C7)CC6)C5)C2)CC4
      */
     @Test
-    public void testFused_Cylclophane() {
+    void testFused_Cylclophane() {
         // medium size spiro cyclophane
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3, 50, 46}, {2, 4}, {3, 5}, {0, 4, 7, 8}, {7, 10}, {5, 6}, {5, 9},
                 {8, 10}, {6, 9, 12, 13}, {12, 15}, {10, 11}, {10, 14}, {13, 15, 16, 17}, {11, 14}, {14, 20}, {14, 18},
@@ -304,7 +304,7 @@ public class RegularCyclicVertexSearchTest {
      * CHEBI:33128
      */
     @Test
-    public void testFused_Fullerene() {
+    void testFused_Fullerene() {
         int[][] g = new int[][]{{1, 4, 8}, {0, 2, 11}, {1, 3, 14}, {2, 4, 17}, {3, 0, 5}, {4, 6, 19}, {5, 7, 21},
                 {6, 8, 24}, {7, 0, 9}, {8, 10, 25}, {9, 11, 28}, {10, 1, 12}, {11, 13, 29}, {12, 14, 32}, {13, 2, 15},
                 {14, 16, 33}, {15, 17, 36}, {16, 3, 18}, {17, 19, 37}, {18, 5, 20}, {19, 21, 39}, {20, 6, 22},
@@ -323,12 +323,12 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testToArray_Empty() {
+    void testToArray_Empty() {
         assertThat(RegularCyclicVertexSearch.toArray(0L), is(new int[0]));
     }
 
     @Test
-    public void testToArray_Singleton() {
+    void testToArray_Singleton() {
         for (int i = 0; i < 62; i++) {
             assertThat(RegularCyclicVertexSearch.toArray(pow(2L, i)), is(new int[]{i}));
         }
@@ -336,7 +336,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testSetBit() throws Exception {
+    void testSetBit() throws Exception {
         for (int i = 0; i < 62; i++) {
             assertThat(RegularCyclicVertexSearch.setBit(0L, i), is(pow(2L, i)));
         }
@@ -344,7 +344,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testSetBit_Universe() throws Exception {
+    void testSetBit_Universe() throws Exception {
         long s = 0L;
         long t = ~s;
         for (int i = 0; i < 64; i++) {
@@ -354,7 +354,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testIsBitSet_Empty() throws Exception {
+    void testIsBitSet_Empty() throws Exception {
         long s = 0L;
         for (int i = 0; i < 64; i++) {
             Assertions.assertFalse(RegularCyclicVertexSearch.isBitSet(s, i));
@@ -362,7 +362,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testIsBitSet_Universe() throws Exception {
+    void testIsBitSet_Universe() throws Exception {
         long s = ~0L;
         for (int i = 0; i < 64; i++) {
             Assertions.assertTrue(RegularCyclicVertexSearch.isBitSet(s, i));
@@ -370,7 +370,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testIsBitSet_Singleton() throws Exception {
+    void testIsBitSet_Singleton() throws Exception {
         long s = 1L;
         Assertions.assertTrue(RegularCyclicVertexSearch.isBitSet(s, 0));
         for (int i = 1; i < 64; i++) {
@@ -379,7 +379,7 @@ public class RegularCyclicVertexSearchTest {
     }
 
     @Test
-    public void testIsBitSet() throws Exception {
+    void testIsBitSet() throws Exception {
         for (int i = 0; i < 62; i++) {
             Assertions.assertTrue(RegularCyclicVertexSearch.isBitSet(pow(2L, i), i));
         }

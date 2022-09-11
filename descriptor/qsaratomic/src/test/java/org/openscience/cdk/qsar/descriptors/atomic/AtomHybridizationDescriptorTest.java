@@ -36,17 +36,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
+class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
 
-    public AtomHybridizationDescriptorTest() {}
+    AtomHybridizationDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(AtomHybridizationDescriptor.class);
     }
 
     @Test
-    public void testAtomHybridizationDescriptorTest() throws java.lang.Exception {
+    void testAtomHybridizationDescriptorTest() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C#CC=CC"); //
         addExplicitHydrogens(mol);
@@ -60,7 +60,7 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testBug1701073() throws Exception {
+    void testBug1701073() throws Exception {
 
         String[] smiles = new String[]{"C1CCCC=2[C]1(C(=O)NN2)C", "C1CCCC=2[C]1(C(=O)NN2)O",
                 "C[Si](C)(C)[CH](Br)CC(F)(Br)F", "c1(ccc(cc1)O)C#N", "CCN(CC)C#CC#CC(=O)OC",

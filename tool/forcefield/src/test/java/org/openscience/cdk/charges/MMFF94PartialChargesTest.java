@@ -34,7 +34,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *@cdk.created       2004-11-04
  */
 
-public class MMFF94PartialChargesTest extends CDKTestCase {
+class MMFF94PartialChargesTest extends CDKTestCase {
 
     /**
 
@@ -43,7 +43,7 @@ public class MMFF94PartialChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMMFF94PartialCharges() throws Exception {
+    void testMMFF94PartialCharges() throws Exception {
         double[] testResult = {-0.99, 0.314, 0.66, -0.57, -0.65, 0.36, 0.36, 0, 0, 0.5};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("NCC(=O)O");

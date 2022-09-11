@@ -52,18 +52,18 @@ import static org.mockito.Mockito.mock;
  * @see Mol2Writer
  * @see SMILES2Mol2WriterTest
  */
-public class Mol2WriterTest extends ChemObjectIOTest {
+class Mol2WriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new Mol2Writer());
     }
 
     @Test
-    public void testAccepts() throws Exception {
+    void testAccepts() throws Exception {
         Mol2Writer writer = new Mol2Writer();
         Assertions.assertTrue(writer.accepts(AtomContainer.class));
     }
@@ -74,7 +74,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
      * @cdk.bug 2675188
      */
     @Disabled("moved to SMILES2Mol2WriterTest")
-    public void testWriter1() throws Exception {
+    void testWriter1() throws Exception {
         IAtomContainer molecule = mock(IAtomContainer.class);
 
         StringWriter swriter = new StringWriter();
@@ -86,7 +86,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     }
 
     @Disabled("moved to SMILES2Mol2WriterTest")
-    public void testWriter2() throws Exception {
+    void testWriter2() throws Exception {
         IAtomContainer molecule = mock(IAtomContainer.class);
         Aromaticity.cdkLegacy().apply(molecule);
 
@@ -103,7 +103,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     }
 
     @Disabled("moved to SMILES2Mol2WriterTest")
-    public void testWriterForAmide() throws Exception {
+    void testWriterForAmide() throws Exception {
         IAtomContainer molecule = mock(IAtomContainer.class);
         Aromaticity.cdkLegacy().apply(molecule);
 
@@ -128,7 +128,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
      * @cdk.bug 3315503
      */
     @Test
-    public void testMissingAtomType() throws Exception {
+    void testMissingAtomType() throws Exception {
         String filename = "ligand-1a0i.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);

@@ -62,10 +62,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @see org.openscience.cdk.geometry.GeometryTools
  */
-public class GeometryToolsTest extends CDKTestCase {
+class GeometryToolsTest extends CDKTestCase {
 
     @Test
-    public void testHas2DCoordinates_IAtomContainer() {
+    void testHas2DCoordinates_IAtomContainer() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -86,14 +86,14 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testHas2DCoordinates_EmptyAtomContainer() {
+    void testHas2DCoordinates_EmptyAtomContainer() {
         IAtomContainer container = new AtomContainer();
         Assertions.assertFalse(GeometryTools.has2DCoordinates(container));
         Assertions.assertFalse(GeometryTools.has2DCoordinates((IAtomContainer) null));
     }
 
     @Test
-    public void testHas2DCoordinates_Partial() {
+    void testHas2DCoordinates_Partial() {
         IAtomContainer container = new AtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
@@ -108,7 +108,7 @@ public class GeometryToolsTest extends CDKTestCase {
      * @cdk.bug 2936440
      */
     @Test
-    public void testHas2DCoordinates_With000() throws CDKException {
+    void testHas2DCoordinates_With000() throws CDKException {
         String filenameMol = "with000coordinate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne;
@@ -118,14 +118,14 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void get2DCoordinateCoverage_EmptyAtomContainer() {
+    void get2DCoordinateCoverage_EmptyAtomContainer() {
         IAtomContainer container = new AtomContainer();
         Assertions.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(container));
         Assertions.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(null));
     }
 
     @Test
-    public void get2DCoordinateCoverage_Partial() {
+    void get2DCoordinateCoverage_Partial() {
 
         IAtomContainer container = new AtomContainer();
 
@@ -145,7 +145,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void get2DCoordinateCoverage_Full() {
+    void get2DCoordinateCoverage_Full() {
 
         IAtomContainer container = new AtomContainer();
 
@@ -166,7 +166,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void get2DCoordinateCoverage_None_3D() {
+    void get2DCoordinateCoverage_None_3D() {
 
         IAtomContainer container = new AtomContainer();
 
@@ -187,7 +187,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testTranslateAllPositive_IAtomContainer() {
+    void testTranslateAllPositive_IAtomContainer() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom(Elements.CARBON);
         atom.setPoint2d(new Point2d(-3, -2));
@@ -198,7 +198,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetLength2D_IBond() {
+    void testGetLength2D_IBond() {
         Atom o = new Atom("O", new Point2d(0.0, 0.0));
         Atom c = new Atom("C", new Point2d(1.0, 0.0));
         Bond bond = new Bond(c, o);
@@ -207,7 +207,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testMapAtomsOfAlignedStructures() throws Exception {
+    void testMapAtomsOfAlignedStructures() throws Exception {
         String filenameMolOne = "murckoTest6_3d_2.mol";
         String filenameMolTwo = "murckoTest6_3d.mol";
         //String filenameMolTwo = "data/mdl/murckoTest6_3d_2.mol";
@@ -242,7 +242,7 @@ public class GeometryToolsTest extends CDKTestCase {
      * @cdk.bug 1649007
      */
     @Test
-    public void testRotate_IAtomContainer_Point2d_double() {
+    void testRotate_IAtomContainer_Point2d_double() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -262,7 +262,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMinMax_IAtomContainer() {
+    void testGetMinMax_IAtomContainer() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -279,7 +279,7 @@ public class GeometryToolsTest extends CDKTestCase {
 
     /** @cdk.bug 2094881 */
     @Test
-    public void testGetMinMax2() {
+    void testGetMinMax2() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(-2, -1));
         Atom atom2 = new Atom("C");
@@ -295,7 +295,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetRectangle2D_IAtomContainer() {
+    void testGetRectangle2D_IAtomContainer() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(2, 2));
         Atom atom2 = new Atom("C");
@@ -311,7 +311,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testRotate_IAtom_Point3d_Point3d_double() {
+    void testRotate_IAtom_Point3d_Point3d_double() {
         Atom atom1 = new Atom("C");
         atom1.setPoint3d(new Point3d(1, 1, 0));
         GeometryTools.rotate(atom1, new Point3d(2, 0, 0), new Point3d(2, 2, 0), 90);
@@ -319,7 +319,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testNormalize_Point3d() {
+    void testNormalize_Point3d() {
         Point3d p = new Point3d(1, 1, 0);
         GeometryTools.normalize(p);
         Assertions.assertEquals(p.x, 0.7, .1);
@@ -328,7 +328,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGet2DCenter_IAtomContainer() {
+    void testGet2DCenter_IAtomContainer() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -342,7 +342,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGet2DCenterOfMass_IAtomContainer() {
+    void testGet2DCenterOfMass_IAtomContainer() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         atom1.setExactMass(12.0);
@@ -359,7 +359,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGet2DCenter_arrayIAtom() {
+    void testGet2DCenter_arrayIAtom() {
         IAtomContainer container = new AtomContainer();
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
@@ -373,7 +373,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGet2DCenter_IRingSet() {
+    void testGet2DCenter_IRingSet() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -389,7 +389,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGet2DCenter_Iterator() {
+    void testGet2DCenter_Iterator() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -403,7 +403,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testHas2DCoordinates_IAtom() {
+    void testHas2DCoordinates_IAtom() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Assertions.assertTrue(GeometryTools.has2DCoordinates(atom1));
@@ -414,7 +414,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testHas2DCoordinates_IBond() {
+    void testHas2DCoordinates_IBond() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -431,7 +431,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testHas2DCoordinatesNew_IAtomContainer() {
+    void testHas2DCoordinatesNew_IAtomContainer() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -461,7 +461,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testHas3DCoordinates_IAtomContainer() {
+    void testHas3DCoordinates_IAtomContainer() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -482,21 +482,21 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testHas3DCoordinates_EmptyAtomContainer() {
+    void testHas3DCoordinates_EmptyAtomContainer() {
         IAtomContainer container = new AtomContainer();
         Assertions.assertFalse(GeometryTools.has3DCoordinates(container));
         Assertions.assertFalse(GeometryTools.has3DCoordinates((IAtomContainer) null));
     }
 
     @Test
-    public void get3DCoordinateCoverage_EmptyAtomContainer() {
+    void get3DCoordinateCoverage_EmptyAtomContainer() {
         IAtomContainer container = new AtomContainer();
         Assertions.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get3DCoordinateCoverage(container));
         Assertions.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get3DCoordinateCoverage(null));
     }
 
     @Test
-    public void get3DCoordinateCoverage_Partial() {
+    void get3DCoordinateCoverage_Partial() {
 
         IAtomContainer container = new AtomContainer();
 
@@ -516,7 +516,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void get3DCoordinateCoverage_Full() {
+    void get3DCoordinateCoverage_Full() {
 
         IAtomContainer container = new AtomContainer();
 
@@ -537,7 +537,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void get3DCoordinateCoverage_None_2D() {
+    void get3DCoordinateCoverage_None_2D() {
 
         IAtomContainer container = new AtomContainer();
 
@@ -558,7 +558,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testTranslateAllPositive_IAtomContainer_HashMap() {
+    void testTranslateAllPositive_IAtomContainer_HashMap() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(-1, -1));
         Atom atom2 = new Atom("C");
@@ -574,7 +574,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetLength2D_IBond_HashMap() {
+    void testGetLength2D_IBond_HashMap() {
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(-1, -1));
         Atom atom2 = new Atom("C");
@@ -587,7 +587,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetClosestAtom_Multiatom() {
+    void testGetClosestAtom_Multiatom() {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(-1, -1));
         IAtom atom2 = new Atom("C");
@@ -604,7 +604,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetClosestAtom_Double_Double_IAtomContainer_IAtom() {
+    void testGetClosestAtom_Double_Double_IAtomContainer_IAtom() {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 0));
         IAtom atom2 = new Atom("C");
@@ -620,7 +620,7 @@ public class GeometryToolsTest extends CDKTestCase {
      * Tests if not the central atom is returned as closest atom.
      */
     @Test
-    public void testGetClosestAtom_IAtomContainer_IAtom() {
+    void testGetClosestAtom_IAtomContainer_IAtom() {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(-1, -1));
         IAtom atom2 = new Atom("C");
@@ -633,7 +633,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testShiftContainerHorizontal_IAtomContainer_Rectangle2D_Rectangle2D_double() throws Exception {
+    void testShiftContainerHorizontal_IAtomContainer_Rectangle2D_Rectangle2D_double() throws Exception {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(0, 1));
         IAtom atom2 = new Atom("C");
@@ -665,7 +665,7 @@ public class GeometryToolsTest extends CDKTestCase {
      * @throws Exception Thrown when the cloning failed.
      */
     @Test
-    public void testShiftContainerHorizontal_Two_vertical_molecules() throws Exception {
+    void testShiftContainerHorizontal_Two_vertical_molecules() throws Exception {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(0, 0));
         IAtom atom2 = new Atom("C");
@@ -691,7 +691,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetBondLengthAverage_IReaction() {
+    void testGetBondLengthAverage_IReaction() {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(0, 0));
         IAtom atom2 = new Atom("C");
@@ -710,7 +710,7 @@ public class GeometryToolsTest extends CDKTestCase {
      * {@link IAtomContainer}s in the IReaction.
      */
     @Test
-    public void testGetBondLengthAverage_MultiReaction() {
+    void testGetBondLengthAverage_MultiReaction() {
         IReaction reaction = new Reaction();
 
         // mol 1
@@ -739,7 +739,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testShiftReactionVertical_IAtomContainer_Rectangle2D_Rectangle2D_double() throws Exception {
+    void testShiftReactionVertical_IAtomContainer_Rectangle2D_Rectangle2D_double() throws Exception {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(0, 1));
         IAtom atom2 = new Atom("C");
@@ -777,7 +777,7 @@ public class GeometryToolsTest extends CDKTestCase {
      * @throws Exception Thrown when the cloning failed.
      */
     @Test
-    public void testShiftReactionVertical_Two_horizontal_molecules() throws Exception {
+    void testShiftReactionVertical_Two_horizontal_molecules() throws Exception {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(0, 0));
         IAtom atom2 = new Atom("C");
@@ -809,7 +809,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetBestAlignmentForLabelXY() {
+    void testGetBestAlignmentForLabelXY() {
         final String TYPE = "C";
         IAtom zero = new Atom("O");
         zero.setPoint2d(new Point2d());
@@ -831,7 +831,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void medianBondLength() {
+    void medianBondLength() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 1.5)));
@@ -844,7 +844,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void medianBondLengthNoBonds() {
+    void medianBondLengthNoBonds() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 1.5)));
@@ -856,7 +856,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void medianBondLengthNoPoints() {
+    void medianBondLengthNoPoints() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 1.5)));
@@ -871,7 +871,7 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void medianBondLengthOneBond() {
+    void medianBondLengthOneBond() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 1.5)));

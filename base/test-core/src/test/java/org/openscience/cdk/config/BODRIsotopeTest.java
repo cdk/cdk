@@ -25,10 +25,10 @@ import org.openscience.cdk.interfaces.IIsotope;
 /**
  * @cdk.module test-core
  */
-public class BODRIsotopeTest {
+class BODRIsotopeTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
         Assertions.assertEquals("C", isotope.getSymbol());
         Assertions.assertEquals(6, isotope.getAtomicNumber().intValue());
@@ -38,14 +38,14 @@ public class BODRIsotopeTest {
     }
 
     @Test
-    public void testNonclonable() throws CloneNotSupportedException {
+    void testNonclonable() throws CloneNotSupportedException {
         IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
         IIsotope clone = (IIsotope) isotope.clone();
         Assertions.assertEquals(isotope, clone);
     }
 
     @Test
-    public void testImmutable() {
+    void testImmutable() {
         IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
         // try mutations
         isotope.setSymbol("N");
@@ -61,7 +61,7 @@ public class BODRIsotopeTest {
     }
 
     @Test
-    public void untested() {
+    void untested() {
         Assertions.assertTrue(true); // keep PMD from complaining
     }
 }

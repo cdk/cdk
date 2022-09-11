@@ -40,13 +40,13 @@ import org.junit.jupiter.api.BeforeEach;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class HanserRingFinderTest {
+class HanserRingFinderTest {
 
     /**
      * Test of findRings method, of class HanserRingFinder.
      */
     @Test
-    public void testFindRings() {
+    void testFindRings() {
         IAtomContainer molecule = null;
         HanserRingFinder instance = new HanserRingFinder();
         Collection expResult = null;
@@ -57,25 +57,25 @@ public class HanserRingFinderTest {
     private HanserRingFinder finder;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         finder = new HanserRingFinder();
     }
 
-    public void testItShoudFindOneRingInBenzene() throws CDKException {
+    void testItShoudFindOneRingInBenzene() throws CDKException {
         IAtomContainer benzene = Molecules.createBenzene();
         Collection<List<IAtom>> rings = finder.findRings(benzene);
 
         Assertions.assertEquals(1, rings.size());
     }
 
-    public void testItShouldFindThreeRingsInNaphthalene() throws CDKException {
+    void testItShouldFindThreeRingsInNaphthalene() throws CDKException {
         IAtomContainer naphthalene = Molecules.createNaphthalene();
         Collection rings = finder.findRings(naphthalene);
 
         Assertions.assertEquals(3, rings.size());
     }
 
-    public void testItShouldFind28RingsInCubane() throws CDKException {
+    void testItShouldFind28RingsInCubane() throws CDKException {
         IAtomContainer cubane = Molecules.createCubane();
         Collection rings = finder.findRings(cubane);
 

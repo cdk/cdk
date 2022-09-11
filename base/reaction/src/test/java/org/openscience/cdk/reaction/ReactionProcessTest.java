@@ -71,7 +71,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
         return smigen.create(AtomContainerManipulator.copyAndSuppressedHydrogens(mol));
     }
 
-    protected static String cansmi(IReaction rxn) throws CDKException {
+    static String cansmi(IReaction rxn) throws CDKException {
         IReaction copy = rxn.getBuilder().newInstance(IReaction.class);
         for (IAtomContainer mol : rxn.getReactants().atomContainers())
             copy.addReactant(AtomContainerManipulator.copyAndSuppressedHydrogens(mol));
@@ -100,7 +100,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * @param reactionClass   The IReactionProcess class
      * @throws Exception
      */
-    public void setReaction(Class<?> reactionClass) throws Exception {
+    protected void setReaction(Class<?> reactionClass) throws Exception {
         if (dictionary == null) dictionary = openingDictionary();
 
         Object object = reactionClass.newInstance();
@@ -140,7 +140,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * </pre>
      */
     @Test
-    public void testHasSetSuperDotDescriptor() {
+    void testHasSetSuperDotDescriptor() {
         Assertions.assertNotNull(reaction, "The extending class must set the super.descriptor in its setUp() method.");
     }
 
@@ -150,7 +150,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetEntryFromReaction() throws Exception {
+    void testGetEntryFromReaction() throws Exception {
 
         entryString = reaction.getSpecification().getSpecificationReference();
         entryString = entryString.substring(entryString.indexOf("#") + 1, entryString.length());
@@ -164,7 +164,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetDictionaryEntry() throws Exception {
+    void testGetDictionaryEntry() throws Exception {
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
         Assertions.assertNotNull(entry, "The Entry [" + entryString + "] doesn't exist in OWL Dictionary.");
@@ -177,7 +177,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetEntryDefinition() throws Exception {
+    void testGetEntryDefinition() throws Exception {
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
 
@@ -191,7 +191,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetParameterList() throws Exception {
+    void testGetParameterList() throws Exception {
         List<IParameterReact> paramObj = reaction.getParameterList();
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
@@ -208,7 +208,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetSpecification() {
+    void testGetSpecification() {
         ReactionSpecification spec = reaction.getSpecification();
         Assertions.assertNotNull(spec, "The descriptor specification returned must not be null.");
 
@@ -233,7 +233,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetEntryDescription() throws Exception {
+    void testGetEntryDescription() throws Exception {
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
 
@@ -246,7 +246,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetEntryRepresentation() throws Exception {
+    void testGetEntryRepresentation() throws Exception {
 
         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
 
@@ -260,7 +260,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      *
      */
     @Test
-    public void testCentreActive() throws Exception {
+    void testCentreActive() throws Exception {
         IReactionProcess type = reaction;
 
         IParameterReact ipr = type.getParameterClass(SetReactionCenter.class);
@@ -284,7 +284,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetExampleReaction() throws Exception {
+    void testGetExampleReaction() throws Exception {
         //		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
         //    	List<String> xmlList = entry.getExampleReactions();
         //    	Assert.assertTrue("The representation entry for ["+entryString+"]  must contain at least one example of reaction.",

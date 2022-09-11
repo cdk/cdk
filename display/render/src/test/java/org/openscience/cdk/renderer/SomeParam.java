@@ -28,9 +28,9 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  *
  * @cdk.module test-render
  */
-public class SomeParam extends AbstractGeneratorParameter<Boolean> {
+class SomeParam extends AbstractGeneratorParameter<Boolean> {
 
-    Boolean value = Boolean.FALSE;
+    private Boolean value = Boolean.FALSE;
 
     @Override
     public Boolean getDefault() {

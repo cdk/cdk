@@ -17,17 +17,17 @@ import static org.hamcrest.CoreMatchers.is;
  * @cdk.module test-qsarmolecular
  */
 
-public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest {
+class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest {
 
-    public LongestAliphaticChainDescriptorTest() {}
+    LongestAliphaticChainDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(LongestAliphaticChainDescriptor.class);
     }
 
     @Test
-    public void test1LongestAliphaticChainDescriptor() throws java.lang.Exception {
+    void test1LongestAliphaticChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -37,7 +37,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
     }
 
     @Test
-    public void test2LargestChainDescriptor() throws java.lang.Exception {
+    void test2LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -47,7 +47,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
     }
 
     @Test
-    public void test3LargestChainDescriptor() throws java.lang.Exception {
+    void test3LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -57,7 +57,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
     }
 
     @Test
-    public void test4LargestChainDescriptor() throws java.lang.Exception {
+    void test4LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -67,7 +67,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
     }
 
     @Test
-    public void test5LargestChainDescriptor() throws java.lang.Exception {
+    void test5LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -77,7 +77,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
     }
 
     @Test
-    public void test6LargestChainDescriptor() throws java.lang.Exception {
+    void test6LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -87,7 +87,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
     }
 
     @Test
-    public void test7LargestChainDescriptor() throws java.lang.Exception {
+    void test7LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -96,7 +96,8 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
         Assertions.assertEquals(3, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
-    @Test public void ethanol() throws Exception {
+    @Test
+    void ethanol() throws Exception {
         assertSmiles("CCO", 2);
         assertSmiles("OCC", 2);
     }

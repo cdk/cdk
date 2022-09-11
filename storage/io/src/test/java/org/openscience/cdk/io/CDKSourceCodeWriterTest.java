@@ -42,20 +42,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.module test-io
  * @see org.openscience.cdk.io.CDKSourceCodeWriterTest
  */
-public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
+class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setChemObjectIO(new CDKSourceCodeWriter());
     }
 
     @Test
-    public void testAccepts() throws Exception {
+    void testAccepts() throws Exception {
         Assertions.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
 
     @Test
-    public void testOutput() throws Exception {
+    void testOutput() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         Atom atom = new Atom("C");

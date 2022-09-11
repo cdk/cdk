@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class Mol2FormatTest extends ChemFormatMatcherTest {
+class Mol2FormatTest extends ChemFormatMatcherTest {
 
-    public Mol2FormatTest() {
+    Mol2FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) Mol2Format.getInstance());
     }
 

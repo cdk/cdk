@@ -57,7 +57,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public TautomerizationReactionTest() throws Exception {
+    TautomerizationReactionTest() throws Exception {
         setReaction(TautomerizationReaction.class);
     }
 
@@ -65,7 +65,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testTautomerizationReaction() throws Exception {
+    void testTautomerizationReaction() throws Exception {
         IReactionProcess type = new TautomerizationReaction();
         Assertions.assertNotNull(type);
     }
@@ -131,7 +131,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new TautomerizationReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -195,7 +195,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new TautomerizationReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -244,7 +244,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new TautomerizationReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();

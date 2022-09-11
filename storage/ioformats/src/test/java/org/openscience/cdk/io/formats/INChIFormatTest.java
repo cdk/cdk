@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class INChIFormatTest extends ChemFormatMatcherTest {
+class INChIFormatTest extends ChemFormatMatcherTest {
 
-    public INChIFormatTest() {
+    INChIFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) INChIFormat.getInstance());
     }
 

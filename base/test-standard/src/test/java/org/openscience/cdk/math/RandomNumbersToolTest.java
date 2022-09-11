@@ -28,52 +28,52 @@ import java.util.Random;
 /**
  * @cdk.module test-standard
  */
-public class RandomNumbersToolTest extends CDKTestCase {
+class RandomNumbersToolTest extends CDKTestCase {
 
-    public RandomNumbersToolTest() {
+    RandomNumbersToolTest() {
         super();
     }
 
     @Test
-    public void testGetRandomSeed() {
+    void testGetRandomSeed() {
         testSetRandomSeed_long();
     }
 
     @Test
-    public void testSetRandomSeed_long() {
+    void testSetRandomSeed_long() {
         long seed = System.currentTimeMillis();
         RandomNumbersTool.setRandomSeed(seed);
         Assertions.assertEquals(seed, RandomNumbersTool.getRandomSeed());
     }
 
     @Test
-    public void testSetRandom() {
+    void testSetRandom() {
         Random rng = new Random();
         RandomNumbersTool.setRandom(rng);
         Assertions.assertEquals(rng, RandomNumbersTool.getRandom());
     }
 
     @Test
-    public void testRandomInt() {
+    void testRandomInt() {
         int random = RandomNumbersTool.randomInt();
         Assertions.assertTrue(random == 0 || random == 1);
     }
 
     @Test
-    public void testRandomBoolean() {
+    void testRandomBoolean() {
         boolean random = RandomNumbersTool.randomBoolean();
         Assertions.assertTrue(random || !random);
     }
 
     @Test
-    public void testRandomLong() {
+    void testRandomLong() {
         long random = RandomNumbersTool.randomLong();
         Assertions.assertTrue(random >= 0l);
         Assertions.assertTrue(random <= 1l);
     }
 
     @Test
-    public void testRandomLong_long_long() {
+    void testRandomLong_long_long() {
         long lower_limit = 2l;
         long upper_limit = 4l;
         long random = RandomNumbersTool.randomLong(lower_limit, upper_limit);
@@ -82,14 +82,14 @@ public class RandomNumbersToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testRandomDouble() {
+    void testRandomDouble() {
         double random = RandomNumbersTool.randomDouble();
         Assertions.assertTrue(random >= 0.0);
         Assertions.assertTrue(random <= 1.0);
     }
 
     @Test
-    public void testRandomDouble_double_double() {
+    void testRandomDouble_double_double() {
         double lower_limit = 2.0;
         double upper_limit = 4.0;
         double random = RandomNumbersTool.randomDouble(lower_limit, upper_limit);
@@ -98,14 +98,14 @@ public class RandomNumbersToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testRandomFloat() {
+    void testRandomFloat() {
         float random = RandomNumbersTool.randomFloat();
         Assertions.assertTrue(random >= 0.0);
         Assertions.assertTrue(random <= 1.0);
     }
 
     @Test
-    public void testRandomFloat_float_float() {
+    void testRandomFloat_float_float() {
         float lower_limit = (float) 2.0;
         float upper_limit = (float) 4.0;
         float random = RandomNumbersTool.randomFloat(lower_limit, upper_limit);
@@ -114,19 +114,19 @@ public class RandomNumbersToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testRandomBit() {
+    void testRandomBit() {
         int random = RandomNumbersTool.randomBit();
         Assertions.assertTrue(random == 0 || random == 1);
     }
 
     @Test
-    public void testRandomInt_int_int() {
+    void testRandomInt_int_int() {
         int random = RandomNumbersTool.randomInt(0, 5);
         Assertions.assertTrue(random == 0 || random == 1 || random == 2 || random == 3 || random == 4 || random == 5);
     }
 
     @Disabled("Test based on random probability - random failures")
-    public void testFlipCoin() {
+    void testFlipCoin() {
         int ntry = 1000000;
         double p = 0.5;
         int ntrue = 0;
@@ -142,7 +142,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
     }
 
     @Disabled("Test based on random probability - random failures")
-    public void testGaussianFloat() {
+    void testGaussianFloat() {
         float dev = (float) 1.0;
         float epsilon = 0.01f;
 
@@ -166,7 +166,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
     }
 
     @Disabled("Test based on random probability - random failures")
-    public void testGaussianDouble() {
+    void testGaussianDouble() {
         double dev = 2.0;
         double epsilon = 0.01;
         int ntry = 100000;
@@ -189,7 +189,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
     }
 
     @Disabled("Test based on random probability - random failures")
-    public void testExponentialDouble() {
+    void testExponentialDouble() {
         double mean = 1.0f;
         double epsilon = 0.01f;
         int ntry = 100000;

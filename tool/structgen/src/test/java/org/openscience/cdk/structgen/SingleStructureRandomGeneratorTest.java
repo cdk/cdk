@@ -33,10 +33,10 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * @cdk.module test-structgen
  */
-public class SingleStructureRandomGeneratorTest {
+class SingleStructureRandomGeneratorTest {
 
-    String                         mf;
-    SingleStructureRandomGenerator ssrg;
+    private String                         mf;
+    private SingleStructureRandomGenerator ssrg;
 
     public SingleStructureRandomGeneratorTest() throws Exception {
         System.out.println("Instantiating MoleculeListViewer");
@@ -80,7 +80,7 @@ public class SingleStructureRandomGeneratorTest {
         }
     }
 
-    class MoreAction extends AbstractAction {
+    private class MoreAction extends AbstractAction {
 
         private static final long serialVersionUID = -7405706755621468840L;
 

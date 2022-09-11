@@ -62,7 +62,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public SharingLonePairReactionTest() throws Exception {
+    SharingLonePairReactionTest() throws Exception {
         setReaction(SharingLonePairReaction.class);
     }
 
@@ -70,7 +70,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testSharingLonePairReaction() throws Exception {
+    void testSharingLonePairReaction() throws Exception {
         IReactionProcess type = new SharingLonePairReaction();
         Assertions.assertNotNull(type);
     }
@@ -116,7 +116,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new SharingLonePairReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -156,7 +156,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new SharingLonePairReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -191,7 +191,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new SharingLonePairReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -224,7 +224,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer1() throws Exception {
+    void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
@@ -234,7 +234,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer2() throws Exception {
+    void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 

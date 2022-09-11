@@ -32,7 +32,7 @@ import org.openscience.cdk.isomorphism.VentoFoggia;
  * @author John May
  * @cdk.module test-smarts
  */
-public class VFSubstructureTest extends SubstructureTest {
+class VFSubstructureTest extends SubstructureTest {
 
     @Override
     Pattern create(IAtomContainer container) {

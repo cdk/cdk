@@ -11,9 +11,9 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-formula
  */
-public class IsotopePatternManipulatorTest extends CDKTestCase {
+class IsotopePatternManipulatorTest extends CDKTestCase {
 
-    public IsotopePatternManipulatorTest() {
+    IsotopePatternManipulatorTest() {
         super();
     }
 
@@ -23,7 +23,7 @@ public class IsotopePatternManipulatorTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testNormalize_IsotopePattern() {
+    void testNormalize_IsotopePattern() {
         IsotopePattern spExp = new IsotopePattern();
         spExp.setMonoIsotope(new IsotopeContainer(156.07770, 2));
         spExp.addIsotope(new IsotopeContainer(157.08059, 0.0006));
@@ -55,7 +55,7 @@ public class IsotopePatternManipulatorTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSortByIntensity_IsotopePattern() {
+    void testSortByIntensity_IsotopePattern() {
         IsotopePattern spExp = new IsotopePattern();
         spExp.setMonoIsotope(new IsotopeContainer(157.07503, 0.0001));
         spExp.addIsotope(new IsotopeContainer(156.07770, 1));
@@ -86,7 +86,7 @@ public class IsotopePatternManipulatorTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSortAndNormalizedByIntensity_IsotopePattern() {
+    void testSortAndNormalizedByIntensity_IsotopePattern() {
         IsotopePattern spExp = new IsotopePattern();
         spExp.addIsotope(new IsotopeContainer(157.07503, 0.0002));
         spExp.setMonoIsotope(new IsotopeContainer(156.07770, 2));
@@ -117,7 +117,7 @@ public class IsotopePatternManipulatorTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSortByMass_IsotopePattern() {
+    void testSortByMass_IsotopePattern() {
         IsotopePattern spExp = new IsotopePattern();
         spExp.addIsotope(new IsotopeContainer(157.07503, 0.0002));
         spExp.setMonoIsotope(new IsotopeContainer(156.07770, 2));

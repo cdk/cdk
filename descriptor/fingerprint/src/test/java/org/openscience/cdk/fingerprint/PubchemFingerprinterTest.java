@@ -54,7 +54,7 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    SmilesParser parser;
+    private SmilesParser parser;
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -62,18 +62,18 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testGetSize() throws Exception {
+    void testGetSize() throws Exception {
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         Assertions.assertEquals(881, printer.getSize());
     }
 
     @Test
-    public void testFingerprint() throws Exception {
+    void testFingerprint() throws Exception {
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
 
@@ -101,7 +101,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     @Test
-    public void testfp2() throws Exception {
+    void testfp2() throws Exception {
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol1 = parser.parseSmiles("CC(N)CCCN");
@@ -131,7 +131,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
      * @cdk.inchi InChI=1S/C13H24O10S/c1-20-12-8(18)6(16)10(4(2-14)21-12)23-13-9(19)7(17)11(24)5(3-15)22-13/h4-19,24H,2-3H2,1H3/t4-,5-,6-,7-,8-,9-,10-,11-,12-,13+/m1/s1
      */
     @Test
-    public void testCID2518130() throws CDKException {
+    void testCID2518130() throws CDKException {
         IAtomContainer mol = parser.parseSmiles("COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
@@ -154,7 +154,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
      * @cdk.inchi InChI=1S/C32H26N/c1-5-13-26(14-6-1)21-22-31-23-30(28-17-9-3-10-18-28)24-32(29-19-11-4-12-20-29)33(31)25-27-15-7-2-8-16-27/h1-24H,25H2/q+1/b22-21+
      */
     @Test
-    public void testCID5934166() throws CDKException {
+    void testCID5934166() throws CDKException {
         IAtomContainer mol = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
@@ -177,7 +177,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
        * @cdk.inchi  InChI=1S/C14H10Cl3N3O3/c1-6(7-2-4-8(21)5-3-7)19-20-11-9(15)12(14(22)23)18-13(17)10(11)16/h2-5,19,21H,1H2,(H,18,20)(H,22,23)
        */
     @Test
-    public void testCID25181289() throws CDKException {
+    void testCID25181289() throws CDKException {
         IAtomContainer mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
@@ -194,7 +194,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     @Test
-    public void testGetFingerprintAsBytes() throws CDKException {
+    void testGetFingerprintAsBytes() throws CDKException {
 
         IAtomContainer mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
 
@@ -215,7 +215,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     // adapted from: http://stackoverflow.com/questions/6197411/converting-from-bitset-to-byte-array
-    public static byte[] toByteArray(BitSet bits) {
+    static byte[] toByteArray(BitSet bits) {
         byte[] bytes = new byte[bits.length() / 8 + 1];
         for (int i = 0; i < bits.length(); i++) {
             if (bits.get(i)) {
@@ -226,7 +226,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     @Test
-    public void testDecode_invalid()
+    void testDecode_invalid()
     {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             PubchemFingerprinter.decode("a");
@@ -234,7 +234,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     @Test
-    public void testDecode() {
+    void testDecode() {
         BitSet bitSet = PubchemFingerprinter
                 .decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
         int[] setBits = new int[]{0, 9, 10, 178, 179, 255, 283, 284, 332, 344, 355, 370, 371, 384, 416, 434, 441, 446,
@@ -246,7 +246,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     @Test
-    public void testBenzene() throws CDKException {
+    void testBenzene() throws CDKException {
         IAtomContainer mol = parser.parseSmiles("c1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
@@ -268,7 +268,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
      * @cdk.bug 3510588
      */
     @Test
-    public void testMultithreadedUsage() throws Exception {
+    void testMultithreadedUsage() throws Exception {
         IAtomContainer mol1 = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
         IAtomContainer mol2 = parser
                 .parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
@@ -337,7 +337,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
      */
     @Test
     @Override
-    public void testBug934819() throws Exception {
+    void testBug934819() throws Exception {
 
         IAtomContainer subStructure = bug934819_1();
         IAtomContainer superStructure = bug934819_2();

@@ -40,28 +40,28 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-smsd
  */
-public class SMSDNormalizerTest {
+class SMSDNormalizerTest {
 
-    public SMSDNormalizerTest() {}
+    SMSDNormalizerTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of makeDeepCopy method, of class SMSDNormalizer.
      * @throws InvalidSmilesException
      */
     @Test
-    public void testMakeDeepCopy() throws InvalidSmilesException {
+    void testMakeDeepCopy() throws InvalidSmilesException {
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = sp.parseSmiles(rawMolSmiles);
@@ -84,7 +84,7 @@ public class SMSDNormalizerTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testAromatizeMolecule() throws InvalidSmilesException {
+    void testAromatizeMolecule() throws InvalidSmilesException {
         String rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(rawMolSmiles);
@@ -103,7 +103,7 @@ public class SMSDNormalizerTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetExplicitHydrogenCount() throws InvalidSmilesException {
+    void testGetExplicitHydrogenCount() throws InvalidSmilesException {
 
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -126,7 +126,7 @@ public class SMSDNormalizerTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetImplicitHydrogenCount() throws InvalidSmilesException {
+    void testGetImplicitHydrogenCount() throws InvalidSmilesException {
 
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -149,7 +149,7 @@ public class SMSDNormalizerTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetHydrogenCount() throws InvalidSmilesException {
+    void testGetHydrogenCount() throws InvalidSmilesException {
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
@@ -170,7 +170,7 @@ public class SMSDNormalizerTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testRemoveHydrogensAndPreserveAtomID() throws InvalidSmilesException {
+    void testRemoveHydrogensAndPreserveAtomID() throws InvalidSmilesException {
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
@@ -200,7 +200,7 @@ public class SMSDNormalizerTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testConvertExplicitToImplicitHydrogens() throws InvalidSmilesException {
+    void testConvertExplicitToImplicitHydrogens() throws InvalidSmilesException {
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
@@ -214,7 +214,7 @@ public class SMSDNormalizerTest {
      * @throws Exception
      */
     @Test
-    public void testPercieveAtomTypesAndConfigureAtoms() throws Exception {
+    void testPercieveAtomTypesAndConfigureAtoms() throws Exception {
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);

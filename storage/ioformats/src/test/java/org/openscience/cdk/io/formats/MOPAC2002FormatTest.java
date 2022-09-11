@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class MOPAC2002FormatTest extends ChemFormatMatcherTest {
+class MOPAC2002FormatTest extends ChemFormatMatcherTest {
 
-    public MOPAC2002FormatTest() {
+    MOPAC2002FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) MOPAC2002Format.getInstance());
     }
 

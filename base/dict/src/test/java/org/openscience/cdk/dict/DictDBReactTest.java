@@ -33,16 +33,16 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */
-public class DictDBReactTest extends CDKTestCase {
+class DictDBReactTest extends CDKTestCase {
 
     @Test
-    public void testDictDBReact() {
+    void testDictDBReact() {
         DictionaryDatabase db = new DictionaryDatabase();
         Assertions.assertTrue(db.hasDictionary("reaction-processes"));
     }
 
     @Test
-    public void TestCheckUniqueID() {
+    void TestCheckUniqueID() {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("reaction-processes");
         Entry[] entries = dict.getEntries();

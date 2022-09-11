@@ -42,12 +42,12 @@ import org.openscience.cdk.tools.diff.AtomContainerDiff;
 /**
  * @cdk.module test-iordf
  */
-public class ConvertorTest extends CDKTestCase {
+class ConvertorTest extends CDKTestCase {
 
     private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     @Test
-    public void roundtripMolecule() {
+    void roundtripMolecule() {
         IAtomContainer mol = new AtomContainer();
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
@@ -56,7 +56,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripAtom() {
+    void roundtripAtom() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         Model model = Convertor.molecule2Model(mol);
@@ -66,22 +66,22 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripBond_SINGLE() {
+    void roundtripBond_SINGLE() {
         roundtripBond_Order(IBond.Order.SINGLE);
     }
 
     @Test
-    public void roundtripBond_DOUBLE() {
+    void roundtripBond_DOUBLE() {
         roundtripBond_Order(IBond.Order.DOUBLE);
     }
 
     @Test
-    public void roundtripBond_TRIPLE() {
+    void roundtripBond_TRIPLE() {
         roundtripBond_Order(IBond.Order.TRIPLE);
     }
 
     @Test
-    public void roundtripBond_QUAD() {
+    void roundtripBond_QUAD() {
         roundtripBond_Order(IBond.Order.QUADRUPLE);
     }
 
@@ -97,7 +97,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripElectronContainer_ElectronCount() {
+    void roundtripElectronContainer_ElectronCount() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -110,7 +110,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripChemObject() {
+    void roundtripChemObject() {
         IAtomContainer mol = new AtomContainer();
         IAtom object = new Atom("C");
         object.setID("atom1");
@@ -122,7 +122,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripElement() {
+    void roundtripElement() {
         IAtomContainer mol = new AtomContainer();
         IAtom object = new Atom("C");
         object.setAtomicNumber(6);
@@ -134,7 +134,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripPseudoAtom() {
+    void roundtripPseudoAtom() {
         IAtomContainer mol = new AtomContainer();
         IPseudoAtom object = new PseudoAtom("FunnyAtom");
         mol.addAtom(object);
@@ -145,7 +145,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripAtomType() {
+    void roundtripAtomType() {
         IAtomContainer mol = new AtomContainer();
         IAtom object = new Atom("C");
         object.setAtomTypeName("C.sp3");
@@ -158,7 +158,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripIsotope_ExactMass() {
+    void roundtripIsotope_ExactMass() {
         IAtomContainer mol = new AtomContainer();
         IAtom object = new Atom("C");
         object.setExactMass(0.3);
@@ -170,7 +170,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripIsotope_MassNumber() {
+    void roundtripIsotope_MassNumber() {
         IAtomContainer mol = new AtomContainer();
         IAtom object = new Atom("C");
         object.setMassNumber(13);
@@ -182,7 +182,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripIsotope_NaturalAbundance() {
+    void roundtripIsotope_NaturalAbundance() {
         IAtomContainer mol = new AtomContainer();
         IAtom object = new Atom("C");
         object.setNaturalAbundance(0.95);
@@ -194,52 +194,52 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundtripAtomType_S() {
+    void roundtripAtomType_S() {
         roundtripAtomType_Hybridization(Hybridization.S);
     }
 
     @Test
-    public void roundtripAtomType_SP1() {
+    void roundtripAtomType_SP1() {
         roundtripAtomType_Hybridization(Hybridization.SP1);
     }
 
     @Test
-    public void roundtripAtomType_SP2() {
+    void roundtripAtomType_SP2() {
         roundtripAtomType_Hybridization(Hybridization.SP2);
     }
 
     @Test
-    public void roundtripAtomType_SP3() {
+    void roundtripAtomType_SP3() {
         roundtripAtomType_Hybridization(Hybridization.SP3);
     }
 
     @Test
-    public void roundtripAtomType_PLANAR3() {
+    void roundtripAtomType_PLANAR3() {
         roundtripAtomType_Hybridization(Hybridization.PLANAR3);
     }
 
     @Test
-    public void roundtripAtomType_SP3D1() {
+    void roundtripAtomType_SP3D1() {
         roundtripAtomType_Hybridization(Hybridization.SP3D1);
     }
 
     @Test
-    public void roundtripAtomType_SP3D2() {
+    void roundtripAtomType_SP3D2() {
         roundtripAtomType_Hybridization(Hybridization.SP3D2);
     }
 
     @Test
-    public void roundtripAtomType_SP3D3() {
+    void roundtripAtomType_SP3D3() {
         roundtripAtomType_Hybridization(Hybridization.SP3D3);
     }
 
     @Test
-    public void roundtripAtomType_SP3D4() {
+    void roundtripAtomType_SP3D4() {
         roundtripAtomType_Hybridization(Hybridization.SP3D4);
     }
 
     @Test
-    public void roundtripAtomType_SP3D5() {
+    void roundtripAtomType_SP3D5() {
         roundtripAtomType_Hybridization(Hybridization.SP3D5);
     }
 
@@ -255,22 +255,22 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void testAtomType_MaxBondOrder_SINGLE() {
+    void testAtomType_MaxBondOrder_SINGLE() {
         roundtripAtomType_MaxBondOrder(Order.SINGLE);
     }
 
     @Test
-    public void testAtomType_MaxBondOrder_DOUBLE() {
+    void testAtomType_MaxBondOrder_DOUBLE() {
         roundtripAtomType_MaxBondOrder(Order.DOUBLE);
     }
 
     @Test
-    public void testAtomType_MaxBondOrder_TRIPLE() {
+    void testAtomType_MaxBondOrder_TRIPLE() {
         roundtripAtomType_MaxBondOrder(Order.TRIPLE);
     }
 
     @Test
-    public void testAtomType_MaxBondOrder_QUAD() {
+    void testAtomType_MaxBondOrder_QUAD() {
         roundtripAtomType_MaxBondOrder(Order.QUADRUPLE);
     }
 

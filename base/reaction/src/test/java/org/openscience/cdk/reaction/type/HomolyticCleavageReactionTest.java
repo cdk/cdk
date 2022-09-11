@@ -64,14 +64,14 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
     private UniversalIsomorphismTester    uiTester;
 
     @BeforeEach
-    public void setUpUITester() {
+    void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }
 
     /**
      *  The JUnit setup method
      */
-    public HomolyticCleavageReactionTest() throws Exception {
+    HomolyticCleavageReactionTest() throws Exception {
         setReaction(HomolyticCleavageReaction.class);
     }
 
@@ -79,7 +79,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testHomolyticCleavageReaction() throws Exception {
+    void testHomolyticCleavageReaction() throws Exception {
         IReactionProcess type = new HomolyticCleavageReaction();
         Assertions.assertNotNull(type);
     }
@@ -189,7 +189,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCsp2SingleB() throws Exception {
+    void testCsp2SingleB() throws Exception {
         //Smiles("C=CC")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -277,7 +277,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCspSingleB() throws Exception {
+    void testCspSingleB() throws Exception {
         //Smiles("C#CC")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -356,7 +356,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCsp2DoubleB() throws Exception {
+    void testCsp2DoubleB() throws Exception {
         //Smiles("CC=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -437,7 +437,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCspDoubleB() throws Exception {
+    void testCspDoubleB() throws Exception {
         //Smiles("C=C=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -510,7 +510,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCspTripleB() throws Exception {
+    void testCspTripleB() throws Exception {
         //Smiles("CC#C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -582,7 +582,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp3SingleB() throws Exception {
+    void testNsp3SingleB() throws Exception {
         //Smiles("CNC")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -672,7 +672,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp3ChargeSingleB() throws Exception {
+    void testNsp3ChargeSingleB() throws Exception {
         //Smiles("C[N+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -730,7 +730,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp2SingleB() throws Exception {
+    void testNsp2SingleB() throws Exception {
         //Smiles("C=NC")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -812,7 +812,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp2ChargeSingleB() throws Exception {
+    void testNsp2ChargeSingleB() throws Exception {
         //Smiles("C=[N+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -866,7 +866,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp2DoubleB() throws Exception {
+    void testNsp2DoubleB() throws Exception {
         //Smiles("CN=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -941,7 +941,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp2ChargeDoubleB() throws Exception {
+    void testNsp2ChargeDoubleB() throws Exception {
         //Smiles("C[N+]=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -995,7 +995,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNspTripleB() throws Exception {
+    void testNspTripleB() throws Exception {
         //Smiles("N#C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -1050,7 +1050,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNspChargeTripleB() throws Exception {
+    void testNspChargeTripleB() throws Exception {
         //Smiles("[N+]#C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -1094,7 +1094,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testOsp2SingleB() throws Exception {
+    void testOsp2SingleB() throws Exception {
         //Smiles("COC")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -1181,7 +1181,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testOsp2ChargeSingleB() throws Exception {
+    void testOsp2ChargeSingleB() throws Exception {
         //Smiles("C[O+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -1237,7 +1237,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testOspDoubleB() throws Exception {
+    void testOspDoubleB() throws Exception {
         //Smiles("O=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -1296,7 +1296,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testOspChargeDoubleB() throws Exception {
+    void testOspChargeDoubleB() throws Exception {
         //Smiles("[O+]=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -1341,7 +1341,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testFspSingleB() throws Exception {
+    void testFspSingleB() throws Exception {
         //Smiles("FC")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -1407,7 +1407,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new HomolyticCleavageReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -1444,7 +1444,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new HomolyticCleavageReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -1483,7 +1483,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testEthylbenzaldehydeManual() throws Exception {
+    void testEthylbenzaldehydeManual() throws Exception {
         IReactionProcess type = new HomolyticCleavageReaction();
         IAtomContainerSet setOfReactants = builder.newInstance(IAtomContainerSet.class);
 
@@ -1639,7 +1639,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testEthylbenzaldehydeMapping() throws Exception {
+    void testEthylbenzaldehydeMapping() throws Exception {
         IReactionProcess type = new HomolyticCleavageReaction();
         IAtomContainerSet setOfReactants = builder.newInstance(IAtomContainerSet.class);
 
@@ -1765,7 +1765,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @return The IAtomContainerSet
      */
-    private IAtomContainerSet getExpectedProducts() {
+    IAtomContainerSet getExpectedProducts() {
         IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
         setOfProducts.addAtomContainer(null);

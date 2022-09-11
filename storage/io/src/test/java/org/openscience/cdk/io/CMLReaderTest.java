@@ -48,15 +48,15 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  *
  * @cdk.module test-io
  */
-public class CMLReaderTest extends SimpleChemObjectReaderTest {
+class CMLReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new CMLReader(), "org/openscience/cdk/io/3.cml");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Assertions.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
@@ -78,7 +78,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1248
      */
     @Test
-    public void testBug1248() throws IOException, CDKException {
+    void testBug1248() throws IOException, CDKException {
 
         InputStream in = getClass().getResourceAsStream("(1R)-1-aminoethan-1-ol.cml");
         CMLReader reader = new CMLReader(in);
@@ -113,7 +113,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1245
      */
     @Test
-    public void testBug1245() throws IOException, CDKException {
+    void testBug1245() throws IOException, CDKException {
 
         InputStream in = getClass().getResourceAsStream("(1R)-1-aminoethan-1-ol.cml");
         CMLReader reader = new CMLReader(in);
@@ -166,7 +166,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
      * @see #testBug1248()
      */
     @Test
-    public void testBug1274() throws CDKException, IOException {
+    void testBug1274() throws CDKException, IOException {
 
         InputStream in = getClass().getResourceAsStream("(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
         CMLReader reader = new CMLReader(in);
@@ -200,7 +200,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1275
      */
     @Test
-    public void testBug1275() throws CDKException, IOException {
+    void testBug1275() throws CDKException, IOException {
 
         InputStream in = getClass().getResourceAsStream("(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
         CMLReader reader = new CMLReader(in);
@@ -229,7 +229,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testWedgeBondParsing() throws CDKException, IOException {
+    void testWedgeBondParsing() throws CDKException, IOException {
         InputStream in = getClass().getResourceAsStream("AZD5423.xml");
         CMLReader reader = new CMLReader(in);
         try {
@@ -258,7 +258,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testSFBug1085912_1() throws Exception {
+    void testSFBug1085912_1() throws Exception {
         String cmlContent = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
                 + "<molecule convention=\"PDB\" dictRef=\"pdb:model\" xmlns=\"http://www.xml-cml.org/schema\">"
                 + "  <molecule dictRef=\"pdb:sequence\" id=\"ALAA116\">"
@@ -310,7 +310,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testMixedNamespaces() throws Exception {
+    void testMixedNamespaces() throws Exception {
         InputStream in = getClass().getResourceAsStream("US06358966-20020319-C00001-enr.cml");
         CMLReader reader = new CMLReader(in);
         try {

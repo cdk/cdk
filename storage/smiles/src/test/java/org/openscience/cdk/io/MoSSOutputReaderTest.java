@@ -34,21 +34,21 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 /**
  * @cdk.module test-smiles
  */
-public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
+class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new MoSSOutputReader(), "org/openscience/cdk/io/TKO.mossoutput");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         MoSSOutputReader reader = new MoSSOutputReader();
         Assertions.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test
-    public void testExampleFile_MolReading() throws Exception {
+    void testExampleFile_MolReading() throws Exception {
         String filename = "TKO.mossoutput";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MoSSOutputReader reader = new MoSSOutputReader(ins);
@@ -62,7 +62,7 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testExampleFile_SupportColumns() throws Exception {
+    void testExampleFile_SupportColumns() throws Exception {
         String filename = "TKO.mossoutput";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MoSSOutputReader reader = new MoSSOutputReader(ins);

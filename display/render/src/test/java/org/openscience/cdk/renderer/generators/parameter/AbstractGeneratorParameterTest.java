@@ -28,7 +28,7 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 /**
  * @cdk.module test-render
  */
-public class AbstractGeneratorParameterTest {
+class AbstractGeneratorParameterTest {
 
     class MockParameter extends AbstractGeneratorParameter<Boolean> {
 
@@ -39,7 +39,7 @@ public class AbstractGeneratorParameterTest {
     }
 
     @Test
-    public void testValue() {
+    void testValue() {
         IGeneratorParameter<Boolean> param = new MockParameter();
         // test the default
         Assertions.assertFalse(param.getValue());

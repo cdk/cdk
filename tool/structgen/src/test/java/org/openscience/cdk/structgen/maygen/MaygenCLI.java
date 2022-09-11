@@ -34,7 +34,7 @@ import java.util.Objects;
 
 public class MaygenCLI {
 
-    public static final String VERSION = "1.8";
+    private static final String VERSION = "1.8";
     private static final String FORMULA_TEXT = "formula";
     private static final String OUTPUT_FILE = "outputFile";
     private static final String SDF_COORD = "sdfCoord";
@@ -49,7 +49,7 @@ public class MaygenCLI {
         return null;
     }
 
-    public boolean parseArgs(String[] args) throws ParseException {
+    private boolean parseArgs(String[] args) throws ParseException {
         Options options = setupOptions();
         CommandLineParser parser = new DefaultParser();
         boolean helpIsPresent = false;
@@ -96,7 +96,7 @@ public class MaygenCLI {
         return helpIsPresent;
     }
 
-    public void displayHelpMessage(Options options) {
+    private void displayHelpMessage(Options options) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.setOptionComparator(null);
         String header =
@@ -111,7 +111,7 @@ public class MaygenCLI {
         formatter.printHelp("java -jar MAYGEN-" + VERSION + ".jar", header, options, footer, true);
     }
 
-    public Options setupOptions() {
+    private Options setupOptions() {
         Options options = new Options();
         Option formulaOption =
                 Option.builder("f")
@@ -206,7 +206,7 @@ public class MaygenCLI {
         return options;
     }
 
-    public void run() throws CDKException, IOException, CloneNotSupportedException {
+    private void run() throws CDKException, IOException, CloneNotSupportedException {
         maygen.run();
     }
 

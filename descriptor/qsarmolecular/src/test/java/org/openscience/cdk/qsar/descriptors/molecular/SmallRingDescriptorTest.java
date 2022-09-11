@@ -56,19 +56,19 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-qsarmolecular
  */
 
-public class SmallRingDescriptorTest extends MolecularDescriptorTest {
+class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
 
-    public SmallRingDescriptorTest() {}
+    SmallRingDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(SmallRingDescriptor.class);
     }
 
     @Test
-    public void testDescriptors() throws Exception {
+    void testDescriptors() throws Exception {
         logger.info("CircularFingerprinter test: loading source materials");
 
         String fnzip = "data/cdd/aromring_validation.zip";
@@ -82,7 +82,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
     // included to shutdown the warning messages for not having tests for trivial methods
     @Test
-    public void nop() throws Exception {}
+    void nop() throws Exception {}
 
     // run through the cases
     private void validate(InputStream in) throws Exception {

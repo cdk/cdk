@@ -47,7 +47,7 @@ public abstract class AbstractMCSAlgorithmTest {
      * Meta test that tests if #setMCSAlgorithm has been called.
      */
     @Test
-    public void testIsMCSAlgorithmSet() {
+    void testIsMCSAlgorithmSet() {
         Assertions.assertNotNull(AbstractMCSAlgorithmTest.algorithm, "The extending class has not set an IMCSAlgorithm with the" + "setMCSAlgorithm() method.");
     }
 
@@ -56,7 +56,7 @@ public abstract class AbstractMCSAlgorithmTest {
         Assertions.fail("missing unit test");
     }
 
-    public class AbstractMCSAlgorithmImpl extends AbstractMCSAlgorithm {
+    private class AbstractMCSAlgorithmImpl extends AbstractMCSAlgorithm {
 
         @Override
         public void searchMCS(boolean shouldMatchBonds) {

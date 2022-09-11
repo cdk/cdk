@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IChemFile;
  *
  * @cdk.module test-silent
  */
-public class ChemFileTest extends AbstractChemFileTest {
+class ChemFileTest extends AbstractChemFileTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ChemFile::new);
     }
 
     @Test
-    public void testChemFile() {
+    void testChemFile() {
         IChemFile cs = new ChemFile();
         Assertions.assertNotNull(cs);
     }

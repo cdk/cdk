@@ -56,28 +56,28 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class SMSDTest {
+class SMSDTest {
 
     public SMSDTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of init method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
-    public void testInit_3args_1() throws CDKException {
+    void testInit_3args_1() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -94,7 +94,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testInit_3args_2() throws CDKException {
+    void testInit_3args_2() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -111,7 +111,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testSearchMCS() throws CDKException {
+    void testSearchMCS() throws CDKException {
         try {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             sp.kekulise(false);
@@ -138,7 +138,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testSet_IAtomContainer_IAtomContainer() throws CDKException {
+    void testSet_IAtomContainer_IAtomContainer() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -156,7 +156,7 @@ public class SMSDTest {
      * @throws IOException
      */
     @Test
-    public void testSet_String_String() throws CDKException, IOException {
+    void testSet_String_String() throws CDKException, IOException {
         String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         IAtomContainer query = new AtomContainer();
@@ -181,7 +181,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testSet_MolHandler_MolHandler() throws CDKException {
+    void testSet_MolHandler_MolHandler() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer target1 = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -199,7 +199,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetAllAtomMapping() throws CDKException {
+    void testGetAllAtomMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -229,7 +229,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetAllMapping() throws CDKException {
+    void testGetAllMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -252,7 +252,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetFirstAtomMapping() throws CDKException {
+    void testGetFirstAtomMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -270,7 +270,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetFirstMapping() throws CDKException {
+    void testGetFirstMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -288,7 +288,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testSetChemFilters() throws CDKException {
+    void testSetChemFilters() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -304,7 +304,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetFragmentSize() throws CDKException {
+    void testGetFragmentSize() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -321,7 +321,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetStereoScore() throws CDKException {
+    void testGetStereoScore() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -338,7 +338,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetEnergyScore() throws CDKException {
+    void testGetEnergyScore() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -355,7 +355,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetReactantMolecule() throws CDKException {
+    void testGetReactantMolecule() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -372,7 +372,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testGetProductMolecule() throws CDKException {
+    void testGetProductMolecule() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -389,7 +389,7 @@ public class SMSDTest {
      * @throws Exception
      */
     @Test
-    public void testGetTanimotoSimilarity() throws Exception {
+    void testGetTanimotoSimilarity() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -407,7 +407,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testIsStereoMisMatch() throws CDKException {
+    void testIsStereoMisMatch() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -423,7 +423,7 @@ public class SMSDTest {
      * @throws CDKException
      */
     @Test
-    public void testIsSubgraph() throws CDKException {
+    void testIsSubgraph() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -439,7 +439,7 @@ public class SMSDTest {
      * @throws Exception
      */
     @Test
-    public void testGetEuclideanDistance() throws Exception {
+    void testGetEuclideanDistance() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -459,7 +459,7 @@ public class SMSDTest {
     }
 
     @Test
-    public void testQueryAtomContainerDefault() throws CDKException {
+    void testQueryAtomContainerDefault() throws CDKException {
         Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
@@ -476,7 +476,7 @@ public class SMSDTest {
     }
 
     @Test
-    public void testQueryAtomContainerMCSPLUS() throws CDKException {
+    void testQueryAtomContainerMCSPLUS() throws CDKException {
         Isomorphism smsd = new Isomorphism(Algorithm.MCSPlus, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
@@ -493,7 +493,7 @@ public class SMSDTest {
     }
 
     @Test
-    public void testQueryAtomContainerSubstructure() throws CDKException {
+    void testQueryAtomContainerSubstructure() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
@@ -520,7 +520,7 @@ public class SMSDTest {
         //        Assert.assertFalse(foundMatches);
     }
 
-    public void testQueryAtomCount() throws CDKException {
+    void testQueryAtomCount() throws CDKException {
         Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
@@ -538,7 +538,7 @@ public class SMSDTest {
     }
 
     @Test
-    public void testMatchCount() throws CDKException {
+    void testMatchCount() throws CDKException {
         Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
@@ -556,7 +556,7 @@ public class SMSDTest {
     }
 
     @Test
-    public void testMatchCountCDKMCS() throws CDKException {
+    void testMatchCountCDKMCS() throws CDKException {
         Isomorphism smsd = new Isomorphism(Algorithm.CDKMCS, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
@@ -574,7 +574,7 @@ public class SMSDTest {
     }
 
     @Test
-    public void testImpossibleQuery() throws CDKException {
+    void testImpossibleQuery() throws CDKException {
         Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");

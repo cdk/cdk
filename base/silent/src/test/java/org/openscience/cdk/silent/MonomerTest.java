@@ -30,15 +30,15 @@ import org.openscience.cdk.test.interfaces.AbstractMonomerTest;
  *
  * @cdk.module test-silent
  */
-public class MonomerTest extends AbstractMonomerTest {
+class MonomerTest extends AbstractMonomerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Monomer::new);
     }
 
     @Test
-    public void testMonomer() {
+    void testMonomer() {
         IMonomer oMonomer = new Monomer();
         Assertions.assertNotNull(oMonomer);
     }

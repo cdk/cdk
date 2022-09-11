@@ -13,11 +13,11 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *
  * @cdk.module test-formula
  */
-public class IsotopePatternSimilarityTest extends CDKTestCase {
+class IsotopePatternSimilarityTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    public IsotopePatternSimilarityTest() {
+    IsotopePatternSimilarityTest() {
         super();
     }
 
@@ -27,7 +27,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsotopePatternSimilarity() {
+    void testIsotopePatternSimilarity() {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
         Assertions.assertNotNull(is);
     }
@@ -38,7 +38,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSeTolerance_double() {
+    void testSeTolerance_double() {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
         is.seTolerance(0.001);
         Assertions.assertNotNull(is);
@@ -50,7 +50,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetTolerance() {
+    void testGetTolerance() {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
         is.seTolerance(0.001);
         Assertions.assertEquals(0.001, is.getTolerance(), 0.000001);
@@ -62,7 +62,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testCompare_IsotopePattern_IsotopePattern() {
+    void testCompare_IsotopePattern_IsotopePattern() {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
 
         IsotopePattern spExp = new IsotopePattern();
@@ -85,7 +85,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSelectingMF() {
+    void testSelectingMF() {
         IsotopePatternSimilarity is = new IsotopePatternSimilarity();
 
         IsotopePattern spExp = new IsotopePattern();
@@ -120,7 +120,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testExperiment() {
+    void testExperiment() {
 
         IsotopePattern spExp = new IsotopePattern();
         spExp.setMonoIsotope(new IsotopeContainer(762.6006, 124118304));

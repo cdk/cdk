@@ -28,9 +28,9 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 /**
  * @cdk.module test-standard
  */
-public class MoleculeGraphsTest extends CDKTestCase {
+class MoleculeGraphsTest extends CDKTestCase {
 
-    public MoleculeGraphsTest() {
+    MoleculeGraphsTest() {
         super();
     }
 
@@ -39,7 +39,7 @@ public class MoleculeGraphsTest extends CDKTestCase {
      * and as many edges as bonds in alpha-pinene.
      */
     @Test
-    public void testGetMoleculeGraph_IAtomContainer() {
+    void testGetMoleculeGraph_IAtomContainer() {
         IAtomContainer apinene = TestMoleculeFactory.makeAlphaPinene();
         SimpleGraph graph = MoleculeGraphs.getMoleculeGraph(apinene);
         Assertions.assertEquals(apinene.getAtomCount(), graph.vertexSet().size());

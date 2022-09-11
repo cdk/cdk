@@ -37,16 +37,16 @@ import static org.openscience.cdk.graph.JumboPathGraph.ReducedEdge;
 import static org.openscience.cdk.graph.JumboPathGraph.SimpleEdge;
 
 /** @cdk.module test-core */
-public class JumboPathGraphTest {
+class JumboPathGraphTest {
 
     @Test
-    public void nullMGraph() {
+    void nullMGraph() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {new JumboPathGraph(null, new int[0], 0);});
     }
 
     @Test
-    public void limitTooLow() {
+    void limitTooLow() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     new JumboPathGraph(new int[4][], new int[0], -1);
@@ -54,7 +54,7 @@ public class JumboPathGraphTest {
     }
 
     @Test
-    public void limitTooHigh() {
+    void limitTooHigh() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     new JumboPathGraph(new int[4][], new int[0], 5);
@@ -63,7 +63,7 @@ public class JumboPathGraphTest {
 
     /* re-invoking the remove on the same vertex should not do anything */
     @Test
-    public void repeatRemoval() {
+    void repeatRemoval() {
         int ord = 3;
         int[][] k3 = completeGraphOfSize(ord);
         JumboPathGraph pg = new JumboPathGraph(k3, identity(3), ord);
@@ -83,7 +83,7 @@ public class JumboPathGraphTest {
     }
 
     @Test
-    public void k3Degree() {
+    void k3Degree() {
         int ord = 3;
         int[][] k3 = completeGraphOfSize(ord);
         JumboPathGraph pg = new JumboPathGraph(k3, identity(3), ord);
@@ -103,7 +103,7 @@ public class JumboPathGraphTest {
 
     /* graph with 3 vertices where each vertex is connected to every vertex. */
     @Test
-    public void k3() {
+    void k3() {
         Assertions.assertTimeout(Duration.ofMillis(200), () -> {
             int ord = 3;
             int[][] k3 = completeGraphOfSize(ord);
@@ -117,7 +117,7 @@ public class JumboPathGraphTest {
 
     /* graph with 8 vertices where each vertex is connected to every vertex. */
     @Test
-    public void k8() {
+    void k8() {
         Assertions.assertTimeout(Duration.ofMillis(200), () -> {
             int ord = 8;
             int[][] k8 = completeGraphOfSize(ord);
@@ -129,7 +129,7 @@ public class JumboPathGraphTest {
         });
     }
 
-    public static int[] identity(int n) {
+    static int[] identity(int n) {
         int[] identity = new int[n];
         for (int i = 0; i < n; i++)
             identity[i] = i;
@@ -152,7 +152,7 @@ public class JumboPathGraphTest {
     }
 
     @Test
-    public void loop() {
+    void loop() {
         Assertions.assertFalse(new SimpleEdge(0, 1).loop());
         Assertions.assertTrue(new SimpleEdge(0, 0).loop());
         Assertions.assertFalse(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1).loop());
@@ -161,7 +161,7 @@ public class JumboPathGraphTest {
     }
 
     @Test
-    public void path() {
+    void path() {
         assertThat(new SimpleEdge(0, 1).path(), is(new int[]{0, 1}));
         assertThat(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1).path(), is(new int[]{0, 1, 2}));
         assertThat(new ReducedEdge(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1), new ReducedEdge(
@@ -169,7 +169,7 @@ public class JumboPathGraphTest {
     }
 
     @Test
-    public void disjoint() {
+    void disjoint() {
         PathEdge e = new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1);
         PathEdge f = new ReducedEdge(new SimpleEdge(2, 3), new SimpleEdge(3, 4), 3);
         Assertions.assertTrue(e.disjoint(f));
@@ -179,7 +179,7 @@ public class JumboPathGraphTest {
     }
 
     @Test
-    public void len() {
+    void len() {
         assertThat(new SimpleEdge(0, 1).len(), is(2));
         PathEdge e = new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1);
         PathEdge f = new ReducedEdge(new SimpleEdge(2, 3), new SimpleEdge(3, 4), 3);

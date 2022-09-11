@@ -35,28 +35,28 @@ import org.openscience.cdk.test.interfaces.AbstractChemObjectTest;
  * @cdk.module  test-data
  * @cdk.created 2001-08-09
  */
-public class ChemObjectTest extends AbstractChemObjectTest {
+class ChemObjectTest extends AbstractChemObjectTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ChemObject::new);
     }
 
     @Test
-    public void testChemObject() {
+    void testChemObject() {
         IChemObject chemObject = new ChemObject();
         Assertions.assertNotNull(chemObject);
     }
 
     @Test
-    public void testChemObject_IChemObject() {
+    void testChemObject_IChemObject() {
         IChemObject chemObject1 = new ChemObject();
         IChemObject chemObject = new ChemObject(chemObject1);
         Assertions.assertNotNull(chemObject);
     }
 
     @Test
-    public void compare() {
+    void compare() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
         co1.setID("a1");
@@ -65,7 +65,7 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     }
 
     @Test
-    public void compareDifferent() {
+    void compareDifferent() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
         co1.setID("a1");

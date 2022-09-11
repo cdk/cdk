@@ -31,17 +31,17 @@ import static org.mockito.Mockito.when;
 /**
  * @cdk.module test-diff
  */
-public class ChemObjectDiffTest {
+class ChemObjectDiffTest {
 
     @Test
-    public void testMatchAgainstItself() {
+    void testMatchAgainstItself() {
         IChemObject atom1 = mock(IChemObject.class);
         String result = ChemObjectDiff.diff(atom1, atom1);
         Assertions.assertEquals("", result);
     }
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IChemObject atom1 = mock(IChemObject.class);
         IChemObject atom2 = mock(IChemObject.class);
         when(atom1.getFlags()).thenReturn(new boolean[]{false, false, false});
@@ -55,7 +55,7 @@ public class ChemObjectDiffTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         IChemObject atom1 = mock(IChemObject.class);
         IChemObject atom2 = mock(IChemObject.class);
         when(atom1.getFlags()).thenReturn(new boolean[]{false, false, false});

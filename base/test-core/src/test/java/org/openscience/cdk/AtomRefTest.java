@@ -32,24 +32,28 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class AtomRefTest {
+class AtomRefTest {
 
-    @Test public void dereferenceNullPointer() {
+    @Test
+    void dereferenceNullPointer() {
         Assertions.assertNull(AtomRef.deref(null));
     }
 
-    @Test public void dereferenceNonPointer() {
+    @Test
+    void dereferenceNonPointer() {
         IAtom mock = mock(IAtom.class);
         assertThat(AtomRef.deref(mock), is(sameInstance(mock)));
     }
 
-    @Test public void dereferencePointer() {
+    @Test
+    void dereferencePointer() {
         IAtom mock = mock(IAtom.class);
         IAtom ptr  = new AtomRef(mock);
         assertThat(AtomRef.deref(ptr), is(sameInstance(mock)));
     }
 
-    @Test public void dereferencePointerPointer() {
+    @Test
+    void dereferencePointerPointer() {
         IAtom mock = mock(IAtom.class);
         IAtom ptr  = new AtomRef(new AtomRef(mock));
         assertThat(AtomRef.deref(ptr), is(sameInstance(mock)));

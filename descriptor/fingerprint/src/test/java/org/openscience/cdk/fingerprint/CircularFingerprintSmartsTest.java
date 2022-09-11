@@ -43,23 +43,23 @@ import static org.hamcrest.collection.IsIn.isIn;
 /**
  * @cdk.module test-standard
  */
-public class CircularFingerprintSmartsTest extends CDKTestCase {
+class CircularFingerprintSmartsTest extends CDKTestCase {
 
 	private static final ILoggingTool logger = LoggingToolFactory
 			.createLoggingTool(CircularFingerprintSmartsTest.class);
 
-	public static final SmilesParser parser = new SmilesParser(
+	private static final SmilesParser parser = new SmilesParser(
 			SilentChemObjectBuilder.getInstance());
 
 	@Test
-	public void testMol1() throws Exception {
+    void testMol1() throws Exception {
 		String molSmiles = "CC";
 		String[][] expectedFPSmarts = { { "C*" }, { "CC" } };
 		checkFPSmartsForMolecule(molSmiles, expectedFPSmarts);
 	}
 
 	@Test
-	public void testMol2() throws Exception {
+    void testMol2() throws Exception {
 		String molSmiles = "CCC";
 		String[][] expectedFPSmarts = { { "C*" }, { "C(*)*" },
 				{ "CC*", "C(*)C" }, { "CCC" }, };
@@ -67,7 +67,7 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 	}
 
 	@Test
-	public void testMol3() throws Exception {
+    void testMol3() throws Exception {
 		String molSmiles = "CCN";
 		String[][] expectedFPSmarts = { { "C*" }, { "C(*)*" }, { "N*" },
 				{ "CC*", "C(*)C" }, { "C(*)N", "NC*" },
@@ -76,7 +76,7 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 	}
 
 	@Test
-	public void testMol4() throws Exception {
+    void testMol4() throws Exception {
 		String molSmiles = "C1CC1";
 		String[][] expectedFPSmarts = {
 
@@ -85,7 +85,7 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 	}
 
 	@Test
-	public void testMol5() throws Exception {
+    void testMol5() throws Exception {
 		String molSmiles = "C1CCC1";
 		String[][] expectedFPSmarts = {
 
@@ -95,7 +95,7 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 	}
 
 	@Test
-	public void testMol6() throws Exception {
+    void testMol6() throws Exception {
 		String molSmiles = "CC[C-]";
 		String[][] expectedFPSmarts = {
 
@@ -106,7 +106,7 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 	}
 
 	@Test
-	public void testMol7() throws Exception {
+    void testMol7() throws Exception {
 		String molSmiles = "c1ccccc1";
 		String[][] expectedFPSmarts = {
 

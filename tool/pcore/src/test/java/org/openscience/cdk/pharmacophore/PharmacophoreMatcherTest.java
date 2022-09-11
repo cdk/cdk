@@ -41,18 +41,18 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * @cdk.module test-pcore
  */
-public class PharmacophoreMatcherTest {
+class PharmacophoreMatcherTest {
 
-    public static ConformerContainer conformers = null;
+    private static ConformerContainer conformers = null;
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     @BeforeAll
-    public static void loadConformerData() {
+    static void loadConformerData() {
         String filename = "pcoretest1.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
@@ -61,7 +61,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatcherQuery1() throws Exception {
+    void testMatcherQuery1() throws Exception {
         Assertions.assertNotNull(conformers);
 
         // make a query
@@ -110,7 +110,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatchedAtoms() throws Exception {
+    void testMatchedAtoms() throws Exception {
         Assertions.assertNotNull(conformers);
 
         // make a query
@@ -146,7 +146,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatchedBonds() throws Exception {
+    void testMatchedBonds() throws Exception {
         Assertions.assertNotNull(conformers);
 
         // make a query
@@ -192,7 +192,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testInvalidQuery() throws CDKException {
+    void testInvalidQuery() throws CDKException {
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
@@ -217,7 +217,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testCNSPcore() throws CDKException, IOException {
+    void testCNSPcore() throws CDKException, IOException {
         String filename = "cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
@@ -246,7 +246,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatchingBonds() throws CDKException, IOException {
+    void testMatchingBonds() throws CDKException, IOException {
         String filename = "cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
@@ -282,7 +282,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch1() throws Exception {
+    void testAngleMatch1() throws Exception {
         String filename = "cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
@@ -307,7 +307,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch2() throws Exception {
+    void testAngleMatch2() throws Exception {
         String filename = "cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
@@ -332,7 +332,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch3() throws Exception {
+    void testAngleMatch3() throws Exception {
         Assertions.assertNotNull(conformers);
 
         // make a query
@@ -376,7 +376,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testGetterSetter() {
+    void testGetterSetter() {
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
@@ -393,7 +393,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void multiSmartsQuery() throws IOException, CDKException {
+    void multiSmartsQuery() throws IOException, CDKException {
 
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom rings = new PharmacophoreQueryAtom("A", "c1ccccc1|C1CCCC1");

@@ -37,11 +37,11 @@ import org.openscience.cdk.silent.AtomContainer;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class ComponentGroupingTest {
+class ComponentGroupingTest {
 
     // mock matching [#8].[#8]
     @Test
-    public void ungrouped() {
+    void ungrouped() {
         Assertions.assertTrue(create(null, oxidanone()).apply(new int[]{0, 1}));
         Assertions.assertTrue(create(null, oxidanone()).apply(new int[]{1, 0}));
         Assertions.assertTrue(create(null, ethyleneGlycol()).apply(new int[]{0, 3}));
@@ -52,7 +52,7 @@ public class ComponentGroupingTest {
 
     // mock matching ([#8].[#8])
     @Test
-    public void grouped() {
+    void grouped() {
         int[] grouping = {1, 1, 1};
         Assertions.assertTrue(create(grouping, oxidanone()).apply(new int[]{0, 1}));
         Assertions.assertTrue(create(grouping, oxidanone()).apply(new int[]{1, 0}));
@@ -64,7 +64,7 @@ public class ComponentGroupingTest {
 
     // mock matching ([#8]).([#8])
     @Test
-    public void multipleGroups() {
+    void multipleGroups() {
         int[] grouping = {1, 2, 2};
         Assertions.assertFalse(create(grouping, oxidanone()).apply(new int[]{0, 1}));
         Assertions.assertFalse(create(grouping, oxidanone()).apply(new int[]{1, 0}));

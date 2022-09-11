@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IRingSet;
  *
  * @cdk.module test-datadebug
  */
-public class DebugRingSetTest extends AbstractRingSetTest {
+class DebugRingSetTest extends AbstractRingSetTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugRingSet::new);
     }
 
     @Test
-    public void testDebugRingSet() {
+    void testDebugRingSet() {
         IRingSet rs = new DebugRingSet();
         Assertions.assertNotNull(rs);
     }

@@ -38,14 +38,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @cdk.module test-standard
  */
-public class FingerprinterToolTest extends CDKTestCase {
+class FingerprinterToolTest extends CDKTestCase {
 
-    public FingerprinterToolTest() {
+    FingerprinterToolTest() {
         super();
     }
 
     @Test
-    public void testIsSubset_BitSet_BitSet() throws java.lang.Exception {
+    void testIsSubset_BitSet_BitSet() throws java.lang.Exception {
         Fingerprinter fingerprinter = new Fingerprinter();
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
@@ -56,7 +56,7 @@ public class FingerprinterToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testListDifferences_BitSet_BitSet() throws Exception {
+    void testListDifferences_BitSet_BitSet() throws Exception {
         BitSet bs1 = new BitSet();
         BitSet bs2 = new BitSet();
 
@@ -75,7 +75,7 @@ public class FingerprinterToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testDifferences() throws Exception {
+    void testDifferences() throws Exception {
         BitSet bs1 = new BitSet();
         BitSet bs2 = new BitSet();
 
@@ -91,7 +91,7 @@ public class FingerprinterToolTest extends CDKTestCase {
     }
     
     @Test
-    public void makeBitFingerprint() {
+    void makeBitFingerprint() {
         Map<String,Integer> features = new HashMap<>();
         features.put("CCO", 1);
         features.put("CC", 1);
@@ -104,7 +104,7 @@ public class FingerprinterToolTest extends CDKTestCase {
     }
     
     @Test
-    public void makeCountFingerprint() {
+    void makeCountFingerprint() {
         Map<String,Integer> features = new HashMap<>();
         features.put("CCO", 1);
         features.put("CC", 2);

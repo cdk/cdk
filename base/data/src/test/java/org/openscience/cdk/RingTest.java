@@ -34,29 +34,29 @@ import org.openscience.cdk.interfaces.IRing;
  *
  * @see org.openscience.cdk.Ring
  */
-public class RingTest extends AbstractRingTest {
+class RingTest extends AbstractRingTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Ring::new);
     }
 
     @Test
-    public void testRing_int_String() {
+    void testRing_int_String() {
         IRing r = new Ring(5, "C");
         Assertions.assertEquals(5, r.getAtomCount());
         Assertions.assertEquals(5, r.getBondCount());
     }
 
     @Test
-    public void testRing_int() {
+    void testRing_int() {
         IRing r = new Ring(5); // This does not create a ring!
         Assertions.assertEquals(0, r.getAtomCount());
         Assertions.assertEquals(0, r.getBondCount());
     }
 
     @Test
-    public void testRing() {
+    void testRing() {
         IRing ring = new Ring();
         Assertions.assertNotNull(ring);
         Assertions.assertEquals(0, ring.getAtomCount());
@@ -64,7 +64,7 @@ public class RingTest extends AbstractRingTest {
     }
 
     @Test
-    public void testRing_IAtomContainer() {
+    void testRing_IAtomContainer() {
         IAtomContainer container = new org.openscience.cdk.AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));

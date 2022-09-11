@@ -31,10 +31,10 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-public class DataFeaturesTest extends CDKTestCase {
+class DataFeaturesTest extends CDKTestCase {
 
     @Test
-    public void testDataFeatures() {
+    void testDataFeatures() {
         Assertions.assertFalse(DataFeatures.HAS_2D_COORDINATES == -1);
     }
 

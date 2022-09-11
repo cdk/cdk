@@ -45,22 +45,22 @@ import java.util.List;
  * @author     maclean
  * @cdk.module test-renderbasic
  */
-public abstract class AbstractGeneratorTest {
+abstract class AbstractGeneratorTest {
 
-    protected final IChemObjectBuilder  builder = SilentChemObjectBuilder.getInstance();
+    final IChemObjectBuilder  builder = SilentChemObjectBuilder.getInstance();
 
-    protected RendererModel       model;
+    RendererModel       model;
 
-    protected ElementUtility      elementUtil;
+    ElementUtility      elementUtil;
 
-    protected BasicSceneGenerator sceneGenerator;
+    private BasicSceneGenerator sceneGenerator;
 
     private IGenerator            testedGenerator;
 
     /**
      * Sets the {@link IGenerator} that is being tested.
      */
-    public void setTestedGenerator(IGenerator generator) {
+    void setTestedGenerator(IGenerator generator) {
         testedGenerator = generator;
     }
 
@@ -68,7 +68,7 @@ public abstract class AbstractGeneratorTest {
      * Sets up the model and transform.
      * Call from the 'Before' method in subclasses.
      */
-    public void setup() {
+    void setup() {
         if (model != null) return; // things are already set up
         model = new RendererModel();
         elementUtil = new ElementUtility();
@@ -77,14 +77,14 @@ public abstract class AbstractGeneratorTest {
         model.registerParameters(sceneGenerator);
     }
 
-    public <T> boolean containsParameterType(List<IGeneratorParameter<?>> list, Class<T> type) {
+    <T> boolean containsParameterType(List<IGeneratorParameter<?>> list, Class<T> type) {
         for (IGeneratorParameter<?> item : list) {
             if (item.getClass().getName().equals(type.getName())) return true;
         }
         return false;
     }
 
-    public List<IRenderingElement> getAllSimpleElements(IGenerator generator, IAtomContainer container) {
+    List<IRenderingElement> getAllSimpleElements(IGenerator generator, IAtomContainer container) {
         IRenderingElement root = generator.generate(container, model);
         return elementUtil.getAllSimpleElements(root);
     }
@@ -95,14 +95,14 @@ public abstract class AbstractGeneratorTest {
      *
      * @return a Rectangle representing a custom drawing canvas
      */
-    public abstract Rectangle getCustomCanvas();
+    protected abstract Rectangle getCustomCanvas();
 
     /**
      * Gets the default canvas for drawing on.
      *
      * @return a Rectangle representing the default drawing canvas
      */
-    public Rectangle getDefaultCanvas() {
+    Rectangle getDefaultCanvas() {
         return new Rectangle(0, 0, 100, 100);
     }
 
@@ -112,7 +112,7 @@ public abstract class AbstractGeneratorTest {
      *
      * @return the affine transform based on the current canvas
      */
-    public AffineTransform getTransform() {
+    AffineTransform getTransform() {
         Rectangle canvas = getCustomCanvas();
         if (canvas == null) {
             canvas = this.getDefaultCanvas();
@@ -127,7 +127,7 @@ public abstract class AbstractGeneratorTest {
      * @param canvas the rectangular canvas to draw on
      * @return the transform needed to translate to screen space
      */
-    public AffineTransform makeTransform(Rectangle canvas) {
+    AffineTransform makeTransform(Rectangle canvas) {
         AffineTransform transform = new AffineTransform();
         int cX = canvas.x + canvas.width / 2;
         int cY = canvas.y + canvas.height / 2;
@@ -143,7 +143,7 @@ public abstract class AbstractGeneratorTest {
      * @param line the line element to determine the length of
      * @return a length
      */
-    public static double length(LineElement line) {
+    static double length(LineElement line) {
         return AbstractGeneratorTest.distance(line.firstPointX, line.firstPointY, line.secondPointX, line.secondPointY);
     }
 
@@ -156,7 +156,7 @@ public abstract class AbstractGeneratorTest {
      * @param y2 the second y coordinate
      * @return the distance
      */
-    public static double distance(double x1, double y1, double x2, double y2) {
+    static double distance(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
@@ -166,7 +166,7 @@ public abstract class AbstractGeneratorTest {
      * @param elements
      * @return
      */
-    public static Point2d center(List<IRenderingElement> elements) {
+    static Point2d center(List<IRenderingElement> elements) {
         double centerX = 0.0;
         double centerY = 0.0;
         double counter = 0;
@@ -197,7 +197,7 @@ public abstract class AbstractGeneratorTest {
      *
      * @return an atom container with a single atom
      */
-    public IAtomContainer makeSingleAtom() {
+    IAtomContainer makeSingleAtom() {
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
         container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(0, 0)));
         return container;
@@ -208,13 +208,13 @@ public abstract class AbstractGeneratorTest {
      *
      * @return an atom container with a single atom
      */
-    public IAtomContainer makeSingleAtom(String elementSymbol) {
+    IAtomContainer makeSingleAtom(String elementSymbol) {
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
         container.addAtom(builder.newInstance(IAtom.class, elementSymbol, new Point2d(0, 0)));
         return container;
     }
 
-    public IAtomContainer makeMethane() {
+    IAtomContainer makeMethane() {
         IAtomContainer methane = builder.newInstance(IAtomContainer.class);
         methane.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(0, 0)));
         methane.addAtom(builder.newInstance(IAtom.class, "H", new Point2d(1, 1)));
@@ -230,7 +230,7 @@ public abstract class AbstractGeneratorTest {
      *
      * @return an atom container with a single C-C bond
      */
-    public IAtomContainer makeSingleBond() {
+    IAtomContainer makeSingleBond() {
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
         container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(0, -1)));
         container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(0, 1)));
@@ -238,7 +238,7 @@ public abstract class AbstractGeneratorTest {
         return container;
     }
 
-    public IAtomContainer makeCCC() {
+    IAtomContainer makeCCC() {
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
         container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(-1, -1)));
         container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(0, 0)));
@@ -254,7 +254,7 @@ public abstract class AbstractGeneratorTest {
      *
      * @return four carbon atoms connected by bonds into a square
      */
-    public IAtomContainer makeSquare() {
+    IAtomContainer makeSquare() {
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
         container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(-1, -1)));
         container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(1, -1)));
@@ -273,7 +273,7 @@ public abstract class AbstractGeneratorTest {
      *
      * @return an unlikely S-N-O-P square
      */
-    public IAtomContainer makeSNOPSquare() {
+    IAtomContainer makeSNOPSquare() {
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
         container.addAtom(builder.newInstance(IAtom.class, "S", new Point2d(-1, -1)));
         container.addAtom(builder.newInstance(IAtom.class, "N", new Point2d(1, -1)));
@@ -287,7 +287,7 @@ public abstract class AbstractGeneratorTest {
     }
 
     @Test
-    public void testGetParameters() {
+    void testGetParameters() {
         Assertions.assertNotNull(this.testedGenerator, "The tested generator is not set.");
 
         Assertions.assertNotNull(this.testedGenerator.getParameters(), "The getParameters() must not return a null value.");

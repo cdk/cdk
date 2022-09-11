@@ -33,10 +33,10 @@ import java.util.BitSet;
  * @author John May
  * @cdk.module test-hash
  */
-public class SuppressedTest {
+class SuppressedTest {
 
     @Test
-    public void none() throws Exception {
+    void none() throws Exception {
         Suppressed suppressed = Suppressed.none();
         for (int i = 0; i < 1000; i++) {
             Assertions.assertFalse(suppressed.contains(i));
@@ -44,7 +44,7 @@ public class SuppressedTest {
     }
 
     @Test
-    public void bitset() throws Exception {
+    void bitset() throws Exception {
         BitSet set = new BitSet();
         set.set(2);
         set.set(3);

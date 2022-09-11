@@ -52,19 +52,19 @@ import org.openscience.cdk.silent.AtomContainer;
  */
 public abstract class ChemObjectIOTest extends CDKTestCase {
 
-    protected static IChemObjectIO chemObjectIO;
+    private static IChemObjectIO chemObjectIO;
 
-    public static void setChemObjectIO(IChemObjectIO aChemObjectIO) {
+    static void setChemObjectIO(IChemObjectIO aChemObjectIO) {
         chemObjectIO = aChemObjectIO;
     }
 
     @Test
-    public void testChemObjectIOSet() {
+    void testChemObjectIOSet() {
         Assertions.assertNotNull(chemObjectIO, "You must use setChemObjectIO() to set the IChemObjectIO object.");
     }
 
     @Test
-    public void testGetFormat() {
+    void testGetFormat() {
         IResourceFormat format = chemObjectIO.getFormat();
         Assertions.assertNotNull(format, "The IChemObjectIO.getFormat method returned null.");
     }
@@ -73,7 +73,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
             new Reaction()                               };
 
     @Test
-    public void testAcceptsAtLeastOneNonotifyObject() {
+    void testAcceptsAtLeastOneNonotifyObject() {
         boolean oneAccepted = false;
         for (IChemObject object : acceptableNNChemObjects) {
             if (chemObjectIO.accepts(object.getClass())) {
@@ -87,7 +87,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
             new DebugAtomContainer(), new DebugReaction()   };
 
     @Test
-    public void testAcceptsAtLeastOneDebugObject() {
+    void testAcceptsAtLeastOneDebugObject() {
         boolean oneAccepted = false;
         for (IChemObject object : acceptableDebugChemObjects) {
             if (chemObjectIO.accepts(object.getClass())) {
@@ -102,13 +102,13 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     protected static final IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
             new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
 
-    protected static IChemObject[] acceptableChemObjects() {
+    static IChemObject[] acceptableChemObjects() {
         return new IChemObject[]{new ChemFile(), new ChemModel(), new AtomContainer(), new Reaction(),
                 new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
     }
 
     @Test
-    public void testAcceptsAtLeastOneChemObject() {
+    void testAcceptsAtLeastOneChemObject() {
         boolean oneAccepted = false;
         for (IChemObject object : acceptableChemObjects) {
             if (chemObjectIO.accepts(object.getClass())) {
@@ -119,7 +119,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     @SuppressWarnings("rawtypes")
-    protected static final Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
+    private static final Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
             IReaction.class, IRGroupQuery.class          };
 
     /**
@@ -127,7 +127,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testAcceptsAtLeastOneChemObjectClass() {
+    void testAcceptsAtLeastOneChemObjectClass() {
         boolean oneAccepted = false;
         for (Class<? extends IChemObject> clazz : acceptableChemObjectClasses) {
             if (chemObjectIO.accepts(clazz)) {
@@ -138,12 +138,12 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     @Test
-    public void testClose() throws Exception {
+    void testClose() throws Exception {
         chemObjectIO.close();
     }
 
     @Test
-    public void testGetIOSetting() {
+    void testGetIOSetting() {
         IOSetting[] settings = chemObjectIO.getIOSettings();
         for (IOSetting setting : settings) {
             Assertions.assertNotNull(setting);
@@ -155,7 +155,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     @Test
-    public void testAddChemObjectIOListener() {
+    void testAddChemObjectIOListener() {
         MyListener listener = new MyListener();
         chemObjectIO.addChemObjectIOListener(listener);
     }
@@ -171,7 +171,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemoveChemObjectIOListener() {
+    void testRemoveChemObjectIOListener() {
         MyListener listener = new MyListener();
         chemObjectIO.addChemObjectIOListener(listener);
         chemObjectIO.removeChemObjectIOListener(listener);

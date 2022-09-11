@@ -33,17 +33,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsaratomic
  */
 
-public class AtomValenceDescriptorTest extends AtomicDescriptorTest {
+class AtomValenceDescriptorTest extends AtomicDescriptorTest {
 
-    public AtomValenceDescriptorTest() {}
+    AtomValenceDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(AtomValenceDescriptor.class);
     }
 
     @Test
-    public void testAtomValenceDescriptor() throws java.lang.Exception {
+    void testAtomValenceDescriptor() throws java.lang.Exception {
         IAtomicDescriptor descriptor = new AtomValenceDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCl"); //

@@ -55,17 +55,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.module  test-smarts
  * @cdk.require java1.4+
  */
-public class SMARTSTest extends CDKTestCase {
+class SMARTSTest extends CDKTestCase {
 
     private UniversalIsomorphismTester uiTester;
 
     @BeforeEach
-    public void setUpUITester() {
+    void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }
 
     @Test
-    public void testStrictSMARTS() throws Exception {
+    void testStrictSMARTS() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         SmilesParser sp = new SmilesParser(builder);
@@ -83,7 +83,7 @@ public class SMARTSTest extends CDKTestCase {
     }
 
     @Test
-    public void testSMARTS() throws Exception {
+    void testSMARTS() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
@@ -111,7 +111,7 @@ public class SMARTSTest extends CDKTestCase {
     }
 
     @Test
-    public void testImplicitHCountAtom() throws Exception {
+    void testImplicitHCountAtom() throws Exception {
         IAtomContainer container = createEthane();
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -126,7 +126,7 @@ public class SMARTSTest extends CDKTestCase {
     }
 
     @Test
-    public void testImplicitHCountAtom2() throws Exception {
+    void testImplicitHCountAtom2() throws Exception {
         IAtomContainer container = createEthane();
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -141,7 +141,7 @@ public class SMARTSTest extends CDKTestCase {
     }
 
     @Test
-    public void testMatchInherited() {
+    void testMatchInherited() {
         try {
             IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -168,7 +168,8 @@ public class SMARTSTest extends CDKTestCase {
 
     }
 
-    @Test public void testUnspecifiedIsotope() {
+    @Test
+    void testUnspecifiedIsotope() {
         IAtom aexpr = SMARTSParser.parse("[!0]", SilentChemObjectBuilder.getInstance())
                                   .getAtom(0);
         assertThat(aexpr, instanceOf(LogicalOperatorAtom.class));

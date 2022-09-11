@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.module test-formula
  */
 @Deprecated
-public class MassToFormulaToolTest extends CDKTestCase {
+class MassToFormulaToolTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private IsotopeFactory                  ifac;
@@ -55,7 +55,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     /**
      *  Constructor for the MassToFormulaToolTest object.
      */
-    public MassToFormulaToolTest() {
+    MassToFormulaToolTest() {
 
         super();
         try {
@@ -72,7 +72,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMassToFormulaTool_IChemObjectBuilder() {
+    void testMassToFormulaTool_IChemObjectBuilder() {
 
         Assertions.assertNotNull(new MassToFormulaTool(builder));
     }
@@ -83,7 +83,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMass_0Null() {
+    void testMass_0Null() {
 
         Assertions.assertNull(new MassToFormulaTool(builder).generate(0.0));
     }
@@ -94,7 +94,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMass_NegativeNULL() {
+    void testMass_NegativeNULL() {
 
         Assertions.assertNull(new MassToFormulaTool(builder).generate(-10.0));
     }
@@ -105,7 +105,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetRestrictions() {
+    void testGetRestrictions() {
 
         Assertions.assertNotNull(new MassToFormulaTool(builder).getRestrictions());
     }
@@ -116,7 +116,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetDefaultRestrictions() {
+    void testSetDefaultRestrictions() {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> rules = mfTool.getRestrictions();
@@ -160,7 +160,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetRestrictions_List() throws Exception {
+    void testSetRestrictions_List() throws Exception {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
         List<IRule> rules = mfTool.getRestrictions();
@@ -185,7 +185,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetRestrictionsElements() throws Exception {
+    void testSetRestrictionsElements() throws Exception {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
         List<IRule> rules = mfTool.getRestrictions();
@@ -229,7 +229,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetRestrictionsCharge() throws Exception {
+    void testSetRestrictionsCharge() throws Exception {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
@@ -265,7 +265,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testSetRestrictionsTolerance() throws Exception {
+    void testSetRestrictionsTolerance() throws Exception {
 
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
@@ -304,7 +304,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     * @return    The test suite
     */
     @Test
-    public void testGenerate_double() {
+    void testGenerate_double() {
 
         Assertions.assertNotNull(new MassToFormulaTool(builder).generate(44.0032));
     }
@@ -316,7 +316,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C5H12N2O2/c6-3-1-2-4(7)5(8)9/h4H,1-3,6-7H2,(H,8,9)
      */
     @Test
-    public void testValidation_Orthinine() {
+    void testValidation_Orthinine() {
 
         IIsotope carb = ifac.getMajorIsotope("C");
         IIsotope h = ifac.getMajorIsotope("H");
@@ -363,7 +363,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C5H12N2O2/c6-3-1-2-4(7)5(8)9/h4H,1-3,6-7H2,(H,8,9)
      */
     @Test
-    public void testValidation_Orthinine_Restrictions() throws Exception {
+    void testValidation_Orthinine_Restrictions() throws Exception {
 
         IIsotope carb = ifac.getMajorIsotope("C");
         IIsotope h = ifac.getMajorIsotope("H");
@@ -407,7 +407,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C6H14N4O2/c7-4(5(11)12)2-1-3-10-6(8)9/h4H,1-3,7H2,(H,11,12)(H4,8,9,10)/t4-/m0/s1/f/h11H,8-9H2
      */
     @Test
-    public void testValidation_Arginine_Restrictions() throws Exception {
+    void testValidation_Arginine_Restrictions() throws Exception {
 
         IIsotope carb = ifac.getMajorIsotope("C");
         IIsotope h = ifac.getMajorIsotope("H");
@@ -455,7 +455,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      * @cdk.inchi InChI=
      */
     @Test
-    public void testMiddleMass() throws Exception {
+    void testMiddleMass() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -506,7 +506,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C111H166N8O184S32/c1-18(121)113-35-52(43(281-313(172,173)174)27(249-96(35)144)9-241-304(145,146)147)258-105-81(297-329(220,221)222)67(290-322(199,200)201)60(74(273-105)89(130)131)266-97-36(112-17-120)53(44(282-314(175,176)177)28(251-97)10-242-305(148,149)150)259-106-82(298-330(223,224)225)68(291-323(202,203)204)61(75(274-106)90(132)133)268-99-38(115-20(3)123)55(46(284-316(181,182)183)30(253-99)12-244-307(154,155)156)261-108-84(300-332(229,230)231)70(293-325(208,209)210)63(77(276-108)92(136)137)270-101-40(117-22(5)125)57(48(286-318(187,188)189)32(255-101)14-246-309(160,161)162)263-110-86(302-334(235,236)237)72(295-327(214,215)216)65(79(278-110)94(140)141)272-103-42(119-24(7)127)59(50(288-320(193,194)195)34(257-103)16-248-311(166,167)168)265-111-87(303-335(238,239)240)73(296-328(217,218)219)66(80(279-111)95(142)143)271-102-41(118-23(6)126)58(49(287-319(190,191)192)33(256-102)15-247-310(163,164)165)264-109-85(301-333(232,233)234)71(294-326(211,212)213)64(78(277-109)93(138)139)269-100-39(116-21(4)124)56(47(285-317(184,185)186)31(254-100)13-245-308(157,158)159)262-107-83(299-331(226,227)228)69(292-324(205,206)207)62(76(275-107)91(134)135)267-98-37(114-19(2)122)54(45(283-315(178,179)180)29(252-98)11-243-306(151,152)153)260-104-51(289-321(196,197)198)25(280-312(169,170)171)8-26(250-104)88(128)129/h8,17,25,27-87,96-111,144H,9-16H2,1-7H3,(H,112,120)(H,113,121)(H,114,122)(H,115,123)(H,116,124)(H,117,125)(H,118,126)(H,119,127)(H,128,129)(H,130,131)(H,132,133)(H,134,135)(H,136,137)(H,138,139)(H,140,141)(H,142,143)(H,145,146,147)(H,148,149,150)(H,151,152,153)(H,154,155,156)(H,157,158,159)(H,160,161,162)(H,163,164,165)(H,166,167,168)(H,169,170,171)(H,172,173,174)(H,175,176,177)(H,178,179,180)(H,181,182,183)(H,184,185,186)(H,187,188,189)(H,190,191,192)(H,193,194,195)(H,196,197,198)(H,199,200,201)(H,202,203,204)(H,205,206,207)(H,208,209,210)(H,211,212,213)(H,214,215,216)(H,217,218,219)(H,220,221,222)(H,223,224,225)(H,226,227,228)(H,229,230,231)(H,232,233,234)(H,235,236,237)(H,238,239,240)/t25-,27+,28+,29+,30+,31+,32+,33+,34+,35+,36+,37+,38+,39+,40+,41+,42+,43+,44+,45+,46+,47+,48+,49+,50+,51+,52+,53+,54+,55+,56+,57+,58+,59+,60-,61-,62-,63-,64-,65-,66-,67-,68-,69-,70-,71-,72-,73-,74-,75-,76-,77-,78-,79-,80-,81+,82+,83+,84+,85+,86+,87+,96?,97-,98-,99-,100-,101-,102-,103-,104-,105+,106+,107+,108+,109+,110+,111+/m0/s1/f/h112-119,128,130,132,134,136,138,140,142,145,148,151,154,157,160,163,166,169,172,175,178,181,184,187,190,193,196,199,202,205,208,211,214,217,220,223,226,229,232,235,238H
      */
     @Test
-    public void testHighMass() throws Exception {
+    void testHighMass() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -540,7 +540,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testFoundMF() throws Exception {
+    void testFoundMF() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -586,7 +586,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testFoundMF2() throws Exception {
+    void testFoundMF2() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -629,7 +629,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testFragment() throws Exception {
+    void testFragment() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -680,7 +680,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C8H9Cl3NO2PS/c1-12-15(16,13-2)14-8-4-6(10)5(9)3-7(8)11/h3-4H,1-2H3,(H,12,16)
      */
     @Test
-    public void testCompoundWith7Elements() throws Exception {
+    void testCompoundWith7Elements() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -739,7 +739,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      *
      */
     @Test
-    public void testDifferentIsotopes() throws Exception {
+    void testDifferentIsotopes() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -784,7 +784,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testFixedFormulaRange() throws Exception {
+    void testFixedFormulaRange() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -815,7 +815,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testFixedFormulaRange2() throws Exception {
+    void testFixedFormulaRange2() throws Exception {
         MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 
         List<IRule> myRules = new ArrayList<>();
@@ -862,7 +862,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      * Test to find a single carbon.
      */
     @Disabled("Demonstrates a deficiency in the implementation - use MolecularFormulaGenerator")
-    public void testSingleCarbon() throws Exception {
+    void testSingleCarbon() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
@@ -901,7 +901,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
      * Test to find H2O in a range of 1-20.
      */
     @Disabled("Demonstrates a deficiency in the implementation - use MolecularFormulaGenerator")
-    public void testWater() throws Exception {
+    void testWater() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");

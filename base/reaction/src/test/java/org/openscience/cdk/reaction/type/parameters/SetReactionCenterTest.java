@@ -27,12 +27,12 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-reaction
  */
-public class SetReactionCenterTest extends CDKTestCase {
+class SetReactionCenterTest extends CDKTestCase {
 
     /**
      *  Constructor for the SetReactionCenterTest object.
      */
-    public SetReactionCenterTest() {
+    SetReactionCenterTest() {
         super();
     }
 
@@ -42,7 +42,7 @@ public class SetReactionCenterTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSetReactionCenter() {
+    void testSetReactionCenter() {
         SetReactionCenter react = new SetReactionCenter();
         Assertions.assertNotNull(react);
     }

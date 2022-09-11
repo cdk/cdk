@@ -39,25 +39,25 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-cip
  */
-public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
+class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
 
-    static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
-    static IAtomContainer molecule;
+    private static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static IAtomContainer molecule;
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
     }
 
     @Test
-    public void testCompare_Identity() {
+    void testCompare_Identity() {
         ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
         Assertions.assertEquals(0, rule.compare(ligand, ligand));
     }
 
     @Test
-    public void testCompare() {
+    void testCompare() {
         ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
@@ -66,7 +66,7 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
     }
 
     @Test
-    public void testOrder() {
+    void testOrder() {
         ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
         ILigand ligand3 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));

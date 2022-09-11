@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IReactionSet;
  *
  * @cdk.module test-datadebug
  */
-public class DebugReactionSetTest extends AbstractReactionSetTest {
+class DebugReactionSetTest extends AbstractReactionSetTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugReactionSet::new);
     }
 
     @Test
-    public void testDebugReactionSet() {
+    void testDebugReactionSet() {
         IReactionSet rs = new DebugReactionSet();
         Assertions.assertNotNull(rs);
     }

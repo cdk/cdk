@@ -38,10 +38,10 @@ import org.junit.jupiter.api.Test;
  * @author John May
  * @cdk.module test-core
  */
-public class MinimumCycleBasisTest {
+class MinimumCycleBasisTest {
 
     @Test
-    public void noGraph() {
+    void noGraph() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     new MinimumCycleBasis((int[][]) null);
@@ -49,7 +49,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void noInitialCycles() {
+    void noInitialCycles() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     new MinimumCycleBasis((InitialCycles) null);
@@ -57,7 +57,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void paths_norbornane() {
+    void paths_norbornane() {
         int[][] norbornane = norbornane();
         MinimumCycleBasis mcb = new MinimumCycleBasis(norbornane);
         int[][] paths = mcb.paths();
@@ -67,7 +67,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void paths_bicyclo() {
+    void paths_bicyclo() {
         int[][] bicyclo = bicyclo();
         MinimumCycleBasis mcb = new MinimumCycleBasis(bicyclo);
         int[][] paths = mcb.paths();
@@ -77,7 +77,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void paths_napthalene() {
+    void paths_napthalene() {
         int[][] napthalene = naphthalene();
         MinimumCycleBasis mcb = new MinimumCycleBasis(napthalene);
         int[][] paths = mcb.paths();
@@ -87,7 +87,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void paths_anthracene() {
+    void paths_anthracene() {
         int[][] anthracene = anthracene();
         MinimumCycleBasis mcb = new MinimumCycleBasis(anthracene);
         int[][] paths = mcb.paths();
@@ -97,7 +97,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void paths_cyclophane_even() {
+    void paths_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         MinimumCycleBasis mcb = new MinimumCycleBasis(cyclophane_even);
         int[][] paths = mcb.paths();
@@ -107,7 +107,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void paths_cyclophane_odd() {
+    void paths_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         MinimumCycleBasis mcb = new MinimumCycleBasis(cyclophane_even);
         int[][] paths = mcb.paths();
@@ -117,7 +117,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void size_norbornane() {
+    void size_norbornane() {
         int[][] norbornane = norbornane();
         MinimumCycleBasis mcb = new MinimumCycleBasis(norbornane);
         int[][] paths = mcb.paths();
@@ -125,35 +125,35 @@ public class MinimumCycleBasisTest {
     }
 
     @Test
-    public void size_bicyclo() {
+    void size_bicyclo() {
         int[][] bicyclo = bicyclo();
         MinimumCycleBasis mcb = new MinimumCycleBasis(bicyclo);
         assertThat(mcb.size(), is(2));
     }
 
     @Test
-    public void size_napthalene() {
+    void size_napthalene() {
         int[][] napthalene = naphthalene();
         MinimumCycleBasis mcb = new MinimumCycleBasis(napthalene);
         assertThat(mcb.size(), is(2));
     }
 
     @Test
-    public void size_anthracene() {
+    void size_anthracene() {
         int[][] anthracene = anthracene();
         MinimumCycleBasis mcb = new MinimumCycleBasis(anthracene);
         assertThat(mcb.size(), is(3));
     }
 
     @Test
-    public void size_cyclophane_even() {
+    void size_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         MinimumCycleBasis relevant = new MinimumCycleBasis(cyclophane_even);
         assertThat(relevant.size(), is(2));
     }
 
     @Test
-    public void size_cyclophane_odd() {
+    void size_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         MinimumCycleBasis mcb = new MinimumCycleBasis(cyclophane_even);
         assertThat(mcb.size(), is(2));

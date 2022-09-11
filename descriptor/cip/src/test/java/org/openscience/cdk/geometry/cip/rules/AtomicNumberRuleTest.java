@@ -40,25 +40,25 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-cip
  */
-public class AtomicNumberRuleTest extends CDKTestCase {
+class AtomicNumberRuleTest extends CDKTestCase {
 
-    static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
-    static IAtomContainer molecule;
+    private static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static IAtomContainer molecule;
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
     }
 
     @Test
-    public void testCompare_Identity() {
+    void testCompare_Identity() {
         ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ISequenceSubRule<ILigand> rule = new AtomicNumberRule();
         Assertions.assertEquals(0, rule.compare(ligand, ligand));
     }
 
     @Test
-    public void testCompare() {
+    void testCompare() {
         ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ISequenceSubRule<ILigand> rule = new AtomicNumberRule();
@@ -67,7 +67,7 @@ public class AtomicNumberRuleTest extends CDKTestCase {
     }
 
     @Test
-    public void testOrder() {
+    void testOrder() {
         VisitedAtoms visitedAtoms = new VisitedAtoms();
         ILigand ligand1 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(4));
         ILigand ligand2 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(3));
@@ -87,7 +87,7 @@ public class AtomicNumberRuleTest extends CDKTestCase {
     }
 
     @Test
-    public void testImplicitHydrogen_Same() {
+    void testImplicitHydrogen_Same() {
         ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
         ISequenceSubRule<ILigand> rule = new AtomicNumberRule();
@@ -96,7 +96,7 @@ public class AtomicNumberRuleTest extends CDKTestCase {
     }
 
     @Test
-    public void testImplicitHydrogen() {
+    void testImplicitHydrogen() {
         ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
         ISequenceSubRule<ILigand> rule = new AtomicNumberRule();

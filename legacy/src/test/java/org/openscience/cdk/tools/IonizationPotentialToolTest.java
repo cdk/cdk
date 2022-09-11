@@ -37,14 +37,14 @@ import java.util.List;
  *
  * @cdk.module test-ionpot
  */
-public class IonizationPotentialToolTest extends CDKTestCase {
+class IonizationPotentialToolTest extends CDKTestCase {
 
-    final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**
      * Constructor of the IonizationPotentialToolTest.
      */
-    public IonizationPotentialToolTest() {
+    IonizationPotentialToolTest() {
         super();
     }
 
@@ -54,13 +54,13 @@ public class IonizationPotentialToolTest extends CDKTestCase {
      * @return The test suite
      */
     @Test
-    public void testIonizationPotentialTool() {
+    void testIonizationPotentialTool() {
 
         Assertions.assertNotNull(new IonizationPotentialTool());
     }
 
     @Test
-    public void testBenzene() throws Exception {
+    void testBenzene() throws Exception {
         String smiles = "c1ccccc1";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles(smiles);

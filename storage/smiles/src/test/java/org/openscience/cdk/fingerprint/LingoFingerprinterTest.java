@@ -38,7 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @cdk.module test-smiles
  */
-public class LingoFingerprinterTest extends AbstractFingerprinterTest {
+class LingoFingerprinterTest extends AbstractFingerprinterTest {
 
     boolean standAlone = false;
 
@@ -48,7 +48,7 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void testGetSize() throws Exception {
+    void testGetSize() throws Exception {
         IFingerprinter fingerprinter = new LingoFingerprinter();
         Assertions.assertNotNull(fingerprinter);
         Assertions.assertEquals(-1, fingerprinter.getSize());

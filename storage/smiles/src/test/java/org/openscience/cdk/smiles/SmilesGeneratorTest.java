@@ -83,13 +83,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.created    2004-02-09
  * @cdk.module     test-smiles
  */
-public class SmilesGeneratorTest extends CDKTestCase {
+class SmilesGeneratorTest extends CDKTestCase {
 
     /**
      *  A unit test for JUnit
      */
     @Test
-    public void testSmilesGenerator() throws Exception {
+    void testSmilesGenerator() throws Exception {
         IAtomContainer mol2 = TestMoleculeFactory.makeAlphaPinene();
         SmilesGenerator sg = new SmilesGenerator();
         addImplicitHydrogens(mol2);
@@ -102,7 +102,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testEthylPropylPhenantren() throws Exception {
+    void testEthylPropylPhenantren() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeEthylPropylPhenantren();
         SmilesGenerator sg = new SmilesGenerator();
         fixCarbonHCount(mol1);
@@ -115,7 +115,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testPropylCycloPropane() throws Exception {
+    void testPropylCycloPropane() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makePropylCycloPropane();
         SmilesGenerator sg = new SmilesGenerator();
         fixCarbonHCount(mol1);
@@ -129,7 +129,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testAlanin() throws Exception {
+    void testAlanin() throws Exception {
         IAtomContainer mol1 = new AtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
         mol1.addAtom(new Atom("N", new Point2d(1, 0)));
@@ -196,7 +196,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testCisResorcinol() throws Exception {
+    void testCisResorcinol() throws Exception {
         IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         SmilesGenerator sg = SmilesGenerator.isomeric();
         mol1.addAtom(new Atom("O", new Point2d(3, 1)));
@@ -282,7 +282,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testCisTransDecalin() throws Exception {
+    void testCisTransDecalin() throws Exception {
         IAtomContainer mol1 = new AtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
 
@@ -368,7 +368,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testDoubleBondConfiguration() throws Exception {
+    void testDoubleBondConfiguration() throws Exception {
         IAtomContainer mol1 = new AtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
         mol1.addAtom(new Atom("S", new Point2d(0, 0)));
@@ -444,7 +444,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testPartitioning() throws Exception {
+    void testPartitioning() throws Exception {
         String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
@@ -464,7 +464,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 791091
      */
     @Test
-    public void testBug791091() throws Exception {
+    void testBug791091() throws Exception {
         String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
@@ -487,7 +487,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 590236
      */
     @Test
-    public void testBug590236() throws Exception {
+    void testBug590236() throws Exception {
         String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
@@ -507,7 +507,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 956923
      */
     @Test
-    public void testSFBug956923_aromatic() throws Exception {
+    void testSFBug956923_aromatic() throws Exception {
         String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator().aromatic();
@@ -533,7 +533,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testSFBug956923_nonAromatic() throws Exception {
+    void testSFBug956923_nonAromatic() throws Exception {
         String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
@@ -560,7 +560,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testAtomPermutation() throws Exception {
+    void testAtomPermutation() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("S"));
         mol.addAtom(new Atom("O"));
@@ -590,7 +590,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testBondPermutation() throws Exception {
+    void testBondPermutation() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("S"));
         mol.addAtom(new Atom("O"));
@@ -640,7 +640,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testPseudoAtom() throws Exception {
+    void testPseudoAtom() throws Exception {
         IAtom atom = new PseudoAtom("Star");
         SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
         String smiles;
@@ -656,7 +656,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  reaction, but it serves its purpose.
      */
     @Test
-    public void testReactionSMILES() throws Exception {
+    void testReactionSMILES() throws Exception {
         Reaction reaction = new Reaction();
         AtomContainer methane = new AtomContainer();
         methane.addAtom(new Atom("C"));
@@ -681,7 +681,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  Test generation of a D and L alanin.
      */
     @Test
-    public void testAlaSMILES() throws Exception {
+    void testAlaSMILES() throws Exception {
         String filename = "l-ala.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -704,7 +704,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  Test some sugars
      */
     @Test
-    public void testSugarSMILES() throws Exception {
+    void testSugarSMILES() throws Exception {
         String filename = "D-mannose.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -729,7 +729,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  Test for some rings where the double bond is broken
      */
     @Test
-    public void testCycloOctan() throws Exception {
+    void testCycloOctan() throws Exception {
         String filename = "cyclooctan.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -743,7 +743,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testCycloOcten() throws Exception {
+    void testCycloOcten() throws Exception {
         String filename = "cycloocten.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -757,7 +757,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testCycloOctadien() throws Exception {
+    void testCycloOctadien() throws Exception {
         String filename = "cyclooctadien.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -771,7 +771,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1089770
      */
     @Test
-    public void testSFBug1089770_1() throws Exception {
+    void testSFBug1089770_1() throws Exception {
         String filename = "bug1089770-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -787,7 +787,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @see <a href="https://sourceforge.net/p/cdk/bugs/242/">CDK Bug 1089770</a>
      */
     @Test
-    public void testSFBug1089770_2() throws Exception {
+    void testSFBug1089770_2() throws Exception {
         String filename = "bug1089770-2.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -804,7 +804,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     @Tag("SlowTest")
     // MDL -> CML (slow) -> SMILES round tripping
     @Test
-    public void testSFBug1014344() throws Exception {
+    void testSFBug1014344() throws Exception {
         String filename = "bug1014344-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
@@ -827,7 +827,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1014344
      */
     @Test
-    public void testTest() throws Exception {
+    void testTest() throws Exception {
         String filename_cml = "9554-with-exp-hyd.mol";
         String filename_mol = "9553-with-exp-hyd.mol";
         InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
@@ -854,7 +854,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1535055
      */
     @Test
-    public void testSFBug1535055() throws Exception {
+    void testSFBug1535055() throws Exception {
         String filename_cml = "test1.cml";
         InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
         CMLReader reader1 = new CMLReader(ins1);
@@ -881,7 +881,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1014344
      */
     @Test
-    public void testSFBug1014344_1() throws Exception {
+    void testSFBug1014344_1() throws Exception {
         String filename_cml = "bug1014344-1.cml";
         String filename_mol = "bug1014344-1.mol";
         InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
@@ -911,7 +911,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1875946
      */
     @Test
-    public void testPreservingFormalCharge() throws Exception {
+    void testPreservingFormalCharge() throws Exception {
         AtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom(Elements.OXYGEN));
         mol.getAtom(0).setFormalCharge(-1);
@@ -925,7 +925,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testIndole() throws Exception {
+    void testIndole() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addImplicitHydrogens(mol);
@@ -937,7 +937,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testPyrrole() throws Exception {
+    void testPyrrole() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addImplicitHydrogens(mol);
@@ -951,7 +951,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1300
      */
     @Test
-    public void testDoubleBracketProblem() throws Exception {
+    void testDoubleBracketProblem() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         mol.getAtom(1).setFormalCharge(-1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -966,7 +966,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1300
      */
     @Test
-    public void testHydrogenOnChargedNitrogen() throws Exception {
+    void testHydrogenOnChargedNitrogen() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         mol.getAtom(1).setFormalCharge(-1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -982,7 +982,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 545
      */
     @Test
-    public void testTimeOut() throws Exception {
+    void testTimeOut() throws Exception {
         String filename = "24763.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -1000,7 +1000,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 2051597
      */
     @Test
-    public void testSFBug2051597() throws Exception {
+    void testSFBug2051597() throws Exception {
         String smiles = "c1(c2ccc(c8ccccc8)cc2)" + "c(c3ccc(c9ccccc9)cc3)" + "c(c4ccc(c%10ccccc%10)cc4)"
                 + "c(c5ccc(c%11ccccc%11)cc5)" + "c(c6ccc(c%12ccccc%12)cc6)" + "c1(c7ccc(c%13ccccc%13)cc7)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -1024,7 +1024,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 2596061
      */
     @Test
-    public void testRoundTripPseudoAtom() throws Exception {
+    void testRoundTripPseudoAtom() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "[12*H2-]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1037,7 +1037,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 2781199
      */
     @Test
-    public void testBug2781199() throws Exception {
+    void testBug2781199() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "n1ncn(c1)CC";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1050,7 +1050,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 2898032
      */
     @Test
-    public void testCanSmiWithoutConfiguredAtoms() throws CDKException, IOException {
+    void testCanSmiWithoutConfiguredAtoms() throws CDKException, IOException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String s1 = "OC(=O)C(Br)(Cl)N";
         String s2 = "ClC(Br)(N)C(=O)O";
@@ -1069,7 +1069,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 2898032
      */
     @Test
-    public void testCanSmiWithConfiguredAtoms() throws CDKException, IOException {
+    void testCanSmiWithConfiguredAtoms() throws CDKException, IOException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String s1 = "OC(=O)C(Br)(Cl)N";
         String s2 = "ClC(Br)(N)C(=O)O";
@@ -1092,7 +1092,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 3040273
      */
     @Test
-    public void testBug3040273() throws Exception {
+    void testBug3040273() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String testSmiles = "C1(C(C(C(C(C1Br)Br)Br)Br)Br)Br";
         IAtomContainer mol = sp.parseSmiles(testSmiles);
@@ -1105,7 +1105,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCreateSMILESWithoutCheckForMultipleMolecules_withDetectAromaticity() throws Exception {
+    void testCreateSMILESWithoutCheckForMultipleMolecules_withDetectAromaticity() throws Exception {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
         SmilesGenerator sg = new SmilesGenerator();
@@ -1114,7 +1114,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCreateSMILESWithoutCheckForMultipleMolecules_withoutDetectAromaticity() throws Exception {
+    void testCreateSMILESWithoutCheckForMultipleMolecules_withoutDetectAromaticity() throws Exception {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
         SmilesGenerator sg = new SmilesGenerator().aromatic();
@@ -1125,7 +1125,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void outputOrder() throws Exception {
+    void outputOrder() throws Exception {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(adenine);
@@ -1153,7 +1153,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void outputCanOrder() throws Exception {
+    void outputCanOrder() throws Exception {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(adenine);
@@ -1181,7 +1181,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void atomClasses() throws Exception {
+    void atomClasses() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IAtomContainer ethanol = new SmilesParser(bldr).parseSmiles("C[CH2:6]O");
         assertThat(SmilesGenerator.generic().create(ethanol), is("CCO"));
@@ -1192,13 +1192,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 328
      */
     @Test
-    public void bug328() throws Exception {
+    void bug328() throws Exception {
         assertThat(canon("[H]c2c([H])c(c1c(nc(n1([H]))C(F)(F)F)c2Cl)Cl"),
                    is(canon("Clc1ccc(Cl)c2[nH]c([nH0]c21)C(F)(F)F")));
     }
 
     @Test
-    public void warnOnBadInput() throws Exception {
+    void warnOnBadInput() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         smipar.kekulise(false);
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1");
@@ -1212,14 +1212,15 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @see https://tech.knime.org/forum/cdk/buggy-behavior-of-molecule-to-cdk-node
      */
     @Test
-    public void assignDbStereo() throws Exception {
+    void assignDbStereo() throws Exception {
         String in = "C(/N)=C\\C=C\\1/N=C1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(in);
         Assertions.assertEquals("C(\\N)=C/C=C/1N=C1", SmilesGenerator.isomeric().create(mol));
     }
 
-    @Test public void canonicalReactions() throws Exception {
+    @Test
+    void canonicalReactions() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReaction r1 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
         IReaction r2 = smipar.parseReactionSmiles("C(CC(=O)Cl)CCl.CC(C)C1=CC=CC=C1>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
@@ -1230,7 +1231,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void inconsistentAromaticState() throws Exception {
+    void inconsistentAromaticState() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1");
         for (IAtom atom : mol.atoms())
@@ -1243,21 +1244,21 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void strictIsotopes() throws CDKException {
+    void strictIsotopes() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[12CH3]C");
         assertThat(new SmilesGenerator(SmiFlavor.AtomicMassStrict).create(mol), is("[12CH3]C"));
     }
 
     @Test
-    public void isotopes() throws CDKException {
+    void isotopes() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[12CH3]C");
         assertThat(new SmilesGenerator(SmiFlavor.AtomicMass).create(mol), is("[12CH3]C"));
     }
 
     @Test
-    public void cyclobutene() throws CDKException {
+    void cyclobutene() throws CDKException {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol    = smipar.parseSmiles("C1(C)=C(c2ccccc2)C=C1.C1(C)C(c2ccccc2)=CC=1");
         // by default we generate SMILES that allows all double bonds to move
@@ -1272,7 +1273,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void roundTripExtendedCisTrans() throws CDKException {
+    void roundTripExtendedCisTrans() throws CDKException {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol    = smipar.parseSmiles("C/C=C=C=C/C");
         assertThat(new SmilesGenerator(SmiFlavor.Stereo).create(mol),
@@ -1285,7 +1286,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void canonAtomMaps() throws CDKException {
+    void canonAtomMaps() throws CDKException {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol    = smipar.parseSmiles("[*:2]C(CC[*:3])[*:1]");
         assertThat(new SmilesGenerator(SmiFlavor.Canonical|SmiFlavor.AtomAtomMap).create(mol),
@@ -1296,7 +1297,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void canonAtomMapsRenumber() throws CDKException {
+    void canonAtomMapsRenumber() throws CDKException {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol    = smipar.parseSmiles("[*:2]C(CC[*:3])[*:1]");
         assertThat(new SmilesGenerator(SmiFlavor.Canonical|SmiFlavor.AtomAtomMapRenumber).create(mol),
@@ -1307,7 +1308,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void stereoElementRemap_Silent() throws CDKException {
+    void stereoElementRemap_Silent() throws CDKException {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReaction      rxn    = smipar.parseReactionSmiles("*/C=C/C>> |$R$|");
         String         res    = null;
@@ -1317,7 +1318,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void stereoElementRemap_Default() throws CDKException {
+    void stereoElementRemap_Default() throws CDKException {
         SmilesParser   smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IReaction      rxn    = smipar.parseReactionSmiles("*/C=C/C>> |$R$|");
         String         res    = null;
@@ -1327,7 +1328,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void stereoElementRemapRxn_Silent() throws CDKException {
+    void stereoElementRemapRxn_Silent() throws CDKException {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReaction      rxn    = smipar.parseReactionSmiles("*/C=C/C>> |$R$|");
         String         res    = null;
@@ -1335,7 +1336,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void stereoElementRemapRxn_Default() throws CDKException {
+    void stereoElementRemapRxn_Default() throws CDKException {
         SmilesParser   smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IReaction      rxn    = smipar.parseReactionSmiles("*/C=C/C>> |$R$|");
         String         res    = null;

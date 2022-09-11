@@ -31,21 +31,21 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *
  * @cdk.module test-silent
  */
-public class AdductFormulaTest extends AbstractAdductFormulaTest {
+class AdductFormulaTest extends AbstractAdductFormulaTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setBuilder(SilentChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testAdductFormula() {
+    void testAdductFormula() {
         IAdductFormula mfS = new AdductFormula();
         Assertions.assertNotNull(mfS);
     }
 
     @Test
-    public void testAdductFormula_IMolecularFormula() {
+    void testAdductFormula_IMolecularFormula() {
         IAdductFormula mfS = new AdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assertions.assertEquals(1, mfS.size());
     }

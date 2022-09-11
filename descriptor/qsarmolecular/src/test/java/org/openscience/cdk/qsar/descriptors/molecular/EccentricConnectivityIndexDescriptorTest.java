@@ -39,17 +39,17 @@ import java.util.List;
  * @cdk.module test-qsarmolecular
  */
 
-public class EccentricConnectivityIndexDescriptorTest extends MolecularDescriptorTest {
+class EccentricConnectivityIndexDescriptorTest extends MolecularDescriptorTest {
 
-    public EccentricConnectivityIndexDescriptorTest() {}
+    EccentricConnectivityIndexDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(EccentricConnectivityIndexDescriptor.class);
     }
 
     @Test
-    public void testEccentricConnectivityIndex() throws java.lang.Exception {
+    void testEccentricConnectivityIndex() throws java.lang.Exception {
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

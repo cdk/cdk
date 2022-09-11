@@ -47,10 +47,10 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @author      Christoph Steinbeck
  * @cdk.created 2004-11-04
  */
-public class TemplateHandler3DTest extends CDKTestCase {
+class TemplateHandler3DTest extends CDKTestCase {
 
     @Test
-    public void testGetInstance() throws Exception {
+    void testGetInstance() throws Exception {
         TemplateHandler3D th3d = TemplateHandler3D.getInstance();
         // need to trigger a load of the templates
         th3d.mapTemplates(new AtomContainer(), 0);
@@ -62,7 +62,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testFingerprints() throws Exception {
+    void testFingerprints() throws Exception {
         BitSet[] expected = new BitSet[]{
             parseBitSet("{3, 5, 8, 18, 29, 33, 39, 65, 71, 90, 105, 125, 140, 170, 182, 192, 199, 203, 209, 213, 226, 271, 272, 287, 301, 304, 319, 368, 386, 423, 433, 540, 590, 605, 618, 620, 629, 641, 649, 672, 681, 690, 694, 696, 697, 716, 726, 745, 748, 751, 760, 765, 775, 777, 780, 792, 799, 805, 810, 825, 829, 836, 844, 850, 876, 880, 882, 888, 899, 914, 924, 929, 932, 935, 967, 971, 1004, 1013, 1015, 1023}"),
             parseBitSet("{3, 8, 18, 29, 33, 65, 90, 101, 109, 117, 125, 127, 140, 170, 190, 192, 209, 213, 218, 226, 271, 272, 286, 287, 301, 304, 319, 386, 423, 433, 566, 590, 605, 618, 629, 641, 646, 649, 672, 690, 694, 696, 716, 726, 745, 748, 765, 775, 777, 780, 783, 792, 805, 810, 825, 829, 836, 844, 850, 876, 882, 899, 914, 924, 932, 934, 956, 967, 971, 994, 1004, 1013, 1015, 1023}"),
@@ -88,7 +88,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testAnonFingerprints() throws Exception {
+    void testAnonFingerprints() throws Exception {
         BitSet[] expected = new BitSet[]{
             parseBitSet("{148, 206, 392, 542, 637, 742, 752, 830}"),
             parseBitSet("{148, 206, 392, 542, 637, 742, 752, 830}"),
@@ -114,7 +114,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testMapTemplates_IAtomContainer_double() throws Exception {
+    void testMapTemplates_IAtomContainer_double() throws Exception {
         IAtomContainer ac = TestMoleculeFactory.makeBicycloRings();
         TemplateHandler3D th3d = TemplateHandler3D.getInstance();
         ForceFieldConfigurator ffc = new ForceFieldConfigurator();

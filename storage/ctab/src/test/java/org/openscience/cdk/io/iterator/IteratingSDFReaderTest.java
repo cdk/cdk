@@ -48,12 +48,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module test-io
  * @see org.openscience.cdk.io.MDLReader
  */
-public class IteratingSDFReaderTest extends CDKTestCase {
+class IteratingSDFReaderTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSDFReaderTest.class);
 
     @Test
-    public void testSDF() throws Exception {
+    void testSDF() throws Exception {
         String filename = "test2.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -73,7 +73,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testSDF_broken_stream() throws Exception {
+    void testSDF_broken_stream() throws Exception {
         String filename = "test2.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -101,7 +101,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testReadTitle() throws Exception {
+    void testReadTitle() throws Exception {
         String filename = "test.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -118,7 +118,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testReadDataItems() throws Exception {
+    void testReadDataItems() throws Exception {
         String filename = "test.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -136,7 +136,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testMultipleEntryFields() throws Exception {
+    void testMultipleEntryFields() throws Exception {
         String filename = "test.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
@@ -149,7 +149,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testOnMDLMolfile() throws Exception {
+    void testOnMDLMolfile() throws Exception {
         String filename = "bug682233.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -168,7 +168,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testOnSingleEntrySDFile() throws Exception {
+    void testOnSingleEntrySDFile() throws Exception {
         String filename = "singleMol.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -187,7 +187,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testEmptyEntryIteratingReader() throws IOException {
+    void testEmptyEntryIteratingReader() throws IOException {
         String filename = "emptyStructures.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -214,7 +214,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
      * @cdk.bug 2692107
      */
     @Test
-    public void testZeroZCoordinates() throws Exception {
+    void testZeroZCoordinates() throws Exception {
         String filename = "nozcoord.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -238,7 +238,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testNo3DCoordsButForcedAs() throws IOException {
+    void testNo3DCoordsButForcedAs() throws IOException {
         // First test unforced 3D coordinates
         String filename = "no3dStructures.sdf";
         logger.info("Testing: " + filename);
@@ -301,7 +301,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
      * @cdk.bug 3488307
      */
     @Test
-    public void testBrokenSDF() throws IOException, CDKException {
+    void testBrokenSDF() throws IOException, CDKException {
 
         String path = "bug3488307.sdf";
         InputStream in = getClass().getResourceAsStream(path);
@@ -324,7 +324,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testV3000MolfileFormat() throws IOException, CDKException {
+    void testV3000MolfileFormat() throws IOException, CDKException {
 
         String path = "molV3000.mol";
         InputStream in = getClass().getResourceAsStream(path);

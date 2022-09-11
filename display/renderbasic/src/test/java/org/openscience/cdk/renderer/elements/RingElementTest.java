@@ -28,10 +28,10 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * @cdk.module test-renderbasic
  */
-public class RingElementTest extends AbstractElementTest {
+class RingElementTest extends AbstractElementTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         IRenderingElement element = new RingElement(3, 4, 5, Color.orange);
         setRenderingElement(element);
     }

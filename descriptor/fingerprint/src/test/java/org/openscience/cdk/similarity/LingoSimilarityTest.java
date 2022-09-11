@@ -38,10 +38,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-fingerprint
  */
-public class LingoSimilarityTest extends CDKTestCase {
+class LingoSimilarityTest extends CDKTestCase {
 
     @Test
-    public void testLingoSim() throws Exception {
+    void testLingoSim() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makeIndole();
         addImplicitHydrogens(mol1);

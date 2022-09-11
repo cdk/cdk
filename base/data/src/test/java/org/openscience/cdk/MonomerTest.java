@@ -36,15 +36,15 @@ import org.openscience.cdk.test.interfaces.AbstractMonomerTest;
  * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */
-public class MonomerTest extends AbstractMonomerTest {
+class MonomerTest extends AbstractMonomerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Monomer::new);
     }
 
     @Test
-    public void testMonomer() {
+    void testMonomer() {
         IMonomer oMonomer = new Monomer();
         Assertions.assertNotNull(oMonomer);
     }

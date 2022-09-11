@@ -33,22 +33,22 @@ import org.openscience.cdk.test.interfaces.AbstractLonePairTest;
  *
  * @cdk.module test-data
  */
-public class LonePairTest extends AbstractLonePairTest {
+class LonePairTest extends AbstractLonePairTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(LonePair::new);
     }
 
     @Test
-    public void testLonePair() {
+    void testLonePair() {
         ILonePair lp = new LonePair();
         Assertions.assertNull(lp.getAtom());
         Assertions.assertEquals(2, lp.getElectronCount().intValue());
     }
 
     @Test
-    public void testLonePair_IAtom() {
+    void testLonePair_IAtom() {
         IAtom atom = new Atom("N");
         ILonePair lp = new LonePair(atom);
         Assertions.assertEquals(2, lp.getElectronCount().intValue());

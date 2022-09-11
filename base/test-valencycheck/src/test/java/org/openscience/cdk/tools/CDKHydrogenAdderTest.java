@@ -63,7 +63,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2007-07-28
  */
-public class CDKHydrogenAdderTest extends CDKTestCase {
+class CDKHydrogenAdderTest extends CDKTestCase {
 
     private final static CDKHydrogenAdder   adder   = CDKHydrogenAdder.getInstance(SilentChemObjectBuilder
                                                             .getInstance());
@@ -71,12 +71,12 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
                                                             .getInstance());
 
     @Test
-    public void testInstance() {
+    void testInstance() {
         Assertions.assertNotNull(adder);
     }
 
     @Test
-    public void testMethane() throws Exception {
+    void testMethane() throws Exception {
         IAtomContainer molecule = new AtomContainer();
         IAtom newAtom = new Atom(Elements.CARBON);
         molecule.addAtom(newAtom);
@@ -91,7 +91,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testFormaldehyde() throws Exception {
+    void testFormaldehyde() throws Exception {
         IAtomContainer molecule = new AtomContainer();
         IAtom newAtom = new Atom(Elements.CARBON);
         IAtom newAtom2 = new Atom(Elements.OXYGEN);
@@ -114,7 +114,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testMethanol() throws Exception {
+    void testMethanol() throws Exception {
         IAtomContainer molecule = new AtomContainer();
         IAtom newAtom = new Atom(Elements.CARBON);
         IAtom newAtom2 = new Atom(Elements.OXYGEN);
@@ -137,7 +137,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testHCN() throws Exception {
+    void testHCN() throws Exception {
         IAtomContainer molecule = new AtomContainer();
         IAtom newAtom = new Atom(Elements.CARBON);
         IAtom newAtom2 = new Atom(Elements.NITROGEN);
@@ -160,7 +160,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testMethylAmine() throws Exception {
+    void testMethylAmine() throws Exception {
         IAtomContainer molecule = new AtomContainer();
         IAtom newAtom = new Atom(Elements.CARBON);
         IAtom newAtom2 = new Atom(Elements.NITROGEN);
@@ -183,7 +183,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testMethyleneImine() throws Exception {
+    void testMethyleneImine() throws Exception {
         IAtomContainer molecule = new AtomContainer();
         IAtom newAtom = new Atom(Elements.CARBON);
         IAtom newAtom2 = new Atom(Elements.NITROGEN);
@@ -206,7 +206,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testSulphur() throws Exception {
+    void testSulphur() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("S");
         mol.addAtom(atom);
@@ -222,7 +222,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testProton() throws Exception {
+    void testProton() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom proton = new Atom("H");
         proton.setFormalCharge(+1);
@@ -242,7 +242,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testHydrogen() throws Exception {
+    void testHydrogen() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom proton = new Atom("H");
         mol.addAtom(proton);
@@ -261,7 +261,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testAmmonia() throws Exception {
+    void testAmmonia() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom nitrogen = new Atom("N");
         mol.addAtom(nitrogen);
@@ -275,7 +275,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testAmmonium() throws Exception {
+    void testAmmonium() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom nitrogen = new Atom("N");
         nitrogen.setFormalCharge(+1);
@@ -290,7 +290,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testWater() throws Exception {
+    void testWater() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom oxygen = new Atom("O");
         mol.addAtom(oxygen);
@@ -304,7 +304,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testHydroxonium() throws Exception {
+    void testHydroxonium() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom oxygen = new Atom("O");
         oxygen.setFormalCharge(+1);
@@ -319,7 +319,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testHydroxyl() throws Exception {
+    void testHydroxyl() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom oxygen = new Atom("O");
         oxygen.setFormalCharge(-1);
@@ -334,7 +334,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testHalogens() throws Exception {
+    void testHalogens() throws Exception {
         halogenTest("I");
         halogenTest("F");
         halogenTest("Cl");
@@ -342,7 +342,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testHalogenAnions() throws Exception {
+    void testHalogenAnions() throws Exception {
         negativeHalogenTest("I");
         negativeHalogenTest("F");
         negativeHalogenTest("Cl");
@@ -379,7 +379,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testSulfite() throws Exception {
+    void testSulfite() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom s = new Atom("S");
         Atom o1 = new Atom("O");
@@ -424,7 +424,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testAceticAcid() throws Exception {
+    void testAceticAcid() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom carbonylOxygen = new Atom("O");
         Atom hydroxylOxygen = new Atom("O");
@@ -452,7 +452,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testEthane() throws Exception {
+    void testEthane() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -470,7 +470,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testEthaneWithPresetImplicitHCount() throws Exception {
+    void testEthaneWithPresetImplicitHCount() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -491,7 +491,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testEthene() throws Exception {
+    void testEthene() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -509,7 +509,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testEthyne() throws Exception {
+    void testEthyne() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -527,7 +527,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testAromaticSaturation() throws Exception {
+    void testAromaticSaturation() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
@@ -558,7 +558,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testaddImplicitHydrogensToSatisfyValency_OldValue() throws Exception {
+    void testaddImplicitHydrogensToSatisfyValency_OldValue() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         Atom oxygen = new Atom("O");
@@ -576,7 +576,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testAdenine() throws Exception {
+    void testAdenine() throws Exception {
         IAtomContainer mol = new AtomContainer(); // Adenine
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(21.0223, -17.2946));
@@ -641,7 +641,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      *
      */
     @Test
-    public void testBug1727373() throws Exception {
+    void testBug1727373() throws Exception {
         IAtomContainer molecule;
         String filename = "carbocations.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -659,7 +659,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      * @cdk.bug 1575269
      */
     @Test
-    public void testBug1575269() throws Exception {
+    void testBug1575269() throws Exception {
         String filename = "furan.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -673,7 +673,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testImpHByAtom() throws Exception {
+    void testImpHByAtom() throws Exception {
         String filename = "furan.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -689,7 +689,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testPseudoAtom() throws Exception {
+    void testPseudoAtom() throws Exception {
         IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new PseudoAtom("Waterium"));
         findAndConfigureAtomTypesForAllAtoms(molecule);
@@ -697,7 +697,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testNaCl() throws Exception {
+    void testNaCl() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom cl = new Atom("Cl");
         cl.setFormalCharge(-1);
@@ -720,7 +720,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      * @cdk.bug 1244612
      */
     @Test
-    public void testSulfurCompound_ImplicitHydrogens() throws Exception {
+    void testSulfurCompound_ImplicitHydrogens() throws Exception {
         String filename = "sulfurCompound.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -749,7 +749,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      * @cdk.bug 1627763
      */
     @Test
-    public void testBug1627763() throws Exception {
+    void testBug1627763() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(mol.getBuilder().newInstance(IAtom.class, "C"));
         mol.addAtom(mol.getBuilder().newInstance(IAtom.class, "O"));
@@ -771,7 +771,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void testMercaptan() throws Exception {
+    void testMercaptan() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(mol.getBuilder().newInstance(IAtom.class, "C"));
         mol.addAtom(mol.getBuilder().newInstance(IAtom.class, "C"));
@@ -811,7 +811,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void unknownAtomTypeLeavesHydrogenCountAlone() throws Exception {
+    void unknownAtomTypeLeavesHydrogenCountAlone() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         CDKHydrogenAdder hydrogenAdder = CDKHydrogenAdder.getInstance(bldr);
         IAtomContainer container = bldr.newInstance(IAtomContainer.class);
@@ -824,7 +824,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     @Test
-    public void unknownAtomTypeLeavesHydrogenCountAloneUnlessNull() throws Exception {
+    void unknownAtomTypeLeavesHydrogenCountAloneUnlessNull() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         CDKHydrogenAdder hydrogenAdder = CDKHydrogenAdder.getInstance(bldr);
         IAtomContainer container = bldr.newInstance(IAtomContainer.class);

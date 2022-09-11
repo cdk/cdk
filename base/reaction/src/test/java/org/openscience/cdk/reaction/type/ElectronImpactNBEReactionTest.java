@@ -62,7 +62,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public ElectronImpactNBEReactionTest() throws Exception {
+    ElectronImpactNBEReactionTest() throws Exception {
         setReaction(ElectronImpactNBEReaction.class);
     }
 
@@ -70,7 +70,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testElectronImpactNBEReaction() throws Exception {
+    void testElectronImpactNBEReaction() throws Exception {
         IReactionProcess type = new ElectronImpactNBEReaction();
         Assertions.assertNotNull(type);
     }
@@ -141,7 +141,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      * @return    Description of the Return Value
      */
     @Test
-    public void testAutomatic_Set_Active_Atom() throws Exception {
+    void testAutomatic_Set_Active_Atom() throws Exception {
         /*
          * ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC, without setting the
          * reactive center
@@ -191,7 +191,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp3SingleB() throws Exception {
+    void testNsp3SingleB() throws Exception {
         //Smiles("CN")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -264,7 +264,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testNsp2SingleB() throws Exception {
+    void testNsp2SingleB() throws Exception {
         //Smiles("C=N")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -331,7 +331,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testFspSingleB() throws Exception {
+    void testFspSingleB() throws Exception {
         //Smiles("FC")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -397,7 +397,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new ElectronImpactNBEReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -431,7 +431,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new ElectronImpactNBEReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -504,7 +504,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      * @return The IAtomContainerSet
      */
-    private IAtomContainerSet getExpectedProducts() {
+    IAtomContainerSet getExpectedProducts() {
         IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
         setOfProducts.addAtomContainer(null);

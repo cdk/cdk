@@ -37,22 +37,22 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  * @cdk.module test-qsarprotein
  *
  */
-public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
+class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
 
     private static IMolecularDescriptor descriptor;
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         descriptor = new TaeAminoAcidDescriptor();
     }
 
     @BeforeEach
-    public void setDescriptor() throws Exception {
+    void setDescriptor() throws Exception {
         super.setDescriptor(TaeAminoAcidDescriptor.class);
     }
 
     @Test
-    public void testTaeAminoAcidDescriptor() throws Exception {
+    void testTaeAminoAcidDescriptor() throws Exception {
         IBioPolymer pepseq = ProteinBuilderTool.createProtein("ACDEFGH", SilentChemObjectBuilder.getInstance());
         DescriptorValue result = descriptor.calculate(pepseq);
 

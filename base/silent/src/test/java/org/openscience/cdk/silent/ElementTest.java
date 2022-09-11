@@ -33,34 +33,34 @@ import static org.hamcrest.CoreMatchers.is;
  *
  * @cdk.module test-silent
  */
-public class ElementTest extends AbstractElementTest {
+class ElementTest extends AbstractElementTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Element::new);
     }
 
     @Test
-    public void testElement() {
+    void testElement() {
         IElement e = new Element();
         Assertions.assertTrue(e instanceof IChemObject);
     }
 
     @Test
-    public void testElement_IElement() {
+    void testElement_IElement() {
         IElement element = new Element();
         IElement e = element.getBuilder().newInstance(IElement.class, element);
         Assertions.assertTrue(e instanceof IChemObject);
     }
 
     @Test
-    public void testElement_String() {
+    void testElement_String() {
         IElement e = new Element("C");
         Assertions.assertEquals("C", e.getSymbol());
     }
 
     @Test
-    public void testElement_X() {
+    void testElement_X() {
         IElement e = new Element("X");
         Assertions.assertEquals("R", e.getSymbol());
         // and it should not throw exceptions
@@ -69,7 +69,7 @@ public class ElementTest extends AbstractElementTest {
     }
 
     @Test
-    public void testElement_String_Integer() {
+    void testElement_String_Integer() {
         IElement e = new Element("H", 1);
         Assertions.assertEquals("H", e.getSymbol());
         Assertions.assertEquals(1, e.getAtomicNumber().intValue());
@@ -150,28 +150,28 @@ public class ElementTest extends AbstractElementTest {
     }
 
     @Test
-    public void compareSymbol() {
+    void compareSymbol() {
         Element e1 = new Element("H", 1);
         Element e2 = new Element("H", 1);
         Assertions.assertTrue(e1.compare(e2));
     }
 
     @Test
-    public void compareAtomicNumber() {
+    void compareAtomicNumber() {
         Element e1 = new Element("H", 1);
         Element e2 = new Element("H", 1);
         Assertions.assertTrue(e1.compare(e2));
     }
 
     @Test
-    public void compareDiffSymbol() {
+    void compareDiffSymbol() {
         Element e1 = new Element("H", 1);
         Element e2 = new Element("C", 12);
         Assertions.assertFalse(e1.compare(e2));
     }
 
     @Test
-    public void compareDiffAtomicNumber() {
+    void compareDiffAtomicNumber() {
         Element e1 = new Element("H", 1);
         Element e2 = new Element("H", null);
         Assertions.assertFalse(e1.compare(e2));

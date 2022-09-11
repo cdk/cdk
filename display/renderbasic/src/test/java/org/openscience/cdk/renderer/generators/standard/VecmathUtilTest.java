@@ -43,24 +43,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class VecmathUtilTest {
+class VecmathUtilTest {
 
     @Test
-    public void testToAwtPoint() throws Exception {
+    void testToAwtPoint() throws Exception {
         Point2D p = VecmathUtil.toAwtPoint(new Point2d(4, 2));
         assertThat(p.getX(), closeTo(4d, 0.01));
         assertThat(p.getY(), closeTo(2d, 0.01));
     }
 
     @Test
-    public void testToVecmathPoint() throws Exception {
+    void testToVecmathPoint() throws Exception {
         Point2d p = VecmathUtil.toVecmathPoint(new Point2D.Double(4, 2));
         assertThat(p.x, closeTo(4d, 0.01));
         assertThat(p.y, closeTo(2d, 0.01));
     }
 
     @Test
-    public void testNewUnitVector() throws Exception {
+    void testNewUnitVector() throws Exception {
         Vector2d unit = VecmathUtil.newUnitVector(new Point2d(4, 2), new Point2d(6, 7));
         assertThat(unit.x, closeTo(0.371d, 0.01));
         assertThat(unit.y, closeTo(0.928d, 0.01));
@@ -68,7 +68,7 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void testNewUnitVectorFromBond() throws Exception {
+    void testNewUnitVectorFromBond() throws Exception {
         IAtom a1 = mock(IAtom.class);
         IAtom a2 = mock(IAtom.class);
         when(a1.getPoint2d()).thenReturn(new Point2d(0, 1));
@@ -83,7 +83,7 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void testNewUnitVectors() throws Exception {
+    void testNewUnitVectors() throws Exception {
         IAtom fromAtom = mock(IAtom.class);
         IAtom toAtom1 = mock(IAtom.class);
         IAtom toAtom2 = mock(IAtom.class);
@@ -104,48 +104,48 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void testNewPerpendicularVector() throws Exception {
+    void testNewPerpendicularVector() throws Exception {
         Vector2d perpendicular = VecmathUtil.newPerpendicularVector(new Vector2d(5, 2));
         assertThat(perpendicular.x, closeTo(-2d, 0.01));
         assertThat(perpendicular.y, closeTo(5d, 0.01));
     }
 
     @Test
-    public void testScale() throws Exception {
+    void testScale() throws Exception {
         Vector2d vector = VecmathUtil.scale(new Vector2d(4, 2), 2.5);
         assertThat(vector.x, closeTo(10d, 0.01));
         assertThat(vector.y, closeTo(5d, 0.01));
     }
 
     @Test
-    public void testSum() throws Exception {
+    void testSum() throws Exception {
         Vector2d vector = VecmathUtil.sum(new Vector2d(4, 2), new Vector2d(2, 5));
         assertThat(vector.x, closeTo(6d, 0.01));
         assertThat(vector.y, closeTo(7d, 0.01));
     }
 
     @Test
-    public void testNegate() throws Exception {
+    void testNegate() throws Exception {
         Vector2d vector = VecmathUtil.negate(new Vector2d(4, 2));
         assertThat(vector.x, closeTo(-4d, 0.01));
         assertThat(vector.y, closeTo(-2d, 0.01));
     }
 
     @Test
-    public void testAdjacentLength() throws Exception {
+    void testAdjacentLength() throws Exception {
         double length = VecmathUtil.adjacentLength(new Vector2d(2, 4), new Vector2d(9, 4), 6d);
         assertThat(length, closeTo(4.94, 0.01));
     }
 
     @Test
-    public void testAverage() throws Exception {
+    void testAverage() throws Exception {
         Vector2d mean = VecmathUtil.average(Arrays.asList(new Vector2d(0.5, 0.5), new Vector2d(0.5, -0.5)));
         assertThat(mean.x, closeTo(0.5d, 0.01));
         assertThat(mean.y, closeTo(0d, 0.01));
     }
 
     @Test
-    public void testGetNearestVector1() throws Exception {
+    void testGetNearestVector1() throws Exception {
         // not unit vectors, but okay for test
         Vector2d nearest = VecmathUtil.getNearestVector(new Vector2d(0, 1),
                 Arrays.asList(new Vector2d(0.5, 0.5), new Vector2d(0.5, -0.5)));
@@ -154,7 +154,7 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void testGetNearestVector2() throws Exception {
+    void testGetNearestVector2() throws Exception {
         // not unit vectors, but okay for test
         Vector2d nearest = VecmathUtil.getNearestVector(new Vector2d(0, -1),
                 Arrays.asList(new Vector2d(0.5, 0.5), new Vector2d(0.5, -0.5)));
@@ -163,14 +163,14 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void testGetNearestVectorComplainsWhenNoVectorsProvided() throws Exception {
+    void testGetNearestVectorComplainsWhenNoVectorsProvided() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.emptyList());
         });
     }
 
     @Test
-    public void testGetNearestVectorFromBonds() throws Exception {
+    void testGetNearestVectorFromBonds() throws Exception {
 
         IAtom a1 = mock(IAtom.class);
         IAtom a2 = mock(IAtom.class);
@@ -194,7 +194,7 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void intersection1() {
+    void intersection1() {
         Tuple2d intersect = VecmathUtil.intersection(new Point2d(1, 1), new Vector2d(0, 1), new Point2d(1, 0),
                 new Vector2d(1, 0));
         assertThat(intersect.x, closeTo(1.0, 0.01));
@@ -202,7 +202,7 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void intersection2() {
+    void intersection2() {
         Tuple2d intersect = VecmathUtil.intersection(new Point2d(6, 1), new Vector2d(-4, -2), new Point2d(1, 6),
                 new Vector2d(2, 4));
         assertThat(intersect.x, closeTo(-4, 0.01));
@@ -210,7 +210,7 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void parallelLines() {
+    void parallelLines() {
         Tuple2d intersect = VecmathUtil.intersection(new Point2d(0, 1), new Vector2d(0, 1), new Point2d(0, -1),
                 new Vector2d(0, 1));
         Assertions.assertTrue(Double.isNaN(intersect.x));
@@ -218,27 +218,27 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void sweepEast() {
+    void sweepEast() {
         assertThat(VecmathUtil.extent(new Vector2d(1, 0)), is(closeTo(Math.toRadians(0), 0.01)));
     }
 
     @Test
-    public void sweepNorth() {
+    void sweepNorth() {
         assertThat(VecmathUtil.extent(new Vector2d(0, 1)), is(closeTo(Math.toRadians(90), 0.01)));
     }
 
     @Test
-    public void sweepWest() {
+    void sweepWest() {
         assertThat(VecmathUtil.extent(new Vector2d(-1, 0)), is(closeTo(Math.toRadians(180), 0.01)));
     }
 
     @Test
-    public void sweepSouth() {
+    void sweepSouth() {
         assertThat(VecmathUtil.extent(new Vector2d(0, -1)), is(closeTo(Math.toRadians(270), 0.01)));
     }
 
     @Test
-    public void largestGapSouthWest() {
+    void largestGapSouthWest() {
         Vector2d vector = VecmathUtil.newVectorInLargestGap(Arrays.asList(new Vector2d(0, 1), new Vector2d(1, 0)));
         assertThat(vector.x, closeTo(-0.707d, 0.01));
         assertThat(vector.y, closeTo(-0.707d, 0.01));
@@ -246,7 +246,7 @@ public class VecmathUtilTest {
     }
 
     @Test
-    public void largestGapEast() {
+    void largestGapEast() {
         Vector2d vector = VecmathUtil.newVectorInLargestGap(Arrays
                 .asList(new Vector2d(1, 1), new Vector2d(1, -1), new Vector2d(-1, -1), new Vector2d(-1, 1),
                         new Vector2d(-1, 0), new Vector2d(0, 1), new Vector2d(0, -1)));

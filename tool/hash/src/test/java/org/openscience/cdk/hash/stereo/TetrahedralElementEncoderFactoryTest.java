@@ -45,10 +45,10 @@ import static org.mockito.Mockito.when;
  * @cdk.module test-hash
  * @see org.openscience.cdk.hash.HashCodeScenariosTest
  */
-public class TetrahedralElementEncoderFactoryTest {
+class TetrahedralElementEncoderFactoryTest {
 
     @Test
-    public void createExplicitH() throws Exception {
+    void createExplicitH() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);
@@ -79,7 +79,7 @@ public class TetrahedralElementEncoderFactoryTest {
     }
 
     @Test
-    public void createImplicitH_back() throws Exception {
+    void createImplicitH_back() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
 
@@ -108,7 +108,7 @@ public class TetrahedralElementEncoderFactoryTest {
     }
 
     @Test
-    public void createImplicitH_front() throws Exception {
+    void createImplicitH_front() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
 
@@ -139,7 +139,7 @@ public class TetrahedralElementEncoderFactoryTest {
     }
 
     @Test
-    public void createImplicitH_middle() throws Exception {
+    void createImplicitH_middle() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
 

@@ -30,7 +30,7 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public abstract class ReactionMechanismTest extends CDKTestCase {
 
-    protected static IReactionMechanism reactionMechanism;
+    private static IReactionMechanism reactionMechanism;
 
     /**
      * Defining reaction mechanism.
@@ -38,7 +38,7 @@ public abstract class ReactionMechanismTest extends CDKTestCase {
      * @param descriptorClass
      * @throws Exception
      */
-    public static void setMechanism(Class<?> descriptorClass) throws Exception {
+    protected static void setMechanism(Class<?> descriptorClass) throws Exception {
         if (ReactionMechanismTest.reactionMechanism == null) {
             Object descriptor = descriptorClass.newInstance();
             if (!(descriptor instanceof IReactionMechanism)) {
@@ -63,7 +63,7 @@ public abstract class ReactionMechanismTest extends CDKTestCase {
      * </pre>
      */
     @Test
-    public void testHasSetSuperDotDescriptor() {
+    void testHasSetSuperDotDescriptor() {
         Assertions.assertNotNull(reactionMechanism, "The extending class must set the super.descriptor in its setUp() method.");
     }
 

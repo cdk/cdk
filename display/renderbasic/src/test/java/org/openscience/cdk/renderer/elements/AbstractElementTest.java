@@ -29,15 +29,15 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-renderbasic
  */
-public abstract class AbstractElementTest {
+abstract class AbstractElementTest {
 
     private static IRenderingElement element;
 
-    protected static void setRenderingElement(IRenderingElement renderingElement) {
+    static void setRenderingElement(IRenderingElement renderingElement) {
         element = renderingElement;
     }
 
-    public class MockVisitor implements IRenderingVisitor {
+    class MockVisitor implements IRenderingVisitor {
 
         boolean isVisited = false;
 
@@ -53,12 +53,12 @@ public abstract class AbstractElementTest {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         Assertions.assertNotNull(element);
     }
 
     @Test
-    public void testAccept() {
+    void testAccept() {
         MockVisitor visitor = new MockVisitor();
         Assertions.assertFalse(visitor.isVisited);
         element.accept(visitor);

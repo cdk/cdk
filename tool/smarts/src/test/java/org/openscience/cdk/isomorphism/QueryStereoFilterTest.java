@@ -43,11 +43,11 @@ import java.util.ArrayList;
  * @author John May
  * @cdk.module test-smarts
  */
-public class QueryStereoFilterTest {
+class QueryStereoFilterTest {
 
     /* target does not have an element */
     @Test
-    public void tetrahedral_missingInTarget() {
+    void tetrahedral_missingInTarget() {
         IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{0, 1, 2, 3, 4}));
@@ -58,7 +58,7 @@ public class QueryStereoFilterTest {
      * is a valid mapping.
      */
     @Test
-    public void tetrahedral_missingInQuery() {
+    void tetrahedral_missingInQuery() {
         IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
@@ -67,7 +67,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void tetrahedral_match() {
+    void tetrahedral_match() {
         IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
@@ -76,7 +76,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void tetrahedral_mismatch() {
+    void tetrahedral_mismatch() {
         IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
@@ -89,7 +89,7 @@ public class QueryStereoFilterTest {
      * match
      */
     @Test
-    public void tetrahedral_match_swap() {
+    void tetrahedral_match_swap() {
         IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
@@ -99,7 +99,7 @@ public class QueryStereoFilterTest {
 
     /* These don't match because we don't map the atoms in order. */
     @Test
-    public void tetrahedral_mismatch_swap() {
+    void tetrahedral_mismatch_swap() {
         IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
@@ -108,7 +108,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void tetrahedral_unspecified_match() {
+    void tetrahedral_unspecified_match() {
         IAtomContainer query = sma("[C@@?](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{0, 1, 2, 3, 4}));
@@ -118,7 +118,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void tetrahedral_unspecified_match2() {
+    void tetrahedral_unspecified_match2() {
         IAtomContainer query = sma("[C@?](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{0, 1, 2, 3, 4}));
@@ -128,7 +128,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void tetrahedral_unspecified_mismatch() {
+    void tetrahedral_unspecified_mismatch() {
         IAtomContainer query = sma("[C@@?](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{0, 1, 2, 3, 4}));
@@ -138,7 +138,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void tetrahedral_unspecified_mismatch2() {
+    void tetrahedral_unspecified_mismatch2() {
         IAtomContainer query = sma("[C@?](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{0, 1, 2, 3, 4}));
@@ -148,7 +148,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void tetrahedral_either_match() {
+    void tetrahedral_either_match() {
         IAtomContainer query = sma("[@,@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{0, 1, 2, 3, 4}));
@@ -162,7 +162,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_together1() {
+    void geometric_match_together1() {
         IAtomContainer query = sma("C/C=C\\C");
         IAtomContainer target = but2ene();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -172,7 +172,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_together2() {
+    void geometric_match_together2() {
         IAtomContainer query = sma("C\\C=C/C");
         IAtomContainer target = but2ene();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -182,7 +182,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_opposite1() {
+    void geometric_match_opposite1() {
         IAtomContainer query = sma("C/C=C/C");
         IAtomContainer target = but2ene();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -192,7 +192,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_opposite2() {
+    void geometric_match_opposite2() {
         IAtomContainer query = sma("C\\C=C\\C");
         IAtomContainer target = but2ene();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -202,7 +202,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_mismatch_together1() {
+    void geometric_mismatch_together1() {
         IAtomContainer query = sma("C/C=C\\C");
         IAtomContainer target = but2ene();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -212,7 +212,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_mismatch_together2() {
+    void geometric_mismatch_together2() {
         IAtomContainer query = sma("C\\C=C/C");
         IAtomContainer target = but2ene();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -222,7 +222,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_mismatch_opposite1() {
+    void geometric_mismatch_opposite1() {
         IAtomContainer query = sma("C/C=C/C");
         IAtomContainer target = but2ene();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -232,7 +232,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_mismatch_opposite2() {
+    void geometric_mismatch_opposite2() {
         IAtomContainer query = sma("C\\C=C\\C");
         IAtomContainer target = but2ene();
         Assertions.assertFalse(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -242,7 +242,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_together_unspecified1() {
+    void geometric_match_together_unspecified1() {
         IAtomContainer query = sma("C/C=C\\?C");
         IAtomContainer target = but2ene();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -252,7 +252,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_together_unspecified2() {
+    void geometric_match_together_unspecified2() {
         IAtomContainer query = sma("C/?C=C\\C");
         IAtomContainer target = but2ene();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -266,7 +266,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_together_unspecified3() {
+    void geometric_match_together_unspecified3() {
         IAtomContainer query = sma("C\\C=C/?C");
         IAtomContainer target = but2ene();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -280,7 +280,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_together_unspecified4() {
+    void geometric_match_together_unspecified4() {
         IAtomContainer query = sma("C\\?C=C/C");
         IAtomContainer target = but2ene();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -294,7 +294,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_opposite_unspecified1() {
+    void geometric_match_opposite_unspecified1() {
         IAtomContainer query = sma("C/C=C/?C");
         IAtomContainer target = but2ene();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -308,7 +308,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_opposite_unspecified2() {
+    void geometric_match_opposite_unspecified2() {
         IAtomContainer query = sma("C/?C=C/C");
         IAtomContainer target = but2ene();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -322,7 +322,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_opposite_unspecified3() {
+    void geometric_match_opposite_unspecified3() {
         IAtomContainer query = sma("C\\C=C\\?C");
         IAtomContainer target = but2ene();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));
@@ -336,7 +336,7 @@ public class QueryStereoFilterTest {
     }
 
     @Test
-    public void geometric_match_opposite_unspecified4() {
+    void geometric_match_opposite_unspecified4() {
         IAtomContainer query = sma("C\\?C=C\\C");
         IAtomContainer target = but2ene();
         Assertions.assertTrue(new QueryStereoFilter(query, target).apply(new int[]{2, 0, 1, 3}));

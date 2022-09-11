@@ -59,7 +59,7 @@ final class SdfAndSmiOutputConsumer implements Maygen.Consumer {
         setupOptions();
     }
 
-    public SdfAndSmiOutputConsumer(Writer writer) {
+    private SdfAndSmiOutputConsumer(Writer writer) {
         this.dir = null;
         sdfw = new SDFWriter(writer);
         wtr = new BufferedWriter(writer);

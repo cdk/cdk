@@ -42,20 +42,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-smarts
  */
-public class SmartsStereoTest {
+class SmartsStereoTest {
 
     @Test
-    public void nonAbsoluteGeometric_trans() throws Exception {
+    void nonAbsoluteGeometric_trans() throws Exception {
         assertMatch("C/C=C/C", "C/C(CC)=C(CC)/C", 4, 2);
     }
 
     @Test
-    public void nonAbsoluteGeometric_cis() throws Exception {
+    void nonAbsoluteGeometric_cis() throws Exception {
         assertMatch("C(/C)=C/C", "C/C(CC)=C(CC)/C", 4, 2);
     }
 
     @Test
-    public void unspecifiedGeometric() throws Exception {
+    void unspecifiedGeometric() throws Exception {
         assertMatch("C/C=C/?Cl", "CC=CCl", 1, 1);
         assertMatch("C/C=C/?Cl", "C/C=C/Cl", 1, 1);
         assertMatch("C/?C=C/Cl", "CC=CCl", 1, 1);
@@ -65,55 +65,55 @@ public class SmartsStereoTest {
     }
 
     @Test
-    public void nonAbsoluteTetrahedral() throws Exception {
+    void nonAbsoluteTetrahedral() throws Exception {
         assertMatch("C[C@](C)(C)C", "C[C@](CC)(CCC)CCCC", 12, 1);
         assertMatch("C[C@](C)(C)C", "C[C@@](CC)(CCC)CCCC", 12, 1);
     }
 
     @Test
-    public void tetrahedralNegation_anticlockwise() throws Exception {
+    void tetrahedralNegation_anticlockwise() throws Exception {
         assertMatch("[!@](C)(N)(O)CC", "C(C)(N)(O)CC", 1, 1);
         assertMatch("[!@](C)(N)(O)CC", "[C@@](C)(N)(O)CC", 1, 1);
         assertMatch("[!@](C)(N)(O)CC", "[C@](C)(N)(O)CC", 0, 0);
     }
 
     @Test
-    public void tetrahedralNegation_clockwise() throws Exception {
+    void tetrahedralNegation_clockwise() throws Exception {
         assertMatch("[!@@](C)(N)(O)CC", "C(C)(N)(O)CC", 1, 1);
         assertMatch("[!@@](C)(N)(O)CC", "[C@@](C)(N)(O)CC", 0, 0);
         assertMatch("[!@@](C)(N)(O)CC", "[C@](C)(N)(O)CC", 1, 1);
     }
 
     @Test
-    public void tetrahedralUnspecified_clockwise() throws Exception {
+    void tetrahedralUnspecified_clockwise() throws Exception {
         assertMatch("[@@?](C)(N)(O)CC", "C(C)(N)(O)CC", 1, 1);
         assertMatch("[@@?](C)(N)(O)CC", "[C@@](C)(N)(O)CC", 1, 1);
         assertMatch("[@@?](C)(N)(O)CC", "[C@](C)(N)(O)CC", 0, 0);
     }
 
     @Test
-    public void tetrahedralUnspecified_anticlockwise() throws Exception {
+    void tetrahedralUnspecified_anticlockwise() throws Exception {
         assertMatch("[@?](C)(N)(O)CC", "C(C)(N)(O)CC", 1, 1);
         assertMatch("[@?](C)(N)(O)CC", "[C@@](C)(N)(O)CC", 0, 0);
         assertMatch("[@?](C)(N)(O)CC", "[C@](C)(N)(O)CC", 1, 1);
     }
 
     @Test
-    public void tetrahedral_or() throws Exception {
+    void tetrahedral_or() throws Exception {
         assertMatch("C[@,@@](C)(C)C", "CC(CC)(CCC)CCCC", 0, 0);
         assertMatch("C[@,@@](C)(C)C", "C[C@](CC)(CCC)CCCC", 24, 1);
         assertMatch("C[@,@@](C)(C)C", "C[C@](CC)(CCC)CCCC", 24, 1);
     }
 
     @Test
-    public void tetrahedral_and() throws Exception {
+    void tetrahedral_and() throws Exception {
         assertMatch("C[@&@@](C)(C)C", "CC(CC)(CCC)CCCC", 0, 0);
         assertMatch("C[@&@@](C)(C)C", "C[C@](CC)(CCC)CCCC", 0, 0);
         assertMatch("C[@&@@](C)(C)C", "C[C@@](CC)(CCC)CCCC", 0, 0);
     }
 
     @Test
-    public void tetrahedralAndSymbol_or() throws Exception {
+    void tetrahedralAndSymbol_or() throws Exception {
         assertMatch("C[C@,Si@@](CC)(CCC)CCCC", "CC(CC)(CCC)CCCCC", 0, 0);
         assertMatch("C[C@,Si@@](CC)(CCC)CCCC", "C[Si](CC)(CCC)CCCCC", 0, 0);
         assertMatch("C[C@,Si@@](CC)(CCC)CCCC", "C[C@](CC)(CCC)CCCC", 1, 1);
@@ -123,14 +123,14 @@ public class SmartsStereoTest {
     }
 
     @Test
-    public void tetrahedralImplicitH() throws Exception {
+    void tetrahedralImplicitH() throws Exception {
         assertMatch("[C@H](C)(N)O", "[C@@H](N)(C)O", 1, 1);
         assertMatch("[C@H](C)(N)O", "[C@H](N)(C)O", 0, 0);
         assertMatch("[C@H](C)(N)O", "C(N)(C)O", 0, 0);
     }
 
     @Test
-    public void tetrahedralImplicitH_unspec() throws Exception {
+    void tetrahedralImplicitH_unspec() throws Exception {
         assertMatch("[C@?H](C)(N)O", "[C@@H](N)(C)O", 1, 1);
         assertMatch("[C@?H](C)(N)O", "[C@H](N)(C)O", 0, 0);
         assertMatch("[C@?H](C)(N)O", "C(N)(C)O", 1, 1);

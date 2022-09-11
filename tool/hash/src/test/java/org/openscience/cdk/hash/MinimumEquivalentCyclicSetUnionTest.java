@@ -45,10 +45,10 @@ import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
  * @author John May
  * @cdk.module test-hash
  */
-public class MinimumEquivalentCyclicSetUnionTest {
+class MinimumEquivalentCyclicSetUnionTest {
 
     @Test
-    public void testFind() throws Exception {
+    void testFind() throws Exception {
         IAtomContainer dummy = mock(IAtomContainer.class);
         int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
 
@@ -67,7 +67,7 @@ public class MinimumEquivalentCyclicSetUnionTest {
     }
 
     @Test
-    public void testFind_Distinct() throws Exception {
+    void testFind_Distinct() throws Exception {
         IAtomContainer dummy = mock(IAtomContainer.class);
         int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
 
@@ -89,7 +89,7 @@ public class MinimumEquivalentCyclicSetUnionTest {
      * does.
      */
     @Test
-    public void testScenario() {
+    void testScenario() {
 
         IAtomContainer cid4433798 = cid44333798();
         IAtomContainer cid57170558 = cid57170558();

@@ -54,29 +54,29 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 @Tag("SlowTest")
 // CanonicalLabeler is deprecated (slow)
-public class CanonicalLabelerTest extends CDKTestCase {
+class CanonicalLabelerTest extends CDKTestCase {
 
     private SmilesParser     parser;
     private CanonicalLabeler labeler;
 
-    public CanonicalLabelerTest() {
+    CanonicalLabelerTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         labeler = new CanonicalLabeler();
     }
 
     @Test
-    public void testCanonicalLabeler() {
+    void testCanonicalLabeler() {
         // assume setup worked
         Assertions.assertNotNull(labeler);
     }
 
     @Test
-    public void testCanonLabel_IAtomContainer() throws Exception {
+    void testCanonLabel_IAtomContainer() throws Exception {
         IAtomContainer molecule = parser.parseSmiles("CC(=O)CBr");
 
         labeler.canonLabel(molecule);
@@ -99,7 +99,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
      * @see testSomeMolecule()
      */
     @Test
-    public void testSomeMoleculeWithDifferentStartingOrder() throws Exception {
+    void testSomeMoleculeWithDifferentStartingOrder() throws Exception {
         IAtomContainer molecule = parser.parseSmiles("O=C(C)CBr");
         labeler.canonLabel(molecule);
         for (IAtom atom : molecule.atoms()) {
@@ -116,7 +116,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
      * @cdk.bug 1014344
      */
     @Test
-    public void testStabilityAfterRoundtrip() throws Exception {
+    void testStabilityAfterRoundtrip() throws Exception {
         String filename = "bug1014344-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
@@ -163,7 +163,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
      * @cdk.bug 2944519
      */
     @Test
-    public void testBug2944519() {
+    void testBug2944519() {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(ac.getBuilder().newInstance(IAtom.class, "C"));
         ac.addAtom(ac.getBuilder().newInstance(IAtom.class, "O"));

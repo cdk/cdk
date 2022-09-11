@@ -29,15 +29,15 @@ import org.openscience.cdk.test.interfaces.AbstractReactionSchemeTest;
  *
  * @cdk.module test-silent
  */
-public class ReactionSchemeTest extends AbstractReactionSchemeTest {
+class ReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ReactionScheme::new);
     }
 
     @Test
-    public void testReactionScheme() {
+    void testReactionScheme() {
         IReactionScheme scheme = new ReactionScheme();
         Assertions.assertNotNull(scheme);
     }

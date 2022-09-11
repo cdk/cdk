@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * @cdk.module test-formula
  */
-public class RDBERuleTest extends FormulaRuleTest {
+class RDBERuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
 
@@ -39,7 +39,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     *  The JUnit setup method
     */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
         setRule(RDBERule.class);
     }
@@ -50,7 +50,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testRDBERule() throws Exception {
+    void testRDBERule() throws Exception {
 
         IRule rule = new RDBERule();
         Assertions.assertNotNull(rule);
@@ -63,7 +63,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefault() throws Exception {
+    void testDefault() throws Exception {
 
         IRule rule = new RDBERule();
         Object[] objects = rule.getParameters();
@@ -82,7 +82,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testSetParameters() throws Exception {
+    void testSetParameters() throws Exception {
 
         IRule rule = new RDBERule();
         Object[] params = new Object[2];
@@ -107,7 +107,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse() throws Exception {
+    void testDefaultValidFalse() throws Exception {
 
         IRule rule = new RDBERule();
 
@@ -122,7 +122,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse_SetParam() throws Exception {
+    void testDefaultValidFalse_SetParam() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -146,7 +146,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidTrue() throws Exception {
+    void testDefaultValidTrue() throws Exception {
 
         IRule rule = new RDBERule();
 
@@ -162,7 +162,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testGetRDBEValue_IMolecularFormula() throws Exception {
+    void testGetRDBEValue_IMolecularFormula() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -177,7 +177,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testValidate_IMolecularFormula_double() throws Exception {
+    void testValidate_IMolecularFormula_double() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -192,7 +192,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void test1() throws Exception {
+    void test1() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -210,7 +210,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void test2() throws Exception {
+    void test2() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -225,7 +225,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testAnticipatedIonState_1() throws Exception {
+    void testAnticipatedIonState_1() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -241,7 +241,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testAnticipatedIonState_2() throws Exception {
+    void testAnticipatedIonState_2() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -258,7 +258,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testPCCharged() throws Exception {
+    void testPCCharged() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -274,7 +274,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testB() throws Exception {
+    void testB() throws Exception {
 
         RDBERule rule = new RDBERule();
 

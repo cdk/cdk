@@ -38,13 +38,13 @@ public class ReactionBoxGeneratorTest extends AbstractGeneratorTest {
     private ReactionBoxGenerator generator;
 
     @Override
-    public Rectangle getCustomCanvas() {
+    protected Rectangle getCustomCanvas() {
         return null;
     }
 
     @BeforeEach
     @Override
-    public void setup() {
+    void setup() {
         super.setup();
         model.registerParameters(new ReactionSceneGenerator());
         model.registerParameters(new BasicBondGenerator());
@@ -54,7 +54,7 @@ public class ReactionBoxGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Test
-    public void testEmptyReaction() {
+    void testEmptyReaction() {
         IReaction singleReaction = super.builder.newInstance(IReaction.class);
 
         // nothing should be made

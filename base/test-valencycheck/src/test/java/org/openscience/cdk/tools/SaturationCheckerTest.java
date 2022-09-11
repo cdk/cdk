@@ -39,14 +39,14 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  * @author     steinbeck
  * @cdk.created    2003-02-20
  */
-public class SaturationCheckerTest extends CDKTestCase {
+class SaturationCheckerTest extends CDKTestCase {
 
-    SaturationChecker satcheck   = null;
+    private SaturationChecker satcheck   = null;
     boolean           standAlone = false;
 
     @BeforeEach
     @Test
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         satcheck = new SaturationChecker();
     }
 
@@ -54,7 +54,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testAllSaturated() throws Exception {
+    void testAllSaturated() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer m = new AtomContainer();
         Atom c = new Atom("C");
@@ -85,7 +85,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testIsSaturated() throws Exception {
+    void testIsSaturated() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer m = new AtomContainer();
         Atom c = new Atom("C");
@@ -114,7 +114,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      * charges.
      */
     @Test
-    public void testIsSaturated_NegativelyChargedOxygen() throws Exception {
+    void testIsSaturated_NegativelyChargedOxygen() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer m = new AtomContainer();
         Atom c = new Atom("C");
@@ -144,7 +144,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      * charges.
      */
     @Test
-    public void testIsSaturated_PositivelyChargedNitrogen() throws Exception {
+    void testIsSaturated_PositivelyChargedNitrogen() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer m = new AtomContainer();
         Atom n = new Atom("N");
@@ -173,7 +173,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testSaturate() throws Exception {
+    void testSaturate() throws Exception {
         // test ethene
         Atom c1 = new Atom("C");
         c1.setImplicitHydrogenCount(2);
@@ -193,7 +193,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testSaturate_Butene() throws Exception {
+    void testSaturate_Butene() throws Exception {
         // test ethene
         Atom c1 = new Atom("C");
         c1.setImplicitHydrogenCount(2);
@@ -222,7 +222,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testSaturate_ParaDiOxygenBenzene() throws Exception {
+    void testSaturate_ParaDiOxygenBenzene() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom a1 = new Atom("C");
         mol.addAtom(a1);
@@ -287,7 +287,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      * Test sulfuric acid.
      */
     @Test
-    public void testBug772316() throws Exception {
+    void testBug772316() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer m = new AtomContainer();
         Atom sulphur = new Atom("S");
@@ -320,7 +320,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testBug777529() throws Exception {
+    void testBug777529() throws Exception {
         IAtomContainer m = new AtomContainer();
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -417,7 +417,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testCalculateNumberOfImplicitHydrogens() throws Exception {
+    void testCalculateNumberOfImplicitHydrogens() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         IAtomContainer proton = builder.newInstance(IAtomContainer.class);

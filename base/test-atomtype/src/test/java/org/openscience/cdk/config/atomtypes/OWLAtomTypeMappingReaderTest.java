@@ -32,7 +32,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-atomtype
  */
-public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
+class OWLAtomTypeMappingReaderTest extends CDKTestCase {
 
     private final String OWL_CONTENT = "<?xml version=\"1.0\"?>" + "<!DOCTYPE rdf:RDF ["
                                              + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
@@ -57,13 +57,13 @@ public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
                                              + "  </owl:Thing>" + "</rdf:RDF>";
 
     @Test
-    public void testOWLAtomTypeMappingReader_Reader() {
+    void testOWLAtomTypeMappingReader_Reader() {
         OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StringReader(""));
         Assertions.assertNotNull(reader);
     }
 
     @Test
-    public void testReadAtomTypeMappings() {
+    void testReadAtomTypeMappings() {
         OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StringReader(OWL_CONTENT));
         Assertions.assertNotNull(reader);
         Map<String, String> mappings = reader.readAtomTypeMappings();
@@ -72,7 +72,7 @@ public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testReadAtomTypes_CDK2Sybyl() {
+    void testReadAtomTypes_CDK2Sybyl() {
         OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StringReader(OWL_CONTENT));
         Assertions.assertNotNull(reader);
         Map<String, String> mappings = reader.readAtomTypeMappings();

@@ -40,16 +40,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public class MatchingTest {
+class MatchingTest {
 
     private final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
     private final SmilesParser       smipar = new SmilesParser(bldr);
 
     @Disabled("no operation performed")
-    public void nop() {}
+    void nop() {}
 
     @Test
-    public void match() {
+    void match() {
         Matching matching = Matching.withCapacity(8);
         matching.match(2, 5);
         matching.match(6, 7);
@@ -64,7 +64,7 @@ public class MatchingTest {
     }
 
     @Test
-    public void replace() {
+    void replace() {
         Matching matching = Matching.withCapacity(8);
         matching.match(2, 5);
         matching.match(6, 7);
@@ -78,7 +78,7 @@ public class MatchingTest {
     }
 
     @Test
-    public void other() {
+    void other() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             Matching matching = Matching.withCapacity(8);
             matching.match(2, 5);
@@ -89,7 +89,7 @@ public class MatchingTest {
     }
 
     @Test
-    public void unmatch() {
+    void unmatch() {
         Matching matching = Matching.withCapacity(5);
         matching.match(2, 4);
         matching.unmatch(4); // also unmatches 2
@@ -98,7 +98,7 @@ public class MatchingTest {
     }
 
     @Test
-    public void perfectArbitaryMatching() {
+    void perfectArbitaryMatching() {
         Matching matching = Matching.withCapacity(4);
         BitSet subset = new BitSet();
         subset.flip(0, 4);
@@ -106,7 +106,7 @@ public class MatchingTest {
     }
 
     @Test
-    public void imperfectArbitaryMatching() {
+    void imperfectArbitaryMatching() {
         Matching matching = Matching.withCapacity(5);
         BitSet subset = new BitSet();
         subset.flip(0, 5);
@@ -114,7 +114,7 @@ public class MatchingTest {
     }
 
     @Test
-    public void fulvelene1() throws Exception {
+    void fulvelene1() throws Exception {
         int[][] graph = GraphUtil.toAdjList(smipar.parseSmiles("c1cccc1c1cccc1"));
         Matching m = Matching.withCapacity(graph.length);
         BitSet subset = new BitSet();
@@ -124,7 +124,7 @@ public class MatchingTest {
     }
 
     @Test
-    public void fulvelene2() throws Exception {
+    void fulvelene2() throws Exception {
         int[][] graph = GraphUtil.toAdjList(smipar.parseSmiles("c1cccc1c1cccc1"));
         Matching m = Matching.withCapacity(graph.length);
         BitSet subset = new BitSet();
@@ -141,7 +141,7 @@ public class MatchingTest {
     }
 
     @Test
-    public void string() {
+    void string() {
         Matching matching = Matching.withCapacity(9);
         matching.match(1, 3);
         matching.match(4, 8);

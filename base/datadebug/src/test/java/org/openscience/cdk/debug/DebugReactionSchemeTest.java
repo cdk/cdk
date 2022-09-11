@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  *
  * @cdk.module test-datadebug
  */
-public class DebugReactionSchemeTest extends AbstractReactionSchemeTest {
+class DebugReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugReactionScheme::new);
     }
 
     @Test
-    public void testDebugReactionScheme() {
+    void testDebugReactionScheme() {
         IReactionScheme scheme = new DebugReactionScheme();
         Assertions.assertNotNull(scheme);
     }

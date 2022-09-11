@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@cdk.created    September 4, 2003
  * @cdk.require java1.4+
  */
-public class OverlapResolverTest extends CDKTestCase {
+class OverlapResolverTest extends CDKTestCase {
 
     /**
      *  Description of the Field
@@ -59,7 +59,7 @@ public class OverlapResolverTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testResolveOverlap1() throws Exception {
+    void testResolveOverlap1() throws Exception {
         logger.debug("Test case with atom clash");
         String filename = "overlaptest.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -86,7 +86,7 @@ public class OverlapResolverTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testResolveOverlap2() throws Exception {
+    void testResolveOverlap2() throws Exception {
         logger.debug("Test case with neither bond nor atom overlap");
         String filename = "overlaptest2.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -106,7 +106,7 @@ public class OverlapResolverTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testResolveOverlap3() throws Exception {
+    void testResolveOverlap3() throws Exception {
         logger.debug("Test case with bond overlap");
         String filename = "overlaptest3.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -126,7 +126,7 @@ public class OverlapResolverTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testResolveOverlap4() throws Exception {
+    void testResolveOverlap4() throws Exception {
         double overlapScore;
         logger.debug("Test case with atom clash");
         String filename = "overlaptest.cml";
@@ -149,7 +149,7 @@ public class OverlapResolverTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testResolveOverlap5() throws Exception {
+    void testResolveOverlap5() throws Exception {
         double overlapScore;
         logger.debug("Test case with atom clash");
         IAtomContainer atomContainer = new SmilesParser(DefaultChemObjectBuilder.getInstance())

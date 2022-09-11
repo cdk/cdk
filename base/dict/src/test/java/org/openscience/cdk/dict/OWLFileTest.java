@@ -25,15 +25,15 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * @cdk.module test-dict
  */
-public class OWLFileTest extends AbstractDictionaryTest {
+class OWLFileTest extends AbstractDictionaryTest {
 
     @BeforeEach
-    public void setTestClass() {
+    void setTestClass() {
         super.setTestClass(new OWLFile());
     }
 
     @AfterEach
-    public void testTestClass() {
+    void testTestClass() {
         Assertions.assertTrue(getTestClass().getClass().getName().endsWith(".OWLFile"));
     }
 

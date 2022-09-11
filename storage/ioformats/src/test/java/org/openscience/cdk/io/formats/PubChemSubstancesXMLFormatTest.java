@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  */
 public class PubChemSubstancesXMLFormatTest extends ChemFormatMatcherTest {
 
-    public PubChemSubstancesXMLFormatTest() {
+    PubChemSubstancesXMLFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) PubChemSubstancesXMLFormat.getInstance());
     }
 
@@ -39,7 +39,7 @@ public class PubChemSubstancesXMLFormatTest extends ChemFormatMatcherTest {
      */
     @Test
     @Override
-    public void testMatches() throws Exception {
+    void testMatches() throws Exception {
         String header = "<?xml version=\"\"?><PC-Substances/>";
         Assertions.assertTrue(matches(header));
     }

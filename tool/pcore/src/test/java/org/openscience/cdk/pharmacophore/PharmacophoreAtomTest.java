@@ -26,10 +26,10 @@ import javax.vecmath.Point3d;
 /**
  * @cdk.module test-pcore
  */
-public class PharmacophoreAtomTest {
+class PharmacophoreAtomTest {
 
     @Test
-    public void testGetterSetter() {
+    void testGetterSetter() {
         PharmacophoreAtom patom = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
         Assertions.assertEquals("[CX2]N", patom.getSmarts());
 
@@ -38,7 +38,7 @@ public class PharmacophoreAtomTest {
     }
 
     @Test
-    public void testMatchingAtoms() {
+    void testMatchingAtoms() {
         PharmacophoreAtom patom = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
         patom.setMatchingAtoms(new int[]{1, 4, 5});
         int[] indices = patom.getMatchingAtoms();
@@ -48,7 +48,7 @@ public class PharmacophoreAtomTest {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         PharmacophoreAtom patom1 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
         patom1.setMatchingAtoms(new int[]{1, 4, 5});
 

@@ -35,17 +35,17 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *
  * @cdk.module test-qsaratomic
  */
-public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
+class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
 
-    public DistanceToAtomDescriptorTest() {}
+    DistanceToAtomDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(DistanceToAtomDescriptor.class);
     }
 
     @Test
-    public void testDistanceToAtomDescriptor() throws java.lang.Exception {
+    void testDistanceToAtomDescriptor() throws java.lang.Exception {
         IAtomicDescriptor descriptor = new DistanceToAtomDescriptor();
         Object[] params = {2};
         descriptor.setParameters(params);

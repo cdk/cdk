@@ -61,7 +61,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public SharingChargeDBReactionTest() throws Exception {
+    SharingChargeDBReactionTest() throws Exception {
         setReaction(SharingChargeDBReaction.class);
     }
 
@@ -69,7 +69,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testSharingChargeDBReaction() throws Exception {
+    void testSharingChargeDBReaction() throws Exception {
         IReactionProcess type = new SharingChargeDBReaction();
         Assertions.assertNotNull(type);
     }
@@ -118,7 +118,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new SharingChargeDBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -157,7 +157,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new SharingChargeDBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -192,7 +192,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new SharingChargeDBReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -225,7 +225,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer1() throws Exception {
+    void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
@@ -235,7 +235,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer2() throws Exception {
+    void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 

@@ -25,28 +25,28 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * @cdk.module test-diff
  */
-public class BondOrderDifferenceTest {
+class BondOrderDifferenceTest {
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IDifference result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.DOUBLE);
         Assertions.assertNotNull(result);
     }
 
     @Test
-    public void testSame() {
+    void testSame() {
         IDifference result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.SINGLE);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testTwoNull() {
+    void testTwoNull() {
         IDifference result = BondOrderDifference.construct("Foo", null, null);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testOneNull() {
+    void testOneNull() {
         IDifference result = BondOrderDifference.construct("Foo", null, IBond.Order.SINGLE);
         Assertions.assertNotNull(result);
 
@@ -55,7 +55,7 @@ public class BondOrderDifferenceTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         IDifference result = BondOrderDifference.construct("Foo", null, IBond.Order.SINGLE);
         String diffString = result.toString();
         Assertions.assertNotNull(diffString);

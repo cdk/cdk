@@ -16,7 +16,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-data
  */
-public class ConformerContainerTest extends CDKTestCase {
+class ConformerContainerTest extends CDKTestCase {
 
     private IAtomContainer   base;
     private IAtomContainer[] confs;
@@ -65,13 +65,13 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @BeforeEach
-    public void setUp() throws CloneNotSupportedException {
+    void setUp() throws CloneNotSupportedException {
         base = getBaseAtomContainer(natom, "myMolecule");
         confs = getConformers(base, nconfs);
     }
 
     @Test
-    public void testConformerContainer() {
+    void testConformerContainer() {
         ConformerContainer container = new ConformerContainer();
         Assertions.assertNotNull(container);
         base.setTitle("myMolecule");
@@ -84,40 +84,40 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testConformerContainer_arrayIAtomContainer() {
+    void testConformerContainer_arrayIAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertNotNull(container);
         Assertions.assertEquals(nconfs, container.size());
     }
 
     @Test
-    public void testGetTitle() {
+    void testGetTitle() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertEquals("myMolecule", container.getTitle());
     }
 
     @Test
-    public void testIsEmpty() {
+    void testIsEmpty() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertTrue(!container.isEmpty());
     }
 
     @Test
-    public void testContains() {
+    void testContains() {
         ConformerContainer container = new ConformerContainer(confs);
         IAtomContainer o = container.get(0);
         Assertions.assertTrue(container.contains(o));
     }
 
     @Test
-    public void testToArray() {
+    void testToArray() {
         ConformerContainer container = new ConformerContainer(confs);
         IAtomContainer[] array = (IAtomContainer[]) container.toArray();
         Assertions.assertEquals(nconfs, array.length);
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         ConformerContainer container = new ConformerContainer(confs);
         Iterator<IAtomContainer> iter = container.iterator();
         int nmol = 0;
@@ -129,7 +129,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testIterator2() {
+    void testIterator2() {
         ConformerContainer container = new ConformerContainer(confs);
         int nmol = 0;
         for (IAtomContainer conf : container) {
@@ -140,7 +140,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemove_int() {
+    void testRemove_int() {
         ConformerContainer container = new ConformerContainer(confs);
         container.clear();
         Assertions.assertEquals(0, container.size());
@@ -154,7 +154,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testIndexOf_IAtomContainer() {
+    void testIndexOf_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         IAtomContainer ac = container.get(2);
         int index = container.indexOf(ac);
@@ -162,7 +162,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testAdd_IAtomContainer() {
+    void testAdd_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         base.setTitle("junk");
         Assertions.assertThrows(IllegalArgumentException.class,
@@ -172,7 +172,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testGet_int() {
+    void testGet_int() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertThrows(IndexOutOfBoundsException.class,
                                 () -> {
@@ -181,7 +181,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testGet2() {
+    void testGet2() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertThrows(IndexOutOfBoundsException.class,
                                 () -> {
@@ -191,19 +191,19 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testAdd_int_IAtomContainer() {
+    void testAdd_int_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         container.add(5, confs[5]);
     }
 
     @Test
-    public void testAdd_int_Object() {
+    void testAdd_int_Object() {
         ConformerContainer container = new ConformerContainer(confs);
         container.add(5, confs[5]);
     }
 
     @Test
-    public void testAdd_Object() {
+    void testAdd_Object() {
         ConformerContainer container = new ConformerContainer();
         Assertions.assertNotNull(container);
         for (IAtomContainer conf : confs)
@@ -212,7 +212,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testIndexOf_Object() {
+    void testIndexOf_Object() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertNotNull(container);
 
@@ -224,7 +224,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testClear() {
+    void testClear() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertEquals(nconfs, container.size());
         container.clear();
@@ -232,13 +232,13 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertEquals(nconfs, container.size());
     }
 
     @Test
-    public void testLastIndexOf_Object() {
+    void testLastIndexOf_Object() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertEquals(nconfs, container.size());
         int x = container.lastIndexOf(container.get(3));
@@ -246,21 +246,21 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testContains_Object() {
+    void testContains_Object() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertEquals(nconfs, container.size());
         Assertions.assertTrue(container.contains(container.get(3)));
     }
 
     @Test
-    public void testAddAll_Collection() {
+    void testAddAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertEquals(nconfs, container.size());
         Assertions.assertTrue(container.contains(container.get(3)));
     }
 
     @Test
-    public void testAddAll_int_Collection() {
+    void testAddAll_int_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
@@ -269,7 +269,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testToArray_arrayObject() {
+    void testToArray_arrayObject() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
@@ -278,7 +278,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemove_Object() {
+    void testRemove_Object() {
         ConformerContainer cContainer = new ConformerContainer(confs);
         Assertions.assertEquals(nconfs, cContainer.size());
         IAtomContainer container = cContainer.get(3);
@@ -289,7 +289,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testSet_int_IAtomContainer() {
+    void testSet_int_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         int location = 5;
         container.set(location, container.get(location + 1));
@@ -311,7 +311,7 @@ public class ConformerContainerTest extends CDKTestCase {
      * now be X
      */
     @Test
-    public void testSet_int_Object() {
+    void testSet_int_Object() {
         ConformerContainer container = new ConformerContainer(confs);
         int location = 5;
         container.set(location, container.get(location + 1));
@@ -319,7 +319,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testContainsAll_Collection() {
+    void testContainsAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertNotNull(container);
         Assertions.assertEquals(nconfs, container.size());
@@ -330,7 +330,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemoveAll_Collection() {
+    void testRemoveAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assertions.assertNotNull(container);
         Assertions.assertEquals(nconfs, container.size());
@@ -341,7 +341,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testRetainAll_Collection() {
+    void testRetainAll_Collection() {
         ConformerContainer container = new ConformerContainer(base);
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
@@ -350,7 +350,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testSubList_int_int() {
+    void testSubList_int_int() {
         ConformerContainer container = new ConformerContainer(base);
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
@@ -359,7 +359,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testListIterator() {
+    void testListIterator() {
         ConformerContainer container = new ConformerContainer(base);
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
@@ -368,7 +368,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testListIterator_int() {
+    void testListIterator_int() {
         ConformerContainer container = new ConformerContainer(base);
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
@@ -377,7 +377,7 @@ public class ConformerContainerTest extends CDKTestCase {
     }
 
     @Test
-    public void testConformerContainer_IAtomContainer() {
+    void testConformerContainer_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(base);
         Assertions.assertNotNull(container);
         Assertions.assertEquals(1, container.size());

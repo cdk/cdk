@@ -38,7 +38,7 @@ public class AtomMassGeneratorTest extends BasicAtomGeneratorTest {
     private AtomMassGenerator generator;
 
     @Override
-    public Rectangle getCustomCanvas() {
+    protected Rectangle getCustomCanvas() {
         return null;
     }
 
@@ -54,7 +54,7 @@ public class AtomMassGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
-    public void testEmptyContainer() {
+    void testEmptyContainer() {
         IAtomContainer emptyContainer = super.builder.newInstance(IAtomContainer.class);
 
         // nothing should be made

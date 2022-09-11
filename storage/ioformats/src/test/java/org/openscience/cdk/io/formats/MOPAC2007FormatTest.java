@@ -29,14 +29,14 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-ioformats
  */
-public class MOPAC2007FormatTest extends ChemFormatMatcherTest {
+class MOPAC2007FormatTest extends ChemFormatMatcherTest {
 
-    public MOPAC2007FormatTest() {
+    MOPAC2007FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) MOPAC2007Format.getInstance());
     }
 
     @Test
-    public void matchesMopac2007() throws Exception {
+    void matchesMopac2007() throws Exception {
         Assertions.assertTrue(((MOPAC2007Format) MOPAC2007Format.getInstance()).matches(0, "MOPAC2007"));
     }
 }

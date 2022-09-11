@@ -25,9 +25,9 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-reaction
  */
-public class ReactionSpecificationTest extends CDKTestCase {
+class ReactionSpecificationTest extends CDKTestCase {
 
-    public ReactionSpecificationTest() {
+    ReactionSpecificationTest() {
         super();
     }
 
@@ -37,35 +37,35 @@ public class ReactionSpecificationTest extends CDKTestCase {
     private final static String REAC_IMPL_ID     = "bla4";
 
     @Test
-    public void testReactionSpecification_String_String_String_String() {
+    void testReactionSpecification_String_String_String_String() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
         Assertions.assertNotNull(spec);
     }
 
     @Test
-    public void testGetImplementationVendor() {
+    void testGetImplementationVendor() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
         Assertions.assertEquals(REAC_IMPL_VENDOR, spec.getImplementationVendor());
     }
 
     @Test
-    public void testGetSpecificationReference() {
+    void testGetSpecificationReference() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
         Assertions.assertEquals(REAC_REF, spec.getSpecificationReference());
     }
 
     @Test
-    public void testGetImplementationIdentifier() {
+    void testGetImplementationIdentifier() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
         Assertions.assertEquals(REAC_IMPL_ID, spec.getImplementationIdentifier());
     }
 
     @Test
-    public void testGetImplementationTitle() {
+    void testGetImplementationTitle() {
         ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
                 REAC_IMPL_VENDOR);
         Assertions.assertEquals(REAC_IMPL_TITLE, spec.getImplementationTitle());

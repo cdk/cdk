@@ -14,17 +14,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsarmolecular
  */
 
-public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
+class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
 
-    public LargestPiSystemDescriptorTest() {}
+    LargestPiSystemDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(LargestPiSystemDescriptor.class);
     }
 
     @Test
-    public void test1LargestPiSystemDescriptor() throws java.lang.Exception {
+    void test1LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -33,7 +33,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test2LargestPiSystemDescriptor() throws java.lang.Exception {
+    void test2LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -43,7 +43,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test3LargestPiSystemDescriptor() throws java.lang.Exception {
+    void test3LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -53,7 +53,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test4LargestPiSystemDescriptor() throws java.lang.Exception {
+    void test4LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -63,7 +63,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test5LargestPiSystemDescriptor() throws java.lang.Exception {
+    void test5LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -73,7 +73,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test6LargestPiSystemDescriptor() throws java.lang.Exception {
+    void test6LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -83,7 +83,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test7LargestPiSystemDescriptor() throws java.lang.Exception {
+    void test7LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

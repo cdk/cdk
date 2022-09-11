@@ -60,7 +60,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     private static final DictionaryDatabase dictDB = new DictionaryDatabase();
     private static final Dictionary         dict   = dictDB.getDictionary("descriptor-algorithms");
 
-    public MolecularDescriptorTest() {}
+    protected MolecularDescriptorTest() {}
 
     private Number[] getAtomFlags(IAtomContainer mol) {
         Number[] flags = new Number[mol.getAtomCount()];
@@ -79,7 +79,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     }
 
     @Test
-    public void descriptorDoesNotChangeFlags() throws CDKException {
+    void descriptorDoesNotChangeFlags() throws CDKException {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Cycles.markRingAtomsAndBonds(mol);
@@ -96,14 +96,14 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     }
 
     @Test
-    public void testDescriptorIdentifierExistsInOntology() {
+    void testDescriptorIdentifierExistsInOntology() {
         Entry ontologyEntry = dict.getEntry(descriptor.getSpecification().getSpecificationReference()
                 .substring(dict.getNS().length()).toLowerCase());
         Assertions.assertNotNull(ontologyEntry);
     }
 
     @Test
-    public void testCalculate_IAtomContainer() {
+    void testCalculate_IAtomContainer() {
         IAtomContainer mol = null;
         try {
             mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
@@ -122,7 +122,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     }
 
     @Test
-    public void testCalculate_NoModifications() throws Exception {
+    void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         IAtomContainer clone = mol.clone();
         descriptor.calculate(mol);
@@ -137,7 +137,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
      * @throws Exception Passed on from calculate.
      */
     @Test
-    public void testLabels() throws Exception {
+    void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
 
         DescriptorValue v = descriptor.calculate(mol);
@@ -162,7 +162,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     * of the names
     */
     @Test
-    public void testNamesConsistency() throws Exception {
+    void testNamesConsistency() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
 
         String[] names1 = descriptor.getDescriptorNames();
@@ -177,7 +177,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     }
 
     @Test
-    public void testGetDescriptorResultType() throws Exception {
+    void testGetDescriptorResultType() throws Exception {
         IDescriptorResult result = descriptor.getDescriptorResultType();
         Assertions.assertNotNull(result, "The getDescriptorResultType() must not be null.");
 
@@ -189,7 +189,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     }
 
     @Test
-    public void testTakeIntoAccountImplicitHydrogens() throws Exception {
+    void testTakeIntoAccountImplicitHydrogens() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer methane1 = builder.newInstance(IAtomContainer.class);
         IAtom c1 = builder.newInstance(IAtom.class, "C");
@@ -227,7 +227,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     }
 
     @Test
-    public void testTakeIntoAccountImplicitHydrogensInEthane() throws Exception {
+    void testTakeIntoAccountImplicitHydrogensInEthane() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer ethane1 = builder.newInstance(IAtomContainer.class);
         IAtom c1 = builder.newInstance(IAtom.class, "C");
@@ -312,7 +312,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     }
 
     @Test
-    public void testImplementationIndependence() throws Exception {
+    void testImplementationIndependence() throws Exception {
         IAtomContainer water1 = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         IAtomContainer water2 = someoneBringMeSomeWater(SilentChemObjectBuilder.getInstance());
 
@@ -326,7 +326,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     }
 
     @Test
-    public void testAtomContainerHandling() throws Exception {
+    void testAtomContainerHandling() throws Exception {
         IAtomContainer water1 = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         // creates an AtomContainer with the atoms / bonds from water1
         IAtomContainer water2 = SilentChemObjectBuilder.getInstance().newAtomContainer();
@@ -346,7 +346,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
      * but return NA instead.
      */
     @Test
-    public void testDisconnectedStructureHandling() throws Exception {
+    void testDisconnectedStructureHandling() throws Exception {
         IAtomContainer disconnected = SilentChemObjectBuilder.getInstance()
                                                              .newAtomContainer();
         IAtom chloride = new Atom("Cl");
@@ -364,7 +364,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
 
     @Disabled
     @Test
-    public void testTakeIntoAccountBondHybridization() {
+    void testTakeIntoAccountBondHybridization() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer ethane1 = builder.newInstance(IAtomContainer.class);
         IAtom c1 = builder.newInstance(IAtom.class, "C");

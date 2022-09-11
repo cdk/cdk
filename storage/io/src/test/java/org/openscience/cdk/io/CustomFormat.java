@@ -30,7 +30,7 @@ import org.openscience.cdk.io.formats.IChemFormat;
  *
  * @cdk.module test-io
  */
-public class CustomFormat implements IChemFormat {
+class CustomFormat implements IChemFormat {
 
     @Override
     public String getReaderClassName() {

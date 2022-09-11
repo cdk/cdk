@@ -31,9 +31,9 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * @cdk.module test-standard
  */
-public class DescriptorValueTest extends CDKTestCase {
+class DescriptorValueTest extends CDKTestCase {
 
-    public DescriptorValueTest() {
+    DescriptorValueTest() {
         super();
     }
 
@@ -43,7 +43,7 @@ public class DescriptorValueTest extends CDKTestCase {
     private final static String DESC_IMPL_ID     = "bla4";
 
     @Test
-    public void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult_arrayString() {
+    void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult_arrayString() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], new DoubleResult(0.7),
@@ -52,7 +52,7 @@ public class DescriptorValueTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetValue() {
+    void testGetValue() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
@@ -61,7 +61,7 @@ public class DescriptorValueTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetSpecification() {
+    void testGetSpecification() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
@@ -70,7 +70,7 @@ public class DescriptorValueTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetParameters() {
+    void testGetParameters() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
@@ -79,7 +79,7 @@ public class DescriptorValueTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetParameterNames() {
+    void testGetParameterNames() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
@@ -88,7 +88,7 @@ public class DescriptorValueTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetNames() {
+    void testGetNames() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
@@ -107,7 +107,7 @@ public class DescriptorValueTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetException() {
+    void testGetException() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);

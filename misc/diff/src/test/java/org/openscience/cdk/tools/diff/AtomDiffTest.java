@@ -34,17 +34,17 @@ import static org.mockito.Mockito.when;
 /**
  * @cdk.module test-diff
  */
-public class AtomDiffTest {
+class AtomDiffTest {
 
     @Test
-    public void testMatchAgainstItself() {
+    void testMatchAgainstItself() {
         IAtom atom1 = mock(IAtom.class);
         String result = AtomDiff.diff(atom1, atom1);
         Assertions.assertEquals("", result);
     }
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getSymbol()).thenReturn("H");
@@ -58,7 +58,7 @@ public class AtomDiffTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getSymbol()).thenReturn("H");
@@ -70,7 +70,7 @@ public class AtomDiffTest {
 
     @Disabled("unit test did not test AtomDiff but rather the ability of AtomContainer"
             + "to be serialized. This is already tested in each respective domain module")
-    public void testDiffFromSerialized() throws IOException, ClassNotFoundException {
+    void testDiffFromSerialized() throws IOException, ClassNotFoundException {
         //        IAtom atom = new Atom("C");
         //
         //        File tmpFile = File.createTempFile("serialized", ".dat");

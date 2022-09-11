@@ -31,17 +31,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsaratomic
  */
-public class BondsToAtomDescriptorTest extends AtomicDescriptorTest {
+class BondsToAtomDescriptorTest extends AtomicDescriptorTest {
 
-    public BondsToAtomDescriptorTest() {}
+    BondsToAtomDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BondsToAtomDescriptor.class);
     }
 
     @Test
-    public void testBondsToAtomDescriptor() throws java.lang.Exception {
+    void testBondsToAtomDescriptor() throws java.lang.Exception {
         BondsToAtomDescriptor descriptor = new BondsToAtomDescriptor();
         Object[] params = {5};
         descriptor.setParameters(params);

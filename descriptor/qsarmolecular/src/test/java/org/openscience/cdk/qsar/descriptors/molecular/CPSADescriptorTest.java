@@ -40,17 +40,17 @@ import java.util.List;
  * @cdk.module test-qsarmolecular
  */
 
-public class CPSADescriptorTest extends MolecularDescriptorTest {
+class CPSADescriptorTest extends MolecularDescriptorTest {
 
-    public CPSADescriptorTest() {}
+    CPSADescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(CPSADescriptor.class);
     }
 
     @Test
-    public void testCPSA() throws Exception {
+    void testCPSA() throws Exception {
         String filename = "benzene.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -72,7 +72,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testChargedMolecule() throws Exception {
+    void testChargedMolecule() throws Exception {
         String filename = "cpsa-charged.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -87,7 +87,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testUnChargedMolecule() throws Exception {
+    void testUnChargedMolecule() throws Exception {
         String filename = "cpsa-uncharged.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);

@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  */
 public class PubChemCompoundXMLFormatTest extends ChemFormatMatcherTest {
 
-    public PubChemCompoundXMLFormatTest() {
+    PubChemCompoundXMLFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) PubChemCompoundXMLFormat.getInstance());
     }
 
@@ -39,13 +39,13 @@ public class PubChemCompoundXMLFormatTest extends ChemFormatMatcherTest {
      */
     @Test
     @Override
-    public void testMatches() throws Exception {
+    void testMatches() throws Exception {
         String header = "<?xml version=\"\"?><PC-Compound/>";
         Assertions.assertTrue(matches(header));
     }
 
     @Test
-    public void testFalsePositive() throws Exception {
+    void testFalsePositive() throws Exception {
         String header = "<?xml version=\"\"?><PC-Compounds><PC-Compound/></PC-Compounds>";
         Assertions.assertFalse(matches(header));
     }
@@ -54,7 +54,7 @@ public class PubChemCompoundXMLFormatTest extends ChemFormatMatcherTest {
      * @cdk.bug 2832858
      */
     @Test
-    public void testFalsePositiveWithNewlines() throws Exception {
+    void testFalsePositiveWithNewlines() throws Exception {
         String header = "<PC-Compounds>\n<PC-Compound/>\n</PC-Compounds>";
         Assertions.assertFalse(matches(header));
     }

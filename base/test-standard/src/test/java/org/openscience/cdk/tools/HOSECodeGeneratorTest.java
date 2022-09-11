@@ -49,15 +49,15 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      steinbeck
  * @cdk.created 2002-11-16
  */
-public class HOSECodeGeneratorTest extends CDKTestCase {
+class HOSECodeGeneratorTest extends CDKTestCase {
 
-    static final boolean standAlone = false;
+    private static final boolean standAlone = false;
 
     /**
      * @cdk.bug 968852
      */
     @Test
-    public void test968852() throws Exception {
+    void test968852() throws Exception {
         String filename = "2,5-dimethyl-furan.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -73,7 +73,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testSecondSphere() throws Exception {
+    void testSecondSphere() throws Exception {
         String filename = "isopropylacetate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -93,7 +93,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void test1Sphere() throws Exception {
+    void test1Sphere() throws Exception {
         String[] result = {"O-1;=C(//)", "C-3;=OCC(//)", "C-3;=CC(//)", "C-3;=CC(//)", "C-3;*C*CC(//)", "C-3;*C*C(//)",
                 "C-3;*C*C(//)", "C-3;*C*CC(//)", "C-3;*C*CC(//)", "C-3;*C*C(//)", "C-3;*C*C(//)", "C-3;*C*C(//)",
                 "C-3;*C*C(//)", "C-3;*C*CO(//)", "O-2;CC(//)", "C-3;*C*CO(//)", "C-3;*C*CO(//)", "O-2;CC(//)",
@@ -245,7 +245,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void testMakeBremserCompliant() throws Exception {
+    void testMakeBremserCompliant() throws Exception {
         String[] startData = {"O-1;=C(//)", "C-3;=OCC(//)", "C-2;CC(//)", "C-2;CC(//)", "C-3;CCC(//)", "C-2;CC(//)",
                 "C-2;CC(//)", "C-3;CCC(//)", "C-3;CCC(//)", "C-2;CC(//)", "C-2;CC(//)", "C-2;CC(//)", "C-2;CC(//)",
                 "C-3;CCO(//)", "O-2;CC(//)", "C-3;CCO(//)", "C-3;CCO(//)", "O-2;CC(//)", "C-1;O(//)", "C-2;CC(//)",
@@ -271,7 +271,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void test4Sphere() throws Exception {
+    void test4Sphere() throws Exception {
         String[] result = {
 
         "O-1;=C(CC/*C*C,=C/*C*C,*C,&)", "C-3;=OCC(,*C*C,=C/*C*C,*C,&/*C*C,*C&,*&O)",
@@ -436,7 +436,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      *@return    Description of the Return Value
      */
     @Test
-    public void test4() throws Exception {
+    void test4() throws Exception {
         String[] result = {"C-3;*C*C*C(*C*N,*C,*C/*C,*&,*&,*&/*&)", "C-3;*C*C(*C*C,*N/*C*&,*C,*&/*C,*&)",
                 "C-3;*C*N(*C,*C/*&*C,*&*C/,*C,*C)", "N-3;*C*C(*C*C,*C/*C*&,*C,*&/*C,*&)",
                 "C-3;*C*C*N(*C*C,*C,*C/*C,*&,*&,*&/*&)", "C-3;*C*C(*C*N,*C/*C*C,*C,*&/*&,*&,*&)",
@@ -462,7 +462,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      * @cdk.bug 655169
      */
     @Test
-    public void testBug655169() throws Exception {
+    void testBug655169() throws Exception {
         IAtomContainer molecule;
         HOSECodeGenerator hcg;
         String[] result = {"C-4;C(=C/Y/)", "C-3;=CC(Y,//)", "C-3;=CY(C,//)", "Br-1;C(=C/C/)"};
@@ -502,7 +502,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      * @cdk.bug 795480
      */
     @Test
-    public void testBug795480() throws Exception {
+    void testBug795480() throws Exception {
         IAtomContainer molecule;
         HOSECodeGenerator hcg;
         String[] result = {"C-4-;C(=C/Y'+4'/)", "C-3;=CC-(Y'+4',//)", "C-3;=CY'+4'(C-,//)", "Br-1'+4';C(=C/C-/)"};
@@ -524,7 +524,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomsOfSphere() throws Exception {
+    void testGetAtomsOfSphere() throws Exception {
         IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
@@ -538,7 +538,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomsOfSphereWithHydr() throws Exception {
+    void testGetAtomsOfSphereWithHydr() throws Exception {
         IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance()))
                 .parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);

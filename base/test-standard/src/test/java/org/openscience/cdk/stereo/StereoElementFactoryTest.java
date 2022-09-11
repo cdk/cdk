@@ -58,11 +58,11 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @author John May
  * @cdk.module test-standard
  */
-public class StereoElementFactoryTest {
+class StereoElementFactoryTest {
 
     // don't create double bond configs in benzene
     @Test
-    public void benzene() {
+    void benzene() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 1, 1.30, -0.75));
         mol.addAtom(atom("C", 1, -0.00, -1.50));
@@ -82,7 +82,7 @@ public class StereoElementFactoryTest {
 
     // >=8 is okay for db stereo (ala inchi)
     @Test
-    public void cyclooctatetraene() {
+    void cyclooctatetraene() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 1, -10.46, 6.36));
         mol.addAtom(atom("C", 1, -11.34, 5.15));
@@ -106,7 +106,7 @@ public class StereoElementFactoryTest {
 
     // not okay... but technically the trans form exists
     @Test
-    public void doubleBondInSevenMemberedRing() {
+    void doubleBondInSevenMemberedRing() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 1, -10.46, 6.36));
         mol.addAtom(atom("C", 1, -11.34, 5.15));
@@ -127,7 +127,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void hydrogenIsotope() {
+    void hydrogenIsotope() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 3, 0.00, 0.00));
         mol.addAtom(atom("C", 1, 1.30, -0.75));
@@ -142,7 +142,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void bridgeHeadNitrogen() {
+    void bridgeHeadNitrogen() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 2, 1.23, 0.75));
         mol.addAtom(atom("C", 2, 1.23, -0.75));
@@ -164,7 +164,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void e_but2ene() {
+    void e_but2ene() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -2.19d, 1.64d));
         m.addAtom(atom("C", 1, -1.36d, 1.64d));
@@ -182,7 +182,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void z_but2ene() {
+    void z_but2ene() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 3, -2.46d, 1.99d));
         m.addAtom(atom("C", 1, -1.74d, 0.68d));
@@ -204,7 +204,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles C/C=C=C=C/C
      */
     @Test
-    public void e_hexa234triene() {
+    void e_hexa234triene() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 1, 2.48d, 0.00d));
         mol.addAtom(atom("C", 0, 1.65d, 0.00d));
@@ -232,7 +232,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles C/C=C=C=C\C
      */
     @Test
-    public void z_hexa234triene() {
+    void z_hexa234triene() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 1, 2.48d, 0.00d));
         mol.addAtom(atom("C", 0, 1.65d, 0.00d));
@@ -260,7 +260,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles C/C=C=C=C/C
      */
     @Test
-    public void e_hexa234triene_3D() {
+    void e_hexa234triene_3D() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 1, 0.29d, 0.01d, 0.02d));
         mol.addAtom(atom("C", 0, -0.56d, -0.90d, 0.25d));
@@ -288,7 +288,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles C/C=C=C=C\C
      */
     @Test
-    public void z_hexa234triene_3D() {
+    void z_hexa234triene_3D() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(atom("C", 1, -0.09d, -0.45d, -1.07d));
         mol.addAtom(atom("C", 0, -0.67d, -1.04d, -0.11d));
@@ -312,7 +312,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void unspec_but2ene_byCoordinates() {
+    void unspec_but2ene_byCoordinates() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.37d, 1.64d));
         m.addAtom(atom("C", 1, -2.19d, 1.63d));
@@ -329,7 +329,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void unspec_but2ene_wavyBond() {
+    void unspec_but2ene_wavyBond() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.27d, 1.48d));
         m.addAtom(atom("C", 1, -2.10d, 1.46d));
@@ -346,7 +346,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void unspec_but2ene_crossBond() {
+    void unspec_but2ene_crossBond() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.27d, 1.48d));
         m.addAtom(atom("C", 1, -2.10d, 1.46d));
@@ -363,7 +363,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void r_butan2ol() {
+    void r_butan2ol() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -381,7 +381,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void s_butan2ol() {
+    void s_butan2ol() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -399,7 +399,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void r_butan2ol_3d() {
+    void r_butan2ol_3d() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, 0.56d, 0.05d, 0.71d));
         m.addAtom(atom("C", 2, -0.53d, 0.51d, -0.30d));
@@ -417,7 +417,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void s_butan2ol_3d() {
+    void s_butan2ol_3d() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, -0.17d, -0.12d, -0.89d));
         m.addAtom(atom("C", 2, 1.12d, -0.91d, -0.51d));
@@ -435,7 +435,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void r_butan2ol_3d_expH() {
+    void r_butan2ol_3d_expH() {
         IAtomContainer m = new AtomContainer(6, 5, 0, 0);
         m.addAtom(atom("C", 0, -0.07d, -0.14d, 0.50d));
         m.addAtom(atom("C", 2, -0.05d, -1.20d, -0.65d));
@@ -455,7 +455,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void s_butan2ol_3d_expH() {
+    void s_butan2ol_3d_expH() {
         IAtomContainer m = new AtomContainer(6, 5, 0, 0);
         m.addAtom(atom("C", 0, -0.17d, -0.12d, -0.89d));
         m.addAtom(atom("C", 2, 1.12d, -0.91d, -0.51d));
@@ -475,7 +475,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void unspec_butan2ol() {
+    void unspec_butan2ol() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -496,7 +496,7 @@ public class StereoElementFactoryTest {
      * @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m1/s1
      */
     @Test
-    public void r_methanesulfinylethane() {
+    void r_methanesulfinylethane() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("S", 0, 0.01d, 1.50d));
         m.addAtom(atom("C", 3, 0.03d, 0.00d));
@@ -517,7 +517,7 @@ public class StereoElementFactoryTest {
      * @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m0/s1
      */
     @Test
-    public void s_methanesulfinylethane() {
+    void s_methanesulfinylethane() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("S", 0, 0.01d, 1.50d));
         m.addAtom(atom("C", 3, 0.03d, 0.00d));
@@ -535,7 +535,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void e_but2ene_3d() {
+    void e_but2ene_3d() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -0.19d, 0.09d, -0.27d));
         m.addAtom(atom("C", 1, 0.22d, -1.15d, 0.05d));
@@ -553,7 +553,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void z_but2ene_3d() {
+    void z_but2ene_3d() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, 0.05d, -1.28d, 0.13d));
         m.addAtom(atom("C", 1, -0.72d, -0.58d, -0.72d));
@@ -571,7 +571,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void inverse_style_downbond() {
+    void inverse_style_downbond() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -592,7 +592,7 @@ public class StereoElementFactoryTest {
     // between two stereo-centres - we can't create an element for atom 1 as
     // this bond is used to specify atom '2'
     @Test
-    public void inverse_style_downbond_ambiguous() throws CDKException {
+    void inverse_style_downbond_ambiguous() throws CDKException {
         IAtomContainer m = new AtomContainer(6, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -612,7 +612,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void badWedgePatternWithThreeNeighbors() throws CDKException {
+    void badWedgePatternWithThreeNeighbors() throws CDKException {
         IAtomContainer m = new AtomContainer(6, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -628,7 +628,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void okWedgePatternWithThreeNeighbors() throws CDKException {
+    void okWedgePatternWithThreeNeighbors() throws CDKException {
         IAtomContainer m = new AtomContainer(6, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -646,7 +646,7 @@ public class StereoElementFactoryTest {
 
     // see http://efficientbits.blogspot.com/2019/09/rules-for-interpreting-updown-wedge.html
     @Test
-    public void okWedgePatternWithThreeNeighbors2() throws Exception {
+    void okWedgePatternWithThreeNeighbors2() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("wedge_okay_d3.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
@@ -664,7 +664,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void badWedgePatternWithThreeNeighbors2() throws Exception {
+    void badWedgePatternWithThreeNeighbors2() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("wedge_bad_d3.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
@@ -682,7 +682,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void badWedgePatternWithThreeNeighbors180() throws Exception {
+    void badWedgePatternWithThreeNeighbors180() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("wedge_180_bad_d3.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
@@ -700,7 +700,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void okWedgePatternWithThreeNeighbors180() throws Exception {
+    void okWedgePatternWithThreeNeighbors180() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("wedge_180_okay_d3.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
@@ -718,7 +718,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void badWedgePatternWithFourNeighbors() throws Exception {
+    void badWedgePatternWithFourNeighbors() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("wedge_bad_d4.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
@@ -741,7 +741,7 @@ public class StereoElementFactoryTest {
      * @cdk.inchi InChI=1S/C9H7NO4/c11-7-2-4-1-6(9(13)14)10-5(4)3-8(7)12/h1,3,6,10H,2H2,(H,13,14)/p-1
      */
     @Test
-    public void inverse_style_downbond_dopachrome() throws Exception {
+    void inverse_style_downbond_dopachrome() throws Exception {
         MDLV2000Reader mdl = null;
         try {
             mdl = new MDLV2000Reader(getClass().getResourceAsStream("CPD-7272.mol"));
@@ -759,7 +759,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void createExtendedTetrahedralFrom2DCoordinates_cw() throws Exception {
+    void createExtendedTetrahedralFrom2DCoordinates_cw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -783,7 +783,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void createExtendedTetrahedralFrom2DCoordinates_ccw() throws Exception {
+    void createExtendedTetrahedralFrom2DCoordinates_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -807,7 +807,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_cw() throws Exception {
+    void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_cw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 1, -1.13d, 1.49d));
@@ -827,7 +827,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_ccw() throws Exception {
+    void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 1, -1.13d, 1.49d));
@@ -847,7 +847,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void createExtendedTetrahedralFrom2DCoordinatesNoNonplanarBonds() throws Exception {
+    void createExtendedTetrahedralFrom2DCoordinatesNoNonplanarBonds() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -869,7 +869,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void createExtendedTetrahedralFrom3DCoordinates_cw() throws Exception {
+    void createExtendedTetrahedralFrom3DCoordinates_cw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, 0.1925, -2.7911, 1.8739));
         m.addAtom(atom("C", 0, -0.4383, -2.0366, 0.8166));
@@ -895,7 +895,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void createExtendedTetrahedralFrom3DCoordinates_ccw() throws Exception {
+    void createExtendedTetrahedralFrom3DCoordinates_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.4096, -2.1383, 0.6392));
         m.addAtom(atom("C", 0, -0.4383, -2.0366, 0.8166));
@@ -921,7 +921,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void createExtendedTetrahedral() throws CDKException {
+    void createExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 1, -1.13d, 1.49d));
@@ -938,7 +938,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void doNotCreateNonStereogenicExtendedTetrahedral() throws CDKException {
+    void doNotCreateNonStereogenicExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 1, -1.13d, 1.49d));
@@ -961,7 +961,7 @@ public class StereoElementFactoryTest {
      * we check we get the correct (anti-clockwise) configuration.
      */
     @Test
-    public void differentBondLengthsDoNotAffectWinding() {
+    void differentBondLengthsDoNotAffectWinding() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, 14.50d, -8.72d));
         m.addAtom(atom("N", 2, 14.50d, -11.15d));
@@ -988,7 +988,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void always2DTetrahedralElements() {
+    void always2DTetrahedralElements() {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 1, 0.34d, 2.28d));
         m.addAtom(atom("O", 1, 1.17d, 2.28d));
@@ -1018,7 +1018,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles CC=[C@]=CC
      */
     @Test
-    public void badlyOptimizedAllene() {
+    void badlyOptimizedAllene() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 1, -4.02, 3.96, -1.09));
         m.addAtom(atom("C", 0, -4.96, 3.82, 0.13));
@@ -1034,7 +1034,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void onlyCreateStereoForConsitionalDifferencesIn3D() {
+    void onlyCreateStereoForConsitionalDifferencesIn3D() {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 1, -1.00d, -0.25d, 1.22d));
         m.addAtom(atom("O", 1, -1.82d, 0.20d, 2.30d));
@@ -1059,7 +1059,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void dontCreateStereoForNonStereogenicIn3D() {
+    void dontCreateStereoForNonStereogenicIn3D() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 0, 0.00d, 0.00d, 0.00d));
         m.addAtom(atom("H", 0, -0.36d, -0.51d, 0.89d));
@@ -1082,7 +1082,7 @@ public class StereoElementFactoryTest {
      * @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
      */
     @Test
-    public void onlyInterpretFischerProjectionsWhenAsked() throws Exception {
+    void onlyInterpretFischerProjectionsWhenAsked() throws Exception {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 0, 0.80d, 1.24d));
         m.addAtom(atom("C", 0, 0.80d, 0.42d));
@@ -1122,7 +1122,7 @@ public class StereoElementFactoryTest {
      * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
      */
     @Test
-    public void onlyInterpretHaworthProjectionsWhenAsked() throws Exception {
+    void onlyInterpretHaworthProjectionsWhenAsked() throws Exception {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 1, 4.16d, 1.66d));
         m.addAtom(atom("C", 1, 3.75d, 0.94d));
@@ -1170,7 +1170,8 @@ public class StereoElementFactoryTest {
      * beta-D-glucose
      * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
      */
-    @Test public void onlyInterpretChairProjectionsWhenAsked() throws Exception {
+    @Test
+    void onlyInterpretChairProjectionsWhenAsked() throws Exception {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 1, -0.77d, 10.34d));
         m.addAtom(atom("C", 1, 0.03d, 10.13d));
@@ -1218,7 +1219,7 @@ public class StereoElementFactoryTest {
      * Pass through non-stereo configurations if check symmetry is disabled
      */
     @Test
-    public void keepNonStereoConfiguration() throws CDKException {
+    void keepNonStereoConfiguration() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 0, 0.07, 1.19));
         m.addAtom(atom("H", 0, 0.56, 2.02));
@@ -1239,7 +1240,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void keepNonStereoConfigurationPhosphorusTautomer() throws CDKException {
+    void keepNonStereoConfigurationPhosphorusTautomer() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("P", 0, 0.07, 1.19));
         m.addAtom(atom("O", 0, 0.56, 2.02));
@@ -1260,7 +1261,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void doNotkeepNonStereoConfigurationPhosphorusTautomer() throws CDKException {
+    void doNotkeepNonStereoConfigurationPhosphorusTautomer() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("P", 0, 0.07, 1.19));
         m.addAtom(atom("O", 0, 0.56, 2.02));
@@ -1286,7 +1287,7 @@ public class StereoElementFactoryTest {
      * Do not pass through non-stereo configurations if check symmetry is enabled
      */
     @Test
-    public void doNotKeepNonStereoConfiguration() throws CDKException {
+    void doNotKeepNonStereoConfiguration() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 0, 0.07, 1.19));
         m.addAtom(atom("H", 0, 0.56, 2.02));
@@ -1312,7 +1313,7 @@ public class StereoElementFactoryTest {
      * Pass through non-stereo configurations if check symmetry is disabled
      */
     @Test
-    public void keepNonStereoConfigurationH2() throws CDKException {
+    void keepNonStereoConfigurationH2() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 0, 0.07, 1.19));
         m.addAtom(atom("H", 0, 0.56, 2.02));
@@ -1341,7 +1342,8 @@ public class StereoElementFactoryTest {
      *         bond rotation is restricted.
      * @cdk.smiles OC1=CC=C2C=CC=CC2=C1C1=C(O)C=CC2=C1C=CC=C2
      */
-    @Test public void binol2D() throws CDKException {
+    @Test
+    void binol2D() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 0, -0.83, -0.01));
         m.addAtom(atom("C", 0, -1.55, -0.42));
@@ -1438,7 +1440,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles CC1=C(C=CC=C1)C1=C(C)C=CC=C1O
      */
     @Test
-    public void atropisomer1() throws CDKException {
+    void atropisomer1() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 0, -7.53, -2.12));
         m.addAtom(atom("C", 1, -8.24, -2.53));
@@ -1481,7 +1483,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles CC1=C(C(O)=CC=C1)C1=CC=CC=C1
      */
     @Test
-    public void nonAtropisomer2() throws CDKException {
+    void nonAtropisomer2() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 0, -7.53, -2.12));
         m.addAtom(atom("C", 1, -8.24, -2.53));
@@ -1522,7 +1524,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles CC1=C(C=CC=C1)C1=C(C)C=CC=C1
      */
     @Test
-    public void nonAtropisomer3() throws CDKException {
+    void nonAtropisomer3() throws CDKException {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 0, -7.53, -2.12));
         m.addAtom(atom("C", 1, -8.24, -2.53));
@@ -1564,7 +1566,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles [H]C1=CC=C2C=CC=CC2=C1C1=C([H])C=CC2=C1C=CC=C2
      */
     @Test
-    public void nonAtropisomerExplHydrogens() {
+    void nonAtropisomerExplHydrogens() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("H", 0, -1.43, 0.83));
         m.addAtom(atom("C", 0, -0.71, 1.24));
@@ -1623,7 +1625,7 @@ public class StereoElementFactoryTest {
      * @cdk.smiles CC1=CC=CC(Cl)=C1C1=C(C)C=CC=C1
      */
     @Test
-    public void atropisomer3D() {
+    void atropisomer3D() {
         IAtomContainer m = new AtomContainer();
         m.addAtom(atom("C", 1, -4.95, 1.27));
         m.addAtom(atom("C", 1, -4.26, 1.73));
@@ -1663,7 +1665,7 @@ public class StereoElementFactoryTest {
     }
     
     @Test
-    public void samePositionWithStereocenter() throws Exception {
+    void samePositionWithStereocenter() throws Exception {
     	IAtomContainer m = new AtomContainer();
         m.addAtom(atom("F", 0, -1, -1));
         m.addAtom(atom("Cl", 0, 1, -1));
@@ -1688,7 +1690,8 @@ public class StereoElementFactoryTest {
     }
 
 
-    @Test public void warnOnAmbiguousStereo() throws Exception{
+    @Test
+    void warnOnAmbiguousStereo() throws Exception{
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("ambig-wedge.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
@@ -1705,7 +1708,7 @@ public class StereoElementFactoryTest {
     }
 
     @Test
-    public void ignoreInverseWedgeWhenStrict() throws Exception{
+    void ignoreInverseWedgeWhenStrict() throws Exception{
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("inverse-wedge.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {

@@ -47,10 +47,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.renderer.generators.standard.StandardBondGenerator.RingBondOffsetComparator;
 
-public class StandardBondGeneratorTest {
+class StandardBondGeneratorTest {
 
     @Test
-    public void adenineRingPreference() throws Exception {
+    void adenineRingPreference() throws Exception {
 
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         Map<IBond, IAtomContainer> ringMap = StandardBondGenerator.ringPreferenceMap(adenine);
@@ -72,7 +72,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void metalRingPreference() throws Exception {
+    void metalRingPreference() throws Exception {
 
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("C1[Fe]C=CC2=C1C=CN2");
@@ -97,7 +97,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void ringSizePriority() {
+    void ringSizePriority() {
         assertThat(RingBondOffsetComparator.sizePreference(6), is(0));
         assertThat(RingBondOffsetComparator.sizePreference(5), is(1));
         assertThat(RingBondOffsetComparator.sizePreference(7), is(2));
@@ -106,31 +106,31 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void invalidRingSize() {
+    void invalidRingSize() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {RingBondOffsetComparator.sizePreference(2); });
     }
 
     @Test
-    public void macroCycle() {
+    void macroCycle() {
         assertThat(RingBondOffsetComparator.sizePreference(8), is(8));
         assertThat(RingBondOffsetComparator.sizePreference(10), is(10));
         assertThat(RingBondOffsetComparator.sizePreference(20), is(20));
     }
 
     @Test
-    public void benzeneDoubleBondCount() {
+    void benzeneDoubleBondCount() {
         assertThat(RingBondOffsetComparator.nDoubleBonds(TestMoleculeFactory.makeBenzene()), is(3));
     }
 
     @Test
-    public void benzeneElementCount() {
+    void benzeneElementCount() {
         int[] freq = RingBondOffsetComparator.countLightElements(TestMoleculeFactory.makeBenzene());
         assertThat(freq[6], is(6));
     }
 
 
     @Test
-    public void highAtomicNoElementCount() {
+    void highAtomicNoElementCount() {
         IAtomContainer container = TestMoleculeFactory.makeBenzene();
         container.getAtom(0).setAtomicNumber(34);
         container.getAtom(0).setSymbol("Se");
@@ -139,14 +139,14 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void adenineElementCount() {
+    void adenineElementCount() {
         int[] freq = RingBondOffsetComparator.countLightElements(TestMoleculeFactory.makeAdenine());
         assertThat(freq[6], is(5));
         assertThat(freq[7], is(5));
     }
 
     @Test
-    public void benzeneComparedToPyrrole() {
+    void benzeneComparedToPyrrole() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtomContainer pyrrole = TestMoleculeFactory.makePyrrole();
 
@@ -155,7 +155,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void benzeneComparedToCycloHexane() {
+    void benzeneComparedToCycloHexane() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtomContainer cyclohexane = TestMoleculeFactory.makeCyclohexane();
 
@@ -164,7 +164,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void benzeneComparedToCycloHexene() {
+    void benzeneComparedToCycloHexene() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtomContainer cyclohexene = TestMoleculeFactory.makeCyclohexene();
 
@@ -173,7 +173,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void benzeneComparedToBenzene() {
+    void benzeneComparedToBenzene() {
         IAtomContainer benzene1 = TestMoleculeFactory.makeBenzene();
         IAtomContainer benzene2 = TestMoleculeFactory.makeBenzene();
 
@@ -182,7 +182,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void benzeneComparedToPyridine() {
+    void benzeneComparedToPyridine() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtomContainer pyridine = TestMoleculeFactory.makePyridine();
 
@@ -191,7 +191,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void furaneComparedToPyrrole() {
+    void furaneComparedToPyrrole() {
         IAtomContainer furane = TestMoleculeFactory.makePyrrole();
         IAtomContainer pyrrole = TestMoleculeFactory.makePyrrole();
 
@@ -204,7 +204,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void furaneComparedToThiophene() {
+    void furaneComparedToThiophene() {
         IAtomContainer furane = TestMoleculeFactory.makePyrrole();
         IAtomContainer thiophene = TestMoleculeFactory.makePyrrole();
 
@@ -220,7 +220,7 @@ public class StandardBondGeneratorTest {
     }
 
     @Test
-    public void ensureAnnotationsAreGenerator() throws CDKException {
+    void ensureAnnotationsAreGenerator() throws CDKException {
         IAtomContainer furane = TestMoleculeFactory.makePyrrole();
         for (IBond bond : furane.bonds()) {
             bond.setProperty(StandardGenerator.ANNOTATION_LABEL,

@@ -43,14 +43,14 @@ import java.util.Map;
 /**
  * @cdk.module test-signature
  */
-public class SignatureFingerprintTanimotoTest extends CDKTestCase {
+class SignatureFingerprintTanimotoTest extends CDKTestCase {
 
     /**
      * @throws Exception
      * @cdk.bug 3310138
      */
     @Test
-    public void testRawTanimotoBetween0and1() throws Exception {
+    void testRawTanimotoBetween0and1() throws Exception {
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smilesParser.parseSmiles("Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
         IAtomContainer mol2 = smilesParser
@@ -63,7 +63,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void testICountFingerprintComparison() throws Exception {
+    void testICountFingerprintComparison() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makeIndole();
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
@@ -75,7 +75,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void compareCountFingerprintAndRawFingerprintTanimoto() throws CDKException {
+    void compareCountFingerprintAndRawFingerprintTanimoto() throws CDKException {
         IAtomContainer mol1 = TestMoleculeFactory.make123Triazole();
         IAtomContainer mol2 = TestMoleculeFactory.makeImidazole();
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter(1);
@@ -89,7 +89,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void testCountMethod1and2() throws CDKException {
+    void testCountMethod1and2() throws CDKException {
         ICountFingerprint fp1 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
 
             {
@@ -115,7 +115,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase {
     }
 
     @Test
-    public void testComparingBitFingerprintAndCountBehavingAsBit() throws Exception {
+    void testComparingBitFingerprintAndCountBehavingAsBit() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.make123Triazole();
         IAtomContainer mol2 = TestMoleculeFactory.makeImidazole();
 

@@ -33,17 +33,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-qsarmolecular
  */
 
-public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
+class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
 
-    public KappaShapeIndicesDescriptorTest() {}
+    KappaShapeIndicesDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(KappaShapeIndicesDescriptor.class);
     }
 
     @Test
-    public void testKappaShapeIndicesDescriptor() throws java.lang.Exception {
+    void testKappaShapeIndicesDescriptor() throws java.lang.Exception {
         double[] testResult = {5, 2.25, 4};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");

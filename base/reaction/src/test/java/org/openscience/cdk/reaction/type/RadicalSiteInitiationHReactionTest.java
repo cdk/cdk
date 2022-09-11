@@ -57,7 +57,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public RadicalSiteInitiationHReactionTest() throws Exception {
+    RadicalSiteInitiationHReactionTest() throws Exception {
         setReaction(RadicalSiteInitiationHReaction.class);
     }
 
@@ -65,7 +65,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testRadicalSiteInitiationHReaction() throws Exception {
+    void testRadicalSiteInitiationHReaction() throws Exception {
         IReactionProcess type = new RadicalSiteInitiationHReaction();
         Assertions.assertNotNull(type);
     }
@@ -118,7 +118,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new RadicalSiteInitiationHReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -164,7 +164,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new RadicalSiteInitiationHReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -205,7 +205,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new RadicalSiteInitiationHReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);

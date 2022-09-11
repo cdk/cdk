@@ -42,20 +42,20 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
  *
  * @see org.openscience.cdk.io.GhemicalReader
  */
-public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
+class GhemicalReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new GhemicalMMReader(), "ethene.mm1gp");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Assertions.assertTrue(chemObjectIO.accepts(ChemModel.class));
     }
 
     @Test
-    public void testExample() throws Exception {
+    void testExample() throws Exception {
         String testfile = "!Header mm1gp 100\n" + "!Info 1\n" + "!Atoms 6\n" + "0 6 \n" + "1 6 \n" + "2 1 \n"
                 + "3 1 \n" + "4 1 \n" + "5 1 \n" + "!Bonds 5\n" + "1 0 D \n" + "2 0 S \n" + "3 0 S \n" + "4 1 S \n"
                 + "5 1 S \n" + "!Coord\n" + "0 0.06677 -0.00197151 4.968e-07 \n"
@@ -87,7 +87,7 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testEthene() throws Exception {
+    void testEthene() throws Exception {
         String filename = "ethene.mm1gp";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         GhemicalMMReader reader = new GhemicalMMReader(ins);

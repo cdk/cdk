@@ -32,7 +32,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SmartsFragmentExtractorTest {
+class SmartsFragmentExtractorTest {
 
     private String generate(String smi, int mode, int[] idxs) throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -50,7 +50,7 @@ public class SmartsFragmentExtractorTest {
     }
 
     @Test
-    public void methylExact() throws Exception {
+    void methylExact() throws Exception {
         String smarts = generate("CC(C)CCC",
                                  SmartsFragmentExtractor.MODE_EXACT,
                                  makeSeq(0,1));
@@ -58,7 +58,7 @@ public class SmartsFragmentExtractorTest {
     }
 
     @Test
-    public void methylForJCompoundMap() throws Exception {
+    void methylForJCompoundMap() throws Exception {
         String smarts = generate("CC(C)CCC",
                                  SmartsFragmentExtractor.MODE_JCOMPOUNDMAPPER,
                                  makeSeq(0,1));
@@ -66,7 +66,7 @@ public class SmartsFragmentExtractorTest {
     }
 
     @Test
-    public void indole() throws Exception {
+    void indole() throws Exception {
         String smarts = generate("[nH]1ccc2c1cccc2",
                                  SmartsFragmentExtractor.MODE_EXACT,
                                  makeSeq(0,4));
@@ -74,7 +74,7 @@ public class SmartsFragmentExtractorTest {
     }
 
     @Test
-    public void indoleForJCompoundMap() throws Exception {
+    void indoleForJCompoundMap() throws Exception {
         String smarts = generate("[nH]1ccc2c1cccc2",
                                  SmartsFragmentExtractor.MODE_JCOMPOUNDMAPPER,
                                  makeSeq(0,4));
@@ -82,7 +82,7 @@ public class SmartsFragmentExtractorTest {
     }
 
     @Test
-    public void biphenylIncludesSingleBond() throws Exception {
+    void biphenylIncludesSingleBond() throws Exception {
         String smarts = generate("c1ccccc1-c1ccccc1",
                                  SmartsFragmentExtractor.MODE_EXACT,
                                  makeSeq(0,12));
@@ -90,7 +90,7 @@ public class SmartsFragmentExtractorTest {
     }
 
     @Test
-    public void fullereneC60() throws Exception {
+    void fullereneC60() throws Exception {
         String smarts = generate("c12c3c4c5c1c1c6c7c2c2c8c3c3c9c4c4c%10c5c5c1c1c6c6c%11c7c2c2c7c8c3c3c8c9c4c4c9c%10c5c5c1c1c6c6c%11c2c2c7c3c3c8c4c4c9c5c1c1c6c2c3c41",
                                  SmartsFragmentExtractor.MODE_EXACT,
                                  makeSeq(0,60));

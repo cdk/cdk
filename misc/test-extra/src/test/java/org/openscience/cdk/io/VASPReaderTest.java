@@ -35,23 +35,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module test-extra
  */
-public class VASPReaderTest extends SimpleChemObjectReaderTest {
+class VASPReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(VASPReaderTest.class);
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new VASPReader(), "LiMoS2_optimisation_ISIF3.vasp");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         VASPReader reader = new VASPReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
     }
 
     @Test
-    public void testReading() throws Exception {
+    void testReading() throws Exception {
         String filename = "LiMoS2_optimisation_ISIF3.vasp";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

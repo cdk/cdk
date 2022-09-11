@@ -29,15 +29,15 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
  *
  * @cdk.module test-data
  */
-public class FragmentAtomTest extends AbstractFragmentAtomTest {
+class FragmentAtomTest extends AbstractFragmentAtomTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(FragmentAtom::new);
     }
 
     @Test
-    public void testFragmentAtom() {
+    void testFragmentAtom() {
         IFragmentAtom a = new FragmentAtom();
         Assertions.assertNotNull(a);
     }

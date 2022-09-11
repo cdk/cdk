@@ -35,21 +35,21 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
+class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BasicGroupCountDescriptor.class,
                       DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testConstructor() throws Exception {
+    void testConstructor() throws Exception {
         Assertions.assertNotNull(new BasicGroupCountDescriptor());
     }
 
     @Test
-    public void testAmine() throws Exception {
+    void testAmine() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NC");
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
@@ -57,7 +57,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void uninitalisedError() {
+    void uninitalisedError() {
         Assertions.assertThrows(IllegalStateException.class, () -> {
             new BasicGroupCountDescriptor().calculate(new AtomContainer());
         });
@@ -67,7 +67,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C2H4N2/c1-4-2-3/h2-3H,1H2
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a1 = builder.newInstance(IAtom.class, "N");

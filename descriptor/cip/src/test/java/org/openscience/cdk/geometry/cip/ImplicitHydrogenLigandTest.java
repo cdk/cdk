@@ -32,10 +32,10 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-cip
  */
-public class ImplicitHydrogenLigandTest extends CDKTestCase {
+class ImplicitHydrogenLigandTest extends CDKTestCase {
 
     @Test
-    public void testConstructorAndGetMethods() throws Exception {
+    void testConstructorAndGetMethods() throws Exception {
         SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)");
 

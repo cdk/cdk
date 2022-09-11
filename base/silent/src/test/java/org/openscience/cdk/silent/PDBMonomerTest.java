@@ -30,15 +30,15 @@ import org.openscience.cdk.test.interfaces.AbstractPDBMonomerTest;
  *
  * @cdk.module test-silent
  */
-public class PDBMonomerTest extends AbstractPDBMonomerTest {
+class PDBMonomerTest extends AbstractPDBMonomerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(PDBMonomer::new);
     }
 
     @Test
-    public void testPDBMonomer() {
+    void testPDBMonomer() {
         IPDBMonomer monomer = new PDBMonomer();
         Assertions.assertNotNull(monomer);
         Assertions.assertEquals(monomer.getICode(), null);

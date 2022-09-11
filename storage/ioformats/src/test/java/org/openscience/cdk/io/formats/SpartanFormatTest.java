@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class SpartanFormatTest extends ChemFormatMatcherTest {
+class SpartanFormatTest extends ChemFormatMatcherTest {
 
-    public SpartanFormatTest() {
+    SpartanFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) SpartanFormat.getInstance());
     }
 

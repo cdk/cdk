@@ -19,10 +19,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-hash
  */
-public class SeedGeneratorTest {
+class SeedGeneratorTest {
 
     @Test
-    public void testConstruct_Null() {
+    void testConstruct_Null() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     new SeedGenerator(null);
@@ -30,7 +30,7 @@ public class SeedGeneratorTest {
     }
 
     @Test
-    public void testGenerate() throws Exception {
+    void testGenerate() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
 
@@ -72,7 +72,7 @@ public class SeedGeneratorTest {
     }
 
     @Test
-    public void testGenerate_SizeSeeding() throws Exception {
+    void testGenerate_SizeSeeding() throws Exception {
 
         IAtomContainer m1 = mock(IAtomContainer.class);
         IAtomContainer m2 = mock(IAtomContainer.class);

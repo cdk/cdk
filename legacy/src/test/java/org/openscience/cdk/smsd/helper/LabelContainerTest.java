@@ -30,10 +30,10 @@ import org.junit.jupiter.api.Test;
  * @author     Syed Asad Rahman
  * @cdk.module test-smsd
  */
-public class LabelContainerTest {
+class LabelContainerTest {
 
     @Test
-    public void testGetInstance() {
+    void testGetInstance() {
         Assertions.assertNotNull(LabelContainer.getInstance());
     }
 
@@ -41,7 +41,7 @@ public class LabelContainerTest {
      * Test of addLabel method, of class LabelContainer.
      */
     @Test
-    public void testAddLabel() {
+    void testAddLabel() {
         String label = "R3";
         LabelContainer instance = new LabelContainer();
         instance.addLabel(label);
@@ -54,7 +54,7 @@ public class LabelContainerTest {
      * Test of getLabelID method, of class LabelContainer.
      */
     @Test
-    public void testGetLabelID() {
+    void testGetLabelID() {
         String label = "R3";
         LabelContainer instance = new LabelContainer();
         instance.addLabel(label);
@@ -66,7 +66,7 @@ public class LabelContainerTest {
      * Test of getLabel method, of class LabelContainer.
      */
     @Test
-    public void testGetLabel() {
+    void testGetLabel() {
         String label = "R3";
         LabelContainer instance = new LabelContainer();
         instance.addLabel(label);
@@ -79,7 +79,7 @@ public class LabelContainerTest {
      * Test of getSize method, of class LabelContainer.
      */
     @Test
-    public void testGetSize() {
+    void testGetSize() {
         String label = "R3";
         LabelContainer instance = new LabelContainer();
         instance.addLabel(label);

@@ -28,16 +28,16 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-atomtype
  */
-public class AtomTypeMapperTest extends CDKTestCase {
+class AtomTypeMapperTest extends CDKTestCase {
 
     @Test
-    public void testGetInstance_String() {
+    void testGetInstance_String() {
         AtomTypeMapper mapper = AtomTypeMapper.getInstance("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl");
         Assertions.assertNotNull(mapper);
     }
 
     @Test
-    public void testGetInstance_String_InputStream() {
+    void testGetInstance_String_InputStream() {
         AtomTypeMapper mapper = AtomTypeMapper.getInstance("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl", this
                 .getClass().getClassLoader()
                 .getResourceAsStream("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"));
@@ -45,7 +45,7 @@ public class AtomTypeMapperTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMapping() {
+    void testGetMapping() {
         final String mapping = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
         AtomTypeMapper mapper = AtomTypeMapper.getInstance(mapping);
         Assertions.assertNotNull(mapper);
@@ -53,7 +53,7 @@ public class AtomTypeMapperTest extends CDKTestCase {
     }
 
     @Test
-    public void testMapAtomType_String() {
+    void testMapAtomType_String() {
         final String mapping = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
         AtomTypeMapper mapper = AtomTypeMapper.getInstance(mapping);
         Assertions.assertNotNull(mapper);

@@ -88,7 +88,7 @@ import static org.hamcrest.Matchers.lessThan;
  *@author     steinbeck
  *@cdk.created    August 29, 2003
  */
-public class StructureDiagramGeneratorTest extends CDKTestCase {
+class StructureDiagramGeneratorTest extends CDKTestCase {
 
     private static final StructureDiagramGenerator SDG = new StructureDiagramGenerator();
 
@@ -96,13 +96,13 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         SDG.setUseIdentityTemplates(true);
     }
 
-    public static IAtomContainer layout(IAtomContainer mol) throws Exception {
+    static IAtomContainer layout(IAtomContainer mol) throws Exception {
         SDG.setMolecule(mol, false);
         SDG.generateCoordinates();
         return mol;
     }
 
-    public void visualBugPMR() throws Exception {
+    void visualBugPMR() throws Exception {
         String filename = "data/cml/SL0016a.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -121,7 +121,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *@cdk.bug 1670871
      */
     @Test
-    public void testBugLecture2007() throws Exception {
+    void testBugLecture2007() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             //IAtomContainer mol = sp.parseSmiles("Oc1nc(nc2c(nn(c12)C)CCC)c3cc(ccc3(OCC))S(=O)(=O)N4CCN(C)CC4");
@@ -139,7 +139,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
                                   *  A unit test for JUnit
                                   */
     @Test
-    public void testAlphaPinene() throws Exception {
+    void testAlphaPinene() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeAlphaPinene();
             IAtomContainer ac = layout(m);
@@ -148,7 +148,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testBridgedHydrogen() throws Exception {
+    void testBridgedHydrogen() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer mol = new AtomContainer();
             IAtom carbon1 = new Atom("C");
@@ -168,7 +168,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testBiphenyl() throws Exception {
+    void testBiphenyl() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeBiphenyl();
             IAtomContainer ac = layout(m);
@@ -180,7 +180,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void test4x3CondensedRings() throws Exception {
+    void test4x3CondensedRings() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.make4x3CondensedRings();
             IAtomContainer ac = layout(m);
@@ -192,7 +192,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testPhenylEthylBenzene() throws Exception {
+    void testPhenylEthylBenzene() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makePhenylEthylBenzene();
             IAtomContainer ac = layout(m);
@@ -204,7 +204,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testSpiroRings() throws Exception {
+    void testSpiroRings() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeSpiroRings();
             IAtomContainer ac = layout(m);
@@ -216,7 +216,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testMethylDecaline() throws Exception {
+    void testMethylDecaline() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeMethylDecaline();
             IAtomContainer ac = layout(m);
@@ -228,7 +228,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testBranchedAliphatic() throws Exception {
+    void testBranchedAliphatic() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeBranchedAliphatic();
             IAtomContainer ac = layout(m);
@@ -240,7 +240,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testDiamantane() throws Exception {
+    void testDiamantane() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeDiamantane();
             IAtomContainer ac = layout(m);
@@ -255,7 +255,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *@cdk.bug 1670871
      */
     @Test
-    public void testBug1670871() throws Exception {
+    void testBug1670871() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             IAtomContainer mol = sp.parseSmiles("CC(=O)OC1C=CC(SC23CC4CC(CC(C4)C2)C3)N(C1SC56CC7CC(CC(C7)C5)C6)C(C)=O");
@@ -269,7 +269,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testEthylCyclohexane() throws Exception {
+    void testEthylCyclohexane() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeEthylCyclohexane();
             IAtomContainer ac = layout(m);
@@ -281,7 +281,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testBicycloRings() throws Exception {
+    void testBicycloRings() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer m = TestMoleculeFactory.makeBicycloRings();
             IAtomContainer ac = layout(m);
@@ -292,7 +292,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    public IAtomContainer makeJhao3() throws Exception {
+    IAtomContainer makeJhao3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=C1C2=CC13(CC23)");
         return mol;
@@ -301,7 +301,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     /**
      *  A unit test for JUnit
      */
-    public IAtomContainer makeJhao4() throws Exception {
+    IAtomContainer makeJhao4() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCC3C1CC23(CC12)");
         return mol;
@@ -311,7 +311,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testBenzene() throws Exception {
+    void testBenzene() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             IAtomContainer mol = sp.parseSmiles("c1ccccc1");
@@ -324,7 +324,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 780545
      */
     @Test
-    public void testBug780545() throws Exception {
+    void testBug780545() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             IAtomContainer mol = new AtomContainer();
             mol.addAtom(new Atom("C"));
@@ -337,7 +337,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1598409
      */
     @Test
-    public void testBug1598409() throws Exception {
+    void testBug1598409() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             String smiles = "c1(:c(:c2-C(-c3:c(-C(=O)-c:2:c(:c:1-[H])-[H]):c(:c(:c(:c:3-[H])-[H])-N(-[H])-[H])-[H])=O)-[H])-[H]";
             SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -350,7 +350,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1572062
      */
     @Test
-    public void testBug1572062() throws Exception {
+    void testBug1572062() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             String filename = "sdg_test.mol";
 
@@ -372,7 +372,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     /**
      * @cdk.bug 884993
      */
-    public void testBug884993() throws Exception {
+    void testBug884993() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
         IAtomContainer ac = layout(mol);
@@ -385,7 +385,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1677912
      */
     @Test
-    public void testBug1677912SDGHangs() throws Exception {
+    void testBug1677912SDGHangs() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             // Parse the SMILES
             String smiles = "[NH](-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3)-C(=O)-C(=O)-[CH2]-c1:n:c(:c(:[cH]:c:1-C(=O)-O-[CH3])-C(=O)-O-[CH3])-[CH2]-C(=O)-C(=O)-[NH]-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3";
@@ -403,7 +403,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1714794
      */
     @Test
-    public void testBug1714794() throws Exception {
+    void testBug1714794() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             String problematicMol2AsSmiles = "N1c2c(c3c(c4c(c(c3O)C)OC(OC=CC(C(C(C(C(C(C(C(C=CC=C(C1=O)C)C)O)C)O)C)OC(=O)C)C)OC)(C4=O)C)c(c2C=NN(C12CC3CC(C1)CC(C2)C3)C)O)O";
             SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -676,7 +676,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     /**
      * @cdk.bug 1750968
      */
-    public IAtomContainer makeBug1750968() throws Exception {
+    IAtomContainer makeBug1750968() throws Exception {
         String filename = "data/mdl/bug_1750968.mol";
 
         //		set up molecule reader
@@ -707,7 +707,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1772609
      */
     @Test
-    public void testNPEWithBridgedRingsBug1772609() throws Exception {
+    void testNPEWithBridgedRingsBug1772609() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             // set up molecule reader
             String filename = "bug1772609.mol";
@@ -741,7 +741,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1784850
      */
     @Test
-    public void testBug1784850InfiniteLoop() throws Exception {
+    void testBug1784850InfiniteLoop() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             // set up molecule reader
             String filename = "bug1784850.mol";
@@ -767,7 +767,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     * @cdk.bug 2842445
     */
     @Test
-    public void testBug2843445NaNCoords() throws Exception {
+    void testBug2843445NaNCoords() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2000), () -> {
             SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
             String smiles = "CCCC[C@H](NC(=O)[C@H](CCC(O)=O)NC(=O)[C@@H](NC(=O)[C@@H](CCCC)NC"
@@ -804,7 +804,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1234
      */
     @Test
-    public void testBug1234() throws Exception {
+    void testBug1234() throws Exception {
         Assertions.assertThrows(CDKException.class, () -> {
             SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
             String smiles = "C1C1";
@@ -828,7 +828,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1269
      */
     @Test
-    public void testBug1269() throws Exception {
+    void testBug1269() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
             String smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
@@ -845,7 +845,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * @cdk.bug 1279
      */
     @Test
-    public void testBug1279() throws Exception {
+    void testBug1279() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
             SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
             String smiles = "[NH4+].CP(=O)(O)CCC(N)C(=O)[O-]";
@@ -858,7 +858,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         });
     }
 
-    @Test public void alleneWithImplHDoesNotCauseNPE() throws Exception {
+    @Test
+    void alleneWithImplHDoesNotCauseNPE() throws Exception {
 
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         String smiles = "CC=[C@]=CC";
@@ -869,7 +870,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void pyrroleWithIdentityTemplate() throws Exception {
+    void pyrroleWithIdentityTemplate() throws Exception {
 
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         String smiles = "C1=CNC=C1";
@@ -892,7 +893,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void pyrroleWithoutIdentityTemplate() throws Exception {
+    void pyrroleWithoutIdentityTemplate() throws Exception {
 
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         String smiles = "C1=CNC=C1";
@@ -923,7 +924,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void handleFragments() throws Exception {
+    void handleFragments() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCOCC.o1cccc1");
         layout(mol);
@@ -932,7 +933,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void ionicBondsInAlCl3() throws Exception {
+    void ionicBondsInAlCl3() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[Al+3].[Cl-].[Cl-].[Cl-]");
         layout(mol);
@@ -947,7 +948,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void ionicBondsInK2CO3() throws Exception {
+    void ionicBondsInK2CO3() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[K+].[O-]C(=O)[O-].[K+]");
         layout(mol);
@@ -961,7 +962,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
 
     // subjective... since the real structure is lattice but looks better than a grid
     @Test
-    public void ionicBondsInLiAlH4() throws Exception {
+    void ionicBondsInLiAlH4() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[Li+].[Al+3].[Cl-].[Cl-].[Cl-].[Cl-]");
         layout(mol);
@@ -978,7 +979,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void ionicBondsInSodiumBenzoate() throws Exception {
+    void ionicBondsInSodiumBenzoate() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[Na+].[O-]C(=O)c1ccccc1");
         layout(mol);
@@ -991,7 +992,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     // SMILES have been shuffled the smiles to make it harder... otherwise we
     // get it right by chance
     @Test
-    public void chembl12276() throws Exception {
+    void chembl12276() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[Cl-].C(C1=CC=CC2=C(C=CC=C12)[N+](=O)[O-])[N+](C)(CCCl)CCCl");
         layout(mol);
@@ -1004,7 +1005,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void calciumOxide() throws Exception {
+    void calciumOxide() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[Ca+2].[O-2]");
         layout(mol);
@@ -1015,7 +1016,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void ethaneHCL() throws Exception {
+    void ethaneHCL() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Cl.CC");
         layout(mol);
@@ -1025,7 +1026,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
 
     // An extreme test case suggest by Roger Sayle showing Humpty Dumpty reassembly
     @Test
-    public void multipleSalts() throws Exception {
+    void multipleSalts() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[K+].[Al+3].[Cl-].[Cl-].[K+].[Cl-].[Cl-].[Al+3].[Cl-].[Pt+2]([NH3])[NH3].[Cl-].[Cl-].[Cl-].[O-][C+]([O-])[O-]");
         layout(mol);
@@ -1087,7 +1088,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         }
     }
 
-    @Test public void placeCrossingSgroupBrackets() throws Exception {
+    @Test
+    void placeCrossingSgroupBrackets() throws Exception {
         IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
@@ -1118,7 +1120,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         assertThat(brackets.size(), is(2));
     }
 
-    @Test public void placeNonCrossingSgroupBrackets() throws Exception {
+    @Test
+    void placeNonCrossingSgroupBrackets() throws Exception {
         IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
@@ -1148,7 +1151,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void placeOverlappingCrossingSgroupBrackets() throws Exception {
+    void placeOverlappingCrossingSgroupBrackets() throws Exception {
         IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
@@ -1203,7 +1206,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         return Line2D.linesIntersect(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
     }
 
-    @Test public void positionalVariation() throws Exception {
+    @Test
+    void positionalVariation() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1CCCC.*[R1].*C(=O)O");
 
@@ -1244,7 +1248,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void disconnectedMultigroupPlacement() throws Exception {
+    void disconnectedMultigroupPlacement() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1.c1ccccc1.c1ccccc1");
 
@@ -1277,7 +1281,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * usual (bond length)
      */
     @Test
-    public void dihydroazine() throws Exception {
+    void dihydroazine() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("N=N.N=N");
         layout(mol);
@@ -1287,7 +1291,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void NH4OH() throws Exception {
+    void NH4OH() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[NH4+].[OH-]");
         layout(mol);
@@ -1296,7 +1300,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
 
     }
 
-    @Test public void fragmentDoubleBondConfiguration() throws Exception {
+    @Test
+    void fragmentDoubleBondConfiguration() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("C(\\C)=C/C.C(\\C)=C\\C.C(\\C)=C/C.C(\\C)=C\\C");
         layout(mol);
@@ -1317,7 +1322,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void setBondLength() {
+    void setBondLength() {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();
             sdg.setBondLength(2);
@@ -1329,7 +1334,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      * reaction layout should not crash.
      */
     @Test
-    public void alignReactionBondBrokenAndMade() throws CDKException {
+    void alignReactionBondBrokenAndMade() throws CDKException {
         String smiles = "[CH3:18][NH:19][CH3:20].[cH:14]1[cH:13][cH:12][c:11]([cH:16][cH:15]1)[CH2:10][O:9][C:1](=[O:17])[NH:2][C@H:3]2[CH2:8][C:6](=[O:7])[O:5][CH2:4]2>C1CCOC1>[CH3:18][N:19]([CH3:20])[C:6](=[O:7])[CH2:8][C@H:3]([CH2:4][OH:5])[NH:2][C:1](=[O:17])[O:9][CH2:10][c:11]1[cH:12][cH:13][cH:14][cH:15][cH:16]1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReaction reaction =  smipar.parseReactionSmiles(smiles);
@@ -1341,7 +1346,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void alignReactionBondBrokenAndMade2() throws CDKException {
+    void alignReactionBondBrokenAndMade2() throws CDKException {
         String smiles = "[CH2:2]1[CH2:3][CH:4]2[CH2:5][CH2:6][CH:1]1[O:7]2.[IH:8]>>[OH:7][C@H:1]1[CH2:6][CH2:5][C@H:4]([I:8])[CH2:3][CH2:2]1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReaction reaction =  smipar.parseReactionSmiles(smiles);
@@ -1362,7 +1367,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testFixConcaveRingsInMacroCycles() throws CDKException {
+    void testFixConcaveRingsInMacroCycles() throws CDKException {
         String smiles = "c12c(C=Cc(ccc3)cc3Oc4ccc(cc4)C=Cc(cc5O1)ccc5)cccc2";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smiles);

@@ -41,9 +41,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarionpot
  */
-public class IPMolecularLearningDescriptorTest extends CDKTestCase {
+class IPMolecularLearningDescriptorTest extends CDKTestCase {
 
-    IPMolecularLearningDescriptor descriptor;
+    private IPMolecularLearningDescriptor descriptor;
     private final SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -52,15 +52,15 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      *  Constructor for the IPMolecularLearningDescriptorTest object
      *
      */
-    public IPMolecularLearningDescriptorTest() {}
+    IPMolecularLearningDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         descriptor = new IPMolecularLearningDescriptor();
     }
 
     @Test
-    public void testIPMolecularLearningDescriptor() throws Exception {
+    void testIPMolecularLearningDescriptor() throws Exception {
         Assertions.assertNotNull(descriptor);
     }
 
@@ -71,7 +71,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptor0() throws Exception {
+    void testIPDescriptor0() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -103,7 +103,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptor_1() throws Exception {
+    void testIPDescriptor_1() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-Cl");
 
@@ -123,7 +123,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptor_2() throws Exception {
+    void testIPDescriptor_2() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("COCCCC=O");
 
@@ -145,7 +145,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testIPDescriptor_3() throws Exception {
+    void testIPDescriptor_3() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C=CCCC(=O)C");
 
@@ -257,7 +257,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testBug_2787332_triclosan() throws Exception {
+    void testBug_2787332_triclosan() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));//0
         mol.addAtom(builder.newInstance(IAtom.class, "C"));//1

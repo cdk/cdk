@@ -32,21 +32,21 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *
  * @cdk.module test-silent
  */
-public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
+class MolecularFormulaTest extends AbstractMolecularFormulaTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setBuilder(SilentChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testMolecularFormula() {
+    void testMolecularFormula() {
         IMolecularFormula mf = new MolecularFormula();
         Assertions.assertNotNull(mf);
     }
 
     @Test
-    public void testIsTheSame_IIsotope_IIsotope() throws IOException {
+    void testIsTheSame_IIsotope_IIsotope() throws IOException {
         MolecularFormula mf = new MolecularFormula();
         IIsotope carb = getBuilder().newInstance(IIsotope.class, "C");
         IIsotope anotherCarb = getBuilder().newInstance(IIsotope.class, "C");

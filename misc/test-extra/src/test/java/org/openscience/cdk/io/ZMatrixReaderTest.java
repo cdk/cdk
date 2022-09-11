@@ -33,15 +33,15 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
 /**
  * @cdk.module test-extra
  */
-public class ZMatrixReaderTest extends ChemObjectIOTest {
+class ZMatrixReaderTest extends ChemObjectIOTest {
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setChemObjectIO(new ZMatrixReader());
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         ZMatrixReader reader = new ZMatrixReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
     }

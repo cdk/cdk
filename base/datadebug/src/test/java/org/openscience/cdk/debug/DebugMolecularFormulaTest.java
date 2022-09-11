@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *
  * @cdk.module test-datadebug
  */
-public class DebugMolecularFormulaTest extends AbstractMolecularFormulaTest {
+class DebugMolecularFormulaTest extends AbstractMolecularFormulaTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testDebugMolecularFormula() {
+    void testDebugMolecularFormula() {
         IMolecularFormula mf = new DebugMolecularFormula();
         Assertions.assertNotNull(mf);
     }

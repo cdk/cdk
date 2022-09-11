@@ -48,26 +48,26 @@ import org.openscience.cdk.tools.IDCreator;
 /**
  * @cdk.module test-standard
  */
-public class ChemSequenceManipulatorTest extends CDKTestCase {
+class ChemSequenceManipulatorTest extends CDKTestCase {
 
-    IAtomContainer    molecule1    = null;
-    IAtomContainer    molecule2    = null;
-    IAtom             atomInMol1   = null;
-    IBond             bondInMol1   = null;
-    IAtom             atomInMol2   = null;
-    IAtomContainerSet moleculeSet  = null;
-    IReaction         reaction     = null;
-    IReactionSet      reactionSet  = null;
-    IChemModel        chemModel1   = null;
-    IChemModel        chemModel2   = null;
-    IChemSequence     chemSequence = null;
+    private IAtomContainer    molecule1    = null;
+    private IAtomContainer    molecule2    = null;
+    private IAtom             atomInMol1   = null;
+    private IBond             bondInMol1   = null;
+    private IAtom             atomInMol2   = null;
+    private IAtomContainerSet moleculeSet  = null;
+    private IReaction         reaction     = null;
+    private IReactionSet      reactionSet  = null;
+    private IChemModel        chemModel1   = null;
+    private IChemModel        chemModel2   = null;
+    private IChemSequence     chemSequence = null;
 
-    public ChemSequenceManipulatorTest() {
+    ChemSequenceManipulatorTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         molecule1 = new AtomContainer();
         atomInMol1 = new Atom("Cl");
         molecule1.addAtom(atomInMol1);
@@ -96,25 +96,25 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomCount_IChemSequence() {
+    void testGetAtomCount_IChemSequence() {
         int count = ChemSequenceManipulator.getAtomCount(chemSequence);
         Assertions.assertEquals(6, count);
     }
 
     @Test
-    public void testGetBondCount_IChemSequence() {
+    void testGetBondCount_IChemSequence() {
         int count = ChemSequenceManipulator.getBondCount(chemSequence);
         Assertions.assertEquals(2, count);
     }
 
     @Test
-    public void testGetAllAtomContainers_IChemSequence() {
+    void testGetAllAtomContainers_IChemSequence() {
         List<IAtomContainer> list = ChemSequenceManipulator.getAllAtomContainers(chemSequence);
         Assertions.assertEquals(4, list.size());
     }
 
     @Test
-    public void testGetAllChemObjects_IChemSequence() {
+    void testGetAllChemObjects_IChemSequence() {
         List<IChemObject> list = ChemSequenceManipulator.getAllChemObjects(chemSequence);
         int molCount = 0;
         int molSetCount = 0;
@@ -147,7 +147,7 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllIDs_IChemSequence() {
+    void testGetAllIDs_IChemSequence() {
         Assertions.assertEquals(0, ChemSequenceManipulator.getAllIDs(chemSequence).size());
         IDCreator.createIDs(chemSequence);
         List<String> allIDs = ChemSequenceManipulator.getAllIDs(chemSequence);

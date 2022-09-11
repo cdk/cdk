@@ -51,21 +51,21 @@ import java.io.StringWriter;
  * @author John Mayfield
  * @cdk.module test-qsarcml
  */
-public class QSARCMLRoundTripTest {
+class QSARCMLRoundTripTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(QSARCMLRoundTripTest.class);
 
     private static Convertor    convertor;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         convertor = new Convertor(false, "");
         // not needed QSARCustomizer is on by default
         // convertor.registerCustomizer(new QSARCustomizer());
     }
 
     // See also CMLRoundTripTool
-    public static IAtomContainer roundTripMolecule(Convertor convertor, IAtomContainer mol) throws Exception {
+    static IAtomContainer roundTripMolecule(Convertor convertor, IAtomContainer mol) throws Exception {
         String cmlString;
         Element cmlDOM = convertor.cdkAtomContainerToCMLMolecule(mol);
         cmlString = cmlDOM.toXML();
@@ -93,7 +93,7 @@ public class QSARCMLRoundTripTest {
     }
 
     @Test
-    public void testDescriptorValue_QSAR() throws Exception {
+    void testDescriptorValue_QSAR() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
@@ -120,7 +120,7 @@ public class QSARCMLRoundTripTest {
     }
 
     @Test
-    public void testQSARCustomization() throws Exception {
+    void testQSARCustomization() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();

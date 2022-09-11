@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class JMEFormatTest extends ChemFormatTest {
+class JMEFormatTest extends ChemFormatTest {
 
-    public JMEFormatTest() {
+    JMEFormatTest() {
         super.setChemFormat((IChemFormat) JMEFormat.getInstance());
     }
 

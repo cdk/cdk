@@ -40,16 +40,16 @@ import java.io.IOException;
 /**
  * @cdk.module test-libiocml
  */
-public class ConvertorTest extends CDKTestCase {
+class ConvertorTest extends CDKTestCase {
 
     /**
      * @cdk.bug 1748257
      */
     @Disabled("moved to MDMoleculeTest")
-    public void testBug1748257() {}
+    void testBug1748257() {}
 
     @Test
-    public void testCdkBondToCMLBond_Wedge() throws IOException {
+    void testCdkBondToCMLBond_Wedge() throws IOException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IBond bond = builder.newInstance(IBond.class);
@@ -75,7 +75,7 @@ public class ConvertorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCdkBondToCMLBond_Hatch() throws IOException {
+    void testCdkBondToCMLBond_Hatch() throws IOException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IBond bond = builder.newInstance(IBond.class);

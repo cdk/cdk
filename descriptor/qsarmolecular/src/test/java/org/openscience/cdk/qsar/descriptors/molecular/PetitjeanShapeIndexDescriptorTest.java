@@ -41,17 +41,17 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsarmolecular
  */
 
-public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
+class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
 
-    public PetitjeanShapeIndexDescriptorTest() {}
+    PetitjeanShapeIndexDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(PetitjeanShapeIndexDescriptor.class);
     }
 
     @Test
-    public void testPetitjeanShapeIndexDescriptor() throws Exception {
+    void testPetitjeanShapeIndexDescriptor() throws Exception {
         // first molecule is nbutane, second is naphthalene
         String filename = "petitejean.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -74,7 +74,7 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testPetiteJeanShapeNo3D() throws Exception {
+    void testPetiteJeanShapeNo3D() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CCCOCCC(O)=O");
         DescriptorValue result = descriptor.calculate(atomContainer);

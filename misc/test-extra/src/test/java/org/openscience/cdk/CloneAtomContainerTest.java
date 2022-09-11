@@ -36,10 +36,10 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author  Christoph Steinbeck
  * @cdk.created 2001-08-09
  */
-public class CloneAtomContainerTest extends CDKTestCase {
+class CloneAtomContainerTest extends CDKTestCase {
 
     @Test
-    public void testClone() throws Exception {
+    void testClone() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         IAtomContainer clonedMol = molecule.clone();
         Assertions.assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());

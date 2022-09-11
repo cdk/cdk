@@ -42,24 +42,24 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsarmolecular
  */
 
-public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
+class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
 
-    public ZagrebIndexDescriptorTest() {}
+    ZagrebIndexDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(ZagrebIndexDescriptor.class);
     }
 
     @Test
-    public void testZagrebIndexDescriptor() throws java.lang.Exception {
+    void testZagrebIndexDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         Assertions.assertEquals(16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
     }
 
     @Test
-    public void test2Dvs3D() throws Exception {
+    void test2Dvs3D() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O1C2C34C(C(C1O)CCCc1cc(cc(c1)C(F)(F)F)C(F)(F)F)CCC(C3CCC(O2)(OO4)C)C");
 

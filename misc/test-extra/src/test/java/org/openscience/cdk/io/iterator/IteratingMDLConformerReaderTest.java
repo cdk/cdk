@@ -17,12 +17,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class IteratingMDLConformerReaderTest extends CDKTestCase {
+class IteratingMDLConformerReaderTest extends CDKTestCase {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingMDLConformerReaderTest.class);
 
     @Test
-    public void testSDF() throws Exception {
+    void testSDF() throws Exception {
         String filename = "iterconftest.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -47,7 +47,7 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemove() {
+    void testRemove() {
         String filename = "iterconftest.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

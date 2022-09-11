@@ -37,27 +37,27 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.module test-isomorphism
  */
-public class RGroupListTest extends CDKTestCase {
+class RGroupListTest extends CDKTestCase {
 
     @BeforeAll
-    public static void setUp() {}
+    static void setUp() {}
 
     @Test
-    public void testOccurrenceCorrect() throws CDKException {
+    void testOccurrenceCorrect() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence("1, 3-7, 9, >11");
         Assertions.assertEquals(rgrLst.getOccurrence(), "1,3-7,9,>11");
     }
 
     @Test
-    public void testOccurrenceNull() throws CDKException {
+    void testOccurrenceNull() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence(null);
         Assertions.assertEquals(rgrLst.getOccurrence(), RGroupList.DEFAULT_OCCURRENCE);
     }
 
     @Test
-    public void testOccurrenceNumericValues() throws CDKException {
+    void testOccurrenceNumericValues() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         Assertions.assertThrows(CDKException.class,
                                 () -> {
@@ -66,7 +66,7 @@ public class RGroupListTest extends CDKTestCase {
     }
 
     @Test
-    public void testOccurrenceNoNegativeNumber() throws CDKException {
+    void testOccurrenceNoNegativeNumber() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         Assertions.assertThrows(CDKException.class,
                                 () -> {
@@ -75,7 +75,7 @@ public class RGroupListTest extends CDKTestCase {
     }
 
     @Test
-    public void testOccurrenceNotSmallerThanZero() throws CDKException {
+    void testOccurrenceNotSmallerThanZero() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         Assertions.assertThrows(CDKException.class,
                                 () -> {

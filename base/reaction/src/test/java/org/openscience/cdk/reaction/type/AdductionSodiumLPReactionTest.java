@@ -59,7 +59,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public AdductionSodiumLPReactionTest() throws Exception {
+    AdductionSodiumLPReactionTest() throws Exception {
         setReaction(AdductionSodiumLPReaction.class);
     }
 
@@ -67,7 +67,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testAdductionSodiumLPReaction() throws Exception {
+    void testAdductionSodiumLPReaction() throws Exception {
         IReactionProcess type = new AdductionSodiumLPReaction();
         Assertions.assertNotNull(type);
     }
@@ -119,7 +119,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new AdductionSodiumLPReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -156,7 +156,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new AdductionSodiumLPReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -205,7 +205,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new AdductionSodiumLPReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();

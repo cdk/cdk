@@ -44,13 +44,13 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
     private BasicSceneGenerator generator;
 
     @Override
-    public Rectangle getCustomCanvas() {
+    protected Rectangle getCustomCanvas() {
         return null;
     }
 
     @BeforeEach
     @Override
-    public void setup() {
+    void setup() {
         super.setup();
         this.generator = new BasicSceneGenerator();
         model.registerParameters(generator);
@@ -58,7 +58,7 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Test
-    public void testSingleAtom() {
+    void testSingleAtom() {
         IAtomContainer singleAtom = makeSingleAtom();
 
         // nothing should be made
@@ -68,7 +68,7 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Test
-    public void testSingleBond() {
+    void testSingleBond() {
         IAtomContainer container = makeSingleBond();
 
         // generate the single line element
@@ -78,7 +78,7 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Test
-    public void testSquare() {
+    void testSquare() {
         IAtomContainer square = makeSquare();
 
         // generate all four bonds

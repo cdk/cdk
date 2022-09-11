@@ -35,13 +35,13 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.ChemFile
  */
-public class ChangeEventPropagationTest extends CDKTestCase {
+class ChangeEventPropagationTest extends CDKTestCase {
 
     @BeforeAll
-    public static void setUp() {}
+    static void setUp() {}
 
     @Test
-    public void testPropagation() {
+    void testPropagation() {
         ChemFile cf = new ChemFile();
         ChemSequence cs = new ChemSequence();
         ChemModel cm = new ChemModel();

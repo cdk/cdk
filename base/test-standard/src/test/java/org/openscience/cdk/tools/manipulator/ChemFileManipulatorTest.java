@@ -56,30 +56,30 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module test-standard
  */
-public class ChemFileManipulatorTest extends CDKTestCase {
+class ChemFileManipulatorTest extends CDKTestCase {
 
     private final static ILoggingTool logger        = LoggingToolFactory
                                                             .createLoggingTool(ChemFileManipulatorTest.class);
 
-    IAtomContainer                    molecule1     = null;
-    IAtomContainer                    molecule2     = null;
-    IAtom                             atomInMol1    = null;
-    IBond                             bondInMol1    = null;
-    IAtom                             atomInMol2    = null;
-    IAtomContainerSet                 moleculeSet   = null;
-    IReaction                         reaction      = null;
-    IReactionSet                      reactionSet   = null;
-    IChemModel                        chemModel     = null;
-    IChemSequence                     chemSequence1 = null;
-    IChemSequence                     chemSequence2 = null;
-    IChemFile                         chemFile      = null;
+    private IAtomContainer                    molecule1     = null;
+    private IAtomContainer                    molecule2     = null;
+    private IAtom                             atomInMol1    = null;
+    private IBond                             bondInMol1    = null;
+    private IAtom                             atomInMol2    = null;
+    private IAtomContainerSet                 moleculeSet   = null;
+    private IReaction                         reaction      = null;
+    private IReactionSet                      reactionSet   = null;
+    private IChemModel                        chemModel     = null;
+    private IChemSequence                     chemSequence1 = null;
+    private IChemSequence                     chemSequence2 = null;
+    private IChemFile                         chemFile      = null;
 
-    public ChemFileManipulatorTest() {
+    ChemFileManipulatorTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         molecule1 = new AtomContainer();
         atomInMol1 = new Atom("Cl");
         molecule1.addAtom(atomInMol1);
@@ -110,7 +110,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllAtomContainers_IChemFile() throws Exception {
+    void testGetAllAtomContainers_IChemFile() throws Exception {
         String filename = "prev2000.sd";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -123,7 +123,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllIDs_IChemFile() {
+    void testGetAllIDs_IChemFile() {
         Assertions.assertEquals(0, ChemFileManipulator.getAllIDs(chemFile).size());
         IDCreator.createIDs(chemFile);
         List<String> allIDs = ChemFileManipulator.getAllIDs(chemFile);
@@ -133,19 +133,19 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomCount_IChemFile() {
+    void testGetAtomCount_IChemFile() {
         int count = ChemFileManipulator.getAtomCount(chemFile);
         Assertions.assertEquals(6, count);
     }
 
     @Test
-    public void testGetBondCount_IChemFile() {
+    void testGetBondCount_IChemFile() {
         int count = ChemFileManipulator.getBondCount(chemFile);
         Assertions.assertEquals(2, count);
     }
 
     @Test
-    public void testGetAllChemObjects_IChemFile() {
+    void testGetAllChemObjects_IChemFile() {
         List<IChemObject> list = ChemFileManipulator.getAllChemObjects(chemFile);
         Assertions.assertEquals(8, list.size()); // not the file itself
         int atomCount = 0;
@@ -185,13 +185,13 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllChemModels_IChemFile() {
+    void testGetAllChemModels_IChemFile() {
         List<IChemModel> list = ChemFileManipulator.getAllChemModels(chemFile);
         Assertions.assertEquals(1, list.size());
     }
 
     @Test
-    public void testGetAllReactions_IChemFile() {
+    void testGetAllReactions_IChemFile() {
         List<IReaction> list = ChemFileManipulator.getAllReactions(chemFile);
         Assertions.assertEquals(1, list.size());
     }

@@ -34,10 +34,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class CompatibilityMatrixTest {
+class CompatibilityMatrixTest {
 
     @Test
-    public void accessAndModify() throws Exception {
+    void accessAndModify() throws Exception {
         CompatibilityMatrix m = new CompatibilityMatrix(5, 5);
         Assertions.assertFalse(m.get(0, 1));
         Assertions.assertFalse(m.get(0, 4));
@@ -54,7 +54,7 @@ public class CompatibilityMatrixTest {
     }
 
     @Test
-    public void mark() throws Exception {
+    void mark() throws Exception {
         CompatibilityMatrix m = new CompatibilityMatrix(5, 5);
         m.set(0, 1);
         m.set(0, 2);
@@ -84,7 +84,7 @@ public class CompatibilityMatrixTest {
     }
 
     @Test
-    public void markRow() throws Exception {
+    void markRow() throws Exception {
         CompatibilityMatrix m = new CompatibilityMatrix(5, 5);
         m.set(0, 1);
         m.set(0, 2);
@@ -95,7 +95,7 @@ public class CompatibilityMatrixTest {
     }
 
     @Test
-    public void fix() throws Exception {
+    void fix() throws Exception {
         CompatibilityMatrix m = new CompatibilityMatrix(5, 5);
         m.set(0, 1);
         m.set(0, 2);

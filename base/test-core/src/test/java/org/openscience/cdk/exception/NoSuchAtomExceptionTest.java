@@ -30,10 +30,10 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.exception.NoSuchAtomException
  */
-public class NoSuchAtomExceptionTest extends CDKTestCase {
+class NoSuchAtomExceptionTest extends CDKTestCase {
 
     @Test
-    public void testNoSuchAtomException_String() {
+    void testNoSuchAtomException_String() {
         final String EXPLANATION = "Buckybull is not an element!";
         NoSuchAtomException exception = new NoSuchAtomException(EXPLANATION);
         Assertions.assertNotNull(exception);

@@ -48,7 +48,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.created September 4, 2003
  * @cdk.require java1.4+
  */
-public class TemplateHandlerTest extends CDKTestCase {
+class TemplateHandlerTest extends CDKTestCase {
 
     public boolean                           standAlone = false;
     private static final ILoggingTool              logger     = LoggingToolFactory
@@ -61,7 +61,7 @@ public class TemplateHandlerTest extends CDKTestCase {
      *  The JUnit setup method
      */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         sdg = new StructureDiagramGenerator();
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
@@ -72,14 +72,14 @@ public class TemplateHandlerTest extends CDKTestCase {
      *@exception  Exception  Description of the Exception
      */
     @Test
-    public void testInit() throws Exception {
+    void testInit() throws Exception {
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 
         Assertions.assertEquals(5, th.getTemplateCount());
     }
 
     @Test
-    public void testDetection() throws Exception {
+    void testDetection() throws Exception {
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -90,7 +90,7 @@ public class TemplateHandlerTest extends CDKTestCase {
      * Tests if a template matches if just an element is non-carbon.
      */
     @Test
-    public void testOtherElements() throws Exception {
+    void testOtherElements() throws Exception {
         boolean itIsInThere;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = TestMoleculeFactory.makeSteran();
@@ -105,7 +105,7 @@ public class TemplateHandlerTest extends CDKTestCase {
      * Tests if a template matches if just and bond order is changed.
      */
     @Test
-    public void testOtherBondOrder() throws Exception {
+    void testOtherBondOrder() throws Exception {
         boolean itIsInThere;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = TestMoleculeFactory.makeSteran();
@@ -117,7 +117,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testAddMolecule() throws Exception {
+    void testAddMolecule() throws Exception {
         logger.debug("***TestAddMolecule***");
         boolean itIsInThere;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
@@ -139,7 +139,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemoveMolecule() throws Exception {
+    void testRemoveMolecule() throws Exception {
         logger.debug("***TestRemoveMolecule***");
         boolean itIsInThere;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
@@ -170,7 +170,7 @@ public class TemplateHandlerTest extends CDKTestCase {
      * Loads a molecule with two adamantanes and one cubane
      * substructure and tests whether all are found.
      */
-    public void getMappedSubstructures_IAtomContainer() throws Exception {
+    void getMappedSubstructures_IAtomContainer() throws Exception {
         // Set up molecule reader
         String filename = "data/mdl/diadamantane-cubane.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -188,7 +188,8 @@ public class TemplateHandlerTest extends CDKTestCase {
         Assertions.assertEquals(3, mappedStructures.getAtomContainerCount(), "3 mapped templates");
     }
 
-    @Test public void convert() throws IOException {
+    @Test
+    void convert() throws IOException {
         TemplateHandler templateHandler = new TemplateHandler(SilentChemObjectBuilder.getInstance());
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         templateHandler.toIdentityTemplateLibrary().store(bout);

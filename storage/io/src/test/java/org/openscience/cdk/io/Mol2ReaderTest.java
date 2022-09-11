@@ -57,17 +57,17 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *
  * @see org.openscience.cdk.io.Mol2Reader
  */
-public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
+class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Mol2ReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new Mol2Reader(), "fromWebsite.mol2");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         Mol2Reader reader = new Mol2Reader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(ChemModel.class));
@@ -79,7 +79,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
      * <a href="http://www.tripos.com/custResources/mol2Files/mol2_format3.html">Tripos example</a>.
      */
     @Test
-    public void testExampleFromWebsite() throws Exception {
+    void testExampleFromWebsite() throws Exception {
         String filename = "fromWebsite.mol2";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -110,7 +110,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadingIDs() throws Exception {
+    void testReadingIDs() throws Exception {
         String filename = "fromWebsite.mol2";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
@@ -128,7 +128,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
      */
     @Tag("SlowTest")
     @Test
-    public void testNCIfeb03_2D() throws Exception {
+    void testNCIfeb03_2D() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         String filename = "NCI_feb03_2D.mol2.gz";
@@ -149,7 +149,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testMultiMol() throws Exception {
+    void testMultiMol() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
         String filename = "actives.mol2";
         logger.info("Testing: ", filename);
@@ -164,7 +164,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testMultiMolButSingle() throws Exception {
+    void testMultiMolButSingle() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
         String filename = "fromWebsite.mol2";
         logger.info("Testing: ", filename);
@@ -179,7 +179,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testIAtomContainer() throws Exception {
+    void testIAtomContainer() throws Exception {
         String filename = "fromWebsite.mol2";
         InputStream in = Mol2ReaderTest.class.getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(in);
@@ -191,7 +191,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testBug1714794() throws Exception {
+    void testBug1714794() throws Exception {
         String problematicMol2 = "@<TRIPOS>MOLECULE\n" + "mol_197219.smi\n" + " 129 135 0 0 0\n" + "SMALL\n"
                 + "GASTEIGER\n" + "Energy = 0\n" + "\n" + "@<TRIPOS>ATOM\n"
                 + "      1 N1          0.0000    0.0000    0.0000 N.am    1  <1>        -0.2782\n"
@@ -396,7 +396,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     // CL --> Cl, NA --> Na etc.. /cdk/bug/1346
     @Test
-    public void unrecognisedAtomTypes() throws Exception {
+    void unrecognisedAtomTypes() throws Exception {
         Mol2Reader mol2Reader = null;
         try {
             mol2Reader = new Mol2Reader(getClass().getResourceAsStream("CLMW1.mol2"));

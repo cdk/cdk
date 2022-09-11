@@ -48,12 +48,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.module test-smiles
  * @see org.openscience.cdk.io.SMILESReader
  */
-public class IteratingSMILESReaderTest extends CDKTestCase {
+class IteratingSMILESReaderTest extends CDKTestCase {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
 
     @Test
-    public void testSMILESFileWithNames() throws Exception {
+    void testSMILESFileWithNames() throws Exception {
         String filename = "test.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -73,7 +73,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testSMILESFileWithSpacesAndTabs() throws Exception {
+    void testSMILESFileWithSpacesAndTabs() throws Exception {
         String filename = "tabs.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -93,7 +93,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testSMILESTitles() throws Exception {
+    void testSMILESTitles() throws Exception {
         String filename = "tabs.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -109,7 +109,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testSMILESFile() {
+    void testSMILESFile() {
         String filename = "test2.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -127,7 +127,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetFormat() {
+    void testGetFormat() {
         String filename = "test2.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -137,7 +137,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetReader1() {
+    void testSetReader1() {
         String filename = "test2.smi";
         InputStream ins1 = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins1, DefaultChemObjectBuilder.getInstance());
@@ -158,7 +158,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testRemove() {
+    void testRemove() {
         String filename = "test2.smi";
         InputStream ins1 = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins1, DefaultChemObjectBuilder.getInstance());
@@ -173,7 +173,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void empty() {
+    void empty() {
         Reader reader = new StringReader(" empty1\n empty2");
         IteratingSMILESReader smis = new IteratingSMILESReader(reader, SilentChemObjectBuilder.getInstance());
         Assertions.assertTrue(smis.hasNext());
@@ -188,7 +188,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void problemSmiles() {
+    void problemSmiles() {
 
         Reader reader = new StringReader(" okay\nn1cccc1 bad\n okay");
         IteratingSMILESReader smis = new IteratingSMILESReader(reader, SilentChemObjectBuilder.getInstance());

@@ -31,10 +31,10 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-qsar
  */
-public class AtomicPropertiesTest extends CDKTestCase {
+class AtomicPropertiesTest extends CDKTestCase {
 
     @Test
-    public void testGetInstance() throws IOException {
+    void testGetInstance() throws IOException {
         AtomicProperties props = AtomicProperties.getInstance();
         Assertions.assertNotNull(props);
         // test singleton pattern
@@ -43,56 +43,56 @@ public class AtomicPropertiesTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetMass() throws Exception {
+    void testGetMass() throws Exception {
         AtomicProperties props = AtomicProperties.getInstance();
         double mass = props.getMass("C");
         Assertions.assertTrue(mass > 0);
     }
 
     @Test
-    public void testGetNormalizedMass() throws Exception {
+    void testGetNormalizedMass() throws Exception {
         AtomicProperties props = AtomicProperties.getInstance();
         double mass = props.getNormalizedMass("C");
         Assertions.assertTrue(mass > 0);
     }
 
     @Test
-    public void testGetPolarizability() throws Exception {
+    void testGetPolarizability() throws Exception {
         AtomicProperties props = AtomicProperties.getInstance();
         double polar = props.getPolarizability("C");
         Assertions.assertTrue(polar > 0);
     }
 
     @Test
-    public void testGetNormalizedPolarizability() throws Exception {
+    void testGetNormalizedPolarizability() throws Exception {
         AtomicProperties props = AtomicProperties.getInstance();
         double polar = props.getNormalizedPolarizability("C");
         Assertions.assertTrue(polar > 0);
     }
 
     @Test
-    public void testGetVdWVolume() throws Exception {
+    void testGetVdWVolume() throws Exception {
         AtomicProperties props = AtomicProperties.getInstance();
         double vol = props.getVdWVolume("C");
         Assertions.assertTrue(vol > 0);
     }
 
     @Test
-    public void testGetNormalizedVdWVolume() throws Exception {
+    void testGetNormalizedVdWVolume() throws Exception {
         AtomicProperties props = AtomicProperties.getInstance();
         double vol = props.getNormalizedVdWVolume("C");
         Assertions.assertTrue(vol > 0);
     }
 
     @Test
-    public void testGetElectronegativity() throws Exception {
+    void testGetElectronegativity() throws Exception {
         AtomicProperties props = AtomicProperties.getInstance();
         double eneg = props.getElectronegativity("C");
         Assertions.assertTrue(eneg > 0);
     }
 
     @Test
-    public void testGetNormalizedElectronegativity() throws Exception {
+    void testGetNormalizedElectronegativity() throws Exception {
         AtomicProperties props = AtomicProperties.getInstance();
         double eneg = props.getNormalizedElectronegativity("C");
         Assertions.assertTrue(eneg > 0);

@@ -45,17 +45,17 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+
  */
-public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
+class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIPlainTextReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new INChIPlainTextReader(), "guanine.inchi");
     }
 
     @Test
-    public void testAccepts() throws IOException {
+    void testAccepts() throws IOException {
         INChIPlainTextReader reader = new INChIPlainTextReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         reader.close();
@@ -66,7 +66,7 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
      * of guanine.
      */
     @Test
-    public void testGuanine() throws Exception {
+    void testGuanine() throws Exception {
         String filename = "guanine.inchi";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -91,7 +91,7 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testChebi26120() throws Exception {
+    void testChebi26120() throws Exception {
         StringReader ins = new StringReader(
                 "InChI=1/C40H62/c1-33(2)19-13-23-37(7)27-17-31-39(9)29-15-25-35(5)21-11-12-22-36(6)26-16-30-40(10)32-18-28-38(8)24-14-20-34(3)4/h11-12,15,19-22,25,27-30H,13-14,16-18,23-24,26,31-32H2,1-10H3");
         INChIPlainTextReader reader = new INChIPlainTextReader(ins);
@@ -115,7 +115,7 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testPlatinum() throws Exception {
+    void testPlatinum() throws Exception {
         StringReader ins = new StringReader(
                 "InChI=1S/Pt");
         INChIPlainTextReader reader = new INChIPlainTextReader(ins);

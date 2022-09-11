@@ -32,18 +32,18 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarbond
  */
-public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
+class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 
     /**
      *  Constructor for the BondPartialPiChargeDescriptorTest object
      *
      */
-    public BondPartialPiChargeDescriptorTest() {
+    BondPartialPiChargeDescriptorTest() {
 
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BondPartialPiChargeDescriptor.class);
     }
 
@@ -52,7 +52,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
      */
 
     @Test
-    public void testBondPiElectronegativityDescriptor() throws
+    void testBondPiElectronegativityDescriptor() throws
             java.lang.Exception {
         descriptor = new BondPartialPiChargeDescriptor();
         double[] testResult = {0.0, 0.0};/*
@@ -77,7 +77,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Allyl bromide
      */
     @Test
-    public void testBondPiElectronegativityDescriptor_Allyl_bromide() throws
+    void testBondPiElectronegativityDescriptor_Allyl_bromide() throws
             java.lang.Exception {
         descriptor = new BondPartialPiChargeDescriptor();
         double[] testResult = {0.0022, 0.0011, 0.0011, 0.0011, 0.0011, 0.0, 0.0, 0.0}; /*
@@ -122,7 +122,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Isopentyl iodide
      */
     @Test
-    public void testBondPiElectronegativityDescriptor_Isopentyl_iodide() throws
+    void testBondPiElectronegativityDescriptor_Isopentyl_iodide() throws
             java.lang.Exception {
         descriptor = new BondPartialPiChargeDescriptor();
         double testResult = 0.0; /*
@@ -144,7 +144,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with Allyl mercaptan
      */
     @Test
-    public void testBondPiElectronegativityDescriptor_Allyl_mercaptan() throws
+    void testBondPiElectronegativityDescriptor_Allyl_mercaptan() throws
             java.lang.Exception {
         descriptor = new BondPartialPiChargeDescriptor();
         double[] testResult = {0.0006, 0.0003, 0.0003, 0.0003, 0.0003, 0.0, 0.0, 0.0, 0.0}; /*

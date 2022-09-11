@@ -36,10 +36,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class UllmannTest {
+class UllmannTest {
 
     @Test
-    public void benzeneSubsearch() throws Exception {
+    void benzeneSubsearch() throws Exception {
         int[] match = Ullmann.findSubstructure(TestMoleculeFactory.makeBenzene()).match(
                 TestMoleculeFactory.makeNaphthalene());
         assertThat(match, is(new int[]{2, 7, 6, 5, 4, 3}));
@@ -49,7 +49,7 @@ public class UllmannTest {
     }
 
     @Test
-    public void napthaleneSubsearch() throws Exception {
+    void napthaleneSubsearch() throws Exception {
         int[] match = Ullmann.findSubstructure(TestMoleculeFactory.makeNaphthalene()).match(
                 TestMoleculeFactory.makeBenzene());
         assertThat(match, is(new int[0]));

@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  *
  * @cdk.module test-core
  */
-public class OWLAtomTypeReaderTest extends CDKTestCase {
+class OWLAtomTypeReaderTest extends CDKTestCase {
 
     private final String OWL_CONTENT = "<?xml version=\"1.0\"?>" + "<!DOCTYPE rdf:RDF ["
                                              + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
@@ -56,13 +56,13 @@ public class OWLAtomTypeReaderTest extends CDKTestCase {
                                              + "  </at:AtomType>" + "</rdf:RDF>";
 
     @Test
-    public void testAtomTypeReader_Reader() {
+    void testAtomTypeReader_Reader() {
         OWLAtomTypeReader reader = new OWLAtomTypeReader(new StringReader(""));
         Assertions.assertNotNull(reader);
     }
 
     @Test
-    public void testReadAtomTypes_IChemObjectBuilder() {
+    void testReadAtomTypes_IChemObjectBuilder() {
         OWLAtomTypeReader reader = new OWLAtomTypeReader(new StringReader(OWL_CONTENT));
         Assertions.assertNotNull(reader);
         List<IAtomType> types = reader.readAtomTypes(new ChemObject().getBuilder());
@@ -71,7 +71,7 @@ public class OWLAtomTypeReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testReadAtomTypes_CDK() {
+    void testReadAtomTypes_CDK() {
         OWLAtomTypeReader reader = new OWLAtomTypeReader(new StringReader(OWL_CONTENT));
         Assertions.assertNotNull(reader);
         List<IAtomType> types = reader.readAtomTypes(new ChemObject().getBuilder());

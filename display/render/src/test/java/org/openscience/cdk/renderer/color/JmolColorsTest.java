@@ -34,17 +34,17 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * @cdk.module test-render
  */
-public class JmolColorsTest extends CDKTestCase {
+class JmolColorsTest extends CDKTestCase {
 
     @Test
-    public void testGetAtomColor() {
+    void testGetAtomColor() {
     	IAtomColorer colors = new JmolColors();
         Assertions.assertNotNull(colors);
         Assertions.assertEquals(new Color(0xFFFFFF).getRGB(), colors.getAtomColor(new Atom("H")).getRGB());
     }
 
     @Test
-    public void testGetDefaultAtomColor() {
+    void testGetDefaultAtomColor() {
     	IAtomColorer colors = new JmolColors();
 
         Assertions.assertNotNull(colors);

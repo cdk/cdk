@@ -44,10 +44,10 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * @author John May
  * @cdk.module test-core
  */
-public class BitMatrixTest {
+class BitMatrixTest {
 
     @Test
-    public void swap_basic() {
+    void swap_basic() {
         BitMatrix m = new BitMatrix(0, 4);
         List<BitSet> rows = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -66,7 +66,7 @@ public class BitMatrixTest {
 
     // ensure we can access the rows by with original index even after swapping
     @Test
-    public void swap() {
+    void swap() {
         BitMatrix m = new BitMatrix(0, 100);
         List<BitSet> rows = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
@@ -88,7 +88,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void clear() {
+    void clear() {
         BitMatrix m = new BitMatrix(9, 3);
         BitSet r1 = toBitSet("110000000");
         BitSet r2 = toBitSet("100000000");
@@ -109,7 +109,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void indexOf() {
+    void indexOf() {
         BitMatrix m = new BitMatrix(9, 3);
         BitSet r1 = toBitSet("010000000");
         BitSet r2 = toBitSet("100001000");
@@ -129,7 +129,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void string() {
+    void string() {
         BitMatrix m = new BitMatrix(9, 3);
         m.add(toBitSet("110000000"));
         m.add(toBitSet("110011000"));
@@ -139,7 +139,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void eliminate1() throws Exception {
+    void eliminate1() throws Exception {
         // vectors[0] = vectors[1] ^ vectors[2] (xor)
         BitMatrix m = new BitMatrix(9, 3);
         m.add(toBitSet("110000000"));
@@ -152,7 +152,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void eliminate2() throws Exception {
+    void eliminate2() throws Exception {
         // vectors[2] = vectors[0] ^ vectors[1] (xor)
         BitMatrix m = new BitMatrix(9, 3);
         m.add(toBitSet("110011000"));
@@ -165,7 +165,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void eliminate3() throws Exception {
+    void eliminate3() throws Exception {
         // all vectors are independent
         BitMatrix m = new BitMatrix(15, 4);
 
@@ -185,7 +185,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void independent1() throws Exception {
+    void independent1() throws Exception {
         BitMatrix m = new BitMatrix(9, 3);
         m.add(toBitSet("010011000"));
         m.add(toBitSet("001000110"));
@@ -197,7 +197,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void independent2() throws Exception {
+    void independent2() throws Exception {
         // all vectors are independent
         BitMatrix m = new BitMatrix(9, 3);
         m.add(toBitSet("110011000"));
@@ -210,7 +210,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void duplicates() throws Exception {
+    void duplicates() throws Exception {
         // ensure duplicates are handled
         BitMatrix m = new BitMatrix(9, 3);
         m.add(toBitSet("110000000"));
@@ -237,7 +237,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void xor() {
+    void xor() {
         BitSet s = toBitSet("00011");
         BitSet t = toBitSet("10010");
         BitSet u = BitMatrix.xor(s, t);
@@ -247,7 +247,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void from_cycles() {
+    void from_cycles() {
         Cycle c1 = mock(Cycle.class);
         Cycle c2 = mock(Cycle.class);
         Cycle c3 = mock(Cycle.class);
@@ -264,7 +264,7 @@ public class BitMatrixTest {
     }
 
     @Test
-    public void from_cycles_cycle() {
+    void from_cycles_cycle() {
         Cycle c1 = mock(Cycle.class);
         Cycle c2 = mock(Cycle.class);
         Cycle last = mock(Cycle.class);

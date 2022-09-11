@@ -38,9 +38,9 @@ import org.openscience.cdk.interfaces.IChemFile;
  * @cdk.module test-libiocml
  */
 
-public class MDLCMLRoundtripTest {
+class MDLCMLRoundtripTest {
 
-    public MDLCMLRoundtripTest() {
+    MDLCMLRoundtripTest() {
         super();
     }
 
@@ -48,7 +48,7 @@ public class MDLCMLRoundtripTest {
      * @cdk.bug 1649526
      */
     @Test
-    public void testBug1649526() throws Exception {
+    void testBug1649526() throws Exception {
         //Read the original
         String filename = "bug-1649526.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);

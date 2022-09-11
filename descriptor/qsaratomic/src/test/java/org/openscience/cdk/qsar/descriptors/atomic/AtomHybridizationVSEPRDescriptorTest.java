@@ -38,12 +38,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
+class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
 
-    public AtomHybridizationVSEPRDescriptorTest() {}
+    AtomHybridizationVSEPRDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(AtomHybridizationVSEPRDescriptor.class);
     }
 
@@ -51,7 +51,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with O-C
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_1() throws
+    void testAtomHybridizationVSEPRDescriptorTest_1() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -80,7 +80,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with [O+]=C-C
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_2() throws
+    void testAtomHybridizationVSEPRDescriptorTest_2() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -109,7 +109,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_3() throws
+    void testAtomHybridizationVSEPRDescriptorTest_3() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -140,7 +140,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      * @cdk.bug 2323124
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_4() throws
+    void testAtomHybridizationVSEPRDescriptorTest_4() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -172,7 +172,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      * @cdk.bug 2323133
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_5() throws
+    void testAtomHybridizationVSEPRDescriptorTest_5() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -208,7 +208,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      * @cdk.bug 2323126
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_6() throws
+    void testAtomHybridizationVSEPRDescriptorTest_6() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -235,7 +235,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with F-C=C
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_7() throws
+    void testAtomHybridizationVSEPRDescriptorTest_7() throws
             java.lang.Exception {
         int[] testResult = {IAtomType.Hybridization.SP3.ordinal(), IAtomType.Hybridization.SP2.ordinal(),
                 IAtomType.Hybridization.SP2.ordinal()}; /*
@@ -269,7 +269,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with [F+]=C-[C-]
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_8() throws
+    void testAtomHybridizationVSEPRDescriptorTest_8() throws
             java.lang.Exception {
         int[] testResult = {IAtomType.Hybridization.SP2.ordinal(), IAtomType.Hybridization.SP2.ordinal(),
                 IAtomType.Hybridization.SP3.ordinal()};

@@ -32,17 +32,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsaratomic
  */
-public class PeriodicTablePositionDescriptorTest extends AtomicDescriptorTest {
+class PeriodicTablePositionDescriptorTest extends AtomicDescriptorTest {
 
-    public PeriodicTablePositionDescriptorTest() {}
+    PeriodicTablePositionDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(PeriodicTablePositionDescriptor.class);
     }
 
     @Test
-    public void testPeriodicTablePositionDescriptor() throws java.lang.Exception {
+    void testPeriodicTablePositionDescriptor() throws java.lang.Exception {
         IAtomicDescriptor descriptor = new PeriodicTablePositionDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCl"); //

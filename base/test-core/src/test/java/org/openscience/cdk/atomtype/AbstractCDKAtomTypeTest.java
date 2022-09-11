@@ -31,11 +31,11 @@ import org.openscience.cdk.test.atomtype.AbstractAtomTypeTest;
  * @cdk.module test-core
  * @cdk.bug    1890702
  */
-abstract public class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
+abstract class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
 
     private final static String            ATOMTYPE_LIST = "cdk-atom-types.owl";
 
-    protected final static AtomTypeFactory factory       = AtomTypeFactory
+    final static AtomTypeFactory factory       = AtomTypeFactory
                                                                  .getInstance("org/openscience/cdk/dict/data/"
                                                                          + ATOMTYPE_LIST,
                                                                          SilentChemObjectBuilder.getInstance());

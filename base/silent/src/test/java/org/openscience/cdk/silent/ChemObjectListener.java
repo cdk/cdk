@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @cdk.module test-silent
  */
-public class ChemObjectListener implements IChemObjectListener {
+class ChemObjectListener implements IChemObjectListener {
 
     private boolean                changed;
     private IChemObjectChangeEvent event;

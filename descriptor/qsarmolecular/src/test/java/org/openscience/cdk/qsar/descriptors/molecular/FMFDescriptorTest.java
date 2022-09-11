@@ -32,17 +32,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class FMFDescriptorTest extends MolecularDescriptorTest {
+class FMFDescriptorTest extends MolecularDescriptorTest {
 
-    public FMFDescriptorTest() {}
+    FMFDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(FMFDescriptor.class);
     }
 
     @Test
-    public void testClenbuterol() throws Exception {
+    void testClenbuterol() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Clc1cc(cc(Cl)c1N)C(O)CNC(C)(C)C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -52,7 +52,7 @@ public class FMFDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testCarbinoxamine() throws Exception {
+    void testCarbinoxamine() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -62,7 +62,7 @@ public class FMFDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testIsamoltane() throws CDKException {
+    void testIsamoltane() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -72,7 +72,7 @@ public class FMFDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testPirenperone() throws CDKException {
+    void testPirenperone() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);

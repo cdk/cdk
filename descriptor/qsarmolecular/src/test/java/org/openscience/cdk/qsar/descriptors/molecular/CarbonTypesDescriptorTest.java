@@ -14,17 +14,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsarmolecular
  */
 
-public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
+class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
 
-    public CarbonTypesDescriptorTest() {}
+    CarbonTypesDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(CarbonTypesDescriptor.class);
     }
 
     @Test
-    public void testButane() throws Exception {
+    void testButane() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
 
@@ -42,7 +42,7 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testComplex1() throws Exception {
+    void testComplex1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(C)(C)C=C(C)C");
 
@@ -60,7 +60,7 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testComplex2() throws Exception {
+    void testComplex2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C#CC(C)=C");
 

@@ -27,25 +27,25 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-dict
  */
-public abstract class AbstractEntryTest extends CDKTestCase {
+abstract class AbstractEntryTest extends CDKTestCase {
 
     private Entry testClass;
 
-    protected void setTestClass(Entry testClass) {
+    void setTestClass(Entry testClass) {
         this.testClass = testClass;
     }
 
-    protected Entry getTestClass() {
+    Entry getTestClass() {
         return this.testClass;
     }
 
     @Test
-    public void testSetTestClass() {
+    void testSetTestClass() {
         Assertions.assertNotNull(this.testClass);
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Entry entry = getTestClass();
         entry.setID("testid");
         entry.setLabel("testTerm");
@@ -54,7 +54,7 @@ public abstract class AbstractEntryTest extends CDKTestCase {
     }
 
     @Test
-    public void testLabel() {
+    void testLabel() {
         Entry entry = getTestClass();
         Assertions.assertEquals("", entry.getLabel());
         entry.setLabel("label");
@@ -62,7 +62,7 @@ public abstract class AbstractEntryTest extends CDKTestCase {
     }
 
     @Test
-    public void testID() {
+    void testID() {
         Entry entry = getTestClass();
         Assertions.assertEquals("", entry.getID());
         entry.setID("identifier");
@@ -70,7 +70,7 @@ public abstract class AbstractEntryTest extends CDKTestCase {
     }
 
     @Test
-    public void testDefinition() {
+    void testDefinition() {
         Entry entry = getTestClass();
         Assertions.assertNull(entry.getDefinition());
         entry.setDefinition("This is a definition.");
@@ -78,7 +78,7 @@ public abstract class AbstractEntryTest extends CDKTestCase {
     }
 
     @Test
-    public void testDescriptorMetadata() {
+    void testDescriptorMetadata() {
         Entry entry = getTestClass();
         Assertions.assertNotNull(entry.getDescriptorMetadata());
         List<String> metadata = entry.getDescriptorMetadata();
@@ -89,7 +89,7 @@ public abstract class AbstractEntryTest extends CDKTestCase {
     }
 
     @Test
-    public void testDescription() {
+    void testDescription() {
         Entry entry = getTestClass();
         Assertions.assertNull(entry.getDescription());
         entry.setDescription("This is a description.");
@@ -97,7 +97,7 @@ public abstract class AbstractEntryTest extends CDKTestCase {
     }
 
     @Test
-    public void testClassName() {
+    void testClassName() {
         Entry entry = getTestClass();
         Assertions.assertNull(entry.getClassName());
         entry.setClassName("org.openscience.cdk.DoesNotExist");
@@ -105,7 +105,7 @@ public abstract class AbstractEntryTest extends CDKTestCase {
     }
 
     @Test
-    public void testRawContent() {
+    void testRawContent() {
         Entry entry = getTestClass();
         Assertions.assertNull(entry.getRawContent());
         Object someObject = 5.0;

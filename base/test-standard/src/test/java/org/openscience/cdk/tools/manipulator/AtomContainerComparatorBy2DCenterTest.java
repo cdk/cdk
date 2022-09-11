@@ -36,20 +36,20 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Test class for {@link org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter}
  * @cdk.module test-standard
  */
-public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
+class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
 
-    public AtomContainerComparatorBy2DCenterTest() {
+    AtomContainerComparatorBy2DCenterTest() {
         super();
     }
 
     @Test
-    public void testCompare_Null_Null() {
+    void testCompare_Null_Null() {
         Comparator<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter();
         Assertions.assertEquals(0, comparator.compare(null, null), "null <-> null");
     }
 
     @Test
-    public void testCompare_Null_2DCoordinates() {
+    void testCompare_Null_2DCoordinates() {
         IAtomContainer atomContainer = new AtomContainer();
         atomContainer.addAtom(new Atom("N"));
         Comparator<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter();
@@ -57,7 +57,7 @@ public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_self_valid_2DCoordinates() {
+    void testCompare_self_valid_2DCoordinates() {
         IAtomContainer atomContainer = new AtomContainer();
         IAtom atom = new Atom("N");
         atom.setPoint2d(new Point2d(10, 10));
@@ -68,7 +68,7 @@ public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_minusOne() {
+    void testCompare_minusOne() {
         IAtomContainer atomContainer = new AtomContainer();
         IAtom atom = new Atom("N");
         atom.setPoint2d(new Point2d(10, 10));
@@ -84,7 +84,7 @@ public class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
     }
 
     @Test
-    public void testCompare_plusOne() {
+    void testCompare_plusOne() {
         IAtomContainer atomContainer = new AtomContainer();
         IAtom atom = new Atom("N");
         atom.setPoint2d(new Point2d(20, 10));

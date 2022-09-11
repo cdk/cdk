@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class MDLV2000FormatTest extends ChemFormatMatcherTest {
+class MDLV2000FormatTest extends ChemFormatMatcherTest {
 
-    public MDLV2000FormatTest() {
+    MDLV2000FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) MDLV2000Format.getInstance());
     }
 

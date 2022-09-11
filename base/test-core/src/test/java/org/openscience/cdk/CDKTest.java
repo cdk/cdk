@@ -29,10 +29,10 @@ import static org.hamcrest.CoreMatchers.not;
  *
  * @cdk.module test-core
  */
-public class CDKTest {
+class CDKTest {
 
     @Test
-    public void testGetVersion() {
+    void testGetVersion() {
         String version = CDK.getVersion();
         Assertions.assertNotNull(version);
         // see for the expected behavior: http://stackoverflow.com/a/3697482/217943

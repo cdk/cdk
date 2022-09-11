@@ -27,10 +27,10 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */
-public class CDKRMapTest extends CDKTestCase {
+class CDKRMapTest extends CDKTestCase {
 
     @Test
-    public void testRMap_int_int() {
+    void testRMap_int_int() {
         CDKRMap node = new CDKRMap(1, 2);
         Assertions.assertNotNull(node);
         Assertions.assertEquals(1, node.getId1());

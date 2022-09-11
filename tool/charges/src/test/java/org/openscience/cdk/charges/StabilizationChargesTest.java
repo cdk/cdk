@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 *
 * @cdk.module test-charges
 */
-public class StabilizationChargesTest extends CDKTestCase {
+class StabilizationChargesTest extends CDKTestCase {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -43,7 +43,7 @@ public class StabilizationChargesTest extends CDKTestCase {
     /**
      * Constructor of the StabilizationChargesTest.
      */
-    public StabilizationChargesTest() {
+    StabilizationChargesTest() {
         super();
     }
 
@@ -53,7 +53,7 @@ public class StabilizationChargesTest extends CDKTestCase {
      *
      */
     @Test
-    public void testStabilizationCharges() {
+    void testStabilizationCharges() {
 
         Assertions.assertNotNull(new StabilizationCharges());
     }
@@ -68,7 +68,7 @@ public class StabilizationChargesTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testCalculatePositive_IAtomContainer_IAtom() throws Exception {
+    void testCalculatePositive_IAtomContainer_IAtom() throws Exception {
 
         StabilizationCharges sc = new StabilizationCharges();
 

@@ -25,10 +25,10 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class RMapTest extends CDKTestCase {
+class RMapTest extends CDKTestCase {
 
     @Test
-    public void testRMap_int_int() {
+    void testRMap_int_int() {
         RMap node = new RMap(1, 2);
         Assertions.assertNotNull(node);
         Assertions.assertEquals(1, node.getId1());

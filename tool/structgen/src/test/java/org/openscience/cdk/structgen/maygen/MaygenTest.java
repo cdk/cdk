@@ -40,10 +40,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
  * @cdk.module structgen
  */
-public class MaygenTest {
+class MaygenTest {
 
     @Test
-    public void test_gettersAndSetters() {
+    void test_gettersAndSetters() {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setTsvoutput(true);
         Assertions.assertTrue(maygen.isTsvoutput());
@@ -62,7 +62,7 @@ public class MaygenTest {
     }
 
     @Test
-    public void test_C3Cl2H4_writeSmiles()
+    void test_C3Cl2H4_writeSmiles()
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFormula("C3Cl2H4");
@@ -80,7 +80,7 @@ public class MaygenTest {
     }
 
     @Test
-    public void test_C3Cl2H4_writeSdf()
+    void test_C3Cl2H4_writeSdf()
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFormula("C3Cl2H4");
@@ -118,7 +118,7 @@ public class MaygenTest {
 
     // important! SDG changes may affect this test!
     @Test
-    public void test_C3Cl2H4_sdfCoordinates()
+    void test_C3Cl2H4_sdfCoordinates()
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFormula("C3Cl2H4");
@@ -156,7 +156,7 @@ public class MaygenTest {
     }
 
     @Test
-    public void test_C_1_6_Cl2_H_4_8_writeSmiles()
+    void test_C_1_6_Cl2_H_4_8_writeSmiles()
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFuzzyFormula("C[1-6]Cl2H[4-8]");
@@ -178,7 +178,7 @@ public class MaygenTest {
     }
 
     @Test
-    public void test_C_1_2_O_H_3_8_falseFormat()
+    void test_C_1_2_O_H_3_8_falseFormat()
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFuzzyFormula("C(1-2}OH[3-8]");

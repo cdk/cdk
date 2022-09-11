@@ -39,12 +39,12 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module test-core
  */
-public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
+class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
 
     private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @Test
-    public void testFile3() throws Exception {
+    void testFile3() throws Exception {
         String filename = "3.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -63,7 +63,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
      * @cdk.bug 3141611
      */
     @Test
-    public void testBug3141611() throws Exception {
+    void testBug3141611() throws Exception {
         String filename = "error.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -79,7 +79,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
     }
 
     @Test
-    public void testOla28() throws Exception {
+    void testOla28() throws Exception {
         String filename = "mol28.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -96,7 +96,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
     }
 
     @Test
-    public void testSmilesFiles() throws Exception {
+    void testSmilesFiles() throws Exception {
         CDKAtomTypeMatcher atomTypeMatcher = CDKAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
 
         // Read the first file

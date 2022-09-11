@@ -52,18 +52,10 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
     public VFlibTurboHandlerTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
-
-    @BeforeEach
-    @Override
-    public void setUp() {}
-
-    @AfterEach
-    @Override
-    public void tearDown() {}
+    static void tearDownClass() throws Exception {}
 
     /**
      * Test of isSubgraph method, of class VFlibSubStructureHandler.
@@ -88,7 +80,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
      * @throws Exception
      */
     @Test
-    public void testSet_IAtomContainer_IAtomContainer() throws Exception {
+    void testSet_IAtomContainer_IAtomContainer() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -105,7 +97,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
      * @throws CDKException
      */
     @Test
-    public void testSet_String_String() throws CDKException {
+    void testSet_String_String() throws CDKException {
         String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         IAtomContainer query = new AtomContainer();
@@ -130,7 +122,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testSet_MolHandler_MolHandler() throws InvalidSmilesException {
+    void testSet_MolHandler_MolHandler() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer target1 = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -147,7 +139,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetAllAtomMapping() throws InvalidSmilesException {
+    void testGetAllAtomMapping() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -166,7 +158,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetAllMapping() throws InvalidSmilesException {
+    void testGetAllMapping() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -185,7 +177,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetFirstAtomMapping() throws InvalidSmilesException {
+    void testGetFirstAtomMapping() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -204,7 +196,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetFirstMapping() throws InvalidSmilesException {
+    void testGetFirstMapping() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");

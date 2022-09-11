@@ -25,25 +25,25 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class BooleanResultTypeTest extends CDKTestCase {
+class BooleanResultTypeTest extends CDKTestCase {
 
-    public BooleanResultTypeTest() {
+    BooleanResultTypeTest() {
         super();
     }
 
     @Test
-    public void testBooleanResultType() {
+    void testBooleanResultType() {
         IDescriptorResult type = new BooleanResultType();
         Assertions.assertNotNull(type);
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Assertions.assertEquals("BooleanResultType", new BooleanResultType().toString());
     }
 
     @Test
-    public void testLength() {
+    void testLength() {
         Assertions.assertEquals(1, new BooleanResultType().length());
     }
 

@@ -59,7 +59,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public ElectronImpactPDBReactionTest() throws Exception {
+    ElectronImpactPDBReactionTest() throws Exception {
         setReaction(ElectronImpactPDBReaction.class);
     }
 
@@ -67,7 +67,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testElectronImpactPDBReaction() throws Exception {
+    void testElectronImpactPDBReaction() throws Exception {
         IReactionProcess type = new ElectronImpactPDBReaction();
         Assertions.assertNotNull(type);
     }
@@ -149,7 +149,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *@return    Description of the Return Value
      */
     @Test
-    public void testAutomatic_Set_Active_Bond() throws Exception {
+    void testAutomatic_Set_Active_Bond() throws Exception {
         /* ionize all possible double bonds */
         IAtomContainer reactant = builder.newInstance(IAtomContainer.class);//miles("C=CC")
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -189,7 +189,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *@return    Description of the Return Value
      */
     @Test
-    public void testAutomatic_Set_Active_Bond2() throws Exception {
+    void testAutomatic_Set_Active_Bond2() throws Exception {
         /* ionize >C=C< , set the reactive center */
         IAtomContainer reactant = builder.newInstance(IAtomContainer.class);//Smiles("C=CCC(=O)CC")
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -245,7 +245,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new ElectronImpactPDBReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -287,7 +287,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new ElectronImpactPDBReaction();
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
@@ -374,7 +374,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *
      * @return The IAtomContainerSet
      */
-    private IAtomContainerSet getExpectedProducts() {
+    IAtomContainerSet getExpectedProducts() {
         IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
         setOfProducts.addAtomContainer(null);

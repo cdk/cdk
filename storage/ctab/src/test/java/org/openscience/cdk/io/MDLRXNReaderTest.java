@@ -54,17 +54,17 @@ import java.util.Iterator;
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */
-public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
+class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReaderTest.class);
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         setSimpleChemObjectReader(new MDLRXNReader(), "reaction-1.rxn");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         MDLRXNReader reader = new MDLRXNReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(ChemModel.class));
@@ -75,7 +75,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadReactions1() throws Exception {
+    void testReadReactions1() throws Exception {
         String filename1 = "reaction-1.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
@@ -109,7 +109,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadReactions2() throws Exception {
+    void testReadReactions2() throws Exception {
         String filename2 = "reaction-2.rxn";
         logger.info("Testing: " + filename2);
         InputStream ins2 = this.getClass().getResourceAsStream(filename2);
@@ -124,7 +124,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadMapping() throws Exception {
+    void testReadMapping() throws Exception {
         String filename2 = "mappingTest.rxn";
         logger.info("Testing: " + filename2);
         InputStream ins2 = this.getClass().getResourceAsStream(filename2);
@@ -143,7 +143,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
      *
      */
     @Test
-    public void testRDFChemFile() throws Exception {
+    void testRDFChemFile() throws Exception {
         String filename = "qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -181,7 +181,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
      *
      */
     @Test
-    public void testRDFModel() throws Exception {
+    void testRDFModel() throws Exception {
         String filename = "qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -215,7 +215,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
      *
      */
     @Test
-    public void testRDFReactioniSet() throws Exception {
+    void testRDFReactioniSet() throws Exception {
         String filename = "qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -242,7 +242,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
      * This test checks of different numbering for the same mapping gives the same result.
      */
     @Test
-    public void testAsadExamples() throws Exception {
+    void testAsadExamples() throws Exception {
         String filename = "output.rxn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

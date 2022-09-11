@@ -39,18 +39,18 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author maclean
  * @cdk.module test-group
  */
-public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
+class AtomDiscretePartitionRefinerTest extends CDKTestCase {
 
-    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     @Test
-    public void defaultConstructorTest() {
+    void defaultConstructorTest() {
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
         Assertions.assertNotNull(refiner);
     }
 
     @Test
-    public void advancedConstructorTest() {
+    void advancedConstructorTest() {
         boolean ignoreElements = true;
         boolean ignoreBondOrder = true;
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner(ignoreElements, ignoreBondOrder);
@@ -58,7 +58,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void resetTest() {
+    void resetTest() {
         String acpString1 = "C0C1 0:1(1)";
         IAtomContainer ac1 = AtomContainerPrinter.fromString(acpString1, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
@@ -74,7 +74,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void refine_StartingPartitionTest() {
+    void refine_StartingPartitionTest() {
         Partition partition = Partition.fromString("0,1|2,3");
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
@@ -85,7 +85,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void refine_IgnoreElementsTest() {
+    void refine_IgnoreElementsTest() {
         String acpString = "C0C1O2O3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         boolean ignoreElements = true;
@@ -97,7 +97,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void refineTest() {
+    void refineTest() {
         String acpString = "C0C1O2O3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
@@ -107,7 +107,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void isCanonical_TrueTest() {
+    void isCanonical_TrueTest() {
         String acpString = "C0C1C2O3 0:2(2),0:3(1),1:2(1),1:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
@@ -115,7 +115,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void isCanonical_FalseTest() {
+    void isCanonical_FalseTest() {
         String acpString = "C0C1C2O3 0:1(2),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
@@ -123,7 +123,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getAutomorphismGroupTest() {
+    void getAutomorphismGroupTest() {
         String acpString = "C0C1C2O3 0:1(2),0:2(1),1:3(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
@@ -133,7 +133,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getAutomorphismGroup_StartingGroupTest() {
+    void getAutomorphismGroup_StartingGroupTest() {
         String acpString = "C0C1C2C3 0:1(1),0:2(1),1:3(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         Permutation flip = new Permutation(1, 0, 3, 2);
@@ -145,7 +145,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getAutomorphismGroup_StartingPartitionTest() {
+    void getAutomorphismGroup_StartingPartitionTest() {
         Partition partition = Partition.fromString("0,1|2,3");
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
@@ -155,7 +155,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getVertexCountTest() {
+    void getVertexCountTest() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
@@ -164,7 +164,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getConnectivityTest() {
+    void getConnectivityTest() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(2),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
@@ -175,7 +175,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getAutomorphismPartitionTest() {
+    void getAutomorphismPartitionTest() {
         String acpString = "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1),"
                 + "4:5(2),5:6(1),6:7(2),7:8(1),8:9(2),5:9(1),0:9(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
@@ -189,7 +189,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     // and mostly test for aromatic bonds
 
     @Test
-    public void testAzulene() throws Exception {
+    void testAzulene() throws Exception {
 
         IAtomContainer mol = TestMoleculeFactory.makeAzulene();
         Assertions.assertNotNull(mol, "Created molecule was null");
@@ -214,7 +214,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testPyrimidine() throws Exception {
+    void testPyrimidine() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrimidine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -236,7 +236,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testBiphenyl() throws Exception {
+    void testBiphenyl() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);

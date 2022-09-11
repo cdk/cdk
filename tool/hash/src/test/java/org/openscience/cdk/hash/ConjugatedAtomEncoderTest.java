@@ -45,10 +45,10 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * @author John May
  * @cdk.module test-hash
  */
-public class ConjugatedAtomEncoderTest {
+class ConjugatedAtomEncoderTest {
 
     @Test
-    public void testConstruction_Null() {
+    void testConstruction_Null() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     new ConjugatedAtomEncoder(null);
@@ -56,7 +56,7 @@ public class ConjugatedAtomEncoderTest {
     }
 
     @Test
-    public void testConstruction_Empty() {
+    void testConstruction_Empty() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     new ConjugatedAtomEncoder(Collections.emptyList());
@@ -67,7 +67,7 @@ public class ConjugatedAtomEncoderTest {
      * ensure we can modify the order after we have constructed the conjunction
      */
     @Test
-    public void testConstruction_Modification() {
+    void testConstruction_Modification() {
         AtomEncoder a = mock(AtomEncoder.class);
         AtomEncoder b = mock(AtomEncoder.class);
         AtomEncoder c = mock(AtomEncoder.class);
@@ -92,7 +92,7 @@ public class ConjugatedAtomEncoderTest {
     }
 
     @Test
-    public void testCreate_Null() {
+    void testCreate_Null() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     ConjugatedAtomEncoder.create(null, new AtomEncoder[0]);
@@ -100,7 +100,7 @@ public class ConjugatedAtomEncoderTest {
     }
 
     @Test
-    public void testCreate_Null2() {
+    void testCreate_Null2() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     ConjugatedAtomEncoder.create(mock(AtomEncoder.class), null);
@@ -108,7 +108,7 @@ public class ConjugatedAtomEncoderTest {
     }
 
     @Test
-    public void testEncode_Single() throws Exception {
+    void testEncode_Single() throws Exception {
         AtomEncoder a = mock(AtomEncoder.class);
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -122,7 +122,7 @@ public class ConjugatedAtomEncoderTest {
     }
 
     @Test
-    public void testEncode() throws Exception {
+    void testEncode() throws Exception {
         AtomEncoder a = mock(AtomEncoder.class);
         AtomEncoder b = mock(AtomEncoder.class);
         AtomEncoder c = mock(AtomEncoder.class);

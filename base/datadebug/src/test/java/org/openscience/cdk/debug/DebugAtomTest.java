@@ -35,21 +35,21 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomTest extends AbstractAtomTest {
+class DebugAtomTest extends AbstractAtomTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugAtom::new);
     }
 
     @Test
-    public void testDebugAtom() {
+    void testDebugAtom() {
         IAtom a = new DebugAtom();
         Assertions.assertNotNull(a);
     }
 
     @Test
-    public void testDebugAtom_IElement() {
+    void testDebugAtom_IElement() {
         IChemObject object = newChemObject();
         IElement element = object.getBuilder().newInstance(IElement.class);
         IAtom a = new DebugAtom(element);
@@ -57,7 +57,7 @@ public class DebugAtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testDebugAtom_String() {
+    void testDebugAtom_String() {
         IAtom a = new DebugAtom("C");
         Assertions.assertEquals("C", a.getSymbol());
         Assertions.assertNull(a.getPoint2d());
@@ -66,7 +66,7 @@ public class DebugAtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testDebugAtom_String_Point3d() {
+    void testDebugAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IAtom a = new DebugAtom("C", point3d);
@@ -77,7 +77,7 @@ public class DebugAtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testDebugAtom_String_Point2d() {
+    void testDebugAtom_String_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
 
         IAtom a = new DebugAtom("C", point2d);

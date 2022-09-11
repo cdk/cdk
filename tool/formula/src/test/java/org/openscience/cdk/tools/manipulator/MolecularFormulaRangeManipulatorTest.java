@@ -35,7 +35,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  *
  * @cdk.module test-formula
  */
-public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
+class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
@@ -43,7 +43,7 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
      *  Constructor for the MolecularFormulaRangeManipulatorTest object.
      *
      */
-    public MolecularFormulaRangeManipulatorTest() {
+    MolecularFormulaRangeManipulatorTest() {
 
         super();
     }
@@ -54,7 +54,7 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetRange_IMolecularFormulaSet() {
+    void testGetRange_IMolecularFormulaSet() {
         IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);
@@ -99,7 +99,7 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder() {
+    void testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder() {
         IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);
@@ -141,7 +141,7 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder() {
+    void testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder() {
         IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);

@@ -41,10 +41,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class IdentityTemplateLibraryTest {
+class IdentityTemplateLibraryTest {
 
     @Test
-    public void decodeCoordinates() throws Exception {
+    void decodeCoordinates() throws Exception {
         Point2d[] points = IdentityTemplateLibrary.decodeCoordinates("12.5, 5.5, 4, 2");
         assertThat(points.length, is(2));
         assertThat(points[0].x, closeTo(12.5, 0.01));
@@ -54,7 +54,7 @@ public class IdentityTemplateLibraryTest {
     }
 
     @Test
-    public void encodeCoordinates() throws Exception {
+    void encodeCoordinates() throws Exception {
         Point2d[] points = new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
         String str = IdentityTemplateLibrary.encodeCoordinates(points);
         assertThat(str, is("|(12.5,5.5,;4.0,2.0,)|"));
@@ -62,7 +62,7 @@ public class IdentityTemplateLibraryTest {
     }
 
     @Test
-    public void encodeEntry() {
+    void encodeEntry() {
         String smiles = "CO";
         Point2d[] points = new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
         String encoded = IdentityTemplateLibrary.encodeEntry(new SimpleEntry<>(smiles, points));
@@ -71,7 +71,7 @@ public class IdentityTemplateLibraryTest {
     }
 
     @Test
-    public void decodeEntry() {
+    void decodeEntry() {
         String encode = "CO 12.500, 5.500, 4.000, 2.000";
         Map.Entry<String, Point2d[]> entry = IdentityTemplateLibrary.decodeEntry(encode);
         assertThat(entry.getKey(), is("CO"));
@@ -79,7 +79,7 @@ public class IdentityTemplateLibraryTest {
     }
 
     @Test
-    public void assignEthanolNoEntry() {
+    void assignEthanolNoEntry() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
@@ -94,7 +94,7 @@ public class IdentityTemplateLibraryTest {
     }
 
     @Test
-    public void assignEthanol() {
+    void assignEthanol() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
@@ -117,7 +117,7 @@ public class IdentityTemplateLibraryTest {
     }
 
     @Test
-    public void store() throws IOException {
+    void store() throws IOException {
         IdentityTemplateLibrary lib = IdentityTemplateLibrary.empty();
         lib.add(IdentityTemplateLibrary.decodeEntry("[C][C][O] 0, 1, 2, 3, 4, 5"));
         lib.add(IdentityTemplateLibrary.decodeEntry("[C][C] 0, 1, 2, 3"));

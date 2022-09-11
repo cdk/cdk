@@ -29,20 +29,20 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  *
  * @cdk.module test-reaction
  */
-public class RemovingSEofNBMechanismTest extends ReactionMechanismTest {
+class RemovingSEofNBMechanismTest extends ReactionMechanismTest {
 
     /**
      *  The JUnit setup method
      */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         setMechanism(RemovingSEofNBMechanism.class);
     }
 
     /**
      *  Constructor for the RemovingSEofNBMechanismTest object.
      */
-    public RemovingSEofNBMechanismTest() {
+    RemovingSEofNBMechanismTest() {
         super();
     }
 
@@ -52,7 +52,7 @@ public class RemovingSEofNBMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testRemovingSEofNBMechanism() {
+    void testRemovingSEofNBMechanism() {
         IReactionMechanism mechanism = new RemovingSEofNBMechanism();
         Assertions.assertNotNull(mechanism);
     }
@@ -64,7 +64,7 @@ public class RemovingSEofNBMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+    void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
         IReactionMechanism mechanism = new RemovingSEofNBMechanism();
 
         Assertions.assertNotNull(mechanism);

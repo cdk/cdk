@@ -28,10 +28,10 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * @cdk.module test-standard
  */
-public class AtomContainerPermutorTest extends CDKTestCase {
+class AtomContainerPermutorTest extends CDKTestCase {
 
     @Test
-    public void testAtomPermutation() {
+    void testAtomPermutation() {
         AtomContainer ac = new org.openscience.cdk.AtomContainer();
         AtomContainer result;
         String atoms;
@@ -60,7 +60,7 @@ public class AtomContainerPermutorTest extends CDKTestCase {
     }
 
     @Test
-    public void testBondPermutation() {
+    void testBondPermutation() {
         AtomContainer ac = new org.openscience.cdk.AtomContainer();
         AtomContainer result;
         String bonds;

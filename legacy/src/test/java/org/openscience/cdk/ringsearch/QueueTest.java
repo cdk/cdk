@@ -25,20 +25,20 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class QueueTest extends CDKTestCase {
+class QueueTest extends CDKTestCase {
 
-    public QueueTest() {
+    QueueTest() {
         super();
     }
 
     @Test
-    public void testQueue() {
+    void testQueue() {
         Queue queue = new Queue();
         Assertions.assertNotNull(queue);
     }
 
     @Test
-    public void testOperations() {
+    void testOperations() {
         Queue queue = new Queue();
         queue.push(1);
         queue.push("Hello");

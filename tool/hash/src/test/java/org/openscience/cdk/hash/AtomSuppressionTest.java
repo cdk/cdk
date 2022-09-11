@@ -37,10 +37,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-hash
  */
-public class AtomSuppressionTest {
+class AtomSuppressionTest {
 
     @Test
-    public void unsuppressed() throws Exception {
+    void unsuppressed() throws Exception {
         AtomSuppression suppression = AtomSuppression.unsuppressed();
         IAtomContainer container = mock(IAtomContainer.class);
         Suppressed suppressed = suppression.suppress(container);
@@ -52,7 +52,7 @@ public class AtomSuppressionTest {
     }
 
     @Test
-    public void anyHydrogens() throws Exception {
+    void anyHydrogens() throws Exception {
         AtomSuppression suppression = AtomSuppression.anyHydrogens();
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);
@@ -79,7 +79,7 @@ public class AtomSuppressionTest {
     }
 
     @Test
-    public void anyPseudos() throws Exception {
+    void anyPseudos() throws Exception {
         AtomSuppression suppression = AtomSuppression.anyPseudos();
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);

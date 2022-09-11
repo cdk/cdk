@@ -30,15 +30,15 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class VABCDescriptorTest extends MolecularDescriptorTest {
+class VABCDescriptorTest extends MolecularDescriptorTest {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(VABCDescriptor.class);
     }
 
     @Test
-    public void testIronChloride() throws CDKException {
+    void testIronChloride() throws CDKException {
         IAtomContainer ironChloride = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("Cl[Fe]Cl");
         Assertions.assertEquals(Double.NaN, ((DoubleResult) descriptor.calculate(ironChloride).getValue()).doubleValue(), 0.01);
     }

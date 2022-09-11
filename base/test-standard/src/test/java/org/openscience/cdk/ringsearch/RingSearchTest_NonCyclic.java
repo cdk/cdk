@@ -36,17 +36,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public final class RingSearchTest_NonCyclic {
+final class RingSearchTest_NonCyclic {
 
     private final IAtomContainer nonCyclic = TestMoleculeFactory.makeBranchedAliphatic();
 
     @Test
-    public void testCyclic() {
+    void testCyclic() {
         assertThat(new RingSearch(nonCyclic).cyclic().length, is(0));
     }
 
     @Test
-    public void testCyclic_Int() {
+    void testCyclic_Int() {
         int n = nonCyclic.getAtomCount();
         RingSearch ringSearch = new RingSearch(nonCyclic);
         for (int i = 0; i < n; i++) {
@@ -55,27 +55,27 @@ public final class RingSearchTest_NonCyclic {
     }
 
     @Test
-    public void testIsolated() {
+    void testIsolated() {
         assertThat(new RingSearch(nonCyclic).isolated().length, is(0));
     }
 
     @Test
-    public void testFused() {
+    void testFused() {
         assertThat(new RingSearch(nonCyclic).fused().length, is(0));
     }
 
     @Test
-    public void testRingFragments() {
+    void testRingFragments() {
         Assertions.assertTrue(new RingSearch(nonCyclic).ringFragments().isEmpty());
     }
 
     @Test
-    public void testIsolatedRingFragments() {
+    void testIsolatedRingFragments() {
         Assertions.assertTrue(new RingSearch(nonCyclic).isolatedRingFragments().isEmpty());
     }
 
     @Test
-    public void testFusedRingFragments() {
+    void testFusedRingFragments() {
         Assertions.assertTrue(new RingSearch(nonCyclic).fusedRingFragments().isEmpty());
     }
 

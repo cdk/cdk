@@ -32,16 +32,16 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-standard
  */
-public class ConnectionMatrixTest extends CDKTestCase {
+class ConnectionMatrixTest extends CDKTestCase {
 
     private final static SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
-    public ConnectionMatrixTest() {
+    ConnectionMatrixTest() {
         super();
     }
 
     @Test
-    public void testGetMatrix_IAtomContainer() throws Exception {
+    void testGetMatrix_IAtomContainer() throws Exception {
         IAtomContainer container = sp.parseSmiles("C1CC1");
         double[][] matrix = ConnectionMatrix.getMatrix(container);
         Assertions.assertEquals(3, matrix.length);
@@ -49,7 +49,7 @@ public class ConnectionMatrixTest extends CDKTestCase {
     }
 
     @Test
-    public void testLonePairs() throws Exception {
+    void testLonePairs() throws Exception {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "I"));
         container.addLonePair(container.getBuilder().newInstance(ILonePair.class, container.getAtom(0)));

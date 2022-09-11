@@ -29,20 +29,20 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  *
  * @cdk.module test-reaction
  */
-public class RadicalSiteIonizationMechanismTest extends ReactionMechanismTest {
+class RadicalSiteIonizationMechanismTest extends ReactionMechanismTest {
 
     /**
      *  The JUnit setup method
      */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         setMechanism(RadicalSiteRearrangementMechanism.class);
     }
 
     /**
      *  Constructor for the RadicalSiteIonizationMechanismTest object.
      */
-    public RadicalSiteIonizationMechanismTest() {
+    RadicalSiteIonizationMechanismTest() {
         super();
     }
 
@@ -52,7 +52,7 @@ public class RadicalSiteIonizationMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testRadicalSiteIonizationMechanism() {
+    void testRadicalSiteIonizationMechanism() {
         IReactionMechanism mechanism = new RadicalSiteIonizationMechanism();
         Assertions.assertNotNull(mechanism);
     }
@@ -64,7 +64,7 @@ public class RadicalSiteIonizationMechanismTest extends ReactionMechanismTest {
      * @throws Exception
      */
     @Test
-    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+    void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
         IReactionMechanism mechanism = new RadicalSiteIonizationMechanism();
 
         Assertions.assertNotNull(mechanism);

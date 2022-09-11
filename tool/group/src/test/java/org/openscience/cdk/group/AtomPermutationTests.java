@@ -12,15 +12,15 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * @author maclean
  * @cdk.module test-group
  */
-public class AtomPermutationTests extends CDKTestCase {
+class AtomPermutationTests extends CDKTestCase {
 
-    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      * This test is checking all permutations of an atom container to see
      * if the refiner gives the canonical labelling map (effectively).
      */
-    public void checkForCanonicalForm(IAtomContainer atomContainer) {
+    void checkForCanonicalForm(IAtomContainer atomContainer) {
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(atomContainer);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
         refiner.refine(atomContainer);
@@ -36,49 +36,49 @@ public class AtomPermutationTests extends CDKTestCase {
     }
 
     @Test
-    public void testDisconnectedAtomCarbonCompound() {
+    void testDisconnectedAtomCarbonCompound() {
         String acpString = "C0C1C2 0:2(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         checkForCanonicalForm(ac);
     }
 
     @Test
-    public void testDisconnectedBondsCarbonCompound() {
+    void testDisconnectedBondsCarbonCompound() {
         String acpString = "C0C1C2C3 0:2(1),1:3(2)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         checkForCanonicalForm(ac);
     }
 
     @Test
-    public void testSimpleCarbonCompound() {
+    void testSimpleCarbonCompound() {
         String acpString = "C0C1C2C3 0:1(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         checkForCanonicalForm(ac);
     }
 
     @Test
-    public void testCyclicCarbonCompound() {
+    void testCyclicCarbonCompound() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         checkForCanonicalForm(ac);
     }
 
     @Test
-    public void testDoubleBondCyclicCarbonCompound() {
+    void testDoubleBondCyclicCarbonCompound() {
         String acpString = "C0C1C2C3 0:1(1),0:3(2),1:2(2),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         checkForCanonicalForm(ac);
     }
 
     @Test
-    public void testSimpleCarbonOxygenCompound() {
+    void testSimpleCarbonOxygenCompound() {
         String acpString = "O0C1C2 0:1(2),1:2(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         checkForCanonicalForm(ac);
     }
 
     @Test
-    public void testCyclicCarbonOxygenCompound() {
+    void testCyclicCarbonOxygenCompound() {
         String acpString = "O0C1O2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         checkForCanonicalForm(ac);

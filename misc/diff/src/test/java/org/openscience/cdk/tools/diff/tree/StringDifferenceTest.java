@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-diff
  */
-public class StringDifferenceTest {
+class StringDifferenceTest {
 
     public static void assertOneLiner(String testString) {
         Assertions.assertNotNull(testString, "Expected a non-null String.");
@@ -36,25 +36,25 @@ public class StringDifferenceTest {
     }
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         IDifference result = StringDifference.construct("Foo", "foo", "bar");
         Assertions.assertNotNull(result);
     }
 
     @Test
-    public void testSame() {
+    void testSame() {
         IDifference result = StringDifference.construct("Foo", "foo", "foo");
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testTwoNull() {
+    void testTwoNull() {
         IDifference result = StringDifference.construct("Foo", null, null);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testOneNull() {
+    void testOneNull() {
         IDifference result = StringDifference.construct("Foo", null, "bar");
         Assertions.assertNotNull(result);
 
@@ -63,7 +63,7 @@ public class StringDifferenceTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         IDifference result = StringDifference.construct("Foo", null, "bar");
         String diffString = result.toString();
         Assertions.assertNotNull(diffString);

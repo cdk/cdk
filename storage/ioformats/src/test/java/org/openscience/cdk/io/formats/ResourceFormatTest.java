@@ -31,21 +31,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @cdk.module test-ioformats
  */
-abstract public class ResourceFormatTest {
+abstract class ResourceFormatTest {
 
     private IResourceFormat resourceFormat;
 
-    public void setResourceFormat(IResourceFormat format) {
+    void setResourceFormat(IResourceFormat format) {
         this.resourceFormat = format;
     }
 
     @Test
-    public void testResourceFormatSet() {
+    void testResourceFormatSet() {
         Assertions.assertNotNull(resourceFormat, "You must use setResourceFormatSet() to set the resourceFormat object.");
     }
 
     @Test
-    public void testGetMIMEType() {
+    void testGetMIMEType() {
         if (resourceFormat.getMIMEType() == null) {
             // OK, that's fine
         } else {
@@ -54,13 +54,13 @@ abstract public class ResourceFormatTest {
     }
 
     @Test
-    public void testGetFormatName() {
+    void testGetFormatName() {
         Assertions.assertNotNull(resourceFormat.getFormatName());
         Assertions.assertNotSame(0, resourceFormat.getFormatName().length());
     }
 
     @Test
-    public void testGetPreferredNameExtension() {
+    void testGetPreferredNameExtension() {
         if (resourceFormat.getPreferredNameExtension() == null) {
             if (resourceFormat.getNameExtensions() == null || resourceFormat.getNameExtensions().length == 0) {
                 // Seems to be current practice
@@ -82,7 +82,7 @@ abstract public class ResourceFormatTest {
     }
 
     @Test
-    public void testGetNameExtensions() {
+    void testGetNameExtensions() {
         if (resourceFormat.getNameExtensions() == null) {
             // Seems to be current practice
             // FIXME: needs to be discussed
@@ -101,21 +101,21 @@ abstract public class ResourceFormatTest {
     }
 
     @Test
-    public void testHashCode() throws IllegalAccessException, InstantiationException {
+    void testHashCode() throws IllegalAccessException, InstantiationException {
         IResourceFormat a = resourceFormat.getClass().newInstance();
         IResourceFormat b = resourceFormat.getClass().newInstance();
         assertThat(a.hashCode(), is(b.hashCode()));
     }
 
     @Test
-    public void testEquals() throws IllegalAccessException, InstantiationException {
+    void testEquals() throws IllegalAccessException, InstantiationException {
         IResourceFormat a = resourceFormat.getClass().newInstance();
         IResourceFormat b = resourceFormat.getClass().newInstance();
         assertThat(a, is(b));
     }
 
     @Test
-    public void testEquals_null() throws IllegalAccessException, InstantiationException {
+    void testEquals_null() throws IllegalAccessException, InstantiationException {
         IResourceFormat a = resourceFormat.getClass().newInstance();
         Assertions.assertNotNull(a);
     }

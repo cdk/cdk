@@ -30,12 +30,12 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-public class JPlogPDescriptorTest {
+class JPlogPDescriptorTest {
 
-	static SmilesParser parser = null;
+	private static SmilesParser parser = null;
 
 	@Test
-	public void testPyridine() throws CDKException {
+    void testPyridine() throws CDKException {
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer struct = parseSmiles("c1ncccc1");
 		JPlogPDescriptor desc = new JPlogPDescriptor();
@@ -46,7 +46,7 @@ public class JPlogPDescriptorTest {
 	}
 
 	@Test
-	public void testPropionicAcid() throws CDKException {
+    void testPropionicAcid() throws CDKException {
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer struct = parseSmiles("CCC(=O)O");
 		JPlogPDescriptor desc = new JPlogPDescriptor();
@@ -57,7 +57,7 @@ public class JPlogPDescriptorTest {
 	}
 
 	@Test
-	public void testAcetonitrile() throws CDKException {
+    void testAcetonitrile() throws CDKException {
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer struct = parseSmiles("CC#N");
 		JPlogPDescriptor desc = new JPlogPDescriptor();
@@ -68,7 +68,7 @@ public class JPlogPDescriptorTest {
 	}
 
 	@Test
-	public void testAniline() throws CDKException {
+    void testAniline() throws CDKException {
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer struct = parseSmiles("Nc1ccccc1");
 		JPlogPDescriptor desc = new JPlogPDescriptor();
@@ -79,7 +79,7 @@ public class JPlogPDescriptorTest {
 	}
 
 	@Test
-	public void testFluorobenzene() throws CDKException {
+    void testFluorobenzene() throws CDKException {
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer struct = parseSmiles("Fc1ccccc1");
 		JPlogPDescriptor desc = new JPlogPDescriptor();
@@ -90,7 +90,7 @@ public class JPlogPDescriptorTest {
 	}
 
 	@Test
-	public void testSimpleTextFields() {
+    void testSimpleTextFields() {
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		DescriptorSpecification specification = desc.getSpecification();
 		String name = desc.getDescriptorNames()[0];
@@ -102,7 +102,7 @@ public class JPlogPDescriptorTest {
 	}
 
 	@Test
-	public void testGetHologram() throws CDKException {
+    void testGetHologram() throws CDKException {
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer molecule = parseSmiles("c1ccccc1");

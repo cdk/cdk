@@ -35,27 +35,27 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class BinaryTreeTest {
+class BinaryTreeTest {
 
     public BinaryTreeTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of getValue method, of class BinaryTree.
      */
     @Test
-    public void testGetValue() {
+    void testGetValue() {
         BinaryTree instance = new BinaryTree(15);
         int expResult = 15;
         int result = instance.getValue();
@@ -66,7 +66,7 @@ public class BinaryTreeTest {
      * Test of getEqual method, of class BinaryTree.
      */
     @Test
-    public void testGetEqual() {
+    void testGetEqual() {
         BinaryTree instance = new BinaryTree(15);
         BinaryTree equal = new BinaryTree(15);
         instance.setEqual(equal);
@@ -80,7 +80,7 @@ public class BinaryTreeTest {
      * Test of setEqual method, of class BinaryTree.
      */
     @Test
-    public void testSetEqual() {
+    void testSetEqual() {
         BinaryTree instance = new BinaryTree(15);
         BinaryTree equal = new BinaryTree(15);
         instance.setEqual(equal);
@@ -94,7 +94,7 @@ public class BinaryTreeTest {
      * Test of getNotEqual method, of class BinaryTree.
      */
     @Test
-    public void testGetNotEqual() {
+    void testGetNotEqual() {
         BinaryTree instance = new BinaryTree(15);
         BinaryTree equal = new BinaryTree(15);
         BinaryTree notEqual = new BinaryTree(10);
@@ -109,7 +109,7 @@ public class BinaryTreeTest {
      * Test of setNotEqual method, of class BinaryTree.
      */
     @Test
-    public void testSetNotEqual() {
+    void testSetNotEqual() {
         BinaryTree instance = new BinaryTree(15);
         BinaryTree equal = new BinaryTree(15);
         BinaryTree notEqual = new BinaryTree(10);

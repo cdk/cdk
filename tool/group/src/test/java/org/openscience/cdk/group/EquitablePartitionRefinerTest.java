@@ -34,7 +34,7 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class EquitablePartitionRefinerTest extends CDKTestCase {
 
-    public MockRefinable makeExampleTable() {
+    MockRefinable makeExampleTable() {
         int[][] table = new int[4][];
         table[0] = new int[]{1, 2};
         table[1] = new int[]{0, 3};
@@ -45,9 +45,9 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
 
     public class MockRefinable implements Refinable {
 
-        public final int[][] connections;
+        final int[][] connections;
 
-        public MockRefinable(int[][] connections) {
+        MockRefinable(int[][] connections) {
             this.connections = connections;
         }
 
@@ -56,7 +56,7 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
             return connections.length;
         }
 
-        public int[] getConnectedIndices(int vertexI) {
+        int[] getConnectedIndices(int vertexI) {
             return connections[vertexI];
         }
 
@@ -89,13 +89,13 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
         Assertions.assertNotNull(refiner);
     }
 
     @Test
-    public void refineTest() {
+    void refineTest() {
         EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
         Partition coarser = Partition.fromString("[0|1,2,3]");
         Partition finer = refiner.refine(coarser);

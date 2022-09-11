@@ -27,10 +27,10 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */
-public class CDKRNodeTest extends CDKTestCase {
+class CDKRNodeTest extends CDKTestCase {
 
     @Test
-    public void testRNode_int_int() {
+    void testRNode_int_int() {
         CDKRNode node = new CDKRNode(1, 2);
         Assertions.assertNotNull(node);
         Assertions.assertNotNull(node.getExtension());

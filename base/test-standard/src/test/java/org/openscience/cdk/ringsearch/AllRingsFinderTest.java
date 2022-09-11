@@ -49,26 +49,26 @@ import static org.openscience.cdk.ringsearch.AllRingsFinder.Threshold.PubChem_99
 /**
  * @cdk.module test-standard
  */
-public class AllRingsFinderTest extends CDKTestCase {
+class AllRingsFinderTest extends CDKTestCase {
 
-    final boolean standAlone = false;
+    private final boolean standAlone = false;
 
-    public AllRingsFinderTest() {
+    AllRingsFinderTest() {
         super();
     }
 
-    public void setStandAlone(boolean standAlone) {
+    void setStandAlone(boolean standAlone) {
         // not-used
     }
 
     @Test
-    public void testAllRingsFinder() {
+    void testAllRingsFinder() {
         AllRingsFinder arf = new AllRingsFinder();
         Assertions.assertNotNull(arf);
     }
 
     @Test
-    public void testFindAllRings_IAtomContainer() throws Exception {
+    void testFindAllRings_IAtomContainer() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
@@ -83,7 +83,7 @@ public class AllRingsFinderTest extends CDKTestCase {
      * @cdk.bug 746067
      */
     @Test
-    public void testBondsWithinRing() throws Exception {
+    void testBondsWithinRing() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
@@ -104,14 +104,14 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testFindAllRings_IAtomContainer_boolean() throws Exception {
+    void testFindAllRings_IAtomContainer_boolean() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
         IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
         arf.findAllRings(molecule);
     }
 
     @Disabled("timeout not longer used")
-    public void testSetTimeout_long() throws Exception {
+    void testSetTimeout_long() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(1);
         IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
@@ -119,21 +119,21 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Disabled("timeout not longer used")
-    public void testCheckTimeout() throws Exception {
+    void testCheckTimeout() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(3);
         arf.checkTimeout();
     }
 
     @Disabled("timeout not longer used")
-    public void testGetTimeout() {
+    void testGetTimeout() {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(3);
         Assertions.assertEquals(3, arf.getTimeout(), 0.01);
     }
 
     @Test
-    public void testPorphyrine() throws Exception {
+    void testPorphyrine() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
 
@@ -150,7 +150,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testBigRingSystem() throws Exception {
+    void testBigRingSystem() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(500), () -> {
             Assumptions.assumeTrue(runSlowTests());
 
@@ -172,7 +172,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testCholoylCoA() throws Exception {
+    void testCholoylCoA() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
 
@@ -189,7 +189,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testAzulene() throws Exception {
+    void testAzulene() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
 
@@ -209,7 +209,7 @@ public class AllRingsFinderTest extends CDKTestCase {
      * @cdk.inchi InChI=1S/C90H74O28/c91-48-18-8-36(28-58(48)101)81-64(107)34-35-4-3-6-43(80(35)114-81)66-44-14-24-55(98)72(87(44)115-83(75(66)108)38-10-20-50(93)60(103)30-38)68-46-16-26-57(100)74(89(46)117-85(77(68)110)40-12-22-52(95)62(105)32-40)70-47-17-27-56(99)73(90(47)118-86(79(70)112)41-13-23-53(96)63(106)33-41)69-45-15-25-54(97)71(88(45)116-84(78(69)111)39-11-21-51(94)61(104)31-39)67-42-5-1-2-7-65(42)113-82(76(67)109)37-9-19-49(92)59(102)29-37/h1-33,64,66-70,75-79,81-86,91-112H,34H2
      */
     @Test
-    public void testBigMoleculeWithIsolatedRings() throws Exception {
+    void testBigMoleculeWithIsolatedRings() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
 
@@ -248,7 +248,7 @@ public class AllRingsFinderTest extends CDKTestCase {
      * @cdk.bug 777488
      */
     @Test
-    public void testBug777488() throws Exception {
+    void testBug777488() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         //String filename = "data/Bug646.cml";
@@ -271,7 +271,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testRingFlags1() throws Exception {
+    void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         for (IAtom a : molecule.atoms())
@@ -287,7 +287,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testRingFlags2() throws Exception {
+    void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCCC1CC");
         for (IAtom a : molecule.atoms())
@@ -304,7 +304,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testBigRingSystem_MaxRingSize6_03419() throws Exception {
+    void testBigRingSystem_MaxRingSize6_03419() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         String filename = "ring_03419.mol";
@@ -319,7 +319,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testBigRingSystem_MaxRingSize4_fourRing5x10() throws Exception {
+    void testBigRingSystem_MaxRingSize4_fourRing5x10() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         String filename = "four-ring-5x10.mol";
@@ -335,7 +335,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testBigRingSystem_MaxRingSize6_fourRing5x10() throws Exception {
+    void testBigRingSystem_MaxRingSize6_fourRing5x10() throws Exception {
         IRingSet ringSet;
         AllRingsFinder arf = new AllRingsFinder();
         String filename = "four-ring-5x10.mol";

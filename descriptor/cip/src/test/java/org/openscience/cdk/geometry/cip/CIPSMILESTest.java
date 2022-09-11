@@ -45,12 +45,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @cdk.module test-cip
  */
-public class CIPSMILESTest extends CDKTestCase {
+class CIPSMILESTest extends CDKTestCase {
 
-    static final SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static final SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 1, 4, 0, 2, 3, Stereo.CLOCKWISE);
         Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
@@ -64,7 +64,7 @@ public class CIPSMILESTest extends CDKTestCase {
      * @see #test2methylbutanol_S()
      */
     @Test
-    public void test2methylbutanol_R() throws Exception {
+    void test2methylbutanol_R() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("OCC([H])(C)CC");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 2, 3, 1, 4, 5, Stereo.CLOCKWISE);
         Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
@@ -78,7 +78,7 @@ public class CIPSMILESTest extends CDKTestCase {
      * @see #test2methylbutanol_R()
      */
     @Test
-    public void test2methylbutanol_S() throws Exception {
+    void test2methylbutanol_S() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("OCC([H])(C)CC");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 2, 3, 1, 4, 5,
                 Stereo.ANTI_CLOCKWISE);
@@ -86,14 +86,14 @@ public class CIPSMILESTest extends CDKTestCase {
     }
 
     @Test
-    public void testTwoVersusDoubleBondedOxygen_R() throws Exception {
+    void testTwoVersusDoubleBondedOxygen_R() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("OC(O)C([H])(C)C=O");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 3, 4, 5, 1, 6, Stereo.CLOCKWISE);
         Assertions.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
     }
 
     @Test
-    public void testTwoVersusDoubleBondedOxygen_S() throws Exception {
+    void testTwoVersusDoubleBondedOxygen_S() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("OC(O)C([H])(C)C=O");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 3, 4, 5, 1, 6,
                 Stereo.ANTI_CLOCKWISE);
@@ -101,7 +101,7 @@ public class CIPSMILESTest extends CDKTestCase {
     }
 
     @Test
-    public void testImplicitHydrogen() throws Exception {
+    void testImplicitHydrogen() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CCC(C)CCC");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 2, CIPTool.HYDROGEN, 3, 1, 4,
                 Stereo.ANTI_CLOCKWISE);
@@ -109,7 +109,7 @@ public class CIPSMILESTest extends CDKTestCase {
     }
 
     @Test
-    public void testTermination() throws Exception {
+    void testTermination() throws Exception {
         IAtomContainer mol = smiles
                 .parseSmiles("[H]O[C@]([H])(C1([H])(C([H])([H])C([H])([H])C1([H])([H])))C2([H])(C([H])([H])C2([H])([H]))");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
@@ -121,7 +121,7 @@ public class CIPSMILESTest extends CDKTestCase {
     }
 
     @Test
-    public void testTermination2() throws Exception {
+    void testTermination2() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("OC1CCC[C@](F)(CC1)Cl");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
         Assertions.assertTrue(stereoElements.hasNext());
@@ -132,7 +132,7 @@ public class CIPSMILESTest extends CDKTestCase {
     }
 
     @Test
-    public void testTetraHalogenMethane() throws Exception {
+    void testTetraHalogenMethane() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("FC(Br)(Cl)I");
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 1, 0, 4, 2, 3,
                 Stereo.ANTI_CLOCKWISE);
@@ -143,7 +143,7 @@ public class CIPSMILESTest extends CDKTestCase {
      * @cdk.inchi InChI=1S/C20H20BrN3O3S/c1-23(2)9-10-24(20-22-14-8-7-13(21)11-18(14)28-20)19(25)17-12-26-15-5-3-4-6-16(15)27-17/h3-8,11,17H,9-10,12H2,1-2H3/p+1/t17-/m1/s1
      */
     @Test
-    public void testCID42475007_R() throws Exception {
+    void testCID42475007_R() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("C[NH+](C)CCN(C1=NC2=C(S1)C=C(C=C2)Br)C(=O)[C@H]3COC4=CC=CC=C4O3");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
         Assertions.assertTrue(stereoElements.hasNext());
@@ -157,7 +157,7 @@ public class CIPSMILESTest extends CDKTestCase {
      * @cdk.inchi InChI=1S/C20H20BrN3O3S/c1-23(2)9-10-24(20-22-14-8-7-13(21)11-18(14)28-20)19(25)17-12-26-15-5-3-4-6-16(15)27-17/h3-8,11,17H,9-10,12H2,1-2H3/p+1/t17+/m1/s1
      */
     @Test
-    public void testCID42475007_S() throws Exception {
+    void testCID42475007_S() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("C[NH+](C)CCN(C1=NC2=C(S1)C=C(C=C2)Br)C(=O)[C@@H]3COC4=CC=CC=C4O3");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
         Assertions.assertTrue(stereoElements.hasNext());
@@ -171,7 +171,7 @@ public class CIPSMILESTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C4H10OS/c1-3-4-6(2)5/h3-4H2,1-2H3/t6+/s2
      */
     @Test
-    public void r_sulfinyl() throws Exception {
+    void r_sulfinyl() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("CCC[S@@](C)=O");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
         Assertions.assertTrue(stereoElements.hasNext());
@@ -185,7 +185,7 @@ public class CIPSMILESTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C4H10OS/c1-3-4-6(2)5/h3-4H2,1-2H3/t6-/s2
      */
     @Test
-    public void s_sulfinyl() throws Exception {
+    void s_sulfinyl() throws Exception {
         IAtomContainer mol = smiles.parseSmiles("CCC[S@](C)=O");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
         Assertions.assertTrue(stereoElements.hasNext());
@@ -196,42 +196,42 @@ public class CIPSMILESTest extends CDKTestCase {
     }
 
     @Test
-    public void e_butene() throws Exception {
+    void e_butene() throws Exception {
         assertThat(label("C/C=C/C"), is(CIP_CHIRALITY.E));
         assertThat(label("C\\C=C\\C"), is(CIP_CHIRALITY.E));
     }
 
     @Test
-    public void z_butene() throws Exception {
+    void z_butene() throws Exception {
         assertThat(label("C/C=C\\C"), is(CIP_CHIRALITY.Z));
         assertThat(label("C\\C=C/C"), is(CIP_CHIRALITY.Z));
     }
 
     @Test
-    public void none() throws Exception {
+    void none() throws Exception {
         assertThat(label("C/C=C(/C)C"), is(CIP_CHIRALITY.NONE));
         assertThat(label("C/C(C)=C/C"), is(CIP_CHIRALITY.NONE));
     }
 
     @Test
-    public void e_depth2() throws Exception {
+    void e_depth2() throws Exception {
         assertThat(label("CC/C(CO)=C(/CC)CO"), is(CIP_CHIRALITY.E));
         assertThat(label("OC\\C(CC)=C(/CC)CO"), is(CIP_CHIRALITY.E));
     }
 
     @Test
-    public void z_depth2() throws Exception {
+    void z_depth2() throws Exception {
         assertThat(label("CC\\C(CO)=C(/CC)CO"), is(CIP_CHIRALITY.Z));
         assertThat(label("OC/C(CC)=C(/CC)CO"), is(CIP_CHIRALITY.Z));
     }
 
     @Test
-    public void one_size_depth2() throws Exception {
+    void one_size_depth2() throws Exception {
         assertThat(label("CC\\C(CO)=C(/C)"), is(CIP_CHIRALITY.E));
     }
 
     @Test
-    public void none_depth2() throws Exception {
+    void none_depth2() throws Exception {
         assertThat(label("CC/C(CC)=C(/CC)CO"), is(CIP_CHIRALITY.NONE));
     }
 

@@ -37,7 +37,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  *
  * @cdk.module test-io
  */
-public class CustomWriter extends ChemObjectIO implements IChemObjectWriter {
+class CustomWriter extends ChemObjectIO implements IChemObjectWriter {
 
     @Override
     public void setWriter(Writer writer) throws CDKException {}

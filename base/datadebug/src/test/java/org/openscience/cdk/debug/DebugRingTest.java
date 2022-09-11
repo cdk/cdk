@@ -32,29 +32,29 @@ import org.openscience.cdk.interfaces.IRing;
  *
  * @cdk.module test-datadebug
  */
-public class DebugRingTest extends AbstractRingTest {
+class DebugRingTest extends AbstractRingTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugRing::new);
     }
 
     @Test
-    public void testDebugRing_int_String() {
+    void testDebugRing_int_String() {
         IRing r = new DebugRing(5, "C");
         Assertions.assertEquals(5, r.getAtomCount());
         Assertions.assertEquals(5, r.getBondCount());
     }
 
     @Test
-    public void testDebugRing_int() {
+    void testDebugRing_int() {
         IRing r = new DebugRing(5);
         Assertions.assertEquals(0, r.getAtomCount());
         Assertions.assertEquals(0, r.getBondCount());
     }
 
     @Test
-    public void testDebugRing() {
+    void testDebugRing() {
         IRing ring = new DebugRing();
         Assertions.assertNotNull(ring);
         Assertions.assertEquals(0, ring.getAtomCount());
@@ -62,7 +62,7 @@ public class DebugRingTest extends AbstractRingTest {
     }
 
     @Test
-    public void testDebugRing_IAtomContainer() {
+    void testDebugRing_IAtomContainer() {
         IAtomContainer container = newChemObject().getBuilder().newInstance(IAtomContainer.class);
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));

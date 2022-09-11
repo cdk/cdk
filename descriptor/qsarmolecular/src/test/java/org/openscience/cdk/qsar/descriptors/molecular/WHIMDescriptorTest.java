@@ -27,12 +27,12 @@ import org.junit.jupiter.api.BeforeEach;
  * @cdk.module test-qsarmolecular
  */
 
-public class WHIMDescriptorTest extends MolecularDescriptorTest {
+class WHIMDescriptorTest extends MolecularDescriptorTest {
 
-    public WHIMDescriptorTest() {}
+    WHIMDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(WHIMDescriptor.class);
     }
 }

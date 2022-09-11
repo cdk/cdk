@@ -30,15 +30,15 @@ import org.openscience.cdk.test.interfaces.AbstractReactionTest;
  *
  * @cdk.module test-silent
  */
-public class ReactionTest extends AbstractReactionTest {
+class ReactionTest extends AbstractReactionTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Reaction::new);
     }
 
     @Test
-    public void testReaction() {
+    void testReaction() {
         IReaction polymer = new Reaction();
         Assertions.assertTrue(polymer instanceof Reaction);
     }

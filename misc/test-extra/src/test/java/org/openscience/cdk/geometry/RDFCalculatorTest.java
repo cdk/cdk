@@ -37,17 +37,17 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.geometry.RDFCalculator
  */
-public class RDFCalculatorTest extends CDKTestCase {
+class RDFCalculatorTest extends CDKTestCase {
 
     @Test
-    public void testRDFCalculator_double_double_double_double() {
+    void testRDFCalculator_double_double_double_double() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
 
         Assertions.assertNotNull(calculator);
     }
 
     @Test
-    public void testRDFCalculator_double_double_double_double_RDFWeightFunction() {
+    void testRDFCalculator_double_double_double_double_RDFWeightFunction() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new IRDFWeightFunction() {
 
             @Override
@@ -61,7 +61,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCalculate() {
+    void testCalculate() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
         AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
         Atom h1 = new Atom("H");
@@ -86,7 +86,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCalculate_RDFWeightFunction() {
+    void testCalculate_RDFWeightFunction() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new IRDFWeightFunction() {
 
             @Override
@@ -118,7 +118,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCalculate_RDFWeightFunction2() {
+    void testCalculate_RDFWeightFunction2() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new IRDFWeightFunction() {
 
             @Override
@@ -152,7 +152,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCalculate_With_Gauss() {
+    void testCalculate_With_Gauss() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.3, new IRDFWeightFunction() {
 
             @Override

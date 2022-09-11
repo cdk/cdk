@@ -57,7 +57,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
     /**
      *  The JUnit setup method
      */
-    public RadicalChargeSiteInitiationHReactionTest() throws Exception {
+    RadicalChargeSiteInitiationHReactionTest() throws Exception {
         setReaction(RadicalChargeSiteInitiationHReaction.class);
     }
 
@@ -65,7 +65,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
      *  The JUnit setup method
      */
     @Test
-    public void testRadicalChargeSiteInitiationHReaction() throws Exception {
+    void testRadicalChargeSiteInitiationHReaction() throws Exception {
         IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
         Assertions.assertNotNull(type);
     }
@@ -115,7 +115,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -156,7 +156,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -195,7 +195,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();

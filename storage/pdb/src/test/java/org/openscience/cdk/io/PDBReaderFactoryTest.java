@@ -41,7 +41,7 @@ import java.io.InputStream;
  *
  * @cdk.module test-pdb
  */
-public class PDBReaderFactoryTest {
+class PDBReaderFactoryTest {
 
     private final ReaderFactory factory = new ReaderFactory();
 
@@ -70,7 +70,7 @@ public class PDBReaderFactoryTest {
     }
 
     @Test
-    public void testPDB() throws Exception {
+    void testPDB() throws Exception {
         expectReader("org/openscience/cdk/io/coffeine.pdb", PDBFormat.getInstance());
     }
 }

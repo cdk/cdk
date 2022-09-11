@@ -29,19 +29,19 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-extra
  */
-public class IsotopeHandlerTest extends CDKTestCase {
+class IsotopeHandlerTest extends CDKTestCase {
 
     // serious testing is done in IsotopeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
     @Test
-    public void testIsotopeHandler_IChemObjectBuilder() {
+    void testIsotopeHandler_IChemObjectBuilder() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         Assertions.assertNotNull(handler);
     }
 
     @Test
-    public void testGetIsotopes() {
+    void testGetIsotopes() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read
         Assertions.assertNotNull(handler);
@@ -49,7 +49,7 @@ public class IsotopeHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testStartDocument() {
+    void testStartDocument() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
         Assertions.assertNotNull(handler);
@@ -57,13 +57,13 @@ public class IsotopeHandlerTest extends CDKTestCase {
     }
 
     @Test
-    public void testCharacters_arraychar_int_int() {
+    void testCharacters_arraychar_int_int() {
         // nothing I can test here that IsotopeFactoryTest doesn't do
         Assertions.assertTrue(true);
     }
 
     @Test
-    public void testEndElement_String_String_String() {
+    void testEndElement_String_String_String() {
         // nothing I can test here that IsotopeFactoryTest doesn't do
         Assertions.assertTrue(true);
     }

@@ -33,10 +33,10 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * @author Asad
  * @cdk.module test-smsd
  */
-public class BondEnergiesTest extends CDKTestCase {
+class BondEnergiesTest extends CDKTestCase {
 
     @Test
-    public void testGetInstance() throws Exception {
+    void testGetInstance() throws Exception {
         BondEnergies energies = BondEnergies.getInstance();
         Assertions.assertNotNull(energies);
     }
@@ -45,7 +45,7 @@ public class BondEnergiesTest extends CDKTestCase {
      * Test of getEnergies method, of class BondEnergies.
      */
     @Test
-    public void testGetEnergies() {
+    void testGetEnergies() {
         IAtom sourceAtom = new Atom("C");
         IAtom targetAtom = new Atom("C");
         Order bondOrder = Order.SINGLE;

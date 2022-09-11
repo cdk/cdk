@@ -34,7 +34,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-group
  *
  */
-public class PermutationGroupTest extends CDKTestCase {
+class PermutationGroupTest extends CDKTestCase {
 
     // the first 7 factorials
     private final static int[] lookup = {1, 1, 2, 6, 24, 120, 720, 5040};
@@ -70,19 +70,19 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void testTheFactorialFunction() {
+    void testTheFactorialFunction() {
         Assertions.assertEquals(40320, factorial(8));
     }
 
     @Test
-    public void sizeConstructor() {
+    void sizeConstructor() {
         int size = 4;
         PermutationGroup group = new PermutationGroup(size);
         Assertions.assertEquals(size, group.getSize());
     }
 
     @Test
-    public void baseConstructor() {
+    void baseConstructor() {
         int size = 4;
         Permutation base = new Permutation(size);
         PermutationGroup group = new PermutationGroup(base);
@@ -90,7 +90,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void generatorConstructor() {
+    void generatorConstructor() {
         int size = 4;
         Permutation p1 = new Permutation(1, 0, 2, 3);
         Permutation p2 = new Permutation(1, 2, 3, 0);
@@ -103,7 +103,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void makeSymNTest() {
+    void makeSymNTest() {
         int size = 4;
         PermutationGroup sym = PermutationGroup.makeSymN(size);
         Assertions.assertEquals(size, sym.getSize());
@@ -111,21 +111,21 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void getSizeTest() {
+    void getSizeTest() {
         int size = 4;
         PermutationGroup group = new PermutationGroup(size);
         Assertions.assertEquals(size, group.getSize());
     }
 
     @Test
-    public void orderTest() {
+    void orderTest() {
         int size = 5;
         PermutationGroup sym = PermutationGroup.makeSymN(size);
         Assertions.assertEquals(factorial(size), sym.order());
     }
 
     @Test
-    public void getTest() {
+    void getTest() {
         int size = 6;
         // group that could represent a hexagon (numbered clockwise from top)
         // p1 = a flip across the vertical, p2 = flip across the horizontal
@@ -151,14 +151,14 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void getLeftTransversalTest() {
+    void getLeftTransversalTest() {
         PermutationGroup group = getCubeGroup();
         List<Permutation> transversal = group.getLeftTransversal(1);
         Assertions.assertEquals(3, transversal.size());
     }
 
     @Test
-    public void testTransversal() {
+    void testTransversal() {
         int size = 4;
         // Sym(n) : make the total symmetry group
         PermutationGroup group = PermutationGroup.makeSymN(size);
@@ -184,7 +184,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void applyTest() {
+    void applyTest() {
         final List<Permutation> all = new ArrayList<>();
         int size = 4;
         PermutationGroup group = PermutationGroup.makeSymN(size);
@@ -204,7 +204,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void apply_FinishEarlyTest() {
+    void apply_FinishEarlyTest() {
         final List<Permutation> all = new ArrayList<>();
         final int max = 5; // stop after this many seen
         int size = 4;
@@ -225,7 +225,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void allTest() {
+    void allTest() {
         int size = 4;
         PermutationGroup group = PermutationGroup.makeSymN(size);
         List<Permutation> all = group.all();
@@ -233,7 +233,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void test_SuccessTest() {
+    void test_SuccessTest() {
         PermutationGroup group = getCubeGroup();
         Permutation p = new Permutation(6, 7, 4, 5, 2, 3, 0, 1);
         int position = group.test(p);
@@ -242,7 +242,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void test_FailureTest() {
+    void test_FailureTest() {
         PermutationGroup group = getCubeGroup();
         Permutation p = new Permutation(1, 2, 3, 4, 0, 6, 7, 5);
         int position = group.test(p);
@@ -251,7 +251,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void enterTest() {
+    void enterTest() {
         int size = 4;
         PermutationGroup group = new PermutationGroup(size);
         group.enter(new Permutation(1, 0, 3, 2));
@@ -259,7 +259,7 @@ public class PermutationGroupTest extends CDKTestCase {
     }
 
     @Test
-    public void changeBaseTest() {
+    void changeBaseTest() {
         int size = 4;
         PermutationGroup group = new PermutationGroup(size);
         group.enter(new Permutation(1, 0, 3, 2));

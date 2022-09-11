@@ -47,21 +47,21 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
-public class SMARTSQueryToolTest extends CDKTestCase {
+class SMARTSQueryToolTest extends CDKTestCase {
 
     /**
      * @throws CDKException
      * @cdk.bug 2788357
      */
     @Test
-    public void testLexicalError() throws Exception {
+    void testLexicalError() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide", DefaultChemObjectBuilder.getInstance());
         });
     }
 
     @Test
-    public void testQueryTool() throws Exception {
+    void testQueryTool() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
         SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", DefaultChemObjectBuilder.getInstance());
@@ -97,7 +97,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testQueryToolSingleAtomCase() throws Exception {
+    void testQueryToolSingleAtomCase() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
         SMARTSQueryTool querytool = new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
@@ -110,7 +110,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testQueryToolResetSmarts() throws Exception {
+    void testQueryToolResetSmarts() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
         SMARTSQueryTool querytool = new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
@@ -133,7 +133,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testUniqueQueries() throws Exception {
+    void testUniqueQueries() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
@@ -151,7 +151,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testQuery() throws Exception {
+    void testQuery() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
@@ -177,7 +177,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
      * @cdk.bug 1985811
      */
     @Test
-    public void testIndoleAgainstItself() throws Exception {
+    void testIndoleAgainstItself() throws Exception {
 
         IAtomContainer indole = TestMoleculeFactory.makeIndole();
         addImplicitHydrogens(indole);
@@ -196,7 +196,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
      * @cdk.bug 2149621
      */
     @Test
-    public void testMethane() throws Exception {
+    void testMethane() throws Exception {
         IAtomContainer methane = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom carbon = methane.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         carbon.setImplicitHydrogenCount(4);
@@ -209,7 +209,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     }
 
     @Test
-    public void nullAromaticity() {
+    void nullAromaticity() {
         Assertions.assertThrows(NullPointerException.class, () -> {
             SMARTSQueryTool sqt = new SMARTSQueryTool("CC", DefaultChemObjectBuilder.getInstance());
             sqt.setAromaticity(null);
@@ -217,7 +217,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     }
 
     @Test
-    public void setAromaticity() throws Exception {
+    void setAromaticity() throws Exception {
         SMARTSQueryTool sqt = new SMARTSQueryTool("[a]", DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer furan = smiles("O1C=CC=C1");

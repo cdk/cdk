@@ -28,14 +28,14 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-ioformats
  */
-public class MOPAC93FormatTest extends ChemFormatMatcherTest {
+class MOPAC93FormatTest extends ChemFormatMatcherTest {
 
-    public MOPAC93FormatTest() {
+    MOPAC93FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) MOPAC93Format.getInstance());
     }
 
     @Test
-    public void testMatchesMopac93() throws Exception {
+    void testMatchesMopac93() throws Exception {
         Assertions.assertTrue(((MOPAC93Format) MOPAC93Format.getInstance()).matches(0,
                                                                                     "*                   MOPAC  93.00               CALC'D. Mon May 31 20:29:07 2004"));
     }

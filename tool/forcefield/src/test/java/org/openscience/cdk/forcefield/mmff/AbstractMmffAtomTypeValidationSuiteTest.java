@@ -13,7 +13,7 @@ import static org.openscience.cdk.interfaces.IBond.Order.TRIPLE;
  * This test class is generated from MMFF94hypervalent.mol2 and  MMFF94opti.log available at
  * http://server.ccl.net/cca/data/MMFF94/.
  */
-public abstract class AbstractMmffAtomTypeValidationSuiteTest {
+abstract class AbstractMmffAtomTypeValidationSuiteTest {
 
     /**
      * Generated test for AGLYSL01
@@ -21,7 +21,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H5NO2/c3-1-2(4)5/h1,3H2,(H,4,5)
      */
     @Test
-    public void testAGLYSL01() {
+    void testAGLYSL01() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -53,7 +53,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H6O6/c5-1(3(7)8)2(6)4(9)10/h1-2,5-6H,(H,7,8)(H,9,10)/p-1/t1-,2-/m1/s1
      */
     @Test
-    public void testAMHTAR01() {
+    void testAMHTAR01() {
         IAtomContainer container = new AtomContainer(15, 14, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -96,7 +96,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10N6/c1-3-4(2)12-7-5(11-3)6(9)13-8(10)14-7/h1-2H3,(H4,9,10,12,13,14)/p+1
      */
     @Test
-    public void testAMPTRB10() {
+    void testAMPTRB10() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -161,7 +161,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H14N4O2/c7-4(5(11)12)2-1-3-10-6(8)9/h4H,1-3,7H2,(H,11,12)(H4,8,9,10)/t4-/m0/s1
      */
     @Test
-    public void testARGIND11() {
+    void testARGIND11() {
         IAtomContainer container = new AtomContainer(26, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -226,7 +226,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H2O4/c3-1(4)2(5)6/h(H,3,4)(H,5,6)/p-2
      */
     @Test
-    public void testBAOXLM01() {
+    void testBAOXLM01() {
         IAtomContainer container = new AtomContainer(6, 5, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -250,7 +250,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8BrNO3S2/c10-6-1-3-7(4-2-6)16(13,14)11-8-5-15-9(8)12/h1-4,8,11H,5H2/t8-/m0/s1
      */
     @Test
-    public void testBBSPRT10() {
+    void testBBSPRT10() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("S", 0));
@@ -313,7 +313,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C16N8/c17-1-9(2-18)13-14(10(3-19)4-20)16(12(7-23)8-24)15(13)11(5-21)6-22
      */
     @Test
-    public void testBEVJER10() {
+    void testBEVJER10() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -375,7 +375,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C23H23N3O9S/c1-13(11-34-15(3)28)20-18-10-19(36(33)9-8-24-14(2)27)21(25(18)22(20)29)23(30)35-12-16-4-6-17(7-5-16)26(31)32/h4-9,18H,10-12H2,1-3H3,(H,24,27)/b9-8+,20-13+/t18-,36-/m1/s1
      */
     @Test
-    public void testBEWCUB() {
+    void testBEWCUB() {
         IAtomContainer container = new AtomContainer(59, 61, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -511,7 +511,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H10N3O2S/c12-9-4-6-10(7-5-9)17(15,16)14-11-3-1-2-8-13-11/h1-8H,12H2/q-1/p+1
      */
     @Test
-    public void testBEWKUJ04() {
+    void testBEWKUJ04() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -582,7 +582,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9NO3/c1-4-7(10)6-5(2-9-4)3-12-8(6)11/h2,8,10-11H,3H2,1H3/t8-/m1/s1
      */
     @Test
-    public void testBIHKEI01() {
+    void testBIHKEI01() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -639,7 +639,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9FN2O3/c9-5-4-11(6-2-1-3-14-6)8(13)10-7(5)12/h4,6H,1-3H2,(H,10,12,13)/t6-/m0/s1
      */
     @Test
-    public void testBIPDEJ02() {
+    void testBIPDEJ02() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -700,7 +700,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H4N2O6/c10-7(11)5-2-1-4(8(12)13)3-6(5)9(14)15/h1-3H,(H,10,11)
      */
     @Test
-    public void testBIPJUF10() {
+    void testBIPJUF10() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -752,7 +752,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H8N2/c1-3-7-11-9(5-1)10-6-2-4-8-12-10/h1-8H/p+2
      */
     @Test
-    public void testBIPYCL01() {
+    void testBIPYCL01() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -811,7 +811,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H11N3S/c1-8-7-9(2)15(14-8)12-13-10-5-3-4-6-11(10)16-12/h3-7H,1-2H3
      */
     @Test
-    public void testBITNAT10() {
+    void testBITNAT10() {
         IAtomContainer container = new AtomContainer(27, 29, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -881,7 +881,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H9NS/c1-3-7-11-9(5-1)13-10-6-2-4-8-12(10)14-11/h1-8,13H
      */
     @Test
-    public void testBIYBIU10() {
+    void testBIYBIU10() {
         IAtomContainer container = new AtomContainer(23, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -943,7 +943,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H8N4O2S.C4H8N2S2/c1-12-10-4(5(7)11)3-2-13-6(8)9-3;1-3-5-6-4(7-2)8-3/h2H,1H3,(H2,7,11)(H2,8,9);3,5H,1-2H3/b10-4-;/t;3-/m.1/s1
      */
     @Test
-    public void testBODKOU() {
+    void testBODKOU() {
         IAtomContainer container = new AtomContainer(37, 37, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
@@ -1032,7 +1032,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H9BrN2O/c13-10-4-5-11(16)9(7-10)8-15-12-3-1-2-6-14-12/h1-8,16H/b15-8+
      */
     @Test
-    public void testBSALAP01() {
+    void testBSALAP01() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", 0));
@@ -1097,7 +1097,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H24P2S2/c1-9(2,3)11(7,13)12(8,14)10(4,5)6/h1-8H3/t11-,12+
      */
     @Test
-    public void testBUPSLB10() {
+    void testBUPSLB10() {
         IAtomContainer container = new AtomContainer(38, 37, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("S", 0));
@@ -1187,7 +1187,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H24P2S3/c1-9(2,3)11(7,13)15-12(8,14)10(4,5)6/h1-8H3/t11-,12-/m0/s1
      */
     @Test
-    public void testBUPSLD10() {
+    void testBUPSLD10() {
         IAtomContainer container = new AtomContainer(39, 38, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
@@ -1279,7 +1279,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12N4O4/c12-3-6-4-15(14-2-1-13-10(6)14)11-9(18)8(17)7(5-16)19-11/h1-2,4,7-9,11,16-18H,5H2/t7-,8-,9-,11-/m1/s1
      */
     @Test
-    public void testBUYTIY10() {
+    void testBUYTIY10() {
         IAtomContainer container = new AtomContainer(31, 33, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -1358,7 +1358,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12N4O4/c12-3-6-4-13-15-2-1-14(10(6)15)11-9(18)8(17)7(5-16)19-11/h1-2,4,7-9,11,16-18H,5H2/t7-,8-,9-,11-/m1/s1
      */
     @Test
-    public void testBUYTOE10() {
+    void testBUYTOE10() {
         IAtomContainer container = new AtomContainer(31, 33, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -1437,7 +1437,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H20N2O4S/c1-7(2)9(11(16)17)13-10(15)8(12-6-14)4-5-18-3/h6-9H,4-5H2,1-3H3,(H,12,14)(H,13,15)(H,16,17)/t8-,9-/m0/s1
      */
     @Test
-    public void testBUYXEY10() {
+    void testBUYXEY10() {
         IAtomContainer container = new AtomContainer(38, 37, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -1527,7 +1527,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12N2O2S/c1-13-7-8-15-16-11(13)12-10(14)9-5-3-2-4-6-9/h2-6H,7-8H2,1H3/b12-11-
      */
     @Test
-    public void testBYITOT02() {
+    void testBYITOT02() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("S", 0));
@@ -1598,7 +1598,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10O2S/c11-13(12)7-6-10(8-13)9-4-2-1-3-5-9/h1-6H,7-8H2
      */
     @Test
-    public void testCABWEH10() {
+    void testCABWEH10() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -1659,7 +1659,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH2O2/c2-1-3/h1H,(H,2,3)/p-1
      */
     @Test
-    public void testCAFORM07() {
+    void testCAFORM07() {
         IAtomContainer container = new AtomContainer(4, 3, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -1679,7 +1679,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H5NO6S2/c9-15(10)8-7(13-16(11,12)14-15)6-4-2-1-3-5-6/h1-5H
      */
     @Test
-    public void testCAGREH10() {
+    void testCAGREH10() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -1736,7 +1736,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H13N3O4/c1-4(8)7(14)10-2-5(11)9-3-6(12)13/h4H,2-3,8H2,1H3,(H,9,11)(H,10,14)(H,12,13)/t4-/m0/s1
      */
     @Test
-    public void testCALXES20() {
+    void testCALXES20() {
         IAtomContainer container = new AtomContainer(27, 26, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -1803,7 +1803,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H4O4/c4-2(5)1-3(6)7/h1H2,(H,4,5)(H,6,7)/p-2
      */
     @Test
-    public void testCAMALD03() {
+    void testCAMALD03() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -1833,7 +1833,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C16H17N9O5S3/c1-24-16(20-22-23-24)33-4-6-3-31-13-9(12(27)25(13)10(6)14(28)29)19-11(26)8(21-30-2)7-5-32-15(17)18-7/h5,9,13H,3-4H2,1-2H3,(H2,17,18)(H,19,26)(H,28,29)/b21-8-/t9-,13-/m1/s1
      */
     @Test
-    public void testCEFMEN() {
+    void testCEFMEN() {
         IAtomContainer container = new AtomContainer(50, 53, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -1952,7 +1952,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H15NO5S/c1-4-6(2-11)17-10-9(15-4)8(14)7(13)5(3-12)16-10/h4-10,12-14H,3H2,1H3/t4-,5+,6+,7+,8-,9+,10-/m0/s1
      */
     @Test
-    public void testCETROI01() {
+    void testCETROI01() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -2031,7 +2031,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C18H15OP/c19-20(16-10-4-1-5-11-16,17-12-6-2-7-13-17)18-14-8-3-9-15-18/h1-15H
      */
     @Test
-    public void testCEWCUC10() {
+    void testCEWCUC10() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -2118,7 +2118,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14N4O2/c1-6(2)4-14-8-7(11-5-12-8)9(15)13(3)10(14)16/h5-6H,4H2,1-3H3,(H,11,12)
      */
     @Test
-    public void testCEWVIJ10() {
+    void testCEWVIJ10() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -2194,7 +2194,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H8O2/c13-9-5-1-3-7-8-4-2-6-10(14)12(8)11(7)9/h1-6,13-14H
      */
     @Test
-    public void testCEWYIM30() {
+    void testCEWYIM30() {
         IAtomContainer container = new AtomContainer(22, 24, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -2254,7 +2254,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H8O3/c1-3(7-1)5-6(9-5)4-2-8-4/h3-6H,1-2H2/t3-,4-,5+,6+/m1/s1
      */
     @Test
-    public void testCIHWUL10() {
+    void testCIHWUL10() {
         IAtomContainer container = new AtomContainer(17, 19, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -2304,7 +2304,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H13NO/c1-5-3-7-4-8(11)9(5)6(2)10-7/h5,7,9H,3-4H2,1-2H3/p+1/t5-,7-,9-/m0/s1
      */
     @Test
-    public void testCIJXOI10() {
+    void testCIJXOI10() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2369,7 +2369,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H5N5/c11-4-7-5-12-8-2-1-3-9-13-6-14-10(7)15(8)9/h1-3,5-6H
      */
     @Test
-    public void testCIKSEU10() {
+    void testCIKSEU10() {
         IAtomContainer container = new AtomContainer(20, 22, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -2425,7 +2425,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H10N4O14/c1-20-7-6(25-11(18)19)5(24-10(16)17)4(23-9(14)15)3(22-7)2-21-8(12)13/h3-7H,2H2,1H3/t3-,4-,5+,6-,7-/m1/s1
      */
     @Test
-    public void testCILBII() {
+    void testCILBII() {
         IAtomContainer container = new AtomContainer(35, 35, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2510,7 +2510,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H9N3O4S/c7-6(14)9-8-3(5(12)13)1-2-4(10)11/h1-2H2,(H,10,11)(H,12,13)(H3,7,9,14)/b8-3+
      */
     @Test
-    public void testCILDOQ() {
+    void testCILDOQ() {
         IAtomContainer container = new AtomContainer(23, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -2569,7 +2569,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H3N3/c1-2-4-6-5-3-1/h1-3H
      */
     @Test
-    public void testCILWUP11() {
+    void testCILWUP11() {
         IAtomContainer container = new AtomContainer(9, 9, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -2600,7 +2600,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12ClNO3/c1-17-11(16)12(7-9(12)13)14-10(15)8-5-3-2-4-6-8/h2-6,9H,7H2,1H3,(H,14,15)/t9-,12-/m0/s1
      */
     @Test
-    public void testCIMRUL10() {
+    void testCIMRUL10() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -2673,7 +2673,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11N3O8/c1-9(15)7(14)6(11(16)17)4-10(13(20)21,5-2-3-5)8(9)12(18)19/h4-5,8,15H,2-3H2,1H3/t8-,9-,10-/m1/s1
      */
     @Test
-    public void testCINVIE() {
+    void testCINVIE() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -2753,7 +2753,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H11N5O2/c1-4-15-8(14)6-5(2)10-13-7(6)9-11-12(13)3/h4H2,1-3H3
      */
     @Test
-    public void testCIPVOM() {
+    void testCIPVOM() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -2820,7 +2820,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12N6/c13-1-7(2-14)10-11(8(3-15)4-16)12(10)9(5-17)6-18
      */
     @Test
-    public void testCIPYAB10() {
+    void testCIPYAB10() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2870,7 +2870,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H2N4S2/c1-2-4-6(10-12-8-4)5-3(1)7-11-9-5/h1-2H
      */
     @Test
-    public void testCISMOG() {
+    void testCISMOG() {
         IAtomContainer container = new AtomContainer(14, 16, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -2914,7 +2914,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H4N8O4/c17-15(18)4-1-6-5(7(2-4)16(19)20)3-9-14(6)8-10-12-13-11-8/h1-3H,(H,10,11,12,13)
      */
     @Test
-    public void testCISPOJ() {
+    void testCISPOJ() {
         IAtomContainer container = new AtomContainer(24, 26, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2978,7 +2978,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H5Cl3O2/c1-4(12)13-8-6(10)3-2-5(9)7(8)11/h2-3H,1H3
      */
     @Test
-    public void testCITDIS() {
+    void testCITDIS() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -3028,7 +3028,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13NO2S/c1-2-15-10(13)8-12-11(14)9-6-4-3-5-7-9/h3-7H,2,8H2,1H3,(H,12,14)
      */
     @Test
-    public void testCITNOI10() {
+    void testCITNOI10() {
         IAtomContainer container = new AtomContainer(28, 28, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -3098,7 +3098,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H15NOS2/c1-3-16-12(15)9(2)13-11(14)10-7-5-4-6-8-10/h4-9H,3H2,1-2H3,(H,13,14)/t9-/m0/s1
      */
     @Test
-    public void testCITPEA10() {
+    void testCITPEA10() {
         IAtomContainer container = new AtomContainer(31, 31, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -3174,7 +3174,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH4N2O/c2-1-3-4/h1,4H,(H2,2,3)/p+1
      */
     @Test
-    public void testCITSED10() {
+    void testCITSED10() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -3204,7 +3204,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H15N3O6/c16-10-13(1-7-4-19-7)11(17)15(3-9-6-21-9)12(18)14(10)2-8-5-20-8/h7-9H,1-6H2/t7-,8-,9-/m0/s1
      */
     @Test
-    public void testCIVCEP02() {
+    void testCIVCEP02() {
         IAtomContainer container = new AtomContainer(36, 39, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -3294,7 +3294,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14O6/c1-14-9(12)5-7-6(10(13)15-2)8(5)11(7)16-3-4-17-11/h5-8H,3-4H2,1-2H3/t5-,6+,7+,8-
      */
     @Test
-    public void testCIVLAU02() {
+    void testCIVLAU02() {
         IAtomContainer container = new AtomContainer(31, 33, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -3373,7 +3373,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H10O4/c8-4-1-5-3-6(2-4)11-7(9)10-5/h4-6,8H,1-3H2/t4-,5+,6-
      */
     @Test
-    public void testCIXWAH() {
+    void testCIXWAH() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -3430,7 +3430,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6N4O2S2/c11-5-1-2(8-13-7-1)6(12)4-3(5)9-14-10-4
      */
     @Test
-    public void testCIYNUT() {
+    void testCIYNUT() {
         IAtomContainer container = new AtomContainer(14, 16, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -3474,7 +3474,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H13NO3S/c1-6-5-8-4-3-7(2)14(12)10(8)9(11)13-6/h3-4,6-8H,5H2,1-2H3/t6-,7+,8+,14-/m0/s1
      */
     @Test
-    public void testCIZFIA() {
+    void testCIZFIA() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -3543,7 +3543,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H30Cl2Si4/c1-15(2,3)11(13)17(7,8)12(14,16(4,5)6)18(11,9)10/h1-10H3/t11-,12+
      */
     @Test
-    public void testCIZJAW() {
+    void testCIZJAW() {
         IAtomContainer container = new AtomContainer(48, 48, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Si", 0));
@@ -3654,7 +3654,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H4N4O/c7-5-9-10(11)6-3-1-2-4-8-6/h1-4H/b10-9-
      */
     @Test
-    public void testCIZWUD() {
+    void testCIZWUD() {
         IAtomContainer container = new AtomContainer(15, 15, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -3698,7 +3698,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14N2S/c1-14(2)12(15-3)11(9-13)10-7-5-4-6-8-10/h4-8H,1-3H3/b12-11+
      */
     @Test
-    public void testCIZYEP() {
+    void testCIZYEP() {
         IAtomContainer container = new AtomContainer(29, 29, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -3770,7 +3770,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H6N4O3S/c11-5-7-1-2-9(5)6-8-3-4(14-6)10(12)13/h3H,1-2H2,(H,7,11)
      */
     @Test
-    public void testCIZZUG() {
+    void testCIZZUG() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -3825,7 +3825,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H12N2O4/c1-3-13-6(11)7(5(8)10)4-9(7)12-2/h3-4H2,1-2H3,(H2,8,10)/t7-,9+/m0/s1
      */
     @Test
-    public void testCOBKIN01() {
+    void testCOBKIN01() {
         IAtomContainer container = new AtomContainer(25, 25, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -3889,7 +3889,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H6N4/c13-7-15-11-5-6-12(16-8-14)10-4-2-1-3-9(10)11/h1-6H/b15-11+,16-12+
      */
     @Test
-    public void testCOCXUN() {
+    void testCOCXUN() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -3948,7 +3948,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H6N6/c1-2-4-8-7(3-1)5-6-9-10(8)12-11-13-15-16-17(11)14-9/h1-6H
      */
     @Test
-    public void testCOGDEH() {
+    void testCOGDEH() {
         IAtomContainer container = new AtomContainer(23, 26, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -4011,7 +4011,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6ClN3/c9-8-6-10-12(11-8)7-4-2-1-3-5-7/h1-6H
      */
     @Test
-    public void testCOGYAY() {
+    void testCOGYAY() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
@@ -4062,7 +4062,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H4N4OS/c1-10-4(7)5-8-3(2-6)9-11-5/h7H,1H3/b7-4+
      */
     @Test
-    public void testCOHKOZ() {
+    void testCOHKOZ() {
         IAtomContainer container = new AtomContainer(15, 15, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -4106,7 +4106,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H9N5/c1-12(2)7-5-6(9-3-8-5)10-4-11-7/h3-4H,1-2H3,(H,8,9,10,11)/p+2
      */
     @Test
-    public void testCOJFIQ() {
+    void testCOJFIQ() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -4167,7 +4167,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H14O2S/c1-6-7(8(2,3)4)10-11(5)9/h1,7H,2-5H3/t7-,11+/m0/s1
      */
     @Test
-    public void testCOKDEL() {
+    void testCOKDEL() {
         IAtomContainer container = new AtomContainer(25, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -4230,7 +4230,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10N3O3S/c1-7-6-10(12-16-7)13-17(14,15)9-4-2-8(11)3-5-9/h2-6H,11H2,1H3/q-1
      */
     @Test
-    public void testCOKROJ() {
+    void testCOKROJ() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -4299,7 +4299,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H26N4P2/c1-17-13-5-3-6-14(17)10-12-16-8-4-7-15(11-9-13)18(16)2/h3-12H2,1-2H3/t17-,18-
      */
     @Test
-    public void testCOLZUY() {
+    void testCOLZUY() {
         IAtomContainer container = new AtomContainer(44, 46, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("C", 0));
@@ -4404,7 +4404,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H8Br2O2/c12-7-4-8(14)11(13)6-2-1-5(3-6)9(11)10(7)15/h1-2,4-6,9H,3H2/t5-,6+,9+,11+/m1/s1
      */
     @Test
-    public void testCOMDIR() {
+    void testCOMDIR() {
         IAtomContainer container = new AtomContainer(23, 25, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
@@ -4466,7 +4466,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H7NO2/c8-2-4-1-5-3-10-7(9)6(4)5/h4-6H,1,3H2/t4-,5+,6+/m0/s1
      */
     @Test
-    public void testCOMKAQ() {
+    void testCOMKAQ() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -4515,7 +4515,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H7NO/c11-6-7-5-10-9-4-2-1-3-8(7)9/h1-6,10H
      */
     @Test
-    public void testCOMWOQ() {
+    void testCOMWOQ() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -4566,7 +4566,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14N2/c1-13(2)8-9-7-12-11-6-4-3-5-10(9)11/h3-7,12H,8H2,1-2H3
      */
     @Test
-    public void testCOMWUW() {
+    void testCOMWUW() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -4635,7 +4635,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14F2N4O4/c1-15-5-6-12(14,8(20)18(4)10(22)16(6)2)11(5,13)7(19)17(3)9(15)21/h5-6H,1-4H3/t5-,6+,11-,12+
      */
     @Test
-    public void testCONBAI() {
+    void testCONBAI() {
         IAtomContainer container = new AtomContainer(36, 38, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -4724,7 +4724,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H5NOS/c1-4-2(3)5/h1H3,(H2,3,5)
      */
     @Test
-    public void testCONFAM() {
+    void testCONFAM() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -4756,7 +4756,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H18N2/c1-8(2)5-6-9(3,4)7-8/h5-7H2,1-4H3/q+2
      */
     @Test
-    public void testCONLIA() {
+    void testCONLIA() {
         IAtomContainer container = new AtomContainer(27, 27, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 1));
@@ -4824,7 +4824,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9ClO3S/c1-14(12,13)9(10)8(11)7-5-3-2-4-6-7/h2-6,9H,1H3/t9-/m1/s1
      */
     @Test
-    public void testCORDOC() {
+    void testCORDOC() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -4884,7 +4884,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H3NOS2/c4-1-3-2(5)6/h1H,(H2,3,4,5,6)/p-1
      */
     @Test
-    public void testCORWUB10() {
+    void testCORWUB10() {
         IAtomContainer container = new AtomContainer(8, 7, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -4912,7 +4912,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H7NOS/c1-9-6-4-2-3-5-7(6)11-8(9)10/h2-5H,1H3
      */
     @Test
-    public void testCOSFAR() {
+    void testCOSFAR() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -4963,7 +4963,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H8N2S4/c7-3(8)5-1-2-6-4(9)10/h1-2H2,(H2,5,7,8)(H2,6,9,10)/p-2
      */
     @Test
-    public void testCOSSEI() {
+    void testCOSSEI() {
         IAtomContainer container = new AtomContainer(16, 15, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -5008,7 +5008,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H10N2O/c1-3-10-6-4-9(8-12)5-7-11(13-10)14-2/h3-7H,1H2,2H3/b6-4-,7-5-,9-4+,9-5+,10-6-,11-7+,13-10?,13-11+
      */
     @Test
-    public void testCOSWIQ() {
+    void testCOSWIQ() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -5070,7 +5070,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H8ClN3S/c8-5-1-3-6(4-2-5)10-7(12)11-9/h1-4H,9H2,(H2,10,11,12)
      */
     @Test
-    public void testCOTMON() {
+    void testCOTMON() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -5124,7 +5124,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H6O5/c6-3(5(9)10)1-2-4(7)8/h1-2H2,(H,7,8)(H,9,10)/p-1
      */
     @Test
-    public void testCOTPEG() {
+    void testCOTPEG() {
         IAtomContainer container = new AtomContainer(15, 14, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -5167,7 +5167,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H9N3O2/c15-13-8-6-11(7-9-13)14(16)12-10-4-2-1-3-5-10/h1-9H/b14-12-
      */
     @Test
-    public void testCOTRIM() {
+    void testCOTRIM() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", -1));
@@ -5232,7 +5232,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H6O2S5/c1-7-3(5)9-11-10-4(6)8-2/h1-2H3
      */
     @Test
-    public void testCOVHUQ() {
+    void testCOVHUQ() {
         IAtomContainer container = new AtomContainer(17, 16, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -5279,7 +5279,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H20N2/c1-9(2,3)11-7-8-12-10(4,5)6/h7-8H,1-6H3/b11-7+,12-8+
      */
     @Test
-    public void testCOVMAB() {
+    void testCOVMAB() {
         IAtomContainer container = new AtomContainer(32, 31, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -5357,7 +5357,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14N4O2S/c1-8-7-9(2)15-12(14-8)16-19(17,18)11-5-3-10(13)4-6-11/h3-7H,13H2,1-2H3,(H,14,15,16)
      */
     @Test
-    public void testCOVXIU() {
+    void testCOVXIU() {
         IAtomContainer container = new AtomContainer(33, 34, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -5439,7 +5439,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H16NO4P/c1-7(2)11-10(16(13,14)15)8-5-3-4-6-9(8)12/h3-7,10-12H,1-2H3,(H2,13,14,15)/t10-/m1/s1
      */
     @Test
-    public void testCOWTIR() {
+    void testCOWTIR() {
         IAtomContainer container = new AtomContainer(32, 32, 0, 0);
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("O", 0));
@@ -5518,7 +5518,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H11O3PS3/c1-7-9(6,8-2)5-11-3-10-4-12-5/h5H,3-4H2,1-2H3
      */
     @Test
-    public void testCOXBAS() {
+    void testCOXBAS() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("S", 0));
@@ -5578,7 +5578,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H7N3S2/c1-8-3(7)6-2(4)5/h1H3,(H4,4,5,6,7)
      */
     @Test
-    public void testCOXZEU() {
+    void testCOXZEU() {
         IAtomContainer container = new AtomContainer(15, 14, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -5621,7 +5621,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11N3O2/c11-8(14)10(9(12)15)6-13(10)7-4-2-1-3-5-7/h1-5H,6H2,(H2,11,14)(H2,12,15)/t13-/m0/s1
      */
     @Test
-    public void testCOYMOS() {
+    void testCOYMOS() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -5688,7 +5688,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6N2O2/c9-10-7(11)5-3-1-2-4-6(5)8(10)12/h1-4H,9H2
      */
     @Test
-    public void testCOYNAF() {
+    void testCOYNAF() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -5739,7 +5739,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H10N4O2S2/c1-11-17(14,15)7-5-3-2-4-6(7)8-12-13-9(10)16-8/h2-5,11H,1H3,(H2,10,13)
      */
     @Test
-    public void testCOYVIV() {
+    void testCOYVIV() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -5808,7 +5808,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14N2/c1-9-4-3-5-11(10(9)2)6-12-7-13-8-14-12/h3-5,7-8H,6H2,1-2H3,(H,13,14)/p+1
      */
     @Test
-    public void testCUBTUO() {
+    void testCUBTUO() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -5881,7 +5881,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12O3/c1-6-4-3-5-7-8(6)12(2,14)11-10(15-11)9(7)13/h3-5,10-11,14H,1-2H3/t10-,11-,12+/m0/s1
      */
     @Test
-    public void testCUCDAF() {
+    void testCUCDAF() {
         IAtomContainer container = new AtomContainer(27, 29, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -5951,7 +5951,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14O4/c1-6(12)10-5-11(10,7(2)13)9(3,15)4-8(10)14/h15H,4-5H2,1-3H3/t9-,10-,11+/m0/s1
      */
     @Test
-    public void testCUCHOX() {
+    void testCUCHOX() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -6024,7 +6024,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8N4O3S/c1-12-5-11-7(13(15)16)9(12)17-8-6(14)3-2-4-10-8/h2-5,14H,1H3
      */
     @Test
-    public void testCUCHUD() {
+    void testCUCHUD() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -6089,7 +6089,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H10N4O3/c1-3(8-12)6(9-13)10-2-4(10)5(7)11/h4,12-13H,2H2,1H3,(H2,7,11)/b8-3+,9-6-/t4-,10+/m1/s1
      */
     @Test
-    public void testCUDJAM() {
+    void testCUDJAM() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -6149,7 +6149,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H22O2Si/c1-12-10(13(2,3)4)8-6-5-7-9(10)11/h9,11H,5-8H2,1-4H3/t9-,10+/m1/s1
      */
     @Test
-    public void testCUDNEU() {
+    void testCUDNEU() {
         IAtomContainer container = new AtomContainer(35, 35, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
@@ -6234,7 +6234,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H5N3O4/c10-5-3-7-2-1-4(5)6(8-11)9(12)13/h1-3,10-11H/p-1/b8-6+
      */
     @Test
-    public void testCUDPAS() {
+    void testCUDPAS() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -6282,7 +6282,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11N3S/c1-10(2)12-11-9(14)13(10)8-6-4-3-5-7-8/h3-7H,1-2H3
      */
     @Test
-    public void testCUDPOG() {
+    void testCUDPOG() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -6347,7 +6347,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H4N2S/c4-3-5-1-2-6-3/h1-2H,(H2,4,5)/p+1
      */
     @Test
-    public void testCUDREY() {
+    void testCUDREY() {
         IAtomContainer container = new AtomContainer(11, 11, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 1));
@@ -6382,7 +6382,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C20H12O5/c21-11-5-7-15-17(9-11)24-18-10-12(22)6-8-16(18)20(15)14-4-2-1-3-13(14)19(23)25-20/h1-10,21-22H
      */
     @Test
-    public void testCUFFAK() {
+    void testCUFFAK() {
         IAtomContainer container = new AtomContainer(37, 41, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -6475,7 +6475,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14N2O2/c1-2-16-12-10(7-13)8-5-3-4-6-9(8)11(15)14-12/h2-6H2,1H3,(H,14,15)
      */
     @Test
-    public void testCUGBEL() {
+    void testCUGBEL() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -6551,7 +6551,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H6Cl5NO4/c1-6(10,5(14)15)2-3(8)4(9)7(11,12)13(16)17/h2,4H,1H3,(H,14,15)/b3-2+/t4-,6-/m1/s1
      */
     @Test
-    public void testCUGGOA() {
+    void testCUGGOA() {
         IAtomContainer container = new AtomContainer(23, 22, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -6610,7 +6610,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9N3O6/c14-11(15)9-3-1-2-4-5(3)6(9)7(4)10(8(2)9,12(16)17)13(18)19/h2-8H,1H2/t2-,3+,4-,5+,6+,7-,8+,9-/m1/s1
      */
     @Test
-    public void testCUGLOF() {
+    void testCUGLOF() {
         IAtomContainer container = new AtomContainer(28, 32, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -6684,7 +6684,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10N2OS/c1-10-6-4-3-5-7(10)8(9-11)12-2/h3-6H,1-2H3/p+1
      */
     @Test
-    public void testCUJYUB10() {
+    void testCUJYUB10() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -6744,7 +6744,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9NO3S/c1-13(10,11)9-8(12-9)7-5-3-2-4-6-7/h2-6,8H,1H3/t8-,9-/m0/s1
      */
     @Test
-    public void testCULGEV10() {
+    void testCULGEV10() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -6803,7 +6803,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H24N2O/c15-14(10-5-2-6-11-14)12-9-13-7-3-1-4-8-13/h1-12H2
      */
     @Test
-    public void testCULHIA10() {
+    void testCULHIA10() {
         IAtomContainer container = new AtomContainer(39, 40, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -6897,7 +6897,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H16ClO3P/c1-6(2)7-8(3,4)5-11-13(9,10)12-7/h6-7H,5H2,1-4H3/t7-,13+/m0/s1
      */
     @Test
-    public void testCULVEK() {
+    void testCULVEK() {
         IAtomContainer container = new AtomContainer(29, 29, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -6969,7 +6969,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10N4O5/c1-6(7(2)15)11-12-9-4-3-8(13(16)17)5-10(9)14(18)19/h3-5,12H,1-2H3/b11-6+
      */
     @Test
-    public void testCUNVAI() {
+    void testCUNVAI() {
         IAtomContainer container = new AtomContainer(29, 29, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -7041,7 +7041,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14ClNO2S/c1-8(2,3)15-9(6-12)5-10(9,11)7(13)14-4/h5H2,1-4H3/t9-,10+/m1/s1
      */
     @Test
-    public void testCUNVEM() {
+    void testCUNVEM() {
         IAtomContainer container = new AtomContainer(29, 29, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
@@ -7113,7 +7113,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H12O3S/c1-2-5-4-3-6(12(5,9)10)8-7(4)11-8/h4-8H,2-3H2,1H3/t4-,5-,6-,7-,8+/m1/s1
      */
     @Test
-    public void testCURZIY() {
+    void testCURZIY() {
         IAtomContainer container = new AtomContainer(24, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -7177,7 +7177,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H11NO4S2/c7-4(6(10)11)3-13-12-2-1-5(8)9/h4H,1-3,7H2,(H,8,9)(H,10,11)/t4-/m0/s1
      */
     @Test
-    public void testCUVFOO() {
+    void testCUVFOO() {
         IAtomContainer container = new AtomContainer(24, 23, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -7238,7 +7238,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H13O4P/c1-5(7)3-4-6(2,8)11(5,9)10/h7-8H,3-4H2,1-2H3,(H,9,10)/t5-,6-/m0/s1
      */
     @Test
-    public void testCUVGAB() {
+    void testCUVGAB() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -7300,7 +7300,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH6N2/c1-3-2/h3H,2H2,1H3/p+1
      */
     @Test
-    public void testCUVJOS() {
+    void testCUVJOS() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -7332,7 +7332,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12O4/c1-7(13)10-6-9-11(15-3)4-8(14-2)5-12(9)16-10/h4-6H,1-3H3
      */
     @Test
-    public void testCUYRAP() {
+    void testCUYRAP() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -7403,7 +7403,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH2N2/c2-1-3/h2H2
      */
     @Test
-    public void testCYANAM01() {
+    void testCYANAM01() {
         IAtomContainer container = new AtomContainer(5, 4, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -7425,7 +7425,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14ClN5/c1-11(2)16-9(13)15-10(14)17(11)8-5-3-7(12)4-6-8/h3-6H,1-2H3,(H4,13,14,15,16)/p+1
      */
     @Test
-    public void testCYGUAN01() {
+    void testCYGUAN01() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 1));
@@ -7505,7 +7505,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14N4O3S/c1-8-14-11(7-12(15-8)19-2)16-20(17,18)10-5-3-9(13)4-6-10/h3-7H,13H2,1-2H3,(H,14,15,16)
      */
     @Test
-    public void testDABHAP() {
+    void testDABHAP() {
         IAtomContainer container = new AtomContainer(34, 35, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -7589,7 +7589,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8F4/c9-7(10)3-1-4-6(2-5(3)7)8(4,11)12/h3-6H,1-2H2/t3-,4-,5+,6+
      */
     @Test
-    public void testDABLIB() {
+    void testDABLIB() {
         IAtomContainer container = new AtomContainer(20, 22, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -7645,7 +7645,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H15FNO2P/c1-10(11-6-3-2-4-7-11)13-8-5-9-15-16(13,12)14/h2-4,6-7,10H,5,8-9H2,1H3/t10-,16+/m0/s1
      */
     @Test
-    public void testDACSAB() {
+    void testDACSAB() {
         IAtomContainer container = new AtomContainer(31, 32, 0, 0);
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("O", 0));
@@ -7722,7 +7722,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H22NPS/c1-8-9(2,3)12(13,11(6)7)10(8,4)5/h8H,1-7H3/t8-,12-
      */
     @Test
-    public void testDACYIP() {
+    void testDACYIP() {
         IAtomContainer container = new AtomContainer(35, 35, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
@@ -7807,7 +7807,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H15NO4/c14-10-1-2-11(15)17-9-4-6-13-5-3-8(7-16-10)12(9)13/h3,9,12H,1-2,4-7H2/t9-,12-/m1/s1
      */
     @Test
-    public void testDADDAN() {
+    void testDADDAN() {
         IAtomContainer container = new AtomContainer(32, 34, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -7888,7 +7888,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H8N2O2/c1-3-5(4(2)10)6(8)7(11)9-3/h1,8H2,2H3,(H,9,11)
      */
     @Test
-    public void testDADLAV() {
+    void testDADLAV() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -7940,7 +7940,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H8N2O2/c1-3(10)5-4(2)11-7(9)6(5)8/h9H,2,8H2,1H3/b9-7-
      */
     @Test
-    public void testDADLEZ() {
+    void testDADLEZ() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -7992,7 +7992,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H11N3/c1-7-3-5-8(6-4-7)10-11-9-2/h3-6H,1-2H3,(H,9,10)
      */
     @Test
-    public void testDAFKIE() {
+    void testDAFKIE() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -8050,7 +8050,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H2N4O3/c3-1-2(6(7)8)5-9-4-1/h(H2,3,4)
      */
     @Test
-    public void testDAFPUV() {
+    void testDAFPUV() {
         IAtomContainer container = new AtomContainer(11, 11, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -8085,7 +8085,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H12N2O6S2/c1-11-5(13(3,7)8)6(12-2)14(4,9)10/h1-4H3
      */
     @Test
-    public void testDAGTUA() {
+    void testDAGTUA() {
         IAtomContainer container = new AtomContainer(26, 25, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -8150,7 +8150,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10N2O3/c1-9(2)8(12)6-4-3-5-7(11)10(6)13/h3-5,13H,1-2H3
      */
     @Test
-    public void testDAHBAP() {
+    void testDAHBAP() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -8210,7 +8210,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H16Cl2Si2/c1-9(2,7)5-6-10(3,4)8/h5-6H2,1-4H3
      */
     @Test
-    public void testDAHNAB() {
+    void testDAHNAB() {
         IAtomContainer container = new AtomContainer(26, 25, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -8275,7 +8275,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14N4O2/c1-11-7-6-8(11)15(10(17)13-9(11)16)4-2-3-14(6)5-12-7/h5-8H,2-4H2,1H3,(H,13,16,17)/t6-,7+,8-,11+/m0/s1
      */
     @Test
-    public void testDAJXER() {
+    void testDAJXER() {
         IAtomContainer container = new AtomContainer(31, 34, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -8355,7 +8355,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C15H13N3O3S/c1-8-13(9(2)19)14(11(7-16)15(22)17-8)10-5-3-4-6-12(10)18(20)21/h3-6,14,17,22H,1-2H3/p-1/t14-/m1/s1
      */
     @Test
-    public void testDAKBAS() {
+    void testDAKBAS() {
         IAtomContainer container = new AtomContainer(34, 35, 0, 0);
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("O", 0));
@@ -8439,7 +8439,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H4N8/c9-13-10-7-5-3-1-2-4-6(5)8-11-14-15-16(8)12-7/h1-4H
      */
     @Test
-    public void testDAKCEX() {
+    void testDAKCEX() {
         IAtomContainer container = new AtomContainer(20, 22, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -8495,7 +8495,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C16H11ClN4O3S/c17-8-1-3-10-11(5-8)13(7-15(22)23)21(19-16(10)24)9-2-4-14-12(6-9)18-20-25-14/h1-6,13H,7H2,(H,19,24)(H,22,23)/t13-/m0/s1
      */
     @Test
-    public void testDAKDOI() {
+    void testDAKDOI() {
         IAtomContainer container = new AtomContainer(36, 39, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -8585,7 +8585,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H8S4Si/c1-2-6-9(5-1)7-3-4-8-9/h1-4H2
      */
     @Test
-    public void testDANCUQ() {
+    void testDANCUQ() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("S", 0));
@@ -8634,7 +8634,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12N2O2S/c13-9-1-5-11(6-2-9)17(15,16)12-7-3-10(14)4-8-12/h1-8H,13-14H2
      */
     @Test
-    public void testDAPSUO03() {
+    void testDAPSUO03() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -8707,7 +8707,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14N4S2/c1-6-8(13-5-12-6)9-14-7(3-15-9)4-16-10(14)11-2/h5,7,9H,3-4H2,1-2H3,(H,12,13)/b11-10-/t7-,9-/m0/s1
      */
     @Test
-    public void testDARDEF() {
+    void testDARDEF() {
         IAtomContainer container = new AtomContainer(30, 32, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
@@ -8783,7 +8783,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H25N2PSi/c1-8-12(9-2)10(11(3)4)13-14(5,6)7/h8-9H2,1-7H3
      */
     @Test
-    public void testDARPOB10() {
+    void testDARPOB10() {
         IAtomContainer container = new AtomContainer(39, 38, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Si", 0));
@@ -8875,7 +8875,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12N2S/c1-9-8-11(14)13(12(9)2)10-6-4-3-5-7-10/h3-8H,1-2H3
      */
     @Test
-    public void testDARXID() {
+    void testDARXID() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -8942,7 +8942,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H11N3O/c1-2-12-9(13)7-5-3-4-6-8(7)10-11-12/h3-6,9,13H,2H2,1H3/t9-/m0/s1
      */
     @Test
-    public void testDARZEB() {
+    void testDARZEB() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -9005,7 +9005,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9Br2N3O7/c1-7(12(16)17)4(10)5(11)8(2,13(18)19)9(3,6(7)15)14(20)21/h1-3H3/t7-,8+,9-/m1/s1
      */
     @Test
-    public void testDAVWEC() {
+    void testDAVWEC() {
         IAtomContainer container = new AtomContainer(30, 30, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
@@ -9079,7 +9079,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12N4O9/c1-5-6(11(16)17)9(3,13(20)21)10(4,14(22)23)7(15)8(5,2)12(18)19/h1-4H3/t8-,9+,10+/m0/s1
      */
     @Test
-    public void testDAVXED() {
+    void testDAVXED() {
         IAtomContainer container = new AtomContainer(35, 35, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -9164,7 +9164,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H7F4N3O/c1-11-3-4(13(14)12-2)6(9,10)5(3,7)8/h11H,1-2H3/b13-12-
      */
     @Test
-    public void testDAWXII() {
+    void testDAWXII() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -9220,7 +9220,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H5ClO2/c10-7-5-9(11)12-8-4-2-1-3-6(7)8/h1-5H
      */
     @Test
-    public void testDAWYUV() {
+    void testDAWYUV() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -9269,7 +9269,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H12O7P2/c7-14(9-3-1-4-10-14)13-15(8)11-5-2-6-12-15/h1-6H2
      */
     @Test
-    public void testDAYWEF() {
+    void testDAYWEF() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
@@ -9338,7 +9338,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12O3/c13-7-10(1-2-10)8(14)12(5-6-12)9(15)11(7)3-4-11/h1-6H2
      */
     @Test
-    public void testDAZVEF() {
+    void testDAZVEF() {
         IAtomContainer container = new AtomContainer(27, 30, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -9409,7 +9409,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H4O4/c5-3(6)1-2-4(7)8/h1-2H,(H,5,6)(H,7,8)/p-1/b2-1-
      */
     @Test
-    public void testDEBMOM01() {
+    void testDEBMOM01() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -9443,7 +9443,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H8N2O4/c10-6-3-1-2-8-4(7(11)12)5(3)13-9-6/h4,8H,1-2H2,(H,9,10)(H,11,12)/t4-/m0/s1
      */
     @Test
-    public void testDECJAW() {
+    void testDECJAW() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -9500,7 +9500,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H15N3O2/c1-12-6-7(9(11)14)10(15)13-5-3-2-4-8(12)13/h6,8H,2-5H2,1H3,(H2,11,14)/t8-/m1/s1
      */
     @Test
-    public void testDECKUR() {
+    void testDECKUR() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -9576,7 +9576,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H13N2O/c1-11(2)10-12(3)8-6-4-5-7-9(8)13-10/h4-7H,1-3H3/q+1
      */
     @Test
-    public void testDECRIM() {
+    void testDECRIM() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -9643,7 +9643,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H6Cl3NO/c1-9(12)5-2-4(10)3-6(11)7(5)13-8(9)14/h2-3H,1H3,(H,13,14)/t9-/m0/s1
      */
     @Test
-    public void testDEDCIY() {
+    void testDEDCIY() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -9698,7 +9698,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14INO3/c1-11(2,3)16-10(15)4-5-13-8(7-12)6-9(13)14/h8H,6-7H2,1-3H3/t8-/m1/s1
      */
     @Test
-    public void testDEDSIO() {
+    void testDEDSIO() {
         IAtomContainer container = new AtomContainer(30, 30, 0, 0);
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("N", 0));
@@ -9773,7 +9773,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10N4O2/c1-12(14)11-10-7-4-2-6(3-5-7)8(9)13/h2-5,10H,1H3,(H2,9,13)/b12-11-
      */
     @Test
-    public void testDEFGIE() {
+    void testDEFGIE() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -9835,7 +9835,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8N6O8/c1-3(15)9-5-6(12(7(9)17)14(21)22)10(4(2)16)8(18)11(5)13(19)20/h5-6H,1-2H3/t5-,6-/m1/s1
      */
     @Test
-    public void testDEFLEF() {
+    void testDEFLEF() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -9911,7 +9911,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H8N4S/c1-6-4-7-9-3(5)8(4)2/h5H,1-2H3,(H,6,7)/p+1
      */
     @Test
-    public void testDEFPUZ() {
+    void testDEFPUZ() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -9961,7 +9961,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11N5O/c1-14(2)9-11-10(16)15(13-12-9)8-6-4-3-5-7-8/h3-7H,1-2H3
      */
     @Test
-    public void testDEFTUD() {
+    void testDEFTUD() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -10030,7 +10030,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13N5O/c1-8-4-6-9(7-5-8)13-16-11(17)12-10(14-16)15(2)3/h4-7H,1-3H3/p+1
      */
     @Test
-    public void testDEFVAL() {
+    void testDEFVAL() {
         IAtomContainer container = new AtomContainer(31, 32, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -10108,7 +10108,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H9NS2/c7-5-3-1-2-4(5)6(8)9/h1-3,7H2,(H,8,9)
      */
     @Test
-    public void testDEFYUI() {
+    void testDEFYUI() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -10158,7 +10158,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H7ClN2/c1-6(2)3(4)5/h5H,1-2H3/p+1
      */
     @Test
-    public void testDEGLUW() {
+    void testDEGLUW() {
         IAtomContainer container = new AtomContainer(14, 13, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
@@ -10199,7 +10199,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C17H18N2/c1-12-3-5-16-14(7-12)9-18-11-19(16)10-15-8-13(2)4-6-17(15)18/h3-8H,9-11H2,1-2H3
      */
     @Test
-    public void testDEGRIQ() {
+    void testDEGRIQ() {
         IAtomContainer container = new AtomContainer(37, 40, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -10291,7 +10291,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H5N3O5/c1-9-4(12)7-2(10)6(9)3(11)8-5(13)14-6/h1H3,(H2,7,8,10,11,12,13)/p-1/t6-/m1/s1
      */
     @Test
-    public void testDEKRUG() {
+    void testDEKRUG() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -10342,7 +10342,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H7ClN6O2/c8-1-2-14-7(16)13-3-10-4(5(9)15)6(13)11-12-14/h3H,1-2H2,(H2,9,15)
      */
     @Test
-    public void testDEMBIG() {
+    void testDEMBIG() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -10403,7 +10403,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H5N3OS/c1-2-6-8(11-3-1)14-9-7(13-6)10-4-5-12-9/h1-5H
      */
     @Test
-    public void testDEPKEO() {
+    void testDEPKEO() {
         IAtomContainer container = new AtomContainer(19, 21, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -10457,7 +10457,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H13F3N4O2/c1-8(2)6(15(3)4)16(7(18)13-8)14-5(17)9(10,11)12/h1-4H3,(H-,13,14,17,18)
      */
     @Test
-    public void testDERZUV() {
+    void testDERZUV() {
         IAtomContainer container = new AtomContainer(31, 31, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -10534,7 +10534,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H8N2O2S/c1-2-10-6(9)4-5(7)11-3-8-4/h3H,2,7H2,1H3
      */
     @Test
-    public void testDESWUT() {
+    void testDESWUT() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -10586,7 +10586,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H4N2/c1-3(5)2-4/h1,5H2
      */
     @Test
-    public void testDESYOP() {
+    void testDESYOP() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -10616,7 +10616,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H10N2O5/c1-2-14-7-4-9-8(18-5-19-9)3-6(7)11(15)10(13-14)12(16)17/h3-4H,2,5H2,1H3,(H,16,17)
      */
     @Test
-    public void testDEWHOC() {
+    void testDEWHOC() {
         IAtomContainer container = new AtomContainer(29, 31, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -10690,7 +10690,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H22N2Si2/c1-13(2,3)11-7-9-12(10-8-11)14(4,5)6/h7-10H,1-6H3
      */
     @Test
-    public void testDEWJEU() {
+    void testDEWJEU() {
         IAtomContainer container = new AtomContainer(36, 36, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("N", 0));
@@ -10777,7 +10777,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13NO2/c1-7(13)9-10(12-11(9)14)8-5-3-2-4-6-8/h2-7,9-10,13H,1H3,(H,12,14)/t7-,9+,10-/m1/s1
      */
     @Test
-    public void testDEXCIS() {
+    void testDEXCIS() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -10846,7 +10846,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9N3O3/c13-5-10-9(15)6-1-3-12-4-2-7(14)11-8(6)12/h1,3,5H,2,4H2,(H,11,14)(H,10,13,15)
      */
     @Test
-    public void testDEXGIW() {
+    void testDEXGIW() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -10909,7 +10909,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6F6/c9-5(10)1-3-4-2-6(11,12)7(3,13)8(4,5)14/h3-4H,1-2H2/t3-,4-,7+,8+/m1/s1
      */
     @Test
-    public void testDEZDUH() {
+    void testDEZDUH() {
         IAtomContainer container = new AtomContainer(20, 22, 0, 0);
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("F", 0));
@@ -10965,7 +10965,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13NO2S/c1-15(13,14)11-10-5-3-2-4-9(8-10)6-7-12-11/h2-7,9-10H,8H2,1H3/t9-,10-/m0/s1
      */
     @Test
-    public void testDEZNIF() {
+    void testDEZNIF() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -11036,7 +11036,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H5Cl2NO2/c9-5-2-1-3-7(10)11-6(5)4-13-8(11)12/h1-3H,4H2
      */
     @Test
-    public void testDEZXEL() {
+    void testDEZXEL() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -11087,7 +11087,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11N5O2/c11-9-8-10(13-4-12-9)15(5-14-8)7-2-1-6(3-16)17-7/h1-2,4-7,16H,3H2,(H2,11,12,13)/t6-,7+/m0/s1
      */
     @Test
-    public void testDHOADS01() {
+    void testDHOADS01() {
         IAtomContainer container = new AtomContainer(28, 30, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -11159,7 +11159,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C16H12N2S/c1-2-4-14-12(3-1)9-13(10-18-7-6-17-11-18)15-5-8-19-16(14)15/h1-9,11H,10H2/p+1
      */
     @Test
-    public void testDICKIJ() {
+    void testDICKIJ() {
         IAtomContainer container = new AtomContainer(32, 35, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -11241,7 +11241,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6N2O2/c11-10-8(6-9-12-10)7-4-2-1-3-5-7/h1-6H
      */
     @Test
-    public void testDICPUA() {
+    void testDICPUA() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -11292,7 +11292,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6N2O2/c11-10-6-8(9-12-10)7-4-2-1-3-5-7/h1-6H
      */
     @Test
-    public void testDICRAI() {
+    void testDICRAI() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -11343,7 +11343,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H15NSi/c1-6(2)7(3,4)5/h1-5H3
      */
     @Test
-    public void testDICYIX() {
+    void testDICYIX() {
         IAtomContainer container = new AtomContainer(22, 21, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("N", 0));
@@ -11400,7 +11400,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10Cl4N2O2/c1-3-14(4-2)7(10)13-6(16)8(11,12)5(9)15/h3-4H2,1-2H3/b13-7+
      */
     @Test
-    public void testDICYOD() {
+    void testDICYOD() {
         IAtomContainer container = new AtomContainer(26, 25, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -11465,7 +11465,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H11NO5/c1-12-7(11)6(10)5(9)4-2-3-8-13-4/h3-6,9-10H,2H2,1H3/t4-,5-,6+/m1/s1
      */
     @Test
-    public void testDIDYOE() {
+    void testDIDYOE() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -11527,7 +11527,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H8N2O5S/c15-13(16)9-5-1-3-7-11(9)20(19)12-8-4-2-6-10(12)14(17)18/h1-8H
      */
     @Test
-    public void testDIFSIU() {
+    void testDIFSIU() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -11598,7 +11598,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4N2S4/c5-1(6)3-4-2(7)8/h(H2,3,5,6)(H2,4,7,8)/p-2
      */
     @Test
-    public void testDIGCOL() {
+    void testDIGCOL() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -11630,7 +11630,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H10S6/c1-9-5(7)11-3-4-12-6(8)10-2/h3-4H2,1-2H3
      */
     @Test
-    public void testDIGCUR() {
+    void testDIGCUR() {
         IAtomContainer container = new AtomContainer(22, 21, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -11687,7 +11687,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C17H14N2O7/c20-12-3-1-2-11(15(12)21)16(22)18-14-13(26-17(14)23)8-9-4-6-10(7-5-9)19(24)25/h1-7,13-14,20-21H,8H2,(H,18,22)/t13-,14+/m1/s1
      */
     @Test
-    public void testDIGLEK() {
+    void testDIGLEK() {
         IAtomContainer container = new AtomContainer(40, 42, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -11784,7 +11784,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8N2O2/c1-5-3-7(12)6-4-10-11(2)8(6)9(5)13/h3-4H,1-2H3
      */
     @Test
-    public void testDIHTET() {
+    void testDIHTET() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -11841,7 +11841,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H10Cl3NO3S/c1-4-6(2,3)11(15(4,13)14)5(12)7(8,9)10/h4H,1-3H3/t4-/m1/s1
      */
     @Test
-    public void testDIKGAF() {
+    void testDIKGAF() {
         IAtomContainer container = new AtomContainer(25, 25, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -11905,7 +11905,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H10Cl3NO3S/c1-4-6(2,3)14-5(7(8,9)10)11-15(4,12)13/h4H,1-3H3/t4-/m1/s1
      */
     @Test
-    public void testDIKGEJ() {
+    void testDIKGEJ() {
         IAtomContainer container = new AtomContainer(25, 25, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -11969,7 +11969,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H21N3O2/c16-15-11-7-3-1-5-9(11)13-10-6-2-4-8-12(10,15)17-14-11/h9-10,13-14,16H,1-8H2/t9-,10+,11-,12-/m0/s1
      */
     @Test
-    public void testDIKWID() {
+    void testDIKWID() {
         IAtomContainer container = new AtomContainer(38, 41, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -12063,7 +12063,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6Cl2O2/c9-8(10)5-2-1-4(3-11)6(5)7(8)12/h1,3,5-6H,2H2/t5-,6+/m1/s1
      */
     @Test
-    public void testDIKYUR() {
+    void testDIKYUR() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -12114,7 +12114,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H17NO3/c1-6(2)7-8(13)12-9(7)15-10(14)11(3,4)5/h9H,1-5H3,(H,12,13)/t9-/m0/s1
      */
     @Test
-    public void testDILCOQ() {
+    void testDILCOQ() {
         IAtomContainer container = new AtomContainer(32, 32, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -12193,7 +12193,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H6N2O6S2/c13-11(14)8-6-9(12(15)16)19-10(8)20(17,18)7-4-2-1-3-5-7/h1-6H
      */
     @Test
-    public void testDIMYIH10() {
+    void testDIMYIH10() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -12260,7 +12260,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12N2O5/c1-4-2-6(14)11-10-12(4)9-8(17-10)7(15)5(3-13)16-9/h2,5,7-9,13,15H,3H2,1H3/t5-,7-,8+,9-/m1/s1
      */
     @Test
-    public void testDIPDAH10() {
+    void testDIPDAH10() {
         IAtomContainer container = new AtomContainer(29, 31, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -12334,7 +12334,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H10N4/c6-2-1-4-3-8-5(7)9-4/h3H,1-2,6H2,(H3,7,8,9)/p+2
      */
     @Test
-    public void testDIPDIP10() {
+    void testDIPDIP10() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -12390,7 +12390,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH5NO3S/c1-6(4,5)2-3/h2-3H,1H3
      */
     @Test
-    public void testDIRMIA() {
+    void testDIRMIA() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -12424,7 +12424,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13NO/c1-8-7-12(2,3)13-11-5-4-9(14)6-10(8)11/h4-7H,1-3H3
      */
     @Test
-    public void testDISHES() {
+    void testDISHES() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -12493,7 +12493,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H6ClNO4/c1-2-10-4(7)3(5)6(8)9/h7H,2H2,1H3/p-1/b4-3+
      */
     @Test
-    public void testDISJOE() {
+    void testDISJOE() {
         IAtomContainer container = new AtomContainer(15, 14, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -12536,7 +12536,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H7N3S/c1-6-2(3)5-4/h4H2,1H3,(H2,3,5)/p+1
      */
     @Test
-    public void testDITRAZ() {
+    void testDITRAZ() {
         IAtomContainer container = new AtomContainer(14, 13, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -12577,7 +12577,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13ClO/c13-11-6-4-10(5-7-11)12(14)8-9-2-1-3-9/h4-7,9H,1-3,8H2
      */
     @Test
-    public void testDITYAG10() {
+    void testDITYAG10() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -12646,7 +12646,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H9N3OS/c1-6-4-5(8-9)10-3-2-7-4/h9H,2-3H2,1H3,(H,6,7)/p+1/b8-5-
      */
     @Test
-    public void testDIVJUN() {
+    void testDIVJUN() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -12700,7 +12700,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12O2/c12-11-7-3-1-2-4-9(7)13-10-6-5-8(10)11/h1-4,8,10-12H,5-6H2/t8-,10+,11+/m1/s1
      */
     @Test
-    public void testDIVTUX() {
+    void testDIVTUX() {
         IAtomContainer container = new AtomContainer(25, 27, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -12766,7 +12766,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H6N4O/c3-1(4)6-2(5)7/h(H6,3,4,5,6,7)/p+1
      */
     @Test
-    public void testDIVVEJ() {
+    void testDIVVEJ() {
         IAtomContainer container = new AtomContainer(14, 13, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -12807,7 +12807,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C18H12O4/c19-16-14(11-12-7-3-1-4-8-12)22-17(18(20)21)15(16)13-9-5-2-6-10-13/h1-11H,(H,20,21)/b14-11-
      */
     @Test
-    public void testDIVWEK() {
+    void testDIVWEK() {
         IAtomContainer container = new AtomContainer(34, 36, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -12892,7 +12892,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH8N6/c2-5-1(6-3)7-4/h2-4H2,(H2,5,6,7)/p+1
      */
     @Test
-    public void testDIWCOB() {
+    void testDIWCOB() {
         IAtomContainer container = new AtomContainer(16, 15, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -12937,7 +12937,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H9N5/c1-12(2)7-5-6(9-3-8-5)10-4-11-7/h3-4H,1-2H3,(H,8,9,10,11)/p+1
      */
     @Test
-    public void testDIXJEZ() {
+    void testDIXJEZ() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -12996,7 +12996,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8O4/c10-5-7-3-1-2-4-8(7)13-6-9(11)12/h1-5H,6H2,(H,11,12)
      */
     @Test
-    public void testDIYDIY() {
+    void testDIYDIY() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -13052,7 +13052,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H15N5O3/c1-3(15)6(16)4-2-11-7-5(12-4)8(17)14-9(10)13-7/h3-4,6,12,15-16H,2H2,1H3,(H4,10,11,13,14,17)/p+2/t3-,4+,6-/m0/s1
      */
     @Test
-    public void testDIYPOQ() {
+    void testDIYPOQ() {
         IAtomContainer container = new AtomContainer(34, 35, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -13136,7 +13136,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H8N2O/c8-5(6-1-2-6)7-3-4-7/h1-4H2
      */
     @Test
-    public void testDIYPUW() {
+    void testDIYPUW() {
         IAtomContainer container = new AtomContainer(16, 17, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -13183,7 +13183,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H15NO/c1-7(12)9-4-2-3-8-5-6-10(9)11-8/h4,8,10-11H,2-3,5-6H2,1H3/p+1/t8-,10-/m1/s1
      */
     @Test
-    public void testDIZPUX() {
+    void testDIZPUX() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -13254,7 +13254,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H6O4/c1-7-3(5)4(6)8-2/h1-2H3
      */
     @Test
-    public void testDMEOXA01() {
+    void testDMEOXA01() {
         IAtomContainer container = new AtomContainer(14, 13, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -13295,7 +13295,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6S4/c9-7(10)5-1-2-6(4-3-5)8(11)12/h1-4H,(H,9,10)(H,11,12)/p-2
      */
     @Test
-    public void testDOCCIH() {
+    void testDOCCIH() {
         IAtomContainer container = new AtomContainer(16, 16, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -13341,7 +13341,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8Cl2N8S3/c9-5(7-13-3(1-11)15-19-7)17-21-18-6(10)8-14-4(2-12)16-20-8/b17-5-,18-6-
      */
     @Test
-    public void testDOCFIK() {
+    void testDOCFIK() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -13398,7 +13398,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H11N3O3/c1-6-4-3-5-12(9(6)13)8(11-15)7(2)10-14/h3-5,14-15H,1-2H3/b10-7+,11-8-
      */
     @Test
-    public void testDOCWUN() {
+    void testDOCWUN() {
         IAtomContainer container = new AtomContainer(26, 26, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -13464,7 +13464,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H15NO6S3/c1-4-14(8,9)7(15(10,11)5-2)16(12,13)6-3/h4-6H2,1-3H3
      */
     @Test
-    public void testDODNOZ() {
+    void testDODNOZ() {
         IAtomContainer container = new AtomContainer(31, 30, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("S", 0));
@@ -13540,7 +13540,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H11NO4S2/c1-3-10(6,7)5-11(8,9)4-2/h5H,3-4H2,1-2H3
      */
     @Test
-    public void testDODNUF() {
+    void testDODNUF() {
         IAtomContainer container = new AtomContainer(22, 21, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("S", 0));
@@ -13597,7 +13597,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10O2S/c9-11(10)3-7-5-1-2-6(5)8(7)4-11/h1-2,5-8H,3-4H2/t5-,6+,7+,8-
      */
     @Test
-    public void testDOJPAT() {
+    void testDOJPAT() {
         IAtomContainer container = new AtomContainer(21, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -13655,7 +13655,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H13NO6S4/c1-6(2)5(3-13-15(7,8)9)4-14-16(10,11)12/h5H,3-4H2,1-2H3,(H,7,8,9)(H,10,11,12)/p-1
      */
     @Test
-    public void testDONFOB() {
+    void testDONFOB() {
         IAtomContainer container = new AtomContainer(28, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -13724,7 +13724,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H6N2O3S/c4-3(6)5-1-2-9(5,7)8/h1-2H2,(H2,4,6)
      */
     @Test
-    public void testDOSNOO() {
+    void testDOSNOO() {
         IAtomContainer container = new AtomContainer(15, 15, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("S", 0));
@@ -13768,7 +13768,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H7NS2/c10-6-9(7-11)8-4-2-1-3-5-8/h1-7H
      */
     @Test
-    public void testDOTNIJ() {
+    void testDOTNIJ() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -13818,7 +13818,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H5N3O3S/c4-2-1-3(7)6-10(8,9)5-2/h1H2,(H2,4,5)(H,6,7)
      */
     @Test
-    public void testDOTVEN() {
+    void testDOTVEN() {
         IAtomContainer container = new AtomContainer(15, 15, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -13862,7 +13862,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12Cl2O3/c1-2-17-9-5-3-8(4-6-9)11(10(15)16)7-12(11,13)14/h3-6H,2,7H2,1H3,(H,15,16)/t11-/m0/s1
      */
     @Test
-    public void testDOTWOY() {
+    void testDOTWOY() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -13935,7 +13935,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H5N3O2S/c1-12-4-3(2-7)5(10)11-6(8)9-4/h1H3,(H2,8,9)
      */
     @Test
-    public void testDOWDEY() {
+    void testDOWDEY() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -13983,7 +13983,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H7N3O4/c4-2(3(7)8)1-6(10)5-9/h2,9H,1,4H2,(H,7,8)/b6-5-/t2-/m0/s1
      */
     @Test
-    public void testDOXXAP() {
+    void testDOXXAP() {
         IAtomContainer container = new AtomContainer(17, 16, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -14030,7 +14030,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H7NO/c10-9-8-5-6-3-1-2-4-7(6)8/h1-4,10H,5H2/b9-8-
      */
     @Test
-    public void testDOXZOF() {
+    void testDOXZOF() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -14079,7 +14079,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H7F2N3O3/c1-8(2)7-3(10)4(5,6)9(11)12/h1-2H3,(H,7,10)/p+1
      */
     @Test
-    public void testDOZFON() {
+    void testDOZFON() {
         IAtomContainer container = new AtomContainer(20, 19, 0, 0);
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("F", 0));
@@ -14132,7 +14132,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H2N7O4/c10-8(11)6-1-3-2(5-4-1)7-9(12)13/h(H2-,3,4,5,6,7)/q-1
      */
     @Test
-    public void testDOZNIP() {
+    void testDOZNIP() {
         IAtomContainer container = new AtomContainer(15, 15, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -14176,7 +14176,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9N3O2/c1-9-7(12)10-5-2-3-6(4-5)11(10)8(9)13/h2-3,5-6H,4H2,1H3/t5-,6+
      */
     @Test
-    public void testDUBNET() {
+    void testDUBNET() {
         IAtomContainer container = new AtomContainer(22, 24, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -14236,7 +14236,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H10N4O/c1-4-6-7-5(2)9(3-10)8-4/h5,10H,3H2,1-2H3/t5-/m1/s1
      */
     @Test
-    public void testDUDMUK() {
+    void testDUDMUK() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -14290,7 +14290,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6N2O/c9-6-8(10-11)7-4-2-1-3-5-7/h1-5,11H/b10-8+
      */
     @Test
-    public void testDUGMUN() {
+    void testDUGMUN() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -14338,7 +14338,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H9NO4S2/c1-4(9(2,5)6)10(3,7)8/h1-3H3
      */
     @Test
-    public void testDUGWIL01() {
+    void testDUGWIL01() {
         IAtomContainer container = new AtomContainer(19, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -14389,7 +14389,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H7NO3S/c1-6(8)7-2-4-11(9,10)5-3-7/h2-5H,1H3
      */
     @Test
-    public void testDUJHEV() {
+    void testDUJHEV() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -14439,7 +14439,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H18N2O3/c1-13-5-9-17-12(10-4-3-7-15-10)11(13)16-8-6-14(12)2/h3-4,7,11H,5-6,8-9H2,1-2H3/t11-,12-/m0/s1
      */
     @Test
-    public void testDUJMEA() {
+    void testDUJMEA() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -14526,7 +14526,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4N4S/c3-1-5-6-2(4)7-1/h(H2,3,5)(H2,4,6)/p+1
      */
     @Test
-    public void testDUKVAG() {
+    void testDUKVAG() {
         IAtomContainer container = new AtomContainer(12, 12, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 1));
@@ -14564,7 +14564,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H13NO7S/c7-3-5(9)4(8)2(14-6(3)10)1-15(11,12)13/h2-6,8-10H,1,7H2,(H,11,12,13)/t2-,3-,4-,5-,6+/m1/s1
      */
     @Test
-    public void testDUKWUB() {
+    void testDUKWUB() {
         IAtomContainer container = new AtomContainer(28, 28, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -14634,7 +14634,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H12BrNO2/c9-6-3-10-2-1-5-7(10)8(6,4-11)12-5/h5-7,11H,1-4H2/t5-,6-,7+,8+/m1/s1
      */
     @Test
-    public void testDULTIN() {
+    void testDULTIN() {
         IAtomContainer container = new AtomContainer(24, 26, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("C", 0));
@@ -14698,7 +14698,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H12O5S/c1-9-6-5-4(12-8(14)13-5)3-11-7(6)10-2/h4-7H,3H2,1-2H3/t4-,5-,6+,7-/m0/s1
      */
     @Test
-    public void testDUMHIC() {
+    void testDUMHIC() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -14765,7 +14765,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H14N4O5/c1-8(10(12)13)3-7(5-16-6-7)4-9(2)11(14)15/h3-6H2,1-2H3
      */
     @Test
-    public void testDUMPAC() {
+    void testDUMPAC() {
         IAtomContainer container = new AtomContainer(30, 30, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -14839,7 +14839,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9ClN2O2S/c1-15-9(6-12(13)14)11-8-5-3-2-4-7(8)10/h2-6,11H,1H3/b9-6+
      */
     @Test
-    public void testDUPHEB() {
+    void testDUPHEB() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -14901,7 +14901,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9NO2S/c12-14(13,11-8-4-5-9-11)10-6-2-1-3-7-10/h1-9H
      */
     @Test
-    public void testDUPTAJ() {
+    void testDUPTAJ() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -14962,7 +14962,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H10N2O2/c1-5-4-6(2,3)8(10)7(5)9/h4H,1-3H3
      */
     @Test
-    public void testDURDID() {
+    void testDURDID() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -15016,7 +15016,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14N2O3/c1-15-12(11-13-6-7-14-11)8-16-9-4-2-3-5-10(9)17-12/h2-5H,6-8H2,1H3,(H,13,14)/p+1/t12-/m1/s1
      */
     @Test
-    public void testDUTHIJ() {
+    void testDUTHIJ() {
         IAtomContainer container = new AtomContainer(32, 34, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -15097,7 +15097,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H8N2S3/c1-7-9(14-15-10(7)13)3-2-8-6-11-4-5-12-8/h2-6H,1H3/b3-2+
      */
     @Test
-    public void testDUVHUX10() {
+    void testDUVHUX10() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -15158,7 +15158,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H5N5O2/c1-10-3-2(7-9-8-3)4(11)6-5(10)12/h1H3,(H,6,11,12)(H,7,8,9)
      */
     @Test
-    public void testDUVXIB() {
+    void testDUVXIB() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -15207,7 +15207,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H13ClN2P/c1-7-4-5-8(2,3)9(7)6/h4-5H2,1-3H3/q+1/t9-/m1/s1
      */
     @Test
-    public void testDUWGAD() {
+    void testDUWGAD() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -15265,7 +15265,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H6Cl3N5O2/c1-14-13-4(5(6,7)8)10-3-2(9)11-15-12-3/h1H3,(H2,9,11)(H,10,12,13)
      */
     @Test
-    public void testDUWKUB() {
+    void testDUWKUB() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -15321,7 +15321,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H9NO6/c8-2-4-6(10)3(9)1-5(13-4)7(11)12/h1,3-4,6,8-10H,2H2/t3-,4-,6+/m1/s1
      */
     @Test
-    public void testDUWRIW() {
+    void testDUWRIW() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -15379,7 +15379,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4N2O4/c5-1(3-7)2(6)4-8/h7-8H,(H,3,5)(H,4,6)
      */
     @Test
-    public void testDUXTIZ() {
+    void testDUXTIZ() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -15415,7 +15415,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12N2O2S2/c1-8(14)13-10(9-6-4-3-5-7-9)16-11(12-13)17(2)15/h3-7,10H,1-2H3/t10-,17+/m0/s1
      */
     @Test
-    public void testDUXWUO() {
+    void testDUXWUO() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -15488,7 +15488,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12N2O3S2/c1-8(14)13-10(9-6-4-3-5-7-9)18(16)11(12-13)17(2)15/h3-7,10H,1-2H3/t10-,17-,18+/m0/s1
      */
     @Test
-    public void testDUXXAV() {
+    void testDUXXAV() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -15564,7 +15564,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H22N4O/c1-8-5-9(2)14(12)10(3,6-8)16-11(4,7-8)15(9)13/h5-7,12-13H2,1-4H3/t8-,9+,10-,11+
      */
     @Test
-    public void testDUYNOA() {
+    void testDUYNOA() {
         IAtomContainer container = new AtomContainer(38, 40, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -15657,7 +15657,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C20H23N2O2/c1-21(2)20(22(3)4)24-19(17-13-9-6-10-14-17)15-18(23)16-11-7-5-8-12-16/h5-15H,1-4H3/q+1/b19-15+
      */
     @Test
-    public void testDUYPES() {
+    void testDUYPES() {
         IAtomContainer container = new AtomContainer(47, 48, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -15768,7 +15768,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H22N2P2/c1-8(2,3)12-7-13(11-10-12)9(4,5)6/h10-11H,7H2,1-6H3/t12-,13-/m1/s1
      */
     @Test
-    public void testDUYRAQ() {
+    void testDUYRAQ() {
         IAtomContainer container = new AtomContainer(35, 35, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
@@ -15853,7 +15853,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H13N2OP/c1-6-10-8-3-4-9(5-8)14(10)12(11-6)7(2)13/h3-4,8-10H,5H2,1-2H3/t8-,9+,10+,14-/m0/s1
      */
     @Test
-    public void testFACMIF() {
+    void testFACMIF() {
         IAtomContainer container = new AtomContainer(27, 29, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -15923,7 +15923,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H9NO6/c7-1-2-3(8)4(9)5(12-2)6(10)11/h2-5,7-9H,1H2/t2-,3-,4-,5-/m1/s1
      */
     @Test
-    public void testFACREG() {
+    void testFACREG() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -15979,7 +15979,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H5NO3/c11-3-10-7-2-9-8(13-5-14-9)1-6(7)4-12-10/h1-2,4H,5H2
      */
     @Test
-    public void testFACYAJ() {
+    void testFACYAJ() {
         IAtomContainer container = new AtomContainer(19, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -16033,7 +16033,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H6N2O/c10-7-5-3-1-2-4-6(5)8-9-7/h1-4H,(H2,8,9,10)
      */
     @Test
-    public void testFADMIG() {
+    void testFADMIG() {
         IAtomContainer container = new AtomContainer(16, 17, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -16080,7 +16080,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H9NO7S3/c1-12(5,6)4(13(2,7)8)11-14(3,9)10/h1-3H3
      */
     @Test
-    public void testFADVEL() {
+    void testFADVEL() {
         IAtomContainer container = new AtomContainer(23, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -16139,7 +16139,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H12N2O3S/c1-11(7,10)3-2-4(6)5(8)9/h4,7H,2-3,6H2,1H3,(H,8,9)/t4-,11-/m0/s1
      */
     @Test
-    public void testFADVUB() {
+    void testFADVUB() {
         IAtomContainer container = new AtomContainer(23, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -16198,7 +16198,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H24N4O2P/c1-11(2)9(12(3)4)17(15,16)10(13(5)6)14(7)8/h1-8H3/q+1
      */
     @Test
-    public void testFAGBUK() {
+    void testFAGBUK() {
         IAtomContainer container = new AtomContainer(41, 40, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", -1));
@@ -16294,7 +16294,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11NO3S/c1-15(13,14)11-9(7-10(11)12)8-5-3-2-4-6-8/h2-6,9H,7H2,1H3/t9-/m0/s1
      */
     @Test
-    public void testFAGCOF() {
+    void testFAGCOF() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -16361,7 +16361,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H4ClO2P/c7-10-8-5-3-1-2-4-6(5)9-10/h1-4H
      */
     @Test
-    public void testFAGLII() {
+    void testFAGLII() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("P", 0));
@@ -16403,7 +16403,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4O4/c5-1-2(6)4(8)3(1)7
      */
     @Test
-    public void testFAGVEO() {
+    void testFAGVEO() {
         IAtomContainer container = new AtomContainer(8, 8, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -16432,7 +16432,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H2Br2O4/c7-1-3(9)5(11)2(8)6(12)4(1)10/h9,12H/p-2
      */
     @Test
-    public void testFAGZOC() {
+    void testFAGZOC() {
         IAtomContainer container = new AtomContainer(12, 12, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", -1));
@@ -16469,7 +16469,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12N2O2S/c15-17(16)7-8-5-6-10-9-3-1-2-4-11(9)14(17)12(10)13-8/h1-6,8,10,12-13H,7H2/t8-,10+,12-/m1/s1
      */
     @Test
-    public void testFAHPUZ() {
+    void testFAHPUZ() {
         IAtomContainer container = new AtomContainer(29, 32, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -16544,7 +16544,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H11N5O/c1-9-6-5-7(12(2)4-10-6)13(3)8(14)11-5/h4H,1-3H3,(H,11,14)/p+1
      */
     @Test
-    public void testFAHSUC() {
+    void testFAHSUC() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -16611,7 +16611,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H11NOS/c1-10(11)9(12-2)8-6-4-3-5-7-8/h3-7H,1-2H3/b10-9-
      */
     @Test
-    public void testFAHYUI() {
+    void testFAHYUI() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
@@ -16671,7 +16671,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9NO4S/c1-7-9(8-5-3-2-4-6-8)15-16(13,14)11-10(7)12/h2-6H,1H3,(H,11,12)
      */
     @Test
-    public void testFAHZET() {
+    void testFAHZET() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -16736,7 +16736,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H7N3O3/c1-10-4-6-3(9)7-5(8-4)11-2/h1-2H3,(H,6,7,8,9)
      */
     @Test
-    public void testFAJWIW() {
+    void testFAJWIW() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -16786,7 +16786,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14NOPS/c1-8-9-6-4-5-7-10(9)13(14,12-8)11(2)3/h4-8H,1-3H3/t8-,13-/m1/s1
      */
     @Test
-    public void testFAMHAC() {
+    void testFAMHAC() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
@@ -16857,7 +16857,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H4BrNO2/c5-6-3(7)1-2-4(6)8/h1-2H2
      */
     @Test
-    public void testFAMYUN() {
+    void testFAMYUN() {
         IAtomContainer container = new AtomContainer(12, 12, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("N", 0));
@@ -16894,7 +16894,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4N3O3PS/c6-1-3-2(7)5-9(8,10)4-1/h(H4,3,4,5,6,7,8,10)/p-1
      */
     @Test
-    public void testFAPLUD() {
+    void testFAPLUD() {
         IAtomContainer container = new AtomContainer(13, 13, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 0));
@@ -16934,7 +16934,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H8N4/c1-3-7-15-9(5-1)13-11-12(15)16-8-4-2-6-10(16)14-11/h1-8H
      */
     @Test
-    public void testFARMAM() {
+    void testFARMAM() {
         IAtomContainer container = new AtomContainer(24, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -16999,7 +16999,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12N8S2/c13-1-5(2-14)7-9-11(19-21-17-9)8(6(3-15)4-16)12-10(7)18-22-20-12
      */
     @Test
-    public void testFARSOG() {
+    void testFARSOG() {
         IAtomContainer container = new AtomContainer(22, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -17059,7 +17059,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H6N2S2/c1-2(4)5-3(6)7/h1H3,(H3,4,5,6,7)/p-1
      */
     @Test
-    public void testFARWEA() {
+    void testFARWEA() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -17095,7 +17095,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH8N6/c2-5-1(6-3)7-4/h2-4H2,(H2,5,6,7)
      */
     @Test
-    public void testFASGUB() {
+    void testFASGUB() {
         IAtomContainer container = new AtomContainer(15, 14, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -17138,7 +17138,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H19N5O2P2S/c1-13(2)18(16)11-14(3)19(20,15(4)12-18)17-10-8-6-5-7-9-10/h5-9H,1-4H3,(H2,11,12,16)/t18-,19+
      */
     @Test
-    public void testFASJIS() {
+    void testFASJIS() {
         IAtomContainer container = new AtomContainer(39, 40, 0, 0);
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("P", 1));
@@ -17232,7 +17232,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H16N3O3P/c1-18-11-4-2-3-10(9-11)12(16)13-19(17,14-5-6-14)15-7-8-15/h2-4,9H,5-8H2,1H3,(H,13,16,17)
      */
     @Test
-    public void testFATLIV() {
+    void testFATLIV() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("O", -1));
@@ -17319,7 +17319,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H4N4O/c10-5-3-1-8-9-4(3)6-2-7-5/h1-2H,(H2,6,7,8,9,10)/p+1
      */
     @Test
-    public void testFAXFUF10() {
+    void testFAXFUF10() {
         IAtomContainer container = new AtomContainer(15, 16, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -17364,7 +17364,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8N2O3S/c1-10-8(11)6-4-2-3-5-7(6)9-14(10,12)13/h2-5,9H,1H3
      */
     @Test
-    public void testFAXVAB() {
+    void testFAXVAB() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -17423,7 +17423,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H14N/c1-2-3-7-10-8-5-4-6-9-10/h4-6,8-9H,2-3,7H2,1H3/q+1
      */
     @Test
-    public void testFAXVEF() {
+    void testFAXVEF() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -17485,7 +17485,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H6F3N3O2/c13-12(14,15)7-5-8-11(9(6-7)18(19)20)17-4-2-1-3-10(17)16-8/h1-6H
      */
     @Test
-    public void testFAXVIJ() {
+    void testFAXVIJ() {
         IAtomContainer container = new AtomContainer(26, 28, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17553,7 +17553,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H4N2OS/c1-9-5(8)4(2-6)3-7/h8H,1H3/p-1
      */
     @Test
-    public void testFAZBAJ() {
+    void testFAZBAJ() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
@@ -17589,7 +17589,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2Cl8Si2/c3-1(11(5,6)7)2(4)12(8,9)10/b2-1+
      */
     @Test
-    public void testFAZKUM() {
+    void testFAZKUM() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -17625,7 +17625,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11FN4O6/c1-10(2,3)12(11)9-7(14(18)19)4-6(13(16)17)5-8(9)15(20)21/h4-5H,1-3H3
      */
     @Test
-    public void testFBATNB() {
+    void testFBATNB() {
         IAtomContainer container = new AtomContainer(32, 32, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17704,7 +17704,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H12N2O/c1-7(2)8-4-5-11(3)10-6-9(8)12/h4-6H,1-3H3
      */
     @Test
-    public void testFECXEQ() {
+    void testFECXEQ() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17766,7 +17766,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H8NO4P/c6-3-1-2-4(5-3)10(7,8)9/h4H,1-2H2,(H,5,6)(H2,7,8,9)/t4-/m0/s1
      */
     @Test
-    public void testFEGSEP() {
+    void testFEGSEP() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("O", 0));
@@ -17816,7 +17816,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H7NO/c1-3-2-4(3)5(6)7/h4H,1-2H2,(H2,6,7)/t4-/m0/s1
      */
     @Test
-    public void testFEHDAX() {
+    void testFEHDAX() {
         IAtomContainer container = new AtomContainer(14, 14, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17858,7 +17858,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H11NO/c1-2-10-11(13-12(10)14)8-9-6-4-3-5-7-9/h3-7,11H,1,8H2,(H,13,14)/t11-/m1/s1
      */
     @Test
-    public void testFEJJEJ() {
+    void testFEJJEJ() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -17923,7 +17923,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H22N2/c1-2-11(1)9-13-5-7-14(8-6-13)10-12-3-4-12/h11-12H,1-10H2/p+2
      */
     @Test
-    public void testFEJKIO() {
+    void testFEJKIO() {
         IAtomContainer container = new AtomContainer(38, 40, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -18016,7 +18016,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H9NO2S/c9-4-3-8-7(11)6-2-1-5-10-6/h1-2,5,9H,3-4H2,(H,8,11)
      */
     @Test
-    public void testFELYIE() {
+    void testFELYIE() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -18070,7 +18070,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11NO3/c1-7(12)9-3-5-10(6-4-9)11(14)8(2)13/h3-6,14H,1-2H3
      */
     @Test
-    public void testFELYUQ() {
+    void testFELYUQ() {
         IAtomContainer container = new AtomContainer(25, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -18134,7 +18134,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14O2/c11-10(12)9-7-5-3-1-2-4-6-8(7)9/h3,5,7-9H,1-2,4,6H2,(H,11,12)/p-1/b5-3-/t7-,8+,9+/m1/s1
      */
     @Test
-    public void testFEMGEJ() {
+    void testFEMGEJ() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -18199,7 +18199,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H7N3O3/c1-3(6-9)5-4(2)8(10)11-7-5/h9H,1-2H3/b6-3+
      */
     @Test
-    public void testFENCOQ() {
+    void testFENCOQ() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -18249,7 +18249,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H7N3O2/c1-3-7-4(8-10-3)5(9)6-2/h1-2H3,(H,6,9)
      */
     @Test
-    public void testFENHAH() {
+    void testFENHAH() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -18297,7 +18297,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H17N3S2/c1-8(2)9(11(3)4)12(5-6-14-9)7(13)10-8/h5-6H2,1-4H3,(H,10,13)/t9-/m1/s1
      */
     @Test
-    public void testFENJIR() {
+    void testFENJIR() {
         IAtomContainer container = new AtomContainer(31, 32, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -18374,7 +18374,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H19N3S2/c1-5-10(2,8-11-6-7-15-8)12-9(14)13(3)4/h5-7H2,1-4H3,(H,12,14)/t10-/m0/s1
      */
     @Test
-    public void testFENJOX() {
+    void testFENJOX() {
         IAtomContainer container = new AtomContainer(34, 34, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -18457,7 +18457,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H14N2OS2/c12-7-9(3-1-2-4-9)10-8(14)11(7)5-6-13/h13H,1-6H2,(H,10,14)
      */
     @Test
-    public void testFENJUD() {
+    void testFENJUD() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -18528,7 +18528,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H13N2P/c1-6(2)5(8)7(3)4/h8H,1-4H3
      */
     @Test
-    public void testFENNUH() {
+    void testFENNUH() {
         IAtomContainer container = new AtomContainer(21, 20, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 0));
@@ -18583,7 +18583,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H16N4O4/c1-12(2,3)20-11(19)7-5-4-6-15-9(17)8(14-13)10(18)16(7)15/h7H,4-6H2,1-3H3/t7-/m1/s1
      */
     @Test
-    public void testFENYIG() {
+    void testFENYIG() {
         IAtomContainer container = new AtomContainer(36, 37, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -18671,7 +18671,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H6N2S2/c1-2(4)5-3(6)7/h1H3,(H3,4,5,6,7)
      */
     @Test
-    public void testFEPWAY() {
+    void testFEPWAY() {
         IAtomContainer container = new AtomContainer(13, 12, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -18710,7 +18710,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4F4N2S2/c5-3(6,11-1-9)4(7,8)12-2-10
      */
     @Test
-    public void testFEPWOM() {
+    void testFEPWOM() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("F", 0));
@@ -18746,7 +18746,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H3NO3/c5-1-4(2-6)3-7/h1-3H
      */
     @Test
-    public void testFESCAH() {
+    void testFESCAH() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -18778,7 +18778,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9Cl3N2O2/c10-9(11,12)8(15)16-14-7(13)6-4-2-1-3-5-6/h1-5,8,15H,(H2,13,14)/t8-/m1/s1
      */
     @Test
-    public void testFESMIZ() {
+    void testFESMIZ() {
         IAtomContainer container = new AtomContainer(25, 25, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -18842,7 +18842,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H12N4/c1-7-2-9-4-8(1)5-10(3-7)6-9/h1-6H2/p+1
      */
     @Test
-    public void testFETRUR() {
+    void testFETRUR() {
         IAtomContainer container = new AtomContainer(23, 25, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -18904,7 +18904,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13NO5/c13-5-3-4-8(11(5)17)9(10(4)16)12-6(14)1-2-7(12)15/h4-5,8-9,11,13,17H,1-3H2/t4-,5-,8+,9+,11-/m1/s1
      */
     @Test
-    public void testFETWOQ() {
+    void testFETWOQ() {
         IAtomContainer container = new AtomContainer(30, 32, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -18981,7 +18981,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H6Cl3N3O2/c1-11-3(12)5(6,7)2(10-8)9-4(11)13/h3,12H,1H3,(H,9,10,13)/t3-/m0/s1
      */
     @Test
-    public void testFEVNUP() {
+    void testFEVNUP() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -19033,7 +19033,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H4N6O5/c11-9(12)7-1-2-8(10(13)14)4-3(7)5-15-6-4/h1-2H2
      */
     @Test
-    public void testFEYLUQ() {
+    void testFEYLUQ() {
         IAtomContainer container = new AtomContainer(19, 20, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -19086,7 +19086,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4N2O2S2/c5-1(7)3-4-2(6)8/h(H2,3,5,7)(H2,4,6,8)/p-2
      */
     @Test
-    public void testFEZPOP() {
+    void testFEZPOP() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
@@ -19118,7 +19118,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H11N5O/c1-8-14-15-12-13-10(7-11(18)17(12)16-8)9-5-3-2-4-6-9/h2-7H,1H3,(H,13,15)(H,14,16)
      */
     @Test
-    public void testFEZRUX() {
+    void testFEZRUX() {
         IAtomContainer container = new AtomContainer(29, 31, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -19193,7 +19193,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12N2O4/c14-11(12-7-1-2-8-17-12)9-3-5-10(6-4-9)13(15)16/h3-6H,1-2,7-8H2
      */
     @Test
-    public void testFIBLIL() {
+    void testFIBLIL() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -19266,7 +19266,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H7N3O3/c1-7-3-6-4(8(9)10)5(7)11-2/h3H,1-2H3
      */
     @Test
-    public void testFICDOK() {
+    void testFICDOK() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -19316,7 +19316,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H20O2S/c1-9(2)6-10(3,4)8-11(7-9,13-8)14(5)12/h8H,6-7H2,1-5H3/t8-,11-,14-/m1/s1
      */
     @Test
-    public void testFIFGUW() {
+    void testFIFGUW() {
         IAtomContainer container = new AtomContainer(34, 35, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -19400,7 +19400,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H7N/c4-3-1-2-3/h3H,1-2,4H2
      */
     @Test
-    public void testFIGYID() {
+    void testFIGYID() {
         IAtomContainer container = new AtomContainer(11, 11, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19435,7 +19435,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13BrN2O5/c12-2-1-6-4-14(11(18)13-10(6)17)9-3-7(16)8(5-15)19-9/h1-2,4,7-9,15-16H,3,5H2,(H,13,17,18)/b2-1-/t7-,8+,9+/m0/s1
      */
     @Test
-    public void testFIHXID() {
+    void testFIHXID() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", 0));
@@ -19515,7 +19515,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H6N6/c12-2-8-1-10(4-13,5-14)3-11(6-15,7-16)9(8)17/h1,3,17H2
      */
     @Test
-    public void testFIKJAK() {
+    void testFIKJAK() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19575,7 +19575,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H7NS2/c11-9-10-8(6-12-9)7-4-2-1-3-5-7/h1-6H,(H,10,11)
      */
     @Test
-    public void testFIKZOO10() {
+    void testFIKZOO10() {
         IAtomContainer container = new AtomContainer(19, 20, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19628,7 +19628,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H9N3O/c1-8-11(9-2-4-14-5-3-9)6-10(7-13)12(16)15-8/h2-6H,1H3,(H,15,16)
      */
     @Test
-    public void testFILGEM() {
+    void testFILGEM() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19693,7 +19693,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H11NO2S/c1-9(2)7-5-3-4-6-8(7)13(12)10(9)11/h3-6,11H,1-2H3/t13-/m1/s1
      */
     @Test
-    public void testFILNOD() {
+    void testFILNOD() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -19756,7 +19756,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H3Cl9O3P2/c7-4(8,9)1-16-20-17-2(5(10,11)12)19(1)3(18-20)6(13,14)15/h1-3H/t1-,2-,3-,19-,20+/m0/s1
      */
     @Test
-    public void testFINBIN() {
+    void testFINBIN() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -19817,7 +19817,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H11NO3/c7-6(5(9)10)1-4(2-6)3-8/h4,8H,1-3,7H2,(H,9,10)/p+1/t4-,6+
      */
     @Test
-    public void testFINPEX() {
+    void testFINPEX() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -19875,7 +19875,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H14N2O3/c1-4-14-8(12)6-5(2)11-9(3,13)7(6)10/h13H,4,10H2,1-3H3/t9-/m0/s1
      */
     @Test
-    public void testFITGIY() {
+    void testFITGIY() {
         IAtomContainer container = new AtomContainer(28, 28, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -19945,7 +19945,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H3N3/c7-1-4-5(2-8)6(4)3-9/h4-6H/t4-,5-,6-
      */
     @Test
-    public void testFITSEG() {
+    void testFITSEG() {
         IAtomContainer container = new AtomContainer(12, 12, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19982,7 +19982,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H7N5/c1-11-3-10-5(7)4-6(11)9-2-8-4/h2-3H,1H3,(H2,7,8,9)/p+1
      */
     @Test
-    public void testFITTIL() {
+    void testFITTIL() {
         IAtomContainer container = new AtomContainer(19, 20, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -20035,7 +20035,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H15N3OS/c1-7-5-15(3)6-10(11(7)16)8(2)9(4-13)12(14)17/h5-6,8-9H,1-3H3,(H2,14,17)/t8-,9-/m1/s1
      */
     @Test
-    public void testFIVNUT() {
+    void testFIVNUT() {
         IAtomContainer container = new AtomContainer(32, 32, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -20114,7 +20114,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H15N3OS/c1-2-3-8-13-12(16)14-11-9-6-4-5-7-10(9)17-15-11/h4-7H,2-3,8H2,1H3,(H2,13,14,15,16)
      */
     @Test
-    public void testFIVRAD() {
+    void testFIVRAD() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -20194,7 +20194,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H10N2O3/c1-7-3-5-9(6-4-7)13-10(8(2)14)11(15)16-12-13/h3-6H,1-2H3
      */
     @Test
-    public void testFIXPIL() {
+    void testFIXPIL() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -20261,7 +20261,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11NO3S/c1-8-7-15(13,11-10(12)14-8)9-5-3-2-4-6-9/h2-6,8H,7H2,1H3/t8-,15-/m1/s1
      */
     @Test
-    public void testFIYBIY() {
+    void testFIYBIY() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -20328,7 +20328,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H7Cl4NO2S2/c1-6-2-4-7(5-3-6)20(17,18)16-19-10(14)8(12)9(13)11(19)15/h2-5H,1H3
      */
     @Test
-    public void testFIZGEA() {
+    void testFIZGEA() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -20397,7 +20397,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H5Cl4NO3S/c1-2-15-7(13)12-16(14)5(10)3(8)4(9)6(16)11/h2H2,1H3
      */
     @Test
-    public void testFIZGOK() {
+    void testFIZGOK() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -20453,7 +20453,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H6N4O2/c1-9-3-5-7-4(10-2)8-6-3/h1-2H3
      */
     @Test
-    public void testFIZJED() {
+    void testFIZJED() {
         IAtomContainer container = new AtomContainer(16, 16, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -20499,7 +20499,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H7NO2/c5-4(1-2-4)3(6)7/h1-2,5H2,(H,6,7)
      */
     @Test
-    public void testFOBJUB01() {
+    void testFOBJUB01() {
         IAtomContainer container = new AtomContainer(14, 14, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -20541,7 +20541,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H14N2O2/c1-6(12)11-5-7-3-9(11,4-7)8(13)10-2/h7H,3-5H2,1-2H3,(H,10,13)/t7-,9+
      */
     @Test
-    public void testFODTUN() {
+    void testFODTUN() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -20610,7 +20610,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H16NOSi/c1-11(2)7-9-6-4-3-5-8(9)10-11/h3-7H2,1-2H3/q+1
      */
     @Test
-    public void testFOGBIM() {
+    void testFOGBIM() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
@@ -20679,7 +20679,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H15N7O2S3/c9-6(15-20(12,16)17)1-2-18-3-5-4-19-8(13-5)14-7(10)11/h4H,1-3H2,(H2,9,15)(H2,12,16,17)(H4,10,11,13,14)
      */
     @Test
-    public void testFOGVIG01() {
+    void testFOGVIG01() {
         IAtomContainer container = new AtomContainer(35, 35, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -20764,7 +20764,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H12N4S2/c1-2-5-14-7-10-6-9-3-4-12(6)8(13)11-7/h2-5H2,1H3,(H,9,10,11,13)
      */
     @Test
-    public void testFOHXEF() {
+    void testFOHXEF() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -20831,7 +20831,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H7ClO2S/c1-6-2-4-7(5-3-6)11(8,9)10/h2-5H,1H3
      */
     @Test
-    public void testFOHYAC() {
+    void testFOHYAC() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -20881,7 +20881,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H16O2S/c1-3-4-8-5-6-10-7(2)11(8)9/h7-8H,3-6H2,1-2H3/t7-,8+,11-/m0/s1
      */
     @Test
-    public void testFOJBEL() {
+    void testFOJBEL() {
         IAtomContainer container = new AtomContainer(27, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -20949,7 +20949,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H9NO2S2/c1-7-2-4-8(5-3-7)10-11-13(12(15)17-10)9(14)6-16-11/h2-5H,6H2,1H3
      */
     @Test
-    public void testFOJPAV() {
+    void testFOJPAV() {
         IAtomContainer container = new AtomContainer(26, 28, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -21017,7 +21017,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H16N2O2/c1-6(2)5-7-10(14)12-4-3-8(12)9(13)11-7/h6-8H,3-5H2,1-2H3,(H,11,13)/t7-,8-/m1/s1
      */
     @Test
-    public void testFONCOA() {
+    void testFONCOA() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -21093,7 +21093,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H7IO2/c1-11-8(10)6-2-4-7(9)5-3-6/h2-5H,1H3
      */
     @Test
-    public void testFORGOI() {
+    void testFORGOI() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("O", 0));
@@ -21143,7 +21143,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H6N2O2S/c1-4(7(8)9)5(2)10-3-6/h1-2H3/b5-4-
      */
     @Test
-    public void testFORHEZ() {
+    void testFORHEZ() {
         IAtomContainer container = new AtomContainer(16, 15, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -21188,7 +21188,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H2Cl10/c11-3-1-5(13)4(12)2(7(3,15)9(5,17)18)8(3,16)10(19,20)6(1,4)14/h1-2H/t1-,2-,3-,4-,5-,6+,7-,8+
      */
     @Test
-    public void testFORJIF() {
+    void testFORJIF() {
         IAtomContainer container = new AtomContainer(22, 26, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -21250,7 +21250,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14N4S/c1-7-5-4-6-8(2)9(7)15-10(12)13-11(14-15)16-3/h4-6H,1-3H3,(H2,12,13,14)
      */
     @Test
-    public void testFORJUR() {
+    void testFORJUR() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -21325,7 +21325,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H14N2S2/c1-7(2)5(6(9)10)8(3)4/h5H,1-4H3,(H,9,10)/p-1
      */
     @Test
-    public void testFORTAH() {
+    void testFORTAH() {
         IAtomContainer container = new AtomContainer(23, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -21384,7 +21384,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H12Cl3N4PS/c9-8(10,11)7-12-1-2-15(7)16(17,13-3-4-13)14-5-6-14/h1-6H2
      */
     @Test
-    public void testFOSDIA() {
+    void testFOSDIA() {
         IAtomContainer container = new AtomContainer(29, 31, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -21458,7 +21458,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H9N5/c1-2-7-3(5)9-4(6)8-2/h3H,5H2,1H3,(H3,6,7,8,9)/t3-/m1/s1
      */
     @Test
-    public void testFOVHUT() {
+    void testFOVHUT() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -21508,7 +21508,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12O3/c1-5-4-7-8(9(5)12)10(7,3)13-6(2)11/h4,7-8H,1-3H3/t7-,8-,10+/m1/s1
      */
     @Test
-    public void testFOVJIJ() {
+    void testFOVJIJ() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -21573,7 +21573,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C14H14N4O/c1-10-12(15)18-8-7-16-14(13(18)17-10)19-9-11-5-3-2-4-6-11/h2-8H,9,15H2,1H3/p+1
      */
     @Test
-    public void testFOVRAJ() {
+    void testFOVRAJ() {
         IAtomContainer container = new AtomContainer(34, 36, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -21658,7 +21658,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C14H14N4O/c1-10-8-13(19)16-17-14(10)11-2-4-12(5-3-11)18-7-6-15-9-18/h2-7,9-10H,8H2,1H3,(H,16,19)/p+1/t10-/m0/s1
      */
     @Test
-    public void testFOVRUD() {
+    void testFOVRUD() {
         IAtomContainer container = new AtomContainer(34, 36, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -21743,7 +21743,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8ClN5/c1-9(2)5-6(12-14-9)7(10)13-15-4-3-11-8(5)15/h3-4H,1-2H3
      */
     @Test
-    public void testFOWBEY() {
+    void testFOWBEY() {
         IAtomContainer container = new AtomContainer(23, 25, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
@@ -21805,7 +21805,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9N7O2/c1-19-7-4-2-6(3-5-7)11-8-9(18)12-10-13-15-16-17(10)14-8/h2-5H,1H3,(H,11,14)(H,12,13,16,18)
      */
     @Test
-    public void testFOWPOW() {
+    void testFOWPOW() {
         IAtomContainer container = new AtomContainer(28, 30, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -21877,7 +21877,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8O4S4/c9-5-1-2(6(10)15-5)14-4-3(13-1)7(11)16-8(4)12
      */
     @Test
-    public void testFOWVES() {
+    void testFOWVES() {
         IAtomContainer container = new AtomContainer(16, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -21925,7 +21925,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14O3/c13-4-15-12-5-1-6-7-3-9(14)10(6)8(2-5)11(7)12/h4-8,10-12H,1-3H2/t5-,6-,7-,8-,10+,11+,12+/m1/s1
      */
     @Test
-    public void testFOWZAS() {
+    void testFOWZAS() {
         IAtomContainer container = new AtomContainer(29, 32, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -22000,7 +22000,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H8N2/c8-7(9)6-4-2-1-3-5-6/h1-5H,(H3,8,9)/p+1
      */
     @Test
-    public void testFOYMAH() {
+    void testFOYMAH() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -22050,7 +22050,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H11NO3/c14-13(15)11-7-9-6-5-8-3-1-2-4-10(8)12(9)16-11/h5-7H,1-4H2
      */
     @Test
-    public void testFOYNUC() {
+    void testFOYNUC() {
         IAtomContainer container = new AtomContainer(27, 29, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -22120,7 +22120,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H7Cl2NSi/c1-5(2)6(3)4/h6H,1-2H3
      */
     @Test
-    public void testFUCMIZ() {
+    void testFUCMIZ() {
         IAtomContainer container = new AtomContainer(13, 12, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -22158,7 +22158,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H2N2S2/c1-5-3-4(7-1)6-2-8-3/h1-2H
      */
     @Test
-    public void testFUCMUL() {
+    void testFUCMUL() {
         IAtomContainer container = new AtomContainer(10, 11, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -22192,7 +22192,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/NO3/c2-1(3)4/q-1
      */
     @Test
-    public void testFUCTIG01() {
+    void testFUCTIG01() {
         IAtomContainer container = new AtomContainer(4, 3, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -22212,7 +22212,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H15N5O4/c1-15-3-14-10-6(9(15)12)13-4-16(10)11-8(19)7(18)5(2-17)20-11/h3-5,7-8,11-12,17-19H,2H2,1H3/b12-9+/t5-,7-,8-,11-/m1/s1
      */
     @Test
-    public void testFUCWIJ() {
+    void testFUCWIJ() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -22299,7 +22299,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9N6/c11-10-14-8-7(12-6-13-8)9(15-10)16-4-2-1-3-5-16/h1-6H,(H3,11,12,13,14,15)/q+1
      */
     @Test
-    public void testFUCWOP() {
+    void testFUCWOP() {
         IAtomContainer container = new AtomContainer(25, 27, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -22365,7 +22365,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H2O3/c4-1-2(5)3(1)6/h4-5H
      */
     @Test
-    public void testFUDPOJ() {
+    void testFUDPOJ() {
         IAtomContainer container = new AtomContainer(8, 8, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -22394,7 +22394,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H6N2/c1-5-3-2-4/h5H,3H2,1H3/p+1
      */
     @Test
-    public void testFUDXUX() {
+    void testFUDXUX() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -22430,7 +22430,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H8N2O5/c1-5(10)2(8)6-4(9)7-3(5)12-11/h3,10-11H,1H3,(H2,6,7,8,9)/t3-,5-/m0/s1
      */
     @Test
-    public void testFUFDIT() {
+    void testFUFDIT() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -22484,7 +22484,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H13N5O3/c11-10-8-6(12-3-13-10)7(14-15-8)9-5(17)1-4(2-16)18-9/h3-5,9,16-17H,1-2H2,(H,14,15)(H2,11,12,13)/p+1/t4-,5+,9+/m0/s1
      */
     @Test
-    public void testFUGWIN() {
+    void testFUGWIN() {
         IAtomContainer container = new AtomContainer(32, 34, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -22565,7 +22565,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H7NO2/c1-4-3-5-2/h3H,1-2H3
      */
     @Test
-    public void testFUHFAP() {
+    void testFUHFAP() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -22601,7 +22601,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H6N2O2/c10-7-9(11(12)13)6-8-4-2-1-3-5-8/h1-6H/b9-6+
      */
     @Test
-    public void testFUHSEG() {
+    void testFUHSEG() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -22653,7 +22653,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H14N6O4/c9-5(10)6-12-8(11)14(13-6)7-4(17)3(16)2(1-15)18-7/h2-4,7,15-17H,1H2,(H3,9,10)(H2,11,12,13)/p+1/t2-,3-,4-,7-/m1/s1
      */
     @Test
-    public void testFULRAF() {
+    void testFULRAF() {
         IAtomContainer container = new AtomContainer(33, 34, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -22735,7 +22735,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H7NO7S/c1-2-12-4(6)3(5(7)8)13(9,10)11/h3H,2H2,1H3,(H,9,10,11)/p-1/t3-/m0/s1
      */
     @Test
-    public void testFUNSIQ() {
+    void testFUNSIQ() {
         IAtomContainer container = new AtomContainer(19, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -22786,7 +22786,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H10O3/c1-14-11-4-2-9(3-5-11)12(13)10-6-7-15-8-10/h2-8H,1H3
      */
     @Test
-    public void testFUNXOB() {
+    void testFUNXOB() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -22851,7 +22851,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13N3O3/c1-11(2,3)17-10(15)13-8-6-4-5-7-9(8)14(16)12-13/h4-7H,1-3H3
      */
     @Test
-    public void testFUPJUV() {
+    void testFUPJUV() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
@@ -22927,7 +22927,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H7N3O3S/c1-14(11,12)13-10-7-5-3-2-4-6(7)8-9-10/h2-5H,1H3
      */
     @Test
-    public void testFUPKIK() {
+    void testFUPKIK() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -22984,7 +22984,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H10N6O3S/c1-21-15-10(7-6-22-12(13)14-7)11(19)17-8-4-2-3-5-9(8)18(20)16-17/h2-6H,1H3,(H2,13,14)/b15-10-
      */
     @Test
-    public void testFUPKOQ() {
+    void testFUPKOQ() {
         IAtomContainer container = new AtomContainer(32, 34, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -23065,7 +23065,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H2Cl8OS2/c7-1(8)2-16-3(5(9,10)11)15-4(17-2)6(12,13)14/h3-4H/t3-,4-/m1/s1
      */
     @Test
-    public void testFUPTOZ() {
+    void testFUPTOZ() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("S", 0));
@@ -23117,7 +23117,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H18O3/c1-7-5-6-9-11(3,4)10(12(7,9)14)15-8(2)13/h5,9-10,14H,6H2,1-4H3/t9-,10+,12+/m0/s1
      */
     @Test
-    public void testFUPZEV() {
+    void testFUPZEV() {
         IAtomContainer container = new AtomContainer(33, 34, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -23199,7 +23199,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H4O2/c4-2-1-3-5/h1-4H/p-1/b2-1+
      */
     @Test
-    public void testFUSPEO() {
+    void testFUSPEO() {
         IAtomContainer container = new AtomContainer(8, 7, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -23227,7 +23227,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12N2O/c1-10(2)9(13)12(11-10)8-6-4-3-5-7-8/h3-7,11H,1-2H3
      */
     @Test
-    public void testFUTCEC() {
+    void testFUTCEC() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -23292,7 +23292,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH6OSi/c1-2-3/h1,3H3
      */
     @Test
-    public void testFUTZEZ() {
+    void testFUTZEZ() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
@@ -23322,7 +23322,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H15N3O6/c1-4(16)19-10-7-11(20-5(2)17)9-12(21-6(3)18)8(10)14-13(7)15(9)14/h7-12H,1-3H3/t7-,8+,9-,10-,11+,12-,13+,14-,15+
      */
     @Test
-    public void testFUVDOP() {
+    void testFUVDOP() {
         IAtomContainer container = new AtomContainer(36, 39, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -23412,7 +23412,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H18N2O2/c1-10(2)8(12)6-5-7-9(13)11(3)4/h5-7H2,1-4H3/p+2
      */
     @Test
-    public void testFUVMUE() {
+    void testFUVMUE() {
         IAtomContainer container = new AtomContainer(33, 32, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -23492,7 +23492,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C17H20N2O/c1-18(2)15-9-5-13(6-10-15)17(20)14-7-11-16(12-8-14)19(3)4/h5-12H,1-4H3
      */
     @Test
-    public void testFUVNEP() {
+    void testFUVNEP() {
         IAtomContainer container = new AtomContainer(40, 41, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -23588,7 +23588,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9NO2/c1-11-8-4-2-7(3-5-8)6-9-10/h2-6,10H,1H3/p+1/b9-6-
      */
     @Test
-    public void testFUVXOJ() {
+    void testFUVXOJ() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -23644,7 +23644,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H10N2O4S/c12-9-11(6-7-15-9)16(13,14)10-8-4-2-1-3-5-8/h1-5,10H,6-7H2
      */
     @Test
-    public void testFUWMOZ() {
+    void testFUWMOZ() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -23711,7 +23711,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H9P3S3/c1-5-2-6-7(3-5)11-8(9,4-5)10-6/h2-4H2,1H3/t5-,6+,7-,8-
      */
     @Test
-    public void testFUWTUM() {
+    void testFUWTUM() {
         IAtomContainer container = new AtomContainer(20, 22, 0, 0);
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("S", 0));
@@ -23767,7 +23767,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H15N2O3PS/c6-2-1-3-7-4-5-12-11(8,9)10/h7H,1-6H2,(H2,8,9,10)
      */
     @Test
-    public void testFUXXAX() {
+    void testFUXXAX() {
         IAtomContainer container = new AtomContainer(27, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
@@ -23834,7 +23834,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8N2O4S/c1-13-5-7(3-9)15(11,12)8(4-10)6-14-2/h5-6H,1-2H3/b7-5+,8-6+
      */
     @Test
-    public void testFUXZED() {
+    void testFUXZED() {
         IAtomContainer container = new AtomContainer(23, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -23893,7 +23893,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C14H18N2/c1-15(2)12-9-5-7-11-8-6-10-13(14(11)12)16(3)4/h5-10H,1-4H3/p+1
      */
     @Test
-    public void testGADHEY() {
+    void testGADHEY() {
         IAtomContainer container = new AtomContainer(35, 36, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -23979,7 +23979,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12N2O5/c1-6(15)19-11-3-7-2-9(11)8-4-12(14(17)18)13(16)5-10(7)8/h4-5,7,9,11H,2-3H2,1H3/t7-,9-,11+/m1/s1
      */
     @Test
-    public void testGAFNUW() {
+    void testGAFNUW() {
         IAtomContainer container = new AtomContainer(31, 33, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -24058,7 +24058,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H11NO4/c1-3-5(6(9)10)7(11)4(2)8/h5,11H,3H2,1-2H3,(H,9,10)/t5-/m0/s1
      */
     @Test
-    public void testGAHPIO() {
+    void testGAHPIO() {
         IAtomContainer container = new AtomContainer(22, 21, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -24115,7 +24115,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H5NO3S/c7-10(8,9)6-4-2-1-3-5-6/h1-5H
      */
     @Test
-    public void testGAJTEQ() {
+    void testGAJTEQ() {
         IAtomContainer container = new AtomContainer(15, 15, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
@@ -24159,7 +24159,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13NO2/c1-7-9-5-3-4-6-13(9)10-8(2)12(14)15-11(7)10/h5H,3-4,6H2,1-2H3
      */
     @Test
-    public void testGAKGOO() {
+    void testGAKGOO() {
         IAtomContainer container = new AtomContainer(28, 30, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -24231,7 +24231,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H2ClN3O3/c7-3-1-2-4(10(11)12)6-5(3)8-13-9-6/h1-2H
      */
     @Test
-    public void testGAKNEL() {
+    void testGAKNEL() {
         IAtomContainer container = new AtomContainer(15, 16, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -24276,7 +24276,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H10O2S2/c1-2-6-9(7)4-3-5-10(6)8/h2H,3-5H2,1H3/t9-,10-/m0/s1
      */
     @Test
-    public void testGAKNIP() {
+    void testGAKNIP() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -24330,7 +24330,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8O2S/c1-7-6-8-4-2-3-5-9(8)12(7,10)11/h2-6H,1H3
      */
     @Test
-    public void testGAKPEN() {
+    void testGAKPEN() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -24385,7 +24385,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H4S3/c1-5-6-2-10-4-8(6)11-7(5)3-9-1/h1-4H
      */
     @Test
-    public void testGAKTAN() {
+    void testGAKTAN() {
         IAtomContainer container = new AtomContainer(15, 17, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -24431,7 +24431,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H2O3/c5-2-1-3(6)4(2)7/h1,5H
      */
     @Test
-    public void testGANHUY() {
+    void testGANHUY() {
         IAtomContainer container = new AtomContainer(9, 9, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -24462,7 +24462,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H5BrO2S/c9-8-5-6-3-1-2-4-7(6)12(8,10)11/h1-5H
      */
     @Test
-    public void testGAPMEP() {
+    void testGAPMEP() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("S", 0));
@@ -24511,7 +24511,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H5N3O2/c1-2-3(4)6(7)8-5-2/h4H2,1H3
      */
     @Test
-    public void testGAVKOD() {
+    void testGAVKOD() {
         IAtomContainer container = new AtomContainer(13, 13, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -24550,7 +24550,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9NOS/c1-7-11-10(12)9(13-7)8-5-3-2-4-6-8/h2-6,12H,1H3
      */
     @Test
-    public void testGAVMEV() {
+    void testGAVMEV() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
@@ -24609,7 +24609,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14NO4P/c1-12-8-5-9-15-17(12,14)16-11(13)10-6-3-2-4-7-10/h2-4,6-7H,5,8-9H2,1H3/t17-/m0/s1
      */
     @Test
-    public void testGAWWOQ() {
+    void testGAWWOQ() {
         IAtomContainer container = new AtomContainer(31, 32, 0, 0);
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("O", 0));
@@ -24687,7 +24687,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13NO6S/c13-11(9(14)15)6-12(7-11,10(16)17)20(18,19)8-4-2-1-3-5-8/h1-5H,6-7,13H2,(H,14,15)(H,16,17)/p-1/t11-,12-
      */
     @Test
-    public void testGEHBOK() {
+    void testGEHBOK() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -24767,7 +24767,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H6N4O4S3/c5-1(9)3(11)7-13-15-14-8-4(12)2(6)10/h(H2,5,9)(H2,6,10)(H,7,11)(H,8,12)
      */
     @Test
-    public void testGEHPUE() {
+    void testGEHPUE() {
         IAtomContainer container = new AtomContainer(21, 20, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -24822,7 +24822,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H18Cl2N4O2/c1-3-19-9-15-11-7-5-6-8-12(11,17(9)13)16-10(18(11)14)20-4-2/h3-8H2,1-2H3/t11-,12-/m0/s1
      */
     @Test
-    public void testGEHXEW() {
+    void testGEHXEW() {
         IAtomContainer container = new AtomContainer(38, 40, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
@@ -24915,7 +24915,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H6F4NP/c1-9(2)3(5)10-4(6,7)8/h1-2H3
      */
     @Test
-    public void testGEJYOJ() {
+    void testGEJYOJ() {
         IAtomContainer container = new AtomContainer(16, 15, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("F", 0));
@@ -24960,7 +24960,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H12N2/c1-4(2,3)6-5/h6H,5H2,1-3H3
      */
     @Test
-    public void testGEKXEZ() {
+    void testGEKXEZ() {
         IAtomContainer container = new AtomContainer(18, 17, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25009,7 +25009,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H8N2/c1-6(4-8)3-7(6,2)5-9/h3H2,1-2H3/t6-,7+
      */
     @Test
-    public void testGEMCEG() {
+    void testGEMCEG() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25057,7 +25057,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H8N2O2/c1-10-6(4-8)3-7(6,5-9)11-2/h3H2,1-2H3/t6-,7+
      */
     @Test
-    public void testGEMCOQ() {
+    void testGEMCOQ() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25109,7 +25109,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H14N4/c1-12(2)8(6-10)5-9(8,7-11)13(3)4/h5H2,1-4H3/t8-,9-/m1/s1
      */
     @Test
-    public void testGEMDAD() {
+    void testGEMDAD() {
         IAtomContainer container = new AtomContainer(27, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25177,7 +25177,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H6N2O3S/c10-13(11,12)7-8-5-3-1-2-4-6(5)9-7/h1-4H,(H,8,9)(H,10,11,12)
      */
     @Test
-    public void testGERCUB() {
+    void testGERCUB() {
         IAtomContainer container = new AtomContainer(19, 20, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -25230,7 +25230,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H17N4OS/c1-8-11(3-4-17)18-7-16(8)6-10-5-14-9(2)15-12(10)13/h5,7,17H,3-4,6H2,1-2H3,(H2,13,14,15)/q+1
      */
     @Test
-    public void testGESCIQ() {
+    void testGESCIQ() {
         IAtomContainer container = new AtomContainer(35, 36, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -25316,7 +25316,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H6/c1-2-4-7-5-6(7)3-1/h1-4H,5H2
      */
     @Test
-    public void testGESNIB() {
+    void testGESNIB() {
         IAtomContainer container = new AtomContainer(13, 14, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25356,7 +25356,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H13NO2S/c1-8-4-6-9(7-5-8)13(11,12)10(2)3/h4-7H,1-3H3
      */
     @Test
-    public void testGESSUS() {
+    void testGESSUS() {
         IAtomContainer container = new AtomContainer(26, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -25422,7 +25422,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H2N4O5/c7-8-4-1-3(9(12)13)2-5(6(4)11)10(14)15/h1-2H
      */
     @Test
-    public void testGETFIU() {
+    void testGETFIU() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25470,7 +25470,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6HClN4O5/c7-4-3(10(13)14)1-2(9-8)6(12)5(4)11(15)16/h1H
      */
     @Test
-    public void testGETFOA() {
+    void testGETFOA() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25518,7 +25518,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H10P2S6/c15-13(17-11-7-3-1-4-8-11)19-14(16,20-13)18-12-9-5-2-6-10-12/h1-10H/t13-,14-
      */
     @Test
-    public void testGETJOE() {
+    void testGETJOE() {
         IAtomContainer container = new AtomContainer(30, 32, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 1));
@@ -25594,7 +25594,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9NO/c12-10-6-7-11(8-10)9-4-2-1-3-5-9/h1-7H,8H2
      */
     @Test
-    public void testGEWTAD() {
+    void testGEWTAD() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -25651,7 +25651,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H8N2O4/c10-6(11)3-8-1-2-9(5-8)4-7(12)13/h1-2,5H,3-4H2,(H-,10,11,12,13)/p+1
      */
     @Test
-    public void testGEXGIZ() {
+    void testGEXGIZ() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -25709,7 +25709,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13N3O4/c1-8-11(12(17)13-6-7-16)15(19)10-5-3-2-4-9(10)14(8)18/h2-5,16H,6-7H2,1H3,(H,13,17)
      */
     @Test
-    public void testGEYWOW() {
+    void testGEYWOW() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", -1));
@@ -25789,7 +25789,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H2N10O4/c15-13(16)11-1-5-3(9-11)7-8-4-6-2-12(10-4)14(17)18/h1-2H/b8-7+
      */
     @Test
-    public void testGICTIV01() {
+    void testGICTIV01() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25844,7 +25844,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10BrNO4/c1-15-7(13)9-2-3-10(11,5-12)6(4-9)16-8(9)14/h6H,2-4H2,1H3/t6-,9-,10+/m1/s1
      */
     @Test
-    public void testGIDJUY() {
+    void testGIDJUY() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("C", 0));
@@ -25911,7 +25911,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H7N7/c9-7-5-3-4(14-15-11)1-2-6(5)12-8(10)13-7/h1-3H,(H4,9,10,12,13)/p+1
      */
     @Test
-    public void testGIDMEL() {
+    void testGIDMEL() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -25972,7 +25972,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H15N5O6/c12-9(19)15-10(20)13-7-1-2-16(11(21)14-7)8-3-5(18)6(4-17)22-8/h1-2,5-6,8,17-18H,3-4H2,(H4,12,13,14,15,19,20,21)/t5-,6+,8+/m0/s1
      */
     @Test
-    public void testGIDTIW() {
+    void testGIDTIW() {
         IAtomContainer container = new AtomContainer(37, 38, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -26062,7 +26062,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13N4O2S/c1-8-7-9(2)15-12(14-8)16-19(17,18)11-5-3-10(13)4-6-11/h3-7H,13H2,1-2H3/q-1
      */
     @Test
-    public void testGIFRAO() {
+    void testGIFRAO() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -26142,7 +26142,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C14H9N3/c1-4-11-12(15-7-1)5-6-13-14(11)17-8-2-3-10(17)9-16-13/h1-9H
      */
     @Test
-    public void testGIGCEE() {
+    void testGIGCEE() {
         IAtomContainer container = new AtomContainer(26, 29, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -26211,7 +26211,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14S4/c1-2-10-8-13-6-4-11-3-5-12-7-9(1)14-10/h1-2H,3-8H2
      */
     @Test
-    public void testGIGMUE() {
+    void testGIGMUE() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -26282,7 +26282,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8O5/c1-13-6(11)8-4-3(10)5(8)9(4,8)7(12)14-2/h4-5H,1-2H3/t4-,5+,8-,9+
      */
     @Test
-    public void testGIHZEC() {
+    void testGIHZEC() {
         IAtomContainer container = new AtomContainer(22, 24, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -26342,7 +26342,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H5NO4S/c9-4-2-1-3-5-6(4)7(10)8-13(5,11)12/h1-3H,(H2,8,9,10)/p-1
      */
     @Test
-    public void testGIJMOB01() {
+    void testGIJMOB01() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -26391,7 +26391,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H4BrNO/c8-5-3-6-1-2-7(10)9(6)4-5/h1-4H
      */
     @Test
-    public void testGIKJIT() {
+    void testGIKJIT() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -26434,7 +26434,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H13NO2S/c1-7(11)9(10(12)13)14-8-5-3-2-4-6-8/h2-7,9H,11H2,1H3,(H,12,13)/t7-,9+/m1/s1
      */
     @Test
-    public void testGIKNOD() {
+    void testGIKNOD() {
         IAtomContainer container = new AtomContainer(27, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -26502,7 +26502,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6O5/c9-1-5-3-11-8-6(2-10)4-12-7(5)13-8/h1-4,7-8H/t7-,8-/m0/s1
      */
     @Test
-    public void testGIKTUP() {
+    void testGIKTUP() {
         IAtomContainer container = new AtomContainer(19, 20, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -26555,7 +26555,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H11Cl4N/c12-8-10(14)6-4-1-2-5(3-4)7(6)11(8,15)16-9(10)13/h4-8H,1-3H2/t4-,5+,6+,7-,8+,10-,11-/m0/s1
      */
     @Test
-    public void testGIMJIV() {
+    void testGIMJIV() {
         IAtomContainer container = new AtomContainer(27, 30, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -26626,7 +26626,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8N2O3S/c1-14-8(13)5-6-4-7(12)10-9-11(6)2-3-15-9/h2-4H,5H2,1H3
      */
     @Test
-    public void testGINMUL() {
+    void testGINMUL() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -26687,7 +26687,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10O4/c11-9(12)8(10(13)14)6-7-4-2-1-3-5-7/h1-5,8H,6H2,(H,11,12)(H,13,14)/p-1
      */
     @Test
-    public void testGIPHES() {
+    void testGIPHES() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -26747,7 +26747,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H20N2P2/c1-9-11(3)5-7-13(9)10(2)12(4)6-8-14(9)10/h5-8H2,1-4H3/t9-,10-,13+,14+
      */
     @Test
-    public void testGIRDOA01() {
+    void testGIRDOA01() {
         IAtomContainer container = new AtomContainer(34, 36, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 0));
@@ -26832,7 +26832,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H2N4O4/c9-1-5-2(10)8-4(12)6-3(11)7(1)8/h(H,5,9,10)(H,6,11,12)
      */
     @Test
-    public void testGOHVUU() {
+    void testGOHVUU() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -26875,7 +26875,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H2Cl10OS2/c7-3(8,9)1-17-2(4(10,11)12)19-6(16,18-1)5(13,14)15/h1-2H/t1-,2-/m1/s1
      */
     @Test
-    public void testGOJCIR() {
+    void testGOJCIR() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -26931,7 +26931,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H5N5O2S/c13-12(14)5-2-1-3-8-6(5)15-7-9-4-10-11-7/h1-4H,(H,9,10,11)
      */
     @Test
-    public void testGOJKIZ() {
+    void testGOJKIZ() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -26986,7 +26986,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,6,7,8,9,10,11)/p+1
      */
     @Test
-    public void testGUANCH01() {
+    void testGUANCH01() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -27035,7 +27035,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H15NOS/c14-11-7-3-2-6-10(11)12(15)13-8-4-1-5-9-13/h2-3,6-7,14H,1,4-5,8-9H2
      */
     @Test
-    public void testHYTPRD01() {
+    void testHYTPRD01() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -27110,7 +27110,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4N2S6/c5-1-2-3-4(6-7-2)9-11-12-10-8-3
      */
     @Test
-    public void testISTZCN10() {
+    void testISTZCN10() {
         IAtomContainer container = new AtomContainer(12, 13, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -27148,7 +27148,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13NS2/c1-8-5-4-6-11(10(8)3)13-9(2)7-15-12(13)14/h4-7H,1-3H3
      */
     @Test
-    public void testJABGAU() {
+    void testJABGAU() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -27219,7 +27219,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H3ClS3/c8-4-1-2-5-6(3-4)10-11-7(5)9/h1-3H
      */
     @Test
-    public void testJADLIJ() {
+    void testJADLIJ() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
@@ -27261,7 +27261,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H19NO7/c1-11(2)16-5-6(18-11)7-8(20-12(3,4)19-7)9-10(17-9)13(14)15/h6-10H,5H2,1-4H3/t6-,7-,8+,9+,10-/m1/s1
      */
     @Test
-    public void testJADXER() {
+    void testJADXER() {
         IAtomContainer container = new AtomContainer(39, 41, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -27356,7 +27356,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12O3S/c1-10(14(2,11)12)9(13-10)8-6-4-3-5-7-8/h3-7,9H,1-2H3/t9-,10-/m0/s1
      */
     @Test
-    public void testJAHKOS() {
+    void testJAHKOS() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -27423,7 +27423,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13ClO/c1-12(2)10(11(12)14-3)8-4-6-9(13)7-5-8/h4-7H,1-3H3
      */
     @Test
-    public void testJAHTOB() {
+    void testJAHTOB() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -27492,7 +27492,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H12Cl3N/c9-7-3-1-5-12(6-2-4-7)8(7,10)11/h1-6H2
      */
     @Test
-    public void testJAHYEW() {
+    void testJAHYEW() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -27555,7 +27555,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12P2/c1-2-4-10-9(3-1)11-5-7-12(10)8-6-11/h1-4H,5-8H2/t11-,12+
      */
     @Test
-    public void testJAKGUX() {
+    void testJAKGUX() {
         IAtomContainer container = new AtomContainer(24, 26, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
@@ -27619,7 +27619,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10N2O/c1-6-3-4-7(9-2)8(5-6)10-11/h3-5,9H,1-2H3
      */
     @Test
-    public void testJAKJOU() {
+    void testJAKJOU() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -27675,7 +27675,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H15OS2/c11-13(12)10-4-7-1-8(5-10)3-9(2-7)6-10/h7-9H,1-6H2/t7-,8+,9-,10-
      */
     @Test
-    public void testJALSOE() {
+    void testJALSOE() {
         IAtomContainer container = new AtomContainer(28, 30, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -27747,7 +27747,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C20H22N4O5/c1-24(2)17(25)12-28-18(26)11-13-3-9-16(10-4-13)29-19(27)14-5-7-15(8-6-14)23-20(21)22/h3-10H,11-12H2,1-2H3,(H4,21,22,23)/p+1
      */
     @Test
-    public void testJAMREU() {
+    void testJAMREU() {
         IAtomContainer container = new AtomContainer(52, 53, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -27868,7 +27868,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C21H20N4O7S/c1-11(26)14-15-17(31-2)18(33-21-22-8-3-9-23-21)16(24(15)19(14)27)20(28)32-10-12-4-6-13(7-5-12)25(29)30/h3-9,11,14-15,17,26H,10H2,1-2H3/t11-,14-,15+,17-/m1/s1
      */
     @Test
-    public void testJANDOR() {
+    void testJANDOR() {
         IAtomContainer container = new AtomContainer(53, 56, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -27993,7 +27993,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10NO4P/c1-13-14(11,12)8(9-10)7-5-3-2-4-6-7/h2-6,10H,1H3,(H,11,12)/p-1/b9-8+
      */
     @Test
-    public void testJANMAM() {
+    void testJANMAM() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -28053,7 +28053,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H9N3O3S/c16-11-10(13-12-14(11)4-5-19-12)7-8-2-1-3-9(6-8)15(17)18/h1-3,6-7H,4-5H2/b10-7-
      */
     @Test
-    public void testJAPFAH() {
+    void testJAPFAH() {
         IAtomContainer container = new AtomContainer(28, 30, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -28125,7 +28125,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H12N2O4/c1-9-5(10-2)7-8-6(11-3)12-4/h1-4H3
      */
     @Test
-    public void testJATBIP() {
+    void testJATBIP() {
         IAtomContainer container = new AtomContainer(24, 23, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -28186,7 +28186,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H3ClN4S/c6-5-10-4-2(11-5)3(7)8-1-9-4/h1H,(H2,7,8,9)
      */
     @Test
-    public void testJATCOW() {
+    void testJATCOW() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -28229,7 +28229,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H15N7O2S3/c9-6(15-20(12,16)17)1-2-18-3-5-4-19-8(13-5)14-7(10)11/h4H,1-3H2,(H2,9,15)(H2,12,16,17)(H4,10,11,13,14)/p+1
      */
     @Test
-    public void testJATLOF() {
+    void testJATLOF() {
         IAtomContainer container = new AtomContainer(36, 36, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -28316,7 +28316,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H18N6O2S3/c1-15(2)13-9-12-7(6-19-9)5-18-4-3-8(10)14-20(11,16)17/h6H,3-5H2,1-2H3,(H2,10,14)(H,12,13)(H2,11,16,17)
      */
     @Test
-    public void testJATMEW() {
+    void testJATMEW() {
         IAtomContainer container = new AtomContainer(38, 38, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -28407,7 +28407,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H10N2O2S/c1-9(2)13-8-6-4-3-5-7(8)10(11)12/h3-6H,1-2H3
      */
     @Test
-    public void testJAVGAO() {
+    void testJAVGAO() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
@@ -28467,7 +28467,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H15N5O6/c1-15-4-7(13-10(12)14-8(4)20)16(11(15)21)9-6(19)5(18)3(2-17)22-9/h3,5-6,9,17-19H,2H2,1H3,(H3,12,13,14,20)/t3-,5-,6-,9-/m1/s1
      */
     @Test
-    public void testJAWJIA() {
+    void testJAWJIA() {
         IAtomContainer container = new AtomContainer(37, 39, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -28558,7 +28558,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H7NO/c5-3-1-4-2-3/h3-5H,1-2H2
      */
     @Test
-    public void testJAWMAV() {
+    void testJAWMAV() {
         IAtomContainer container = new AtomContainer(12, 12, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -28595,7 +28595,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14O3/c1-6(2)3-4-7-5-8(12)10-11(14-10)9(7)13/h3,8-13H,1,5H2,2H3/t4-,8+,9-,10-,11+/m0/s1
      */
     @Test
-    public void testJAWVEI() {
+    void testJAWVEI() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -28666,7 +28666,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H7N4O2P/c11-13(12,5-7-1-2-8-5)6-9-3-4-10-6/h1-4H,(H,7,8)(H,9,10)(H,11,12)/p-1
      */
     @Test
-    public void testJAWZEM() {
+    void testJAWZEM() {
         IAtomContainer container = new AtomContainer(19, 20, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", -1));
@@ -28719,7 +28719,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H13NO5S/c1-8(2)6-3-4-9(8)5-17(13,14)11-10(9,16-11)7(12)15-6/h6H,3-5H2,1-2H3/t6-,9-,10-,11+/m0/s1
      */
     @Test
-    public void testJAZGOG() {
+    void testJAZGOG() {
         IAtomContainer container = new AtomContainer(30, 33, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -28796,7 +28796,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H13N5O6S2/c9-6(20)7-11-2-13(12-7)8-5(15)4(14)3(19-8)1-18-21(10,16)17/h2-5,8,14-15H,1H2,(H2,9,20)(H2,10,16,17)/t3-,4-,5-,8-/m1/s1
      */
     @Test
-    public void testJAZVIP10() {
+    void testJAZVIP10() {
         IAtomContainer container = new AtomContainer(34, 35, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -28880,7 +28880,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14N6O6S/c11-10-14-7-4(8(15-10)23(12,20)21)13-2-16(7)9-6(19)5(18)3(1-17)22-9/h2-3,5-6,9,17-19H,1H2,(H2,11,14,15)(H2,12,20,21)/t3-,5-,6-,9-/m1/s1
      */
     @Test
-    public void testJAZZOZ10() {
+    void testJAZZOZ10() {
         IAtomContainer container = new AtomContainer(37, 39, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -28971,7 +28971,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H11N2OP/c15-16(10-6-2-1-3-7-10)13-11-8-4-5-9-12(11)14-16/h1-9H,(H2,13,14,15)
      */
     @Test
-    public void testJEBFEB01() {
+    void testJEBFEB01() {
         IAtomContainer container = new AtomContainer(27, 29, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -29041,7 +29041,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H14N4O3/c1-7-4-12(7)6-8(14)5-11-3-2-10-9(11)13(15)16/h2-3,7-8,14H,4-6H2,1H3/t7-,8-,12+/m0/s1
      */
     @Test
-    public void testJECVES() {
+    void testJECVES() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -29117,7 +29117,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H11N3O4/c1-4(10)9(5(11)7-2)13-6(12)8-3/h1-3H3,(H,7,11)(H,8,12)
      */
     @Test
-    public void testJECVUI() {
+    void testJECVUI() {
         IAtomContainer container = new AtomContainer(24, 23, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -29178,7 +29178,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H22N5OP/c1-4-11(13-14-12)18(17)15(2)9-7-5-6-8-10(9)16(18)3/h9-11H,4-8H2,1-3H3/t9-,10-,11-/m1/s1
      */
     @Test
-    public void testJECYIZ() {
+    void testJECYIZ() {
         IAtomContainer container = new AtomContainer(40, 41, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -29274,7 +29274,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H18N6S2/c1-14(2)8(17)11-7-12-9(15(3)4)18-10(13-7)16(5)6/h1-6H3
      */
     @Test
-    public void testJEFRAN() {
+    void testJEFRAN() {
         IAtomContainer container = new AtomContainer(36, 36, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -29361,7 +29361,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H9N5O/c1-12-3-9-4-5(12)10-7(8)11-6(4)13-2/h3H,1-2H3,(H2,8,10,11)
      */
     @Test
-    public void testJEHCUU01() {
+    void testJEHCUU01() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -29420,7 +29420,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H8N2O2S/c7-8-11(9,10)6-4-2-1-3-5-6/h1-5,8H,7H2/p+1
      */
     @Test
-    public void testJEHXOJ() {
+    void testJEHXOJ() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -29474,7 +29474,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H11Cl2O2P/c7-11(8,10)6(9)4-2-1-3-5-6/h9H,1-5H2
      */
     @Test
-    public void testJELKUG() {
+    void testJELKUG() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -29532,7 +29532,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H7N3O2/c16-11-8-4-1-2-5-9(8)15(17)10(11)12-13-6-3-7-14-12/h1-7H
      */
     @Test
-    public void testJELREX() {
+    void testJELREX() {
         IAtomContainer container = new AtomContainer(24, 26, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
@@ -29596,7 +29596,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H7NO4/c1-15-10(13)8-9(12)6-4-2-3-5-7(6)11(8)14/h2-5H,1H3
      */
     @Test
-    public void testJELRIB() {
+    void testJELRIB() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
@@ -29655,7 +29655,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H6F2NO3P/c3-2(4,1-5)9(6,7)8/h1,5H2,(H2,6,7,8)
      */
     @Test
-    public void testJEMHIS() {
+    void testJEMHIS() {
         IAtomContainer container = new AtomContainer(15, 14, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -29698,7 +29698,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H4F10O2/c9-5(10,8(16,17)18)4-3(6(11,12)13)7(14,15)20-2-1-19-4/h1-2H2
      */
     @Test
-    public void testJEMWUT() {
+    void testJEMWUT() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -29760,7 +29760,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H16N4Si/c1-5-9(6-2,7-3)8-4/h5-8H,1-4H3
      */
     @Test
-    public void testJESFES() {
+    void testJESFES() {
         IAtomContainer container = new AtomContainer(25, 24, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("N", 0));
@@ -29823,7 +29823,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H8O7P2/c1-2(3,10(4,5)6)11(7,8)9/h3H,1H3,(H2,4,5,6)(H2,7,8,9)/p-1
      */
     @Test
-    public void testJETJUN() {
+    void testJETJUN() {
         IAtomContainer container = new AtomContainer(18, 17, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
@@ -29872,7 +29872,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H13NO3/c1-9(2)3-7(11)6(5-10-13)8(12)4-9/h5,10,13H,3-4H2,1-2H3
      */
     @Test
-    public void testJEVXIR() {
+    void testJEVXIR() {
         IAtomContainer container = new AtomContainer(26, 26, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -29938,7 +29938,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H18Cl2N3O2P/c13-4-7-17(8-5-14)20(18)16-12(3-9-19-20)11-2-1-6-15-10-11/h1-2,6,10,12H,3-5,7-9H2,(H,16,18)/t12-,20-/m1/s1
      */
     @Test
-    public void testJEWFAS() {
+    void testJEWFAS() {
         IAtomContainer container = new AtomContainer(38, 39, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -30030,7 +30030,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H4Cl2N2O2S/c9-5-3-1-15-2-4-6(10)8(14)12(7(5)13)11(3)4/h1-2H2
      */
     @Test
-    public void testJEWPIK() {
+    void testJEWPIK() {
         IAtomContainer container = new AtomContainer(19, 21, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -30084,7 +30084,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H16N2O4S2/c1-11(2)9-5-7-10(8-6-9)12(17(3,13)14)18(4,15)16/h5-8H,1-4H3
      */
     @Test
-    public void testJEXREJ() {
+    void testJEXREJ() {
         IAtomContainer container = new AtomContainer(34, 34, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -30167,7 +30167,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9NO3/c12-7-1-2-9-8(4-7)6(5-11-9)3-10(13)14/h1-2,4-5,11-12H,3H2,(H,13,14)
      */
     @Test
-    public void testJEYBUK() {
+    void testJEYBUK() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -30228,7 +30228,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H15NO4S/c1-8-2-4-9(5-3-8)17(15,16)12-10(6-13)11(12)7-14/h2-5,10-11,13-14H,6-7H2,1H3/t10-,11+,12+
      */
     @Test
-    public void testJIDHIN() {
+    void testJIDHIN() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -30308,7 +30308,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9N3O2S/c9-5-8-10-6-3-1-2-4-7(6)14(12,13)11-8/h1-4H,5,9H2,(H,10,11)/p+1
      */
     @Test
-    public void testJIFYUS() {
+    void testJIFYUS() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -30371,7 +30371,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H5N3OS/c1-2-3-4(6)10-8-5(3)9-7-2/h6H2,1H3
      */
     @Test
-    public void testJIGCIL() {
+    void testJIGCIL() {
         IAtomContainer container = new AtomContainer(15, 16, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -30416,7 +30416,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H5Cl3O3/c1-5(4-12)2-3-6-7(13)10(16)11(17)8(14)9(6)15/h4,17H,1H3/b5-4+
      */
     @Test
-    public void testJIGRAS() {
+    void testJIGRAS() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -30474,7 +30474,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4N2O3/c1-2(3-5)4(6)7/h5H,1H3/b3-2+
      */
     @Test
-    public void testJIHVEB() {
+    void testJIHVEB() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
@@ -30508,7 +30508,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H11IN2O5/c10-4-2-12(9(16)11-8(4)15)7-1-5(13)6(14)3-17-7/h2,5-7,13-14H,1,3H2,(H,11,15,16)/t5-,6+,7+/m0/s1
      */
     @Test
-    public void testJIKHUG() {
+    void testJIKHUG() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -30579,7 +30579,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H3N4O4/c12-10(13)4-1-2-6-5(3-4)7(9-8-6)11(14)15/h1-3H/q-1
      */
     @Test
-    public void testJILWUW() {
+    void testJILWUW() {
         IAtomContainer container = new AtomContainer(18, 19, 0, 0);
         container.addAtom(newAtm("N", -1));
         container.addAtom(newAtm("N", 0));
@@ -30630,7 +30630,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H9NO3S/c1-12(10,11)8(9)7-5-3-2-4-6-7/h2-6,9H,1H3
      */
     @Test
-    public void testJINDAL() {
+    void testJINDAL() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -30686,7 +30686,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14N2O4S/c1-14(2)6-5-8-7-13-9-3-4-10(12(14)11(8)9)18-19(15,16)17/h3-4,7,13H,5-6H2,1-2H3
      */
     @Test
-    public void testJINDOZ() {
+    void testJINDOZ() {
         IAtomContainer container = new AtomContainer(33, 35, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -30769,7 +30769,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H5NO2S/c1-8(6,7)4-2-3-5/h2,4H,1H3/b4-2+
      */
     @Test
-    public void testJIRJID() {
+    void testJIRJID() {
         IAtomContainer container = new AtomContainer(13, 12, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -30807,7 +30807,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H18NO2/c1-8-9-6-5-7-10(15-4)11(9)12(14)13(8,2)3/h5-8,12,14H,1-4H3/q+1/t8-,12-/m1/s1
      */
     @Test
-    public void testJISZAM() {
+    void testJISZAM() {
         IAtomContainer container = new AtomContainer(33, 34, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -30889,7 +30889,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14F3NO3S/c1-9(10(11,12)13)8(7-18(15,16)17-9)14-5-3-2-4-6-14/h7H,2-6H2,1H3/t9-/m1/s1
      */
     @Test
-    public void testJITMII() {
+    void testJITMII() {
         IAtomContainer container = new AtomContainer(32, 33, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -30969,7 +30969,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H8N2O6/c13-5-1-3-11(17)7(9(5)15)8-10(16)6(14)2-4-12(8)18/h1-4,13-16H
      */
     @Test
-    public void testJIWKOP() {
+    void testJIWKOP() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
@@ -31036,7 +31036,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H11N3O2/c1-16-11(13)10(6-12)14-7-8-2-4-9(15)5-3-8/h2-5,7,15H,13H2,1H3/b11-10+,14-7+
      */
     @Test
-    public void testJIXBAT() {
+    void testJIXBAT() {
         IAtomContainer container = new AtomContainer(27, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -31104,7 +31104,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H4F4O3/c1-16-10-8(14)7(13)6(12)5(11)3-2-4(15)17-9(3)10/h2H,1H3
      */
     @Test
-    public void testJIYJAC() {
+    void testJIYJAC() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -31161,7 +31161,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H7N3O2/c1-2-7-4-6-3-5(7)8(9)10/h3-4H,2H2,1H3/p+1
      */
     @Test
-    public void testJIYREO() {
+    void testJIYREO() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -31211,7 +31211,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H5NO/c7-5-3-1-2-4-6-5/h1-4H,(H,6,7)/p-1
      */
     @Test
-    public void testJIYTOA() {
+    void testJIYTOA() {
         IAtomContainer container = new AtomContainer(11, 11, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -31246,7 +31246,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H18Cl6N2SSi2/c1-7(2,3)15(18(9,10)11)17-16(8(4,5)6)19(12,13)14/h1-6H3
      */
     @Test
-    public void testJIZWUK() {
+    void testJIZWUK() {
         IAtomContainer container = new AtomContainer(37, 36, 0, 0);
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -31334,7 +31334,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H8ClNOSi/c1-8(2,3-5)6-4-7/h3H2,1-2H3
      */
     @Test
-    public void testJOFDUD() {
+    void testJOFDUD() {
         IAtomContainer container = new AtomContainer(16, 15, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -31379,7 +31379,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12Cl2O/c1-8(6-2-3-6)9(4-5-9)7(13)10(8,11)12/h6H,2-5H2,1H3/t8-/m1/s1
      */
     @Test
-    public void testKAFXIY() {
+    void testKAFXIY() {
         IAtomContainer container = new AtomContainer(25, 27, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -31445,7 +31445,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C17H14O4/c1-19-14-8-5-9-15(20-2)17(14)16-10-12(18)11-6-3-4-7-13(11)21-16/h3-10H,1-2H3
      */
     @Test
-    public void testKAGBOJ() {
+    void testKAGBOJ() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -31532,7 +31532,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13NOS/c1-11(2)10(14)13-8-6-4-5-7-9(8)15-12(11,13)3/h4-7H,1-3H3/t12-/m1/s1
      */
     @Test
-    public void testKAKGOS() {
+    void testKAKGOS() {
         IAtomContainer container = new AtomContainer(28, 30, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -31604,7 +31604,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H14Br2N2O5/c13-12(14)2-6(12)5-3-16(11(20)15-10(5)19)9-1-7(18)8(4-17)21-9/h3,6-9,17-18H,1-2,4H2,(H,15,19,20)/t6-,7-,8+,9+/m0/s1
      */
     @Test
-    public void testKAMCUW() {
+    void testKAMCUW() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
@@ -31691,7 +31691,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H11ClN4O/c1-15(17)11(6-16-8-13-7-14-16)9-2-4-10(12)5-3-9/h2-5,7-8H,6H2,1H3/b15-11+
      */
     @Test
-    public void testKAMJAJ() {
+    void testKAMJAJ() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -31762,7 +31762,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H2N6S/c13-3-7(4-14)9-1-2-10(8(5-15)6-16)12-11(9)17-19-18-12/h1-2H
      */
     @Test
-    public void testKANWEB() {
+    void testKANWEB() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -31819,7 +31819,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C14H14Cl3N5O4/c1-14(2)25-7-4(3-23)24-11(8(7)26-14)21-10-6-5(18-13(17)22-10)9(15)20-12(16)19-6/h4,7-8,11,23H,3H2,1-2H3,(H,18,21,22)/t4-,7-,8-,11-/m1/s1
      */
     @Test
-    public void testKANZOO() {
+    void testKANZOO() {
         IAtomContainer container = new AtomContainer(40, 43, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -31917,7 +31917,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H8N2S2/c1-7-3-4-8(2)5(7)6(9)10/h3-4H,1-2H3
      */
     @Test
-    public void testKAPCUZ() {
+    void testKAPCUZ() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -31967,7 +31967,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H15NO2S/c1-10(2)8-3-7-4-9(8)11(5-7,6-12)15(10,13)14/h7-9H,3-5H2,1-2H3/t7-,8+,9-,11+/m1/s1
      */
     @Test
-    public void testKARYAD() {
+    void testKARYAD() {
         IAtomContainer container = new AtomContainer(30, 32, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -32043,7 +32043,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H7N3O2/c9-7-10(11(12)13)6-8-4-2-1-3-5-8/h1-5H,6H2
      */
     @Test
-    public void testKASBAH() {
+    void testKASBAH() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -32097,7 +32097,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H10O4/c1-14-9-5-3-8(4-6-11(12)13)7-10(9)15-2/h3,5,7H,1-2H3,(H,12,13)
      */
     @Test
-    public void testKASBOV() {
+    void testKASBOV() {
         IAtomContainer container = new AtomContainer(25, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -32161,7 +32161,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12N4O2S/c1-8-10-11(16(2)14-8)15-19(17,18)12(13-10)9-6-4-3-5-7-9/h3-7,14H,1-2H3
      */
     @Test
-    public void testKATNAU() {
+    void testKATNAU() {
         IAtomContainer container = new AtomContainer(31, 33, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -32240,7 +32240,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H2N4O4/c8-6(9)3-1-5(2-4-3)7(10)11/h1-2H
      */
     @Test
-    public void testKAVFUI() {
+    void testKAVFUI() {
         IAtomContainer container = new AtomContainer(13, 13, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -32279,7 +32279,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H13NO5/c1-6(11)13-4-8-2-7-3-9(12)15-10(7)5-14-8/h7-8H,2-5H2,1H3/t7-,8+/m1/s1
      */
     @Test
-    public void testKAVTEG() {
+    void testKAVTEG() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -32350,7 +32350,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H8F8S2/c1-5-2-6(4-7(21)11(17,18)9(13)14)22-8(3-5)12(19,20)10(15)16/h2-4,9-10H,1H3/b6-4-
      */
     @Test
-    public void testKECSIU() {
+    void testKECSIU() {
         IAtomContainer container = new AtomContainer(30, 30, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -32424,7 +32424,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5Cl9N3/c6-2-15-1(3(7,8)9)16-17(2)5(13,14)4(10,11)12
      */
     @Test
-    public void testKECSUG() {
+    void testKECSUG() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -32472,7 +32472,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10O2S2/c1-11-7-3-9(13-5-7)10-4-8(12-2)6-14-10/h3-6H,1-2H3
      */
     @Test
-    public void testKEDYAT() {
+    void testKEDYAT() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -32535,7 +32535,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H9N3O2/c1-15-10-9(7-12)14-11(16-10)13-8-5-3-2-4-6-8/h2-6H,1H3,(H,13,14)
      */
     @Test
-    public void testKEFJEK() {
+    void testKEFJEK() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -32600,7 +32600,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H10NO4P/c1-6(2)4(5(7)8)3-12(9,10)11-6/h3H,1-2H3,(H2,7,8)(H,9,10)/p-1
      */
     @Test
-    public void testKEJFOU() {
+    void testKEJFOU() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", -1));
@@ -32656,7 +32656,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11N4O2S2/c1-2-9-12-13-10(17-9)14-18(15,16)8-5-3-7(11)4-6-8/h3-6H,2,11H2,1H3/q-1
      */
     @Test
-    public void testKEMFAJ() {
+    void testKEMFAJ() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -32729,7 +32729,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8ClNO3S/c9-14(11,12)10-8-7-5-2-1-4(13-8)3-6(5)7/h1-2,4-7H,3H2/b10-8-/t4-,5+,6-,7+/m0/s1
      */
     @Test
-    public void testKENHOA() {
+    void testKENHOA() {
         IAtomContainer container = new AtomContainer(22, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -32789,7 +32789,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H2N6O2/c12-11-3-1-2-4-6-8-9-10(4)5(3)7-13-11/h1-2H
      */
     @Test
-    public void testKEPKIZ() {
+    void testKEPKIZ() {
         IAtomContainer container = new AtomContainer(15, 17, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -32835,7 +32835,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13N3O5/c1-11(2,3)12(15)7-8-4-5-9(13(16)17)6-10(8)14(18)19/h4-7H,1-3H3/b12-7-
      */
     @Test
-    public void testKESNEB() {
+    void testKESNEB() {
         IAtomContainer container = new AtomContainer(32, 32, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -32914,7 +32914,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H2N6S/c3-1-2(5-8-4)7-9-6-1/h(H2,3,6)
      */
     @Test
-    public void testKEWJIF() {
+    void testKEWJIF() {
         IAtomContainer container = new AtomContainer(11, 11, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -32949,7 +32949,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH2O2/c2-1-3/h1H,(H,2,3)
      */
     @Test
-    public void testKHDFRM11() {
+    void testKHDFRM11() {
         IAtomContainer container = new AtomContainer(5, 4, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -32971,7 +32971,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H13N5O2S/c1-15-7(11-4-2-3-5-11)9-6(8)10-12(13)14/h2-5H2,1H3,(H2,8,10)/b9-7-
      */
     @Test
-    public void testKIBDII() {
+    void testKIBDII() {
         IAtomContainer container = new AtomContainer(28, 28, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -33041,7 +33041,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9N3O/c1-8-7-10(12-13(14)11-8)9-5-3-2-4-6-9/h2-7H,1H3
      */
     @Test
-    public void testKIBFAC() {
+    void testKIBFAC() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -33102,7 +33102,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H4F2NOP/c4-8(5)7-3-1-2-6/h1,3H2
      */
     @Test
-    public void testKICCUU() {
+    void testKICCUU() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("F", 0));
@@ -33138,7 +33138,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H6Cl6/c11-5-3-1-2-4(5)9(15)7(13)6(12)8(3,14)10(2,9)16/h2-5H,1H2/t2-,3+,4-,5-,8-,9+,10-/m0/s1
      */
     @Test
-    public void testKICGAE() {
+    void testKICGAE() {
         IAtomContainer container = new AtomContainer(22, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -33199,7 +33199,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H11O6P/c1-9-6-5-4(7)3(2-10-6)11-13(8)12-5/h3-7,13H,2H2,1H3/t3-,4-,5-,6-/m0/s1
      */
     @Test
-    public void testKICLAJ() {
+    void testKICLAJ() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -33262,7 +33262,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H5ClNPS/c7-9-8-5-3-1-2-4-6(5)10-9/h1-4,8H/t9-/m1/s1
      */
     @Test
-    public void testKIGKIU() {
+    void testKIGKIU() {
         IAtomContainer container = new AtomContainer(15, 16, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
@@ -33306,7 +33306,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10F8N4O2/c11-1-5(2(12)8(16)19-7(1)15)21(23)22(24)6-3(13)9(17)20-10(18)4(6)14/b22-21+
      */
     @Test
-    public void testKIKVUV() {
+    void testKIKVUV() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -33369,7 +33369,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CF3O/c2-1(3,4)5/q-1
      */
     @Test
-    public void testKIMLEX01() {
+    void testKIMLEX01() {
         IAtomContainer container = new AtomContainer(5, 4, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", -1));
@@ -33391,7 +33391,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H16N2OS/c1-11(2,3)15-10(8-12)9-13-6-4-5-7-14-13/h4-5,9H,6-7H2,1-3H3/b10-9-
      */
     @Test
-    public void testKINKUN() {
+    void testKINKUN() {
         IAtomContainer container = new AtomContainer(31, 31, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -33467,7 +33467,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H18N4/c1-13-7-4-10-16(11-5-8-14-2)12-6-9-15-3/h4-12H2/q+3
      */
     @Test
-    public void testKINTUW() {
+    void testKINTUW() {
         IAtomContainer container = new AtomContainer(34, 33, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -33549,7 +33549,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C17H18N2O2/c1-2-21-17-15-11-7-10(14(15)16(20)18-19-17)12-8-5-3-4-6-9(8)13(11)12/h3-6,10-15H,2,7H2,1H3,(H,18,20)/t10-,11+,12-,13+,14+,15-/m0/s1
      */
     @Test
-    public void testKINWEJ() {
+    void testKINWEJ() {
         IAtomContainer container = new AtomContainer(39, 43, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -33646,7 +33646,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H8FNO4/c6-2(4(8)9)1-3(7)5(10)11/h2-3H,1,7H2,(H,8,9)(H,10,11)/t2-,3+/m0/s1
      */
     @Test
-    public void testKINWIN() {
+    void testKINWIN() {
         IAtomContainer container = new AtomContainer(19, 18, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -33697,7 +33697,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H7N5O12/c1-26-10(17)9-8-5-2-4(12(18)19)3-6(13(20)21)7(5)11(14(22)23,15(24)25)16(27-8)28-9/h2-3,8-9H,1H3/t8-,9-/m0/s1
      */
     @Test
-    public void testKIRCAP() {
+    void testKIRCAP() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -33784,7 +33784,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H9ClN2O3/c1-8-4(10)6(3-9(6)7)5(11)12-2/h3H2,1-2H3,(H,8,10)/t6-,9-/m1/s1
      */
     @Test
-    public void testKIRCOD() {
+    void testKIRCOD() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
@@ -33840,7 +33840,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H12N5O4P/c9-7-6-8(11-3-10-7)13(4-12-6)1-2-17-5-18(14,15)16/h3-4H,1-2,5H2,(H2,9,10,11)(H2,14,15,16)
      */
     @Test
-    public void testKITREK() {
+    void testKITREK() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -33916,7 +33916,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H4F6N2S3/c6-4(7,8)3(5(9,10)11)16-15-2(13)1(12)14/h3,13H,(H2,12,14)/b13-2-
      */
     @Test
-    public void testKIYGAA() {
+    void testKIYGAA() {
         IAtomContainer container = new AtomContainer(20, 19, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -33969,7 +33969,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H4N4O3/c4-2-1(7(9)10)3(8)6-5-2/h(H4,4,5,6,8)
      */
     @Test
-    public void testKOBXOO() {
+    void testKOBXOO() {
         IAtomContainer container = new AtomContainer(14, 14, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -34011,7 +34011,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H4N6/c1-5-4(9-6-1)10-2-7-8-3-10/h1-3H,(H,5,6,9)
      */
     @Test
-    public void testKOBYOP() {
+    void testKOBYOP() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -34054,7 +34054,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C19H9Cl2N7O2/c20-13-14(21)17(30)15(10(9-22)16(13)29)27-28-18(11-5-1-3-7-23-11)25-26-19(28)12-6-2-4-8-24-12/h1-8,27H
      */
     @Test
-    public void testKOBZEG() {
+    void testKOBZEG() {
         IAtomContainer container = new AtomContainer(39, 42, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -34150,7 +34150,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H6N2OS/c11-6-8-3-5-14-10(8)12-4-1-2-9(12)7-13/h1-5,7H
      */
     @Test
-    public void testKOCWUU() {
+    void testKOCWUU() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -34205,7 +34205,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H18INO/c1-4-9(11)10(13)12-7(2)5-6-8(12)3/h7-9H,4-6H2,1-3H3/t7-,8-,9+/m0/s1
      */
     @Test
-    public void testKODFUE() {
+    void testKODFUE() {
         IAtomContainer container = new AtomContainer(31, 31, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -34281,7 +34281,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H8N6O5/c11-5-6-3-7(9(12)13)1-2-8(4-6)10(14)15/h1-4H2
      */
     @Test
-    public void testKOFKIZ() {
+    void testKOFKIZ() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -34341,7 +34341,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12N2O3/c1-2-16-12(15)14-11-13-8-10(17-11)9-6-4-3-5-7-9/h3-8H,2H2,1H3,(H,13,14,15)
      */
     @Test
-    public void testKOFMEX() {
+    void testKOFMEX() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -34414,7 +34414,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12N4O5S/c1-10(5-13-3-2-11-12-13)8(9(16)17)14-6(15)4-7(14)20(10,18)19/h2-3,7-8H,4-5H2,1H3,(H,16,17)/t7-,8+,10+/m1/s1
      */
     @Test
-    public void testKOFNIC() {
+    void testKOFNIC() {
         IAtomContainer container = new AtomContainer(32, 34, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -34495,7 +34495,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10O3S/c1-3-8-13-14(11,12)10-6-4-9(2)5-7-10/h4-7H,1-2H3
      */
     @Test
-    public void testKOHVEI() {
+    void testKOHVEI() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -34557,7 +34557,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H6O2/c1-2-11-9(10)8-6-4-3-5-7-8/h1,3-7H
      */
     @Test
-    public void testKOHVIM() {
+    void testKOHVIM() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -34605,7 +34605,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14N4S/c1-7-5-9(3)14(12-7)11(16)15-10(4)6-8(2)13-15/h5-6H,1-4H3
      */
     @Test
-    public void testKOJGOF() {
+    void testKOJGOF() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -34681,7 +34681,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14N2/c1-11-7-3-5-9-12(2)10-6-4-8-11/h7-10H2,1-2H3
      */
     @Test
-    public void testKOJKID() {
+    void testKOJKID() {
         IAtomContainer container = new AtomContainer(26, 26, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -34747,7 +34747,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H8N4O3/c1-9-4(7)3(8-13)5(11)10(2)6(9)12/h7H2,1-2H3
      */
     @Test
-    public void testKOJZOY() {
+    void testKOJZOY() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -34803,7 +34803,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H15N4O2P/c1-5-14-15(13)8(2,3)12(4)7(11-15)10-6-9/h5H2,1-4H3,(H,10,11,13)/t15-/m1/s1
      */
     @Test
-    public void testKOKMIG() {
+    void testKOKMIG() {
         IAtomContainer container = new AtomContainer(30, 30, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -34877,7 +34877,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H5Cl9N2S3/c11-8(12,13)22-20-7(6-4-2-1-3-5-6)21(23-9(14,15)16)24-10(17,18)19/h1-5H/b20-7-
      */
     @Test
-    public void testKOLCUJ() {
+    void testKOLCUJ() {
         IAtomContainer container = new AtomContainer(29, 29, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -34949,7 +34949,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H17N2/c1-10(2)8-6-5-7-9-11(3)4/h5-9H,1-4H3/q+1
      */
     @Test
-    public void testMAPMIP03() {
+    void testMAPMIP03() {
         IAtomContainer container = new AtomContainer(28, 27, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -35018,7 +35018,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H7NO3S/c1-11-12-7-5-3-2-4-6(7)8(9)10/h2-5H,1H3
      */
     @Test
-    public void testMENBZS01() {
+    void testMENBZS01() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
@@ -35070,7 +35070,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H10O3S/c1-12-9(10)7-5-3-4-6-8(7)13(2)11/h3-6H,1-2H3/t13-/m1/s1
      */
     @Test
-    public void testMETBZC10() {
+    void testMETBZC10() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -35130,7 +35130,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H11NS2/c1-3-6(4-2)5(7)8/h3-4H2,1-2H3,(H,7,8)/p-1
      */
     @Test
-    public void testNAESCB01() {
+    void testNAESCB01() {
         IAtomContainer container = new AtomContainer(18, 17, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -35179,7 +35179,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H2O4/c3-1(4)2(5)6/h(H,3,4)(H,5,6)/p-1
      */
     @Test
-    public void testNHOXAL06() {
+    void testNHOXAL06() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -35205,7 +35205,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H8N3O3P/c1-5-6(2)12-13(10,11-5)9-4-7-3-8-9/h3-4H,1-2H3
      */
     @Test
-    public void testPHOSLA10() {
+    void testPHOSLA10() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -35262,7 +35262,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H18N3O3P/c1-7-8(2)15-16(13,14-7)10-9(11(3)4)12(5)6/h1-6H3
      */
     @Test
-    public void testPHOSLB10() {
+    void testPHOSLB10() {
         IAtomContainer container = new AtomContainer(34, 34, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -35345,7 +35345,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H12N2S/c1-2-4-9(5-3-1)10-8-13-6-7-14-11(13)12-10/h1-5,10H,6-8H2/t10-/m1/s1
      */
     @Test
-    public void testPIMTAZ01() {
+    void testPIMTAZ01() {
         IAtomContainer container = new AtomContainer(26, 28, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -35413,7 +35413,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H5NO4/c9-6(10)4-2-1-3-8-5(4)7(11)12/h1-3H,(H,9,10)(H,11,12)/p-1
      */
     @Test
-    public void testQUICNA01() {
+    void testQUICNA01() {
         IAtomContainer container = new AtomContainer(16, 16, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -35459,7 +35459,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H12N4O5/c1-3-18-8(13-9(16)17-2)11-5-4-10-7(15)12-6(5)14/h4H,3H2,1-2H3,(H,11,13,16)(H2,10,12,14,15)
      */
     @Test
-    public void testSABNOY() {
+    void testSABNOY() {
         IAtomContainer container = new AtomContainer(30, 30, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -35534,7 +35534,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H18N4S/c1-2-3-4-5-6-7-17-12-10-11(14-8-13-10)15-9-16-12/h8-9H,2-7H2,1H3,(H,13,14,15,16)
      */
     @Test
-    public void testSACXAV() {
+    void testSACXAV() {
         IAtomContainer container = new AtomContainer(35, 36, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -35620,7 +35620,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8N4O3/c1-10-5(13)3-4-12-6(10)9-7(14)11(2)8(12)15/h3-4H,1-2H3
      */
     @Test
-    public void testSADXAW() {
+    void testSADXAW() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -35681,7 +35681,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H4N2S2/c1-5(7-3-9-1)6-2-10-4-8-6/h1-4H
      */
     @Test
-    public void testSAFFOU() {
+    void testSAFFOU() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -35724,7 +35724,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H4N2S2/c1-3-9-5(7-1)6-8-2-4-10-6/h1-4H
      */
     @Test
-    public void testSAFFUA() {
+    void testSAFFUA() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -35767,7 +35767,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2HN3O4/c3-4-1(2(6)7)5(8)9/h(H,6,7)
      */
     @Test
-    public void testSAFKAL() {
+    void testSAFKAL() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -35799,7 +35799,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H17N3O4S/c1-6(16)9-7-4-8(20-3-2-14-5-13)10(12(18)19)15(7)11(9)17/h5-7,9,16H,2-4H2,1H3,(H2,13,14)(H,18,19)/p-1/t6-,7-,9-/m1/s1
      */
     @Test
-    public void testSAHSOJ() {
+    void testSAHSOJ() {
         IAtomContainer container = new AtomContainer(36, 37, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -35887,7 +35887,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12N2O2S/c11-7-12-5-6-15-9-4-2-1-3-8(9)10(13)14/h1-4,7H,5-6H2,(H2,11,12)(H,13,14)
      */
     @Test
-    public void testSAHSUP() {
+    void testSAHSUP() {
         IAtomContainer container = new AtomContainer(27, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -35955,7 +35955,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C21H8Cl2N2O2/c22-15-16(23)18(27)20(10-25)19(9-24,17(15)26)21(20)13-7-3-1-5-11(13)12-6-2-4-8-14(12)21/h1-8H/t19-,20+
      */
     @Test
-    public void testSAKGUG() {
+    void testSAKGUG() {
         IAtomContainer container = new AtomContainer(35, 39, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -36044,7 +36044,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H14N2O3S/c1-4(2)6-5-7(15(14)10-6)9(13)11(3)8(5)12/h4-7,10H,1-3H3/t5-,6+,7+,15+/m0/s1
      */
     @Test
-    public void testSALVEG() {
+    void testSALVEG() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -36117,7 +36117,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H7NO2S3/c9-13(10,8-7(11)12)6-4-2-1-3-5-6/h1-5H,(H2,8,11,12)/p-2
      */
     @Test
-    public void testSAMFUH() {
+    void testSAMFUH() {
         IAtomContainer container = new AtomContainer(18, 18, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -36167,7 +36167,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H18N3PS2/c1-6-12(7-2)13(15)8(3)10(4)9(14)11(13)5/h3,6-7H2,1-2,4-5H3/t13-/m0/s1
      */
     @Test
-    public void testSAMXUZ() {
+    void testSAMXUZ() {
         IAtomContainer container = new AtomContainer(33, 33, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("S", 0));
@@ -36248,7 +36248,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H13N3O4/c15-5-9-8(17)3-10(18-9)14-11-6(4-13-14)7(16)1-2-12-11/h1-2,4,8-10,15,17H,3,5H2,(H,12,16)/t8-,9+,10+/m0/s1
      */
     @Test
-    public void testSANKEX10() {
+    void testSANKEX10() {
         IAtomContainer container = new AtomContainer(31, 33, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -36327,7 +36327,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H24O3S/c1-8-9(11(2,3)4)14-16(13)15-10(8)12(5,6)7/h8-10H,1-7H3/t8-,9-,10+,16-
      */
     @Test
-    public void testSAVDOI() {
+    void testSAVDOI() {
         IAtomContainer container = new AtomContainer(40, 40, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -36422,7 +36422,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9N3/c10-12-7-6-9(11-12)8-4-2-1-3-5-8/h1-7H,10H2
      */
     @Test
-    public void testSAWKEG10() {
+    void testSAWKEG10() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -36479,7 +36479,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12N2/c1-2-4-9(5-3-1)8-10-11-6-7-12-10/h1-5H,6-8H2,(H,11,12)/p+1
      */
     @Test
-    public void testSEBPEU01() {
+    void testSEBPEU01() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -36544,7 +36544,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C15H13N3O4S/c1-18-13(15(20)17-12-8-4-5-9-16-12)14(19)10-6-2-3-7-11(10)23(18,21)22/h2-9,19H,1H3,(H,16,17,20)/p-1
      */
     @Test
-    public void testSECDAF() {
+    void testSECDAF() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -36631,7 +36631,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10N2OS/c13-9-8-6-3-1-2-4-7(6)14-10(8)12-5-11-9/h5H,1-4H2,(H,11,12,13)
      */
     @Test
-    public void testSEFRAW() {
+    void testSEFRAW() {
         IAtomContainer container = new AtomContainer(24, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -36695,7 +36695,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H18NO2PS2/c1-6(2)10-12(14,9-8(5)13)11-7(3)4/h6-7H,1-5H3,(H,9,13,14)
      */
     @Test
-    public void testSEFYIL() {
+    void testSEFYIL() {
         IAtomContainer container = new AtomContainer(32, 31, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -36773,7 +36773,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9N3O2S/c10-9(15)12-11-7(8(13)14)6-4-2-1-3-5-6/h1-5H,(H,13,14)(H3,10,12,15)/p-1/b11-7+
      */
     @Test
-    public void testSEGFIT() {
+    void testSEGFIT() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
@@ -36833,7 +36833,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H8Cl4O4Si2/c13-21(14)17-9-5-1-2-6-10(9)18-22(15,16)20-12-8-4-3-7-11(12)19-21/h1-8H
      */
     @Test
-    public void testSEGJAP() {
+    void testSEGJAP() {
         IAtomContainer container = new AtomContainer(30, 32, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -36909,7 +36909,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H8N2O2S/c7-8-11(9,10)6-4-2-1-3-5-6/h1-5,8H,7H2
      */
     @Test
-    public void testSEGLAR() {
+    void testSEGLAR() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -36961,7 +36961,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H5N3O4S/c5-4(12)7-6-1(2(8)9)3(10)11/h(H,8,9)(H,10,11)(H3,5,7,12)/p-1
      */
     @Test
-    public void testSEGNEX() {
+    void testSEGNEX() {
         IAtomContainer container = new AtomContainer(16, 15, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -37006,7 +37006,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H6Cl3I/c7-6(8,9)4-1-5(10,2-4)3-4/h1-3H2/t4-,5+
      */
     @Test
-    public void testSEGWEG() {
+    void testSEGWEG() {
         IAtomContainer container = new AtomContainer(16, 17, 0, 0);
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -37053,7 +37053,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H17NO2/c1-8-5-9(2)11(13)10(6-8)7-12(3,4)14/h5-6,13H,7H2,1-4H3
      */
     @Test
-    public void testSEHBEM() {
+    void testSEHBEM() {
         IAtomContainer container = new AtomContainer(31, 31, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -37129,7 +37129,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12O3/c13-9-7(1-6-15-9)8-11(2-3-11)10(14)12(8)4-5-12/h1-6H2
      */
     @Test
-    public void testSEJDAM() {
+    void testSEJDAM() {
         IAtomContainer container = new AtomContainer(27, 30, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -37200,7 +37200,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H17NO/c1-3-4-8-11(2)9-6-5-7-10(11)12-13/h3,8,13H,5-7,9H2,1-2H3/b12-10+/t4-,11+/m1/s1
      */
     @Test
-    public void testSEKKIC() {
+    void testSEKKIC() {
         IAtomContainer container = new AtomContainer(30, 30, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -37274,7 +37274,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H6N4/c7-10-8-5-3-1-2-4-6(5)9-10/h1-4H,7H2
      */
     @Test
-    public void testSEKPED() {
+    void testSEKPED() {
         IAtomContainer container = new AtomContainer(16, 17, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -37321,7 +37321,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H7N3/c8-10-5-9-6-3-1-2-4-7(6)10/h1-5H,8H2
      */
     @Test
-    public void testSEKPIH() {
+    void testSEKPIH() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -37370,7 +37370,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C18H16OSi/c19-20(16-10-4-1-5-11-16,17-12-6-2-7-13-17)18-14-8-3-9-15-18/h1-15,19H
      */
     @Test
-    public void testSELFIY() {
+    void testSELFIY() {
         IAtomContainer container = new AtomContainer(36, 38, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
@@ -37459,7 +37459,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H16FNO2S/c1-4-9(5-2,6-3)7(8)12(10)11/h7H,4-6H2,1-3H3/q+1/t7-/m0/s1
      */
     @Test
-    public void testSEMDIX() {
+    void testSEMDIX() {
         IAtomContainer container = new AtomContainer(28, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("F", 0));
@@ -37528,7 +37528,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H9N5O2/c1-18-11(17)9(7-12)10-13-14-15-16(10)8-5-3-2-4-6-8/h2-6H,1H3,(H,13,15)/b10-9+
      */
     @Test
-    public void testSEMXOX() {
+    void testSEMXOX() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -37597,7 +37597,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H10O4S2/c11-15(12)6-7-16(13,14)10(8-15)9-4-2-1-3-5-9/h1-5,8H,6-7H2
      */
     @Test
-    public void testSETHAA() {
+    void testSETHAA() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -37664,7 +37664,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H6F6N2S2/c11-9(12,13)8(10(14,15)16)18-7(19-20-8)17-6-4-2-1-3-5-6/h1-5H,(H,17,18)
      */
     @Test
-    public void testSETLIM() {
+    void testSETLIM() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -37731,7 +37731,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H5N3/c1-2-7-4-6-5(1)3-8-9-6/h1-4H,(H,8,9)/p+1
      */
     @Test
-    public void testSEYVUN() {
+    void testSEYVUN() {
         IAtomContainer container = new AtomContainer(15, 16, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -37776,7 +37776,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H16N4O2S/c1-9(2)6(12(3)4)13(7(14)10-9)11-8(16)15-5/h1-5H3,(H,10,14)
      */
     @Test
-    public void testSEYWUO() {
+    void testSEYWUO() {
         IAtomContainer container = new AtomContainer(32, 32, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", -1));
@@ -37855,7 +37855,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H3Cl7O2/c8-2(9)1-5(4(10)16-5)7(13,14)3(15)6(1,11)12/h3-4,15H/t3-,4-,5+/m0/s1
      */
     @Test
-    public void testSEZMEP() {
+    void testSEZMEP() {
         IAtomContainer container = new AtomContainer(19, 20, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -37908,7 +37908,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H6N4O8/c13-8(14)4-9(12(19)20)6-2-1-5(10(15)16)3-7(6)11(17)18/h1-3H,4H2,(H,13,14)
      */
     @Test
-    public void testSICNUN() {
+    void testSICNUN() {
         IAtomContainer container = new AtomContainer(26, 26, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -37974,7 +37974,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H11NOS/c1-9(12-7-4-8-15-12)13-10-5-2-3-6-11(10)14/h2-8,14H,1H3/b13-9+
      */
     @Test
-    public void testSICPEZ() {
+    void testSICPEZ() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -38041,7 +38041,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H7N5/c1-2-4-8(5-3-1)15-13-9-10(14-15)12-7-6-11-9/h1-7H
      */
     @Test
-    public void testSICSEC() {
+    void testSICSEC() {
         IAtomContainer container = new AtomContainer(22, 24, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -38101,7 +38101,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H2I2N4/c13-11-1-9(7(3-15)4-16)12(14)2-10(11)8(5-17)6-18/h1-2H
      */
     @Test
-    public void testSIDFIU() {
+    void testSIDFIU() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("N", 0));
@@ -38155,7 +38155,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H19N7O2S/c1-9(2,3)7(10-11-14-19(6,17)18)8-15(4)12-13-16(8)5/h7H,1-6H3/t7-/m1/s1
      */
     @Test
-    public void testSIDRUS() {
+    void testSIDRUS() {
         IAtomContainer container = new AtomContainer(38, 38, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -38246,7 +38246,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H24N2P2/c1-7-13-9(11(3)4)14(8-2)10(13)12(5)6/h9-10H,7-8H2,1-6H3/p+2/t9-,10+,13-,14+
      */
     @Test
-    public void testSINMIL() {
+    void testSINMIL() {
         IAtomContainer container = new AtomContainer(40, 40, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 1));
@@ -38341,7 +38341,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H22NO3PS/c1-7(2)8-11-9(10(3,4)16-8)15(12,13-5)14-6/h7-9,11H,1-6H3/t8-,9-/m0/s1
      */
     @Test
-    public void testSIYLOB() {
+    void testSIYLOB() {
         IAtomContainer container = new AtomContainer(38, 38, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
@@ -38432,7 +38432,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H17NO8/c13-3-12(1-4(15)9-10(12)20-9)21-11-8(18)7(17)6(16)5(2-14)19-11/h4-11,14-18H,1-2H2/t4-,5-,6-,7+,8-,9-,10-,11+,12-/m1/s1
      */
     @Test
-    public void testSIZJIU() {
+    void testSIZJIU() {
         IAtomContainer container = new AtomContainer(38, 40, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -38525,7 +38525,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H10N2O3S/c10-8(13)6-4-15-9(11-6)7-2-1-5(3-12)14-7/h1-2,4-5,7,12H,3H2,(H2,10,13)/t5-,7+/m0/s1
      */
     @Test
-    public void testSIZWUT() {
+    void testSIZWUT() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -38590,7 +38590,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H11N3O3S/c1-7-6-10(12-16-7)13-17(14,15)9-4-2-8(11)3-5-9/h2-6H,11H2,1H3,(H,12,13)
      */
     @Test
-    public void testSLFNMB04() {
+    void testSLFNMB04() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -38661,7 +38661,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H11N5O3/c1-8(2)10-11(3)7(14)5-6(13(15)16)9-4-12(5)8/h4,10H,1-3H3
      */
     @Test
-    public void testSOGVOZ() {
+    void testSOGVOZ() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -38730,7 +38730,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H14N8/c1-4(14-15-7(9)10)6-3-13-16(5(6)2)8(11)12/h3H,1-2H3,(H7,9,10,11,12,15)/p+2/b14-4+
      */
     @Test
-    public void testSOHXOC() {
+    void testSOHXOC() {
         IAtomContainer container = new AtomContainer(32, 32, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -38809,7 +38809,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H8N4O3S2/c1-3(10)7-4-9(2)8-5(13-4)14(6,11)12/h1-2H3,(H2,6,11,12)/b7-4-
      */
     @Test
-    public void testSOJNEK() {
+    void testSOJNEK() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -38867,7 +38867,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8Br2N2O2S/c1-7(2)4(3-11)12-5(13)8(9,10)6(12)15(7)14/h4,6H,1-2H3/t4-,6+,15-/m0/s1
      */
     @Test
-    public void testSOMKIO() {
+    void testSOMKIO() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Br", 0));
@@ -38928,7 +38928,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C13H19N3S/c1-2-7-16-8-3-4-9-10(16)5-6-11-12(9)15-13(14)17-11/h4,10H,2-3,5-8H2,1H3,(H2,14,15)/t10-/m1/s1
      */
     @Test
-    public void testSONZIE() {
+    void testSONZIE() {
         IAtomContainer container = new AtomContainer(36, 38, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -39017,7 +39017,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H4N2OS2/c1-5(11)2-7-12-8(13-7)6(3-9)4-10/h2H,1H3
      */
     @Test
-    public void testSOPZEC() {
+    void testSOPZEC() {
         IAtomContainer container = new AtomContainer(17, 17, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -39065,7 +39065,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H4Cl2N4O2/c9-7-11-8(10)13(12-7)5-1-3-6(4-2-5)14(15)16/h1-4H
      */
     @Test
-    public void testSORBIK() {
+    void testSORBIK() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -39120,7 +39120,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH4N2O2S/c2-1(3)6(4)5/h2-3H2
      */
     @Test
-    public void testSURDOX02() {
+    void testSURDOX02() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -39152,7 +39152,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H6N6O4/c14-12(15)6-1-8-10(3-6)5-11-4-7(2-9-11)13(16)17/h1-4H,5H2
      */
     @Test
-    public void testTACGIN() {
+    void testTACGIN() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -39213,7 +39213,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12N2O3/c13-8(7-1-4-11-5-2-7)10(9(14)15)3-6-12-10/h1-2,4-5,8,12-13H,3,6H2,(H,14,15)/t8-,10-/m1/s1
      */
     @Test
-    public void testTACLEO() {
+    void testTACLEO() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39282,7 +39282,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H4N6O3/c11-7-9-1-2-10(8-12)4-3(9)5-13-6-4/h1-2H2
      */
     @Test
-    public void testTAFKIU() {
+    void testTAFKIU() {
         IAtomContainer container = new AtomContainer(17, 18, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39331,7 +39331,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H9Br5/c13-9-7-5-3-1-2-4-6(5)8(10(9)14)12(16,17)11(7)15/h1-4,7-11H/t7-,8+,9+,10-,11+/m1/s1
      */
     @Test
-    public void testTAFXIH() {
+    void testTAFXIH() {
         IAtomContainer container = new AtomContainer(26, 28, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39399,7 +39399,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H4ClNO2S/c7-11-6-4-2-1-3-5(6)8(9)10/h1-4H
      */
     @Test
-    public void testTAFZIJ() {
+    void testTAFZIJ() {
         IAtomContainer container = new AtomContainer(15, 15, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
@@ -39442,7 +39442,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H4N2O4/c8-3-2(4(9)10)1-6-5(11)7-3/h1H,(H,9,10)(H2,6,7,8,11)/p-1
      */
     @Test
-    public void testTAGVIG() {
+    void testTAGVIG() {
         IAtomContainer container = new AtomContainer(14, 14, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -39484,7 +39484,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H8N4O/c1-5(2,3-6)9-8-4(7)10/h1-2H3,(H2,7,10)/b9-8+
      */
     @Test
-    public void testTAHMOE() {
+    void testTAHMOE() {
         IAtomContainer container = new AtomContainer(18, 17, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39533,7 +39533,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H8N4O3/c11-8-3-5-13(6-4-8)17-10-2-1-9(7-12-10)14(15)16/h1-7,11H/p+1
      */
     @Test
-    public void testTAJPUP() {
+    void testTAJPUP() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -39600,7 +39600,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12N4O3/c17-11(6-10-4-2-1-3-5-10)14-16-8-13-15(9-16)7-12(18)19/h1-5,8-9H,6-7H2,(H-,14,17,18,19)/p-1
      */
     @Test
-    public void testTAJSUS() {
+    void testTAJSUS() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39675,7 +39675,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CHN3S2/c5-1-2-3-4-6-1/h(H,2,4,5)/p-1
      */
     @Test
-    public void testTAJVUV() {
+    void testTAJVUV() {
         IAtomContainer container = new AtomContainer(6, 6, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -39700,7 +39700,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H5N3OS2/c12-7(6-4-2-1-3-5-6)13-8-9-10-11-14-8/h1-5H
      */
     @Test
-    public void testTAJWAC() {
+    void testTAJWAC() {
         IAtomContainer container = new AtomContainer(19, 20, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -39753,7 +39753,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6Cl8/c7-3(8)1-2(4(9)10)6(13,14)5(1,11)12
      */
     @Test
-    public void testTAKHES() {
+    void testTAKHES() {
         IAtomContainer container = new AtomContainer(14, 14, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -39795,7 +39795,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H5NO2S2/c9-12(10)6-4-2-1-3-5(6)7(11)8-12/h1-4H,(H,8,11)/p-1
      */
     @Test
-    public void testTAMMAV() {
+    void testTAMMAV() {
         IAtomContainer container = new AtomContainer(16, 17, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -39842,7 +39842,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H6N2O2/c11-7-10(12(13)14)6-9(10)8-4-2-1-3-5-8/h1-6H/t10-/m0/s1
      */
     @Test
-    public void testTANHAR() {
+    void testTANHAR() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39897,7 +39897,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H8N2O3/c1-10(14)6-4-2-3-5-7(6)12-8(10)9(13)15-11-12/h2-5,14H,1H3/t10-/m1/s1
      */
     @Test
-    public void testTAPJUP() {
+    void testTAPJUP() {
         IAtomContainer container = new AtomContainer(23, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39959,7 +39959,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H7N3/c10-5-8(6-11)7-1-3-9(12)4-2-7/h1-4,8H,12H2
      */
     @Test
-    public void testTAPSAE() {
+    void testTAPSAE() {
         IAtomContainer container = new AtomContainer(19, 19, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -40011,7 +40011,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H6N3P/c7-1-4-10(5-2-8)6-3-9/h4-6H2
      */
     @Test
-    public void testTCYMPH02() {
+    void testTCYMPH02() {
         IAtomContainer container = new AtomContainer(16, 15, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("C", 0));
@@ -40056,7 +40056,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H12O2/c1-7-5(11)6(12)8(2)9(7,3)10(7,8)4/h1-4H3/t7-,8+,9-,10+
      */
     @Test
-    public void testTMTCHD01() {
+    void testTMTCHD01() {
         IAtomContainer container = new AtomContainer(24, 26, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -40120,7 +40120,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9N5/c1-9-13-8-6-3-2-4-10-7(6)11-5-12-8/h2-5,9H,1H3,(H,10,11,12,13)
      */
     @Test
-    public void testVABLIT() {
+    void testVABLIT() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -40179,7 +40179,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H14O5/c1-9(2)13-6-5(4-10)12-8(11-3)7(6)14-9/h4-8H,1-3H3/t5-,6-,7-,8-/m1/s1
      */
     @Test
-    public void testVABROF() {
+    void testVABROF() {
         IAtomContainer container = new AtomContainer(28, 29, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40250,7 +40250,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H11N5O3/c1-6(14)2-3-12-8(11-4-5-11)9-7(10-12)13(15)16/h2-5H2,1H3
      */
     @Test
-    public void testVACRUM() {
+    void testVACRUM() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -40319,7 +40319,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H7N3O2S3/c1-8-2-4-9(5-3-8)19(15,16)14-17-10(6-12)11(7-13)18-14/h2-5H,1H3
      */
     @Test
-    public void testVAJFAN() {
+    void testVAJFAN() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40386,7 +40386,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4OS2/c1-3-2(4)5/h1H3,(H,4,5)/p-1
      */
     @Test
-    public void testVALTEH() {
+    void testVALTEH() {
         IAtomContainer container = new AtomContainer(8, 7, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
@@ -40414,7 +40414,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H13F4NO2S2/c10-8(11,17-9(12,13)18(15)16)14-4-1-7(2-5-14)3-6-14/h7H,1-6H2/q+1/t7-,14-
      */
     @Test
-    public void testVALWOU() {
+    void testVALWOU() {
         IAtomContainer container = new AtomContainer(31, 32, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -40491,7 +40491,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H13N5O4/c11-4-1-2-12-15-9(4)13-14-10(15)8-7(18)6(17)5(3-16)19-8/h1-2,5-8,16-18H,3,11H2/t5-,6-,7-,8-/m1/s1
      */
     @Test
-    public void testVAPZOB10() {
+    void testVAPZOB10() {
         IAtomContainer container = new AtomContainer(32, 34, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -40572,7 +40572,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H8O3/c1-5-3-7-8(12-9(5)10)4-6(2)11-7/h3-4H,1-2H3
      */
     @Test
-    public void testVASDOI() {
+    void testVASDOI() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40627,7 +40627,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H11ClN2O2S/c1-15-9-6-5(12(15)18-2)3-4-14-8(6)7(13)10(16)11(9)17/h14H,3-4H2,1-2H3
      */
     @Test
-    public void testVATKAC() {
+    void testVATKAC() {
         IAtomContainer container = new AtomContainer(29, 31, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
@@ -40702,7 +40702,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H9N2O5P/c1-4-5(8(10)11)3-14(12,13-2)6(4)7-9/h7H,3H2,1-2H3/b7-6-/t14-/m0/s1
      */
     @Test
-    public void testVAWDUS() {
+    void testVAWDUS() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -40762,7 +40762,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C7H12N4O6S/c8-18(15,16)7-9-2-11(10-7)6-5(14)4(13)3(1-12)17-6/h2-6,12-14H,1H2,(H2,8,15,16)/t3-,4-,5-,6-/m1/s1
      */
     @Test
-    public void testVAWMOV() {
+    void testVAWMOV() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -40838,7 +40838,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H16BrN3O4/c1-6(7(12(14)15)13(16)17)11-9(4,5)8(2,3)10/h11H,1-5H3
      */
     @Test
-    public void testVAWWAR() {
+    void testVAWWAR() {
         IAtomContainer container = new AtomContainer(33, 32, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", -1));
@@ -40918,7 +40918,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H13N3O/c1-3-12-5-7-4-10-6(2)11-8(7)9/h4H,3,5H2,1-2H3,(H2,9,10,11)/p+1
      */
     @Test
-    public void testVAYKUB() {
+    void testVAYKUB() {
         IAtomContainer container = new AtomContainer(26, 26, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -40984,7 +40984,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H10N2O3/c1-16-9-6-7(2-3-8(9)14)10(15)11-12-4-5-13-11/h2-6,14H,1H3,(H,12,13)
      */
     @Test
-    public void testVAZHUZ() {
+    void testVAZHUZ() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41051,7 +41051,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H12S6/c1-10-6(9)5-7(11-2)14-8(5,12-3)13-4/h1-4H3
      */
     @Test
-    public void testVECSAX() {
+    void testVECSAX() {
         IAtomContainer container = new AtomContainer(26, 26, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -41117,7 +41117,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H9N5O2S/c1-10-3-8-6-4(10)5(7)9-14(12,13)11(6)2/h3H,1-2H3,(H2,7,9)
      */
     @Test
-    public void testVEDTED() {
+    void testVEDTED() {
         IAtomContainer container = new AtomContainer(23, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -41178,7 +41178,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H11N3O2Si/c1-12(2,3)6-5(9(10)11)4-7-8-6/h4H,1-3H3,(H,7,8)
      */
     @Test
-    public void testVEHCOA() {
+    void testVEHCOA() {
         IAtomContainer container = new AtomContainer(23, 23, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -41238,7 +41238,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H11ClN2O4S/c9-5-7-6-16(12,13)10-8(15-7)11-1-3-14-4-2-11/h6H,1-5H2
      */
     @Test
-    public void testVEHZOX() {
+    void testVEHZOX() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
@@ -41307,7 +41307,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H6Cl4O4S/c1-16-7(14)9(13,8(15)17-2)5-3(10)4(11)6(12)18-5/h1-2H3
      */
     @Test
-    public void testVEJWOW() {
+    void testVEJWOW() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -41369,7 +41369,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H13N2O/c1-8(12)11-6-4-9(5-7-11)10(2)3/h4-7H,1-3H3/q+1
      */
     @Test
-    public void testVEKMON() {
+    void testVEKMON() {
         IAtomContainer container = new AtomContainer(25, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41433,7 +41433,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12/c1-4-7-9-5(2)10-8(4)12(10)6(3)11(7)9/h7-12H,1-3H2/t7-,8+,9+,10-,11-,12+
      */
     @Test
-    public void testVENYUI() {
+    void testVENYUI() {
         IAtomContainer container = new AtomContainer(24, 27, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41498,7 +41498,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H2N8O8/c15-11(16)3-4(12(17)18)8-1(7-3)2-9-5(13(19)20)6(10-2)14(21)22/h(H,7,8)(H,9,10)
      */
     @Test
-    public void testVETWAS() {
+    void testVETWAS() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41561,7 +41561,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13Cl2OP/c1-11-8-16(15,7-10(11)12(11,13)14)9-5-3-2-4-6-9/h2-6,10H,7-8H2,1H3/t10-,11+,16-/m1/s1
      */
     @Test
-    public void testVEVDIJ() {
+    void testVEVDIJ() {
         IAtomContainer container = new AtomContainer(29, 31, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -41635,7 +41635,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H12FN5/c1-7(2)15-11-12-17-14-6-18(12)10-5-8(13)3-4-9(10)16-11/h3-7H,1-2H3,(H,15,16)/p+1
      */
     @Test
-    public void testVEWZOM() {
+    void testVEWZOM() {
         IAtomContainer container = new AtomContainer(31, 33, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -41714,7 +41714,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H6N2O/c13-7-8-5-6-11-12(14-8)9-3-1-2-4-10(9)15-11/h1-6H
      */
     @Test
-    public void testVEXKOY() {
+    void testVEXKOY() {
         IAtomContainer container = new AtomContainer(21, 23, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -41772,7 +41772,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H10N2O/c15-14-12(10-6-2-1-3-7-10)11-8-4-5-9-13-11/h1-9,15H/b14-12+
      */
     @Test
-    public void testVEXMOA() {
+    void testVEXMOA() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -41837,7 +41837,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C5H14O3Si2/c1-9(6)4-3-5-10(2,7)8-9/h6-7H,3-5H2,1-2H3/t9-,10-/m0/s1
      */
     @Test
-    public void testVEYBIK() {
+    void testVEYBIK() {
         IAtomContainer container = new AtomContainer(24, 24, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Si", 0));
@@ -41899,7 +41899,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H3ClN2O2/c3-2(5-7)1-4-6/h1,6-7H/b4-1+,5-2+
      */
     @Test
-    public void testVEYWAX() {
+    void testVEYWAX() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -41931,7 +41931,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8ClO2P/c9-5-12(10)6-11-7-3-1-2-4-8(7)12/h1-4H,5-6H2/t12-/m0/s1
      */
     @Test
-    public void testVEZBUX() {
+    void testVEZBUX() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("P", 0));
@@ -41986,7 +41986,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H14N4O5/c1-11-8(16)10-7(9)12(11)6-5(15)4(14)3(2-13)17-6/h3-6,13-15H,2H2,1H3,(H2,9,10,16)/t3-,4-,5-,6-/m1/s1
      */
     @Test
-    public void testVICGAP() {
+    void testVICGAP() {
         IAtomContainer container = new AtomContainer(31, 32, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -42064,7 +42064,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H14N6O4S/c11-10-14-8-7(9(15-10)21(12)19)13-3-16(8)6-1-4(18)5(2-17)20-6/h3-6,17-18H,1-2,12H2,(H2,11,14,15)/t4-,5+,6-,21-/m0/s1
      */
     @Test
-    public void testVICGET() {
+    void testVICGET() {
         IAtomContainer container = new AtomContainer(35, 37, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -42151,7 +42151,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H13ClO2S/c1-9(2)6-3-4-10(9,7(12)5-6)8(11)14-13/h6H,3-5H2,1-2H3/t6-,10+/m1/s1
      */
     @Test
-    public void testVICKIB() {
+    void testVICKIB() {
         IAtomContainer container = new AtomContainer(27, 28, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
@@ -42220,7 +42220,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9N5O/c1-2-7(16-3-1)4-11-9-8-10(13-5-12-8)15-6-14-9/h1-3,5-6H,4H2,(H2,11,12,13,14,15)/p+1
      */
     @Test
-    public void testVICPOM() {
+    void testVICPOM() {
         IAtomContainer container = new AtomContainer(26, 28, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -42288,7 +42288,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H12N2/c1-5-4-6(2,3)8-7-5/h8H,4H2,1-3H3/p+1
      */
     @Test
-    public void testVIDKUO() {
+    void testVIDKUO() {
         IAtomContainer container = new AtomContainer(21, 21, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -42344,7 +42344,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C14H9NS/c1-3-7-11-9(5-1)14-13(15-11)10-6-2-4-8-12(10)16-14/h1-8,15H
      */
     @Test
-    public void testVIFFEV() {
+    void testVIFFEV() {
         IAtomContainer container = new AtomContainer(25, 28, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -42411,7 +42411,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H16N4O2/c1-10(2,11(3,4)17)15-5-7-8(14-15)12-6-13-9(7)16/h5-6,17H,1-4H3,(H,12,13,14,16)
      */
     @Test
-    public void testVIGPEG() {
+    void testVIGPEG() {
         IAtomContainer container = new AtomContainer(33, 34, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -42493,7 +42493,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H8N2/c1-2-4-6-5(3-1)13-11-9-7-8(9)10(7)12(11)14-6/h1-4,7-10H/t7-,8+,9-,10+
      */
     @Test
-    public void testVIGTUA() {
+    void testVIGTUA() {
         IAtomContainer container = new AtomContainer(22, 26, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -42555,7 +42555,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H11NOS2/c1-11(2)10(15-13)14-9(12-11)8-6-4-3-5-7-8/h3-7H,1-2H3
      */
     @Test
-    public void testVIHHID() {
+    void testVIHHID() {
         IAtomContainer container = new AtomContainer(26, 27, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -42622,7 +42622,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H9NO4/c1-3-4(2)6(3,5(8)9)7(10)11/h3-4H,1-2H3,(H,8,9)/t3-,4+,6+
      */
     @Test
-    public void testVIKVIU() {
+    void testVIKVIU() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -42676,7 +42676,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H10BrNO3/c12-11(13(15)16)8-3-1-2-4-5(3)9(11)7(4)10(14)6(2)8/h2-9H,1H2/t2-,3+,4-,5+,6+,7-,8-,9+,11+/m1/s1
      */
     @Test
-    public void testVIKYAP() {
+    void testVIKYAP() {
         IAtomContainer container = new AtomContainer(26, 30, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -42746,7 +42746,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/ClO4/c2-1(3,4)5/q-4
      */
     @Test
-    public void testVIMHII() {
+    void testVIMHII() {
         IAtomContainer container = new AtomContainer(5, 4, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", -1));
@@ -42768,7 +42768,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9N3O2/c1-5-3-10-9-11-7(13)6(2)4-12(9)8(5)14/h3-4H,1-2H3,(H,10,11,13)/p+1
      */
     @Test
-    public void testVIPXAT() {
+    void testVIPXAT() {
         IAtomContainer container = new AtomContainer(24, 25, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -42831,7 +42831,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H14N2O2/c1-11(9(14)6-13-12)8-5-3-2-4-7(8)10(11)15/h6-8H,2-5H2,1H3/t7-,8+,11+/m1/s1
      */
     @Test
-    public void testVIRBON() {
+    void testVIRBON() {
         IAtomContainer container = new AtomContainer(29, 30, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -42904,7 +42904,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H8O2/c11-10-9(7-12-10)6-8-4-2-1-3-5-8/h1-6H,7H2/b9-6+
      */
     @Test
-    public void testVIWCOT() {
+    void testVIWCOT() {
         IAtomContainer container = new AtomContainer(20, 21, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -42959,7 +42959,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H5N3OS/c1-9-3-7-6-5(9)4(10)2-8-11-6/h2-3H,1H3
      */
     @Test
-    public void testVIXRID() {
+    void testVIXRID() {
         IAtomContainer container = new AtomContainer(16, 17, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -43006,7 +43006,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H3F2NO2S2/c1-5-8(6)2(3,4)9(5)7/h1H3/t8-,9+
      */
     @Test
-    public void testVIXXOP() {
+    void testVIXXOP() {
         IAtomContainer container = new AtomContainer(12, 12, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -43043,7 +43043,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H13BrO6/c1-9(2)15-5-4-6(14-7(5)17-9)10(11,16-4)8(12)13-3/h4-7H,1-3H3/t4-,5-,6+,7-,10+/m1/s1
      */
     @Test
-    public void testVIYPAU() {
+    void testVIYPAU() {
         IAtomContainer container = new AtomContainer(30, 32, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", 0));
@@ -43120,7 +43120,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H13N3O/c1-12(2)7-10(16)15-9-6-4-3-5-8(9)13-11(15)14-12/h3-6H,7H2,1-2H3,(H,13,14)
      */
     @Test
-    public void testVOBLAZ() {
+    void testVOBLAZ() {
         IAtomContainer container = new AtomContainer(29, 31, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43194,7 +43194,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9NO2S/c10-12(11)6-8-4-2-1-3-7(8)5-9-12/h1-4,9H,5-6H2
      */
     @Test
-    public void testVOBWOY() {
+    void testVOBWOY() {
         IAtomContainer container = new AtomContainer(21, 22, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
@@ -43251,7 +43251,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C11H10Br2O2/c12-11(13)7-10(11,6-9(14)15)8-4-2-1-3-5-8/h1-5H,6-7H2,(H,14,15)/t10-/m0/s1
      */
     @Test
-    public void testVOFBOH() {
+    void testVOFBOH() {
         IAtomContainer container = new AtomContainer(25, 26, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
@@ -43316,7 +43316,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9BrCl2/c11-7-9(6-10(9,12)13)8-4-2-1-3-5-8/h1-5H,6-7H2/t9-/m0/s1
      */
     @Test
-    public void testVOFCAU() {
+    void testVOFCAU() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -43375,7 +43375,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/p+1
      */
     @Test
-    public void testVOJGEG() {
+    void testVOJGEG() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 1));
@@ -43405,7 +43405,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H9N2O2P/c7-6-3-1-2-4-8(6)5-11(9)10/h1-4,7,11H,5H2,(H,9,10)
      */
     @Test
-    public void testVOJJIN() {
+    void testVOJJIN() {
         IAtomContainer container = new AtomContainer(20, 20, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -43459,7 +43459,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H2N2O4/c5-1(3-7)2(6)4-8/h(H2-2,3,4,5,6,7,8)/q-2
      */
     @Test
-    public void testVUWXUG() {
+    void testVUWXUG() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("C", 0));
@@ -43491,7 +43491,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C10H9NO2/c1-6(12)10-9(11)7-4-2-3-5-8(7)13-10/h2-5H,11H2,1H3
      */
     @Test
-    public void testVUXGOK() {
+    void testVUXGOK() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -43550,7 +43550,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H8N2O3S/c9-14(11,12)5-7-6-3-1-2-4-8(6)13-10-7/h1-4H,5H2,(H2,9,11,12)
      */
     @Test
-    public void testVUXPUZ() {
+    void testVUXPUZ() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -43609,7 +43609,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C9H9NO3/c1-2-12-9(11)7-5-8-6(10-7)3-4-13-8/h3-5,10H,2H2,1H3
      */
     @Test
-    public void testVUXREL() {
+    void testVUXREL() {
         IAtomContainer container = new AtomContainer(22, 23, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -43668,7 +43668,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H4N2/c1-9-7-3-5-8(10-2)6-4-7/h3-6H/q+2
      */
     @Test
-    public void testZZZIZA01() {
+    void testZZZIZA01() {
         IAtomContainer container = new AtomContainer(14, 14, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43709,7 +43709,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C12H10O4S4/c13-19(14,11-7-3-1-4-8-11)17-18-20(15,16)12-9-5-2-6-10-12/h1-10H
      */
     @Test
-    public void testZZZMVU10() {
+    void testZZZMVU10() {
         IAtomContainer container = new AtomContainer(30, 31, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -43784,7 +43784,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H4INO2/c5-6-3(7)1-2-4(6)8/h1-2H2
      */
     @Test
-    public void testZZZVCQ01() {
+    void testZZZVCQ01() {
         IAtomContainer container = new AtomContainer(12, 12, 0, 0);
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("O", 0));
@@ -43821,7 +43821,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H3NO/c1-2-5-3-4-1/h1-3H
      */
     @Test
-    public void testAR14A() {
+    void testAR14A() {
         IAtomContainer container = new AtomContainer(8, 8, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -43850,7 +43850,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H2O3/c3-1-2(4)5/h1H,(H,4,5)
      */
     @Test
-    public void testCA04A() {
+    void testCA04A() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -43876,7 +43876,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H4O2/c1-2-5-3-4/h2-3H,1H2
      */
     @Test
-    public void testCE05A() {
+    void testCE05A() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43906,7 +43906,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH2O/c1-2/h1H2
      */
     @Test
-    public void testCO01A() {
+    void testCO01A() {
         IAtomContainer container = new AtomContainer(4, 3, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -43926,7 +43926,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
      */
     @Test
-    public void testCO08A() {
+    void testCO08A() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43960,7 +43960,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H7Cl/c5-4-2-1-3-4/h4H,1-3H2
      */
     @Test
-    public void testHL08A() {
+    void testHL08A() {
         IAtomContainer container = new AtomContainer(12, 12, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -43997,7 +43997,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H5N/c1-3-2/h1H2,2H3
      */
     @Test
-    public void testIM02A() {
+    void testIM02A() {
         IAtomContainer container = new AtomContainer(8, 7, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -44025,7 +44025,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H5N/c1-3-2/h1H2,2H3/p+1
      */
     @Test
-    public void testNC10A() {
+    void testNC10A() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -44055,7 +44055,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH3N/c1-2/h2H,1H2/p+1
      */
     @Test
-    public void testNC13A() {
+    void testNC13A() {
         IAtomContainer container = new AtomContainer(6, 5, 0, 0);
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -44079,7 +44079,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/H3N/h1H3
      */
     @Test
-    public void testNH10A() {
+    void testNH10A() {
         IAtomContainer container = new AtomContainer(4, 3, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("H", 0));
@@ -44099,7 +44099,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H9NO/c1-3-4(2)5/h4H,3H2,1-2H3
      */
     @Test
-    public void testNH20A() {
+    void testNH20A() {
         IAtomContainer container = new AtomContainer(14, 13, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -44139,7 +44139,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H7NO/c1-2-3-4/h2-3H2,1H3
      */
     @Test
-    public void testNH22A() {
+    void testNH22A() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("N", 1));
@@ -44173,7 +44173,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H7NO/c1-2-3-4/h3-4H,2H2,1H3
      */
     @Test
-    public void testNH23A() {
+    void testNH23A() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("N", 0));
@@ -44207,7 +44207,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4O/c1-2-3/h2-3H,1H2
      */
     @Test
-    public void testOH10A() {
+    void testOH10A() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44233,7 +44233,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/H2S/h1H2
      */
     @Test
-    public void testSR01A() {
+    void testSR01A() {
         IAtomContainer container = new AtomContainer(3, 2, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("H", 0));
@@ -44251,7 +44251,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH4S2/c1-3-2/h2H,1H3
      */
     @Test
-    public void testSR05A() {
+    void testSR05A() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -44277,7 +44277,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C6H6S/c7-6-4-2-1-3-5-6/h1-5,7H
      */
     @Test
-    public void testSR07A() {
+    void testSR07A() {
         IAtomContainer container = new AtomContainer(13, 13, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44316,7 +44316,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH3O/c1-2/h1H3/q-1
      */
     @Test
-    public void testAN05A() {
+    void testAN05A() {
         IAtomContainer container = new AtomContainer(5, 4, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", -1));
@@ -44338,7 +44338,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH4S/c1-2/h2H,1H3/p-1
      */
     @Test
-    public void testAN06A() {
+    void testAN06A() {
         IAtomContainer container = new AtomContainer(5, 4, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", -1));
@@ -44360,7 +44360,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4S/c1-2-3/h2-3H,1H2/p-1
      */
     @Test
-    public void testAN08A() {
+    void testAN08A() {
         IAtomContainer container = new AtomContainer(6, 5, 0, 0);
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("C", 0));
@@ -44384,7 +44384,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CHN4/c1-2-4-5-3-1/h1H/q-1
      */
     @Test
-    public void testAN11A() {
+    void testAN11A() {
         IAtomContainer container = new AtomContainer(6, 6, 0, 0);
         container.addAtom(newAtm("N", -1));
         container.addAtom(newAtm("N", 0));
@@ -44409,7 +44409,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4N/c1-2-3/h2-3H,1H2/q-1
      */
     @Test
-    public void testAN12A() {
+    void testAN12A() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44435,7 +44435,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H5F/c4-3-1-2-3/h3H,1-2H2
      */
     @Test
-    public void testHL11A() {
+    void testHL11A() {
         IAtomContainer container = new AtomContainer(9, 9, 0, 0);
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("C", 0));
@@ -44466,7 +44466,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H3F/c1-2-3/h2H,1H2
      */
     @Test
-    public void testHL13A() {
+    void testHL13A() {
         IAtomContainer container = new AtomContainer(6, 5, 0, 0);
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("C", 0));
@@ -44490,7 +44490,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH3NO/c1-2-3/h1H3
      */
     @Test
-    public void testNO03A() {
+    void testNO03A() {
         IAtomContainer container = new AtomContainer(6, 5, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -44514,7 +44514,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H6N2/c1-3(2)5-4/h1-2H3
      */
     @Test
-    public void testNX02A() {
+    void testNX02A() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44548,7 +44548,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H6O/c1-3(2)4/h1-2H3/p+1
      */
     @Test
-    public void testOC02A() {
+    void testOC02A() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44582,7 +44582,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/H3OP/c1-2/h2H3
      */
     @Test
-    public void testPO02A() {
+    void testPO02A() {
         IAtomContainer container = new AtomContainer(5, 4, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -44604,7 +44604,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H8NO2P/c1-3-6(2,4)5/h1-2H3,(H2,3,4,5)/p-1
      */
     @Test
-    public void testPO05A() {
+    void testPO05A() {
         IAtomContainer container = new AtomContainer(13, 12, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -44642,7 +44642,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/H3P/h1H3
      */
     @Test
-    public void testPR01A() {
+    void testPR01A() {
         IAtomContainer container = new AtomContainer(4, 3, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("H", 0));
@@ -44662,7 +44662,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH5P/c1-2/h2H2,1H3
      */
     @Test
-    public void testPR02A() {
+    void testPR02A() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("P", 0));
@@ -44688,7 +44688,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH4ClP/c1-3-2/h3H,1H3/t3-/m1/s1
      */
     @Test
-    public void testPR03A() {
+    void testPR03A() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("P", 0));
@@ -44714,7 +44714,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H7P/c1-3(2)4/h4H,1-2H3
      */
     @Test
-    public void testPR04A() {
+    void testPR04A() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44748,7 +44748,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH6Si/c1-2/h1-2H3
      */
     @Test
-    public void testSI02A() {
+    void testSI02A() {
         IAtomContainer container = new AtomContainer(8, 7, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("C", 0));
@@ -44776,7 +44776,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH6OSi/c1-3-2/h2H,3H2,1H3
      */
     @Test
-    public void testSI03A() {
+    void testSI03A() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("C", 0));
@@ -44806,7 +44806,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C8H9NO3S/c1-13(11,12)9-8(10)7-5-3-2-4-6-7/h2-6H,1H3,(H,9,10)
      */
     @Test
-    public void testSO07A() {
+    void testSO07A() {
         IAtomContainer container = new AtomContainer(22, 22, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44864,7 +44864,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)
      */
     @Test
-    public void testSO12A() {
+    void testSO12A() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -44890,7 +44890,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H6NO2S/c1-3-6(2,4)5/h1-2H3/q-1
      */
     @Test
-    public void testSO15A() {
+    void testSO15A() {
         IAtomContainer container = new AtomContainer(12, 11, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
@@ -44926,7 +44926,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H6OS/c1-3(2)5-4/h1-2H3
      */
     @Test
-    public void testSO16A() {
+    void testSO16A() {
         IAtomContainer container = new AtomContainer(11, 10, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44960,7 +44960,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/CH3OS2/c1-4(2)3/h1H3
      */
     @Test
-    public void testSO18A() {
+    void testSO18A() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("C", 0));
@@ -44986,7 +44986,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Br.H2O/h;1H2
      */
     @Test
-    public void testBRMW1() {
+    void testBRMW1() {
         IAtomContainer container = new AtomContainer(4, 2, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45005,7 +45005,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Ca.3H2O/h;3*1H2
      */
     @Test
-    public void testCA2PW3() {
+    void testCA2PW3() {
         IAtomContainer container = new AtomContainer(10, 6, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45034,7 +45034,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Cl.H2O/h;1H2
      */
     @Test
-    public void testCLMW1() {
+    void testCLMW1() {
         IAtomContainer container = new AtomContainer(4, 2, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45053,7 +45053,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Cu.H2O/h;1H2
      */
     @Test
-    public void testCU1PW1() {
+    void testCU1PW1() {
         IAtomContainer container = new AtomContainer(4, 2, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45072,7 +45072,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Cu.3H2O/h;3*1H2
      */
     @Test
-    public void testCU2PW3() {
+    void testCU2PW3() {
         IAtomContainer container = new AtomContainer(10, 6, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45101,7 +45101,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Fe.3H2O/h;3*1H2
      */
     @Test
-    public void testFE2PW3() {
+    void testFE2PW3() {
         IAtomContainer container = new AtomContainer(10, 6, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45130,7 +45130,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Fe.3H2O/h;3*1H2
      */
     @Test
-    public void testFE3PW3() {
+    void testFE3PW3() {
         IAtomContainer container = new AtomContainer(10, 6, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45159,7 +45159,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/F.H2O/h;1H2
      */
     @Test
-    public void testFMW1() {
+    void testFMW1() {
         IAtomContainer container = new AtomContainer(4, 2, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45178,7 +45178,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/2H2O/h2*1H2/p+1
      */
     @Test
-    public void testH3OPW1() {
+    void testH3OPW1() {
         IAtomContainer container = new AtomContainer(7, 5, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45203,7 +45203,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/K.H2O/h;1H2
      */
     @Test
-    public void testKPW1() {
+    void testKPW1() {
         IAtomContainer container = new AtomContainer(4, 2, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45222,7 +45222,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Li.H2O/h;1H2
      */
     @Test
-    public void testLIPW1() {
+    void testLIPW1() {
         IAtomContainer container = new AtomContainer(4, 2, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45241,7 +45241,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Mg.3H2O/h;3*1H2
      */
     @Test
-    public void testMG2PW3() {
+    void testMG2PW3() {
         IAtomContainer container = new AtomContainer(10, 6, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45270,7 +45270,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/Na.H2O/h;1H2
      */
     @Test
-    public void testNAPW() {
+    void testNAPW() {
         IAtomContainer container = new AtomContainer(4, 2, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45289,7 +45289,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/2H2O/h2*1H2/p-1
      */
     @Test
-    public void testOHMW1() {
+    void testOHMW1() {
         IAtomContainer container = new AtomContainer(5, 3, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45310,7 +45310,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/3H2O.Zn/h3*1H2;
      */
     @Test
-    public void testZN2PW3() {
+    void testZN2PW3() {
         IAtomContainer container = new AtomContainer(10, 6, 0, 0);
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -45339,7 +45339,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H8N2S/c1-3-4-2-5-6-3/h3-5H,2H2,1H3/t3-/m1/s1
      */
     @Test
-    public void testERULE01() {
+    void testERULE01() {
         IAtomContainer container = new AtomContainer(14, 14, 0, 0);
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -45380,7 +45380,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H6N2S/c1-2-5-4-3-1/h3-4H,1-2H2
      */
     @Test
-    public void testERULE02() {
+    void testERULE02() {
         IAtomContainer container = new AtomContainer(11, 11, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -45415,7 +45415,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H13PSi/c1-5-6(2,3)4/h5H,1-4H3/t5-/m1/s1
      */
     @Test
-    public void testERULE03() {
+    void testERULE03() {
         IAtomContainer container = new AtomContainer(19, 18, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Si", 0));
@@ -45466,7 +45466,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H4ClNS2/c3-2-1-5-6-4-2/h2,4H,1H2/t2-/m1/s1
      */
     @Test
-    public void testERULE04() {
+    void testERULE04() {
         IAtomContainer container = new AtomContainer(10, 10, 0, 0);
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -45499,7 +45499,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/H3P3/c1-2-3-1/h1-3H/t1-,2-,3-
      */
     @Test
-    public void testERULE05() {
+    void testERULE05() {
         IAtomContainer container = new AtomContainer(6, 6, 0, 0);
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
@@ -45524,7 +45524,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C2H6FN/c1-4(2)3/h1-2H3
      */
     @Test
-    public void testERULE06() {
+    void testERULE06() {
         IAtomContainer container = new AtomContainer(10, 9, 0, 0);
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -45556,7 +45556,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C4H8N2/c1-4-2-6(4)3-5-1/h4-5H,1-3H2/t4-,6-/m1/s1
      */
     @Test
-    public void testERULE07() {
+    void testERULE07() {
         IAtomContainer container = new AtomContainer(14, 15, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -45598,7 +45598,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
      * @cdk.inchi InChI=1S/C3H8N2/c1-5-3-2-4-5/h4H,2-3H2,1H3
      */
     @Test
-    public void testERULE08() {
+    void testERULE08() {
         IAtomContainer container = new AtomContainer(13, 13, 0, 0);
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));

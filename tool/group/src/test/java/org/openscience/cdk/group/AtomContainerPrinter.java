@@ -13,13 +13,13 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @author maclean
  * @cdk.module test-group
  */
-public class AtomContainerPrinter {
+class AtomContainerPrinter {
 
     public static void print(IAtomContainer atomContainer) {
         System.out.println(AtomContainerPrinter.toString(atomContainer));
     }
 
-    public static String toString(IAtomContainer atomContainer) {
+    private static String toString(IAtomContainer atomContainer) {
         return AtomContainerPrinter.toString(atomContainer, new Permutation(atomContainer.getAtomCount()));
     }
 
@@ -28,7 +28,7 @@ public class AtomContainerPrinter {
         return toString(atomContainer, identity, sortEdges);
     }
 
-    public static String toString(IAtomContainer atomContainer, Permutation permutation) {
+    private static String toString(IAtomContainer atomContainer, Permutation permutation) {
         return toString(atomContainer, permutation, false); // don't sort by default?
     }
 

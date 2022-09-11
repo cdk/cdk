@@ -62,7 +62,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public SharingAnionReactionTest() throws Exception {
+    SharingAnionReactionTest() throws Exception {
         setReaction(SharingAnionReaction.class);
     }
 
@@ -70,7 +70,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testSharingAnionReaction() throws Exception {
+    void testSharingAnionReaction() throws Exception {
         IReactionProcess type = new SharingAnionReaction();
         Assertions.assertNotNull(type);
     }
@@ -115,7 +115,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyCentreActive() throws Exception {
+    void testManuallyCentreActive() throws Exception {
         IReactionProcess type = new SharingAnionReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -156,7 +156,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCarbons() throws Exception {
+    void testCarbons() throws Exception {
         IReactionProcess type = new SharingAnionReaction();
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -206,7 +206,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+    void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new SharingAnionReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -241,7 +241,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMapping() throws Exception {
+    void testMapping() throws Exception {
         IReactionProcess type = new SharingAnionReaction();
 
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -274,7 +274,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer1() throws Exception {
+    void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
@@ -284,7 +284,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
      * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
      */
     @Test
-    public void testAtomTypesAtomContainer2() throws Exception {
+    void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
 

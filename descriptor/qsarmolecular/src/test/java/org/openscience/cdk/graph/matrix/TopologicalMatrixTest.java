@@ -13,10 +13,10 @@ import org.openscience.cdk.io.MDLV2000Reader;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class TopologicalMatrixTest extends CDKTestCase {
+class TopologicalMatrixTest extends CDKTestCase {
 
     @Disabled // not actually asserting anything
-    public void testTopologicalMatrix_IAtomContainer() throws Exception {
+    void testTopologicalMatrix_IAtomContainer() throws Exception {
         String filename = "data/mdl/chlorobenzene.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

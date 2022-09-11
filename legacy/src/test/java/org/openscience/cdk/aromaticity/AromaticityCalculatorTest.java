@@ -31,14 +31,14 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-standard
  */
-public class AromaticityCalculatorTest extends CDKTestCase {
+class AromaticityCalculatorTest extends CDKTestCase {
 
-    public AromaticityCalculatorTest() {
+    AromaticityCalculatorTest() {
         super();
     }
 
     @Test
-    public void testIsAromatic_IRing_IAtomContainer() throws Exception {
+    void testIsAromatic_IRing_IAtomContainer() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = sp.parseSmiles("c1ccncc1");

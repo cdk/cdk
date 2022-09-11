@@ -60,12 +60,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */
-public class CDKMCSTest extends CDKTestCase {
+class CDKMCSTest extends CDKTestCase {
 
-    final boolean standAlone = false;
+    private final boolean standAlone = false;
 
     @Test
-    public void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {
+    void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         IAtomContainer frag1 = TestMoleculeFactory.makeCyclohexene(); //one double bond in ring
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -90,7 +90,7 @@ public class CDKMCSTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSFBug1708336() throws Exception {
+    void testSFBug1708336() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer atomContainer = builder.newInstance(IAtomContainer.class);
         atomContainer.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -123,7 +123,7 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     @Test
-    public void test2() throws java.lang.Exception {
+    void test2() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         IAtomContainer frag1 = TestMoleculeFactory.makeCyclohexane(); // no double bond in ring
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -139,7 +139,7 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     @Test
-    public void test3() throws java.lang.Exception {
+    void test3() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -159,7 +159,7 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     @Test
-    public void testBasicQueryAtomContainer() throws Exception {
+    void testBasicQueryAtomContainer() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
@@ -169,7 +169,7 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetSubgraphAtomsMaps_IAtomContainer() throws java.lang.Exception {
+    void testGetSubgraphAtomsMaps_IAtomContainer() throws java.lang.Exception {
         int[] result1 = {6, 5, 7, 8, 0};
         int[] result2 = {3, 4, 2, 1, 0};
 
@@ -194,7 +194,7 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception {
+    void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception {
         String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         IAtomContainer mol = new AtomContainer();
@@ -227,7 +227,7 @@ public class CDKMCSTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetOverlaps_IAtomContainer_IAtomContainer() throws Exception {
+    void testGetOverlaps_IAtomContainer_IAtomContainer() throws Exception {
         String file1 = "org/openscience/cdk/smsd/algorithm/5SD.mol";
         String file2 = "org/openscience/cdk/smsd/algorithm/ADN.mol";
         IAtomContainer mol1 = new AtomContainer();
@@ -262,7 +262,7 @@ public class CDKMCSTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSFBug999330() throws Exception {
+    void testSFBug999330() throws Exception {
         String file1 = "org/openscience/cdk/smsd/algorithm/5SD.mol";
         String file2 = "org/openscience/cdk/smsd/algorithm/ADN.mol";
         IAtomContainer mol1 = new AtomContainer();
@@ -293,7 +293,7 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     @Test
-    public void testItself() throws Exception {
+    void testItself() throws Exception {
         String smiles = "C1CCCCCCC1CC";
         QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser(
                 DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles), true);
@@ -314,7 +314,7 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsIsomorph_IAtomContainer_IAtomContainer() throws Exception {
+    void testIsIsomorph_IAtomContainer_IAtomContainer() throws Exception {
         AtomContainer ac1 = new AtomContainer();
         ac1.addAtom(new Atom("C"));
         AtomContainer ac2 = new AtomContainer();
@@ -324,7 +324,7 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     @Test
-    public void testAnyAtomAnyBondCase() throws Exception {
+    void testAnyAtomAnyBondCase() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("O1C=CC=C1");
         IAtomContainer queryac = sp.parseSmiles("C1CCCC1");
@@ -339,7 +339,7 @@ public class CDKMCSTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testFirstArgumentMustNotBeAnQueryAtomContainer() throws Exception {
+    void testFirstArgumentMustNotBeAnQueryAtomContainer() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("O1C=CC=C1");
         IAtomContainer queryac = sp.parseSmiles("C1CCCC1");
@@ -358,7 +358,7 @@ public class CDKMCSTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSingleAtomMatching1() throws Exception {
+    void testSingleAtomMatching1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("[H]");
         IAtomContainer queryac = sp.parseSmiles("[H]");
@@ -379,7 +379,7 @@ public class CDKMCSTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSingleAtomMatching2() throws Exception {
+    void testSingleAtomMatching2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("CNC");
         IAtomContainer queryac = sp.parseSmiles("C");
@@ -406,7 +406,7 @@ public class CDKMCSTest extends CDKTestCase {
      * Test of getTimeManager method, of class CDKMCS.
      */
     @Test
-    public void testGetTimeManager() {
+    void testGetTimeManager() {
         TimeManager expResult = new TimeManager();
         Assertions.assertNotNull(expResult);
     }
@@ -415,7 +415,7 @@ public class CDKMCSTest extends CDKTestCase {
      * Test of setTimeManager method, of class CDKMCS.
      */
     @Test
-    public void testSetTimeManager() {
+    void testSetTimeManager() {
         TimeManager aTimeManager = new TimeManager();
         CDKMCS.setTimeManager(aTimeManager);
         Assertions.assertNotNull(CDKMCS.getTimeManager());

@@ -37,15 +37,15 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  *
  * @author Stephen Tomkinson
  */
-public class ParserTest extends CDKTestCase {
+class ParserTest extends CDKTestCase {
 
-    final IsomorphismTester comparer = new IsomorphismTester();
+    private final IsomorphismTester comparer = new IsomorphismTester();
 
     // Add test methods here, they have to start with 'test' name.
     // for example:
     // @Test public void testHello() {}
     @Test
-    public void testEthane() throws Exception {
+    void testEthane() throws Exception {
         IAtomContainer parserMolecule = null;
         try {
             parserMolecule = NomParser.generate("ethane", SilentChemObjectBuilder.getInstance());
@@ -58,7 +58,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     @Test
-    public void testPentane() throws Exception {
+    void testPentane() throws Exception {
         IAtomContainer parserMolecule = null;
         try {
             parserMolecule = NomParser.generate("pentane", SilentChemObjectBuilder.getInstance());
@@ -71,7 +71,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     @Test
-    public void testSeptane() throws Exception {
+    void testSeptane() throws Exception {
         IAtomContainer parserMolecule = null;
         try {
             parserMolecule = NomParser.generate("heptane", SilentChemObjectBuilder.getInstance());
@@ -84,7 +84,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     @Test
-    public void testEicosane() throws Exception {
+    void testEicosane() throws Exception {
         IAtomContainer parserMolecule = NomParser.generate("Eicosane", SilentChemObjectBuilder.getInstance());
         IAtomContainer correctMolecule = TestMoleculeFactory.makeAlkane(20);
 
@@ -92,7 +92,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     @Test
-    public void testTokenMgrErrorCharacterName() throws Exception {
+    void testTokenMgrErrorCharacterName() throws Exception {
         try {
             NomParser.generate("!\"$%^&*()-=_+", SilentChemObjectBuilder.getInstance());
             Assertions.fail("Molecule was successfully generated but should have thrown a TokenMgrError");
@@ -106,7 +106,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     @Test
-    public void testParseExceptionNoName() {
+    void testParseExceptionNoName() {
         try {
             NomParser.generate("", SilentChemObjectBuilder.getInstance());
             Assertions.fail("Molecule was successfully generated but should have thrown a ParseException");
@@ -118,7 +118,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     @Test
-    public void testParseExceptionMissingToken() {
+    void testParseExceptionMissingToken() {
         try {
             NomParser.generate("ethol", SilentChemObjectBuilder.getInstance());
             Assertions.fail("Molecule was successfully generated but should have thrown a ParseException");
@@ -130,7 +130,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     @Test
-    public void testUnconnectingGroup() {
+    void testUnconnectingGroup() {
         try {
             NomParser.generate("7-chloropentane", SilentChemObjectBuilder.getInstance());
             Assertions.fail("Molecule was successfully generated but should have thrown a ParseException");
@@ -142,7 +142,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     @Test
-    public void testUnconnectingSubChain() {
+    void testUnconnectingSubChain() {
         try {
             NomParser.generate("9-ethylhexane", SilentChemObjectBuilder.getInstance());
             Assertions.fail("Molecule was successfully generated but should have thrown a ParseException");

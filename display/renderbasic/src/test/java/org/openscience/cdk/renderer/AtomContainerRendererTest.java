@@ -49,13 +49,13 @@ import org.openscience.cdk.renderer.generators.IGenerator;
  * @author     maclean
  * @cdk.module test-renderbasic
  */
-public class AtomContainerRendererTest {
+class AtomContainerRendererTest {
 
     private final IChemObjectBuilder        builder = SilentChemObjectBuilder.getInstance();
 
     private final StructureDiagramGenerator sdg     = new StructureDiagramGenerator();
 
-    public IAtomContainer layout(IAtomContainer molecule) {
+    IAtomContainer layout(IAtomContainer molecule) {
         sdg.setMolecule(molecule);
         try {
             sdg.generateCoordinates();
@@ -65,7 +65,7 @@ public class AtomContainerRendererTest {
         return sdg.getMolecule();
     }
 
-    public IAtomContainer makeSquare() {
+    IAtomContainer makeSquare() {
         IAtomContainer square = builder.newInstance(IAtomContainer.class);
         square.addAtom(builder.newInstance(IAtom.class, "C"));
         square.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -80,7 +80,7 @@ public class AtomContainerRendererTest {
     }
 
     @Test
-    public void testSquareMolecule() {
+    void testSquareMolecule() {
         IAtomContainer square = makeSquare();
 
         List<IGenerator<IAtomContainer>> generators = new ArrayList<>();

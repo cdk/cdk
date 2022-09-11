@@ -13,10 +13,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-hash
  */
-public class CombinedPermutationParityTest {
+class CombinedPermutationParityTest {
 
     @Test
-    public void testParity() throws Exception {
+    void testParity() throws Exception {
         PermutationParity left = mock(PermutationParity.class);
         PermutationParity right = mock(PermutationParity.class);
         PermutationParity parity = new CombinedPermutationParity(left, right);

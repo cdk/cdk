@@ -40,22 +40,22 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-standard
  */
-public class EStateAtomTypeMatcherTest extends CDKTestCase {
+class EStateAtomTypeMatcherTest extends CDKTestCase {
 
-    static EStateAtomTypeMatcher matcher;
-    IAtomContainer               mol = null;
+    private static EStateAtomTypeMatcher matcher;
+    private IAtomContainer               mol = null;
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         matcher = new EStateAtomTypeMatcher();
     }
 
-    public EStateAtomTypeMatcherTest() {
+    EStateAtomTypeMatcherTest() {
         super();
     }
 
     @Test
-    public void testEStateAtomTypeMatcher() {
+    void testEStateAtomTypeMatcher() {
         Assertions.assertNotNull(matcher);
     }
 
@@ -75,7 +75,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testFindMatchingAtomType_IAtomContainer() throws Exception {
+    void testFindMatchingAtomType_IAtomContainer() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
         final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
@@ -91,7 +91,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testSP3Atoms() {
+    void testSP3Atoms() {
         //Testing with CC(C)(C)CC
         mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -185,7 +185,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testSP2Atoms() {
+    void testSP2Atoms() {
         //Test with C=CC=N
         mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -232,7 +232,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testSPAtoms() {
+    void testSPAtoms() {
         //Testing with  C#CCC#N
         mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -275,7 +275,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testAromaticAtoms() {
+    void testAromaticAtoms() {
         //Testing with C1=CN=CC=C1C
         mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -352,7 +352,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testBenzeneFromSmiles() throws Exception {
+    void testBenzeneFromSmiles() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         mol = sp.parseSmiles("C1=CC=CC=C1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -368,7 +368,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testNaphthalene() {
+    void testNaphthalene() {
         //Testing with C1=CC2C=CC=CC=2C=C1
         mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -470,7 +470,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testChargedAtoms() {
+    void testChargedAtoms() {
         //Testing with C[N+]
         mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -511,7 +511,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     }
 
     @Test
-    public void testNaCl() {
+    void testNaCl() {
         //Testing with [Na+].[Cl-]
         mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "Na");

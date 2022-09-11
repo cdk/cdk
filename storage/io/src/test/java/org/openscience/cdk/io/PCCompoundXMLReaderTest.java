@@ -39,23 +39,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module test-io
  */
-public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
+class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundXMLReaderTest.class);
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new PCCompoundXMLReader(), "cid1145.xml");
     }
 
     @Test
-    public void testAccepts() throws Exception {
+    void testAccepts() throws Exception {
         PCCompoundXMLReader reader = new PCCompoundXMLReader();
         Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test
-    public void testReading() throws Exception {
+    void testReading() throws Exception {
         String filename = "cid1145.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -84,7 +84,7 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReading3DCoords() throws Exception {
+    void testReading3DCoords() throws Exception {
         String filename = "cid176.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);

@@ -38,21 +38,21 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 /**
  * @cdk.module test-io
  */
-public class Mopac7WriterTest extends ChemObjectWriterTest {
+class Mopac7WriterTest extends ChemObjectWriterTest {
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setChemObjectWriter(new Mopac7Writer());
     }
 
     @Test
-    public void testAccepts() throws Exception {
+    void testAccepts() throws Exception {
         Mopac7Writer reader = new Mopac7Writer();
         Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test
-    public void testWrite() throws Exception {
+    void testWrite() throws Exception {
         StringWriter strWriter = new StringWriter();
         Mopac7Writer writer = new Mopac7Writer(strWriter);
 
@@ -67,7 +67,7 @@ public class Mopac7WriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWriteWithOptimizationTrue() throws Exception {
+    void testWriteWithOptimizationTrue() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("Cr"));
 
@@ -82,7 +82,7 @@ public class Mopac7WriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWriteWithOptimizationFalse() throws Exception {
+    void testWriteWithOptimizationFalse() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("Cr"));
 
@@ -97,7 +97,7 @@ public class Mopac7WriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testWriteWithCustomCommands() throws Exception {
+    void testWriteWithCustomCommands() throws Exception {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("Cr"));
 
@@ -112,7 +112,7 @@ public class Mopac7WriterTest extends ChemObjectWriterTest {
     }
 
     @Test
-    public void testChargedCompounds() throws Exception {
+    void testChargedCompounds() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom aluminum = new Atom("Al");
         aluminum.setFormalCharge(+3);

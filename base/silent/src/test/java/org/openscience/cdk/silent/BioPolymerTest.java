@@ -33,15 +33,15 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @cdk.module test-silent
  */
-public class BioPolymerTest extends AbstractBioPolymerTest {
+class BioPolymerTest extends AbstractBioPolymerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(BioPolymer::new);
     }
 
     @Test
-    public void testBioPolymer() {
+    void testBioPolymer() {
         IBioPolymer oBioPolymer = new BioPolymer();
         Assertions.assertNotNull(oBioPolymer);
         Assertions.assertEquals(oBioPolymer.getMonomerCount(), 0);

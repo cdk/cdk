@@ -36,14 +36,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-extra
  */
-public class DeAromatizationToolTest extends CDKTestCase {
+class DeAromatizationToolTest extends CDKTestCase {
 
-    public DeAromatizationToolTest() {
+    DeAromatizationToolTest() {
         super();
     }
 
     @Test
-    public void testBezene() {
+    void testBezene() {
         Ring benzene = new Ring(6, "C");
         for (IBond iBond : benzene.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, true);
         boolean success = DeAromatizationTool.deAromatize(benzene);
@@ -53,7 +53,7 @@ public class DeAromatizationToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testPyridine() {
+    void testPyridine() {
         Ring pyridine = new Ring(6, "C");
         pyridine.getAtom(0).setSymbol("N");
         for (IBond iBond : pyridine.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, true);
@@ -64,7 +64,7 @@ public class DeAromatizationToolTest extends CDKTestCase {
     }
 
     @Test
-    public void testDeAromatize_IRing() {
+    void testDeAromatize_IRing() {
         Ring butadiene = new Ring(4, "C");
         boolean success = DeAromatizationTool.deAromatize(butadiene);
         Assertions.assertFalse(success);

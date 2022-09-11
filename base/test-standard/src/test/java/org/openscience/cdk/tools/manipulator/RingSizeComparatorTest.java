@@ -28,20 +28,20 @@ import org.openscience.cdk.interfaces.IRing;
 /**
  * @cdk.module test-standard
  */
-public class RingSizeComparatorTest extends CDKTestCase {
+class RingSizeComparatorTest extends CDKTestCase {
 
-    public RingSizeComparatorTest() {
+    RingSizeComparatorTest() {
         super();
     }
 
     @Test
-    public void testRingSizeComparator_int() {
+    void testRingSizeComparator_int() {
         RingSizeComparator comp = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
         Assertions.assertNotNull(comp);
     }
 
     @Test
-    public void testCompare() {
+    void testCompare() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRing cycloPentane = builder.newInstance(IRing.class, 5, "C");
         IRing cycloHexane = builder.newInstance(IRing.class, 6, "C");

@@ -34,69 +34,69 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.module test-core
  */
-public class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
+class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
 
     private static SmilesParser       smilesParser;
     private static CDKAtomTypeMatcher atomTypeMatcher;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         atomTypeMatcher = CDKAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testSMILES() throws Exception {
+    void testSMILES() throws Exception {
         typeAndRetype("C=1N=CNC=1");
     }
 
     @Test
-    public void testSMILES2() throws Exception {
+    void testSMILES2() throws Exception {
         typeAndRetype("OCN1C=CN=C1");
     }
 
     @Test
-    public void testSMILES3() throws Exception {
+    void testSMILES3() throws Exception {
         typeAndRetype("OC(=O)N1C=CN=C1");
     }
 
     @Test
-    public void testSMILES4() throws Exception {
+    void testSMILES4() throws Exception {
         typeAndRetype("CN(C)CCC1=CNC2=C1C=C(C=C2)CC1NC(=O)OC1");
     }
 
     @Test
-    public void testSMILES5() throws Exception {
+    void testSMILES5() throws Exception {
         typeAndRetype("CN(C)CCC1=CNc2c1cc(cc2)CC1NC(=O)OC1");
     }
 
     @Test
-    public void testSMILES6() throws Exception {
+    void testSMILES6() throws Exception {
         typeAndRetype("c1c2cc[NH]cc2nc1");
     }
 
     @Test
-    public void testSMILES7() throws Exception {
+    void testSMILES7() throws Exception {
         typeAndRetype("c1cnc2s[cH][cH]n12");
     }
 
     @Test
-    public void testSMILES8() throws Exception {
+    void testSMILES8() throws Exception {
         typeAndRetype("Cl[Pt]1(Cl)(Cl)(Cl)NC2CCCCC2N1");
     }
 
     @Test
-    public void testSMILES9() throws Exception {
+    void testSMILES9() throws Exception {
         typeAndRetype("[Pt](Cl)(Cl)(N)N");
     }
 
     @Test
-    public void testSMILES10() throws Exception {
+    void testSMILES10() throws Exception {
         typeAndRetype("CN(C)(=O)CCC=C2c1ccccc1CCc3ccccc23");
     }
 
     @Test
-    public void testSMILES11() throws Exception {
+    void testSMILES11() throws Exception {
         typeAndRetype("CCCN1CC(CSC)CC2C1Cc3c[nH]c4cccc2c34");
     }
 

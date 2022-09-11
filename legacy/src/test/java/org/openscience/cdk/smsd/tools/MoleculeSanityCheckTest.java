@@ -40,28 +40,28 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @author Asad
  */
-public class MoleculeSanityCheckTest {
+class MoleculeSanityCheckTest {
 
     public MoleculeSanityCheckTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of checkAndCleanMolecule method, of class MoleculeSanityCheck.
      * @throws InvalidSmilesException
      */
     @Test
-    public void testCheckAndCleanMolecule() throws InvalidSmilesException {
+    void testCheckAndCleanMolecule() throws InvalidSmilesException {
         String fragmentMolSmiles = "C1=CC=CC=C1.C1=CC2=C(C=C1)C=CC=C2";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles(fragmentMolSmiles);
@@ -75,7 +75,7 @@ public class MoleculeSanityCheckTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testFixAromaticity() throws InvalidSmilesException {
+    void testFixAromaticity() throws InvalidSmilesException {
         String rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(rawMolSmiles);

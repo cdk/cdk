@@ -31,14 +31,14 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  *
  * @cdk.module test-extra
  */
-public class ReactionChainTest extends CDKTestCase {
+class ReactionChainTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  Constructor for the ReactionEngineTest object.
      */
-    public ReactionChainTest() {
+    ReactionChainTest() {
         super();
     }
 
@@ -48,7 +48,7 @@ public class ReactionChainTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testReactionChain() {
+    void testReactionChain() {
         IReactionSet chain = new ReactionChain();
         Assertions.assertNotNull(chain);
     }
@@ -59,7 +59,7 @@ public class ReactionChainTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testAddReaction_IReaction_int() {
+    void testAddReaction_IReaction_int() {
         ReactionChain chain = new ReactionChain();
         IReaction reaction1 = builder.newInstance(IReaction.class);
         reaction1.setID("reaction1");
@@ -81,7 +81,7 @@ public class ReactionChainTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetReactionStep_IReaction() {
+    void testGetReactionStep_IReaction() {
         ReactionChain chain = new ReactionChain();
         IReaction reaction1 = builder.newInstance(IReaction.class);
         reaction1.setID("reaction1");
@@ -103,7 +103,7 @@ public class ReactionChainTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetReaction_int() {
+    void testGetReaction_int() {
         ReactionChain chain = new ReactionChain();
         IReaction reaction1 = builder.newInstance(IReaction.class);
         reaction1.setID("reaction1");

@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-public class ChemObjectIOInstantionTests extends CDKTestCase {
+class ChemObjectIOInstantionTests extends CDKTestCase {
 
     private final static String      IO_FORMATS_LIST = "io-formats.set";
 
@@ -84,7 +84,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
     }
 
     @Test
-    public void testInstantion() {
+    void testInstantion() {
         loadFormats();
 
         IChemFormat format;

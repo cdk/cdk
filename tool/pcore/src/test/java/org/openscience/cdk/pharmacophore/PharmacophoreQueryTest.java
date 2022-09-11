@@ -25,12 +25,12 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-pcore
  */
-public class PharmacophoreQueryTest {
+class PharmacophoreQueryTest {
 
     private PharmacophoreQuery query;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         query = new PharmacophoreQuery();
 
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
@@ -51,7 +51,7 @@ public class PharmacophoreQueryTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         String repr = query.toString();
         Assertions.assertTrue(repr
                 .indexOf(" #A:3, #EC:3, D, A, A, DC::D [[OX1]]::A [[N]]::[4.0 - 4.5] , DC::D [[OX1]]::A [[N]]::[4.0 - 5.0] , DC::A [[N]]::A [[N]]::[5.4 - 5.8] , )") > 0);

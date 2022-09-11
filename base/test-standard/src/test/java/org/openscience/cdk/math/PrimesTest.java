@@ -25,14 +25,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class PrimesTest extends CDKTestCase {
+class PrimesTest extends CDKTestCase {
 
-    public PrimesTest() {
+    PrimesTest() {
         super();
     }
 
     @Test
-    public void testGetPrimeAt_int() {
+    void testGetPrimeAt_int() {
         Assertions.assertEquals(2, Primes.getPrimeAt(0));
 
         try {
@@ -44,7 +44,7 @@ public class PrimesTest extends CDKTestCase {
     }
 
     @Test
-    public void testArrayIndexOutOfBounds() {
+    void testArrayIndexOutOfBounds() {
         Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {Primes.getPrimeAt(-1);});
     }
 

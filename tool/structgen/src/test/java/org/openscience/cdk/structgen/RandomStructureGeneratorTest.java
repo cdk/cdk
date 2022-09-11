@@ -32,17 +32,17 @@ import java.util.Vector;
 /**
  * @cdk.module test-structgen
  */
-public class RandomStructureGeneratorTest extends CDKTestCase {
+class RandomStructureGeneratorTest extends CDKTestCase {
 
-    public final boolean debug      = false;
-    boolean        standAlone = false;
+    private final boolean debug      = false;
+    private boolean        standAlone = false;
 
-    public void setStandAlone(boolean standAlone) {
+    void setStandAlone(boolean standAlone) {
         this.standAlone = standAlone;
     }
 
     @Test
-    public void testTwentyRandomStructures() {
+    void testTwentyRandomStructures() {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         RandomGenerator rg = new RandomGenerator(molecule);
         IAtomContainer result;
@@ -57,7 +57,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase {
      * @param structures
      * @return
      */
-    private boolean everythingOk(Vector structures) throws Exception {
+    boolean everythingOk(Vector structures) throws Exception {
         StructureDiagramGenerator sdg;
         IAtomContainer mol;
         if (debug) System.out.println("number of structures in vector: " + structures.size());

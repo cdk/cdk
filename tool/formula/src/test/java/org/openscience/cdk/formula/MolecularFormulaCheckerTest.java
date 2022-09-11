@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module test-formula
  */
-public class MolecularFormulaCheckerTest extends CDKTestCase {
+class MolecularFormulaCheckerTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private IsotopeFactory                  ifac;
@@ -66,7 +66,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testMolecularFormulaChecker_List() {
+    void testMolecularFormulaChecker_List() {
 
         Assertions.assertNotNull(new MolecularFormulaChecker(new ArrayList<>()));
     }
@@ -77,7 +77,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetRules() {
+    void testGetRules() {
 
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(new ArrayList<>());
 
@@ -90,7 +90,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsValidSum_IMolecularFormula() {
+    void testIsValidSum_IMolecularFormula() {
 
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 1);
@@ -111,7 +111,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsValid_NOT() {
+    void testIsValid_NOT() {
 
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 1);
@@ -134,7 +134,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsValid_IMolecularFormula() {
+    void testIsValid_IMolecularFormula() {
 
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 1);
@@ -157,7 +157,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsValid_NOT_2Rules() {
+    void testIsValid_NOT_2Rules() {
 
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 1);
@@ -183,7 +183,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsValidSum_True_2Rules() {
+    void testIsValidSum_True_2Rules() {
 
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 1);
@@ -206,7 +206,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
      *
      */
     @Test
-    public void testIsValid_True_2Rules() {
+    void testIsValid_True_2Rules() {
 
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 1);

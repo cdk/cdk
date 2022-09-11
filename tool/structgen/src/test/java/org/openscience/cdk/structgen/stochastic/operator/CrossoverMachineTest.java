@@ -39,10 +39,10 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 @Tag("SlowTest")
 // structgen is slow... a single method here currently takes ~6 seconds
-public class CrossoverMachineTest extends CDKTestCase {
+class CrossoverMachineTest extends CDKTestCase {
 
     @Test
-    public void testdoCrossover_IAtomContainer() throws Exception {
+    void testdoCrossover_IAtomContainer() throws Exception {
         String filename = "c10h16isomers.smi";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);

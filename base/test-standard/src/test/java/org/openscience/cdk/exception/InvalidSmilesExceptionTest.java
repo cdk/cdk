@@ -25,14 +25,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class InvalidSmilesExceptionTest extends CDKTestCase {
+class InvalidSmilesExceptionTest extends CDKTestCase {
 
-    public InvalidSmilesExceptionTest() {
+    InvalidSmilesExceptionTest() {
         super();
     }
 
     @Test
-    public void testInvalidSmilesException_String() {
+    void testInvalidSmilesException_String() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         InvalidSmilesException exception = new InvalidSmilesException(EXPLANATION);
         Assertions.assertNotNull(exception);

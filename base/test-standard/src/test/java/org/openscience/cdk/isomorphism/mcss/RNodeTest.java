@@ -25,10 +25,10 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class RNodeTest extends CDKTestCase {
+class RNodeTest extends CDKTestCase {
 
     @Test
-    public void testRNode_int_int() {
+    void testRNode_int_int() {
         RNode node = new RNode(1, 2);
         Assertions.assertNotNull(node);
         Assertions.assertNotNull(node.getExtension());

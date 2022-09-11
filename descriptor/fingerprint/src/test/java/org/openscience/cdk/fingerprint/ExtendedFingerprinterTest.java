@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.diff.AtomContainerDiff;
 /**
  * @cdk.module test-fingerprint
  */
-public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
+class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -60,13 +60,13 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
     }
 
     @Test
-    public void testExtendedFingerprinter() throws java.lang.Exception {
+    void testExtendedFingerprinter() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
         Assertions.assertNotNull(fingerprinter);
     }
 
     @Test
-    public void testgetBitFingerprint_IAtomContainer() throws java.lang.Exception {
+    void testgetBitFingerprint_IAtomContainer() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
         Assertions.assertNotNull(fingerprinter);
 
@@ -79,7 +79,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
     }
 
     @Test
-    public void testgetBitFingerprint_IAtomContainer_IRingSet_List() throws java.lang.Exception {
+    void testgetBitFingerprint_IAtomContainer_IRingSet_List() throws java.lang.Exception {
         ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
         Assertions.assertNotNull(fingerprinter);
 
@@ -94,14 +94,14 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
     }
 
     @Test
-    public void testGetSize() throws java.lang.Exception {
+    void testGetSize() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
         Assertions.assertNotNull(fingerprinter);
         Assertions.assertEquals(512, fingerprinter.getSize());
     }
 
     @Test
-    public void testExtendedFingerprinter_int() throws java.lang.Exception {
+    void testExtendedFingerprinter_int() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
         Assertions.assertNotNull(fingerprinter);
 
@@ -114,7 +114,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
     }
 
     @Test
-    public void testExtendedFingerprinter_int_int() throws java.lang.Exception {
+    void testExtendedFingerprinter_int_int() throws java.lang.Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter(512, 7);
         Assertions.assertNotNull(fingerprinter);
 
@@ -132,7 +132,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
      * default
      */
     @Test
-    public void testDifferentRingFinders() throws Exception {
+    void testDifferentRingFinders() throws Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
         IAtomContainer ac1 = new AtomContainer();
         Atom atom1 = new Atom("C");
@@ -186,7 +186,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
      * fingerprint
      */
     @Test
-    public void testCondensedSingle() throws Exception {
+    void testCondensedSingle() throws Exception {
         IAtomContainer molcondensed = new AtomContainer();
         IAtom a1 = molcondensed.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(421.99999999999994, 860.0));
@@ -393,7 +393,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
      * before the change in r11932
      */
     @Test
-    public void testChebi() throws Exception {
+    void testChebi() throws Exception {
         IAtomContainer searchmol;
         IAtomContainer findmol;
         String filename = "chebisearch.mol";
@@ -421,7 +421,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
      * @throws CloneNotSupportedException
      */
     @Test
-    public void testMoleculeInvariance() throws Exception, CloneNotSupportedException {
+    void testMoleculeInvariance() throws Exception, CloneNotSupportedException {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         IAtomContainer clone = mol.clone();
 

@@ -60,7 +60,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public CarbonylEliminationReactionTest() throws Exception {
+    CarbonylEliminationReactionTest() throws Exception {
         setReaction(CarbonylEliminationReaction.class);
     }
 
@@ -68,7 +68,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testCarbonylEliminationReaction() throws Exception {
+    void testCarbonylEliminationReaction() throws Exception {
         IReactionProcess type = new CarbonylEliminationReaction();
         Assertions.assertNotNull(type);
     }
@@ -115,7 +115,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testManuallyPCentreActiveExample1() throws Exception {
+    void testManuallyPCentreActiveExample1() throws Exception {
 
         IReactionProcess type = new CarbonylEliminationReaction();
 
@@ -157,7 +157,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testMappingExample1() throws Exception {
+    void testMappingExample1() throws Exception {
 
         IReactionProcess type = new CarbonylEliminationReaction();
 

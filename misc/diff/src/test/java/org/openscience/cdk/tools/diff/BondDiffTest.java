@@ -32,17 +32,17 @@ import static org.mockito.Mockito.when;
 /**
  * @cdk.module test-diff
  */
-public class BondDiffTest {
+class BondDiffTest {
 
     @Test
-    public void testMatchAgainstItself() {
+    void testMatchAgainstItself() {
         IBond bond1 = mock(IBond.class);
         String result = BondDiff.diff(bond1, bond1);
         Assertions.assertEquals("", result);
     }
 
     @Test
-    public void testDiff() {
+    void testDiff() {
 
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
@@ -77,7 +77,7 @@ public class BondDiffTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
 

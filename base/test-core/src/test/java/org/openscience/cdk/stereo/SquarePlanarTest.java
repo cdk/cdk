@@ -40,10 +40,10 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SquarePlanarTest {
+class SquarePlanarTest {
 
     @Test
-    public void normalize() throws InvalidSmilesException {
+    void normalize() throws InvalidSmilesException {
         SmilesParser             smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer           mol    = smipar.parseSmiles("Cl[Pt@SP3](Cl)([NH3])[NH3]");
         Iterator<IStereoElement> ses    = mol.stereoElements().iterator();
@@ -62,7 +62,7 @@ public class SquarePlanarTest {
     }
 
     @Test
-    public void tooManyCarriers() {
+    void tooManyCarriers() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IAtom a0 = Mockito.mock(IAtom.class);
@@ -76,7 +76,7 @@ public class SquarePlanarTest {
     }
 
     @Test
-    public void badConfigurationOrder() {
+    void badConfigurationOrder() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IAtom a0 = Mockito.mock(IAtom.class);

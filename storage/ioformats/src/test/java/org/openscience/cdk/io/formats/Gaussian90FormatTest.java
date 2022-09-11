@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class Gaussian90FormatTest extends ChemFormatMatcherTest {
+class Gaussian90FormatTest extends ChemFormatMatcherTest {
 
-    public Gaussian90FormatTest() {
+    Gaussian90FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) Gaussian90Format.getInstance());
     }
 

@@ -30,16 +30,16 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-qsaratomic
  */
-public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
+class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
 
     /**
      *  Constructor for the CovalentRadiusDescriptorTest object
      *
      */
-    public CovalentRadiusDescriptorTest() {}
+    CovalentRadiusDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(CovalentRadiusDescriptor.class);
     }
 
@@ -52,7 +52,7 @@ public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit
      */
     @Test
-    public void testVdWRadiusDescriptor() throws java.lang.Exception {
+    void testVdWRadiusDescriptor() throws java.lang.Exception {
         double[] testResult = {0.77};
         IAtomicDescriptor descriptor = new CovalentRadiusDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

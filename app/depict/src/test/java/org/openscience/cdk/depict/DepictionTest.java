@@ -30,10 +30,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-public class DepictionTest {
+class DepictionTest {
 
     @Test
-    public void depictAsPs() throws CDKException {
+    void depictAsPs() throws CDKException {
         DepictionGenerator dg = new DepictionGenerator();
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
@@ -45,7 +45,7 @@ public class DepictionTest {
     }
 
     @Test
-    public void depictAsEps() throws CDKException {
+    void depictAsEps() throws CDKException {
         DepictionGenerator dg = new DepictionGenerator();
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
@@ -57,7 +57,7 @@ public class DepictionTest {
     }
 
     @Test
-    public void depictAsEps2() throws CDKException {
+    void depictAsEps2() throws CDKException {
         DepictionGenerator dg = new DepictionGenerator();
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("C1CCCCC1CCCCC");
@@ -69,7 +69,7 @@ public class DepictionTest {
     }
 
     @Test
-    public void depictAsSvg() throws CDKException {
+    void depictAsSvg() throws CDKException {
         DepictionGenerator dg = new DepictionGenerator();
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");

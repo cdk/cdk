@@ -38,13 +38,13 @@ public class MappingGeneratorTest extends AbstractGeneratorTest {
     private MappingGenerator generator;
 
     @Override
-    public Rectangle getCustomCanvas() {
+    protected Rectangle getCustomCanvas() {
         return null;
     }
 
     @BeforeEach
     @Override
-    public void setup() {
+    void setup() {
         super.setup();
         model.registerParameters(new BasicSceneGenerator());
         model.registerParameters(new BasicAtomGenerator());
@@ -55,7 +55,7 @@ public class MappingGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Test
-    public void testEmptyReaction() {
+    void testEmptyReaction() {
         IReaction emptyReaction = super.builder.newInstance(IReaction.class);
 
         // nothing should be made

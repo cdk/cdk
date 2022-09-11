@@ -59,17 +59,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @see org.openscience.cdk.io.MDLReader
  * @see org.openscience.cdk.io.SDFReaderTest
  */
-public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
+class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLV3000Reader(), "org/openscience/cdk/io/iterator/molV3000.mol");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         MDLV3000Reader reader = new MDLV3000Reader();
         Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
@@ -78,7 +78,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1571207
      */
     @Test
-    public void testBug1571207() throws Exception {
+    void testBug1571207() throws Exception {
         String filename = "iterator/molV3000.mol";
         logger.info("Testing: " + filename);
         try (InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -98,7 +98,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testEmptyString() throws Exception {
+    void testEmptyString() throws Exception {
         String emptyString = "";
         try (MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString))) {
             reader.read(new AtomContainer());
@@ -110,7 +110,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testPseudoAtomLabels() throws Exception {
+    void testPseudoAtomLabels() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("pseudoatomsv3000.mol");
         MDLV3000Reader reader = new MDLV3000Reader(in)) {
             IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -123,7 +123,8 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
     
-    @Test public void pseudoAtomReplacement() throws Exception {
+    @Test
+    void pseudoAtomReplacement() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("pseudoAtomReplacement.mol"))) {
             IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
             for (IAtom atom : container.getBond(9).atoms()) {
@@ -133,7 +134,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void positionalVariation() throws Exception {
+    void positionalVariation() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
             IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
             assertThat(container.getBondCount(), is(8));
@@ -145,7 +146,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void radicalsInCH3() throws Exception {
+    void radicalsInCH3() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("CH3.mol"))) {
             IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
             assertThat(container.getSingleElectronCount(), is(1));
@@ -154,7 +155,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void issue602() throws Exception {
+    void issue602() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
             IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(mol.getAtomCount(), CoreMatchers.is(31));
@@ -162,7 +163,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void forceReadAs3D() throws Exception {
+    void forceReadAs3D() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
             IAtomContainer mol = reader.read(builder.newAtomContainer());
@@ -184,7 +185,8 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    @Test public void massSpecification() throws Exception {
+    @Test
+    void massSpecification() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("(methyl-13C)-cyclohexane.mdl3"))) {
             IAtomContainer mol = reader.read(builder.newAtomContainer());
@@ -194,7 +196,8 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    @Test public void hydIsotopes() throws Exception {
+    @Test
+    void hydIsotopes() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("cyclohexane-d6.mdl3"))) {
             IAtomContainer mol = reader.read(builder.newAtomContainer());
@@ -211,7 +214,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     // InterpretHydrogenIsotopes=false means D comes in as an IPseudoAtom
     @Test
-    public void hydIsotopesAsPseudo() throws Exception {
+    void hydIsotopesAsPseudo() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("cyclohexane-d6.mdl3"))) {
             reader.getSetting("InterpretHydrogenIsotopes").setSetting("false");
@@ -234,7 +237,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
      * to avoid NPE in valence calculation.
      */
     @Test
-    public void reading_query_bond_should_not_npe() throws Exception {
+    void reading_query_bond_should_not_npe() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("v3000Query.mol"))) {
             IAtomContainer container = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             for (IBond bond: container.bonds()) {
@@ -245,7 +248,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testNoChiralFlag() throws Exception {
+    void testNoChiralFlag() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052112362D          \n" +
                 "\n" +
@@ -284,7 +287,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testChiralFlag() throws Exception {
+    void testChiralFlag() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052112362D          \n" +
                 "\n" +
@@ -324,7 +327,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testStereoRac1() throws Exception {
+    void testStereoRac1() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052113162D          \n" +
                 "\n" +
@@ -366,7 +369,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testStereoRel1() throws Exception {
+    void testStereoRel1() throws Exception {
         final String input = "\n" +
                 "  Mrv1810 02052113162D          \n" +
                 "\n" +
@@ -406,7 +409,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testStereo0d() throws Exception {
+    void testStereo0d() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("stereo0d.mdl3");
              MDLV3000Reader mdlr = new MDLV3000Reader(in)) {

@@ -30,16 +30,16 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * @cdk.module test-cip
  */
-public class VisitedAtomsTest {
+class VisitedAtomsTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         VisitedAtoms visited = new VisitedAtoms();
         Assertions.assertNotNull(visited);
     }
 
     @Test
-    public void testVisiting() {
+    void testVisiting() {
         VisitedAtoms visited = new VisitedAtoms();
         IAtom atom = new Atom("C");
         Assertions.assertFalse(visited.isVisited(atom));
@@ -48,7 +48,7 @@ public class VisitedAtomsTest {
     }
 
     @Test
-    public void testAddedVisitedAtoms() {
+    void testAddedVisitedAtoms() {
         VisitedAtoms visited = new VisitedAtoms();
         IAtom atom = new Atom("C");
 

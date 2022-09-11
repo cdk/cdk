@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IChemSequence;
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemSequenceTest extends AbstractChemSequenceTest {
+class DebugChemSequenceTest extends AbstractChemSequenceTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugChemSequence::new);
     }
 
     @Test
-    public void testDebugChemSequence() {
+    void testDebugChemSequence() {
         IChemSequence cs = new DebugChemSequence();
         Assertions.assertNotNull(cs);
     }

@@ -33,12 +33,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-hash
  */
-public class XorshiftTest {
+class XorshiftTest {
 
     private final Xorshift generator = new Xorshift();
 
     @Test
-    public void testNext() throws Exception {
+    void testNext() throws Exception {
         assertThat(generator.next(5L), is(178258005L));
         assertThat(generator.next(178258005L), is(5651489766934405L));
         assertThat(generator.next(5651489766934405L), is(-9127299601691290113L));
@@ -50,7 +50,7 @@ public class XorshiftTest {
     // good enough for hashing molecules but may sometimes not be uniformly
     // distributed
     @Disabled("random fail")
-    public void testDistribution() throws Exception {
+    void testDistribution() throws Exception {
 
         int[] values = new int[10];
 
@@ -71,7 +71,7 @@ public class XorshiftTest {
      * demonstrates a limitation of the xor-shift, 0 will always return 0
      */
     @Test
-    public void demonstrateZeroLimitation() {
+    void demonstrateZeroLimitation() {
         assertThat(new Xorshift().next(0L), is(0L));
     }
 }

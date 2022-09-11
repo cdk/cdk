@@ -43,13 +43,13 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 /**
  * @cdk.module test-core
  */
-public class SpanningTreeTest extends CDKTestCase {
+class SpanningTreeTest extends CDKTestCase {
 
     private static SpanningTree azulene = null;
     private static SpanningTree ethane  = null;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         if (azulene == null) {
             // load azulene
             String filename = "azulene.mol";
@@ -75,32 +75,32 @@ public class SpanningTreeTest extends CDKTestCase {
     }
 
     @Test
-    public void testSpanningTree_IAtomContainer() {
+    void testSpanningTree_IAtomContainer() {
         SpanningTree sTree = new SpanningTree(new AtomContainer());
         Assertions.assertNotNull(sTree);
     }
 
     @Test
-    public void testGetCyclicFragmentsContainer() throws Exception {
+    void testGetCyclicFragmentsContainer() throws Exception {
         IAtomContainer ringSystems = azulene.getCyclicFragmentsContainer();
         Assertions.assertEquals(10, ringSystems.getAtomCount());
         Assertions.assertEquals(11, ringSystems.getBondCount());
     }
 
     @Test
-    public void testGetBondsCyclicCount() throws Exception {
+    void testGetBondsCyclicCount() throws Exception {
         Assertions.assertEquals(11, azulene.getBondsCyclicCount());
         Assertions.assertEquals(0, ethane.getBondsCyclicCount());
     }
 
     @Test
-    public void testGetBondsAcyclicCount() throws Exception {
+    void testGetBondsAcyclicCount() throws Exception {
         Assertions.assertEquals(0, azulene.getBondsAcyclicCount());
         Assertions.assertEquals(1, ethane.getBondsAcyclicCount());
     }
 
     @Test
-    public void testGetPath_IAtomContainer_IAtom_IAtom() throws Exception {
+    void testGetPath_IAtomContainer_IAtom_IAtom() throws Exception {
         IAtomContainer ethaneMol = ethane.getSpanningTree();
         IAtomContainer path = ethane.getPath(ethaneMol, ethaneMol.getAtom(0), ethaneMol.getAtom(1));
         Assertions.assertEquals(2, path.getAtomCount());
@@ -120,7 +120,7 @@ public class SpanningTreeTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsDisconnected() {
+    void testIsDisconnected() {
         Assertions.assertFalse(azulene.isDisconnected());
 
         IChemObjectBuilder builder = azulene.getSpanningTree().getBuilder();
@@ -134,7 +134,7 @@ public class SpanningTreeTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetSpanningTree() {
+    void testGetSpanningTree() {
         IAtomContainer container = azulene.getSpanningTree();
         Assertions.assertEquals(10, container.getAtomCount());
         Assertions.assertEquals(9, container.getBondCount()); // two rings to be broken to make a tree
@@ -145,7 +145,7 @@ public class SpanningTreeTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetBasicRings() throws Exception {
+    void testGetBasicRings() throws Exception {
         IRingSet ringSet = azulene.getBasicRings();
         Assertions.assertEquals(2, ringSet.getAtomContainerCount());
 
@@ -154,7 +154,7 @@ public class SpanningTreeTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAllRings() throws Exception {
+    void testGetAllRings() throws Exception {
         IRingSet ringSet = azulene.getAllRings();
         Assertions.assertEquals(3, ringSet.getAtomContainerCount());
 
@@ -163,13 +163,13 @@ public class SpanningTreeTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetSpanningTreeSize() {
+    void testGetSpanningTreeSize() {
         Assertions.assertEquals(9, azulene.getSpanningTreeSize());
         Assertions.assertEquals(1, ethane.getSpanningTreeSize());
     }
 
     @Test
-    public void testGetSpanningTreeForPyridine() throws NoSuchAtomException {
+    void testGetSpanningTreeForPyridine() throws NoSuchAtomException {
         IAtomContainer mol = TestMoleculeFactory.makePyridine();
         SpanningTree spanningTree = new SpanningTree(mol);
         Assertions.assertEquals(6, spanningTree.getBondsCyclicCount());

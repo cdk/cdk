@@ -34,10 +34,10 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
  *
  * @cdk.module test-silent
  */
-public class IsotopeTest extends AbstractIsotopeTest {
+class IsotopeTest extends AbstractIsotopeTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
             @Override
@@ -48,20 +48,20 @@ public class IsotopeTest extends AbstractIsotopeTest {
     }
 
     @Test
-    public void testIsotope_String() {
+    void testIsotope_String() {
         IIsotope i = new Isotope("C");
         Assertions.assertEquals("C", i.getSymbol());
     }
 
     @Test
-    public void testIsotope_IElement() {
+    void testIsotope_IElement() {
         IElement element = newChemObject().getBuilder().newInstance(IElement.class, "C");
         IIsotope i = new Isotope(element);
         Assertions.assertEquals("C", i.getSymbol());
     }
 
     @Test
-    public void testIsotope_int_String_int_double_double() {
+    void testIsotope_int_String_int_double_double() {
         IIsotope i = new Isotope(6, "C", 12, 12.001, 80.0);
         Assertions.assertEquals(12, i.getMassNumber().intValue());
         Assertions.assertEquals("C", i.getSymbol());
@@ -71,14 +71,14 @@ public class IsotopeTest extends AbstractIsotopeTest {
     }
 
     @Test
-    public void testIsotope_String_int() {
+    void testIsotope_String_int() {
         IIsotope i = new Isotope("C", 12);
         Assertions.assertEquals(12, i.getMassNumber().intValue());
         Assertions.assertEquals("C", i.getSymbol());
     }
 
     @Test
-    public void testIsotope_int_String_double_double() {
+    void testIsotope_int_String_double_double() {
         IIsotope i = new Isotope(6, "C", 12.001, 80.0);
         Assertions.assertEquals("C", i.getSymbol());
         Assertions.assertEquals(6, i.getAtomicNumber().intValue());
@@ -87,7 +87,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
     }
 
     @Test
-    public void testCompare_MassNumber() {
+    void testCompare_MassNumber() {
         Isotope iso = new Isotope("C");
         iso.setMassNumber(12);
         Isotope iso2 = new Isotope("C");
@@ -96,7 +96,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
     }
 
     @Test
-    public void testCompare_MassNumberIntegers() {
+    void testCompare_MassNumberIntegers() {
         Isotope iso = new Isotope("C");
         iso.setMassNumber(12);
         Isotope iso2 = new Isotope("C");
@@ -105,7 +105,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
     }
 
     @Test
-    public void testCompare_MassNumberIntegers_ValueOf() {
+    void testCompare_MassNumberIntegers_ValueOf() {
         Isotope iso = new Isotope("C");
         iso.setMassNumber(12);
         Isotope iso2 = new Isotope("C");
@@ -114,7 +114,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
     }
 
     @Test
-    public void testCompare_ExactMass() {
+    void testCompare_ExactMass() {
         Isotope iso = new Isotope("C");
         iso.setExactMass(12.000000);
         Isotope iso2 = new Isotope("C");
@@ -123,7 +123,7 @@ public class IsotopeTest extends AbstractIsotopeTest {
     }
 
     @Test
-    public void testCompare_NaturalAbundance() {
+    void testCompare_NaturalAbundance() {
         Isotope iso = new Isotope("C");
         iso.setNaturalAbundance(12.000000);
         Isotope iso2 = new Isotope("C");

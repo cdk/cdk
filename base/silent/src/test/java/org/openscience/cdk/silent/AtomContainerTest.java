@@ -32,15 +32,15 @@ import org.openscience.cdk.interfaces.ILonePair;
  *
  * @cdk.module test-silent
  */
-public class AtomContainerTest extends AbstractAtomContainerTest {
+class AtomContainerTest extends AbstractAtomContainerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(AtomContainer::new);
     }
 
     @Test
-    public void testAtomContainer_int_int_int_int() {
+    void testAtomContainer_int_int_int_int() {
         // create an empty container with predefined
         // array lengths
         IAtomContainer ac = new AtomContainer(5, 6, 1, 2);
@@ -55,7 +55,7 @@ public class AtomContainerTest extends AbstractAtomContainerTest {
     }
 
     @Test
-    public void testAtomContainer() {
+    void testAtomContainer() {
         // create an empty container with in the constructor defined array lengths
         IAtomContainer container = new AtomContainer();
 
@@ -71,7 +71,7 @@ public class AtomContainerTest extends AbstractAtomContainerTest {
     }
 
     @Test
-    public void testAtomContainer_IAtomContainer() {
+    void testAtomContainer_IAtomContainer() {
         IAtomContainer acetone = newChemObject().getBuilder().newInstance(IAtomContainer.class);
         IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");
         IAtom c2 = acetone.getBuilder().newInstance(IAtom.class, "C");

@@ -60,7 +60,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
     /**
      *  The JUnit setup method
      */
-    public PiBondingMovementReactionTest() throws Exception {
+    PiBondingMovementReactionTest() throws Exception {
         setReaction(PiBondingMovementReaction.class);
     }
 
@@ -68,7 +68,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testPiBondingMovementReaction() {
+    void testPiBondingMovementReaction() {
         IReactionProcess type = new PiBondingMovementReaction();
         Assertions.assertNotNull(type);
     }
@@ -132,7 +132,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      * InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
      */
     @Test
-    public void testAutomaticSearchCentreActiveExample1() throws Exception {
+    void testAutomaticSearchCentreActiveExample1() throws Exception {
         IReactionProcess type = new PiBondingMovementReaction();
         // C1=C(C)-C(C)=C-C=C1
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -215,7 +215,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      * InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
      */
     @Test
-    public void testDoubleRingConjugated() throws Exception {
+    void testDoubleRingConjugated() throws Exception {
         IReactionProcess type = new PiBondingMovementReaction();
         // C1=CC(=CC2=C1C=CC=C2)C
         IAtomContainerSet setOfReactants = getExampleReactants();
@@ -285,7 +285,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      *
      */
     @Test
-    public void testDoubleRingConjugated2() throws Exception {
+    void testDoubleRingConjugated2() throws Exception {
         IReactionProcess type = new PiBondingMovementReaction();
         // C1=CC(=CC2=C1C=CC=C2)C
 

@@ -31,22 +31,22 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  *
  * @cdk.module test-datadebug
  */
-public class DebugSingleElectronTest extends AbstractSingleElectronTest {
+class DebugSingleElectronTest extends AbstractSingleElectronTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugSingleElectron::new);
     }
 
     @Test
-    public void testDebugSingleElectron() {
+    void testDebugSingleElectron() {
         ISingleElectron radical = new DebugSingleElectron();
         Assertions.assertNull(radical.getAtom());
         Assertions.assertEquals(1, radical.getElectronCount().intValue());
     }
 
     @Test
-    public void testDebugSingleElectron_IAtom() {
+    void testDebugSingleElectron_IAtom() {
         IAtom atom = newChemObject().getBuilder().newInstance(IAtom.class, "N");
         ISingleElectron radical = new DebugSingleElectron(atom);
         Assertions.assertEquals(1, radical.getElectronCount().intValue());

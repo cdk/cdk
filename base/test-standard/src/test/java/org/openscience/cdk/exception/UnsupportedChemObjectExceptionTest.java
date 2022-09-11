@@ -25,14 +25,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class UnsupportedChemObjectExceptionTest extends CDKTestCase {
+class UnsupportedChemObjectExceptionTest extends CDKTestCase {
 
-    public UnsupportedChemObjectExceptionTest() {
+    UnsupportedChemObjectExceptionTest() {
         super();
     }
 
     @Test
-    public void testUnsupportedChemObjectException_String() {
+    void testUnsupportedChemObjectException_String() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         UnsupportedChemObjectException exception = new UnsupportedChemObjectException(EXPLANATION);
         Assertions.assertNotNull(exception);

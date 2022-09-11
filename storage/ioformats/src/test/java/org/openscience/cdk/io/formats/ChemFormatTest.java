@@ -30,22 +30,22 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * @cdk.module test-ioformats
  */
-abstract public class ChemFormatTest extends ResourceFormatTest {
+abstract class ChemFormatTest extends ResourceFormatTest {
 
     private IChemFormat chemFormat;
 
-    public void setChemFormat(IChemFormat format) {
+    void setChemFormat(IChemFormat format) {
         super.setResourceFormat(format);
         this.chemFormat = format;
     }
 
     @Test
-    public void testChemFormatSet() {
+    void testChemFormatSet() {
         Assertions.assertNotNull(chemFormat, "You must use setChemFormat() to set the IChemFormat object.");
     }
 
     @Disabled("Test cannot be run because it causes a circular dependency cycle")
-    public void testGetReaderClassName() throws Exception {
+    void testGetReaderClassName() throws Exception {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getReaderClassName() != null) {
             String readerClass = chemFormat.getReaderClassName();
@@ -56,7 +56,7 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
     }
 
     @Disabled("Test cannot be run because it causes a circular dependency cycle")
-    public void testGetWriterClassName() throws Exception {
+    void testGetWriterClassName() throws Exception {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getWriterClassName() != null) {
             String writerClass = chemFormat.getWriterClassName();
@@ -67,14 +67,14 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
     }
 
     @Test
-    public void testGetSupportedDataFeatures() {
+    void testGetSupportedDataFeatures() {
         int supported = chemFormat.getSupportedDataFeatures();
         Assertions.assertTrue(supported >= DataFeatures.NONE);
         Assertions.assertTrue(supported <= 1 << 13); // 13 features, so: all summed <= 1<<13
     }
 
     @Test
-    public void testGetRequiredDataFeatures() {
+    void testGetRequiredDataFeatures() {
         int required = chemFormat.getRequiredDataFeatures();
         Assertions.assertTrue(required >= DataFeatures.NONE);
         Assertions.assertTrue(required <= 1 << 13); // 13 features, so: all summed <= 1<<13

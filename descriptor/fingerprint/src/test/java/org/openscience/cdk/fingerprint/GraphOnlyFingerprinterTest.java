@@ -46,7 +46,7 @@ import java.util.Random;
 /**
  * @cdk.module test-standard
  */
-public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
+class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
@@ -56,7 +56,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
     }
 
     @Test
-    public void testFingerprint() throws Exception {
+    void testFingerprint() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new GraphOnlyFingerprinter();
 
@@ -87,7 +87,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
      *
      */
     @Test
-    public void testFingerPrint() throws Exception {
+    void testFingerPrint() throws Exception {
         IFingerprinter printer = new GraphOnlyFingerprinter();
 
         IAtomContainer mol1 = createMolecule(molecule_test_2);

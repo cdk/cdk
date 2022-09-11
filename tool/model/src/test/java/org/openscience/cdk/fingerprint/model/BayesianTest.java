@@ -52,7 +52,7 @@ import java.util.Map;
  * Validation test for the Bayesian model building & serialisation.
  * @cdk.module test-standard
  */
-public class BayesianTest {
+class BayesianTest {
 
     private static final ILoggingTool logger          = LoggingToolFactory.createLoggingTool(BayesianTest.class);
 
@@ -155,7 +155,7 @@ public class BayesianTest {
      */
 
     @Test
-    public void testFingerprints() throws Exception {
+    void testFingerprints() throws Exception {
         logger.info("Bayesian/Fingerprints test: verifying circular fingerprints for a single molecule");
 
         checkFP(REF_MOLECULE, CircularFingerprinter.CLASS_ECFP6, 0, REF_ECFP6_0);
@@ -163,14 +163,14 @@ public class BayesianTest {
     }
 
     @Test
-    public void testAuxiliary() throws Exception {
+    void testAuxiliary() throws Exception {
         logger.info("Bayesian/Fingerprints test: making sure auxiliary fields are preserved");
 
         checkTextFields();
     }
 
     @Test
-    public void testConfusion() throws Exception {
+    void testConfusion() throws Exception {
         logger.info("Bayesian/Fingerprints test: ensuring expected truth table for canned data");
 
         confirmPredictions("Tiny.sdf", 8, 8, 0, 0);
@@ -178,7 +178,7 @@ public class BayesianTest {
     }
 
     @Test
-    public void testFolding() throws Exception {
+    void testFolding() throws Exception {
         logger.info("Bayesian/Fingerprints test: comparing folded fingerprints to reference set");
 
         compareFolding("FoldedProbes.sdf", "ECFP6/0", CircularFingerprinter.CLASS_ECFP6, 0);
@@ -189,7 +189,7 @@ public class BayesianTest {
 
     @Test
     @Tag("SlowTest")
-    public void testExample1() throws Exception {
+    void testExample1() throws Exception {
         logger.info("Bayesian/Fingerprints test: using dataset of binding data to compare to reference data");
 
         runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian", true);
@@ -200,7 +200,7 @@ public class BayesianTest {
 
     @Test
     @Tag("SlowTest")
-    public void testExample2() throws Exception {
+    void testExample2() throws Exception {
         logger.info("Bayesian/Fingerprints test: using dataset of molecular probes to compare to reference data");
 
         runTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_ECFP6, 1024, 0,

@@ -30,10 +30,10 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.exception.CDKException
  */
-public class CDKExceptionTest extends CDKTestCase {
+class CDKExceptionTest extends CDKTestCase {
 
     @Test
-    public void testCDKException_String() {
+    void testCDKException_String() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         CDKException exception = new CDKException(EXPLANATION);
         Assertions.assertNotNull(exception);
@@ -41,7 +41,7 @@ public class CDKExceptionTest extends CDKTestCase {
     }
 
     @Test
-    public void testCDKException_String_Throwable() {
+    void testCDKException_String_Throwable() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         try {
             int[] array = new int[0];

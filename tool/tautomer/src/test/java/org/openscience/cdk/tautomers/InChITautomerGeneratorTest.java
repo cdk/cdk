@@ -49,12 +49,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-tautomer
  */
 
-public class InChITautomerGeneratorTest extends CDKTestCase {
+class InChITautomerGeneratorTest extends CDKTestCase {
 
     private final SmilesParser           smilesParser;
     private InChITautomerGenerator tautomerGenerator = new InChITautomerGenerator();
 
-    public InChITautomerGeneratorTest() throws CDKException {
+    InChITautomerGeneratorTest() throws CDKException {
         super();
         smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         tautomerGenerator = new InChITautomerGenerator();
@@ -80,28 +80,28 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void test1() throws Exception {
+    void test1() throws Exception {
         unitTestWithInchiProvided("NC1=CC(N)=NC(O)=N1", "InChI=1S/C4H6N4O/c5-2-1-3(6)8-4(9)7-2/h1H,(H5,5,6,7,8,9)", 5);
     }
 
     @Test
-    public void test2() throws Exception {
+    void test2() throws Exception {
         unitTestWithInchiProvided("CCCN1C2=C(NC=N2)C(=O)NC1=O",
                 "InChI=1S/C8H10N4O2/c1-2-3-12-6-5(9-4-10-6)7(13)11-8(12)14/h4H,2-3H2,1H3,(H,9,10)(H,11,13,14)", 8);
     }
 
     @Test
-    public void test3() throws Exception {
+    void test3() throws Exception {
         unitTestWithInchiProvided("CCNC(=N)NC", "InChI=1S/C4H11N3/c1-3-7-4(5)6-2/h3H2,1-2H3,(H3,5,6,7)", 3);
     }
 
     @Test
-    public void test4() throws Exception {
+    void test4() throws Exception {
         unitTestWithInchiProvided("O=C1NC=CC(=O)N1", "InChI=1S/C4H4N2O2/c7-3-1-2-5-4(8)6-3/h1-2H,(H2,5,6,7,8)", 6);
     }
 
     @Test
-    public void test5() throws Exception {
+    void test5() throws Exception {
         unitTestWithInchiProvided("CCN1CCOC2=CC(NC3=NCCN3)=CC=C12",
                 "InChI=1S/C13H18N4O/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13/"
                         + "h3-4,9H,2,5-8H2,1H3,(H2,14,15,16)", 2);
@@ -109,7 +109,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
 
     @Test
     @Tag("SlowTest")
-    public void test6() throws Exception {
+    void test6() throws Exception {
         //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
         unitTestWithInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2",
                 "InChI=1/C19H16O4/c1-12(20)11-15(13-7-3-2-4-8-13)17-18(21)14-9-5-6-10-16(14)23-19(17)22/"
@@ -117,39 +117,39 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void test1_fast() throws Exception {
+    void test1_fast() throws Exception {
         unitTestWithoutInchiProvided("NC1=CC(N)=NC(O)=N1", 0, 5);
     }
 
     @Test
-    public void test2_fast() throws Exception {
+    void test2_fast() throws Exception {
         unitTestWithoutInchiProvided("CCCN1C2=C(NC=N2)C(=O)NC1=O", 0, 8);
     }
 
     @Test
-    public void test3_fast() throws Exception {
+    void test3_fast() throws Exception {
         unitTestWithoutInchiProvided("CCNC(=N)NC", 0, 3);
     }
 
     @Test
-    public void test4_fast() throws Exception {
+    void test4_fast() throws Exception {
         unitTestWithoutInchiProvided("O=C1NC=CC(=O)N1", 0, 6);
     }
 
     @Test
-    public void test5_fast() throws Exception {
+    void test5_fast() throws Exception {
         unitTestWithoutInchiProvided("CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", 0, 2);
     }
 
     @Test
-    public void test6_fast() throws Exception {
+    void test6_fast() throws Exception {
         //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
         unitTestWithoutInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", InChITautomerGenerator.KETO_ENOL,  6);
     }
 
     @Test
     // bail out on dots in formula
-    public void testFail1() throws Exception {
+    void testFail1() throws Exception {
         Assertions.assertThrows(CDKException.class, () -> {
             unitTestWithInchiProvided("[I-].CCN1CCOC2=CC(NC3=NCCN3)=CC=C12",
                                       "InChI=1S/C13H18N4O.HI/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13;"
@@ -159,7 +159,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
 
     @Test
     // bail out on dots in formula
-    public void testFail2() throws Exception {
+    void testFail2() throws Exception {
         Assertions.assertThrows(CDKException.class, () -> {
             unitTestWithInchiProvided("CN1C=C(C)C(=O)N2C1O[Pt]([NH3+])([NH3+])OC3N(C)C=C(C)C(=O)N3[Pt]2([NH3+])[NH3+]",
                                       "InChI=1S/2C6H9N2O2.4H3N.2Pt/c2*1-4-3-8(2)6(10)7-5(4)9;;;;;;"
@@ -168,7 +168,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void test_withJniInchi() throws Exception {
+    void test_withJniInchi() throws Exception {
         String mdlInput = // same as NC1=CC(N)=NC(O)=N1
         "\n" + "  Mrv0541 02151109592D\n" + "\n" + "  9  9  0  0  0  0            999 V2000\n"
                 + "    2.1434   -0.4125    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n"
@@ -195,7 +195,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testAdenine() throws CDKException, CloneNotSupportedException {
+    void testAdenine() throws CDKException, CloneNotSupportedException {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a1 = builder.newInstance(IAtom.class, "N");

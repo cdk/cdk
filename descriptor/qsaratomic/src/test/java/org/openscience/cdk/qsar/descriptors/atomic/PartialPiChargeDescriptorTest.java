@@ -42,19 +42,19 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
+class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    private final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the PartialPiChargeDescriptorTest object
      *
      */
-    public PartialPiChargeDescriptorTest() {}
+    PartialPiChargeDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(PartialPiChargeDescriptor.class);
     }
 
@@ -65,7 +65,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescriptor_Methyl_Fluoride() throws
+    void testPartialPiChargeDescriptor_Methyl_Fluoride() throws
             Exception {
         double[] testResult = {0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                          * from Petra online:
@@ -101,7 +101,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescriptor_Fluoroethylene() throws
+    void testPartialPiChargeDescriptor_Fluoroethylene() throws
             Exception {
         double[] testResult = {0.0299, 0.0, -0.0299, 0.0, 0.0, 0.0};/*
                                                                      * from
@@ -145,7 +145,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescriptor_FormicAcid() throws
+    void testPartialPiChargeDescriptor_FormicAcid() throws
             Exception {
         double[] testResult = {0.0221, -0.1193, 0.0972, 0.0, 0.0};/*
                                                                    * from Petra
@@ -188,7 +188,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescriptor_Fluorobenzene() throws
+    void testPartialPiChargeDescriptor_Fluorobenzene() throws
             Exception {
         double[] testResult = {0.0262, 0.0, -0.0101, 0.0, -0.006, 0.0, -0.0101, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
@@ -240,7 +240,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescriptor_Methoxyethylene() throws
+    void testPartialPiChargeDescriptor_Methoxyethylene() throws
             Exception {
         double[] testResult = {-0.044, 0.0, 0.044, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                        * from
@@ -302,7 +302,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescriptor_1_Methoxybutadiene() throws Exception {
+    void testPartialPiChargeDescriptor_1_Methoxybutadiene() throws Exception {
         double[] testResult = {-0.0333, 0.0, -0.0399, 0.0, 0.0733, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                                                  * from
                                                                                                                  * Petra
@@ -359,7 +359,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
     /**
      * get the sign of a value
      */
-    private double getSign(double d) {
+    double getSign(double d) {
         double sign = 0.0;
         if (d > 0)
             sign = 1;
@@ -373,7 +373,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescriptoCharge_1() throws Exception {
+    void testPartialPiChargeDescriptoCharge_1() throws Exception {
         double[] testResult = {0.0613, -0.0554, 0.0, -0.0059, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                                             * from
                                                                                                             * Petra
@@ -422,7 +422,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescriptoCharge_2() throws Exception {
+    void testPartialPiChargeDescriptoCharge_2() throws Exception {
         double[] testResult = {-0.0822, 0.02, 0.0, 0.0423, 0.0, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                                                * from
                                                                                                                * Petra
@@ -481,7 +481,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.bug   1959099
      */
     @Disabled("Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.")
-    public void testPartialPiChargeDescriptoCharge_3() throws Exception {
+    void testPartialPiChargeDescriptoCharge_3() throws Exception {
         double[] testResult = {-0.0379, -0.0032, 0.0, -0.0078, 0.0, 0.0488, 0.0, 0.0};/*
                                                                                        * from
                                                                                        * Petra
@@ -528,7 +528,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testPartialPiChargeDescripto4() throws Exception {
+    void testPartialPiChargeDescripto4() throws Exception {
         double[] testResult = {0.0};/*
                                      * from Petra online:
                                      * http://www2.chemie.uni-
@@ -556,7 +556,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testArticle1() throws Exception {
+    void testArticle1() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0, 0.0216, -0.1644, 0.1428, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
                                                                                              * from
@@ -606,7 +606,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testSousa() throws Exception {
+    void testSousa() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0914, 0.0193, -0.1107, 0.0, 0.0, 0.0, -0.0063, 0.0, -0.0101, 0.0, 0.0262, -0.0098,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
@@ -682,7 +682,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testBondNotConjugated() throws Exception {
+    void testBondNotConjugated() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0, 0.0004, 0.0, -0.0004, 0.0, 0.0, 0.0, 0.0, 0.0277, 0.0, -0.0277}; /*
                                                                                                       * from
@@ -732,7 +732,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testDifferentStarts() throws  Exception {
+    void testDifferentStarts() throws  Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("C=CCC=O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
@@ -764,7 +764,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testBondNotConjugated1() throws Exception {
+    void testBondNotConjugated1() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0, -0.0009, 0.0, 0.0009, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
                                                                                                     * from
@@ -812,7 +812,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testBondNotConjugated2() throws Exception {
+    void testBondNotConjugated2() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0, 0.25, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,}; /*
                                                                                                 * from
@@ -862,7 +862,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Tag("SlowTest")
-    public void testLangCalculation() throws Exception {
+    void testLangCalculation() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccc(cc1)n3c4ccccc4(c2ccccc23)");

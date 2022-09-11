@@ -57,18 +57,18 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
  * @author      Egon Willighagen
  * @cdk.created 2001-08-09
  */
-public class PDBWriterTest extends ChemObjectIOTest {
+class PDBWriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new MDLRXNWriter());
     }
 
     @Test
-    public void testRoundTrip() throws Exception {
+    void testRoundTrip() throws Exception {
         StringWriter sWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(sWriter);
 
@@ -104,7 +104,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testRoundTrip_fractionalCoordinates() throws Exception {
+    void testRoundTrip_fractionalCoordinates() throws Exception {
         StringWriter sWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(sWriter);
 
@@ -179,7 +179,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void writeAsHET() throws CDKException, IOException {
+    void writeAsHET() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule();
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);
@@ -191,7 +191,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void writeAsATOM() throws CDKException, IOException {
+    void writeAsATOM() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule();
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);
@@ -203,32 +203,32 @@ public class PDBWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void writeMolID() throws CDKException, IOException {
+    void writeMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule("ZZZ");
         Assertions.assertTrue(getAsString(mol).contains("ZZZ"));
     }
 
     @Test
-    public void writeNullMolID() throws CDKException, IOException {
+    void writeNullMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule(null);
         Assertions.assertTrue(getAsString(mol).contains("MOL"));
     }
 
     @Test
-    public void writeEmptyStringMolID() throws CDKException, IOException {
+    void writeEmptyStringMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule("");
         Assertions.assertTrue(getAsString(mol).contains("MOL"));
     }
 
     @Test
-    public void writeChargedAtom() throws CDKException, IOException {
+    void writeChargedAtom() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule("", 1);
         String[] lines = getAsStringArray(mol);
         Assertions.assertTrue(lines[lines.length - 2].endsWith("+1"));
     }
 
     @Test
-    public void writeMoleculeWithBond() throws CDKException, IOException {
+    void writeMoleculeWithBond() throws CDKException, IOException {
         IAtomContainer mol = singleBondMolecule();
         String[] lines = getAsStringArray(mol);
         String lastLineButTwo = lines[lines.length - 3];
@@ -244,7 +244,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void molfactoryRoundtripTest() throws Exception {
+    void molfactoryRoundtripTest() throws Exception {
         IAtomContainer original = TestMoleculeFactory.makePyrrole();
         setCoordinatesToZero(original);
         StringWriter stringWriter = new StringWriter();

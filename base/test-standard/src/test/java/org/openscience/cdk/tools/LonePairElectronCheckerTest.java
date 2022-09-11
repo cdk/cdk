@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author         Miguel Rojas
  * @cdk.created    2006-04-01
  */
-public class LonePairElectronCheckerTest extends CDKTestCase {
+class LonePairElectronCheckerTest extends CDKTestCase {
 
     private static LonePairElectronChecker lpcheck = null;
 
@@ -50,7 +50,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
     *  The JUnit setup method
     */
     @BeforeAll
-    public static void setUp() throws Exception {
+    static void setUp() throws Exception {
         lpcheck = new LonePairElectronChecker();
     }
 
@@ -58,7 +58,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testAllSaturated_Formaldehyde() throws Exception {
+    void testAllSaturated_Formaldehyde() throws Exception {
         // test Formaldehyde, CH2=O with explicit hydrogen
         IAtomContainer m = new AtomContainer();
         Atom c = new Atom("C");
@@ -85,7 +85,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testAllSaturated_Methanethiol() throws Exception {
+    void testAllSaturated_Methanethiol() throws Exception {
         // test Methanethiol, CH4S
         Atom c = new Atom("C");
         c.setImplicitHydrogenCount(3);
@@ -111,7 +111,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testNewSaturate_Methyl_chloride() throws Exception {
+    void testNewSaturate_Methyl_chloride() throws Exception {
         // test Methyl chloride, CH3Cl
         Atom c1 = new Atom("C");
         c1.setImplicitHydrogenCount(3);
@@ -133,7 +133,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testNewSaturate_Methyl_alcohol() throws Exception {
+    void testNewSaturate_Methyl_alcohol() throws Exception {
         // test Methyl chloride, CH3OH
         Atom c1 = new Atom("C");
         c1.setImplicitHydrogenCount(3);
@@ -156,7 +156,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testNewSaturate_Methyl_alcohol_AddH() throws Exception {
+    void testNewSaturate_Methyl_alcohol_AddH() throws Exception {
         // test Methyl alcohol, CH3OH
         IAtomContainer m = new AtomContainer();
         m.addAtom(new Atom("C"));
@@ -180,7 +180,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testNewSaturate_Methyl_alcohol_protonated() throws Exception {
+    void testNewSaturate_Methyl_alcohol_protonated() throws Exception {
         // test Methyl alcohol protonated, CH3OH2+
         Atom c1 = new Atom("C");
         c1.setImplicitHydrogenCount(3);
@@ -204,7 +204,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testNewSaturate_methoxide_anion() throws Exception {
+    void testNewSaturate_methoxide_anion() throws Exception {
         // test methoxide anion, CH3O-
         Atom c1 = new Atom("C");
         c1.setImplicitHydrogenCount(3);
@@ -227,7 +227,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testNewSaturate_Ammonia() throws Exception {
+    void testNewSaturate_Ammonia() throws Exception {
         // test Ammonia, H3N
         Atom n = new Atom("N");
         n.setImplicitHydrogenCount(3);
@@ -245,7 +245,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit
      */
     @Test
-    public void testNewSaturate_methylamine_radical_cation() throws Exception {
+    void testNewSaturate_methylamine_radical_cation() throws Exception {
         // test Ammonia, CH3NH3+
         Atom c = new Atom("C");
         c.setImplicitHydrogenCount(3);
@@ -269,7 +269,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
      *  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
      */
     @Test
-    public void testNewSaturate_withHAdded() throws Exception {
+    void testNewSaturate_withHAdded() throws Exception {
         // O=C([H])[C+]([H])[C-]([H])[H]
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");

@@ -31,16 +31,16 @@ import org.openscience.cdk.silent.ChemObject;
  *
  * @cdk.module test-core
  */
-public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
+class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
 
     @Test
-    public void testCDKBasedAtomTypeConfigurator() {
+    void testCDKBasedAtomTypeConfigurator() {
         OWLBasedAtomTypeConfigurator configurator = new OWLBasedAtomTypeConfigurator();
         Assertions.assertNotNull(configurator);
     }
 
     @Test
-    public void testReadAtomTypes_IChemObjectBuilder() throws Exception {
+    void testReadAtomTypes_IChemObjectBuilder() throws Exception {
         OWLBasedAtomTypeConfigurator configurator = new OWLBasedAtomTypeConfigurator();
         String configFile = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
@@ -49,7 +49,7 @@ public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetInputStream_InputStream() throws Exception {
+    void testSetInputStream_InputStream() throws Exception {
         testReadAtomTypes_IChemObjectBuilder();
     }
 

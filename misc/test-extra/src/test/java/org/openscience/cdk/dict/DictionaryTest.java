@@ -29,10 +29,10 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DefaultHanlder
  */
-public class DictionaryTest extends CDKTestCase {
+class DictionaryTest extends CDKTestCase {
 
     @Test
-    public void testDefaultHanlder() {
+    void testDefaultHanlder() {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("chemical"); // this dictionary needs the DefaultHanlder
         Entry entry = dict.getEntry("ionPair".toLowerCase());

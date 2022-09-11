@@ -49,23 +49,23 @@ public abstract class AbstractSubGraphTest {
      *
      * @param algorithm
      */
-    public static void setMCSAlgorithm(AbstractSubGraphTest algorithm) {
+    static void setMCSAlgorithm(AbstractSubGraphTest algorithm) {
         AbstractSubGraphTest.algorithm = algorithm;
     }
 
     public AbstractSubGraphTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of isSubgraph method, of class AbstractSubGraph.
@@ -84,7 +84,7 @@ public abstract class AbstractSubGraphTest {
         Assertions.assertEquals(true, smsd1.isSubgraph(true));
     }
 
-    public class ISubGraphImpl extends AbstractSubGraph {
+    private class ISubGraphImpl extends AbstractSubGraph {
 
         @Override
         public boolean isSubgraph(boolean bondMatch) {

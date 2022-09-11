@@ -33,15 +33,15 @@ import org.openscience.cdk.test.interfaces.AbstractElectronContainerTest;
  *
  * @see org.openscience.cdk.ElectronContainer
  */
-public class ElectronContainerTest extends AbstractElectronContainerTest {
+class ElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ElectronContainer::new);
     }
 
     @Test
-    public void testElectronContainer() {
+    void testElectronContainer() {
         IElectronContainer ec = new ElectronContainer();
         Assertions.assertNotNull(ec);
         Assertions.assertEquals(0, ec.getElectronCount().intValue());

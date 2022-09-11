@@ -38,13 +38,13 @@ public class LonePairGeneratorTest extends AbstractGeneratorTest {
     private LonePairGenerator generator;
 
     @Override
-    public Rectangle getCustomCanvas() {
+    protected Rectangle getCustomCanvas() {
         return null;
     }
 
     @BeforeEach
     @Override
-    public void setup() {
+    void setup() {
         super.setup();
         model.registerParameters(new BasicSceneGenerator());
         model.registerParameters(new BasicAtomGenerator());
@@ -55,7 +55,7 @@ public class LonePairGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Test
-    public void testEmptyContainer() {
+    void testEmptyContainer() {
         IAtomContainer emptyContainer = super.builder.newInstance(IAtomContainer.class);
 
         // nothing should be made

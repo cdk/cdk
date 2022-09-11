@@ -32,10 +32,10 @@ import org.openscience.cdk.test.interfaces.AbstractReactionSchemeTest;
  *
  * @see ReactionScheme
  */
-public class ReactionSchemeTest extends AbstractReactionSchemeTest {
+class ReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(ReactionScheme::new);
     }
 
@@ -45,7 +45,7 @@ public class ReactionSchemeTest extends AbstractReactionSchemeTest {
      *
      */
     @Test
-    public void testReactionScheme() {
+    void testReactionScheme() {
         IReactionScheme scheme = new ReactionScheme();
         Assertions.assertNotNull(scheme);
     }

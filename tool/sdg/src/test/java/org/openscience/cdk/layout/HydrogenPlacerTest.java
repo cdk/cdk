@@ -38,13 +38,13 @@ import javax.vecmath.Point2d;
 import java.io.InputStream;
 
 /** @cdk.module test-sdg */
-public class HydrogenPlacerTest extends CDKTestCase {
+class HydrogenPlacerTest extends CDKTestCase {
 
     public boolean       standAlone = false;
     private final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(HydrogenPlacerTest.class);
 
     @Test
-    public void testAtomWithoutCoordinates() {
+    void testAtomWithoutCoordinates() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
             hydrogenPlacer.placeHydrogens2D(new AtomContainer(), new Atom(), 1.5);
@@ -52,7 +52,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
     }
 
     @Test
-    public void testNullContainer() {
+    void testNullContainer() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
             hydrogenPlacer.placeHydrogens2D(null, new Atom(), 1.5);
@@ -60,7 +60,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
     }
 
     @Test
-    public void testNoConnections() {
+    void testNoConnections() {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         AtomContainer  container      = new AtomContainer();
         Atom           atom         = new Atom("C", new Point2d(0, 0));
@@ -70,7 +70,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 
     /** @cdk.bug 1269 */
     @Test
-    public void testH2() {
+    void testH2() {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
 
         // h1 has no coordinates
@@ -85,7 +85,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
     }
 
     @Test
-    public void unplacedNonHydrogen() {
+    void unplacedNonHydrogen() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
 
@@ -102,7 +102,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 
     /** @cdk.bug 933572 */
     @Test
-    public void testBug933572() throws Exception {
+    void testBug933572() throws Exception {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("H"));
         ac.getAtom(0).setPoint2d(new Point2d(0, 0));
@@ -115,7 +115,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
     }
 
     @Test
-    public void testPlaceHydrogens2D() throws Exception {
+    void testPlaceHydrogens2D() throws Exception {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         IAtomContainer dichloromethane = new AtomContainer();
         Atom carbon = new Atom("C");
@@ -158,7 +158,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
      * HydrogenPlacer, not to be run as a JUnit test. Thus the name without
      * "test".
      */
-    public void visualFullMolecule2DEvaluation() throws Exception {
+    void visualFullMolecule2DEvaluation() throws Exception {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         String filename = "data/mdl/reserpine.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

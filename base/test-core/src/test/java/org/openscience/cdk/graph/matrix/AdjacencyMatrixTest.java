@@ -29,17 +29,17 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-core
  */
-public class AdjacencyMatrixTest extends CDKTestCase {
+class AdjacencyMatrixTest extends CDKTestCase {
 
     private static SmilesParser sp;
 
     @BeforeAll
-    public static void getSmilesParser() {
+    static void getSmilesParser() {
         sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 
     @Test
-    public void testGetMatrix_IAtomContainer() throws Exception {
+    void testGetMatrix_IAtomContainer() throws Exception {
         IAtomContainer container = sp.parseSmiles("C1CC1");
         int[][] matrix = AdjacencyMatrix.getMatrix(container);
         Assertions.assertEquals(3, matrix.length);

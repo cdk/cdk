@@ -35,24 +35,24 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @author Asad
  */
-public class ExactMappingTest {
+class ExactMappingTest {
 
     public ExactMappingTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     @Test
-    public void testSomeMethod() {
+    void testSomeMethod() {
         // TODO review the generated test code and remove the default call to fail.
         Assertions.assertNotNull(ExactMapping.extractMapping(new ArrayList<>(), new ArrayList<>(),
                                                              new ArrayList<>()));

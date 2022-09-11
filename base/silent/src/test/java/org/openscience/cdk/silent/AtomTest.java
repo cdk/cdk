@@ -34,28 +34,28 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @cdk.module test-silent
  */
-public class AtomTest extends AbstractAtomTest {
+class AtomTest extends AbstractAtomTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Atom::new);
     }
 
     @Test
-    public void testAtom() {
+    void testAtom() {
         IAtom a = new Atom();
         Assertions.assertNotNull(a);
     }
 
     @Test
-    public void testAtom_IElement() {
+    void testAtom_IElement() {
         IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IAtom a = new Atom(element);
         Assertions.assertNotNull(a);
     }
 
     @Test
-    public void testAtom_String() {
+    void testAtom_String() {
         IAtom a = new Atom("C");
         Assertions.assertEquals("C", a.getSymbol());
         Assertions.assertNull(a.getPoint2d());
@@ -64,7 +64,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_NH4plus_direct() {
+    void testAtom_NH4plus_direct() {
         IAtom a = new Atom(7, 4, +1);
         Assertions.assertEquals("N", a.getSymbol());
         Assertions.assertEquals((Integer) 7, a.getAtomicNumber());
@@ -76,7 +76,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_CH3_direct() {
+    void testAtom_CH3_direct() {
         IAtom a = new Atom(6, 3);
         Assertions.assertEquals("C", a.getSymbol());
         Assertions.assertEquals((Integer) 6, a.getAtomicNumber());
@@ -88,7 +88,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_Cl_direct() {
+    void testAtom_Cl_direct() {
         IAtom a = new Atom(17);
         Assertions.assertEquals("Cl", a.getSymbol());
         Assertions.assertEquals((Integer) 17, a.getAtomicNumber());
@@ -100,7 +100,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_NH4plus() {
+    void testAtom_NH4plus() {
         IAtom a = new Atom("NH4+");
         Assertions.assertEquals("N", a.getSymbol());
         Assertions.assertEquals((Integer) 7, a.getAtomicNumber());
@@ -112,7 +112,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_Ominus() {
+    void testAtom_Ominus() {
         IAtom a = new Atom("O-");
         Assertions.assertEquals("O", a.getSymbol());
         Assertions.assertEquals((Integer) 8, a.getAtomicNumber());
@@ -124,7 +124,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_Ca2plus() {
+    void testAtom_Ca2plus() {
         IAtom a = new Atom("Ca+2");
         Assertions.assertEquals("Ca", a.getSymbol());
         Assertions.assertEquals((Integer) 20, a.getAtomicNumber());
@@ -136,7 +136,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_13CH3() {
+    void testAtom_13CH3() {
         IAtom a = new Atom("13CH3");
         Assertions.assertEquals("C", a.getSymbol());
         Assertions.assertEquals((Integer) 13, a.getMassNumber());
@@ -149,7 +149,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_String_Point3d() {
+    void testAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IAtom a = new Atom("C", point3d);
@@ -160,7 +160,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test
-    public void testAtom_String_Point2d() {
+    void testAtom_String_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
 
         IAtom a = new Atom("C", point2d);
@@ -245,7 +245,7 @@ public class AtomTest extends AbstractAtomTest {
     }
     
     @Test
-    public void testNewAtomImplicitHydrogenCount() {
+    void testNewAtomImplicitHydrogenCount() {
         Assertions.assertNull(new Atom("C").getImplicitHydrogenCount());
         Assertions.assertNull(new Atom("*").getImplicitHydrogenCount());
         Assertions.assertNull(new Atom("H").getImplicitHydrogenCount());

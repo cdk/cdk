@@ -36,13 +36,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-hash
  */
-public class Tetrahedral3DParityTest {
+class Tetrahedral3DParityTest {
 
     private static final int CLOCKWISE     = -1;
     private static final int ANTICLOCKWISE = +1;
 
     @Test
-    public void testConstruction_Empty() throws Exception {
+    void testConstruction_Empty() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     new Tetrahedral3DParity(new Point3d[0]);
@@ -50,7 +50,7 @@ public class Tetrahedral3DParityTest {
     }
 
     @Test
-    public void testParity_Three_Clockwise() {
+    void testParity_Three_Clockwise() {
         Point3d[] coords = new Point3d[]{new Point3d(1.70, 0.98, -0.51), // -O
                 new Point3d(2.65, -0.83, 0.62), // -N
                 new Point3d(0.26, -0.33, 0.95), // -C
@@ -60,7 +60,7 @@ public class Tetrahedral3DParityTest {
     }
 
     @Test
-    public void testParity_Three_Anticlockwise() {
+    void testParity_Three_Anticlockwise() {
         Point3d[] coords = new Point3d[]{new Point3d(1.70, 0.98, -0.51), // -O
                 new Point3d(0.26, -0.33, 0.95), // -C
                 new Point3d(2.65, -0.83, 0.62), // -N
@@ -70,7 +70,7 @@ public class Tetrahedral3DParityTest {
     }
 
     @Test
-    public void testParity_Four_Clockwise() {
+    void testParity_Four_Clockwise() {
         Point3d[] coords = new Point3d[]{new Point3d(1.70, 0.98, -0.51), // -O
                 new Point3d(2.65, -0.83, 0.62), // -N
                 new Point3d(0.26, -0.33, 0.95), // -C
@@ -80,7 +80,7 @@ public class Tetrahedral3DParityTest {
     }
 
     @Test
-    public void testParity_Four_Anticlockwise() {
+    void testParity_Four_Anticlockwise() {
         Point3d[] coords = new Point3d[]{new Point3d(1.70, 0.98, -0.51), // -O
                 new Point3d(0.26, -0.33, 0.95), // -C
                 new Point3d(2.65, -0.83, 0.62), // -N

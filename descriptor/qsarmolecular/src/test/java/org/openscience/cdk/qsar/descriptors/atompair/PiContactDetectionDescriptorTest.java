@@ -30,15 +30,15 @@ import org.openscience.cdk.qsar.result.BooleanResult;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.test.qsar.DescriptorTest;
 
-public class PiContactDetectionDescriptorTest extends DescriptorTest<IAtomPairDescriptor> {
+class PiContactDetectionDescriptorTest extends DescriptorTest<IAtomPairDescriptor> {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(PiContactDetectionDescriptor.class);
     }
 
     @Test
-    public void testButadiene() {
+    void testButadiene() {
         IAtomContainer mol = TestMoleculeFactory.makeAlkane(4);
         mol.getBond(0).setOrder(IBond.Order.DOUBLE);
         mol.getBond(2).setOrder(IBond.Order.DOUBLE);
@@ -48,7 +48,7 @@ public class PiContactDetectionDescriptorTest extends DescriptorTest<IAtomPairDe
     }
 
     @Test
-    public void test137() throws CDKException {
+    void test137() throws CDKException {
         IAtomContainer mol = TestMoleculeFactory.makeAlkane(8);
         mol.getBond(0).setOrder(IBond.Order.DOUBLE);
         mol.getBond(2).setOrder(IBond.Order.DOUBLE);

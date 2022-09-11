@@ -29,14 +29,14 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * @cdk.module test-standard
  */
-public class AtomContainerAtomPermutorTest extends CDKTestCase {
+class AtomContainerAtomPermutorTest extends CDKTestCase {
 
-    public AtomContainerAtomPermutorTest() {
+    AtomContainerAtomPermutorTest() {
         super();
     }
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         IAtomContainer atomContainer = new AtomContainer();
         atomContainer.addAtom(new Atom("C"));
         atomContainer.addAtom(new Atom("O"));
@@ -48,7 +48,7 @@ public class AtomContainerAtomPermutorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCountAtomPermutation() {
+    void testCountAtomPermutation() {
         AtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("N"));
@@ -71,7 +71,7 @@ public class AtomContainerAtomPermutorTest extends CDKTestCase {
     }
 
     @Test
-    public void containerFromPermutationTest() {
+    void containerFromPermutationTest() {
         IAtomContainer atomContainer = new AtomContainer();
         atomContainer.addAtom(new Atom("C"));
         atomContainer.addAtom(new Atom("O"));

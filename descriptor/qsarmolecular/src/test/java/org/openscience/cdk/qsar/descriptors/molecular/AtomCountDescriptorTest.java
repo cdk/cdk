@@ -33,17 +33,17 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsarmolecular
  */
 
-public class AtomCountDescriptorTest extends MolecularDescriptorTest {
+class AtomCountDescriptorTest extends MolecularDescriptorTest {
 
-    public AtomCountDescriptorTest() {}
+    AtomCountDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(AtomCountDescriptor.class);
     }
 
     @Test
-    public void testCarbonCount() throws java.lang.Exception {
+    void testCarbonCount() throws java.lang.Exception {
         Object[] params = {"C"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -56,7 +56,7 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testImplicitExplicitH() throws Exception {
+    void testImplicitExplicitH() throws Exception {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

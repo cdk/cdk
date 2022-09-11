@@ -33,33 +33,33 @@ import static org.hamcrest.Matchers.closeTo;
  *
  * @cdk.module test-qsarmolecular
  */
-public class VAdjMaDescriptorTest extends MolecularDescriptorTest {
+class VAdjMaDescriptorTest extends MolecularDescriptorTest {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(VAdjMaDescriptor.class);
     }
 
-    public void ignoreCalculate_IAtomContainer() {
+    void ignoreCalculate_IAtomContainer() {
         Assertions.fail("Not tested");
     }
 
     @Test
-    public void testCyclic() throws Exception {
+    void testCyclic() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1CCC2CCCCC2C1");
         org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(4.459, 0.001));
     }
 
     @Test
-    public void testLinear() throws Exception {
+    void testLinear() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCCCCCCCC");
         org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(4.17, 0.001));
     }
 
     @Test
-    public void testCompound() throws Exception {
+    void testCompound() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCCC1CCCCC1");
         org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(4.322, 0.001));

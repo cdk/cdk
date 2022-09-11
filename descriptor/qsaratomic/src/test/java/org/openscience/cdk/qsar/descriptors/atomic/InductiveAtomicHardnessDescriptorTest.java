@@ -33,17 +33,17 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 /**
  * @cdk.module test-qsaratomic
  */
-public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest {
+class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest {
 
-    public InductiveAtomicHardnessDescriptorTest() {}
+    InductiveAtomicHardnessDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(InductiveAtomicHardnessDescriptor.class);
     }
 
     @Test
-    public void testInductiveAtomicHardnessDescriptor() throws
+    void testInductiveAtomicHardnessDescriptor() throws
             java.lang.Exception {
         double[] testResult = {1.28};
 

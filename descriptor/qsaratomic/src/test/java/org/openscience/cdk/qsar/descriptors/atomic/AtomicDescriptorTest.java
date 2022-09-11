@@ -38,11 +38,11 @@ import org.openscience.cdk.tools.diff.AtomDiff;
  *
  * @cdk.module test-qsaratomic
  */
-public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescriptor> {
+abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescriptor> {
 
-    protected IAtomicDescriptor descriptor;
+    IAtomicDescriptor descriptor;
 
-    public AtomicDescriptorTest() {}
+    AtomicDescriptorTest() {}
 
     @Override
     public void setDescriptor(Class<? extends IAtomicDescriptor> descriptorClass) throws Exception {
@@ -58,7 +58,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
 
     @Test
     @Tag("SlowTest")
-    public void testCalculate_IAtomContainer() throws Exception {
+    void testCalculate_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         DescriptorValue v = null;
@@ -79,7 +79,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
      */
     @Test
     @Tag("SlowTest")
-    public void testLabels() throws Exception {
+    void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
@@ -105,7 +105,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
      */
     @Test
     @Tag("SlowTest")
-    public void testNamesConsistency() {
+    void testNamesConsistency() {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         String[] names1 = descriptor.getDescriptorNames();
@@ -121,7 +121,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
 
     @Test
     @Tag("SlowTest")
-    public void testCalculate_NoModifications() throws Exception {
+    void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IAtom atom = mol.getAtom(1);
         IAtom clone = mol.getAtom(1).clone();

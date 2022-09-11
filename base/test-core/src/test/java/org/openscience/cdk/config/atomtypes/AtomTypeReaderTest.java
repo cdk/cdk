@@ -33,16 +33,16 @@ import java.util.List;
  *
  * @cdk.module test-core
  */
-public class AtomTypeReaderTest extends CDKTestCase {
+class AtomTypeReaderTest extends CDKTestCase {
 
     @Test
-    public void testAtomTypeReader_Reader() {
+    void testAtomTypeReader_Reader() {
         AtomTypeReader reader = new AtomTypeReader(new StringReader(""));
         Assertions.assertNotNull(reader);
     }
 
     @Test
-    public void testReadAtomTypes_IChemObjectBuilder() {
+    void testReadAtomTypes_IChemObjectBuilder() {
         AtomTypeReader reader = new AtomTypeReader(
                 new StringReader(
                         "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              "
@@ -66,7 +66,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testReadAtomTypes2() {
+    void testReadAtomTypes2() {
         String data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              "
                 + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    "
                 + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\""
@@ -90,7 +90,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testReadAtomTypes_CDK() {
+    void testReadAtomTypes_CDK() {
         String data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n"
                 + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n"
                 + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"
@@ -122,7 +122,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
     }
 
     @Test
-    public void testReadAtomTypes_FF() {
+    void testReadAtomTypes_FF() {
         String data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n"
                 + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n"
                 + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"

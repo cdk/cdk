@@ -41,27 +41,27 @@ import org.junit.jupiter.api.Test;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
-public class FinalMappingsTest {
+class FinalMappingsTest {
 
     public FinalMappingsTest() {}
 
     @BeforeAll
-    public static void setUpClass() throws Exception {}
+    static void setUpClass() throws Exception {}
 
     @AfterAll
-    public static void tearDownClass() throws Exception {}
+    static void tearDownClass() throws Exception {}
 
     @BeforeEach
-    public void setUp() {}
+    void setUp() {}
 
     @AfterEach
-    public void tearDown() {}
+    void tearDown() {}
 
     /**
      * Test of getInstance method, of class FinalMappings.
      */
     @Test
-    public void testGetInstance() {
+    void testGetInstance() {
         FinalMappings result = FinalMappings.getInstance();
         Assertions.assertNotNull(result);
     }
@@ -70,7 +70,7 @@ public class FinalMappingsTest {
      * Test of add method, of class FinalMappings.
      */
     @Test
-    public void testAdd() {
+    void testAdd() {
         Map<Integer, Integer> mapping = new TreeMap<>();
         mapping.put(1, 1);
         mapping.put(2, 2);
@@ -85,7 +85,7 @@ public class FinalMappingsTest {
      * Test of set method, of class FinalMappings.
      */
     @Test
-    public void testSet() {
+    void testSet() {
         Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
@@ -108,7 +108,7 @@ public class FinalMappingsTest {
      * Test of getIterator method, of class FinalMappings.
      */
     @Test
-    public void testGetIterator() {
+    void testGetIterator() {
         Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
@@ -132,7 +132,7 @@ public class FinalMappingsTest {
      * Test of clear method, of class FinalMappings.
      */
     @Test
-    public void testClear() {
+    void testClear() {
         Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
@@ -156,7 +156,7 @@ public class FinalMappingsTest {
      * Test of getFinalMapping method, of class FinalMappings.
      */
     @Test
-    public void testGetFinalMapping() {
+    void testGetFinalMapping() {
         Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);
@@ -181,7 +181,7 @@ public class FinalMappingsTest {
      * Test of getSize method, of class FinalMappings.
      */
     @Test
-    public void testGetSize() {
+    void testGetSize() {
         Map<Integer, Integer> mapping1 = new TreeMap<>();
         mapping1.put(1, 1);
         mapping1.put(2, 2);

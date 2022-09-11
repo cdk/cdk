@@ -45,14 +45,14 @@ import java.io.InputStream;
  * @cdk.created 2003-09-26
  * @cdk.module test-extra
  */
-public class EquivalentClassPartitionerTest extends CDKTestCase {
+class EquivalentClassPartitionerTest extends CDKTestCase {
 
     AtomContainer C40C3V = null;
     AtomContainer C24D6D = null;
     AtomContainer C28TD  = null;
 
     @Test
-    public void testEquivalent() throws Exception {
+    void testEquivalent() throws Exception {
         AtomContainer C40C3V = new org.openscience.cdk.AtomContainer();
         C40C3V.addAtom(new Atom("C")); // 1
         C40C3V.addAtom(new Atom("C")); // 2
@@ -168,7 +168,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
     }
 
     @Test
-    public void testFullereneC24D6D() throws Exception {
+    void testFullereneC24D6D() throws Exception {
         AtomContainer C24D6D = new org.openscience.cdk.AtomContainer();
         C24D6D.addAtom(new Atom("C")); // 1
         C24D6D.addAtom(new Atom("C")); // 2
@@ -248,7 +248,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testPseudoAtoms() throws Exception {
+    void testPseudoAtoms() throws Exception {
         String filename = "pseudoatoms.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -279,7 +279,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      * @cdk.bug 3562476
      */
     @Test
-    public void testAromaticSystem() throws Exception {
+    void testAromaticSystem() throws Exception {
 
         IAtomContainer mol = TestMoleculeFactory.makeAzulene();
         Assertions.assertNotNull(mol, "Created molecule was null");
@@ -305,7 +305,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testAlphaPinene() throws Exception {
+    void testAlphaPinene() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -329,7 +329,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testPyrimidine() throws Exception {
+    void testPyrimidine() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrimidine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -352,7 +352,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testBiphenyl() throws Exception {
+    void testBiphenyl() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -377,7 +377,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testImidazole() throws Exception {
+    void testImidazole() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeImidazole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);

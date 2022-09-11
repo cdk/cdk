@@ -29,16 +29,16 @@ import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 /**
  * @cdk.module test-core
  */
-public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
+class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
     @Test
-    public void testLoggingTool_Class() throws Exception {
+    void testLoggingTool_Class() throws Exception {
         ILoggingTool logger = new SystemOutLoggingTool(this.getClass());
         Assertions.assertNotNull(logger);
     }
 
     @Test
-    public void testDebug_Object() throws Exception {
+    void testDebug_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -740,7 +740,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         ILoggingTool logger = SystemOutLoggingTool.create(this.getClass());
         Assertions.assertNotNull(logger);
     }

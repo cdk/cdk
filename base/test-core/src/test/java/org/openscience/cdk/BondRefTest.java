@@ -32,28 +32,28 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class BondRefTest {
+class BondRefTest {
 
     @Test
-    public void dereferenceNullPointer() {
+    void dereferenceNullPointer() {
         Assertions.assertNull(BondRef.deref(null));
     }
 
     @Test
-    public void dereferenceNonPointer() {
+    void dereferenceNonPointer() {
         IBond mock = mock(IBond.class);
         assertThat(BondRef.deref(mock), is(sameInstance(mock)));
     }
 
     @Test
-    public void dereferencePointer() {
+    void dereferencePointer() {
         IBond mock = mock(IBond.class);
         IBond ptr  = new BondRef(mock);
         assertThat(BondRef.deref(ptr), is(sameInstance(mock)));
     }
 
     @Test
-    public void dereferencePointerPointer() {
+    void dereferencePointerPointer() {
         IBond mock = mock(IBond.class);
         IBond ptr  = new BondRef(new BondRef(mock));
         assertThat(BondRef.deref(ptr), is(sameInstance(mock)));

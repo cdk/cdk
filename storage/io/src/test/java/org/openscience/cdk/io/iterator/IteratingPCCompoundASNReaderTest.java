@@ -35,12 +35,12 @@ import java.io.InputStream;
 /**
  * @cdk.module test-io
  */
-public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
+class IteratingPCCompoundASNReaderTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReaderTest.class);
 
     @Test
-    public void testList() throws Exception {
+    void testList() throws Exception {
         String filename = "org/openscience/cdk/io/list.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

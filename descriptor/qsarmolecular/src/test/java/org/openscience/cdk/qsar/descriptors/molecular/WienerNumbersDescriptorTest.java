@@ -30,17 +30,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-qsarmolecular
  */
-public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
+class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
 
-    public WienerNumbersDescriptorTest() {}
+    WienerNumbersDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(WienerNumbersDescriptor.class);
     }
 
     @Test
-    public void testWienerNumbersDescriptor() throws Exception {
+    void testWienerNumbersDescriptor() throws Exception {
         double[] testResult = {18, 2};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
@@ -54,7 +54,7 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
      * Test if the descriptor returns the same results with and without explicit hydrogens.
      */
     @Test
-    public void testWithExplicitHydrogens() throws Exception {
+    void testWithExplicitHydrogens() throws Exception {
         double[] testResult = {18, 2};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
@@ -67,7 +67,7 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
      * Numbers extracted from {@cdk.cite Wiener1947}.
      */
     @Test
-    public void testOriginalWienerPaperCompounds() throws Exception {
+    void testOriginalWienerPaperCompounds() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         double[] testResult = {10, 20, 35, 56, 84, 120, 165, 220, 286};
         String smiles = "CCC";

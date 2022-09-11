@@ -30,10 +30,10 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  *
  * @cdk.module test-core
  */
-public class ImmutableAtomTypeTest extends CDKTestCase {
+class ImmutableAtomTypeTest extends CDKTestCase {
 
 	@Test
-	public void testToString() throws NoSuchAtomTypeException {
+    void testToString() throws NoSuchAtomTypeException {
 		AtomTypeFactory factory = AtomTypeFactory.getInstance(
 			"org/openscience/cdk/dict/data/cdk-atom-types.owl",
 			SilentChemObjectBuilder.getInstance()

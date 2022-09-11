@@ -29,15 +29,15 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.module test-silent
  */
-public class SilentChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
+class SilentChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setRootObject(new ChemObject());
     }
 
     @Test
-    public void testGetInstance() {
+    void testGetInstance() {
         Object builder = SilentChemObjectBuilder.getInstance();
         Assertions.assertNotNull(builder);
         Assertions.assertTrue(builder instanceof IChemObjectBuilder);

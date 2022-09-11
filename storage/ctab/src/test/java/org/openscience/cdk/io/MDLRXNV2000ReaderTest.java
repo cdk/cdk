@@ -52,17 +52,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */
-public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
+class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
 
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLRXNV2000Reader(), "0024.stg02.rxn");
     }
 
     @Test
-    public void testAccepts() {
+    void testAccepts() {
         MDLRXNV2000Reader reader = new MDLRXNV2000Reader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(ChemModel.class));
@@ -73,7 +73,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1849923
      */
     @Test
-    public void testReadReactions1() throws Exception {
+    void testReadReactions1() throws Exception {
         String filename1 = "0024.stg02.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
@@ -100,7 +100,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1851202
      */
     @Test
-    public void testBug1851202() throws Exception {
+    void testBug1851202() throws Exception {
         String filename1 = "0002.stg01.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
@@ -124,7 +124,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testReadMapping() throws Exception {
+    void testReadMapping() throws Exception {
         String filename2 = "mappingTest.rxn";
         logger.info("Testing: " + filename2);
         InputStream ins2 = this.getClass().getResourceAsStream(filename2);
@@ -140,7 +140,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testAgentParts() throws Exception {
+    void testAgentParts() throws Exception {
         try (InputStream in = this.getClass().getResourceAsStream("ethylesterification.mol");
              MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(in)) {
             IReaction reaction = rdr.read(new Reaction());
@@ -149,7 +149,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void optionalSdfSeparator() throws Exception {
+    void optionalSdfSeparator() throws Exception {
         String dummyRecord = "ethanol\n" +
                        "  Mrv1810 09251921392D          \n" +
                        "\n" +

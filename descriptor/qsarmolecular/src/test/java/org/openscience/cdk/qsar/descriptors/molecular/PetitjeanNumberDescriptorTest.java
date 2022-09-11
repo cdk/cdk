@@ -32,17 +32,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
+class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
 
-    public PetitjeanNumberDescriptorTest() {}
+    PetitjeanNumberDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(PetitjeanNumberDescriptor.class);
     }
 
     @Test
-    public void testPetitjeanNumberDescriptor() throws java.lang.Exception {
+    void testPetitjeanNumberDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         AtomContainerManipulator.removeHydrogens(mol);
@@ -50,7 +50,7 @@ public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testSingleAtomCase() throws Exception {
+    void testSingleAtomCase() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O");
         Assertions.assertEquals(0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);

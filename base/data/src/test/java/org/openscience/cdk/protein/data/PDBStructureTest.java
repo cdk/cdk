@@ -32,15 +32,15 @@ import org.openscience.cdk.test.interfaces.AbstractPDBStructureTest;
  *
  * @see PDBStructure
  */
-public class PDBStructureTest extends AbstractPDBStructureTest {
+class PDBStructureTest extends AbstractPDBStructureTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setChemObject(new PDBStructure());
     }
 
     @Test
-    public void testPDBStructure() {
+    void testPDBStructure() {
         IPDBStructure structure = new PDBStructure();
         Assertions.assertNotNull(structure);
     }

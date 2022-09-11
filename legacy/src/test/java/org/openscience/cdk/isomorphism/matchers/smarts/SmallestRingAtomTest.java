@@ -39,10 +39,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-smarts
  */
-public class SmallestRingAtomTest {
+class SmallestRingAtomTest {
 
     @Test
-    public void matches() {
+    void matches() {
         SmallestRingAtom matcher = new SmallestRingAtom(5, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(

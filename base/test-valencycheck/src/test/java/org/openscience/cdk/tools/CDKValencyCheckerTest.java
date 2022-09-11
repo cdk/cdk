@@ -41,16 +41,16 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2007-07-28
  */
-public class CDKValencyCheckerTest extends CDKTestCase {
+class CDKValencyCheckerTest extends CDKTestCase {
 
     @Test
-    public void testInstance() {
+    void testInstance() {
         CDKValencyChecker checker = CDKValencyChecker.getInstance(DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(checker);
     }
 
     @Test
-    public void testIsSaturated_IAtomContainer() throws Exception {
+    void testIsSaturated_IAtomContainer() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer mol = new AtomContainer();
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
@@ -81,7 +81,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsSaturatedPerAtom() throws Exception {
+    void testIsSaturatedPerAtom() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer mol = new AtomContainer();
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
@@ -114,7 +114,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsSaturated_MissingHydrogens_Methane() throws Exception {
+    void testIsSaturated_MissingHydrogens_Methane() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer mol = new AtomContainer();
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
@@ -129,7 +129,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
      * Tests if the saturation checker considers negative charges.
      */
     @Test
-    public void testIsSaturated_NegativelyChargedOxygen() throws Exception {
+    void testIsSaturated_NegativelyChargedOxygen() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer mol = new AtomContainer();
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
@@ -157,7 +157,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
      * charges.
      */
     @Test
-    public void testIsSaturated_PositivelyChargedNitrogen() throws Exception {
+    void testIsSaturated_PositivelyChargedNitrogen() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer mol = new AtomContainer();
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
@@ -184,7 +184,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
      * Test sulfuric acid.
      */
     @Test
-    public void testBug772316() throws Exception {
+    void testBug772316() throws Exception {
         // test methane with explicit hydrogen
         IAtomContainer mol = new AtomContainer();
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
@@ -216,7 +216,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
      * Tests if the saturation checker gets a proton right.
      */
     @Test
-    public void testIsSaturated_Proton() throws Exception {
+    void testIsSaturated_Proton() throws Exception {
         // test H+
         IAtomContainer mol = new AtomContainer();
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
@@ -231,7 +231,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
      *  resonance structure.
      */
     @Test
-    public void test1() throws Exception {
+    void test1() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom f1 = new Atom("F");
         Atom c2 = new Atom("C");
@@ -249,7 +249,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void testIsSaturated_MissingBondOrders_Ethane() throws Exception {
+    void testIsSaturated_MissingBondOrders_Ethane() throws Exception {
         // test ethane with explicit hydrogen
         IAtomContainer mol = new AtomContainer();
         CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());

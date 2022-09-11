@@ -38,19 +38,19 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * @author maclean
  * @cdk.module group
  */
-public class AtomRefinableTest {
+class AtomRefinableTest {
     
-    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     
     @Test
-    public void getVertexCount() {
+    void getVertexCount() {
         IAtomContainer ac = makeAtomContainer("CCCC");
         AtomRefinable refinable = new AtomRefinable(ac);
         Assertions.assertEquals(ac.getAtomCount(), refinable.getVertexCount());
     }
     
     @Test
-    public void getConnectivity() {
+    void getConnectivity() {
         String acpString = "C0C1C2C3 0:1(1),1:2(2),2:3(3)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomRefinable refinable = new AtomRefinable(ac);
@@ -60,7 +60,7 @@ public class AtomRefinableTest {
     }
     
     @Test
-    public void neighboursInBlockForSingleBonds() {
+    void neighboursInBlockForSingleBonds() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomRefinable refinable = new AtomRefinable(ac);
@@ -71,7 +71,7 @@ public class AtomRefinableTest {
     }
     
     @Test
-    public void neighboursInBlockForMultipleBonds() {
+    void neighboursInBlockForMultipleBonds() {
         String acpString = "C0C1C2C3C4 0:1(1),0:2(2),0:3(1),1:4(1),2:4(1),3:4(2)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomRefinable refinable = new AtomRefinable(ac);
@@ -82,7 +82,7 @@ public class AtomRefinableTest {
     }
     
     @Test
-    public void neighboursInBlockForMultipleBondsIgnoringBondOrders() {
+    void neighboursInBlockForMultipleBondsIgnoringBondOrders() {
         String acpString = "C0C1C2C3C4 0:1(1),0:2(2),0:3(1),1:4(1),2:4(1),3:4(2)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomRefinable refinable = new AtomRefinable(ac, false, true);
@@ -101,7 +101,7 @@ public class AtomRefinableTest {
     }
     
     @Test
-    public void getElementPartitionTest() {
+    void getElementPartitionTest() {
         String acpString = "C0N1C2P3C4N5";
         Partition expected = Partition.fromString("0,2,4|1,5|3");
         
@@ -113,7 +113,7 @@ public class AtomRefinableTest {
     }
     
     @Test
-    public void oddEvenElementPartitionTest() {
+    void oddEvenElementPartitionTest() {
         IAtomContainer ac = makeAtomContainer("CNCNCN");
         Partition expected = Partition.fromString("0,2,4|1,3,5");
         
@@ -124,7 +124,7 @@ public class AtomRefinableTest {
     }
     
     @Test
-    public void orderedElementPartitionTest() {
+    void orderedElementPartitionTest() {
         IAtomContainer ac = makeAtomContainer("CCCCNNNNOOOO");
         Partition expected = Partition.fromString("0,1,2,3|4,5,6,7|8,9,10,11");
         
@@ -135,7 +135,7 @@ public class AtomRefinableTest {
     }
     
     @Test
-    public void disorderedElementPartitionTest() {
+    void disorderedElementPartitionTest() {
         IAtomContainer ac = makeAtomContainer("NNNNCCCCOOOO");
         Partition expected = Partition.fromString("4,5,6,7|0,1,2,3|8,9,10,11");
         

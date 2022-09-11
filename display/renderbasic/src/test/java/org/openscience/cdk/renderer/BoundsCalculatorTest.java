@@ -34,14 +34,14 @@ import org.openscience.cdk.silent.AtomContainer;
 /**
  * @cdk.module test-renderbasic
  */
-public class BoundsCalculatorTest {
+class BoundsCalculatorTest {
 
     /**
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IAtomContainer_SingleAtom() {
+    void testCalculateBounds_IAtomContainer_SingleAtom() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -54,7 +54,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IAtomContainer() {
+    void testCalculateBounds_IAtomContainer() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -68,7 +68,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IAtomContainerSet_SingleAtom() {
+    void testCalculateBounds_IAtomContainerSet_SingleAtom() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -83,7 +83,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IAtomContainerSet() {
+    void testCalculateBounds_IAtomContainerSet() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -99,7 +99,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IReactionSet_SingleAtom() {
+    void testCalculateBounds_IReactionSet_SingleAtom() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -116,7 +116,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IReactionSet() {
+    void testCalculateBounds_IReactionSet() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -134,7 +134,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IChemModel_SingleAtom() {
+    void testCalculateBounds_IChemModel_SingleAtom() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -151,7 +151,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IChemModel() {
+    void testCalculateBounds_IChemModel() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -170,7 +170,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IReaction_SingleAtom() {
+    void testCalculateBounds_IReaction_SingleAtom() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -185,7 +185,7 @@ public class BoundsCalculatorTest {
      * an {@link IAtomContainer} without 2D coordinates.
      */
     @Test
-    public void testCalculateBounds_IReaction() {
+    void testCalculateBounds_IReaction() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             IAtomContainer container = new AtomContainer();
             container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));

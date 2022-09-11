@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class CTXFormatTest extends ChemFormatMatcherTest {
+class CTXFormatTest extends ChemFormatMatcherTest {
 
-    public CTXFormatTest() {
+    CTXFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) CTXFormat.getInstance());
     }
 

@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomContainerSetTest extends AbstractAtomContainerSetTest {
+class DebugAtomContainerSetTest extends AbstractAtomContainerSetTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugAtomContainerSet::new);
     }
 
     @Test
-    public void testDebugAtomContainerSet() {
+    void testDebugAtomContainerSet() {
         IAtomContainerSet som = new DebugAtomContainerSet();
         Assertions.assertNotNull(som);
         Assertions.assertEquals(0, som.getAtomContainerCount());

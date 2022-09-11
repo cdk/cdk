@@ -40,12 +40,12 @@ import org.openscience.cdk.interfaces.IBond.Order;
 /**
  * @cdk.module test-cip
  */
-public class ImmutableHydrogenTest extends CDKTestCase {
+class ImmutableHydrogenTest extends CDKTestCase {
 
     // FIXME: think about how to cover all other IAtom methods that are not implemented...
 
     @Test
-    public void testExpectedValues() throws Exception {
+    void testExpectedValues() throws Exception {
         IAtom hydrogen = new ImmutableHydrogen();
         Assertions.assertEquals("H", hydrogen.getSymbol());
         Assertions.assertEquals(1, hydrogen.getAtomicNumber().intValue());
@@ -53,7 +53,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
     }
 
     @Test
-    public void testOverwriteStaticValues() throws Exception {
+    void testOverwriteStaticValues() throws Exception {
         IAtom hydrogen = new ImmutableHydrogen();
         hydrogen.setSymbol("C");
         hydrogen.setAtomicNumber(12);
@@ -64,7 +64,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
     }
 
     @Test
-    public void testListenerStuff() throws Exception {
+    void testListenerStuff() throws Exception {
         IAtom hydrogen = new ImmutableHydrogen();
         Assertions.assertEquals(0, hydrogen.getListenerCount());
         hydrogen.addListener(new IChemObjectListener() {
@@ -89,7 +89,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
     }
 
     @Test
-    public void testReturnsNull() {
+    void testReturnsNull() {
         IAtom hydrogen = new ImmutableHydrogen();
         Assertions.assertNull(hydrogen.getCharge());
         Assertions.assertNull(hydrogen.getImplicitHydrogenCount());
@@ -117,7 +117,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetIsSilent() throws Exception {
+    void testSetIsSilent() throws Exception {
         // because we already test that the matching get methods
         // return null, we only test that set does not throw
         // exceptions
@@ -148,7 +148,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
     }
 
     @Test
-    public void testClone() throws Exception {
+    void testClone() throws Exception {
         IAtom hydrogen = new ImmutableHydrogen();
         Assertions.assertEquals(hydrogen, hydrogen.clone());
     }

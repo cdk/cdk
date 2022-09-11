@@ -39,16 +39,16 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
+class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    private final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the PartialSigmaChargeDescriptorTest object
      *
      */
-    public PartialSigmaChargeDescriptorTest() {}
+    PartialSigmaChargeDescriptorTest() {}
 
     /**
      *  A unit test suite for JUnit
@@ -57,7 +57,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      */
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(PartialSigmaChargeDescriptor.class);
         Integer[] params = {6};
         descriptor.setParameters(params);
@@ -69,7 +69,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Fluoroethylene() throws
+    void testPartialSigmaChargeDescriptor_Fluoroethylene() throws
             java.lang.Exception {
         double[] testResult = {-0.2138, 0.079, 0.0942, -0.072, 0.0563, 0.0563};/*
                                                                                 * from
@@ -129,7 +129,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Methyl_Floride() throws
+    void testPartialSigmaChargeDescriptor_Methyl_Floride() throws
             java.lang.Exception {
         double[] testResult = {0.07915, -0.25264, 0.05783, 0.05783, 0.05783};/*
                                                                               * from
@@ -182,7 +182,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi  InChI=1/CH3Cl/c1-2/h1H3
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Methyl_chloride() throws
+    void testPartialSigmaChargeDescriptor_Methyl_chloride() throws
             java.lang.Exception {
         double[] testResult = {0.0382, -0.1755, 0.0457, 0.0457, 0.0457};/*
                                                                          * from
@@ -228,7 +228,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi  InChI=1/CH3Br/c1-2/h1H3
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Methyl_bromide() throws
+    void testPartialSigmaChargeDescriptor_Methyl_bromide() throws
             java.lang.Exception {
         double[] testResult = {0.021, -0.1448, 0.0413, 0.0413, 0.0413};/*
                                                                         * from
@@ -271,7 +271,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Methyl_iodide() throws
+    void testPartialSigmaChargeDescriptor_Methyl_iodide() throws
             java.lang.Exception {
         double[] testResult = {-0.0116, -0.0892, 0.0336, 0.0336, 0.0336};/*
                                                                           * from
@@ -318,7 +318,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi  InChI=1/C3H5Br/c1-2-3-4/h2H,1,3H2
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Allyl_bromide() throws
+    void testPartialSigmaChargeDescriptor_Allyl_bromide() throws
             java.lang.Exception {
         double testResult = -0.1366;/*
                                      * from Petra online:
@@ -349,7 +349,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi  InChI=1/C5H11I/c1-5(2)3-4-6/h5H,3-4H2,1-2H3
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Isopentyl_iodide() throws
+    void testPartialSigmaChargeDescriptor_Isopentyl_iodide() throws
             java.lang.Exception {
         double[] testResult = {-0.0458, -0.0623, -0.0623, -0.0415, 0.0003, -0.0855}; /*
                                                                                       * from
@@ -396,7 +396,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi  InChI=1/C4H10O/c1-3-5-4-2/h3-4H2,1-2H3
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Ethoxy_ethane() throws
+    void testPartialSigmaChargeDescriptor_Ethoxy_ethane() throws
             java.lang.Exception {
         double testResult = -0.3809; /*
                                       * from Petra online:
@@ -429,7 +429,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi  InChI=1/C2H7NO/c3-1-2-4/h4H,1-3H2
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Ethanolamine() throws
+    void testPartialSigmaChargeDescriptor_Ethanolamine() throws
             java.lang.Exception {
         double[] testResult = {-0.3293, 0.017, 0.057, -0.3943}; /*
                                                                  * from Petra
@@ -469,7 +469,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi  InChI=1/C3H6S/c1-2-3-4/h2,4H,1,3H2
      */
     @Test
-    public void testPartialSigmaChargeDescriptor_Allyl_mercaptan() throws
+    void testPartialSigmaChargeDescriptor_Allyl_mercaptan() throws
             java.lang.Exception {
         double[] testResult = {-0.1031, -0.0828, 0.0093, -0.1742}; /*
                                                                     * from Petra
@@ -510,7 +510,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with
      */
     @Test
-    public void testPartialSigmaChargeDescriptor1() throws java.lang.Exception {
+    void testPartialSigmaChargeDescriptor1() throws java.lang.Exception {
         double[] testResult = {-0.2138, 0.079, 0.0942, -0.072, 0.0563, 0.0563}; /*
                                                                                  * from
                                                                                  * Petra
@@ -551,7 +551,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with
      */
     @Test
-    public void testPartialSigmaChargeDescriptor2() throws java.lang.Exception {
+    void testPartialSigmaChargeDescriptor2() throws java.lang.Exception {
         double[] testResult = {-0.3855, -0.0454, 0.0634, -0.0544, -0.0391, -0.0391}; /*
                                                                                       * from
                                                                                       * Petra
@@ -593,7 +593,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with
      */
     @Test
-    public void testPartialSigmaChargeDescriptor3() throws java.lang.Exception {
+    void testPartialSigmaChargeDescriptor3() throws java.lang.Exception {
         double[] testResult = {-0.3855, -0.0454, 0.0634, -0.0544, -0.0391, -0.0391}; /*
                                                                                       * from
                                                                                       * Petra
@@ -636,7 +636,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
      */
     @Test
-    public void testPartialSigmaChargeDescriptor4() throws java.lang.Exception {
+    void testPartialSigmaChargeDescriptor4() throws java.lang.Exception {
         double[] testResult = {-0.3041, 0.1055, 0.0993, 0.0993}; /*
                                                                   * from Petra
                                                                   * online:
@@ -677,7 +677,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
      */
     @Test
-    public void testPartialSigmaChargeDescriptor5() throws java.lang.Exception {
+    void testPartialSigmaChargeDescriptor5() throws java.lang.Exception {
         double[] testResult = {-0.3291, 0.144, 0.1028, -0.0084, 0.0303, 0.0303, 0.0303}; /*
                                                                                           * from
                                                                                           * Petra
@@ -737,7 +737,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with
      */
     @Test
-    public void testPartialSigmaChargeDescriptor6() throws java.lang.Exception {
+    void testPartialSigmaChargeDescriptor6() throws java.lang.Exception {
         double[] testResult = {-0.4331, -0.1067, 0.0133, 0.0133, 0.0133}; /*
                                                                            * from
                                                                            * Petra
@@ -777,7 +777,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with [H]c1[n-][c+]([H])c([H])c([H])c1([H])
      */
     @Test
-    public void testPartialSigmaChargeDescriptor7() throws java.lang.Exception {
+    void testPartialSigmaChargeDescriptor7() throws java.lang.Exception {
         /*
          * from Petra online: http://www2.chemi.uni.erlange.de/services/petra/smiles.pthml
          */

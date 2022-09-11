@@ -28,16 +28,16 @@ import java.util.List;
 /**
  * @cdk.module test-diff
  */
-public class AbstractDifferenceListTest {
+class AbstractDifferenceListTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         DifferenceClass diffClass = new DifferenceClass();
         Assertions.assertNotNull(diffClass);
     }
 
     @Test
-    public void testAddChild() {
+    void testAddChild() {
         DifferenceClass diffClass = new DifferenceClass();
         diffClass.addChild(StringDifference.construct("Foo", "Bar1", "Bar2"));
         Assertions.assertEquals(1, diffClass.childCount());
@@ -47,7 +47,7 @@ public class AbstractDifferenceListTest {
     }
 
     @Test
-    public void testChildDiffs() {
+    void testChildDiffs() {
         DifferenceClass diffClass = new DifferenceClass();
         List<IDifference> diffs = new ArrayList<>();
         diffs.add(StringDifference.construct("Foo", "Bar1", "Bar2"));

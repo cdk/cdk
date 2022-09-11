@@ -42,10 +42,10 @@ import org.openscience.cdk.graph.InitialCycles.Cycle;
  * @author John May
  * @cdk.module test-core
  */
-public class GreedyBasisTest {
+class GreedyBasisTest {
 
     @Test
-    public void add() {
+    void add() {
         Cycle c1 = mock(Cycle.class);
         Cycle c2 = mock(Cycle.class);
         when(c1.edgeVector()).thenReturn(new BitSet());
@@ -59,7 +59,7 @@ public class GreedyBasisTest {
     }
 
     @Test
-    public void addAll() {
+    void addAll() {
         Cycle c1 = mock(Cycle.class);
         Cycle c2 = mock(Cycle.class);
         when(c1.edgeVector()).thenReturn(new BitSet());
@@ -71,7 +71,7 @@ public class GreedyBasisTest {
     }
 
     @Test
-    public void unmodifiableMembers() {
+    void unmodifiableMembers() {
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> {
                                     Cycle c1 = mock(Cycle.class);
@@ -82,7 +82,7 @@ public class GreedyBasisTest {
     }
 
     @Test
-    public void subsetOfBasis() {
+    void subsetOfBasis() {
         Cycle c1 = mock(Cycle.class);
         Cycle c2 = mock(Cycle.class);
         Cycle c3 = mock(Cycle.class);
@@ -102,7 +102,7 @@ public class GreedyBasisTest {
     }
 
     @Test
-    public void independence() {
+    void independence() {
         Cycle c1 = mock(Cycle.class);
         Cycle c2 = mock(Cycle.class);
         Cycle c3 = mock(Cycle.class);
@@ -124,7 +124,7 @@ public class GreedyBasisTest {
     }
 
     @Test
-    public void size() {
+    void size() {
         GreedyBasis basis = new GreedyBasis(3, 12);
         assertThat(basis.size(), is(0));
         Cycle c1 = mock(Cycle.class);

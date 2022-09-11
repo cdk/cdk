@@ -25,15 +25,15 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * @cdk.module test-dict
  */
-public class OWLReactTest extends AbstractDictionaryTest {
+class OWLReactTest extends AbstractDictionaryTest {
 
     @BeforeEach
-    public void setTestClass() {
+    void setTestClass() {
         super.setTestClass(new OWLReact());
     }
 
     @AfterEach
-    public void testTestClass() {
+    void testTestClass() {
         Assertions.assertTrue(getTestClass().getClass().getName().endsWith(".OWLReact"));
     }
 

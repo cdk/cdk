@@ -31,25 +31,25 @@ import org.junit.jupiter.api.Test;
  * @cdk.module structgen
  *
  */
-public class BoundaryConditionsTest {
+class BoundaryConditionsTest {
 
     @Test
-    public void detectTripleBonds() {
+    void detectTripleBonds() {
         Assertions.assertFalse(BoundaryConditions.detectTripleBonds(new int[][] {}));
     }
 
     @Test
-    public void detectAdjacentDoubleBonds() {
+    void detectAdjacentDoubleBonds() {
         Assertions.assertFalse(BoundaryConditions.detectAdjacentDoubleBonds(new int[][] {}));
     }
 
     @Test
-    public void detectAllenes() {
+    void detectAllenes() {
         Assertions.assertFalse(BoundaryConditions.detectAllenes(new int[][] {}, new String[] {}));
     }
 
     @Test
-    public void boundaryConditionCheck() {
+    void boundaryConditionCheck() {
         Assertions.assertTrue(BoundaryConditions.boundaryConditionCheck(new int[][] {}, new String[] {}));
     }
 }

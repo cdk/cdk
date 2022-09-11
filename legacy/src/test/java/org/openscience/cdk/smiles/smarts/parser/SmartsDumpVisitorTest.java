@@ -12,16 +12,16 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-smarts
  * @cdk.keyword SMARTS
  */
-public class SmartsDumpVisitorTest extends CDKTestCase {
+class SmartsDumpVisitorTest extends CDKTestCase {
 
-    public void dump(String smarts) throws Exception {
+    void dump(String smarts) throws Exception {
         SMARTSParser parser = new SMARTSParser(new StringReader(smarts));
         ASTStart start = parser.Start();
         SmartsDumpVisitor visitor = new SmartsDumpVisitor();
         visitor.visit(start, null);
     }
 
-    public void testRing() throws Exception {
+    void testRing() throws Exception {
         dump("(C=1CCC1).(CCC).(C1CC1CCC=12CCCC2)");
     }
 }

@@ -32,17 +32,17 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */
-public class DictDBTest extends CDKTestCase {
+class DictDBTest extends CDKTestCase {
 
     @Test
-    public void testDictionaryDatabase() {
+    void testDictionaryDatabase() {
         DictionaryDatabase db = new DictionaryDatabase();
         Assertions.assertTrue(db.hasDictionary("descriptor-algorithms"));
         Assertions.assertTrue(db.hasDictionary("reaction-processes"));
     }
 
     @Test
-    public void testOWLDictionary() {
+    void testOWLDictionary() {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("descriptor-algorithms");
         Assertions.assertTrue(dict.size() > 0);
@@ -50,7 +50,7 @@ public class DictDBTest extends CDKTestCase {
     }
 
     @Test
-    public void testOWLEntry() {
+    void testOWLEntry() {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("descriptor-algorithms");
         Entry entry = dict.getEntry("apol");
@@ -62,7 +62,7 @@ public class DictDBTest extends CDKTestCase {
     }
 
     @Test
-    public void testOWLReactEntry() {
+    void testOWLReactEntry() {
         DictionaryDatabase db = new DictionaryDatabase();
         Dictionary dict = db.getDictionary("reaction-processes");
         Entry entry = dict.getEntry("AdductionProtonLP".toLowerCase());
@@ -74,7 +74,7 @@ public class DictDBTest extends CDKTestCase {
     }
 
     @Test
-    public void testListDictionaries() {
+    void testListDictionaries() {
         DictionaryDatabase db = new DictionaryDatabase();
         Iterator<String> dbs = db.listDictionaries();
         Assertions.assertNotNull(dbs);
@@ -87,7 +87,7 @@ public class DictDBTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetDictionaryNames() {
+    void testGetDictionaryNames() {
         DictionaryDatabase db = new DictionaryDatabase();
         String[] dbs = db.getDictionaryNames();
         Assertions.assertNotNull(dbs);
@@ -99,7 +99,7 @@ public class DictDBTest extends CDKTestCase {
     }
 
     @Test
-    public void testHasDictionary() {
+    void testHasDictionary() {
         DictionaryDatabase db = new DictionaryDatabase();
         Iterator<String> dbs = db.listDictionaries();
         Assertions.assertNotNull(dbs);

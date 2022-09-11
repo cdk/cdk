@@ -48,7 +48,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 /**
  * @cdk.module test-core
  */
-public class DoubleBondStereochemistryTest extends CDKTestCase {
+class DoubleBondStereochemistryTest extends CDKTestCase {
 
     private static IAtomContainer molecule;
     private static IBond[]        ligands;
@@ -57,7 +57,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
      * This method creates <i>E</i>-but-2-ene.
      */
     @BeforeAll
-    public static void setup() throws Exception {
+    static void setup() throws Exception {
         molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
@@ -78,7 +78,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
      * @cdk.bug 1273
      */
     @Test
-    public void testConstructor_TooManyBonds() {
+    void testConstructor_TooManyBonds() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -90,14 +90,14 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
         Assertions.assertNotNull(stereo);
     }
 
     @Test
-    public void testBuilder() {
+    void testBuilder() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
         stereo.setBuilder(DefaultChemObjectBuilder.getInstance());
@@ -105,7 +105,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetStereoBond() {
+    void testGetStereoBond() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
         Assertions.assertNotNull(stereo);
@@ -113,7 +113,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetStereo() {
+    void testGetStereo() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
         Assertions.assertNotNull(stereo);
@@ -121,7 +121,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetBonds() {
+    void testGetBonds() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
         Assertions.assertNotNull(stereo);
@@ -131,7 +131,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void contains() throws Exception {
+    void contains() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         IAtom c1 = builder.newInstance(IAtom.class, "C");
@@ -157,7 +157,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void testMap_Map_Map() throws CloneNotSupportedException {
+    void testMap_Map_Map() throws CloneNotSupportedException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -205,7 +205,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void testMap_Null_Map() throws CloneNotSupportedException {
+    void testMap_Null_Map() throws CloneNotSupportedException {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -229,7 +229,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void testMap_Map_Map_EmptyMapping() throws CloneNotSupportedException {
+    void testMap_Map_Map_EmptyMapping() throws CloneNotSupportedException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -253,7 +253,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
         String stringRepr = stereo.toString();

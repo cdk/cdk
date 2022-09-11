@@ -60,22 +60,22 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class ModelBuilder3DTest extends CDKTestCase {
+class ModelBuilder3DTest extends CDKTestCase {
 
-    boolean standAlone = false;
+    private boolean standAlone = false;
 
     /**
      *  Sets the standAlone attribute
      *
      *@param  standAlone  The new standAlone value
      */
-    public void setStandAlone(boolean standAlone) {
+    void setStandAlone(boolean standAlone) {
         this.standAlone = standAlone;
     }
 
     //  A unit test for JUnit with methylenfluoride\
     @Test
-    public void testModelBuilder3D_CF() throws Exception {
+    void testModelBuilder3D_CF() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         Point3d c_coord = new Point3d(1.392, 0.0, 0.0);
         Point3d f_coord = new Point3d(0.0, 0.0, 0.0);
@@ -97,7 +97,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testModelBuilder3D_CccccC() throws Exception {
+    void testModelBuilder3D_CccccC() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "CccccC";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -112,7 +112,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testModelBuilder3D_c1ccccc1C0() throws Exception {
+    void testModelBuilder3D_c1ccccc1C0() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -129,7 +129,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     @Tag("SlowTest")
-    public void testModelBuilder3D_Konstanz() throws Exception {
+    void testModelBuilder3D_Konstanz() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -145,7 +145,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
-    public void xtestModelBuilder3D_Konstanz2() throws Exception {
+    void xtestModelBuilder3D_Konstanz2() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -161,7 +161,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception {
+    void testModelBuilder3D_C1CCCCCCC1CC() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -182,7 +182,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      * @cdk.bug 1610997
      */
     @Test
-    public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception {
+    void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -205,7 +205,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testModelBuilder3D_232() throws Exception {
+    void testModelBuilder3D_232() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -232,7 +232,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testModelBuilder3D_231() throws Exception {
+    void testModelBuilder3D_231() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -256,7 +256,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      * @cdk.bug 1309731
      */
     @Test
-    public void testModelBuilder3D_keepChemObjectIDs() throws Exception {
+    void testModelBuilder3D_keepChemObjectIDs() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer methanol = new AtomContainer();
@@ -293,7 +293,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      * @cdk.bug 1610997
      */
     @Test
-    public void testModel3D_bug_1610997() throws Exception {
+    void testModel3D_bug_1610997() throws Exception {
         Assumptions.assumeTrue(runSlowTests());
 
         boolean notCalculatedResults = false;
@@ -359,7 +359,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      */
     @Test
     @Tag("SlowTest")
-    public void testModelBuilder3D_bug_1241421() throws Exception {
+    void testModelBuilder3D_bug_1241421() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "bug1241421.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -375,7 +375,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     @Test
     @Tag("SlowTest")
     @Disabled("JWM - to fix, spotted in JUnit 5 migration")
-    public void testModelBuilder3D_reserpine() throws Exception {
+    void testModelBuilder3D_reserpine() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "reserpine.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -392,7 +392,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
-    public void testAlkanes() throws CDKException, IOException, CloneNotSupportedException {
+    void testAlkanes() throws CDKException, IOException, CloneNotSupportedException {
         String smiles1 = "CCCCCCCCCCCCCCCCCC";
         String smiles2 = "CCCCCC(CCCC)CCCC";
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -404,7 +404,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
     
     @Test
-    public void hydrogenAsFirstAtomInMethane() throws Exception {
+    void hydrogenAsFirstAtomInMethane() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer methane = smipar.parseSmiles("[H]C([H])([H])[H]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
@@ -415,7 +415,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
-    public void hydrogenAsFirstAtomInEthane() throws Exception {
+    void hydrogenAsFirstAtomInEthane() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ethane = smipar.parseSmiles("[H]C([H])([H])C([H])([H])[H]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ethane);

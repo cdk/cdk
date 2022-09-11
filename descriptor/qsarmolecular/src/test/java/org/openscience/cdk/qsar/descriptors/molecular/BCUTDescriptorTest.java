@@ -46,17 +46,17 @@ import java.util.List;
  * @cdk.module test-qsarmolecular
  */
 
-public class BCUTDescriptorTest extends MolecularDescriptorTest {
+class BCUTDescriptorTest extends MolecularDescriptorTest {
 
-    public BCUTDescriptorTest() {}
+    BCUTDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(BCUTDescriptor.class);
     }
 
     @Test
-    public void testBCUT() throws Exception {
+    void testBCUT() throws Exception {
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -105,7 +105,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testExtraEigenvalues() throws Exception {
+    void testExtraEigenvalues() throws Exception {
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -133,7 +133,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testAromaticity() throws Exception {
+    void testAromaticity() throws Exception {
         setDescriptor(BCUTDescriptor.class);
 
         String smiles1 = "c1ccccc1";
@@ -161,7 +161,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testHAddition() throws Exception {
+    void testHAddition() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
         DoubleArrayResult result1 = (DoubleArrayResult) descriptor.calculate(mol).getValue();
@@ -173,7 +173,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
      * @cdk.bug 3489559
      */
     @Test
-    public void testUndefinedValues() throws Exception {
+    void testUndefinedValues() throws Exception {
         String filename = "burden_undefined.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -193,7 +193,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testBug735_ordering1() throws Exception {
+    void testBug735_ordering1() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(C)(N)=O");
         DescriptorValue val = descriptor.calculate(mol);
@@ -207,7 +207,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testBug735_ordering2() throws Exception {
+    void testBug735_ordering2() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC(=O)N");
         DescriptorValue val = descriptor.calculate(mol);

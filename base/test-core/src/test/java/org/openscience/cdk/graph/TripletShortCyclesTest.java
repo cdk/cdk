@@ -38,10 +38,10 @@ import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
  * @author John May
  * @cdk.module test-core
  */
-public class TripletShortCyclesTest {
+class TripletShortCyclesTest {
 
     @Test
-    public void lexicographic() {
+    void lexicographic() {
 
         int[] exp = new int[]{0, 1, 2, 3, 4};
 
@@ -59,14 +59,14 @@ public class TripletShortCyclesTest {
     }
 
     @Test
-    public void empty() throws Exception {
+    void empty() throws Exception {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(new int[0][]), false);
         int[][] paths = esssr.paths();
         assertThat(paths, is(new int[0][]));
     }
 
     @Test
-    public void unmodifiable() throws Exception {
+    void unmodifiable() throws Exception {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(k4()), false);
         int[][] paths = esssr.paths();
         // modify paths
@@ -80,7 +80,7 @@ public class TripletShortCyclesTest {
     }
 
     @Test
-    public void naphthalenePaths() {
+    void naphthalenePaths() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(naphthalene()), false);
         int[][] paths = esssr.paths();
         assertThat(paths[0].length - 1, is(6));
@@ -90,13 +90,13 @@ public class TripletShortCyclesTest {
     }
 
     @Test
-    public void naphthaleneSize() {
+    void naphthaleneSize() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(naphthalene()), false);
         assertThat(esssr.size(), is(3));
     }
 
     @Test
-    public void anthracenePaths() {
+    void anthracenePaths() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(anthracene()), false);
         int[][] paths = esssr.paths();
         assertThat(paths[0].length - 1, is(6));
@@ -114,13 +114,13 @@ public class TripletShortCyclesTest {
     }
 
     @Test
-    public void anthraceneSize() {
+    void anthraceneSize() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(anthracene()), false);
         assertThat(esssr.size(), is(5));
     }
 
     @Test
-    public void bicycloPaths() {
+    void bicycloPaths() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(bicyclo()), false);
         int[][] paths = esssr.paths();
         assertThat(paths[0].length - 1, is(6));
@@ -133,13 +133,13 @@ public class TripletShortCyclesTest {
     }
 
     @Test
-    public void bicycloSize() {
+    void bicycloSize() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(bicyclo()), false);
         assertThat(esssr.size(), is(3));
     }
 
     @Test
-    public void norbornanePaths() {
+    void norbornanePaths() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(norbornane()), false);
         int[][] paths = esssr.paths();
         assertThat(paths[0].length - 1, is(5));
@@ -150,7 +150,7 @@ public class TripletShortCyclesTest {
     }
 
     @Test
-    public void norbornaneSize() {
+    void norbornaneSize() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(norbornane()), false);
         assertThat(esssr.size(), is(3));
     }
@@ -160,7 +160,7 @@ public class TripletShortCyclesTest {
      * multiple shortest paths here we would miss one of the larger cycles
      */
     @Test
-    public void cyclophanePaths() {
+    void cyclophanePaths() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(cyclophane()), false);
         assertThat(esssr.paths(), is(new int[][]{{0, 1, 2, 3, 4, 5, 0}, {6, 7, 8, 9, 10, 11, 6},
                 {0, 1, 2, 3, 17, 18, 19, 16, 9, 8, 7, 6, 15, 14, 13, 12, 0},
@@ -170,7 +170,7 @@ public class TripletShortCyclesTest {
     }
 
     @Test
-    public void cyclophaneSize() {
+    void cyclophaneSize() {
         TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(cyclophane()), false);
         assertThat(esssr.size(), is(6));
     }

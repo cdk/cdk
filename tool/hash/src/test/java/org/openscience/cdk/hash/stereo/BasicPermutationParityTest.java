@@ -31,18 +31,18 @@ import org.junit.jupiter.api.Test;
  * @author John May
  * @cdk.module test-hash
  */
-public class BasicPermutationParityTest {
+class BasicPermutationParityTest {
 
-    final BasicPermutationParity permutationParity = new BasicPermutationParity(new int[]{0, 1, 2, 3});
+    private final BasicPermutationParity permutationParity = new BasicPermutationParity(new int[]{0, 1, 2, 3});
 
     @Test
-    public void testConstruction_Null() {
+    void testConstruction_Null() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {new BasicPermutationParity(null);});
     }
 
     @Test
-    public void testConstruction_Empty() {
+    void testConstruction_Empty() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     new BasicPermutationParity(new int[0]);
@@ -50,32 +50,32 @@ public class BasicPermutationParityTest {
     }
 
     @Test
-    public void testParity_Even() throws Exception {
+    void testParity_Even() throws Exception {
         Assertions.assertEquals(1, permutationParity.parity(new long[]{4, 3, 2, 1}));
     }
 
     @Test
-    public void testParity_Odd() throws Exception {
+    void testParity_Odd() throws Exception {
         Assertions.assertEquals(-1, permutationParity.parity(new long[]{4, 2, 3, 1}));
     }
 
     @Test
-    public void testParity_Even_Negative() throws Exception {
+    void testParity_Even_Negative() throws Exception {
         Assertions.assertEquals(1, permutationParity.parity(new long[]{4, 3, -1, -2}));
     }
 
     @Test
-    public void testParity_Odd_Negative() throws Exception {
+    void testParity_Odd_Negative() throws Exception {
         Assertions.assertEquals(-1, permutationParity.parity(new long[]{4, -1, 3, -2}));
     }
 
     @Test
-    public void testParity_Duplicate() throws Exception {
+    void testParity_Duplicate() throws Exception {
         Assertions.assertEquals(0, permutationParity.parity(new long[]{4, 3, -1, -1}));
     }
 
     @Test
-    public void testParity_All() throws Exception {
+    void testParity_All() throws Exception {
         Assertions.assertEquals(1, permutationParity.parity(new long[]{1, 2, 3, 4}));
         Assertions.assertEquals(-1, permutationParity.parity(new long[]{2, 1, 3, 4}));
         Assertions.assertEquals(-1, permutationParity.parity(new long[]{1, 3, 2, 4}));

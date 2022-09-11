@@ -36,10 +36,10 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 /**
  * @cdk.module test-renderextra
  */
-public class ReactionSetRendererTest {
+class ReactionSetRendererTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         List<IGenerator<IAtomContainer>> generators = new ArrayList<>();
         generators.add(new BasicSceneGenerator());
         generators.add(new BasicAtomGenerator());

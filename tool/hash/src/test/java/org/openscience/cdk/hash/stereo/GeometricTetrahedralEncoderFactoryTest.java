@@ -50,10 +50,10 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
  * @author John May
  * @cdk.module test-hash
  */
-public class GeometricTetrahedralEncoderFactoryTest {
+class GeometricTetrahedralEncoderFactoryTest {
 
     @Test
-    public void testCreate_2D() throws Exception {
+    void testCreate_2D() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);
@@ -120,7 +120,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
     }
 
     @Test
-    public void testCreate_2D_Implicit() throws Exception {
+    void testCreate_2D_Implicit() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(4);
@@ -181,7 +181,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
     }
 
     @Test
-    public void testCreate_3D() throws Exception {
+    void testCreate_3D() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);
@@ -248,7 +248,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
     }
 
     @Test
-    public void testCreate_3D_Implicit() throws Exception {
+    void testCreate_3D_Implicit() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(4);
@@ -308,7 +308,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
     }
 
     @Test
-    public void testCreate_NonSP3() throws Exception {
+    void testCreate_NonSP3() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);
@@ -363,7 +363,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
     }
 
     @Test
-    public void testCreate_NoStereoBonds() throws Exception {
+    void testCreate_NoStereoBonds() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);
@@ -419,7 +419,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
     }
 
     @Test
-    public void testCreate_WrongDegree() throws Exception {
+    void testCreate_WrongDegree() throws Exception {
 
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);

@@ -19,12 +19,12 @@ import java.util.Map;
 /**
  * @cdk.module test-fingerprint
  */
-public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
+class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
 
-    final SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private final SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test
-    public void testFingerprint() throws Exception {
+    void testFingerprint() throws Exception {
         /*
     	 * We are going to test hexane. Hexane is a good test b/c it has 10 carbons.
     	 * Since the max distance for this fingerprint is 10, the final C-C fingerprint slot
@@ -48,7 +48,7 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void testHalogen() throws Exception {
+    void testHalogen() throws Exception {
         IFingerprinter       printer = new AtomPairs2DFingerprinter();
         IAtomContainer       mol1    = parser.parseSmiles("Clc1ccccc1");
         Map<String, Integer> map     = printer.getRawFingerprint(mol1);
@@ -63,7 +63,7 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void ignoredAtom() throws Exception {
+    void ignoredAtom() throws Exception {
         IFingerprinter       printer = new AtomPairs2DFingerprinter();
         IAtomContainer       mol1    = parser.parseSmiles("[Te]1cccc1");
         Map<String, Integer> map     = printer.getRawFingerprint(mol1);
@@ -86,7 +86,7 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
     }
     
     @Test
-    public void testNullPointerExceptionInGetBitFingerprint() throws Exception {
+    void testNullPointerExceptionInGetBitFingerprint() throws Exception {
         IFingerprinter printer = new AtomPairs2DFingerprinter();
         IAtomContainer chlorobenzene;
         chlorobenzene = parser.parseSmiles("Clc1ccccc1");

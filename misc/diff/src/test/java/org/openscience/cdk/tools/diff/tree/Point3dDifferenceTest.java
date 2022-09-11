@@ -26,10 +26,10 @@ import javax.vecmath.Point3d;
 /**
  * @cdk.module test-diff
  */
-public class Point3dDifferenceTest {
+class Point3dDifferenceTest {
 
     @Test
-    public void testDiff() {
+    void testDiff() {
         Point3d foo = new Point3d(1.0, 2.0, 4.5);
         Point3d bar = new Point3d(1.0, 5.0, 8.3);
         IDifference result = Point3dDifference.construct("Foo", foo, bar);
@@ -37,7 +37,7 @@ public class Point3dDifferenceTest {
     }
 
     @Test
-    public void testSame() {
+    void testSame() {
         Point3d foo = new Point3d(1.0, 2.0, 4.5);
         Point3d bar = new Point3d(1.0, 2.0, 4.5);
         IDifference result = Point3dDifference.construct("Foo", foo, bar);
@@ -45,13 +45,13 @@ public class Point3dDifferenceTest {
     }
 
     @Test
-    public void testTwoNull() {
+    void testTwoNull() {
         IDifference result = Point3dDifference.construct("Foo", null, null);
         Assertions.assertNull(result);
     }
 
     @Test
-    public void testOneNull() {
+    void testOneNull() {
         Point3d bar = new Point3d(1.0, 5.0, 8.3);
         IDifference result = Point3dDifference.construct("Foo", null, bar);
         Assertions.assertNotNull(result);
@@ -61,7 +61,7 @@ public class Point3dDifferenceTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Point3d bar = new Point3d(1.0, 5.0, 8.3);
         IDifference result = Point3dDifference.construct("Foo", null, bar);
         String diffString = result.toString();

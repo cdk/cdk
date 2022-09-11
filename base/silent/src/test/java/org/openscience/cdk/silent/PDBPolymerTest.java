@@ -35,15 +35,15 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @cdk.module test-silent
  */
-public class PDBPolymerTest extends AbstractPDBPolymerTest {
+class PDBPolymerTest extends AbstractPDBPolymerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(PDBPolymer::new);
     }
 
     @Test
-    public void testPDBPolymer() {
+    void testPDBPolymer() {
         IPDBPolymer pdbPolymer = new PDBPolymer();
         Assertions.assertNotNull(pdbPolymer);
         Assertions.assertEquals(pdbPolymer.getMonomerCount(), 0);
@@ -97,7 +97,7 @@ public class PDBPolymerTest extends AbstractPDBPolymerTest {
     }
 
     @Test
-    public void testGetMonomerNamesInSequentialOrder() {
+    void testGetMonomerNamesInSequentialOrder() {
         PDBPolymer pdbPolymer = new PDBPolymer();
         Assertions.assertEquals(0, pdbPolymer.getMonomerNames().size());
 

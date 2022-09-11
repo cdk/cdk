@@ -40,7 +40,7 @@ import java.io.StringWriter;
  * @cdk.module test-smiles
  * @see org.openscience.cdk.io.Mol2Writer
  */
-public class SMILES2Mol2WriterTest {
+class SMILES2Mol2WriterTest {
 
     private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
@@ -50,7 +50,7 @@ public class SMILES2Mol2WriterTest {
      * @cdk.bug 2675188
      */
     @Test
-    public void testWriter1() throws Exception {
+    void testWriter1() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("C([H])([H])([H])([H])");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
@@ -64,7 +64,7 @@ public class SMILES2Mol2WriterTest {
     }
 
     @Test
-    public void testWriter2() throws Exception {
+    void testWriter2() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1C=O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
@@ -83,7 +83,7 @@ public class SMILES2Mol2WriterTest {
     }
 
     @Test
-    public void testWriterForAmide() throws Exception {
+    void testWriterForAmide() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("CC(=O)NC");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);

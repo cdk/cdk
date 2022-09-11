@@ -42,17 +42,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-standard
  */
-public final class RingSearchTest_Hexaphenylene {
+final class RingSearchTest_Hexaphenylene {
 
     private final IAtomContainer hexaphenylene = hexaphenylene();
 
     @Test
-    public void testCyclic() {
+    void testCyclic() {
         assertThat(new RingSearch(hexaphenylene).cyclic().length, is(hexaphenylene.getAtomCount()));
     }
 
     @Test
-    public void testCyclic_Int() {
+    void testCyclic_Int() {
         int n = hexaphenylene.getAtomCount();
         RingSearch ringSearch = new RingSearch(hexaphenylene);
         for (int i = 0; i < n; i++) {
@@ -61,35 +61,35 @@ public final class RingSearchTest_Hexaphenylene {
     }
 
     @Test
-    public void testIsolated() {
+    void testIsolated() {
         RingSearch search = new RingSearch(hexaphenylene);
         int[][] isolated = search.isolated();
         assertThat(isolated.length, is(0));
     }
 
     @Test
-    public void testFused() {
+    void testFused() {
         int[][] fused = new RingSearch(hexaphenylene).fused();
         assertThat(fused.length, is(1));
         assertThat(fused[0].length, is(hexaphenylene.getAtomCount()));
     }
 
     @Test
-    public void testRingFragments() {
+    void testRingFragments() {
         IAtomContainer fragment = new RingSearch(hexaphenylene).ringFragments();
         assertThat(fragment.getAtomCount(), is(hexaphenylene.getAtomCount()));
         assertThat(fragment.getBondCount(), is(hexaphenylene.getBondCount()));
     }
 
     @Test
-    public void testIsolatedRingFragments() {
+    void testIsolatedRingFragments() {
         RingSearch search = new RingSearch(hexaphenylene);
         List<IAtomContainer> isolated = search.isolatedRingFragments();
         assertThat(isolated.size(), is(0));
     }
 
     @Test
-    public void testFusedRingFragments() {
+    void testFusedRingFragments() {
         RingSearch search = new RingSearch(hexaphenylene);
         List<IAtomContainer> fused = search.fusedRingFragments();
         assertThat(fused.size(), is(1));
@@ -100,7 +100,7 @@ public final class RingSearchTest_Hexaphenylene {
     /**
      * @cdk.inchi InChI=1S/C36H24/c1-2-14-26-25(13-1)27-15-3-4-17-29(27)31-19-7-8-21-33(31)35-23-11-12-24-36(35)34-22-10-9-20-32(34)30-18-6-5-16-28(26)30/h1-24H/b27-25-,28-26-,31-29-,32-30-,35-33-,36-34-
      */
-    public static IAtomContainer hexaphenylene() {
+    static IAtomContainer hexaphenylene() {
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = new Atom("C");
         mol.addAtom(a1);

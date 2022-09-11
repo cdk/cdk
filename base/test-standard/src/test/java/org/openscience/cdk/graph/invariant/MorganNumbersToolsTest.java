@@ -38,14 +38,14 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module test-standard
  */
-public class MorganNumbersToolsTest extends CDKTestCase {
+class MorganNumbersToolsTest extends CDKTestCase {
 
-    public MorganNumbersToolsTest() {
+    MorganNumbersToolsTest() {
         super();
     }
 
     @Test
-    public void testGetMorganNumbers_IAtomContainer() {
+    void testGetMorganNumbers_IAtomContainer() {
         // This is an array with the expected Morgan Numbers for a-pinene
         long[] reference = {28776, 17899, 23549, 34598, 31846, 36393, 9847, 45904, 15669, 15669};
 
@@ -59,7 +59,7 @@ public class MorganNumbersToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testPhenylamine() {
+    void testPhenylamine() {
         // This is an array with the expected Morgan Numbers for a-pinene
         String[] reference = {"C-457", "C-428", "C-325", "C-354", "C-325", "C-428", "N-251"};
 
@@ -76,7 +76,7 @@ public class MorganNumbersToolsTest extends CDKTestCase {
      * @cdk.bug 2846213
      */
     @Test
-    public void testBug2846213() throws CDKException {
+    void testBug2846213() throws CDKException {
         String filename = "bug2846213.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

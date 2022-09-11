@@ -24,15 +24,15 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-diff
  */
-public class AbstractDifferenceTest {
+class AbstractDifferenceTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         DifferenceClass diffClass = new DifferenceClass();
         Assertions.assertNotNull(diffClass);
     }
 
-    protected class DifferenceClass extends AbstractDifference {
+    class DifferenceClass extends AbstractDifference {
 
     }
 

@@ -44,10 +44,10 @@ import static org.mockito.Mockito.mock;
  * @author John May
  * @cdk.module test-hash
  */
-public class AllEquivalentCyclicSetTest {
+class AllEquivalentCyclicSetTest {
 
     @Test
-    public void testFind() throws Exception {
+    void testFind() throws Exception {
         IAtomContainer dummy = mock(IAtomContainer.class);
         int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
 
@@ -69,7 +69,7 @@ public class AllEquivalentCyclicSetTest {
     }
 
     @Test
-    public void testFind_Distinct() throws Exception {
+    void testFind_Distinct() throws Exception {
         IAtomContainer dummy = mock(IAtomContainer.class);
         int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
 
@@ -90,7 +90,7 @@ public class AllEquivalentCyclicSetTest {
      * finder does not tell them apart but that this more complex finder does.
      */
     @Test
-    public void testScenario() throws Exception {
+    void testScenario() throws Exception {
 
         IAtomContainer cid138898 = cid138898();
         IAtomContainer cid241107 = cid241107();

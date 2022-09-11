@@ -26,9 +26,9 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class DescriptorSpecificationTest extends CDKTestCase {
+class DescriptorSpecificationTest extends CDKTestCase {
 
-    public DescriptorSpecificationTest() {
+    DescriptorSpecificationTest() {
         super();
     }
 
@@ -38,42 +38,42 @@ public class DescriptorSpecificationTest extends CDKTestCase {
     private final static String DESC_IMPL_ID     = "bla4";
 
     @Test
-    public void testDescriptorSpecification_String_String_String_String() {
+    void testDescriptorSpecification_String_String_String_String() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         Assertions.assertNotNull(spec);
     }
 
     @Test
-    public void testDescriptorSpecification_String_String_String() {
+    void testDescriptorSpecification_String_String_String() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_VENDOR);
         Assertions.assertNotNull(spec);
         Assertions.assertEquals(CDK.getVersion(), spec.getImplementationIdentifier());
     }
 
     @Test
-    public void testGetImplementationVendor() {
+    void testGetImplementationVendor() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         Assertions.assertEquals(DESC_IMPL_VENDOR, spec.getImplementationVendor());
     }
 
     @Test
-    public void testGetSpecificationReference() {
+    void testGetSpecificationReference() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         Assertions.assertEquals(DESC_REF, spec.getSpecificationReference());
     }
 
     @Test
-    public void testGetImplementationIdentifier() {
+    void testGetImplementationIdentifier() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         Assertions.assertEquals(DESC_IMPL_ID, spec.getImplementationIdentifier());
     }
 
     @Test
-    public void testGetImplementationTitle() {
+    void testGetImplementationTitle() {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         Assertions.assertEquals(DESC_IMPL_TITLE, spec.getImplementationTitle());

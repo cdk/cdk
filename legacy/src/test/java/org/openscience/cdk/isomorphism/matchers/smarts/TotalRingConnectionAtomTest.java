@@ -39,10 +39,10 @@ import static org.mockito.Mockito.when;
  * @author John May
  * @cdk.module test-smarts
  */
-public class TotalRingConnectionAtomTest {
+class TotalRingConnectionAtomTest {
 
     @Test
-    public void matches() throws Exception {
+    void matches() throws Exception {
         TotalRingConnectionAtom matcher = new TotalRingConnectionAtom(2, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))

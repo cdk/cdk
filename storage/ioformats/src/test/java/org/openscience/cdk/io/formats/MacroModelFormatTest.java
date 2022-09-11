@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class MacroModelFormatTest extends ChemFormatTest {
+class MacroModelFormatTest extends ChemFormatTest {
 
-    public MacroModelFormatTest() {
+    MacroModelFormatTest() {
         super.setChemFormat((IChemFormat) MacroModelFormat.getInstance());
     }
 

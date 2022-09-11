@@ -45,30 +45,30 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module test-standard
  */
-public class SSSRFinderTest extends CDKTestCase {
+class SSSRFinderTest extends CDKTestCase {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SSSRFinderTest.class);
 
-    public SSSRFinderTest() {
+    SSSRFinderTest() {
         super();
     }
 
     @Test
-    public void testSSSRFinder_IAtomContainer() {
+    void testSSSRFinder_IAtomContainer() {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         SSSRFinder finder = new SSSRFinder(molecule);
         Assertions.assertNotNull(finder);
     }
 
     @Test
-    public void testFindSSSR() {
+    void testFindSSSR() {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         Assertions.assertEquals(2, ringSet.getAtomContainerCount());
     }
 
     @Test
-    public void testFindSSSR_IAtomContainer() {
+    void testFindSSSR_IAtomContainer() {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         SSSRFinder sssrFinder = new SSSRFinder(molecule);
         IRingSet ringSet = sssrFinder.findSSSR();
@@ -76,7 +76,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtomContainerCount() throws Exception {
+    void testGetAtomContainerCount() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -84,7 +84,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testRingFlags1() throws Exception {
+    void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         new SSSRFinder(molecule).findSSSR();
@@ -97,7 +97,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testRingFlags2() throws Exception {
+    void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCCC1CC");
         new SSSRFinder(molecule).findSSSR();
@@ -110,7 +110,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testBicyclicCompound() throws Exception {
+    void testBicyclicCompound() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -121,7 +121,7 @@ public class SSSRFinderTest extends CDKTestCase {
      * @cdk.bug 826942
      */
     @Test
-    public void testSFBug826942() throws Exception {
+    void testSFBug826942() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -129,7 +129,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testProblem1() throws Exception {
+    void testProblem1() throws Exception {
         IAtomContainer molecule;
         IRing ring;
         String filename = "figueras-test-sep3D.mol";
@@ -149,7 +149,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testLoopProblem() throws Exception {
+    void testLoopProblem() throws Exception {
         String filename = "ring_03419.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -167,7 +167,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testProblem2() throws Exception {
+    void testProblem2() throws Exception {
         IAtomContainer molecule;
         IRing ring;
         String filename = "figueras-test-buried.mol";
@@ -187,7 +187,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test
-    public void testProblem3() throws Exception {
+    void testProblem3() throws Exception {
         IAtomContainer molecule;
         IRing ring;
         String filename = "figueras-test-inring.mol";
@@ -210,7 +210,7 @@ public class SSSRFinderTest extends CDKTestCase {
      * @cdk.bug 891021
      */
     @Test
-    public void testBug891021() throws Exception {
+    void testBug891021() throws Exception {
         IAtomContainer molecule;
         String filename = "too.many.rings.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -246,7 +246,7 @@ public class SSSRFinderTest extends CDKTestCase {
      */
     @Tag("SlowTest")
     @Test
-    public void testBuckyballRelevantRings() throws Exception {
+    void testBuckyballRelevantRings() throws Exception {
         IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetRelevant = new SSSRFinder(buckyball).findRelevantRings();
         ringCount(ringSetRelevant, 6, 20);
@@ -260,7 +260,7 @@ public class SSSRFinderTest extends CDKTestCase {
      */
     @Tag("SlowTest")
     @Test
-    public void testBuckyballSSSR() throws Exception {
+    void testBuckyballSSSR() throws Exception {
         IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetSSSR = new SSSRFinder(buckyball).findSSSR();
         ringCount(ringSetSSSR, 6, 19);
@@ -276,7 +276,7 @@ public class SSSRFinderTest extends CDKTestCase {
      * is essential.
      */
     @Test
-    public void testBuckyballEssentialRings() throws Exception {
+    void testBuckyballEssentialRings() throws Exception {
         IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetEssential = new SSSRFinder(buckyball).findEssentialRings();
         ringCount(ringSetEssential, 6, 0);

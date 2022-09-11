@@ -33,10 +33,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class Mdl2SmartsTest {
+class Mdl2SmartsTest {
 
   @Test
-  public void atomList() throws Exception {
+  void atomList() throws Exception {
     try (InputStream in = getClass().getResourceAsStream("mdlquery.mol");
          MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
       IQueryAtomContainer mol = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));

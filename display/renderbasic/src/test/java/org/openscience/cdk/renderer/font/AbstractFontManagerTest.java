@@ -27,16 +27,16 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-renderbasic
  */
-public abstract class AbstractFontManagerTest {
+abstract class AbstractFontManagerTest {
 
-    public static AbstractFontManager manager;
+    private static AbstractFontManager manager;
 
-    public static void setFontManager(AbstractFontManager fontManager) {
+    static void setFontManager(AbstractFontManager fontManager) {
         manager = fontManager;
     }
 
     @Test
-    public void testGetSetFontName() {
+    void testGetSetFontName() {
         String fontName = "Not-Arial";
         manager.setFontName(fontName);
         Assertions.assertEquals(fontName, manager.getFontName());

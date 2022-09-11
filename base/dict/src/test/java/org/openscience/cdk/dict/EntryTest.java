@@ -26,26 +26,26 @@ import org.junit.jupiter.api.Test;
 /**
  * @cdk.module test-dict
  */
-public class EntryTest extends AbstractEntryTest {
+class EntryTest extends AbstractEntryTest {
 
     @BeforeEach
-    public void setTestClass() {
+    void setTestClass() {
         super.setTestClass(new Entry());
     }
 
     @AfterEach
-    public void testTestedClass() {
+    void testTestedClass() {
         Assertions.assertTrue(super.getTestClass().getClass().getName().endsWith(".Entry"));
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         Entry entry = new Entry();
         Assertions.assertNotNull(entry);
     }
 
     @Test
-    public void testConstructor_String_String() {
+    void testConstructor_String_String() {
         Entry entry = new Entry("testid", "testTerm");
         Assertions.assertNotNull(entry);
         Assertions.assertEquals(entry.getID(), "testid");
@@ -53,7 +53,7 @@ public class EntryTest extends AbstractEntryTest {
     }
 
     @Test
-    public void testConstructor_String() {
+    void testConstructor_String() {
         Entry entry = new Entry("testid");
         Assertions.assertNotNull(entry);
         Assertions.assertEquals(entry.getID(), "testid");
@@ -61,7 +61,7 @@ public class EntryTest extends AbstractEntryTest {
     }
 
     @Test
-    public void testConstructor_IDLowerCasing() {
+    void testConstructor_IDLowerCasing() {
         Entry entry = new Entry("testID", "testTerm");
         Assertions.assertNotNull(entry);
         Assertions.assertEquals(entry.getID(), "testid");

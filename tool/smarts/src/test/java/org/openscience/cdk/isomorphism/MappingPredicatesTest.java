@@ -40,10 +40,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author John May
  * @cdk.module test-smarts
  */
-public class MappingPredicatesTest {
+class MappingPredicatesTest {
 
     @Test
-    public void uniqueAtoms() throws Exception {
+    void uniqueAtoms() throws Exception {
         UniqueAtomMatches uam = new UniqueAtomMatches();
         assertTrue(uam.apply(new int[]{1, 2, 3, 4}));
         assertTrue(uam.apply(new int[]{1, 2, 3, 5}));
@@ -52,7 +52,7 @@ public class MappingPredicatesTest {
     }
 
     @Test
-    public void uniqueAtomsUniqSet()  {
+    void uniqueAtomsUniqSet()  {
         UniqueAtomMatches uam = new UniqueAtomMatches();
         assertTrue(uam.apply(new int[]{1, 2, 3}));
         assertTrue(uam.apply(new int[]{4, 2, 5}));
@@ -63,7 +63,7 @@ public class MappingPredicatesTest {
     }
 
     @Test
-    public void uniqueBonds() throws Exception {
+    void uniqueBonds() throws Exception {
 
         IAtomContainer query = smi("C1CCC1");
         IAtomContainer target = smi("C12C3C1C23");
@@ -78,7 +78,7 @@ public class MappingPredicatesTest {
     }
 
     @Test
-    public void uniqueAtoms_multipleIterations() throws Exception {
+    void uniqueAtoms_multipleIterations() throws Exception {
         IAtomContainer ethane = smi("CC");
         IAtomContainer ethanol = smi("CCO");
         Mappings mappings = Pattern.findSubstructure(ethane).matchAll(ethanol);
@@ -87,7 +87,7 @@ public class MappingPredicatesTest {
     }
 
     @Test
-    public void uniqueBonds_multipleIterations() throws Exception {
+    void uniqueBonds_multipleIterations() throws Exception {
         IAtomContainer ethane = smi("CC");
         IAtomContainer ethanol = smi("CCO");
         Mappings mappings = Pattern.findSubstructure(ethane).matchAll(ethanol);
@@ -95,8 +95,8 @@ public class MappingPredicatesTest {
         assertThat(mappings.uniqueBonds().count(), is(1)); // re-iteration
     }
 
-    final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    final SmilesParser       smipar = new SmilesParser(bldr);
+    private final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+    private final SmilesParser       smipar = new SmilesParser(bldr);
 
     IAtomContainer smi(String smi) throws Exception {
         return smipar.parseSmiles(smi);

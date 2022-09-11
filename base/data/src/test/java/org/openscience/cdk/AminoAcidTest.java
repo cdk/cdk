@@ -36,15 +36,15 @@ import org.openscience.cdk.test.interfaces.AbstractAminoAcidTest;
  * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */
-public class AminoAcidTest extends AbstractAminoAcidTest {
+class AminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(AminoAcid::new);
     }
 
     @Test
-    public void testAminoAcid() {
+    void testAminoAcid() {
         IAminoAcid oAminoAcid = new AminoAcid();
         Assertions.assertNotNull(oAminoAcid);
     }

@@ -40,10 +40,10 @@ import static org.hamcrest.CoreMatchers.is;
  * @author John May
  * @cdk.module test-inchi
  */
-public class AbsoluteSMILESTest {
+class AbsoluteSMILESTest {
 
     @Test
-    public void myo_inositol() throws Exception {
+    void myo_inositol() throws Exception {
         test("O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O", "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@@H](O)[C@H]1O",
                 "O[C@@H]1[C@@H](O)[C@H](O)[C@@H](O)[C@H](O)[C@@H]1O",
                 "[C@@H]1(O)[C@H](O)[C@@H](O)[C@H](O)[C@@H](O)[C@@H]1O",
@@ -65,7 +65,7 @@ public class AbsoluteSMILESTest {
     }
 
     @Test
-    public void _1_3_diethylidenecyclobutane() throws Exception {
+    void _1_3_diethylidenecyclobutane() throws Exception {
         test("C/C=C1/CC(=C/C)/C1", "C/C=C/1C\\C(=C/C)C1", "C/1(C\\C(C1)=C/C)=C\\C", "C\\1C(/CC1=C/C)=C\\C",
                 "C/C=C1/CC(=C/C)/C1", "C1(=C/C)/CC(=C\\C)/C1", "C\\C=C1/CC(=C\\C)/C1", "C(\\C)=C1/CC(=C/C)/C1",
                 "C1\\C(C\\C1=C\\C)=C/C", "C/1(C\\C(=C/C)C1)=C\\C", "C(/C)=C1/CC(=C\\C)/C1", "C/1(C\\C(C1)=C\\C)=C/C",
@@ -74,7 +74,7 @@ public class AbsoluteSMILESTest {
     }
 
     @Test
-    public void bispropenyloctatriene() throws Exception {
+    void bispropenyloctatriene() throws Exception {
         test("C(=C/C)/C(=C(\\C=C/C)/C=C/C)/C=C/C", "C(=C/C)/C(/C=C/C)=C(\\C=C/C)/C=C/C",
                 "C\\C=C\\C(=C(/C=C/C)\\C=C/C)\\C=C/C", "C(=C/C)/C(/C=C/C)=C(/C=C/C)\\C=C/C",
                 "C(/C=C/C)(=C(/C=C/C)\\C=C/C)\\C=C/C", "C\\C=C\\C(\\C=C/C)=C(/C=C/C)\\C=C/C",
@@ -90,7 +90,7 @@ public class AbsoluteSMILESTest {
 
     // 2,4,6,8-tetramethyl-1,3,5,7-tetraazatricyclo[5.1.0.0³,⁵]octane
     @Test
-    public void tetramethyltetraazatricyclooctane() throws Exception {
+    void tetramethyltetraazatricyclooctane() throws Exception {
         test("C[C@H]1N2N([C@@H](C)N3[C@H](C)N13)[C@H]2C", "N12N([C@H](C)N3[C@@H](C)N3[C@@H]1C)[C@@H]2C",
                 "C[C@H]1N2[C@@H](N3[C@H](N3[C@H](C)N21)C)C", "C[C@@H]1N2[C@@H](C)N3[C@H](C)N3[C@@H](C)N12",
                 "N12N([C@H](N3N([C@H]1C)[C@H]3C)C)[C@H]2C", "C[C@@H]1N2N1[C@@H](N3[C@H](N3[C@@H]2C)C)C",
@@ -104,7 +104,7 @@ public class AbsoluteSMILESTest {
     }
 
     @Disabled("Random failure: to be resolved https://github.com/cdk/cdk/issues/336")
-    public void dbStereoCanonGeneration() throws Exception {
+    void dbStereoCanonGeneration() throws Exception {
         String in = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         final IAtomContainer mol = smipar.parseSmiles(in);
@@ -113,17 +113,17 @@ public class AbsoluteSMILESTest {
     }
 
     @Test
-    public void smilesWithUnknownElem() throws Exception {
+    void smilesWithUnknownElem() throws Exception {
         test("*CC", "CC*");
     }
 
     @Test
-    public void rfElement() throws Exception {
+    void rfElement() throws Exception {
         test("[Rf]");
     }
 
     @Test
-    public void problematic() throws Exception {
+    void problematic() throws Exception {
         Assertions.assertThrows(CDKException.class, () -> {
             test("*[Rf]");
         });

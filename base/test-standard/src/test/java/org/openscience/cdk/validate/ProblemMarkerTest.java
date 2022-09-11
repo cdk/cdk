@@ -27,14 +27,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-standard
  */
-public class ProblemMarkerTest extends CDKTestCase {
+class ProblemMarkerTest extends CDKTestCase {
 
-    public ProblemMarkerTest() {
+    ProblemMarkerTest() {
         super();
     }
 
     @Test
-    public void testUnmarkWithError_IChemObject() {
+    void testUnmarkWithError_IChemObject() {
         IChemObject object = new ChemObject();
         Assertions.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
         ProblemMarker.markWithError(object);
@@ -44,7 +44,7 @@ public class ProblemMarkerTest extends CDKTestCase {
     }
 
     @Test
-    public void testUnmarkWithWarning_IChemObject() {
+    void testUnmarkWithWarning_IChemObject() {
         IChemObject object = new ChemObject();
         Assertions.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
         ProblemMarker.markWithWarning(object);
@@ -54,7 +54,7 @@ public class ProblemMarkerTest extends CDKTestCase {
     }
 
     @Test
-    public void testUnmark_IChemObject() {
+    void testUnmark_IChemObject() {
         IChemObject object = new ChemObject();
         Assertions.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
         ProblemMarker.markWithWarning(object);
@@ -67,7 +67,7 @@ public class ProblemMarkerTest extends CDKTestCase {
     }
 
     @Test
-    public void testMarkWithError_IChemObject() {
+    void testMarkWithError_IChemObject() {
         IChemObject object = new ChemObject();
         Assertions.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
         ProblemMarker.markWithError(object);
@@ -75,7 +75,7 @@ public class ProblemMarkerTest extends CDKTestCase {
     }
 
     @Test
-    public void testMarkWithWarning_IChemObject() {
+    void testMarkWithWarning_IChemObject() {
         IChemObject object = new ChemObject();
         Assertions.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
         ProblemMarker.markWithWarning(object);

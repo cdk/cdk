@@ -38,10 +38,10 @@ import org.junit.jupiter.api.Test;
  * @author John May
  * @cdk.module test-core
  */
-public class RelevantCyclesTest {
+class RelevantCyclesTest {
 
     @Test
-    public void noGraph() {
+    void noGraph() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     new RelevantCycles((int[][]) null);
@@ -49,7 +49,7 @@ public class RelevantCyclesTest {
     }
 
     @Test
-    public void noInitialCycles() {
+    void noInitialCycles() {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
                                     new RelevantCycles((InitialCycles) null);
@@ -57,7 +57,7 @@ public class RelevantCyclesTest {
     }
 
     @Test
-    public void paths_norbornane() {
+    void paths_norbornane() {
         int[][] norbornane = norbornane();
         RelevantCycles relevant = new RelevantCycles(norbornane);
         int[][] paths = relevant.paths();
@@ -67,7 +67,7 @@ public class RelevantCyclesTest {
     }
 
     @Test
-    public void paths_bicyclo() {
+    void paths_bicyclo() {
         int[][] bicyclo = bicyclo();
         RelevantCycles relevant = new RelevantCycles(bicyclo);
         int[][] paths = relevant.paths();
@@ -77,7 +77,7 @@ public class RelevantCyclesTest {
     }
 
     @Test
-    public void paths_napthalene() {
+    void paths_napthalene() {
         int[][] napthalene = naphthalene();
         RelevantCycles relevant = new RelevantCycles(napthalene);
         int[][] paths = relevant.paths();
@@ -87,7 +87,7 @@ public class RelevantCyclesTest {
     }
 
     @Test
-    public void paths_anthracene() {
+    void paths_anthracene() {
         int[][] anthracene = anthracene();
         RelevantCycles relevant = new RelevantCycles(anthracene);
         int[][] paths = relevant.paths();
@@ -97,7 +97,7 @@ public class RelevantCyclesTest {
     }
 
     @Test
-    public void paths_cyclophane_even() {
+    void paths_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         int[][] paths = relevant.paths();
@@ -108,7 +108,7 @@ public class RelevantCyclesTest {
     }
 
     @Test
-    public void paths_cyclophane_odd() {
+    void paths_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         int[][] paths = relevant.paths();
@@ -119,42 +119,42 @@ public class RelevantCyclesTest {
     }
 
     @Test
-    public void size_norbornane() {
+    void size_norbornane() {
         int[][] norbornane = norbornane();
         RelevantCycles relevant = new RelevantCycles(norbornane);
         assertThat(relevant.size(), is(2));
     }
 
     @Test
-    public void size_bicyclo() {
+    void size_bicyclo() {
         int[][] bicyclo = bicyclo();
         RelevantCycles relevant = new RelevantCycles(bicyclo);
         assertThat(relevant.size(), is(3));
     }
 
     @Test
-    public void size_napthalene() {
+    void size_napthalene() {
         int[][] napthalene = naphthalene();
         RelevantCycles relevant = new RelevantCycles(napthalene);
         assertThat(relevant.size(), is(2));
     }
 
     @Test
-    public void size_anthracene() {
+    void size_anthracene() {
         int[][] anthracene = anthracene();
         RelevantCycles relevant = new RelevantCycles(anthracene);
         assertThat(relevant.size(), is(3));
     }
 
     @Test
-    public void size_cyclophane_even() {
+    void size_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         assertThat(relevant.size(), is(3));
     }
 
     @Test
-    public void size_cyclophane_odd() {
+    void size_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         assertThat(relevant.size(), is(3));

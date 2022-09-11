@@ -30,15 +30,15 @@ import org.openscience.cdk.interfaces.IReaction;
  *
  * @cdk.module test-datadebug
  */
-public class DebugReactionTest extends AbstractReactionTest {
+class DebugReactionTest extends AbstractReactionTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugReaction::new);
     }
 
     @Test
-    public void testDebugReaction() {
+    void testDebugReaction() {
         IReaction polymer = new DebugReaction();
         Assertions.assertTrue(polymer instanceof DebugReaction);
     }

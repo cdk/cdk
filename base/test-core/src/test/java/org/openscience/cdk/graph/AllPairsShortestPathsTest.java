@@ -37,10 +37,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-core
  */
-public class AllPairsShortestPathsTest {
+class AllPairsShortestPathsTest {
 
     @Test
-    public void testConstruction_Null()
+    void testConstruction_Null()
     {
         Assertions.assertThrows(NullPointerException.class,
                                 () -> {
@@ -49,7 +49,7 @@ public class AllPairsShortestPathsTest {
     }
 
     @Test
-    public void testConstruction_Empty() {
+    void testConstruction_Empty() {
 
         AllPairsShortestPaths asp = new AllPairsShortestPaths(new AtomContainer());
 
@@ -70,7 +70,7 @@ public class AllPairsShortestPathsTest {
     }
 
     @Test
-    public void testFrom_Atom_Benzene() throws Exception {
+    void testFrom_Atom_Benzene() throws Exception {
 
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         AllPairsShortestPaths asp = new AllPairsShortestPaths(benzene);
@@ -122,7 +122,7 @@ public class AllPairsShortestPathsTest {
     }
 
     @Test
-    public void testFrom_Int_Benzene() throws Exception {
+    void testFrom_Int_Benzene() throws Exception {
 
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         AllPairsShortestPaths asp = new AllPairsShortestPaths(benzene);

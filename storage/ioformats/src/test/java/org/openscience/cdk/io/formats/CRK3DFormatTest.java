@@ -25,9 +25,9 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class CRK3DFormatTest extends ChemFormatTest {
+class CRK3DFormatTest extends ChemFormatTest {
 
-    public CRK3DFormatTest() {
+    CRK3DFormatTest() {
         super.setChemFormat((IChemFormat) CRK3DFormat.getInstance());
     }
 

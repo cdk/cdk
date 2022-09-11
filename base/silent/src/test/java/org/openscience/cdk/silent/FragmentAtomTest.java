@@ -30,15 +30,15 @@ import org.openscience.cdk.test.interfaces.AbstractFragmentAtomTest;
  *
  * @cdk.module test-silent
  */
-public class FragmentAtomTest extends AbstractFragmentAtomTest {
+class FragmentAtomTest extends AbstractFragmentAtomTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(FragmentAtom::new);
     }
 
     @Test
-    public void testFragmentAtom() {
+    void testFragmentAtom() {
         IFragmentAtom a = new FragmentAtom();
         Assertions.assertNotNull(a);
     }

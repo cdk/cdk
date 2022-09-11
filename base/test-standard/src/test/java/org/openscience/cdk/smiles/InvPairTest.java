@@ -28,20 +28,20 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * @cdk.module     test-standard
  */
-public class InvPairTest extends CDKTestCase {
+class InvPairTest extends CDKTestCase {
 
-    public InvPairTest() {
+    InvPairTest() {
         super();
     }
 
     @Test
-    public void testInvPair() {
+    void testInvPair() {
         InvPair pair = new InvPair();
         Assertions.assertNotNull(pair);
     }
 
     @Test
-    public void testInvPair_long_IAtom() {
+    void testInvPair_long_IAtom() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         Assertions.assertNotNull(pair);
@@ -50,7 +50,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testEquals_Object() {
+    void testEquals_Object() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         Assertions.assertEquals(pair, pair);
@@ -59,7 +59,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         Assertions.assertNotNull(pair.toString());
@@ -67,7 +67,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetAtom_IAtom() {
+    void testSetAtom_IAtom() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair();
         Assertions.assertNotSame(atom, pair.getAtom());
@@ -76,7 +76,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetAtom() {
+    void testGetAtom() {
         InvPair pair = new InvPair();
         Assertions.assertNull(pair.getAtom());
         pair.setAtom(new Atom(Elements.CARBON));
@@ -87,7 +87,7 @@ public class InvPairTest extends CDKTestCase {
      * @cdk.bug 2045574
      */
     @Test
-    public void testGetPrime() {
+    void testGetPrime() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         pair.setPrime();
@@ -100,7 +100,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetPrime() {
+    void testSetPrime() {
         InvPair pair = new InvPair();
         try {
             pair.setPrime();
@@ -111,7 +111,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testCommit() {
+    void testCommit() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         pair.commit();
@@ -120,7 +120,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetCurr_long() {
+    void testSetCurr_long() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         Assertions.assertEquals(5l, pair.getCurr());
@@ -129,14 +129,14 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetCurr() {
+    void testGetCurr() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         Assertions.assertEquals(5l, pair.getCurr());
     }
 
     @Test
-    public void testSetLast_long() {
+    void testSetLast_long() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         Assertions.assertEquals(0l, pair.getLast());
@@ -145,7 +145,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetLast() {
+    void testGetLast() {
         IAtom atom = new Atom(Elements.CARBON);
         InvPair pair = new InvPair(5l, atom);
         Assertions.assertEquals(0l, pair.getLast());

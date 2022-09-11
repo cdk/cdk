@@ -33,15 +33,15 @@ import org.openscience.cdk.interfaces.IChemObject;
  * @cdk.module test-data
  * @see org.openscience.cdk.Bond
  */
-public class BondTest extends AbstractBondTest {
+class BondTest extends AbstractBondTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(Bond::new);
     }
 
     @Test
-    public void testBond() {
+    void testBond() {
         IBond bond = new Bond();
         Assertions.assertEquals(0, bond.getAtomCount());
         Assertions.assertNull(bond.getBegin());
@@ -51,7 +51,7 @@ public class BondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testBond_arrayIAtom() {
+    void testBond_arrayIAtom() {
         IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
@@ -66,7 +66,7 @@ public class BondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testBond_arrayIAtom_IBond_Order() {
+    void testBond_arrayIAtom_IBond_Order() {
         IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
@@ -82,7 +82,7 @@ public class BondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testBond_IAtom_IAtom() {
+    void testBond_IAtom_IAtom() {
         IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom o = object.getBuilder().newInstance(IAtom.class, "O");
@@ -96,7 +96,7 @@ public class BondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testBond_IAtom_IAtom_IBond_Order() {
+    void testBond_IAtom_IAtom_IBond_Order() {
         IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom o = object.getBuilder().newInstance(IAtom.class, "O");
@@ -110,7 +110,7 @@ public class BondTest extends AbstractBondTest {
     }
 
     @Test
-    public void testBond_IAtom_IAtom_IBond_Order_IBond_Stereo() {
+    void testBond_IAtom_IAtom_IBond_Order_IBond_Stereo() {
         IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom o = object.getBuilder().newInstance(IAtom.class, "O");

@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IntArrayCountFingerprintTest {
+class IntArrayCountFingerprintTest {
 
     @Test
-    public void testMerge() {
+    void testMerge() {
         IntArrayCountFingerprint fp1 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
 
             {

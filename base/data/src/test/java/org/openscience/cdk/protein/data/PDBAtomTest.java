@@ -36,10 +36,10 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
  *
  * @cdk.module test-data
  */
-public class PDBAtomTest extends AbstractPDBAtomTest {
+class PDBAtomTest extends AbstractPDBAtomTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
             @Override
@@ -50,7 +50,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
     }
 
     @Test
-    public void testPDBAtom_IElement() {
+    void testPDBAtom_IElement() {
         IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IAtom a = new PDBAtom(element);
         Assertions.assertNotNull(a);
@@ -60,7 +60,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
      * Method to test the Atom(String symbol) method.
      */
     @Test
-    public void testPDBAtom_String() {
+    void testPDBAtom_String() {
         IPDBAtom a = new PDBAtom("C");
         Assertions.assertEquals("C", a.getSymbol());
         Assertions.assertNull(a.getPoint2d());
@@ -72,7 +72,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
      * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
      */
     @Test
-    public void testPDBAtom_String_Point3d() {
+    void testPDBAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IPDBAtom a = new PDBAtom("C", point3d);

@@ -38,10 +38,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-io
  */
-public class MDLValenceTest {
+class MDLValenceTest {
 
     @Test
-    public void sodium_metal() {
+    void sodium_metal() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Na");
         atom.setValency(0);
@@ -52,7 +52,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void sodium_hydride() {
+    void sodium_hydride() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Na");
         atom.setValency(1);
@@ -63,7 +63,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void sodium_implicit() {
+    void sodium_implicit() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Na");
         container.addAtom(atom);
@@ -73,7 +73,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void bismuth() {
+    void bismuth() {
         IAtomContainer container = new AtomContainer();
         IAtom bi1 = new Atom("Bi");
         IAtom h2 = new Atom("H");
@@ -89,7 +89,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void tin_ii() {
+    void tin_ii() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Sn");
         atom.setValency(2);
@@ -100,7 +100,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void tin_iv() {
+    void tin_iv() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Sn");
         atom.setValency(4);
@@ -114,7 +114,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void carbon_neutral() {
+    void carbon_neutral() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("C");
         container.addAtom(atom);
@@ -124,7 +124,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void carbon_cation() {
+    void carbon_cation() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("C");
         atom.setFormalCharge(-1);
@@ -135,7 +135,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void carbon_cation_doubleBonded() {
+    void carbon_cation_doubleBonded() {
         IAtomContainer container = new AtomContainer();
         IAtom c1 = new Atom("C");
         IAtom c2 = new Atom("C");
@@ -151,7 +151,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void carbon_anion() {
+    void carbon_anion() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("C");
         atom.setFormalCharge(+1);
@@ -162,7 +162,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void bismuth_isImplicit() {
+    void bismuth_isImplicit() {
         IAtomContainer container = new AtomContainer();
         IAtom bi1 = new Atom("Bi");
         IAtom h2 = new Atom("H");
@@ -178,7 +178,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void nitrogen_neutral() {
+    void nitrogen_neutral() {
         assertThat(MDLValence.implicitValence(7, 0, 0), is(3));
         assertThat(MDLValence.implicitValence(7, 0, 1), is(3));
         assertThat(MDLValence.implicitValence(7, 0, 2), is(3));
@@ -189,7 +189,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void nitrogen_cation() {
+    void nitrogen_cation() {
         assertThat(MDLValence.implicitValence(7, +1, 0), is(4));
         assertThat(MDLValence.implicitValence(7, +1, 1), is(4));
         assertThat(MDLValence.implicitValence(7, +1, 2), is(4));
@@ -200,7 +200,7 @@ public class MDLValenceTest {
     }
 
     @Test
-    public void nitrogen_anion() {
+    void nitrogen_anion() {
         assertThat(MDLValence.implicitValence(7, -1, 0), is(2));
         assertThat(MDLValence.implicitValence(7, -1, 1), is(2));
         assertThat(MDLValence.implicitValence(7, -1, 2), is(2));

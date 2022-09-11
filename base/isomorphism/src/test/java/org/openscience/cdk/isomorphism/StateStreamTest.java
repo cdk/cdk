@@ -39,17 +39,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class StateStreamTest {
+class StateStreamTest {
 
     @Test
-    public void hasNext() throws Exception {
+    void hasNext() throws Exception {
         VFSubState state = createNaphthaleneToBenzene(AtomMatcher.forAny(), BondMatcher.forAny());
         Iterator<int[]> it = new StateStream(state);
         Assertions.assertFalse(it.hasNext());
     }
 
     @Test
-    public void hasNext2() throws Exception {
+    void hasNext2() throws Exception {
         VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         int cnt = 0;
         Iterator<int[]> it = new StateStream(state);
@@ -61,7 +61,7 @@ public class StateStreamTest {
     }
 
     @Test
-    public void next() throws Exception {
+    void next() throws Exception {
         VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         Iterator<int[]> it = new StateStream(state);
         assertThat(it.next(), is(new int[]{0, 1, 2, 7, 8, 9}));
@@ -91,7 +91,7 @@ public class StateStreamTest {
     }
 
     @Test
-    public void remove() throws Exception {
+    void remove() throws Exception {
         VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         Iterator<int[]> it = new StateStream(state);
         Assertions.assertThrows(UnsupportedOperationException.class,

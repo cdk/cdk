@@ -30,17 +30,17 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-qsaratomic
  */
-public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest {
+class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest {
 
-    public ProtonTotalPartialChargeDescriptorTest() {}
+    ProtonTotalPartialChargeDescriptorTest() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         setDescriptor(ProtonTotalPartialChargeDescriptor.class);
     }
 
     @Test
-    public void testProtonTotalPartialChargeDescriptorTest() throws java.lang.Exception {
+    void testProtonTotalPartialChargeDescriptorTest() throws java.lang.Exception {
         double[] testResult = {0.07915, 0.05783, 0.05783, 0.05783};
         IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
 
@@ -57,7 +57,7 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
      * @cdk.bug 2039739
      */
     @Test
-    public void testNaNs() throws java.lang.Exception {
+    void testNaNs() throws java.lang.Exception {
         IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(F)(F)");

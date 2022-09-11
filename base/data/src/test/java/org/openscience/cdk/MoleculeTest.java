@@ -35,23 +35,23 @@ import org.openscience.cdk.test.interfaces.AbstractMoleculeTest;
  *
  * @see org.openscience.cdk.Molecule
  */
-public class MoleculeTest extends AbstractMoleculeTest {
+class MoleculeTest extends AbstractMoleculeTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(AtomContainer::new);
     }
 
     // test constructors
 
     @Test
-    public void testMolecule() {
+    void testMolecule() {
         IAtomContainer m = new AtomContainer();
         Assertions.assertNotNull(m);
     }
 
     @Test
-    public void testMolecule_int_int_int_int() {
+    void testMolecule_int_int_int_int() {
         IAtomContainer m = new AtomContainer(5, 5, 1, 1);
         Assertions.assertNotNull(m);
         Assertions.assertEquals(0, m.getAtomCount());
@@ -61,7 +61,7 @@ public class MoleculeTest extends AbstractMoleculeTest {
     }
 
     @Test
-    public void testMolecule_IAtomContainer() {
+    void testMolecule_IAtomContainer() {
         IAtomContainer acetone = new org.openscience.cdk.AtomContainer();
         IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");
         IAtom c2 = acetone.getBuilder().newInstance(IAtom.class, "C");

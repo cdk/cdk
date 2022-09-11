@@ -30,27 +30,27 @@ import org.openscience.cdk.test.interfaces.AbstractPDBStructureTest;
  *
  * @cdk.module test-silent
  */
-public class PDBStructureTest extends AbstractPDBStructureTest {
+class PDBStructureTest extends AbstractPDBStructureTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setChemObject(new PDBStructure());
     }
 
     @Test
-    public void testPDBStructure() {
+    void testPDBStructure() {
         IPDBStructure structure = new PDBStructure();
         Assertions.assertNotNull(structure);
     }
 
     @Test
-    public void testGetBuilder() {
+    void testGetBuilder() {
         PDBStructure structure = new PDBStructure();
         Assertions.assertTrue(structure.getBuilder().getClass().getName().contains("SilentChemObjectBuilder"));
     }
 
     @Test
-    public void testAddListener_IChemObjectListener() {
+    void testAddListener_IChemObjectListener() {
         ChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
 

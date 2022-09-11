@@ -37,10 +37,10 @@ import org.openscience.cdk.interfaces.ICrystal;
 /**
  * @cdk.module test-extra
  */
-public class ShelXWriterTest extends CDKTestCase {
+class ShelXWriterTest extends CDKTestCase {
 
     @Test
-    public void testRoundTrip() throws Exception {
+    void testRoundTrip() throws Exception {
         Crystal crystal = new Crystal();
         double a = 3.0;
         double b = 5.0;

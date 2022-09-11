@@ -29,12 +29,12 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  *
  * @cdk.module test-reaction
  */
-public class ReactionEngineTest extends CDKTestCase {
+class ReactionEngineTest extends CDKTestCase {
 
     /**
      *  Constructor for the ReactionEngineTest object.
      */
-    public ReactionEngineTest() {
+    ReactionEngineTest() {
         super();
     }
 
@@ -44,7 +44,7 @@ public class ReactionEngineTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testReactionEngine() throws Exception {
+    void testReactionEngine() throws Exception {
         ReactionEngine engine = new AdductionProtonLPReaction();
         Assertions.assertNotNull(engine);
     }
@@ -55,7 +55,7 @@ public class ReactionEngineTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetParameterList() throws Exception {
+    void testGetParameterList() throws Exception {
         ReactionEngine engine = new AdductionProtonLPReaction();
         Assertions.assertNotNull(engine.getParameterList());
     }
@@ -66,7 +66,7 @@ public class ReactionEngineTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testSetParameterList_List() throws Exception {
+    void testSetParameterList_List() throws Exception {
         ReactionEngine engine = new AdductionProtonLPReaction();
         engine.setParameterList(engine.getParameterList());
         Assertions.assertNotNull(engine.getParameterList());
@@ -78,7 +78,7 @@ public class ReactionEngineTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    public void testGetParameterClass_Class() throws Exception {
+    void testGetParameterClass_Class() throws Exception {
         ReactionEngine engine = new AdductionProtonLPReaction();
         Assertions.assertNotNull(engine.getParameterClass(SetReactionCenter.class));
     }

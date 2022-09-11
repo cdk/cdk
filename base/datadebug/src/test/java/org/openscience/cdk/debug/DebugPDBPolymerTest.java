@@ -33,15 +33,15 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @cdk.module test-datadebug
  */
-public class DebugPDBPolymerTest extends AbstractPDBPolymerTest {
+class DebugPDBPolymerTest extends AbstractPDBPolymerTest {
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         setTestObjectBuilder(DebugPDBPolymer::new);
     }
 
     @Test
-    public void testDebugPDBPolymer() {
+    void testDebugPDBPolymer() {
         IPDBPolymer pdbPolymer = new DebugPDBPolymer();
         Assertions.assertNotNull(pdbPolymer);
         Assertions.assertEquals(pdbPolymer.getMonomerCount(), 0);

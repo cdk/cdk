@@ -34,56 +34,56 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @author maclean
  * @cdk.module test-group
  */
-public class AtomGroupTests extends CDKTestCase {
+class AtomGroupTests extends CDKTestCase {
 
-    public IAtomContainer getMol(String smiles) throws InvalidSmilesException {
+    IAtomContainer getMol(String smiles) throws InvalidSmilesException {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         return parser.parseSmiles(smiles);
     }
 
-    public void test(IAtomContainer mol, int expected) {
+    void test(IAtomContainer mol, int expected) {
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
         PermutationGroup group = refiner.getAutomorphismGroup(mol);
         Assertions.assertEquals(expected, group.order());
     }
 
     @Test
-    public void carbonSingleTree() throws InvalidSmilesException {
+    void carbonSingleTree() throws InvalidSmilesException {
         test(getMol("CC(C)C(C)C"), 8);
     }
 
     @Test
-    public void hetatmSingleTree() throws InvalidSmilesException {
+    void hetatmSingleTree() throws InvalidSmilesException {
         test(getMol("CC(O)C(C)C"), 2);
     }
 
     @Test
-    public void carbonMultipleTree() throws InvalidSmilesException {
+    void carbonMultipleTree() throws InvalidSmilesException {
         test(getMol("CC(=C)C(C)C"), 2);
     }
 
     @Test
-    public void carbonSingleCycle() throws InvalidSmilesException {
+    void carbonSingleCycle() throws InvalidSmilesException {
         test(getMol("C1CCC1"), 8);
     }
 
     @Test
-    public void hetatmMultipleTree() throws InvalidSmilesException {
+    void hetatmMultipleTree() throws InvalidSmilesException {
         test(getMol("CC(=O)C(C)C"), 2);
     }
 
     @Test
-    public void hetatmSingleCycle() throws InvalidSmilesException {
+    void hetatmSingleCycle() throws InvalidSmilesException {
         test(getMol("C1COC1"), 2);
     }
 
     @Test
-    public void carbonMultipleCycle() throws InvalidSmilesException {
+    void carbonMultipleCycle() throws InvalidSmilesException {
         test(getMol("C1=CC=C1"), 4);
     }
 
     @Test
-    public void hetatmMultipleCycle() throws InvalidSmilesException {
+    void hetatmMultipleCycle() throws InvalidSmilesException {
         test(getMol("C1=OC=C1"), 1);
     }
 

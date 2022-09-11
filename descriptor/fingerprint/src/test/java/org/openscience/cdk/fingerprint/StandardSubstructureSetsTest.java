@@ -29,10 +29,10 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-fingerprint
  */
-public class StandardSubstructureSetsTest extends CDKTestCase {
+class StandardSubstructureSetsTest extends CDKTestCase {
 
     @Test
-    public void testGetFunctionalGroupSubstructureSet() throws Exception {
+    void testGetFunctionalGroupSubstructureSet() throws Exception {
         String[] smarts;
         smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
         Assertions.assertNotNull(smarts);
@@ -40,7 +40,7 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetCountableMACCSSMARTSSubstructureSet() throws Exception {
+    void testGetCountableMACCSSMARTSSubstructureSet() throws Exception {
         String[] smarts;
         smarts = StandardSubstructureSets.getCountableMACCSSMARTS();
         Assertions.assertNotNull(smarts);

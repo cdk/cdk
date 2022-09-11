@@ -40,11 +40,11 @@ import java.io.StringWriter;
  *
  * @cdk.module test-io
  */
-public abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.ChemObjectIOTest {
+abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.ChemObjectIOTest {
 
-    protected static IChemObjectWriter chemObjectIO;
+    private static IChemObjectWriter chemObjectIO;
 
-    public static void setChemObjectWriter(IChemObjectWriter aChemObjectWriter) {
+    static void setChemObjectWriter(IChemObjectWriter aChemObjectWriter) {
         ChemObjectIOTest.setChemObjectIO(aChemObjectWriter);
         ChemObjectWriterTest.chemObjectIO = aChemObjectWriter;
     }
@@ -58,7 +58,7 @@ public abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.C
      * <code>accepts</code>, that it can actually be written too.
      */
     @Test
-    public void testAcceptsWriteConsistency() throws CDKException {
+    void testAcceptsWriteConsistency() throws CDKException {
         Assertions.assertNotNull(chemObjectIO, "The IChemObjectWriter is not set.");
         for (IChemObject object : allChemObjectsTypes) {
             if (chemObjectIO.accepts(object.getClass())) {
@@ -79,14 +79,14 @@ public abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.C
     }
 
     @Test
-    public void testSetWriter_Writer() throws Exception {
+    void testSetWriter_Writer() throws Exception {
         Assertions.assertNotNull(chemObjectIO, "No IChemObjectWriter has been set!");
         StringWriter testWriter = new StringWriter();
         chemObjectIO.setWriter(testWriter);
     }
 
     @Test
-    public void testSetWriter_OutputStream() throws Exception {
+    void testSetWriter_OutputStream() throws Exception {
         Assertions.assertNotNull(chemObjectIO, "No IChemObjectWriter has been set!");
         ByteArrayOutputStream testStream = new ByteArrayOutputStream();
         chemObjectIO.setWriter(testStream);
