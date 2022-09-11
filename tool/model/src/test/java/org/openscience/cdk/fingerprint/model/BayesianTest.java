@@ -31,9 +31,8 @@
 package org.openscience.cdk.fingerprint.model;
 
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.CircularFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -189,7 +188,7 @@ public class BayesianTest {
     }
 
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testExample1() throws Exception {
         logger.info("Bayesian/Fingerprints test: using dataset of binding data to compare to reference data");
 
@@ -200,7 +199,7 @@ public class BayesianTest {
     }
 
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testExample2() throws Exception {
         logger.info("Bayesian/Fingerprints test: using dataset of molecular probes to compare to reference data");
 

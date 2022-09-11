@@ -25,10 +25,9 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.graph.Cycles;
@@ -410,7 +409,7 @@ public class RecursiveTest extends CDKTestCase {
         Assertions.assertEquals(1, result[1]);
     }
 
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     @Test
     public void testBasicAmineOnDrugs_cdkAromaticModel() throws Exception {
         String filename = "drugs.smi";
@@ -443,7 +442,7 @@ public class RecursiveTest extends CDKTestCase {
         Assertions.assertEquals(4, nmatch);
     }
 
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     @Test
     public void testBasicAmineOnDrugs() throws Exception {
         String filename = "drugs.smi";

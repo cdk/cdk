@@ -20,7 +20,7 @@ package org.openscience.cdk.smiles;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IElement;
@@ -29,7 +29,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.config.Elements;
@@ -802,7 +801,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     /**
      * @cdk.bug 1014344
      */
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     // MDL -> CML (slow) -> SMILES round tripping
     @Test
     public void testSFBug1014344() throws Exception {

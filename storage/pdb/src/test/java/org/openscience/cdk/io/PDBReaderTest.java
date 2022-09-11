@@ -32,10 +32,9 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -469,7 +468,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
                           "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3");
     }
 
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     @Test
     public void test1CKV() throws Exception {
         String filename = "1CKV.pdb";
@@ -646,7 +645,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     /**
      * @cdk.bug 489
      */
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     @Test
     public void readFinalPump() throws Exception {
         IChemFile chemFile = new PDBReader(getClass().getResourceAsStream("finalPump96.09.06.pdb")).read(new ChemFile());

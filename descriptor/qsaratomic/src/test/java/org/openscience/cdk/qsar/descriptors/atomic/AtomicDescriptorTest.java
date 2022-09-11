@@ -22,9 +22,8 @@ import javax.vecmath.Point3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,7 +57,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
     }
 
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testCalculate_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
@@ -79,7 +78,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
      * @throws Exception Passed on from calculate.
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
@@ -105,7 +104,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
      * of the names
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testNamesConsistency() {
         IAtomContainer mol = someoneBringMeSomeWater();
 
@@ -121,7 +120,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
     }
 
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IAtom atom = mol.getAtom(1);

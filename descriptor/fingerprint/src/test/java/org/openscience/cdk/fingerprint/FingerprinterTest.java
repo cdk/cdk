@@ -34,13 +34,12 @@ import java.util.Random;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDK;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
@@ -174,7 +173,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Assertions.assertNotNull(fingerprinter.getBitFingerprint(product));
     }
 
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testbug2917084() throws Exception {
         Assertions.assertThrows(CDKException.class, () -> {
             String filename1 = "boronBuckyBall.mol";

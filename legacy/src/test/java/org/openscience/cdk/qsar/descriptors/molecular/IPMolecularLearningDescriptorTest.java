@@ -21,10 +21,9 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -71,7 +70,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor0() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -103,7 +102,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_1() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-Cl");
@@ -123,7 +122,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      *  A unit test for JUnit with COCCCC=O
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_2() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("COCCCC=O");
@@ -145,7 +144,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      *  A unit test for JUnit with C=CCC(=O)CC
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_3() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C=CCCC(=O)C");
@@ -257,7 +256,7 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
      * @throws org.openscience.cdk.exception.CDKException
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testBug_2787332_triclosan() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));//0

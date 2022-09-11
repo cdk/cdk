@@ -22,10 +22,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -108,7 +107,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor1() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -135,7 +134,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C3H7Cl/c1-3(2)4/h3H,1-2H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor2() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("CC(CC)Cl"); // not in db
@@ -174,7 +173,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_1() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-Cl");
@@ -193,7 +192,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_2() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-Br");
@@ -231,7 +230,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_4() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-O");
@@ -250,7 +249,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_5() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("N1(C)CCC(C)(C)CC1");
@@ -272,7 +271,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C2H7N/c1-3-2/h3H,1-2H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_6() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-N-C");
@@ -294,7 +293,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C2H7N/c1-2-3/h2-3H2,1H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_7() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-N");
@@ -316,7 +315,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C4H11P/c1-3-5-4-2/h5H,3-4H2,1-2H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_8() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-P-C-C");
@@ -338,7 +337,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C6H12O/c1-5(2)4-6(3)7/h5H,4H2,1-3H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_9() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("O=C(C)CC(C)C");
@@ -358,7 +357,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C7H10O/c8-7-5-1-2-6(7)4-3-5/h5-6H,1-4H2
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_10() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("O=C1C2CCC1CC2");
@@ -378,7 +377,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPDescriptor_14() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("CCOCCCO");
@@ -457,7 +456,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPPySystemWithHeteroatomDescriptor3() throws Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -482,7 +481,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPPySystemWithHeteroatomDescriptor2() throws Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -507,7 +506,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testIPPySystemWithHeteroatomDescriptor1() throws Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

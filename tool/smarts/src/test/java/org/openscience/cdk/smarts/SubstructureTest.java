@@ -26,8 +26,7 @@ package org.openscience.cdk.smarts;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
-import org.openscience.cdk.test.SlowTest;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -314,7 +313,7 @@ public abstract class SubstructureTest {
                 300);
     }
 
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     @Test
     public void fullerene_c70_automorphisms() throws Exception {
         assertMatch(

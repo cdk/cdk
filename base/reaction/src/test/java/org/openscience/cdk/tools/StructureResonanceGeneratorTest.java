@@ -20,13 +20,12 @@ package org.openscience.cdk.tools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -388,7 +387,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testFlagActiveCenter1() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
@@ -586,7 +585,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testFluorobenzene() throws Exception {
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -673,7 +672,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testFluorobenzeneContainer() throws Exception {
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -711,7 +710,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testFluorobenzene_symm() throws Exception {
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -798,7 +797,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testAniline() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -867,7 +866,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testAllyl() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -895,7 +894,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testAllylRadical() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -1128,7 +1127,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      * @cdk.bug      1728830
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testBenzene() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         addExplicitHydrogens(molecule);
@@ -1150,7 +1149,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testGetContainers_IAtomContainer() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -1225,7 +1224,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testGetContainer_IAtomContainer_IAtom() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom1 = builder.newInstance(IAtom.class, "C");
@@ -1273,7 +1272,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testGetContainer_IAtomContainer_IBond() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom1 = builder.newInstance(IAtom.class, "C");
@@ -1321,7 +1320,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testGetID() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom1 = builder.newInstance(IAtom.class, "C");
@@ -1381,7 +1380,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testGetContainersFluoromethylbenzene() throws Exception {
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -1429,7 +1428,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testGetContainersFluorobenzene() throws Exception {
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -1476,7 +1475,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      */
     @Test
 
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void test1Propene2chloro() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "Cl"));
@@ -1505,7 +1504,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testBenzene1bromo4methoxy() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -1592,7 +1591,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      */
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void testSetMaximalStructures_int() throws Exception {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         Assertions.assertEquals(50, gRI.getMaximalStructures());

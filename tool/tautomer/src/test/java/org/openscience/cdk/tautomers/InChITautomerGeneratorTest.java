@@ -27,11 +27,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -109,7 +108,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    @Category(SlowTest.class)
+    @Tag("SlowTest")
     public void test6() throws Exception {
         //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
         unitTestWithInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2",

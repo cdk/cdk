@@ -24,19 +24,21 @@
 
 package org.openscience.cdk.renderer.color;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class UniColorTest extends TestCase {
+public class UniColorTest {
 
+    @Test
     public void testGetAtomColor() throws Exception {
         assertThat(new UniColor(new Color(0x444444)).getAtomColor(null), is(new Color(0x444444)));
     }
 
+    @Test
     public void testGetAtomColor1() throws Exception {
         assertThat(new UniColor(new Color(0x444444)).getAtomColor(null, Color.WHITE), is(new Color(0x444444)));
     }
