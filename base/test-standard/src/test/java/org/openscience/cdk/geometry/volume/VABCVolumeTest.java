@@ -51,9 +51,9 @@ public class VABCVolumeTest {
 
     @Test
     public void testIronChloride() throws CDKException {
+        IAtomContainer methane = smilesParser.parseSmiles("Cl[Fe]Cl");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         Assertions.assertThrows(CDKException.class, () -> {
-            IAtomContainer methane = smilesParser.parseSmiles("Cl[Fe]Cl");
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
             VABCVolume.calculate(methane);
         });
     }
