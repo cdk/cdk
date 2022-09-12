@@ -61,7 +61,7 @@ public class AtomTypeTools {
      * Constructor for the MMFF94AtomTypeMatcher object.
      */
     public AtomTypeTools() {
-        hcg = new HOSECodeGenerator();
+        hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
     }
 
     public IRingSet assignAtomTypePropertiesToAtom(IAtomContainer molecule) throws Exception {

@@ -134,8 +134,8 @@ class ForceFieldConfiguratorTest {
         ffc.setForceFieldConfigurator("mmff94", builder);
         IAtom N1 = hu.getAtom(0);
         IAtom N2 = hu.getAtom(3);
-        ffc.configureAtom(N1, new HOSECodeGenerator().getHOSECode(hu, N1, 3), false);
-        ffc.configureAtom(N2, new HOSECodeGenerator().getHOSECode(hu, N2, 3), false);
+        ffc.configureAtom(N1, new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE).getHOSECode(hu, N1, 3), false);
+        ffc.configureAtom(N2, new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE).getHOSECode(hu, N2, 3), false);
         Assertions.assertEquals("NC=O", N1.getAtomTypeName());
         Assertions.assertEquals("N2OX", N2.getAtomTypeName());
 
@@ -150,7 +150,7 @@ class ForceFieldConfiguratorTest {
         ForceFieldConfigurator ffc = new ForceFieldConfigurator();
         ffc.setForceFieldConfigurator("mmff94", builder);
         IAtom amideN = pa.getAtom(0);
-        ffc.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator().getHOSECode(pa, amideN, 3), false);
+        ffc.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE).getHOSECode(pa, amideN, 3), false);
         Assertions.assertEquals("NC=O", amideN.getAtomTypeName());
 
     }
@@ -167,7 +167,7 @@ class ForceFieldConfiguratorTest {
         ForceFieldConfigurator ffc = new ForceFieldConfigurator();
         ffc.setForceFieldConfigurator("mmff94", builder);
         IAtom amideN = urea.getAtom(0);
-        ffc.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator().getHOSECode(urea, amideN, 3), false);
+        ffc.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE).getHOSECode(urea, amideN, 3), false);
         //		System.err.println(amideN.getAtomTypeName());
         Assertions.assertEquals("NC=O", amideN.getAtomTypeName());
 
@@ -218,7 +218,7 @@ class ForceFieldConfiguratorTest {
         IAtomContainer bugmol = parser.parseSmiles(smiles);
         forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
         IAtom amideN = bugmol.getAtom(11);
-        forceFieldConfigurator.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator().getHOSECode(bugmol, amideN, 3),
+        forceFieldConfigurator.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE).getHOSECode(bugmol, amideN, 3),
                 false);
         //		System.err.println(amideN.getAtomTypeName());
         Assertions.assertEquals("NC=O", amideN.getAtomTypeName());
@@ -236,7 +236,7 @@ class ForceFieldConfiguratorTest {
         IAtomContainer bugmol = parser.parseSmiles(smiles);
         forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
         IAtom amideN = bugmol.getAtom(2);
-        forceFieldConfigurator.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator().getHOSECode(bugmol, amideN, 3),
+        forceFieldConfigurator.configureMMFF94BasedAtom(amideN, new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE).getHOSECode(bugmol, amideN, 3),
                 false);
         //		System.err.println(amideN.getAtomTypeName());
         Assertions.assertEquals("NO3", amideN.getAtomTypeName());
@@ -255,7 +255,7 @@ class ForceFieldConfiguratorTest {
         IAtomContainer bugmol = parser.parseSmiles(smiles);
         forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
         IAtom sulphur = bugmol.getAtom(1);
-        HOSECodeGenerator hscodegen = new HOSECodeGenerator();
+        HOSECodeGenerator hscodegen = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         forceFieldConfigurator.configureAtom(sulphur, hscodegen.getHOSECode(bugmol, sulphur, 3), false);
         Assertions.assertEquals("SO2", sulphur.getAtomTypeName());
     }
@@ -274,7 +274,7 @@ class ForceFieldConfiguratorTest {
         IAtom nitrogen1 = bugmol.getAtom(1);
         IAtom nitrogen2 = bugmol.getAtom(4);
         IAtom nitrogen3 = bugmol.getAtom(6);
-        HOSECodeGenerator hscodegen = new HOSECodeGenerator();
+        HOSECodeGenerator hscodegen = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         forceFieldConfigurator.configureAtom(nitrogen1, hscodegen.getHOSECode(bugmol, nitrogen1, 3), false);
         forceFieldConfigurator.configureAtom(nitrogen2, hscodegen.getHOSECode(bugmol, nitrogen2, 3), false);
         forceFieldConfigurator.configureAtom(nitrogen3, hscodegen.getHOSECode(bugmol, nitrogen3, 3), false);
@@ -294,7 +294,7 @@ class ForceFieldConfiguratorTest {
         IAtomContainer bugmol = parser.parseSmiles(smiles);
         forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
         IAtom nitrogen1 = bugmol.getAtom(2);
-        HOSECodeGenerator hscodegen = new HOSECodeGenerator();
+        HOSECodeGenerator hscodegen = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         forceFieldConfigurator.configureAtom(nitrogen1, hscodegen.getHOSECode(bugmol, nitrogen1, 3), false);
         Assertions.assertEquals("NC=O", nitrogen1.getAtomTypeName());
 

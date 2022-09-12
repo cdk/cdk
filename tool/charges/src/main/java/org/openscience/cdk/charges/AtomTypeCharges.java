@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  */
 public class AtomTypeCharges implements IChargeCalculator {
 
-    final HOSECodeGenerator hcg = new HOSECodeGenerator();
+    final HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
     final Pattern           pOC = Pattern.compile("O-[1][-];=?+C[(]=?+O.*+");
     final Pattern           pOP = Pattern.compile("O-[1][-];=?+P.*+");
     final Pattern           pOS = Pattern.compile("O-[1][-];=?+S.*+");

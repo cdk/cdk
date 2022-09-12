@@ -245,7 +245,7 @@ public class ForceFieldConfigurator {
     public IRingSet assignAtomTyps(IAtomContainer molecule) throws CDKException {
         IAtom atom;
         String hoseCode;
-        HOSECodeGenerator hcg = new HOSECodeGenerator();
+        HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         int NumberOfRingAtoms = 0;
         IRingSet ringSetA;
         IRingSet ringSetMolecule = Cycles.sssr(molecule).toRingSet();

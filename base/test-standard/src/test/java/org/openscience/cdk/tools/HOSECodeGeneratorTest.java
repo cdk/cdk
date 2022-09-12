@@ -51,7 +51,33 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 class HOSECodeGeneratorTest extends CDKTestCase {
 
-    private static final boolean standAlone = false;
+    private static boolean standAlone = false;
+
+    @Test
+    void testSecondSphereOrderingX() throws Exception {
+        String filename = "hosesecondspherewronglyordered.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        reader.close();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Assertions.assertEquals("C-4;CCC(CY,CY,/,,,/)//",
+                                new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(3), 6));
+    }
+
+    @Test
+    void testSecondSphereOrderingX_legacyMode() throws Exception {
+        String filename = "hosesecondspherewronglyordered.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        reader.close();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Assertions.assertEquals("C-4;CCC(C,C,Y,Y,/,,,/)//",
+                                new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE).getHOSECode(mol1, mol1.getAtom(3), 6));
+    }
 
     /**
      * @cdk.bug 968852
@@ -64,7 +90,8 @@ class HOSECodeGeneratorTest extends CDKTestCase {
         IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         Aromaticity.cdkLegacy().apply(mol1);
-        Assertions.assertEquals(new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(2), 6), new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(3), 6));
+        Assertions.assertEquals(new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(2), 6),
+                new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(3), 6));
     }
 
     /**
@@ -230,7 +257,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        String s;
+        String s = null;
         for (int f = 0; f < 23; f++) {
             s = hcg.getHOSECode(mol, mol.getAtom(f), 1);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
@@ -255,7 +282,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
                 "CCC(//)", "CC(//)", "CC(//)", "CC(//)", "CC(//)", "CCO(//)", "CC(//)", "CCO(//)", "CCO(//)", "CC(//)",
                 "O(//)", "CC(//)", "CCC(//)", "CCC(//)", "CCC(//)"};
 
-        String s;
+        String s = null;
         HOSECodeGenerator hcg = new HOSECodeGenerator();
         for (int f = 0; f < startData.length; f++) {
             s = hcg.makeBremserCompliant(startData[f]);
@@ -276,7 +303,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
 
         "O-1;=C(CC/*C*C,=C/*C*C,*C,&)", "C-3;=OCC(,*C*C,=C/*C*C,*C,&/*C*C,*C&,*&O)",
                 "C-3;=CC(C,=OC/*C*C,,*&*C/*C*&,*C,*C)", "C-3;=CC(C,*C*C/=OC,*C*&,*C/,*&*C,*C*C,*&)",
-                "C-3;*C*CC(*C*C,*C,=C/*C*C,*CC,*&,&/*C,*&C,O,*&,=O&)", "C-3;*C*C(*CC,*C/*C*C,=C,*&C/*C*&,*CC,&,*C*C)",
+                "C-3;*C*CC(*C*C,*C,=C/*C*C,*CC,*&,&/*CO,*&C,*&,=O&)", "C-3;*C*C(*CC,*C/*C*C,=C,*&C/*C*&,*CC,&,*C*C)",
                 "C-3;*C*C(*CC,*C/*C*C,*C*C,*&C/*C*&,*CO,*C&,*C,=C)",
                 "C-3;*C*CC(*C*C,*C,*C*C/*C*C,*CO,*&,*C&,*C/*CC,*&C,*&O,&,*C,*&)",
                 "C-3;*C*CC(*CO,*C,*C*C/*C,C,*&,*C*&,*C/*&,*&*C,*C*C,*&)", "C-3;*C*C(*CC,*C/*CO,*C*C,*&/*&,C,*C*&,*C)",
@@ -286,9 +313,9 @@ class HOSECodeGeneratorTest extends CDKTestCase {
                 "C-3;*C*CO(*C*C,*CO,C/*C*C,*CC,*&,C,*&*C/*&C,*CC,*&,*&*C,,*C)",
                 "C-3;*C*CO(*CO,*C,C/*C*C,C,*&C,/*&*C,*CC,*&*C,=OC)", "O-2;CC(*C*C,/*CO,*C/*C*C,C,*&C)",
                 "C-4;O(C/*C*C/*CO,*C)", "C-3;*C*C(*CC,*CO/*C*C,=OC,*&O,C/*&*C,*CC,,=&,C,)",
-                "C-3;*C*CC(*C*C,*C,=OC/*C*C,*CC,*&O,,=&/*&,*CC,O,*&,=&,C)",
-                "C-3;*C*C*C(*C*C,*CC,*CC/*C,*CC,O,*&,=OC,*&,=&/*&O,*&,*C*C,&,,=&)",
-                "C-3;*C*C*C(*C*C,*C,*CC,O/*CC,*CC,*&O,*&,*C*C,&/*&,=OC,*&,=&,C,*C&,*C)"};
+                "C-3;*C*CC(*C*C,*C,=OC/*C*C,*CC,*&O,,=&/*&O,*CC,*&,=&,C)",
+                "C-3;*C*C*C(*C*C,*CC,*CC/*CO,*CC,*&,=OC,*&,=&/*&O,C,*&,*&*C,,=&)",
+                "C-3;*C*C*C(*C*C,*CO,*CC/*CC,*CC,*&O,C,*&,*&*C/*&,=OC,*&,=&,C,*&*C,*C)"};
 
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "O");
@@ -419,13 +446,13 @@ class HOSECodeGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        String s;
+        String s = null;
         for (int f = 0; f < mol.getAtomCount(); f++) {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.cdkLegacy().apply(mol);
             s = hcg.getHOSECode(mol, mol.getAtom(f), 4);
             if (standAlone) System.out.println(f + "|" + s + "| -> " + result[f]);
-            Assertions.assertEquals(result[f], s);
+            Assertions.assertEquals(result[f], s, "idx=" + f);
             if (standAlone) System.out.println("  OK");
         }
     }
@@ -449,7 +476,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(molecule);
         //display(molecule);
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        String s;
+        String s = null;
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.println(f + "|" + s + "| -> " + result[f]);
@@ -463,15 +490,15 @@ class HOSECodeGeneratorTest extends CDKTestCase {
      */
     @Test
     void testBug655169() throws Exception {
-        IAtomContainer molecule;
-        HOSECodeGenerator hcg;
+        IAtomContainer molecule = null;
+        HOSECodeGenerator hcg = null;
         String[] result = {"C-4;C(=C/Y/)", "C-3;=CC(Y,//)", "C-3;=CY(C,//)", "Br-1;C(=C/C/)"};
 
         molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         hcg = new HOSECodeGenerator();
-        String s;
+        String s = null;
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
@@ -503,8 +530,8 @@ class HOSECodeGeneratorTest extends CDKTestCase {
      */
     @Test
     void testBug795480() throws Exception {
-        IAtomContainer molecule;
-        HOSECodeGenerator hcg;
+        IAtomContainer molecule = null;
+        HOSECodeGenerator hcg = null;
         String[] result = {"C-4-;C(=C/Y'+4'/)", "C-3;=CC-(Y'+4',//)", "C-3;=CY'+4'(C-,//)", "Br-1'+4';C(=C/C-/)"};
 
         molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
@@ -514,7 +541,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
         molecule.getAtom(0).setFormalCharge(-1);
         molecule.getAtom(3).setFormalCharge(+4);
         hcg = new HOSECodeGenerator();
-        String s;
+        String s = null;
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
