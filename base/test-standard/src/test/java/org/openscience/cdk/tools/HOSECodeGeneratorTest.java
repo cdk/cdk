@@ -28,8 +28,8 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -62,8 +62,8 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         reader.close();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         Aromaticity.cdkLegacy().apply(mol1);
-        Assert.assertEquals("C-4;CCC(CY,CY,/,,,/)//",
-                new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(3), 6));
+        Assertions.assertEquals("C-4;CCC(CY,CY,/,,,/)//",
+                                new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(3), 6));
     }
 
     /**
@@ -77,7 +77,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         Aromaticity.cdkLegacy().apply(mol1);
-        Assert.assertEquals(new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(2), 6),
+        Assertions.assertEquals(new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(2), 6),
                 new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(3), 6));
     }
 
@@ -98,7 +98,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         MDLV2000Reader reader2 = new MDLV2000Reader(ins2, Mode.STRICT);
         IAtomContainer mol2 = reader2.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         String code2 = new HOSECodeGenerator().getHOSECode(mol2, mol2.getAtom(2), 6);
-        Assert.assertNotSame(code2, code1);
+        Assertions.assertNotSame(code2, code1);
     }
 
     /**
@@ -248,7 +248,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         for (int f = 0; f < 23; f++) {
             s = hcg.getHOSECode(mol, mol.getAtom(f), 1);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
-            Assert.assertEquals(result[f], s);
+            Assertions.assertEquals(result[f], s);
             if (standAlone) System.out.println("  OK");
         }
     }
@@ -274,7 +274,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         for (int f = 0; f < startData.length; f++) {
             s = hcg.makeBremserCompliant(startData[f]);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
-            Assert.assertEquals(result[f], s);
+            Assertions.assertEquals(result[f], s);
             if (standAlone) System.out.println("  OK");
         }
     }
@@ -439,7 +439,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
             Aromaticity.cdkLegacy().apply(mol);
             s = hcg.getHOSECode(mol, mol.getAtom(f), 4);
             if (standAlone) System.out.println(f + "|" + s + "| -> " + result[f]);
-            Assert.assertEquals("idx=" + f, result[f], s);
+            Assertions.assertEquals(result[f], s, "idx=" + f);
             if (standAlone) System.out.println("  OK");
         }
     }
@@ -467,7 +467,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.println(f + "|" + s + "| -> " + result[f]);
-            Assert.assertEquals(result[f], s);
+            Assertions.assertEquals(result[f], s);
             if (standAlone) System.out.println("  OK");
         }
     }
@@ -489,7 +489,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
-            Assert.assertEquals(result[f], s);
+            Assertions.assertEquals(result[f], s);
             if (standAlone) System.out.println("  OK");
         }
 
@@ -524,7 +524,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         boolean isAromatic = Aromaticity.cdkLegacy().apply(molecule);
-        Assert.assertFalse(isAromatic);
+        Assertions.assertFalse(isAromatic);
         molecule.getAtom(0).setFormalCharge(-1);
         molecule.getAtom(3).setFormalCharge(+4);
         hcg = new HOSECodeGenerator();
@@ -532,7 +532,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
             if (standAlone) System.out.print("|" + s + "| -> " + result[f]);
-            Assert.assertEquals(result[f], s);
+            Assertions.assertEquals(result[f], s);
             if (standAlone) System.out.println("  OK");
         }
     }
@@ -547,8 +547,8 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         hcg.getSpheres(molecule, molecule.getAtom(0), 4, true);
         List<IAtom> atoms = hcg.getNodesInSphere(3);
 
-        Assert.assertEquals(1, atoms.size());
-        Assert.assertEquals("Br", atoms.get(0).getSymbol());
+        Assertions.assertEquals(1, atoms.size());
+        Assertions.assertEquals("Br", atoms.get(0).getSymbol());
     }
 
     @Test
@@ -562,10 +562,10 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         hcg.getSpheres(molecule, molecule.getAtom(0), 3, true);
         List<IAtom> atoms = hcg.getNodesInSphere(3);
 
-        Assert.assertEquals(2, atoms.size());
+        Assertions.assertEquals(2, atoms.size());
 
-        Assert.assertEquals("H", atoms.get(0).getSymbol());
-        Assert.assertEquals("Br", atoms.get(1).getSymbol());
+        Assertions.assertEquals("H", atoms.get(0).getSymbol());
+        Assertions.assertEquals("Br", atoms.get(1).getSymbol());
     }
 
 }
