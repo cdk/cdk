@@ -241,7 +241,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                 return 0;
 
             try {
-                HOSECodeGenerator hcg = new HOSECodeGenerator();
+                HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
                 //Check starting from the exact sphere hose code and maximal a value of 10
                 int exactSphere = 0;
                 String hoseCode = "";

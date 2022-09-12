@@ -98,7 +98,7 @@ class BremserPredictorTest extends CDKTestCase {
         molecule = reader.read(new AtomContainer());
         double prediction;
         BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-        HOSECodeGenerator hcg = new HOSECodeGenerator();
+        HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         String s;
         removeHydrogens(molecule);
         //logger.debug("Molecule has " + molecule.getAtomCount() + " atoms.");

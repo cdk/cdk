@@ -142,7 +142,7 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        HOSECodeGenerator hcg = new HOSECodeGenerator();
+        HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
@@ -201,7 +201,7 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        HOSECodeGenerator hcg = new HOSECodeGenerator();
+        HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         for (IAtom atomi : reactant.atoms()) {
             if (reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
