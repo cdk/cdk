@@ -135,10 +135,12 @@ public class AtomContainerManipulator {
      * @param atomContainer the source container to extract from
      * @param atomIndices the indices of the substructure
      * @return a cloned atom container with a substructure of the source
+     * @throws CloneNotSupportedException not thrown any longer, kept to retain compatability
      * @deprecated use {@link #extractSubstructure(IAtomContainer, Collection)} instead
      */
     @Deprecated
-    public static IAtomContainer extractSubstructure(IAtomContainer atomContainer, int... atomIndices) {
+    public static IAtomContainer extractSubstructure(IAtomContainer atomContainer, int... atomIndices)
+            throws CloneNotSupportedException {
         return extractSubstructure(atomContainer,
                 Arrays.stream(atomIndices).mapToObj(atomContainer::getAtom).collect(Collectors.toSet()));
     }
@@ -690,7 +692,7 @@ public class AtomContainerManipulator {
         return hCount;
     }
 
-    private static final void replaceAtom(IAtom[] atoms, IAtom org, IAtom rep) {
+    private static void replaceAtom(IAtom[] atoms, IAtom org, IAtom rep) {
         for (int i = 0; i < atoms.length; i++) {
             if (atoms[i].equals(org))
                 atoms[i] = rep;

@@ -72,7 +72,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    void testExtractSubstructure() {
+    void testExtractSubstructure() throws CloneNotSupportedException {
         IAtomContainer source = TestMoleculeFactory.makeEthylCyclohexane();
         IAtomContainer ringSubstructure = AtomContainerManipulator.extractSubstructure(source, 0, 1, 2, 3, 4, 5);
         assertThat(ringSubstructure.getAtomCount(), is(6));
