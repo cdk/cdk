@@ -374,7 +374,6 @@ class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     @Tag("SlowTest")
-    @Disabled("JWM - to fix, spotted in JUnit 5 migration")
     void testModelBuilder3D_reserpine() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "reserpine.mol";

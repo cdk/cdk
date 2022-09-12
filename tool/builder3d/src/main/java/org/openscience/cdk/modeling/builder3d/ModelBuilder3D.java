@@ -361,7 +361,7 @@ public class ModelBuilder3D {
         Point3d pointRingCenter = GeometryUtil.get3DCenter(ac);
         double distance = 0;
         double rotAngleMax = 0;
-        angle = 1.0 / 180 * Math.PI;
+        angle = Math.toRadians(180);
         ringCenter = new Vector3d(pointRingCenter.x, pointRingCenter.y, pointRingCenter.z);
         ringCenter.x = ringCenter.x - newCoord.x;
         ringCenter.y = ringCenter.y - newCoord.y;
