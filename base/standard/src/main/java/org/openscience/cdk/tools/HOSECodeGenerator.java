@@ -478,12 +478,33 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 }
             }
         }
-        for (int f = 0; f < maxSphere; f++) {
-            calculateNodeScores(spheres[f]);
-            for (TreeNode tn : spheres[f])
-                tn.score += tn.ranking;
-            sortNodesByScore(spheres[f]);
+
+        if ((flags&LEGACY_MODE) != 0) {
+            for (int f = 0; f < maxSphere; f++)
+                calculateNodeScores(spheres[f]);
+            for (int f = 0; f < maxSphere; f++)
+                for (TreeNode tn : spheres[f])
+                    tn.score += tn.ranking;
+            for (int f = 0; f < maxSphere; f++) {
+                for (TreeNode tn : spheres[f]) {
+                    String localscore = tn.score + "";
+                    while (localscore.length() < 6) {
+                        localscore = "0" + localscore;
+                    }
+                    tn.stringscore = tn.source.stringscore + "" + localscore;
+                }
+                sortNodesByScore(spheres[f]);
+            }
         }
+        else {
+            for (int f = 0; f < maxSphere; f++) {
+                calculateNodeScores(spheres[f]);
+                for (TreeNode tn : spheres[f])
+                    tn.score += tn.ranking;
+                sortNodesByScore(spheres[f]);
+            }
+        }
+
         HOSECode.append(centerCode);
         for (int f = 0; f < maxSphere; f++) {
             sphere = f + 1;
@@ -613,7 +634,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
     private void sortNodesByScore(List<TreeNode> sphereNodes) {
 
         if ((flags&LEGACY_MODE) != 0) {
-            sphereNodes.sort((a, b) -> Long.compare(b.score, a.score));
+            sphereNodes.sort((a, b) -> b.stringscore.compareTo(a.stringscore));
         } else {
             sphereNodes.sort((a, b) -> {
                 // compare the parent node (source) first then the child string score
@@ -692,6 +713,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         List<TreeNode> childs      = null;
         String         hSymbol     = null;
         boolean        stopper     = false;
+        String         stringscore = "";
 
         /**
          *  Constructor for the TreeNode object.
