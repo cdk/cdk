@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
@@ -751,19 +752,14 @@ public class HOSECodeGenerator implements java.io.Serializable {
          */
         @Override
         public boolean equals(Object o) {
-            try {
-                if (this.atom.equals(((TreeNode) o).atom)) {
-                    return true;
-                }
-            } catch (Exception exc) {
-                /*
-                 * we do nothing here because anything that could seriously
-                 * happen here is the we got something which is not a TreeNode
-                 * and then got a class cast exception. Thus we can just wait
-                 * until the end of the method returns a "false"
-                 */
-            }
-            return false;
+            if (!(o instanceof TreeNode))
+                return false;
+            return this.atom.equals(((TreeNode) o).atom);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(atom);
         }
 
         @Override
