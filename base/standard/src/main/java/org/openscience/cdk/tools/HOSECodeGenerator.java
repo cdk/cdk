@@ -132,19 +132,57 @@ public class HOSECodeGenerator implements java.io.Serializable {
             8000, 7900, 1200, 1100, 1000             };
 
     /**
-     *  The bond rankings to be used for the four bond order possibilities.
+     * The bond rankings to be used for the four bond order possibilities.
      */
 
-    static final int[]          bondRankings         = {0, 0, 200000, 300000, 100000};
+    static final int[] bondRankings = {0, 0, 200000, 300000, 100000};
+
+    /** Configure with no special treatment (default). */
+    public static final int DEFAULT_MODE = 0;
+
+    /** Ignored parent ordering be considered when sorting spheres (legacy mode)
+     *  for compatibility with existing ML/AI models. */
+    public static final int LEGACY_MODE  = 1;
+
+    private final int flags;
 
     /**
-     *  Constructor for the HOSECodeGenerator.
+     * Constructor for the HOSECodeGenerator.
+     *
+     * <h1>Important!</h1>
+     * A critical bug was discovered in
+     * the implementation (see <a href="https://github.com/cdk/cdk/pull/828">PR
+     * 828</a>) which gave the wrong nesting in "some" cases. Fixing this
+     * behaviour invalidates any ML/AI models trained on the incorrect values.
+     * If you have a model built with the old algorithm that can not be
+     * retrained set {@cdoe legacyMode=true}.
+     *
+     * @param flags (default: false)
+     * @see <a href="https://github.com/cdk/cdk/pull/828">PR 828</a>
      */
-    public HOSECodeGenerator() {
+    public HOSECodeGenerator(int flags) {
+        this.flags = flags;
         sphereNodes = new ArrayList<TreeNode>();
         sphereNodesWithAtoms = new ArrayList<IAtom>();
         nextSphereNodes = new ArrayList<TreeNode>();
         HOSECode = new StringBuffer();
+    }
+
+    /**
+     * Constructor for the HOSECodeGenerator.
+     *
+     * <h1>Important!</h1>
+     * A critical bug was discovered in
+     * the implementation (see <a href="https://github.com/cdk/cdk/pull/828">PR
+     * 828</a>) which gave the wrong nesting in "some" cases. Fixing this
+     * behaviour invalidates any ML/AI models trained on the incorrect values.
+     * If you have a model built with the old algorithm that can not be
+     * retrained set {@cdoe new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE)}.
+     *
+     * @see <a href="https://github.com/cdk/cdk/pull/828">PR 828</a>
+     */
+    public HOSECodeGenerator() {
+        this(DEFAULT_MODE);
     }
 
     private IsotopeFactory isotopeFac = null;
@@ -573,12 +611,18 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *@param  sphereNodes  A vector with sphere nodes to be sorted.
      */
     private void sortNodesByScore(List<TreeNode> sphereNodes) {
-        sphereNodes.sort((a, b) -> {
-            // compare the parent node (source) first then the child string score
-            int cmp = Integer.compare(b.source.sortOrder, a.source.sortOrder);
-            if (cmp != 0) return cmp;
-            return Long.compare(b.score, a.score);
-        });
+
+        if ((flags&LEGACY_MODE) != 0) {
+            sphereNodes.sort((a, b) -> Long.compare(b.score, a.score));
+        } else {
+            sphereNodes.sort((a, b) -> {
+                // compare the parent node (source) first then the child string score
+                int cmp = Integer.compare(b.source.sortOrder, a.source.sortOrder);
+                if (cmp != 0) return cmp;
+                return Long.compare(b.score, a.score);
+            });
+        }
+
         /* Having sorted a sphere, we label the nodes with their sort order */
         for (int i = 0; i < sphereNodes.size(); i++) {
             sphereNodes.get(i).sortOrder = sphereNodes.size() - i;
