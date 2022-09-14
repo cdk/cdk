@@ -674,10 +674,9 @@
                     <tagletArtifact>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2.8</version>
+                        <version>1.0.2.9-jdk11</version>
                     </tagletArtifact>
                     <failOnError>false</failOnError>
-                    <excludePackageNames>org.openscience.cdk.test,org.openscience.cdk.test.*</excludePackageNames>
                     <doctitle>Chemistry Development Kit ${project.version} API</doctitle>
                     <stylesheetfile>${basedir}/doc/javadoc/stylesheet.css</stylesheetfile>
                 </configuration>
@@ -712,7 +711,7 @@
                     <dependency>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2.4</version>
+                        <version>1.0.2.9-jdk11</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -728,8 +727,8 @@
                     <dependency>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2.3</version>
-                    </dependency>
+                        <version>1.0.2.9-jdk11</version>
+                    </dependency>                    
                 </dependencies>
             </plugin>
             <plugin>
@@ -853,7 +852,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.7</version>
+                        <version>1.6.13</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
