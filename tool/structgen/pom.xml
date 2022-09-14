@@ -60,6 +60,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-data</artifactId>
             <version>${project.parent.version}</version>
@@ -69,7 +74,8 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-test</artifactId>
             <version>${project.parent.version}</version>
-            <scope>test</scope>            
+            <scope>test</scope>
+            <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>

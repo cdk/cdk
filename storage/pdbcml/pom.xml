@@ -78,7 +78,8 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-test</artifactId>
             <version>${project.parent.version}</version>
-            <scope>test</scope>            
+            <scope>test</scope>
+            <type>test-jar</type>
         </dependency>
     </dependencies>
 
