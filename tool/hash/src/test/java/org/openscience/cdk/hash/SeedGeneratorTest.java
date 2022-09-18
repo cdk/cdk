@@ -30,7 +30,7 @@ class SeedGeneratorTest {
     }
 
     @Test
-    void testGenerate() throws Exception {
+    void testGenerate() {
 
         IAtomContainer container = mock(IAtomContainer.class);
 
@@ -72,7 +72,7 @@ class SeedGeneratorTest {
     }
 
     @Test
-    void testGenerate_SizeSeeding() throws Exception {
+    void testGenerate_SizeSeeding() {
 
         IAtomContainer m1 = mock(IAtomContainer.class);
         IAtomContainer m2 = mock(IAtomContainer.class);
@@ -148,4 +148,41 @@ class SeedGeneratorTest {
 
     }
 
+    @Test
+    void testGenerate_negativeAtomHash() {
+        // arrange
+        IAtomContainer atomContainer = mock(IAtomContainer.class);
+        IAtom atom = mock(IAtom.class);
+        when(atomContainer.getAtomCount()).thenReturn(1);
+        when(atomContainer.getAtom(0)).thenReturn(atom);
+
+        AtomEncoder encoder = mock(AtomEncoder.class);
+        when(encoder.encode(atom, atomContainer)).thenReturn(-512);
+
+        SeedGenerator generator = new SeedGenerator(encoder);
+
+        // act
+        long[] hashes = generator.generate(atomContainer);
+        assertThat(hashes.length, is(1));
+        assertThat(hashes[0], is(67554012666142223L));
+    }
+
+    @Test
+    void testGenerate_positiveAtomHash() {
+        // arrange
+        IAtomContainer atomContainer = mock(IAtomContainer.class);
+        IAtom atom = mock(IAtom.class);
+        when(atomContainer.getAtomCount()).thenReturn(1);
+        when(atomContainer.getAtom(0)).thenReturn(atom);
+
+        AtomEncoder encoder = mock(AtomEncoder.class);
+        when(encoder.encode(atom, atomContainer)).thenReturn(512);
+
+        SeedGenerator generator = new SeedGenerator(encoder);
+
+        // act
+        long[] hashes = generator.generate(atomContainer);
+        assertThat(hashes.length, is(1));
+        assertThat(hashes[0], is(18253619712L));
+    }
 }
