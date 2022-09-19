@@ -42,14 +42,14 @@ $ javac -cp cdk-2.7.jar MyClass.java
 $ java -cp cdk-2.7.jar:. MyClass
 ```
 
-If you are using Maven, you can use the **uber** ``cdk-bundle``, note it is much more efficient to use include
-the modules you need:
+If you are using Maven, you can use the **uber** ``cdk-bundle`` to grab 
+everything, note it is much more efficient to use include the modules you need:
 
 ```xml
 <dependency>
   <artifactId>cdk-bundle</artifactId>
   <groupId>org.openscience.cdk</groupId>
-  <version>2.7</version>
+  <version>2.8</version>
 </dependency>
 ```
 
