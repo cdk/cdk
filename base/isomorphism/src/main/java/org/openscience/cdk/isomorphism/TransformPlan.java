@@ -71,7 +71,6 @@ final class TransformPlan {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Optimizes op-codes:" + this.ops);
         }
-        System.err.println(this.ops);
     }
 
     /**
