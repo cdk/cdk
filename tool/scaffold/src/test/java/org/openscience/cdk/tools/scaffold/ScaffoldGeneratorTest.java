@@ -27,7 +27,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Kekulization;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,6 +36,7 @@ import org.openscience.cdk.io.FormatFactory;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLV3000Reader;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -139,7 +139,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getSchuffenhauerNonCTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
         IAtomContainer tmpNTripleBondMolecule = tmpParser.parseSmiles("C1C(C(C(C1)=O)C)C[N](CC2CCC(C2)C)#C[H]"); //Triple bond
         IAtomContainer tmpPDoubleBondMolecule = tmpParser.parseSmiles("P=[P+]1CCCCC1"); // P=P Test
@@ -161,7 +161,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void removeRingNonCTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CCN(C1=CC=CC(=C1)C2=CC=NC3=C(C=NN23)C#N)C(=O)C");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         IAtomContainer tmpSchuff = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
@@ -409,7 +409,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
      */
     @Test
     public void getLinkersDoubleBondTest() throws Exception {
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C=C1CCCCC1/N=C/C2CC(C)CCC2C");
         //Generate the Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -543,7 +543,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void mergeTreeTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
         IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("C2NC1SCNN1N2");
         IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("c4ccc(C3NC2SC(c1ccccc1)NN2N3)cc4");
@@ -592,7 +592,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void mergeNetworkTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         /*Generate IAtomContainer from SMILES*/
         IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("C2NC1SCNN1N2");
         IAtomContainer tmpMolecule2 = tmpParser.parseSmiles("c4ccc(C3NC2SC(c1ccccc1)NN2N3)cc4");
@@ -632,7 +632,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpTestMoleculeList = new ArrayList<>();
         /*Loading and reading the library*/
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C4CCC(C/C(CC1CC[F+]CC1)=C(CC2CCCCC2)\\CC3CC[F+]CC3)CC4");
         IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("C4CCC(C/C(CC1CC[F+]CC1)=C(CC2CCCCC2)/CC3CC[F+]CC3)CC4");
         tmpTestMoleculeList.add(tmpMolecule);
@@ -659,7 +659,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpTestMoleculeList = new ArrayList<>();
         /*Loading and reading the library*/
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C4CCC(C/C(CC1CC[F+]CC1)=C(CC2CCCCC2)\\CC3CC[F+]CC3)CC4");
         IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("C4CCC(C/C(CC1CC[F+]CC1)=C(CC2CCCCC2)/CC3CC[F+]CC3)CC4");
         tmpTestMoleculeList.add(tmpMolecule);
@@ -772,7 +772,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void heteroThreeGenerateScaffoldNetworkTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("O=C(O)C(NC(=O)C(N)C(C)C)C1N2CC2C(N=C(N)N)C1");
         //Generate a network of molecules with iteratively removed terminal rings
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -802,7 +802,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void heteroGenerateSchuffenhauerRemovalTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule1 = tmpParser.parseSmiles("O=C(O)C(NC(=O)C(N)C(C)C)C1N2CC2C(N=C(N)N)C1");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         ScaffoldTree tmpTree = tmpScaffoldGenerator.generateSchuffenhauerTree(tmpMolecule1);
@@ -832,7 +832,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     public void stereoFragmentationTest() throws Exception {
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         tmpScaffoldGenerator.setSmilesGeneratorSetting(new SmilesGenerator(SmiFlavor.Isomeric));
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles(
                 "C8CCCC(/C(=C(C1CCCNCCC1)\\C6CCCCC(C5CCCC(C/C(CC2CCNCC2)=C(CC3CCCCC3)/CC4CCNCC4)C5)CC6)C7CCCCCNC7)CCC8");
         List<IAtomContainer> tmpFragmentList = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
@@ -916,7 +916,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void applySchuffenhauerRulesSMILESTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C5CCCCCCCCCCCCCC1NC1CCCCCCCCCCCCCC(C3CC2CC2C4NC34)CC5");
         String[] tmpExpectedSmilesArray = new String[]{"N1C2CCCCCCCCCCCCCCCCC(CCCCCCCCCCCCCC12)C3CC4CC4C5NC53",
@@ -943,7 +943,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme1Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -962,7 +962,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme2bTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1C2CC3CC1CC(C2)C3");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -987,7 +987,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme3aTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("c2ccc1CNCCc1c2");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1023,7 +1023,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme3bTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("c1cc2CCCc3c[nH]c(c1)c23");
         //Generate Schuffenhauer scaffold
@@ -1048,7 +1048,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme4Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1CCCC2C(O2)CC(OC(=O)CC(C(C(=O)C(C1O)C)(C)C)O)C(=CC3=CSC(=N3)C)C");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpRuleOneOutput = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
@@ -1069,7 +1069,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme4Rule1OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1CCCC2C(O2)CC(OC(=O)CC(C(C(=O)C(C1O)C)(C)C)O)C(=CC3=CSC(=N3)C)C");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1095,7 +1095,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme5Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1C(=O)NC(C(=O)NC(C(=O)NC(C(=O)NC(C(=O)NC(C(=O)N1C)CC2=CC=CC=C2)C(C)C)CCCCN)CC3=CNC4=CC=CC=C43)CC5=CC=C(C=C5)O");//Original
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1123,7 +1123,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme5Rule2OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("O=C1NCC(=O)NC(C(=O)NCC(=O)NC(C(=O)NC(C(=O)NC1)CC2=CNC=3C=CC=CC32)C)C");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         IAtomContainer tmpSchuffenhauerScaffold = tmpScaffoldGenerator.getScaffold(tmpMolecule, true);
@@ -1147,7 +1147,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme6Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");//Original
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpRule = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
@@ -1166,7 +1166,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme6Rule3OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1192,7 +1192,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme7Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1C2CC3=C(C1(CCN2CC=C(C)C)C)C=C(C=C3)O");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpRule = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
@@ -1212,7 +1212,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme7Rule4and5OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1C2CC3=C(C1(CCN2CC=C(C)C)C)C=C(C=C3)O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1237,7 +1237,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme8Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1CC2CN3C(CC=CC3=O)C4C2N(C1)CCC4");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpRule = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
@@ -1256,7 +1256,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme8Rule4and5OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1CC2CN3C(CC=CC3=O)C4C2N(C1)CCC4");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1283,7 +1283,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme9Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CCC1CN2CCC3(C2CC1C(=COC)C(=O)OC)C4=CC=CC=C4NC3=O");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         List<IAtomContainer> tmpRule = tmpScaffoldGenerator.applySchuffenhauerRules(tmpMolecule);
@@ -1304,7 +1304,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme9Rule4and5OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("O=C1NC=CC12CCN3CCCCC32"); //already parent scaffold
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1330,7 +1330,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme10Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC12CCC3=C(C1CCC45C2CCC(C4)C(C5)(CO)O)C=CO3");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1351,7 +1351,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme10Rule4and5OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1CCC23CCC(CCC2C1)C3");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1378,7 +1378,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme11aTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1401,7 +1401,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme11aRule6OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         //Two-ring parent scaffold of flucloxacillin
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("O=C1N2CCSC2C1");
         //Generate Schuffenhauer scaffold
@@ -1429,7 +1429,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme11bTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1C2C3=CC=CC=C3CC4=CC=CC=C4N2C(=N1)N");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1450,7 +1450,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme11bRule6OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("N1=CN2C=CCC=CC2C1");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1478,7 +1478,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme12Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CCN(C1=CC=CC(=C1)C2=CC=NC3=C(C=NN23)C#N)C(=O)C");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1501,7 +1501,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme12Rule7OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("N1=CC=CN2N=CC=C12");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1527,7 +1527,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme13Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("c2ccc1[nH]ccc1c2");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1548,7 +1548,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme13Rule8OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("c2ccc1[nH]ccc1c2");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1574,7 +1574,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme14Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1CN(CC2=C1SC=C2)CC3=CC=CC=C3Cl");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1595,7 +1595,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme14Rule9OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("S1C=CC2=C1CCNC2");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1621,7 +1621,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getRule10Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("O=C3CC2C(CCCC1CCCCCCC12)C(=O)C(=O)C3=O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1642,7 +1642,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getRule10Rule10OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1CCCC2CCCCCC2CC1");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1668,7 +1668,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme15Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CNC1CCC(C2=CC=CC=C12)C3=CC(=C(C=C3)Cl)Cl");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1689,7 +1689,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme15Rule11OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C=1C=CC2=C(C1)CCCC2");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1716,7 +1716,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme16Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1=CC=C(C(=C1)C2=NN(C(=N2)C3=CC=CC=C3O)C4=CC=C(C=C4)C(=O)O)O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1739,7 +1739,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme16Rule12OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C1=CC=C(C(=C1)C2=NN(C(=N2)C3=CC=CC=C3O)C4=CC=C(C=C4)C(=O)O)O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1769,7 +1769,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme17Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1(C(C(C2=C(O1)C=C(C=C2)OC)C3=CC=C(C=C3)OCCN4CCCC4)C5=CC=CC=C5)C");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1793,7 +1793,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme17Rule13OnlyTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("O1C=2C=CC=CC2C(C=3C=CC=CC3)C(C=4C=CC=CC4)C1");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1817,7 +1817,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     public void getScheme18Test() throws Exception {
         /*-----Diazepam-----*/
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMoleculeDiazepam = tmpParser.parseSmiles("CN1C(=O)CN=C(C2=C1C=CC(=C2)Cl)C3=CC=CC=C3");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1872,7 +1872,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void getScheme19Test() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C2C(C(=O)C3(C(CC4C(C3C(C(C2(C)C)(CC1O)O)OC(=O)C5=CC=CC=C5)(CO4)OC(=O)C)O)C)OC(=O)C");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1897,7 +1897,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void setRuleSevenAppliedSettingTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CCN(C1=CC=CC(=C1)C2=CC=NC3=C(C=NN23)C#N)C(=O)C"); //Scheme12
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1921,7 +1921,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void setScaffoldModeSettingTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -1962,7 +1962,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void setScaffoldModeSettingWithoutHTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("CC1=C(C(=NO1)C2=C(C=CC=C2Cl)F)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O");
         //Generate Schuffenhauer scaffold
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
@@ -2001,7 +2001,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
     @Test
     public void setRetainOnlyHybridisationsAtAromaticBondsSettingTest() throws Exception {
         //SMILES to IAtomContainer
-        SmilesParser tmpParser  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser tmpParser  = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpMolecule = tmpParser.parseSmiles("C2=C1CCNCC1=CCC2");
         ScaffoldGenerator tmpScaffoldGenerator = this.getScaffoldGeneratorTestSettings();
         tmpScaffoldGenerator.setRetainOnlyHybridisationsAtAromaticBondsSetting(true);
@@ -2038,12 +2038,12 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         /*Load V2000 mol file*/
         if(tmpFormat.getReaderClassName().contains("V2000")) {
             MDLV2000Reader tmpReader = new MDLV2000Reader(tmpInputStream);
-            IChemObjectBuilder tmpBuilder = DefaultChemObjectBuilder.getInstance();
+            IChemObjectBuilder tmpBuilder = SilentChemObjectBuilder.getInstance();
             tmpMolecule = tmpReader.read(tmpBuilder.newAtomContainer());
             /*Load V3000 mol file*/
         } else if(tmpFormat.getReaderClassName().contains("V3000")) {
             MDLV3000Reader tmpReader = new MDLV3000Reader(tmpInputStream);
-            IChemObjectBuilder tmpBuilder = DefaultChemObjectBuilder.getInstance();
+            IChemObjectBuilder tmpBuilder = SilentChemObjectBuilder.getInstance();
             tmpMolecule = tmpReader.read(tmpBuilder.newAtomContainer());
         }
         return tmpMolecule;
