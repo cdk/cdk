@@ -28,6 +28,9 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class TransformTest {
 
     @Test
@@ -38,12 +41,9 @@ class TransformTest {
                 Arrays.asList(new TransformOp(Type.NewAtom, 6, 17, 0),
                               new TransformOp(Type.NewBond, 1, 5, 1),
                               new TransformOp(Type.BondOrder, 1, 2, 2)));
-        transform.apply(pentane2);
-        System.err.println(pentane2.getBondCount());
-        for  (IAtom atom : pentane2.atoms())
-            System.err.println(atom.getSymbol());
-        for (IBond bond : pentane2.bonds())
-            System.err.println(bond.getBegin().getIndex() + " " + bond.getEnd().getIndex() + " " + bond.getOrder());
+        assertTrue(transform.apply(pentane2));
+        assertEquals(pentane2.getBondCount(), 5);
+        assertEquals(pentane2.getBond(5).getOrder(), IBond.Order.DOUBLE);
     }
 
 }
