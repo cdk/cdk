@@ -25,6 +25,7 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.isomorphism.DfPattern;
 import org.openscience.cdk.isomorphism.Transform;
@@ -245,8 +246,11 @@ public class Smirks {
         // build the query pattern based on the left-hand side of the reaction
         prepareQuery(state);
 
-        System.err.println(Smarts.generate(query));
-        System.err.println(ops);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(Smarts.generate(query));
+            LOGGER.debug(ops);
+        }
+
         transform.init(DfPattern.findSubstructure(query), ops, state.getMessage());
 
         return true;
@@ -290,23 +294,23 @@ public class Smirks {
                 if (IsAromatic(atom).val == 1)
                     valence++;
                 switch (elem) {
-                    case IAtom.Wildcard:
+                    case IElement.Wildcard:
                         return 0;
-                    case IAtom.B:
+                    case IElement.B:
                         if (valence < 3) return 3 - valence;
                         break;
-                    case IAtom.C:
+                    case IElement.C:
                         if (valence < 4) return 4 - valence;
                         break;
-                    case IAtom.N:
-                    case IAtom.P:
+                    case IElement.N:
+                    case IElement.P:
                         if (valence < 3) return 3 - valence;
                         else if (valence < 5) return 5 - valence;
                         break;
-                    case IAtom.O:
+                    case IElement.O:
                         if (valence < 2) return 2 - valence;
                         break;
-                    case IAtom.S:
+                    case IElement.S:
                         if (valence < 2) return 2 - valence;
                         else if (valence < 4) return 4 - valence;
                         else if (valence < 6) return 6 - valence;
@@ -464,7 +468,7 @@ public class Smirks {
 
     private static String generateAtom(IAtom atom) {
         return "[" + Smarts.generateAtom(((QueryAtom) atom).getExpression())
-                           .replaceAll("^\\[|\\]$", "") + ":" + getMapIdx(atom) + "]";
+                           .replaceAll("(?:^\\[)|(?:]$)", "") + ":" + getMapIdx(atom) + "]";
     }
 
     private static void checkAtomMap(SmirksState state, IAtom atom) {
@@ -727,19 +731,19 @@ public class Smirks {
         switch (expr.type()) {
             case ELEMENT:
                 switch (expr.value()) {
-                    case IAtom.B:
-                    case IAtom.C:
-                    case IAtom.N:
-                    case IAtom.O:
-                    case IAtom.Al:
-                    case IAtom.Si:
-                    case IAtom.P:
-                    case IAtom.S:
-                    case IAtom.Ge:
-                    case IAtom.As:
-                    case IAtom.Se:
-                    case IAtom.Sb:
-                    case IAtom.Te:
+                    case IElement.B:
+                    case IElement.C:
+                    case IElement.N:
+                    case IElement.O:
+                    case IElement.Al:
+                    case IElement.Si:
+                    case IElement.P:
+                    case IElement.S:
+                    case IElement.Ge:
+                    case IElement.As:
+                    case IElement.Se:
+                    case IElement.Sb:
+                    case IElement.Te:
                         return BinaryExprValue.UNDEF; // these 'might' be aromatic
                     default:
                         return BinaryExprValue.FALSE;
