@@ -43,7 +43,7 @@ class TransformTest {
                               new TransformOp(Type.BondOrder, 1, 2, 2)));
         assertTrue(transform.apply(pentane2));
         assertEquals(pentane2.getBondCount(), 5);
-        assertEquals(pentane2.getBond(5).getOrder(), IBond.Order.DOUBLE);
+        assertEquals(pentane2.getBond(0).getOrder(), IBond.Order.DOUBLE);
     }
 
 }
