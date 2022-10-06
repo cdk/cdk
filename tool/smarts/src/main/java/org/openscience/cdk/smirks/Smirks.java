@@ -58,7 +58,7 @@ import java.util.Set;
  *     System.err.println("Success!");
  * }
  * }</pre>
- *
+ * <p>
  * If the SMIRKS is invalid a runtime exception is thrown. If you expect
  * to be processing possibly invalid inputs consider using the more verbose
  * {@link #parse(org.openscience.cdk.isomorphism.Transform, String)}
@@ -81,6 +81,78 @@ import java.util.Set;
  * @see org.openscience.cdk.smirks.SmirksTransform
  */
 public class Smirks {
+
+    public enum Option {
+        /**
+         * The transform will be run right-to-left instead of left-to-right.
+         */
+        Reverse,
+        /**
+         * Ignore attempts to set the hydrogen count with properties.
+         */
+        IgnoreHCnt,
+        /**
+         * Unless specified, zero the hydrogen count on a mapped atom if it's
+         * counterpart had a hydrogen count specified.
+         */
+        ZeroHCntIfChanged,
+        /**
+         * Interpret [CH0] the same as [C]
+         */
+        ZeroHIsUnset,
+        /**
+         * Ignore attempts to set the isotopic mass of an atom.
+         */
+        IgnoreIso,
+        /**
+         * Ignores attempts to change the element of an atom.
+         */
+        IgnoreTransmutation,
+        /**
+         * Unless specified, zero the charge on a mapped atom if it's
+         * counterpart had a charge specified.
+         */
+        ZeroChargeIfChanged,
+        /**
+         * Unless a charge is specified, default to zero.
+         */
+        ZeroCharge,
+
+        UnpairedMaps,
+
+        // where does this option go
+        RECALCULATE_H,
+
+        // options of the plan
+
+        /**
+         * Automatically add explicit hydrogens to a pattern before matching/
+         * running the transform.
+         */
+        AutoExplH,
+        /**
+         * Remove stereo chemistry even when a single neighbour changes.
+         */
+        RemoveStereoOnSinglePointChange,
+        /**
+         * If a bond already exists between two atoms and a new one
+         */
+        OverwriteExistingBond,
+        /**
+         * LillyMol - Not supported yet.
+         */
+        DeleteUnmapped
+    }
+
+    public final Set<Option> Daylight = EnumSet.of(Option.IgnoreHCnt,
+                                                   Option.IgnoreIso,
+                                                   Option.IgnoreTransmutation,
+                                                   Option.ZeroCharge,
+                                                   Option.AutoExplH,
+                                                   Option.RemoveStereoOnSinglePointChange);
+
+    public final Set<Option> OEChem = EnumSet.of(Option.IgnoreIso,
+                                                 Option.ZeroHCntIfChanged);
 
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(Smirks.class);
 
@@ -117,7 +189,7 @@ public class Smirks {
      * Smirks.compile("[*:1][H]>>[*:1]Cl")
      *       .apply(mol);
      * }</pre>
-     *
+     * <p>
      * If the SMIRKS is invalid a runtime exception is thrown. If you expect
      * to be processing possibly invalid inputs consider using the more verbose
      * {@link #parse(org.openscience.cdk.isomorphism.Transform, String)}
@@ -142,13 +214,13 @@ public class Smirks {
      *     System.err.println("Success!");
      * }
      * }</pre>
-     *
+     * <p>
      * If the SMIRKS is invalid a runtime exception is thrown. If you expect
      * to be processing possibly invalid inputs consider using the more verbose
      * {@link #parse(org.openscience.cdk.isomorphism.Transform, String)}
      * function and apply it separately.
      *
-     * @param mol the molecule to apply the SMIRKS to
+     * @param mol    the molecule to apply the SMIRKS to
      * @param smirks the SMIRKS string
      * @return the pattern was applied or not
      * @see org.openscience.cdk.isomorphism.Transform#apply(org.openscience.cdk.interfaces.IAtomContainer)
@@ -166,13 +238,13 @@ public class Smirks {
      *    // ... further process result molecule
      * }
      * }</pre>
-     *
+     * <p>
      * If the SMIRKS is invalid a runtime exception is thrown. If you expect
      * to be processing possibly invalid inputs consider using the more verbose
      * {@link #parse(org.openscience.cdk.isomorphism.Transform, String)}
      * function and apply it separately.
      *
-     * @param mol the molecule to apply the SMIRKS to
+     * @param mol    the molecule to apply the SMIRKS to
      * @param smirks the SMIRKS string
      * @return the pattern was applied or not
      * @see org.openscience.cdk.isomorphism.Transform#apply(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.isomorphism.Transform.Mode)
@@ -198,7 +270,7 @@ public class Smirks {
      * transform.apply(mol);
      * }
      * </pre>
-     *
+     * <p>
      * If the SMIRKS could not be interpreted or was invalid this method returns
      * <b>false</b> and sets the transform into an error state meaning calling
      * {@code apply()} will do nothing. The {@link Transform#message()} may
@@ -246,10 +318,10 @@ public class Smirks {
         // build the query pattern based on the left-hand side of the reaction
         prepareQuery(state);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(Smarts.generate(query));
-            LOGGER.debug(ops);
-        }
+        //if (LOGGER.isDebugEnabled()) {
+        System.err.println(Smarts.generate(query));
+        System.err.println(ops);
+        //}
 
         transform.init(DfPattern.findSubstructure(query), ops, state.getMessage());
 
@@ -501,6 +573,15 @@ public class Smirks {
         for (IBond[] pair : state.bondPairs) {
             int begIdx = pair[0] == null ? state.atomidx.get(pair[1].getBegin()) : state.atomidx.get(pair[0].getBegin());
             int endIdx = pair[0] == null ? state.atomidx.get(pair[1].getEnd()) : state.atomidx.get(pair[0].getEnd());
+
+            if (pair[0] != null && pair[1] != null) {
+                System.err.println(begIdx + "-" + endIdx + " changed?");
+            } else if (pair[0] != null && pair[1] == null) {
+                System.err.println(begIdx + "-" + endIdx + " deleted");
+            } else if (pair[1] != null && pair[0] == null) {
+                System.err.println(begIdx + "-" + endIdx + " new bond");
+            }
+
             BinaryExprValue lft = GetBondOrder(pair[0]);
             BinaryExprValue rgt = GetBondOrder(pair[1]);
             if (pair[0] != null && pair[1] == null) {
