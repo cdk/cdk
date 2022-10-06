@@ -318,10 +318,10 @@ public class Smirks {
         // build the query pattern based on the left-hand side of the reaction
         prepareQuery(state);
 
-        //if (LOGGER.isDebugEnabled()) {
-        System.err.println(Smarts.generate(query));
-        System.err.println(ops);
-        //}
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(Smarts.generate(query));
+            LOGGER.debug(ops);
+        }
 
         transform.init(DfPattern.findSubstructure(query), ops, state.getMessage());
 
@@ -574,13 +574,13 @@ public class Smirks {
             int begIdx = pair[0] == null ? state.atomidx.get(pair[1].getBegin()) : state.atomidx.get(pair[0].getBegin());
             int endIdx = pair[0] == null ? state.atomidx.get(pair[1].getEnd()) : state.atomidx.get(pair[0].getEnd());
 
-            if (pair[0] != null && pair[1] != null) {
-                System.err.println(begIdx + "-" + endIdx + " changed?");
-            } else if (pair[0] != null && pair[1] == null) {
-                System.err.println(begIdx + "-" + endIdx + " deleted");
-            } else if (pair[1] != null && pair[0] == null) {
-                System.err.println(begIdx + "-" + endIdx + " new bond");
-            }
+//            if (pair[0] != null && pair[1] != null) {
+//                System.err.println(begIdx + "-" + endIdx + " changed?");
+//            } else if (pair[0] != null && pair[1] == null) {
+//                System.err.println(begIdx + "-" + endIdx + " deleted");
+//            } else if (pair[1] != null && pair[0] == null) {
+//                System.err.println(begIdx + "-" + endIdx + " new bond");
+//            }
 
             BinaryExprValue lft = GetBondOrder(pair[0]);
             BinaryExprValue rgt = GetBondOrder(pair[1]);
@@ -808,7 +808,6 @@ public class Smirks {
     }
 
     private static BinaryExprValue IsAromatic(Expr expr) {
-        int lft, rgt;
         switch (expr.type()) {
             case ELEMENT:
                 switch (expr.value()) {
@@ -906,7 +905,6 @@ public class Smirks {
     }
 
     private static BinaryExprValue GetBondOrder(Expr expr, boolean alipEndPoint) {
-        BinaryExprValue lft, rgt;
         switch (expr.type()) {
             case IS_AROMATIC:
                 return new BinaryExprValue(5);
