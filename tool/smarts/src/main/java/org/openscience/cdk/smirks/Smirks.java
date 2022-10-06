@@ -101,12 +101,12 @@ public class Smirks {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             BondKey key = (BondKey) o;
-            return beg == key.beg && end == key.end;
+            return beg == key.beg && end == key.end || beg == key.end && end == key.beg;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(beg, end);
+            return Objects.hash(Math.min(beg, end), Math.max(beg, end));
         }
     }
 
