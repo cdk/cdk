@@ -219,6 +219,7 @@ class SmirksTest {
     }
 
     @Disabled("TODO aromatic flags on atoms/bonds")
+    @Test
     public void testImplicitValenceAromatic() throws Exception {
         assertTransform("c1ccccc1C(=O)O",
                         "[OD1:1][H]>>[O:1]Cc1ccccc1",
@@ -551,4 +552,20 @@ class SmirksTest {
 
     // To Test:
     // [H:1]C>>C[*:1]
+
+    @Test
+    void testBondOrderingSwapping_1() throws Exception {
+        assertTransform("[Li+:30].[Al+3:32].[O:28]=[C:27]1[O:31][C:2](=[O:29])[CH:3]2[CH2:26][C:17]" +
+                "(=[C:8]([C:9]3=[CH:10][CH:11]=[C:12]([O:13][CH3:14])[CH:15]=[CH:16]3)[CH2:7][CH:4]12)[C:18]=4" +
+                "[CH:19]=[CH:20][C:21]([O:22][CH3:23])=[CH:24][CH:25]4",
+                 "[Al+3;h0X0:32].[C+0;h1:3]1[C+0;h1:4][C+0;h0X3v4:27](=[O+0;h0:28])[O+0;h0X2v2:31][C+0;h0X3v4:2]1=[O+0;h0:29].[Li+;h0X0:30]>>[CH2+0:2]([OH1+0:29])[CH1+0:3][CH1+0:4][CH2+0:27][O+0;h1:28]",
+                "OCC1CC(=C(CC1CO)C=2C=CC(OC)=CC2)C3=CC=C(OC)C=C3");
+    }
+
+    @Test
+    void testBondOrderingSwapping_2() throws Exception {
+        assertTransform("CCC(C)O",
+                "[H][C:1]-[O:2][H]>>[O:2]=[C:1]",
+                "CCC(C)=O");
+    }
 }
