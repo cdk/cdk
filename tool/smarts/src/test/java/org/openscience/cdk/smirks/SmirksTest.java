@@ -33,9 +33,7 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.openscience.cdk.isomorphism.TransformOp.Type.*;
@@ -47,15 +45,29 @@ class SmirksTest {
     private static final SmilesGenerator SMIGEN = new SmilesGenerator(SmiFlavor.Default | SmiFlavor.UseAromaticSymbols);
 
     static void assertTransform(String smiles, String smirks, String expected) throws Exception {
+        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Exclusive);
+    }
+
+    static void assertTransform(String smiles, String smirks, String[] expected, Transform.Mode mode) throws Exception {
         IAtomContainer mol = SMIPAR.parseSmiles(smiles);
         Transform transform = new Transform();
         assertTrue(Smirks.parse(transform, smirks), transform.message());
-        assertTrue(transform.apply(mol));
-        String actual = SMIGEN.create(mol);
-        Assertions.assertEquals(
-                expected,
-                actual,
-                "Applying the transform did not generate the expected molecule");
+        Iterable<IAtomContainer> iterable = transform.apply(mol, mode);
+
+        List<String> actualSmiles = new ArrayList<>();
+        for (IAtomContainer actual: iterable) {
+            actualSmiles.add(SMIGEN.create(actual));
+        }
+
+        assertEquals(expected.length, actualSmiles.size(), "The number of expected transforms " + expected.length +
+                " and actual transforms " + actualSmiles.size() + " is different.");
+
+        for (int i = 0; i < expected.length; i++) {
+            Assertions.assertEquals(
+                    expected[i],
+                    actualSmiles.get(i),
+                    "Applying the transform did not generate the expected molecule");
+        }
     }
 
     static void assertNoMatch(String smiles, String smirks) throws Exception {
@@ -614,13 +626,9 @@ class SmirksTest {
                 "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]";
         final String smirks = "[C+0;h2:18][O+0;h1D1v2:19].[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20](=[O+0;h0:21])[c+0;h0:22]>>[CH2:18][OH0:19][CH0:20](=[OH0:21])[cH0:22]";
 
-        IAtomContainer atomContainer = SMIPAR.parseSmiles(smiles);
-        Transform transform = new Transform();
-        assertTrue(Smirks.parse(transform, smirks), transform.message());
-
         // does not match and thus does not modify the molecule because there are aromatic atoms in the smirks
         // successfully matching the smiles would require aromaticity perception to be carried out on the smiles
-        assertFalse(transform.apply(atomContainer));
+        assertNoMatch(smiles, smirks);
     }
 
     @Test
@@ -673,6 +681,70 @@ class SmirksTest {
         transform.setPrepare(false);
         assertFalse(Smirks.parse(transform, smirks), transform.message());
         assertEquals("SMIRKS was not a reaction!", transform.message());
+    }
+
+    @Test
+    void testTwoTerminalNitroGroups() throws Exception {
+        final String smiles = "N(=O)(=O)CCN(=O)=O";
+        final String smirks = "[*:1][N:2](=[O:3])=[O:4]>>[*:1][N+:2](=[O:3])[O-:4]";
+        final String[] expectedArray = new String[] {"[N+](=O)([O-])CC[N+](=O)[O-]", "[N+](=O)([O-])CC[N+](=O)[O-]"};
+        assertTransform(smiles, smirks, expectedArray[0]);
+        assertTransform(smiles, smirks, expectedArray, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, expectedArray, Transform.Mode.All);
+    }
+
+    @Test
+    void testKetal() throws Exception {
+        final String smiles = "C1CCCCC1=O";
+        final String smirks = "[C:1]=O>>[C:1]1OCCO1";
+        final String expected = "C1CCCCC12OCCO2";
+        assertTransform(smiles, smirks, expected);
+    }
+
+    @Test
+    void testSwernOxidation() throws Exception {
+        final String smiles = "C1CC(O)C(O)CC1";
+        final String smirks = "[*:1][C:2]([H:3])([O:4][H:5])[C:6]([H:7])([O:8][H:9])[*:10]>>[*:1][C:2](=[O:4])[C:6](=[O:8])[*:10]";
+        final String expected = "C1CC(=O)C(=O)CC1";
+        assertTransform(smiles, smirks, expected);
+    }
+
+    @Disabled("throws an IllegalArgumentException in org.openscience.cdk.smirks.Smirks.collectBondPairs with the mapped Hs")
+    @Test
+    void testSwernOxidationMappedHydrogens() throws Exception {
+        final String smiles = "C1CC(O)C(O)CC1";
+        final String smirks = "[*:1][C:2]([H:3])([O:4][H:5])[C:6]([H:7])([O:8][H:9])[*:10]>>[*:1][C:2](=[O:4])[C:6](=[O:8])[*:10].[H:3][H:5].[H:7][H:9]";
+        final String expected = "C1CC(=O)C(=O)CC1";
+        assertTransform(smiles, smirks, expected);
+    }
+
+    @Test
+    void testTwoNonOverlappingMatches() throws Exception {
+        final String smiles = "O=CC(C)CCC=O";
+        final String smirks = "[C:1]=[O:2]>>[H][C:1][O:2][H]";
+        final String[] expectedArray = new String[] {"OCC(C)CCCO", "OCC(C)CCCO"};
+        assertTransform(smiles, smirks, expectedArray[0]);
+        assertTransform(smiles, smirks, expectedArray, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, expectedArray, Transform.Mode.All);
+    }
+
+    @Test
+    void testTwoOverlappingMatches() throws Exception {
+        final String smiles = "O=CCC=O";
+        final String smirks = "[C:3][C:1]=[O:2]>>[C:3][C:1]([H])[O:2][H]";
+        assertTransform(smiles, smirks, "OCCC=O");
+        assertTransform(smiles, smirks, new String[] {"OCCCO", "OCCCO"}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[] {"OCCCO", "OCCCO"}, Transform.Mode.All);
+    }
+
+    @Test
+    void testDielsAlder() throws Exception {
+        final String smiles = "C=CC=C.C=C";
+        final String smirks = "[C:1]=[C:2][C:3]=[C:4].[C:5]=[C:6]>>[C:1]1[C:2]=[C:3][C:4][C:5][C:6]1";
+        final String expected = "C1C=CCCC1";
+        assertTransform(smiles, smirks, expected);
+        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
     }
 
 }
