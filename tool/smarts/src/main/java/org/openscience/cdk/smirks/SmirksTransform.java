@@ -55,10 +55,6 @@ public final class SmirksTransform extends Transform {
      */
     private boolean doPrep = true;
 
-    /** Aromaticity model. */
-    private static final Aromaticity arom = new Aromaticity(ElectronDonation.daylight(),
-                                                            Cycles.or(Cycles.all(), Cycles.relevant()));
-
     // package private!
     SmirksTransform() {
         super();
