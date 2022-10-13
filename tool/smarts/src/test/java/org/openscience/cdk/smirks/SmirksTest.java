@@ -238,12 +238,11 @@ class SmirksTest {
                         "c1(c(c(c(c(c1N(=O)=O)Cl)Cl)Cl)Cl)Cl");
     }
 
-    @Disabled("TODO aromatic flags on atoms/bonds")
     @Test
     public void testImplicitValenceAromatic() throws Exception {
         assertTransform("c1ccccc1C(=O)O",
                         "[OD1:1][H]>>[O:1]Cc1ccccc1",
-                        "c1ccccc1C(=O)OCc1ccccc1");
+                        "c1ccccc1C(=O)OCc2ccccc2");
     }
 
     // explicit hydrogens in SMIRKS, but we remove (one) implicit hydrogens
@@ -570,6 +569,14 @@ class SmirksTest {
                         "[H+].c1ccccc1");
     }
 
+
+    @Test
+    void testDeepCopy() throws Exception {
+        assertTransform("CCOCCF", "[O:1][C:2][C:3]>>[OH1:1].[CH3:2][C:3]",
+                        new String[]{"CC.OCCF", "CCO.CCF"},
+                        Transform.Mode.All);
+    }
+
     // To Test:
     // [H:1]C>>C[*:1]
 
@@ -687,10 +694,15 @@ class SmirksTest {
     void testTwoTerminalNitroGroups() throws Exception {
         final String smiles = "N(=O)(=O)CCN(=O)=O";
         final String smirks = "[*:1][N:2](=[O:3])=[O:4]>>[*:1][N+:2](=[O:3])[O-:4]";
-        final String[] expectedArray = new String[] {"[N+](=O)([O-])CC[N+](=O)[O-]", "[N+](=O)([O-])CC[N+](=O)[O-]"};
-        assertTransform(smiles, smirks, expectedArray[0]);
-        assertTransform(smiles, smirks, expectedArray, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, expectedArray, Transform.Mode.All);
+        assertTransform(smiles, smirks, "[N+](=O)([O-])CC[N+](=O)[O-]");
+        assertTransform(smiles, smirks, new String[] {"[N+](=O)([O-])CCN(=O)=O", "N(=O)(=O)CC[N+](=O)[O-]"},
+                        Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{
+                "[N+](=O)([O-])CCN(=O)=O",
+                "[N+]([O-])(=O)CCN(=O)=O",
+                "N(=O)(=O)CC[N+](=O)[O-]",
+                "N(=O)(=O)CC[N+]([O-])=O"
+        }, Transform.Mode.All);
     }
 
     @Test
@@ -722,8 +734,8 @@ class SmirksTest {
     void testTwoNonOverlappingMatches() throws Exception {
         final String smiles = "O=CC(C)CCC=O";
         final String smirks = "[C:1]=[O:2]>>[H][C:1][O:2][H]";
-        final String[] expectedArray = new String[] {"OCC(C)CCCO", "OCC(C)CCCO"};
-        assertTransform(smiles, smirks, expectedArray[0]);
+        final String[] expectedArray = new String[] {"OCC(C)CCC=O", "O=CC(C)CCCO"};
+        assertTransform(smiles, smirks, "OCC(C)CCCO");
         assertTransform(smiles, smirks, expectedArray, Transform.Mode.Unique);
         assertTransform(smiles, smirks, expectedArray, Transform.Mode.All);
     }
@@ -733,8 +745,8 @@ class SmirksTest {
         final String smiles = "O=CCC=O";
         final String smirks = "[C:3][C:1]=[O:2]>>[C:3][C:1]([H])[O:2][H]";
         assertTransform(smiles, smirks, "OCCC=O");
-        assertTransform(smiles, smirks, new String[] {"OCCCO", "OCCCO"}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {"OCCCO", "OCCCO"}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[] {"OCCC=O", "O=CCCO"}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[] {"OCCC=O", "O=CCCO"}, Transform.Mode.All);
     }
 
     @Test
@@ -744,7 +756,9 @@ class SmirksTest {
         final String expected = "C1C=CCCC1";
         assertTransform(smiles, smirks, expected);
         assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        // there are 4 symmetric matches since there are two paths
+        assertTransform(smiles, smirks, new String[] {expected, expected, expected, expected},
+                        Transform.Mode.All);
     }
 
 }

@@ -275,6 +275,10 @@ public class Transform {
     }
 
     private static IAtomContainer copyOf(IAtomContainer mol) {
-        return mol.getBuilder().newInstance(IAtomContainer.class, mol);
+        try {
+            return mol.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Could not clone() molecule");
+        }
     }
 }
