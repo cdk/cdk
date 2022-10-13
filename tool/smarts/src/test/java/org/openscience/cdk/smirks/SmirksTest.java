@@ -33,14 +33,9 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.openscience.cdk.isomorphism.TransformOp.Type.*;
 
 class SmirksTest {
@@ -50,15 +45,29 @@ class SmirksTest {
     private static final SmilesGenerator SMIGEN = new SmilesGenerator(SmiFlavor.Default | SmiFlavor.UseAromaticSymbols);
 
     static void assertTransform(String smiles, String smirks, String expected) throws Exception {
+        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Exclusive);
+    }
+
+    static void assertTransform(String smiles, String smirks, String[] expected, Transform.Mode mode) throws Exception {
         IAtomContainer mol = SMIPAR.parseSmiles(smiles);
         Transform transform = new Transform();
         assertTrue(Smirks.parse(transform, smirks), transform.message());
-        assertTrue(transform.apply(mol));
-        String actual = SMIGEN.create(mol);
-        Assertions.assertEquals(
-                expected,
-                actual,
-                "Applying the transform did not generate the expected molecule");
+        Iterable<IAtomContainer> iterable = transform.apply(mol, mode);
+
+        List<String> actualSmiles = new ArrayList<>();
+        for (IAtomContainer actual: iterable) {
+            actualSmiles.add(SMIGEN.create(actual));
+        }
+
+        assertEquals(expected.length, actualSmiles.size(), "The number of expected transforms " + expected.length +
+                " and actual transforms " + actualSmiles.size() + " is different.");
+
+        for (int i = 0; i < expected.length; i++) {
+            Assertions.assertEquals(
+                    expected[i],
+                    actualSmiles.get(i),
+                    "Applying the transform did not generate the expected molecule");
+        }
     }
 
     static void assertNoMatch(String smiles, String smirks) throws Exception {
@@ -78,6 +87,17 @@ class SmirksTest {
         Collections.sort(actual);
         Arrays.sort(expected);
         assertArrayEquals(expected, actual.toArray());
+    }
+
+    @Test
+    void testNullArgument_Transform() {
+        assertThrows(NullPointerException.class, () -> Smirks.parse(null, "[C:3]>>[C:3][O:3]"), "NullPointerException expected when passing null as an argument for transform.");
+    }
+
+    @Test
+    void testNullArgument_Smirks() {
+        Transform transform = new Transform();
+        assertThrows(NullPointerException.class, () -> Smirks.parse(transform, null), "NullPointerException expected when passing null as an argument for smirks.");
     }
 
     @Test
@@ -568,4 +588,163 @@ class SmirksTest {
                 "[H][C:1]-[O:2][H]>>[O:2]=[C:1]",
                 "CCC(C)=O");
     }
+
+    @Test
+    void testReaction_1() throws Exception {
+        assertTransform("[O:1]=[C:2]([OH:17])[C:8]=1[NH:16][C:15]=2[CH:14]=[CH:13][CH:12]=[CH:11][C:10]2[CH:9]1.[OH:7][CH2:6][CH2:5][CH2:4][NH2:3]",
+                "[CH0D3v4:2][OH1D1v2:17].[NH2D1v3:3]>>[CH0:2][NH1:3]",
+                "O=C(C=1NC=2C=CC=CC2C1)NCCCO");
+    }
+
+    @Test
+    void testReaction_2() throws Exception {
+        assertTransform("[O:1]=[C:2]([OH:17])[C:8]=1[NH:16][C:15]=2[CH:14]=[CH:13][CH:12]=[CH:11][C:10]2[CH:9]1.[OH:7][CH2:6][CH2:5][CH2:4][NH2:3]",
+                "[N+0;h2D1v3:3][C+0;h2:4].[O+0;h0:1]=[C+0;h0D3v4:2]([O+0;h1D1v2:17])[C+0;h0:8]>>[OH0:1]=[CH0:2]([NH1:3][CH2:4])[CH0:8]",
+                "O=C(C=1NC=2C=CC=CC2C1)NCCCO");
+    }
+
+    // uses atom properties h, D and v; should the usage of these yield an exception or a warning message?
+    @Test
+    void testReaction_3() throws Exception {
+        assertTransform("[O:21]=[C:20]([NH:29][NH2:28])[C:22]1=[CH:23][CH:24]=[CH:25][N:26]=[CH:27]1." +
+                        "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]",
+                "[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20].[O+0;h1D1v2:19]>>[O+0;h0D2v2:19][C+0;h0D3v4:20]",
+                "O=C(C1=CC=CN=C1)OCCCCCCCCCCCCCCCC(C)C");
+    }
+
+    @Test
+    void testReaction_4() throws Exception {
+        assertTransform("[O:21]=[C:20]([NH:29][NH2:28])[C:22]1=[CH:23][CH:24]=[CH:25][N:26]=[CH:27]1." +
+                        "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]",
+                "[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20].[O+0;h1D1v2:19]>>[OH0:19][C:20]",
+                "O=C(C1=CC=CN=C1)OCCCCCCCCCCCCCCCC(C)C");
+    }
+
+    @Test
+    void testReaction_5_Transform() throws Exception {
+        final String smiles = "[O:21]=[C:20]([NH:29][NH2:28])[C:22]1=[CH:23][CH:24]=[CH:25][N:26]=[CH:27]1." +
+                "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]";
+        final String smirks = "[C+0;h2:18][O+0;h1D1v2:19].[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20](=[O+0;h0:21])[c+0;h0:22]>>[CH2:18][OH0:19][CH0:20](=[OH0:21])[cH0:22]";
+
+        // does not match and thus does not modify the molecule because there are aromatic atoms in the smirks
+        // successfully matching the smiles would require aromaticity perception to be carried out on the smiles
+        assertNoMatch(smiles, smirks);
+    }
+
+    @Test
+    void testReaction_5_SmirksTransform() throws Exception {
+        final String smiles = "[O:21]=[C:20]([NH:29][NH2:28])[C:22]1=[CH:23][CH:24]=[CH:25][N:26]=[CH:27]1." +
+                "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]";
+        final String smirks = "[C+0;h2:18][O+0;h1D1v2:19].[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20](=[O+0;h0:21])[c+0;h0:22]>>[CH2:18][OH0:19][CH0:20](=[OH0:21])[cH0:22]";
+        final String expected = "O=C(c1cccnc1)OCCCCCCCCCCCCCCCC(C)C";
+
+        IAtomContainer atomContainer = SMIPAR.parseSmiles(smiles);
+        SmirksTransform transform = new SmirksTransform();
+        assertTrue(Smirks.parse(transform, smirks), transform.message());
+        assertTrue(transform.apply(atomContainer));
+        String actual = SMIGEN.create(atomContainer);
+
+        Assertions.assertEquals(
+                expected,
+                actual,
+                "Applying the transform did not generate the expected molecule");
+    }
+
+    @Test
+    void testReaction_5_SmirksTransform_setPrepareFalse() throws Exception {
+        final String smiles = "[O:21]=[C:20]([NH:29][NH2:28])[C:22]1=[CH:23][CH:24]=[CH:25][N:26]=[CH:27]1." +
+                "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]";
+        final String smirks = "[C+0;h2:18][O+0;h1D1v2:19].[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20](=[O+0;h0:21])[c+0;h0:22]>>[CH2:18][OH0:19][CH0:20](=[OH0:21])[cH0:22]";
+
+        IAtomContainer atomContainer = SMIPAR.parseSmiles(smiles);
+        SmirksTransform transform = new SmirksTransform();
+        transform.setPrepare(false);
+        assertTrue(Smirks.parse(transform, smirks), transform.message());
+
+        // does not match and thus does not modify the molecule because there are aromatic atoms in the smirks
+        // successfully matching the smiles would require aromaticity perception to be carried out on the smiles
+        assertFalse(transform.apply(atomContainer));
+    }
+
+    @Test
+    void testReaction_6() throws Exception {
+        assertTransform("[O:17]=[C:6]1[CH2:10][CH2:9][CH2:8]1.[F:15][C:12]([F:14])([F:13])[c:11]1[cH:16][c:2]([Br:1])[cH:3][cH:4][c:5]1[I:18]",
+                "[C+0;h0D3v4:6](=[O+0;h0:17])([C+0;h2:8])[C+0;h2:10].[c+0;h1:4]:[c+0;h0D3v4:5]([I+0;h0D1v1:18]):[c+0;h0:11]" +
+                        ">>[cH1:4]:[cH0:5]([CH0:6]([OH1:17])([CH2:8])[CH2:10]):[cH0:11]",
+                "OC1(CCC1)c2ccc(cc2C(F)(F)F)Br");
+    }
+
+    @Test
+    void invalidSmirks_1() {
+        final String smirks = "[*:1][N:2](=[O:3])=[O:4]";
+        SmirksTransform transform = new SmirksTransform();
+        transform.setPrepare(false);
+        assertFalse(Smirks.parse(transform, smirks), transform.message());
+        assertEquals("SMIRKS was not a reaction!", transform.message());
+    }
+
+    @Test
+    void testTwoTerminalNitroGroups() throws Exception {
+        final String smiles = "N(=O)(=O)CCN(=O)=O";
+        final String smirks = "[*:1][N:2](=[O:3])=[O:4]>>[*:1][N+:2](=[O:3])[O-:4]";
+        final String[] expectedArray = new String[] {"[N+](=O)([O-])CC[N+](=O)[O-]", "[N+](=O)([O-])CC[N+](=O)[O-]"};
+        assertTransform(smiles, smirks, expectedArray[0]);
+        assertTransform(smiles, smirks, expectedArray, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, expectedArray, Transform.Mode.All);
+    }
+
+    @Test
+    void testKetal() throws Exception {
+        final String smiles = "C1CCCCC1=O";
+        final String smirks = "[C:1]=O>>[C:1]1OCCO1";
+        final String expected = "C1CCCCC12OCCO2";
+        assertTransform(smiles, smirks, expected);
+    }
+
+    @Test
+    void testSwernOxidation() throws Exception {
+        final String smiles = "C1CC(O)C(O)CC1";
+        final String smirks = "[*:1][C:2]([H:3])([O:4][H:5])[C:6]([H:7])([O:8][H:9])[*:10]>>[*:1][C:2](=[O:4])[C:6](=[O:8])[*:10]";
+        final String expected = "C1CC(=O)C(=O)CC1";
+        assertTransform(smiles, smirks, expected);
+    }
+
+    @Disabled("throws an IllegalArgumentException in org.openscience.cdk.smirks.Smirks.collectBondPairs with the mapped Hs")
+    @Test
+    void testSwernOxidationMappedHydrogens() throws Exception {
+        final String smiles = "C1CC(O)C(O)CC1";
+        final String smirks = "[*:1][C:2]([H:3])([O:4][H:5])[C:6]([H:7])([O:8][H:9])[*:10]>>[*:1][C:2](=[O:4])[C:6](=[O:8])[*:10].[H:3][H:5].[H:7][H:9]";
+        final String expected = "C1CC(=O)C(=O)CC1";
+        assertTransform(smiles, smirks, expected);
+    }
+
+    @Test
+    void testTwoNonOverlappingMatches() throws Exception {
+        final String smiles = "O=CC(C)CCC=O";
+        final String smirks = "[C:1]=[O:2]>>[H][C:1][O:2][H]";
+        final String[] expectedArray = new String[] {"OCC(C)CCCO", "OCC(C)CCCO"};
+        assertTransform(smiles, smirks, expectedArray[0]);
+        assertTransform(smiles, smirks, expectedArray, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, expectedArray, Transform.Mode.All);
+    }
+
+    @Test
+    void testTwoOverlappingMatches() throws Exception {
+        final String smiles = "O=CCC=O";
+        final String smirks = "[C:3][C:1]=[O:2]>>[C:3][C:1]([H])[O:2][H]";
+        assertTransform(smiles, smirks, "OCCC=O");
+        assertTransform(smiles, smirks, new String[] {"OCCCO", "OCCCO"}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[] {"OCCCO", "OCCCO"}, Transform.Mode.All);
+    }
+
+    @Test
+    void testDielsAlder() throws Exception {
+        final String smiles = "C=CC=C.C=C";
+        final String smirks = "[C:1]=[C:2][C:3]=[C:4].[C:5]=[C:6]>>[C:1]1[C:2]=[C:3][C:4][C:5][C:6]1";
+        final String expected = "C1C=CCCC1";
+        assertTransform(smiles, smirks, expected);
+        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+    }
+
 }
