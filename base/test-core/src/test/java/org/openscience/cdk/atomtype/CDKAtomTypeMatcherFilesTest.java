@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -75,6 +76,22 @@ class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
 
         String[] expectedTypes = {"C.sp3", "C.sp2", "O.sp2", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "P.ate", "O.sp2",
                 "O.minus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Disabled("Fails with NPE: Cannot invoke org.openscience.cdk.interfaces.IBond$Order.ordinal() because the return value of org.openscience.cdk.interfaces.IBond.getOrder() is null ")
+    @Test
+    void testGermaniumDativeBond() throws Exception {
+        String filename = "dativeBond.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IChemFile chemFile = reader.read(new ChemFile());
+
+        // test the resulting ChemFile content
+        Assertions.assertNotNull(chemFile);
+        IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+
+        String[] expectedTypes = {"X", "Ge"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
