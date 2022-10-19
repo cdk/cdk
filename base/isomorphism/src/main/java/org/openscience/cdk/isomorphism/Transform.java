@@ -228,7 +228,7 @@ public class Transform {
                     results.add(cpy);
             }
         }
-        return results;
+        return Collections.unmodifiableList(results);
     }
 
     /**
