@@ -96,6 +96,12 @@ class SmirksTest {
         assertArrayEquals(expected, actual.toArray());
     }
 
+    private void assertWarningMesg(String smirks, String expected) {
+        Transform transform = new Transform();
+        Smirks.parse(transform, smirks);
+        assertEquals(expected, transform.message());
+    }
+
     @Test
     void testNullArgument_Transform() {
         assertThrows(NullPointerException.class, () -> Smirks.parse(null, "[C:3]>>[C:3][O:3]"), "NullPointerException expected when passing null as an argument for transform.");
@@ -127,27 +133,27 @@ class SmirksTest {
         SmirksTransform transform = new SmirksTransform();
         transform.setPrepare(false);
         assertFalse(Smirks.parse(transform, smirks), transform.message());
-        assertEquals("Invalid atom expression", transform.message());
+        assertEquals("Invalid atom expression: map idx should >0", transform.message());
     }
 
-    @Disabled("I would expect Smirks.parse(transform, smirks) to fail with a MapIdx value of zero...?")
+    // JWM: May be better to make it a warning but this is hard because the
+    // SMARTS parser doesn't currently have a warning mechanism
     @Test
     void testZeroMapIdx() {
         final String smirks = "[*:1][N:0](=[O:3])=[O:4]>>[*:1][N+:0](=[O:3])-[OH:4]";
         SmirksTransform transform = new SmirksTransform();
         transform.setPrepare(false);
-        assertFalse(Smirks.parse(transform, smirks), transform.message());
-        assertEquals("Invalid atom expression", transform.message());
+        assertFalse(Smirks.parse(transform, smirks));
+        assertEquals("Invalid atom expression: map idx should >0", transform.message());
     }
 
-    @Disabled("Is it worthwhile checking the RHS for any atomic primitives that are not considered (D, r, R, v, x, X) and rejecting smirks as invalid when calling Smirks.parse(transform, smirks)..?")
+    // JWM: perhaps a warning on created expressions e.g. H2,H3. X3 is find as can be reversed
     @Test
-    void testProductWithUnconsideredAtomExpressions() {
+    void testProductWithUnconsideredAtomExpressions() throws Exception {
         final String smirks = "[C:1][H]>>[CX3:1]O[H]";
-        SmirksTransform transform = new SmirksTransform();
-        transform.setPrepare(false);
-        assertFalse(Smirks.parse(transform, smirks), transform.message());
-        assertEquals("Invalid atom expression", transform.message());
+        assertTransform("C",
+                        smirks,
+                        "CO");
     }
 
     @Test
@@ -867,29 +873,33 @@ class SmirksTest {
         final String smirks = "[C:1]C([Br:2])=[O:3].[C:11][N:10]>>[C:1]C(=[O:3])[NH1:10][C:11]";
         final String expected = "CCC(=O)NCC";
 
+        assertWarningMesg(smirks,
+                          "Warning - added/removed atoms do not need to be mapped: [Br:2]");
+
         assertTransform(smiles, smirks, "CCC(=O)NCC");
         assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
         assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
     }
 
-    @Disabled("the unmapped Br atom is present on the LHS only and gets removed when applying the transform; I would have expected the Br atom to not be removed as it is not mapped...?")
     @Test
     void testMappedAndUnmappedAtoms_2() throws Exception {
         final String smiles = "CCC(Br)=O.CCN";
         final String smirks = "[C:1]C(Br)=[O:3].[C:11][N:10]>>[C:1]C(=[O:3])[NH1:10][C:11]";
-        final String expected = "CCC(=O)NCC.[Br]";
+        final String expected = "CCC(=O)NCC";
 
         assertTransform(smiles, smirks, "CCC(=O)NCC");
         assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
         assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
     }
 
-    @Disabled("the mapped * atom expression is present on the LHS and not present on the RHS; throws an IllegalArgumentException")
     @Test
     void testMappedAndUnmappedAtoms_3() throws Exception {
         final String smiles = "CCC(Br)=O.CCN";
         final String smirks = "[C:1]C([*:2])=[O:3].[C:11][N:10]>>[C:1]C(=[O:3])[NH1:10][C:11]";
         final String expected = "CCC(=O)NCC";
+
+        assertWarningMesg(smirks,
+                          "Warning - added/removed atoms do not need to be mapped: [*:2]");
 
         assertTransform(smiles, smirks, "CCC(=O)NCC");
         assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
@@ -1012,11 +1022,9 @@ class SmirksTest {
         assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected, "c1cc2CCNC(C)c2cc1"}, Transform.Mode.All);
     }
 
-    @Disabled("IllegalArgumentException thrown by Smirks::determineBondChanges")
     @Test
     void testAnyRingBondOnRightHandSide() {
         final String smirks = "[c;r6:1](-[SH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[CH1;R0:5](=[OD1])>>[c:3]2:[c:1]:[s:2]:[c:5](-[#6:6]):[n:4]@2";
-        SmirksTransform transform = new SmirksTransform();
-        assertFalse(Smirks.parse(transform, smirks), transform.message());
+        assertWarningMesg(smirks, "Ignored query bond, consider using '~'");
     }
 }
