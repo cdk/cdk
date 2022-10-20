@@ -568,8 +568,8 @@ public class Smirks {
         }
     }
 
-    private static void determineBondChanges(List<TransformOp> ops,
-                                             SmirksState state) {
+    private static boolean determineBondChanges(List<TransformOp> ops,
+                                                SmirksState state) {
         for (IBond[] pair : state.bondPairs) {
             int begIdx = pair[0] == null ? state.atomidx.get(pair[1].getBegin()) : state.atomidx.get(pair[0].getBegin());
             int endIdx = pair[0] == null ? state.atomidx.get(pair[1].getEnd()) : state.atomidx.get(pair[0].getEnd());
@@ -595,14 +595,16 @@ public class Smirks {
                     if (!rgt.ok()) {
                         if (IsAnyBond(pair[1]))
                             continue;
-                        throw new IllegalArgumentException();
+                        state.warnings.add("Ignored query bond, consider using '~'");
+                    } else {
+                        if (changed(lft, rgt))
+                            ops.add(new TransformOp(TransformOp.Type.BondOrder,
+                                                    begIdx, endIdx, rgt.val));
                     }
-                    if (changed(lft, rgt))
-                        ops.add(new TransformOp(TransformOp.Type.BondOrder,
-                                                begIdx, endIdx, rgt.val));
                 }
             }
         }
+        return true;
     }
 
     private static void determineStereoChanges(List<TransformOp> ops, SmirksState state) {
