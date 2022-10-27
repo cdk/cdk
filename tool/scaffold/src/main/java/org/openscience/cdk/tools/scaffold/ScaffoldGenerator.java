@@ -57,7 +57,7 @@ import java.util.TreeMap;
 /**
  * This class is designed to generate different molecule scaffolds and frameworks.
  * It contains several other methods for the decomposition of molecules.
- * All details of the functionality and implementation are described <a href="https://doi.org/10.26434/chemrxiv-2022-7tf0h">
+ * All details of the functionality and implementation are described <a href="https://doi.org/10.26434/chemrxiv-2022-7tf0h-v2">
  * here</a>.<p>
  *
  * Furthermore, the molecules can be decomposed according to the <a href="https://doi.org/10.1021/ci600338x">
@@ -69,7 +69,7 @@ import java.util.TreeMap;
  * Different trees or networks can also be merged together.
  *
  * @author Julian Zander, Jonas Schaub (zanderjulian@gmx.de, jonas.schaub@uni-jena.de)
- * @version 1.0.3.0
+ * @version 1.0.4.0
  */
 public class ScaffoldGenerator {
 
@@ -80,25 +80,24 @@ public class ScaffoldGenerator {
     public enum ScaffoldModeOption {
 
         /**
-         * Schuffenhauer scaffolds are generated. Based on the <a href="https://doi.org/10.1021/ci600338x">
-         * "The Scaffold Tree"</a> paper by Schuffenhauer et al. 2006.
-         * The terminal side chains of the molecule are removed, but any atoms non-single bonded to linkers or rings are retained.
+         * Terminal side chains of the molecule are removed except for any atoms non-single bonded
+         * directly to linkers or rings, as it is e.g. defined in <a href="https://doi.org/10.1021/ci600338x">
+         * "The Scaffold Tree − Visualization of the Scaffold Universe by Hierarchical Scaffold Classification"</a>.
          */
-        SCHUFFENHAUER_SCAFFOLD(),
+        SCAFFOLD(),
 
         /**
-         * Murcko frameworks are generated. Based on the <a href="https://doi.org/10.1021/jm9602928">
-         * "The Properties of Known Drugs. 1. Molecular Frameworks"</a> paper by Bemis and Murcko 1996.
+         * Murcko frameworks are generated. Based on <a href="https://doi.org/10.1021/jm9602928">
+         * "The Properties of Known Drugs. 1. Molecular Frameworks"</a> by Bemis and Murcko 1996.
          * All terminal side chains are removed and only linkers and rings are retained.
          */
         MURCKO_FRAMEWORK(),
 
         /**
-         * Basic wire frames are generated based on the <a href="https://doi.org/10.1186/s13321-021-00526-y">
-         * "Molecular Anatomy: a new multi‑dimensional hierarchical scaffold analysis tool"</a>
-         * paper by Manelfi et al. 2021.
-         * It is a very abstract form of representation.
          * All side chains are removed, all bonds are converted into single bonds and all atoms are converted into carbons.
+         * Naming is based on <a href="https://doi.org/10.1186/s13321-021-00526-y">
+         * "Molecular Anatomy: a new multi‑dimensional hierarchical scaffold analysis tool"</a>
+         * by Manelfi et al. 2021.
          */
         BASIC_WIRE_FRAME(),
 
@@ -108,10 +107,10 @@ public class ScaffoldGenerator {
         ELEMENTAL_WIRE_FRAME(),
 
         /**
-         * Basic Frameworks are generated based on the <a href="https://doi.org/10.1186/s13321-021-00526-y">
-         * "Molecular Anatomy: a new multi‑dimensional hierarchical scaffold analysis tool"</a>
-         * paper by Manelfi et al. 2021.
          * All side chains are removed and all atoms are converted into carbons. The order of the remaining bonds is not changed.
+         * Naming is based on <a href="https://doi.org/10.1186/s13321-021-00526-y">
+         * "Molecular Anatomy: a new multi‑dimensional hierarchical scaffold analysis tool"</a>
+         * by Manelfi et al. 2021.
          */
         BASIC_FRAMEWORK()
     }
@@ -171,9 +170,9 @@ public class ScaffoldGenerator {
 
     /**
      * Default setting for which scaffold mode should be used.
-     * By default, ScaffoldModeOption.SCHUFFENHAUER_SCAFFOLD is used.
+     * By default, ScaffoldModeOption.SCAFFOLD is used.
      */
-    public static final ScaffoldModeOption SCAFFOLD_MODE_OPTION_DEFAULT = ScaffoldModeOption.SCHUFFENHAUER_SCAFFOLD;
+    public static final ScaffoldModeOption SCAFFOLD_MODE_OPTION_DEFAULT = ScaffoldModeOption.SCAFFOLD;
     //</editor-fold>
 
     //<editor-fold desc="Private variables">
@@ -1011,8 +1010,8 @@ public class ScaffoldGenerator {
                     tmpCounterBWF++;
                 }
                 break;
-            /*Generate the Schuffenhauer scaffold*/
-            case SCHUFFENHAUER_SCAFFOLD:
+            /*Generate the common scaffold retaining atoms multi-bonded to rings and linkers directly*/
+            case SCAFFOLD:
                 /*Store the number of each Atom of the murckoFragment*/
                 HashSet<Integer> tmpMurckoAtomNumbers = new HashSet<>(tmpClonedMolecule.getAtomCount(), 1);
                 for (IAtom tmpMurckoAtom : tmpMurckoFragment.atoms()) {
@@ -1580,9 +1579,9 @@ public class ScaffoldGenerator {
         //Remove the ring from the fragment currently being treated
         IAtomContainer tmpRingRemoved = this.removeRing(aFragmentList.get(aFragmentList.size() - 1), true, aRing);
         //Remove the linkers
-        IAtomContainer tmpSchuffRingRemoved = this.getScaffoldInternal(tmpRingRemoved, true, this.determineAromaticitySetting, this.aromaticityModelSetting, this.scaffoldModeSetting);
+        IAtomContainer tmpScaffoldRingRemoved = this.getScaffoldInternal(tmpRingRemoved, true, this.determineAromaticitySetting, this.aromaticityModelSetting, this.scaffoldModeSetting);
         //Add the fragment to the list of fragments
-        aFragmentList.add(tmpSchuffRingRemoved);
+        aFragmentList.add(tmpScaffoldRingRemoved);
     }
     /**
      * Selects the correct CycleFinder based on ScaffoldGenerator.CYCLE_FINDER_BACKUP_PROPERTY.
