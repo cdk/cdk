@@ -108,6 +108,13 @@ final class ReactionDepiction extends Depiction {
                                                      yOffsetSide = new double[sideGrid.width + 1],
                                                      xOffsetSide = new double[sideGrid.height + 1]);
 
+        // Retro synthetic swaps the order or reactants/products
+        if (direction == IReaction.Direction.RETRO_SYNTHETIC) {
+            List<Bounds> tmp = reactants;
+            reactants = products;
+            products = tmp;
+        }
+
         // build the main components, we add a 'plus' between each molecule
         for (Bounds reactant : reactants) {
             this.mainComp.add(reactant);
@@ -305,7 +312,7 @@ final class ReactionDepiction extends Depiction {
 
         // SIDE COMPONENTS DRAW
         xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
-        yBase -= mainCompOffset;
+        yBase -= mainCompOffset + 2*margin;
         for (int i = 0; i < sideComps.size(); i++) {
             final int row = i / nSideCol;
             final int col = i % nSideCol;
@@ -460,7 +467,7 @@ final class ReactionDepiction extends Depiction {
 
         // SIDE COMPONENTS DRAW
         xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
-        yBase -= mainCompOffset;
+        yBase -= mainCompOffset + 2*margin;
         for (int i = 0; i < sideComps.size(); i++) {
             final int row = i / nSideCol;
             final int col = i % nSideCol;
@@ -584,9 +591,10 @@ final class ReactionDepiction extends Depiction {
         final double headThickness = minHeight / 3;
         final double inset         = 0.8;
         final double headLength    = minHeight;
+        double strokeWidth = minHeight / 14;
         switch (direction) {
             case FORWARD:
-                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, minHeight / 14, fgcol));
+                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, strokeWidth, fgcol));
                 path.moveTo(minWidth, 0);
                 path.lineTo(minWidth - headLength, +headThickness);
                 path.lineTo(minWidth - inset * headLength, 0);
@@ -595,7 +603,7 @@ final class ReactionDepiction extends Depiction {
                 arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
             case BACKWARD:
-                arrow.add(new LineElement(0.5 * headLength, 0, minWidth, 0, minHeight / 14, fgcol));
+                arrow.add(new LineElement(0.5 * headLength, 0, minWidth, 0, strokeWidth, fgcol));
                 path.moveTo(0, 0);
                 path.lineTo(minHeight, +headThickness);
                 path.lineTo(minHeight - (1 - inset) * minHeight, 0);
@@ -604,13 +612,55 @@ final class ReactionDepiction extends Depiction {
                 arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
             case BIDIRECTIONAL: // equilibrium?
-                path.moveTo(0, 0.5 * +headThickness);
-                path.lineTo(minWidth + minHeight + minHeight, 0.5 * +headThickness);
-                path.lineTo(minWidth + minHeight, 1.5 * +headThickness);
-                path.moveTo(minWidth + minHeight + minHeight, 0.5 * -headThickness);
-                path.lineTo(0, 0.5 * -headThickness);
-                path.lineTo(minHeight, 1.5 * -headThickness);
-                arrow.add(GeneralPath.outlineOf(path, minHeight / 14, fgcol));
+
+                arrow.add(new LineElement(0, +0.5*headThickness, minWidth - 0.5 * headLength, +0.5*headThickness, strokeWidth, fgcol));
+                path.moveTo(minWidth, 0.5*headThickness-0.5*strokeWidth);
+                path.lineTo(minWidth - headLength, 1.5*headThickness);
+                path.lineTo(minWidth - inset * headLength, 0.5*headThickness-0.5*strokeWidth);
+                path.closePath();
+
+                arrow.add(new LineElement(0.5 * headLength, -0.5*headThickness, minWidth, -0.5*headThickness, strokeWidth, fgcol));
+                path.moveTo(0, -0.5*headThickness+0.5*strokeWidth);
+                path.lineTo(+headLength, -1.5*headThickness);
+                path.lineTo(inset * headLength, -0.5*headThickness+0.5*strokeWidth);
+                path.closePath();
+                arrow.add(GeneralPath.shapeOf(path, fgcol));
+                break;
+            case NO_GO: // crossed arrow
+                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, strokeWidth, fgcol));
+                path.moveTo(minWidth, 0);
+                path.lineTo(minWidth - headLength, +headThickness);
+                path.lineTo(minWidth - inset * headLength, 0);
+                path.lineTo(minWidth - headLength, -headThickness);
+                path.closePath();
+                arrow.add(GeneralPath.shapeOf(path, fgcol));
+                double cx = minWidth/2;
+                arrow.add(new LineElement(cx-headThickness, -headThickness, cx+headThickness, +headThickness,
+                                          strokeWidth, fgcol));
+                arrow.add(new LineElement(cx-headThickness, +headThickness, cx+headThickness, -headThickness,
+                                          strokeWidth, fgcol));
+                break;
+            case RETRO_SYNTHETIC: // open arrow
+                arrow.add(new LineElement(0, -headThickness, minWidth - 0.5 * headLength, -headThickness, strokeWidth, fgcol));
+                arrow.add(new LineElement(0, +headThickness, minWidth - 0.5 * headLength, +headThickness, strokeWidth, fgcol));
+                path.moveTo(minWidth-headLength, -2*headThickness);
+                path.lineTo(minWidth, 0);
+                path.lineTo(minWidth-headLength, +2*headThickness);
+                arrow.add(GeneralPath.outlineOf(path, strokeWidth, fgcol));
+                break;
+            case RESONANCE:
+                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, strokeWidth, fgcol));
+                path.moveTo(minWidth, 0);
+                path.lineTo(minWidth - headLength, +headThickness);
+                path.lineTo(minWidth - inset * headLength, 0);
+                path.lineTo(minWidth - headLength, -headThickness);
+                path.closePath();
+                path.moveTo(0, 0);
+                path.lineTo(minHeight, +headThickness);
+                path.lineTo(minHeight - (1 - inset) * minHeight, 0);
+                path.lineTo(minHeight, -headThickness);
+                path.closePath();
+                arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
         }
 

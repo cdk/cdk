@@ -44,12 +44,24 @@ public interface IReaction extends IChemObject {
      * Permissible reaction directions.
      */
     enum Direction {
-        /** Reaction equilibrium which is (almost) fully on the product side. Often denoted with a forward arrow. */
+        /** Reaction equilibrium which is (almost) fully on the product side.
+         *  Often denoted with a forward arrow. */
         FORWARD,
-        /** Reaction equilibrium which is (almost) fully on the reactant side. Often denoted with a backward arrow. */
+        /** Reaction equilibrium which is (almost) fully on the reactant side.
+         *  Often denoted with a backward arrow. */
         BACKWARD,
-        /** Reaction equilibrium state. Often denoted by a double arrow. */
-        BIDIRECTIONAL
+        /** Reaction equilibrium state. Often denoted by a stacked arrows, one
+         *  forwards, one backwards. */
+        BIDIRECTIONAL,
+        /** Reaction is a no-go, Often denoted by a cross or hash arrow. */
+        NO_GO,
+        /** Indicate the precursors for a given molecule,
+         *  note this will make swap where reactant/products appear.
+         *  Usually denoted with an open arrow. */
+        RETRO_SYNTHETIC,
+        /** Reaction shows interconversion between resonance forms. Usually
+         *  denoted by a double-headed arrow. */
+        RESONANCE
     }
 
     /**
