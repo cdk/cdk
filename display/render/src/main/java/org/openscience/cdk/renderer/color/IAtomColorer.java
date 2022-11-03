@@ -44,5 +44,8 @@ public interface IAtomColorer {
      * @param defaultColor the color to use if the atom type of this atom cannot be identified
      * @return the color of the specified atom
      */
-    Color getAtomColor(IAtom atom, Color defaultColor);
+    default Color getAtomColor(IAtom atom, Color defaultColor) {
+        Color color = getAtomColor(atom);
+        return color != null ? color : defaultColor;
+    }
 }
