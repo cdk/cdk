@@ -434,6 +434,11 @@ public class CDKConstants {
      */
     public static final String      REACTION_CONDITIONS          = "cdk:ReactionConditions";
 
+    /**
+     * Arrow display type
+     */
+    public static final String      REACTION_ARROW                = "cdk:Arrow";
+
 
     /* **************************************
      * Some predefined property names for * AtomTypes *

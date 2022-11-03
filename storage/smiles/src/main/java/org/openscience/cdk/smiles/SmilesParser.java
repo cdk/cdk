@@ -370,6 +370,17 @@ public final class SmilesParser {
 
                 assignCxSmilesInfo(rxn.getBuilder(), rxn, atoms, atomToMol, cxstate);
             }
+
+            String arrowType = rxn.getProperty(CDKConstants.REACTION_ARROW);
+            if (arrowType != null && !arrowType.isEmpty()) {
+                switch (arrowType) {
+                    case "RES": rxn.setDirection(IReaction.Direction.RESONANCE); break;
+                    case "EQU": rxn.setDirection(IReaction.Direction.BIDIRECTIONAL); break;
+                    case "RET": rxn.setDirection(IReaction.Direction.RETRO_SYNTHETIC); break;
+                    case "NGO": rxn.setDirection(IReaction.Direction.NO_GO); break;
+                }
+
+            }
         }
     }
 
