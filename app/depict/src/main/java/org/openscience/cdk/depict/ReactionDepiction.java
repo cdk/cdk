@@ -557,7 +557,8 @@ final class ReactionDepiction extends Depiction {
             final int nSideCol = xOffsetSide.length - 1;
             final int nSideRow = yOffsetSide.length - 1;
 
-            double mainCompOffset = sideRequired.h + (nSideRow * padding) - (firstRowHeight / 2);
+            double mainCompOffset = sideRequired.h + 4*margin +
+                                    (nSideRow * padding) - (firstRowHeight / 2);
             if (mainCompOffset < 0)
                 mainCompOffset = 0;
 
