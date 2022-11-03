@@ -230,7 +230,12 @@ final class CxSmilesParser {
         int beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
-        final String field = unescape(iter.substr(beg, iter.pos));
+        String field = unescape(iter.substr(beg, iter.pos));
+
+        // cdk.Arrow => cdk:Arrow to align with CDKConstants, ':' needs encoding
+        // in CXSMILES
+        if (field.startsWith("cdk."))
+            field = field.replace("cdk.", "cdk:");
 
         if (!iter.nextIf(':'))
             return false;
