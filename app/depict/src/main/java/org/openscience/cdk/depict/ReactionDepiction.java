@@ -649,7 +649,7 @@ final class ReactionDepiction extends Depiction {
                 arrow.add(GeneralPath.outlineOf(path, strokeWidth, fgcol));
                 break;
             case RESONANCE:
-                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, strokeWidth, fgcol));
+                arrow.add(new LineElement(0.5 * headLength, 0, minWidth - 0.5 * headLength, 0, strokeWidth, fgcol));
                 path.moveTo(minWidth, 0);
                 path.lineTo(minWidth - headLength, +headThickness);
                 path.lineTo(minWidth - inset * headLength, 0);
