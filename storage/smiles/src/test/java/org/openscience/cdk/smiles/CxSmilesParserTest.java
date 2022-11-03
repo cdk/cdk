@@ -218,7 +218,25 @@ class CxSmilesParserTest {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|SgD::cdk&#58;ReactionConditions:Heat&#10;Hv|", state), is(not(-1)));
         assertThat(state.mysgroups,
-                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
+                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<>(),  CDKConstants.REACTION_CONDITIONS, "Heat\nHv", "", "", "")));
+    }
+
+    @Test
+    void dataSgroupsArrow() {
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx("|SgD::cdk&#58;Arrow:RES|", state), is(not(-1)));
+        assertThat(state.mysgroups,
+                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<>(), CDKConstants.REACTION_ARROW, "RES", "", "", "")));
+    }
+
+    // a ':' needs to be escaped in CXSMILES, if we "cdk." as a Data prop, convert this to cdk:
+    // which then also gets picked up and set in the porperties
+    @Test
+    void dataSgroupsArrowWithDot() {
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx("|SgD::cdk.Arrow:RES|", state), is(not(-1)));
+        assertThat(state.mysgroups,
+                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<>(), CDKConstants.REACTION_ARROW, "RES", "", "", "")));
     }
 
     @Test
