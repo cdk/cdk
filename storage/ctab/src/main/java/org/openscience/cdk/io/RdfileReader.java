@@ -4,8 +4,6 @@ import org.openscience.cdk.exception.CDKException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RdfileReader implements Closeable {
     static final String RDFILE_VERSION_1 = "$RDFILE 1";
@@ -21,6 +19,7 @@ public class RdfileReader implements Closeable {
     static final String M_END = "M  END";
     static final String DTYPE = "$DTYPE";
     static final String DATUM = "$DATUM";
+    static final String LINE_SEPARATOR_NEWLINE = "\n";
 
     private final BufferedReader bufferedReader;
     private boolean headerRead = false;
@@ -64,40 +63,47 @@ public class RdfileReader implements Closeable {
         // $MFMT [$MEREG external-regno]
         // $MIREG internal-regno
         // $MEREG external-regno
-        final boolean hasMoleculeRecord = processMoleculeAndReactionIdentifiers(new CharIter(line), rdFileRecord, MOLECULE_FMT, MOLECULE_INT_REG, MOLECULE_EXT_REG);
+        boolean hasMoleculeIdentifier = processMoleculeAndReactionIdentifiers(new CharIter(line), rdFileRecord, MOLECULE_FMT, MOLECULE_INT_REG, MOLECULE_EXT_REG);
 
         // the reaction identifier can be one of the following:
         // $RFMT [$RIREG internal-regno]
         // $RFMT [$REREG external-regno]
         // $RIREG internal-regno
         // $REREG external-regno
-        final boolean hasReactionRecord = processMoleculeAndReactionIdentifiers(new CharIter(line), rdFileRecord, REACTION_FMT, REACTION_INT_REG, REACTION_EXT_REG);
+        boolean hasReactionIdentifier = processMoleculeAndReactionIdentifiers(new CharIter(line), rdFileRecord, REACTION_FMT, REACTION_INT_REG, REACTION_EXT_REG);
 
-        if (!hasMoleculeRecord && !hasReactionRecord) {
+        if (!hasMoleculeIdentifier && !hasReactionIdentifier) {
             // the molecule or reaction identifier is not properly formatted
-            throw new CDKException("Error in line" + lineCounter + ": Expected the line to specify the molecule or reaction identifier, but instead found '" + line + "'.");
+            throw new CDKException("Error in line " + lineCounter + ": Expected the line to specify the molecule or reaction identifier, but instead found '" + line + "'.");
         }
+        rdFileRecord.setMolfile(hasMoleculeIdentifier);
+        rdFileRecord.setRxnFile(hasReactionIdentifier);
+
         while ((line = nextLine()) != null) {
-            // next record
-            if (line.startsWith(REACTION_FMT) || line.startsWith(MOLECULE_FMT)) {
-                pushBack(line);
-                break;
+            if (rdFileRecord.isMolfile()) {
+                // process molfile
+                rdFileRecord.setContent(processMolfile(line));
+            } else if (rdFileRecord.isRxnFile()) {
+                // process rxn
+                rdFileRecord.setContent(processRxn(line));
             }
 
-            if (hasMoleculeRecord && line.startsWith(MOLFILE_START)) {
-                // process molecule
-                final RdfileRecord.Molfile molfile = processMolfile(line);
-                rdFileRecord.setMolfile(molfile);
-            } else if (hasReactionRecord && line.startsWith(RXNFILE_START)){
-                // process reaction
-                final RdfileRecord.Rxnfile rxnFile = processRxn(line);
-                rdFileRecord.setRxnFile(rxnFile);
-            } else if (line.startsWith(DTYPE)) {
+            line = nextLine();
+            if (line == null) {
+                return rdFileRecord;
+            }
+
+            if (line.startsWith(DTYPE)) {
                 // process data block
-                final String[] dtypeDatum = processDatum(line);
-                rdFileRecord.putData(dtypeDatum[0], dtypeDatum[1]);
+                final String dataBlock = processDataBlock(line);
+                rdFileRecord.setDataBlock(dataBlock);
+            } else if (isStartOfNewRecord(line)) {
+                // next record
+                pushBack(line);
+                break;
             } else {
-                throw new CDKException("Error in line " + lineCounter + ": Expected ...");
+                // anything else is unexpected here
+                throw new CDKException("Error in line " + lineCounter + ": Expected start of data block '" + DTYPE + "' or start of next record, but instead found '" + line + "'.");
             }
         }
 
@@ -124,7 +130,7 @@ public class RdfileReader implements Closeable {
         prev = line;
     }
 
-    private boolean processMoleculeAndReactionIdentifiers(CharIter iter, RdfileRecord rdFileRecord, String fmt, String intReg, String extReg) {
+    private boolean processMoleculeAndReactionIdentifiers(CharIter iter, RdfileRecord rdFileRecord, String fmt, String intReg, String extReg) throws CDKException {
         if (iter.consume(fmt)) {
             iter.skipWhiteSpace();
             if (iter.consume(intReg)) {
@@ -133,7 +139,14 @@ public class RdfileReader implements Closeable {
             } else if (iter.consume(extReg)) {
                 iter.skipWhiteSpace();
                 rdFileRecord.setExternalRegistryNumber(iter.rest());
+            } else {
+                String rest = iter.rest();
+                if (!rest.isEmpty()) {
+                    throw new CDKException("Error in line " + lineCounter + ": Expected either '" + MOLECULE_INT_REG + "' or '" + MOLECULE_EXT_REG +
+                            "' after '" + MOLECULE_FMT + "', but instead found '" + rest + "'.");
+                }
             }
+
             return true;
         } else if (iter.consume(intReg)) {
             iter.skipWhiteSpace();
@@ -147,8 +160,8 @@ public class RdfileReader implements Closeable {
 
         return false;
     }
-    
-    private RdfileRecord.Molfile processMolfile(String line) throws IOException, CDKException {
+
+    private String processMolfile(String line) throws IOException, CDKException {
         if (!line.startsWith(MOLFILE_START))
             throw new CDKException("Error in line " + lineCounter + ": Expected the line to start with '" + MOLFILE_START + "', but instead found '" + line + "'.");
 
@@ -156,100 +169,128 @@ public class RdfileReader implements Closeable {
         if (title == null)
             throw new CDKException("Error in line " + lineCounter + ": Expected a line with the title of the molecule, but instead found '" + line + "'.");
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(title).append('\n');
+        final StringBuilder sb = new StringBuilder();
+        sb.append(title).append(LINE_SEPARATOR_NEWLINE);
         while ((line = nextLine()) != null) {
             sb.append(line);
-            sb.append('\n');
+            sb.append(LINE_SEPARATOR_NEWLINE);
+
             if (line.startsWith(M_END))
                 break;
+
+            if (line.startsWith("$"))
+                throw new CDKException("Error in line " + lineCounter + ": Unexpected character '$' within molfile at start of line '" + line + "'.");
         }
 
-        return new RdfileRecord.Molfile(title, sb.toString());
+        final int lastIndexOf = sb.lastIndexOf(M_END);
+        if (lastIndexOf == -1 || lastIndexOf != sb.length() - 7) {
+            throw new CDKException("Error in line " + lineCounter + ": Expected molfile to end with '" + M_END + "', but instead found '" + line + "'.");
+        }
+
+        return sb.toString();
     }
 
-    private RdfileRecord.Rxnfile processRxn(String line) throws IOException, CDKException {
+    private String processRxn(String line) throws IOException, CDKException {
         if (!line.startsWith(RXNFILE_START))
             throw new CDKException("Error in line " + lineCounter + ": Expected the line to start with '" + RXNFILE_START + "', but instead found '" + line + "'.");
 
-        final String title = nextLine();
-        if (title == null)
-            throw new CDKException("Error in line " + lineCounter + ": Expected a line with the title of the reaction, but instead found '" + line + "'.");
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
 
-        final String header = nextLine();
-        if (header == null)
-            throw new CDKException("Error in line " + lineCounter + ": Expected the line with the header, but instead found '" + line + "'.");
-
-        final String remark = nextLine();
-        if (remark == null)
-            throw new CDKException("Error in line " + lineCounter + ": Expected a line with a remark, but instead found '" + line + "'.");
-
-        String counts = nextLine();
-        if (counts == null)
-            throw new CDKException("Error in line " + lineCounter + ": Expected a line with the counts for the number of reactants, products and agents, but instead found '" + line + "'.");
-        int numReactants = readMdlUInt(counts, 0);
-        int numProducts = readMdlUInt(counts, 3);
-        int numAgents = readMdlUInt(counts, 6);
-
-        List<RdfileRecord.Molfile> reactants = processReactionComponent(numReactants);
-        List<RdfileRecord.Molfile> agents = processReactionComponent(numAgents);
-        List<RdfileRecord.Molfile> products = processReactionComponent(numProducts);
-
-        return new RdfileRecord.Rxnfile(title, header, remark, reactants, agents, products);
-    }
-
-    private List<RdfileRecord.Molfile> processReactionComponent(int numberOfComponents) throws IOException, CDKException {
-        final List<RdfileRecord.Molfile> molfiles = new ArrayList<>();
-
-        while (numberOfComponents > 0) {
-            String line = nextLine();
-            final RdfileRecord.Molfile molfile = processMolfile(line);
-            molfiles.add(molfile);
-            numberOfComponents--;
-        }
-
-        return molfiles;
-    }
-
-    private String[] processDatum(String line) throws IOException {
-        // process the line that starts with $DTYPE
-        CharIter iter = new CharIter(line);
-        iter.consume(DTYPE);
-        iter.skipWhiteSpace();
-        final String dtype = iter.rest();
-
-        // process the line that starts with $DATUM
         line = nextLine();
-        iter = new CharIter(line);
-        if (!iter.consume(DATUM)) {
-            pushBack(line); // not a DATUM line
-            return new String[] {dtype, ""};
-        }
-        iter.skipWhiteSpace();
-        String datum = iter.rest();
+        if (line == null)
+            throw new CDKException("Error in line " + lineCounter + ": Expected a line with the title of the reaction, but instead found '" + line + "'.");
+        stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
 
-        // multi line datum
-        if (line.length() == 81 && endsWithPlus(line)) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(datum);
-            sb.setLength(sb.length() - 1); // drop '+'
-            while ((line = nextLine()) != null) {
-                if (line.charAt(0) == '$') {
-                    pushBack(line); // not a DATUM continuation
-                    break;
-                }
-                if (line.length() == 81 && endsWithPlus(line)) {
-                    sb.append(line);
-                    sb.setLength(sb.length() - 1); // drop '+'
-                } else {
-                    sb.append(line);
-                    break;
+        line = nextLine();
+        if (line == null)
+            throw new CDKException("Error in line " + lineCounter + ": Expected the line with the header, but instead found '" + line + "'.");
+        stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
+
+        line = nextLine();
+        if (line == null)
+            throw new CDKException("Error in line " + lineCounter + ": Expected a line with a remark, but instead found '" + line + "'.");
+        stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
+
+        line = nextLine();
+        if (line == null)
+            throw new CDKException("Error in line " + lineCounter + ": Expected a line with the counts for the number of reactants, products and agents, but instead found '" + line + "'.");
+        final int numReactants = readMdlUInt(line, 0);
+        final int numProducts = readMdlUInt(line, 3);
+        final int numAgents = readMdlUInt(line, 6);
+        if (numReactants == -1 || numProducts == -1) {
+            throw new CDKException("Error in line " + lineCounter + ": Incorrect formatting of the line that indicates the number of reaction components '" + line + "'.");
+        }
+        int numReactionComponents = numReactants + numProducts;
+        if (numAgents != -1) {
+            numReactionComponents += numAgents;
+        }
+        stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
+
+        int molfileCounter = 0;
+        while ((line = nextLine()) != null) {
+            // beginning of data block or next record
+            if (line.startsWith(DTYPE) || isStartOfNewRecord(line)) {
+                pushBack(line);
+                break;
+            }
+
+            molfileCounter++;
+            stringBuilder.append(MOLFILE_START).append(LINE_SEPARATOR_NEWLINE);
+            stringBuilder.append(processMolfile(line));
+        }
+
+        if (molfileCounter != numReactionComponents) {
+            throw new CDKException("Error in RXN record: The sum of the number of reactants (" + numReactants + "), products (" + numProducts +
+                    ") and agents (" + numAgents + ") is not equal to the number of Molfile entries " + molfileCounter + " in the record.");
+        }
+
+        return stringBuilder.toString();
+    }
+
+    private String processDataBlock(String line) throws CDKException, IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while (line != null) {
+            // next record
+            if (isStartOfNewRecord(line)) {
+                pushBack(line);
+                break;
+            }
+
+            // process the line that starts with $DTYPE
+            if (!line.startsWith(DTYPE)) {
+                throw new CDKException("Error in data block in line " + lineCounter + ". Expected line to start with '" + DTYPE + "', but instead found '" + line + "'.");
+            }
+            stringBuilder.append(line).append("\n");
+
+            // process the line that starts with $DATUM
+            line = nextLine();
+            if (!line.startsWith(DATUM)) {
+                throw new CDKException("Error in data block in line " + lineCounter + ". Expected line to start with '" + DATUM + "', but instead found '" + line + "'.");
+            }
+            stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
+
+            // multi line datum
+            if (line.length() == 81 && line.endsWith("+")) {
+                while ((line = nextLine()) != null) {
+                    // not a DATUM continuation
+                    if (line.charAt(0) == '$') {
+                        pushBack(line);
+                        break;
+                    }
+
+                    stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
+
+                    if (line.length() < 81) {
+                        break;
+                    }
                 }
             }
-            datum = sb.toString();
+            line = nextLine();
         }
 
-        return new String[] {dtype, datum};
+        return stringBuilder.toString();
     }
 
     private int readMdlUInt(String str, int pos) {
@@ -265,8 +306,10 @@ public class RdfileReader implements Closeable {
         return num;
     }
 
-
-    private boolean endsWithPlus(String datum) {
-        return datum.charAt(datum.length() - 1) == '+';
+    private boolean isStartOfNewRecord(String line) {
+        return line.startsWith(REACTION_FMT) || line.startsWith(MOLECULE_FMT)
+                || line.startsWith(REACTION_INT_REG) || line.startsWith(REACTION_EXT_REG)
+                || line.startsWith(MOLECULE_INT_REG) || line.startsWith(MOLECULE_EXT_REG);
     }
+
 }
