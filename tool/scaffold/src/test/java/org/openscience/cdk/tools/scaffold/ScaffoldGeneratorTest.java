@@ -54,7 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * JUnit test class for the ScaffoldGenerator.
+ * JUnit test class for the Scaffold Generator.
  *
  * @author Julian Zander, Jonas Schaub (zanderjulian@gmx.de, jonas.schaub@uni-jena.de)
  * @version 1.0.6.0
