@@ -57,8 +57,9 @@ import java.util.TreeMap;
 /**
  * This class is designed to generate different molecule scaffolds and frameworks.
  * It contains several other methods for the decomposition of molecules.
- * All details of the functionality and implementation are described <a href="https://doi.org/10.26434/chemrxiv-2022-7tf0h-v2">
- * here</a>.<p>
+ * All details of the functionality and implementation are described in <a href="https://doi.org/10.1186/s13321-022-00656-x">
+ * Schaub et al. "Scaffold Generator: a Java library implementing molecular scaffold functionalities in the Chemistry
+ * Development Kit (CDK)" (J Cheminform 14, 79, 2022)</a><p>
  *
  * Furthermore, the molecules can be decomposed according to the <a href="https://doi.org/10.1021/ci600338x">
  * Schuffenhauer rules</a> and a generation of all possible fragments,
@@ -67,9 +68,6 @@ import java.util.TreeMap;
  * The network approach is based on the <a href="https://doi.org/10.1021/ci2000924">
  * Mining for Bioactive Scaffolds with Scaffold Networks</a> paper.
  * Different trees or networks can also be merged together.
- * The Scaffold Generator library is described in <a href="https://doi.org/10.1186/s13321-022-00656-x"> Schaub et al.
- * "Scaffold Generator: a Java library implementing molecular scaffold functionalities in the Chemistry Development Kit
- * (CDK)" (J Cheminform 14, 79, 2022)</a>
  *
  * @author Julian Zander, Jonas Schaub (zanderjulian@gmx.de, jonas.schaub@uni-jena.de)
  * @version 1.0.4.0
