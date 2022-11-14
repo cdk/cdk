@@ -40,8 +40,6 @@ import java.util.Objects;
  * @version 1.0.2.0
  */
 public class ScaffoldTree extends ScaffoldNodeCollectionBase {
-
-    //<editor-fold desc="Constructors">
     /**
      * Constructor
      * @param aSmilesGenerator Used SMILES Generator
@@ -56,9 +54,7 @@ public class ScaffoldTree extends ScaffoldNodeCollectionBase {
     public ScaffoldTree() {
         super();
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Public methods">
     @Override
     public void addNode(ScaffoldNodeBase aNode) throws CDKException, IllegalArgumentException, NullPointerException {
         /*Parameter checks*/
@@ -209,7 +205,6 @@ public class ScaffoldTree extends ScaffoldNodeCollectionBase {
         return true;
     }
 
-    //<editor-fold desc="get/set">
     @Override
     public Integer[][] getMatrix() throws IllegalStateException {
         int tmpSize = this.nodeMap.size();
@@ -254,10 +249,7 @@ public class ScaffoldTree extends ScaffoldNodeCollectionBase {
         }
         throw new IllegalStateException("Tree has no clear root");
     }
-    //</editor-fold>
-    //</editor-fold>
 
-    //<editor-fold desc="Private methods">
     /**
      * Checks if the parent of each node in the tree is present (root excluded).
      * If this is not the case, the tree is disjointed. Then it is actually more than one tree.
@@ -305,5 +297,4 @@ public class ScaffoldTree extends ScaffoldNodeCollectionBase {
             return false;
         }
     }
-    //</editor-fold>
 }

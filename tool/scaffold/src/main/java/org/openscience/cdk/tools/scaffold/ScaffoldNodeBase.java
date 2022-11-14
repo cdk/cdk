@@ -41,8 +41,6 @@ import java.util.Objects;
  * @version 1.0.1.0
  */
 public abstract class ScaffoldNodeBase<MoleculeType> {
-
-    //<editor-fold desc="Protected variables">
     /**
      * Molecule that can be stored in each node
      */
@@ -69,9 +67,7 @@ public abstract class ScaffoldNodeBase<MoleculeType> {
      * Children of the Node
      */
     protected List<ScaffoldNodeBase<MoleculeType>> children;
-    //</editor-fold>
 
-    //<editor-fold desc="Constructor">
     /**
      * Constructor
      * @param aMolecule molecule of the ScaffoldNodeBase
@@ -84,9 +80,7 @@ public abstract class ScaffoldNodeBase<MoleculeType> {
         this.originSmilesList = new ArrayList<String>();
         this.nonVirtualOriginSmilesList = new ArrayList<String>();
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Public methods">
     /**
      * Indicates whether it has children
      * @return true if it has no children
@@ -142,7 +136,6 @@ public abstract class ScaffoldNodeBase<MoleculeType> {
     public boolean hasNonVirtualOriginSmiles() {
         return !this.nonVirtualOriginSmilesList.isEmpty();
     }
-    //<editor-fold desc="get/set">
 
     /**
      * Outputs the level on which the node is located in the entire tree
@@ -243,6 +236,4 @@ public abstract class ScaffoldNodeBase<MoleculeType> {
         Objects.requireNonNull(aNonVirtualOriginSmilesList, "Given SMILES of the molecule List is 'null'");
         this.nonVirtualOriginSmilesList = aNonVirtualOriginSmilesList;
     }
-    //</editor-fold>
-    //</editor-fold>
 }

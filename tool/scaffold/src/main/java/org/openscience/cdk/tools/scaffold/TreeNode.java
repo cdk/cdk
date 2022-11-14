@@ -38,15 +38,11 @@ import java.util.Objects;
  * @version 1.0.0.0
  */
 public class TreeNode<MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
-
-    //<editor-fold desc="Public variables">
     /**
      * Parent of the node
      */
     private TreeNode<MoleculeType> parent;
-    //</editor-fold>
 
-    //<editor-fold desc="Constructor">
     /**
      * Constructor
      * @param aMolecule molecule of the TreeNode
@@ -54,9 +50,7 @@ public class TreeNode<MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
     public TreeNode(MoleculeType aMolecule) {
         super(aMolecule);
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Public methods">
     @Override
     public boolean isOrphan() {
         return parent == null;
@@ -71,7 +65,6 @@ public class TreeNode<MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
         return tmpChildNode;
     }
 
-    //<editor-fold desc="get/set">
     @Override
     public int getLevel() {
         if (this.isOrphan())
@@ -97,6 +90,4 @@ public class TreeNode<MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
         Objects.requireNonNull(aParent, "Given TreeNode is 'null'");
         this.parent = aParent;
     }
-    //</editor-fold>
-    //</editor-fold>
 }

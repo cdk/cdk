@@ -39,15 +39,11 @@ import java.util.Objects;
  * @version 1.0.0.0
  */
 public class NetworkNode <MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
-
-    //<editor-fold desc="Private variables">
     /**
      * parents of the node
      */
     private List<NetworkNode<MoleculeType>> parents;
-    //</editor-fold>
 
-    //<editor-fold desc="Constructor">
     /**
      * Creates a NetworkNode
      * @param aMolecule molecule of the NetworkNode
@@ -56,9 +52,7 @@ public class NetworkNode <MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
         super(aMolecule);
         this.parents =  new ArrayList<NetworkNode<MoleculeType>>();
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Public methods">
     @Override
     public boolean isOrphan() {
         return parents.isEmpty();
@@ -98,7 +92,6 @@ public class NetworkNode <MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
         //Add parent
         this.parents.add(aParent);
     }
-    //<editor-fold desc="get/set">
 
     @Override
     public int getLevel() {
@@ -125,6 +118,4 @@ public class NetworkNode <MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
         Objects.requireNonNull(aParents, "Given NetworkNode is 'null'");
         this.parents = aParents;
     }
-    //</editor-fold>
-    //</editor-fold>
 }

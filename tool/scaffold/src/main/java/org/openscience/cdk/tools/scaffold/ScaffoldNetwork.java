@@ -42,8 +42,6 @@ import java.util.Objects;
  * @version 1.0.2.1
  */
 public class ScaffoldNetwork extends ScaffoldNodeCollectionBase {
-
-    //<editor-fold desc="Constructors">
     /**
      * Constructor
      * @param aSmilesGenerator Used SMILES Generator
@@ -58,9 +56,7 @@ public class ScaffoldNetwork extends ScaffoldNodeCollectionBase {
     public ScaffoldNetwork() {
         super();
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Public methods">
     @Override
     public void addNode(ScaffoldNodeBase aNode) throws CDKException, IllegalArgumentException, NullPointerException {
         /*Parameter checks*/
@@ -187,7 +183,6 @@ public class ScaffoldNetwork extends ScaffoldNodeCollectionBase {
         }
     }
 
-    //<editor-fold desc="get/set">
     @Override
     public Integer[][] getMatrix() throws IllegalStateException {
         int tmpSize = this.nodeMap.size();
@@ -232,6 +227,4 @@ public class ScaffoldNetwork extends ScaffoldNodeCollectionBase {
         }
         return tmpNodeList;
     }
-    //</editor-fold>
-    //</editor-fold>
 }

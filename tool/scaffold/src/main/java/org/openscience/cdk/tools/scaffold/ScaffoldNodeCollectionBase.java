@@ -42,8 +42,6 @@ import java.util.Objects;
  * @version 1.0.2.0
  */
 public abstract class ScaffoldNodeCollectionBase {
-
-    //<editor-fold desc="Protected variables">
     /**
      * Saves all ScaffoldNodes and numbers them in ascending order. Starts at 0.
      * reverseNodeMap with key and value swapped. Key:Number, Value:ScaffoldNodeBase
@@ -75,9 +73,7 @@ public abstract class ScaffoldNodeCollectionBase {
      * Shows how many nodes have been added so far. Removing nodes has no effect on it.
      */
     protected int nodeCounter;
-    //</editor-fold>
 
-    //<editor-fold desc="Constructor">
     /**
      * Constructor
      * @param aSmilesGenerator Used SMILES Generator
@@ -97,9 +93,7 @@ public abstract class ScaffoldNodeCollectionBase {
     public ScaffoldNodeCollectionBase() {
         this(ScaffoldGenerator.SMILES_GENERATOR_SETTING_DEFAULT);
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Public methods">
     /**
      * Add ScaffoldNodeBase to the ScaffoldNodeCollectionBase.
      * The same node can also be added several times. It may therefore be necessary to check whether the node already exists. See containsMolecule();
@@ -147,7 +141,6 @@ public abstract class ScaffoldNodeCollectionBase {
         return this.nodeMap.containsKey(aNumber);
     }
 
-    //<editor-fold desc="get/set">
     /**
      * Return the ScaffoldNode that belongs to a specific molecule.
      * Check whether it is the same molecule using the SMILES.
@@ -239,6 +232,4 @@ public abstract class ScaffoldNodeCollectionBase {
         tmpList.addAll(this.nodeMap.keySet());
         return tmpList;
     }
-    //</editor-fold>
-    //</editor-fold>
 }

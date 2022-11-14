@@ -60,9 +60,6 @@ import java.util.List;
  * @version 1.0.6.0
  */
 public class ScaffoldGeneratorTest extends ScaffoldGenerator {
-
-    //<editor-fold desc="Tests">
-    //<editor-fold desc="Fundamental method tests">
     /**
      * Test of ScaffoldGenerator.getScaffold() with V2000 and V3000 mol files.
      * Loads the 7 Test(Test1.mol-Test7.mol) mol files from the resources folder and creates the scaffolds
@@ -435,9 +432,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         tmpLinkers = tmpScaffoldGenerator.getLinkers(tmpMolecule, true);
        Assert.assertEquals("CC",tmpSmilesGenerator.create(tmpLinkers.get(0)));
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Advanced method test">
     /**
      * Generates parent scaffolds with the enumerative routine from a V2000 or V3000 mol file and checks the generated fragments.
      *
@@ -851,9 +846,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
             Assert.assertEquals(tmpParentScaffoldsSmilesArray[i], tmpSmilesGenerator.create(tmpFragmentList.get(i)));
         }
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Schuffenhauer rules tests">
     /**
      * Test of ScaffoldGenerator.applySchuffenhauerRules() with V2000 and V3000 mol files.
      * Loads the Test(Test1.mol-Test7.mol) mol files from the resources folder and compares their generated parent
@@ -1886,9 +1879,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         Assert.assertEquals("O=C1CC2=CCCC(C2)CCC1", tmpSmilesGenerator.create(tmpScaffolds.get(3)));
         Assert.assertEquals("O=C1CCCCCCC1", tmpSmilesGenerator.create(tmpScaffolds.get(4)));
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Settings">
     /**
      * Test of ScaffoldGenerator.setRuleSevenAppliedSetting() with SMILES of scheme 12.
      *
@@ -2015,10 +2006,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         /*Generate and check SMILES*/
         Assert.assertEquals("C1=CCCNC1", tmpSmilesGenerator.create(tmpSchuffenhauerFragments.get(1)));
     }
-    //</editor-fold>
-    //</editor-fold>
 
-    //<editor-fold desc="Protected methods">
     /**
      * Loads a mol file of a specific path and returns it as IAtomContainer.
      * Supports V2000 and V3000 mol files.
@@ -2107,5 +2095,4 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
         }
         return tmpRemovableRings;
     }
-    //</editor-fold>
 }

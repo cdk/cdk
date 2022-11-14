@@ -75,8 +75,6 @@ import java.util.TreeMap;
  * @version 1.0.4.0
  */
 public class ScaffoldGenerator {
-
-    //<editor-fold desc="Enum">
     /**
      * Enum with which the type of scaffolds to be generated can be set. These scaffolds are then used for the rest of the processing.
      */
@@ -117,9 +115,7 @@ public class ScaffoldGenerator {
          */
         BASIC_FRAMEWORK()
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Public static final constants">
     /**
      * Property of the atoms according to which they are counted and identified.
      */
@@ -176,9 +172,7 @@ public class ScaffoldGenerator {
      * By default, ScaffoldModeOption.SCAFFOLD is used.
      */
     public static final ScaffoldModeOption SCAFFOLD_MODE_OPTION_DEFAULT = ScaffoldModeOption.SCAFFOLD;
-    //</editor-fold>
 
-    //<editor-fold desc="Private variables">
     /**
      * Specifies whether the aromaticity is to be taken into account.
      */
@@ -220,9 +214,7 @@ public class ScaffoldGenerator {
      * Default logger.
      */
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(ScaffoldGenerator.class);
-    //</editor-fold>
 
-    //<editor-fold desc="Constructor">
     /**
      * The only constructor of this class. Sets all settings to their default values.
      */
@@ -230,10 +222,7 @@ public class ScaffoldGenerator {
         this.tmpLogExceptionCounter = 0;
         this.restoreDefaultSettings();
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Public properties">
-    //<editor-fold desc="get/are/is">
     /**
      * Specifies whether the aromaticity is to be taken into account.
      * @return true if the aromaticity is determined
@@ -284,9 +273,7 @@ public class ScaffoldGenerator {
     public boolean areOnlyHybridisationsAtAromaticBondsRetained() {
         return this.retainOnlyHybridisationsAtAromaticBondsSetting;
     }
-    //</editor-fold>
 
-    //<editor-fold desc="set/restore">
     /**
      * Sets the option to not determine the aromaticity.
      * If false, then no structures labelled as aromatic are created and previously existing ones are not changed.
@@ -357,11 +344,7 @@ public class ScaffoldGenerator {
         this.setRetainOnlyHybridisationsAtAromaticBondsSetting(ScaffoldGenerator.RETAIN_ONLY_HYBRIDISATIONS_AT_AROMATIC_BONDS_SETTING_DEFAULT);
         this.setScaffoldModeSetting(ScaffoldGenerator.SCAFFOLD_MODE_OPTION_DEFAULT);
     }
-    //</editor-fold>
-    //</editor-fold>
 
-    //<editor-fold desc="Public methods">
-    //<editor-fold desc="Fundamental methods">
     /**
      * Generates the selected fragment type for the entered molecule and returns it. You can choose from the types available in ScaffoldModeOption.
      * Depending on the internal settings via {@link ScaffoldGenerator#aromaticityModelSetting},
@@ -548,8 +531,7 @@ public class ScaffoldGenerator {
         }
         return tmpLinkerList;
     }
-    //</editor-fold>
-    //<editor-fold desc="Advanced methods">
+
     /**
      * Iteratively removes the terminal rings. All resulting scaffolds are returned. Duplicates are not permitted.
      * The Scaffold of the entire entered molecule is stored first in the list.
@@ -966,11 +948,7 @@ public class ScaffoldGenerator {
         }
         return tmpOutputForest;
     }
-    //</editor-fold>
-    //</editor-fold>
 
-    //<editor-fold desc="Protected methods">
-    //<editor-fold desc="General processing">
     /**
      * Generates the selected fragment type for the entered molecule and returns it. You can choose from the types available in ScaffoldModeOption.
      * Depending on the internal settings via {@link ScaffoldGenerator#aromaticityModelSetting},
@@ -1700,9 +1678,7 @@ public class ScaffoldGenerator {
         }
         return true;
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Schuffenhauer rules">
     /**
      * Sort out the rings according to the first Schuffenhauer rule.
      * Based on the first rule from the  <a href="https://doi.org/10.1021/ci600338x">
@@ -2407,6 +2383,4 @@ public class ScaffoldGenerator {
         IAtomContainer tmpReturnedStructure = tmpRingRemovedMap.get(tmpRingRemovedMap.firstKey());
         return tmpReturnedStructure;
     }
-    //</editor-fold>
-    //</editor-fold>
 }
