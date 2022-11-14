@@ -468,15 +468,57 @@ class RdfileReaderTest {
         rdfileReader.close();
     }
 
+    @Test
+    void testRdfile_error_line57_datumExpected() throws IOException {
+        // arrange
+        final String rdfFilename = "rdfile_error_line57_datumExpected.rdf";
+        RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+
+        // act & assert
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        assertThat(exception.getMessage(), is("Error in data block in line 57. Expected line to start with '$DATUM', but instead found '$datum 141'."));
+
+        // tear down
+        rdfileReader.close();
+    }
+
+    @Test
+    void testRdfile_error_line58_dtypeExpected() throws IOException {
+        // arrange
+        final String rdfFilename = "rdfile_error_line58_dtypeExpected.rdf";
+        RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+
+        // act & assert
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        assertThat(exception.getMessage(), is("Error in data block in line 58. Expected line to start with '$DTYPE', but instead found '$VTYPE LongMultilineDatum'."));
+
+        // tear down
+        rdfileReader.close();
+    }
+
 //    @Test
-//    void testRdfile_error_line56_rxnfile_dtypeOrNewRecordExpected() throws IOException, CDKException {
+//    void testRdfile_fourRecords_mol_mol_rxn_mol() throws IOException, CDKException {
 //        // arrange
-//        final String rdfFilename = "rdfile_error_line56_rxnfile_dtypeOrNewRecordExpected.rdf";
-//        RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+//        final String rdfFilename = "rdfile_fourRecords_mol_mol_rxn_mol.rdf";
+//        final List<String> expectedContent = readFile(rdfFilename);
+//        // remove the first four lines (RdFile header + $MOL)
+//        expectedContent.remove(0);
+//        expectedContent.remove(0);
+//        expectedContent.remove(0);
+//        expectedContent.remove(0);
 //
-//        // act & assert
-//        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
-//        assertThat(exception.getMessage(), is("Error in line 56: : Expected start of data block '$DTYPE' or start of next record, but instead found 'M  END'."));
+//        RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+//        // act
+//        RdfileRecord rdfileRecord = rdfileReader.read();
+//
+//        // assert
+//        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+//        Assertions.assertNull(rdfileRecord.getInternalRegistryNumber());
+//        Assertions.assertNull(rdfileRecord.getExternalRegistryNumber());
+//        Assertions.assertTrue(rdfileRecord.isMolfile());
+//        Assertions.assertFalse(rdfileRecord.isRxnFile());
+//
+//        Assertions.assertEquals(expectedContent, Arrays.asList(rdfileRecord.getContent().split(RdfileReader.LINE_SEPARATOR_NEWLINE)));
 //
 //        // tear down
 //        rdfileReader.close();
@@ -492,4 +534,31 @@ class RdfileReaderTest {
         bufferedReader.close();
         return lines;
     }
+
+//    private boolean rdfileRecordEqualsRdfile(RdfileRecord record, String filename) throws IOException {
+//        List<String> fileLines = readFile(filename);
+//        String[] contentLines = record.getContent().split(RdfileReader.LINE_SEPARATOR_NEWLINE);
+//
+//        for (String line: fileLines) {
+//            if (line.startsWith(RdfileReader.RDFILE_VERSION_1) ||
+//                            line.startsWith(RdfileReader.DATM) ||
+//                    line.startsWith(RdfileReader.MOLECULE_FMT) ||
+//                    line.startsWith(RdfileReader.REACTION_FMT) ||
+//                    line.startsWith(RdfileReader.MOLECULE_INT_REG) ||
+//                    line.startsWith(RdfileReader.MOLECULE_EXT_REG) ||
+//                    line.startsWith(RdfileReader.REACTION_INT_REG) ||
+//                    line.startsWith(RdfileReader.REACTION_EXT_REG)
+//            ) {
+//                continue;
+//            }
+//
+//            if (record.isMolfile() && line.startsWith(RdfileReader.MOLFILE_START)) {
+//                continue;
+//            }
+//
+////            if ()
+//        }
+//
+//        return true;
+//    }
 }
