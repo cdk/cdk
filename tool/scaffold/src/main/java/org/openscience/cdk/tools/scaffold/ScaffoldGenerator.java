@@ -580,7 +580,8 @@ public class ScaffoldGenerator {
     /**
      * Iteratively removes the terminal rings. All resulting Scaffolds are saved in a ScaffoldNetwork.
      * A new level is created when the total number of rings decreases by 1.
-     * Level 0 is the one with the fewest (mostly 1) rings and therefore the root. <p>
+     * Level 0 is the one with the fewest rings and therefore the root. In most cases, the scaffold on level 0 will have
+     * exactly one ring, if it is not an aromatic multi-ring system that cannot be dissected further.<p>
      *
      * Duplicates are permitted. <br>
      * Duplicates are not given their own node, but a link created to the existing related node.
@@ -656,7 +657,8 @@ public class ScaffoldGenerator {
      *
      * Iteratively removes the terminal rings of each molecule. All resulting scaffolds of a molecule are saved in a ScaffoldNetwork.
      * A new level is created when the total number of rings decreases by 1.
-     * Level 0 is the one with the fewest (mostly 1) rings and therefore the root. <br>
+     * Level 0 is the one with the fewest rings and therefore the root. In most cases, the scaffold on level 0 will have
+     * exactly one ring, if it is not an aromatic multi-ring system that cannot be dissected further.<br>
      *
      * All networks are merged together. Duplicates are permitted.
      * Duplicates are not given their own node, but a link created to the existing related node.
@@ -839,7 +841,6 @@ public class ScaffoldGenerator {
         }
         return tmpScaffoldFragments;
     }
-
 
     /**
      * Iteratively removes the rings of the molecule according to specific rules that are queried hierarchically. <p>
