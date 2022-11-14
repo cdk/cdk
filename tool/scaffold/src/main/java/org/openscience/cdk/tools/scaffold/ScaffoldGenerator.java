@@ -155,7 +155,8 @@ public class ScaffoldGenerator {
     public static final SmilesGenerator SMILES_GENERATOR_SETTING_DEFAULT = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
 
     /**
-     * Default setting for whether rule 7 should be applied. By default, rule 7 is applied.
+     * Default setting for whether rule prioritisation rule 7 of the Schuffenhauer scaffold tree fragmentation should be
+     * applied. By default, rule 7 is applied.
      */
     public static final boolean RULE_SEVEN_APPLIED_SETTING_DEFAULT = true;
 
@@ -187,7 +188,7 @@ public class ScaffoldGenerator {
     private SmilesGenerator smilesGeneratorSetting;
 
     /**
-     * Indicates whether rule 7 is executed.
+     * Indicates whether rule 7 of the Schuffenhauer scaffold tree fragmentation is executed.
      * It can be useful to turn off rule 7 explicitly,
      * as it is only relevant for a relatively small number of molecules, but it increases the computing time.
      */
@@ -247,10 +248,10 @@ public class ScaffoldGenerator {
     }
 
     /**
-     * Indicates whether rule 7 is executed.
+     * Indicates whether rule 7 of the Schuffenhauer scaffold tree fragmentation is executed.
      * It can be useful to turn off rule 7 explicitly,
      * as it is only relevant for a relatively small number of molecules, but it increases the computing time.
-     * @return true if Rule 7 is applied
+     * @return true if rule 7 is applied
      */
     public boolean isRuleSevenApplied() {
         return this.ruleSevenAppliedSetting;
@@ -304,7 +305,7 @@ public class ScaffoldGenerator {
     }
 
     /**
-     * Sets the option to skip rule 7.
+     * Sets the option to skip rule 7 of the Schuffenhauer scaffold tree fragmentation.
      * It can be useful to turn off rule 7 explicitly,
      * as it is only relevant for a relatively small number of molecules, but it increases the computing time.
      * @param anIsRuleSevenApplied if true rule 7 is applied
