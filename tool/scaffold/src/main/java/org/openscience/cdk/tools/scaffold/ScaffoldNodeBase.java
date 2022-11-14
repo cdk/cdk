@@ -97,8 +97,8 @@ public abstract class ScaffoldNodeBase<MoleculeType> {
 
     /**
      * Adds a child to the ScaffoldNodeBase, i.e. links it to a ScaffoldNodeBase on the level below
-     * @param aMolecule Molecule of the child leave
-     * @return Node of the child leave
+     * @param aMolecule Molecule of the child
+     * @return Node of the child
      * @throws NullPointerException if parameter is null
      */
     public abstract ScaffoldNodeBase<MoleculeType> addChild(MoleculeType aMolecule) throws NullPointerException;
@@ -138,11 +138,11 @@ public abstract class ScaffoldNodeBase<MoleculeType> {
     }
 
     /**
-     * Outputs the level on which the node is located in the entire tree
+     * Outputs the level on which the node is located in the entire graph structure.
      * The level indicates the distance to the root (node without parents) and
      * is determined by setting the level of the parent node + 1. The root itself has the level 0.
      * The level is therefore dependent on the data structure and does not have to be set.
-     * @return level of the node in the entire NodeCollection
+     * @return level of the node in the entire node collection
      */
     public abstract int getLevel();
 

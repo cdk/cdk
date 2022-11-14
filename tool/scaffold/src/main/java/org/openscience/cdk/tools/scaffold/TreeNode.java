@@ -51,11 +51,22 @@ public class TreeNode<MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
         super(aMolecule);
     }
 
+    /**
+     * Shows if the node has parents. Description copied from {@link ScaffoldNodeBase}.
+     * @return Whether the node has parents
+     */
     @Override
     public boolean isOrphan() {
         return parent == null;
     }
 
+    /**
+     * Adds a child to the tree node, i.e. links it to a node on the level below.
+     * Description copied from {@link ScaffoldNodeBase}.
+     * @param aMolecule Molecule of the child
+     * @return Node of the child
+     * @throws NullPointerException if parameter is null
+     */
     @Override
     public TreeNode<MoleculeType> addChild(MoleculeType aMolecule) throws NullPointerException {
         Objects.requireNonNull(aMolecule, "Given molecule is 'null'");
@@ -65,6 +76,14 @@ public class TreeNode<MoleculeType> extends ScaffoldNodeBase<MoleculeType> {
         return tmpChildNode;
     }
 
+    /**
+     * Outputs the level on which the node is located in the graph structure.
+     * The level indicates the distance to the root (node without parents) and
+     * is determined by setting the level of the parent node + 1. The root itself has the level 0.
+     * The level is therefore dependent on the data structure and does not have to be set.
+     * Description copied from {@link ScaffoldNodeBase}.
+     * @return level of the node in the entire node collection
+     */
     @Override
     public int getLevel() {
         if (this.isOrphan())

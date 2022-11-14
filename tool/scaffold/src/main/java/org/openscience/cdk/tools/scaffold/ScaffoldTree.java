@@ -55,6 +55,15 @@ public class ScaffoldTree extends ScaffoldNodeCollectionBase {
         super();
     }
 
+    /**
+     * Add a node to the graph structure.
+     * The same node can also be added several times. It may therefore be necessary to check whether the node already exists. See containsMolecule();
+     * Description copied from {@link ScaffoldNodeCollectionBase}.
+     * @param aNode Node to be added. Must match the scaffold node collection type. For example, a ScaffoldTree requires a TreeNode.
+     * @throws CDKException In case of a problem with the SmilesGenerator
+     * @throws IllegalArgumentException if the node does not match the scaffold node collection type
+     * @throws NullPointerException if parameter is null
+     */
     @Override
     public void addNode(ScaffoldNodeBase aNode) throws CDKException, IllegalArgumentException, NullPointerException {
         /*Parameter checks*/
@@ -87,6 +96,14 @@ public class ScaffoldTree extends ScaffoldNodeCollectionBase {
         this.nodeCounter++;
     }
 
+    /**
+     * Removes a node. This does not change the order. The numbering does not change.
+     * Description copied from {@link ScaffoldNodeCollectionBase}.
+     * @param aNode Node to remove. Must match the tree object. For example, a ScaffoldTree requires a TreeNode.
+     * @throws CDKException In case of a problem with the SmilesGenerator
+     * @throws IllegalArgumentException if the node is not in the Scaffold
+     * @throws NullPointerException if parameter is null
+     */
     @Override
     public void removeNode(ScaffoldNodeBase aNode) throws CDKException, IllegalArgumentException, NullPointerException {
         /*Parameter checks*/
@@ -205,6 +222,14 @@ public class ScaffoldTree extends ScaffoldNodeCollectionBase {
         return true;
     }
 
+    /**
+     * Outputs an adjacency matrix in which the parent node of each node is marked with a 1.
+     * All others are marked with 0. Each row and column number in the matrix is assigned to a node.
+     * The assignment can be requested with getMatrixNodes/getMatrixNode.
+     * Description copied from {@link ScaffoldNodeCollectionBase}.
+     * @return the adjacency matrix
+     * @throws IllegalStateException if the tree is not connected
+     */
     @Override
     public Integer[][] getMatrix() throws IllegalStateException {
         int tmpSize = this.nodeMap.size();

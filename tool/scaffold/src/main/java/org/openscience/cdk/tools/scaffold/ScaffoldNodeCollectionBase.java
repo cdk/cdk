@@ -97,18 +97,18 @@ public abstract class ScaffoldNodeCollectionBase {
     /**
      * Add ScaffoldNodeBase to the ScaffoldNodeCollectionBase.
      * The same node can also be added several times. It may therefore be necessary to check whether the node already exists. See containsMolecule();
-     * @param aNode Node to be added. Must match the tree object. For example, a ScaffoldTree requires a TreeNode.
+     * @param aNode Node to be added. Must match the scaffold node collection type. For example, a ScaffoldTree requires a TreeNode.
      * @throws CDKException In case of a problem with the SmilesGenerator
-     * @throws IllegalArgumentException if the Node do not match the tree object.
+     * @throws IllegalArgumentException if the node does not match the scaffold node collection type
      * @throws NullPointerException if parameter is null
      */
     public abstract void addNode(ScaffoldNodeBase aNode) throws CDKException, IllegalArgumentException, NullPointerException;
 
     /**
-     * Removes a Node. This does not change the order. The numbering does not change.
-     * @param aNode Node to remove. Must match the tree object. For example, a ScaffoldTree requires a TreeNode.
+     * Removes a node. This does not change the order. The numbering does not change.
+     * @param aNode Node to remove. Must match the scaffold node collection type. For example, a ScaffoldTree requires a TreeNode.
      * @throws CDKException In case of a problem with the SmilesGenerator
-     * @throws IllegalArgumentException if the node is not in the Scaffold
+     * @throws IllegalArgumentException if the node is not in the scaffold node collection
      * @throws NullPointerException if parameter is null
      */
     public abstract void removeNode(ScaffoldNodeBase aNode) throws CDKException, IllegalArgumentException, NullPointerException;
