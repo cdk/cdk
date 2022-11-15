@@ -4,6 +4,10 @@ import org.openscience.cdk.exception.CDKException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RdfileReader implements Closeable {
     static final String RDFILE_VERSION_1 = "$RDFILE 1";
@@ -20,6 +24,11 @@ public class RdfileReader implements Closeable {
     static final String DTYPE = "$DTYPE";
     static final String DATUM = "$DATUM";
     static final String LINE_SEPARATOR_NEWLINE = "\n";
+    static final String PLUS_SIGN = "+";
+
+    private static final Pattern DTYPE_KEY = Pattern.compile("\\A\\" + DTYPE + " (.+)\\Z");
+    private static final Pattern DATUM_VALUE_FIRSTLINE = Pattern.compile("\\A\\" + DATUM + " (.{73}\\+|.{1,72})\\Z");
+//    private static final Pattern DATUM_VALUE_FIRSTLINE = Pattern.compile("\\A" + DATUM + " (.{1,73})\\+?\\Z");
 
     private final BufferedReader bufferedReader;
     private boolean headerRead = false;
@@ -36,8 +45,6 @@ public class RdfileReader implements Closeable {
     }
 
     public RdfileRecord read() throws IOException, CDKException {
-        final RdfileRecord rdFileRecord = new RdfileRecord();
-
         if (!headerRead) {
             // line 1: $RDFILE 1
             final String header = nextLine();
@@ -63,48 +70,51 @@ public class RdfileReader implements Closeable {
         // $MFMT [$MEREG external-regno]
         // $MIREG internal-regno
         // $MEREG external-regno
-        boolean hasMoleculeIdentifier = processMoleculeAndReactionIdentifiers(new CharIter(line), rdFileRecord, MOLECULE_FMT, MOLECULE_INT_REG, MOLECULE_EXT_REG);
+        RdfileRecord rdFileRecord;
+        rdFileRecord = processMoleculeAndReactionIdentifiers(new CharIter(line), MOLECULE_FMT, MOLECULE_INT_REG, MOLECULE_EXT_REG, false);
+        if (rdFileRecord == null) {
+            // the reaction identifier can be one of the following:
+            // $RFMT [$RIREG internal-regno]
+            // $RFMT [$REREG external-regno]
+            // $RIREG internal-regno
+            // $REREG external-regno
+            rdFileRecord = processMoleculeAndReactionIdentifiers(new CharIter(line), REACTION_FMT, REACTION_INT_REG, REACTION_EXT_REG, true);
+        }
 
-        // the reaction identifier can be one of the following:
-        // $RFMT [$RIREG internal-regno]
-        // $RFMT [$REREG external-regno]
-        // $RIREG internal-regno
-        // $REREG external-regno
-        boolean hasReactionIdentifier = processMoleculeAndReactionIdentifiers(new CharIter(line), rdFileRecord, REACTION_FMT, REACTION_INT_REG, REACTION_EXT_REG);
-
-        if (!hasMoleculeIdentifier && !hasReactionIdentifier) {
-            // the molecule or reaction identifier is not properly formatted
+        // the molecule or reaction identifier is not properly formatted
+        if (rdFileRecord == null) {
             throw new CDKException("Error in line " + lineCounter + ": Expected the line to specify the molecule or reaction identifier, but instead found '" + line + "'.");
         }
-        rdFileRecord.setMolfile(hasMoleculeIdentifier);
-        rdFileRecord.setRxnFile(hasReactionIdentifier);
 
-        while ((line = nextLine()) != null) {
-            if (rdFileRecord.isMolfile()) {
-                // process molfile
-                rdFileRecord.setContent(processMolfile(line));
-            } else if (rdFileRecord.isRxnFile()) {
-                // process rxn
-                rdFileRecord.setContent(processRxn(line));
-            }
+        line = nextLine();
+        if (line == null) {
+            String expected = rdFileRecord.isMolfile() ? MOLFILE_START : RXNFILE_START;
+            throw new CDKException("Error in line " + lineCounter + ": Expected this line to start with '" + expected + "', but instead found '" + line + "'.");
+        }
 
-            line = nextLine();
-            if (line == null) {
-                return rdFileRecord;
-            }
+        if (rdFileRecord.isMolfile()) {
+            // process molfile
+            rdFileRecord.setContent(processMolfile(line));
+        } else if (rdFileRecord.isRxnFile()) {
+            // process rxn
+            rdFileRecord.setContent(processRxn(line));
+        }
 
-            if (line.startsWith(DTYPE)) {
-                // process data block
-                final String dataBlock = processDataBlock(line);
-                rdFileRecord.setDataBlock(dataBlock);
-            } else if (isStartOfNewRecord(line)) {
-                // next record
-                pushBack(line);
-                break;
-            } else {
-                // anything else is unexpected here
-                throw new CDKException("Error in line " + lineCounter + ": Expected start of data block '" + DTYPE + "' or start of next record, but instead found '" + line + "'.");
-            }
+        line = nextLine();
+        if (line == null) {
+            return rdFileRecord;
+        }
+
+        if (line.startsWith(DTYPE)) {
+            // process data block
+            final Map<String, String> dataMap = processDataBlock(line);
+            rdFileRecord.setData(dataMap);
+        } else if (isStartOfNewRecord(line)) {
+            // next record
+            pushBack(line);
+        } else {
+            // anything else is unexpected here
+            throw new CDKException("Error in line " + lineCounter + ": Expected start of data block '" + DTYPE + "' or start of next record, but instead found '" + line + "'.");
         }
 
         return rdFileRecord;
@@ -130,15 +140,18 @@ public class RdfileReader implements Closeable {
         prev = line;
     }
 
-    private boolean processMoleculeAndReactionIdentifiers(CharIter iter, RdfileRecord rdFileRecord, String fmt, String intReg, String extReg) throws CDKException {
+    private RdfileRecord processMoleculeAndReactionIdentifiers(CharIter iter, String fmt, String intReg, String extReg, boolean isTestForRxn) throws CDKException {
+        String intRegNo = null;
+        String extRegNo = null;
+
         if (iter.consume(fmt)) {
             iter.skipWhiteSpace();
             if (iter.consume(intReg)) {
                 iter.skipWhiteSpace();
-                rdFileRecord.setInternalRegistryNumber(iter.rest());
+                intRegNo = iter.rest();
             } else if (iter.consume(extReg)) {
                 iter.skipWhiteSpace();
-                rdFileRecord.setExternalRegistryNumber(iter.rest());
+                extRegNo = iter.rest();
             } else {
                 String rest = iter.rest();
                 if (!rest.isEmpty()) {
@@ -147,18 +160,18 @@ public class RdfileReader implements Closeable {
                 }
             }
 
-            return true;
+            return new RdfileRecord(intRegNo, extRegNo, isTestForRxn);
         } else if (iter.consume(intReg)) {
             iter.skipWhiteSpace();
-            rdFileRecord.setInternalRegistryNumber(iter.rest());
-            return true;
+            intRegNo = iter.rest();
+            return new RdfileRecord(intRegNo, extRegNo, isTestForRxn);
         } else if (iter.consume(extReg)) {
             iter.skipWhiteSpace();
-            rdFileRecord.setExternalRegistryNumber(iter.rest());
-            return true;
+            extRegNo = iter.rest();
+            return new RdfileRecord(intRegNo, extRegNo, isTestForRxn);
         }
 
-        return false;
+        return null;
     }
 
     private String processMolfile(String line) throws IOException, CDKException {
@@ -248,8 +261,8 @@ public class RdfileReader implements Closeable {
         return stringBuilder.toString();
     }
 
-    private String processDataBlock(String line) throws CDKException, IOException {
-        StringBuilder stringBuilder = new StringBuilder();
+    private Map<String, String> processDataBlock(String line) throws CDKException, IOException {
+        Map<String, String> dataMap = new LinkedHashMap<>();
 
         while (line != null) {
             // next record
@@ -258,39 +271,67 @@ public class RdfileReader implements Closeable {
                 break;
             }
 
-            // process the line that starts with $DTYPE
-            if (!line.startsWith(DTYPE)) {
-                throw new CDKException("Error in data block in line " + lineCounter + ". Expected line to start with '" + DTYPE + "', but instead found '" + line + "'.");
+            // process $DTYPE
+            Matcher dtypeMatcher = DTYPE_KEY.matcher(line);
+            if (!dtypeMatcher.matches()) {
+                throw new CDKException("Error in data block in line " + lineCounter + ". Expected line to start with '" + DTYPE + "' and be followed by a space and a string, but instead found '" + line + "'.");
             }
-            stringBuilder.append(line).append("\n");
+            final String key = dtypeMatcher.group(1);
 
-            // process the line that starts with $DATUM
             line = nextLine();
-            if (!line.startsWith(DATUM)) {
+            if (line == null) {
                 throw new CDKException("Error in data block in line " + lineCounter + ". Expected line to start with '" + DATUM + "', but instead found '" + line + "'.");
             }
-            stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
 
-            // multi line datum
-            if (line.length() == 81 && line.endsWith("+")) {
-                while ((line = nextLine()) != null) {
-                    // not a DATUM continuation
-                    if (line.charAt(0) == '$') {
-                        pushBack(line);
-                        break;
-                    }
+            // process the line that starts with $DATUM
+            // a line in a multi line datum might be
+            // (1) a line with <= 80 characters
+            // (2) a line with 81 characters AND ending with a '+' sign
+            StringBuilder stringBuilder = new StringBuilder();
+            // first line of $DATUM
+            Matcher datumFirstLineMatcher = DATUM_VALUE_FIRSTLINE.matcher(line);
+            if (datumFirstLineMatcher.matches()) {
+                stringBuilder.append(datumFirstLineMatcher.group(1));
+            } else {
+                throw new CDKException("Error in data block in line " + lineCounter + ". Expected line to start with '" + DATUM +
+                        "' and to either have <= 80 characters or exactly 81 characters and ending with a '+'', but instead found '" + line + "'.");
+            }
 
+            // remove trailing plus sign if any
+            if (stringBuilder.charAt(stringBuilder.length() - 1) == '+') {
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            } else {
+                stringBuilder.append(LINE_SEPARATOR_NEWLINE);
+            }
+
+            // process all following lines that belong to this $DATUM
+            while ((line = nextLine()) != null) {
+                // start of either next key-value data item or next record
+                if (line.startsWith("$")) {
+                    pushBack(line);
+                    break;
+                }
+
+                if (line.length() <= 80) {
                     stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
-
-                    if (line.length() < 81) {
-                        break;
-                    }
+                } else if (line.length() == 81 && line.endsWith(PLUS_SIGN)) {
+                    stringBuilder.append(line.substring(0, 80));
+                } else {
+                    throw new CDKException("Error in data block in line " + lineCounter + ". Expected multi-line datum with either less than or equal to 80 characters " +
+                            "or with exactly 81 characters and ending with a '+', but instead found '" + line + "'.");
                 }
             }
+
+            // remove trailing newline character sign if any
+            if (stringBuilder.charAt(stringBuilder.length() - 1) == '\n') {
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            }
+
+            dataMap.put(key, stringBuilder.toString());
             line = nextLine();
         }
 
-        return stringBuilder.toString();
+        return dataMap;
     }
 
     private int readMdlUInt(String str, int pos) {

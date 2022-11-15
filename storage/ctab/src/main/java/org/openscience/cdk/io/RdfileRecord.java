@@ -1,42 +1,40 @@
 package org.openscience.cdk.io;
 
-public class RdfileRecord {
-    private String internalRegistryNumber;
-    private String externalRegistryNumber;
-    private boolean isRxnFile;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public final class RdfileRecord {
+    private final String internalRegistryNumber;
+    private final String externalRegistryNumber;
+    private final boolean isRxnFile;
     private String content = "";
-    private String dataBlock ="";
+    private Map<String,String> data = new LinkedHashMap<>();
+
+    RdfileRecord(String internalRegistryNumber, String externalRegistryNumber, boolean isRxnFile) {
+        this.internalRegistryNumber = internalRegistryNumber;
+        this.externalRegistryNumber = externalRegistryNumber;
+        this.isRxnFile = isRxnFile;
+    }
 
     public String getInternalRegistryNumber() {
         return internalRegistryNumber;
-    }
-
-    public void setInternalRegistryNumber(String internalRegistryNumber) {
-        this.internalRegistryNumber = internalRegistryNumber;
     }
 
     public String getExternalRegistryNumber() {
         return externalRegistryNumber;
     }
 
-    public void setExternalRegistryNumber(String externalRegistryNumber) {
-        this.externalRegistryNumber = externalRegistryNumber;
+    void setData(Map<String,String> data) {
+        this.data = data;
     }
 
-    public void setDataBlock(String dataBlock) {
-        this.dataBlock = dataBlock;
+    public Map<String,String> getData() {
+        return Collections.unmodifiableMap(data);
     }
 
-    public String getDataBlock() {
-        return this.dataBlock;
-    }
-
-    public void setRxnFile(boolean isRxnFile) {
-        this.isRxnFile = isRxnFile;
-    }
-
-    public void setMolfile(boolean isMolfile) {
-        this.isRxnFile = !isMolfile;
+    public String getDataValue(String key) {
+        return data.get(key);
     }
 
     public boolean isRxnFile() {
@@ -47,14 +45,11 @@ public class RdfileRecord {
         return !isRxnFile;
     }
 
-    public void setContent(String content) {
+    void setContent(String content) {
         this.content = content;
     }
 
     public String getContent() {
-        StringBuilder stringbuilder = new StringBuilder();
-        stringbuilder.append(content);
-        stringbuilder.append(dataBlock);
-        return stringbuilder.toString();
+        return this.content;
     }
 }
