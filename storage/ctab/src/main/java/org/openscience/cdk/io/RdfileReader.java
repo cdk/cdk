@@ -1,15 +1,20 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RdfileReader implements Closeable {
+public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
+    private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(RdfileReader.class);
     static final String RDFILE_VERSION_1 = "$RDFILE 1";
     static final String DATM = "$DATM";
     static final String REACTION_FMT = "$RFMT";
@@ -25,15 +30,18 @@ public class RdfileReader implements Closeable {
     static final String DATUM = "$DATUM";
     static final String LINE_SEPARATOR_NEWLINE = "\n";
     static final String PLUS_SIGN = "+";
-
     private static final Pattern DTYPE_KEY = Pattern.compile("\\A\\" + DTYPE + " (.+)\\Z");
     private static final Pattern DATUM_VALUE_FIRSTLINE = Pattern.compile("\\A\\" + DATUM + " (.{73}\\+|.{1,72})\\Z");
+    private static final Pattern MDL_CTAB_VERSION = Pattern.compile("999 (V[23]0{3})\\Z");
+    private static final Pattern MDL_RXN_VERSION = Pattern.compile("\\A\\$RXN ?(V3000)?\\Z");
 
     private final BufferedReader bufferedReader;
-    private boolean headerRead = false;
-    private String next = null;
-    private String prev = null;
-    private int lineCounter = 0;
+    private boolean headerRead;
+    private String previousLine;
+    private int lineCounter;
+    private boolean hasNext;
+    private RdfileRecord nextRecord;
+    private boolean endOfFile;
 
     public RdfileReader(InputStream in) {
         this(new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)));
@@ -43,7 +51,70 @@ public class RdfileReader implements Closeable {
         bufferedReader = new BufferedReader(reader);
     }
 
-    public RdfileRecord read() throws IOException, CDKException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasNext() {
+        if (nextRecord != null)
+            return true;
+
+        if (endOfFile)
+            return false;
+
+        nextRecord = readNext();
+        return nextRecord != null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RdfileRecord next() {
+        if (nextRecord == null && !endOfFile) {
+            nextRecord = readNext();
+        }
+
+        if (nextRecord == null) {
+            throw new NoSuchElementException("RdfileReader reached end of file.");
+        }
+
+        RdfileRecord returnValue = nextRecord;
+        nextRecord = null;
+        return returnValue;
+    }
+
+    RdfileRecord readNext() {
+        try {
+            return doReadNext();
+        } catch (IOException exception) {
+            LOGGER.error("I/O error when reading RDfile: " + exception.getMessage());
+            // we don't try to recover from an I/O error but fold our sails for this file
+            return null;
+        } catch (CDKException exception) {
+            LOGGER.error("Parsing error when reading RDfile: " + exception.getMessage());
+            // a CDKException being thrown due to a parsing error could happen when
+            // EITHER a complete record OR part of a record has been read
+            // We try to recover from a parsing error of a record by moving on to the next record
+            // the rest of this record - if any - is destined for /dev/null
+            try {
+                String line;
+                while ((line = nextLine()) != null) {
+                    if (isStartOfNewRecord(line)) {
+                        pushBack(line);
+                        break;
+                    }
+                }
+            } catch (IOException ioException) {
+                LOGGER.error("I/O error when reading RDfile: " + ioException.getMessage());
+                // we don't try to recover from an I/O error but fold our sails for this file
+                return null;
+            }
+        }
+        return readNext();
+    }
+
+    RdfileRecord doReadNext() throws IOException, CDKException {
         if (!headerRead) {
             // line 1: $RDFILE 1
             final String header = nextLine();
@@ -60,6 +131,7 @@ public class RdfileReader implements Closeable {
 
         String line = nextLine();
         if (line == null) {
+            endOfFile = true;
             return null;
         }
 
@@ -116,6 +188,11 @@ public class RdfileReader implements Closeable {
             throw new CDKException("Error in line " + lineCounter + ": Expected start of data block '" + DTYPE + "' or start of next record, but instead found '" + line + "'.");
         }
 
+        // parse the molecule data into a chemical object
+        // decide whether this record has a RXN or a Molfile
+        // determine the file version
+        // add the data fields as a property to the chemical object
+
         return rdFileRecord;
     }
 
@@ -125,18 +202,18 @@ public class RdfileReader implements Closeable {
     }
 
     private String nextLine() throws IOException {
-        if (prev != null) {
-            next = prev;
-            prev = null;
+        if (previousLine != null) {
+            final String nextLine = previousLine;
+            previousLine = null;
+            return nextLine;
         } else {
-            next = bufferedReader.readLine();
             lineCounter++;
+            return bufferedReader.readLine();
         }
-        return next;
     }
 
     private void pushBack(String line) {
-        prev = line;
+        previousLine = line;
     }
 
     private RdfileRecord processMoleculeAndReactionIdentifiers(CharIter iter, String fmt, String intReg, String extReg, boolean isTestForRxn) throws CDKException {
@@ -351,5 +428,4 @@ public class RdfileReader implements Closeable {
                 || line.startsWith(REACTION_INT_REG) || line.startsWith(REACTION_EXT_REG)
                 || line.startsWith(MOLECULE_INT_REG) || line.startsWith(MOLECULE_EXT_REG);
     }
-
 }

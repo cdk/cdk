@@ -27,10 +27,10 @@ class RdfileReaderTest {
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -48,10 +48,10 @@ class RdfileReaderTest {
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -70,10 +70,10 @@ class RdfileReaderTest {
 
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -88,10 +88,10 @@ class RdfileReaderTest {
         final Map<String, String> expectedData = new LinkedHashMap<>();
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -106,10 +106,10 @@ class RdfileReaderTest {
         final Map<String, String> expectedData = new LinkedHashMap<>();
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -127,10 +127,10 @@ class RdfileReaderTest {
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -148,10 +148,10 @@ class RdfileReaderTest {
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -169,10 +169,10 @@ class RdfileReaderTest {
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -187,10 +187,10 @@ class RdfileReaderTest {
         final Map<String, String> expectedData = new LinkedHashMap<>();
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -205,10 +205,10 @@ class RdfileReaderTest {
         final Map<String, String> expectedData = new LinkedHashMap<>();
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -247,10 +247,10 @@ class RdfileReaderTest {
                 "bfkPnBBS4aK6Wkq7LOHaHORhMe3PCuJxKBqJi9492soYNHwgvESO1A3lGUgeGiMSS4aK6Wkq7LOHaHOG");
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
+        RdfileRecord rdfileRecord = rdfileReader.doReadNext();
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only one record in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
         // tear down
@@ -264,7 +264,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 1: Expected the line to exactly contain '$RDFILE 1', but instead found '$RDFILE 2'."));
 
         // tear down
@@ -278,7 +278,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 2: Expected the line to start with '$DATM', but instead found '$FATM    11/09/22 22:12'."));
 
         // tear down
@@ -292,7 +292,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 3: Expected either '$MIREG' or '$MEREG' after '$MFMT', but instead found '$RIREG 7483765'."));
 
         // tear down
@@ -306,7 +306,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 3: Expected either '$MIREG' or '$MEREG' after '$MFMT', but instead found 'NONSENSE'."));
 
         // tear down
@@ -320,7 +320,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 3: Expected the line to specify the molecule or reaction identifier, but instead found '$LFMT'."));
 
         // tear down
@@ -334,7 +334,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 4: Expected the line to start with '$MOL', but instead found '$RXN'."));
 
         // tear down
@@ -348,7 +348,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 4: Expected the line to start with '$RXN', but instead found '$MOL'."));
 
         // tear down
@@ -362,7 +362,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 9: Expected molfile to end with 'M  END', but instead found 'null'."));
 
         // tear down
@@ -376,7 +376,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 10: Unexpected character '$' within molfile at start of line '$DTYPE Identifier'."));
 
         // tear down
@@ -390,7 +390,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 8: Incorrect formatting of the line that indicates the number of reaction components '  2'."));
 
         // tear down
@@ -404,7 +404,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in line 8: Incorrect formatting of the line that indicates the number of reaction components '  2  D'."));
 
         // tear down
@@ -418,7 +418,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in RXN record: The sum of the number of reactants (2), products (1) and agents (1) is not equal to " +
                 "the number of Molfile entries 3 in the record."));
 
@@ -433,7 +433,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in data block in line 57. Expected line to start with '$DATUM' " +
                 "and to either have <= 80 characters or exactly 81 characters and ending with a '+'', but instead found '$datum 141'."));
 
@@ -448,7 +448,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in data block in line 58. Expected line to start with '$DTYPE' and be followed by a space and a string, but instead found '$VTYPE LongMultilineDatum'."));
 
         // tear down
@@ -462,7 +462,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in data block in line 58. Expected line to start with '$DTYPE' and be followed by a space and a string, but instead found '$DTYPE'."));
 
         // tear down
@@ -476,7 +476,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in data block in line 59. Expected line to start with '$DATUM' and to " +
                 "either have <= 80 characters or exactly 81 characters and ending with a '+'', but instead found " +
                 "'$DATUM 5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9AG'."));
@@ -492,7 +492,7 @@ class RdfileReaderTest {
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
         // act & assert
-        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.read());
+        Exception exception = Assertions.assertThrows(CDKException.class, () -> rdfileReader.doReadNext());
         assertThat(exception.getMessage(), is("Error in data block in line 60. Expected multi-line datum with either less than or equal to 80 characters " +
                 "or with exactly 81 characters and ending with a '+', but instead found " +
                 "'XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVSDF389sdfs'."));
@@ -507,30 +507,205 @@ class RdfileReaderTest {
         final String rdfFilename = "rdfile_fourRecords_mol_mol_rxn_mol.rdf";
         final RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
 
-        final List<Map<String,String>> expectedDataList = new ArrayList<>();
-        final Map<String,String> expectedData_1 = new LinkedHashMap<>();
+        final List<Map<String, String>> expectedDataList = new ArrayList<>();
+        final Map<String, String> expectedData_1 = new LinkedHashMap<>();
         expectedData_1.put("Identifier", "141");
         expectedDataList.add(expectedData_1);
-        final Map<String,String> expectedData_2 = new LinkedHashMap<>();
+        final Map<String, String> expectedData_2 = new LinkedHashMap<>();
         expectedData_2.put("Identifier", "142");
         expectedDataList.add(expectedData_2);
-        final Map<String,String> expectedData_3 = new LinkedHashMap<>();
+        final Map<String, String> expectedData_3 = new LinkedHashMap<>();
         expectedData_3.put("Identifier", "211");
         expectedDataList.add(expectedData_3);
-        final Map<String,String> expectedData_4 = new LinkedHashMap<>();
+        final Map<String, String> expectedData_4 = new LinkedHashMap<>();
         expectedData_4.put("Identifier", "143");
         expectedDataList.add(expectedData_4);
 
         // act
         final List<RdfileRecord> records = new ArrayList<>();
-        records.add(rdfileReader.read());
-        records.add(rdfileReader.read());
-        records.add(rdfileReader.read());
-        records.add(rdfileReader.read());
+        records.add(rdfileReader.doReadNext());
+        records.add(rdfileReader.doReadNext());
+        records.add(rdfileReader.doReadNext());
+        records.add(rdfileReader.doReadNext());
 
         // assert
-        Assertions.assertNull(rdfileReader.read(), "Expected null as there is only four records in this RDfile");
+        Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only four records in this RDfile");
         rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList);
+
+        // tear down
+        rdfileReader.close();
+    }
+
+    @Test
+    void testIterator_fourRecords_iterationPattern1() throws IOException {
+        // arrange
+        final String rdfFilename = "rdfile_fourRecords_mol_mol_rxn_mol.rdf";
+        final RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+        List<RdfileRecord> records = new ArrayList<>();
+        List<Map<String, String>> expectedDataList = new ArrayList<>();
+        final Map<String, String> expectedData_1 = new LinkedHashMap<>();
+        expectedData_1.put("Identifier", "141");
+        expectedDataList.add(expectedData_1);
+        final Map<String, String> expectedData_2 = new LinkedHashMap<>();
+        expectedData_2.put("Identifier", "142");
+        expectedDataList.add(expectedData_2);
+        final Map<String, String> expectedData_3 = new LinkedHashMap<>();
+        expectedData_3.put("Identifier", "211");
+        expectedDataList.add(expectedData_3);
+        final Map<String, String> expectedData_4 = new LinkedHashMap<>();
+        expectedData_4.put("Identifier", "143");
+        expectedDataList.add(expectedData_4);
+
+        // act & assert
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());
+        assertThat(rdfileReader.hasNext(), is(false));
+        assertThat(rdfileReader.hasNext(), is(false));
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> rdfileReader.next(), "");
+        assertThat(exception.getMessage(), is("RdfileReader reached end of file."));
+        rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList);
+
+        // tear down
+        rdfileReader.close();
+    }
+
+    @Test
+    void testIterator_fourRecords_iterationPattern2() throws IOException {
+        // arrange
+        final String rdfFilename = "rdfile_fourRecords_mol_mol_rxn_mol.rdf";
+        final RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+        List<RdfileRecord> records = new ArrayList<>();
+        List<Map<String, String>> expectedDataList = new ArrayList<>();
+        final Map<String, String> expectedData_1 = new LinkedHashMap<>();
+        expectedData_1.put("Identifier", "141");
+        expectedDataList.add(expectedData_1);
+        final Map<String, String> expectedData_2 = new LinkedHashMap<>();
+        expectedData_2.put("Identifier", "142");
+        expectedDataList.add(expectedData_2);
+        final Map<String, String> expectedData_3 = new LinkedHashMap<>();
+        expectedData_3.put("Identifier", "211");
+        expectedDataList.add(expectedData_3);
+        final Map<String, String> expectedData_4 = new LinkedHashMap<>();
+        expectedData_4.put("Identifier", "143");
+        expectedDataList.add(expectedData_4);
+
+        // act & assert
+        records.add(rdfileReader.next());
+        records.add(rdfileReader.next());
+        records.add(rdfileReader.next());
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());
+        assertThat(rdfileReader.hasNext(), is(false));
+        assertThat(rdfileReader.hasNext(), is(false));
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> rdfileReader.next(), "");
+        assertThat(exception.getMessage(), is("RdfileReader reached end of file."));
+        rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList);
+
+        // tear down
+        rdfileReader.close();
+    }
+
+    @Test
+    void testIterator_oneRecord_iterationPattern1() throws IOException {
+        // arrange
+        final String rdfFilename = "rdfile_oneRecord_rfmt_rxn_dataBlock.rdf";
+        final RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+        final Map<String, String> expectedData = new LinkedHashMap<>();
+        expectedData.put("Identifier", "141");
+        expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
+                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
+
+
+        // act & assert
+        assertThat(rdfileReader.hasNext(), is(true));
+        assertThat(rdfileReader.hasNext(), is(true));
+        RdfileRecord record = rdfileReader.next();
+        assertThat(rdfileReader.hasNext(), is(false));
+        assertThat(rdfileReader.hasNext(), is(false));
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> rdfileReader.next(), "");
+        assertThat(exception.getMessage(), is("RdfileReader reached end of file."));
+        rdfileRecordEqualsRdfile(record, rdfFilename, expectedData);
+
+        // tear down
+        rdfileReader.close();
+    }
+
+    @Test
+    void testIterator_fourRecords_parsingErrorRecord3() throws IOException {
+        // arrange
+        final String rdfFilename = "rdfile_fourRecords_parsingErrorRecord3.rdf";
+        final RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+        List<RdfileRecord> records = new ArrayList<>();
+        List<Map<String, String>> expectedDataList = new ArrayList<>();
+        final Map<String, String> expectedData_1 = new LinkedHashMap<>();
+        expectedData_1.put("Identifier", "141");
+        expectedDataList.add(expectedData_1);
+        final Map<String, String> expectedData_2 = new LinkedHashMap<>();
+        expectedData_2.put("Identifier", "142");
+        expectedDataList.add(expectedData_2);
+        final Map<String, String> expectedData_3 = new LinkedHashMap<>();
+        expectedData_3.put("Identifier", "211");
+        expectedDataList.add(expectedData_3);
+        final Map<String, String> expectedData_4 = new LinkedHashMap<>();
+        expectedData_4.put("Identifier", "143");
+        expectedDataList.add(expectedData_4);
+
+        // act & assert
+        assertThat(rdfileReader.hasNext(), is(true));
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());                   // reads record #1
+        assertThat(rdfileReader.hasNext(), is(true));
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());                   // reads record #2
+        assertThat(rdfileReader.hasNext(), is(true));
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());                   // reads record #4
+        assertThat(rdfileReader.hasNext(), is(false));
+        assertThat(rdfileReader.hasNext(), is(false));
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> rdfileReader.next(), "");
+        assertThat(exception.getMessage(), is("RdfileReader reached end of file."));
+        records.add(2, null);                 // insert empty element at position #3 that had a broken record
+        rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList, new Integer[]{3});
+
+        // tear down
+        rdfileReader.close();
+    }
+
+    @Test
+    void testIterator_fourRecords_parsingErrorRecord1And4() throws IOException {
+        // arrange
+        final String rdfFilename = "rdfile_fourRecords_parsingErrorRecord1Record4.rdf";
+        final RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+        List<RdfileRecord> records = new ArrayList<>();
+        List<Map<String, String>> expectedDataList = new ArrayList<>();
+        final Map<String, String> expectedData_1 = new LinkedHashMap<>();
+        expectedDataList.add(expectedData_1);
+        final Map<String, String> expectedData_2 = new LinkedHashMap<>();
+        expectedData_2.put("Identifier", "142");
+        expectedDataList.add(expectedData_2);
+        final Map<String, String> expectedData_3 = new LinkedHashMap<>();
+        expectedData_3.put("Identifier", "211");
+        expectedDataList.add(expectedData_3);
+        final Map<String, String> expectedData_4 = new LinkedHashMap<>();
+        expectedDataList.add(expectedData_4);
+
+        // act & assert
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());                   // reads record #2
+        assertThat(rdfileReader.hasNext(), is(true));
+        records.add(rdfileReader.next());                   // reads record #3
+        assertThat(rdfileReader.hasNext(), is(false));
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> rdfileReader.next(), "");
+        assertThat(exception.getMessage(), is("RdfileReader reached end of file."));
+        records.add(0, null);                 // insert empty element at position #1 that had a broken record
+        records.add(3, null);                 // insert empty element at position #4 that had a broken record
+        rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList, new Integer[]{1, 4});
 
         // tear down
         rdfileReader.close();
@@ -558,10 +733,17 @@ class RdfileReaderTest {
     }
 
     private void rdfileRecordEqualsRdfile(final List<RdfileRecord> records, final String filename, final List<Map<String, String>> expectedDataList) throws IOException {
+        rdfileRecordEqualsRdfile(records, filename, expectedDataList, new Integer[]{});
+    }
+
+    private void rdfileRecordEqualsRdfile(final List<RdfileRecord> records, final String filename, final List<Map<String, String>> expectedDataList, final Integer[] recordsToSkip) throws IOException {
         final Pattern registryNumberPattern = Pattern.compile("\\A\\$([MR]FMT ?)?\\$([MR][EI]REG) (.+)\\Z");
         final Pattern newRecordPattern = Pattern.compile("\\A(\\$[MR]FMT)|((\\$[MR]FMT )?\\$[MR][IE]REG (.+))\\Z");
 
         List<String> expectedLines = readFile(filename);
+
+        // convert the recordsToSkip to a set
+        Set<Integer> recordsToSkipAsSet = new HashSet<>(Arrays.asList(recordsToSkip));
 
         // assert that number of elements in records, the number of elements in expectedDataList, and the number of records in the file are equal
         int recordCounter = 0;
@@ -580,6 +762,12 @@ class RdfileReaderTest {
         recordCounter = 0;
         // loop over all lines in the file
         for (; expectedLinesIndex < expectedLines.size(); recordCounter++, expectedLinesIndex++) {
+            // if this record is in recordsToSkip we fast-forward to the next record
+            if (recordsToSkipAsSet.contains(recordCounter + 1)) {
+                expectedLinesIndex = skipToNextRecord(expectedLinesIndex, expectedLines);
+                continue;
+            }
+
             RdfileRecord record = records.get(recordCounter);
             String line = expectedLines.get(expectedLinesIndex);
 
@@ -619,14 +807,7 @@ class RdfileReaderTest {
             }
 
             // skip data block and read until next record starts
-            while (++expectedLinesIndex < expectedLines.size()) {
-                line = expectedLines.get(expectedLinesIndex);
-                Matcher newRecordMatcher = newRecordPattern.matcher(line);
-                if (newRecordMatcher.matches()) {
-                    expectedLinesIndex--;
-                    break;
-                }
-            }
+            expectedLinesIndex = skipToNextRecord(expectedLinesIndex, expectedLines);
 
             // assert content
             String[] expectedContent = stringBuilder.toString().split(RdfileReader.LINE_SEPARATOR_NEWLINE);
@@ -646,5 +827,19 @@ class RdfileReaderTest {
                 Assertions.assertEquals(expectedData.get(expectedKeys.get(index)), record.getData().get(actualKeys.get(index)), "");
             }
         }
+    }
+
+    private int skipToNextRecord(int expectedLinesIndex, List<String> expectedLines) {
+        final Pattern newRecordPattern = Pattern.compile("\\A(\\$[MR]FMT)|((\\$[MR]FMT )?\\$[MR][IE]REG (.+))\\Z");
+        // skip to next record
+        while (++expectedLinesIndex < expectedLines.size()) {
+            String line = expectedLines.get(expectedLinesIndex);
+            Matcher newRecordMatcher = newRecordPattern.matcher(line);
+            if (newRecordMatcher.matches()) {
+                expectedLinesIndex--;
+                break;
+            }
+        }
+        return expectedLinesIndex;
     }
 }
