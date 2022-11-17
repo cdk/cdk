@@ -21,7 +21,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_mfmt_mol_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
         expectedData.put("Identifier", "141");
         expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
@@ -42,7 +42,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_mfmt_mireg_mol_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
         expectedData.put("Identifier", "141");
         expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
@@ -63,7 +63,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_mfmt_mereg_mol_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
         expectedData.put("Identifier", "141");
         expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
@@ -85,7 +85,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_mireg_mol_noDataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
 
         // act
         RdfileRecord rdfileRecord = rdfileReader.read();
@@ -103,7 +103,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_mereg_mol_noDataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
 
         // act
         RdfileRecord rdfileRecord = rdfileReader.read();
@@ -121,7 +121,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_rfmt_rxn_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
         expectedData.put("Identifier", "141");
         expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
@@ -142,7 +142,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_rfmt_rireg_rxn_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
         expectedData.put("Identifier", "141");
         expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
@@ -163,7 +163,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_rfmt_rereg_rxn_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
         expectedData.put("Identifier", "141");
         expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
@@ -184,7 +184,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_rireg_rxn_noDataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
 
         // act
         RdfileRecord rdfileRecord = rdfileReader.read();
@@ -202,7 +202,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_rereg_rxn_noDataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
 
         // act
         RdfileRecord rdfileRecord = rdfileReader.read();
@@ -220,7 +220,7 @@ class RdfileReaderTest {
         // arrange
         final String rdfFilename = "rdfile_oneRecord_rereg_rxn_dataBlockWithEmbeddedMolecule.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
-        final Map<String,String> expectedData = new LinkedHashMap<>();
+        final Map<String, String> expectedData = new LinkedHashMap<>();
         expectedData.put("CATALYST_1", "$MFMT\n" +
                 "\n" +
                 "  Mrv2219  110920222203\n" +
@@ -505,16 +505,32 @@ class RdfileReaderTest {
     void testRdfile_fourRecords_mol_mol_rxn_mol() throws IOException, CDKException {
         // arrange
         final String rdfFilename = "rdfile_fourRecords_mol_mol_rxn_mol.rdf";
-        RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+        final RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename));
+
+        final List<Map<String,String>> expectedDataList = new ArrayList<>();
+        final Map<String,String> expectedData_1 = new LinkedHashMap<>();
+        expectedData_1.put("Identifier", "141");
+        expectedDataList.add(expectedData_1);
+        final Map<String,String> expectedData_2 = new LinkedHashMap<>();
+        expectedData_2.put("Identifier", "142");
+        expectedDataList.add(expectedData_2);
+        final Map<String,String> expectedData_3 = new LinkedHashMap<>();
+        expectedData_3.put("Identifier", "211");
+        expectedDataList.add(expectedData_3);
+        final Map<String,String> expectedData_4 = new LinkedHashMap<>();
+        expectedData_4.put("Identifier", "143");
+        expectedDataList.add(expectedData_4);
 
         // act
-        RdfileRecord rdfileRecord = rdfileReader.read();
-        rdfileRecord = rdfileReader.read();
-        rdfileRecord = rdfileReader.read();
-        rdfileRecord = rdfileReader.read();
+        final List<RdfileRecord> records = new ArrayList<>();
+        records.add(rdfileReader.read());
+        records.add(rdfileReader.read());
+        records.add(rdfileReader.read());
+        records.add(rdfileReader.read());
 
         // assert
         Assertions.assertNull(rdfileReader.read(), "Expected null as there is only four records in this RDfile");
+        rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList);
 
         // tear down
         rdfileReader.close();
@@ -531,83 +547,104 @@ class RdfileReaderTest {
         return lines;
     }
 
-    private void rdfileRecordEqualsRdfile(final RdfileRecord record, final String filename, final Map<String,String> expectedData) throws IOException {
+    private void rdfileRecordEqualsRdfile(final RdfileRecord record, final String filename, final Map<String, String> expectedData) throws IOException {
         List<RdfileRecord> records = new ArrayList<>();
         records.add(record);
 
-        List<Map<String,String>> listOfExpectedData = new ArrayList<>();
-        listOfExpectedData.add(expectedData);
+        List<Map<String, String>> expectedDataList = new ArrayList<>();
+        expectedDataList.add(expectedData);
 
-        rdfileRecordEqualsRdfile(records, filename, listOfExpectedData);
+        rdfileRecordEqualsRdfile(records, filename, expectedDataList);
     }
 
-    private void rdfileRecordEqualsRdfile(final List<RdfileRecord> records, final String filename, final List<Map<String,String>> listOfExpectedData) throws IOException {
-        final RdfileRecord record = records.get(0);
-        final Map<String,String> expectedData = listOfExpectedData.get(0);
-
-//        final Pattern internalRegistryNumberPattern = Pattern.compile("\\A(\\$MFMT( \\$((MIREG)|(MEREG)) (.+))?)|(\\$((MIREG)|(MEREG)) (.+))\\Z");
-        final Pattern internalRegistryNumberPattern = Pattern.compile("\\A\\$([MR]FMT )?\\$[MR]IREG (.+)\\Z");
-        final Pattern externalRegistryNumberPattern = Pattern.compile("\\A\\$([MR]FMT )?\\$[MR]EREG (.+)\\Z");
-        final Pattern newRecordPattern = Pattern.compile("\\A\\$([MR]FMT )?\\$[MR][IE]REG (.+)\\Z");
+    private void rdfileRecordEqualsRdfile(final List<RdfileRecord> records, final String filename, final List<Map<String, String>> expectedDataList) throws IOException {
+        final Pattern registryNumberPattern = Pattern.compile("\\A\\$([MR]FMT ?)?\\$([MR][EI]REG) (.+)\\Z");
+        final Pattern newRecordPattern = Pattern.compile("\\A(\\$[MR]FMT)|((\\$[MR]FMT )?\\$[MR][IE]REG (.+))\\Z");
 
         List<String> expectedLines = readFile(filename);
 
+        // assert that number of elements in records, the number of elements in expectedDataList, and the number of records in the file are equal
+        int recordCounter = 0;
+        for (String expectedLine : expectedLines) {
+            Matcher matcher = newRecordPattern.matcher(expectedLine);
+            if (matcher.matches()) {
+                recordCounter++;
+            }
+        }
+        Assertions.assertEquals(recordCounter, records.size(), "");
+        Assertions.assertEquals(recordCounter, expectedDataList.size(), "");
+
         // line 1, line 2: skip
-        int indexExpected = 2;
-        String line = expectedLines.get(indexExpected);
+        int expectedLinesIndex = 2;
 
-        // line 3: assert int/ext registry number
-        Matcher matcherIntRegNumber = internalRegistryNumberPattern.matcher(line);
-        Matcher matcherExtRegNumber = externalRegistryNumberPattern.matcher(line);
-        if (matcherIntRegNumber.matches()) {
-            Assertions.assertEquals(matcherIntRegNumber.group(2), record.getInternalRegistryNumber(), "");
-        } else if (matcherExtRegNumber.matches()) {
-            Assertions.assertEquals(matcherExtRegNumber.group(2), record.getExternalRegistryNumber(), "");
-        } else if (line.startsWith(RdfileReader.MOLECULE_FMT) || line.startsWith(RdfileReader.REACTION_FMT)) {
-            Assertions.assertNull(record.getInternalRegistryNumber(), "");
-            Assertions.assertNull(record.getExternalRegistryNumber(), "");
-        }
+        recordCounter = 0;
+        // loop over all lines in the file
+        for (; expectedLinesIndex < expectedLines.size(); recordCounter++, expectedLinesIndex++) {
+            RdfileRecord record = records.get(recordCounter);
+            String line = expectedLines.get(expectedLinesIndex);
 
-        // line 4: indicates whether record is molfile or rxn
-        StringBuilder stringBuilder = new StringBuilder();
-        line = expectedLines.get(++indexExpected);
-        if (line.startsWith(RdfileReader.MOLFILE_START)) {
-            Assertions.assertTrue(record.isMolfile(), "");
-        } else if (line.startsWith(RdfileReader.RXNFILE_START)) {
-            Assertions.assertTrue(record.isRxnFile());
-            stringBuilder.append(line).append(RdfileReader.LINE_SEPARATOR_NEWLINE);
-        }
-
-        // from line 5: molfile or rxn
-        while (++indexExpected < expectedLines.size()) {
-            line = expectedLines.get(indexExpected);
-
-            if (line.startsWith("$") && !line.startsWith(RdfileReader.MOLFILE_START)) {
-                indexExpected--;
-                break;
+            // line 3: assert int/ext registry number
+            Matcher matcherIntRegNumber = registryNumberPattern.matcher(line);
+            if (matcherIntRegNumber.matches()) {
+                if (matcherIntRegNumber.group(2).endsWith("IREG")) {
+                    Assertions.assertEquals(matcherIntRegNumber.group(3), record.getInternalRegistryNumber(), "");
+                } else if (matcherIntRegNumber.group(2).endsWith("EREG")) {
+                    Assertions.assertEquals(matcherIntRegNumber.group(3), record.getExternalRegistryNumber(), "");
+                } else {
+                    Assertions.assertNull(record.getInternalRegistryNumber(), "");
+                    Assertions.assertNull(record.getExternalRegistryNumber(), "");
+                }
             }
 
-            stringBuilder.append(line).append(RdfileReader.LINE_SEPARATOR_NEWLINE);
-        }
+            // line 4: indicates whether record is molfile or rxn
+            StringBuilder stringBuilder = new StringBuilder();
+            line = expectedLines.get(++expectedLinesIndex);
+            if (line.startsWith(RdfileReader.MOLFILE_START)) {
+                Assertions.assertTrue(record.isMolfile(), "");
+            } else if (line.startsWith(RdfileReader.RXNFILE_START)) {
+                Assertions.assertTrue(record.isRxnFile());
+                stringBuilder.append(line).append(RdfileReader.LINE_SEPARATOR_NEWLINE);
+            }
 
-        // skip data block and read until next record starts
+            // from line 5: molfile or rxn
+            while (++expectedLinesIndex < expectedLines.size()) {
+                line = expectedLines.get(expectedLinesIndex);
 
+                if (line.startsWith("$") && !line.startsWith(RdfileReader.MOLFILE_START)) {
+                    expectedLinesIndex--;
+                    break;
+                }
 
-        // assert content
-        String[] expectedContent = stringBuilder.toString().split(RdfileReader.LINE_SEPARATOR_NEWLINE);
-        String[] actualContent = record.getContent().split(RdfileReader.LINE_SEPARATOR_NEWLINE);
-        Assertions.assertEquals(expectedContent.length, actualContent.length, "");
-        for (int index = 0; index < actualContent.length; index++) {
-            Assertions.assertEquals(expectedContent[index], actualContent[index], "");
-        }
+                stringBuilder.append(line).append(RdfileReader.LINE_SEPARATOR_NEWLINE);
+            }
 
-        // data block
-        Assertions.assertEquals(expectedData.size(), record.getData().size(), "");
-        List<String> expectedKeys = new ArrayList<>(expectedData.keySet());
-        List<String> actualKeys = new ArrayList<>(record.getData().keySet());
-        for(int index = 0; index < expectedKeys.size(); index++) {
-            Assertions.assertEquals(expectedKeys.get(index), actualKeys.get(index), "");
-            Assertions.assertEquals(expectedData.get(expectedKeys.get(index)), record.getData().get(actualKeys.get(index)), "");
+            // skip data block and read until next record starts
+            while (++expectedLinesIndex < expectedLines.size()) {
+                line = expectedLines.get(expectedLinesIndex);
+                Matcher newRecordMatcher = newRecordPattern.matcher(line);
+                if (newRecordMatcher.matches()) {
+                    expectedLinesIndex--;
+                    break;
+                }
+            }
+
+            // assert content
+            String[] expectedContent = stringBuilder.toString().split(RdfileReader.LINE_SEPARATOR_NEWLINE);
+            String[] actualContent = record.getContent().split(RdfileReader.LINE_SEPARATOR_NEWLINE);
+            Assertions.assertEquals(expectedContent.length, actualContent.length, "");
+            for (int index = 0; index < actualContent.length; index++) {
+                Assertions.assertEquals(expectedContent[index], actualContent[index], "");
+            }
+
+            // assert data block
+            final Map<String, String> expectedData = expectedDataList.get(recordCounter);
+            Assertions.assertEquals(expectedData.size(), record.getData().size(), "");
+            List<String> expectedKeys = new ArrayList<>(expectedData.keySet());
+            List<String> actualKeys = new ArrayList<>(record.getData().keySet());
+            for (int index = 0; index < expectedKeys.size(); index++) {
+                Assertions.assertEquals(expectedKeys.get(index), actualKeys.get(index), "");
+                Assertions.assertEquals(expectedData.get(expectedKeys.get(index)), record.getData().get(actualKeys.get(index)), "");
+            }
         }
     }
 }
