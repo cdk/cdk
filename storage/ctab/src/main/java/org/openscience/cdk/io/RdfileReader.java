@@ -28,7 +28,6 @@ public class RdfileReader implements Closeable {
 
     private static final Pattern DTYPE_KEY = Pattern.compile("\\A\\" + DTYPE + " (.+)\\Z");
     private static final Pattern DATUM_VALUE_FIRSTLINE = Pattern.compile("\\A\\" + DATUM + " (.{73}\\+|.{1,72})\\Z");
-//    private static final Pattern DATUM_VALUE_FIRSTLINE = Pattern.compile("\\A" + DATUM + " (.{1,73})\\+?\\Z");
 
     private final BufferedReader bufferedReader;
     private boolean headerRead = false;
