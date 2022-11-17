@@ -1,5 +1,8 @@
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IReaction;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,6 +12,8 @@ public final class RdfileRecord {
     private final String externalRegistryNumber;
     private final boolean isRxnFile;
     private String content = "";
+    private IAtomContainer atomContainer;
+    private IReaction reaction;
     private Map<String,String> data = new LinkedHashMap<>();
 
     RdfileRecord(String internalRegistryNumber, String externalRegistryNumber, boolean isRxnFile) {
@@ -49,7 +54,23 @@ public final class RdfileRecord {
         this.content = content;
     }
 
-    public String getContent() {
+    String getContent() {
         return this.content;
+    }
+
+    public IAtomContainer getAtomContainer() {
+        return atomContainer;
+    }
+
+    void setAtomContainer(IAtomContainer atomContainer) {
+        this.atomContainer = atomContainer;
+    }
+
+    public IReaction getReaction() {
+        return reaction;
+    }
+
+    void setReaction(IReaction reaction) {
+        this.reaction = reaction;
     }
 }
