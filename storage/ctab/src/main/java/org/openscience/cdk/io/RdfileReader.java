@@ -1,6 +1,8 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -13,6 +15,12 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Iterating reader for RDFiles.
+ *
+ * @see RdfileRecord
+ * @author uli-f
+ */
 public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(RdfileReader.class);
     static final String RDFILE_VERSION_1 = "$RDFILE 1";
@@ -32,23 +40,34 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
     static final String PLUS_SIGN = "+";
     private static final Pattern DTYPE_KEY = Pattern.compile("\\A\\" + DTYPE + " (.+)\\Z");
     private static final Pattern DATUM_VALUE_FIRSTLINE = Pattern.compile("\\A\\" + DATUM + " (.{73}\\+|.{1,72})\\Z");
-    private static final Pattern MDL_CTAB_VERSION = Pattern.compile("999 (V[23]0{3})\\Z");
-    private static final Pattern MDL_RXN_VERSION = Pattern.compile("\\A\\$RXN ?(V3000)?\\Z");
+    private static final Pattern MDL_CTAB_VERSION = Pattern.compile("(V[23]0{3})\\Z");
+    private static final Pattern MDL_RXN_VERSION = Pattern.compile("\\A\\$RXN ?(V30{3})?\\Z");
 
-    private final BufferedReader bufferedReader;
     private boolean headerRead;
     private String previousLine;
     private int lineCounter;
-    private boolean hasNext;
     private RdfileRecord nextRecord;
     private boolean endOfFile;
+    private final boolean skipRecordsOnError;
+    private final BufferedReader bufferedReader;
+    private final IChemObjectBuilder chemObjectBuilder;
 
-    public RdfileReader(InputStream in) {
-        this(new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)));
+    public RdfileReader(InputStream in, IChemObjectBuilder chemObjectBuilder) {
+        this(in, chemObjectBuilder, true);
     }
 
-    public RdfileReader(Reader reader) {
-        bufferedReader = new BufferedReader(reader);
+    public RdfileReader(InputStream in, IChemObjectBuilder chemObjectBuilder, boolean skipRecordsOnError) {
+        this(new InputStreamReader(in, StandardCharsets.UTF_8), chemObjectBuilder, skipRecordsOnError);
+    }
+
+    public RdfileReader(Reader reader, IChemObjectBuilder chemObjectBuilder) {
+        this(reader, chemObjectBuilder, true);
+    }
+
+    public RdfileReader(Reader reader, IChemObjectBuilder chemObjectBuilder, boolean skipRecordsOnError) {
+        this.bufferedReader = new BufferedReader(reader);
+        this.chemObjectBuilder = chemObjectBuilder;
+        this.skipRecordsOnError = skipRecordsOnError;
     }
 
     /**
@@ -93,6 +112,13 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
             return null;
         } catch (CDKException exception) {
             LOGGER.error("Parsing error when reading RDfile: " + exception.getMessage());
+
+            // if records with errors should not be skipped we indicate EOF after encountering an error
+            if (!skipRecordsOnError) {
+                endOfFile = true;
+                return null;
+            }
+
             // a CDKException being thrown due to a parsing error could happen when
             // EITHER a complete record OR part of a record has been read
             // We try to recover from a parsing error of a record by moving on to the next record
@@ -157,28 +183,32 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
             throw new CDKException("Error in line " + lineCounter + ": Expected the line to specify the molecule or reaction identifier, but instead found '" + line + "'.");
         }
 
+        // line 4: indicates the start of a molfile ($MOL) or an rxnfile ($RNX)
         line = nextLine();
         if (line == null) {
             String expected = rdFileRecord.isMolfile() ? MOLFILE_START : RXNFILE_START;
             throw new CDKException("Error in line " + lineCounter + ": Expected this line to start with '" + expected + "', but instead found '" + line + "'.");
         }
 
+        // read the chemical content into a string
         if (rdFileRecord.isMolfile()) {
             // process molfile
-            rdFileRecord.setContent(processMolfile(line));
+            rdFileRecord.setContent(processMolfile(line, rdFileRecord));
         } else if (rdFileRecord.isRxnFile()) {
             // process rxn
-            rdFileRecord.setContent(processRxn(line));
+            rdFileRecord.setContent(processRxn(line, rdFileRecord));
         }
 
+        // the next line could be (1) EOF, (2) the start of the data block or (3) the next record
         line = nextLine();
         if (line == null) {
+            rdFileRecord.setChemObject(parseChemicalContent(rdFileRecord));
             return rdFileRecord;
         }
 
         if (line.startsWith(DTYPE)) {
             // process data block
-            final Map<String, String> dataMap = processDataBlock(line);
+            final Map<Object, Object> dataMap = processDataBlock(line);
             rdFileRecord.setData(dataMap);
         } else if (isStartOfNewRecord(line)) {
             // next record
@@ -188,10 +218,7 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
             throw new CDKException("Error in line " + lineCounter + ": Expected start of data block '" + DTYPE + "' or start of next record, but instead found '" + line + "'.");
         }
 
-        // parse the molecule data into a chemical object
-        // decide whether this record has a RXN or a Molfile
-        // determine the file version
-        // add the data fields as a property to the chemical object
+        rdFileRecord.setChemObject(parseChemicalContent(rdFileRecord));
 
         return rdFileRecord;
     }
@@ -250,16 +277,52 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
         return null;
     }
 
-    private String processMolfile(String line) throws IOException, CDKException {
+    private String processMolfile(String line, RdfileRecord rdfileRecord) throws IOException, CDKException {
+        return processMolfile(line, rdfileRecord, null);
+    }
+
+    private String processMolfile(String line, RdfileRecord rdfileRecord, RdfileRecord.CTAB_VERSION ctabVersionRecord) throws IOException, CDKException {
         if (!line.startsWith(MOLFILE_START))
             throw new CDKException("Error in line " + lineCounter + ": Expected the line to start with '" + MOLFILE_START + "', but instead found '" + line + "'.");
 
-        final String title = nextLine();
-        if (title == null)
-            throw new CDKException("Error in line " + lineCounter + ": Expected a line with the title of the molecule, but instead found '" + line + "'.");
-
         final StringBuilder sb = new StringBuilder();
-        sb.append(title).append(LINE_SEPARATOR_NEWLINE);
+
+        line = nextLine();
+        // line 1: title (or name)
+        if (line == null)
+            throw new CDKException("Error in line " + lineCounter + ": Expected a line with the title of the molecule, but instead found '" + line + "'.");
+        sb.append(line).append(LINE_SEPARATOR_NEWLINE);
+        // line 2: user, program, date, time, dimensions etc.
+        line = nextLine();
+        if (line == null)
+            throw new CDKException("Error in line " + lineCounter + ": Expected a line with program, date and time, dimensions etc., but instead found '" + line + "'.");
+        sb.append(line).append(LINE_SEPARATOR_NEWLINE);
+        // line 3: comment
+        line = nextLine();
+        if (line == null)
+            throw new CDKException("Error in line " + lineCounter + ": Expected a line with a comment, but instead found '" + line + "'.");
+        sb.append(line).append(LINE_SEPARATOR_NEWLINE);
+        // line 4: counts
+        line = nextLine();
+        if (line == null)
+            throw new CDKException("Error in line " + lineCounter + ": Expected a line with a comment, but instead found '" + line + "'.");
+        // figure out the CTAB version
+        Matcher matcher = MDL_CTAB_VERSION.matcher(line);
+        if (!matcher.find()) {
+            throw new CDKException("Error in line " + lineCounter + ": Expected a counts line that ends with a version of either '" + RdfileRecord.CTAB_VERSION.V2000 +
+                    "' or '" + RdfileRecord.CTAB_VERSION.V3000 + "', but instead found '" + line + "'.");
+        }
+        // the Molfile we are reading may be either (1) the sole molecular content of this RDFile or (2) part of an RXNFile
+        // if (2) holds true we already determined a CTAB version for this record and all molecular content of this record must have the same CTAB version
+        RdfileRecord.CTAB_VERSION ctabVersion = RdfileRecord.CTAB_VERSION.valueOf(matcher.group(1));
+        if (ctabVersionRecord == null) {
+            rdfileRecord.setCtabVersion(ctabVersion);
+        } else if (ctabVersionRecord != ctabVersion) {
+            throw new CDKException("Error in line " + lineCounter + ": Expected the CTAB version '" + ctabVersion +
+                    "' of this Molfile to be the same as the CTAB version '" + ctabVersionRecord + "' of the record, but instead found '" + line + "'.");
+        }
+        sb.append(line).append(LINE_SEPARATOR_NEWLINE);
+
         while ((line = nextLine()) != null) {
             sb.append(line);
             sb.append(LINE_SEPARATOR_NEWLINE);
@@ -279,9 +342,16 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
         return sb.toString();
     }
 
-    private String processRxn(String line) throws IOException, CDKException {
-        if (!line.startsWith(RXNFILE_START))
+    private String processRxn(String line, RdfileRecord rdfileRecord) throws IOException, CDKException {
+        Matcher matcher = MDL_RXN_VERSION.matcher(line);
+        if (!matcher.matches()) {
             throw new CDKException("Error in line " + lineCounter + ": Expected the line to start with '" + RXNFILE_START + "', but instead found '" + line + "'.");
+        }
+        if (matcher.group(1) == null) {
+            rdfileRecord.setCtabVersion(RdfileRecord.CTAB_VERSION.V2000);
+        } else {
+            rdfileRecord.setCtabVersion(RdfileRecord.CTAB_VERSION.V3000);
+        }
 
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
@@ -326,7 +396,7 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
 
             molfileCounter++;
             stringBuilder.append(MOLFILE_START).append(LINE_SEPARATOR_NEWLINE);
-            stringBuilder.append(processMolfile(line));
+            stringBuilder.append(processMolfile(line, rdfileRecord, rdfileRecord.getCtabVersion()));
         }
 
         if (molfileCounter != numReactionComponents) {
@@ -337,8 +407,8 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
         return stringBuilder.toString();
     }
 
-    private Map<String, String> processDataBlock(String line) throws CDKException, IOException {
-        Map<String, String> dataMap = new LinkedHashMap<>();
+    private Map<Object, Object> processDataBlock(String line) throws CDKException, IOException {
+        Map<Object, Object> dataMap = new LinkedHashMap<>();
 
         while (line != null) {
             // next record
@@ -391,7 +461,7 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
                 if (line.length() <= 80) {
                     stringBuilder.append(line).append(LINE_SEPARATOR_NEWLINE);
                 } else if (line.length() == 81 && line.endsWith(PLUS_SIGN)) {
-                    stringBuilder.append(line.substring(0, 80));
+                    stringBuilder.append(line, 0, 80);
                 } else {
                     throw new CDKException("Error in data block in line " + lineCounter + ". Expected multi-line datum with either less than or equal to 80 characters " +
                             "or with exactly 81 characters and ending with a '+', but instead found '" + line + "'.");
@@ -408,6 +478,38 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
         }
 
         return dataMap;
+    }
+
+    private IChemObject parseChemicalContent(RdfileRecord rdFileRecord) throws CDKException {
+        // parse the molecule data into a chemical object
+        IChemObject chemObject;
+        // decide whether this record has a RXNfile or a Molfile
+        if (rdFileRecord.isMolfile()) {
+            // determine the Molfile version
+            ISimpleChemObjectReader reader;
+            if (rdFileRecord.getCtabVersion() == RdfileRecord.CTAB_VERSION.V2000) {
+                reader = new MDLV2000Reader(new StringReader(rdFileRecord.getContent()));
+            } else {
+                // only other possibility with the specified pattern is 'V3000'
+                reader = new MDLV3000Reader(new StringReader(rdFileRecord.getContent()));
+            }
+            chemObject = reader.read(chemObjectBuilder.newAtomContainer());
+        } else {
+            // we got a RXN in this record, so let's determine the RXN version
+            ISimpleChemObjectReader reader;
+            if (rdFileRecord.getCtabVersion() == RdfileRecord.CTAB_VERSION.V2000) {
+                reader = new MDLRXNV2000Reader(new StringReader(rdFileRecord.getContent()));
+            } else {
+                // only other possibility is V3000
+                reader = new MDLRXNV3000Reader(new StringReader(rdFileRecord.getContent()));
+            }
+            chemObject = reader.read(chemObjectBuilder.newReaction());
+        }
+
+        // add the data fields as a property to the chemical object
+        chemObject.addProperties(rdFileRecord.getData());
+
+        return chemObject;
     }
 
     private int readMdlUInt(String str, int pos) {

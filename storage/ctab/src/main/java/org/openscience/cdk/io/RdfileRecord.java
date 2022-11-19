@@ -1,20 +1,29 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * @author uli-f
+ */
 public final class RdfileRecord {
+    enum CTAB_VERSION {
+        V2000,
+        V3000
+    }
+
     private final String internalRegistryNumber;
     private final String externalRegistryNumber;
     private final boolean isRxnFile;
     private String content = "";
-    private IAtomContainer atomContainer;
-    private IReaction reaction;
-    private Map<String,String> data = new LinkedHashMap<>();
+    private CTAB_VERSION ctabVersion;
+    private Map<Object,Object> data = new LinkedHashMap<>();
+    private IChemObject chemObject;
 
     RdfileRecord(String internalRegistryNumber, String externalRegistryNumber, boolean isRxnFile) {
         this.internalRegistryNumber = internalRegistryNumber;
@@ -30,16 +39,12 @@ public final class RdfileRecord {
         return externalRegistryNumber;
     }
 
-    void setData(Map<String,String> data) {
+    void setData(Map<Object,Object> data) {
         this.data = data;
     }
 
-    public Map<String,String> getData() {
+    Map<Object,Object> getData() {
         return Collections.unmodifiableMap(data);
-    }
-
-    public String getDataValue(String key) {
-        return data.get(key);
     }
 
     public boolean isRxnFile() {
@@ -58,19 +63,31 @@ public final class RdfileRecord {
         return this.content;
     }
 
-    public IAtomContainer getAtomContainer() {
-        return atomContainer;
+    CTAB_VERSION getCtabVersion() {
+        return ctabVersion;
     }
 
-    void setAtomContainer(IAtomContainer atomContainer) {
-        this.atomContainer = atomContainer;
+    void setCtabVersion(CTAB_VERSION ctabVersion) {
+        this.ctabVersion = ctabVersion;
+    }
+
+    void setChemObject(IChemObject chemObject) {
+        this.chemObject = chemObject;
+    }
+
+    public IAtomContainer getAtomContainer() {
+        if (chemObject instanceof IAtomContainer) {
+            return (IAtomContainer) chemObject;
+        }
+
+        return null;
     }
 
     public IReaction getReaction() {
-        return reaction;
-    }
+        if (chemObject instanceof IReaction) {
+            return (IReaction) chemObject;
+        }
 
-    void setReaction(IReaction reaction) {
-        this.reaction = reaction;
+        return null;
     }
 }
