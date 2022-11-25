@@ -307,4 +307,14 @@ class InChIToStructureTest extends CDKTestCase {
         }
         Assertions.assertEquals(2, nCisTrans);
     }
+
+    @Test
+    void testTc99() throws CDKException {
+        InChIToStructure parser = new InChIToStructure("InChI=1S/Tc/i1+1", DefaultChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.getAtomContainer();
+        Assertions.assertNotNull(container);
+        Assertions.assertEquals(1, container.getAtomCount());
+        Assertions.assertEquals(43, container.getAtom(0).getAtomicNumber());
+        Assertions.assertEquals(99, container.getAtom(0).getMassNumber());
+    }
 }

@@ -33,11 +33,14 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import net.sf.jniinchi.INCHI_OPTION;
+import org.apache.logging.log4j.core.util.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
@@ -989,5 +992,14 @@ class InChIGeneratorTest extends CDKTestCase {
     	InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
     	InChIGenerator generator = factory.getInChIGenerator(ac);
         assertThat(generator.options.getTimeoutMilliSeconds(), is(5000L));
+    }
+
+    @Test
+    void testTc99() throws CDKException {
+        IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("99Tc"));
+        InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
+        InChIGenerator generator = factory.getInChIGenerator(ac);
+        assertThat(generator.getInchi(), is("InChI=1S/Tc/i1+1"));
     }
 }

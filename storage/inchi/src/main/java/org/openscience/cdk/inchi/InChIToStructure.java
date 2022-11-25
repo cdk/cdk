@@ -32,7 +32,6 @@ import io.github.dan2097.jnainchi.InchiStereoType;
 import io.github.dan2097.jnainchi.JnaInchi;
 import net.sf.jniinchi.INCHI_RET;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,8 +42,9 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +102,27 @@ public class InChIToStructure {
      * should be treated as a relative mass.
      */
     private static final int ISOTOPIC_SHIFT_THRESHOLD = ISOTOPIC_SHIFT_FLAG - 100;
+
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(InChIToStructure.class);
+
+    /** InChI mass values by atomic numbers - INCHI_BASE/src/util.c */
+    private static final int[] defaultElemMass = new int[]{
+            0,   1,   4,   7,   9,   11,  12,  14,  //     H He Li Be  B  C  N
+            16,  19,  20,  23,  24,  27,  28,  31,  //  O  F Ne Na Mg Al Si  P
+            32,  35,  40,  39,  40,  45,  48,  51,  //  S Cl Ar  K Ca Sc Ti  V
+            52,  55,  56,  59,  59,  64,  65,  70,  // Cr Mn Fe Co Ni Cu Zn Ga
+            73,  75,  79,  80,  84,  85,  88,  89,  // Ge As Se Br Kr Rb Sr  Y
+            91,  93,  96,  98,  101, 103, 106, 108, // Zr Nb Mo Tc Ru Rh Pd Ag
+            112, 115, 119, 122, 128, 127, 131, 133, // Cd In Sn Sb Te  I Xe Cs
+            137, 139, 140, 141, 144, 145, 150, 152, // Ba La Ce Pr Nd Pm Sm Eu
+            157, 159, 163, 165, 167, 169, 173, 175, // Gd Tb Dy Ho Er Tm Yb Lu
+            178, 181, 184, 186, 190, 192, 195, 197, // Hf Ta  W Re Os Ir Pt Au
+            201, 204, 207, 209, 209, 210, 222, 223, // Hg Tl Pb Bi Po At Rn Fr
+            226, 227, 232, 231, 238, 237, 244, 243, // Ra Ac Th Pa  U Np Pu Am
+            247, 247, 251, 252, 257, 258, 259, 260, // Cm Bk Cf Es Fm Md No Lr
+            261, 270, 269, 270, 270, 278, 281, 281, // Rf Db Sg Bh Hs Mt Ds Rg
+            285, 278, 289, 289, 293, 297, 294
+    };
 
     /**
      * Constructor. Generates CDK AtomContainer from InChI.
@@ -178,7 +199,8 @@ public class InChIToStructure {
             inchiCdkAtomMap.put(iAt, cAt);
 
             cAt.setID("a" + i);
-            cAt.setAtomicNumber(Elements.ofString(iAt.getElName()).number());
+            int elem = Elements.ofString(iAt.getElName()).number();
+            cAt.setAtomicNumber(elem);
 
             // Ignore coordinates - all zero - unless aux info was given... but
             // the CDK doesn't have an API to provide that
@@ -191,12 +213,11 @@ public class InChIToStructure {
 
             if (isotopicMass != 0) {
                 if (isotopicMass > ISOTOPIC_SHIFT_THRESHOLD) {
-                    try {
-                        int massNumber = Isotopes.getInstance().getMajorIsotope(cAt.getAtomicNumber()).getMassNumber();
-                        cAt.setMassNumber(massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG));
-                    } catch (IOException e) {
-                        throw new CDKException("Could not load Isotopes data", e);
-                    }
+                    int delta = isotopicMass - ISOTOPIC_SHIFT_FLAG;
+                    if (elem > 0 && elem < defaultElemMass.length)
+                        cAt.setMassNumber(defaultElemMass[elem] + delta);
+                    else
+                        logger.error("Cannot set mass delta for element {}, no base mass?", elem);
                 } else {
                     cAt.setMassNumber(isotopicMass);
                 }
