@@ -255,8 +255,10 @@ public final class ShortestPaths {
                             routeTo[w] = new Branch(routeTo[w], new SequentialRoute(routeTo[v], w));
                             nPathsTo[w] += nPathsTo[v];
                         } else {
+                            // we now have a 'preceding' path to the start
                             precedes[w] = true;
                             routeTo[w] = new SequentialRoute(routeTo[v], w);
+                            nPathsTo[w] = nPathsTo[v];
                         }
                     }
                 }
