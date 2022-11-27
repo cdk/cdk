@@ -897,17 +897,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     public double getBondOrderSum(IAtom atom) {
         double count = 0;
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom)) {
-                if (bonds[i].getOrder() == IBond.Order.SINGLE) {
-                    count += 1;
-                } else if (bonds[i].getOrder() == IBond.Order.DOUBLE) {
-                    count += 2;
-                } else if (bonds[i].getOrder() == IBond.Order.TRIPLE) {
-                    count += 3;
-                } else if (bonds[i].getOrder() == IBond.Order.QUADRUPLE) {
-                    count += 4;
-                }
-            }
+            IBond bond = bonds[i];
+            if (bond.contains(atom) && bond.getOrder() != null)
+                count += bond.getOrder().numeric();
         }
         return count;
     }
@@ -923,8 +915,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     public Order getMaximumBondOrder(IAtom atom) {
         IBond.Order max = IBond.Order.SINGLE;
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom) && bonds[i].getOrder().ordinal() > max.ordinal()) {
-                max = bonds[i].getOrder();
+            IBond bond = bonds[i];
+            if (bond.contains(atom) &&
+                    bond.getOrder() != null &&
+                    bond.getOrder().numeric() > max.numeric()) {
+                max = bond.getOrder();
             }
         }
         return max;
@@ -941,8 +936,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     public Order getMinimumBondOrder(IAtom atom) {
         IBond.Order min = IBond.Order.QUADRUPLE;
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom) && bonds[i].getOrder().ordinal() < min.ordinal()) {
-                min = bonds[i].getOrder();
+            IBond bond = bonds[i];
+            if (bond.contains(atom) &&
+                    bond.getOrder() != null &&
+                    bond.getOrder().numeric() < min.numeric()) {
+                min = bond.getOrder();
             }
         }
         return min;
