@@ -41,7 +41,11 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.ringsearch.RingSearch;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -66,6 +70,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private final static Object                                              LOCK                       = new Object();
 
     private static final Map<Integer, Map<IChemObjectBuilder, CDKAtomTypeMatcher>> factories                  = new ConcurrentHashMap<>(5);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKAtomTypeMatcher.class);
 
     private CDKAtomTypeMatcher(IChemObjectBuilder builder, int mode) {
         factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl", builder);
@@ -125,9 +130,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds) throws CDKException {
         IAtomType type;
-        if (atom instanceof IPseudoAtom || atom.getAtomicNumber() == null) {
+        if (atomContainer instanceof IQueryAtomContainer || atom instanceof IQueryAtom)
+            logger.warn("A query molecule/atom was provided to the atom type matcher");
+        if (atom instanceof IPseudoAtom || atom.getAtomicNumber() == null)
             return factory.getAtomType("X");
-        }
         switch (atom.getAtomicNumber()) {
             case IElement.C:
                 type = perceiveCarbons(atomContainer, atom, searcher, connectedBonds);
@@ -819,7 +825,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (hasOneSingleElectron(atomContainer, atom)) {
             return perceiveNitrogenRadicals(atomContainer, atom);
         }
-        
+
         if (connectedBonds == null) connectedBonds = atomContainer.getConnectedBondsList(atom);
         if (hasHybridization(atom) && !isCharged(atom)) {
             if (atom.getHybridization() == Hybridization.SP1) {
