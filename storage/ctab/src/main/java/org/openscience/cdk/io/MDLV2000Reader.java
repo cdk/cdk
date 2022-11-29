@@ -141,7 +141,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     /** Valid pseudo labels. */
     private static final Set<String> PSEUDO_LABELS    = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("*","A","Q","L","LP","R","R#")));
-    
+
     public MDLV2000Reader() {
         this(new StringReader(""));
     }
@@ -466,7 +466,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
             }
 
-            // read PROPERTY block
+            // read PROPERTY block and SGroups
             readPropertiesFast(input, outputContainer, nAtoms);
 
             // read potential SD file data between M  END and $$$$
@@ -895,7 +895,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @param nAtoms    the number of atoms in the atoms block
      * @throws IOException low-level IO error
      */
-    void readPropertiesFast(final BufferedReader input, final IAtomContainer container, final int nAtoms)
+    void readPropertiesFast(final BufferedReader input,
+                            final IAtomContainer container,
+                            final int nAtoms)
             throws IOException, CDKException {
         String line;
 
@@ -1084,7 +1086,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         index = readMolfileInt(line, st) - 1;
                         int value = readMolfileInt(line, st + 4);
                         SPIN_MULTIPLICITY multiplicity = SPIN_MULTIPLICITY.ofValue(value);
-                        
+
                         container.getAtom(offset + index).setProperty(CDKConstants.SPIN_MULTIPLICITY, multiplicity);
 
                         for (int e = 0; e < multiplicity.getSingleElectrons(); e++)
@@ -1430,6 +1432,37 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
 
         if (!sgroups.isEmpty()) {
+
+            for (Sgroup sgroup : sgroups.values()) {
+                if (sgroup.getType() != SgroupType.CtabData)
+                    continue;
+                String key = sgroup.getValue(SgroupKey.DataFieldName);
+                String val = sgroup.getValue(SgroupKey.Data);
+                switch (key) {
+                    case "MRV_IMPLICIT_H":
+                        final int implh;
+                        if (val.equals("IMPL_H0"))
+                            implh = 0;
+                        else if (val.equals("IMPL_H1"))
+                            implh = 1;
+                        else if (val.equals("IMPL_H2"))
+                            implh = 2;
+                        else
+                            break; // unlikely/rare/not supported
+                        for (IAtom atom : sgroup.getAtoms())
+                            atom.setImplicitHydrogenCount(implh);
+                        break;
+                    case "MRV_COORDINATE_BOND_TYPE":
+                        IAtom[] atoms = sgroup.getAtoms().toArray(new IAtom[0]);
+                        if (atoms.length == 2) {
+                            IBond bond = container.getBond(atoms[0], atoms[1]);
+                            if (bond != null)
+                                bond.setOrder(IBond.Order.UNSET);
+                        }
+                        break;
+                }
+            }
+
             // load Sgroups into molecule, first we downcast
             List<Sgroup> sgroupOrgList = new ArrayList<>(sgroups.values());
             List<Sgroup> sgroupCpyList = new ArrayList<>(sgroupOrgList.size());
@@ -2443,7 +2476,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         /** ACDLabs Atom Label */
         M_ZZC,
-        
+
         /** End of Block. */
         M_END,
 
