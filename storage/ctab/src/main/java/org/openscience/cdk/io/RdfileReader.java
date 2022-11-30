@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * Iterating reader for RDFiles.
  *
  * @see RdfileRecord
- * @author uli-f
+ * @author Uli Fechner
  */
 public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(RdfileReader.class);
