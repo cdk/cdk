@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author uli-f
+ * @author Uli Fechner
  */
 public final class RdfileRecord {
     enum CTAB_VERSION {
