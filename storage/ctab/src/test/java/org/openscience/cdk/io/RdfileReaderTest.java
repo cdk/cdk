@@ -3,9 +3,7 @@ package org.openscience.cdk.io;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.io.BufferedReader;
@@ -20,10 +18,10 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 /**
- * @author uli-f
+ * @author Uli Fechner
  */
 class RdfileReaderTest {
-    private static IChemObjectBuilder chemObjectBuilder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder chemObjectBuilder = SilentChemObjectBuilder.getInstance();
 
     @Test
     void testRdfile_oneRecord_mfmt_mol_dataBlock() throws IOException, CDKException {
@@ -48,14 +46,10 @@ class RdfileReaderTest {
 
         Assertions.assertNull(rdfileRecord.getReaction());
         IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
-        Assertions.assertEquals(7, atomContainer.getAtomCount());
-        for (int index = 0; index < atomContainer.getAtomCount(); index++) {
-            Assertions.assertEquals(6, atomContainer.getAtom(index).getAtomicNumber());
-        }
-        Assertions.assertEquals(7, atomContainer.getBondCount());
-        for (int index = 0; index < atomContainer.getBondCount(); index++) {
-            Assertions.assertEquals(IBond.Order.SINGLE, atomContainer.getBond(index).getOrder());
-        }
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
         Assertions.assertEquals(value_1, atomContainer.getProperty(key_1));
         Assertions.assertEquals(value_2, atomContainer.getProperty(key_2));
 
@@ -86,14 +80,10 @@ class RdfileReaderTest {
 
         Assertions.assertNull(rdfileRecord.getReaction());
         IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
-        Assertions.assertEquals(7, atomContainer.getAtomCount());
-        for (int index = 0; index < atomContainer.getAtomCount(); index++) {
-            Assertions.assertEquals(6, atomContainer.getAtom(index).getAtomicNumber());
-        }
-        Assertions.assertEquals(7, atomContainer.getBondCount());
-        for (int index = 0; index < atomContainer.getBondCount(); index++) {
-            Assertions.assertEquals(IBond.Order.SINGLE, atomContainer.getBond(index).getOrder());
-        }
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
         Assertions.assertEquals(value_1, atomContainer.getProperty(key_1));
         Assertions.assertEquals(value_2, atomContainer.getProperty(key_2));
 
@@ -124,14 +114,10 @@ class RdfileReaderTest {
 
         Assertions.assertNull(rdfileRecord.getReaction());
         IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
-        Assertions.assertEquals(7, atomContainer.getAtomCount());
-        for (int index = 0; index < atomContainer.getAtomCount(); index++) {
-            Assertions.assertEquals(6, atomContainer.getAtom(index).getAtomicNumber());
-        }
-        Assertions.assertEquals(7, atomContainer.getBondCount());
-        for (int index = 0; index < atomContainer.getBondCount(); index++) {
-            Assertions.assertEquals(IBond.Order.SINGLE, atomContainer.getBond(index).getOrder());
-        }
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
         Assertions.assertEquals(value_1, atomContainer.getProperty(key_1));
         Assertions.assertEquals(value_2, atomContainer.getProperty(key_2));
 
@@ -155,14 +141,10 @@ class RdfileReaderTest {
 
         Assertions.assertNull(rdfileRecord.getReaction());
         IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
-        Assertions.assertEquals(7, atomContainer.getAtomCount());
-        for (int index = 0; index < atomContainer.getAtomCount(); index++) {
-            Assertions.assertEquals(6, atomContainer.getAtom(index).getAtomicNumber());
-        }
-        Assertions.assertEquals(7, atomContainer.getBondCount());
-        for (int index = 0; index < atomContainer.getBondCount(); index++) {
-            Assertions.assertEquals(IBond.Order.SINGLE, atomContainer.getBond(index).getOrder());
-        }
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
 
         // tear down
         rdfileReader.close();
@@ -184,15 +166,10 @@ class RdfileReaderTest {
 
         Assertions.assertNull(rdfileRecord.getReaction());
         IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
-        Assertions.assertEquals(7, atomContainer.getAtomCount());
-        for (int index = 0; index < atomContainer.getAtomCount(); index++) {
-            Assertions.assertEquals(6, atomContainer.getAtom(index).getAtomicNumber());
-        }
-        Assertions.assertEquals(7, atomContainer.getBondCount());
-        for (int index = 0; index < atomContainer.getBondCount(); index++) {
-            Assertions.assertEquals(IBond.Order.SINGLE, atomContainer.getBond(index).getOrder());
-        }
-
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
 
         // tear down
         rdfileReader.close();
@@ -204,9 +181,13 @@ class RdfileReaderTest {
         final String rdfFilename = "rdfile_oneRecord_rfmt_rxn_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename), chemObjectBuilder);
         final Map<Object, Object> expectedData = new LinkedHashMap<>();
-        expectedData.put("Identifier", "141");
-        expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
-                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
+        final String key_1 = "Identifier";
+        final String value_1 = "141";
+        expectedData.put(key_1, value_1);
+        final String key_2 = "LongMultilineDatum";
+        final String value_2 = "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
+                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB";
+        expectedData.put(key_2, value_2);
 
         // act
         RdfileRecord rdfileRecord = rdfileReader.doReadNext();
@@ -214,6 +195,36 @@ class RdfileReaderTest {
         // assert
         Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
+
+        Assertions.assertNull(rdfileRecord.getAtomContainer());
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // data block
+        Assertions.assertEquals(value_1, reaction.getProperty(key_1));
+        Assertions.assertEquals(value_2, reaction.getProperty(key_2));
 
         // tear down
         rdfileReader.close();
@@ -225,9 +236,13 @@ class RdfileReaderTest {
         final String rdfFilename = "rdfile_oneRecord_rfmt_rireg_rxn_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename), chemObjectBuilder);
         final Map<Object, Object> expectedData = new LinkedHashMap<>();
-        expectedData.put("Identifier", "141");
-        expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
-                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
+        final String key_1 = "Identifier";
+        final String value_1 = "141";
+        expectedData.put(key_1, value_1);
+        final String key_2 = "LongMultilineDatum";
+        final String value_2 = "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
+                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB";
+        expectedData.put(key_2, value_2);
 
         // act
         RdfileRecord rdfileRecord = rdfileReader.doReadNext();
@@ -235,6 +250,35 @@ class RdfileReaderTest {
         // assert
         Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
+
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // data block
+        Assertions.assertEquals(value_1, reaction.getProperty(key_1));
+        Assertions.assertEquals(value_2, reaction.getProperty(key_2));
 
         // tear down
         rdfileReader.close();
@@ -246,9 +290,13 @@ class RdfileReaderTest {
         final String rdfFilename = "rdfile_oneRecord_rfmt_rereg_rxn_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename), chemObjectBuilder);
         final Map<Object, Object> expectedData = new LinkedHashMap<>();
-        expectedData.put("Identifier", "141");
-        expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
-                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
+        final String key_1 = "Identifier";
+        final String value_1 = "141";
+        expectedData.put(key_1, value_1);
+        final String key_2 = "LongMultilineDatum";
+        final String value_2 = "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
+                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB";
+        expectedData.put(key_2, value_2);
 
         // act
         RdfileRecord rdfileRecord = rdfileReader.doReadNext();
@@ -256,6 +304,35 @@ class RdfileReaderTest {
         // assert
         Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
+
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // data block
+        Assertions.assertEquals(value_1, reaction.getProperty(key_1));
+        Assertions.assertEquals(value_2, reaction.getProperty(key_2));
 
         // tear down
         rdfileReader.close();
@@ -275,6 +352,32 @@ class RdfileReaderTest {
         Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+
         // tear down
         rdfileReader.close();
     }
@@ -293,6 +396,32 @@ class RdfileReaderTest {
         Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
 
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+
         // tear down
         rdfileReader.close();
     }
@@ -303,7 +432,8 @@ class RdfileReaderTest {
         final String rdfFilename = "rdfile_oneRecord_rereg_rxn_dataBlockWithEmbeddedMolecule.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename), chemObjectBuilder);
         final Map<Object, Object> expectedData = new LinkedHashMap<>();
-        expectedData.put("CATALYST_1", "$MFMT\n" +
+        final String key_1 = "CATALYST_1";
+        final String value_1 = "$MFMT\n" +
                 "\n" +
                 "  Mrv2219  110920222203\n" +
                 "\n" +
@@ -311,9 +441,13 @@ class RdfileReaderTest {
                 "   -5.0000    3.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
                 "    5.0000   -3.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
                 "  1  2  2  0  0  0  0\n" +
-                "M  END");
-        expectedData.put("Identifier", "141");
-        expectedData.put("SOLVENT_1", "$MFMT\n" +
+                "M  END";
+        expectedData.put(key_1, value_1);
+        final String key_2 = "Identifier";
+        final String value_2 = "141";
+        expectedData.put(key_2, value_2);
+        final String key_3 = "SOLVENT_1";
+        final String value_3 = "$MFMT\n" +
                 "\n" +
                 "  Mrv2219  110920222203\n" +
                 "\n" +
@@ -323,10 +457,13 @@ class RdfileReaderTest {
                 "   -0.5000    3.5000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
                 "  1  3  1  0  0  0  0\n" +
                 "  2  3  1  0  0  0  0\n" +
-                "M  END");
-        expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
+                "M  END";
+        expectedData.put(key_3, value_3);
+        final String key_4 = "LongMultilineDatum";
+        final String value_4 = "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
                 "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUV" +
-                "bfkPnBBS4aK6Wkq7LOHaHORhMe3PCuJxKBqJi9492soYNHwgvESO1A3lGUgeGiMSS4aK6Wkq7LOHaHOG");
+                "bfkPnBBS4aK6Wkq7LOHaHORhMe3PCuJxKBqJi9492soYNHwgvESO1A3lGUgeGiMSS4aK6Wkq7LOHaHOG";
+        expectedData.put(key_4, value_4);
 
         // act
         RdfileRecord rdfileRecord = rdfileReader.doReadNext();
@@ -334,6 +471,32 @@ class RdfileReaderTest {
         // assert
         Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only one record in this RDfile");
         rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
+
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
 
         // tear down
         rdfileReader.close();
@@ -621,16 +784,24 @@ class RdfileReaderTest {
 
         final List<Map<Object, Object>> expectedDataList = new ArrayList<>();
         final Map<Object, Object> expectedData_1 = new LinkedHashMap<>();
-        expectedData_1.put("Identifier", "141");
+        final String key_1 = "Identifier";
+        final String value_1 = "141";
+        expectedData_1.put(key_1, value_1);
         expectedDataList.add(expectedData_1);
         final Map<Object, Object> expectedData_2 = new LinkedHashMap<>();
-        expectedData_2.put("Identifier", "142");
+        final String key_2 = "Identifier";
+        final String value_2 = "142";
+        expectedData_2.put(key_2, value_2);
         expectedDataList.add(expectedData_2);
         final Map<Object, Object> expectedData_3 = new LinkedHashMap<>();
-        expectedData_3.put("Identifier", "211");
+        final String key_3 = "Identifier";
+        final String value_3 = "211";
+        expectedData_3.put(key_3, value_3);
         expectedDataList.add(expectedData_3);
         final Map<Object, Object> expectedData_4 = new LinkedHashMap<>();
-        expectedData_4.put("Identifier", "143");
+        final String key_4 = "Identifier";
+        final String value_4 = "143";
+        expectedData_4.put(key_4, value_4);
         expectedDataList.add(expectedData_4);
 
         // act
@@ -643,6 +814,68 @@ class RdfileReaderTest {
         // assert
         Assertions.assertNull(rdfileReader.doReadNext(), "Expected null as there is only four records in this RDfile");
         rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList);
+
+        // record #1 - molecule
+        RdfileRecord rdfileRecord = records.get(0);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        Assertions.assertEquals(value_1, atomContainer.getProperty(key_1));
+
+        // record #2 - molecule
+        rdfileRecord = records.get(1);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(2, elementFrequencyMap.get(8));
+        bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(1, bondOrderFrequencyMap.get(IBond.Order.DOUBLE));
+        Assertions.assertEquals(value_2, atomContainer.getProperty(key_2));
+
+        // record #3 - reaction
+        rdfileRecord = records.get(2);
+        Assertions.assertNull(rdfileRecord.getAtomContainer());
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertNotNull(reaction);
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+
+        // record #4 - molecule
+        rdfileRecord = records.get(3);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(2, elementFrequencyMap.get(8));
+        bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(1, bondOrderFrequencyMap.get(IBond.Order.DOUBLE));
+        Assertions.assertEquals(value_4, atomContainer.getProperty(key_4));
 
         // tear down
         rdfileReader.close();
@@ -729,20 +962,53 @@ class RdfileReaderTest {
         final String rdfFilename = "rdfile_oneRecord_rfmt_rxn_dataBlock.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename), chemObjectBuilder);
         final Map<Object, Object> expectedData = new LinkedHashMap<>();
-        expectedData.put("Identifier", "141");
-        expectedData.put("LongMultilineDatum", "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
-                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB");
-
+        final String key_1 = "Identifier";
+        final String value_1 = "141";
+        expectedData.put(key_1, value_1);
+        final String key_2 = "LongMultilineDatum";
+        final String value_2 = "5TMSS4aK6Wkq7LOHaHORhMe3PCuJxKBWnUeyf1uxEsWjdYWWNLlV6FPo14G7Jv9lhwzVChf9A" +
+                "XjGOe9gSgO0I7u5SEtqJi9492soYNHwgvEsApwkmoRZhwdC9CESO1A3lGUgeGim0s4fhQEdbthmPBTUVbfkPnBB";
+        expectedData.put(key_2, value_2);
 
         // act & assert
         assertThat(rdfileReader.hasNext(), is(true));
         assertThat(rdfileReader.hasNext(), is(true));
-        RdfileRecord record = rdfileReader.next();
+        RdfileRecord rdfileRecord = rdfileReader.next();
         assertThat(rdfileReader.hasNext(), is(false));
         assertThat(rdfileReader.hasNext(), is(false));
         Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> rdfileReader.next(), "expected to have reached end of file");
         assertThat(exception.getMessage(), is("RdfileReader reached end of file."));
-        rdfileRecordEqualsRdfile(record, rdfFilename, expectedData);
+        rdfileRecordEqualsRdfile(rdfileRecord, rdfFilename, expectedData);
+
+        Assertions.assertNull(rdfileRecord.getAtomContainer());
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // data block
+        Assertions.assertEquals(value_1, reaction.getProperty(key_1));
+        Assertions.assertEquals(value_2, reaction.getProperty(key_2));
 
         // tear down
         rdfileReader.close();
@@ -756,16 +1022,24 @@ class RdfileReaderTest {
         final List<RdfileRecord> records = new ArrayList<>();
         final List<Map<Object, Object>> expectedDataList = new ArrayList<>();
         final Map<Object, Object> expectedData_1 = new LinkedHashMap<>();
-        expectedData_1.put("Identifier", "141");
+        final String key_1 = "Identifier";
+        final String value_1 = "141";
+        expectedData_1.put(key_1, value_1);
         expectedDataList.add(expectedData_1);
         final Map<Object, Object> expectedData_2 = new LinkedHashMap<>();
-        expectedData_2.put("Identifier", "142");
+        final String key_2 = "Identifier";
+        final String value_2 = "142";
+        expectedData_2.put(key_2, value_2);
         expectedDataList.add(expectedData_2);
         final Map<Object, Object> expectedData_3 = new LinkedHashMap<>();
-        expectedData_3.put("Identifier", "211");
+        final String key_3 = "Identifier";
+        final String value_3 = "211";
+        expectedData_3.put(key_3, value_3);
         expectedDataList.add(expectedData_3);
         final Map<Object, Object> expectedData_4 = new LinkedHashMap<>();
-        expectedData_4.put("Identifier", "143");
+        final String key_4 = "Identifier";
+        final String value_4 = "143";
+        expectedData_4.put(key_4, value_4);
         expectedDataList.add(expectedData_4);
 
         // act & assert
@@ -785,6 +1059,39 @@ class RdfileReaderTest {
         records.add(2, null);                 // insert empty element at position #3 that has broken record
         rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList, new Integer[]{3});
 
+        // record #1 - molecule
+        RdfileRecord rdfileRecord = records.get(0);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        Assertions.assertEquals(value_1, atomContainer.getProperty(key_1));
+
+        // record #2 - molecule
+        rdfileRecord = records.get(1);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(2, elementFrequencyMap.get(8));
+        bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(1, bondOrderFrequencyMap.get(IBond.Order.DOUBLE));
+        Assertions.assertEquals(value_2, atomContainer.getProperty(key_2));
+
+        // record #4 - molecule
+        rdfileRecord = records.get(3);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(2, elementFrequencyMap.get(8));
+        bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(1, bondOrderFrequencyMap.get(IBond.Order.DOUBLE));
+        Assertions.assertEquals(value_4, atomContainer.getProperty(key_4));
+
         // tear down
         rdfileReader.close();
     }
@@ -797,10 +1104,14 @@ class RdfileReaderTest {
         final List<RdfileRecord> records = new ArrayList<>();
         final List<Map<Object, Object>> expectedDataList = new ArrayList<>();
         final Map<Object, Object> expectedData_1 = new LinkedHashMap<>();
-        expectedData_1.put("Identifier", "141");
+        final String key_1 = "Identifier";
+        final String value_1 = "141";
+        expectedData_1.put(key_1, value_1);
         expectedDataList.add(expectedData_1);
         final Map<Object, Object> expectedData_2 = new LinkedHashMap<>();
-        expectedData_2.put("Identifier", "142");
+        final String key_2 = "Identifier";
+        final String value_2 = "142";
+        expectedData_2.put(key_2, value_2);
         expectedDataList.add(expectedData_2);
         final Map<Object, Object> expectedData_3 = new LinkedHashMap<>();
         expectedDataList.add(expectedData_3);
@@ -823,6 +1134,28 @@ class RdfileReaderTest {
         records.add(null);                 // insert empty element at position #3 that has broken record
         rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList, new Integer[]{3, 4});
 
+        // record #1 - molecule
+        RdfileRecord rdfileRecord = records.get(0);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        Assertions.assertEquals(value_1, atomContainer.getProperty(key_1));
+
+        // record #2 - molecule
+        rdfileRecord = records.get(1);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(2, elementFrequencyMap.get(8));
+        bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(1, bondOrderFrequencyMap.get(IBond.Order.DOUBLE));
+        Assertions.assertEquals(value_2, atomContainer.getProperty(key_2));
+
         // tear down
         rdfileReader.close();
     }
@@ -837,10 +1170,14 @@ class RdfileReaderTest {
         final Map<Object, Object> expectedData_1 = new LinkedHashMap<>();
         expectedDataList.add(expectedData_1);
         final Map<Object, Object> expectedData_2 = new LinkedHashMap<>();
-        expectedData_2.put("Identifier", "142");
+        final String key_2 = "Identifier";
+        final String value_2 = "142";
+        expectedData_2.put(key_2, value_2);
         expectedDataList.add(expectedData_2);
         final Map<Object, Object> expectedData_3 = new LinkedHashMap<>();
-        expectedData_3.put("Identifier", "211");
+        final String key_3 = "Identifier";
+        final String value_3 = "211";
+        expectedData_3.put(key_3, value_3);
         expectedDataList.add(expectedData_3);
         final Map<Object, Object> expectedData_4 = new LinkedHashMap<>();
         expectedDataList.add(expectedData_4);
@@ -857,12 +1194,51 @@ class RdfileReaderTest {
         records.add(3, null);                 // insert empty element at position #4 that had a broken record
         rdfileRecordEqualsRdfile(records, rdfFilename, expectedDataList, new Integer[]{1, 4});
 
+        // record #2 - molecule
+        RdfileRecord rdfileRecord = records.get(1);
+        Assertions.assertNull(rdfileRecord.getReaction());
+        IAtomContainer atomContainer = rdfileRecord.getAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        Map<Integer,Integer> elementFrequencyMap = generateElementFrequencyMap(atomContainer);
+        Assertions.assertEquals(2, elementFrequencyMap.get(8));
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = generateBondFrequencyMap(atomContainer);
+        Assertions.assertEquals(1, bondOrderFrequencyMap.get(IBond.Order.DOUBLE));
+        Assertions.assertEquals(value_2, atomContainer.getProperty(key_2));
+
+        // record #3 - reaction
+        rdfileRecord = records.get(2);
+        Assertions.assertNull(rdfileRecord.getAtomContainer());
+        IReaction reaction = rdfileRecord.getReaction();
+        Assertions.assertNotNull(reaction);
+        Assertions.assertEquals(2, reaction.getReactantCount());
+        Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
+        Assertions.assertEquals(1, reaction.getProductCount());
+        // reactant #1
+        IAtomContainer reactant1 = reaction.getReactants().getAtomContainer(0);
+        elementFrequencyMap = generateElementFrequencyMap(reactant1);
+        Assertions.assertEquals(7, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant1);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+        // reactant #2
+        IAtomContainer reactant2 = reaction.getReactants().getAtomContainer(1);
+        elementFrequencyMap = generateElementFrequencyMap(reactant2);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        bondOrderFrequencyMap = generateBondFrequencyMap(reactant2);
+        Assertions.assertEquals(0, bondOrderFrequencyMap.size());
+        // product
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        Assertions.assertEquals(7, product.getAtomCount());
+        elementFrequencyMap = generateElementFrequencyMap(product);
+        Assertions.assertEquals(1, elementFrequencyMap.get(35));
+        Assertions.assertEquals(6, elementFrequencyMap.get(6));
+        bondOrderFrequencyMap = generateBondFrequencyMap(product);
+        Assertions.assertEquals(7, bondOrderFrequencyMap.get(IBond.Order.SINGLE));
+
         // tear down
         rdfileReader.close();
     }
 
-
-
+    ///// private helper methods for this test class /////
     private List<String> readFile(String filename) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(filename)));
         List<String> lines = new ArrayList<>();
@@ -1014,5 +1390,27 @@ class RdfileReaderTest {
             }
         }
         return expectedLinesIndex;
+    }
+
+    private Map<Integer,Integer> generateElementFrequencyMap(IAtomContainer atomContainer) {
+        Map<Integer,Integer> elementFrequencyMap = new HashMap<>();
+        if (atomContainer == null || atomContainer.isEmpty()) {
+            return elementFrequencyMap;
+        }
+        for (IAtom atom: atomContainer.atoms()) {
+            elementFrequencyMap.merge(atom.getAtomicNumber(), 1, (v1, v2) -> v1 + v2);
+        }
+        return elementFrequencyMap;
+    }
+
+    private Map<IBond.Order,Integer> generateBondFrequencyMap(IAtomContainer atomContainer) {
+        Map<IBond.Order,Integer> bondOrderFrequencyMap = new HashMap<>();
+        if (atomContainer == null || atomContainer.isEmpty()) {
+            return bondOrderFrequencyMap;
+        }
+        for (IBond bond: atomContainer.bonds()) {
+            bondOrderFrequencyMap.merge(bond.getOrder(), 1, (v1, v2) -> v1 + v2);
+        }
+        return bondOrderFrequencyMap;
     }
 }
