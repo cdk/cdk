@@ -52,6 +52,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -160,6 +161,38 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         boolean chiral;
         Map<Integer,Integer> stereoflags = null;
         final Map<IAtom,Integer> stereo0d = new HashMap<>();
+
+        // atom/bond ids need not be sequential, we could use map but more
+        // common is the ids will be sequential
+        IAtom[] atomById = new IAtom[64];
+        IBond[] bondById = new IBond[64];
+
+        <T> T[] grow(T[] arr, int req)
+        {
+            int cap = arr.length;
+            return Arrays.copyOf(arr, Math.max(cap + cap >> 1,
+                                               req + 1));
+        }
+
+        void addAtom(int id, IAtom atom) {
+            if (id >= atomById.length)
+                atomById = grow(atomById, id);
+            atomById[id] = atom;
+        }
+
+        void addBond(int id, IBond bond) {
+            if (id >= bondById.length)
+                bondById = grow(bondById, id);
+            bondById[id] = bond;
+        }
+
+        public IAtom getAtom(int i) {
+            return atomById[i];
+        }
+
+        public IBond getBond(int i) {
+            return bondById[i];
+        }
     }
 
     public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {
@@ -190,9 +223,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             } else if ("BEGIN ATOM".equals(command)) {
                 readAtomBlock(state);
             } else if ("BEGIN BOND".equals(command)) {
-                readBondBlock(readData);
+                readBondBlock(state);
             } else if ("BEGIN SGROUP".equals(command)) {
-                readSGroup(readData);
+                readSGroup(state);
             } else if ("BEGIN COLLECTION".equals(command)) {
                 readCollection(state);
             } else {
@@ -277,9 +310,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     if (se.getConfigClass() != IStereoElement.TH)
                         continue;
                     IAtom focus = (IAtom) se.getFocus();
-                    int idx = readData.indexOf(focus);
-                    if (idx < 0)
+                    if (focus.getID() == null)
                         continue;
+                    int idx = Integer.parseInt(focus.getID());
                     Integer grpinfo = state.stereoflags.get(idx);
                     if (grpinfo != null)
                         se.setGroupInfo(grpinfo);
@@ -372,7 +405,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             }
             // val-1 since we store atom index instead of atom number
             if (val > 0)
-                flags.put(val-1, type);
+                flags.put(val, type);
             while (i < len && str.charAt(i) == ' ')
                 i++;
             if (i < len && str.charAt(i) == ')')
@@ -455,6 +488,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
         int RGroupCounter = 1;
         int Rnumber;
+        String id;
         String[] rGroup;
 
         boolean foundEND = false;
@@ -469,7 +503,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 StringTokenizer tokenizer = new StringTokenizer(command);
                 // parse the index
                 try {
-                    atom.setID(tokenizer.nextToken());
+                    id = tokenizer.nextToken();
                 } catch (Exception exception) {
                     String error = "Error while parsing atom index";
                     logger.error(error);
@@ -607,7 +641,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 }
 
                 // store atom
+                atom.setID(id);
                 readData.addAtom(atom);
+                state.addAtom(Integer.parseInt(id), readData.getAtom(readData.getAtomCount()-1));
                 logger.debug("Added atom: " + atom);
             }
         }
@@ -616,7 +652,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     /**
      * Reads the bond atoms, order and stereo configuration.
      */
-    public void readBondBlock(IAtomContainer readData) throws CDKException {
+    public void readBondBlock(ReadState state) throws CDKException {
+        IAtomContainer readData = state.mol;
         logger.info("Reading BOND block");
         boolean foundEND = false;
         while (isReady() && !foundEND) {
@@ -657,7 +694,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 try {
                     String indexAtom1String = tokenizer.nextToken();
                     int indexAtom1 = Integer.parseInt(indexAtom1String);
-                    IAtom atom1 = readData.getAtom(indexAtom1 - 1);
+                    IAtom atom1 = state.getAtom(indexAtom1);
                     bond.setAtom(atom1, 0);
                 } catch (Exception exception) {
                     String error = "Error while parsing index atom 1 in bond";
@@ -669,7 +706,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 try {
                     String indexAtom2String = tokenizer.nextToken();
                     int indexAtom2 = Integer.parseInt(indexAtom2String);
-                    IAtom atom2 = readData.getAtom(indexAtom2 - 1);
+                    IAtom atom2 = state.getAtom(indexAtom2);
                     bond.setAtom(atom2, 1);
                 } catch (Exception exception) {
                     String error = "Error while parsing index atom 2 in bond";
@@ -726,6 +763,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
                 // storing bond
                 readData.addBond(bond);
+                state.addBond(Integer.parseInt(bond.getID()),
+                              readData.getBond(readData.getBondCount()-1));
 
                 // storing positional variation
                 if ("ANY".equals(attach)) {
@@ -750,7 +789,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     /**
      * Reads labels.
      */
-    public void readSGroup(IAtomContainer readData) throws CDKException {
+    public void readSGroup(ReadState state) throws CDKException {
+        IAtomContainer readData = state.mol;
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             String command = readCommand(readLine());
@@ -788,13 +828,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                 StringTokenizer atomsTokenizer = new StringTokenizer(value);
                                 int nExpected = Integer.parseInt(atomsTokenizer.nextToken());
                                 while (atomsTokenizer.hasMoreTokens()) {
-                                    sgroup.addAtom(readData.getAtom(Integer.parseInt(atomsTokenizer.nextToken()) - 1));
+                                    sgroup.addAtom(state.getAtom(Integer.parseInt(atomsTokenizer.nextToken())));
                                 }
                             } else if (key.equals("XBONDS")) {
                                 StringTokenizer xbonds = new StringTokenizer(value);
                                 int nExpected = Integer.parseInt(xbonds.nextToken());
                                 while (xbonds.hasMoreTokens()) {
-                                    sgroup.addBond(readData.getBond(Integer.parseInt(xbonds.nextToken()) - 1));
+                                    sgroup.addBond(state.getBond(Integer.parseInt(xbonds.nextToken())));
                                 }
                             } else if (key.equals("LABEL")) {
                                 label = value;
