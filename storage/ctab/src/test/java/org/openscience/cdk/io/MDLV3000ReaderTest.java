@@ -409,6 +409,31 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
+    void testNonSequentialAtomIdx() throws Exception {
+        final String input = "\n" +
+                "  Mrv2219 11302223302D          \n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 2 1 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C -6.458 3.4367 0 0\n" +
+                "M  V30 22 C -7.7917 2.6667 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 22\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  END";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertEquals(2, mol.getAtomCount());
+            Assertions.assertEquals(1, mol.getBondCount());
+        }
+    }
+
+    @Test
     void testStereo0d() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("stereo0d.mdl3");
