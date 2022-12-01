@@ -689,7 +689,7 @@ class RdfileReaderTest {
     @Test
     void testRdfile_error_line56_rxnfile_countsDontMatchMolfiles() throws IOException {
         // arrange
-        final String rdfFilename = "Rdfile_error_line56_rxnfile_countsDontMatchMolfiles.rdf";
+        final String rdfFilename = "rdfile_error_line56_rxnfile_countsDontMatchMolfiles.rdf";
         RdfileReader rdfileReader = new RdfileReader(RdfileReader.class.getResourceAsStream(rdfFilename), chemObjectBuilder);
 
         // act & assert
