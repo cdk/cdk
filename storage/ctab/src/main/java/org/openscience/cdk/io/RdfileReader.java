@@ -34,6 +34,21 @@ import java.util.regex.Pattern;
 
 /**
  * Iterating reader for RDFiles.
+ * <p>
+ *     This class facilitates reading RDFiles the specificiation of which was initially published
+ *     in {@cdk.cite DAL92} and is now maintained by Daussault Systems {@cdk.cite Dassault20}.
+ * </p>
+ * An RDFile is composed of
+ * <ol>
+ *     <li>an RDFile header</li>
+ *     <li>one or more records where each record comprises</li>
+ *     <ol>
+ *         <li>an optional internal or external registry number</li>
+ *         <li>a molecule represented as a MolFile in V2000 or V3000 format <b>or</b>
+ *         a reaction represented as an RxnFile in V2000 or V3000 format</li>
+ *         <li>an optional data block that consists of one or more (data field identifier, data) pairs</li>
+ *     </ol>
+ * </ol>
  *
  * @see RdfileRecord
  * @author Uli Fechner
@@ -82,7 +97,12 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
     }
 
     public RdfileReader(Reader reader, IChemObjectBuilder chemObjectBuilder, boolean skipRecordsOnError) {
-        this.bufferedReader = new BufferedReader(reader);
+        if (reader instanceof BufferedReader) {
+            this.bufferedReader = (BufferedReader) reader;
+        } else {
+            this.bufferedReader = new BufferedReader(reader);
+        }
+
         this.chemObjectBuilder = chemObjectBuilder;
         this.skipRecordsOnError = skipRecordsOnError;
     }
