@@ -17,11 +17,21 @@
         <dependency>
             <groupId>xom</groupId>
             <artifactId>xom</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xercesImpl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xalan</groupId>
+                    <artifactId>xalan</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.blueobelisk</groupId>
             <artifactId>cmlxom</artifactId>
-            <version>4.3</version>
+            <version>4.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.logging.log4j</groupId>
