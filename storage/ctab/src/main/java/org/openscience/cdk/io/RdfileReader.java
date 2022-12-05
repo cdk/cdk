@@ -41,13 +41,14 @@ import java.util.regex.Pattern;
  * An RDFile is composed of
  * <ol>
  *     <li>an RDFile header</li>
- *     <li>one or more records where each record comprises</li>
+ *     <li>one or more records where each record comprises
  *     <ol>
  *         <li>an optional internal or external registry number</li>
  *         <li>a molecule represented as a MolFile in V2000 or V3000 format <b>or</b>
  *         a reaction represented as an RxnFile in V2000 or V3000 format</li>
  *         <li>an optional data block that consists of one or more (data field identifier, data) pairs</li>
  *     </ol>
+ *     </li>
  * </ol>
  *
  * @see RdfileRecord
