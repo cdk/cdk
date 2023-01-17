@@ -826,6 +826,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 throw new CDKException("invalid line length: " + length + " " + line);
         }
 
+        if (u >= atoms.length || v >= atoms.length) {
+            // handleError("Bond references atom which does not exists: " + line, lineNum, 0, length);
+            // but we need this to be FATAL!
+            throw new CDKException("MOLfile bond uses atoms does not exists: " + line + " num_atoms=" + atoms.length);
+        }
+
         IBond bond = builder.newBond();
         bond.setAtoms(new IAtom[]{atoms[u], atoms[v]});
 
