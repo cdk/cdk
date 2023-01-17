@@ -34,7 +34,6 @@ jobs:
   build-sonarcloud:
     name: Build sonarcloud
     runs-on: ubuntu-latest
-    environment: SonarCloud
     steps:
       - uses: actions/checkout@v3
         with:
