@@ -25,6 +25,7 @@
 package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -593,7 +594,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 1826577
      */
     @Test
-    void testHisotopes_Strict() throws Exception {
+    void testHisotopes_Strict() {
         String filename = "hisotopes.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -932,8 +933,8 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         molecule = reader.read(molecule);
         reader.close();
         IAtom deuterium = molecule.getAtom(molecule.getAtomCount() - 1);
-        Assertions.assertTrue(1 == deuterium.getAtomicNumber());
-        Assertions.assertTrue(2 == deuterium.getMassNumber());
+        Assertions.assertEquals(1, (int) deuterium.getAtomicNumber());
+        Assertions.assertEquals(2, (int) deuterium.getMassNumber());
     }
 
     @Test
@@ -960,8 +961,8 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         molecule = reader.read(molecule);
         reader.close();
         IAtom tritium = molecule.getAtom(molecule.getAtomCount() - 1);
-        Assertions.assertTrue(1 == tritium.getAtomicNumber());
-        Assertions.assertTrue(3 == tritium.getMassNumber());
+        Assertions.assertEquals(1, (int) tritium.getAtomicNumber());
+        Assertions.assertEquals(3, (int) tritium.getMassNumber());
     }
 
     /**
@@ -1394,7 +1395,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void v2000Version() throws Exception {
+    void v2000Version() {
         assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999 V2000"),
                 is(MDLV2000Reader.CTabVersion.V2000));
         assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999 v2000"),
@@ -1402,7 +1403,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void v3000Version() throws Exception {
+    void v3000Version() {
         assertThat(MDLV2000Reader.CTabVersion.ofHeader("  0  0  0  0  0  0            999 V3000"),
                 is(MDLV2000Reader.CTabVersion.V3000));
         assertThat(MDLV2000Reader.CTabVersion.ofHeader("  0  0  0  0  0  0            999 v3000"),
@@ -1410,7 +1411,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void unspecVersion() throws Exception {
+    void unspecVersion() {
         assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999"),
                 is(MDLV2000Reader.CTabVersion.UNSPECIFIED));
         assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999      "),
@@ -1456,10 +1457,9 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * The non-standard ACDLabs atom label property should throw a CDKException in STRICT mode.
-     * @throws Exception
      */
     @Test
-    void testAcdChemSketchLabel_Strict() throws Exception {
+    void testAcdChemSketchLabel_Strict() {
 
         String filename = "chemsketch-all-labelled.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -1675,23 +1675,23 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void testSgroupInvalidConnectInStrictMode() throws Exception {
+    void testSgroupInvalidConnectInStrictMode() {
         Assertions.assertThrows(CDKException.class,
                                 () -> {
                                     try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bad-scn.mol"))) {
                                         mdlr.setReaderMode(Mode.STRICT);
-                                        IAtomContainer container = mdlr.read(new AtomContainer());
+                                        mdlr.read(new AtomContainer());
                                     }
                                 });
     }
 
     @Test
-    void testSgroupDefOrderInStrictMode() throws Exception {
+    void testSgroupDefOrderInStrictMode() {
         Assertions.assertThrows(CDKException.class,
                                 () -> {
                                     try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bad-def.mol"))) {
                                         mdlr.setReaderMode(Mode.STRICT);
-                                        IAtomContainer container = mdlr.read(new AtomContainer());
+                                        mdlr.read(new AtomContainer());
                                     }
                                 });
     }
@@ -1746,15 +1746,14 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     /**
      * When atomic mass is defined as a delta some atoms don't have a reasonable
      * default. Most tools will output an 'M  ISO' property, so can be specified
-     * @throws Exception expected format error
      */
     @Test
-    void seaborgiumMassDelta() throws Exception {
+    void seaborgiumMassDelta() {
         Assertions.assertThrows(CDKException.class,
                                 () -> {
                                     try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
                                          MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
-                                        IAtomContainer mol = mdlr.read(new AtomContainer());
+                                        mdlr.read(new AtomContainer());
                                     }
                                 });
     }
@@ -1773,8 +1772,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         String mdl = "deuterium.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1 V2000\n"
                 + "    0.0000    0.0000    0.0000 H  +1  0  0  0  0\n"
                 + "M  END\n";
-        try (StringReader in = new StringReader(mdl)) {
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl), Mode.STRICT);
+        try (MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl), Mode.STRICT)) {
             IAtomContainer mol = reader.read(new AtomContainer());
             IAtom atom = mol.getAtom(0);
             Assertions.assertEquals(1, atom.getAtomicNumber().intValue());
@@ -1896,7 +1894,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
                                    .or(new Expr(Expr.Type.ELEMENT, 7)) // N
                                    .or(new Expr(Expr.Type.ELEMENT, 8)); // O
-            expected = expected.negate();
+            expected.negate();
             assertThat(expr, is(expected));
         }
     }
@@ -1912,7 +1910,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
                     .or(new Expr(Expr.Type.ELEMENT, 7)) // N
                     .or(new Expr(Expr.Type.ELEMENT, 8)); // O
-            expected = expected.negate();
+            expected.negate();
             assertThat(expr, is(expected));
         }
     }
@@ -2045,5 +2043,112 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
             }
         }
+    }
+
+    @Test
+    void testBugArrayIndexOutOfBoundsException() throws Exception {
+        // arrange
+        final String input = "\n" +
+                "  Mrv2221 01162322282D          \n" +
+                "\n" +
+                " 40 46  0  0  0  0            999 V2000\n" +
+                "    6.8727   -0.3790    0.0000 C   0  0  0  0  0  0  0  0  0  1  0  0\n" +
+                "    6.8727   -1.2041    0.0000 C   0  0  0  0  0  0  0  0  0  2  0  0\n" +
+                "    7.5870   -1.6166    0.0000 N   0  0  0  0  0  0  0  0  0  3  0  0\n" +
+                "    8.3015   -1.2041    0.0000 C   0  0  0  0  0  0  0  0  0  4  0  0\n" +
+                "    8.3015   -0.3790    0.0000 C   0  0  0  0  0  0  0  0  0  5  0  0\n" +
+                "    7.5870    0.0333    0.0000 C   0  0  0  0  0  0  0  0  0  6  0  0\n" +
+                "    9.0861   -1.4590    0.0000 N   0  0  0  0  0  0  0  0  0  7  0  0\n" +
+                "    9.5711   -0.7916    0.0000 C   0  0  0  0  0  0  0  0  0 27  0  0\n" +
+                "    9.0861   -0.1242    0.0000 C   0  0  0  0  0  0  0  0  0 28  0  0\n" +
+                "    9.3411    0.6604    0.0000 C   0  0  0  0  0  0  0  0  0 25  0  0\n" +
+                "   10.3960   -0.7916    0.0000 C   0  0  0  0  0  0  0  0  0 29  0  0\n" +
+                "   10.1479    0.8320    0.0000 C   0  0  0  0  0  5  0  0  0 20  0  0\n" +
+                "   10.8085   -1.5060    0.0000 C   0  0  0  0  0  0  0  0  0 30  0  0\n" +
+                "   11.6335   -1.5060    0.0000 C   0  0  0  0  0  0  0  0  0 31  0  0\n" +
+                "   12.0459   -0.7916    0.0000 C   0  0  0  0  0  0  0  0  0 32  0  0\n" +
+                "   11.6335   -0.0771    0.0000 C   0  0  0  0  0  0  0  0  0 33  0  0\n" +
+                "   10.8085   -0.0771    0.0000 C   0  0  0  0  0  0  0  0  0 34  0  0\n" +
+                "   12.8709   -0.7916    0.0000 Cl  0  0  0  0  0  0  0  0  0 42  0  0\n" +
+                "    6.1582    0.0333    0.0000 Cl  0  0  0  0  0  0  0  0  0  9  0  0\n" +
+                "   10.4029    1.6166    0.0000 O   0  0  0  0  0  0  0  0  0 21  0  0\n" +
+                "   10.7000    0.2189    0.0000 O   0  0  0  0  0  0  0  0  0 22  0  0\n" +
+                "   11.4144    0.6313    0.0000 C   0  0  0  0  0  0  0  0  0 23  0  0\n" +
+                "    6.8727   -0.3790    0.0000 C   0  0  0  0  0  0  0  0  0  1  0  0\n" +
+                "    6.8727   -1.2041    0.0000 C   0  0  0  0  0  0  0  0  0  2  0  0\n" +
+                "    7.5870   -1.6166    0.0000 N   0  0  0  0  0  0  0  0  0  3  0  0\n" +
+                "    8.3015   -1.2041    0.0000 C   0  0  0  0  0  0  0  0  0  4  0  0\n" +
+                "    8.3015   -0.3790    0.0000 C   0  0  0  0  0  0  0  0  0  5  0  0\n" +
+                "    7.5870    0.0333    0.0000 C   0  0  0  0  0  0  0  0  0  6  0  0\n" +
+                "    9.0861   -1.4590    0.0000 N   0  0  0  0  0  0  0  0  0  7  0  0\n" +
+                "    9.5711   -0.7916    0.0000 C   0  0  0  0  0  0  0  0  0 27  0  0\n" +
+                "    9.0861   -0.1242    0.0000 C   0  0  0  0  0  0  0  0  0 28  0  0\n" +
+                "    9.3411    0.6604    0.0000 C   0  0  0  0  0  0  0  0  0 25  0  0\n" +
+                "   10.3960   -0.7916    0.0000 C   0  0  0  0  0  0  0  0  0 29  0  0\n" +
+                "   10.8085   -1.5060    0.0000 C   0  0  0  0  0  0  0  0  0 30  0  0\n" +
+                "   11.6335   -1.5060    0.0000 C   0  0  0  0  0  0  0  0  0 31  0  0\n" +
+                "   12.0459   -0.7916    0.0000 C   0  0  0  0  0  0  0  0  0 32  0  0\n" +
+                "   11.6335   -0.0771    0.0000 C   0  0  0  0  0  0  0  0  0 33  0  0\n" +
+                "   10.8085   -0.0771    0.0000 C   0  0  0  0  0  0  0  0  0 34  0  0\n" +
+                "   12.8709   -0.7916    0.0000 Cl  0  0  0  0  0  0  0  0  0 42  0  0\n" +
+                "    6.1582    0.0333    0.0000 Cl  0  0  0  0  0  0  0  0  0  9  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "  1  6  2  0  0  0  0\n" +
+                "  1 19  1  0  0  0  0\n" +
+                "  2  3  2  0  0  0  0\n" +
+                "  3  4  1  0  0  0  0\n" +
+                "  4  5  2  0  0  0  0\n" +
+                "  4  7  1  0  0  0  0\n" +
+                "  5  6  1  0  0  0  0\n" +
+                "  5  9  1  0  0  0  0\n" +
+                "  7  8  1  0  0  0  0\n" +
+                "  8  9  2  0  0  0  0\n" +
+                "  8 11  1  0  0  0  0\n" +
+                "  9 10  1  0  0  0  0\n" +
+                " 11 13  1  0  0  0  0\n" +
+                " 11 17  2  0  0  0  0\n" +
+                " 12 20  2  0  0  0  0\n" +
+                " 12 21  1  0  0  0  0\n" +
+                "  0  0  1  0  0  0  0\n" +
+                " 13 14  2  0  0  0  0\n" +
+                " 14 15  1  0  0  0  0\n" +
+                " 15 16  2  0  0  0  0\n" +
+                " 15 18  1  0  0  0  0\n" +
+                " 16 17  1  0  0  0  0\n" +
+                " 21 22  1  0  0  0  0\n" +
+                " 23 24  1  0  0  0  0\n" +
+                " 23 28  2  0  0  0  0\n" +
+                " 23 40  1  0  0  0  0\n" +
+                " 24 25  2  0  0  0  0\n" +
+                " 25 26  1  0  0  0  0\n" +
+                " 26 27  2  0  0  0  0\n" +
+                " 26 29  1  0  0  0  0\n" +
+                " 27 28  1  0  0  0  0\n" +
+                " 27 31  1  0  0  0  0\n" +
+                " 29 30  1  0  0  0  0\n" +
+                " 30 31  2  0  0  0  0\n" +
+                " 30 33  1  0  0  0  0\n" +
+                " 31 32  1  0  0  0  0\n" +
+                " 33 34  1  0  0  0  0\n" +
+                " 33 38  2  0  0  0  0\n" +
+                " 34 35  2  0  0  0  0\n" +
+                " 35 36  1  0  0  0  0\n" +
+                " 36 37  2  0  0  0  0\n" +
+                " 36 39  1  0  0  0  0\n" +
+                " 37 38  1  0  0  0  0\n" +
+                " 40 10  1  0  0  0  0\n" +
+                " 12 32  1  0  0  0  0\n" +
+                "M  END\n";
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new StringReader(input));
+
+        // act
+        IAtomContainer atomContainer = mdlv2000Reader.read(builder.newAtomContainer());
+
+        // assert
+        assertThat(atomContainer, is(Matchers.notNullValue()));
+
+        // tear down
+        mdlv2000Reader.close();
     }
 }
