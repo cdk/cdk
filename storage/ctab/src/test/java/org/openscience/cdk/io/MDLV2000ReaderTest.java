@@ -25,7 +25,6 @@
 package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -2046,7 +2045,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void testBugArrayIndexOutOfBoundsException() throws Exception {
+    void testAtomIndexBelowValidRangeInBondsBlock() throws Exception {
         // arrange
         final String input = "\n" +
                 "  Mrv2221 01162322282D          \n" +
@@ -2142,11 +2141,42 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new StringReader(input));
 
-        // act
-        IAtomContainer atomContainer = mdlv2000Reader.read(builder.newAtomContainer());
+        // act & assert
+        CDKException cdkException = Assertions.assertThrowsExactly(CDKException.class, () -> mdlv2000Reader.read(builder.newAtomContainer()));
+        assertThat(cdkException.getMessage(), is("Invalid atom index in bond block in line 62:   0  0  1  0  0  0  0"));
 
-        // assert
-        assertThat(atomContainer, is(Matchers.notNullValue()));
+        // tear down
+        mdlv2000Reader.close();
+    }
+
+    @Test
+    void testAtomIndexAboveValidRangeInBondsBlock() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052112282D          \n" +
+                "\n" +
+                "  7  7  0  0  1  0            999 V2000\n" +
+                "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "  2  3  1  0  0  0  0\n" +
+                "  3  4  1  0  0  0  0\n" +
+                "  4  5  1  0  0  0  0\n" +
+                "  5  6  1  0  0  0  0\n" +
+                "  1  8  1  0  0  0  0\n" +
+                "  1  7  1  0  0  0  0\n" +
+                "M  END\n";
+
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new StringReader(input));
+
+        // act & assert
+        CDKException cdkException = Assertions.assertThrowsExactly(CDKException.class, () -> mdlv2000Reader.read(builder.newAtomContainer()));
+        assertThat(cdkException.getMessage(), is("Invalid atom index in bond block in line 17:   1  8  1  0  0  0  0"));
 
         // tear down
         mdlv2000Reader.close();

@@ -826,6 +826,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 throw new CDKException("invalid line length: " + length + " " + line);
         }
 
+        // verify atom indices to avoid an ArrayIndexOutOfBoundsException runtime exception
+        if (u < 0 || v < 0 || u >= atoms.length || v >= atoms.length) {
+            throw new CDKException("Invalid atom index in bond block in line " + lineNum + ": " + line);
+        }
+
         IBond bond = builder.newBond();
         bond.setAtoms(new IAtom[]{atoms[u], atoms[v]});
 
@@ -1694,7 +1699,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     /**
-     * Optimised method for reading a integer from 3 characters in a string at a
+     * Optimised method for reading an integer from 3 characters in a string at a
      * specified index. MDL V2000 Molfile make heavy use of the 3 character ints
      * in the atom/bond and property blocks. The integer may be signed and
      * pre/post padded with white space.
