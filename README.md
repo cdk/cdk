@@ -38,8 +38,8 @@ You can also download a pre-built library JAR from [releases](https://github.com
 Include the main JAR on the Java classpath when compiling and running your code:
 
 ```bash
-$ javac -cp cdk-2.7.jar MyClass.java
-$ java -cp cdk-2.7.jar:. MyClass
+$ javac -cp cdk-2.8.jar MyClass.java
+$ java -cp cdk-2.8.jar:. MyClass
 ```
 
 If you are using Maven, you can use the **uber** ``cdk-bundle`` to grab 
