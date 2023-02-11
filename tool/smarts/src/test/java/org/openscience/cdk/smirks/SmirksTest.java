@@ -59,6 +59,8 @@ class SmirksTest {
     static void assertTransform(String smiles, String smirks, Transform transform, String[] expected, Transform.Mode mode) throws Exception {
         IAtomContainer mol = SMIPAR.parseSmiles(smiles);
         assertTrue(Smirks.parse(transform, smirks), transform.message());
+        if (transform.message() != null)
+            System.err.println("Warning: " + transform.message());
         Iterable<IAtomContainer> iterable = transform.apply(mol, mode);
 
         List<String> actualSmiles = new ArrayList<>();
