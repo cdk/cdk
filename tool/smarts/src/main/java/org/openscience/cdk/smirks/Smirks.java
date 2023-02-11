@@ -329,8 +329,8 @@ public class Smirks {
     }
 
     private static final class SmirksState {
-        List<String> errors = new ArrayList<>();
-        List<String> warnings = new ArrayList<>();
+        Set<String> errors = new HashSet<>();
+        Set<String> warnings = new HashSet<>();
 
         QueryAtomContainer query;
 
@@ -582,6 +582,20 @@ public class Smirks {
 //                System.err.println(begIdx + "-" + endIdx + " new bond");
 //            }
 
+            // warn if someone puts something like >>C:C, better written as
+            // >>c:c or even >>cc
+            if (pair[1] != null) {
+                BinaryExprValue bndArom = IsAromatic(pair[1]);
+                if (bndArom.ok() && bndArom.val == 1) {
+                    BinaryExprValue begArom = IsAromatic(pair[1].getBegin());
+                    BinaryExprValue endArom = IsAromatic(pair[1].getEnd());
+                    if (begArom.ok() && begArom.val == 0)
+                        state.warning("Aromatic bond ':' connected to an aliphatic atom");
+                    else if (endArom.ok() && endArom.val == 0)
+                        state.warning("Aromatic bond ':' connected to an aliphatic atom");
+                }
+            }
+
             BinaryExprValue lft = GetBondOrder(pair[0]);
             BinaryExprValue rgt = GetBondOrder(pair[1]);
             if (pair[0] != null && pair[1] == null) {
@@ -591,15 +605,22 @@ public class Smirks {
                     if (!rgt.ok())
                         throw new IllegalArgumentException();
                     ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, GetBondOrder(pair[1]).val, 0));
+                    if (rgt.val == 5)
+                        ops.add(new TransformOp(TransformOp.Type.AromaticBond, begIdx, endIdx, 1, 0));
                 } else {
                     if (!rgt.ok()) {
                         if (IsAnyBond(pair[1]))
                             continue;
                         state.warnings.add("Ignored query bond, consider using '~'");
                     } else {
-                        if (changed(lft, rgt))
+                        if (changed(lft, rgt)) {
                             ops.add(new TransformOp(TransformOp.Type.BondOrder,
                                                     begIdx, endIdx, rgt.val));
+                        }
+                        lft = IsAromatic(pair[0]);
+                        rgt = IsAromatic(pair[1]);
+                        if (changed(lft, rgt))
+                            ops.add(new TransformOp(TransformOp.Type.AromaticBond, begIdx, endIdx, rgt.val, 0));
                     }
                 }
             }
@@ -850,7 +871,13 @@ public class Smirks {
     }
 
     private static BinaryExprValue IsAromatic(IAtom atom) {
+        if (atom == null)
+            return BinaryExprValue.UNDEF;
         return IsAromatic(((QueryAtom) atom).getExpression());
+    }
+
+    private static BinaryExprValue IsAromatic(IBond bond) {
+        return IsAromatic(((QueryBond) bond).getExpression());
     }
 
     private static BinaryExprValue GetProperty(Expr expr, Expr.Type type) {
@@ -944,8 +971,13 @@ public class Smirks {
         BinaryExprValue rgt = GetAtomicNumber(after);
         if (before == null) {
             ops.add(new TransformOp(TransformOp.Type.NewAtom, aidx, rgt.val, hAdjust, IsAromatic(after).val));
-        } else if (changed(lft, rgt))
+        } else if (changed(lft, rgt)) {
             ops.add(new TransformOp(TransformOp.Type.Element, aidx, rgt.val));
+            lft = IsAromatic(before);
+            rgt = IsAromatic(after);
+            if (changed(lft, rgt))
+                ops.add(new TransformOp(TransformOp.Type.Aromatic, aidx, rgt.val));
+        }
         lft = GetProperty(before, Expr.Type.FORMAL_CHARGE);
         rgt = GetProperty(after, Expr.Type.FORMAL_CHARGE);
         if (changed(lft, rgt))
@@ -961,7 +993,7 @@ public class Smirks {
         rgt = GetProperty(after, Expr.Type.ISOTOPE);
         if (changed(lft, rgt))
             ops.add(new TransformOp(TransformOp.Type.Mass, aidx, rgt.val));
-        // hcnt delta and implH
+
         return ops;
     }
 }
