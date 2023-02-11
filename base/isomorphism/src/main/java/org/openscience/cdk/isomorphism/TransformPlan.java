@@ -296,6 +296,11 @@ final class TransformPlan {
             case Aromatic:
                 amap[op.a].setIsAromatic(op.b != 0);
                 break;
+            case AromaticBond:
+                amap[op.a].getBond(amap[op.b]).setIsAromatic(op.c != 0);
+                amap[op.a].setIsAromatic(op.c != 0); // questionable semantics
+                amap[op.b].setIsAromatic(op.c != 0);
+                break;
             case Charge:
                 amap[op.a].setFormalCharge(op.b);
                 break;

@@ -95,10 +95,15 @@ public final class TransformOp implements Comparable<TransformOp> {
          */
         Element,
         /**
-         * Set the aromatic flag of an atom.
+         * Set or clear the aromatic flag of an atom.
          * {@code params: {idx, isarom}}
          */
         Aromatic,
+        /**
+         * Set or clear the aromatic flag of an bond.
+         * {@code params: {idx1, idx2, isarom}}
+         */
+        AromaticBond,
         /**
          * Set the formal charge of an atom.
          * {@code params: {idx, charg}}
@@ -231,6 +236,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case NewBond:
             case DeleteBond:
             case BondOrder:
+            case AromaticBond:
             case MoveH:
                 return Math.max(a, b);
             case DbOpposite:
@@ -257,6 +263,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case NewBond:
             case DeleteBond:
             case BondOrder:
+            case AromaticBond:
             case MoveH:
                 return Math.min(a, b);
             case DbOpposite:
