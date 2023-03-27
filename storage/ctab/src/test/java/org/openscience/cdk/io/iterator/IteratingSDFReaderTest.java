@@ -25,8 +25,11 @@ package org.openscience.cdk.io.iterator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
@@ -41,6 +44,8 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -63,7 +68,7 @@ class IteratingSDFReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assertions.assertNotNull(object);
-            Assertions.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
             Assertions.assertEquals(MDLV2000Format.getInstance(), reader.getFormat(), "Molecule # was not in MDL V2000 format: " + molCount);
         }
@@ -91,7 +96,7 @@ class IteratingSDFReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assertions.assertNotNull(object);
-            Assertions.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
             Assertions.assertEquals(MDLV2000Format.getInstance(), reader.getFormat(), "Molecule # was not in MDL V2000 format: " + molCount);
         }
@@ -108,10 +113,10 @@ class IteratingSDFReaderTest extends CDKTestCase {
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         //int molCount = 0;
-        Assertions.assertTrue(reader.hasNext());
+        assertTrue(reader.hasNext());
         Object object = reader.next();
         Assertions.assertNotNull(object);
-        Assertions.assertTrue(object instanceof IAtomContainer);
+        assertTrue(object instanceof IAtomContainer);
         Assertions.assertEquals("2-methylbenzo-1,4-quinone", ((IAtomContainer) object).getTitle());
         Assertions.assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
         reader.close();
@@ -125,10 +130,10 @@ class IteratingSDFReaderTest extends CDKTestCase {
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         //int molCount = 0;
-        Assertions.assertTrue(reader.hasNext());
+        assertTrue(reader.hasNext());
         Object object = reader.next();
         Assertions.assertNotNull(object);
-        Assertions.assertTrue(object instanceof IAtomContainer);
+        assertTrue(object instanceof IAtomContainer);
         IAtomContainer m = (IAtomContainer) object;
         Assertions.assertEquals("1", m.getProperty("E_NSC"));
         Assertions.assertEquals("553-97-9", m.getProperty("E_CAS"));
@@ -159,7 +164,7 @@ class IteratingSDFReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assertions.assertNotNull(object);
-            Assertions.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
@@ -178,7 +183,7 @@ class IteratingSDFReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assertions.assertNotNull(object);
-            Assertions.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
@@ -196,7 +201,7 @@ class IteratingSDFReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assertions.assertNotNull(object);
-            Assertions.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
 
             if (molCount == 2) {
@@ -228,10 +233,10 @@ class IteratingSDFReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assertions.assertNotNull(object);
-            Assertions.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
             boolean has3d = GeometryUtil.has3DCoordinates((IAtomContainer) object);
-            Assertions.assertTrue(has3d);
+            assertTrue(has3d);
         }
         Assertions.assertNotSame(0, molCount);
         reader.close();
@@ -249,7 +254,7 @@ class IteratingSDFReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assertions.assertNotNull(object);
-            Assertions.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
             mol = (IAtomContainer) object;
         }
@@ -270,7 +275,7 @@ class IteratingSDFReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assertions.assertNotNull(object);
-            Assertions.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
             mol = (IAtomContainer) object;
         }
@@ -344,6 +349,28 @@ class IteratingSDFReaderTest extends CDKTestCase {
 
         Assertions.assertEquals(1, count);
 
+    }
+
+    // extra spaces from the ChEMBL API
+    @Test
+    void testExtraSpaces() throws IOException {
+        try (InputStream in = getClass().getResourceAsStream("chemblApiExamples.sdf")) {
+            IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+            IteratingSDFReader reader = new IteratingSDFReader(in, builder);
+            reader.setSkip(true); // skip over null entries and keep reading until EOF
+            assertTrue(reader.hasNext());
+            IAtomContainer mol = reader.next();
+            Assertions.assertEquals(mol.<String>getProperty("chembl_id"), "CHEMBL564829");
+            Assertions.assertEquals(mol.<String>getProperty("chembl_pref_name"), "MILCICLIB");
+            assertTrue(reader.hasNext());
+            mol = reader.next();
+            Assertions.assertEquals(mol.<String>getProperty("chembl_id"), "CHEMBL603469");
+            Assertions.assertEquals(mol.<String>getProperty("chembl_pref_name"), "LESTAURTINIB");
+            assertTrue(reader.hasNext());
+            mol = reader.next();
+            Assertions.assertEquals(mol.<String>getProperty("chembl_id"), "CHEMBL1946170");
+            Assertions.assertEquals(mol.<String>getProperty("chembl_pref_name"), "REGORAFENIB");
+        }
     }
 
 }
