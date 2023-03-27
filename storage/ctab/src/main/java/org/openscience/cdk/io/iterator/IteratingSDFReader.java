@@ -315,11 +315,13 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
             if (str.startsWith(SDF_DATA_HEADER)) {
                 dataHeader = extractFieldName(str);
                 skipOtherFieldHeaderLines(str);
-                String data = extractFieldData(sb);
+                String data = extractFieldData(sb).trim();
                 if (dataHeader != null) {
                     logger.info("fieldName, data: ", dataHeader, ", ", data);
                     m.setProperty(dataHeader, data);
                 }
+            } else if (currentLine.isEmpty()) {
+                 currentLine = input.readLine();
             } else {
                 break;
             }
