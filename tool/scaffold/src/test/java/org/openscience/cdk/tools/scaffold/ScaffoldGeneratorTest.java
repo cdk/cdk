@@ -262,12 +262,7 @@ public class ScaffoldGeneratorTest extends ScaffoldGenerator {
             for (IAtomContainer tmpRing : tmpRings) {
                 /*Generate scaffold with removed ring*/
                 IAtomContainer tmpRemovedRing = tmpScaffoldGenerator.removeRing(tmpScaffold, true, tmpRing);
-                try {
-                    Assertions.assertTrue(Arrays.asList(tmpFileNameToRingRemovalProductsSmilesMap.get(tmpFileName)).contains(tmpSmiGen.create(tmpRemovedRing)));
-                } catch (AssertionError e) {
-                    System.out.println(tmpFileName);
-                    System.out.println(tmpSmiGen.create(tmpRemovedRing));
-                }
+                Assertions.assertTrue(Arrays.asList(tmpFileNameToRingRemovalProductsSmilesMap.get(tmpFileName)).contains(tmpSmiGen.create(tmpRemovedRing)));
             }
         }
     }
