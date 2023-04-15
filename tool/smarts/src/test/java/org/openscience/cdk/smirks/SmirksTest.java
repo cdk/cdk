@@ -1032,4 +1032,21 @@ class SmirksTest {
         final String smirks = "[c;r6:1](-[SH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[CH1;R0:5](=[OD1])>>[c:3]2:[c:1]:[s:2]:[c:5](-[#6:6]):[n:4]@2";
         assertWarningMesg(smirks, "Ignored query bond, consider using '~'");
     }
+
+    @Test
+    void testRetroWittigLike() throws Exception {
+        final String smiles = "CCC=Cc1ccccc1";
+        final String smirks = "[CH1:1]=[CH1+0:2]>>[CH1:1]=O.[CH2+0:2][P+](c1ccccc1)(C)C";
+        final String expected = "CCC=O.C(c1ccccc1)[P+](c2ccccc2)(C)C";
+
+        assertTransform(smiles, smirks, new SmirksTransform(), expected);
+        assertTransform(smiles, smirks, new SmirksTransform(),
+                        new String[] {expected},
+                        Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new SmirksTransform(),
+                        new String[] {
+                                "CCC=O.C(c1ccccc1)[P+](c2ccccc2)(C)C",
+                                "CCC[P+](c1ccccc1)(C)C.C(c1ccccc1)=O"},
+                        Transform.Mode.All);
+    }
 }
