@@ -68,8 +68,11 @@ class SmirksTest {
             actualSmiles.add(SMIGEN.create(actual));
         }
 
-        assertEquals(expected.length, actualSmiles.size(), "The number of expected transforms " + expected.length +
-                " and actual transforms " + actualSmiles.size() + " is different.");
+        assertEquals(expected.length,
+                     actualSmiles.size(),
+                     "The number of expected transforms " + expected.length +
+                     " and actual transforms " + actualSmiles.size() + " is different:" +
+                     actualSmiles);
 
         for (int i = 0; i < expected.length; i++) {
             Assertions.assertEquals(
