@@ -338,6 +338,7 @@ public final class TransformOp implements Comparable<TransformOp> {
                 return type + "{" + a + "-" + b + "}";
             case NewBond:
             case BondOrder:
+            case AromaticBond:
                 switch (c) {
                     case 1:
                         return type + "{" + a + "-" + b + "}";
@@ -358,7 +359,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case DbTogether:
                 return type + "{" + c + "/" + a + "=" + b + "\\" + d + "}";
             default:
-                throw new IllegalStateException();
+                throw new IllegalStateException("Unknown op:" + type);
         }
     }
 }
