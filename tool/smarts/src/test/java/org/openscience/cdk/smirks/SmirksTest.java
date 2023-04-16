@@ -1080,4 +1080,11 @@ class SmirksTest {
                         "[cH0X3v4+0:1]1[cH1X3v4+0:3][cH0X3v4+0:4][nH0X2v3+0:11][nH0X3v3+0:10]1>>[CH0+0:1]([CH2+0:3][CH0+0:4]=O)=O.[NH1+0:10][NH2+0:11]",
                         "FC(F)(F)C(CC(C)=O)=O.NNC");
     }
+
+    @Test
+    public void testImplicitValenceAromatic5() throws Exception {
+        assertTransform("n1c(cccc1C)-n2c(ccc2C)C",
+                        "[c;H0v4X3;+0:1]1[c;H1v4X3;+0:3][c;H1v4X3;+0:4][c;H0v4X3;+0:5][n;H0v3X3;+0:13]1>>[H][#6;AH1:3]([#6;AH0;+0:1]=O)[#6;AH1:4]([H])[#6;AH0;+0:5]=O.[H][#7;A:13][H]",
+                        "n1c(cccc1C)N.C(CCC(C)=O)(C)=O");
+    }
 }
