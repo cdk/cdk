@@ -555,8 +555,13 @@ class SmirksTest {
     // correctly
     @Test
     void testReplaceH_2() throws Exception {
+        assertWarningMesg("[CH1:1][H]>>[*:1]c1ccccc1",
+                          "Not enough context to determine bond order of newly created bond!");
+        // * is both aliphatic and aromatic! so we can't know until we run
+        // the pattern if the new bond is aromatic or aliphatic, it must be
+        // knowable from the pattern
         assertTransform("C[C@H](O)CC",
-                        "[CH1:1][H]>>[*:1]c1ccccc1",
+                        "[CH1:1][H]>>[*:1]-c1ccccc1",
                         "C[C@](O)(CC)c1ccccc1");
     }
 
@@ -1048,5 +1053,14 @@ class SmirksTest {
                                 "CCC=O.C(c1ccccc1)[P+](c2ccccc2)(C)C",
                                 "CCC[P+](c1ccccc1)(C)C.C(c1ccccc1)=O"},
                         Transform.Mode.All);
+    }
+
+    // need to check the atoms of a bond to see if the implicit bond definition
+    // is aliphatic or aromatic
+    @Test
+    public void testAromaticContext() throws Exception {
+        assertTransform("FC(F)(F)c1nn(c(c1)C)C",
+                        "[cH0X3v4+0:1]1[cH1X3v4+0:3][cH0X3v4+0:4][nH0X2v3+0:11][nH0X3v3+0:10]1>>[CH0+0:1]([CH2+0:3][CH0+0:4]=O)=O.[NH1+0:10][NH2+0:11]",
+                        "FC(F)(F)C(CC(C)=O)=O.NNC");
     }
 }
