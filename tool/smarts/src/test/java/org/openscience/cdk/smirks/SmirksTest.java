@@ -1055,6 +1055,23 @@ class SmirksTest {
                         Transform.Mode.All);
     }
 
+    @Test
+    void testRetroWittigLikeTriPhenyl() throws Exception {
+        final String smiles = "CCC=Cc1ccccc1";
+        final String smirks = "[CH1:1]=[CH1+0:2]>>[CH1:1]=O.[CH2+0:2][P+](c1ccccc1)(c2ccccc2)c3ccccc3";
+        final String expected = "CCC=O.C(c1ccccc1)[P+](c2ccccc2)(c3ccccc3)c4ccccc4";
+
+        assertTransform(smiles, smirks, new SmirksTransform(), expected);
+        assertTransform(smiles, smirks, new SmirksTransform(),
+                        new String[] {expected},
+                        Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new SmirksTransform(),
+                        new String[] {
+                                "CCC=O.C(c1ccccc1)[P+](c2ccccc2)(c3ccccc3)c4ccccc4",
+                                "CCC[P+](c1ccccc1)(c2ccccc2)c3ccccc3.C(c1ccccc1)=O"},
+                        Transform.Mode.All);
+    }
+
     // need to check the atoms of a bond to see if the implicit bond definition
     // is aliphatic or aromatic
     @Test
