@@ -318,8 +318,6 @@ public class Smirks {
         // build the query pattern based on the left-hand side of the reaction
         prepareQuery(state);
 
-        System.err.println(ops);
-
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(Smarts.generate(query));
             LOGGER.debug(ops);
