@@ -1087,4 +1087,18 @@ class SmirksTest {
                         "[c;H0v4X3;+0:1]1[c;H1v4X3;+0:3][c;H1v4X3;+0:4][c;H0v4X3;+0:5][n;H0v3X3;+0:13]1>>[H][#6;AH1:3]([#6;AH0;+0:1]=O)[#6;AH1:4]([H])[#6;AH0;+0:5]=O.[H][#7;A:13][H]",
                         "n1c(cccc1C)N.C(CCC(C)=O)(C)=O");
     }
+
+    @Test
+    public void testAromatic6() throws Exception {
+        assertTransform("CCn1c(CCl)nc2cc(C)ccc12",
+                        "[cH0+0:1]1[nH0+0:6][cH0+0:7][cH0+0:13][nD2H0+0:14]1>>[CH0+0:1](O)=O.[NH1+0:6][cH0+0:7][cH0+0:13][NH2+0:14]",
+                        "CCNc1ccc(cc1N)C.C(CCl)(O)=O");
+    }
+
+    @Test
+    public void testFischerIndole() throws Exception {
+        assertTransform("CCOC(=O)c1[nH]c2ccccc2c1Cc1ccccc1",
+                        "[#8:9]-[C:8](=[O;D1;H0:10])-[c;H0;D3;+0:5]1:[nH;D2;+0:1]:[c:2]:[c;H0;D3;+0:3](:[c:4]):[c;H0;D3;+0:6]:1-[C:7]>>N-[NH;D2;+0:1]-[c:2]:[cH;D2;+0:3]:[c:4].O=[C;H0;D3;+0:5](-[CH2;D2;+0:6]-[C:7])-[C:8](-[#8:9])=[O;D1;H0:10]",
+                        "CCOC(=O)C(CCc1ccccc1)=O.N(c1ccccc1)N");
+    }
 }

@@ -271,6 +271,8 @@ final class TransformPlan {
             case NewBond:
                 if (amap[op.a].getBond(amap[op.b]) != null)
                     return false;
+                if (amap[op.a] == null || amap[op.b] == null)
+                    throw new IllegalStateException(op + " atoms={null=" + (amap[op.a]==null) + ",null=" + (amap[op.b]==null) + "}");
                 mol.addBond(amap[op.a].getIndex(), amap[op.b].getIndex(),
                             BOND_ORDERS[op.c]);
                 if (op.c == 5 && amap[op.a].isAromatic() && amap[op.b].isAromatic())
@@ -298,8 +300,8 @@ final class TransformPlan {
                 break;
             case AromaticBond:
                 amap[op.a].getBond(amap[op.b]).setIsAromatic(op.c != 0);
-                amap[op.a].setIsAromatic(op.c != 0); // questionable semantics
-                amap[op.b].setIsAromatic(op.c != 0);
+                // amap[op.a].setIsAromatic(op.c != 0); // only for aromatic!
+                // amap[op.b].setIsAromatic(op.c != 0);
                 break;
             case Charge:
                 amap[op.a].setFormalCharge(op.b);
