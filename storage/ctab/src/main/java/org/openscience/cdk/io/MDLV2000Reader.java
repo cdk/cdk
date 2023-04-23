@@ -137,7 +137,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     private static final Pattern     TRAILING_SPACE   = Pattern.compile("\\s+$");
 
     /** Delimits Structure-Data (SD) Files. */
-    private static final String      RECORD_DELIMITER = "$$$$";
+    private static final String SDF_RECORD_DELIMITER = "$$$$";
 
     /** Valid pseudo labels. */
     private static final Set<String> PSEUDO_LABELS    = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("*","A","Q","L","LP","R","R#")));
@@ -327,9 +327,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 return null;
             }
 
-            if (line.startsWith("$$$$")) {
+            if (line.startsWith(SDF_RECORD_DELIMITER))
                 return molecule;
-            }
+
             if (line.length() > 0) {
                 title = line;
             }
@@ -2329,7 +2329,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return the line indicates the end of a record was reached
      */
     private static boolean endOfRecord(final String line) {
-        return line == null || line.equals(RECORD_DELIMITER);
+        return line == null || line.startsWith(SDF_RECORD_DELIMITER);
     }
 
     /**

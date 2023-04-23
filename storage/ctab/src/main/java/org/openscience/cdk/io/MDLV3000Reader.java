@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -76,6 +77,7 @@ import java.util.regex.Pattern;
  */
 public class MDLV3000Reader extends DefaultChemObjectReader {
 
+    public static final String M_END = "M  END";
     private BooleanIOSetting optForce3d;
     private BooleanIOSetting optHydIso;
     private BooleanIOSetting optStereoPerc;
@@ -232,6 +234,15 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 logger.warn("Unrecognized command: " + command);
             }
             lastLine = readLine();
+        }
+
+        // read in any SDF fields
+        if (lastLine.startsWith(M_END)) {
+            try {
+                MDLV2000Reader.readNonStructuralData(input, state.mol);
+            } catch (IOException ex) {
+                throw new CDKException("IO Error", ex);
+            }
         }
 
         finalizeMol(state);
