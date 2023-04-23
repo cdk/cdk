@@ -248,12 +248,9 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                     }
                 }
 
-                if (currentLine.startsWith(M_END)) {
-
+                if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
                     logger.debug("MDL file part read: ", buffer);
-
                     IAtomContainer molecule = null;
-
                     try {
                         ISimpleChemObjectReader reader = getReader(currentFormat);
                         reader.setReader(new StringReader(buffer.toString()));
@@ -264,31 +261,15 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                     }
 
                     if (molecule != null) {
-                        readDataBlockInto(molecule);
                         hasNext = true;
                         nextAvailableIsKnown = true;
                         nextMolecule = molecule;
                         return true;
-                    } else if (skip) {
-                        // null molecule and skip = true, eat up the rest of the entry until '$$$$'
-                        String line;
-                        while ((line = input.readLine()) != null) {
-                            if (line.startsWith(SDF_RECORD_SEPARATOR)) {
-                                break;
-                            }
-                        }
-                    } else {
+                    } else if (!skip) {
                         return false;
                     }
 
                     // empty the buffer
-                    buffer.setLength(0);
-                    lineNum = 0;
-                }
-
-                // found SDF record separator ($$$$) without parsing a molecule (separator is detected
-                // in readDataBlockInto()) the buffer is cleared and the iterator continues reading
-                if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
                     buffer.setLength(0);
                     lineNum = 0;
                 }
@@ -298,34 +279,32 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
             logger.debug(exception);
         }
 
+        if (buffer.length() != 0) {
+            IAtomContainer molecule = null;
+            try {
+                ISimpleChemObjectReader reader = getReader(currentFormat);
+                reader.setReader(new StringReader(buffer.toString()));
+                molecule = reader.read(builder.newAtomContainer());
+            } catch (Exception exception) {
+                logger.error("Error while reading next molecule: " + exception.getMessage());
+                logger.debug(exception);
+            }
+
+            if (molecule != null) {
+                hasNext = true;
+                nextAvailableIsKnown = true;
+                nextMolecule = molecule;
+                return true;
+            } else if (!skip) {
+                return false;
+            }
+            // empty the buffer
+            buffer.setLength(0);
+        }
+
         // reached end of file
         return false;
 
-    }
-
-    private void readDataBlockInto(IAtomContainer m) throws IOException {
-        String dataHeader;
-        StringBuilder sb = new StringBuilder();
-        currentLine = input.readLine();
-        while (currentLine != null) {
-            if (currentLine.startsWith(SDF_RECORD_SEPARATOR))
-                break;
-            logger.debug("looking for data header: ", currentLine);
-            String str = currentLine;
-            if (str.startsWith(SDF_DATA_HEADER)) {
-                dataHeader = extractFieldName(str);
-                skipOtherFieldHeaderLines(str);
-                String data = extractFieldData(sb).trim();
-                if (dataHeader != null) {
-                    logger.info("fieldName, data: ", dataHeader, ", ", data);
-                    m.setProperty(dataHeader, data);
-                }
-            } else if (currentLine.isEmpty()) {
-                 currentLine = input.readLine();
-            } else {
-                break;
-            }
-        }
     }
 
     /**
