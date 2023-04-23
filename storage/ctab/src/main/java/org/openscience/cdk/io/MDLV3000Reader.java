@@ -237,7 +237,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
 
         // read in any SDF fields
-        if (lastLine.startsWith(M_END)) {
+        if (lastLine != null && lastLine.startsWith(M_END)) {
             try {
                 MDLV2000Reader.readNonStructuralData(input, state.mol);
             } catch (IOException ex) {
