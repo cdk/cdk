@@ -473,4 +473,49 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             }
         }
     }
+
+    @Test
+    void testSdProperties() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("pubchem_paracetamol.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertEquals("AAADccByMAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAHgAQCAAACAyBkAAyxoLAAgCIACVSUACCAAAhIgAIiAAGbIgIJiLCkZOEcAhk1BHI2AewQAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAA==",
+                                    mol.getProperty("PUBCHEM_CACTVS_SUBSKEYS"));
+            Assertions.assertEquals("N-(4-hydroxyphenyl)acetamide",
+                                    mol.getProperty("PUBCHEM_IUPAC_OPENEYE_NAME"));
+            Assertions.assertEquals("0.5",
+                                    mol.getProperty("PUBCHEM_XLOGP3"));
+        }
+    }
+
+    @Test
+    void testSdPropertiesNoDelim() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("pubchem_paracetamol_nodelim.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertEquals("AAADccByMAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAHgAQCAAACAyBkAAyxoLAAgCIACVSUACCAAAhIgAIiAAGbIgIJiLCkZOEcAhk1BHI2AewQAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAA==",
+                                    mol.getProperty("PUBCHEM_CACTVS_SUBSKEYS"));
+            Assertions.assertEquals("N-(4-hydroxyphenyl)acetamide",
+                                    mol.getProperty("PUBCHEM_IUPAC_OPENEYE_NAME"));
+            Assertions.assertEquals("0.5",
+                                    mol.getProperty("PUBCHEM_XLOGP3"));
+        }
+    }
+
+    @Test
+    void testSdPropertiesDelimTrailingSpace() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("pubchem_paracetamol_delimnoise.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertEquals("AAADccByMAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAHgAQCAAACAyBkAAyxoLAAgCIACVSUACCAAAhIgAIiAAGbIgIJiLCkZOEcAhk1BHI2AewQAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAA==",
+                                    mol.getProperty("PUBCHEM_CACTVS_SUBSKEYS"));
+            Assertions.assertEquals("N-(4-hydroxyphenyl)acetamide",
+                                    mol.getProperty("PUBCHEM_IUPAC_OPENEYE_NAME"));
+            Assertions.assertEquals("0.5",
+                                    mol.getProperty("PUBCHEM_XLOGP3"));
+        }
+    }
 }
