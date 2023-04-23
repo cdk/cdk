@@ -229,82 +229,59 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
         // now try to parse the next Molecule
         try {
-            currentFormat = (IChemFormat) MDLFormat.getInstance();
+            for (;;) {
+                currentFormat = (IChemFormat) MDLFormat.getInstance();
+                int lineNum = 0;
+                buffer.setLength(0);
 
-            int lineNum = 0;
-            buffer.setLength(0);
-            while ((currentLine = input.readLine()) != null) {
+                while ((currentLine = input.readLine()) != null) {
 
-                // still in a molecule
-                buffer.append(currentLine).append(LINE_SEPARATOR);
-                lineNum++;
+                    // still in a molecule
+                    buffer.append(currentLine).append(LINE_SEPARATOR);
+                    lineNum++;
 
-                // do MDL molfile version checking
-                if (lineNum == 4) {
-                    Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
-                    if (versionMatcher.find()) {
-                        currentFormat = "2000".equals(versionMatcher.group(1)) ? (IChemFormat) MDLV2000Format.getInstance()
-                                                                               : (IChemFormat) MDLV3000Format.getInstance();
+                    // do MDL molfile version checking
+                    if (lineNum == 4) {
+                        Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
+                        if (versionMatcher.find()) {
+                            currentFormat = "2000".equals(versionMatcher.group(1)) ? (IChemFormat) MDLV2000Format.getInstance()
+                                    : (IChemFormat) MDLV3000Format.getInstance();
+                        }
+                    }
+
+                    if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
+                        break;
                     }
                 }
 
-                if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
-                    logger.debug("MDL file part read: ", buffer);
-                    IAtomContainer molecule = null;
-                    try {
-                        ISimpleChemObjectReader reader = getReader(currentFormat);
-                        reader.setReader(new StringReader(buffer.toString()));
-                        molecule = reader.read(builder.newAtomContainer());
-                    } catch (Exception exception) {
-                        logger.error("Error while reading next molecule: " + exception.getMessage());
-                        logger.debug(exception);
-                    }
-
-                    if (molecule != null) {
-                        hasNext = true;
-                        nextAvailableIsKnown = true;
-                        nextMolecule = molecule;
-                        return true;
-                    } else if (!skip) {
-                        return false;
-                    }
-
-                    // empty the buffer
-                    buffer.setLength(0);
-                    lineNum = 0;
+                logger.debug("MDL file part read: ", buffer);
+                IAtomContainer molecule = null;
+                try {
+                    ISimpleChemObjectReader reader = getReader(currentFormat);
+                    reader.setReader(new StringReader(buffer.toString()));
+                    molecule = reader.read(builder.newAtomContainer());
+                } catch (Exception exception) {
+                    logger.error("Error while reading next molecule: " + exception.getMessage());
+                    logger.debug(exception);
                 }
+
+                if (molecule != null) {
+                    hasNext = true;
+                    nextAvailableIsKnown = true;
+                    nextMolecule = molecule;
+                    return true;
+                } else if (!skip) {
+                    return false;
+                } else if (currentLine == null && buffer.length() == 0) {
+                    return false; // EOF
+                }
+                // else (skip=true) try next record
             }
         } catch (IOException exception) {
             logger.error("Error while reading next molecule: " + exception.getMessage());
             logger.debug(exception);
         }
-
-        if (buffer.length() != 0) {
-            IAtomContainer molecule = null;
-            try {
-                ISimpleChemObjectReader reader = getReader(currentFormat);
-                reader.setReader(new StringReader(buffer.toString()));
-                molecule = reader.read(builder.newAtomContainer());
-            } catch (Exception exception) {
-                logger.error("Error while reading next molecule: " + exception.getMessage());
-                logger.debug(exception);
-            }
-
-            if (molecule != null) {
-                hasNext = true;
-                nextAvailableIsKnown = true;
-                nextMolecule = molecule;
-                return true;
-            } else if (!skip) {
-                return false;
-            }
-            // empty the buffer
-            buffer.setLength(0);
-        }
-
-        // reached end of file
         return false;
-
     }
 
     /**
