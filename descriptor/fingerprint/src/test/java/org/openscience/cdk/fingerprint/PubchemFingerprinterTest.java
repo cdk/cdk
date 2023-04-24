@@ -24,15 +24,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +38,14 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import static org.hamcrest.CoreMatchers.is;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @cdk.module test-fingerprint
@@ -328,6 +326,29 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         Assertions.assertEquals(bs2, fb2);
     }
 
+    private String explain(BitSet expected, BitSet actual) {
+        BitSet tmp1 = new BitSet();
+        tmp1.or(expected);
+        tmp1.andNot(actual);
+        BitSet tmp2 = new BitSet();
+        tmp2.or(actual);
+        tmp2.andNot(expected);
+        return "missed=" + tmp1 + " extra=" + tmp2;
+    }
+
+    // Compare a SMILES string to the expected "CACTVS_SUBSTRUCTURE_KEYS" field
+    // used in PubChem
+    private void assertBase64Fingerprint(String expected,
+                                         String smiles) throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        BitSet expectedBits = PubchemFingerprinter.decode(expected);
+        PubchemFingerprinter fpr = new PubchemFingerprinter(SilentChemObjectBuilder.getInstance());
+        BitSet actualBits = fpr.getBitFingerprint(mol).asBitSet();
+        Assertions.assertEquals(expectedBits, actualBits,
+                                explain(expectedBits, actualBits));
+    }
+
     /**
      * Using PubChem/CACTVS Substr keys, these molecules are not considered
      * substructures and should only be used for similarity. This is because the
@@ -338,32 +359,33 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     @Test
     @Override
     void testBug934819() throws Exception {
-
-        IAtomContainer subStructure = bug934819_1();
-        IAtomContainer superStructure = bug934819_2();
-
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
-        addImplicitHydrogens(superStructure);
-        addImplicitHydrogens(subStructure);
-
-        IFingerprinter fpr = new PubchemFingerprinter(SilentChemObjectBuilder.getInstance());
-        IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
-        IBitFingerprint subBits = fpr.getBitFingerprint(subStructure);
-
-        org.hamcrest.MatcherAssert.assertThat(
-                subBits.asBitSet(),
-                is(asBitSet(9, 10, 14, 18, 19, 33, 143, 146, 255, 256, 283, 284, 285, 293, 301, 332, 344, 349, 351,
-                        353, 355, 368, 370, 371, 376, 383, 384, 395, 401, 412, 416, 421, 423, 434, 441, 446, 449, 454,
-                        455, 464, 470, 471, 480, 489, 490, 500, 502, 507, 513, 514, 516, 520, 524, 531, 532, 545, 546,
-                        549, 552, 556, 558, 564, 570, 586, 592, 599, 600, 607, 633, 658, 665)));
-        org.hamcrest.MatcherAssert.assertThat(
-                superBits.asBitSet(),
-                is(asBitSet(9, 10, 11, 14, 18, 19, 33, 34, 143, 146, 150, 153, 255, 256, 257, 258, 283, 284, 285, 293,
-                        301, 332, 344, 349, 351, 353, 355, 368, 370, 371, 374, 376, 383, 384, 395, 401, 412, 416, 417,
-                        421, 423, 427, 434, 441, 446, 449, 454, 455, 460, 464, 470, 471, 479, 480, 489, 490, 500, 502,
-                        507, 513, 514, 516, 520, 524, 531, 532, 545, 546, 549, 552, 556, 558, 564, 570, 578, 582, 584,
-                        586, 592, 595, 600, 603, 607, 608, 633, 634, 640, 658, 660, 664, 665, 668, 677, 678, 683)));
+        assertBase64Fingerprint("AAADcQBiMABAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAABgAAAHAQEAAAACACFUACwgYAQQAiFACBCQwCDAIBgChBoiBgAZIoIIAAggYEAAABAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+                                "[O-][N+](=O)C1=CC=CS1 bug934819_1");
+        assertBase64Fingerprint("AAADccByMABgAAAAAAAAAAAAAAAAASJAAAAAAAAAAAAAAAAB4AAAHAQEAAAACACFUACygYAQQAjFECBCQwiDAYBgChBoiBgAZIoIICKgkJGAAABggAAoyAYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+                                "CCCCSC1=CC=C(S1)C#CC1=CC=C(S1)[N+]([O-])=O bug934819_2");
     }
 
+    /**
+     * Overloads underlying AbstractTest, PC fingerprint can not be used for
+     * substructure queries. We check we match the PubChem values for these
+     * molecules.
+     * @cdk.bug 853254
+     */
+    @Test
+    void testBug853254() throws Exception {
+        // bug853254-1.mol
+        assertBase64Fingerprint("AAADcYBwMAAAAAAAAAAAAAAAAAAAASAAAAAwAAAAAAAAAEgBAAAAGgAAAAAADACAmAAwCIAABACIAiDSCAACAAAkAAAIiAEACMgIJjKANRiCMQAkwAEIqYeLyKCOgAAAAAAQAAAAAAAAACAAAAAAAAAAAA==",
+                                "c1cccc2c1c(=O)oc(=O)2");
+        // bug853254-2.mol
+        assertBase64Fingerprint("AAADcQBwMAAEAAAAAAAAAAAAAAAAASAAAAAwAAAAAAAAAEgBAAAAGgIAAAAADAKAmCAwCIAABACIAiDSCAACAAAkBQAIiAEACsgIJjKBNxiCMQAkwAEIrYeLyKCOgAAAIAARAAAAAABAACIAAAAAAAAAAA==",
+                                "c1ccc(Cl)c2c1c(=O)oc(=O)2");
+    }
+
+    // ensuring ESSSR is used, in this case SMARTS can not be used as it is not
+    // considered to have a 7 membered ring (e.g. bit213).
+    @Test
+    void testCID6249() throws Exception {
+        assertBase64Fingerprint("AAADccBgAAAAAAAAAAAAAAAAGDAAAYAAAAAwYAAAAAAAAAAAAAAAGAAAAAAADQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAgAAOgAAAAAAAAAAAAAAAAAAAAQAACAAAAA==",
+                                "C1C2CC2C3C1C3");
+    }
 }
