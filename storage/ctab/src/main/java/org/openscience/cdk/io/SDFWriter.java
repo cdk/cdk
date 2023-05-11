@@ -30,6 +30,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -70,9 +71,10 @@ public class SDFWriter extends DefaultChemObjectWriter {
     public static final String OptAlwaysV3000 = "writeV3000";
     public static final String OptWriteData = "writeProperties";
     public static final String OptTruncateLongData  = "TruncateLongData";
+    public static final String SD_RECORD_DELIM = "$$$$";
 
 
-  private BufferedWriter   writer;
+    private BufferedWriter   writer;
     private BooleanIOSetting paramWriteData;
     private BooleanIOSetting paramWriteV3000;
     private BooleanIOSetting truncateData;
@@ -278,63 +280,21 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
             // write non-structural data (mol properties in our case)
             if (paramWriteData.isSet()) {
-                Map<Object, Object> sdFields           = container.getProperties();
-                boolean             writeAllProperties = propertiesToWrite == null;
-                if (sdFields != null) {
-                    for (Object propKey : sdFields.keySet()) {
-                        String headerKey = propKey.toString();
-                        if (!isCDKInternalProperty(headerKey)) {
-                            if (writeAllProperties || propertiesToWrite.contains(headerKey)) {
-                                String cleanHeaderKey = replaceInvalidHeaderChars(headerKey);
-                                if (!cleanHeaderKey.equals(headerKey))
-                                    logger.info("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
-
-                                Object val = sdFields.get(propKey);
-
-                                if (isPrimitiveDataValue(val)) {
-                                    stringWriter.append("> <" + cleanHeaderKey + ">\n");
-                                    if (val != null) {
-                                      String valStr = val.toString();
-                                      int maxDataLen = 200; // set in the spec
-                                      if (truncateData.isSet()) {
-                                        for (String line : valStr.split("\n")) {
-                                          if (line.length() > maxDataLen)
-                                            stringWriter.append(line.substring(0, maxDataLen));
-                                          else
-                                            stringWriter.append(valStr);
-                                        }
-                                      } else {
-                                        stringWriter.append(valStr);
-                                      }
-                                    }
-                                    stringWriter.append("\n\n");
-                                } else {
-
-                                    logger.info("Skipped property " + propKey + " because only primitive and string properties can be written by SDFWriter");
-                                }
-                            }
-                        }
-                    }
-                }
+                MDLV2000Writer.writeNonStructuralData(stringWriter,
+                                                      container,
+                                                      cdkInternalProperties,
+                                                      propertiesToWrite,
+                                                      truncateData.isSet());
             }
-            stringWriter.append("$$$$\n");
+            stringWriter.append(SD_RECORD_DELIM)
+                        .append('\n');
+
             writer.write(stringWriter.toString());
         } catch (IOException exception) {
             throw new CDKException("Error while writing a SD file entry: " + exception.getMessage(), exception);
         }
     }
 
-    private static boolean isPrimitiveDataValue(Object obj) {
-        return obj == null ||
-               obj.getClass() == String.class ||
-               obj.getClass() == Integer.class ||
-               obj.getClass() == Double.class ||
-               obj.getClass() == Boolean.class ||
-               obj.getClass() == Float.class ||
-               obj.getClass() == Byte.class ||
-               obj.getClass() == Short.class ||
-               obj.getClass() == Character.class;
-    }
 
     private boolean writeV3000(IAtomContainer container) {
         if (paramWriteV3000.isSet())
@@ -379,7 +339,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      * A list of properties used by CDK algorithms which must never be
      * serialized into the SD file format.
      */
-    private static final List<String> cdkInternalProperties = new ArrayList<>();
+    private static final Set<String> cdkInternalProperties = new HashSet<>();
 
     static {
         cdkInternalProperties.add(InvPair.CANONICAL_LABEL);

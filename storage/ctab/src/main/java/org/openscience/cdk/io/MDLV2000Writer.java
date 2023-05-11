@@ -126,6 +126,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public static final String OptProgramName               = "ProgramName";
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
+    private static final int MAX_SDTAG_LENGTH = 200;
 
     // regular expression to capture R groups with attached numbers
     private final Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
@@ -215,6 +216,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private BooleanIOSetting writeQueryFormatValencies;
 
     private BooleanIOSetting writeDefaultProps;
+
+    private BooleanIOSetting writeSdData;
 
     private StringIOSetting programNameOpt;
 
@@ -1387,6 +1390,79 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         for (int f = 0; f < l; f++)
             s += " ";
         return s;
+    }
+
+    private static String replaceInvalidHeaderChars(String headerKey) {
+        return headerKey.replaceAll("[-<>.=% ]", "_");
+    }
+
+    private static boolean isPrimitiveDataValue(Object obj) {
+        return obj == null ||
+                obj.getClass() == String.class ||
+                obj.getClass() == Integer.class ||
+                obj.getClass() == Double.class ||
+                obj.getClass() == Boolean.class ||
+                obj.getClass() == Float.class ||
+                obj.getClass() == Byte.class ||
+                obj.getClass() == Short.class ||
+                obj.getClass() == Character.class;
+    }
+
+    /**
+     * Write non-structural SDfile key/value pairs.
+     */
+    static void writeNonStructuralData(StringWriter sw,
+                                       final IAtomContainer mol,
+                                       final Set<String> reject,
+                                       final Set<String> accept,
+                                       final boolean truncate)
+    {
+        Map<Object, Object> sdFields = mol.getProperties();
+        if (sdFields == null)
+            return;
+
+        for (Map.Entry<Object,Object> e : sdFields.entrySet()) {
+
+            final String key = e.getKey().toString();
+            if (reject != null && reject.contains(key))
+                continue;
+            if (accept != null && !accept.contains(key))
+                continue;
+
+            final String cleanHeaderKey = replaceInvalidHeaderChars(key);
+            if (!cleanHeaderKey.equals(key))
+                logger.info("Replaced characters in SDfile data header: ",
+                            key, " written as: ", cleanHeaderKey);
+
+            final Object val = e.getValue();
+            if (!isPrimitiveDataValue(val)) {
+                logger.info("Skipped property " + key,
+                            " because only primitive and string properties",
+                            " can be written by SDFWriter");
+                continue;
+            }
+
+            sw.append("> <").append(cleanHeaderKey).append(">\n");
+
+            if (val == null)
+                continue;
+
+            String valStr = val.toString();
+            if (truncate && valStr.length() > MAX_SDTAG_LENGTH) {
+                StringBuilder sb = new StringBuilder();
+                for (String line : valStr.split("\n")) {
+                    if (line.length() > MAX_SDTAG_LENGTH)
+                        sb.append(line, 0, MAX_SDTAG_LENGTH);
+                    else
+                        sb.append(line);
+                    sb.append("\n");
+                }
+                valStr = sb.toString();
+            }
+            sw.append(valStr);
+            sw.append("\n\n");
+        }
+
     }
 
     /**
