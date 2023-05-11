@@ -350,6 +350,69 @@ class SDFWriterTest extends ChemObjectWriterTest {
     }
 
     @Test
+    void testPropertyOutput_noneOption() throws CDKException, IOException {
+        IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
+        StringWriter sw = new StringWriter();
+        SDFWriter sdf = new SDFWriter(sw);
+        sdf.getSetting(SDFWriter.OptWriteData).setSetting("false");
+        adenine.setProperty("one", "a");
+        adenine.setProperty("two", "b");
+        sdf.write(adenine);
+        sdf.close();
+        String out = sw.toString();
+        Assertions.assertFalse(out.contains("> <two>"));
+        Assertions.assertFalse(out.contains("> <one>"));
+    }
+
+    @Test
+    void testPropertyOutput_V3000() throws CDKException, IOException {
+        IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
+        StringWriter sw = new StringWriter();
+        SDFWriter sdf = new SDFWriter(sw);
+        sdf.getSetting(SDFWriter.OptAlwaysV3000).setSetting("true");
+        sdf.getSetting(SDFWriter.OptWriteData).setSetting("true");
+        adenine.setProperty("one", "a");
+        adenine.setProperty("two", "b");
+        sdf.write(adenine);
+        sdf.close();
+        String out = sw.toString();
+        Assertions.assertTrue(out.contains("> <two>"));
+        Assertions.assertTrue(out.contains("> <one>"));
+    }
+
+    @Test
+    void testPropertyOutput_V3000_acceptTags() throws CDKException, IOException {
+        IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
+        StringWriter sw = new StringWriter();
+        SDFWriter sdf = new SDFWriter(sw, Collections.emptySet());
+        sdf.getSetting(SDFWriter.OptAlwaysV3000).setSetting("true");
+        sdf.getSetting(SDFWriter.OptWriteData).setSetting("true");
+        adenine.setProperty("one", "a");
+        adenine.setProperty("two", "b");
+        sdf.write(adenine);
+        sdf.close();
+        String out = sw.toString();
+        Assertions.assertFalse(out.contains("> <two>"));
+        Assertions.assertFalse(out.contains("> <one>"));
+    }
+
+    @Test
+    void testPropertyOutput_V3000_acceptTag() throws CDKException, IOException {
+        IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
+        StringWriter sw = new StringWriter();
+        SDFWriter sdf = new SDFWriter(sw, Collections.singleton("one"));
+        sdf.getSetting(SDFWriter.OptAlwaysV3000).setSetting("true");
+        sdf.getSetting(SDFWriter.OptWriteData).setSetting("true");
+        adenine.setProperty("one", "a");
+        adenine.setProperty("two", "b");
+        sdf.write(adenine);
+        sdf.close();
+        String out = sw.toString();
+        Assertions.assertFalse(out.contains("> <two>"));
+        Assertions.assertTrue(out.contains("> <one>"));
+    }
+
+    @Test
     void setProgramName() {
         StringWriter sw = new StringWriter();
         try (SDFWriter sdfw = new SDFWriter(sw)) {

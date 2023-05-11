@@ -29,10 +29,7 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
@@ -49,7 +46,6 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
-import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -78,7 +74,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting paramWriteData;
     private BooleanIOSetting paramWriteV3000;
     private BooleanIOSetting truncateData;
-    private Set<String>      propertiesToWrite;
+    private Set<String> acceptedSdTags;
 
     /**
      * Create an SDfile writer that will output directly to the provided buffered writer.
@@ -122,10 +118,10 @@ public class SDFWriter extends DefaultChemObjectWriter {
      *
      * @param out The {@link Writer} to write to
      */
-    public SDFWriter(Writer out, Set<String> propertiesToWrite) {
+    public SDFWriter(Writer out, Set<String> acceptedSdTags) {
         this(out);
         initIOSettings();
-        this.propertiesToWrite = propertiesToWrite;
+        this.acceptedSdTags = acceptedSdTags;
     }
 
     /**
@@ -134,15 +130,15 @@ public class SDFWriter extends DefaultChemObjectWriter {
      *
      * @param output The {@link OutputStream} to write to
      */
-    public SDFWriter(OutputStream output, Set<String> propertiesToWrite) {
-        this(new OutputStreamWriter(output), propertiesToWrite);
+    public SDFWriter(OutputStream output, Set<String> acceptedSdTags) {
+        this(new OutputStreamWriter(output), acceptedSdTags);
     }
 
     /**
      * Writes SD-File to a String including the given properties
      */
-    public SDFWriter(Set<String> propertiesToWrite) {
-        this(new StringWriter(), propertiesToWrite);
+    public SDFWriter(Set<String> acceptedSdTags) {
+        this(new StringWriter(), acceptedSdTags);
     }
 
     /**
@@ -268,24 +264,21 @@ public class SDFWriter extends DefaultChemObjectWriter {
             // write the MDL molfile bits
             StringWriter stringWriter = new StringWriter();
             IChemObjectWriter mdlWriter;
-
-            if (writeV3000(container))
+            if (writeV3000(container)) {
                 mdlWriter = new MDLV3000Writer(stringWriter);
-            else
+                mdlWriter.addSettings(getSettings());
+                ((MDLV3000Writer)mdlWriter).customizeJob();
+                ((MDLV3000Writer)mdlWriter).setAcceptedSdTags(acceptedSdTags);
+            }
+            else {
                 mdlWriter = new MDLV2000Writer(stringWriter);
+                mdlWriter.addSettings(getSettings());
+                ((MDLV2000Writer)mdlWriter).customizeJob();
+                ((MDLV2000Writer)mdlWriter).setAcceptedSdTags(acceptedSdTags);
+            }
 
-            mdlWriter.addSettings(getSettings());
             mdlWriter.write(container);
             mdlWriter.close();
-
-            // write non-structural data (mol properties in our case)
-            if (paramWriteData.isSet()) {
-                MDLV2000Writer.writeNonStructuralData(stringWriter,
-                                                      container,
-                                                      cdkInternalProperties,
-                                                      propertiesToWrite,
-                                                      truncateData.isSet());
-            }
             stringWriter.append(SD_RECORD_DELIM)
                         .append('\n');
 
@@ -333,26 +326,6 @@ public class SDFWriter extends DefaultChemObjectWriter {
                     return true;
         }
         return false;
-    }
-
-    /**
-     * A list of properties used by CDK algorithms which must never be
-     * serialized into the SD file format.
-     */
-    private static final Set<String> cdkInternalProperties = new HashSet<>();
-
-    static {
-        cdkInternalProperties.add(InvPair.CANONICAL_LABEL);
-        cdkInternalProperties.add(InvPair.INVARIANCE_PAIR);
-        cdkInternalProperties.add(CDKConstants.CTAB_SGROUPS);
-        // TITLE/REMARK written in Molfile header
-        cdkInternalProperties.add(CDKConstants.REMARK);
-        cdkInternalProperties.add(CDKConstants.TITLE);
-        // I think there are a few more, but cannot find them right now
-    }
-
-    private boolean isCDKInternalProperty(Object propKey) {
-        return cdkInternalProperties.contains(propKey);
     }
 
     private void initIOSettings() {
