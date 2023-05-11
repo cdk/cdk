@@ -1527,7 +1527,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                                         "CDK"));
         optWriteData = addSetting(new BooleanIOSetting(OptWriteData,
                                                        IOSetting.Importance.LOW,
-                                                       "Should molecule properties be written as non-structural data", "true"));
+                                                       "Should molecule properties be written as non-structural data", "false"));
         optTruncateData = addSetting(new BooleanIOSetting(OptTruncateLongData,
                                                           IOSetting.Importance.LOW,
                                                           "Truncate long data files >200 characters", "false"));
