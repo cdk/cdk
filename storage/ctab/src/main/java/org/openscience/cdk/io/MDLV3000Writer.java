@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -70,6 +71,8 @@ import java.util.regex.Pattern;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.io.MDLV2000Writer.OptProgramName;
+import static org.openscience.cdk.io.MDLV2000Writer.OptTruncateLongData;
+import static org.openscience.cdk.io.MDLV2000Writer.OptWriteData;
 
 /**
  * Ctab V3000 format output. This writer provides output to the more modern (but less widely
@@ -91,6 +94,11 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     private static final Pattern         R_GRP_NUM = Pattern.compile("R(\\d+)");
     private              V30LineWriter   writer;
     private              StringIOSetting programNameOpt;
+
+    private BooleanIOSetting optWriteData;
+
+    private BooleanIOSetting optTruncateData;
+    private Set<String> acceptedSdTags;
 
     /**
      * Create a new V3000 writer, output to the provided JDK writer.
@@ -117,6 +125,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      */
     public MDLV3000Writer() {
         initIOSettings();
+    }
+
+    void setAcceptedSdTags(Set<String> acceptedSdTags) {
+        this.acceptedSdTags = acceptedSdTags;
     }
 
     /**
@@ -712,6 +724,14 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
         writer.write("END CTAB\n");
         writer.writeDirect("M  END\n");
+        // write non-structural data (mol properties in our case)
+        if (optWriteData.isSet()) {
+            MDLV2000Writer.writeNonStructuralData(writer.writer,
+                                                  mol,
+                                                  MDLV2000Writer.SD_TAGS_TO_IGNORE,
+                                                  acceptedSdTags,
+                                                  optTruncateData.isSet());
+        }
         writer.writer.flush();
     }
 
@@ -829,14 +849,14 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         public static final int     LIMIT      = 78; // -\n takes two chars (80 total)
 
         // the base writer instance
-        private final Writer writer;
+        private final BufferedWriter writer;
 
         // tracks the current line length
         private int currLength = 0;
 
         public V30LineWriter(Writer writer) {
             if (writer instanceof BufferedWriter) {
-                this.writer = writer;
+                this.writer = (BufferedWriter)writer;
             } else {
                 this.writer = new BufferedWriter(writer);
             }
@@ -996,6 +1016,12 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                                         IOSetting.Importance.LOW,
                                                         "Program name to write at the top of the molfile header, should be exactly 8 characters long",
                                                         "CDK"));
+        optWriteData = addSetting(new BooleanIOSetting(OptWriteData,
+                                                       IOSetting.Importance.LOW,
+                                                       "Should molecule properties be written as non-structural data", "true"));
+        optTruncateData = addSetting(new BooleanIOSetting(OptTruncateLongData,
+                                                          IOSetting.Importance.LOW,
+                                                          "Truncate long data files >200 characters", "false"));
     }
 
     public void customizeJob() {
