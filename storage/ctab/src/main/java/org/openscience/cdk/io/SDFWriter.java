@@ -71,9 +71,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
 
     private BufferedWriter   writer;
-    private BooleanIOSetting paramWriteData;
     private BooleanIOSetting paramWriteV3000;
-    private BooleanIOSetting truncateData;
     private Set<String> acceptedSdTags;
 
     /**
@@ -255,10 +253,6 @@ public class SDFWriter extends DefaultChemObjectWriter {
         }
     }
 
-    private static String replaceInvalidHeaderChars(String headerKey) {
-        return headerKey.replaceAll("[-<>.=% ]", "_");
-    }
-
     private void writeMolecule(IAtomContainer container) throws CDKException {
         try {
             // write the MDL molfile bits
@@ -335,15 +329,15 @@ public class SDFWriter extends DefaultChemObjectWriter {
             addSettings(mdlv3.getSettings());
         } catch (IOException ignored) {
         }
-        paramWriteData = addSetting(new BooleanIOSetting(OptWriteData,
-                                                         IOSetting.Importance.LOW,
-                                                         "Should molecule properties be written as non-structural data", "true"));
+        addSetting(new BooleanIOSetting(OptWriteData,
+                                        IOSetting.Importance.LOW,
+                                        "Should molecule properties be written as non-structural data", "true"));
+        addSetting(new BooleanIOSetting(OptTruncateLongData,
+                                        IOSetting.Importance.LOW,
+                                        "Truncate long data files >200 characters", "false"));
         paramWriteV3000 = addSetting(new BooleanIOSetting(OptAlwaysV3000,
                                                           IOSetting.Importance.LOW,
                                                           "Write all records as V3000", "false"));
-        truncateData = addSetting(new BooleanIOSetting(OptTruncateLongData,
-                                                       IOSetting.Importance.LOW,
-                                                       "Truncate long data files >200 characters", "false"));
     }
 
     public void setAlwaysV3000(boolean val) {
