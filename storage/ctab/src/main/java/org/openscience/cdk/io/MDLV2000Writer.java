@@ -219,11 +219,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     @Deprecated
     private BooleanIOSetting writeQueryFormatValencies;
 
-    private BooleanIOSetting writeDefaultProps;
+    private BooleanIOSetting writeTrailingZeros;
 
-    private BooleanIOSetting optWriteData;
+    private BooleanIOSetting writeDataOpt;
 
-    private BooleanIOSetting optTruncateData;
+    private BooleanIOSetting truncateDataOpt;
 
     private StringIOSetting programNameOpt;
 
@@ -559,7 +559,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             line.append(formatMDLInt(atomprops[0], 2)); // dd (mass-number)
             line.append(formatMDLInt(atomprops[1], 3)); // ccc (charge)
             int last = atomprops.length-1;
-            if (!writeDefaultProps.isSet())
+            if (!writeTrailingZeros.isSet())
             {
                 while (last >= 0) {
                     if (atomprops[last] != 0)
@@ -686,7 +686,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     default:
                         line.append("0");
                 }
-                if (writeDefaultProps.isSet())
+                if (writeTrailingZeros.isSet())
                     line.append("  0  0  0");
                 line.append('\n');
                 writer.write(line.toString());
@@ -832,12 +832,12 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write('\n');
 
         // write non-structural data (mol properties in our case)
-        if (optWriteData.isSet()) {
+        if (writeDataOpt.isSet()) {
             MDLV2000Writer.writeNonStructuralData(writer,
                                                   container,
                                                   SD_TAGS_TO_IGNORE,
                                                   acceptedSdTags,
-                                                  optTruncateData.isSet());
+                                                  truncateDataOpt.isSet());
         }
 
         writer.flush();
@@ -1517,18 +1517,18 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                                                  "Should aromatic bonds be written as bond type 4?", "false"));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting(OptWriteQueryFormatValencies,
                                                                     IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
-        writeDefaultProps = addSetting(new BooleanIOSetting(OptWriteDefaultProperties,
-                                                            IOSetting.Importance.LOW,
-                                                            "Write trailing zero's on atom/bond property blocks even if they're not used.",
-                                                            "true"));
+        writeTrailingZeros = addSetting(new BooleanIOSetting(OptWriteDefaultProperties,
+                                                             IOSetting.Importance.LOW,
+                                                             "Write trailing zero's on atom/bond property blocks even if they're not used.",
+                                                             "true"));
         programNameOpt = addSetting(new StringIOSetting(OptProgramName,
                                                         IOSetting.Importance.LOW,
                                                         "Program name to write at the top of the molfile header, should be exactly 8 characters long",
                                                         "CDK"));
-        optWriteData = addSetting(new BooleanIOSetting(OptWriteData,
+        writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
                                                        IOSetting.Importance.LOW,
                                                        "Should molecule properties be written as non-structural data", "false"));
-        optTruncateData = addSetting(new BooleanIOSetting(OptTruncateLongData,
+        truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
                                                           IOSetting.Importance.LOW,
                                                           "Truncate long data files >200 characters", "false"));
     }
