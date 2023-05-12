@@ -108,7 +108,6 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
     // patterns to match
     private static final Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
-    private static final String  M_END                = "M  END";
     private static final String  SDF_RECORD_SEPARATOR = "$$$$";
     private static final String  SDF_DATA_HEADER      = "> ";
 
@@ -292,44 +291,6 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
      */
     public void setSkip(boolean skip) {
         this.skip = skip;
-    }
-
-    private String extractFieldData(StringBuilder data) throws IOException {
-        data.setLength(0);
-        while (currentLine != null && !currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
-            if (currentLine.startsWith(SDF_DATA_HEADER))
-                break;
-            logger.debug("data line: ", currentLine);
-            if (data.length() > 0)
-                data.append('\n');
-            data.append(currentLine);
-            currentLine = input.readLine();
-        }
-        // trim trailing newline
-        int len = data.length();
-        if (len > 1 && data.charAt(len-1) == '\n')
-            data.setLength(len-1);
-        return data.toString();
-    }
-
-    private String skipOtherFieldHeaderLines(String str) throws IOException {
-        while (str.startsWith(SDF_DATA_HEADER)) {
-            logger.debug("data header line: ", currentLine);
-            currentLine = input.readLine();
-            str = currentLine;
-        }
-        return str;
-    }
-
-    private String extractFieldName(String str) {
-        int index = str.indexOf('<');
-        if (index != -1) {
-            int index2 = str.indexOf('>', index);
-            if (index2 != -1) {
-                return str.substring(index + 1, index2);
-            }
-        }
-        return null;
     }
 
     /**
