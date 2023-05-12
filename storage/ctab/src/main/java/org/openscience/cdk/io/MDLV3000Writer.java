@@ -95,9 +95,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     private              V30LineWriter   writer;
     private              StringIOSetting programNameOpt;
 
-    private BooleanIOSetting optWriteData;
+    private BooleanIOSetting writeDataOpt;
 
-    private BooleanIOSetting optTruncateData;
+    private BooleanIOSetting truncateDataOpt;
+
     private Set<String> acceptedSdTags;
 
     /**
@@ -725,12 +726,12 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         writer.write("END CTAB\n");
         writer.writeDirect("M  END\n");
         // write non-structural data (mol properties in our case)
-        if (optWriteData.isSet()) {
+        if (writeDataOpt.isSet()) {
             MDLV2000Writer.writeNonStructuralData(writer.writer,
                                                   mol,
                                                   MDLV2000Writer.SD_TAGS_TO_IGNORE,
                                                   acceptedSdTags,
-                                                  optTruncateData.isSet());
+                                                  truncateDataOpt.isSet());
         }
         writer.writer.flush();
     }
@@ -1016,10 +1017,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                                         IOSetting.Importance.LOW,
                                                         "Program name to write at the top of the molfile header, should be exactly 8 characters long",
                                                         "CDK"));
-        optWriteData = addSetting(new BooleanIOSetting(OptWriteData,
+        writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
                                                        IOSetting.Importance.LOW,
                                                        "Should molecule properties be written as non-structural data", "false"));
-        optTruncateData = addSetting(new BooleanIOSetting(OptTruncateLongData,
+        truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
                                                           IOSetting.Importance.LOW,
                                                           "Truncate long data files >200 characters", "false"));
     }
