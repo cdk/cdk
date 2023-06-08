@@ -117,7 +117,7 @@ class AromaticityTest {
     }
 
     @Test
-    void validSum() throws Exception {
+    void validSum() {
         // aromatic
         Assertions.assertTrue(Aromaticity.validSum(2));
         Assertions.assertTrue(Aromaticity.validSum(6));
@@ -145,7 +145,7 @@ class AromaticityTest {
     }
 
     @Test
-    void electronSum() throws Exception {
+    void electronSum() {
         assertThat(Aromaticity.electronSum(new int[]{0, 1, 2, 3, 0}, new int[]{1, 1, 1, 1}, new int[]{0, 1, 2, 3}),
                    is(4));
     }
@@ -162,6 +162,20 @@ class AromaticityTest {
         arom.apply(a);
         arom.apply(b);
         Assertions.assertTrue(AtomContainerDiff.diff(a, b).isEmpty());
+    }
+
+    /**
+     * @cdk.bug 976
+     */
+    @Test
+    void outOfMemoryExceptionInitialCycles() throws Exception {
+        IAtomContainer atomContainer = smiles("C1=CC2=CC3=C1C1=C4C=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=" +
+                "C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC5=C(C=C1)C1=" +
+                "C(C=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)" +
+                "C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C2C=C1)C345");
+        Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(), Cycles.or(Cycles.all(), Cycles.essential()));
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+        aromaticity.apply(atomContainer);
     }
 
     static IAtomContainer smiles(String smi) throws Exception {
