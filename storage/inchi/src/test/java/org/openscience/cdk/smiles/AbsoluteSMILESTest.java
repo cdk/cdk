@@ -27,6 +27,7 @@ package org.openscience.cdk.smiles;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -86,6 +87,28 @@ class AbsoluteSMILESTest {
                 "C(\\C=C/C)(=C(/C=C/C)\\C=C/C)/C=C/C", "C(=C/C)/C(=C(/C=C/C)\\C=C/C)/C=C/C",
                 "C\\C=C/C(=C(/C=C/C)\\C=C/C)/C=C/C", "C(=C/C)\\C(\\C=C/C)=C(\\C=C/C)/C=C/C",
                 "C\\C=C/C(/C=C/C)=C(/C=C/C)\\C=C/C");
+    }
+
+    @Test
+    public void testLargeMoleculeCanon() throws CDKException {
+        SmilesParser smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+
+        StringBuilder smi1 = new StringBuilder();
+        StringBuilder smi2 = new StringBuilder();
+
+        for (int i=0; i<5000; i++)
+            smi1.append('C');
+        smi1.append('O');
+
+        smi2.append('O');
+        for (int i=0; i<5000; i++)
+            smi2.append('C');
+
+        IAtomContainer mol1 = smipar.parseSmiles(smi1.toString());
+        IAtomContainer mol2 = smipar.parseSmiles(smi2.toString());
+        String smiout1 = new SmilesGenerator(SmiFlavor.Absolute).create(mol1);
+        String smiout2 = new SmilesGenerator(SmiFlavor.Absolute).create(mol2);
+        Assertions.assertEquals(smiout1, smiout2);
     }
 
     // 2,4,6,8-tetramethyl-1,3,5,7-tetraazatricyclo[5.1.0.0³,⁵]octane
