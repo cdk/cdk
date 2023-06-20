@@ -78,7 +78,8 @@ public class InChINumbersTools {
      * @throws CDKException
      */
     public static long[] getUSmilesNumbers(IAtomContainer container) throws CDKException {
-        String aux = auxInfo(container, InchiFlag.RecMet, InchiFlag.FixedH);
+        String aux = auxInfo(container, InchiFlag.RecMet, InchiFlag.FixedH,
+                             InchiFlag.LargeMolecules);
         return parseUSmilesNumbers(aux, container);
     }
 
