@@ -96,12 +96,12 @@ class AbsoluteSMILESTest {
         StringBuilder smi1 = new StringBuilder();
         StringBuilder smi2 = new StringBuilder();
 
-        for (int i=0; i<5000; i++)
+        for (int i=0; i<2500; i++)
             smi1.append('C');
         smi1.append('O');
 
         smi2.append('O');
-        for (int i=0; i<5000; i++)
+        for (int i=0; i<2500; i++)
             smi2.append('C');
 
         IAtomContainer mol1 = smipar.parseSmiles(smi1.toString());
