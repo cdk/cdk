@@ -682,8 +682,10 @@ public final class DepictionGenerator {
         if (title == null || title.isEmpty())
             return new Bounds();
         scale = 1 / scale * getParameterValue(RendererModel.TitleFontScale.class);
+        String refId = chemObj.getProperty(MarkedElement.ID_KEY);
+        String classStr = refId != null ? ("title " + refId) : "title";
         return new Bounds(MarkedElement.markup(StandardGenerator.embedText(font, title, getParameterValue(RendererModel.TitleColor.class), scale),
-                                               "title"));
+                                               classStr));
     }
 
     private Bounds generateReactionConditions(IReaction chemObj, Color fg, double scale) {
