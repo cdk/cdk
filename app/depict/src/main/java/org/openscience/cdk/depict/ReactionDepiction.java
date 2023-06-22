@@ -612,6 +612,11 @@ final class ReactionDepiction extends Depiction {
                 path.closePath();
                 arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
+            case UNDIRECTED:
+                arrow.add(new LineElement(0.5 * headLength, +0.5*headThickness, minWidth - 0.5 * headLength, +0.5*headThickness, strokeWidth, fgcol));
+                arrow.add(new LineElement(0.5 * headLength, -0.5*headThickness, minWidth - 0.5 * headLength, -0.5*headThickness, strokeWidth, fgcol));
+                arrow.add(GeneralPath.shapeOf(path, fgcol));
+                break;
             case BIDIRECTIONAL: // equilibrium?
 
                 arrow.add(new LineElement(0, +0.5*headThickness, minWidth - 0.5 * headLength, +0.5*headThickness, strokeWidth, fgcol));

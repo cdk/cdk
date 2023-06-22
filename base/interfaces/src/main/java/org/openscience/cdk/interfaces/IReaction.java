@@ -53,6 +53,14 @@ public interface IReaction extends IChemObject {
         /** Reaction equilibrium state. Often denoted by a stacked arrows, one
          *  forwards, one backwards. */
         BIDIRECTIONAL,
+        /**
+         * Reaction equilibrium is not known to be fully on reactant/product
+         * or in equilibrium state.
+         * Also used to represent a "net reaction" composed of several
+         * elementary steps.
+         * Often denoted by a "=" sign
+         */
+        UNDIRECTED,
         /** Reaction is a no-go, Often denoted by a cross or hash arrow. */
         NO_GO,
         /** Indicate the precursors for a given molecule,

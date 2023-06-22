@@ -24,13 +24,31 @@
 package org.openscience.cdk.depict;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+
 class DepictionTest {
+
+    private static final String UN_REACTION = "UN_REACTION_RHEA_10000.svg";
+
 
     @Test
     void depictAsPs() throws CDKException {
@@ -80,4 +98,27 @@ class DepictionTest {
         Assertions.assertEquals("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">", lines[1]);
     }
 
+
+    @Test
+    void depictUndirectedReactionAsSVG()
+        throws CDKException, IOException
+    {
+        List<String> source = DepictionTest.readResourceFile(UN_REACTION);
+        final SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction rxn = smilesParser.parseReactionSmiles("O.CCCCC(N)=O>>[NH4+].CCCCC([O-])=O");
+        rxn.setDirection(IReaction.Direction.UNDIRECTED);
+        DepictionGenerator dg = new DepictionGenerator();
+        String[] targetLines = dg.depict(rxn).toSvgStr("px").split("\n");
+        Assertions.assertIterableEquals(source, Arrays.asList(targetLines));
+    }
+
+    private static List<String> readResourceFile(String resourceName)
+        throws IOException
+    {
+        try(BufferedReader buff = new BufferedReader(new InputStreamReader(
+            DepictionTest.class.getClassLoader().getResourceAsStream(UN_REACTION), StandardCharsets.UTF_8
+        ))) {
+            return buff.lines().collect(Collectors.toList());
+        }
+    }
 }
