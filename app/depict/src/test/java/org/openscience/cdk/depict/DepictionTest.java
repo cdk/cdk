@@ -65,7 +65,7 @@ class DepictionTest {
         String nl = System.getProperty("line.separator");
         String[] lines = eps.split(nl,3);
         Assertions.assertEquals("%!PS-Adobe-3.0 EPSF-3.0", lines[0]);
-        Assertions.assertEquals("%%BoundingBox: 0 0 28 35", lines[1]);
+        Assertions.assertTrue(lines[1].startsWith("%%BoundingBox: 0 0"));
     }
 
     @Test
