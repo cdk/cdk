@@ -25,10 +25,22 @@ package org.openscience.cdk.depict;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 class DepictionTest {
 
@@ -80,4 +92,36 @@ class DepictionTest {
         Assertions.assertEquals("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">", lines[1]);
     }
 
+    @Test
+    void connectMolWithTitlesInSvg() throws CDKException
+    {
+        final SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction rxn = smilesParser.parseReactionSmiles("O.CCCCC(N)=O>>[NH4+].CCCCC([O-])=O");
+        int count = 0;
+        for(IAtomContainer reactant : rxn.getReactants().atomContainers()) {
+            reactant.setProperty(CDKConstants.TITLE, "Reactant-" + ++count);
+        }
+        count = 0;
+        for(IAtomContainer agent : rxn.getAgents().atomContainers()) {
+            agent.setProperty(CDKConstants.TITLE, "Agent-" + ++count);
+        }
+        count = 0;
+        for(IAtomContainer product : rxn.getProducts().atomContainers()) {
+            product.setProperty(CDKConstants.TITLE, "Product-" + ++count);
+        }
+        DepictionGenerator dg = new DepictionGenerator().withMolTitle();
+        String[] targetLines = dg.depict(rxn).toSvgStr("px").split("\n");
+
+        List<String> stringsToFind = Arrays.asList(
+            "<g class='title mol1'>",
+            "<g class='title mol2'>",
+            "<g class='title mol3'>",
+            "<g class='title mol4'>"
+        );
+        List<String> foundmatches =
+            Stream.of(targetLines)
+                .map(el -> el.trim())
+                .filter(el -> stringsToFind.indexOf(el) != -1).collect(Collectors.toList());
+        Assertions.assertIterableEquals(stringsToFind, foundmatches);
+    }
 }
