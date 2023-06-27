@@ -51,16 +51,26 @@ import java.util.Map;
  * here</a>
  * 
  * 
- * A fingerprint is generated for an AtomContainer with this code: <pre>
- *   Molecule molecule = new Molecule();
- *   PubchemFingerprinter fprinter = new PubchemFingerprinter();
- *   BitSet fingerprint = fprinter.getBitFingerprint(molecule);
- *   fprinter.getSize(); // returns 881
- *   fingerprint.length(); // returns the highest set bit
+ * A fingerprint is generated for an AtomContainer with this code:
+ * <pre>
+ *   IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+ *   IAtomContainer molecule = ...; // e.g. from SMILES
+ *
+ *   // note likely now optional:
+ *   // AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+ *   // Aromaticity.cdkLegacy().apply(mol);
+ *   // AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+ *
+ *   PubchemFingerprinter fprinter = new PubchemFingerprinter(builder);
+ *   BitSet fingerprint = fprinter.getBitFingerprint(molecule).asBitSet();
  * </pre>
- * Note that the fingerprinter assumes that you have detected aromaticity and
- * atom types before evaluating the fingerprint. Also the fingerprinter
- * expects that explicit H's are present
+ *
+ * Note: the fingerprinter originally assumed you have detected aromaticity
+ * and atom types before evaluating the fingerprint, hydrogens should also be
+ * explicit. Modifications have been made to automatically aromatize before
+ * SMARTS matching and work with either implicit/explicit Hydrogens but further
+ * testing is needed to confirm the correct results (as defined in PubChem
+ * SDfiles) are obtained.
  * 
  * Note that this fingerprint is not particularly fast, as it will perform
  * ring detection using {@link org.openscience.cdk.ringsearch.AllRingsFinder}
@@ -80,7 +90,7 @@ import java.util.Map;
  * internally. Please use a separate instance of the class for each thread.</b>
  * <br/>
  * <b>
- * Important! this fingerprint can not be used for substructure screening.
+ * Important! this fingerprint can <b>not</b> be used for substructure screening.
  * </b>
  *
  * @author Rajarshi Guha
