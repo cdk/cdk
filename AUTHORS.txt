@@ -3,6 +3,7 @@ Jonathan Alvarsson
 Rich Apodaca
 Saravanaraj N Ayyampalayam
 Eric Bach
+Parit Bansal
 Ulrich Bauer
 Stephan Beisken
 Arvid Berg
