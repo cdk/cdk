@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -2730,6 +2731,16 @@ class SmilesParserTest extends CDKTestCase {
                 count++;
         }
         Assertions.assertEquals(1, count);
+    }
+
+    @Test
+    void testMultiStepSmiles() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        IReactionSet reactions = smipar.parseReactionSetSmiles("[Pb]>>[Ag]>>[Au]");
+        Assertions.assertEquals(2, reactions.getReactionCount());
+        Assertions.assertEquals("[Pb]>>[Ag]", smigen.create(reactions.getReaction(0)));
+        Assertions.assertEquals("[Ag]>>[Au]", smigen.create(reactions.getReaction(1)));
     }
 
     /**
