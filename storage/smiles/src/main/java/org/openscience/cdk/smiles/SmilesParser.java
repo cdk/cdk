@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -238,6 +239,77 @@ public final class SmilesParser {
         }
 
         return reaction;
+    }
+
+    /**
+     * Parse a SMILES that describes a set of reactions representing multiple
+     * synthesis steps or a metabolic pathway. This is a logical extension to
+     * the SMILES reaction syntax. The basic idea is the product(s) of the
+     * previous step become the reactants of the next step.
+     *
+     * <pre>{@code
+     * {reactant}>{agent_1}>{product_1}>{agent_2}>{product_2}
+     * }</pre>
+     *
+     * Results in a reaction set with two reactions:
+     * <pre>{@code
+     * {reactant}>{agent_1}>{product_1} step 1
+     * {product_1}>{agent_2}>{product_2} step 2
+     * }</pre>
+     *
+     * @param smiles the SMILES input string
+     * @return the reaction set
+     * @throws InvalidSmilesException the input was invalid (with reason)
+     */
+    public IReactionSet parseReactionSetSmiles(String smiles)
+            throws InvalidSmilesException {
+
+        int delim = smiles.length();
+        for (int i = 0; i < smiles.length(); i++) {
+            if (smiles.charAt(i) == ' ' || smiles.charAt(i) == '\t') {
+                delim = i;
+                break;
+            }
+        }
+        String[] parts = smiles.substring(0, delim).split(">");
+        String title = smiles.substring(delim).trim();
+
+        if (parts.length < 3 || parts.length % 2 == 0)
+            throw new IllegalArgumentException("Unexpected number of parts: " + parts.length + ", should be 3,5,7,..");
+
+        IReactionSet reactions = builder.newInstance(IReactionSet.class);
+        IReaction reaction = builder.newReaction();
+
+        for (int i = 0; i < parts.length; i++) {
+            IAtomContainer    mol  = parseSmiles(parts[i], true);
+            IAtomContainerSet mols = ConnectivityChecker.partitionIntoMolecules(mol);
+            if (i == 0) {
+                // first step's reactants
+                for (IAtomContainer container : mols.atomContainers())
+                    reaction.addReactant(container);
+            } else if (i == 1) {
+                // first step's agents
+                for (IAtomContainer container : mols.atomContainers())
+                    reaction.addAgent(container);
+            } else if (i % 2 == 0) {
+                // the products of which ever step we are on
+                for (IAtomContainer container : mols.atomContainers())
+                    reaction.addProduct(container);
+                reactions.addReaction(reaction);
+            } else {
+                // the agents of which ever step we are on, creates the new
+                // reaction step and copies the previous products as reactants
+                IReaction nextReaction = builder.newReaction();
+                for (IAtomContainer container : reaction.getProducts().atomContainers())
+                    nextReaction.addReactant(container);
+                reaction = nextReaction;
+                for (IAtomContainer container : mols.atomContainers())
+                    reaction.addAgent(container);
+            }
+        }
+        
+        reactions.setProperty(CDKConstants.TITLE, title);
+        return reactions;
     }
 
     /**
