@@ -414,31 +414,16 @@ public final class SmilesParser {
                 final List<IAtom> atoms = new ArrayList<>();
 
                 // collect atom offsets before handling fragment groups
-                for (IAtomContainer mol : rxn.getReactants().atomContainers())
-                    for (IAtom atom : mol.atoms())
-                        atoms.add(atom);
-                for (IAtomContainer mol : rxn.getAgents().atomContainers())
-                    for (IAtom atom : mol.atoms())
-                        atoms.add(atom);
-                for (IAtomContainer mol : rxn.getProducts().atomContainers())
+                for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers(rxn))
                     for (IAtom atom : mol.atoms())
                         atoms.add(atom);
 
                 handleFragmentGrouping(rxn, cxstate);
 
                 // merge all together
-                for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
+                for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers(rxn))
                     for (IAtom atom : mol.atoms())
                         atomToMol.put(atom, mol);
-                }
-                for (IAtomContainer mol : rxn.getAgents().atomContainers()) {
-                    for (IAtom atom : mol.atoms())
-                        atomToMol.put(atom, mol);
-                }
-                for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
-                    for (IAtom atom : mol.atoms())
-                        atomToMol.put(atom, mol);
-                }
 
                 assignCxSmilesInfo(rxn.getBuilder(), rxn, atoms, atomToMol, cxstate);
             }
@@ -475,17 +460,9 @@ public final class SmilesParser {
         List<IAtomContainer> fragMap = new ArrayList<>();
         Map<IAtomContainer, Integer> roleMap = new HashMap<>();
 
-        for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
+        for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers(rxn)) {
             fragMap.add(mol);
             roleMap.put(mol, reactant);
-        }
-        for (IAtomContainer mol : rxn.getAgents().atomContainers()) {
-            fragMap.add(mol);
-            roleMap.put(mol, agent);
-        }
-        for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
-            fragMap.add(mol);
-            roleMap.put(mol, product);
         }
 
         if (cxstate.racemicFrags != null) {
