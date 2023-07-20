@@ -423,9 +423,15 @@ public final class DepictionGenerator {
 
         ensure2dLayout(rxn); // can reorder components if align is enabled!
 
-        final Color fgcol = getParameterValue(StandardGenerator.AtomColor.class).getAtomColor(rxn.getBuilder()
-                                                                                                 .newInstance(IAtom.class, "C"));
+        final Color fgcol = getParameterValue(StandardGenerator.AtomColor.class).getAtomColor(rxn.getBuilder().newInstance(IAtom.class, "C"));
 
+        ReactionBounds reactionBounds = getReactionBounds(rxn, fgcol);
+        return new ReactionDepiction(reactionBounds,
+                                     dimensions,
+                                     fgcol);
+    }
+
+    private ReactionBounds getReactionBounds(IReaction rxn, Color fgcol) throws CDKException {
         final List<IAtomContainer> reactants = toList(rxn.getReactants());
         final List<IAtomContainer> products = toList(rxn.getProducts());
         final List<IAtomContainer> agents = toList(rxn.getAgents());
@@ -433,19 +439,9 @@ public final class DepictionGenerator {
 
         // set ids for tagging elements
         int molId = 0;
-        for (IAtomContainer mol : reactants) {
+        for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers(rxn)) {
             setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
             setIfMissing(mol, MarkedElement.CLASS_KEY, "reactant");
-            layoutBackups.add(new LayoutBackup(mol));
-        }
-        for (IAtomContainer mol : products) {
-            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
-            setIfMissing(mol, MarkedElement.CLASS_KEY, "product");
-            layoutBackups.add(new LayoutBackup(mol));
-        }
-        for (IAtomContainer mol : agents) {
-            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
-            setIfMissing(mol, MarkedElement.CLASS_KEY, "agent");
             layoutBackups.add(new LayoutBackup(mol));
         }
 
@@ -500,6 +496,7 @@ public final class DepictionGenerator {
         final Bounds conditions = generateReactionConditions(rxn, fgcol, model.get(BasicSceneGenerator.Scale.class));
 
         ReactionBounds reactionBounds = new ReactionBounds();
+        reactionBounds.model = model;
         reactionBounds.plus = plus;
         reactionBounds.reactants.addAll(reactantBounds);
         reactionBounds.products.addAll(productBounds);
@@ -508,12 +505,8 @@ public final class DepictionGenerator {
         reactionBounds.reactantLabels.addAll(reactantTitles);
         reactionBounds.productLabels.addAll(productTitles);
         reactionBounds.belowArrow.add(conditions);
-
-        return new ReactionDepiction(model,
-                                     reactionBounds,
-                                     rxn.getDirection(),
-                                     dimensions,
-                                     fgcol);
+        reactionBounds.direction = rxn.getDirection();
+        return reactionBounds;
     }
 
     /**

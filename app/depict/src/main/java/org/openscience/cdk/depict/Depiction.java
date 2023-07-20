@@ -111,7 +111,7 @@ public abstract class Depiction {
 
     private static final char DOT = '.';
 
-    private final RendererModel model;
+    protected final RendererModel model;
 
     /**
      * Internal method passes in the rendering model parameters.
