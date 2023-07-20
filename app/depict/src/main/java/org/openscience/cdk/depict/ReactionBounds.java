@@ -19,6 +19,8 @@
 
 package org.openscience.cdk.depict;
 
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
 
 import java.awt.Dimension;
@@ -32,12 +34,14 @@ import java.util.List;
  * positioned to display a reaction.
  */
 final class ReactionBounds {
+    RendererModel model;
     List<Bounds> reactants = new ArrayList<>();
     List<Bounds> products = new ArrayList<>();
     List<Bounds> reactantLabels = new ArrayList<>();
     List<Bounds> productLabels = new ArrayList<>();
     List<Bounds> aboveArrow = new ArrayList<>();
     List<Bounds> belowArrow = new ArrayList<>();
+    IReaction.Direction direction = IReaction.Direction.FORWARD;
     Bounds plus = null;
     Bounds title = null;
 
@@ -45,12 +49,12 @@ final class ReactionBounds {
         List<Bounds> mainRow = new ArrayList<>();
         for (int i = 0; i < reactants.size(); i++) {
             if (i != 0) mainRow.add(plus);
-            mainRow.add(reactants.get(0));
+            mainRow.add(reactants.get(i));
         }
         mainRow.add(new Bounds()); // arrow
         for (int i = 0; i < products.size(); i++) {
             if (i != 0) mainRow.add(plus);
-            mainRow.add(products.get(0));
+            mainRow.add(products.get(i));
         }
         return mainRow;
     }
@@ -90,7 +94,7 @@ final class ReactionBounds {
         return reactants.size() + numGaps;
     }
 
-    ReactionDimensions getDimensions() {
+    ReactionDimensions getDimensions(double padding) {
 
         List<Bounds> mainComp = getMainComponents();
 
@@ -102,9 +106,7 @@ final class ReactionBounds {
         double[] xOffsets, yOffsets;
         double[] xOffsetSide, yOffsetSide;
 
-        mainComp.addAll(getMainRow());
         if (hasMainRowLabels()) {
-            mainComp.addAll(getMainRowLabels());
             nRow = 2;
             nCol = mainComp.size()/2;
         } else {
@@ -140,7 +142,9 @@ final class ReactionBounds {
             // update side dims
             Dimensions sideDim = new Dimensions(minArrowWidth, prelimSideDim.h);
             Dimensions condDim = new Dimensions(minArrowWidth, conditions.height());
-            result = new ReactionDimensions(sideDim, mainDim, condDim);
+            Dimensions titleDim = new Dimensions(title.width(),
+                                                 title.height());
+            result = new ReactionDimensions(sideDim, mainDim, condDim, titleDim, padding);
         } else {
             // arrow padding
             for (int i = 0; i < xOffsetSide.length; i++)
@@ -156,7 +160,9 @@ final class ReactionBounds {
                                                 prelimSideDim.h);
             Dimensions condDim = new Dimensions(2 * arrowHeight + middleRequired,
                                                 conditions.height());
-            result = new ReactionDimensions(sideDim, mainDim, condDim);
+            Dimensions titleDim = new Dimensions(title.width(),
+                                                 title.height());
+            result = new ReactionDimensions(sideDim, mainDim, condDim, titleDim, padding);
         }
 
         result.xOffsets = xOffsets;
