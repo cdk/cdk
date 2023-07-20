@@ -19,19 +19,59 @@
 
 package org.openscience.cdk.depict;
 
+import java.util.Arrays;
+
 /** Helper class */
 class ReactionDimensions {
     // dimensions and spacing of side components
     final Dimensions sideDim;
     final Dimensions mainDim;
     final Dimensions condDim;
+    final Dimensions titleDim;
+    final double padding;
 
     double[]   xOffsets, yOffsets;
     double[] xOffsetSide, yOffsetSide;
 
-    ReactionDimensions(Dimensions sideDim, Dimensions mainDim, Dimensions condDim) {
+    ReactionDimensions(Dimensions sideDim,
+                       Dimensions mainDim,
+                       Dimensions condDim,
+                       Dimensions titleDim,
+                       double padding) {
         this.sideDim = sideDim;
         this.mainDim = mainDim;
         this.condDim = condDim;
+        this.titleDim = titleDim;
+        this.padding = padding;
+    }
+
+    private static double[] scale(double[] values, double ammount) {
+        double[] cpy = Arrays.copyOf(values, values.length);
+        for (int i=0; i<values.length; i++)
+            cpy[i] *= ammount;
+        return cpy;
+    }
+
+    ReactionDimensions scale(double amount) {
+        Dimensions sideRequired = sideDim.scale(amount);
+        Dimensions mainRequired = mainDim.scale(amount);
+        Dimensions condRequired = condDim.scale(amount);
+        Dimensions titleRequired = titleDim.scale(amount);
+
+        // important! padding does not get scaled
+        ReactionDimensions result = new ReactionDimensions(sideRequired,
+                                                           mainRequired,
+                                                           condRequired,
+                                                           titleRequired,
+                                                           padding);
+        result.xOffsets = scale(xOffsets, amount);
+        result.yOffsets = scale(yOffsets, amount);
+        result.xOffsetSide = scale(xOffsetSide, amount);
+        result.yOffsetSide = scale(yOffsetSide, amount);
+        return result;
+    }
+
+    public double mainRowHeight() {
+        return yOffsets[1];
     }
 }
