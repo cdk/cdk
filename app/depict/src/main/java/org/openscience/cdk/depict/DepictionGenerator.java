@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
@@ -45,6 +46,8 @@ import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DelocalisedDonutsBondDisplay;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceDelocalisedBondDisplay;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 
 import javax.vecmath.Point2d;
 import java.awt.Color;
@@ -472,12 +475,12 @@ public final class DepictionGenerator {
         List<Bounds> productBounds = copy.generate(toList(rxn.getProducts()), model, rxn.getReactantCount());
         List<Bounds> agentBounds = copy.generate(toList(rxn.getAgents()), model, rxn.getReactantCount() + rxn.getProductCount());
 
+        // generate a 'plus' element
+        Bounds plus = copy.generatePlusSymbol(scale, fgcol);
+
         // remove current highlight buffer
         for (IChemObject obj : myHighlight.keySet())
             obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
-
-        // generate a 'plus' element
-        Bounds plus = copy.generatePlusSymbol(scale, fgcol);
 
         // reset the coordinates to how they were before we invoked depict
         for (LayoutBackup backup : layoutBackups)
@@ -496,13 +499,20 @@ public final class DepictionGenerator {
 
         final Bounds conditions = generateReactionConditions(rxn, fgcol, model.get(BasicSceneGenerator.Scale.class));
 
+        ReactionBounds reactionBounds = new ReactionBounds();
+        reactionBounds.plus = plus;
+        reactionBounds.reactants.addAll(reactantBounds);
+        reactionBounds.products.addAll(productBounds);
+        reactionBounds.aboveArrow.addAll(agentBounds);
+        reactionBounds.title = title;
+        reactionBounds.reactantLabels.addAll(reactantTitles);
+        reactionBounds.productLabels.addAll(productTitles);
+        reactionBounds.belowArrow.add(conditions);
+
         return new ReactionDepiction(model,
-                                     reactantBounds, productBounds, agentBounds,
-                                     plus, rxn.getDirection(), dimensions,
-                                     reactantTitles,
-                                     productTitles,
-                                     title,
-                                     conditions,
+                                     reactionBounds,
+                                     rxn.getDirection(),
+                                     dimensions,
                                      fgcol);
     }
 
@@ -1165,14 +1175,11 @@ public final class DepictionGenerator {
     }
 
     private double caclModelScale(IReaction rxn) {
-        List<IAtomContainer> mols = new ArrayList<>();
-        for (IAtomContainer mol : rxn.getReactants().atomContainers())
-            mols.add(mol);
-        for (IAtomContainer mol : rxn.getProducts().atomContainers())
-            mols.add(mol);
-        for (IAtomContainer mol : rxn.getAgents().atomContainers())
-            mols.add(mol);
-        return caclModelScale(mols);
+        return caclModelScale(ReactionManipulator.getAllAtomContainers(rxn));
+    }
+
+    private double caclModelScale(IReactionSet rxns) {
+        return caclModelScale(ReactionSetManipulator.getAllAtomContainers(rxns));
     }
 
     private double medianBondLength(Collection<IBond> bonds) {
