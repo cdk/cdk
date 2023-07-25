@@ -60,7 +60,7 @@ public abstract class Depiction {
      * When no fixed padding value is specified we use margin
      * multiplied by this value.
      */
-    protected static final double DEFAULT_PADDING_FACTOR = 2;
+    protected static final double DEFAULT_PADDING_FACTOR = 2.5;
 
     /**
      * Structured Vector Graphics (SVG) format key.

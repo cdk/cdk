@@ -24,11 +24,11 @@ import java.util.Arrays;
 /** Helper class */
 class ReactionDimensions {
     // dimensions and spacing of side components
-    final Dimensions sideDim;
-    final Dimensions mainDim;
-    final Dimensions condDim;
-    final Dimensions titleDim;
-    final double padding;
+    Dimensions sideDim;
+    Dimensions mainDim;
+    Dimensions condDim;
+    Dimensions titleDim;
+    double padding;
 
     double[]   xOffsets, yOffsets;
     double[] xOffsetSide, yOffsetSide;
@@ -63,7 +63,7 @@ class ReactionDimensions {
                                                            mainRequired,
                                                            condRequired,
                                                            titleRequired,
-                                                           padding);
+                                                           padding * amount);
         result.xOffsets = scale(xOffsets, amount);
         result.yOffsets = scale(yOffsets, amount);
         result.xOffsetSide = scale(xOffsetSide, amount);
@@ -71,7 +71,34 @@ class ReactionDimensions {
         return result;
     }
 
-    public double mainRowHeight() {
+    double mainRowHeight() {
         return yOffsets[1];
+    }
+
+    Dimensions calcTotalDimensions(Dimensions requested, String fmt) {
+        if (requested != Dimensions.AUTOMATIC)
+            return requested;
+
+        final double firstRowHeight = yOffsets[1];
+
+        final int nSideCol = xOffsetSide.length - 1;
+        final int nSideRow = yOffsetSide.length - 1;
+
+        double mainCompOffset = (sideDim.h + padding + ((nSideRow-1) * padding)) - (firstRowHeight / 2);
+        if (mainCompOffset < 0)
+            mainCompOffset = 0;
+
+        double titleExtra = Math.max(0, titleDim.h);
+        if (titleExtra > 0)
+            titleExtra += padding;
+
+        int nCol = xOffsets.length - 1;
+        int nRow = yOffsets.length - 1;
+
+        double offsetWidth = xOffsets[xOffsets.length - 1];
+        return new Dimensions(offsetWidth, mainDim.h)
+                      .add(Math.max(0, nCol - 1) * padding, (nRow - 1) * padding)
+                      .add(0, mainCompOffset)
+                      .add(0, titleExtra);
     }
 }

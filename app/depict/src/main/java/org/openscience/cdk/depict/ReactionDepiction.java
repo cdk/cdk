@@ -40,6 +40,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,10 +51,7 @@ import java.util.List;
  * (bidirectional).
  */
 final class ReactionDepiction extends Depiction {
-
-    private final Dimensions dimensions;
-
-    // molecule sets and titles
+    private Dimensions dimensions;
     private final ReactionBounds reactionBounds;
     private final Color fgcol;
 
@@ -79,6 +77,7 @@ final class ReactionDepiction extends Depiction {
                                            new Dimensions(viewBounds.getWidth(),
                                                           viewBounds.getHeight()),
                                            fmt);
+
         required = required.scale(fitting);
         double rescale = fitting * scale * zoom;
 
@@ -96,10 +95,7 @@ final class ReactionDepiction extends Depiction {
         double mainCompOffset;
 
         // shift product x-offset to make room for the arrow / side components
-        mainCompOffset = required.sideDim.h + nSideRow * padding - required.mainRowHeight() / 2;
-        for (int i = arrowIdx + 1; i < required.xOffsets.length; i++) {
-            required.xOffsets[i] += required.sideDim.w;
-        }
+        mainCompOffset = (required.sideDim.h + (nSideRow * padding)) - (required.mainRowHeight() / 2);
 
         int nCol = required.xOffsets.length - 1;
         int nRow = required.yOffsets.length - 1;
@@ -109,7 +105,7 @@ final class ReactionDepiction extends Depiction {
         final double totalRequiredWidth = Math.max(0, nCol - 1) * padding + Math.max(0, nSideCol - 1) * padding + required.xOffsets[nCol];
         final double totalRequiredHeight = Math.max(0, nRow - 1) * padding + (!reactionBounds.title.isEmpty() ? padding : 0) + Math.max(mainCompOffset, 0) + required.mainDim.h + Math.max(0, required.titleDim.h);
         double xBase = viewBounds.getX() + (viewBounds.getWidth() - totalRequiredWidth) / 2;
-        double yBase = viewBounds.getY() + Math.max(mainCompOffset, 0) + (viewBounds.getHeight() - totalRequiredHeight) / 2;
+        double yBase = viewBounds.getY() + Math.max(mainCompOffset, 0) + ((viewBounds.getHeight() - totalRequiredHeight) / 2);
         for (int i = 0; i < mainComp.size(); i++) {
 
             final int row = i / nCol;
@@ -125,7 +121,7 @@ final class ReactionDepiction extends Depiction {
 
             // intercept arrow draw and make it as big as need
             if (i == arrowIdx) {
-                w = (required.xOffsets[i + 1] - required.xOffsets[i]) + Math.max(0, nSideCol - 1) * padding;
+                w = (required.xOffsets[i + 1] - required.xOffsets[i]);
                 draw(visitor,
                      // no zoom for all rxns except unidirected reactions since arrows
                      // are drawn as big as needed otherwise
@@ -156,7 +152,7 @@ final class ReactionDepiction extends Depiction {
 
         // SIDE COMPONENTS DRAW
         xBase += arrowIdx * padding + required.xOffsets[arrowIdx];
-        yBase -= mainCompOffset + padding;
+        yBase -= mainCompOffset;
         for (int i = 0; i < sideComps.size(); i++) {
             final int row = i / nSideCol;
             final int col = i % nSideCol;
@@ -164,7 +160,7 @@ final class ReactionDepiction extends Depiction {
             // calc the 'view' bounds:
             //  amount of padding depends on which row or column we are in.
             //  the width/height of this col/row can be determined by the next offset
-            double x = xBase + col * padding + required.xOffsetSide[col];
+            double x = xBase + (col+1) * padding + required.xOffsetSide[col];
             double y = yBase + row * padding + required.yOffsetSide[row];
             double w = (required.xOffsetSide[col + 1] - required.xOffsetSide[col]);
             double h = (required.yOffsetSide[row + 1] - required.yOffsetSide[row]);
@@ -184,12 +180,6 @@ final class ReactionDepiction extends Depiction {
                       required.condDim.w,
                       required.condDim.h));
         }
-
-        // reset shared xOffsets
-        if (!sideComps.isEmpty()) {
-            for (int i = arrowIdx + 1; i < required.xOffsets.length; i++)
-                required.xOffsets[i] -= required.sideDim.w * 1 / (scale * zoom);
-        }
     }
 
     @Override
@@ -204,7 +194,7 @@ final class ReactionDepiction extends Depiction {
         ReactionDimensions reactionDimensions = reactionBounds.getDimensions(padding);
 
         ReactionDimensions required = reactionDimensions.scale(scale * zoom);
-        final Dimensions total = calcTotalDimensions(required, null);
+        final Dimensions total = required.calcTotalDimensions(dimensions, null);
 
         // create the image for rendering
         final BufferedImage img = new BufferedImage((int) Math.ceil(total.w), (int) Math.ceil(total.h),
@@ -230,6 +220,7 @@ final class ReactionDepiction extends Depiction {
 
     @Override
     String toVecStr(String fmt, String units) {
+
         // format margins and padding for raster images
         final double scale = model.get(BasicSceneGenerator.Scale.class);
 
@@ -252,13 +243,13 @@ final class ReactionDepiction extends Depiction {
             zoom *= MM_TO_POINT;
             margin *= MM_TO_POINT;
             padding *= MM_TO_POINT;
+            dimensions = dimensions.scale(MM_TO_POINT);
         }
 
-        ReactionDimensions reactionDimensions = reactionBounds.getDimensions(padding);
         model.set(BasicSceneGenerator.ZoomFactor.class, zoom);
 
-        ReactionDimensions required = reactionDimensions.scale(scale * zoom);
-        final Dimensions total = calcTotalDimensions(required, fmt);
+        ReactionDimensions required = reactionBounds.getDimensions(padding).scale(scale * zoom);
+        final Dimensions total = required.calcTotalDimensions(dimensions, fmt);
         final Dimensions totalWithMargin = total.add(2 * margin, 2 * margin);
         final double fitting = calcFitting(required, total, fmt);
 
@@ -284,12 +275,6 @@ final class ReactionDepiction extends Depiction {
                                            (int) Math.ceil(totalWithMargin.w),
                                            (int) Math.ceil(totalWithMargin.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
-        visitor.visit(new RectangleElement(margin,
-                                           -total.h - margin,
-                                           total.w,
-                                           total.h,
-                                           true,
-                                           Color.GRAY));
 
         draw(visitor, required, rect(margin, margin, total.w, total.h), fmt);
 
@@ -351,43 +336,9 @@ final class ReactionDepiction extends Depiction {
         return resize;
     }
 
-    private Dimensions calcTotalDimensions(ReactionDimensions reactionDimensions,
-                                           String fmt) {
-        if (dimensions == Dimensions.AUTOMATIC) {
-            final double padding = reactionDimensions.padding;
-            final double firstRowHeight = reactionDimensions.yOffsets[1];
 
-            final int nSideCol = reactionDimensions.xOffsetSide.length - 1;
-            final int nSideRow = reactionDimensions.yOffsetSide.length - 1;
 
-            double mainCompOffset = reactionDimensions.sideDim.h +
-                    (nSideRow * padding) - (firstRowHeight / 2);
-            if (mainCompOffset < 0)
-                mainCompOffset = 0;
-
-            double titleExtra = Math.max(0, reactionDimensions.titleDim.h);
-            if (titleExtra > 0)
-                titleExtra += padding;
-
-            int nCol = reactionDimensions.xOffsets.length - 1;
-            int nRow = reactionDimensions.yOffsets.length - 1;
-
-            return reactionDimensions.mainDim.add(Math.max(0, nCol - 1) * padding, (nRow - 1) * padding)
-                                             .add(Math.max(0, reactionDimensions.sideDim.w), 0)           // side component extra width
-                                             .add(Math.max(0, nSideCol - 1) * padding, 0) // side component padding
-                                             .add(0, mainCompOffset)
-                                             .add(0, titleExtra);
-
-        } else {
-            // we want all vector graphics dims in MM
-            if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
-                return dimensions.scale(MM_TO_POINT);
-            else
-                return dimensions;
-        }
-    }
-
-    private Rectangle2D.Double rect(double x, double y, double w, double h) {
+    static Rectangle2D.Double rect(double x, double y, double w, double h) {
         return new Rectangle2D.Double(x, y, w, h);
     }
 
@@ -396,12 +347,15 @@ final class ReactionDepiction extends Depiction {
      *
      * @param direction the reaction arrow typ
      * @param color     the color of the arrow
-     * @param minWidth  min width
+     * @param length  min width
      * @param minHeight min height
      */
     static Bounds createArrow(IReaction.Direction direction,
                               Color color,
-                              double minWidth, double minHeight) {
+                              double length,
+                              double minHeight) {
+        if (direction == null)
+            return new Bounds();
         Bounds arrow = new Bounds();
         Path2D path = new Path2D.Double();
         final double headThickness = minHeight / 3;
@@ -410,16 +364,16 @@ final class ReactionDepiction extends Depiction {
         double strokeWidth = minHeight / 14;
         switch (direction) {
             case FORWARD:
-                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, strokeWidth, color));
-                path.moveTo(minWidth, 0);
-                path.lineTo(minWidth - headLength, +headThickness);
-                path.lineTo(minWidth - inset * headLength, 0);
-                path.lineTo(minWidth - headLength, -headThickness);
+                arrow.add(new LineElement(0, 0, length - 0.5 * headLength, 0, strokeWidth, color));
+                path.moveTo(length, 0);
+                path.lineTo(length - headLength, +headThickness);
+                path.lineTo(length - inset * headLength, 0);
+                path.lineTo(length - headLength, -headThickness);
                 path.closePath();
                 arrow.add(GeneralPath.shapeOf(path, color));
                 break;
             case BACKWARD:
-                arrow.add(new LineElement(0.5 * headLength, 0, minWidth, 0, strokeWidth, color));
+                arrow.add(new LineElement(0.5 * headLength, 0, length, 0, strokeWidth, color));
                 path.moveTo(0, 0);
                 path.lineTo(minHeight, +headThickness);
                 path.lineTo(minHeight - (1 - inset) * minHeight, 0);
@@ -434,13 +388,13 @@ final class ReactionDepiction extends Depiction {
                 arrow.add(new LineElement(x1, +(y), x2, +(y), strokeWidth, color));
                 break;
             case BIDIRECTIONAL: // equilibrium?
-                arrow.add(new LineElement(0, +0.5 * headThickness, minWidth - 0.5 * headLength, +0.5 * headThickness, strokeWidth, color));
-                path.moveTo(minWidth, 0.5 * headThickness - 0.5 * strokeWidth);
-                path.lineTo(minWidth - headLength, 1.5 * headThickness);
-                path.lineTo(minWidth - inset * headLength, 0.5 * headThickness - 0.5 * strokeWidth);
+                arrow.add(new LineElement(0, +0.5 * headThickness, length - 0.5 * headLength, +0.5 * headThickness, strokeWidth, color));
+                path.moveTo(length, 0.5 * headThickness - 0.5 * strokeWidth);
+                path.lineTo(length - headLength, 1.5 * headThickness);
+                path.lineTo(length - inset * headLength, 0.5 * headThickness - 0.5 * strokeWidth);
                 path.closePath();
 
-                arrow.add(new LineElement(0.5 * headLength, -0.5 * headThickness, minWidth, -0.5 * headThickness, strokeWidth, color));
+                arrow.add(new LineElement(0.5 * headLength, -0.5 * headThickness, length, -0.5 * headThickness, strokeWidth, color));
                 path.moveTo(0, -0.5 * headThickness + 0.5 * strokeWidth);
                 path.lineTo(+headLength, -1.5 * headThickness);
                 path.lineTo(inset * headLength, -0.5 * headThickness + 0.5 * strokeWidth);
@@ -448,33 +402,33 @@ final class ReactionDepiction extends Depiction {
                 arrow.add(GeneralPath.shapeOf(path, color));
                 break;
             case NO_GO: // crossed arrow
-                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, strokeWidth, color));
-                path.moveTo(minWidth, 0);
-                path.lineTo(minWidth - headLength, +headThickness);
-                path.lineTo(minWidth - inset * headLength, 0);
-                path.lineTo(minWidth - headLength, -headThickness);
+                arrow.add(new LineElement(0, 0, length - 0.5 * headLength, 0, strokeWidth, color));
+                path.moveTo(length, 0);
+                path.lineTo(length - headLength, +headThickness);
+                path.lineTo(length - inset * headLength, 0);
+                path.lineTo(length - headLength, -headThickness);
                 path.closePath();
                 arrow.add(GeneralPath.shapeOf(path, color));
-                double cx = minWidth / 2;
+                double cx = length / 2;
                 arrow.add(new LineElement(cx - headThickness, -headThickness, cx + headThickness, +headThickness,
                                           strokeWidth, color));
                 arrow.add(new LineElement(cx - headThickness, +headThickness, cx + headThickness, -headThickness,
                                           strokeWidth, color));
                 break;
             case RETRO_SYNTHETIC: // open arrow
-                arrow.add(new LineElement(0, -headThickness, minWidth - 0.5 * headLength, -headThickness, strokeWidth, color));
-                arrow.add(new LineElement(0, +headThickness, minWidth - 0.5 * headLength, +headThickness, strokeWidth, color));
-                path.moveTo(minWidth - headLength, -2 * headThickness);
-                path.lineTo(minWidth, 0);
-                path.lineTo(minWidth - headLength, +2 * headThickness);
+                arrow.add(new LineElement(0, -headThickness, length - 0.5 * headLength, -headThickness, strokeWidth, color));
+                arrow.add(new LineElement(0, +headThickness, length - 0.5 * headLength, +headThickness, strokeWidth, color));
+                path.moveTo(length - headLength, -2 * headThickness);
+                path.lineTo(length, 0);
+                path.lineTo(length - headLength, +2 * headThickness);
                 arrow.add(GeneralPath.outlineOf(path, strokeWidth, color));
                 break;
             case RESONANCE:
-                arrow.add(new LineElement(0.5 * headLength, 0, minWidth - 0.5 * headLength, 0, strokeWidth, color));
-                path.moveTo(minWidth, 0);
-                path.lineTo(minWidth - headLength, +headThickness);
-                path.lineTo(minWidth - inset * headLength, 0);
-                path.lineTo(minWidth - headLength, -headThickness);
+                arrow.add(new LineElement(0.5 * headLength, 0, length - 0.5 * headLength, 0, strokeWidth, color));
+                path.moveTo(length, 0);
+                path.lineTo(length - headLength, +headThickness);
+                path.lineTo(length - inset * headLength, 0);
+                path.lineTo(length - headLength, -headThickness);
                 path.closePath();
                 path.moveTo(0, 0);
                 path.lineTo(minHeight, +headThickness);
