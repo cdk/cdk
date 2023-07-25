@@ -115,7 +115,7 @@ final class ReactionDepiction extends Depiction {
             double h = (required.yOffsets[row + 1] - required.yOffsets[row]);
 
             // intercept arrow draw and make it as big as need
-            if (i == arrowIdx) {
+            if (i == arrowIdx && reactionBounds.direction != null) {
                 w = (required.xOffsets[i + 1] - required.xOffsets[i]);
                 draw(visitor,
                      1, // no zoom since arrows is drawn as big as needed
