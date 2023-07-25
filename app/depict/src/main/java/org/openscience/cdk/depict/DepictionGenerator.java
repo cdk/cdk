@@ -47,6 +47,7 @@ import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DelocalisedDonutsBondDisplay;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceDelocalisedBondDisplay;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 
@@ -444,13 +445,32 @@ public final class DepictionGenerator {
 
         final Color fgcol = getForgroundColor(rxns.getBuilder());
         List<ReactionBounds> reactionSetBounds = new ArrayList<>();
-        for (IReaction rxn : rxns.reactions())
+
+        IAtomContainerSet prev = null;
+        boolean isSequence = rxns.getReactionCount() > 1;
+        for (IReaction rxn : rxns.reactions()) {
             reactionSetBounds.add(getReactionBounds(rxn, fgcol));
+            if (prev != null && !equals(prev, rxn.getReactants()))
+                isSequence = false;
+            prev = rxn.getProducts();
+        }
 
         return new ReactionSetDepiction(reactionSetBounds.get(0).model,
                                         reactionSetBounds,
                                         dimensions,
+                                        isSequence,
                                         fgcol);
+    }
+
+    private boolean equals(IAtomContainerSet as, IAtomContainerSet bs) {
+        if (as.getAtomContainerCount() != bs.getAtomContainerCount())
+            return false;
+        for (int i = 0; i < as.getAtomContainerCount(); i++) {
+            // deliberate reference comparison
+            if (as.getAtomContainer(i) != bs.getAtomContainer(i))
+                return false;
+        }
+        return true;
     }
 
     private ReactionBounds getReactionBounds(IReaction rxn, Color fgcol) throws CDKException {
