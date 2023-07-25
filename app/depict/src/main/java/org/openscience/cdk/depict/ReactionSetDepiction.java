@@ -24,6 +24,7 @@
 package org.openscience.cdk.depict;
 
 import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
@@ -49,18 +50,49 @@ final class ReactionSetDepiction extends Depiction {
     private Dimensions dimensions;
 
     // molecule sets and titles
-    private final List<ReactionBounds> reactionSetBounds;
+    private final List<ReactionBounds> reactions;
     private final Color fgcol;
 
+    private final boolean isSequence;
+
     ReactionSetDepiction(RendererModel model,
-                         List<ReactionBounds> reactionSetBounds,
+                         List<ReactionBounds> reactions,
                          Dimensions dimensions,
+                         boolean isSequence,
                          Color fgcol) {
         super(model);
         this.model = model;
         this.dimensions = dimensions;
+        this.reactions = reactions;
+        this.isSequence = isSequence;
         this.fgcol = fgcol;
-        this.reactionSetBounds = reactionSetBounds;
+
+        if (isSequence) {
+
+            // the provided reaction set is a sequence of steps/pathway
+            // lay these out as:
+            // A ->
+            // B ->
+            // C ->
+            // D
+
+            ReactionBounds duped = new ReactionBounds();
+            ReactionBounds last = reactions.get(reactions.size() - 1);
+
+            // dummy reaction for the final product
+            duped.model = last.model;
+            duped.direction = null;
+            duped.plus = last.plus;
+            duped.title = new Bounds();
+            duped.reactants.addAll(last.products);
+            duped.reactantLabels.addAll(last.productLabels);
+
+            for (ReactionBounds reaction : reactions) {
+                reaction.products.clear();
+                reaction.productLabels.clear();
+            }
+            reactions.add(duped);
+        }
     }
 
     private Dimensions getRequiredSize(List<ReactionDimensions> dimensions,
@@ -102,12 +134,12 @@ final class ReactionSetDepiction extends Depiction {
         // the spacing between each reaction
         double spacing = padding * zoom * scale;
 
-        for (ReactionBounds bounds : reactionSetBounds)
+        for (ReactionBounds bounds : reactions)
             bounds.model.set(BasicSceneGenerator.ZoomFactor.class, zoom);
         model.set(BasicSceneGenerator.ZoomFactor.class, zoom);
 
         List<ReactionDimensions> reactionSetDimensions = new ArrayList<>();
-        for (ReactionBounds bounds : reactionSetBounds)
+        for (ReactionBounds bounds : reactions)
             reactionSetDimensions.add(bounds.getDimensions(padding).scale(zoom * scale));
 
         Dimensions total           = getRequiredSize(reactionSetDimensions, null, spacing);
@@ -160,8 +192,8 @@ final class ReactionSetDepiction extends Depiction {
 //                                           true,
 //                                           new Color(0xF1F1C8)));
 
-        for (int i = 0; i < reactionSetBounds.size(); i++) {
-            ReactionBounds reactionBounds = reactionSetBounds.get(i);
+        for (int i = 0; i < reactions.size(); i++) {
+            ReactionBounds reactionBounds = reactions.get(i);
             ReactionDimensions reactionDimensions = reactionSetDimensions.get(i);
             Dimensions partDims = reactionDimensions.calcTotalDimensions(Dimensions.AUTOMATIC, null);
 
@@ -214,12 +246,12 @@ final class ReactionSetDepiction extends Depiction {
         // the spacing between each reaction
         double spacing = padding * zoom * scale;
 
-        for (ReactionBounds bounds : reactionSetBounds)
+        for (ReactionBounds bounds : reactions)
             bounds.model.set(BasicSceneGenerator.ZoomFactor.class, zoom);
         model.set(BasicSceneGenerator.ZoomFactor.class, zoom);
 
         List<ReactionDimensions> reactionSetDimensions = new ArrayList<>();
-        for (ReactionBounds bounds : reactionSetBounds)
+        for (ReactionBounds bounds : reactions)
             reactionSetDimensions.add(bounds.getDimensions(padding).scale(zoom * scale));
 
         Dimensions total           = getRequiredSize(reactionSetDimensions, fmt, spacing);
@@ -278,8 +310,8 @@ final class ReactionSetDepiction extends Depiction {
 //                                           true,
 //                                           new Color(0xF1F1C8)));
 
-        for (int i = 0; i < reactionSetBounds.size(); i++) {
-            ReactionBounds reactionBounds = reactionSetBounds.get(i);
+        for (int i = 0; i < reactions.size(); i++) {
+            ReactionBounds reactionBounds = reactions.get(i);
             ReactionDimensions reactionDimensions = reactionSetDimensions.get(i);
 
             Dimensions partDims = reactionDimensions.calcTotalDimensions(Dimensions.AUTOMATIC, null);
@@ -293,7 +325,7 @@ final class ReactionSetDepiction extends Depiction {
         }
 
         // reset the modified zoom we stored
-        for (ReactionBounds bounds : reactionSetBounds)
+        for (ReactionBounds bounds : reactions)
             bounds.model.set(BasicSceneGenerator.ZoomFactor.class, zoomBackup);
         model.set(BasicSceneGenerator.ZoomFactor.class, zoomBackup);
 
@@ -306,7 +338,7 @@ final class ReactionSetDepiction extends Depiction {
     }
 
     private void svgStyleCache(String fmt, double scale, double zoom, double fitting, SvgDrawVisitor visitor) {
-        for (ReactionBounds rbounds : reactionSetBounds)
+        for (ReactionBounds rbounds : reactions)
             svgPrevisit(fmt, zoom * scale * fitting, visitor, rbounds.getMainRow());
     }
 }
