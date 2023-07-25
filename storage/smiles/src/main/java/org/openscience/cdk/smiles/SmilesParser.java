@@ -46,12 +46,14 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 import uk.ac.ebi.beam.Graph;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -232,8 +234,10 @@ public final class SmilesParser {
         }
 
         try {
-            // CXSMILES layer
-            parseRxnCXSMILES(title, reaction);
+            IReactionSet rset = reaction.getBuilder().newInstance(IReactionSet.class);
+            rset.addReaction(reaction);
+            parseRxnCXSMILES(title, rset);
+            reaction.setProperty(CDKConstants.TITLE, rset.getProperty(CDKConstants.TITLE));
         } catch (Exception e) {
             throw new InvalidSmilesException("Error parsing CXSMILES", e);
         }
@@ -265,14 +269,15 @@ public final class SmilesParser {
             throws InvalidSmilesException {
 
         int delim = smiles.length();
-        for (int i = 0; i < smiles.length(); i++) {
+        for (int i = smiles.lastIndexOf('>'); i < smiles.length(); i++) {
             if (smiles.charAt(i) == ' ' || smiles.charAt(i) == '\t') {
                 delim = i;
                 break;
             }
         }
+
         String[] parts = smiles.substring(0, delim).split(">");
-        String title = smiles.substring(delim).trim();
+        String   title = smiles.substring(delim).trim();
 
         if (parts.length < 3 || parts.length % 2 == 0)
             throw new IllegalArgumentException("Unexpected number of parts: " + parts.length + ", should be 3,5,7,..");
@@ -307,8 +312,13 @@ public final class SmilesParser {
                     reaction.addAgent(container);
             }
         }
-        
-        reactions.setProperty(CDKConstants.TITLE, title);
+        try {
+            parseRxnCXSMILES(title, reactions);
+        } catch (Exception e) {
+            throw new InvalidSmilesException("Error parsing CXSMILES", e);
+        }
+
+
         return reactions;
     }
 
@@ -399,44 +409,49 @@ public final class SmilesParser {
      * Parses CXSMILES layer and set attributes for atoms and bonds on the provided reaction.
      *
      * @param title SMILES title field
-     * @param rxn   parsed reaction
+     * @param rxns  parsed reactions
      */
-    private void parseRxnCXSMILES(String title, IReaction rxn) throws InvalidSmilesException {
+    private void parseRxnCXSMILES(String title, IReactionSet rxns) throws InvalidSmilesException {
         CxSmilesState cxstate;
         int pos;
         if (title != null && title.startsWith("|")) {
             if ((pos = CxSmilesParser.processCx(title, cxstate = new CxSmilesState())) >= 0) {
 
                 // set the correct title
-                rxn.setProperty(CDKConstants.TITLE, title.substring(pos));
+                rxns.setProperty(CDKConstants.TITLE, title.substring(pos));
 
                 final Map<IAtom, IAtomContainer> atomToMol = new HashMap<>(100);
                 final List<IAtom> atoms = new ArrayList<>();
 
                 // collect atom offsets before handling fragment groups
-                for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers(rxn))
+                Set<IAtomContainer> uniqueMolecules = new HashSet<>();
+                for (IAtomContainer mol : ReactionSetManipulator.getAllAtomContainers(rxns)) {
+                    if (!uniqueMolecules.add(mol))
+                        continue;
                     for (IAtom atom : mol.atoms())
                         atoms.add(atom);
+                }
 
-                handleFragmentGrouping(rxn, cxstate);
+                handleFragmentGrouping(rxns, cxstate);
 
                 // merge all together
-                for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers(rxn))
+                for (IAtomContainer mol : ReactionSetManipulator.getAllAtomContainers(rxns))
                     for (IAtom atom : mol.atoms())
                         atomToMol.put(atom, mol);
 
-                assignCxSmilesInfo(rxn.getBuilder(), rxn, atoms, atomToMol, cxstate);
+                assignCxSmilesInfo(rxns.getBuilder(), rxns, atoms, atomToMol, cxstate);
             }
 
-            String arrowType = rxn.getProperty(CDKConstants.REACTION_ARROW);
+            String arrowType = rxns.getProperty(CDKConstants.REACTION_ARROW);
             if (arrowType != null && !arrowType.isEmpty()) {
-                switch (arrowType) {
-                    case "RES": rxn.setDirection(IReaction.Direction.RESONANCE); break;
-                    case "EQU": rxn.setDirection(IReaction.Direction.BIDIRECTIONAL); break;
-                    case "RET": rxn.setDirection(IReaction.Direction.RETRO_SYNTHETIC); break;
-                    case "NGO": rxn.setDirection(IReaction.Direction.NO_GO); break;
+                for (IReaction rxn : rxns.reactions()) {
+                    switch (arrowType) {
+                        case "RES": rxn.setDirection(IReaction.Direction.RESONANCE); break;
+                        case "EQU": rxn.setDirection(IReaction.Direction.BIDIRECTIONAL); break;
+                        case "RET": rxn.setDirection(IReaction.Direction.RETRO_SYNTHETIC); break;
+                        case "NGO": rxn.setDirection(IReaction.Direction.NO_GO); break;
+                    }
                 }
-
             }
         }
     }
@@ -445,31 +460,42 @@ public final class SmilesParser {
      * Handle fragment grouping of a reaction that specifies certain disconnected components
      * are actually considered a single molecule. Normally used for salts, [Na+].[OH-].
      *
-     * @param rxn     reaction
+     * @param rxns    reaction set
      * @param cxstate state
      */
-    private void handleFragmentGrouping(IReaction rxn, CxSmilesState cxstate) {
+    private void handleFragmentGrouping(IReactionSet rxns, CxSmilesState cxstate) {
 
         if (cxstate.fragGroups == null && cxstate.racemicFrags == null)
             return; // nothing to do here
 
         final int reactant = 1;
-        final int agent = 2;
-        final int product = 3;
+        final int agent    = 2;
+        final int product  = 3;
 
-        List<IAtomContainer> fragMap = new ArrayList<>();
-        Map<IAtomContainer, Integer> roleMap = new HashMap<>();
+        Set<IAtomContainer> unique = new HashSet<>();
+        List<IAtomContainer> fragments = new ArrayList<>();
+        Map<IAtomContainer, List<Integer>> roleMap = new HashMap<>();
+        Map<IAtomContainer, List<IReaction>> molToReaction = new HashMap<>();
 
-        for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers(rxn)) {
-            fragMap.add(mol);
-            roleMap.put(mol, reactant);
+        for (IReaction reaction : rxns.reactions()) {
+            for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers(reaction)) {
+                molToReaction.computeIfAbsent(mol, k -> new ArrayList<>()).add(reaction);
+                if (unique.add(mol))
+                    fragments.add(mol);
+            }
+            for (IAtomContainer mol : reaction.getReactants().atomContainers())
+                roleMap.computeIfAbsent(mol, k -> new ArrayList<>()).add(reactant);
+            for (IAtomContainer mol : reaction.getAgents().atomContainers())
+                roleMap.computeIfAbsent(mol, k -> new ArrayList<>()).add(agent);
+            for (IAtomContainer mol : reaction.getProducts().atomContainers())
+                roleMap.computeIfAbsent(mol, k -> new ArrayList<>()).add(product);
         }
 
         if (cxstate.racemicFrags != null) {
             for (Integer grp : cxstate.racemicFrags) {
-                if (grp >= fragMap.size())
+                if (grp >= fragments.size())
                     continue;
-                IAtomContainer mol = fragMap.get(grp);
+                IAtomContainer mol = fragments.get(grp);
                 if (mol == null)
                     continue;
                 for (IStereoElement<?, ?> e : mol.stereoElements()) {
@@ -489,9 +515,9 @@ public final class SmilesParser {
             Set<Integer> visit = new HashSet<>();
 
             for (List<Integer> grouping : cxstate.fragGroups) {
-                if (grouping.get(0) >= fragMap.size())
+                if (grouping.get(0) >= fragments.size())
                     continue;
-                IAtomContainer dest = fragMap.get(grouping.get(0));
+                IAtomContainer dest = fragments.get(grouping.get(0));
                 if (dest == null)
                     continue;
                 if (!visit.add(grouping.get(0)))
@@ -499,31 +525,43 @@ public final class SmilesParser {
                 for (int i = 1; i < grouping.size(); i++) {
                     if (!visit.add(grouping.get(i)))
                         invalid = true;
-                    if (grouping.get(i) >= fragMap.size())
+                    if (grouping.get(i) >= fragments.size())
                         continue;
-                    IAtomContainer src = fragMap.get(grouping.get(i));
+                    IAtomContainer src = fragments.get(grouping.get(i));
                     if (src != null) {
                         dest.add(src);
-                        roleMap.put(src, 0); // no-role
+                        roleMap.put(src, Collections.emptyList()); // no-role
                     }
                 }
             }
 
             if (!invalid) {
-                rxn.getReactants().removeAllAtomContainers();
-                rxn.getAgents().removeAllAtomContainers();
-                rxn.getProducts().removeAllAtomContainers();
-                for (IAtomContainer mol : fragMap) {
-                    switch (roleMap.get(mol)) {
-                        case reactant:
-                            rxn.getReactants().addAtomContainer(mol);
-                            break;
-                        case product:
-                            rxn.getProducts().addAtomContainer(mol);
-                            break;
-                        case agent:
-                            rxn.getAgents().addAtomContainer(mol);
-                            break;
+
+                for (IReaction reaction : rxns.reactions()) {
+                    reaction.getReactants().removeAllAtomContainers();
+                    reaction.getAgents().removeAllAtomContainers();
+                    reaction.getProducts().removeAllAtomContainers();
+                }
+
+                for (IAtomContainer mol : fragments) {
+                    List<IReaction> reactions = molToReaction.get(mol);
+                    List<Integer>   roles     = roleMap.get(mol);
+                    if (roles.isEmpty())
+                        continue;
+                    for (int i = 0; i < reactions.size(); i++) {
+                        IReaction rxn = reactions.get(i);
+                        int role = roles.get(i);
+                        switch (role) {
+                            case reactant:
+                                rxn.getReactants().addAtomContainer(mol);
+                                break;
+                            case product:
+                                rxn.getProducts().addAtomContainer(mol);
+                                break;
+                            case agent:
+                                rxn.getAgents().addAtomContainer(mol);
+                                break;
+                        }
                     }
                 }
             }
