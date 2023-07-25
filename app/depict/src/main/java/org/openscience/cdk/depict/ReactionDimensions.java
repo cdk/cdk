@@ -28,7 +28,8 @@ class ReactionDimensions {
     Dimensions mainDim;
     Dimensions condDim;
     Dimensions titleDim;
-    double padding;
+    final double padding;
+    final double scale;
 
     double[]   xOffsets, yOffsets;
     double[] xOffsetSide, yOffsetSide;
@@ -37,12 +38,22 @@ class ReactionDimensions {
                        Dimensions mainDim,
                        Dimensions condDim,
                        Dimensions titleDim,
+                       double scale,
                        double padding) {
         this.sideDim = sideDim;
         this.mainDim = mainDim;
         this.condDim = condDim;
         this.titleDim = titleDim;
+        this.scale = scale;
         this.padding = padding;
+    }
+
+    ReactionDimensions(Dimensions sideDim,
+                       Dimensions mainDim,
+                       Dimensions condDim,
+                       Dimensions titleDim,
+                       double padding) {
+        this(sideDim, mainDim, condDim, titleDim, 1.0, padding);
     }
 
     private static double[] scale(double[] values, double ammount) {
@@ -63,7 +74,9 @@ class ReactionDimensions {
                                                            mainRequired,
                                                            condRequired,
                                                            titleRequired,
+                                                           scale * amount,
                                                            padding * amount);
+
         result.xOffsets = scale(xOffsets, amount);
         result.yOffsets = scale(yOffsets, amount);
         result.xOffsetSide = scale(xOffsetSide, amount);
