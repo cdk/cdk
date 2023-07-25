@@ -77,14 +77,10 @@ final class ReactionDepiction extends Depiction {
                                            new Dimensions(viewBounds.getWidth(),
                                                           viewBounds.getHeight()),
                                            fmt);
-
-        required = required.scale(fitting);
-        double rescale = fitting * scale * zoom;
-
         List<Bounds> mainComp = reactionBounds.getMainComponents();
         List<Bounds> sideComps = reactionBounds.aboveArrow;
         int arrowIdx = reactionBounds.getArrowIndex();
-        double arrowHeight = reactionBounds.plus.height();
+        double arrowHeight = reactionBounds.plus.height() * required.scale;
 
         // work out the required space of the main and side components separately
         // will draw these in two passes (main then side) hence want different offsets for each
@@ -126,7 +122,7 @@ final class ReactionDepiction extends Depiction {
                      // no zoom for all rxns except unidirected reactions since arrows
                      // are drawn as big as needed otherwise
                      IReaction.Direction.UNDIRECTED == reactionBounds.direction ? 0.08 : 1,
-                     createArrow(reactionBounds.direction, fgcol, w, arrowHeight * rescale),
+                     createArrow(reactionBounds.direction, fgcol, w, arrowHeight),
                      rect(x, y, w, h));
                 continue;
             }
@@ -146,7 +142,7 @@ final class ReactionDepiction extends Depiction {
         // RXN TITLE DRAW
         if (!reactionBounds.title.isEmpty()) {
             double y = yBase + nRow * padding + required.yOffsets[nRow];
-            double h = rescale * reactionBounds.title.height();
+            double h = required.scale * reactionBounds.title.height();
             draw(visitor, zoom, reactionBounds.title, rect(0, y, viewBounds.getWidth(), h));
         }
 
