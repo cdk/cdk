@@ -51,7 +51,8 @@ final class ReactionBounds {
             if (i != 0) mainRow.add(plus);
             mainRow.add(reactants.get(i));
         }
-        mainRow.add(new Bounds()); // arrow
+        if (direction != null)
+            mainRow.add(new Bounds()); // arrow
         for (int i = 0; i < products.size(); i++) {
             if (i != 0) mainRow.add(plus);
             mainRow.add(products.get(i));
@@ -74,7 +75,8 @@ final class ReactionBounds {
             else
                 labels.add(new Bounds());
         }
-        labels.add(new Bounds()); // arrow
+        if (direction != null)
+            labels.add(new Bounds()); // arrow
         for (int i = 0; i < productLabels.size(); i++) {
             if (i != 0) labels.add(new Bounds());
             labels.add(productLabels.get(0));
@@ -100,8 +102,9 @@ final class ReactionBounds {
 
         int nRow;
         int nCol;
-        double arrowHeight   = plus.height();
-        double minArrowWidth = 4 * arrowHeight;
+        double arrowHeight      = plus.height();
+        double arrowHeadLength  = plus.height();
+        double minArrowWidth    = direction != null ? 5 * arrowHeight : 0;
 
         double[] xOffsets, yOffsets;
         double[] xOffsetSide, yOffsetSide;
@@ -125,15 +128,21 @@ final class ReactionBounds {
                                                      xOffsetSide = new double[sideGrid.height + 1]);
 
         Bounds conditions = belowArrow.isEmpty() ? new Bounds() : belowArrow.get(0);
-        double middleRequired = Math.max(prelimSideDim.w,
-                                         conditions.width());
+        double middleRequired = 2*padding + arrowHeadLength +
+                Math.max(prelimSideDim.w + Math.min(0, xOffsetSide.length-1) * padding,
+                                                     conditions.width());
+
         ReactionDimensions result;
-        // avoid v. small arrows, we take in to account the padding provided by the arrow head height/length
-        if (middleRequired < minArrowWidth - arrowHeight - arrowHeight) {
+        if (middleRequired < minArrowWidth) {
+
+            // the arrow is bigger than the things above/below the arrow,
+            // ensure these are centered relative to the arrow
+
             // adjust x-offset so side components are centered
             double xAdjust = (minArrowWidth - middleRequired) / 2;
             for (int i = 0; i < xOffsetSide.length; i++)
                 xOffsetSide[i] += xAdjust;
+
             // need to recenter agents
             if (conditions.width() > prelimSideDim.w) {
                 for (int i = 0; i < xOffsetSide.length; i++)
@@ -144,21 +153,27 @@ final class ReactionBounds {
             Dimensions condDim = new Dimensions(minArrowWidth, conditions.height());
             Dimensions titleDim = new Dimensions(title.width(),
                                                  title.height());
-            result = new ReactionDimensions(sideDim, mainDim, condDim, titleDim, padding);
-        } else {
-            // arrow padding
-            for (int i = 0; i < xOffsetSide.length; i++)
-                xOffsetSide[i] += arrowHeight;
 
-            // need to recenter agents
+            for (int j=getArrowIndex()+1; j<xOffsets.length; j++)
+                xOffsets[j] += minArrowWidth;
+            result = new ReactionDimensions(sideDim, mainDim, condDim, titleDim, padding);
+        }
+        else {
+
+            // above/below is larger than arrow, make the arrow as big as needed
+
+            // need to re-center agents
             if (conditions.width() > prelimSideDim.w) {
                 for (int i = 0; i < xOffsetSide.length; i++)
                     xOffsetSide[i] += (conditions.width() - prelimSideDim.w) / 2;
             }
 
-            Dimensions sideDim = new Dimensions(2 * arrowHeight + middleRequired,
+            for (int j=getArrowIndex()+1; j<xOffsets.length; j++)
+                xOffsets[j] += middleRequired;
+
+            Dimensions sideDim = new Dimensions(prelimSideDim.w,
                                                 prelimSideDim.h);
-            Dimensions condDim = new Dimensions(2 * arrowHeight + middleRequired,
+            Dimensions condDim = new Dimensions(middleRequired,
                                                 conditions.height());
             Dimensions titleDim = new Dimensions(title.width(),
                                                  title.height());
