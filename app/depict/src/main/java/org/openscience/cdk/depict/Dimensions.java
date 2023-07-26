@@ -53,6 +53,8 @@ final class Dimensions {
     }
 
     Dimensions scale(double coef) {
+        if (this == AUTOMATIC)
+            return this;
         return new Dimensions(coef * w, coef * h);
     }
 
