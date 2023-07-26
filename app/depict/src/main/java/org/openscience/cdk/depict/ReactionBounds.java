@@ -79,7 +79,7 @@ final class ReactionBounds {
             labels.add(new Bounds()); // arrow
         for (int i = 0; i < productLabels.size(); i++) {
             if (i != 0) labels.add(new Bounds());
-            labels.add(productLabels.get(0));
+            labels.add(productLabels.get(i));
         }
         return labels;
     }
