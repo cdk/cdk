@@ -276,7 +276,7 @@ public final class SmilesParser {
             }
         }
 
-        String[] parts = smiles.substring(0, delim).split(">");
+        String[] parts = smiles.substring(0, delim).split(">", -1);
         String   title = smiles.substring(delim).trim();
 
         if (parts.length < 3 || parts.length % 2 == 0)
