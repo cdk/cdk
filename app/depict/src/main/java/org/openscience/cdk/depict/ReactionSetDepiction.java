@@ -100,27 +100,14 @@ final class ReactionSetDepiction extends Depiction {
                                        double spacing) {
         if (dimensions.isEmpty())
             throw new IllegalArgumentException();
-        Dimensions total = dimensions.get(0).calcTotalDimensions(Dimensions.AUTOMATIC, fmt);
+        Dimensions total = dimensions.get(0).calcTotalDimensions(fmt);
         double padding = dimensions.get(0).padding;
         for (int i = 1; i < dimensions.size(); i++) {
-            Dimensions part = dimensions.get(i).calcTotalDimensions(Dimensions.AUTOMATIC, fmt);
+            Dimensions part = dimensions.get(i).calcTotalDimensions(fmt);
             total = total.add(Math.max(part.w - total.w, 0),
                               spacing + part.h);
         }
         return total;
-    }
-
-    private double calcFitting(Dimensions srcDim,
-                               Dimensions dstDim,
-                               double margin) {
-        if (dstDim == Dimensions.AUTOMATIC)
-            return 1; // no fitting
-        dstDim = dstDim.add(2*-margin, 2*-margin);
-        double resize = Math.min(dstDim.w / srcDim.w,
-                                 dstDim.h / srcDim.h);
-        if (resize > 1 && !model.get(BasicSceneGenerator.FitToScreen.class))
-            resize = 1;
-        return resize;
     }
 
     @Override
@@ -195,7 +182,7 @@ final class ReactionSetDepiction extends Depiction {
         for (int i = 0; i < reactions.size(); i++) {
             ReactionBounds reactionBounds = reactions.get(i);
             ReactionDimensions reactionDimensions = reactionSetDimensions.get(i);
-            Dimensions partDims = reactionDimensions.calcTotalDimensions(Dimensions.AUTOMATIC, null);
+            Dimensions partDims = reactionDimensions.calcTotalDimensions(null);
 
             ReactionDepiction reactionDepiction = new ReactionDepiction(reactionBounds, null, fgcol);
             reactionDepiction.draw(visitor,
@@ -312,7 +299,7 @@ final class ReactionSetDepiction extends Depiction {
             ReactionBounds reactionBounds = reactions.get(i);
             ReactionDimensions reactionDimensions = reactionSetDimensions.get(i);
 
-            Dimensions partDims = reactionDimensions.calcTotalDimensions(Dimensions.AUTOMATIC, null);
+            Dimensions partDims = reactionDimensions.calcTotalDimensions(null);
 
             ReactionDepiction reactionDepiction = new ReactionDepiction(reactionBounds, null, fgcol);
             reactionDepiction.draw(visitor,
@@ -337,6 +324,6 @@ final class ReactionSetDepiction extends Depiction {
 
     private void svgStyleCache(String fmt, double scale, double zoom, double fitting, SvgDrawVisitor visitor) {
         for (ReactionBounds rbounds : reactions)
-            svgPrevisit(fmt, zoom * scale * fitting, visitor, rbounds.getMainRow());
+            svgStyleCache(fmt, zoom * scale * fitting, visitor, rbounds.getMainRow());
     }
 }

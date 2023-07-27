@@ -373,9 +373,26 @@ public abstract class Depiction {
         return bondLength / model.get(BasicSceneGenerator.BondLength.class);
     }
 
-    protected void svgPrevisit(String fmt, double rescale, SvgDrawVisitor visitor, List<? extends IRenderingElement> elements) {
+    protected void svgStyleCache(String fmt,
+                                 double rescale,
+                                 SvgDrawVisitor visitor,
+                                 List<? extends IRenderingElement> elements) {
         visitor.setTransform(AffineTransform.getScaleInstance(rescale, rescale));
         visitor.previsit(elements);
         visitor.setTransform(null);
     }
+
+    protected double calcFitting(Dimensions srcDim,
+                                 Dimensions dstDim,
+                                 double margin) {
+        if (dstDim == Dimensions.AUTOMATIC)
+            return 1; // no fitting
+        dstDim = dstDim.add(2*-margin, 2*-margin);
+        double resize = Math.min(dstDim.w / srcDim.w,
+                                 dstDim.h / srcDim.h);
+        if (resize > 1 && !model.get(BasicSceneGenerator.FitToScreen.class))
+            resize = 1;
+        return resize;
+    }
+
 }
