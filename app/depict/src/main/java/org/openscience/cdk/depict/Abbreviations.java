@@ -127,7 +127,9 @@ public class Abbreviations implements Iterable<String> {
          */
         AUTO_CONTRACT_HETERO,
         /**
-         * Automatically contract on terminal atoms, e.g. -CMe3
+         * Automatically contract on terminal atoms, e.g. -CMe3.
+         * This will also allow contraction of symmetric abbreviations around
+         * a bond, e.g. Ph-Ph => Ph2
          */
         AUTO_CONTRACT_TERMINAL
     }
@@ -363,6 +365,38 @@ public class Abbreviations implements Iterable<String> {
         return frags;
     }
 
+    private Map<IAtom,List<Sgroup>> getSgroupAdjacency(List<Sgroup> sgroups) {
+        Map<IAtom,List<Sgroup>> sgroupAdjs = new HashMap<>();
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getBonds().size() != 1)
+                continue;
+            IBond attachBond = sgroup.getBonds().iterator().next();
+            Set<IAtom> atoms = sgroup.getAtoms();
+            final IAtom attachAtom;
+            if (!atoms.contains(attachBond.getBegin()) &&
+                 atoms.contains(attachBond.getEnd()))
+                attachAtom = attachBond.getBegin();
+            else if (atoms.contains(attachBond.getBegin()) &&
+                    !atoms.contains(attachBond.getEnd()))
+                attachAtom = attachBond.getEnd();
+            else
+                continue; // corrupted?
+
+            sgroupAdjs.computeIfAbsent(attachAtom, k -> new ArrayList<>())
+                      .add(sgroup);
+        }
+        return sgroupAdjs;
+    }
+
+    private Set<IBond> getCrossingBonds(List<Sgroup> sgroups) {
+        Set<IBond> xbonds = new HashSet<>();
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getBonds().size() == 1)
+                xbonds.addAll(sgroup.getBonds());
+        }
+        return xbonds;
+    }
+
     /**
      * Find all enabled abbreviations in the provided molecule. They are not
      * added to the existing Sgroups and may need filtering.
@@ -442,7 +476,6 @@ public class Abbreviations implements Iterable<String> {
         }
 
         List<IAtomContainer> fragments = generateFragments(mol);
-        Map<IAtom, List<Sgroup>> sgroupAdjs = new HashMap<>();
 
         for (IAtomContainer frag : fragments) {
             try {
@@ -474,21 +507,13 @@ public class Abbreviations implements Iterable<String> {
                 sgroup.setSubscript(label);
 
                 IBond attachBond = frag.getBond(0).getProperty(CUT_BOND, IBond.class);
-                IAtom attachAtom = null;
                 sgroup.addBond(attachBond);
                 for (int i = 1; i < numAtoms; i++) {
                     IAtom atom = frag.getAtom(i);
                     usedAtoms.add(atom);
                     sgroup.addAtom(atom);
-                    if (attachBond.getBegin().equals(atom))
-                        attachAtom = attachBond.getEnd();
-                    else if (attachBond.getEnd().equals(atom))
-                        attachAtom = attachBond.getBegin();
                 }
 
-                if (attachAtom != null)
-                    sgroupAdjs.computeIfAbsent(attachAtom, k -> new ArrayList<>())
-                              .add(sgroup);
                 newSgroups.add(sgroup);
 
              } catch (CDKException e) {
@@ -500,9 +525,9 @@ public class Abbreviations implements Iterable<String> {
             !options.contains(Option.AUTO_CONTRACT_TERMINAL))
             return newSgroups;
 
-        Set<IBond> allCrossingBonds = new HashSet<>();
-        for (Sgroup sgroup : newSgroups)
-            allCrossingBonds.addAll(sgroup.getBonds());
+        // collect adjacency info and terminal crossing bonds
+        Map<IAtom, List<Sgroup>> sgroupAdjs = getSgroupAdjacency(newSgroups);
+        Set<IBond> allCrossingBonds = getCrossingBonds(newSgroups);
 
         // now collapse
         collapse:
@@ -621,7 +646,52 @@ public class Abbreviations implements Iterable<String> {
             usedAtoms.addAll(xatoms);
         }
 
+        if (options.contains(Option.ALLOW_SINGLETON) &&
+            options.contains(Option.AUTO_CONTRACT_TERMINAL)) {
+
+            // recompute the adjacency and crossing bond info
+            sgroupAdjs = getSgroupAdjacency(newSgroups);
+            allCrossingBonds = getCrossingBonds(newSgroups);
+
+            for (IBond bond : allCrossingBonds) {
+                List<Sgroup> begAbbrs = sgroupAdjs.get(bond.getBegin());
+                List<Sgroup> endAbbrs = sgroupAdjs.get(bond.getEnd());
+                if (symmetricSgroups(begAbbrs, endAbbrs)) {
+                    // Ph-Ph -> Ph2
+                    String label = begAbbrs.get(0).getSubscript();
+                    if (isTrivial(label))
+                        begAbbrs.get(0).setSubscript(label + "2");
+                    else
+                        begAbbrs.get(0).setSubscript("(" + label + ")2");
+                    begAbbrs.get(0).removeBond(bond);
+                    for (IAtom atom : endAbbrs.get(0).getAtoms())
+                        begAbbrs.get(0).addAtom(atom);
+                    newSgroups.remove(endAbbrs.get(0));
+                }
+            }
+        }
+
         return newSgroups;
+    }
+
+    private boolean isTrivial(String label) {
+        int numCaps = 0;
+        for (int i = 0; i < label.length(); i++) {
+            if (Character.isUpperCase(label.charAt(i)))
+                numCaps++;
+            else if (Character.isDigit(label.charAt(i)))
+                return false;
+            else if (label.charAt(i) == '(')
+                return false;
+        }
+        return numCaps == 1;
+    }
+
+    private static boolean symmetricSgroups(List<Sgroup> begAbbr, List<Sgroup> endAbbr) {
+        return begAbbr != null && endAbbr != null &&
+                begAbbr.size() == 1 && endAbbr.size() == 1 &&
+                begAbbr.get(0) != endAbbr.get(0) &&
+                begAbbr.get(0).getSubscript().equalsIgnoreCase(endAbbr.get(0).getSubscript());
     }
 
     private static boolean isCH2Me(IAtom attach, Set<IBond> xbonds, List<String> nbrSymbols) {
