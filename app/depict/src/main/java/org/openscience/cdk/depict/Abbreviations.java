@@ -64,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -116,6 +117,17 @@ import java.util.Set;
  */
 public class Abbreviations implements Iterable<String> {
 
+    public enum Option {
+        /**
+         * Allow a structured to be collapsed to a single label.
+         */
+        ALLOW_SINGLETON,
+        /**
+         * Automatically contract on hetero atoms, e.g. -NMe3
+         */
+        AUTO_CONTRACT_HETERO
+    }
+
     private static final int MAX_FRAG = 50;
 
     /**
@@ -130,8 +142,7 @@ public class Abbreviations implements Iterable<String> {
     private final SmilesGenerator     usmigen                   = SmilesGenerator.unique();
 
     private final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-    private boolean contractOnHetero = true;
-    private boolean contractSingleFragments = false;
+    private final Set<Option> options = EnumSet.of(Option.AUTO_CONTRACT_HETERO);
 
     public Abbreviations() {
     }
@@ -169,6 +180,28 @@ public class Abbreviations implements Iterable<String> {
     }
 
     /**
+     * Convenience method to enable an option.
+     *
+     * @param option the option to enable.
+     * @return self, for chaining
+     */
+    public Abbreviations with(Option option) {
+        options.add(option);
+        return this;
+    }
+
+    /**
+     * Convenience method to disable an option.
+     *
+     * @param option the option to enable.
+     * @return self, for chaining
+     */
+    public Abbreviations without(Option option) {
+        options.remove(option);
+        return this;
+    }
+
+    /**
      * Set whether abbreviations should be further contracted when they are connected
      * to a heteroatom, for example -NH-Boc becomes -NHBoc. By default this option
      * is enabled.
@@ -176,11 +209,17 @@ public class Abbreviations implements Iterable<String> {
      * @param val on/off
      */
     public void setContractOnHetero(boolean val) {
-        this.contractOnHetero = val;
+        if (val)
+            options.add(Option.AUTO_CONTRACT_HETERO);
+        else
+            options.remove(Option.AUTO_CONTRACT_HETERO);
     }
 
     public void setContractToSingleLabel(boolean val) {
-        this.contractSingleFragments = val;
+        if (val)
+            options.add(Option.ALLOW_SINGLETON);
+        else
+            options.remove(Option.ALLOW_SINGLETON);
     }
 
     private static Set<IBond> findCutBonds(IAtomContainer mol, EdgeToBondMap bmap, int[][] adjlist) {
@@ -347,7 +386,7 @@ public class Abbreviations implements Iterable<String> {
                 String cansmi = usmigen.create(copy);
                 String label = disconnectedAbbreviations.get(cansmi);
 
-                if (label != null && !disabled.contains(label) && contractSingleFragments) {
+                if (label != null && !disabled.contains(label) && options.contains(Option.ALLOW_SINGLETON)) {
                     Sgroup sgroup = new Sgroup();
                     sgroup.setType(SgroupType.CtabAbbreviation);
                     sgroup.setSubscript(label);
@@ -368,7 +407,7 @@ public class Abbreviations implements Iterable<String> {
                                 b.add(parts.getAtomContainer(j));
                         Sgroup sgroup1 = getAbbr(a);
                         Sgroup sgroup2 = getAbbr(b);
-                        if (sgroup1 != null && sgroup2 != null && contractSingleFragments) {
+                        if (sgroup1 != null && sgroup2 != null && options.contains(Option.ALLOW_SINGLETON)) {
                             Sgroup combined = new Sgroup();
                             label = null;
                             for (IAtom atom : sgroup1.getAtoms())
@@ -453,7 +492,7 @@ public class Abbreviations implements Iterable<String> {
             }
         }
 
-        if (!contractOnHetero)
+        if (!options.contains(Option.AUTO_CONTRACT_HETERO))
             return newSgroups;
 
         // now collapse
@@ -524,7 +563,7 @@ public class Abbreviations implements Iterable<String> {
                 continue;
 
             // avoid contracting completely unless requested to
-            if (newbonds.size() == 0 && !contractSingleFragments)
+            if (newbonds.size() == 0 && !options.contains(Option.ALLOW_SINGLETON))
                 continue;
 
             // create the symbol

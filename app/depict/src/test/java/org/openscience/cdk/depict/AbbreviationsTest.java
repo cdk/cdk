@@ -51,7 +51,7 @@ class AbbreviationsTest {
         IAtomContainer mol = smi("[K+].[O-]C(=O)[O-].[K+]");
         Abbreviations factory = new Abbreviations();
         factory.add("[K+].[O-]C(=O)[O-].[K+] K2CO3");
-        factory.setContractToSingleLabel(true);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("K2CO3"));
@@ -63,8 +63,8 @@ class AbbreviationsTest {
         IAtomContainer mol = smi("CCP(CC)CC");
         Abbreviations factory = new Abbreviations();
         factory.add("*CC Et");
-        factory.setContractToSingleLabel(true);
-        factory.setContractOnHetero(true);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON)
+               .with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("PEt3"));
@@ -76,20 +76,31 @@ class AbbreviationsTest {
         IAtomContainer mol = smi("CCP(CC)CC");
         Abbreviations factory = new Abbreviations();
         factory.add("*CC Et");
-        factory.setContractToSingleLabel(false);
-        factory.setContractOnHetero(true);
+        factory.without(Abbreviations.Option.ALLOW_SINGLETON)
+               .with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(3));
         assertThat(sgroups.get(0).getSubscript(), is("Et"));
         assertThat(sgroups.get(1).getSubscript(), is("Et"));
         assertThat(sgroups.get(2).getSubscript(), is("Et"));
-        factory.setContractToSingleLabel(true);
-        factory.setContractOnHetero(false);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON)
+               .without(Abbreviations.Option.AUTO_CONTRACT_HETERO);
         sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(3));
         assertThat(sgroups.get(0).getSubscript(), is("Et"));
         assertThat(sgroups.get(1).getSubscript(), is("Et"));
         assertThat(sgroups.get(2).getSubscript(), is("Et"));
+    }
+
+    @Test
+    void autoContractNMe2() throws Exception {
+        IAtomContainer mol = smi("CCCCCCN(C)C");
+        // no abbreviations define but cal still contract
+        Abbreviations factory = new Abbreviations();
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("NMe2"));
     }
 
     @Test
@@ -154,7 +165,7 @@ class AbbreviationsTest {
         IAtomContainer mol = smi("ClCCl.FC(F)(F)C(=O)O");
         factory.add("ClCCl DCM");
         factory.add("FC(F)(F)C(=O)O TFA");
-        factory.setContractToSingleLabel(true);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("TFA·DCM"));
@@ -166,7 +177,7 @@ class AbbreviationsTest {
         IAtomContainer mol = smi("ClCCl.FC(F)(F)C(=O)O");
         factory.add("ClCCl DCM");
         factory.add("FC(F)(F)C(=O)O TFA");
-        factory.setContractToSingleLabel(false);
+        factory.without(Abbreviations.Option.ALLOW_SINGLETON);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("DCM"));
@@ -345,7 +356,7 @@ class AbbreviationsTest {
     void hclSaltOfEdci() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("CCN=C=NCCCN(C)C EDCI");
-        factory.setContractToSingleLabel(true);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
         IAtomContainer mol = smi("CCN=C=NCCCN(C)C.Cl");
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
@@ -356,7 +367,7 @@ class AbbreviationsTest {
     void SnCl2() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("Cl[Sn]Cl");
-        factory.setContractToSingleLabel(true);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("SnCl2"));
@@ -366,7 +377,7 @@ class AbbreviationsTest {
     void HOOH() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("OO");
-        factory.setContractToSingleLabel(true);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("HOOH"));
@@ -378,7 +389,7 @@ class AbbreviationsTest {
         Abbreviations factory = new Abbreviations();
         factory.add("ClCCl DCM");
         factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
-        factory.setContractToSingleLabel(true);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
         IAtomContainer mol = smi(smi);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
@@ -391,7 +402,7 @@ class AbbreviationsTest {
         Abbreviations factory = new Abbreviations();
         factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
         factory.add("Cl[Pd]Cl PdCl2");
-        factory.setContractToSingleLabel(true);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
         IAtomContainer mol = smi(smi);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
