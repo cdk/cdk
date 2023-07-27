@@ -56,14 +56,14 @@ class ReactionDimensions {
         this(sideDim, mainDim, condDim, titleDim, 1.0, padding);
     }
 
-    private static double[] scale(double[] values, double ammount) {
+    private static double[] resize(double[] values, double ammount) {
         double[] cpy = Arrays.copyOf(values, values.length);
         for (int i=0; i<values.length; i++)
             cpy[i] *= ammount;
         return cpy;
     }
 
-    ReactionDimensions scale(double amount) {
+    ReactionDimensions resize(double amount) {
         Dimensions sideRequired = sideDim.scale(amount);
         Dimensions mainRequired = mainDim.scale(amount);
         Dimensions condRequired = condDim.scale(amount);
@@ -77,10 +77,10 @@ class ReactionDimensions {
                                                            scale * amount,
                                                            padding * amount);
 
-        result.xOffsets = scale(xOffsets, amount);
-        result.yOffsets = scale(yOffsets, amount);
-        result.xOffsetSide = scale(xOffsetSide, amount);
-        result.yOffsetSide = scale(yOffsetSide, amount);
+        result.xOffsets = resize(xOffsets, amount);
+        result.yOffsets = resize(yOffsets, amount);
+        result.xOffsetSide = resize(xOffsetSide, amount);
+        result.yOffsetSide = resize(yOffsetSide, amount);
         return result;
     }
 
