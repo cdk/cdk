@@ -163,9 +163,8 @@ final class ReactionDepiction extends Depiction {
 
         // CONDITIONS DRAW
         if (!reactionBounds.belowArrow.isEmpty()) {
-            yBase += mainCompOffset;        // back to top
-            yBase += required.mainDim.h / 2;    // now on center line (arrow)
-            yBase += arrowHeight;           // now just bellow
+            yBase += mainCompOffset; // back to center
+            yBase += 2*padding + arrowHeight;  // now just bellow arrow
             draw(visitor, zoom,
                  reactionBounds.belowArrow.get(0),
                  rect(xBase,
