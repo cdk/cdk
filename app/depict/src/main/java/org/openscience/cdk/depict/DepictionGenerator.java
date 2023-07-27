@@ -1233,10 +1233,6 @@ public final class DepictionGenerator {
         return caclModelScale(ReactionManipulator.getAllAtomContainers(rxn));
     }
 
-    private double caclModelScale(IReactionSet rxns) {
-        return caclModelScale(ReactionSetManipulator.getAllAtomContainers(rxns));
-    }
-
     private double medianBondLength(Collection<IBond> bonds) {
         if (bonds.isEmpty())
             return 1.5;
