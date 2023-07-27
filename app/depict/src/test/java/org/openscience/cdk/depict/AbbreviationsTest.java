@@ -129,6 +129,66 @@ class AbbreviationsTest {
     }
 
     @Test
+    void testBiphenyl() throws Exception {
+        IAtomContainer mol = smi("c1ccccc1c1ccccc1");
+        Abbreviations factory = new Abbreviations();
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph2"));
+        assertThat(sgroups.get(0).getAtoms().size(), is(12));
+        factory.without(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph"));
+        assertThat(sgroups.get(1).getSubscript(), is("Ph"));
+    }
+
+    @Test
+    void testNEt2() throws Exception {
+        IAtomContainer mol = smi("CCN(CC)N(CC)CC");
+        Abbreviations factory = new Abbreviations();
+        factory.add("*CC Et");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("(NEt2)2"));
+        assertThat(sgroups.get(0).getAtoms().size(), is(10));
+        factory.without(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        assertThat(sgroups.get(0).getSubscript(), is("NEt2"));
+        assertThat(sgroups.get(1).getSubscript(), is("NEt2"));
+    }
+
+    @Test
+    void testNMe2() throws Exception {
+        IAtomContainer mol = smi("CN(C)N(C)C");
+        Abbreviations factory = new Abbreviations();
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("(NMe2)2"));
+        assertThat(sgroups.get(0).getAtoms().size(), is(6));
+        factory.without(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        assertThat(sgroups.get(0).getSubscript(), is("NMe2"));
+        assertThat(sgroups.get(1).getSubscript(), is("NMe2"));
+    }
+
+    @Test
     void phenyl() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("CCCCCCC(c1ccccc1)(c1ccccc1)c1ccccc1");
