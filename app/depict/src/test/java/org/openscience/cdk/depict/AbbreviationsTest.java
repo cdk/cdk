@@ -51,7 +51,7 @@ class AbbreviationsTest {
         IAtomContainer mol = smi("[K+].[O-]C(=O)[O-].[K+]");
         Abbreviations factory = new Abbreviations();
         factory.add("[K+].[O-]C(=O)[O-].[K+] K2CO3");
-        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("K2CO3"));
@@ -101,6 +101,31 @@ class AbbreviationsTest {
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("NMe2"));
+    }
+
+    @Test
+    void autoContractCEt2() throws Exception {
+        IAtomContainer mol = smi("CCC(CC)CC");
+        Abbreviations factory = new Abbreviations();
+        factory.add("*CC Et");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("CHEt3"));
+        assertThat(sgroups.get(0).getAtoms().size(), is(7));
+    }
+
+    @Test
+    void autoContractCEt2_NonTerminal() throws Exception {
+        IAtomContainer mol = smi("CCCCCCCC(CC)CC");
+        Abbreviations factory = new Abbreviations();
+        factory.add("*CC Et");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("CHEt2"));
     }
 
     @Test
