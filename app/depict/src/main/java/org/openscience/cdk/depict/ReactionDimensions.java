@@ -88,10 +88,7 @@ class ReactionDimensions {
         return yOffsets[1];
     }
 
-    Dimensions calcTotalDimensions(Dimensions requested, String fmt) {
-        if (requested != Dimensions.AUTOMATIC)
-            return requested;
-
+    Dimensions calcTotalDimensions(String fmt) {
         final double firstRowHeight = yOffsets[1];
 
         final int nSideCol = xOffsetSide.length - 1;
