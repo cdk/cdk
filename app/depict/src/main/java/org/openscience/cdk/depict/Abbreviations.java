@@ -125,7 +125,11 @@ public class Abbreviations implements Iterable<String> {
         /**
          * Automatically contract on hetero atoms, e.g. -NMe3
          */
-        AUTO_CONTRACT_HETERO
+        AUTO_CONTRACT_HETERO,
+        /**
+         * Automatically contract on terminal atoms, e.g. -CMe3
+         */
+        AUTO_CONTRACT_TERMINAL
     }
 
     private static final int MAX_FRAG = 50;
@@ -492,8 +496,13 @@ public class Abbreviations implements Iterable<String> {
             }
         }
 
-        if (!options.contains(Option.AUTO_CONTRACT_HETERO))
+        if (!options.contains(Option.AUTO_CONTRACT_HETERO) &&
+            !options.contains(Option.AUTO_CONTRACT_TERMINAL))
             return newSgroups;
+
+        Set<IBond> allCrossingBonds = new HashSet<>();
+        for (Sgroup sgroup : newSgroups)
+            allCrossingBonds.addAll(sgroup.getBonds());
 
         // now collapse
         collapse:
@@ -501,11 +510,20 @@ public class Abbreviations implements Iterable<String> {
             if (usedAtoms.contains(attach))
                 continue;
 
-            // skip charged or isotopic labelled, C or R/*, H, He
+            // skip charged or isotopic labelled, R, *, H, He
             if ((attach.getFormalCharge() != null && attach.getFormalCharge() != 0)
                 || attach.getMassNumber() != null
-                || attach.getAtomicNumber() == 6
-                || attach.getAtomicNumber() < 2)
+                || attach.getAtomicNumber() <= IAtom.He)
+                continue;
+
+            boolean okay = false;
+            if (attach.getAtomicNumber() != IAtom.C &&
+                    options.contains(Option.AUTO_CONTRACT_HETERO))
+                okay = true;
+            else if (effectiveDegree(attach, allCrossingBonds) <= 1 &&
+                     options.contains(Option.AUTO_CONTRACT_TERMINAL))
+                okay = true;
+            if (!okay)
                 continue;
 
             int hcount = attach.getImplicitHydrogenCount();
@@ -562,6 +580,9 @@ public class Abbreviations implements Iterable<String> {
                 newbonds.size() > 2)
                 continue;
 
+            if (isCH2Me(attach, xbonds, nbrSymbols))
+                continue;
+
             // avoid contracting completely unless requested to
             if (newbonds.size() == 0 && !options.contains(Option.ALLOW_SINGLETON))
                 continue;
@@ -571,14 +592,7 @@ public class Abbreviations implements Iterable<String> {
             sb.append(newSymbol(attach.getAtomicNumber(), hcount, newbonds.size() == 0));
             String prev  = null;
             int    count = 0;
-            nbrSymbols.sort(new Comparator<String>() {
-                @Override
-                public int compare(String o1, String o2) {
-                    int cmp = Integer.compare(o1.length(), o2.length());
-                    if (cmp != 0) return cmp;
-                    return o1.compareTo(o2);
-                }
-            });
+            nbrSymbols.sort(Comparator.comparingInt(String::length).thenComparing(o -> o));
             for (String nbrSymbol : nbrSymbols) {
                 if (nbrSymbol.equals(prev)) {
                     count++;
@@ -608,6 +622,24 @@ public class Abbreviations implements Iterable<String> {
         }
 
         return newSgroups;
+    }
+
+    private static boolean isCH2Me(IAtom attach, Set<IBond> xbonds, List<String> nbrSymbols) {
+        return xbonds.size() == 0 &&
+                attach.getAtomicNumber() == IAtom.C &&
+                nbrSymbols.size() == 1 &&
+                nbrSymbols.contains("Me");
+    }
+
+    private int effectiveDegree(IAtom attach, Set<IBond> xbonds) {
+        int degree = 0;
+        for (IBond bond : attach.bonds()) {
+            IAtom nbor = bond.getOther(attach);
+            if (nbor.getBondCount() != 1 &&
+                !xbonds.contains(bond))
+                degree++;
+        }
+        return degree;
     }
 
     private Sgroup getAbbr(IAtomContainer part) throws CDKException {
@@ -672,7 +704,7 @@ public class Abbreviations implements Iterable<String> {
         Elements elem = Elements.ofNumber(atomnum);
         if (elem == Elements.Carbon && hcount == 3)
             return "Me";
-        if (prefix) {
+        if (prefix && elem != Elements.Carbon) {
             if (hcount > 0) {
                 sb.append('H');
                 if (hcount > 1)
