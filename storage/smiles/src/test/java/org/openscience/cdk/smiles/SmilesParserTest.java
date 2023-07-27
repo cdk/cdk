@@ -2743,6 +2743,17 @@ class SmilesParserTest extends CDKTestCase {
         Assertions.assertEquals("[Ag]>>[Au]", smigen.create(reactions.getReaction(1)));
     }
 
+    @Test
+    void testMultiStepSmilesEmpties() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        IReactionSet reactions = smipar.parseReactionSetSmiles(">[Pb]>>[Ag]>>[Au]>");
+        Assertions.assertEquals(3, reactions.getReactionCount());
+        Assertions.assertEquals(">[Pb]>", smigen.create(reactions.getReaction(0)));
+        Assertions.assertEquals(">[Ag]>", smigen.create(reactions.getReaction(1)));
+        Assertions.assertEquals(">[Au]>", smigen.create(reactions.getReaction(2)));
+    }
+
     /**
      * Counts aromatic atoms in a molecule.
      * @param mol molecule for which to count aromatic atoms.
