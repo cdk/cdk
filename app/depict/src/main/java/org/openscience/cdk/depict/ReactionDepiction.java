@@ -24,7 +24,6 @@
 package org.openscience.cdk.depict;
 
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.LineElement;
@@ -39,7 +38,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -219,8 +217,6 @@ final class ReactionDepiction extends Depiction {
         double margin = getMarginValue(units.equals(Depiction.UNITS_MM)
                                                ? DepictionGenerator.DEFAULT_MM_MARGIN
                                                : DepictionGenerator.DEFAULT_PX_MARGIN);
-        double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
-
         // All vector graphics will be written in mm not px to we need to
         // adjust the size of the molecules accordingly. For now the rescaling
         // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
@@ -229,6 +225,8 @@ final class ReactionDepiction extends Depiction {
 
         if (units.equals(Depiction.UNITS_MM))
             zoom *= rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
+
+        double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin) / (zoom * scale);
 
         // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
         if (fmt.equals(PDF_FMT) || fmt.equals(PS_FMT)) {
