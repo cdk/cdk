@@ -70,10 +70,6 @@ final class ReactionDepiction extends Depiction {
         final double zoom = model.get(BasicSceneGenerator.ZoomFactor.class);
         final double padding = required.padding;
 
-        final double fitting = calcFitting(required,
-                                           new Dimensions(viewBounds.getWidth(),
-                                                          viewBounds.getHeight()),
-                                           fmt);
         List<Bounds> mainComp = reactionBounds.getMainComponents();
         List<Bounds> sideComps = reactionBounds.aboveArrow;
         int arrowIdx = reactionBounds.getArrowIndex();
@@ -183,7 +179,7 @@ final class ReactionDepiction extends Depiction {
 
         ReactionDimensions reactionDimensions = reactionBounds.getDimensions(padding);
 
-        ReactionDimensions required = reactionDimensions.scale(scale * zoom);
+        ReactionDimensions required = reactionDimensions.resize(scale * zoom);
         final Dimensions total = required.calcTotalDimensions(dimensions, null);
 
         // create the image for rendering
@@ -238,23 +234,22 @@ final class ReactionDepiction extends Depiction {
 
         model.set(BasicSceneGenerator.ZoomFactor.class, zoom);
 
-        ReactionDimensions required = reactionBounds.getDimensions(padding).scale(scale * zoom);
+        ReactionDimensions required = reactionBounds.getDimensions(padding).resize(scale * zoom);
         final Dimensions total = required.calcTotalDimensions(dimensions, fmt);
         final Dimensions totalWithMargin = total.add(2 * margin, 2 * margin);
         final double fitting = calcFitting(required, total, fmt);
 
         // create the image for rendering
         FreeHepWrapper wrapper = null;
-        if (!fmt.equals(SVG_FMT))
-            wrapper = new FreeHepWrapper(fmt, totalWithMargin.w, totalWithMargin.h);
-        final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(totalWithMargin.w, totalWithMargin.h, units)
-                : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
+        final IDrawVisitor visitor;
         if (fmt.equals(SVG_FMT)) {
+            visitor = new SvgDrawVisitor(totalWithMargin.w, totalWithMargin.h, units);
             svgPrevisit(fmt, scale * zoom * fitting,
                         (SvgDrawVisitor) visitor,
                         reactionBounds.getMainComponents());
         } else {
-            // pdf can handle fraction coords just fine
+            wrapper = new FreeHepWrapper(fmt, totalWithMargin.w, totalWithMargin.h);
+            visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
             ((AWTDrawVisitor) visitor).setRounding(false);
         }
 
@@ -285,7 +280,6 @@ final class ReactionDepiction extends Depiction {
         if (dstDim == Dimensions.AUTOMATIC)
             return 1; // no fitting
 
-        final double scale = model.get(BasicSceneGenerator.Scale.class);
         final double zoom = model.get(BasicSceneGenerator.ZoomFactor.class);
         final double padding = srcDim.padding;
         final double firstRowHeight = srcDim.yOffsets[1];

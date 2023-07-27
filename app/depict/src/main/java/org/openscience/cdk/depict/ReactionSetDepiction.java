@@ -140,7 +140,7 @@ final class ReactionSetDepiction extends Depiction {
 
         List<ReactionDimensions> reactionSetDimensions = new ArrayList<>();
         for (ReactionBounds bounds : reactions)
-            reactionSetDimensions.add(bounds.getDimensions(padding).scale(zoom * scale));
+            reactionSetDimensions.add(bounds.getDimensions(padding).resize(zoom * scale));
 
         Dimensions total           = getRequiredSize(reactionSetDimensions, null, spacing);
         Dimensions totalWithMargin = total.add(2 * margin, 2 * margin);
@@ -150,7 +150,7 @@ final class ReactionSetDepiction extends Depiction {
             spacing *= fitting;
             total = total.scale(fitting);
             totalWithMargin = total.add(2*margin, 2*margin);
-            reactionSetDimensions.replaceAll(reactionDimensions -> reactionDimensions.scale(fitting));
+            reactionSetDimensions.replaceAll(reactionDimensions -> reactionDimensions.resize(fitting));
         }
 
         Dimensions canvasSize = totalWithMargin;
@@ -242,7 +242,6 @@ final class ReactionSetDepiction extends Depiction {
             dimensions = dimensions.scale(MM_TO_POINT);
         }
 
-
         // the spacing between each reaction
         double spacing = padding * zoom * scale;
 
@@ -252,7 +251,7 @@ final class ReactionSetDepiction extends Depiction {
 
         List<ReactionDimensions> reactionSetDimensions = new ArrayList<>();
         for (ReactionBounds bounds : reactions)
-            reactionSetDimensions.add(bounds.getDimensions(padding).scale(zoom * scale));
+            reactionSetDimensions.add(bounds.getDimensions(padding).resize(zoom * scale));
 
         Dimensions total           = getRequiredSize(reactionSetDimensions, fmt, spacing);
         Dimensions totalWithMargin = total.add(2 * margin, 2 * margin);
@@ -262,7 +261,7 @@ final class ReactionSetDepiction extends Depiction {
             spacing *= fitting;
             total = total.scale(fitting);
             totalWithMargin = total.add(2*margin, 2*margin);
-            reactionSetDimensions.replaceAll(reactionDimensions -> reactionDimensions.scale(fitting));
+            reactionSetDimensions.replaceAll(reactionDimensions -> reactionDimensions.resize(fitting));
         }
 
         Dimensions canvasSize = totalWithMargin;
@@ -271,15 +270,14 @@ final class ReactionSetDepiction extends Depiction {
 
         // create the image for rendering
         FreeHepWrapper wrapper = null;
-        if (!fmt.equals(SVG_FMT))
-            wrapper = new FreeHepWrapper(fmt, canvasSize.w, canvasSize.h);
-        final IDrawVisitor visitor = fmt.equals(SVG_FMT)
-                ? new SvgDrawVisitor(canvasSize.w, canvasSize.h, units)
-                : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
+        final IDrawVisitor visitor;
         if (fmt.equals(SVG_FMT)) {
-            svgStyleCache(fmt, scale, zoom, fitting, (SvgDrawVisitor) visitor);
+            visitor = new SvgDrawVisitor(canvasSize.w, canvasSize.h, units);
+            svgStyleCache(fmt, scale, zoom, fitting,
+                          (SvgDrawVisitor) visitor);
         } else {
-            // pdf can handle fraction coords just fine
+            wrapper = new FreeHepWrapper(fmt, canvasSize.w, canvasSize.h);
+            visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
             ((AWTDrawVisitor) visitor).setRounding(false);
         }
 
