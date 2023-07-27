@@ -175,15 +175,27 @@ final class ReactionDepiction extends Depiction {
         final double scale = model.get(BasicSceneGenerator.Scale.class);
         final double zoom = model.get(BasicSceneGenerator.ZoomFactor.class);
         final double margin = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
-        final double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
+        final double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin) / (scale * zoom);
 
         ReactionDimensions reactionDimensions = reactionBounds.getDimensions(padding);
 
-        ReactionDimensions required = reactionDimensions.resize(scale * zoom);
-        final Dimensions total = required.calcTotalDimensions(dimensions, null);
+        ReactionDimensions required = reactionBounds.getDimensions(padding).resize(scale * zoom);
+        Dimensions total = required.calcTotalDimensions(null);
+        Dimensions totalWithMargin = total.add(2 * margin, 2 * margin);
+        double fitting = calcFitting(total, dimensions, margin);
+
+        if (Math.abs(1.0 - fitting) >= 0.01) {
+            total = total.scale(fitting);
+            totalWithMargin = total.add(2*margin, 2*margin);
+            required = required.resize(fitting);
+        }
+
+        Dimensions canvasSize = totalWithMargin;
+        if (dimensions != Dimensions.AUTOMATIC)
+            canvasSize = dimensions;
 
         // create the image for rendering
-        final BufferedImage img = new BufferedImage((int) Math.ceil(total.w), (int) Math.ceil(total.h),
+        final BufferedImage img = new BufferedImage((int) Math.ceil(canvasSize.w), (int) Math.ceil(canvasSize.h),
                                                     BufferedImage.TYPE_4BYTE_ABGR);
 
         // we use the AWT for vector graphics if though we're raster because
@@ -195,9 +207,16 @@ final class ReactionDepiction extends Depiction {
         visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
-        draw(visitor, required,
-             rect(margin, margin, total.w, total.h),
-             null);
+        double xOffset = margin;
+        double yOffset = margin;
+        // centering
+        if (dimensions != Dimensions.AUTOMATIC) {
+            if (dimensions.w > totalWithMargin.w)
+                xOffset += (dimensions.w - totalWithMargin.w) / 2;
+            if (dimensions.h > totalWithMargin.h)
+                yOffset += (dimensions.h - totalWithMargin.h) / 2;
+        }
+        draw(visitor, required, rect(xOffset, yOffset, total.w, total.h), null);
 
         // we created the Graphic2d instance so need to dispose of it
         g2.dispose();
@@ -235,20 +254,30 @@ final class ReactionDepiction extends Depiction {
         model.set(BasicSceneGenerator.ZoomFactor.class, zoom);
 
         ReactionDimensions required = reactionBounds.getDimensions(padding).resize(scale * zoom);
-        final Dimensions total = required.calcTotalDimensions(dimensions, fmt);
-        final Dimensions totalWithMargin = total.add(2 * margin, 2 * margin);
-        final double fitting = calcFitting(required, total, fmt);
+        Dimensions total = required.calcTotalDimensions(fmt);
+        Dimensions totalWithMargin = total.add(2 * margin, 2 * margin);
+        double fitting = calcFitting(total, dimensions, margin);
+
+        if (Math.abs(1.0 - fitting) >= 0.01) {
+            total = total.scale(fitting);
+            totalWithMargin = total.add(2*margin, 2*margin);
+            required = required.resize(fitting);
+        }
+
+        Dimensions canvasSize = totalWithMargin;
+        if (dimensions != Dimensions.AUTOMATIC)
+            canvasSize = dimensions;
 
         // create the image for rendering
         FreeHepWrapper wrapper = null;
         final IDrawVisitor visitor;
         if (fmt.equals(SVG_FMT)) {
-            visitor = new SvgDrawVisitor(totalWithMargin.w, totalWithMargin.h, units);
-            svgPrevisit(fmt, scale * zoom * fitting,
-                        (SvgDrawVisitor) visitor,
-                        reactionBounds.getMainComponents());
+            visitor = new SvgDrawVisitor(canvasSize.w, canvasSize.h, units);
+            svgStyleCache(fmt, scale * zoom * fitting,
+                          (SvgDrawVisitor) visitor,
+                          reactionBounds.getMainComponents());
         } else {
-            wrapper = new FreeHepWrapper(fmt, totalWithMargin.w, totalWithMargin.h);
+            wrapper = new FreeHepWrapper(fmt, canvasSize.w, canvasSize.h);
             visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
             ((AWTDrawVisitor) visitor).setRounding(false);
         }
@@ -260,8 +289,16 @@ final class ReactionDepiction extends Depiction {
                                            (int) Math.ceil(totalWithMargin.w),
                                            (int) Math.ceil(totalWithMargin.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
-
-        draw(visitor, required, rect(margin, margin, total.w, total.h), fmt);
+        double xOffset = margin;
+        double yOffset = margin;
+        // centering
+        if (dimensions != Dimensions.AUTOMATIC) {
+            if (dimensions.w > totalWithMargin.w)
+                xOffset += (dimensions.w - totalWithMargin.w) / 2;
+            if (dimensions.h > totalWithMargin.h)
+                yOffset += (dimensions.h - totalWithMargin.h) / 2;
+        }
+        draw(visitor, required, rect(xOffset, yOffset, total.w, total.h), fmt);
 
         // reset the modified zoom we stored
         model.set(BasicSceneGenerator.ZoomFactor.class, zoomBackup);
