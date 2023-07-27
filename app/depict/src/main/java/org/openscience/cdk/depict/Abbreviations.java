@@ -523,6 +523,10 @@ public class Abbreviations implements Iterable<String> {
                 newbonds.size() > 2)
                 continue;
 
+            // avoid contracting completely unless requested to
+            if (newbonds.size() == 0 && !contractSingleFragments)
+                continue;
+
             // create the symbol
             StringBuilder sb = new StringBuilder();
             sb.append(newSymbol(attach.getAtomicNumber(), hcount, newbonds.size() == 0));
@@ -683,7 +687,7 @@ public class Abbreviations implements Iterable<String> {
         for (Sgroup sgroup : newSgroups) {
             double coverage = sgroup.getAtoms().size() / (double) mol.getAtomCount();
             // update javadoc if changed!
-            if (sgroup.getBonds().isEmpty() || coverage < 0.4d)
+            if (sgroup.getBonds().isEmpty() || coverage < 0.8d)
                 sgroups.add(sgroup);
         }
         mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.unmodifiableList(sgroups));

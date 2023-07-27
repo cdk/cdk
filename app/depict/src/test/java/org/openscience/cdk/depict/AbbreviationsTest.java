@@ -59,6 +59,40 @@ class AbbreviationsTest {
     }
 
     @Test
+    void autoContractPEt3() throws Exception {
+        IAtomContainer mol = smi("CCP(CC)CC");
+        Abbreviations factory = new Abbreviations();
+        factory.add("*CC Et");
+        factory.setContractToSingleLabel(true);
+        factory.setContractOnHetero(true);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("PEt3"));
+        assertThat(sgroups.get(0).getAtoms().size(), is(7));
+    }
+
+    @Test
+    void autoContractPEt3_off() throws Exception {
+        IAtomContainer mol = smi("CCP(CC)CC");
+        Abbreviations factory = new Abbreviations();
+        factory.add("*CC Et");
+        factory.setContractToSingleLabel(false);
+        factory.setContractOnHetero(true);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(3));
+        assertThat(sgroups.get(0).getSubscript(), is("Et"));
+        assertThat(sgroups.get(1).getSubscript(), is("Et"));
+        assertThat(sgroups.get(2).getSubscript(), is("Et"));
+        factory.setContractToSingleLabel(true);
+        factory.setContractOnHetero(false);
+        sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(3));
+        assertThat(sgroups.get(0).getSubscript(), is("Et"));
+        assertThat(sgroups.get(1).getSubscript(), is("Et"));
+        assertThat(sgroups.get(2).getSubscript(), is("Et"));
+    }
+
+    @Test
     void phenyl() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("CCCCCCC(c1ccccc1)(c1ccccc1)c1ccccc1");
@@ -322,6 +356,7 @@ class AbbreviationsTest {
     void SnCl2() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("Cl[Sn]Cl");
+        factory.setContractToSingleLabel(true);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("SnCl2"));
@@ -331,6 +366,7 @@ class AbbreviationsTest {
     void HOOH() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("OO");
+        factory.setContractToSingleLabel(true);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("HOOH"));
