@@ -368,7 +368,7 @@ public class Abbreviations implements Iterable<String> {
     private Map<IAtom,List<Sgroup>> getSgroupAdjacency(List<Sgroup> sgroups) {
         Map<IAtom,List<Sgroup>> sgroupAdjs = new HashMap<>();
         for (Sgroup sgroup : sgroups) {
-            if (sgroup.getBonds().size() != 1)
+            if (nonTerminal(sgroup))
                 continue;
             IBond attachBond = sgroup.getBonds().iterator().next();
             Set<IAtom> atoms = sgroup.getAtoms();
@@ -562,7 +562,7 @@ public class Abbreviations implements Iterable<String> {
             for (Sgroup sgroup : sgroupAdjs.getOrDefault(attach, Collections.emptyList())) {
                 if (containsChargeChar(sgroup.getSubscript()))
                     continue;
-                if (sgroup.getBonds().size() != 1)
+                if (nonTerminal(sgroup))
                     continue;
                 IBond xbond = sgroup.getBonds().iterator().next();
                 xbonds.add(xbond);
@@ -575,6 +575,8 @@ public class Abbreviations implements Iterable<String> {
                 nbrSymbols.add(sgroup.getSubscript());
                 todelete.add(sgroup);
             }
+
+
             int numSGrpNbrs = nbrSymbols.size();
             for (IBond bond : mol.getConnectedBondsList(attach)) {
                 if (!xbonds.contains(bond)) {
@@ -601,7 +603,7 @@ public class Abbreviations implements Iterable<String> {
             // reject if no bonds (<1), except if all symbols are identical... (HashSet.size==1)
             // reject if more that 2 bonds
             if (nbrSymbols.isEmpty() ||
-                newbonds.size() < 1 && (new HashSet<>(nbrSymbols).size() != 1) ||
+                newbonds.size() < 1 && !options.contains(Option.ALLOW_SINGLETON) ||
                 newbonds.size() > 2)
                 continue;
 
@@ -622,7 +624,10 @@ public class Abbreviations implements Iterable<String> {
                 if (nbrSymbol.equals(prev)) {
                     count++;
                 } else {
-                    boolean useParen = count == 0 || countUpper(prev) > 1 || (prev != null && nbrSymbol.startsWith(prev));
+                    boolean useParen = count == 0 ||
+                            !isTrivial(prev) ||
+                            nbrSymbol.startsWith(prev) ||
+                            !hasStandardValence(attach);
                     appendGroup(sb, prev, count, useParen);
                     prev = nbrSymbol;
                     count = 1;
@@ -667,11 +672,48 @@ public class Abbreviations implements Iterable<String> {
                     for (IAtom atom : endAbbrs.get(0).getAtoms())
                         begAbbrs.get(0).addAtom(atom);
                     newSgroups.remove(endAbbrs.get(0));
+                } else if (hasTrivial(begAbbrs, endAbbrs)) {
+                    // e.g. Ph-MgCl => PhMgCl
+                    // 'trivial' label goes in-front to avoid need to reverse
+                    String begLabel = begAbbrs.get(0).getSubscript();
+                    String endLabel = endAbbrs.get(0).getSubscript();
+                    if (isTrivial(begLabel))
+                        begAbbrs.get(0).setSubscript(begLabel + endLabel);
+                    else if (isTrivial(endLabel))
+                        begAbbrs.get(0).setSubscript(endLabel + begLabel);
+                    else
+                        throw new IllegalStateException();
+                    begAbbrs.get(0).removeBond(bond);
+                    for (IAtom atom : endAbbrs.get(0).getAtoms())
+                        begAbbrs.get(0).addAtom(atom);
+                    newSgroups.remove(endAbbrs.get(0));
                 }
             }
         }
 
         return newSgroups;
+    }
+
+    private static boolean hasStandardValence(IAtom attach) {
+        switch (attach.getAtomicNumber()) {
+            case IAtom.B:
+            case IAtom.C:
+            case IAtom.N:
+            case IAtom.O:
+            case IAtom.P:
+            case IAtom.S:
+            case IAtom.F:
+            case IAtom.Cl:
+            case IAtom.Br:
+            case IAtom.I:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static boolean nonTerminal(Sgroup sgroup) {
+        return sgroup.getBonds().size() != 1;
     }
 
     private boolean isTrivial(String label) {
@@ -693,6 +735,14 @@ public class Abbreviations implements Iterable<String> {
                 begAbbr.get(0) != endAbbr.get(0) &&
                 begAbbr.get(0).getSubscript().equalsIgnoreCase(endAbbr.get(0).getSubscript());
     }
+
+    private boolean hasTrivial(List<Sgroup> begAbbr, List<Sgroup> endAbbr) {
+        return begAbbr != null && endAbbr != null &&
+                begAbbr.size() == 1 && endAbbr.size() == 1 &&
+                begAbbr.get(0) != endAbbr.get(0) &&
+                (isTrivial(begAbbr.get(0).getSubscript()) || isTrivial(endAbbr.get(0).getSubscript()));
+    }
+
 
     private static boolean isCH2Me(IAtom attach, Set<IBond> xbonds, List<String> nbrSymbols) {
         return xbonds.size() == 0 &&
@@ -740,18 +790,6 @@ public class Abbreviations implements Iterable<String> {
         return null;
     }
 
-    /**
-     * Count number of upper case chars.
-     */
-    private int countUpper(String str) {
-        if (str == null)
-            return 0;
-        int num = 0;
-        for (int i = 0; i < str.length(); i++)
-            if (Character.isUpperCase(str.charAt(i)))
-                num++;
-        return num;
-    }
 
     private boolean containsChargeChar(String str) {
         for (int i = 0; i < str.length(); i++) {
@@ -795,7 +833,7 @@ public class Abbreviations implements Iterable<String> {
     private void appendGroup(StringBuilder sb, String group, int coef, boolean useParen) {
         if (coef <= 0 || group == null || group.isEmpty()) return;
         if (!useParen)
-            useParen = coef > 1 && (countUpper(group) > 1 || digitAtEnd(group));
+            useParen = coef > 1 && (!isTrivial(group) || digitAtEnd(group));
         if (useParen)
             sb.append('(');
         sb.append(group);
