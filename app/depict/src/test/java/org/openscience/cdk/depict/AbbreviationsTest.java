@@ -207,6 +207,45 @@ class AbbreviationsTest {
     }
 
     @Test
+    void PhMgCl() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("c1ccccc1[Mg]Cl");
+        factory.add("*c1ccccc1 Ph");
+        factory.add("*[Mg]Cl MgCl");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("PhMgCl"));
+    }
+
+
+    @Test
+    void PhNnBu3() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("c1ccccc1[Sn](CCCC)(CCCC)CCCC");
+        factory.add("*c1ccccc1 Ph");
+        factory.add("*CCCC nBu");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("Sn(Ph)nBu3"));
+    }
+
+    @Test
+    void MeMgCl() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("C[Mg]Cl");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        // could be better
+        assertThat(sgroups.get(0).getSubscript(), is("Mg(Cl)Me"));
+    }
+
+    @Test
     void phenylShouldNotMatchBenzene() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("c1ccccc1");
