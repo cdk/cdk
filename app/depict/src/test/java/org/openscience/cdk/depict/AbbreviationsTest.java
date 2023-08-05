@@ -33,6 +33,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -67,7 +68,7 @@ class AbbreviationsTest {
                .with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
-        assertThat(sgroups.get(0).getSubscript(), is("PEt3"));
+        assertThat(sgroups.get(0).getSubscript(), is("Et3P"));
         assertThat(sgroups.get(0).getAtoms().size(), is(7));
     }
 
@@ -104,7 +105,7 @@ class AbbreviationsTest {
     }
 
     @Test
-    void autoContractCEt2() throws Exception {
+    void autoContractCHEt3() throws Exception {
         IAtomContainer mol = smi("CCC(CC)CC");
         Abbreviations factory = new Abbreviations();
         factory.add("*CC Et");
@@ -112,8 +113,21 @@ class AbbreviationsTest {
         factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
-        assertThat(sgroups.get(0).getSubscript(), is("CHEt3"));
+        assertThat(sgroups.get(0).getSubscript(), is("Et3CH"));
         assertThat(sgroups.get(0).getAtoms().size(), is(7));
+    }
+
+    @Test
+    void autoContractEt2CO() throws Exception {
+        IAtomContainer mol = smi("C(=O)(CC)CC");
+        Abbreviations factory = new Abbreviations();
+        factory.add("*CC Et");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("Et2CO"));
+        assertThat(sgroups.get(0).getAtoms().size(), is(6));
     }
 
     @Test
@@ -230,8 +244,26 @@ class AbbreviationsTest {
         factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
-        assertThat(sgroups.get(0).getSubscript(), is("Sn(Ph)nBu3"));
+        assertThat(sgroups.get(0).getSubscript(), is("nBu3SnPh"));
     }
+
+    @Test
+    void PhNnBu3_noSingleton() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("c1ccccc1[Sn](CCCC)(CCCC)CCCC");
+        factory.add("*c1ccccc1 Ph");
+        factory.add("*CCCC nBu");
+        factory.without(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph"));
+        assertThat(sgroups.get(1).getSubscript(), is("SnnBu3"));
+    }
+
+    // C=CH2 test case
+    // TestCase [OH:1][CH2:2][c:3]1[cH:4][cH:5][cH:6][s:7]1.Br[CH2:8][c:9]1[cH:10][cH:11][cH:12][cH:13][cH:14]1>C1CCOC1.[NaH]>[cH:12]1[cH:13][cH:14][c:9]([cH:10][cH:11]1)[CH2:8][O:1][CH2:2][c:3]1[cH:4][cH:5][cH:6][s:7]1
 
     @Test
     void MeMgCl() throws Exception {
@@ -242,7 +274,7 @@ class AbbreviationsTest {
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         // could be better
-        assertThat(sgroups.get(0).getSubscript(), is("Mg(Cl)Me"));
+        assertThat(sgroups.get(0).getSubscript(), is("MeMgCl"));
     }
 
     @Test
