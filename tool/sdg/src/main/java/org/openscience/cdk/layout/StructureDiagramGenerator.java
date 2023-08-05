@@ -979,13 +979,13 @@ public class StructureDiagramGenerator {
      * @param lim wrap angles to the (180 max)
      * @return number of aligned bonds
      */
-    private static void calcDirectionHistogram(IAtomContainer mol,
+    private static void calcDirectionHistogram(Iterable<IBond> bonds,
                                                int[] counts,
                                                int lim) {
         if (lim > 180)
             throw new IllegalArgumentException("limit must be ≤ 180");
         Arrays.fill(counts, 0);
-        for (IBond bond : mol.bonds()) {
+        for (IBond bond : bonds) {
             Point2d beg = bond.getBegin().getPoint2d();
             Point2d end = bond.getEnd().getPoint2d();
             Vector2d vec = new Vector2d(end.x - beg.x, end.y - beg.y);
@@ -994,6 +994,35 @@ public class StructureDiagramGenerator {
             double angle = Math.PI/2 + Math.atan2(vec.y, vec.x);
             counts[(int)(Math.round(Math.toDegrees(angle))%lim)]++;
         }
+    }
+
+    private List<IBond> getNonContractedNonTerminalBonds(IAtomContainer mol) {
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<IBond> result = new ArrayList<>();
+        Set<IBond> xbonds = new HashSet<>();
+        if (sgroups != null) {
+            Set<IAtom> hidden = new HashSet<>();
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getType() == SgroupType.CtabAbbreviation) {
+                    hidden.addAll(sgroup.getAtoms());
+                    xbonds.addAll(sgroup.getBonds());
+                }
+            }
+            for (IBond bond : mol.bonds()) {
+                if (hidden.contains(bond.getBegin()) &&
+                    hidden.contains(bond.getEnd()) &&
+                    !xbonds.contains(bond))
+                    continue;
+                if (mol.getConnectedBondsCount(bond.getBegin()) == 1 ||
+                    mol.getConnectedBondsCount(bond.getEnd()) == 1)
+                    continue;
+                result.add(bond);
+            }
+        } else {
+            for (IBond bond : mol.bonds())
+                result.add(bond);
+        }
+        return result;
     }
 
     /**
@@ -1007,17 +1036,25 @@ public class StructureDiagramGenerator {
      */
     private void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
 
-        int[]    dirhist = new int[180];
+        // only select based on non-contracted non-terminal bonds
+        List<IBond> bonds = getNonContractedNonTerminalBonds(mol);
+        if (bonds.size() == 0)
+            return;
+
         double[] minmax  = GeometryUtil.getMinMax(mol);
         Point2d pivot = new Point2d(minmax[0] + ((minmax[2] - minmax[0]) / 2),
                                     minmax[1] + ((minmax[3] - minmax[1]) / 2));
 
+
+        int[] dirhist = new int[180];
+
         // initial alignment to snapping bonds 60 degrees
-        calcDirectionHistogram(mol, dirhist, 60);
+        calcDirectionHistogram(bonds, dirhist, 60);
         int max = 0;
         for (int i = 1; i < dirhist.length; i++)
             if (dirhist[i] > dirhist[max])
                 max = i;
+
         // only apply if 50% of the bonds are pointing the same 'wrapped'
         // direction, max=0 means already aligned
         if (max != 0 && dirhist[max]/(double)mol.getBondCount() > 0.5)
@@ -1025,7 +1062,7 @@ public class StructureDiagramGenerator {
 
         double maxWidth = minmax[2] - minmax[0];
         double begWidth = maxWidth;
-        calcDirectionHistogram(mol, dirhist, 180);
+        calcDirectionHistogram(bonds, dirhist, 180);
         int maxAligned = dirhist[60]+dirhist[120];
 
         Point2d[] coords = new Point2d[mol.getAtomCount()];
@@ -1055,7 +1092,7 @@ public class StructureDiagramGenerator {
             // width is not significantly better or worse so check
             // the number of bonds aligned to 30 deg (aesthetics)
             else if (delta <= widthDiff) {
-                calcDirectionHistogram(mol, dirhist, 180);
+                calcDirectionHistogram(bonds, dirhist, 180);
                 int aligned = dirhist[60]+dirhist[120];
                 int alignDelta = aligned - maxAligned;
                 if (alignDelta > alignDiff || (alignDelta == 0 && width > maxWidth)) {
