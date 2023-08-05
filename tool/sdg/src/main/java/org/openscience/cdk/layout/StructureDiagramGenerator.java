@@ -1045,6 +1045,16 @@ public class StructureDiagramGenerator {
         Point2d pivot = new Point2d(minmax[0] + ((minmax[2] - minmax[0]) / 2),
                                     minmax[1] + ((minmax[3] - minmax[1]) / 2));
 
+        // n=1
+        if (bonds.size() == 1) {
+            IBond bond = bonds.get(0);
+            Point2d beg = bond.getBegin().getPoint2d();
+            Point2d end = bond.getEnd().getPoint2d();
+            double dx = beg.x - end.x;
+            double dy = beg.y - end.y;
+            GeometryUtil.rotate(mol, pivot, Math.atan2(dx, dy) + Math.PI/2);
+            return;
+        }
 
         int[] dirhist = new int[180];
 
