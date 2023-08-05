@@ -91,7 +91,7 @@ final class ReactionDepiction extends Depiction {
 
         // MAIN COMPONENTS DRAW
         // x,y base coordinates include the margin and centering (only if fitting to a size)
-        final double totalRequiredWidth = Math.max(0, nCol - 1) * padding + Math.max(0, nSideCol - 1) * padding + required.xOffsets[nCol];
+        final double totalRequiredWidth = Math.max(0, nCol - 1) * padding + required.xOffsets[nCol];
         final double totalRequiredHeight = Math.max(0, nRow - 1) * padding + (!reactionBounds.title.isEmpty() ? padding : 0) + Math.max(mainCompOffset, 0) + required.mainDim.h + Math.max(0, required.titleDim.h);
         double xBase = viewBounds.getX() + (viewBounds.getWidth() - totalRequiredWidth) / 2;
         double yBase = viewBounds.getY() + Math.max(mainCompOffset, 0) + ((viewBounds.getHeight() - totalRequiredHeight) / 2);
@@ -117,10 +117,6 @@ final class ReactionDepiction extends Depiction {
                      rect(x, y, w, h));
                 continue;
             }
-
-            // extra padding from the side components
-            if (i > arrowIdx)
-                x += Math.max(0, nSideCol - 1) * padding;
 
             // skip empty elements
             final Bounds bounds = mainComp.get(i);
@@ -289,6 +285,15 @@ final class ReactionDepiction extends Depiction {
                                            (int) Math.ceil(totalWithMargin.w),
                                            (int) Math.ceil(totalWithMargin.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
+
+//        // debug margins
+//        visitor.visit(new RectangleElement(margin,
+//                                           -total.h - margin,
+//                                           total.w,
+//                                           total.h,
+//                                           true,
+//                                           new Color(0xF1F1C8)));
+
         double xOffset = margin;
         double yOffset = margin;
         // centering
