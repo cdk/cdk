@@ -129,7 +129,7 @@ final class ReactionBounds {
 
         Bounds conditions = belowArrow.isEmpty() ? new Bounds() : belowArrow.get(0);
         double middleRequired = 2*padding + arrowHeadLength +
-                Math.max(prelimSideDim.w + Math.min(0, xOffsetSide.length-1) * padding,
+                Math.max(prelimSideDim.w + Math.max(0, xOffsetSide.length-2) * padding,
                                                      conditions.width());
 
         ReactionDimensions result;
