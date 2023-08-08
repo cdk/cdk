@@ -24,7 +24,6 @@
 package org.openscience.cdk.depict;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -39,7 +38,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AbbreviationsTest {
 
@@ -286,16 +285,25 @@ class AbbreviationsTest {
         assertThat(sgroups.size(), is(0));
     }
 
-    @Disabled
+    @Test
     void avoidPhContraction() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("*c1ccccc1 Ph");
         IAtomContainer mol = smi("c1ccccc1CCc1cscc1");
         factory.apply(mol);
-        assertNull(mol.getProperty(CDKConstants.CTAB_SGROUPS));
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        assertEquals(0, sgroups.size());
     }
 
-    // TestCase [OH:1][CH2:2][c:3]1[cH:4][cH:5][cH:6][s:7]1.Br[CH2:8][c:9]1[cH:10][cH:11][cH:12][cH:13][cH:14]1>C1CCOC1.[NaH]>[cH:12]1[cH:13][cH:14][c:9]([cH:10][cH:11]1)[CH2:8][O:1][CH2:2][c:3]1[cH:4][cH:5][cH:6][s:7]1
+    @Test
+    void avoidPhContraction2() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("*c1ccccc1 Ph");
+        IAtomContainer mol = smi("c1ccccc1CBr");
+        factory.apply(mol);
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        assertEquals(0, sgroups.size());
+    }
 
     @Test
     void MeMgCl() throws Exception {
