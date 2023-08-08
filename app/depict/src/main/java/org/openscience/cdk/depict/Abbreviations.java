@@ -425,12 +425,7 @@ public class Abbreviations implements Iterable<String> {
             frags.addAll(makeCut(cut, mol, atmidx, adjlist));
         }
 
-        frags.sort(new Comparator<IAtomContainer>() {
-            @Override
-            public int compare(IAtomContainer a, IAtomContainer b) {
-                return -Integer.compare(a.getBondCount(), b.getBondCount());
-            }
-        });
+        frags.sort((a, b) -> -Integer.compare(a.getBondCount(), b.getBondCount()));
         return frags;
     }
 
@@ -474,10 +469,23 @@ public class Abbreviations implements Iterable<String> {
      * @return list of new abbreviation Sgroups
      */
     public List<Sgroup> generate(final IAtomContainer mol) {
+        return generate(mol, Collections.emptySet());
+    }
+
+    /**
+     * Find all enabled abbreviations in the provided molecule. They are not
+     * added to the existing Sgroups and may need filtering.
+     *
+     * @param mol molecule
+     * @param keepTogether keep these atoms together, an abbreviation should not split
+     * @return list of new abbreviation Sgroups
+     */
+    public List<Sgroup> generate(final IAtomContainer mol,
+                                 final Set<IAtom> keepTogether) {
 
         // mark which atoms have already been abbreviated or are
         // part of an existing Sgroup
-        Set<IAtom> usedAtoms = new HashSet<>();
+        Set<IAtom> usedAtoms = new HashSet<>(keepTogether);
         List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups != null) {
             for (Sgroup sgroup : sgroups)
@@ -650,8 +658,11 @@ public class Abbreviations implements Iterable<String> {
             for (IBond bond : mol.getConnectedBondsList(attach)) {
                 if (!xbonds.contains(bond)) {
                     IAtom nbr = bond.getOther(attach);
+
                     // can only contract terminal bonds
-                    if (mol.getConnectedBondsCount(nbr) == 1) {
+                    if (!usedAtoms.contains(nbr) &&
+                        mol.getConnectedBondsCount(nbr) == 1) {
+
                         if (nbr.getMassNumber() != null ||
                             (nbr.getFormalCharge() != null && nbr.getFormalCharge() != 0) ||
                              isNonMethylTerminalCarbon(nbr)) {
@@ -961,10 +972,26 @@ public class Abbreviations implements Iterable<String> {
      *
      * @param mol molecule
      * @return number of new abbreviations
-     * @see #generate(IAtomContainer)
+     * @see #generate(IAtomContainer, Set)
      */
     public int apply(final IAtomContainer mol) {
-        List<Sgroup> newSgroups = generate(mol);
+        return apply(mol, Collections.emptySet());
+    }
+
+    /**
+     * Generates and assigns abbreviations to a molecule. Abbreviations are first
+     * generated with {@link #generate} and then applied to the molecule if it
+     * is reasonable to do so. Currently, we count the number of ring/chain atoms
+     * in/out of the contraction. If there are more atoms contracted than not
+     * it is not applied.
+     *
+     * @param mol molecule
+     * @param keepTogether atoms, keep these atoms together
+     * @return number of new abbreviations
+     * @see #generate(IAtomContainer, Set)
+     */
+    public int apply(final IAtomContainer mol, final Set<IAtom> keepTogether) {
+        List<Sgroup> newSgroups = generate(mol, keepTogether);
         List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
 
         if (sgroups == null)
