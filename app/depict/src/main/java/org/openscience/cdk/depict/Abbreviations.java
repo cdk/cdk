@@ -396,9 +396,9 @@ public class Abbreviations implements Iterable<String> {
         }
 
         List<IAtomContainer> res = new ArrayList<>();
-        if (!bfrag.isEmpty())
+        if (bfrag.getAtomCount() > 1)
             res.add(bfrag);
-        if (!efrag.isEmpty())
+        if (efrag.getAtomCount() > 1)
             res.add(efrag);
         return res;
     }
