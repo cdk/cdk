@@ -994,19 +994,16 @@ public class Abbreviations implements Iterable<String> {
     private boolean shouldContract(Sgroup sgroup, int nAtoms, int nRingAtoms) {
         if (sgroup.getBonds().isEmpty())
             return true; // no crossing bonds, normally an agent etc
-        int nAbbrChainAtoms = 0;
         int nAbbrRingAtoms  = 0;
         for (IAtom atom : sgroup.getAtoms()) {
             if (atom.isInRing())
-                nAbbrRingAtoms++;
-            else
-                nAbbrChainAtoms++;
+                nAbbrRingAtoms++;;
         }
         int nOtherRingAtoms = nRingAtoms - nAbbrRingAtoms;
         if (nAbbrRingAtoms != 0)
             return nOtherRingAtoms > nAbbrRingAtoms;
-        int nOtherChainAtoms = nAtoms - nRingAtoms - nAbbrChainAtoms;
-        return nOtherChainAtoms > nAbbrChainAtoms;
+        int nOtherAtoms = nAtoms - sgroup.getAtoms().size();
+        return nOtherAtoms > sgroup.getAtoms().size();
     }
 
     /**
