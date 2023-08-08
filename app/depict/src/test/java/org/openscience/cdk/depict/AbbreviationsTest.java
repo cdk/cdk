@@ -36,7 +36,9 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -294,17 +296,147 @@ class AbbreviationsTest {
         IAtom chlorineAtom = mol.getAtom(0);
         assertEquals(IAtom.Cl, chlorineAtom.getAtomicNumber());
         List<Sgroup> sgroups2 = factory.generate(mol,
-                                                 Collections.singleton(chlorineAtom));
+                                                 Collections.singletonMap(chlorineAtom, 1));
         assertThat(sgroups2.size(), is(1));
         assertThat(sgroups2.get(0).getSubscript(), is("Ph"));
+    }
+
+    @Test
+    void PhCl_keepOneC() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("Clc1ccccc1");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
+        assertThat(sgroups.get(0).getSubscript(), is("PhCl"));
 
         // block the Ph contraction
         IAtom carbonAtom = mol.getAtom(5);
         assertEquals(IAtom.C, carbonAtom.getAtomicNumber());
         List<Sgroup> sgroups3 = factory.generate(mol,
-                                                 Collections.singleton(carbonAtom));
+                                                 Collections.singletonMap(carbonAtom, 1));
         assertThat(sgroups3.size(), is(0));
+
+        // all carbon atoms in same group, only Ph comes out
+        Map<IAtom,Integer> atomSets = new HashMap<>();
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getAtomicNumber() == IAtom.C)
+                atomSets.put(atom, 1);
+        }
+        List<Sgroup> sgroups4 = factory.generate(mol,
+                                                 atomSets);
+        assertThat(sgroups4.size(), is(1));
+        assertThat(sgroups4.get(0).getSubscript(), is("Ph"));
+
+        // all atoms in same group, PhCl comes out
+        for (IAtom atom : mol.atoms())
+            atomSets.put(atom, 1);
+        List<Sgroup> sgroups5 = factory.generate(mol,
+                                                 atomSets);
+        assertThat(sgroups5.size(), is(1));
+        assertThat(sgroups5.get(0).getSubscript(), is("PhCl"));
     }
+
+    @Test
+    void PhCl_keepAllC() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("Clc1ccccc1");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
+        assertThat(sgroups.get(0).getSubscript(), is("PhCl"));
+
+        // all carbon atoms in same group, only Ph comes out
+        Map<IAtom,Integer> atomSets = new HashMap<>();
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getAtomicNumber() == IAtom.C)
+                atomSets.put(atom, 1);
+        }
+        List<Sgroup> sgroups4 = factory.generate(mol,
+                                                 atomSets);
+        assertThat(sgroups4.size(), is(1));
+        assertThat(sgroups4.get(0).getSubscript(), is("Ph"));
+
+        // all atoms in same group, PhCl comes out
+        for (IAtom atom : mol.atoms())
+            atomSets.put(atom, 1);
+        List<Sgroup> sgroups5 = factory.generate(mol,
+                                                 atomSets);
+        assertThat(sgroups5.size(), is(1));
+        assertThat(sgroups5.get(0).getSubscript(), is("PhCl"));
+    }
+
+    @Test
+    void PhCl_keepAll() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("Clc1ccccc1");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
+        assertThat(sgroups.get(0).getSubscript(), is("PhCl"));
+
+        // all atoms in same group, PhCl comes out
+        Map<IAtom,Integer> atomSets = new HashMap<>();
+        for (IAtom atom : mol.atoms())
+            atomSets.put(atom, 1);
+        List<Sgroup> sgroups5 = factory.generate(mol,
+                                                 atomSets);
+        assertThat(sgroups5.size(), is(1));
+        assertThat(sgroups5.get(0).getSubscript(), is("PhCl"));
+    }
+
+    @Test
+    void Ph2_keepAll() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("c1ccccc1c1ccccc1");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph2"));
+
+        // all atoms in same group, Ph2 still comes out
+        Map<IAtom,Integer> atomSets = new HashMap<>();
+        for (IAtom atom : mol.atoms())
+            atomSets.put(atom, 1);
+        List<Sgroup> sgroups5 = factory.generate(mol,
+                                                 atomSets);
+        assertThat(sgroups5.size(), is(1));
+        assertThat(sgroups5.get(0).getSubscript(), is("Ph2"));
+    }
+
+    @Test
+    void Ph2_keepOne() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("c1ccccc1c1ccccc1");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph2"));
+
+        // all atoms in same group, only one Ph comes out
+        Map<IAtom,Integer> atomSets = new HashMap<>();
+        atomSets.put(mol.getAtom(0), 1);
+        List<Sgroup> sgroups5 = factory.generate(mol,
+                                                 atomSets);
+        assertThat(sgroups5.size(), is(1));
+        assertThat(sgroups5.get(0).getSubscript(), is("Ph"));
+    }
+
 
     @Test
     void avoid_CHCH2() throws Exception {
