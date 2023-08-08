@@ -302,10 +302,10 @@ public class Abbreviations implements Iterable<String> {
         int numAtoms = mol.getAtomCount();
         for (int i = 0; i < numAtoms; i++) {
             final IAtom atom = mol.getAtom(i);
-            int deg = adjlist[i].length;
+            int deg  = adjlist[i].length;
             int elem = atom.getAtomicNumber();
 
-            if (elem == 6 && deg <= 2 || deg < 2)
+            if (elem == 6 && deg <= 2)
                 continue;
 
             for (int w : adjlist[i]) {
@@ -724,7 +724,8 @@ public class Abbreviations implements Iterable<String> {
                 first++;
             }
 
-            sb.append(newSymbol(attach.getAtomicNumber(), hcount, newbonds.size() == 0));
+            sb.append(newSymbol(attach.getAtomicNumber(), hcount,
+                                newbonds.size() == 0 && first == 0));
             for (int i = first; i < adjGroups.size(); i++) {
                 AdjacentGroup group = adjGroups.get(i);
                 boolean useParen =
