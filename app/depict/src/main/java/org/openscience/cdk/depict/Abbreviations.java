@@ -953,10 +953,11 @@ public class Abbreviations implements Iterable<String> {
     }
 
     /**
-     * Generates and assigns abbreviations to a molecule. Abbrevations are first
-     * generated with {@link #generate} and the filtered based on
-     * the coverage. Currently only abbreviations that cover 100%, or &lt; 40% of the
-     * atoms are assigned.
+     * Generates and assigns abbreviations to a molecule. Abbreviations are first
+     * generated with {@link #generate} and then applied to the molecule if it
+     * is reasonable to do so. Currently, we count the number of ring/chain atoms
+     * in/out of the contraction. If there are more atoms contracted than not
+     * it is not applied.
      *
      * @param mol molecule
      * @return number of new abbreviations
@@ -971,15 +972,41 @@ public class Abbreviations implements Iterable<String> {
         else
             sgroups = new ArrayList<>(sgroups);
 
+        int numAtoms = mol.getAtomCount();
+        int numRingAtoms = countRingAtoms(mol);
         int prev = sgroups.size();
         for (Sgroup sgroup : newSgroups) {
-            double coverage = sgroup.getAtoms().size() / (double) mol.getAtomCount();
-            // update javadoc if changed!
-            if (sgroup.getBonds().isEmpty() || coverage < 0.8d)
+            if (shouldContract(sgroup, numAtoms, numRingAtoms))
                 sgroups.add(sgroup);
         }
         mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.unmodifiableList(sgroups));
         return sgroups.size() - prev;
+    }
+
+    private static int countRingAtoms(IAtomContainer mol) {
+        int numRingAtoms = 0;
+        for (IAtom atom : mol.atoms())
+            if (atom.isInRing())
+                numRingAtoms++;
+        return numRingAtoms;
+    }
+
+    private boolean shouldContract(Sgroup sgroup, int nAtoms, int nRingAtoms) {
+        if (sgroup.getBonds().isEmpty())
+            return true; // no crossing bonds, normally an agent etc
+        int nAbbrChainAtoms = 0;
+        int nAbbrRingAtoms  = 0;
+        for (IAtom atom : sgroup.getAtoms()) {
+            if (atom.isInRing())
+                nAbbrRingAtoms++;
+            else
+                nAbbrChainAtoms++;
+        }
+        int nOtherRingAtoms = nRingAtoms - nAbbrRingAtoms;
+        if (nAbbrRingAtoms != 0)
+            return nOtherRingAtoms > nAbbrRingAtoms;
+        int nOtherChainAtoms = nAtoms - nRingAtoms - nAbbrChainAtoms;
+        return nOtherChainAtoms > nAbbrChainAtoms;
     }
 
     /**
