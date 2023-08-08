@@ -265,6 +265,19 @@ class AbbreviationsTest {
     }
 
     @Test
+    void PhCl() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("Clc1ccccc1");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
+        assertThat(sgroups.get(0).getSubscript(), is("PhCl"));
+    }
+
+    @Test
     void avoid_CHCH2() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("c1ccccc1C=C");
