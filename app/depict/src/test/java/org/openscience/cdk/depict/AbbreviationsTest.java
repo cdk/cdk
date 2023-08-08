@@ -24,8 +24,10 @@
 package org.openscience.cdk.depict;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -274,6 +276,34 @@ class AbbreviationsTest {
         assertThat(sgroups.size(), is(1));
         sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
         assertThat(sgroups.get(0).getSubscript(), is("PhCl"));
+    }
+
+    @Test
+    void PhCl_keepCl() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("Clc1ccccc1");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        sgroups.sort(Comparator.comparing(sgroup -> sgroup.getAtoms().size()));
+        assertThat(sgroups.get(0).getSubscript(), is("PhCl"));
+
+        // block the chlorine atom
+        IAtom chlorineAtom = mol.getAtom(0);
+        assertEquals(IAtom.Cl, chlorineAtom.getAtomicNumber());
+        List<Sgroup> sgroups2 = factory.generate(mol,
+                                                 Collections.singleton(chlorineAtom));
+        assertThat(sgroups2.size(), is(1));
+        assertThat(sgroups2.get(0).getSubscript(), is("Ph"));
+
+        // block the Ph contraction
+        IAtom carbonAtom = mol.getAtom(5);
+        assertEquals(IAtom.C, carbonAtom.getAtomicNumber());
+        List<Sgroup> sgroups3 = factory.generate(mol,
+                                                 Collections.singleton(carbonAtom));
+        assertThat(sgroups3.size(), is(0));
     }
 
     @Test
