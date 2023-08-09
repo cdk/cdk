@@ -670,11 +670,6 @@ public class Abbreviations implements Iterable<String> {
                 IBond xbond = sgroup.getBonds().iterator().next();
                 xbonds.add(xbond);
                 xatoms.addAll(sgroup.getAtoms());
-                if (attach.getSymbol().length() == 1 &&
-                    Character.isLowerCase(sgroup.getSubscript().charAt(0))) {
-                    if (Elements.ofString(attach.getSymbol() + sgroup.getSubscript().charAt(0)) != Elements.Unknown)
-                        continue collapse;
-                }
                 adjGroupMap.computeIfAbsent(sgroup.getSubscript(),
                                             k -> new AdjacentGroup(sgroup))
                          .add(sgroup);
@@ -760,9 +755,17 @@ public class Abbreviations implements Iterable<String> {
                 appendGroup(sb, group.symbol, group.count, false);
                 first++;
             }
-
             sb.append(newSymbol(attach.getAtomicNumber(), hcount,
                                 newbonds.size() == 0 && first == 0));
+
+            // N(iPr)2 is find, NiPr is not
+            if (first == 0 &&
+                    adjGroups.size() == 1 &&
+                    adjGroups.get(0).count == 1 &&
+                    isAccidentalElement(sb, adjGroups.get(0).symbol)) {
+                continue;
+            }
+
             for (int i = first; i < adjGroups.size(); i++) {
                 AdjacentGroup group = adjGroups.get(i);
                 boolean useParen =
@@ -1029,6 +1032,9 @@ public class Abbreviations implements Iterable<String> {
         if (coef <= 0 || group == null || group.isEmpty()) return;
         if (!useParen)
             useParen = coef > 1 && (!isTrivial(group) || digitAtEnd(group));
+        // watch out for N iPr => N(iPr) and not NiPr since Ni is nickel
+        if (!useParen && isAccidentalElement(sb, group))
+            useParen = true;
         if (useParen)
             sb.append('(');
         sb.append(group);
@@ -1036,6 +1042,18 @@ public class Abbreviations implements Iterable<String> {
             sb.append(')');
         if (coef > 1)
             sb.append(coef);
+    }
+
+    private static boolean isAccidentalElement(char fst, char snd) {
+        return Character.isUpperCase(fst) &&
+                Character.isLowerCase(snd) &&
+                Elements.ofString(String.valueOf(fst) + snd) != Elements.Unknown;
+    }
+
+    private static boolean isAccidentalElement(StringBuilder sb, String group) {
+        if (sb.length() == 0 || group.length() == 0)
+            return false;
+        return isAccidentalElement(sb.charAt(sb.length() - 1), group.charAt(0));
     }
 
     /**
