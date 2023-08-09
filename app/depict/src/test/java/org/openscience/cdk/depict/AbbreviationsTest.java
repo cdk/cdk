@@ -437,6 +437,26 @@ class AbbreviationsTest {
         assertThat(sgroups5.get(0).getSubscript(), is("Ph"));
     }
 
+    @Test
+    void testDoNotAbbreviateStereochemistry() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("C(C)[C@@H](C1=CC=CC=C1)NC(=O)C1=C(C(=NC2=CC=CC=C12)C1=CC=CC=C1)CN1CCC(CC1)O");
+        factory.add("*CC Et");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(3));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph"));
+        assertThat(sgroups.get(1).getSubscript(), is("Ph"));
+        assertThat(sgroups.get(2).getSubscript(), is("Et"));
+
+        // removing stereo allows further contraction
+        mol.setStereoElements(Collections.emptyList());
+        sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph"));
+        assertThat(sgroups.get(1).getSubscript(), is("CHEtPh"));
+    }
 
     @Test
     void avoid_CHCH2() throws Exception {

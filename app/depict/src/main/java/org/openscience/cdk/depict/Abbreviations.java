@@ -35,8 +35,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -490,6 +492,18 @@ public class Abbreviations implements Iterable<String> {
         if (sgroups != null) {
             for (Sgroup sgroup : sgroups)
                 usedAtoms.addAll(sgroup.getAtoms());
+        }
+
+        // ensure we don't abbreviate stereochemistry
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            IChemObject chemObject = se.getFocus();
+            if (chemObject instanceof IAtom) {
+                usedAtoms.add((IAtom) chemObject);
+            }
+            else if (chemObject instanceof IBond) {
+                usedAtoms.add(((IBond) chemObject).getBegin());
+                usedAtoms.add(((IBond) chemObject).getEnd());
+            }
         }
 
         final List<Sgroup> newSgroups = new ArrayList<>();
