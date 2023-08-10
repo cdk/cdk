@@ -126,8 +126,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
             changed = true;
         }
 
-        @Test
-        public void reset() {
+        void reset() {
             changed = false;
         }
     }

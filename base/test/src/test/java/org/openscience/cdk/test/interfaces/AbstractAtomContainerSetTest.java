@@ -524,8 +524,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
             changed = true;
         }
 
-        @Test
-        public void reset() {
+        void reset() {
             changed = false;
         }
     }

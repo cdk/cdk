@@ -329,8 +329,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
             changed = true;
         }
 
-        @Test
-        public void reset() {
+        void reset() {
             changed = false;
         }
     }
