@@ -97,8 +97,9 @@ final class Congestion {
                 final Point2d p2 = atoms[w].getPoint2d();
                 final double  x    = p1.x - p2.x;
                 final double  y    = p1.y - p2.y;
-                final double  len2 = x * x + y * y;
-                score += contribution[w][v] = contribution[v][w] = 1 / Math.max(len2, MIN_SCORE);
+                final double  dist2 = x * x + y * y;
+                final double  contrib = dist2 != 0 ? 1 / dist2 : 1 / MIN_SCORE;
+                score += contribution[w][v] = contribution[v][w] = contrib;
             }
         }
         score -= subtract;
@@ -122,8 +123,9 @@ final class Congestion {
                 final Point2d p2   = atoms[w].getPoint2d();
                 final double  x    = p1.x - p2.x;
                 final double  y    = p1.y - p2.y;
-                final double  len2 = x * x + y * y;
-                score += contribution[w][v] = contribution[v][w] = 1 / Math.max(len2, MIN_SCORE);
+                final double  dist2 = x * x + y * y;
+                final double  contrib = dist2 != 0 ? 1 / dist2 : 1 / MIN_SCORE;
+                score += contribution[w][v] = contribution[v][w] = 1 / contrib;
             }
         }
         score -= subtract;
