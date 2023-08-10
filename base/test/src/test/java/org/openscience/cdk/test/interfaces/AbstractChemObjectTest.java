@@ -353,7 +353,6 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
     class DummyChemObjectListener implements IChemObjectListener {
 
-        @Test
         @Override
         public void stateChanged(IChemObjectChangeEvent event) {}
     }
@@ -517,15 +516,13 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
             event = null;
         }
 
-        @Test
         @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
             event = e;
         }
 
-        @Test
-        public void reset() {
+        void reset() {
             changed = false;
             event = null;
         }
