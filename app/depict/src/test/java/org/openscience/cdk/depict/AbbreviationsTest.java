@@ -514,6 +514,18 @@ class AbbreviationsTest {
     }
 
     @Test
+    void testCOEt() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("C1CCCCC1C(=O)CC");
+        factory.add("*CC Et");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("COEt"));
+    }
+
+
+    @Test
     void MeMgCl() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("C[Mg]Cl");
