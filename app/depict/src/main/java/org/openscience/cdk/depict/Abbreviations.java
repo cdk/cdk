@@ -35,8 +35,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -62,6 +64,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -202,13 +205,18 @@ public class Abbreviations implements Iterable<String> {
         @Override
         public int compareTo(AdjacentGroup o) {
             int cmp;
+            // single symbols first
+            cmp = -Boolean.compare(symbol.length() == 1, o.symbol.length() == 1);
+            if (cmp != 0)
+                return cmp;
             cmp = -Boolean.compare(allCarbon, o.allCarbon);
             if (cmp != 0)
                 return cmp;
             cmp = -Boolean.compare(isTrivial, o.isTrivial);
             if (cmp != 0)
                 return cmp;
-            cmp = -Integer.compare(count, o.count);
+            // smaller atom count first
+            cmp = Integer.compare(count, o.count);
             if (cmp != 0)
                 return cmp;
             cmp = Integer.compare(symbol.length(), o.symbol.length());
@@ -216,7 +224,33 @@ public class Abbreviations implements Iterable<String> {
                 return cmp;
             return symbol.compareTo(o.symbol);
         }
+
+        @Override
+        public String toString() {
+            return "AdjacentGroup{" +
+                    ", symbol='" + symbol + '\'' +
+                    ", count=" + count +
+                    '}';
+        }
     }
+
+    private final Comparator<AdjacentGroup> CARBON_COMPARATOR = (a, b) -> {
+        int cmp;
+        cmp = -Boolean.compare(a.allCarbon, b.allCarbon);
+        if (cmp != 0)
+            return cmp;
+        cmp = -Boolean.compare(a.isTrivial, b.isTrivial);
+        if (cmp != 0)
+            return cmp;
+        // more atoms first
+        cmp = -Integer.compare(a.count, b.count);
+        if (cmp != 0)
+            return cmp;
+        cmp = Integer.compare(a.symbol.length(), b.symbol.length());
+        if (cmp != 0)
+            return cmp;
+        return a.symbol.compareTo(b.symbol);
+    };
 
     public Abbreviations() {
     }
@@ -562,6 +596,18 @@ public class Abbreviations implements Iterable<String> {
             }
         }
 
+        // ensure we don't abbreviate stereochemistry
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            IChemObject chemObject = se.getFocus();
+            if (chemObject instanceof IAtom) {
+                usedAtoms.add((IAtom) chemObject);
+            }
+            else if (chemObject instanceof IBond) {
+                usedAtoms.add(((IBond) chemObject).getBegin());
+                usedAtoms.add(((IBond) chemObject).getEnd());
+            }
+        }
+
         List<IAtomContainer> fragments = generateFragments(mol);
 
         for (IAtomContainer frag : fragments) {
@@ -656,11 +702,6 @@ public class Abbreviations implements Iterable<String> {
                 IBond xbond = sgroup.getBonds().iterator().next();
                 xbonds.add(xbond);
                 xatoms.addAll(sgroup.getAtoms());
-                if (attach.getSymbol().length() == 1 &&
-                    Character.isLowerCase(sgroup.getSubscript().charAt(0))) {
-                    if (Elements.ofString(attach.getSymbol() + sgroup.getSubscript().charAt(0)) != Elements.Unknown)
-                        continue collapse;
-                }
                 adjGroupMap.computeIfAbsent(sgroup.getSubscript(),
                                             k -> new AdjacentGroup(sgroup))
                          .add(sgroup);
@@ -737,19 +778,30 @@ public class Abbreviations implements Iterable<String> {
             StringBuilder sb = new StringBuilder();
             String prev  = "{!no_match!}";
 
-            List<AdjacentGroup> adjGroups = new ArrayList<>(adjGroupMap.values());
-            Collections.sort(adjGroups);
-
-            int first = 0;
-            if (newbonds.size() == 0 && adjGroups.get(first).allCarbon) {
-                AdjacentGroup group = adjGroups.get(first);
+            // We are going to reorder and select a possible prefix, so we
+            // work on a copy. Later we need to remove all the old Sgroups
+            List<AdjacentGroup> adjGroupsAll = new ArrayList<>(adjGroupMap.values());
+            List<AdjacentGroup> adjGroups = new ArrayList<>(adjGroupsAll);
+            adjGroups.sort(CARBON_COMPARATOR);
+            boolean hasPrefix = false;
+            if (newbonds.size() == 0 && adjGroups.get(0).allCarbon) {
+                AdjacentGroup group = adjGroups.remove(0);
                 appendGroup(sb, group.symbol, group.count, false);
-                first++;
+                hasPrefix = true;
+            }
+            Collections.sort(adjGroups);
+            sb.append(newSymbol(attach.getAtomicNumber(), hcount,
+                                newbonds.size() == 0 && !hasPrefix));
+
+            // N(iPr)2 is find, NiPr is not
+            if (!hasPrefix &&
+                    adjGroups.size() == 1 &&
+                    adjGroups.get(0).count == 1 &&
+                    isAccidentalElement(sb, adjGroups.get(0).symbol)) {
+                continue;
             }
 
-            sb.append(newSymbol(attach.getAtomicNumber(), hcount,
-                                newbonds.size() == 0 && first == 0));
-            for (int i = first; i < adjGroups.size(); i++) {
+            for (int i = 0; i < adjGroups.size(); i++) {
                 AdjacentGroup group = adjGroups.get(i);
                 boolean useParen =
                         (group.count > 1 && !group.isTrivial) ||
@@ -772,12 +824,12 @@ public class Abbreviations implements Iterable<String> {
 
             if (!splitsAtomSet(atomSets, newSgroup)) {
                 // remove previous contractions
-                for (AdjacentGroup group : adjGroups)
+                for (AdjacentGroup group : adjGroupsAll)
                     newSgroups.removeAll(group.sgroups);
                 newSgroups.add(newSgroup);
             }
 
-            for (AdjacentGroup group : adjGroups)
+            for (AdjacentGroup group : adjGroupsAll)
                 allSgroups.removeAll(group.sgroups);
             allSgroups.add(newSgroup);
 
@@ -1015,6 +1067,9 @@ public class Abbreviations implements Iterable<String> {
         if (coef <= 0 || group == null || group.isEmpty()) return;
         if (!useParen)
             useParen = coef > 1 && (!isTrivial(group) || digitAtEnd(group));
+        // watch out for N iPr => N(iPr) and not NiPr since Ni is nickel
+        if (!useParen && isAccidentalElement(sb, group))
+            useParen = true;
         if (useParen)
             sb.append('(');
         sb.append(group);
@@ -1022,6 +1077,18 @@ public class Abbreviations implements Iterable<String> {
             sb.append(')');
         if (coef > 1)
             sb.append(coef);
+    }
+
+    private static boolean isAccidentalElement(char fst, char snd) {
+        return Character.isUpperCase(fst) &&
+                Character.isLowerCase(snd) &&
+                Elements.ofString(String.valueOf(fst) + snd) != Elements.Unknown;
+    }
+
+    private static boolean isAccidentalElement(StringBuilder sb, String group) {
+        if (sb.length() == 0 || group.length() == 0)
+            return false;
+        return isAccidentalElement(sb.charAt(sb.length() - 1), group.charAt(0));
     }
 
     /**

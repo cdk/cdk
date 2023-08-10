@@ -437,6 +437,52 @@ class AbbreviationsTest {
         assertThat(sgroups5.get(0).getSubscript(), is("Ph"));
     }
 
+    @Test
+    void testDoNotAbbreviateStereochemistry() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("C(C)[C@@H](C1=CC=CC=C1)NC(=O)C1=C(C(=NC2=CC=CC=C12)C1=CC=CC=C1)CN1CCC(CC1)O");
+        factory.add("*CC Et");
+        factory.add("*c1ccccc1 Ph");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(3));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph"));
+        assertThat(sgroups.get(1).getSubscript(), is("Ph"));
+        assertThat(sgroups.get(2).getSubscript(), is("Et"));
+
+        // removing stereo allows further contraction
+        mol.setStereoElements(Collections.emptyList());
+        sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        assertThat(sgroups.get(0).getSubscript(), is("Ph"));
+        assertThat(sgroups.get(1).getSubscript(), is("CHEtPh"));
+    }
+
+    // Don't generate NiPr
+    @Test
+    void avoidAmbiguity() throws Exception {
+        String smi = "C1CCCCC1=NC(C)C";
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C(C)C iPr");
+        IAtomContainer mol = smi(smi);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("iPr"));
+    }
+
+    // we need brackets here, so Ni (nickle) does not accidnetly come out
+    @Test
+    void testNiPr2_needBrackets() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("CCCCN(C(C)C)C(C)C");
+        factory.add("*C(C)C iPr");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("N(iPr)2"));
+    }
 
     @Test
     void avoid_CHCH2() throws Exception {
@@ -466,6 +512,18 @@ class AbbreviationsTest {
         List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
         assertEquals(0, sgroups.size());
     }
+
+    @Test
+    void testCOEt() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("C1CCCCC1C(=O)CC");
+        factory.add("*CC Et");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("COEt"));
+    }
+
 
     @Test
     void MeMgCl() throws Exception {
@@ -766,18 +824,6 @@ class AbbreviationsTest {
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("Pd(dppf)Cl2"));
-    }
-
-    // Don't generate NiPr
-    @Test
-    void avoidAmbiguity() throws Exception {
-        String smi = "C1CCCCC1=NC(C)C";
-        Abbreviations factory = new Abbreviations();
-        factory.add("*C(C)C iPr");
-        IAtomContainer mol = smi(smi);
-        List<Sgroup> sgroups = factory.generate(mol);
-        assertThat(sgroups.size(), is(1));
-        assertThat(sgroups.get(0).getSubscript(), is("iPr"));
     }
 
     @Test
