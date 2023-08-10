@@ -324,7 +324,6 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
             changed = false;
         }
 
-        @Test
         @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
