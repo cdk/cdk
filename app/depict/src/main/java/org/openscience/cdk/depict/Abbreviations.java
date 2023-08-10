@@ -526,18 +526,6 @@ public class Abbreviations implements Iterable<String> {
                 usedAtoms.addAll(sgroup.getAtoms());
         }
 
-        // ensure we don't abbreviate stereochemistry
-        for (IStereoElement<?,?> se : mol.stereoElements()) {
-            IChemObject chemObject = se.getFocus();
-            if (chemObject instanceof IAtom) {
-                usedAtoms.add((IAtom) chemObject);
-            }
-            else if (chemObject instanceof IBond) {
-                usedAtoms.add(((IBond) chemObject).getBegin());
-                usedAtoms.add(((IBond) chemObject).getEnd());
-            }
-        }
-
         final List<Sgroup> newSgroups = new ArrayList<>();
         final List<Sgroup> allSgroups = new ArrayList<>();
 
@@ -605,6 +593,18 @@ public class Abbreviations implements Iterable<String> {
                 }
 
             } catch (CDKException ignored) {
+            }
+        }
+
+        // ensure we don't abbreviate stereochemistry
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            IChemObject chemObject = se.getFocus();
+            if (chemObject instanceof IAtom) {
+                usedAtoms.add((IAtom) chemObject);
+            }
+            else if (chemObject instanceof IBond) {
+                usedAtoms.add(((IBond) chemObject).getBegin());
+                usedAtoms.add(((IBond) chemObject).getEnd());
             }
         }
 
