@@ -511,7 +511,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         Assertions.assertEquals(1.0, som.getMultiplier(newFirstAC), 0.00001);
     }
 
-    protected class ChemObjectListenerImpl implements IChemObjectListener {
+    private class ChemObjectListenerImpl implements IChemObjectListener {
 
         private boolean changed;
 
@@ -519,14 +519,12 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
             changed = false;
         }
 
-        @Test
         @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
 
-        @Test
-        public void reset() {
+        void reset() {
             changed = false;
         }
     }

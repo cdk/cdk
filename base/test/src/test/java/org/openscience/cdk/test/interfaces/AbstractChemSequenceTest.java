@@ -121,14 +121,12 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
             changed = false;
         }
 
-        @Test
         @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
 
-        @Test
-        public void reset() {
+        void reset() {
             changed = false;
         }
     }
