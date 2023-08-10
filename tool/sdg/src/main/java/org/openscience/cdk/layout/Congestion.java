@@ -36,8 +36,9 @@ import javax.vecmath.Point2d;
  */
 final class Congestion {
 
-    // lower bound on scores
-    private static final double MIN_SCORE = 0.00001;
+    // If atoms are closer than this, they are considered on top of each other
+    private static final double MIN_DIST  = 0.00001;
+    private static final double MAX_SCORE = 100000; // 1 / MIN_SCORE
 
     final double[][] contribution;
     double     score;
@@ -69,7 +70,7 @@ final class Congestion {
                 final double x = p1.x - p2.x;
                 final double y = p1.y - p2.y;
                 final double dist2 = x * x + y * y;
-                final double contrib = dist2 != 0 ? 1 / dist2 : 1 / MIN_SCORE;
+                final double contrib = dist2 > MIN_DIST ? 1 / dist2 : MAX_SCORE;
                 score += contribution[j][i] = contribution[i][j] = contrib;
             }
         }
@@ -98,7 +99,7 @@ final class Congestion {
                 final double  x    = p1.x - p2.x;
                 final double  y    = p1.y - p2.y;
                 final double  dist2 = x * x + y * y;
-                final double  contrib = dist2 != 0 ? 1 / dist2 : 1 / MIN_SCORE;
+                final double  contrib = dist2 > MIN_DIST ? 1 / dist2 : MAX_SCORE;
                 score += contribution[w][v] = contribution[v][w] = contrib;
             }
         }
@@ -124,7 +125,7 @@ final class Congestion {
                 final double  x    = p1.x - p2.x;
                 final double  y    = p1.y - p2.y;
                 final double  dist2 = x * x + y * y;
-                final double  contrib = dist2 != 0 ? 1 / dist2 : 1 / MIN_SCORE;
+                final double  contrib = dist2 > MIN_DIST ? 1 / dist2 : MAX_SCORE;
                 score += contribution[w][v] = contribution[v][w] = 1 / contrib;
             }
         }
