@@ -168,6 +168,8 @@ final class TransformPlan {
     }
 
     private int optimizeReplaceAtom(List<TransformOp> ops, int i) {
+        int from = ops.get(i-3).a;
+        int to   = ops.get(i).a;
         ops.set(i - 3, new TransformOp(TransformOp.Type.ReplaceAtom,
                                        ops.get(i).a,
                                        ops.get(i - 3).b,
@@ -183,6 +185,8 @@ final class TransformPlan {
         }
         ops.remove(i--);
         ops.remove(i--);
+        for (int j=i; j<ops.size(); j++)
+            ops.set(j, ops.get(j).remap(from, to));
         return i;
     }
 

@@ -207,6 +207,18 @@ public final class TransformOp implements Comparable<TransformOp> {
         return Objects.hash(type, a, b, c, d);
     }
 
+    TransformOp remap(int from, int to) {
+        if (a == from)
+            return new TransformOp(type, to, b, c, d);
+        if (b == from &&
+                (type == Type.NewBond ||
+                 type == Type.DeleteBond ||
+                 type == Type.BondOrder ||
+                 type == Type.MoveH))
+            return new TransformOp(type, a, to, c, d);
+        return this;
+    }
+
     int getOtherIdx(int x) {
         switch (type) {
             case NewBond:
