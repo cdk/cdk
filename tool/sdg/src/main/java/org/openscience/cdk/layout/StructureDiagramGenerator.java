@@ -1013,14 +1013,26 @@ public class StructureDiagramGenerator {
                     hidden.contains(bond.getEnd()) &&
                     !xbonds.contains(bond))
                     continue;
-                if (mol.getConnectedBondsCount(bond.getBegin()) == 1 ||
-                    mol.getConnectedBondsCount(bond.getEnd()) == 1)
+                int begDeg = mol.getConnectedBondsCount(bond.getBegin());
+                int endDeg = mol.getConnectedBondsCount(bond.getEnd());
+                if ((begDeg == 1 && endDeg > 2) ||
+                    (endDeg == 1 && begDeg > 2))
                     continue;
                 result.add(bond);
             }
         } else {
-            for (IBond bond : mol.bonds())
+            for (IBond bond : mol.bonds()) {
+                int begDeg = mol.getConnectedBondsCount(bond.getBegin());
+                int endDeg = mol.getConnectedBondsCount(bond.getEnd());
+                if ((begDeg == 1 && endDeg > 2) ||
+                    (endDeg == 1 && begDeg > 2))
+                    continue;
                 result.add(bond);
+            }
+            if (result.isEmpty()) {
+                for (IBond bond : mol.bonds())
+                    result.add(bond);
+            }
         }
         return result;
     }
@@ -1084,7 +1096,6 @@ public class StructureDiagramGenerator {
         double total = 0;
 
         while (total < tau) {
-
             total += step;
             GeometryUtil.rotate(mol, pivot, step);
             minmax = GeometryUtil.getMinMax(mol);
@@ -1105,7 +1116,9 @@ public class StructureDiagramGenerator {
                 calcDirectionHistogram(bonds, dirhist, 180);
                 int aligned = dirhist[60]+dirhist[120];
                 int alignDelta = aligned - maxAligned;
-                if (alignDelta > alignDiff || (alignDelta == 0 && width > maxWidth)) {
+                if (alignDelta > alignDiff ||
+                        aligned == bonds.size() ||
+                        (alignDelta == 0 && width > maxWidth)) {
                     maxAligned = aligned;
                     maxWidth = width;
                     for (int j = 0; j < mol.getAtomCount(); j++)
