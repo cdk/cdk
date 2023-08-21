@@ -1109,4 +1109,11 @@ class SmirksTest {
                         "[CH2+]C(=O)C1=CC=CC=C1");
     }
 
+    @Test
+    public void testAddOMe() throws Exception {
+        Assertions.fail("ToDo: Should use ReplaceAtom op-code");
+        assertTransform("ClC(=O)C1=CC=CC=C1",
+                        "[#6:1]Cl>>[#6:1]OC",
+                        "C(=O)(C1=CC=CC=C1)O");
+    }
 }
