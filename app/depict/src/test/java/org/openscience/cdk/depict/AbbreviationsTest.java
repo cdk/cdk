@@ -547,6 +547,25 @@ class AbbreviationsTest {
     }
 
     @Test
+    void testAc() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("[nH]1ccc2c1cc(OC(=O)C)cc2");
+        factory.add("*OC(=O)C OAc");
+        factory.add("*C(=O)C Ac");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        Assertions.assertEquals("OAc", sgroups.get(0).getSubscript());
+        Map<IAtom,Integer> aset = new HashMap<>();
+        aset.put(mol.getAtom(7), 1); // -O-
+        aset.put(mol.getAtom(8), 2); // CH
+        aset.put(mol.getAtom(9), 2); // =O
+        aset.put(mol.getAtom(10), 2); // Me
+        sgroups = factory.generate(mol, aset);
+        assertThat(sgroups.size(), is(1));
+        Assertions.assertEquals("Ac", sgroups.get(0).getSubscript());
+    }
+
+    @Test
     void TFASaltDisconnected() throws Exception {
         Abbreviations factory = new Abbreviations();
         IAtomContainer mol = smi("c1ccccc1c1ccccc1.FC(F)(F)C(=O)O");
