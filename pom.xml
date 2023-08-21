@@ -712,6 +712,7 @@
                     <instructions>
                         <Export-Package>org.openscience.*</Export-Package>
                     </instructions>
+                    <noWarningProjectTypes>pom</noWarningProjectTypes>
                 </configuration>
                 <executions>
                     <execution>
