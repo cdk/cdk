@@ -1101,4 +1101,12 @@ class SmirksTest {
                         "[#8:9]-[C:8](=[O;D1;H0:10])-[c;H0;D3;+0:5]1:[nH;D2;+0:1]:[c:2]:[c;H0;D3;+0:3](:[c:4]):[c;H0;D3;+0:6]:1-[C:7]>>N-[NH;D2;+0:1]-[c:2]:[cH;D2;+0:3]:[c:4].O=[C;H0;D3;+0:5](-[CH2;D2;+0:6]-[C:7])-[C:8](-[#8:9])=[O;D1;H0:10]",
                         "CCOC(=O)C(CCc1ccccc1)=O.N(c1ccccc1)N");
     }
+
+    @Test
+    public void testChargeChange() throws Exception {
+        assertTransform("ClC(=O)C1=CC=CC=C1",
+                        "[#6:1]Cl>>[#6:1][CH2+]",
+                        "[CH2+]C(=O)C1=CC=CC=C1");
+    }
+
 }
