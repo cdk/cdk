@@ -19,6 +19,7 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * A set of AtomContainers.
@@ -27,7 +28,8 @@ import java.util.Comparator;
  * @cdk.module interfaces
  * @cdk.githash
  */
-public interface IAtomContainerSet extends IChemObject {
+public interface IAtomContainerSet
+        extends IChemObject, Iterable<IAtomContainer> {
 
     /**
      * Adds an atomContainer to this container.
@@ -124,6 +126,16 @@ public interface IAtomContainerSet extends IChemObject {
      * @return A new Iterable for this AtomContainerSet.
      */
     Iterable<IAtomContainer> atomContainers();
+
+    /**
+     * Iterator for the containers in this set.
+     *
+     * @return the iterator
+     */
+    @Override
+    default Iterator<IAtomContainer> iterator() {
+        return atomContainers().iterator();
+    }
 
     /**
      * Returns the AtomContainer at position <code>number</code> in the

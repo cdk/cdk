@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Iterator;
+
 /**
  * Represents the idea of a chemical reaction. The reaction consists of
  * a set of reactants and a set of products.
@@ -38,7 +40,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.created 2003-02-13
  * @cdk.keyword reaction
  */
-public interface IReaction extends IChemObject {
+public interface IReaction extends IChemObject, Iterable<IAtomContainer> {
 
     /**
      * Permissible reaction directions.
@@ -127,6 +129,50 @@ public interface IReaction extends IChemObject {
      * @see    #addAgent
      */
     IAtomContainerSet getAgents();
+
+    /**
+     * An iterator for all the containers in this reaction.
+     * The containers will be provided reactants then agents, then products.
+     * @return the iterator
+     */
+    @Override
+    default Iterator<IAtomContainer> iterator() {
+        return new Iterator<IAtomContainer>() {
+
+            private final Iterator[] sets = new Iterator[]{
+                    getReactants().iterator(),
+                    getAgents().iterator(),
+                    getProducts().iterator()
+            };
+            int pos = 0; // 0 = reactant, 1 = agents, 2 = products
+            IAtomContainer next;
+
+            private IAtomContainer loadNext() {
+                if (next != null)
+                    return next;
+                while (pos < sets.length) {
+                    if (sets[pos].hasNext()) {
+                        next = (IAtomContainer) sets[pos].next();
+                        break;
+                    }
+                    pos++;
+                }
+                return next;
+            }
+
+            @Override
+            public boolean hasNext() {
+                return loadNext() != null;
+            }
+
+            @Override
+            public IAtomContainer next() {
+                IAtomContainer res = loadNext();
+                next = null;
+                return res;
+            }
+        };
+    }
 
     /**
      * Returns the mappings between the reactant and the product side.

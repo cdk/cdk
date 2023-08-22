@@ -370,4 +370,26 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         reaction.addMapping(mapping);
         Assertions.assertEquals(1, reaction.getMappingCount());
     }
+
+    @Test
+    public void testIterator() {
+        IReaction reaction = (IReaction) newChemObject();
+        IAtomContainer r1 = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer r2 = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer a1 = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer a2 = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer p  = reaction.getBuilder().newInstance(IAtomContainer.class);
+        reaction.addReactant(r1);
+        reaction.addReactant(r2);
+        reaction.addAgent(a1);
+        reaction.addAgent(a2);
+        reaction.addProduct(p);
+        Iterator<IAtomContainer> iterator = reaction.iterator();
+        Assertions.assertEquals(r1, iterator.next());
+        Assertions.assertEquals(r2, iterator.next());
+        Assertions.assertEquals(a1, iterator.next());
+        Assertions.assertEquals(a2, iterator.next());
+        Assertions.assertEquals(p, iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
+    }
 }
