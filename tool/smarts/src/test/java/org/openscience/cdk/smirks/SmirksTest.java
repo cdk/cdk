@@ -985,7 +985,7 @@ class SmirksTest {
     @Test
     void testThiazole() throws Exception {
         final String smiles = "CC(N)=S.CC(I)C(C)=O";
-        final String smirks = "[#6:6]-[C;R0:1](=[OD1])-[CH1;R0:5](-[#6:7])-[*;#17,#35,#53].[NH2:2]-[C:3]=[SD1:4]>>[CH1:1]2(-[#6:6]):[NH1:2]:[CH1:3]:[S:4][C:5]([#6:7]):2";
+        final String smirks = "[#6:6]-[C;R0:1](=[OD1])-[CH1;R0:5](-[#6:7])-[*;#17,#35,#53].[NH2:2]-[C:3]=[SD1:4]>>[CH1:1]2(-[#6:6])[NH1:2][CH1:3][S:4][C:5]([#6:7])2";
         final String expected = "CC1NC(C(C)S1)C";
 
         assertTransform(smiles, smirks, expected);
