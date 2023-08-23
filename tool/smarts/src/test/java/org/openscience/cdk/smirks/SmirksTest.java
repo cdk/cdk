@@ -998,7 +998,7 @@ class SmirksTest {
     @Test
     void testBenzoxazoleCarboxylicAcid() throws Exception {
         final String smiles = "c1cc(O)c(N)cc1.CC(=O)O";
-        final String smirks = "[c;r6:1](-[OH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[C;R0:5](=[OD1])-[OH1]>>[C:3]2:[C:1]:[OH0:2]:[CH1:5](-[#6:6]):[NH1:4]2";
+        final String smirks = "[c;r6:1](-[OH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[C;R0:5](=[OD1])-[OH1]>>[c:3]2[c:1][OH0:2][CH1:5]([#6:6])[NH1:4]2";
         final String expected = "c1cc2OC(C)Nc2cc1";
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
@@ -1011,7 +1011,7 @@ class SmirksTest {
     @Test
     void testBenzothiazole() throws Exception {
         final String smiles = "CC=O.Nc1ccccc1S";
-        final String smirks = "[c;r6:1](-[SH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[CH1;R0:5](=[OD1])>>[c:3]2:[c:1]:[sH0:2]:[c:5](-[#6:6]):[nH1:4]2";
+        final String smirks = "[c;r6:1](-[SH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[CH1;R0:5](=[OD1])>>[c:3]2[c:1][SH0:2][C:5]([#6:6])[NH1:4]2";
         final String expected = "CC1Sc2ccccc2N1";
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
@@ -1109,6 +1109,7 @@ class SmirksTest {
                         "[CH2+]C(=O)C1=CC=CC=C1");
     }
 
+    @Disabled
     @Test
     public void testAddOMe() throws Exception {
         Assertions.fail("ToDo: Should use ReplaceAtom op-code");
