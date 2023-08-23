@@ -40,6 +40,7 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.stereo.TrigonalBipyramidal;
+import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
@@ -637,6 +638,15 @@ final class NonplanarBonds {
          l.set(j, tmp);
     }
 
+    private IBond.Stereo invert(IBond.Stereo disp) {
+        switch (disp) {
+            case UP: return DOWN;
+            case DOWN: return UP;
+            default: return disp;
+        }
+    }
+
+
     private IBond.Stereo flip(IBond.Stereo disp) {
         switch (disp) {
             case UP: return UP_INVERTED;
@@ -894,7 +904,10 @@ final class NonplanarBonds {
         // hydrogen is opposite all three neighbors. The central label needs to
         // be inverted, atoms could be laid out like this automatically, consider
         // CC1C[C@H]2CC[C@@H]1C2
+        // Like wise if the other two bonds are co-linear we should not place a
+        // wedge on the one off to the side (avoid is set).
         int invert = -1;
+        int avoid  = -1;
         if (n == 3) {
             // find a triangle of non-sequential neighbors (sorted clockwise)
             // which has anti-clockwise winding
@@ -903,22 +916,26 @@ final class NonplanarBonds {
                 Point2d b = focus.getPoint2d();
                 Point2d c = atoms[rank[(i + 2) % n]].getPoint2d();
                 double det = (a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x);
-                if (det > 0) {
-                    invert = rank[(i + 1) % n];
-                    break;
-                }
+                if (Math.abs(det) <= 0.05)
+                    avoid = rank[(i + 1) % n]; // i,i+2 are co-linear, i+1=no wedge
+                else if (det > 0.05 && invert == -1)
+                    invert = rank[(i + 1) % n]; // acute angle, invert wedge
             }
         }
-
+        
         // assign all up/down labels to an auxiliary array
         IBond.Stereo[] labels = new IBond.Stereo[n];
+        IBond.Stereo refWedge = p > 0 ? UP : DOWN;
         for (int i = 0; i < n; i++) {
             int v = rank[i];
-
-            // 4 neighbors (invert every other one)
-            if (n == 4) p *= -1;
-
-            labels[v] = invert == v ? p > 0 ? DOWN : UP : p > 0 ? UP : DOWN;
+            // no wedge here (would be ambiguous)
+            if (avoid == v)
+                labels[v] = NONE;
+            // invert (if D3 acute, or odd index of D4)
+            else if (invert == v || (n == 4 && i % 2 == 0))
+                labels[v] = invert(refWedge);
+            else
+                labels[v] = refWedge;
         }
 
         // set the label for the highest priority and available bond
@@ -927,6 +944,8 @@ final class NonplanarBonds {
         for (int v : priority(atomToIndex.get(focus), atoms, n)) {
             IBond bond = bonds[v];
             if (bond.getStereo() != NONE || bond.getOrder() != SINGLE)
+                continue;
+            if (labels[v] == NONE)
                 continue;
             // first label
             if (firstlabel == null) {

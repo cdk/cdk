@@ -699,7 +699,7 @@ public abstract class StereoElementFactory {
                     Vector2d v1 = toUnitVector(focus, bonds.get(0).getOther(focus));
                     Vector2d v2 = toUnitVector(focus, bonds.get(1).getOther(focus));
                     Vector2d v3 = toUnitVector(focus, bonds.get(2).getOther(focus));
-                    String ambiuousStereoMesg = "Ambiguous stereochemistry - 3 neighbours and two";
+                    String ambiuousStereoMesg = "Ambiguous stereochemistry - 3 neighbours and two bonds are co-linear";
                     if (Math.abs(signedAngle(v1,v2) - Math.PI) < threshold) {
                         if (elevationOf(focus, bonds.get(0)) == 0 &&
                             elevationOf(focus, bonds.get(1)) == 0 &&

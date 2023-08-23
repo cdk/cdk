@@ -34,6 +34,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -41,10 +43,15 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -322,8 +329,8 @@ class NonPlanarBondsTest {
         NonplanarBonds.assign(m);
         assertThat(m.getBond(2).getStereo(), is(IBond.Stereo.UP));
     }
-    
-    
+
+
     // ethene is left alone and not marked as crossed
     @Test
     void dontCrossEtheneDoubleBond() {
@@ -411,8 +418,8 @@ class NonPlanarBondsTest {
     }
 
     /**
-     * @cdk.inchi InChI=1S/C6H14S/c1-5-7(4)6(2)3/h5H2,1-4H3/t7-/m0/s1 
-     */                                                                  
+     * @cdk.inchi InChI=1S/C6H14S/c1-5-7(4)6(2)3/h5H2,1-4H3/t7-/m0/s1
+     */
     @Test
     void dontMarkTetrahedralCentresWithDoubleBondsAsUnspecified() {
         IAtomContainer m = new AtomContainer();
@@ -436,7 +443,7 @@ class NonPlanarBondsTest {
         assertThat(m.getBond(2).getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
         assertThat(m.getBond(3).getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
     }
-    
+
     @Test
     void dontMarkRingBondsInBezeneAsUnspecified() {
         IAtomContainer m = new AtomContainer();
@@ -454,7 +461,7 @@ class NonPlanarBondsTest {
         m.addBond(0, 5, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
         for (IBond bond : m.bonds()) {
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));   
+            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
         }
     }
 
@@ -644,8 +651,8 @@ class NonPlanarBondsTest {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("OC1=CC=C2C=CC=CC2=C1C1=C(O)C=CC2=C1C=CC=C2");
 
-        IBond       focus    = mol.getBond(mol.getAtom(10),
-                                           mol.getAtom(11));
+        IBond focus = mol.getBond(mol.getAtom(10),
+                                  mol.getAtom(11));
         List<IAtom> carriers = new ArrayList<>();
         carriers.addAll(mol.getConnectedAtomsList(focus.getBegin()));
         carriers.addAll(mol.getConnectedAtomsList(focus.getEnd()));
@@ -664,7 +671,7 @@ class NonPlanarBondsTest {
         assertThat(bond2.getOrder(), is(IBond.Order.SINGLE));
 
         Assertions.assertTrue(bond1.getStereo() == IBond.Stereo.DOWN ||
-        bond2.getStereo() == IBond.Stereo.DOWN, "One of the single bonds should have been wedged");
+                                      bond2.getStereo() == IBond.Stereo.DOWN, "One of the single bonds should have been wedged");
 
     }
 
@@ -773,6 +780,16 @@ class NonPlanarBondsTest {
         a.setImplicitHydrogenCount(hCount);
         a.setPoint2d(new Point2d(x, y));
         return a;
+    }
+
+    @Test
+    void testColinearD3bonds() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[C@@H]12[C@@H]([C@H]([C@@H]([C@@H](CO1)O2)O)O)O |(1.3,0.1,;1.3,-1.4,;0.01,-2.15,;-1.29,-1.4,;-1.29,0.1,;-1.29,1.95,;1.26,1.93,;0.01,0.85,;-2.59,-2.15,;0.01,-3.65,;2.6,-2.15,)|");
+        NonplanarBonds.assign(mol);
+        // there are 4
+        Assertions.assertEquals(5,
+                                StereoElementFactory.using2DCoordinates(mol).withStrictMode().createAll().size());
     }
 
 }
