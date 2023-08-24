@@ -481,7 +481,7 @@ public class Smirks {
 
     private static String generateAtom(IAtom atom) {
         return "[" + Smarts.generateAtom(((QueryAtom) atom).getExpression())
-                           .replaceAll("^\\[|]", "") + ":" + getMapIdx(atom) + "]";
+                           .replaceAll("(?:^\\[)|(?:]$)", "") + ":" + getMapIdx(atom) + "]";
     }
 
     private static void checkAtomMap(SmirksState state, IAtom atom) {
