@@ -286,7 +286,7 @@ class SmirksTest {
     }
 
     @Test
-    public void testImplicitValenceAromatic() throws Exception {
+    void testImplicitValenceAromatic() throws Exception {
         assertTransform("c1ccccc1C(=O)O",
                         "[OD1:1][H]>>[O:1]Cc1ccccc1",
                         "c1ccccc1C(=O)OCc2ccccc2");
@@ -341,7 +341,7 @@ class SmirksTest {
     }
 
     // https://www.daylight.com/dayhtml/doc/theory/theory.smirks.html
-    // but atom map 0 => 5, 0 is undef, think this is a bug in Daylight doc (TODO Roger)
+    // but atom map 0 => 5, 0 is undef, think this is a bug in Daylight doc
     // the implicit hydrogens are moved as needed
     @Test
     void testHydrogenMovement_1() throws Exception {
