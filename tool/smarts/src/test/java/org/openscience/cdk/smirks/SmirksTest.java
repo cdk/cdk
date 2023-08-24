@@ -1083,43 +1083,73 @@ class SmirksTest {
     // need to check the atoms of a bond to see if the implicit bond definition
     // is aliphatic or aromatic
     @Test
-    public void testAromaticContext() throws Exception {
+    void testAromaticContext() throws Exception {
         assertTransform("FC(F)(F)c1nn(c(c1)C)C",
                         "[cH0X3v4+0:1]1[cH1X3v4+0:3][cH0X3v4+0:4][nH0X2v3+0:11][nH0X3v3+0:10]1>>[CH0+0:1]([CH2+0:3][CH0+0:4]=O)=O.[NH1+0:10][NH2+0:11]",
                         "FC(F)(F)C(CC(C)=O)=O.NNC");
     }
 
     @Test
-    public void testImplicitValenceAromatic5() throws Exception {
+    void testImplicitValenceAromatic5() throws Exception {
         assertTransform("n1c(cccc1C)-n2c(ccc2C)C",
                         "[c;H0v4X3;+0:1]1[c;H1v4X3;+0:3][c;H1v4X3;+0:4][c;H0v4X3;+0:5][n;H0v3X3;+0:13]1>>[H][#6;AH1:3]([#6;AH0;+0:1]=O)[#6;AH1:4]([H])[#6;AH0;+0:5]=O.[H][#7;A:13][H]",
                         "n1c(cccc1C)N.C(CCC(C)=O)(C)=O");
     }
 
     @Test
-    public void testAromatic6() throws Exception {
+    void testAromatic6() throws Exception {
         assertTransform("CCn1c(CCl)nc2cc(C)ccc12",
                         "[cH0+0:1]1[nH0+0:6][cH0+0:7][cH0+0:13][nD2H0+0:14]1>>[CH0+0:1](O)=O.[NH1+0:6][cH0+0:7][cH0+0:13][NH2+0:14]",
                         "CCNc1ccc(cc1N)C.C(CCl)(O)=O");
     }
 
     @Test
-    public void testFischerIndole() throws Exception {
+    void testFischerIndole() throws Exception {
         assertTransform("CCOC(=O)c1[nH]c2ccccc2c1Cc1ccccc1",
                         "[#8:9]-[C:8](=[O;D1;H0:10])-[c;H0;D3;+0:5]1:[nH;D2;+0:1]:[c:2]:[c;H0;D3;+0:3](:[c:4]):[c;H0;D3;+0:6]:1-[C:7]>>N-[NH;D2;+0:1]-[c:2]:[cH;D2;+0:3]:[c:4].O=[C;H0;D3;+0:5](-[CH2;D2;+0:6]-[C:7])-[C:8](-[#8:9])=[O;D1;H0:10]",
                         "CCOC(=O)C(CCc1ccccc1)=O.N(c1ccccc1)N");
     }
 
     @Test
-    public void testChargeChange() throws Exception {
+    void testChargeNewAtom() throws Exception {
         assertTransform("ClC(=O)C1=CC=CC=C1",
                         "[#6:1]Cl>>[#6:1][CH2+]",
                         "[CH2+]C(=O)C1=CC=CC=C1");
     }
 
+
+
+    @Test
+    void testDeleteAtom() throws Exception {
+        assertTransform("Cl.c1ccccc1",
+                        "Cl>>",
+                        "c1ccccc1");
+    }
+
+    @Test
+    void testDeleteBond() throws Exception {
+        assertTransform("BrBr",
+                        "[Br:1][Br:2]>>[Br:1].[Br:2]",
+                        "[Br].[Br]");
+    }
+
+    @Test
+    void testSetChange() throws Exception {
+        assertTransform("c1ccccc1O",
+                        "[OH:1]>>[OH0-:1]",
+                        "c1ccccc1[O-]");
+    }
+
+    @Test
+    void testSetMass() throws Exception {
+        assertTransform("c1ccccc1[H]",
+                        "[H:1]>>[2H:1]",
+                        "c1ccccc1[2H]");
+    }
+
     @Disabled
     @Test
-    public void testAddOMe() throws Exception {
+    void testAddOMe() throws Exception {
         Assertions.fail("ToDo: Should use ReplaceAtom op-code");
         assertTransform("ClC(=O)C1=CC=CC=C1",
                         "[#6:1]Cl>>[#6:1]OC",
