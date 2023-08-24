@@ -232,7 +232,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case DeleteBond:
             case BondOrder:
             case MoveH:
-            case PromoteH:H:
+            case PromoteH:
                 if (x == a) return b;
                 else if (x == b) return a;
                 return -1;
@@ -348,16 +348,18 @@ public final class TransformOp implements Comparable<TransformOp> {
     public String toString() {
         switch (type) {
             case ReplaceAtom:
-            case NewAtom:
+            case NewAtom: {
                 String desc = Elements.ofNumber(b).symbol();
                 if (d != 0)
                     desc = desc.toLowerCase(Locale.ROOT);
                 desc += "H" + c;
                 return type + "{[" + desc + "@" + a + "]}";
-            case ReplaceHydrogen:
-                desc = Elements.ofNumber(c).symbol();
+            }
+            case ReplaceHydrogen: {
+                String desc = Elements.ofNumber(c).symbol();
                 desc += "H" + d;
                 return type + "{[" + desc + "@" + a + "=>" + b + "]}";
+            }
             case DeleteAtom:
                 return type + "{" + a + "}";
             case Mass:
