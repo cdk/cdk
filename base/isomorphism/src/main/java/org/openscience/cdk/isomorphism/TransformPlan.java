@@ -67,7 +67,7 @@ final class TransformPlan {
         // roll them back if needed
         Collections.sort(this.ops);
         optimize(this.ops);
-        
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Optimizes op-codes:" + this.ops);
         }
@@ -87,7 +87,7 @@ final class TransformPlan {
     /**
      * Apply the plan a molecule with the atoms index in the {@code amap} array.
      *
-     * @param mol the molecule
+     * @param mol  the molecule
      * @param amap atom-mapping
      * @return if the operations were applied successfully or not
      */
@@ -168,8 +168,8 @@ final class TransformPlan {
     }
 
     private int optimizeReplaceAtom(List<TransformOp> ops, int i) {
-        int from = ops.get(i-3).a;
-        int to   = ops.get(i).a;
+        int from = ops.get(i - 3).a;
+        int to = ops.get(i).a;
         ops.set(i - 3, new TransformOp(TransformOp.Type.ReplaceAtom,
                                        ops.get(i).a,
                                        ops.get(i - 3).b,
@@ -185,7 +185,7 @@ final class TransformPlan {
         }
         ops.remove(i--);
         ops.remove(i--);
-        for (int j=i; j<ops.size(); j++)
+        for (int j = i; j < ops.size(); j++)
             ops.set(j, ops.get(j).remap(from, to));
         return i;
     }
@@ -230,7 +230,7 @@ final class TransformPlan {
         int count = 0;
         for (TransformOp op : ops)
             if (op.type == TransformOp.Type.NewAtom ||
-                op.type == TransformOp.Type.PromoteH)
+                    op.type == TransformOp.Type.PromoteH)
                 count++;
         return count;
     }
@@ -271,13 +271,14 @@ final class TransformPlan {
                 replaceAtom(mol, amap, op);
                 break;
             case ReplaceHydrogen:
-                replaceHydrogen(mol, amap, op);
+                if (!replaceHydrogen(mol, amap, op))
+                    return false;
                 break;
             case NewBond:
                 if (amap[op.a].getBond(amap[op.b]) != null)
                     return false;
                 if (amap[op.a] == null || amap[op.b] == null)
-                    throw new IllegalStateException(op + " atoms={null=" + (amap[op.a]==null) + ",null=" + (amap[op.b]==null) + "}");
+                    throw new IllegalStateException(op + " atoms={null=" + (amap[op.a] == null) + ",null=" + (amap[op.b] == null) + "}");
                 mol.addBond(amap[op.a].getIndex(), amap[op.b].getIndex(),
                             BOND_ORDERS[op.c]);
                 if (op.c == 5 && amap[op.a].isAromatic() && amap[op.b].isAromatic())
@@ -305,8 +306,6 @@ final class TransformPlan {
                 break;
             case AromaticBond:
                 amap[op.a].getBond(amap[op.b]).setIsAromatic(op.c != 0);
-                // amap[op.a].setIsAromatic(op.c != 0); // only for aromatic!
-                // amap[op.b].setIsAromatic(op.c != 0);
                 break;
             case Charge:
                 amap[op.a].setFormalCharge(op.b);
@@ -356,7 +355,7 @@ final class TransformPlan {
     private static void resyncStereo(IAtomContainer mol) {
         if (mol.stereoElements().iterator().hasNext()) {
             boolean removed = false;
-            List<IStereoElement> updatedStereo = new ArrayList<>();
+            List<IStereoElement<?, ?>> updatedStereo = new ArrayList<>();
             for (IStereoElement<?, ?> se : mol.stereoElements()) {
                 switch (se.getConfigClass()) {
                     case IStereoElement.Tetrahedral:
@@ -376,39 +375,41 @@ final class TransformPlan {
                         else
                             removed = true;
                         break;
-                    case IStereoElement.Allenal:
-                        IAtom[] ends = ExtendedTetrahedral.findTerminalAtoms(mol, (IAtom)se.getFocus());
+                    case IStereoElement.Allenal: {
+                        IAtom[] ends = ExtendedTetrahedral.findTerminalAtoms(mol, (IAtom) se.getFocus());
                         if (!bondingChanged(se.getFocus()) &&
-                            !bondingChanged(ends[0]) && !bondingChanged(ends[1]))
+                                !bondingChanged(ends[0]) && !bondingChanged(ends[1]))
                             updatedStereo.add(se);
                         else
                             removed = true;
-                        break;
-                    case IStereoElement.Cumulene:
-                        ends = ExtendedCisTrans.findTerminalAtoms(mol, (IBond) se.getFocus());
+                    }
+                    break;
+                    case IStereoElement.Cumulene: {
+                        IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(mol, (IBond) se.getFocus());
                         if (!bondingChanged(((IBond) se.getFocus()).getBegin()) &&
                                 !bondingChanged(((IBond) se.getFocus()).getEnd()) &&
                                 ends != null && !bondingChanged(ends[0]) && !bondingChanged(ends[1]))
                             updatedStereo.add(se);
                         else
                             removed = true;
-                        break;
+                    }
+                    break;
                     default:
                         throw new IllegalStateException("Unhandled stereochemistry type");
                 }
             }
             if (removed)
-                mol.setStereoElements(updatedStereo);
+                mol.setStereoElements((List)updatedStereo);
         }
     }
 
     // this is inefficient, need better AtomContainer API points but OK for now
     private static void removeStereo(IAtomContainer mol, IChemObject atom) {
-        List<IStereoElement> stereo = new ArrayList<>();
-        for (IStereoElement<?,?> se : mol.stereoElements())
+        List<IStereoElement<?,?>> stereo = new ArrayList<>();
+        for (IStereoElement<?, ?> se : mol.stereoElements())
             if (!se.getFocus().equals(atom))
                 stereo.add(se);
-        mol.setStereoElements(stereo);
+        mol.setStereoElements((List)stereo);
     }
 
     private static void setLeftHandedTetrahedral(IAtomContainer mol, IAtom[] amap, TransformOp op) {
@@ -567,7 +568,7 @@ final class TransformPlan {
             atom.setAtomicNumber(1);
             atom.setImplicitHydrogenCount(0);
             mol.addAtom(atom);
-            amap[to] = mol.getAtom(mol.getAtomCount()-1);
+            amap[to] = mol.getAtom(mol.getAtomCount() - 1);
             return true;
         } else {
             if (moveExplH(mol, from, null)) {

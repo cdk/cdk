@@ -392,16 +392,16 @@ public class Smirks {
             return 0;
         }
 
-        public boolean error(String s) {
+        boolean error(String s) {
             errors.add(s);
             return false;
         }
 
-        public void warning(String s) {
+        void warning(String s) {
             warnings.add(s);
         }
 
-        public String getMessage() {
+        String getMessage() {
             if (errors.isEmpty() && warnings.isEmpty())
                 return null;
             StringBuilder sb = new StringBuilder();
@@ -510,7 +510,7 @@ public class Smirks {
         return true;
     }
 
-    private static boolean determineHydrogenMovement(List<TransformOp> ops,
+    private static void determineHydrogenMovement(List<TransformOp> ops,
                                                      SmirksState state) {
         Iterator<IAtom[]> iter = state.atomPairs.iterator();
         while (iter.hasNext()) {
@@ -540,7 +540,6 @@ public class Smirks {
                 iter.remove();
             }
         }
-        return true;
     }
 
     private static String generateAtom(IAtom atom) {
