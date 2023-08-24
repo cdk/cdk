@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -81,78 +80,6 @@ import java.util.Set;
  * @see org.openscience.cdk.smirks.SmirksTransform
  */
 public class Smirks {
-
-    public enum Option {
-        /**
-         * The transform will be run right-to-left instead of left-to-right.
-         */
-        Reverse,
-        /**
-         * Ignore attempts to set the hydrogen count with properties.
-         */
-        IgnoreHCnt,
-        /**
-         * Unless specified, zero the hydrogen count on a mapped atom if it's
-         * counterpart had a hydrogen count specified.
-         */
-        ZeroHCntIfChanged,
-        /**
-         * Interpret [CH0] the same as [C]
-         */
-        ZeroHIsUnset,
-        /**
-         * Ignore attempts to set the isotopic mass of an atom.
-         */
-        IgnoreIso,
-        /**
-         * Ignores attempts to change the element of an atom.
-         */
-        IgnoreTransmutation,
-        /**
-         * Unless specified, zero the charge on a mapped atom if it's
-         * counterpart had a charge specified.
-         */
-        ZeroChargeIfChanged,
-        /**
-         * Unless a charge is specified, default to zero.
-         */
-        ZeroCharge,
-
-        UnpairedMaps,
-
-        // where does this option go
-        RECALCULATE_H,
-
-        // options of the plan
-
-        /**
-         * Automatically add explicit hydrogens to a pattern before matching/
-         * running the transform.
-         */
-        AutoExplH,
-        /**
-         * Remove stereo chemistry even when a single neighbour changes.
-         */
-        RemoveStereoOnSinglePointChange,
-        /**
-         * If a bond already exists between two atoms and a new one
-         */
-        OverwriteExistingBond,
-        /**
-         * LillyMol - Not supported yet.
-         */
-        DeleteUnmapped
-    }
-
-    public final Set<Option> Daylight = EnumSet.of(Option.IgnoreHCnt,
-                                                   Option.IgnoreIso,
-                                                   Option.IgnoreTransmutation,
-                                                   Option.ZeroCharge,
-                                                   Option.AutoExplH,
-                                                   Option.RemoveStereoOnSinglePointChange);
-
-    public final Set<Option> OEChem = EnumSet.of(Option.IgnoreIso,
-                                                 Option.ZeroHCntIfChanged);
 
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(Smirks.class);
 
@@ -356,14 +283,14 @@ public class Smirks {
             // "iscomplex" is not defined
             if (atom.getProperty("cdk.smarts.iscomplex") == null) {
                 // guaranteed to be defined since it is not an expression
-                int elem = GetAtomicNumber(atom).val;
-                Integer valence = GetExplValence(query, atom);
+                int elem = getAtomicNumber(atom).val;
+                Integer valence = getExplValence(query, atom);
                 if (valence == null) {
                     warnings.add("Created (right hand side) unbracketed " + Elements.ofNumber(elem)
                                                                                     .symbol() + " atom was connected with bond expressions");
                     return 0;
                 }
-                if (IsAromatic(atom).val == 1)
+                if (isAromatic(atom).val == 1)
                     valence++;
                 switch (elem) {
                     case IElement.Wildcard:
@@ -387,6 +314,14 @@ public class Smirks {
                         else if (valence < 4) return 4 - valence;
                         else if (valence < 6) return 6 - valence;
                         break;
+                    case IElement.F:
+                    case IElement.Cl:
+                    case IElement.Br:
+                    case IElement.I:
+                        if (valence < 1) return 1 - valence;
+                        break;
+                    default:
+                        throw new IllegalStateException("No default valence for element=" + elem);
                 }
             }
             return 0;
@@ -458,6 +393,8 @@ public class Smirks {
                     state.atomidx.put(atom, aidx);
                     state.hcount[aidx] = state.calcImplH(atom);
                     break;
+                default:
+                    throw new IllegalStateException("Atom without a role!");
             }
         }
         return true;
@@ -544,7 +481,7 @@ public class Smirks {
 
     private static String generateAtom(IAtom atom) {
         return "[" + Smarts.generateAtom(((QueryAtom) atom).getExpression())
-                           .replaceAll("(?:^\\[)|(?:]$)", "") + ":" + getMapIdx(atom) + "]";
+                           .replaceAll("^\\[|]", "") + ":" + getMapIdx(atom) + "]";
     }
 
     private static void checkAtomMap(SmirksState state, IAtom atom) {
@@ -591,31 +528,30 @@ public class Smirks {
             // warn if someone puts something like >>C:C, better written as
             // >>c:c or even >>cc
             if (pair[1] != null) {
-                BinaryExprValue bndArom = IsAromatic(pair[1]);
+                BinaryExprValue bndArom = isAromatic(pair[1]);
                 if (bndArom.ok() && bndArom.val == 1) {
-                    BinaryExprValue begArom = IsAromatic(pair[1].getBegin());
-                    BinaryExprValue endArom = IsAromatic(pair[1].getEnd());
-                    if (begArom.ok() && begArom.val == 0)
-                        state.warning("Aromatic bond ':' connected to an aliphatic atom");
-                    else if (endArom.ok() && endArom.val == 0)
+                    BinaryExprValue begArom = isAromatic(pair[1].getBegin());
+                    BinaryExprValue endArom = isAromatic(pair[1].getEnd());
+                    if (begArom.equals(BinaryExprValue.FALSE) ||
+                        endArom.equals(BinaryExprValue.FALSE))
                         state.warning("Aromatic bond ':' connected to an aliphatic atom");
                 }
             }
 
-            BinaryExprValue lft = GetBondOrder(pair[0]);
-            BinaryExprValue rgt = GetBondOrder(pair[1]);
+            BinaryExprValue lft = getBondOrder(pair[0]);
+            BinaryExprValue rgt = getBondOrder(pair[1]);
             if (pair[0] != null && pair[1] == null) {
-                ops.add(new TransformOp(TransformOp.Type.DeleteBond, begIdx, endIdx, GetBondOrder(pair[0]).val));
+                ops.add(new TransformOp(TransformOp.Type.DeleteBond, begIdx, endIdx, getBondOrder(pair[0]).val));
             } else {
                 if (pair[0] == null && pair[1] != null) {
                     if (!rgt.ok())
                         return state.error("Not enough context to determine bond order of newly created bond!");
-                    ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, GetBondOrder(pair[1]).val, 0));
+                    ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, getBondOrder(pair[1]).val, 0));
                     if (rgt.val == 5)
                         ops.add(new TransformOp(TransformOp.Type.AromaticBond, begIdx, endIdx, 1, 0));
                 } else {
                     if (!rgt.ok()) {
-                        if (IsAnyBond(pair[1]))
+                        if (isAnyBond(pair[1]))
                             continue;
                         state.warnings.add("Ignored query bond, consider using '~'");
                     } else {
@@ -623,8 +559,8 @@ public class Smirks {
                             ops.add(new TransformOp(TransformOp.Type.BondOrder,
                                                     begIdx, endIdx, rgt.val));
                         }
-                        lft = IsAromatic(pair[0]);
-                        rgt = IsAromatic(pair[1]);
+                        lft = isAromatic(pair[0]);
+                        rgt = isAromatic(pair[1]);
                         if (changed(lft, rgt))
                             ops.add(new TransformOp(TransformOp.Type.AromaticBond, begIdx, endIdx, rgt.val, 0));
                     }
@@ -641,7 +577,7 @@ public class Smirks {
                 case IStereoElement.Tetrahedral:
                     if (isProduct((IAtom) se.getFocus())) {
                         IStereoElement<IAtom, IAtom> th = (IStereoElement<IAtom, IAtom>) se;
-                        BinaryExprValue val = GetProperty(th.getFocus(), Expr.Type.STEREOCHEMISTRY);
+                        BinaryExprValue val = getProperty(th.getFocus(), Expr.Type.STEREOCHEMISTRY);
                         if (val.val == 1) {
                             ops.add(new TransformOp(TransformOp.Type.Tetrahedral,
                                                     state.atomidx.get(th.getFocus()),
@@ -663,7 +599,7 @@ public class Smirks {
                     if (isProduct(((IBond) se.getFocus()).getBegin()) &&
                             isProduct(((IBond) se.getFocus()).getEnd())) {
                         IStereoElement<IBond, IBond> db = (IStereoElement<IBond, IBond>) se;
-                        BinaryExprValue val = GetProperty(db.getFocus(), Expr.Type.STEREOCHEMISTRY);
+                        BinaryExprValue val = getProperty(db.getFocus(), Expr.Type.STEREOCHEMISTRY);
                         IAtom a = db.getFocus().getBegin();
                         IAtom b = db.getFocus().getEnd();
                         IAtom c = db.getCarriers().get(0).getOther(a);
@@ -702,6 +638,8 @@ public class Smirks {
                     else
                         stereoElements.add(se);
                     break;
+                default:
+                    state.warning("Ignored stereo on right hand side - unsupported stereo class: " + se.getConfigClass());
             }
         }
 
@@ -727,10 +665,10 @@ public class Smirks {
     }
 
 
-    private static Integer GetExplValence(QueryAtomContainer query, IAtom atom) {
+    private static Integer getExplValence(QueryAtomContainer query, IAtom atom) {
         int count = 0;
         for (IBond bond : query.getConnectedBondsList(atom)) {
-            BinaryExprValue result = GetBondOrder(bond, BinaryExprValue.FALSE);
+            BinaryExprValue result = getBondOrder(bond, BinaryExprValue.FALSE);
             if (!result.ok())
                 return null;
             count += result.val;
@@ -794,13 +732,13 @@ public class Smirks {
         if (!isExplHWithOptRole(((QueryAtom) a).getExpression()))
             return false;
         List<IBond> bonds = mol.getConnectedBondsList(a);
-        return bonds.size() == 1 && GetAtomicNumber(bonds.get(0).getOther(a)).val != 1;
+        return bonds.size() == 1 && getAtomicNumber(bonds.get(0).getOther(a)).val != 1;
     }
 
     private static boolean isHydrogen(IAtomContainer mol, IAtom a) {
         if (a == null)
             return false;
-        return GetAtomicNumber(a).val == 1;
+        return getAtomicNumber(a).val == 1;
     }
 
     private static boolean isWildCard(IAtomContainer mol, IAtom a) {
@@ -821,32 +759,32 @@ public class Smirks {
         return x != null ? x : 0;
     }
 
-    private static BinaryExprValue GetAtomicNumber(IAtom atom) {
-        return atom == null ? BinaryExprValue.UNDEF : GetAtomicNumber(((QueryAtom) atom).getExpression());
+    private static BinaryExprValue getAtomicNumber(IAtom atom) {
+        return atom == null ? BinaryExprValue.UNDEF : getAtomicNumber(((QueryAtom) atom).getExpression());
     }
 
-    private static BinaryExprValue GetAtomicNumber(Expr expr) {
+    private static BinaryExprValue getAtomicNumber(Expr expr) {
         switch (expr.type()) {
             case ELEMENT:
             case ALIPHATIC_ELEMENT:
             case AROMATIC_ELEMENT:
                 return new BinaryExprValue(expr.value());
             case AND:
-                return GetAtomicNumber(expr.left()).and(GetAtomicNumber(expr.right()));
+                return getAtomicNumber(expr.left()).and(getAtomicNumber(expr.right()));
             case OR:
-                return GetAtomicNumber(expr.left()).or(GetAtomicNumber(expr.right()));
+                return getAtomicNumber(expr.left()).or(getAtomicNumber(expr.right()));
             case NOT:
-                return GetAtomicNumber(expr.left()).not();
+                return getAtomicNumber(expr.left()).not();
             default:
                 return BinaryExprValue.UNDEF;
         }
     }
 
-    private static BinaryExprValue IsAromatic(Expr expr) {
-        return IsAromatic(expr, BinaryExprValue.UNDEF);
+    private static BinaryExprValue isAromatic(Expr expr) {
+        return isAromatic(expr, BinaryExprValue.UNDEF);
     }
 
-    private static BinaryExprValue IsAromatic(Expr expr, BinaryExprValue context) {
+    private static BinaryExprValue isAromatic(Expr expr, BinaryExprValue context) {
         switch (expr.type()) {
             case ELEMENT:
                 switch (expr.value()) {
@@ -887,25 +825,25 @@ public class Smirks {
             case SINGLE_OR_DOUBLE:
                 return BinaryExprValue.FALSE;
             case AND:
-                return IsAromatic(expr.left()).and(IsAromatic(expr.right()));
+                return isAromatic(expr.left()).and(isAromatic(expr.right()));
             case OR:
-                return IsAromatic(expr.left()).or(IsAromatic(expr.right()));
+                return isAromatic(expr.left()).or(isAromatic(expr.right()));
             case NOT:
-                return IsAromatic(expr.left()).not();
+                return isAromatic(expr.left()).not();
             default:
                 return BinaryExprValue.UNDEF;
         }
     }
 
-    private static BinaryExprValue IsAromatic(IAtom atom) {
+    private static BinaryExprValue isAromatic(IAtom atom) {
         if (atom == null)
             return BinaryExprValue.UNDEF;
-        return IsAromatic(((QueryAtom) atom).getExpression());
+        return isAromatic(((QueryAtom) atom).getExpression());
     }
 
-    private static BinaryExprValue IsAromatic(IBond bond) {
-        BinaryExprValue begIsArom = IsAromatic(bond.getBegin());
-        BinaryExprValue endIsArom = IsAromatic(bond.getEnd());
+    private static BinaryExprValue isAromatic(IBond bond) {
+        BinaryExprValue begIsArom = isAromatic(bond.getBegin());
+        BinaryExprValue endIsArom = isAromatic(bond.getEnd());
         BinaryExprValue aromContext;
         if (begIsArom.equals(BinaryExprValue.TRUE) &&
                 endIsArom.equals(BinaryExprValue.TRUE))
@@ -915,15 +853,15 @@ public class Smirks {
             aromContext = BinaryExprValue.FALSE;
         else
             aromContext = BinaryExprValue.UNDEF;
-        return IsAromatic(((QueryBond) bond).getExpression(), aromContext);
+        return isAromatic(((QueryBond) bond).getExpression(), aromContext);
     }
 
-    private static BinaryExprValue GetProperty(Expr expr, Expr.Type type) {
+    private static BinaryExprValue getProperty(Expr expr, Expr.Type type) {
         switch (expr.type()) {
             case AND:
-                return GetProperty(expr.left(), type).and(GetProperty(expr.right(), type));
+                return getProperty(expr.left(), type).and(getProperty(expr.right(), type));
             case OR:
-                return GetProperty(expr.left(), type).or(GetProperty(expr.right(), type));
+                return getProperty(expr.left(), type).or(getProperty(expr.right(), type));
             case NOT:
                 return BinaryExprValue.CONFLICTING;
             default:
@@ -937,29 +875,29 @@ public class Smirks {
         }
     }
 
-    private static BinaryExprValue GetProperty(IAtom atom, Expr.Type type) {
+    private static BinaryExprValue getProperty(IAtom atom, Expr.Type type) {
         return atom == null ? BinaryExprValue.UNDEF
-                : GetProperty(((QueryAtom) atom).getExpression(), type);
+                : getProperty(((QueryAtom) atom).getExpression(), type);
     }
 
-    private static BinaryExprValue GetProperty(IBond bond, Expr.Type type) {
+    private static BinaryExprValue getProperty(IBond bond, Expr.Type type) {
         return bond == null ? BinaryExprValue.UNDEF
-                : GetProperty(((QueryBond) bond).getExpression(), type);
+                : getProperty(((QueryBond) bond).getExpression(), type);
     }
 
-    private static boolean IsAnyBond(IBond bond) {
-        return bond != null && IsAnyBond(((QueryBond) bond).getExpression());
+    private static boolean isAnyBond(IBond bond) {
+        return bond != null && isAnyBond(((QueryBond) bond).getExpression());
     }
 
-    private static boolean IsAnyBond(Expr expr) {
+    private static boolean isAnyBond(Expr expr) {
         return expr.type() == Expr.Type.TRUE;
     }
 
-    private static BinaryExprValue GetBondOrder(IBond bond) {
+    private static BinaryExprValue getBondOrder(IBond bond) {
         if (bond == null)
             return BinaryExprValue.UNDEF;
-        BinaryExprValue begIsArom = IsAromatic(bond.getBegin());
-        BinaryExprValue endIsArom = IsAromatic(bond.getEnd());
+        BinaryExprValue begIsArom = isAromatic(bond.getBegin());
+        BinaryExprValue endIsArom = isAromatic(bond.getEnd());
         BinaryExprValue aromContext;
         if (begIsArom.equals(BinaryExprValue.TRUE) &&
                 endIsArom.equals(BinaryExprValue.TRUE))
@@ -969,17 +907,17 @@ public class Smirks {
             aromContext = BinaryExprValue.FALSE;
         else
             aromContext = BinaryExprValue.UNDEF;
-        return GetBondOrder(bond, aromContext);
+        return getBondOrder(bond, aromContext);
     }
 
-    private static BinaryExprValue GetBondOrder(IBond bond,
+    private static BinaryExprValue getBondOrder(IBond bond,
                                                 BinaryExprValue aromContext) {
         if (bond == null)
             return BinaryExprValue.UNDEF;
-        return GetBondOrder(((QueryBond) bond).getExpression(), aromContext);
+        return getBondOrder(((QueryBond) bond).getExpression(), aromContext);
     }
 
-    private static BinaryExprValue GetBondOrder(Expr expr,
+    private static BinaryExprValue getBondOrder(Expr expr,
                                                 BinaryExprValue aromContext) {
         switch (expr.type()) {
             case IS_AROMATIC:
@@ -1003,11 +941,11 @@ public class Smirks {
             case ALIPHATIC_ORDER:
                 return new BinaryExprValue(expr.value());
             case AND:
-                return GetBondOrder(expr.left(), aromContext).and(GetBondOrder(expr.right(), aromContext));
+                return getBondOrder(expr.left(), aromContext).and(getBondOrder(expr.right(), aromContext));
             case OR:
-                return GetBondOrder(expr.left(), aromContext).or(GetBondOrder(expr.right(), aromContext));
+                return getBondOrder(expr.left(), aromContext).or(getBondOrder(expr.right(), aromContext));
             case NOT:
-                return GetBondOrder(expr.left(), aromContext).not();
+                return getBondOrder(expr.left(), aromContext).not();
             default:
                 return BinaryExprValue.UNDEF;
         }
@@ -1020,34 +958,34 @@ public class Smirks {
 
     private static List<TransformOp> atomTypeOps(int aidx, IAtom before, IAtom after, int hAdjust) {
         List<TransformOp> ops = new ArrayList<>(4);
-        BinaryExprValue lft = GetAtomicNumber(before);
-        BinaryExprValue rgt = GetAtomicNumber(after);
+        BinaryExprValue lft = getAtomicNumber(before);
+        BinaryExprValue rgt = getAtomicNumber(after);
         if (before == null) {
-            ops.add(new TransformOp(TransformOp.Type.NewAtom, aidx, rgt.val, hAdjust, IsAromatic(after).val));
+            ops.add(new TransformOp(TransformOp.Type.NewAtom, aidx, rgt.val, hAdjust, isAromatic(after).val));
         } else {
             if (changed(lft, rgt))
                 ops.add(new TransformOp(TransformOp.Type.Element, aidx, rgt.val));
             // make aromatic if non-wildcard
             if (rgt.ok()) {
-                lft = IsAromatic(before);
-                rgt = IsAromatic(after);
+                lft = isAromatic(before);
+                rgt = isAromatic(after);
                 if (changed(lft, rgt))
                     ops.add(new TransformOp(TransformOp.Type.Aromatic, aidx, rgt.val));
             }
         }
-        lft = GetProperty(before, Expr.Type.FORMAL_CHARGE);
-        rgt = GetProperty(after, Expr.Type.FORMAL_CHARGE);
+        lft = getProperty(before, Expr.Type.FORMAL_CHARGE);
+        rgt = getProperty(after, Expr.Type.FORMAL_CHARGE);
         if (changed(lft, rgt))
             ops.add(new TransformOp(TransformOp.Type.Charge, aidx, rgt.val));
-        lft = GetProperty(before, Expr.Type.TOTAL_H_COUNT);
-        rgt = GetProperty(after, Expr.Type.TOTAL_H_COUNT);
+        lft = getProperty(before, Expr.Type.TOTAL_H_COUNT);
+        rgt = getProperty(after, Expr.Type.TOTAL_H_COUNT);
         if (changed(lft, rgt))
             ops.add(new TransformOp(TransformOp.Type.ImplH, aidx, rgt.val));
         else if (before != null && hAdjust != 0) {
             ops.add(new TransformOp(TransformOp.Type.AdjustH, aidx, hAdjust));
         }
-        lft = GetProperty(before, Expr.Type.ISOTOPE);
-        rgt = GetProperty(after, Expr.Type.ISOTOPE);
+        lft = getProperty(before, Expr.Type.ISOTOPE);
+        rgt = getProperty(after, Expr.Type.ISOTOPE);
         if (changed(lft, rgt))
             ops.add(new TransformOp(TransformOp.Type.Mass, aidx, rgt.val));
 
