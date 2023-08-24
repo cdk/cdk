@@ -24,7 +24,6 @@
 package org.openscience.cdk.depict;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,7 +32,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -42,7 +40,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 
 class DepictionTest {
@@ -61,7 +58,6 @@ class DepictionTest {
         Assertions.assertEquals("%!PS-Adobe-3.0", lines[0]);
         Assertions.assertEquals("%%Creator: FreeHEP Graphics2D Driver", lines[1]);
     }
-
     @Test
     void depictAsEps() throws CDKException {
         DepictionGenerator dg = new DepictionGenerator();
@@ -108,7 +104,8 @@ class DepictionTest {
         IReaction rxn = smilesParser.parseReactionSmiles("O.CCCCC(N)=O>>[NH4+].CCCCC([O-])=O");
         rxn.setDirection(IReaction.Direction.UNDIRECTED);
         DepictionGenerator dg = new DepictionGenerator();
-        String[] targetLines = dg.depict(rxn).toSvgStr("px").split("\n");
+        String svg = dg.depict(rxn).toSvgStr("px");
+        String[] targetLines = svg.split("\n");
         Assertions.assertIterableEquals(source, Arrays.asList(targetLines));
     }
 

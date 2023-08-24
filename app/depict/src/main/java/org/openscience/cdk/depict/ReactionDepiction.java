@@ -30,6 +30,7 @@ import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
+import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
 import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
@@ -440,7 +441,9 @@ final class ReactionDepiction extends Depiction {
             if (i == arrowIdx) {
                 w = rescale * (xOffsets[i + 1] - xOffsets[i]) + Math.max(0, nSideCol - 1) * padding;
                 draw(visitor,
-                     1, // no zoom since arrows is drawn as big as needed
+                    // no zoom for all rxns except unidirected reactions since arrows
+                    // are drawn as big as needed otherwise
+                    IReaction.Direction.UNDIRECTED == this.direction ? 0.08 : 1,
                      createArrow(w, arrowHeight * rescale),
                      rect(x, y, w, h));
                 continue;
@@ -613,9 +616,10 @@ final class ReactionDepiction extends Depiction {
                 arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
             case UNDIRECTED:
-                arrow.add(new LineElement(0.5 * headLength, +0.5*headThickness, minWidth - 0.5 * headLength, +0.5*headThickness, strokeWidth, fgcol));
-                arrow.add(new LineElement(0.5 * headLength, -0.5*headThickness, minWidth - 0.5 * headLength, -0.5*headThickness, strokeWidth, fgcol));
-                arrow.add(GeneralPath.shapeOf(path, fgcol));
+                double dx = minWidth/2;
+                double x1 = dx-headThickness, x2 = dx+headThickness, y = 0.3 * headThickness;
+                arrow.add(new LineElement(x1, -(y), x2, -(y), strokeWidth, fgcol));
+                arrow.add(new LineElement(x1, +(y), x2, +(y), strokeWidth, fgcol));
                 break;
             case BIDIRECTIONAL: // equilibrium?
 
