@@ -67,7 +67,7 @@ final class TransformPlan {
         // roll them back if needed
         Collections.sort(this.ops);
         optimize(this.ops);
-
+        
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Optimizes op-codes:" + this.ops);
         }
@@ -229,7 +229,8 @@ final class TransformPlan {
     private int numNewAtoms(List<TransformOp> ops) {
         int count = 0;
         for (TransformOp op : ops)
-            if (op.type == TransformOp.Type.NewAtom)
+            if (op.type == TransformOp.Type.NewAtom ||
+                op.type == TransformOp.Type.PromoteH)
                 count++;
         return count;
     }
@@ -323,6 +324,10 @@ final class TransformPlan {
                 if (!moveHydrogen(mol, amap[op.a], amap[op.b]))
                     return false;
                 markBondingChanged(amap[op.a], amap[op.b]);
+                break;
+            case PromoteH:
+                if (!promoteHydrogen(mol, amap, amap[op.a], op.b))
+                    return false;
                 break;
             case Mass:
                 amap[op.a].setMassNumber(op.b);
@@ -554,6 +559,25 @@ final class TransformPlan {
         }
     }
 
+    private static boolean promoteHydrogen(IAtomContainer mol, IAtom[] amap, IAtom from, int to) {
+        // if possible we move an implicit hydrogen (cheap)
+        if (from.getImplicitHydrogenCount() != 0) {
+            from.setImplicitHydrogenCount(from.getImplicitHydrogenCount() - 1);
+            IAtom atom = mol.getBuilder().newAtom();
+            atom.setAtomicNumber(1);
+            atom.setImplicitHydrogenCount(0);
+            mol.addAtom(atom);
+            amap[to] = mol.getAtom(mol.getAtomCount()-1);
+            return true;
+        } else {
+            if (moveExplH(mol, from, null)) {
+                amap[to] = from;
+                return true;
+            }
+            return false;
+        }
+    }
+
     private static boolean moveExplH(IAtomContainer mol,
                                      IAtom src, IAtom dst) {
         IAtom hAtm = null;
@@ -573,7 +597,8 @@ final class TransformPlan {
             return false;
 
         mol.removeBond(hBnd);
-        mol.addBond(dst.getIndex(), hAtm.getIndex(), IBond.Order.SINGLE);
+        if (dst != null)
+            mol.addBond(dst.getIndex(), hAtm.getIndex(), IBond.Order.SINGLE);
         return true;
     }
 

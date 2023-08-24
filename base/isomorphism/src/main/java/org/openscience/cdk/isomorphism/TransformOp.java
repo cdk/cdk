@@ -120,6 +120,12 @@ public final class TransformOp implements Comparable<TransformOp> {
          */
         AdjustH,
         /**
+         * Move a hydrogen from one atom to another and create a new one at the
+         * given index.
+         * {@code params: {idx1, idx2}}
+         */
+        PromoteH,
+        /**
          * Move a hydrogen from one atom to another.
          * {@code params: {idx1, idx2}}
          */
@@ -214,7 +220,8 @@ public final class TransformOp implements Comparable<TransformOp> {
                 (type == Type.NewBond ||
                  type == Type.DeleteBond ||
                  type == Type.BondOrder ||
-                 type == Type.MoveH))
+                 type == Type.MoveH ||
+                 type == Type.PromoteH))
             return new TransformOp(type, a, to, c, d);
         return this;
     }
@@ -225,6 +232,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case DeleteBond:
             case BondOrder:
             case MoveH:
+            case PromoteH:H:
                 if (x == a) return b;
                 else if (x == b) return a;
                 return -1;
@@ -250,6 +258,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case BondOrder:
             case AromaticBond:
             case MoveH:
+            case PromoteH:
                 return Math.max(a, b);
             case DbOpposite:
             case DbTogether:
@@ -277,6 +286,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case BondOrder:
             case AromaticBond:
             case MoveH:
+            case PromoteH:
                 return Math.min(a, b);
             case DbOpposite:
             case DbTogether:
@@ -294,6 +304,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case AdjustH:
                 return 0;
             case MoveH:
+            case PromoteH:
                 return 1;
             case DeleteAtom:
             case DeleteBond:
@@ -373,6 +384,7 @@ public final class TransformOp implements Comparable<TransformOp> {
                 }
 
             case MoveH:
+            case PromoteH:
                 return type + "{" + a + "=>" + b + "}";
             case Tetrahedral:
                 return type + "{" + a + ",@(" + b + "," + c + "," + d + "}";

@@ -424,7 +424,7 @@ public class Smirks {
             ReactionRole role = atom.getProperty(CDKConstants.REACTION_ROLE);
             if (role == null)
                 return state.error("SMIRKS was not a reaction!");
-            boolean maybeImplH = isExplH(state.query, atom);
+            boolean maybeImplH = isSuppressibleH(state.query, atom);
 
             int mapidx = getMapIdx(atom);
             Integer pairidx = state.remap.get(mapidx);
@@ -451,7 +451,7 @@ public class Smirks {
                     if (atoms[1] != null)
                         return duplicateAtomMap(state, atoms[1], atom);
                     atoms[1] = atom;
-                    if ((maybeImplH || isExplH(state.query, atoms[0])) &&
+                    if ((maybeImplH || isSuppressibleH(state.query, atoms[0])) &&
                             (atoms[0] == null || !state.atomidx.containsKey(atoms[0])))
                         break;
                     int aidx = atoms[0] != null ? state.atomidx.get(atoms[0]) : state.numAtoms++;
@@ -475,7 +475,7 @@ public class Smirks {
             // suppressed hydrogen
             if (!state.atomidx.containsKey(beg)) {
                 if (!state.atomidx.containsKey(end))
-                    throw new IllegalStateException();
+                    continue; // MOVE_TO_EXPL_H
                 state.hcount[state.atomidx.get(end)] += isProduct(end) ? +1 : -1;
                 if (!isProduct(end))
                     state.hmin[state.atomidx.get(end)]++;
@@ -510,19 +510,24 @@ public class Smirks {
         return true;
     }
 
-
     private static boolean determineHydrogenMovement(List<TransformOp> ops,
                                                      SmirksState state) {
         Iterator<IAtom[]> iter = state.atomPairs.iterator();
         while (iter.hasNext()) {
             IAtom[] pair = iter.next();
-            if (isExplH(state.query, pair[0])) {
-                if (isExplH(state.query, pair[1])) {
+            if (isSuppressibleH(state.query, pair[0])) {
+                if (isHydrogen(state.query, pair[1])) {
                     IAtom begNbor = state.query.getConnectedBondsList(pair[0]).get(0).getOther(pair[0]);
                     IAtom endNbor = state.query.getConnectedBondsList(pair[1]).get(0).getOther(pair[1]);
                     int begNborIdx = state.atomidx.get(begNbor);
-                    int endNborIdx = state.atomidx.get(endNbor);
-                    if (begNborIdx != endNborIdx) {
+                    Integer endNborIdx = state.atomidx.get(endNbor);
+                    if (endNborIdx == null) {
+                        state.hcount[begNborIdx]++;
+                        int atomIdx = state.numAtoms++;
+                        state.atomidx.put(pair[1], atomIdx);
+                        ops.add(new TransformOp(TransformOp.Type.PromoteH, begNborIdx, atomIdx));
+                    }
+                    else if (begNborIdx != endNborIdx) {
                         state.hcount[begNborIdx]++;
                         state.hcount[endNborIdx]--;
                         ops.add(new TransformOp(TransformOp.Type.MoveH, begNborIdx, endNborIdx));
@@ -531,7 +536,7 @@ public class Smirks {
                 } else if (pair[1] == null) {
                     iter.remove();
                 }
-            } else if (isExplH(state.query, pair[1])) {
+            } else if (isSuppressibleH(state.query, pair[1])) {
                 iter.remove();
             }
         }
@@ -555,7 +560,9 @@ public class Smirks {
     private static void determineAtomChanges(List<TransformOp> ops,
                                              SmirksState state) {
         for (IAtom[] pair : state.atomPairs) {
-            int aidx = pair[0] != null ? state.atomidx.get(pair[0]) : state.atomidx.get(pair[1]);
+            Integer aidx = pair[0] != null ? state.atomidx.get(pair[0]) : state.atomidx.get(pair[1]);
+            if (aidx == null)
+                continue;
             if (pair[0] != null && pair[1] == null) {
                 checkAtomMap(state, pair[0]);
                 ops.add(new TransformOp(TransformOp.Type.DeleteAtom, aidx));
@@ -706,7 +713,7 @@ public class Smirks {
     private static void prepareQuery(SmirksState state) {
         Set<IAtom> toremove = new HashSet<>();
         for (IAtom atom : state.query.atoms()) {
-            if (isProduct(atom) || isExplH(state.query, atom)) {
+            if (isProduct(atom) || isSuppressibleH(state.query, atom)) {
                 toremove.add(atom);
             } else {
                 // clear the role and renumber the maps
@@ -765,7 +772,7 @@ public class Smirks {
         return end.getProperty(CDKConstants.REACTION_ROLE) == ReactionRole.Product;
     }
 
-    private static boolean isExplH(Expr e) {
+    private static boolean isSuppressibleH(Expr e) {
         return (e.type() == Expr.Type.ELEMENT ||
                 e.type() == Expr.Type.ALIPHATIC_ELEMENT) &&
                 e.value() == 1;
@@ -776,19 +783,25 @@ public class Smirks {
         if (e.type() == Expr.Type.AND) {
             Expr l = e.left();
             Expr r = e.right();
-            return (isExplH(l) && r.type() == Expr.Type.REACTION_ROLE) ||
-                    (isExplH(r) && l.type() == Expr.Type.REACTION_ROLE);
+            return (isSuppressibleH(l) && r.type() == Expr.Type.REACTION_ROLE) ||
+                    (isSuppressibleH(r) && l.type() == Expr.Type.REACTION_ROLE);
         }
-        return isExplH(e);
+        return isSuppressibleH(e);
     }
 
-    private static boolean isExplH(IAtomContainer mol, IAtom a) {
+    private static boolean isSuppressibleH(IAtomContainer mol, IAtom a) {
         if (a == null)
             return false;
         if (!isExplHWithOptRole(((QueryAtom) a).getExpression()))
             return false;
         List<IBond> bonds = mol.getConnectedBondsList(a);
         return bonds.size() == 1 && GetAtomicNumber(bonds.get(0).getOther(a)).val != 1;
+    }
+
+    private static boolean isHydrogen(IAtomContainer mol, IAtom a) {
+        if (a == null)
+            return false;
+        return GetAtomicNumber(a).val == 1;
     }
 
     private static boolean isWildCard(IAtomContainer mol, IAtom a) {
