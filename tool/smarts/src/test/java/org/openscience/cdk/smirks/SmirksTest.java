@@ -764,12 +764,20 @@ class SmirksTest {
         assertTransform(smiles, smirks, expected);
     }
 
-    @Disabled("throws an IllegalArgumentException in org.openscience.cdk.smirks.Smirks.collectBondPairs with the mapped Hs")
+    // @Disabled("throws an IllegalArgumentException in org.openscience.cdk.smirks.Smirks.collectBondPairs with the mapped Hs")
     @Test
     void testSwernOxidationMappedHydrogens() throws Exception {
         final String smiles = "C1CC(O)C(O)CC1";
         final String smirks = "[*:1][C:2]([H:3])([O:4][H:5])[C:6]([H:7])([O:8][H:9])[*:10]>>[*:1][C:2](=[O:4])[C:6](=[O:8])[*:10].[H:3][H:5].[H:7][H:9]";
-        final String expected = "C1CC(=O)C(=O)CC1";
+        final String expected = "C1CC(=O)C(=O)CC1.[H][H].[H][H]";
+        assertTransform(smiles, smirks, expected);
+    }
+
+    @Test
+    void testSwernOxidationMappedHydrogens_ExplH() throws Exception {
+        final String smiles = "C1CC(O[2H])C(O[2H])CC1";
+        final String smirks = "[*:1][C:2]([H:3])([O:4][H:5])[C:6]([H:7])([O:8][H:9])[*:10]>>[*:1][C:2](=[O:4])[C:6](=[O:8])[*:10].[H:3][H:5].[H:7][H:9]";
+        final String expected = "C1CC(=O)C(=O)CC1.[2H][H].[2H][H]";
         assertTransform(smiles, smirks, expected);
     }
 
