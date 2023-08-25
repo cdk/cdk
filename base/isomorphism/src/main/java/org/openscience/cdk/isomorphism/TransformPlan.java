@@ -36,6 +36,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -100,6 +101,7 @@ final class TransformPlan {
                 return false;
             }
         }
+        resyncStereo(mol);
         return true;
     }
 
@@ -342,7 +344,6 @@ final class TransformPlan {
                 return false;
         }
 
-        resyncStereo(mol);
         return true;
     }
 
@@ -398,8 +399,9 @@ final class TransformPlan {
                         throw new IllegalStateException("Unhandled stereochemistry type");
                 }
             }
-            if (removed)
-                mol.setStereoElements((List)updatedStereo);
+            if (removed) {
+                mol.setStereoElements((List) updatedStereo);
+            }
         }
     }
 
@@ -618,6 +620,7 @@ final class TransformPlan {
     }
 
     private static void markBondingChanged(IAtom beg, IAtom end) {
+        beg.setFlag(CDKConstants.REACTIVE_CENTER, true);
         end.setFlag(CDKConstants.REACTIVE_CENTER, true);
     }
 

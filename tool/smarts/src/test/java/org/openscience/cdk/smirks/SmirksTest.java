@@ -466,6 +466,22 @@ class SmirksTest {
                         "C[C@](CC)(Cl)Br");
     }
 
+    @Test
+    void testKeepStereo_Split1() throws Exception {
+        // TODO stereo should be kept
+        assertTransform("C/C=C/C=C/C",
+                        "[CD2H:1]-[CD2H:2]>>[C:1]O.[C:2]O",
+                        "CC=CO.C(=CC)O");
+    }
+
+    @Test
+    void testKeepStereo_Split2() throws Exception {
+        // TODO stereo should be kept
+        assertTransform("Br[C@H](Cl)[C@H](Cl)Br",
+                        "[CD3H:1]-[CD3H:2]>>[C:1]O.[C:2]O",
+                        "BrC(Cl)O.C(Cl)(Br)O");
+    }
+
     // swapping two atoms we should lose stereochemistry because no information
     // has been given about the order in which these attach
     @Test
@@ -1116,7 +1132,6 @@ class SmirksTest {
                         "[#6:1]Cl>>[#6:1][CH2+]",
                         "[CH2+]C(=O)C1=CC=CC=C1");
     }
-
 
 
     @Test
