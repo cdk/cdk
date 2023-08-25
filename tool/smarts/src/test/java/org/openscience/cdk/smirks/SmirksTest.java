@@ -469,6 +469,20 @@ class SmirksTest {
     }
 
     @Test
+    void testKeepStereo_7() throws Exception {
+        assertTransform("CC=[C@]=CCl",
+                        "[C:1]Cl>>[C:1]Br",
+                        "CC=[C@]=CBr");
+    }
+
+    @Test
+    void testKeepStereo_8() throws Exception {
+        assertTransform("Cl/C=C=C=C/Cl",
+                        "[C:1]Cl>>[C:1]Br",
+                        "Br/C=C=C=C/Br");
+    }
+
+    @Test
     void testKeepStereo_Split1() throws Exception {
         // TODO stereo should be kept
         assertTransform("C/C=C/C=C/C",
@@ -1162,6 +1176,13 @@ class SmirksTest {
         assertTransform("c1ccccc1[H]",
                         "[H:1]>>[2H:1]",
                         "c1ccccc1[2H]");
+    }
+
+    @Test
+    void testSetElem() throws Exception {
+        assertTransform("[Pb]",
+                        "[Pb:1]>>[Au:1]",
+                        "[Au]");
     }
 
     @Test
