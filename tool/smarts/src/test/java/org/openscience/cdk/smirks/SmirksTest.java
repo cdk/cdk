@@ -173,36 +173,39 @@ class SmirksTest {
     @Test
     void atomTypeHChanges_1() {
         assertAtomTypeOps("[CH1]", "[C]"); // no-op
-        assertAtomTypeOps("[CH1]", "[CH0]", new TransformOp(ImplH, 0, 0));
+        assertAtomTypeOps("[CH1]", "[CH0]", new TransformOp(TotalH, 0, 0));
         assertAtomTypeOps("[CH1]", "[CH1]"); // no-op
-        assertAtomTypeOps("[CH1]", "[CH2]", new TransformOp(ImplH, 0, 2));
+        assertAtomTypeOps("[CH1]", "[CH2]", new TransformOp(TotalH, 0, 2));
     }
 
     @Test
     void atomTypeImplHChanges_1() {
         assertAtomTypeOps("[CH1]", "[C]"); // no-op
         assertAtomTypeOps("[CH1]", "[Ch0]", new TransformOp(ImplH, 0, 0));
-        assertAtomTypeOps("[CH1]", "[Ch1]"); // no-op
+        assertAtomTypeOps("[Ch1]", "[Ch1]"); // no-op
+        assertAtomTypeOps("[CH1]", "[Ch1]", new TransformOp(ImplH, 0, 1));
         assertAtomTypeOps("[CH1]", "[Ch2]", new TransformOp(ImplH, 0, 2));
         assertAtomTypeOps("[CH1]", "[C;h2,H3]");
-        assertAtomTypeOps("[CH1]", "[C;h3,H3]", new TransformOp(ImplH, 0, 3));
+        assertAtomTypeOps("[CH1]", "[C;h3H3]", new TransformOp(TotalH, 0, 3), new TransformOp(ImplH, 0, 3));
+        assertAtomTypeOps("[CH1]", "[C;h3H4]", new TransformOp(ImplH, 0, 3), new TransformOp(TotalH, 0, 4));
+        assertAtomTypeOps("[CH1]", "[C;h3,H3]"); // conflicting
     }
 
     @Test
     void atomTypeHChanges_2() {
         assertAtomTypeOps("[C;H0,H1]", "[C]"); // no-op
-        assertAtomTypeOps("[C;H0,H1]", "[CH0]", new TransformOp(ImplH, 0, 0));
-        assertAtomTypeOps("[C;H0,H1]", "[CH1]", new TransformOp(ImplH, 0, 1));
-        assertAtomTypeOps("[C;H0,H1]", "[CH2]", new TransformOp(ImplH, 0, 2));
+        assertAtomTypeOps("[C;H0,H1]", "[CH0]", new TransformOp(TotalH, 0, 0));
+        assertAtomTypeOps("[C;H0,H1]", "[CH1]", new TransformOp(TotalH, 0, 1));
+        assertAtomTypeOps("[C;H0,H1]", "[CH2]", new TransformOp(TotalH, 0, 2));
     }
 
     @Test
     void atomTypeHChanges_3() {
         assertAtomTypeOps("[C;H0,H1]", "[C;H0,H1]"); // no-op
         assertAtomTypeOps("[C;H0,H1]", "[C,H0]"); // conflicting
-        assertAtomTypeOps("[C;H0,H1]", "[C;H0]", new TransformOp(ImplH, 0, 0));
-        assertAtomTypeOps("[C;H0,H1]", "[C;H1]", new TransformOp(ImplH, 0, 1));
-        assertAtomTypeOps("[C;H0,H1]", "[C;H2]", new TransformOp(ImplH, 0, 2));
+        assertAtomTypeOps("[C;H0,H1]", "[C;H0]", new TransformOp(TotalH, 0, 0));
+        assertAtomTypeOps("[C;H0,H1]", "[C;H1]", new TransformOp(TotalH, 0, 1));
+        assertAtomTypeOps("[C;H0,H1]", "[C;H2]", new TransformOp(TotalH, 0, 2));
     }
 
     @Test
@@ -1246,6 +1249,61 @@ class SmirksTest {
             count++;
         }
         return count;
+    }
+
+    @Test
+    void setHydrogenCount() throws Exception {
+        assertTransform("[H]C", "[#6:1]>>[#6H0:1]", "[C]");
+        assertTransform("[H]C", "[#6:1]>>[#6H1:1]", "[H][C]");
+        assertTransform("[H]C", "[#6:1]>>[#6H2:1]", "[H][CH]");
+        assertTransform("[H]C", "[#6:1]>>[#6H3:1]", "[H][CH2]");
+        assertTransform("[H]C", "[#6:1]>>[#6H4:1]", "[H]C");
+        assertTransform("[H]C", "[#6:1]>>[#6H5:1]", "[H][CH4]");
+
+        assertTransform("[H]C[H]", "[#6:1]>>[#6H0:1]", "[C]");
+        assertTransform("[H]C[H]", "[#6:1]>>[#6H1:1]", "[C][H]");
+        assertTransform("[H]C[H]", "[#6:1]>>[#6H2:1]", "[H][C][H]");
+        assertTransform("[H]C[H]", "[#6:1]>>[#6H3:1]", "[H][CH][H]");
+        assertTransform("[H]C[H]", "[#6:1]>>[#6H4:1]", "[H]C[H]");
+        assertTransform("[H]C[H]", "[#6:1]>>[#6H5:1]", "[H][CH3][H]");
+
+        assertTransform("[H]C", "[#6:1]>>[#6h0:1]", "[H][C]");
+        assertTransform("[H]C", "[#6:1]>>[#6h1:1]", "[H][CH]");
+        assertTransform("[H]C", "[#6:1]>>[#6h2:1]", "[H][CH2]");
+        assertTransform("[H]C", "[#6:1]>>[#6h3:1]", "[H]C");
+        assertTransform("[H]C", "[#6:1]>>[#6h4:1]", "[H][CH4]");
+        assertTransform("[H]C", "[#6:1]>>[#6h5:1]", "[H][CH5]");
+    }
+
+    @Test
+    void setHydrogenCountIsotope() throws Exception {
+        assertTransform("[2H]C", "[#6:1]>>[#6h0:1]", "[2H][C]");
+        assertTransform("[2H]C", "[#6:1]>>[#6h1:1]", "[2H][CH]");
+        assertTransform("[2H]C", "[#6:1]>>[#6h2:1]", "[2H][CH2]");
+        assertTransform("[2H]C", "[#6:1]>>[#6h3:1]", "[2H]C");
+        assertTransform("[2H]C", "[#6:1]>>[#6h4:1]", "[2H][CH4]");
+        assertTransform("[2H]C", "[#6:1]>>[#6h5:1]", "[2H][CH5]");
+    }
+
+    @Test
+    void setHydrogenCountBridging() throws Exception {
+        // we can not delete bridging hydrogens by setting the hcnt since this affects
+        // the other atoms
+        assertNoMatch("[H]B1([H]B([H]1)[H])", "[#5:1]>>[#5H0:1]");
+        assertNoMatch("[H]B1([H]B([H]1)[H])", "[#5:1]>>[#5H1:1]");
+        assertTransform("[H]B1([H]B([H]1)[H])", "[#5:1]>>[#5H2:1]", "[B]1[H][B][H]1");
+        assertTransform("[H]B1([H]B([H]1)[H])", "[#5:1]>>[#5H3:1]", "[H]B1[H]B([H]1)[H]");
+        assertTransform("[H]B1([H]B([H]1)[H])", "[#5:1]>>[#5H4:1]", "[H][BH]1[H][BH]([H]1)[H]");
+    }
+
+    @Test
+    void defaultValences() throws Exception {
+        assertTransform("C", "[#6:1]>>[#6H3:1]ClO", "C[ClH]O");
+        assertTransform("C", "[#6:1]>>[#6H3:1]Cl=O", "CCl=O");
+        assertTransform("C", "[#6:1]>>[#6H3:1]Cl(=O)=O", "CCl(=O)=O");
+        assertTransform("C", "[#6:1]>>[#6H3:1]S=O", "CS=O");
+        assertTransform("C", "[#6:1]>>[#6H3:1]N(O)O", "CN(O)O");
+        assertTransform("C", "[#6:1]>>[#6H3:1]N(O)=O", "CN(O)=O");
     }
 
     @Disabled
