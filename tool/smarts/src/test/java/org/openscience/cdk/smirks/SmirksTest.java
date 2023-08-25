@@ -1224,6 +1224,30 @@ class SmirksTest {
         Assertions.assertEquals(10, i);
     }
 
+    @Test
+    void testExclusiveApplyLimit() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric | SmiFlavor.UseAromaticSymbols);
+        String smirks = "[#8H1:1]>>[#8H0-:1]";
+        String sucrose = "OC[C@H]1O[C@@](CO)(O[C@H]2O[C@H](CO)[C@@H](O)[C@H](O)[C@H]2O)[C@@H](O)[C@@H]1O";
+        IAtomContainer mol = smipar.parseSmiles(sucrose);
+        Transform tform = Smirks.compile(smirks);
+        tform.apply(mol, 5);
+        String smi = smigen.create(mol);
+        Assertions.assertEquals(5, countOccurrences(smi, "[O-]"));
+    }
+
+    private static int countOccurrences(String smi, String key) {
+        int count = 0;
+        int idx = 0;
+        while ((idx = smi.indexOf(key, idx)) >= 0) {
+            idx += key.length();
+            count++;
+        }
+        return count;
+    }
+
     @Disabled
     @Test
     void testAddOMe() throws Exception {
