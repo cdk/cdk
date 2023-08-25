@@ -202,30 +202,34 @@ public class Transform {
      *
      * @param mol  the molecule to transform
      * @param mode how to transform the molecule
+     * @param limit maximum number of matches
      * @return an iterable which may be empty or contain copies of the molecule
      * transformed
      */
-    public Iterable<IAtomContainer> apply(IAtomContainer mol, Mode mode) {
+    public Iterable<IAtomContainer> apply(IAtomContainer mol, Mode mode, int limit) {
 
         if (status == Status.ERROR)
             return Collections.emptyList();
 
         if (mode == Mode.Exclusive) {
             IAtomContainer cpy = copyOf(mol);
-            if (apply(cpy))
+            if (apply(cpy, limit))
                 return Collections.singletonList(cpy);
             return Collections.emptyList();
         } else {
-            final Mappings mappings;
+            Mappings mappings = pattern.matchAll(mol);
             if (mode == Mode.Unique)
-                mappings = pattern.matchAll(mol).uniqueAtoms();
-            else // if (mode == Mode.All)
-                mappings = pattern.matchAll(mol);
+                mappings = mappings.uniqueAtoms();
+            if (limit != 0)
+                mappings = mappings.limit(limit);
+            // needs to be effectively final
+            final Mappings mappingsCaptured = mappings;
+
             IAtom[] amap = new IAtom[plan.requiredAtomCapacity(mol)];
 
             return () -> new Iterator<IAtomContainer>() {
 
-                private final Iterator<int[]> iter = mappings.iterator();
+                private final Iterator<int[]> iter = mappingsCaptured.iterator();
                 private IAtomContainer next;
 
                 private IAtomContainer loadNext() {
@@ -258,13 +262,27 @@ public class Transform {
     }
 
     /**
+     * Apply the transform to the provided molecule and obtain the results of
+     * applying the transform. The original molecule is <b>NOT</b> modified.
+     *
+     * @param mol  the molecule to transform
+     * @param mode how to transform the molecule
+     * @return an iterable which may be empty or contain copies of the molecule
+     * transformed
+     */
+    public Iterable<IAtomContainer> apply(IAtomContainer mol, Mode mode) {
+        return apply(mol, mode, 0);
+    }
+
+    /**
      * Applies the exclusive transform to the provided molecule modifying it as
      * required.
      *
      * @param mol the molecule to modify
+     * @param limit limit the number of matches
      * @return the molecule was modified or not
      */
-    public boolean apply(IAtomContainer mol) {
+    public boolean apply(IAtomContainer mol, int limit) {
         if (status == Status.ERROR)
             return false;
 
@@ -273,13 +291,28 @@ public class Transform {
         IAtom[] amap = new IAtom[plan.requiredAtomCapacity(mol)];
 
         boolean changed = false;
-        for (int[] match : pattern.matchAll(mol).exclusiveAtoms().toArray()) {
+        Mappings matches = pattern.matchAll(mol).exclusiveAtoms();
+        if (limit != 0)
+            matches = matches.limit(limit);
+        // need toArray() as we are modifying in place
+        for (int[] match : matches.toArray()) {
             permute(amap, match, atoms);
             if (plan.apply(mol, amap))
                 changed = true;
         }
 
         return changed;
+    }
+
+    /**
+     * Applies the exclusive transform to the provided molecule modifying it as
+     * required.
+     *
+     * @param mol the molecule to modify
+     * @return the molecule was modified or not
+     */
+    public boolean apply(IAtomContainer mol) {
+        return apply(mol, 0);
     }
 
     /* Internal Methods */

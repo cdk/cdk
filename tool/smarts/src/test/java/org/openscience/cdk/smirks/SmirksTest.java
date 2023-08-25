@@ -22,6 +22,7 @@ package org.openscience.cdk.smirks;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.Transform;
@@ -34,6 +35,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.openscience.cdk.isomorphism.TransformOp.Type.*;
@@ -1160,6 +1162,45 @@ class SmirksTest {
         assertTransform("c1ccccc1[H]",
                         "[H:1]>>[2H:1]",
                         "c1ccccc1[2H]");
+    }
+
+    @Test
+    @Timeout(value = 100, unit = TimeUnit.MILLISECONDS)
+    void testLazyTransform() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric | SmiFlavor.UseAromaticSymbols);
+
+        String smirks = "[#8H1:1].[#8H1:2].[#8H1:3].[#8H1:4].[#8H1:5].[#8H1:6].[#8H1:7].[#8H1:8]>>[#6H3]-[#6](-[#8H0:5])=O.[#6H3]-[#6](-[#8H0:1])=O.[#6H3]-[#6](-[#8H0:2])=O.[#6H3]-[#6](-[#8H0:6])=O.[#6H3]-[#6](-[#8H0:3])=O.[#6H3]-[#6](-[#8H0:7])=O.[#6H3]-[#6](-[#8H0:4])=O.[#6H3]-[#6](-[#8H0:8])=O";
+        String sucrose = "OC[C@H]1O[C@@](CO)(O[C@H]2O[C@H](CO)[C@@H](O)[C@H](O)[C@H]2O)[C@@H](O)[C@@H]1O";
+        IAtomContainer mol = smipar.parseSmiles(sucrose);
+        Transform tform = Smirks.compile(smirks);
+
+        int i = 0;
+        for (IAtomContainer container : tform.apply(mol, Transform.Mode.All)) {
+            if (++i >= 10)
+                break;
+        }
+        Assertions.assertEquals(10, i);
+    }
+
+    @Test
+    @Timeout(value = 100, unit = TimeUnit.MILLISECONDS)
+    void testLazyTransformLimit() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric | SmiFlavor.UseAromaticSymbols);
+
+        String smirks = "[#8H1:1].[#8H1:2].[#8H1:3].[#8H1:4].[#8H1:5].[#8H1:6].[#8H1:7].[#8H1:8]>>[#6H3]-[#6](-[#8H0:5])=O.[#6H3]-[#6](-[#8H0:1])=O.[#6H3]-[#6](-[#8H0:2])=O.[#6H3]-[#6](-[#8H0:6])=O.[#6H3]-[#6](-[#8H0:3])=O.[#6H3]-[#6](-[#8H0:7])=O.[#6H3]-[#6](-[#8H0:4])=O.[#6H3]-[#6](-[#8H0:8])=O";
+        String sucrose = "OC[C@H]1O[C@@](CO)(O[C@H]2O[C@H](CO)[C@@H](O)[C@H](O)[C@H]2O)[C@@H](O)[C@@H]1O";
+        IAtomContainer mol = smipar.parseSmiles(sucrose);
+        Transform tform = Smirks.compile(smirks);
+
+        int i = 0;
+        for (IAtomContainer container : tform.apply(mol, Transform.Mode.All, 10)) {
+            ++i;
+        }
+        Assertions.assertEquals(10, i);
     }
 
     @Disabled
