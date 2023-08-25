@@ -296,29 +296,32 @@ public class Smirks {
                     case IElement.Wildcard:
                         return 0;
                     case IElement.B:
-                        if (valence < 3) return 3 - valence;
+                        if (valence <= 3) return 3 - valence;
                         break;
                     case IElement.C:
-                        if (valence < 4) return 4 - valence;
+                        if (valence <= 4) return 4 - valence;
                         break;
                     case IElement.N:
                     case IElement.P:
-                        if (valence < 3) return 3 - valence;
-                        else if (valence < 5) return 5 - valence;
+                        if (valence <= 3) return 3 - valence;
+                        else if (valence <= 5) return 5 - valence;
                         break;
                     case IElement.O:
-                        if (valence < 2) return 2 - valence;
+                        if (valence <= 2) return 2 - valence;
                         break;
                     case IElement.S:
-                        if (valence < 2) return 2 - valence;
-                        else if (valence < 4) return 4 - valence;
-                        else if (valence < 6) return 6 - valence;
+                        if (valence <= 2) return 2 - valence;
+                        else if (valence <= 4) return 4 - valence;
+                        else if (valence <= 6) return 6 - valence;
                         break;
                     case IElement.F:
                     case IElement.Cl:
                     case IElement.Br:
                     case IElement.I:
-                        if (valence < 1) return 1 - valence;
+                        if (valence <= 1) return 1 - valence;
+                        else if (valence <= 3) return 3 - valence;
+                        else if (valence <= 5) return 5 - valence;
+                        else if (valence <= 7) return 7 - valence;
                         break;
                     default:
                         throw new IllegalStateException("No default valence for element=" + elem);
@@ -867,8 +870,6 @@ public class Smirks {
             default:
                 if (type == Expr.Type.ISOTOPE && expr.type() == Expr.Type.HAS_UNSPEC_ISOTOPE)
                     return new BinaryExprValue(0);
-                if (type == Expr.Type.TOTAL_H_COUNT && expr.type() == Expr.Type.IMPL_H_COUNT)
-                    return new BinaryExprValue(expr.value());
                 if (expr.type() == type)
                     return new BinaryExprValue(expr.value());
                 return BinaryExprValue.UNDEF;
@@ -979,6 +980,10 @@ public class Smirks {
             ops.add(new TransformOp(TransformOp.Type.Charge, aidx, rgt.val));
         lft = getProperty(before, Expr.Type.TOTAL_H_COUNT);
         rgt = getProperty(after, Expr.Type.TOTAL_H_COUNT);
+        if (changed(lft, rgt))
+            ops.add(new TransformOp(TransformOp.Type.TotalH, aidx, rgt.val));
+        lft = getProperty(before, Expr.Type.IMPL_H_COUNT);
+        rgt = getProperty(after, Expr.Type.IMPL_H_COUNT);
         if (changed(lft, rgt))
             ops.add(new TransformOp(TransformOp.Type.ImplH, aidx, rgt.val));
         else if (before != null && hAdjust != 0) {
