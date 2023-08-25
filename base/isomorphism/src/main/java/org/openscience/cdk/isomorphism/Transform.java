@@ -29,6 +29,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -209,26 +210,51 @@ public class Transform {
         if (status == Status.ERROR)
             return Collections.emptyList();
 
-        // We can make this lazy
-        List<IAtomContainer> results = new ArrayList<>();
-
         if (mode == Mode.Exclusive) {
             IAtomContainer cpy = copyOf(mol);
             if (apply(cpy))
-                results.add(cpy);
+                return Collections.singletonList(cpy);
+            return Collections.emptyList();
         } else {
-            Mappings mappings = pattern.matchAll(mol);
+            final Mappings mappings;
             if (mode == Mode.Unique)
-                mappings = mappings.uniqueAtoms();
+                mappings = pattern.matchAll(mol).uniqueAtoms();
+            else // if (mode == Mode.All)
+                mappings = pattern.matchAll(mol);
             IAtom[] amap = new IAtom[plan.requiredAtomCapacity(mol)];
-            for (int[] match : mappings) {
-                IAtomContainer cpy = copyOf(mol);
-                permute(amap, match, cpy);
-                if (plan.apply(cpy, amap))
-                    results.add(cpy);
-            }
+
+            return () -> new Iterator<IAtomContainer>() {
+
+                private final Iterator<int[]> iter = mappings.iterator();
+                private IAtomContainer next;
+
+                private IAtomContainer loadNext() {
+                    if (next != null)
+                        return next;
+                    while (iter.hasNext()) {
+                        IAtomContainer cpy = copyOf(mol);
+                        permute(amap, iter.next(), cpy);
+                        if (plan.apply(cpy, amap)) {
+                            next = cpy;
+                            break;
+                        }
+                    }
+                    return next;
+                }
+
+                @Override
+                public boolean hasNext() {
+                    return loadNext() != null;
+                }
+
+                @Override
+                public IAtomContainer next() {
+                    IAtomContainer res = loadNext();
+                    next = null;
+                    return res;
+                }
+            };
         }
-        return Collections.unmodifiableList(results);
     }
 
     /**
