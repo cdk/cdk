@@ -115,6 +115,11 @@ public final class TransformOp implements Comparable<TransformOp> {
          */
         ImplH,
         /**
+         * Set the total hydrogen count of an atom.
+         * {@code params: {idx, hcnt}}
+         */
+        TotalH,
+        /**
          * Adjust the total hydrogen count (up or down) of an atom.
          * {@code params: {idx, hdelta}}
          */
@@ -223,6 +228,16 @@ public final class TransformOp implements Comparable<TransformOp> {
                  type == Type.MoveH ||
                  type == Type.PromoteH))
             return new TransformOp(type, a, to, c, d);
+        if (type == Type.Tetrahedral ||
+            type == Type.DbOpposite ||
+            type == Type.DbTogether) {
+            if (b == from)
+                return new TransformOp(type, a, to, c, d);
+            if (c == from)
+                return new TransformOp(type, a, b, to, d);
+            if (d == from)
+                return new TransformOp(type, a, b, c, to);
+        }
         return this;
     }
 
@@ -251,6 +266,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case Aromatic:
             case Charge:
             case ImplH:
+            case TotalH:
             case AdjustH:
                 return a;
             case NewBond:
@@ -279,6 +295,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case Aromatic:
             case Charge:
             case ImplH:
+            case TotalH:
             case AdjustH:
                 return a;
             case NewBond:
@@ -309,6 +326,8 @@ public final class TransformOp implements Comparable<TransformOp> {
             case DeleteAtom:
             case DeleteBond:
                 return 2;
+            case TotalH:
+                return 4;
             case Tetrahedral:
             case DbOpposite:
             case DbTogether:
@@ -368,6 +387,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case Charge:
             case ImplH:
             case AdjustH:
+            case TotalH:
                 return type + "{" + b + "@" + a + "}";
             case DeleteBond:
                 return type + "{" + a + "-" + b + "}";

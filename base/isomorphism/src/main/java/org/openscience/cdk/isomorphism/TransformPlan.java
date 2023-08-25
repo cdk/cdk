@@ -316,6 +316,11 @@ final class TransformPlan {
                 amap[op.a].setImplicitHydrogenCount(op.b);
                 markBondingChanged(amap[op.a]);
                 break;
+            case TotalH:
+                if (!setTotalH(amap[op.a], op.b))
+                    return false;
+                markBondingChanged(amap[op.a]);
+                break;
             case AdjustH:
                 if (!adjustHydrogenCount(mol, amap[op.a], op.b))
                     return false;
@@ -344,6 +349,38 @@ final class TransformPlan {
                 return false;
         }
 
+        return true;
+    }
+
+    private static boolean setTotalH(IAtom atm, int hcnt) {
+        int numExplH = 0;
+        for (IBond bond : atm.bonds()) {
+            IAtom atom = bond.getOther(atm);
+            if (atom.getAtomicNumber() == 1)
+                numExplH++;
+        }
+        if (hcnt >= numExplH) {
+            atm.setImplicitHydrogenCount(hcnt - numExplH);
+        } else {
+            // need to delete some explicit hydrogens
+            atm.setImplicitHydrogenCount(0);
+            List<IAtom> terminalHydrogens = new ArrayList<>(numExplH);
+            for (IBond bond : atm.bonds()) {
+                IAtom nbor = bond.getOther(atm);
+                if (nbor.getAtomicNumber() == 1 &&
+                    nbor.getBondCount() == 1)
+                    terminalHydrogens.add(nbor);
+            }
+            if (numExplH-terminalHydrogens.size() > hcnt)
+                return false;
+            IAtomContainer mol = atm.getContainer();
+            for (IAtom hatm : terminalHydrogens) {
+                mol.removeAtom(hatm); // also deletes
+                numExplH--;
+                if (numExplH == hcnt)
+                    break;
+            }
+        }
         return true;
     }
 
