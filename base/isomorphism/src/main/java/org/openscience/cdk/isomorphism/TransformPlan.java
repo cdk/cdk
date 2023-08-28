@@ -51,7 +51,7 @@ final class TransformPlan {
 
     private static final ILoggingTool LOGGER
             = LoggingToolFactory.createLoggingTool(TransformPlan.class);
-    public static final String SMIRKS_NEWSTEREO = "smirks.newstereo";
+    private static final String SMIRKS_NEWSTEREO = "smirks.newstereo";
 
     private final List<TransformOp> ops;
     private final int maxNewAtomIdx;
