@@ -525,18 +525,28 @@ class SmirksTest {
 
     @Test
     void testKeepStereo_Split1() throws Exception {
-        // TODO stereo should be kept
         assertTransform("C/C=C/C=C/C",
                         "[CD2H:1]-[CD2H:2]>>[C:1]O.[C:2]O",
-                        "CC=CO.C(=CC)O");
+                        "C/C=C/O.C(=C/C)\\O");
+        assertTransform("C/C=C/C=C\\C",
+                        "[CD2H:1]-[CD2H:2]>>[C:1]O.[C:2]O",
+                        "C/C=C/O.C(=C\\C)\\O");
+        assertTransform("C/C=C/C=C\\C",
+                        "[CD2H:1]-[CD2H:2]>>[CH2:1].[CH2:2]",
+                        "CC=C.C=CC");
+        assertTransform("C/C=C/C=C\\C",
+                        "[CD2H:1]-[CD2H:2]>>[C:1][H].[C:2][H]",
+                        "CC=C.C=CC");
+        assertTransform("C/C=C/C=C\\C",
+                        "[CD2H:1]-[CD2H:2]>>[C:1][2H].[C:2][2H]",
+                        "C/C=C/[2H].C(=C\\C)\\[2H]");
     }
 
     @Test
     void testKeepStereo_Split2() throws Exception {
-        // TODO stereo should be kept
         assertTransform("Br[C@H](Cl)[C@H](Cl)Br",
                         "[CD3H:1]-[CD3H:2]>>[C:1]O.[C:2]O",
-                        "BrC(Cl)O.C(Cl)(Br)O");
+                        "Br[C@H](Cl)O.[C@@H](Cl)(Br)O");
     }
 
     // swapping two atoms we should lose stereochemistry because no information
