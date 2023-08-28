@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -256,8 +257,8 @@ public class Smirks {
     }
 
     private static final class SmirksState {
-        Set<String> errors = new HashSet<>();
-        Set<String> warnings = new HashSet<>();
+        Set<String> errors = new LinkedHashSet<>();
+        Set<String> warnings = new LinkedHashSet<>();
 
         QueryAtomContainer query;
         SmartsResult input;
@@ -288,8 +289,9 @@ public class Smirks {
                 int elem = getAtomicNumber(atom).val;
                 Integer valence = getExplValence(query, atom);
                 if (valence == null) {
-                    warnings.add("Created (right hand side) unbracketed " + Elements.ofNumber(elem)
-                                                                                    .symbol() + " atom was connected with bond expressions");
+                    warning("Created (right hand side) unbracketed " + Elements.ofNumber(elem)
+                                                                                    .symbol() + " atom was connected with bond expressions",
+                            atom);
                     return 0;
                 }
                 if (isAromatic(atom).val == 1)
@@ -359,10 +361,14 @@ public class Smirks {
                 return null;
             StringBuilder sb = new StringBuilder();
             for (String e : errors) {
+                if (sb.length() > 0 && sb.charAt(sb.length()-1) != '\n')
+                    sb.append('\n');
                 sb.append(e);
             }
             if (sb.length() == 0) {
                 for (String w : warnings) {
+                    if (sb.length() > 0 && sb.charAt(sb.length()-1) != '\n')
+                        sb.append('\n');
                     sb.append(w);
                 }
             }
@@ -560,11 +566,23 @@ public class Smirks {
                 ops.add(new TransformOp(TransformOp.Type.DeleteBond, begIdx, endIdx, getBondOrder(pair[0]).val));
             } else {
                 if (pair[0] == null && pair[1] != null) {
-                    if (!rgt.ok())
-                        return state.error("Cannot determine bond order for newly created bond", pair[1]);
-                    ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, getBondOrder(pair[1]).val, 0));
-                    if (rgt.val == 5)
-                       ops.add(new TransformOp(TransformOp.Type.AromaticBond, begIdx, endIdx, 1, 0));
+                    if (!rgt.ok()) {
+                        BinaryExprValue begArom = isAromatic(pair[1].getBegin());
+                        BinaryExprValue endArom = isAromatic(pair[1].getEnd());
+                        if (begArom.equals(BinaryExprValue.FALSE) || endArom.equals(BinaryExprValue.FALSE)) {
+                            state.warning("Cannot determine bond order for newly created bond (presumed aliphatic single)", pair[1]);
+                            ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, 1, 0));
+                        } else if (begArom.equals(BinaryExprValue.TRUE) && endArom.equals(BinaryExprValue.TRUE)) {
+                            state.warning("Cannot determine bond order for newly created bond (presumed aromatic single)", pair[1]);
+                            ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, 1, 1));
+                        } else {
+                            return state.error("Cannot determine bond order for newly created bond");
+                        }
+                    } else {
+                        ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, rgt.val, 0));
+                    }
+//                    if (rgt.val == 5)
+//                       ops.add(new TransformOp(TransformOp.Type.AromaticBond, begIdx, endIdx, 1, 0));
                 } else {
                     if (!rgt.ok()) {
                         if (isAnyBond(pair[1]))
