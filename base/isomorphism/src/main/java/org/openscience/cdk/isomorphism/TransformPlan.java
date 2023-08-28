@@ -49,6 +49,7 @@ final class TransformPlan {
 
     private static final ILoggingTool LOGGER
             = LoggingToolFactory.createLoggingTool(TransformPlan.class);
+    public static final String SMIRKS_NEWSTEREO = "smirks.newstereo";
 
     private final List<TransformOp> ops;
     private final int maxNewAtomIdx;
@@ -440,6 +441,12 @@ final class TransformPlan {
                 mol.setStereoElements((List) updatedStereo);
             }
         }
+        List<IStereoElement<?,?>> stereos = mol.getProperty(SMIRKS_NEWSTEREO);
+        if (stereos != null) {
+            for (IStereoElement<?, ?> se : stereos)
+                mol.addStereoElement(se);
+        }
+        mol.removeProperty(SMIRKS_NEWSTEREO);
     }
 
     // this is inefficient, need better AtomContainer API points but OK for now
@@ -463,9 +470,12 @@ final class TransformPlan {
                     carriers[3] = nbor;
             }
         }
-        mol.addStereoElement(new TetrahedralChirality(focus,
-                                                      carriers,
-                                                      ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        List<IStereoElement<?, ?>> newStereo = mol.getProperty(SMIRKS_NEWSTEREO);
+        if (newStereo == null)
+            mol.setProperty(SMIRKS_NEWSTEREO, newStereo = new ArrayList<>());
+        newStereo.add(new TetrahedralChirality(focus,
+                                               carriers,
+                                               ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
     private static void setDbStereo(IAtomContainer mol, IAtom[] amap, TransformOp op) {
@@ -477,14 +487,17 @@ final class TransformPlan {
         IBond endNBor = amap[op.b].getBond(amap[op.d]);
         if (begNbor == null || endNBor == null)
             throw new IllegalStateException();
+        List<IStereoElement<?,?>> newStereo = mol.getProperty(SMIRKS_NEWSTEREO);
+        if (newStereo == null)
+            mol.setProperty(SMIRKS_NEWSTEREO, newStereo = new ArrayList<>());
         if (op.type == TransformOp.Type.DbTogether)
-            mol.addStereoElement(new DoubleBondStereochemistry(dbBond,
-                                                               new IBond[]{begNbor, endNBor},
-                                                               IDoubleBondStereochemistry.Conformation.TOGETHER));
+            newStereo.add(new DoubleBondStereochemistry(dbBond,
+                                                        new IBond[]{begNbor, endNBor},
+                                                        IDoubleBondStereochemistry.Conformation.TOGETHER));
         else {
-            mol.addStereoElement(new DoubleBondStereochemistry(dbBond,
-                                                               new IBond[]{begNbor, endNBor},
-                                                               IDoubleBondStereochemistry.Conformation.OPPOSITE));
+            newStereo.add(new DoubleBondStereochemistry(dbBond,
+                                                        new IBond[]{begNbor, endNBor},
+                                                        IDoubleBondStereochemistry.Conformation.OPPOSITE));
         }
     }
 

@@ -674,7 +674,11 @@ class SmirksTest {
     @Test
     void testSetStereo_1() throws Exception {
         assertTransform("CC=CC",
-                        "[*:1][*:2]=[*:3][*:4]>>[*:1]/[*:2]=[*:3]/[*:4]",
+                        "[*:1]-[*:2]=[*:3]-[*:4]>>[*:1]/[*:2]=[*:3]/[*:4]",
+                        "C/C=C/C");
+        // need to add new Stereo after sorting out old stereo
+        assertTransform("CC=CC",
+                        "[*:1][*:2]=[*:3][*:4]>>[*:1]/-[*:2]=[*:3]/-[*:4]",
                         "C/C=C/C");
     }
 
