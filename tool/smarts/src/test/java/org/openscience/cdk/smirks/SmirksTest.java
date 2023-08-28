@@ -19,6 +19,7 @@
 
 package org.openscience.cdk.smirks;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.openscience.cdk.isomorphism.TransformOp.Type.*;
 
@@ -47,11 +49,11 @@ class SmirksTest {
     private static final SmilesGenerator SMIGEN = new SmilesGenerator(SmiFlavor.Default | SmiFlavor.UseAromaticSymbols);
 
     static void assertTransform(String smiles, String smirks, String expected) throws Exception {
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Exclusive);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Exclusive);
     }
 
     static void assertTransform(String smiles, String smirks, Transform transform, String expected) throws Exception {
-        assertTransform(smiles, smirks, transform, new String[] {expected}, Transform.Mode.Exclusive);
+        assertTransform(smiles, smirks, transform, new String[]{expected}, Transform.Mode.Exclusive);
     }
 
     static void assertTransform(String smiles, String smirks, String[] expected, Transform.Mode mode) throws Exception {
@@ -61,20 +63,26 @@ class SmirksTest {
     static void assertTransform(String smiles, String smirks, Transform transform, String[] expected, Transform.Mode mode) throws Exception {
         IAtomContainer mol = SMIPAR.parseSmiles(smiles);
         assertTrue(Smirks.parse(transform, smirks), transform.message());
-        if (transform.message() != null)
-            System.err.println("Warning: " + transform.message());
+        if (transform.message() != null) {
+            StackTraceElement entry = findEntryPoint();
+            if (entry != null) {
+                System.err.println("Warning: [" + entry + "]\n" + transform.message());
+            } else {
+                System.err.println("Warning: " + transform.message());
+            }
+        }
         Iterable<IAtomContainer> iterable = transform.apply(mol, mode);
 
         List<String> actualSmiles = new ArrayList<>();
-        for (IAtomContainer actual: iterable) {
+        for (IAtomContainer actual : iterable) {
             actualSmiles.add(SMIGEN.create(actual));
         }
 
         assertEquals(expected.length,
                      actualSmiles.size(),
                      "The number of expected transforms " + expected.length +
-                     " and actual transforms " + actualSmiles.size() + " is different:" +
-                     actualSmiles);
+                             " and actual transforms " + actualSmiles.size() + " is different:" +
+                             actualSmiles);
 
         for (int i = 0; i < expected.length; i++) {
             Assertions.assertEquals(
@@ -82,6 +90,20 @@ class SmirksTest {
                     actualSmiles.get(i),
                     "Applying the transform did not generate the expected molecule");
         }
+    }
+
+    private static StackTraceElement findEntryPoint() {
+        StackTraceElement[] elems = Thread.currentThread().getStackTrace();
+        StackTraceElement entry = null;
+        for (StackTraceElement e : elems) {
+            if (e.getMethodName().equals("getStackTrace") ||
+                e.getMethodName().equals("assertTransform") ||
+                e.getMethodName().equals("findEntryPoint"))
+                continue;
+            entry = e;
+            break;
+        }
+        return entry;
     }
 
     static void assertNoMatch(String smiles, String smirks) throws Exception {
@@ -106,7 +128,8 @@ class SmirksTest {
     private void assertWarningMesg(String smirks, String expected) {
         Transform transform = new Transform();
         Smirks.parse(transform, smirks);
-        assertEquals(expected, transform.message());
+        MatcherAssert.assertThat(transform.message(), startsWith(expected));
+        // System.err.println("Warning: " + transform.message());
     }
 
     @Test
@@ -165,9 +188,22 @@ class SmirksTest {
 
     @Test
     void warnOnUnpairedAtomMap() {
+        assertWarningMesg("[C:3]>>[C:3][O:4]", "Added/removed atoms do not need to be mapped");
+    }
+
+    @Test
+    void warnOnWildCardBond() {
         Transform transform = new Transform();
-        assertTrue(Smirks.parse(transform, "[C:3]>>[C:3][O:4]"));
-        assertEquals(transform.message(), "Warning - added/removed atoms do not need to be mapped: [O:4]");
+        assertTrue(Smirks.parse(transform, ">>c1ccccc~1"));
+        assertEquals(transform.message(),
+                     "Cannot determine bond order for newly created bond\n" +
+                     ">>c1ccccc~1\n" +
+                     "         ^\n");
+        assertTrue(Smirks.parse(transform, ">>c~1ccccc1"));
+        assertEquals(transform.message(),
+                     "Cannot determine bond order for newly created bond\n" +
+                     ">>c~1ccccc1\n" +
+                     "   ^\n");
     }
 
     @Test
@@ -591,7 +627,7 @@ class SmirksTest {
     @Test
     void testReplaceH_2() throws Exception {
         assertWarningMesg("[CH1:1][H]>>[*:1]c1ccccc1",
-                          "Not enough context to determine bond order of newly created bond!");
+                          "Cannot determine bond order for newly created bond");
         // * is both aliphatic and aromatic! so we can't know until we run
         // the pattern if the new bond is aromatic or aliphatic, it must be
         // knowable from the pattern
@@ -631,7 +667,7 @@ class SmirksTest {
     @Test
     void testInvertStereo_4() throws Exception {
         assertTransform("C[C@@](Br)(Cl)N",
-                        "[*:1][*@@:2]([*:3])([*:4])[*:5]>>[*:1][*@:2]([*:3])([*:4])[*:5]",
+                        "[*:1][*@@:2]([*:3])([*:4])[*:5]>>[*:1]~[*@:2](~[*:3])(~[*:4])~[*:5]",
                         "C[C@](Br)(Cl)N");
     }
 
@@ -670,48 +706,48 @@ class SmirksTest {
     @Test
     void testBondOrderingSwapping_1() throws Exception {
         assertTransform("[Li+:30].[Al+3:32].[O:28]=[C:27]1[O:31][C:2](=[O:29])[CH:3]2[CH2:26][C:17]" +
-                "(=[C:8]([C:9]3=[CH:10][CH:11]=[C:12]([O:13][CH3:14])[CH:15]=[CH:16]3)[CH2:7][CH:4]12)[C:18]=4" +
-                "[CH:19]=[CH:20][C:21]([O:22][CH3:23])=[CH:24][CH:25]4",
-                 "[Al+3;h0X0:32].[C+0;h1:3]1[C+0;h1:4][C+0;h0X3v4:27](=[O+0;h0:28])[O+0;h0X2v2:31][C+0;h0X3v4:2]1=[O+0;h0:29].[Li+;h0X0:30]>>[CH2+0:2]([OH1+0:29])[CH1+0:3][CH1+0:4][CH2+0:27][O+0;h1:28]",
-                "OCC1CC(=C(CC1CO)C=2C=CC(OC)=CC2)C3=CC=C(OC)C=C3");
+                                "(=[C:8]([C:9]3=[CH:10][CH:11]=[C:12]([O:13][CH3:14])[CH:15]=[CH:16]3)[CH2:7][CH:4]12)[C:18]=4" +
+                                "[CH:19]=[CH:20][C:21]([O:22][CH3:23])=[CH:24][CH:25]4",
+                        "[Al+3;h0X0].[C+0;h1:3]1[C+0;h1:4][C+0;h0X3v4:27](=[O+0;h0:28])[O+0;h0X2v2][C+0;h0X3v4:2]1=[O+0;h0:29].[Li+;h0X0]>>[CH2+0:2]([OH1+0:29])[CH1+0:3][CH1+0:4][CH2+0:27][O+0;h1:28]",
+                        "OCC1CC(=C(CC1CO)C=2C=CC(OC)=CC2)C3=CC=C(OC)C=C3");
     }
 
     @Test
     void testBondOrderingSwapping_2() throws Exception {
         assertTransform("CCC(C)O",
-                "[H][C:1]-[O:2][H]>>[O:2]=[C:1]",
-                "CCC(C)=O");
+                        "[H][C:1]-[O:2][H]>>[O:2]=[C:1]",
+                        "CCC(C)=O");
     }
 
     @Test
     void testReaction_1() throws Exception {
         assertTransform("[O:1]=[C:2]([OH:17])[C:8]=1[NH:16][C:15]=2[CH:14]=[CH:13][CH:12]=[CH:11][C:10]2[CH:9]1.[OH:7][CH2:6][CH2:5][CH2:4][NH2:3]",
-                "[CH0D3v4:2][OH1D1v2:17].[NH2D1v3:3]>>[CH0:2][NH1:3]",
-                "O=C(C=1NC=2C=CC=CC2C1)NCCCO");
+                        "[CH0D3v4:2][OH1D1v2].[NH2D1v3:3]>>[CH0:2][NH1:3]",
+                        "O=C(C=1NC=2C=CC=CC2C1)NCCCO");
     }
 
     @Test
     void testReaction_2() throws Exception {
         assertTransform("[O:1]=[C:2]([OH:17])[C:8]=1[NH:16][C:15]=2[CH:14]=[CH:13][CH:12]=[CH:11][C:10]2[CH:9]1.[OH:7][CH2:6][CH2:5][CH2:4][NH2:3]",
-                "[N+0;h2D1v3:3][C+0;h2:4].[O+0;h0:1]=[C+0;h0D3v4:2]([O+0;h1D1v2:17])[C+0;h0:8]>>[OH0:1]=[CH0:2]([NH1:3][CH2:4])[CH0:8]",
-                "O=C(C=1NC=2C=CC=CC2C1)NCCCO");
+                        "[N+0;h2D1v3:3][C+0;h2:4].[O+0;h0:1]=[C+0;h0D3v4:2]([O+0;h1D1v2])[C+0;h0:8]>>[OH0:1]=[CH0:2]([NH1:3][CH2:4])[CH0:8]",
+                        "O=C(C=1NC=2C=CC=CC2C1)NCCCO");
     }
 
     // uses atom properties h, D and v; should the usage of these yield an exception or a warning message?
     @Test
     void testReaction_3() throws Exception {
         assertTransform("[O:21]=[C:20]([NH:29][NH2:28])[C:22]1=[CH:23][CH:24]=[CH:25][N:26]=[CH:27]1." +
-                        "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]",
-                "[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20].[O+0;h1D1v2:19]>>[O+0;h0D2v2:19][C+0;h0D3v4:20]",
-                "O=C(C1=CC=CN=C1)OCCCCCCCCCCCCCCCC(C)C");
+                                "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]",
+                        "[N+0;h2D1v3][N+0;h1D2v3][C+0;h0D3v4:20].[O+0;h1D1v2:19]>>[O+0;h0D2v2:19][C+0;h0D3v4:20]",
+                        "O=C(C1=CC=CN=C1)OCCCCCCCCCCCCCCCC(C)C");
     }
 
     @Test
     void testReaction_4() throws Exception {
         assertTransform("[O:21]=[C:20]([NH:29][NH2:28])[C:22]1=[CH:23][CH:24]=[CH:25][N:26]=[CH:27]1." +
-                        "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]",
-                "[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20].[O+0;h1D1v2:19]>>[OH0:19][C:20]",
-                "O=C(C1=CC=CN=C1)OCCCCCCCCCCCCCCCC(C)C");
+                                "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]",
+                        "[N+0;h2D1v3][N+0;h1D2v3][C+0;h0D3v4:20].[O+0;h1D1v2:19]>>[OH0:19][C:20]",
+                        "O=C(C1=CC=CN=C1)OCCCCCCCCCCCCCCCC(C)C");
     }
 
     @Test
@@ -729,7 +765,7 @@ class SmirksTest {
     void testReaction_5_SmirksTransform_setPrepareDefaultsToTrue() throws Exception {
         final String smiles = "[O:21]=[C:20]([NH:29][NH2:28])[C:22]1=[CH:23][CH:24]=[CH:25][N:26]=[CH:27]1." +
                 "[OH:19][CH2:18][CH2:17][CH2:16][CH2:15][CH2:14][CH2:13][CH2:12][CH2:11][CH2:10][CH2:9][CH2:8][CH2:7][CH2:6][CH2:5][CH2:4][CH:2]([CH3:1])[CH3:3]";
-        final String smirks = "[C+0;h2:18][O+0;h1D1v2:19].[N+0;h2D1v3:28][N+0;h1D2v3:29][C+0;h0D3v4:20](=[O+0;h0:21])[c+0;h0:22]>>[CH2:18][OH0:19][CH0:20](=[OH0:21])[cH0:22]";
+        final String smirks = "[C+0;h2:18][O+0;h1D1v2:19].[N+0;h2D1v3][N+0;h1D2v3][C+0;h0D3v4:20](=[O+0;h0:21])[c+0;h0:22]>>[CH2:18][OH0:19][CH0:20](=[OH0:21])[cH0:22]";
         final String expected = "O=C(c1cccnc1)OCCCCCCCCCCCCCCCC(C)C";
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
@@ -754,9 +790,9 @@ class SmirksTest {
     @Test
     void testReaction_6() throws Exception {
         assertTransform("[O:17]=[C:6]1[CH2:10][CH2:9][CH2:8]1.[F:15][C:12]([F:14])([F:13])[c:11]1[cH:16][c:2]([Br:1])[cH:3][cH:4][c:5]1[I:18]",
-                "[C+0;h0D3v4:6](=[O+0;h0:17])([C+0;h2:8])[C+0;h2:10].[c+0;h1:4]:[c+0;h0D3v4:5]([I+0;h0D1v1:18]):[c+0;h0:11]" +
-                        ">>[cH1:4]:[cH0:5]([CH0:6]([OH1:17])([CH2:8])[CH2:10]):[cH0:11]",
-                "OC1(CCC1)c2ccc(cc2C(F)(F)F)Br");
+                        "[C+0;h0D3v4:6](=[O+0;h0:17])([C+0;h2:8])[C+0;h2:10].[c+0;h1:4]:[c+0;h0D3v4:5]([I+0;h0D1v1]):[c+0;h0:11]" +
+                                ">>[cH1:4]:[cH0:5]([CH0:6]([OH1:17])([CH2:8])[CH2:10]):[cH0:11]",
+                        "OC1(CCC1)c2ccc(cc2C(F)(F)F)Br");
     }
 
     @Test
@@ -773,7 +809,7 @@ class SmirksTest {
         final String smiles = "N(=O)(=O)CCN(=O)=O";
         final String smirks = "[*:1][N:2](=[O:3])=[O:4]>>[*:1][N+:2](=[O:3])[O-:4]";
         assertTransform(smiles, smirks, "[N+](=O)([O-])CC[N+](=O)[O-]");
-        assertTransform(smiles, smirks, new String[] {"[N+](=O)([O-])CCN(=O)=O", "N(=O)(=O)CC[N+](=O)[O-]"},
+        assertTransform(smiles, smirks, new String[]{"[N+](=O)([O-])CCN(=O)=O", "N(=O)(=O)CC[N+](=O)[O-]"},
                         Transform.Mode.Unique);
         assertTransform(smiles, smirks, new String[]{
                 "[N+](=O)([O-])CCN(=O)=O",
@@ -820,7 +856,7 @@ class SmirksTest {
     void testTwoNonOverlappingMatches() throws Exception {
         final String smiles = "O=CC(C)CCC=O";
         final String smirks = "[C:1]=[O:2]>>[H][C:1][O:2][H]";
-        final String[] expectedArray = new String[] {"OCC(C)CCC=O", "O=CC(C)CCCO"};
+        final String[] expectedArray = new String[]{"OCC(C)CCC=O", "O=CC(C)CCCO"};
         assertTransform(smiles, smirks, "OCC(C)CCCO");
         assertTransform(smiles, smirks, expectedArray, Transform.Mode.Unique);
         assertTransform(smiles, smirks, expectedArray, Transform.Mode.All);
@@ -831,8 +867,8 @@ class SmirksTest {
         final String smiles = "O=CCC=O";
         final String smirks = "[C:3][C:1]=[O:2]>>[C:3][C:1]([H])[O:2][H]";
         assertTransform(smiles, smirks, "OCCC=O");
-        assertTransform(smiles, smirks, new String[] {"OCCC=O", "O=CCCO"}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {"OCCC=O", "O=CCCO"}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{"OCCC=O", "O=CCCO"}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{"OCCC=O", "O=CCCO"}, Transform.Mode.All);
     }
 
     @Test
@@ -841,9 +877,9 @@ class SmirksTest {
         final String smirks = "[C:1]=[C:2][C:3]=[C:4].[C:5]=[C:6]>>[C:1]1[C:2]=[C:3][C:4][C:5][C:6]1";
         final String expected = "C1C=CCCC1";
         assertTransform(smiles, smirks, expected);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
         // there are 4 symmetric matches since there are two paths
-        assertTransform(smiles, smirks, new String[] {expected, expected, expected, expected},
+        assertTransform(smiles, smirks, new String[]{expected, expected, expected, expected},
                         Transform.Mode.All);
     }
 
@@ -851,7 +887,7 @@ class SmirksTest {
     void testAmineNitrogenProtonation_disconnectedGraphs() throws Exception {
         final String smiles = "CC(N)C1CCC(N)CC1.N.CNC(=O)CN";
         final String smirks = "[NH2:2]>>[NH3+:2]";
-        final String[] expected = new String[] {"CC([NH3+])C1CCC(N)CC1.N.CNC(=O)CN", "CC(N)C1CCC([NH3+])CC1.N.CNC(=O)CN", "CC(N)C1CCC(N)CC1.N.CNC(=O)C[NH3+]"};
+        final String[] expected = new String[]{"CC([NH3+])C1CCC(N)CC1.N.CNC(=O)CN", "CC(N)C1CCC([NH3+])CC1.N.CNC(=O)CN", "CC(N)C1CCC(N)CC1.N.CNC(=O)C[NH3+]"};
         assertTransform(smiles, smirks, "CC([NH3+])C1CCC([NH3+])CC1.N.CNC(=O)C[NH3+]");
         assertTransform(smiles, smirks, expected, Transform.Mode.Unique);
         assertTransform(smiles, smirks, expected, Transform.Mode.All);
@@ -863,8 +899,8 @@ class SmirksTest {
         final String smirks = "[*:48][N:42]([H])[H]>>[*:48][N+:42]([H])([H])[H]";
         final String expected = "CNC(=O)C[NH3+]";
         assertTransform(smiles, smirks, "CNC(=O)C[NH3+]");
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.All);
     }
 
     @Test
@@ -873,15 +909,15 @@ class SmirksTest {
         final String smirks = "[CX4:1][NX3:2]([H])[!H:3]>>[*:3][N+:2]([C:1])([H])[H]";
         final String expected = "C[NH2+]C(=O)CN";
         assertTransform(smiles, smirks, expected);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.All);
     }
 
     @Test
     void testPyridineSymmetry() throws Exception {
         final String smiles = "C1=CC=NC=C1";
         final String smirks = "[C:1][H]>>[C:1]O[H]";
-        final String[] expected = new String[] {"C1(=CC=NC=C1)O", "C1=C(C=NC=C1)O", "C1=CC(=NC=C1)O", "C1=CC=NC(=C1)O", "C1=CC=NC=C1O"};
+        final String[] expected = new String[]{"C1(=CC=NC=C1)O", "C1=C(C=NC=C1)O", "C1=CC(=NC=C1)O", "C1=CC=NC(=C1)O", "C1=CC=NC=C1O"};
         assertTransform(smiles, smirks, "C1(=C(C(=NC(=C1O)O)O)O)O");
         assertTransform(smiles, smirks, expected, Transform.Mode.Unique);
         assertTransform(smiles, smirks, expected, Transform.Mode.All);
@@ -890,8 +926,8 @@ class SmirksTest {
     @Test
     void testAmide_separateComponentsMultipleCombinations() throws Exception {
         final String smiles = "NCC=C.NC1=CC=CC=C1.OC(=O)C1CCCOC1";
-        final String smirks = "[O:1]=[C:2][O:3].[NH2:4]>>[O:1]=[C:2][NH:4]";
-        final String[] expected = new String[] {"N(CC=C)C(=O)C1CCCOC1.NC1=CC=CC=C1", "NCC=C.N(C1=CC=CC=C1)C(=O)C2CCCOC2"};
+        final String smirks = "[O:1]=[C:2][O].[NH2:4]>>[O:1]=[C:2][NH:4]";
+        final String[] expected = new String[]{"N(CC=C)C(=O)C1CCCOC1.NC1=CC=CC=C1", "NCC=C.N(C1=CC=CC=C1)C(=O)C2CCCOC2"};
         assertTransform(smiles, smirks, "N(CC=C)C(=O)C1CCCOC1.NC1=CC=CC=C1");
         assertTransform(smiles, smirks, expected, Transform.Mode.Unique);
         assertTransform(smiles, smirks, expected, Transform.Mode.All);
@@ -902,7 +938,7 @@ class SmirksTest {
         // the transformed molecule also matches the LHS of the smirks, assert that there is no infinite loop of matching
         final String smiles = "CCCCN";
         final String smirks = "[C:1][N:2]>>[C:1]C[N:2]";
-        final String[] expected = new String[] {"CCCCCN"};
+        final String[] expected = new String[]{"CCCCCN"};
         assertTransform(smiles, smirks, "CCCCCN");
         assertTransform(smiles, smirks, expected, Transform.Mode.Unique);
         assertTransform(smiles, smirks, expected, Transform.Mode.All);
@@ -913,7 +949,7 @@ class SmirksTest {
         // the transformed molecule also matches the LHS of the smirks, assert that there is no infinite loop of matching
         final String smiles = "OC1NCCC(F)N1";
         final String smirks = "[O:1][C:2][N:3][C:4]>>[OH0:1]1[C:2][NH0:3]([C:4])CC1";
-        final String[] expected = new String[] {"O1C2N(CCC(F)N2)CC1", "O1C2NCCC(F)N2CC1"};
+        final String[] expected = new String[]{"O1C2N(CCC(F)N2)CC1", "O1C2NCCC(F)N2CC1"};
         assertTransform(smiles, smirks, "O1C2N(CCC(F)N2)CC1");
         assertTransform(smiles, smirks, expected, Transform.Mode.Unique);
         assertTransform(smiles, smirks, expected, Transform.Mode.All);
@@ -927,11 +963,11 @@ class SmirksTest {
         final String expected = "CCC(=O)NCC";
 
         assertWarningMesg(smirks,
-                          "Warning - added/removed atoms do not need to be mapped: [Br:2]");
+                          "Added/removed atoms do not need to be mapped");
 
         assertTransform(smiles, smirks, "CCC(=O)NCC");
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.All);
     }
 
     @Test
@@ -941,8 +977,8 @@ class SmirksTest {
         final String expected = "CCC(=O)NCC";
 
         assertTransform(smiles, smirks, "CCC(=O)NCC");
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.All);
     }
 
     @Test
@@ -952,11 +988,11 @@ class SmirksTest {
         final String expected = "CCC(=O)NCC";
 
         assertWarningMesg(smirks,
-                          "Warning - added/removed atoms do not need to be mapped: [*:2]");
+                          "Added/removed atoms do not need to be mapped");
 
         assertTransform(smiles, smirks, "CCC(=O)NCC");
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.All);
     }
 
     // the mapped * atom expression is present on the LHS and the RHS
@@ -968,8 +1004,8 @@ class SmirksTest {
         final String expected = "CCC(=O)NCC.Br";
 
         assertTransform(smiles, smirks, expected);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.All);
     }
 
     @Test
@@ -979,8 +1015,8 @@ class SmirksTest {
         final String expected = "NC1CCCCC1C2CCC(O)C2";
 
         assertTransform(smiles, smirks, expected);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected, expected, expected, expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected, expected, expected, expected}, Transform.Mode.All);
     }
 
     // the carbon atom connected to the hydroxyl group does not have a mapping index
@@ -992,8 +1028,8 @@ class SmirksTest {
         final String expected = "NC1C(CCCC1)C2CCCC2.[OH]";
 
         assertTransform(smiles, smirks, expected);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected, expected, expected, expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected, expected, expected, expected}, Transform.Mode.All);
     }
 
     // adapted from Hartenfeller et al. A Collection of Robust Organic Synthesis Reactions for
@@ -1006,8 +1042,8 @@ class SmirksTest {
         final String expected = "c1cccc2c1[cH](c[nH]2)C=3CCNCC3";
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
-        assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected, "c1cccc2c1[cH](c[nH]2)C3=CCNCC3"}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new SmirksTransform(), new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new SmirksTransform(), new String[]{expected, "c1cccc2c1[cH](c[nH]2)C3=CCNCC3"}, Transform.Mode.All);
     }
 
     // adapted from Hartenfeller et al. A Collection of Robust Organic Synthesis Reactions for
@@ -1019,8 +1055,8 @@ class SmirksTest {
         final String expected = "CC1=NOC(C)=N1";
 
         assertTransform(smiles, smirks, expected);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.All);
     }
 
     // adapted from Hartenfeller et al. A Collection of Robust Organic Synthesis Reactions for
@@ -1032,8 +1068,8 @@ class SmirksTest {
         final String expected = "CC1NC(C(C)S1)C";
 
         assertTransform(smiles, smirks, expected);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.All);
     }
 
     // adapted from Hartenfeller et al. A Collection of Robust Organic Synthesis Reactions for
@@ -1045,8 +1081,8 @@ class SmirksTest {
         final String expected = "c1cc2OC(C)Nc2cc1";
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
-        assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new SmirksTransform(), new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new SmirksTransform(), new String[]{expected}, Transform.Mode.All);
     }
 
     // adapted from Hartenfeller et al. A Collection of Robust Organic Synthesis Reactions for
@@ -1058,8 +1094,8 @@ class SmirksTest {
         final String expected = "CC1Sc2ccccc2N1";
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
-        assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new SmirksTransform(), new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new SmirksTransform(), new String[]{expected}, Transform.Mode.All);
     }
 
     // adapted from Hartenfeller et al. A Collection of Robust Organic Synthesis Reactions for
@@ -1071,14 +1107,14 @@ class SmirksTest {
         final String expected = "c1c2c(CCNC2C)ccc1";
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
-        assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected}, Transform.Mode.Unique);
-        assertTransform(smiles, smirks, new SmirksTransform(), new String[] {expected, "c1cc2CCNC(C)c2cc1"}, Transform.Mode.All);
+        assertTransform(smiles, smirks, new SmirksTransform(), new String[]{expected}, Transform.Mode.Unique);
+        assertTransform(smiles, smirks, new SmirksTransform(), new String[]{expected, "c1cc2CCNC(C)c2cc1"}, Transform.Mode.All);
     }
 
     @Test
     void testAnyRingBondOnRightHandSide() {
         final String smirks = "[c;r6:1](-[SH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[CH1;R0:5](=[OD1])>>[c:3]2:[c:1]:[s:2]:[c:5](-[#6:6]):[n:4]@2";
-        assertWarningMesg(smirks, "Ignored query bond, consider using '~'");
+        assertWarningMesg(smirks, "Ignored query bond (implicit: -,:), use '~' to suppress this warning");
     }
 
     @Test
@@ -1089,10 +1125,10 @@ class SmirksTest {
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
         assertTransform(smiles, smirks, new SmirksTransform(),
-                        new String[] {expected},
+                        new String[]{expected},
                         Transform.Mode.Unique);
         assertTransform(smiles, smirks, new SmirksTransform(),
-                        new String[] {
+                        new String[]{
                                 "CCC=O.C(c1ccccc1)[P+](c2ccccc2)(C)C",
                                 "CCC[P+](c1ccccc1)(C)C.C(c1ccccc1)=O"},
                         Transform.Mode.All);
@@ -1106,10 +1142,10 @@ class SmirksTest {
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
         assertTransform(smiles, smirks, new SmirksTransform(),
-                        new String[] {expected},
+                        new String[]{expected},
                         Transform.Mode.Unique);
         assertTransform(smiles, smirks, new SmirksTransform(),
-                        new String[] {
+                        new String[]{
                                 "CCC=O.C(c1ccccc1)[P+](c2ccccc2)(c3ccccc3)c4ccccc4",
                                 "CCC[P+](c1ccccc1)(c2ccccc2)c3ccccc3.C(c1ccccc1)=O"},
                         Transform.Mode.All);
@@ -1304,6 +1340,14 @@ class SmirksTest {
         assertTransform("C", "[#6:1]>>[#6H3:1]S=O", "CS=O");
         assertTransform("C", "[#6:1]>>[#6H3:1]N(O)O", "CN(O)O");
         assertTransform("C", "[#6:1]>>[#6H3:1]N(O)=O", "CN(O)=O");
+    }
+
+    @Test
+    void testAssertWarningMesgs() throws Exception {
+        assertWarningMesg(">>C:C",
+                          "Aromatic bond ':' connected to an aliphatic atom");
+        assertWarningMesg("[*:1][*:2]>>[*:1][*:2]",
+                          "Ignored query bond (implicit: -,:), use '~' to suppress this warning");
     }
 
     @Disabled
