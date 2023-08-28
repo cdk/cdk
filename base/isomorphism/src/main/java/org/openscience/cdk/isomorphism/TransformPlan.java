@@ -38,8 +38,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -94,7 +96,11 @@ final class TransformPlan {
      * @return if the operations were applied successfully or not
      */
     boolean apply(IAtomContainer mol, IAtom[] amap) {
-        prepare(mol, amap);
+        List<IStereoElement<?,?>> stereo = new ArrayList<>();
+        for (IStereoElement<?,?> se : mol.stereoElements())
+            stereo.add(se);
+        Map<IAtom,IBond[]> bonding = new HashMap<>();
+        prepare(mol, amap, bonding);
         for (int i = 0; i < ops.size(); i++) {
             TransformOp op = ops.get(i);
             if (!apply(mol, amap, op)) {
@@ -102,7 +108,7 @@ final class TransformPlan {
                 return false;
             }
         }
-        resyncStereo(mol);
+        resyncStereo(mol, stereo, bonding);
         return true;
     }
 
@@ -125,13 +131,33 @@ final class TransformPlan {
         atom.setFlag(CDKConstants.REACTIVE_CENTER, false);
     }
 
-    private void prepare(IAtomContainer mol, IAtom[] amap) {
+    private void prepare(IAtomContainer mol, IAtom[] amap, Map<IAtom,IBond[]> bonding) {
         for (IAtom atom : mol.atoms())
             resetFlags(atom);
         for (int i = 1; i < amap.length; i++) {
             if (amap[i] != null)
                 amap[i].setFlag(CDKConstants.MAPPED, true);
         }
+        if (mol.stereoElements().iterator().hasNext()) {
+            for (IStereoElement<?, ?> se : mol.stereoElements()) {
+                if (se.getConfigClass() == IStereoElement.Tetrahedral) {
+                    IAtom focus = (IAtom) se.getFocus();
+                    bonding.put(focus, getBondArray(focus));
+                } else if (se.getConfigClass() == IStereoElement.CisTrans) {
+                    IBond focus = (IBond) se.getFocus();
+                    bonding.put(focus.getBegin(), getBondArray(focus.getBegin()));
+                    bonding.put(focus.getEnd(), getBondArray(focus.getEnd()));
+                }
+            }
+        }
+    }
+
+    private static IBond[] getBondArray(IAtom focus) {
+        IBond[] nbors = new IBond[focus.getBondCount()];
+        int i = 0;
+        for (IBond bond : focus.bonds())
+            nbors[i++] = bond;
+        return nbors;
     }
 
     private void optimize(List<TransformOp> ops) {
@@ -290,6 +316,7 @@ final class TransformPlan {
                 break;
             case DeleteAtom:
                 // mark and sweep would be more optimal but require API changes
+                // Important: can remove stereochemistry
                 mol.removeAtom(amap[op.a]);
                 markBondingChanged(amap[op.a]);
                 break;
@@ -391,28 +418,111 @@ final class TransformPlan {
      *
      * @param mol the molecule to synchronised
      */
-    private static void resyncStereo(IAtomContainer mol) {
-        if (mol.stereoElements().iterator().hasNext()) {
-            boolean removed = false;
+    private static void resyncStereo(IAtomContainer mol, List<IStereoElement<?,?>> stereo, Map<IAtom,IBond[]> bonding) {
+        if (!stereo.isEmpty()) {
+            boolean modified = false;
             List<IStereoElement<?, ?>> updatedStereo = new ArrayList<>();
-            for (IStereoElement<?, ?> se : mol.stereoElements()) {
+            for (IStereoElement<?, ?> se : stereo) {
                 switch (se.getConfigClass()) {
                     case IStereoElement.Tetrahedral:
                     case IStereoElement.SquarePlanar:
                     case IStereoElement.TrigonalBipyramidal:
                     case IStereoElement.Octahedral:
-                        if (!bondingChanged(se.getFocus()))
+                        if (!bondingChanged(se.getFocus())) {
                             updatedStereo.add(se);
-                        else
-                            removed = true;
+                        } else {
+                            modified = true;
+                            boolean okay = true;
+                            @SuppressWarnings("unchecked")
+                            IStereoElement<IAtom, IAtom> atomStereo = (IStereoElement<IAtom, IAtom>)se;
+                            IAtom focus = atomStereo.getFocus();
+                            Set<IAtom> oldNbors = new HashSet<>(atomStereo.getCarriers());
+                            Set<IAtom> newNbors = new HashSet<>();
+                            for (IBond bond : focus.bonds()) {
+                                if (bond.isAromatic())
+                                    okay = false;
+                                IAtom nbor = bond.getOther(focus);
+                                if (!oldNbors.remove(nbor))
+                                    newNbors.add(nbor);
+                            }
+                            if (oldNbors.size() > newNbors.size())
+                                oldNbors.remove(focus);
+                            if (okay &&
+                                (oldNbors.size() == 1 && newNbors.size() == 1)) {
+                                Map<IChemObject,IChemObject> mapping = new HashMap<>();
+                                mapping.put(focus, focus);
+                                for (IAtom old : atomStereo.getCarriers())
+                                    mapping.put(old, old);
+                                mapping.put(oldNbors.iterator().next(),
+                                            newNbors.iterator().next());
+                                List<IAtom> newLigands = new ArrayList<>();
+                                for (IAtom atom : atomStereo.getCarriers())
+                                    newLigands.add((IAtom)mapping.get(atom));
+                                updatedStereo.add(new TetrahedralChirality(focus,
+                                                                           newLigands.toArray(new IAtom[0]),
+                                                                           se.getConfig()));
+                            }
+                        }
                         break;
                     case IStereoElement.Atropisomeric:
+                        if (!bondingChanged(((IBond) se.getFocus()).getBegin()) &&
+                                !bondingChanged(((IBond) se.getFocus()).getEnd())) {
+                            updatedStereo.add(se);
+                        } else {
+                            modified = true;
+                        }
+                        break;
                     case IStereoElement.CisTrans:
                         if (!bondingChanged(((IBond) se.getFocus()).getBegin()) &&
-                                !bondingChanged(((IBond) se.getFocus()).getEnd()))
+                            !bondingChanged(((IBond) se.getFocus()).getEnd())) {
                             updatedStereo.add(se);
-                        else
-                            removed = true;
+                        } else {
+                            modified = true;
+                            @SuppressWarnings("unchecked")
+                            IStereoElement<IBond,IBond> bondStereo = (IStereoElement<IBond,IBond>)se;
+                            IAtom beg = ((IBond) se.getFocus()).getBegin();
+                            IAtom end = ((IBond) se.getFocus()).getEnd();
+                            boolean okay = bondStereo.getFocus().getOrder() == IBond.Order.DOUBLE &&
+                                           !bondStereo.getFocus().isAromatic() &&
+                                           beg.getBond(end) == bondStereo.getFocus();
+                            Set<IBond> oldBegNbors = new HashSet<>(Arrays.asList(bonding.get(beg)));
+                            Set<IBond> oldEndNbors = new HashSet<>(Arrays.asList(bonding.get(end)));
+                            Set<IBond> newBegNbors = new HashSet<>();
+                            Set<IBond> newEndNbors = new HashSet<>();
+                            Map<IChemObject,IChemObject> mapping = new HashMap<>();
+                            for (IBond bond : beg.bonds()) {
+                                if (bond == bondStereo.getFocus())
+                                    continue;
+                                if (!oldBegNbors.remove(bond))
+                                    newBegNbors.add(bond);
+                                else
+                                    mapping.put(bond, bond);
+                                if (bond.getOrder() != IBond.Order.SINGLE || bond.isAromatic())
+                                    okay = false;
+                            }
+                            for (IBond bond : end.bonds()) {
+                                if (bond == bondStereo.getFocus())
+                                    continue;
+                                if (!oldEndNbors.remove(bond))
+                                    newEndNbors.add(bond);
+                                else
+                                    mapping.put(bond, bond);
+                                if (bond.getOrder() != IBond.Order.SINGLE || bond.isAromatic())
+                                    okay = false;
+                            }
+                            oldBegNbors.remove(bondStereo.getFocus());
+                            oldEndNbors.remove(bondStereo.getFocus());
+                            if (oldBegNbors.size() == 1 && newBegNbors.size() == 1)
+                                mapping.put(oldBegNbors.iterator().next(), newBegNbors.iterator().next());
+                            else if (oldBegNbors.size() != 0 || newBegNbors.size() != 0)
+                                okay = false;
+                            if (oldEndNbors.size() == 1 && newEndNbors.size() == 1)
+                                mapping.put(oldEndNbors.iterator().next(), newEndNbors.iterator().next());
+                            else if (oldEndNbors.size() != 0 || newEndNbors.size() != 0)
+                                okay = false;
+                            if (okay)
+                                updatedStereo.add(se.map(mapping));
+                        }
                         break;
                     case IStereoElement.Allenal: {
                         IAtom[] ends = ExtendedTetrahedral.findTerminalAtoms(mol, (IAtom) se.getFocus());
@@ -420,24 +530,24 @@ final class TransformPlan {
                                 !bondingChanged(ends[0]) && !bondingChanged(ends[1]))
                             updatedStereo.add(se);
                         else
-                            removed = true;
+                            modified = true;
                     }
                     break;
                     case IStereoElement.Cumulene: {
                         IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(mol, (IBond) se.getFocus());
                         if (!bondingChanged(((IBond) se.getFocus()).getBegin()) &&
-                                !bondingChanged(((IBond) se.getFocus()).getEnd()) &&
+                            !bondingChanged(((IBond) se.getFocus()).getEnd()) &&
                                 ends != null && !bondingChanged(ends[0]) && !bondingChanged(ends[1]))
                             updatedStereo.add(se);
                         else
-                            removed = true;
+                            modified = true;
                     }
                     break;
                     default:
                         throw new IllegalStateException("Unhandled stereochemistry type");
                 }
             }
-            if (removed) {
+            if (modified) {
                 mol.setStereoElements((List) updatedStereo);
             }
         }
