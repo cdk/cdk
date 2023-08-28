@@ -38,6 +38,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.openscience.cdk.isomorphism.TransformOp.Type.*;
@@ -128,7 +130,7 @@ class SmirksTest {
     private void assertWarningMesg(String smirks, String expected) {
         Transform transform = new Transform();
         Smirks.parse(transform, smirks);
-        MatcherAssert.assertThat(transform.message(), startsWith(expected));
+        assertThat(transform.message(), startsWith(expected));
         // System.err.println("Warning: " + transform.message());
     }
 
@@ -195,15 +197,15 @@ class SmirksTest {
     void warnOnWildCardBond() {
         Transform transform = new Transform();
         assertTrue(Smirks.parse(transform, ">>c1ccccc~1"));
-        assertEquals(transform.message(),
-                     "Cannot determine bond order for newly created bond\n" +
-                     ">>c1ccccc~1\n" +
-                     "         ^\n");
+        assertThat(transform.message(),
+                   containsString("Cannot determine bond order for newly created bond (presumed aromatic single)\n" +
+                                  ">>c1ccccc~1\n" +
+                                  "         ^\n"));
         assertTrue(Smirks.parse(transform, ">>c~1ccccc1"));
-        assertEquals(transform.message(),
-                     "Cannot determine bond order for newly created bond\n" +
-                     ">>c~1ccccc1\n" +
-                     "   ^\n");
+        assertThat(transform.message(),
+                   containsString("Cannot determine bond order for newly created bond (presumed aromatic single)\n" +
+                                  ">>c~1ccccc1\n" +
+                                  "   ^\n"));
     }
 
     @Test
