@@ -205,6 +205,26 @@ public final class TransformOp implements Comparable<TransformOp> {
         this(type, a, 0, 0);
     }
 
+    public Type type() {
+        return type;
+    }
+
+    public int argA() {
+        return a;
+    }
+
+    public int argB() {
+        return b;
+    }
+
+    public int argC() {
+        return c;
+    }
+
+    public int argD() {
+        return c;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
