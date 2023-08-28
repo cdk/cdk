@@ -224,7 +224,7 @@ public class Smirks {
         if (!result.ok())
             return transform.setError(result.getMessage());
 
-        SmirksState state = new SmirksState(query);
+        SmirksState state = new SmirksState(query, result);
 
         // based on the atom mapping pair up the atoms/bonds from the left side
         // of the reaction to the right side
@@ -260,6 +260,7 @@ public class Smirks {
         Set<String> warnings = new HashSet<>();
 
         QueryAtomContainer query;
+        SmartsResult input;
 
         int numAtoms = 1; // start numbering from one to we line up with atom maps.
         int numPairs = 0;
@@ -272,8 +273,9 @@ public class Smirks {
         int[] hcount;
         int[] hmin;
 
-        SmirksState(QueryAtomContainer query) {
+        SmirksState(QueryAtomContainer query, SmartsResult input) {
             this.query = query;
+            this.input = input;
             this.hcount = new int[query.getAtomCount() + 1];
             this.hmin = new int[query.getAtomCount() + 1];
         }
@@ -329,9 +331,14 @@ public class Smirks {
             }
             return 0;
         }
-
         boolean error(String s) {
             errors.add(s);
+            return false;
+        }
+
+
+        boolean error(String s, IBond bond) {
+            errors.add(s + "\n" + input.displayErrorLocation(input.getBondLocation(query.indexOf(bond))));
             return false;
         }
 
@@ -339,17 +346,23 @@ public class Smirks {
             warnings.add(s);
         }
 
+        void warning(String s, IBond bond) {
+            warnings.add(s + "\n" + input.displayErrorLocation(input.getBondLocation(query.indexOf(bond))));
+        }
+
+        void warning(String s, IAtom atom) {
+            warnings.add(s + "\n" + input.displayErrorLocation(input.getAtomLocation(query.indexOf(atom))));
+        }
+
         String getMessage() {
             if (errors.isEmpty() && warnings.isEmpty())
                 return null;
             StringBuilder sb = new StringBuilder();
             for (String e : errors) {
-                if (sb.length() != 0) sb.append(", ");
                 sb.append(e);
             }
             if (sb.length() == 0) {
                 for (String w : warnings) {
-                    if (sb.length() != 0) sb.append(", ");
                     sb.append(w);
                 }
             }
@@ -489,7 +502,7 @@ public class Smirks {
 
     private static void checkAtomMap(SmirksState state, IAtom atom) {
         if (getMapIdx(atom) != 0)
-            state.warning("Warning - added/removed atoms do not need to be mapped: " + generateAtom(atom));
+            state.warning("Added/removed atoms do not need to be mapped", atom);
     }
 
     private static boolean duplicateAtomMap(SmirksState state, IAtom atom1, IAtom atom2) {
@@ -537,7 +550,7 @@ public class Smirks {
                     BinaryExprValue endArom = isAromatic(pair[1].getEnd());
                     if (begArom.equals(BinaryExprValue.FALSE) ||
                         endArom.equals(BinaryExprValue.FALSE))
-                        state.warning("Aromatic bond ':' connected to an aliphatic atom");
+                        state.warning("Aromatic bond ':' connected to an aliphatic atom", pair[1]);
                 }
             }
 
@@ -548,15 +561,15 @@ public class Smirks {
             } else {
                 if (pair[0] == null && pair[1] != null) {
                     if (!rgt.ok())
-                        return state.error("Not enough context to determine bond order of newly created bond!");
+                        return state.error("Cannot determine bond order for newly created bond", pair[1]);
                     ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, getBondOrder(pair[1]).val, 0));
                     if (rgt.val == 5)
-                        ops.add(new TransformOp(TransformOp.Type.AromaticBond, begIdx, endIdx, 1, 0));
+                       ops.add(new TransformOp(TransformOp.Type.AromaticBond, begIdx, endIdx, 1, 0));
                 } else {
                     if (!rgt.ok()) {
                         if (isAnyBond(pair[1]))
                             continue;
-                        state.warnings.add("Ignored query bond, consider using '~'");
+                        state.warning("Ignored query bond (implicit: -,:), use '~' to suppress this warning", pair[1]);
                     } else {
                         if (changed(lft, rgt)) {
                             ops.add(new TransformOp(TransformOp.Type.BondOrder,
@@ -827,6 +840,12 @@ public class Smirks {
             case ALIPHATIC_ORDER:
             case SINGLE_OR_DOUBLE:
                 return BinaryExprValue.FALSE;
+            case TOTAL_H_COUNT:
+            case IMPL_H_COUNT:
+                // sane aromaticity: hcnt > 1 => Aliphatic
+                if (expr.value() > 1)
+                    return BinaryExprValue.FALSE;
+                return BinaryExprValue.UNDEF;
             case AND:
                 return isAromatic(expr.left()).and(isAromatic(expr.right()));
             case OR:
@@ -940,6 +959,7 @@ public class Smirks {
             case SINGLE_OR_DOUBLE:
                 return BinaryExprValue.CONFLICTING;
             case ALIPHATIC_ORDER:
+            case ORDER: // from '/' or '\' ?
                 return new BinaryExprValue(expr.value());
             case AND:
                 return getBondOrder(expr.left(), aromContext).and(getBondOrder(expr.right(), aromContext));
