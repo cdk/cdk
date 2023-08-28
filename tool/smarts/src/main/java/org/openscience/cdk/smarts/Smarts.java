@@ -1584,8 +1584,12 @@ public final class Smarts {
                 bond.setExpression(null);
                 bondPos = aoffset[mol.getAtomCount()-1];
             }
-            bond.setAtom(prev, 0);
+
+            if (mol.getBondCount() == boffset.length)
+                boffset = Arrays.copyOf(boffset, boffset.length + (boffset.length>>>1));
             boffset[mol.getBondCount()] = bondPos;
+
+            bond.setAtom(prev, 0);
             rings[rnum] = addBond(prev, bond);
             numRingOpens++;
             bond = null;
@@ -1606,6 +1610,9 @@ public final class Smarts {
                     return false;
                 }
                 this.bond = null;
+
+                if (mol.getBondCount() == boffset.length)
+                    boffset = Arrays.copyOf(boffset, boffset.length + (boffset.length>>>1));
                 boffset[mol.indexOf(bond)] = bondPos;
             } else if (openExpr == null) {
                 ((QueryBond) BondRef.deref(bond)).setExpression(new Expr(SINGLE_OR_AROMATIC));
@@ -1831,9 +1838,9 @@ public final class Smarts {
                     Expr expr = ((QueryBond) BondRef.deref(bond)).getExpression();
                     expr = strip(expr, Expr.Type.STEREOCHEMISTRY);
                     if (expr == null)
-                        expr = new Expr(SINGLE_OR_AROMATIC);
+                        expr = new Expr(ORDER, 1);
                     else
-                        expr.and(new Expr(SINGLE_OR_AROMATIC));
+                        expr.and(new Expr(ORDER, 1));
                     ((QueryBond) bond).setExpression(expr);
                 }
             }
@@ -3095,7 +3102,7 @@ public final class Smarts {
                         case BSTEREO_UPU: bdir = BSTEREO_DNU; break;
                     }
                 }
-                if (bexpr.isEmpty())
+                if (bexpr.isEmpty() || bexpr.equals("-"))
                     bexpr = bdir;
                 else
                     bexpr += ';' + bdir;
