@@ -19,7 +19,6 @@
 
 package org.openscience.cdk.smirks;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -35,14 +34,27 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.openscience.cdk.isomorphism.TransformOp.Type.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.openscience.cdk.isomorphism.TransformOp.Type.AdjustH;
+import static org.openscience.cdk.isomorphism.TransformOp.Type.Charge;
+import static org.openscience.cdk.isomorphism.TransformOp.Type.Element;
+import static org.openscience.cdk.isomorphism.TransformOp.Type.ImplH;
+import static org.openscience.cdk.isomorphism.TransformOp.Type.Mass;
+import static org.openscience.cdk.isomorphism.TransformOp.Type.TotalH;
 
 class SmirksTest {
 
@@ -129,8 +141,15 @@ class SmirksTest {
 
     private void assertWarningMesg(String smirks, String expected) {
         Transform transform = new Transform();
-        Smirks.parse(transform, smirks);
+        Smirks.parse(transform, smirks, SmirksOption.PEDANTIC);
         assertThat(transform.message(), startsWith(expected));
+        // System.err.println("Warning: " + transform.message());
+    }
+
+    private void assertNoWarningMesg(String smirks) {
+        Transform transform = new Transform();
+        Smirks.parse(transform, smirks, SmirksOption.PEDANTIC);
+        assertNull(transform.message());
         // System.err.println("Warning: " + transform.message());
     }
 
@@ -211,9 +230,9 @@ class SmirksTest {
     @Test
     void atomTypeHChanges_1() {
         assertAtomTypeOps("[CH1]", "[C]"); // no-op
-        assertAtomTypeOps("[CH1]", "[CH0]", new TransformOp(TotalH, 0, 0));
+        assertAtomTypeOps("[CH1]", "[CH0]", new TransformOp(AdjustH, 0, -1));
         assertAtomTypeOps("[CH1]", "[CH1]"); // no-op
-        assertAtomTypeOps("[CH1]", "[CH2]", new TransformOp(TotalH, 0, 2));
+        assertAtomTypeOps("[CH1]", "[CH2]", new TransformOp(AdjustH, 0, 1));
     }
 
     @Test
@@ -224,8 +243,8 @@ class SmirksTest {
         assertAtomTypeOps("[CH1]", "[Ch1]", new TransformOp(ImplH, 0, 1));
         assertAtomTypeOps("[CH1]", "[Ch2]", new TransformOp(ImplH, 0, 2));
         assertAtomTypeOps("[CH1]", "[C;h2,H3]");
-        assertAtomTypeOps("[CH1]", "[C;h3H3]", new TransformOp(TotalH, 0, 3), new TransformOp(ImplH, 0, 3));
-        assertAtomTypeOps("[CH1]", "[C;h3H4]", new TransformOp(ImplH, 0, 3), new TransformOp(TotalH, 0, 4));
+        assertAtomTypeOps("[CH1]", "[C;h3H3]", new TransformOp(AdjustH, 0, 2), new TransformOp(ImplH, 0, 3));
+        assertAtomTypeOps("[CH1]", "[C;h3H4]", new TransformOp(ImplH, 0, 3), new TransformOp(AdjustH, 0, 3));
         assertAtomTypeOps("[CH1]", "[C;h3,H3]"); // conflicting
     }
 
@@ -1364,6 +1383,16 @@ class SmirksTest {
                           "Aromatic bond ':' connected to an aliphatic atom");
         assertWarningMesg("[*:1][*:2]>>[*:1][*:2]",
                           "Ignored query bond (implicit: -,:), use '~' to suppress this warning");
+    }
+
+    @Test
+    void testValenceWarning() {
+        assertWarningMesg("[C:1]>>[C:1]O",
+                          "Atom valence change detected");
+        assertNoWarningMesg("[C:1][H]>>[C:1]O");
+        assertWarningMesg("[C:1][H]>>[C:1]=O",
+                          "Atom valence change detected");
+        assertNoWarningMesg("[CH4:1]>>[CH3:1]O");
     }
 
     @Disabled

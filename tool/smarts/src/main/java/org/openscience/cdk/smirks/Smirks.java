@@ -19,6 +19,7 @@
 
 package org.openscience.cdk.smirks;
 
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.config.Elements;
@@ -40,6 +41,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -207,12 +209,14 @@ public class Smirks {
      *
      * @param transform the transform to load into
      * @param smirks    the SMIRKS string
+     * @param options   options for parsing a SMIRKS
      * @return the SMIRKS interpretable or not (there was an error)
      * @see org.openscience.cdk.isomorphism.Transform
      * @see org.openscience.cdk.smirks.SmirksTransform
      */
     public static boolean parse(Transform transform,
-                                String smirks) {
+                                String smirks,
+                                Set<SmirksOption> options) {
 
         if (transform == null)
             throw new NullPointerException("No transform provided");
@@ -225,7 +229,7 @@ public class Smirks {
         if (!result.ok())
             return transform.setError(result.getMessage());
 
-        SmirksState state = new SmirksState(query, result);
+        SmirksState state = new SmirksState(query, result, options);
 
         // based on the atom mapping pair up the atoms/bonds from the left side
         // of the reaction to the right side
@@ -243,6 +247,8 @@ public class Smirks {
         determineBondChanges(ops, state);
         determineStereoChanges(ops, state);
 
+        checkValence(state, ops);
+
         // build the query pattern based on the left-hand side of the reaction
         prepareQuery(state);
 
@@ -256,7 +262,89 @@ public class Smirks {
         return true;
     }
 
+    private static Set<SmirksOption> wrap(SmirksOption[] options) {
+        Set<SmirksOption> optset = options.length > 1
+                ? EnumSet.of(options[0], options)
+                : options.length > 0 ? EnumSet.of(options[0])
+                : EnumSet.noneOf(SmirksOption.class);
+        return optset;
+    }
+
+    /**
+     * Parse a SMIRKS string into a transform.
+     *
+     * <pre>
+     * {@code
+     * Transform transform = new SmirksTransform();
+     * if (!Smirks.parse(transform, "[*:1][H]>>[*:1]Cl")) {
+     *   System.err.println("BAD SMIRKS: " + transform.message());
+     *   return;
+     * }
+     *
+     * IAtomContainer mol = ...;
+     * transform.apply(mol);
+     * }
+     * </pre>
+     * <p>
+     * If the SMIRKS could not be interpreted or was invalid this method returns
+     * <b>false</b> and sets the transform into an error state meaning calling
+     * {@code apply()} will do nothing. The {@link Transform#message()} may
+     * still be set if there were warnings generated when interpreting the
+     * SMIRKS.
+     *
+     * @param transform the transform to load into
+     * @param smirks    the SMIRKS string
+     * @param options   options for parsing a SMIRKS
+     * @return the SMIRKS interpretable or not (there was an error)
+     * @see org.openscience.cdk.isomorphism.Transform
+     * @see org.openscience.cdk.smirks.SmirksTransform
+     */
+    public static boolean parse(Transform transform,
+                                String smirks,
+                                SmirksOption ... options) {
+        Set<SmirksOption> optset = wrap(options);
+        return parse(transform,
+                     smirks,
+                     optset);
+    }
+
+    /**
+     * Parse a SMIRKS string into a transform.
+     *
+     * <pre>
+     * {@code
+     * Transform transform = new SmirksTransform();
+     * if (!Smirks.parse(transform, "[*:1][H]>>[*:1]Cl")) {
+     *   System.err.println("BAD SMIRKS: " + transform.message());
+     *   return;
+     * }
+     *
+     * IAtomContainer mol = ...;
+     * transform.apply(mol);
+     * }
+     * </pre>
+     * <p>
+     * If the SMIRKS could not be interpreted or was invalid this method returns
+     * <b>false</b> and sets the transform into an error state meaning calling
+     * {@code apply()} will do nothing. The {@link Transform#message()} may
+     * still be set if there were warnings generated when interpreting the
+     * SMIRKS.
+     *
+     * @param transform the transform to load into
+     * @param smirks    the SMIRKS string
+     * @return the SMIRKS interpretable or not (there was an error)
+     * @see org.openscience.cdk.isomorphism.Transform
+     * @see org.openscience.cdk.smirks.SmirksTransform
+     */
+    public static boolean parse(Transform transform,
+                                String smirks) {
+        return parse(transform,
+                     smirks,
+                     EnumSet.noneOf(SmirksOption.class));
+    }
+
     private static final class SmirksState {
+        Set<SmirksOption> opts = EnumSet.noneOf(SmirksOption.class);
         Set<String> errors = new LinkedHashSet<>();
         Set<String> warnings = new LinkedHashSet<>();
 
@@ -274,11 +362,14 @@ public class Smirks {
         int[] hcount;
         int[] hmin;
 
-        SmirksState(QueryAtomContainer query, SmartsResult input) {
+        SmirksState(QueryAtomContainer query,
+                    SmartsResult input,
+                    Set<SmirksOption> options) {
             this.query = query;
             this.input = input;
             this.hcount = new int[query.getAtomCount() + 1];
             this.hmin = new int[query.getAtomCount() + 1];
+            this.opts = options;
         }
 
         private int calcImplH(IAtom atom) {
@@ -507,6 +598,7 @@ public class Smirks {
     }
 
     private static void checkAtomMap(SmirksState state, IAtom atom) {
+        if (state.opts.contains(SmirksOption.PEDANTIC))
         if (getMapIdx(atom) != 0)
             state.warning("Added/removed atoms do not need to be mapped", atom);
     }
@@ -698,6 +790,70 @@ public class Smirks {
             state.query.removeAtom(atom);
     }
 
+    private static void update(Map<Integer,Integer> map, int key, int adj) {
+        Integer v = map.get(key);
+        if (v == null)
+            v = 0;
+        map.put(key, v + adj);
+    }
+
+    private static void checkValence(SmirksState state, List<TransformOp> ops) {
+        if (!state.opts.contains(SmirksOption.PEDANTIC))
+            return;
+        Map<Integer,Integer> valence   = new HashMap<>();
+        Set<Integer>         chargeMod = new HashSet<>();
+        Map<Integer,Integer> hcnts     = new HashMap<>();
+        for (TransformOp op : ops) {
+            switch (op.type()) {
+                // ToDo: BondOrder needs to no the order before hand
+                // ToDo: ImplH handling?
+                case DeleteBond:
+                    update(valence, op.argA(), -op.argC());
+                    update(valence, op.argB(), -op.argC());
+                    break;
+                case NewBond:
+                    update(valence, op.argA(), op.argC());
+                    update(valence, op.argB(), op.argC());
+                    break;
+                case PromoteH:
+                    update(valence, op.argA(), -1);
+                    break;
+                case MoveH:
+                    update(valence, op.argA(), -1);
+                    update(valence, op.argB(), +1);
+                    break;
+                case AdjustH:
+                    update(valence, op.argA(), op.argB());
+                    break;
+                case Charge:
+                    chargeMod.add(op.argA());
+                    break;
+                case TotalH:
+                    hcnts.put(op.argA(), op.argB());
+                    break;
+            }
+        }
+        for (IAtom[] pair : state.atomPairs) {
+            if (pair[0] != null && pair[1] != null) {
+                Integer id   = state.atomidx.get(pair[0]);
+                if (chargeMod.contains(id))
+                    continue;
+                Integer diff = valence.get(id);
+                if (diff != null && diff != 0) {
+                    Integer hcnt = hcnts.get(id);
+                    if (hcnt != null) {
+                        state.warning("Possible valence change detected, add " +
+                                              "H" + (hcnt + diff) + " to suppress",
+                                      pair[0]);
+                    } else {
+                        state.warning("Atom valence change detected, " +
+                                              "change=" + String.format("%+d", diff),
+                                      pair[0]);
+                    }
+                }
+            }
+        }
+    }
 
     private static Integer getExplValence(QueryAtomContainer query, IAtom atom) {
         int count = 0;
@@ -1018,8 +1174,13 @@ public class Smirks {
             ops.add(new TransformOp(TransformOp.Type.Charge, aidx, rgt.val));
         lft = getProperty(before, Expr.Type.TOTAL_H_COUNT);
         rgt = getProperty(after, Expr.Type.TOTAL_H_COUNT);
-        if (changed(lft, rgt))
-            ops.add(new TransformOp(TransformOp.Type.TotalH, aidx, rgt.val));
+        if (changed(lft, rgt)) {
+            // adjust it if possible so we can have simpler valence error checking
+            if (lft.ok() && rgt.ok())
+                ops.add(new TransformOp(TransformOp.Type.AdjustH, aidx, rgt.val - lft.val));
+            else
+                ops.add(new TransformOp(TransformOp.Type.TotalH, aidx, rgt.val));
+        }
         lft = getProperty(before, Expr.Type.IMPL_H_COUNT);
         rgt = getProperty(after, Expr.Type.IMPL_H_COUNT);
         if (changed(lft, rgt))
