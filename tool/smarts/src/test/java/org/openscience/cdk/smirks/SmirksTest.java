@@ -1270,6 +1270,23 @@ class SmirksTest {
         assertTransform("[Pb]",
                         "[Pb:1]>>[Au:1]",
                         "[Au]");
+        assertTransform("[Pb]",
+                        "[Pb:1]>>[Au:1]",
+                        "[Pb]",
+                        SmirksOption.IGNORE_SET_ELEM);
+    }
+
+    @Test
+    void shouldHaveOneSingleBond() throws Exception {
+        assertTransform("CC",
+                        "([CH3:1].[CH3:2])>>[cH1:1]cccc[cH1:2]",
+                        "c1-ccccc1");
+        assertNoMatch("CC",
+                      "([CH3:1].[CH3:2])>>[cH1:1]1cccc[cH1:2]1");
+        assertTransform("CC",
+                        "([CH3:1].[CH3:2])>>[cH1:1]1cccc[cH1:2]1",
+                        "c1ccccc1",
+                        SmirksOption.OVERWRITE_BOND);
     }
 
     @Test
@@ -1338,8 +1355,12 @@ class SmirksTest {
     @Test
     void setHydrogenCount() throws Exception {
         assertTransform("[H]C", "[#6:1]>>[#6H0:1]", "[C]");
+        assertTransform("[H]C", "[#6:1]>>[#6H0:1]", "[H]C", SmirksOption.IGNORE_TOTAL_H0);
+        assertTransform("[H]C", "[#6:1]>>[#6H1:1]", "[H][C]");
         assertTransform("[H]C", "[#6:1]>>[#6H1:1]", "[H][C]");
         assertTransform("[H]C", "[#6:1]>>[#6H2:1]", "[H][CH]");
+        assertTransform("[H]C", "[#6:1]>>[#6H2:1]", "[H][CH]", SmirksOption.IGNORE_TOTAL_H0);
+        assertTransform("[H]C", "[#6:1]>>[#6H2:1]", "[H]C", SmirksOption.IGNORE_TOTAL_H);
         assertTransform("[H]C", "[#6:1]>>[#6H3:1]", "[H][CH2]");
         assertTransform("[H]C", "[#6:1]>>[#6H4:1]", "[H]C");
         assertTransform("[H]C", "[#6:1]>>[#6H5:1]", "[H][CH4]");
