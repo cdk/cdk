@@ -81,7 +81,7 @@ public final class TransformOp implements Comparable<TransformOp> {
         DeleteAtom,
         /**
          * Set the bond order.
-         * {@code params: {idx1, idx2, order}}
+         * {@code params: {idx1, idx2, order, old-order}}
          */
         BondOrder,
         /**
@@ -222,7 +222,7 @@ public final class TransformOp implements Comparable<TransformOp> {
     }
 
     public int argD() {
-        return c;
+        return d;
     }
 
     @Override
