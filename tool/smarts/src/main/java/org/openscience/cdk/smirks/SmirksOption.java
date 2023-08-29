@@ -19,9 +19,20 @@
 
 package org.openscience.cdk.smirks;
 
+import java.util.EnumSet;
+import java.util.Set;
+
+import static java.util.Collections.unmodifiableSet;
+
 public enum SmirksOption {
     /**
      * Additional check and warnings when parsing SMIRKS.
      */
-    PEDANTIC
+    PEDANTIC,
+    /**
+     * Run the reaction backwards (retro synthesis), the right-hand-side is now
+     * matched as a query. Note that not all SMIRKS are reversible and good
+     * form is usually write separate forward/backwards transformations.
+     */
+    REVERSE
 }
