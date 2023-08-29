@@ -804,8 +804,8 @@ public class Smirks {
     }
 
     private static void checkValence(SmirksState state, List<TransformOp> ops) {
-//        if (!state.opts.contains(SmirksOption.PEDANTIC))
-//            return;
+        if (!state.opts.contains(SmirksOption.PEDANTIC))
+            return;
         Map<Integer,Integer> valence  = new HashMap<>();
         Set<Integer>         unknown  = new HashSet<>();
         Map<Integer,Integer> hcnts    = new HashMap<>();
