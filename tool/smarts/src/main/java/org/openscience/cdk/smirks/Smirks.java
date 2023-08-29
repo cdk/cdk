@@ -19,7 +19,6 @@
 
 package org.openscience.cdk.smirks;
 
-import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.config.Elements;
@@ -41,6 +40,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -229,6 +229,12 @@ public class Smirks {
         if (!result.ok())
             return transform.setError(result.getMessage());
 
+        // when we reverse a reaction reactants <=> products swap
+        if (options.contains(SmirksOption.REVERSE)) {
+            for (IAtom atom : query.atoms())
+                swapRoles(atom);
+        }
+
         SmirksState state = new SmirksState(query, result, options);
 
         // based on the atom mapping pair up the atoms/bonds from the left side
@@ -260,6 +266,20 @@ public class Smirks {
         transform.init(DfPattern.findSubstructure(query), ops, state.getMessage());
 
         return true;
+    }
+
+    private static void swapRoles(IAtom atom) {
+        ReactionRole role = atom.getProperty(CDKConstants.REACTION_ROLE);
+        if (role == null)
+            return;
+        switch (role) {
+            case Reactant:
+                atom.setProperty(CDKConstants.REACTION_ROLE, ReactionRole.Product);
+                break;
+            case Product:
+                atom.setProperty(CDKConstants.REACTION_ROLE, ReactionRole.Reactant);
+                break;
+        }
     }
 
     private static Set<SmirksOption> wrap(SmirksOption[] options) {
@@ -468,10 +488,21 @@ public class Smirks {
     }
 
     private static boolean collectAtomPairs(SmirksState state) {
+
         for (IAtom atom : state.query.atoms()) {
             ReactionRole role = atom.getProperty(CDKConstants.REACTION_ROLE);
             if (role == null)
                 return state.error("SMIRKS was not a reaction!");
+        }
+
+        List<IAtom> atomsInOrder = new ArrayList<>();
+        for (IAtom atom : state.query.atoms())
+            atomsInOrder.add(atom);
+        atomsInOrder.sort(Comparator.comparingInt(a -> a.getProperty(CDKConstants.REACTION_ROLE,
+                                                                     ReactionRole.class).ordinal()));
+
+        for (IAtom atom : atomsInOrder) {
+            ReactionRole role = atom.getProperty(CDKConstants.REACTION_ROLE);
             boolean maybeImplH = isSuppressibleH(state.query, atom);
 
             int mapidx = getMapIdx(atom);

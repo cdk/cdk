@@ -62,21 +62,26 @@ class SmirksTest {
     private static final SmilesParser SMIPAR = new SmilesParser(BUILDER);
     private static final SmilesGenerator SMIGEN = new SmilesGenerator(SmiFlavor.Default | SmiFlavor.UseAromaticSymbols);
 
-    static void assertTransform(String smiles, String smirks, String expected) throws Exception {
-        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Exclusive);
+    static void assertTransform(String smiles, String smirks, String expected, SmirksOption ... options) throws Exception {
+        assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Exclusive, options);
     }
 
-    static void assertTransform(String smiles, String smirks, Transform transform, String expected) throws Exception {
-        assertTransform(smiles, smirks, transform, new String[]{expected}, Transform.Mode.Exclusive);
+    static void assertTransform(String smiles, String smirks, Transform transform, String expected, SmirksOption ... options) throws Exception {
+        assertTransform(smiles, smirks, transform, new String[]{expected}, Transform.Mode.Exclusive, options);
     }
 
-    static void assertTransform(String smiles, String smirks, String[] expected, Transform.Mode mode) throws Exception {
-        assertTransform(smiles, smirks, new Transform(), expected, mode);
+    static void assertTransform(String smiles, String smirks, String[] expected, Transform.Mode mode, SmirksOption ... options) throws Exception {
+        assertTransform(smiles, smirks, new Transform(), expected, mode, options);
     }
 
-    static void assertTransform(String smiles, String smirks, Transform transform, String[] expected, Transform.Mode mode) throws Exception {
+    static void assertTransform(String smiles,
+                                String smirks,
+                                Transform transform,
+                                String[] expected,
+                                Transform.Mode mode,
+                                SmirksOption ... options) throws Exception {
         IAtomContainer mol = SMIPAR.parseSmiles(smiles);
-        assertTrue(Smirks.parse(transform, smirks), transform.message());
+        assertTrue(Smirks.parse(transform, smirks, options), transform.message());
         if (transform.message() != null) {
             StackTraceElement entry = findEntryPoint();
             if (entry != null) {
@@ -308,6 +313,14 @@ class SmirksTest {
         assertTransform("c1ccccc1N(=O)=O",
                         "[*:1][N:2](=[O:3])=[O:4]>>[*:1][N+:2](=[O:3])[O-:4]",
                         "c1ccccc1[N+](=O)[O-]");
+    }
+
+    @Test
+    void shouldReverseNitroNorm() throws Exception {
+        assertTransform("c1ccccc1[N+]([O-])=O",
+                        "[*:1][N+0:2](=[O:3])=[O+0:4]>>[*:1][N+:2](=[O:3])[O-:4]",
+                        "c1ccccc1N(=O)=O",
+                        SmirksOption.REVERSE);
     }
 
     @Test
