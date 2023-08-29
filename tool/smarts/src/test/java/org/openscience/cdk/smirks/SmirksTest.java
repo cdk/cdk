@@ -1388,10 +1388,10 @@ class SmirksTest {
     @Test
     void testValenceWarning() {
         assertWarningMesg("[C:1]>>[C:1]O",
-                          "Atom valence change detected");
+                          "Possible valence change");
         assertNoWarningMesg("[C:1][H]>>[C:1]O");
         assertWarningMesg("[C:1][H]>>[C:1]=O",
-                          "Atom valence change detected");
+                          "Possible valence change");
         assertNoWarningMesg("[CH4:1]>>[CH3:1]O");
     }
 
