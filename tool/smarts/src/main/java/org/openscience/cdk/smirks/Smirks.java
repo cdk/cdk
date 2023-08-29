@@ -598,7 +598,8 @@ public class Smirks {
     }
 
     private static void checkAtomMap(SmirksState state, IAtom atom) {
-        if (state.opts.contains(SmirksOption.PEDANTIC))
+        if (!state.opts.contains(SmirksOption.PEDANTIC))
+            return;
         if (getMapIdx(atom) != 0)
             state.warning("Added/removed atoms do not need to be mapped", atom);
     }
