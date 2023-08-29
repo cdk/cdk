@@ -63,7 +63,15 @@ public interface IReaction extends IChemObject, Iterable<IAtomContainer> {
         RETRO_SYNTHETIC,
         /** Reaction shows interconversion between resonance forms. Usually
          *  denoted by a double-headed arrow. */
-        RESONANCE
+        RESONANCE,
+        /**
+         * Reaction equilibrium is not known to be fully on reactant/product
+         * or in equilibrium state.
+         * Also used to represent a "net reaction" composed of several
+         * elementary steps.
+         * Often denoted by a "=" sign
+         */
+        UNDIRECTED
     }
 
     /**
