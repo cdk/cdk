@@ -227,7 +227,7 @@ final class CDKToBeam {
         // use the mass number to specify isotope?
         if (SmiFlavor.isSet(flavour, SmiFlavor.AtomicMass | SmiFlavor.AtomicMassStrict)) {
             Integer massNumber = a.getMassNumber();
-            if (massNumber != null) {
+            if (massNumber != null && massNumber != 0) {
                 ab.isotope(massNumber);
             }
         }
