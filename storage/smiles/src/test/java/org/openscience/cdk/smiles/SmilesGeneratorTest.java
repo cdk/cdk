@@ -1343,6 +1343,14 @@ class SmilesGeneratorTest extends CDKTestCase {
         Assertions.assertEquals("*/C=C/C>> |$R$|", new SmilesGenerator(SmiFlavor.Default).create(rxn));
     }
 
+    @Test
+    void shouldNotWrite0() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol    = smipar.parseSmiles("[0C]");
+        String res = new SmilesGenerator(SmiFlavor.Default).create(mol);
+        Assertions.assertEquals("[C]", res);
+    }
+
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
                                                                                 container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
