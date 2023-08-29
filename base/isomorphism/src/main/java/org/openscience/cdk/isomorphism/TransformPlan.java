@@ -304,14 +304,29 @@ final class TransformPlan {
                     return false;
                 break;
             case NewBond:
-                if (amap[op.a].getBond(amap[op.b]) != null)
-                    return false;
                 if (amap[op.a] == null || amap[op.b] == null)
                     throw new IllegalStateException(op + " atoms={null=" + (amap[op.a] == null) + ",null=" + (amap[op.b] == null) + "}");
+                if (amap[op.a].getBond(amap[op.b]) != null)
+                    return false;
                 mol.addBond(amap[op.a].getIndex(), amap[op.b].getIndex(),
                             BOND_ORDERS[op.c]);
-                if (op.c == 5 && amap[op.a].isAromatic() && amap[op.b].isAromatic())
-                    amap[op.a].getBond(amap[op.b]).setIsAromatic(true);
+                if (op.c == 5)
+                    mol.getBond(mol.getBondCount()-1).setIsAromatic(true);
+                markBondingChanged(amap[op.a], amap[op.b]);
+                break;
+            case OverwriteBond:
+                if (amap[op.a] == null || amap[op.b] == null)
+                    throw new IllegalStateException(op + " atoms={null=" + (amap[op.a] == null) + ",null=" + (amap[op.b] == null) + "}");
+                IBond tmpBond = amap[op.a].getBond(amap[op.b]);
+                if (tmpBond == null) {
+                    mol.addBond(amap[op.a].getIndex(), amap[op.b].getIndex(),
+                                BOND_ORDERS[op.c]);
+                    tmpBond = mol.getBond(mol.getBondCount()-1);
+                } else {
+                    tmpBond.setOrder(BOND_ORDERS[op.c]);
+                }
+                if (op.c == 5)
+                    tmpBond.setIsAromatic(true);
                 markBondingChanged(amap[op.a], amap[op.b]);
                 break;
             case DeleteAtom:

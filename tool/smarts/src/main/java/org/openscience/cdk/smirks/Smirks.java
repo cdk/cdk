@@ -39,8 +39,10 @@ import org.openscience.cdk.smarts.SmartsResult;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -235,6 +237,10 @@ public class Smirks {
                 swapRoles(atom);
         }
 
+        // treat '*.* as (*).(*)'
+        if (options.contains(SmirksOption.DIFF_PART))
+            markParts(query);
+
         SmirksState state = new SmirksState(query, result, options);
 
         // based on the atom mapping pair up the atoms/bonds from the left side
@@ -258,6 +264,15 @@ public class Smirks {
         // build the query pattern based on the left-hand side of the reaction
         prepareQuery(state);
 
+        if (state.opts.contains(SmirksOption.OVERWRITE_BOND)) {
+            for (int i = 0; i < ops.size(); i++) {
+                TransformOp op = ops.get(i);
+                if (op.type() == TransformOp.Type.NewBond) {
+                    ops.set(i, new TransformOp(TransformOp.Type.OverwriteBond, op));
+                }
+            }
+        }
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(Smarts.generate(query));
             LOGGER.debug(ops);
@@ -266,6 +281,35 @@ public class Smirks {
         transform.init(DfPattern.findSubstructure(query), ops, state.getMessage());
 
         return true;
+    }
+
+    private static void markParts(QueryAtomContainer query) {
+        int groupId = 0;
+        for (IAtom atom : query.atoms()) {
+            Integer group = atom.getProperty(CDKConstants.REACTION_GROUP);
+            if (group != null && group != 0)
+                groupId = Math.max(group, groupId);
+        }
+        Deque<IAtom> queue = new ArrayDeque<>();
+        for (IAtom atom : query.atoms()) {
+            Integer group = atom.getProperty(CDKConstants.REACTION_GROUP);
+            if (group == null || group == 0) {
+                groupId++;
+                queue.add(atom);
+                int count = 0;
+                while (!queue.isEmpty()) {
+                    IAtom a = queue.poll();
+                    ++count;
+                    a.setProperty(CDKConstants.REACTION_GROUP, groupId);
+                    List<IAtom> connectedAtomsList = query.getConnectedAtomsList(a);
+                    for (IAtom nbor : connectedAtomsList) {
+                        Integer nborGroup = nbor.getProperty(CDKConstants.REACTION_GROUP);
+                        if (nborGroup == null || nborGroup == 0)
+                            queue.add(nbor);
+                    }
+                }
+            }
+        }
     }
 
     private static void swapRoles(IAtom atom) {
@@ -650,9 +694,17 @@ public class Smirks {
                 ops.add(new TransformOp(TransformOp.Type.DeleteAtom, aidx));
             } else if (pair[0] == null && pair[1] != null) {
                 checkAtomMap(state, pair[1]);
-                ops.addAll(atomTypeOps(state.atomidx.get(pair[1]), null, pair[1], state.hcount[aidx]));
+                ops.addAll(atomTypeOps(state.atomidx.get(pair[1]),
+                                       null,
+                                       pair[1],
+                                       state.hcount[aidx],
+                                       state));
             } else {
-                ops.addAll(atomTypeOps(aidx, pair[0], pair[1], state.hcount[aidx]));
+                ops.addAll(atomTypeOps(aidx,
+                                       pair[0],
+                                       pair[1],
+                                       state.hcount[aidx],
+                                       state));
             }
         }
     }
@@ -1191,20 +1243,30 @@ public class Smirks {
         }
     }
 
+    // for testing
     static List<TransformOp> atomTypeOps(IAtom before, IAtom after) {
-        return atomTypeOps(0, before, after, 0);
+        return atomTypeOps(0, before, after, 0, new SmirksState(new QueryAtomContainer(null),
+                                                                null,
+                                                                EnumSet.noneOf(SmirksOption.class)));
     }
 
-
-    private static List<TransformOp> atomTypeOps(int aidx, IAtom before, IAtom after, int hAdjust) {
+    private static List<TransformOp> atomTypeOps(int aidx,
+                                                 IAtom before,
+                                                 IAtom after,
+                                                 int hAdjust,
+                                                 SmirksState state) {
         List<TransformOp> ops = new ArrayList<>(4);
         BinaryExprValue lft = getAtomicNumber(before);
         BinaryExprValue rgt = getAtomicNumber(after);
         if (before == null) {
             ops.add(new TransformOp(TransformOp.Type.NewAtom, aidx, rgt.val, hAdjust, isAromatic(after).val));
         } else {
-            if (changed(lft, rgt))
-                ops.add(new TransformOp(TransformOp.Type.Element, aidx, rgt.val));
+            if (changed(lft, rgt)) {
+                if (state.opts.contains(SmirksOption.IGNORE_SET_ELEM)) {
+                    state.warning("Ignored attempt to change the element type", after);
+                } else
+                    ops.add(new TransformOp(TransformOp.Type.Element, aidx, rgt.val));
+            }
             // make aromatic if non-wildcard
             if (rgt.ok()) {
                 lft = isAromatic(before);
@@ -1217,22 +1279,38 @@ public class Smirks {
         rgt = getProperty(after, Expr.Type.FORMAL_CHARGE);
         if (changed(lft, rgt))
             ops.add(new TransformOp(TransformOp.Type.Charge, aidx, rgt.val));
-        lft = getProperty(before, Expr.Type.TOTAL_H_COUNT);
-        rgt = getProperty(after, Expr.Type.TOTAL_H_COUNT);
-        if (changed(lft, rgt)) {
-            // adjust it if possible so we can have simpler valence error checking
-            if (lft.ok() && rgt.ok())
-                ops.add(new TransformOp(TransformOp.Type.AdjustH, aidx, rgt.val - lft.val));
-            else
-                ops.add(new TransformOp(TransformOp.Type.TotalH, aidx, rgt.val));
-        }
         lft = getProperty(before, Expr.Type.IMPL_H_COUNT);
         rgt = getProperty(after, Expr.Type.IMPL_H_COUNT);
-        if (changed(lft, rgt))
-            ops.add(new TransformOp(TransformOp.Type.ImplH, aidx, rgt.val));
+        if (changed(lft, rgt)) {
+            if (state.opts.contains(SmirksOption.IGNORE_IMPL_H)) {
+                if (state.opts.contains(SmirksOption.PEDANTIC))
+                    state.warning("Ignored attempt to set the implicit hydrogen count", after);
+            } else {
+                ops.add(new TransformOp(TransformOp.Type.ImplH, aidx, rgt.val));
+            }
+        }
         else if (before != null && hAdjust != 0) {
             ops.add(new TransformOp(TransformOp.Type.AdjustH, aidx, hAdjust));
         }
+
+        // Can total H count override any adjustment?
+
+        lft = getProperty(before, Expr.Type.TOTAL_H_COUNT);
+        rgt = getProperty(after, Expr.Type.TOTAL_H_COUNT);
+        if (changed(lft, rgt)) {
+            if (state.opts.contains(SmirksOption.IGNORE_TOTAL_H) ||
+                (state.opts.contains(SmirksOption.IGNORE_TOTAL_H0) && rgt.equals(BinaryExprValue.ZERO))) {
+                if (state.opts.contains(SmirksOption.PEDANTIC))
+                    state.warning("Ignored attempt to set the total hydrogen count", after);
+            } else {
+                // adjust it if possible so we can have simpler valence error checking
+                if (lft.ok() && rgt.ok())
+                    ops.add(new TransformOp(TransformOp.Type.AdjustH, aidx, rgt.val - lft.val));
+                else
+                    ops.add(new TransformOp(TransformOp.Type.TotalH, aidx, rgt.val));
+            }
+        }
+
         lft = getProperty(before, Expr.Type.ISOTOPE);
         rgt = getProperty(after, Expr.Type.ISOTOPE);
         if (changed(lft, rgt))

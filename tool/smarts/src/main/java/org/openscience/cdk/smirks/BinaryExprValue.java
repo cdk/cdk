@@ -33,6 +33,8 @@ import java.util.Objects;
  */
 final class BinaryExprValue {
 
+    public static final BinaryExprValue ZERO = new BinaryExprValue(0, Type.Integer);
+
     enum Type {
         Integer,
         Boolean,

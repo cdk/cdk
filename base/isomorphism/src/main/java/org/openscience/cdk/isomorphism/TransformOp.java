@@ -65,10 +65,17 @@ public final class TransformOp implements Comparable<TransformOp> {
          */
         NewAtom,
         /**
-         * Create a new bond with between the two atom indexes.
+         * Create a new bond with between the two atom indexes. If the bond
+         * already exists the pattern will fail to apply.
          * {@code params: {idx1, idx2, order}}
          */
         NewBond,
+        /**
+         * Create a new bond with between the two atom indexes.
+         * If the bond already exists the order is updated.
+         * {@code params: {idx1, idx2, order}}
+         */
+        OverwriteBond,
         /**
          * Delete a bond.
          * {@code params: {idx1, idx2}}
@@ -205,6 +212,10 @@ public final class TransformOp implements Comparable<TransformOp> {
         this(type, a, 0, 0);
     }
 
+    public TransformOp(Type type, TransformOp op) {
+        this(type, op.a, op.b, op.c, op.d);
+    }
+
     public Type type() {
         return type;
     }
@@ -243,6 +254,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             return new TransformOp(type, to, b, c, d);
         if (b == from &&
                 (type == Type.NewBond ||
+                 type == Type.OverwriteBond ||
                  type == Type.DeleteBond ||
                  type == Type.BondOrder ||
                  type == Type.MoveH ||
@@ -264,6 +276,7 @@ public final class TransformOp implements Comparable<TransformOp> {
     int getOtherIdx(int x) {
         switch (type) {
             case NewBond:
+            case OverwriteBond:
             case DeleteBond:
             case BondOrder:
             case MoveH:
@@ -290,6 +303,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case AdjustH:
                 return a;
             case NewBond:
+            case OverwriteBond:
             case DeleteBond:
             case BondOrder:
             case AromaticBond:
@@ -319,6 +333,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case AdjustH:
                 return a;
             case NewBond:
+            case OverwriteBond:
             case DeleteBond:
             case BondOrder:
             case AromaticBond:
@@ -338,6 +353,7 @@ public final class TransformOp implements Comparable<TransformOp> {
         switch (type) {
             case NewAtom:
             case NewBond:
+            case OverwriteBond:
             case AdjustH:
                 return 0;
             case MoveH:
@@ -412,6 +428,7 @@ public final class TransformOp implements Comparable<TransformOp> {
             case DeleteBond:
                 return type + "{" + a + "-" + b + "}";
             case NewBond:
+            case OverwriteBond:
             case BondOrder:
             case AromaticBond:
                 switch (c) {
