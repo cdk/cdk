@@ -682,8 +682,13 @@ public class Smirks {
                         state.warning("Ignored query bond (implicit: -,:), use '~' to suppress this warning", pair[1]);
                     } else {
                         if (changed(lft, rgt)) {
-                            ops.add(new TransformOp(TransformOp.Type.BondOrder,
-                                                    begIdx, endIdx, rgt.val));
+                            // record what the bond order was if possible (valence checking)
+                            if (lft.ok())
+                                ops.add(new TransformOp(TransformOp.Type.BondOrder,
+                                                        begIdx, endIdx, rgt.val, lft.val));
+                            else
+                                ops.add(new TransformOp(TransformOp.Type.BondOrder,
+                                                        begIdx, endIdx, rgt.val));
                         }
                         lft = isAromatic(pair[0]);
                         rgt = isAromatic(pair[1]);
@@ -798,15 +803,23 @@ public class Smirks {
     }
 
     private static void checkValence(SmirksState state, List<TransformOp> ops) {
-        if (!state.opts.contains(SmirksOption.PEDANTIC))
-            return;
-        Map<Integer,Integer> valence   = new HashMap<>();
-        Set<Integer>         chargeMod = new HashSet<>();
-        Map<Integer,Integer> hcnts     = new HashMap<>();
+//        if (!state.opts.contains(SmirksOption.PEDANTIC))
+//            return;
+        Map<Integer,Integer> valence  = new HashMap<>();
+        Set<Integer>         unknown  = new HashSet<>();
+        Map<Integer,Integer> hcnts    = new HashMap<>();
         for (TransformOp op : ops) {
             switch (op.type()) {
-                // ToDo: BondOrder needs to no the order before hand
-                // ToDo: ImplH handling?
+                case BondOrder:
+                    // When possible left-hand-side (before) value is (D)
+                    if (op.argD() != 0) {
+                        update(valence, op.argA(), op.argC() - op.argD());
+                        update(valence, op.argB(), op.argC() - op.argD());
+                    } else {
+                        unknown.add(op.argA());
+                        unknown.add(op.argB());
+                    }
+                    break;
                 case DeleteBond:
                     update(valence, op.argA(), -op.argC());
                     update(valence, op.argB(), -op.argC());
@@ -826,9 +839,10 @@ public class Smirks {
                     update(valence, op.argA(), op.argB());
                     break;
                 case Charge:
-                    chargeMod.add(op.argA());
+                    unknown.add(op.argA());
                     break;
                 case TotalH:
+                case ImplH:
                     hcnts.put(op.argA(), op.argB());
                     break;
             }
@@ -836,18 +850,17 @@ public class Smirks {
         for (IAtom[] pair : state.atomPairs) {
             if (pair[0] != null && pair[1] != null) {
                 Integer id   = state.atomidx.get(pair[0]);
-                if (chargeMod.contains(id))
+                if (unknown.contains(id))
                     continue;
                 Integer diff = valence.get(id);
                 if (diff != null && diff != 0) {
                     Integer hcnt = hcnts.get(id);
                     if (hcnt != null) {
-                        state.warning("Possible valence change detected, add " +
-                                              "H" + (hcnt + diff) + " to suppress",
+                        state.warning("Possible valence change," +
+                                      " add H" + (hcnt + diff) + " to reactant to supress",
                                       pair[0]);
                     } else {
-                        state.warning("Atom valence change detected, " +
-                                              "change=" + String.format("%+d", diff),
+                        state.warning("Possible valence change",
                                       pair[0]);
                     }
                 }

@@ -1099,7 +1099,7 @@ class SmirksTest {
     @Test
     void testThiazole() throws Exception {
         final String smiles = "CC(N)=S.CC(I)C(C)=O";
-        final String smirks = "[#6:6]-[C;R0:1](=[OD1])-[CH1;R0:5](-[#6:7])-[*;#17,#35,#53].[NH2:2]-[C:3]=[SD1:4]>>[CH1:1]2(-[#6:6])[NH1:2][CH1:3][S:4][C:5]([#6:7])2";
+        final String smirks = "[#6:6]-[CH0R0:1](=[OD1])-[CH1;R0:5](-[#6:7])-[*;#17,#35,#53].[NH2:2]-[CH0:3]=[SD1:4]>>[CH1:1]2(-[#6:6])[NH1:2][CH1:3][S:4][C:5]([#6:7])2";
         final String expected = "CC1NC(C(C)S1)C";
 
         assertTransform(smiles, smirks, expected);
@@ -1112,7 +1112,7 @@ class SmirksTest {
     @Test
     void testBenzoxazoleCarboxylicAcid() throws Exception {
         final String smiles = "c1cc(O)c(N)cc1.CC(=O)O";
-        final String smirks = "[c;r6:1](-[OH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[C;R0:5](=[OD1])-[OH1]>>[c:3]2[c:1][OH0:2][CH1:5]([#6:6])[NH1:4]2";
+        final String smirks = "[c;r6:1](-[OH1:2]):[c;r6:3](-[NH2:4]).[#6:6]-[CH0R0:5](=[OD1])-[OH1]>>[c:3]2[c:1][OH0:2][CH1:5]([#6:6])[NH1:4]2";
         final String expected = "c1cc2OC(C)Nc2cc1";
 
         assertTransform(smiles, smirks, new SmirksTransform(), expected);
