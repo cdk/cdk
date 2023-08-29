@@ -104,7 +104,7 @@ final class ReactionBounds {
         int nCol;
         double arrowHeight      = plus.height();
         double arrowHeadLength  = plus.height();
-        double minArrowWidth    = direction != null ? 5 * arrowHeight : 0;
+        double minArrowWidth    = direction != null && direction != IReaction.Direction.UNDIRECTED ? 5 * arrowHeight : arrowHeight;
 
         double[] xOffsets, yOffsets;
         double[] xOffsetSide, yOffsetSide;
