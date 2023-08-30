@@ -33,15 +33,11 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -140,7 +136,7 @@ class DepictionTest {
         IReaction rxn = smilesParser.parseReactionSmiles("O.CCCCC(N)=O>>[NH4+].CCCCC([O-])=O");
         rxn.setDirection(IReaction.Direction.UNDIRECTED);
         DepictionGenerator dg = new DepictionGenerator();
-        String svg = dg.depict(rxn).toSvgStr("px");
+        String svg = dg.depict(rxn).toSvgStr();
         String[] targetLines = svg.split("\n");
         Assertions.assertIterableEquals(source, Arrays.asList(targetLines));
     }
