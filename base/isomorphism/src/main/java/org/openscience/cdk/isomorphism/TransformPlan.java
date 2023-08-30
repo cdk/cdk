@@ -612,6 +612,15 @@ final class TransformPlan {
         IBond endNBor = amap[op.b].getBond(amap[op.d]);
         if (begNbor == null || endNBor == null)
             throw new IllegalStateException();
+
+        // swap order
+        if (dbBond.getEnd().equals(amap[op.a]) &&
+            dbBond.getBegin().equals(amap[op.b])) {
+            IBond tmp = begNbor;
+            begNbor = endNBor;
+            endNBor = tmp;
+        }
+
         List<IStereoElement<?,?>> newStereo = mol.getProperty(SMIRKS_NEWSTEREO);
         if (newStereo == null)
             mol.setProperty(SMIRKS_NEWSTEREO, newStereo = new ArrayList<>());

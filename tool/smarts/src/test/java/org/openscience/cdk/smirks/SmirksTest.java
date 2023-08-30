@@ -724,6 +724,17 @@ class SmirksTest {
         assertTransform("CC=CC",
                         "[*:1][*:2]=[*:3][*:4]>>[*:1]/-[*:2]=[*:3]/-[*:4]",
                         "C/C=C/C");
+        assertTransform("CC=CC",
+                        "[*:1][*:2]=[*:3][*:4]>>[*:1]/[*:2]=[*:3]/[*:4]",
+                        "C/C=C/C");
+        assertTransform("CC=CC",
+                        "[*:1][*:2]=[*:3][*:4]>>[*:1]/[*:2]=[*:3]/[*:4]",
+                        new String[]{"C/C=C/C"},
+                        Transform.Mode.Unique);
+        assertTransform("CC=CC",
+                        "[*:1][*:2]=[*:3][*:4]>>[*:1]/[*:2]=[*:3]/[*:4]",
+                        new String[]{"C/C=C/C", "C/C=C/C"},
+                        Transform.Mode.All);
     }
 
     @Test
