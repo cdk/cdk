@@ -382,12 +382,12 @@ final class ReactionDepiction extends Depiction {
                               double minHeight) {
         if (direction == null)
             return new Bounds();
-        Bounds arrow = new Bounds();
         Path2D path = new Path2D.Double();
         final double headThickness = minHeight / 3;
         final double inset = 0.8;
         final double headLength = minHeight;
         double strokeWidth = minHeight / 14;
+        Bounds arrow = new Bounds(0, -headThickness, length, +headThickness);
         switch (direction) {
             case FORWARD:
                 arrow.add(new LineElement(0, 0, length - 0.5 * headLength, 0, strokeWidth, color));
@@ -406,6 +406,13 @@ final class ReactionDepiction extends Depiction {
                 path.lineTo(minHeight, -headThickness);
                 path.closePath();
                 arrow.add(GeneralPath.shapeOf(path, color));
+                break;
+            case UNDIRECTED:
+                double x1 = headThickness;
+                double x2 = length-2*headThickness;
+                double y = 0.5 * headThickness;
+                arrow.add(new LineElement(x1, -(y), x2, -(y), strokeWidth, color));
+                arrow.add(new LineElement(x1, +(y), x2, +(y), strokeWidth, color));
                 break;
             case BIDIRECTIONAL: // equilibrium?
                 arrow.add(new LineElement(0, +0.5 * headThickness, length - 0.5 * headLength, +0.5 * headThickness, strokeWidth, color));

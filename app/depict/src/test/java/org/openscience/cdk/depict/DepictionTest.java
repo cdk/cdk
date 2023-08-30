@@ -24,6 +24,7 @@
 package org.openscience.cdk.depict;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -32,10 +33,12 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -123,5 +126,30 @@ class DepictionTest {
                 .map(el -> el.trim())
                 .filter(el -> stringsToFind.indexOf(el) != -1).collect(Collectors.toList());
         Assertions.assertIterableEquals(stringsToFind, foundmatches);
+    }
+
+    @Disabled("Not stable between systems")
+    @Test
+    void depictUndirectedReactionAsSVG()
+            throws CDKException, IOException
+    {
+        List<String> source = readResourceFile("rhea-net-reaction.svg");
+        final SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction rxn = smilesParser.parseReactionSmiles("O.CCCCC(N)=O>>[NH4+].CCCCC([O-])=O");
+        rxn.setDirection(IReaction.Direction.UNDIRECTED);
+        DepictionGenerator dg = new DepictionGenerator();
+        String svg = dg.depict(rxn).toSvgStr();
+        String[] targetLines = svg.split("\n");
+        Assertions.assertIterableEquals(source, Arrays.asList(targetLines));
+    }
+
+    private List<String> readResourceFile(String resourceName)
+            throws IOException
+    {
+        try(InputStream in = getClass().getResourceAsStream(resourceName);
+            Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+            BufferedReader buff = new BufferedReader(rdr)) {
+            return buff.lines().collect(Collectors.toList());
+        }
     }
 }
