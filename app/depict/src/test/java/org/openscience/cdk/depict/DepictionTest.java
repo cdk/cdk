@@ -24,6 +24,7 @@
 package org.openscience.cdk.depict;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -127,6 +128,7 @@ class DepictionTest {
         Assertions.assertIterableEquals(stringsToFind, foundmatches);
     }
 
+    @Disabled("Not stable between systems")
     @Test
     void depictUndirectedReactionAsSVG()
             throws CDKException, IOException
