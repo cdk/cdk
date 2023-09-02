@@ -108,7 +108,6 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
     // patterns to match
     private static final Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
-    private static final String  M_END                = "M  END";
     private static final String  SDF_RECORD_SEPARATOR = "$$$$";
     private static final String  SDF_DATA_HEADER      = "> ";
 
@@ -229,103 +228,59 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
         // now try to parse the next Molecule
         try {
-            currentFormat = (IChemFormat) MDLFormat.getInstance();
+            for (;;) {
+                currentFormat = (IChemFormat) MDLFormat.getInstance();
+                int lineNum = 0;
+                buffer.setLength(0);
 
-            int lineNum = 0;
-            buffer.setLength(0);
-            while ((currentLine = input.readLine()) != null) {
+                while ((currentLine = input.readLine()) != null) {
 
-                // still in a molecule
-                buffer.append(currentLine).append(LINE_SEPARATOR);
-                lineNum++;
+                    // still in a molecule
+                    buffer.append(currentLine).append(LINE_SEPARATOR);
+                    lineNum++;
 
-                // do MDL molfile version checking
-                if (lineNum == 4) {
-                    Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
-                    if (versionMatcher.find()) {
-                        currentFormat = "2000".equals(versionMatcher.group(1)) ? (IChemFormat) MDLV2000Format.getInstance()
-                                                                               : (IChemFormat) MDLV3000Format.getInstance();
-                    }
-                }
-
-                if (currentLine.startsWith(M_END)) {
-
-                    logger.debug("MDL file part read: ", buffer);
-
-                    IAtomContainer molecule = null;
-
-                    try {
-                        ISimpleChemObjectReader reader = getReader(currentFormat);
-                        reader.setReader(new StringReader(buffer.toString()));
-                        molecule = reader.read(builder.newAtomContainer());
-                    } catch (Exception exception) {
-                        logger.error("Error while reading next molecule: " + exception.getMessage());
-                        logger.debug(exception);
-                    }
-
-                    if (molecule != null) {
-                        readDataBlockInto(molecule);
-                        hasNext = true;
-                        nextAvailableIsKnown = true;
-                        nextMolecule = molecule;
-                        return true;
-                    } else if (skip) {
-                        // null molecule and skip = true, eat up the rest of the entry until '$$$$'
-                        String line;
-                        while ((line = input.readLine()) != null) {
-                            if (line.startsWith(SDF_RECORD_SEPARATOR)) {
-                                break;
-                            }
+                    // do MDL molfile version checking
+                    if (lineNum == 4) {
+                        Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
+                        if (versionMatcher.find()) {
+                            currentFormat = "2000".equals(versionMatcher.group(1)) ? (IChemFormat) MDLV2000Format.getInstance()
+                                    : (IChemFormat) MDLV3000Format.getInstance();
                         }
-                    } else {
-                        return false;
                     }
 
-                    // empty the buffer
-                    buffer.setLength(0);
-                    lineNum = 0;
+                    if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
+                        break;
+                    }
                 }
 
-                // found SDF record separator ($$$$) without parsing a molecule (separator is detected
-                // in readDataBlockInto()) the buffer is cleared and the iterator continues reading
-                if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
-                    buffer.setLength(0);
-                    lineNum = 0;
+                logger.debug("MDL file part read: ", buffer);
+                IAtomContainer molecule = null;
+                try {
+                    ISimpleChemObjectReader reader = getReader(currentFormat);
+                    reader.setReader(new StringReader(buffer.toString()));
+                    molecule = reader.read(builder.newAtomContainer());
+                } catch (Exception exception) {
+                    logger.error("Error while reading next molecule: " + exception.getMessage());
+                    logger.debug(exception);
                 }
+
+                if (molecule != null) {
+                    hasNext = true;
+                    nextAvailableIsKnown = true;
+                    nextMolecule = molecule;
+                    return true;
+                } else if (!skip) {
+                    return false;
+                } else if (currentLine == null && buffer.length() == 0) {
+                    return false; // EOF
+                }
+                // else (skip=true) try next record
             }
         } catch (IOException exception) {
             logger.error("Error while reading next molecule: " + exception.getMessage());
             logger.debug(exception);
         }
-
-        // reached end of file
         return false;
-
-    }
-
-    private void readDataBlockInto(IAtomContainer m) throws IOException {
-        String dataHeader;
-        StringBuilder sb = new StringBuilder();
-        currentLine = input.readLine();
-        while (currentLine != null) {
-            if (currentLine.startsWith(SDF_RECORD_SEPARATOR))
-                break;
-            logger.debug("looking for data header: ", currentLine);
-            String str = currentLine;
-            if (str.startsWith(SDF_DATA_HEADER)) {
-                dataHeader = extractFieldName(str);
-                skipOtherFieldHeaderLines(str);
-                String data = extractFieldData(sb).trim();
-                if (dataHeader != null) {
-                    logger.info("fieldName, data: ", dataHeader, ", ", data);
-                    m.setProperty(dataHeader, data);
-                }
-            } else if (currentLine.isEmpty()) {
-                 currentLine = input.readLine();
-            } else {
-                break;
-            }
-        }
     }
 
     /**
@@ -336,44 +291,6 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
      */
     public void setSkip(boolean skip) {
         this.skip = skip;
-    }
-
-    private String extractFieldData(StringBuilder data) throws IOException {
-        data.setLength(0);
-        while (currentLine != null && !currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
-            if (currentLine.startsWith(SDF_DATA_HEADER))
-                break;
-            logger.debug("data line: ", currentLine);
-            if (data.length() > 0)
-                data.append('\n');
-            data.append(currentLine);
-            currentLine = input.readLine();
-        }
-        // trim trailing newline
-        int len = data.length();
-        if (len > 1 && data.charAt(len-1) == '\n')
-            data.setLength(len-1);
-        return data.toString();
-    }
-
-    private String skipOtherFieldHeaderLines(String str) throws IOException {
-        while (str.startsWith(SDF_DATA_HEADER)) {
-            logger.debug("data header line: ", currentLine);
-            currentLine = input.readLine();
-            str = currentLine;
-        }
-        return str;
-    }
-
-    private String extractFieldName(String str) {
-        int index = str.indexOf('<');
-        if (index != -1) {
-            int index2 = str.indexOf('>', index);
-            if (index2 != -1) {
-                return str.substring(index + 1, index2);
-            }
-        }
-        return null;
     }
 
     /**

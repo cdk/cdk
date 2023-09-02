@@ -82,6 +82,16 @@ public abstract class ChemObjectIO implements IChemObjectIO {
      */
     @Override
     public <S extends IOSetting> S addSetting(IOSetting setting) {
+        if (hasSetting(setting.getName())) {
+            try {
+                S current = getSetting(setting.getName());
+                current.setSetting(setting.getSetting());
+                return current;
+            } catch (CDKException ex) {
+                // setting value was invalid (ignore as we already have a value for this setting
+                // and we can't throw CDKException as IChemObject is in interfaces module)
+            }
+        }
         return (S) settings.add(setting);
     }
 
@@ -91,16 +101,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     @Override
     public void addSettings(Collection<IOSetting> settings) {
         for (IOSetting setting : settings) {
-            if (hasSetting(setting.getName())) {
-                try {
-                    getSetting(setting.getName()).setSetting(setting.getSetting());
-                } catch (CDKException ex) {
-                    // setting value was invalid (ignore as we already have a value for this setting
-                    // and we can't throw CDKException as IChemObject is in interfaces module)
-                }
-            } else {
-                addSetting(setting);
-            }
+            addSetting(setting);
         }
     }
 
