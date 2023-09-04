@@ -478,6 +478,83 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void add(IAtomContainer atomContainer);
 
     /**
+     * Create a new carbon atom in this container, it will have the implicit
+     * hydrogen count initialized to 0.
+     *
+     * @return thew new atom
+     */
+    default IAtom newAtom() {
+        return newAtom(IAtom.C);
+    }
+
+    /**
+     * Create a new atom in this container of the specified element, it will
+     * have the implicit hydrogen count initialized to 0.
+     *
+     * @param element the atomic number
+     *
+     * @return thew new atom
+     */
+    default IAtom newAtom(int element) {
+        return newAtom(element, 0);
+    }
+
+    /**
+     * Create a new atom in this container of the specified element and implicit
+     * hydrogen count.
+     *
+     * @param element the atomic number
+     * @param numImplH the number of implicit hydrogens
+     *
+     * @return thew new atom
+     */
+    default IAtom newAtom(int element, int numImplH) {
+        IAtom atm = getBuilder().newAtom();
+        atm.setAtomicNumber(element);
+        atm.setImplicitHydrogenCount(numImplH);
+        addAtom(atm);
+        return getAtom(getAtomCount()-1);
+    }
+
+    /**
+     * Create a new atom in the container based on properties of the provided
+     * atom. The new atom will have the same properties as the original but is
+     * distinct.
+     *
+     * @param atom the original atom
+     * @return the new atom
+     */
+    default IAtom newAtom(IAtom atom) {
+        IAtom cpy = getBuilder().newInstance(IAtom.class, atom);
+        addAtom(cpy);
+        return getAtom(getAtomCount()-1);
+    }
+
+    /**
+     * Create a new single bond between two atoms.
+     *
+     * @param beg the begin atom
+     * @param end the end atom
+     * @return the new bond
+     */
+    default IBond newBond(IAtom beg, IAtom end) {
+        return newBond(beg, end, Order.SINGLE);
+    }
+
+    /**
+     * Create a new bond between two atoms.
+     *
+     * @param beg the begin atom
+     * @param end the end atom
+     * @param order the bond order
+     * @return the new bond
+     */
+    default IBond newBond(IAtom beg, IAtom end, IBond.Order order) {
+        addBond(indexOf(beg), indexOf(end), order);
+        return getBond(getBondCount()-1);
+    }
+
+    /**
      * Adds an atom to this container.
      *
      * @param atom The atom to be added to this container
