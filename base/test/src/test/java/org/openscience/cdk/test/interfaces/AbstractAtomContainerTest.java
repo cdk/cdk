@@ -3499,4 +3499,57 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
         Assertions.assertEquals(0, sgroupsAfter.size());
     }
+
+    @Test void shouldCreateNewAtomsDefault()  {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom atom = mol.newAtom();
+        assertThat(atom.getAtomicNumber(), is(IAtom.C));
+        assertThat(atom.getImplicitHydrogenCount(), is(0));
+    }
+
+    @Test void shouldCreateNewAtomsElement()  {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom atom = mol.newAtom(IAtom.Au);
+        assertThat(atom.getAtomicNumber(), is(IAtom.Au));
+        assertThat(atom.getImplicitHydrogenCount(), is(0));
+    }
+
+    @Test void shouldCreateNewAtomsElementHcnt()  {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom atom = mol.newAtom(IAtom.N, 3);
+        assertThat(atom.getAtomicNumber(), is(IAtom.N));
+        assertThat(atom.getImplicitHydrogenCount(), is(3));
+    }
+
+    @Test void shouldCreateNewAtomsCopy()  {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom fst = mol.newAtom(IAtom.N, 2);
+        fst.setIsAromatic(true);
+        IAtom snd = mol.newAtom(fst);
+        assertThat(snd.getAtomicNumber(), is(IAtom.N));
+        assertThat(snd.getImplicitHydrogenCount(), is(2));
+        assertThat(snd.isAromatic(), is(true));
+    }
+
+    @Test void shouldCreateNewBond()  {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom fst = mol.newAtom(IAtom.C, 3);
+        IAtom snd = mol.newAtom(IAtom.C, 3);
+        IBond bnd = mol.newBond(fst, snd);
+        assertThat(mol.getConnectedBondsCount(fst), is(1));
+        assertThat(mol.getConnectedBondsCount(snd), is(1));
+        assertThat(mol.getConnectedBondsList(fst).iterator().next(), is(bnd));
+        assertThat(mol.getConnectedBondsList(snd).iterator().next(), is(bnd));
+    }
+
+    @Test void shouldCreateNewBondOrder()  {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom fst = mol.newAtom(IAtom.C, 2);
+        IAtom snd = mol.newAtom(IAtom.C, 2);
+        IBond bnd = mol.newBond(fst, snd, IBond.Order.DOUBLE);
+        assertThat(mol.getConnectedBondsCount(fst), is(1));
+        assertThat(mol.getConnectedBondsCount(snd), is(1));
+        assertThat(mol.getConnectedBondsList(fst).iterator().next(), is(bnd));
+        assertThat(mol.getConnectedBondsList(snd).iterator().next(), is(bnd));
+    }
 }

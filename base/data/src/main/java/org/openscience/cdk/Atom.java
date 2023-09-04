@@ -237,6 +237,42 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
+     * Constructs an isotope by copying the symbol, atomic number,
+     * flags, identifier, exact mass, natural abundance, mass
+     * number, maximum bond order, bond order sum, van der Waals
+     * and covalent radii, formal charge, hybridization, electron
+     * valency, formal neighbour count and atom type name from the
+     * given IAtomType. It does not copy the listeners and
+     * properties. If the element is an instance of
+     * IAtom, then the 2D, 3D and fractional coordinates, partial
+     * atomic charge, hydrogen count and stereo parity are copied
+     * too.
+     *
+     * @param org IAtomType to copy information from
+     */
+    public Atom(IAtom org) {
+        super(org);
+        if (org.getPoint2d() != null) {
+            this.point2d = new Point2d(org.getPoint2d());
+        } else {
+            this.point2d = null;
+        }
+        if (org.getPoint3d() != null) {
+            this.point3d = new Point3d(org.getPoint3d());
+        } else {
+            this.point3d = null;
+        }
+        if (org.getFractionalPoint3d() != null) {
+            this.fractionalPoint3d = new Point3d(org.getFractionalPoint3d());
+        } else {
+            this.fractionalPoint3d = null;
+        }
+        this.hydrogenCount = org.getImplicitHydrogenCount();
+        this.charge = org.getCharge();
+        this.stereoParity = org.getStereoParity();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
