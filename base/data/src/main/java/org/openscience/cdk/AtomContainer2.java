@@ -971,6 +971,38 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
+    @Override
+    public IAtom newAtom(int element, int numImplH) {
+        BaseAtomRef ref = newAtomRef(new Atom(element, numImplH));
+        ensureAtomCapacity(numAtoms + 1);
+        ref.setIndex(numAtoms);
+        atoms[numAtoms++] = ref;
+        return ref;
+    }
+
+    @Override
+    public IAtom newAtom(IAtom atom) {
+        BaseAtomRef ref = newAtomRef(new Atom(atom));
+        ensureAtomCapacity(numAtoms + 1);
+        ref.setIndex(numAtoms);
+        atoms[numAtoms++] = ref;
+        return ref;
+    }
+
+    @Override
+    public IBond newBond(IAtom beg, IAtom end, Order order) {
+        if (!contains(beg))
+            throw new IllegalArgumentException("{beg} atom of bond does not belong to this container");
+        if (!contains(end))
+            throw new IllegalArgumentException("{end} atom of bond does not belong to this container");
+        final BaseBondRef bref = newBondRef(new Bond(beg, end, order));
+        ensureBondCapacity(numBonds + 1);
+        bref.setIndex(numBonds);
+        addToEndpoints(bref);
+        bonds[numBonds++] = bref;
+        return bref;
+    }
+
     /**
      * {@inheritDoc}
      */
