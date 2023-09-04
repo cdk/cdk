@@ -20,6 +20,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,9 +36,11 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -388,11 +391,43 @@ final class TransformPlan {
             case DbOpposite:
                 setDbStereo(mol, amap, op);
                 break;
+            case RemoveUnmapped:
+                removedUnmappedFragments(mol);
+                break;
             default:
                 return false;
         }
 
         return true;
+    }
+
+    private static void removedUnmappedFragments(IAtomContainer mol) {
+        Deque<IAtom> queue = new ArrayDeque<>();
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getFlag(CDKConstants.MAPPED)) {
+                for (IBond bond : atom.bonds()) {
+                    IAtom nbor = bond.getOther(atom);
+                    if (!nbor.getFlag(CDKConstants.MAPPED))
+                        queue.add(nbor);
+                }
+            }
+        }
+        while (!queue.isEmpty()) {
+            IAtom atom = queue.poll();
+            atom.setFlag(CDKConstants.MAPPED, true);
+            for (IBond bond : atom.bonds()) {
+                IAtom nbor = bond.getOther(atom);
+                if (!nbor.getFlag(CDKConstants.MAPPED))
+                    queue.add(nbor);
+            }
+        }
+        List<IAtom> unmapped = new ArrayList<>();
+        for (IAtom atom : mol.atoms()) {
+            if (!atom.getFlag(CDKConstants.MAPPED))
+                unmapped.add(atom);
+        }
+        for (IAtom atom : unmapped)
+            mol.removeAtom(atom);
     }
 
     private static boolean setTotalH(IAtom atm, int hcnt) {
