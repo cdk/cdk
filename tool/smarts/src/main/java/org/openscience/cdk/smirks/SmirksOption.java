@@ -67,7 +67,11 @@ public enum SmirksOption {
      * If a bond already exists where a new one is to be created update the bond
      * order as required.
      */
-    OVERWRITE_BOND;
+    OVERWRITE_BOND,
+    /**
+     * Remove any disconnected fragments
+     */
+    REMOVED_UNMAPPED_FRAGMENTS;
 
     /**
      * Align closer with RDKit's "Reaction SMARTS" semantics.
@@ -76,5 +80,6 @@ public enum SmirksOption {
     public static final Set<SmirksOption> RDKIT = unmodifiableSet(EnumSet.of(DIFF_PART,
                                                                              IGNORE_IMPL_H,
                                                                              IGNORE_TOTAL_H0,
-                                                                             OVERWRITE_BOND));
+                                                                             OVERWRITE_BOND,
+                                                                             REMOVED_UNMAPPED_FRAGMENTS));
 }
