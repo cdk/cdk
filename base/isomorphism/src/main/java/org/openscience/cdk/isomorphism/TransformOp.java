@@ -183,7 +183,8 @@ public final class TransformOp implements Comparable<TransformOp> {
          * <p>
          * {@code params: {idx1, idx2, elem, hcnt}}
          */
-        ReplaceHydrogen
+        ReplaceHydrogen,
+        RemoveUnmapped
     }
 
     final Type type;
@@ -314,6 +315,8 @@ public final class TransformOp implements Comparable<TransformOp> {
             case DbTogether:
             case Tetrahedral:
                 return Math.max(Math.max(a, b), Math.max(c, d));
+            case RemoveUnmapped:
+                return 0;
             default:
                 throw new IllegalStateException(type + " atom index?");
         }
@@ -344,6 +347,8 @@ public final class TransformOp implements Comparable<TransformOp> {
             case DbTogether:
             case Tetrahedral:
                 return Math.min(Math.min(a, b), Math.min(c, d));
+            case RemoveUnmapped:
+                return 0;
             default:
                 throw new IllegalStateException();
         }
@@ -368,6 +373,8 @@ public final class TransformOp implements Comparable<TransformOp> {
             case DbOpposite:
             case DbTogether:
                 return 5;
+            case RemoveUnmapped:
+                return 6;
             default:
                 return 3;
         }
@@ -451,6 +458,8 @@ public final class TransformOp implements Comparable<TransformOp> {
                 return type + "{" + c + "/" + a + "=" + b + "/" + d + "}";
             case DbTogether:
                 return type + "{" + c + "/" + a + "=" + b + "\\" + d + "}";
+            case RemoveUnmapped:
+                return type.toString();
             default:
                 throw new IllegalStateException("Unknown op:" + type);
         }
