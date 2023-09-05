@@ -20,10 +20,12 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
@@ -130,8 +132,12 @@ final class TransformPlan {
     /* Internal Methods */
 
     private static void resetFlags(IAtom atom) {
-        atom.setFlag(CDKConstants.MAPPED, false);
-        atom.setFlag(CDKConstants.REACTIVE_CENTER, false);
+        atom.setFlag(CDKConstants.MAPPED,
+                     false);
+        atom.setFlag(CDKConstants.ISPLACED,
+                     false);
+        atom.setFlag(CDKConstants.REACTIVE_CENTER,
+                     false);
     }
 
     private void prepare(IAtomContainer mol, IAtom[] amap, Map<IAtom,IBond[]> bonding) {
@@ -365,19 +371,24 @@ final class TransformPlan {
             case TotalH:
                 if (!setTotalH(amap[op.a], op.b))
                     return false;
+                amap[op.a].setFlag(CDKConstants.ISPLACED, true);
                 markBondingChanged(amap[op.a]);
                 break;
             case AdjustH:
                 if (!adjustHydrogenCount(mol, amap[op.a], op.b))
                     return false;
+                amap[op.a].setFlag(CDKConstants.ISPLACED, true);
                 markBondingChanged(amap[op.a]);
                 break;
             case MoveH:
                 if (!moveHydrogen(mol, amap[op.a], amap[op.b]))
                     return false;
+                amap[op.a].setFlag(CDKConstants.ISPLACED, true);
+                amap[op.b].setFlag(CDKConstants.ISPLACED, true);
                 markBondingChanged(amap[op.a], amap[op.b]);
                 break;
             case PromoteH:
+                amap[op.a].setFlag(CDKConstants.ISPLACED, true);
                 if (!promoteHydrogen(mol, amap, amap[op.a], op.b))
                     return false;
                 break;
@@ -393,6 +404,9 @@ final class TransformPlan {
                 break;
             case RemoveUnmapped:
                 removedUnmappedFragments(mol);
+                break;
+            case RecomputeHydrogens:
+                recomputeHydrogens(mol);
                 break;
             default:
                 return false;
@@ -428,6 +442,29 @@ final class TransformPlan {
         }
         for (IAtom atom : unmapped)
             mol.removeAtom(atom);
+    }
+
+    private static void recomputeHydrogens(IAtomContainer mol) {
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        for (IAtom atom : mol.atoms()) {
+            if (!atom.getFlag(CDKConstants.MAPPED) ||
+                atom.getFlag(CDKConstants.ISPLACED))
+                continue;
+            try {
+                atom.setImplicitHydrogenCount(null); // clean slate
+                IAtomType matched = matcher.findMatchingAtomType(mol, atom);
+                if (matched != null) {
+                    Integer total = matched.getFormalNeighbourCount();
+                    if (total != null) {
+                        int implH = Math.max(0, total - atom.getBondCount());
+                        atom.setImplicitHydrogenCount(implH);
+                    }
+                }
+            } catch (CDKException ex) {
+                LoggingToolFactory.createLoggingTool(TransformPlan.class)
+                                  .error(ex);
+            }
+        }
     }
 
     private static boolean setTotalH(IAtom atm, int hcnt) {
@@ -731,6 +768,7 @@ final class TransformPlan {
         atom.setAtomicNumber(elem);
         atom.setImplicitHydrogenCount(hnct);
         atom.setIsAromatic(arom != 0);
+        atom.setFlag(CDKConstants.MAPPED, true);
         mol.addAtom(atom);
         return mol.getAtom(mol.getAtomCount() - 1);
     }

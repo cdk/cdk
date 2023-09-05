@@ -69,17 +69,33 @@ public enum SmirksOption {
      */
     OVERWRITE_BOND,
     /**
-     * Remove any disconnected fragments
+     * Postprocessing - Remove any disconnected fragments that were not matched
+     * by the transformed.
      */
-    REMOVED_UNMAPPED_FRAGMENTS;
+    REMOVE_UNMAPPED_FRAGMENTS,
+    /**
+     * Postprocessing - Recompute the implicit hydrogen count on changed atoms
+     * that has not had its hydrogen count explicitly set.
+     */
+    RECOMPUTE_HYDROGENS,
+    /**
+     * Preprocessing - Automatically convert implicit hydrogens to explicit
+     * hydrogens when the pattern contains a '*'.
+     */
+    EXPAND_HYDROGENS;
 
     /**
      * Align closer with RDKit's "Reaction SMARTS" semantics.
-     * WIP - need to handle the floating valence
      */
     public static final Set<SmirksOption> RDKIT = unmodifiableSet(EnumSet.of(DIFF_PART,
                                                                              IGNORE_IMPL_H,
                                                                              IGNORE_TOTAL_H0,
                                                                              OVERWRITE_BOND,
-                                                                             REMOVED_UNMAPPED_FRAGMENTS));
+                                                                             REMOVE_UNMAPPED_FRAGMENTS,
+                                                                             RECOMPUTE_HYDROGENS));
+
+    public static final Set<SmirksOption> DAYLIGHT = unmodifiableSet(EnumSet.of(IGNORE_SET_ELEM,
+                                                                                IGNORE_IMPL_H,
+                                                                                IGNORE_TOTAL_H,
+                                                                                EXPAND_HYDROGENS));
 }
