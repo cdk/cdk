@@ -273,8 +273,10 @@ public class Smirks {
             }
         }
 
-        if (state.opts.contains(SmirksOption.REMOVED_UNMAPPED_FRAGMENTS))
+        if (state.opts.contains(SmirksOption.REMOVE_UNMAPPED_FRAGMENTS))
             ops.add(new TransformOp(TransformOp.Type.RemoveUnmapped, 0));
+        if (state.opts.contains(SmirksOption.RECOMPUTE_HYDROGENS))
+            ops.add(new TransformOp(TransformOp.Type.RecomputeHydrogens, 0));
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(Smarts.generate(query));

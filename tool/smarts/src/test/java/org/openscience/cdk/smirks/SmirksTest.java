@@ -1301,7 +1301,7 @@ class SmirksTest {
     }
 
     @Test
-//    @Timeout(value = 100, unit = TimeUnit.MILLISECONDS)
+    @Timeout(value = 100, unit = TimeUnit.MILLISECONDS)
     void testLazyTransform() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
@@ -1315,13 +1315,10 @@ class SmirksTest {
         long t0 = System.nanoTime();
         int i = 0;
         for (IAtomContainer container : tform.apply(mol, Transform.Mode.All)) {
-//            if (++i >= 10)
-//                break;
-            ++i;
+            if (++i >= 10)
+                break;
         }
-        long t1 = System.nanoTime();
-        System.err.println(TimeUnit.NANOSECONDS.toMillis(t1-t0) + " ms");
-        //Assertions.assertEquals(10, i);
+        Assertions.assertEquals(10, i);
     }
 
     @Test
@@ -1452,12 +1449,77 @@ class SmirksTest {
         assertTransform("c1ccccc1OCC",
                         "[c:1]O>>[c:1][H]",
                         "c1ccccc1",
-                        SmirksOption.REMOVED_UNMAPPED_FRAGMENTS);
+                        SmirksOption.REMOVE_UNMAPPED_FRAGMENTS);
         assertTransform("c1ccccc1OCC",
                         "[C:1]O>>[C:1][H]",
                         "CC",
-                        SmirksOption.REMOVED_UNMAPPED_FRAGMENTS);
+                        SmirksOption.REMOVE_UNMAPPED_FRAGMENTS);
     }
+
+    @Test
+    void shouldRecomputeHydrogenCount() throws Exception {
+        assertTransform("c1ccccc1C",
+                        "[C:1]>>[C:1][O]",
+                        "c1ccccc1[CH3][O]");
+        assertTransform("c1ccccc1C",
+                        "[C:1]>>[C:1][O]",
+                        "c1ccccc1CO",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+        assertTransform("c1ccccc1C",
+                        "[C:1]>>[C:1]=[O]",
+                        "c1ccccc1C=O",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+        assertTransform("[CH]c1ccccc1C",
+                        "[CH3:1]>>[C:1]=[O]",
+                        "[CH]c1ccccc1C=O",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+        assertTransform("C",
+                        "[C:1]>>[C+:1]",
+                        "[CH3+]",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+        assertTransform("C",
+                        "[C:1]>>[N-:1]",
+                        "[NH2-]",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+    }
+
+    @Test
+    void shouldRecomputeHydrogenCount_Charges() throws Exception {
+        assertTransform("C",
+                        "[C:1]>>[C+:1]",
+                        "[CH3+]",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+        assertTransform("C",
+                        "[C:1]>>[N-:1]",
+                        "[NH2-]",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+    }
+
+    @Test
+    void shouldRecomputeHydrogenCount_LeaveUnmapped() throws Exception {
+        assertTransform("[CH]c1ccccc1C",
+                        "[CH3:1]>>[C:1]=[O]",
+                        "[CH]c1ccccc1C=O",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+    }
+
+    @Test
+    void shouldRecomputeHydrogenCount_ExplictH() throws Exception {
+        assertTransform("c1ccccc1C",
+                        "[CH3:1]>>[C:1][OH0]",
+                        "c1ccccc1C[O]",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+        assertTransform("c1ccccc1C",
+                        "[CH3:1]>>[C:1][OH0]",
+                        "c1ccccc1CO",
+                        SmirksOption.RECOMPUTE_HYDROGENS,
+                        SmirksOption.IGNORE_TOTAL_H0);
+        assertTransform("c1ccccc1C",
+                        "[CH3:1]>>[C:1][OH2]",
+                        "c1ccccc1C[OH2]",
+                        SmirksOption.RECOMPUTE_HYDROGENS);
+    }
+
 
     @Disabled
     @Test
