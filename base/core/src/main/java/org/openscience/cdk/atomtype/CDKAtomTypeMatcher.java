@@ -469,7 +469,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (isCharged(atom)) {
             if (isCharge(atom, 1)) {
                 if (connectedBonds.isEmpty()) {
-                    IAtomType type = getAtomType("C.plus.sp2");
+                    IAtomType type = getAtomType("C.plus.planar");
                     if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                 	IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);

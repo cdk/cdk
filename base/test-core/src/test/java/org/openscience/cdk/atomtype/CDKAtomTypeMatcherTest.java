@@ -1356,7 +1356,7 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom2.setFormalCharge(+1);
         mol.addAtom(atom2);
 
-        String[] expectedTypes = {"C.plus.sp2"}; // FIXME: compare with previous test... same compound!
+        String[] expectedTypes = {"C.plus.planar"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
