@@ -573,7 +573,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // atom-atom mapping
                 String mapping = tokenizer.nextToken();
                 if (!mapping.equals("0")) {
-                    logger.warn("Skipping atom-atom mapping: " + mapping);
+                    atom.setMapIdx(Integer.parseInt(mapping));
                 } // else: default 0 is no mapping defined
 
                 // the rest are key value things
