@@ -49,6 +49,7 @@ import java.io.StringReader;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -457,6 +458,19 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
                     numTetrahedrals++;
             }
             Assertions.assertEquals(0, numTetrahedrals);
+        }
+    }
+
+    @Test
+    void testV3000AtomMapping() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("atom-mapping-v3000.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            assertThat(mol.getAtomCount(), is(3));
+            for (IAtom atom : mol.atoms()) {
+                assertThat(atom.getMapIdx(), is(not(0)));
+            }
         }
     }
 }
