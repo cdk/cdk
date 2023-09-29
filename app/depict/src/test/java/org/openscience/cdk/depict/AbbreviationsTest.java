@@ -820,6 +820,17 @@ class AbbreviationsTest {
     }
 
     @Test
+    void shouldNotPartiallyContractKetene() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("c1ccccc1CC=C=O");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(0));
+    }
+
+
+    @Test
     void multipleDisconnectedAbbreviations() throws Exception {
         String smi = "ClCCl.Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1";
         Abbreviations factory = new Abbreviations();

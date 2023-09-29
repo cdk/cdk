@@ -761,10 +761,12 @@ public class Abbreviations implements Iterable<String> {
             // reject if no symbols
             // reject if no bonds (<1), except if all symbols are identical... (HashSet.size==1)
             // reject if more than 2 bonds
+            // reject if double bond attachement
             if (adjGroupMap.isEmpty() ||
                     newbonds.size() < 1 && !options.contains(Option.ALLOW_SINGLETON) ||
                     newbonds.size() > 1 && !options.contains(Option.AUTO_CONTRACT_LINKERS) ||
-                    newbonds.size() > 2)
+                    newbonds.size() > 2 ||
+                    newbonds.size() == 1 && newbonds.iterator().next().getOrder() != IBond.Order.SINGLE)
                 continue;
 
             if (isCC(attach, xbonds, adjGroupMap))
