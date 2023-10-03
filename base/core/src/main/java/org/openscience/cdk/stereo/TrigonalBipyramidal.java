@@ -25,6 +25,7 @@ package org.openscience.cdk.stereo;
 
 import org.openscience.cdk.interfaces.IAtom;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -130,5 +131,70 @@ public final class TrigonalBipyramidal extends AbstractStereo<IAtom,IAtom> {
     @Override
     protected TrigonalBipyramidal create(IAtom focus, List<IAtom> carriers, int cfg) {
         return new TrigonalBipyramidal(focus, carriers.toArray(new IAtom[5]), cfg);
+    }
+
+    private static boolean same(List<IAtom> a, List<IAtom> b, int[] perm, int i) {
+        for(int j = i; j < i + 5; ++j) {
+            if (!((IAtom)b.get(j - i)).equals(a.get(perm[j]))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static int reorder(List<IAtom> current, List<IAtom> required) {
+        for(int order = 0; order < PERMUTATIONS.length; ++order) {
+            int[] local = PERMUTATIONS[order];
+
+            for(int k = 0; k < local.length; k += 5) {
+                if (same(current, required, local, k)) {
+                    return order + 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public boolean canBeOctahedral() {
+        int numExplicit = 0;
+        IAtom focus = (IAtom)this.getFocus();
+        Iterator var3 = this.getCarriers().iterator();
+
+        while(var3.hasNext()) {
+            IAtom atom = (IAtom)var3.next();
+            if (!atom.equals(focus)) {
+                ++numExplicit;
+            }
+        }
+
+        if (numExplicit > 3) {
+            return false;
+        } else {
+            TrigonalBipyramidal normalized = this.normalize();
+            List<IAtom> carriers = normalized.getCarriers();
+            int numEquatorial = 0;
+
+            for(int i = 1; i < 4; ++i) {
+                if (!((IAtom)carriers.get(i)).equals(focus)) {
+                    ++numEquatorial;
+                }
+            }
+
+            return numEquatorial <= 1;
+        }
+    }
+
+    public Octahedral asOctahedral() {
+        TrigonalBipyramidal normalized = this.normalize();
+        if (!normalized.canBeOctahedral()) {
+            return null;
+        } else {
+            IAtom focus = (IAtom)normalized.getFocus();
+            List<IAtom> carriers = normalized.getCarriers();
+            carriers.add(1, focus);
+            return new Octahedral((IAtom)this.getFocus(), (IAtom[])carriers.toArray(new IAtom[6]), 1);
+        }
     }
 }

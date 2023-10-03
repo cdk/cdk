@@ -258,6 +258,8 @@ final class NonplanarBonds {
 
     // tP=target point
     private boolean snapBondToPosition(IAtom beg, IBond bond, Point2d tP) {
+        if (bond == null)
+            return true;
         IAtom end = bond.getOther(beg);
         Point2d bP = beg.getPoint2d();
         Point2d eP = end.getPoint2d();
@@ -372,6 +374,11 @@ final class NonplanarBonds {
         rmap.put(focus, 0);
 
         for (IAtom atom : atoms) {
+            if (atom.equals(focus)) {
+                bonds.add(null);
+                rnums.add(0);
+                continue;
+            }
             IBond bond = container.getBond(se.getFocus(), atom);
             if (bond.isInRing()) {
                 if (!rmap.containsKey(atom))
@@ -383,7 +390,7 @@ final class NonplanarBonds {
         }
 
         if (rcount > 0 &&
-                checkAndHandleRingSystems(bonds, rnums) == SPIRO_REJECT)
+                checkAndHandleRingSystems(bonds, rnums, rcount) == SPIRO_REJECT)
             return;
 
         for (IAtom atom : container.atoms())
@@ -423,6 +430,11 @@ final class NonplanarBonds {
         rmap.put(focus, 0);
 
         for (IAtom atom : atoms) {
+            if (atom.equals(focus)) {
+                bonds.add(null);
+                rnums.add(0);
+                continue;
+            }
             IBond bond = container.getBond(se.getFocus(), atom);
             if (bond.isInRing()) {
                 if (!rmap.containsKey(atom))
@@ -434,7 +446,7 @@ final class NonplanarBonds {
         }
 
         int res = SPIRO_ACCEPT;
-        if (rcount > 0 && (res = checkAndHandleRingSystems(bonds, rnums)) == SPIRO_REJECT)
+        if (rcount > 0 && (res = checkAndHandleRingSystems(bonds, rnums, rcount)) == SPIRO_REJECT)
             return;
 
         for (IAtom atom : container.atoms())
@@ -470,7 +482,12 @@ final class NonplanarBonds {
 
         double blen = 0;
         for (IAtom atom : atoms) {
-            IBond bond = container.getBond(oc.getFocus(), atom);
+            if (atom.equals(focus)) {
+                bonds.add(null);
+                rnums.add(0);
+                continue;
+            }
+            IBond bond = this.container.getBond((IAtom)oc.getFocus(), atom);
             if (bond.isInRing()) {
                 if (!rmap.containsKey(atom))
                     floodFill(rmap, atom, ++rcount);
@@ -481,27 +498,23 @@ final class NonplanarBonds {
             bonds.add(bond);
             blen += GeometryUtil.getLength2D(bond);
         }
-
         int res = SPIRO_ACCEPT;
         if (rcount > 0 &&
-                (res = checkAndHandleRingSystems(bonds, rnums)) == SPIRO_REJECT)
+            (res = checkAndHandleRingSystems(bonds, rnums, rcount)) == SPIRO_REJECT)
             return;
-
-        for (IAtom atom : container.atoms())
+        for (IAtom atom : this.container.atoms())
             atom.setFlag(IChemObject.VISITED, false);
-        for (IBond bond : container.bonds())
+        for (IBond bond : this.container.bonds())
             bond.setFlag(IChemObject.VISITED, false);
-
         if (res == SPIRO_MIRROR) {
-            snapBondsToPosition(focus, bonds, 0, -60, 60, 120, -120, 180);
+            snapBondsToPosition(focus, bonds, new double[] { 0.0D, -60.0D, 60.0D, 120.0D, -120.0D, 180.0D });
         } else {
-            snapBondsToPosition(focus, bonds, 0, 60, -60, -120, 120, 180);
+            snapBondsToPosition(focus, bonds, new double[] { 0.0D, 60.0D, -60.0D, -120.0D, 120.0D, 180.0D });
         }
-
-        setBondDisplay(bonds.get(1), focus, DOWN);
-        setBondDisplay(bonds.get(2), focus, DOWN);
-        setBondDisplay(bonds.get(3), focus, UP);
-        setBondDisplay(bonds.get(4), focus, UP);
+        setBondDisplay(bonds.get(1), focus, IBond.Stereo.DOWN);
+        setBondDisplay(bonds.get(2), focus, IBond.Stereo.DOWN);
+        setBondDisplay(bonds.get(3), focus, IBond.Stereo.UP);
+        setBondDisplay(bonds.get(4), focus, IBond.Stereo.UP);
     }
 
 
@@ -517,7 +530,7 @@ final class NonplanarBonds {
      * @param rnums the ring membership
      * @return the status
      */
-    private int checkAndHandleRingSystems(List<IBond> bonds, List<Integer> rnums) {
+    private int checkAndHandleRingSystems(List<IBond> bonds, List<Integer> rnums, int rcount) {
 
         if (!isSpiro(rnums))
             return SPIRO_REJECT;
@@ -525,7 +538,7 @@ final class NonplanarBonds {
         // square planar
         if (bonds.size() == 4) {
 
-            // check for trans- pairings which we can't lay out at the moment
+            // check for trans-pairings which we can't lay out at the moment
             if (rnums.get(0).equals(rnums.get(2)) || rnums.get(1).equals(rnums.get(3)))
                 return SPIRO_REJECT;
 
@@ -583,7 +596,7 @@ final class NonplanarBonds {
         // octahedral
         if (bonds.size() == 6) {
 
-            // check for trans- pairings which we can't lay out at the moment
+            // check for trans-pairings which we can't lay out at the moment
             if (rnums.get(0) != 0 && rnums.get(0).equals(rnums.get(5)) ||
                     rnums.get(1) != 0 && rnums.get(1).equals(rnums.get(3)) ||
                     rnums.get(2) != 0 && rnums.get(2).equals(rnums.get(4)))
@@ -591,6 +604,18 @@ final class NonplanarBonds {
 
             // rotate such that there is a spiro (or no rings) in position 2/3 in the plane, these are laid out
             // adjacent so is the only place we can nicely place the spiro
+            if (rcount == 1 && rnums.get(0) != 0) {
+                int[] perms = Octahedral.PERMUTATIONS[0];
+                int best = 0;
+                for (int j = 24; j < perms.length; j += 24) {
+                    if (rnums.get(perms[j]) == 0 && rnums.get(perms[j + 6]) == 0) {
+                        best = j;
+                        break;
+                    }
+                }
+                permute(bonds, perms, best, 6);
+                permute(rnums, perms, best, 6);
+            }
             int rotate;
             if (rnums.get(2).equals(rnums.get(3)))
                 rotate = 0; // don't rotate
@@ -623,6 +648,12 @@ final class NonplanarBonds {
         }
 
         return SPIRO_ACCEPT;
+    }
+
+    private <T> void permute(List<T> bonds, int[] perm, int offset, int n) {
+        List<T> backup = new ArrayList<>(bonds);
+        for (int i = 0; i < n; i++)
+            bonds.set(i, backup.get(perm[offset + i]));
     }
 
     /**
@@ -691,6 +722,8 @@ final class NonplanarBonds {
     }
 
     private void setBondDisplay(IBond bond, IAtom focus, IBond.Stereo display) {
+        if (bond == null)
+            return;
         if (bond.getBegin().equals(focus))
             bond.setStereo(display);
         else
