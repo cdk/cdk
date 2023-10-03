@@ -38,7 +38,10 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.stereo.TrigonalBipyramidal;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -1276,7 +1279,27 @@ public final class Smarts {
                         num = IStereoElement.LEFT;
                         if (peek() == '@') {
                             next();
-                            num = IStereoElement.RIGHT;
+                            num = 2;
+                        } else if (nextIf("TH")) {
+                            if ((num = nextUnsignedInt()) < 0)
+                                return false;
+                            num |= IStereoElement.Tetrahedral;
+                        } else if (nextIf("AL")) {
+                            if ((num = nextUnsignedInt()) < 0)
+                                return false;
+                            num |= IStereoElement.Allenal;
+                        } else if (nextIf("SP")) {
+                            if ((num = nextUnsignedInt()) < 0)
+                                return false;
+                            num |= IStereoElement.SquarePlanar;
+                        } else if (nextIf("TB")) {
+                            if ((num = nextUnsignedInt()) < 0)
+                                return false;
+                            num |= IStereoElement.TrigonalBipyramidal;
+                        } else if (nextIf("OH")) {
+                            if ((num = nextUnsignedInt()) < 0)
+                                return false;
+                            num |= IStereoElement.Octahedral;
                         }
                         expr = new Expr(Expr.Type.STEREOCHEMISTRY, num);
                         // "or unspecified"
@@ -1750,6 +1773,97 @@ public final class Smarts {
             return null;
         }
 
+        private void collectStereoTypes(Set<Integer> types, Expr expr) {
+            while (true) {
+                switch (expr.type()){
+                    case STEREOCHEMISTRY:
+                        types.add(0xFF00 & expr.value());
+                        return;
+                    case AND:
+                    case OR:
+                        collectStereoTypes(types, expr.left());
+                        expr = expr.right();
+                        continue;
+                    case NOT:
+                        expr = expr.left();
+                        continue;
+                }
+                break;
+            }
+        }
+
+        private IAtom[] insertImplicitRefs(IAtom atom, Smarts.LocalNbrs nbrinfo, IAtom[] input, int degree, int required) {
+            if (degree == required)
+                return Arrays.<IAtom>copyOf(input, degree);
+            if (degree == 3 && required == 4) {
+                input[degree++] = atom;
+                if (nbrinfo.isFirst)
+                    swap((Object[])input, 2, 3);
+                return Arrays.<IAtom>copyOf(input, degree);
+            }
+            IAtom[] output = new IAtom[required];
+            int extra = required - degree;
+            int srcIdx = 0;
+            int dstIdx = 0;
+            int[] padded = new int[required];
+            if (!nbrinfo.isFirst)
+                output[dstIdx++] = input[srcIdx++];
+            while (extra-- > 0)
+                output[dstIdx++] = atom;
+            while (srcIdx < degree)
+                output[dstIdx++] = input[srcIdx++];
+            return output;
+        }
+
+        private void normalizeDegenerates(IStereoElement<IAtom, IAtom> elem, Expr expr) {
+            while (true) {
+                int type;
+                switch (expr.type()) {
+                    case STEREOCHEMISTRY:
+                        type = 0xFF00 & expr.value();
+                        if (type == IStereoElement.Octahedral) {
+                            elem.setConfigOrder(expr.value());
+                            Octahedral tmp = ((Octahedral)elem).normalize();
+                            int order = Octahedral.reorder(tmp.getCarriers(), elem
+                                    .getCarriers());
+                            expr.setPrimitive(Expr.Type.STEREOCHEMISTRY, 0x6100 | order);
+                            elem.setConfigOrder(0);
+                        } else if (type == IStereoElement.SquarePlanar) {
+                            int spOrder = expr.value() & 0xFF;
+                            if (spOrder == 1) {
+                                elem.setConfigOrder(1);
+                            } else if (spOrder == 2) {
+                                elem.setConfigOrder(10);
+                            } else if (spOrder == 3) {
+                                elem.setConfigOrder(4);
+                            }
+                            Octahedral tmp = ((Octahedral)elem).normalize();
+                            int order = Octahedral.reorder(tmp.getCarriers(), elem
+                                    .getCarriers());
+                            expr.setPrimitive(Expr.Type.STEREOCHEMISTRY, 0x6100 | order);
+                            elem.setConfigOrder(0);
+                        } else if (type == IStereoElement.TrigonalBipyramidal) {
+                            elem.setConfigOrder(expr.value());
+                            TrigonalBipyramidal tmp = ((TrigonalBipyramidal)elem).normalize();
+                            int order = TrigonalBipyramidal.reorder(tmp.getCarriers(), elem
+                                    .getCarriers());
+                            expr.setPrimitive(Expr.Type.STEREOCHEMISTRY, 0x5200 | order);
+                            elem.setConfigOrder(0);
+                        }
+                        return;
+                    case AND:
+                    case OR:
+                        normalizeDegenerates(elem, expr.left());
+                        expr = expr.right();
+                        continue;
+                    case NOT:
+                        expr = expr.left();
+                        continue;
+                }
+                break;
+            }
+        }
+
         // final check
         boolean finish() {
             // check for unclosed rings, components, and branches
@@ -1777,20 +1891,56 @@ public final class Smarts {
                 LocalNbrs nbrinfo = local.get(atom);
                 if (nbrinfo == null)
                     continue;
-                IAtom[] ligands = new IAtom[4];
+                IAtom[] ligands = new IAtom[6];
                 int     degree  = 0;
                 for (IBond bond : nbrinfo.bonds)
                     ligands[degree++] = bond.getOther(atom);
-                // add implicit neighbor, and move to correct position
-                if (degree == 3) {
-                    ligands[degree++] = atom;
-                    if (nbrinfo.isFirst)
-                        swap(ligands, 2, 3);
+
+                Expr expr = ((QueryAtom)atom).getExpression();
+                Set<Integer> types = new HashSet<>();
+                collectStereoTypes(types, expr);
+                if (types.isEmpty()) {
+                    this.error = "Missing stereochemistry type on a atom";
+                    return false;
                 }
-                if (degree == 4) {
-                    // Note the left and right is stored in the atom expression, we
-                    // only need the IStereoElement for the local ordering of neighbors
-                    mol.addStereoElement(new TetrahedralChirality(atom, ligands, 0));
+                if (types.size() > 1) {
+                    this.error = "Multiple stereochemistry types used on a single atom";
+                    return false;
+                }
+                int type = types.iterator().next();
+                if (type == 0) {
+                    if (degree == 3 || degree == 4)
+                        type = IStereoElement.Tetrahedral;
+                    else if (degree == 5)
+                        type = IStereoElement.TrigonalBipyramidal;
+                    else if (degree == 6)
+                        type = IStereoElement.Octahedral;
+                }
+
+                switch (type) {
+                    case IStereoElement.Tetrahedral:
+                        ligands = insertImplicitRefs(atom, nbrinfo, ligands, degree, 4);
+                        this.mol.addStereoElement((IStereoElement)new TetrahedralChirality(atom, ligands, 0));
+                        break;
+                    case IStereoElement.SquarePlanar:
+                        ligands = insertImplicitRefs(atom, nbrinfo, ligands, degree, 4);
+                        Octahedral spOctahedral = (new SquarePlanar(atom, ligands, 0)).asOctahedral();
+                        normalizeDegenerates((IStereoElement<IAtom, IAtom>)spOctahedral, expr);
+                        this.mol.addStereoElement((IStereoElement)spOctahedral);
+                        break;
+                    case IStereoElement.TrigonalBipyramidal:
+                        ligands = insertImplicitRefs(atom, nbrinfo, ligands, degree, 5);
+                        TrigonalBipyramidal tbpy = new TrigonalBipyramidal(atom, ligands, 0);
+                        normalizeDegenerates((IStereoElement<IAtom, IAtom>)tbpy, expr);
+                        this.mol.addStereoElement((IStereoElement)tbpy);
+                        break;
+                    case IStereoElement.Octahedral:
+                        ligands = insertImplicitRefs(atom, nbrinfo, ligands, degree, 6);
+                        Octahedral octahedral = new Octahedral(atom, ligands, 0);
+                        if (degree < 4)
+                            normalizeDegenerates((IStereoElement<IAtom, IAtom>)octahedral, expr);
+                        this.mol.addStereoElement((IStereoElement)octahedral);
+                        break;
                 }
             }
             // convert SMARTS up/down bond stereo to something we use to match
@@ -1892,6 +2042,15 @@ public final class Smarts {
                 return str.charAt(pos++);
             pos++;
             return '\0';
+        }
+
+        private boolean nextIf(String prefix) {
+            if (this.pos < this.str.length() &&
+                    this.str.startsWith(prefix, this.pos)) {
+                this.pos += prefix.length();
+                return true;
+            }
+            return false;
         }
 
         private static boolean isDigit(char c) {

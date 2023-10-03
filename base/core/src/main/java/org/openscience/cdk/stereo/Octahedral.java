@@ -26,6 +26,7 @@ package org.openscience.cdk.stereo;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -59,7 +60,7 @@ import java.util.List;
  */
 public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
 
-    private static final int[][] PERMUTATIONS = new int[][]{
+    public static final int[][] PERMUTATIONS = new int[][]{
 // @OH1
 {A, B, C, D, E, F,  A, C, D, E, B, F,  A, D, E, B, C, F,  A, E, B, C, D, F,
  B, A, E, F, C, D,  B, C, A, E, F, D,  B, E, F, C, A, D,  B, F, C, A, E, D,
@@ -315,5 +316,75 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
         return new Octahedral(focus,
                               carriers.toArray(new IAtom[6]),
                               cfg);
+    }
+
+    private static boolean same(List<IAtom> a, List<IAtom> b, int[] perm, int i) {
+        for(int j = i; j < i + 6; ++j) {
+            if (!((IAtom)b.get(j - i)).equals(a.get(perm[j]))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static int reorder(List<IAtom> current, List<IAtom> required) {
+        for(int order = 0; order < PERMUTATIONS.length; ++order) {
+            int[] local = PERMUTATIONS[order];
+
+            for(int k = 0; k < local.length; k += 6) {
+                if (same(current, required, local, k)) {
+                    return order + 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public boolean canBeTrigonalBipyramidal() {
+        int numExplicit = 0;
+        IAtom focus = (IAtom)this.getFocus();
+        Iterator var3 = this.getCarriers().iterator();
+
+        while(var3.hasNext()) {
+            IAtom atom = (IAtom)var3.next();
+            if (!atom.equals(focus)) {
+                ++numExplicit;
+            }
+        }
+
+        if (numExplicit > 3) {
+            return false;
+        } else {
+            Octahedral normalized = this.normalize();
+            List<IAtom> carriers = normalized.getCarriers();
+            int numEquatorial = 0;
+
+            for(int i = 1; i < 5; ++i) {
+                if (!((IAtom)carriers.get(i)).equals(focus)) {
+                    ++numEquatorial;
+                }
+            }
+
+            return numEquatorial <= 1;
+        }
+    }
+
+    public TrigonalBipyramidal asTrigonalBipyramidal() {
+        Octahedral normalized = this.normalize();
+        if (!normalized.canBeTrigonalBipyramidal()) {
+            return null;
+        } else {
+            IAtom focus = (IAtom)normalized.getFocus();
+            List<IAtom> carriers = normalized.getCarriers();
+            if (((IAtom)carriers.get(1)).equals(focus)) {
+                carriers.remove(1);
+            } else if (((IAtom)carriers.get(2)).equals(focus)) {
+                carriers.remove(2);
+            }
+
+            return new TrigonalBipyramidal((IAtom)this.getFocus(), (IAtom[])carriers.toArray(new IAtom[5]), 1);
+        }
     }
 }

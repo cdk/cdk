@@ -35,10 +35,17 @@ import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
+import org.openscience.cdk.stereo.TrigonalBipyramidal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
@@ -124,11 +131,24 @@ final class QueryStereoFilter implements Predicate<int[]> {
         for (final int u : queryStereoIndices) {
             switch (queryTypes[u]) {
                 case Tetrahedral:
-                    if (!checkTetrahedral(u, mapping)) return false;
+                    if (!checkTetrahedral(u, mapping))
+                        return false;
                     break;
                 case Geometric:
-                    if (!checkGeometric(u, otherIndex(u), mapping)) return false;
+                    if (!checkGeometric(u, otherIndex(u), mapping))
+                        return false;
                     break;
+                case Octahedral:
+                    if (!checkOctahedral(u, mapping))
+                        return false;
+                    break;
+                case TrigonalBipyramidal:
+                    if (!checkTrigonalBipyramidal(u, mapping))
+                        return false;
+                    break;
+                default:
+                    System.err.println("ERROR: Unhandled stereochemistry " + this.queryTypes[u]);
+                    return false;
             }
         }
         return true;
@@ -235,6 +255,99 @@ final class QueryStereoFilter implements Predicate<int[]> {
                                           .matches(targetAtom, 0);
     }
 
+    private boolean checkTrigonalBipyramidal(int u, int[] mapping) {
+        int v = mapping[u];
+        IAtom queryAtom = this.query.getAtom(u);
+        IAtom targetAtom = this.target.getAtom(v);
+        if (this.targetTypes[v] == null)
+            return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, 0);
+        TrigonalBipyramidal queryElement = (TrigonalBipyramidal) this.queryElements[u];
+        IStereoElement<IAtom, IAtom> targetElement = this.targetElements[v];
+        Set<IAtom> used = new HashSet<>();
+        List<IAtom> requiredOrdering = new ArrayList<>();
+        for (IAtom atom : queryElement.getCarriers()) {
+            IAtom mappedAtom = this.target.getAtom(mapping[(Integer) this.queryMap.get(atom)]);
+            used.add(mappedAtom);
+            requiredOrdering.add(mappedAtom);
+        }
+        List<IAtom> currentOrdering = new ArrayList<>();
+        if (this.targetTypes[v] == Type.TrigonalBipyramidal) {
+            TrigonalBipyramidal trigonalBipyramidal = null;
+            if (targetElement instanceof TrigonalBipyramidal)
+                trigonalBipyramidal = ((TrigonalBipyramidal) targetElement).normalize();
+            if (trigonalBipyramidal == null)
+                return false;
+            for (IAtom atom : trigonalBipyramidal.getCarriers()) {
+                if (used.contains(atom)) {
+                    currentOrdering.add(atom);
+                    continue;
+                }
+                currentOrdering.add((IAtom) trigonalBipyramidal.getFocus());
+            }
+        } else if (this.targetTypes[v] == Type.Octahedral) {
+            Octahedral octahedral = new Octahedral(targetAtom, currentOrdering.<IAtom>toArray(new IAtom[0]),
+                                                   targetElement.getConfigOrder());
+            TrigonalBipyramidal tbpy = octahedral.asTrigonalBipyramidal();
+            if (tbpy == null)
+                return false;
+            currentOrdering = tbpy.getCarriers();
+        } else {
+            return false;
+        }
+        int cfg = TrigonalBipyramidal.reorder(requiredOrdering, currentOrdering);
+        if (cfg < 0)
+            return false;
+        cfg |= 0x5200;
+        return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, cfg);
+    }
+
+    private boolean checkOctahedral(int u, int[] mapping) {
+        int v = mapping[u];
+        IAtom queryAtom = this.query.getAtom(u);
+        IAtom targetAtom = this.target.getAtom(v);
+        if (this.targetTypes[v] == null)
+            return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, 0);
+        Octahedral queryElement = (Octahedral) this.queryElements[u];
+        IStereoElement<IAtom,IAtom> targetElement = this.targetElements[v];
+        Set<IAtom> used = new HashSet<>();
+        List<IAtom> requiredOrdering = new ArrayList<>();
+        List<IAtom> currentOrdering = new ArrayList<>();
+        for (IAtom atom : queryElement.getCarriers()) {
+            IAtom mappedAtom = this.target.getAtom(mapping[(Integer) this.queryMap.get(atom)]);
+            used.add(mappedAtom);
+            requiredOrdering.add(mappedAtom);
+        }
+        if (this.targetTypes[v] == Type.Octahedral) {
+            Octahedral octahedral = null;
+            if (targetElement instanceof Octahedral)
+                octahedral = ((Octahedral) targetElement).normalize();
+            if (octahedral == null)
+                return false;
+            for (IAtom atom : octahedral.getCarriers()) {
+                if (used.contains(atom)) {
+                    currentOrdering.add(atom);
+                    continue;
+                }
+                currentOrdering.add((IAtom) octahedral.getFocus());
+            }
+        } else if (this.targetTypes[v] == Type.TrigonalBipyramidal) {
+            TrigonalBipyramidal tbpy = new TrigonalBipyramidal(targetAtom,
+                                                               currentOrdering.<IAtom>toArray(new IAtom[0]),
+                                                               targetElement.getConfigOrder());
+            Octahedral oc = tbpy.asOctahedral();
+            if (oc == null)
+                return false;
+            currentOrdering = oc.getCarriers();
+        } else {
+            return false;
+        }
+        int cfg = Octahedral.reorder(requiredOrdering, currentOrdering);
+        if (cfg < 0)
+            return false;
+        cfg |= 0x6100;
+        return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, cfg);
+    }
+
     /**
      * Transforms the neighbors {@code us} adjacent to {@code u} into the target
      * indices using the mapping {@code mapping}. The transformation accounts
@@ -291,8 +404,8 @@ final class QueryStereoFilter implements Predicate<int[]> {
             IBond[] qbonds = queryElement.getBonds();
             IBond[] tbonds = targetElement.getBonds();
 
-            // bond is undirected so we need to ensure v1 is the first atom in the bond
-            // we also need to to swap the substituents later
+            // bond is undirected, so we need to ensure v1 is the first atom in the bond
+            // we also need to swap the substituents later
             if (!queryElement.getStereoBond().getBegin().equals(query.getAtom(u1)))
                 swap(qbonds, 0, 1);
             if (!targetElement.getStereoBond().getBegin().equals(target.getAtom(v1)))
@@ -307,7 +420,7 @@ final class QueryStereoFilter implements Predicate<int[]> {
             tbond = target.getBond(target.getAtom(v1), target.getAtom(v2));
         }
 
-        Expr expr = ((QueryBond)qbond).getExpression();
+        Expr expr = ((QueryBond) qbond).getExpression();
         return expr.matches(tbond, config);
     }
 
@@ -402,11 +515,37 @@ final class QueryStereoFilter implements Predicate<int[]> {
                 indices[nElements++] = idx;
             } else if (element instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) element;
-                int idx1 = map.get(dbs.getStereoBond().getBegin());
-                int idx2 = map.get(dbs.getStereoBond().getEnd());
-                elements[idx2] = elements[idx1] = element;
-                types[idx1] = types[idx2] = Type.Geometric;
-                indices[nElements++] = idx1; // only visit the first atom
+                int idx1 = (Integer) map.get(dbs.getStereoBond().getBegin());
+                int idx2 = (Integer) map.get(dbs.getStereoBond().getEnd());
+                elements[idx1] = element;
+                elements[idx2] = element;
+                types[idx2] = Type.Geometric;
+                types[idx1] = Type.Geometric;
+                indices[nElements++] = idx1;
+                continue;
+            }
+            if (element instanceof Octahedral) {
+                Octahedral oc = (Octahedral) element;
+                int idx = (Integer) map.get(oc.getFocus());
+                elements[idx] = element;
+                types[idx] = Type.Octahedral;
+                indices[nElements++] = idx;
+                continue;
+            }
+            if (element instanceof SquarePlanar) {
+                Octahedral oc = ((SquarePlanar) element).asOctahedral();
+                int idx = (Integer) map.get(oc.getFocus());
+                elements[idx] = oc;
+                types[idx] = Type.Octahedral;
+                indices[nElements++] = idx;
+                continue;
+            }
+            if (element instanceof TrigonalBipyramidal) {
+                TrigonalBipyramidal tbpy = (TrigonalBipyramidal) element;
+                int idx = (Integer) map.get(tbpy.getFocus());
+                elements[idx] = tbpy;
+                types[idx] = Type.TrigonalBipyramidal;
+                indices[nElements++] = idx;
             }
         }
         return Arrays.copyOf(indices, nElements);
@@ -442,8 +581,7 @@ final class QueryStereoFilter implements Predicate<int[]> {
         return test(ints);
     }
 
-    // could be moved into the IStereoElement to allow faster introspection
-    private enum Type {
-        Tetrahedral, Geometric
+    enum Type {
+        Tetrahedral, Geometric, TrigonalBipyramidal, Octahedral;
     }
 }
