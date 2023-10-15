@@ -40,9 +40,9 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.tools.GridGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -204,7 +204,7 @@ public class ProteinPocketFinder {
         int[] minMax = {0, 0, 0, 0, 0, 0};
 
         for (IAtom atom : atoms) {
-            if (((PDBAtom) atom).getHetAtom()) {
+            if (((IPDBAtom) atom).getHetAtom()) {
                 continue;
             }
             gridPoint = gridGenerator.getGridPointFrom3dCoordinates(atom.getPoint3d());
