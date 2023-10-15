@@ -1,4 +1,4 @@
-/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2010,2023  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -21,8 +21,14 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.io.IChemObjectReader.Mode;
+
 /**
- * Interface for classes aimed to handle {@link IChemObjectReader} errors.
+ * Interface for classes aimed to handle {@link IChemObjectReader} errors. There
+ * are two kinds of errors: normal errors, and fatal errors. Users of the readers
+ * can opt to continue parsing the file (see {@link Mode}. However, fatal errors
+ * cannot be ignored, as the parser is not able to continue reading the file.
+ * The user should immediately halt reading the file.
  *
  * @cdk.module io
  * @cdk.githash
@@ -69,5 +75,48 @@ public interface IChemObjectReaderErrorHandler {
      * @param colEnd   End column in the file where the error is found.
      */
     void handleError(String message, int row, int colStart, int colEnd, Exception exception);
+
+    /**
+     * Method that should react on a fatal error message send by an
+     * {@link IChemObjectReader}. This error is fatal, and the state of
+     * reading is no longer defined.
+     *
+     * @param message Error found while reading.
+     */
+    void handleFatalError(String message);
+
+    /**
+     * Method that should react on a fatal error message send by an
+     * {@link IChemObjectReader}. This error is fatal, and the state of
+     * reading is no longer defined.
+     *
+     * @param message   Error found while reading.
+     * @param exception Exception thrown while reading.
+     */
+    void handleFatalError(String message, Exception exception);
+
+    /**
+     * Method that should react on a fatal error message send by an
+     * {@link IChemObjectReader}. This error is fatal, and the state of
+     * reading is no longer defined.
+     *
+     * @param message  Error found while reading.
+     * @param row      Row in the file where the fatal error is found.
+     * @param colStart Start column in the file where the fatal error is found.
+     * @param colEnd   End column in the file where the fatal error is found.
+     */
+    void handleFatalError(String message, int row, int colStart, int colEnd);
+
+    /**
+     * Method that should react on a fatal error message send by an
+     * {@link IChemObjectReader}. This error is fatal, and the state of
+     * reading is no longer defined.
+     *
+     * @param message   Error found while reading.
+     * @param exception Exception thrown while reading.
+     * @param colStart Start column in the file where the fatal error is found.
+     * @param colEnd   End column in the file where the fatal error is found.
+     */
+    void handleFatalError(String message, int row, int colStart, int colEnd, Exception exception);
 
 }
