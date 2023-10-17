@@ -715,7 +715,7 @@
                 <version>5.1.8</version>
                 <configuration>
                     <instructions>
-                        <Export-Package>org.openscience.*</Export-Package>
+                        <Export-Package>!${bundle.namespace}.test.*,${bundle.namespace}.*;version="${pom.version}"</Export-Package>
                     </instructions>
                     <noWarningProjectTypes>pom</noWarningProjectTypes>
                 </configuration>
