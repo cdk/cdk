@@ -31,11 +31,15 @@ import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -290,98 +294,60 @@ class MappingsTest {
     @Test
     @SuppressWarnings("unchecked")
     void count() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, true, true, true, false);
-        doCallRealMethod().when(iterator)
-                          .forEachRemaining(ArgumentMatchers.any(Consumer.class));
-
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        List<int[]> list = Arrays.asList(new int[0],
+                                             new int[0],
+                                             new int[0],
+                                             new int[0],
+                                             new int[0]);
+        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
         assertThat(ms.count(), is(5));
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void countUnique() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, true, true, false);
-        doCallRealMethod().when(iterator)
-                .forEachRemaining(ArgumentMatchers.any(Consumer.class));
-
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {0, 3, 4};
         int[] p4 = {0, 4, 3};
-
-        when(iterator.next()).thenReturn(p1, p2, p3, p4);
-
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        List<int[]> list = Arrays.asList(p1, p2, p3, p4);
+        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
         assertThat(ms.countUnique(), is(2));
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void countUnique2() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, true, true, false);
-        doCallRealMethod().when(iterator)
-                          .forEachRemaining(ArgumentMatchers.any(Consumer.class));
-
         int[] p1 = {0, 1};
         int[] p2 = {0, 2};
         int[] p3 = {0, 3};
         int[] p4 = {0, 4};
-
-        when(iterator.next()).thenReturn(p1, p2, p3, p4);
-
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        List<int[]> list = Arrays.asList(p1, p2, p3, p4);
+        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
         assertThat(ms.countUnique(), is(4));
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void countExclusive() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, true, true, false);
-        doCallRealMethod().when(iterator)
-                          .forEachRemaining(ArgumentMatchers.any(Consumer.class));
-
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {0, 3, 4};
         int[] p4 = {0, 4, 3};
-
-        when(iterator.next()).thenReturn(p1, p2, p3, p4);
-
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        List<int[]> list = Arrays.asList(p1, p2, p3, p4);
+        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
         assertThat(ms.exclusiveAtoms().count(), is(1));
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void countExclusive2() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, true, true, false);
-        doCallRealMethod().when(iterator)
-                          .forEachRemaining(ArgumentMatchers.any(Consumer.class));
-
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {5, 3, 4};
         int[] p4 = {5, 4, 3};
-
-        when(iterator.next()).thenReturn(p1, p2, p3, p4);
-
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        List<int[]> list = Arrays.asList(p1, p2, p3, p4);
+        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
         assertThat(ms.exclusiveAtoms().count(), is(2));
     }
 
