@@ -20,9 +20,11 @@ package org.openscience.cdk.inchi;
 
 import net.sf.jniinchi.INCHI_RET;
 
+import org.apache.logging.log4j.core.util.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -35,9 +37,11 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
+import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -175,6 +179,19 @@ class InChIToStructureTest extends CDKTestCase {
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
         assertThat(((IDoubleBondStereochemistry) se).getStereo(), is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
+    }
+
+    @Test
+    void inchiRadical() throws Exception {
+        InChIToStructure parser = new InChIToStructure("InChI=1S/C2H5/c1-2/h1H2,2H3",
+                                                       SilentChemObjectBuilder.getInstance());
+        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.getAtomContainer();
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer wtr = new MDLV2000Writer(sw)) {
+            wtr.write(mol);
+        }
+        assertThat(sw.toString(), containsString("M  RAD"));
     }
 
     @Test
