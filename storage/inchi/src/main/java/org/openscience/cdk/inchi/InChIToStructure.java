@@ -25,12 +25,14 @@ import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnainchi.InchiInput;
 import io.github.dan2097.jnainchi.InchiInputFromInchiOutput;
 import io.github.dan2097.jnainchi.InchiOptions;
+import io.github.dan2097.jnainchi.InchiRadical;
 import io.github.dan2097.jnainchi.InchiStatus;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnainchi.InchiStereoType;
 import io.github.dan2097.jnainchi.JnaInchi;
 import net.sf.jniinchi.INCHI_RET;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -227,6 +229,16 @@ public class InChIToStructure {
             cAt = molecule.getAtom(molecule.getAtomCount()-1);
             addHydrogenIsotopes(builder, cAt, 2, iAt.getImplicitDeuterium());
             addHydrogenIsotopes(builder, cAt, 3, iAt.getImplicitTritium());
+
+            InchiRadical radical = iAt.getRadical();
+            if (radical == InchiRadical.SINGLET) {
+                molecule.addSingleElectron(molecule.indexOf(cAt));
+            } else if (radical == InchiRadical.DOUBLET ||
+                       radical == InchiRadical.TRIPLET) {
+                // Information loss - we should make MDL SPIN_MULTIPLICITY avaliable to this API
+                molecule.addSingleElectron(molecule.indexOf(cAt));
+                molecule.addSingleElectron(molecule.indexOf(cAt));
+            }
         }
 
         List<InchiBond> bonds = input.getBonds();
