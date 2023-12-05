@@ -88,7 +88,7 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
         ILigand[] newLigands = new ILigand[ligands.length];
         System.arraycopy(ligands, 0, newLigands, 0, ligands.length);
 
-        Arrays.sort(newLigands, numberRule);
+        Arrays.sort(newLigands, this);
         // this above list is from low to high precendence, so we need to revert the array
         ILigand[] reverseLigands = new ILigand[newLigands.length];
         for (int i = 0; i < newLigands.length; i++) {
