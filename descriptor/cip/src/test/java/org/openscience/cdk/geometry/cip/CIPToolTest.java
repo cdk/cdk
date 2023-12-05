@@ -56,6 +56,11 @@ import org.openscience.cdk.stereo.StereoTool;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import java.io.BufferedReader;
+import java.io.StringReader;
+
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
