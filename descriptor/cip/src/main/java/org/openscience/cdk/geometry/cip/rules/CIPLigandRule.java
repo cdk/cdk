@@ -88,7 +88,7 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
         ILigand[] newLigands = new ILigand[ligands.length];
         System.arraycopy(ligands, 0, newLigands, 0, ligands.length);
 
-        //Should sort based on full CIP rule, not just based on atom number/mass
+        //Now sorts based on full CIP rule, not just based on atom number/mass
         Arrays.sort(newLigands, this);
         // this above list is from low to high precendence, so we need to revert the array
         ILigand[] reverseLigands = new ILigand[newLigands.length];
