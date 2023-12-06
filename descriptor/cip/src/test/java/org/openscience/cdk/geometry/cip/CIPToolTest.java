@@ -56,6 +56,11 @@ import org.openscience.cdk.stereo.StereoTool;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import java.io.BufferedReader;
+import java.io.StringReader;
+
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -765,5 +770,102 @@ class CIPToolTest extends CDKTestCase {
         ITetrahedralChirality tetraStereo = new TetrahedralChirality(a32, ligandAtoms, stereo);
 
         Assertions.assertEquals(CIP_CHIRALITY.NONE, CIPTool.getCIPChirality(mol, tetraStereo));
+    }
+
+
+    /**
+     * Tests if permuting the bond order in an input molfile will modify the
+     * CIP designations. Order of input bonds should not change CIP R/S designation.
+     */
+    @Test
+    public void testPermutingBondOrderingDoesNotChangeCIPDesignation() throws Exception {
+    	String read1 = "\n"
+    			+ "   JSDraw212042315552D\n"
+    			+ "\n"
+    			+ " 12 11  0  0  1  0              0 V2000\n"
+    			+ "   10.7120   -5.6160    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   12.0630   -6.3960    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   13.4140   -5.6160    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   14.7650   -6.3960    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   16.1160   -5.6160    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   17.4670   -6.3960    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   18.8180   -5.6160    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   20.1690   -6.3960    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   12.0630   -7.9560    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   13.4140   -4.0560    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   14.7650   -7.9560    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "   16.1160   -4.0560    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    			+ "  1  2  1  0  0  0  0\n"
+    			+ "  3  4  1  0  0  0  0\n"
+    			+ "  4  5  1  0  0  0  0\n"
+    			+ "  6  7  1  0  0  0  0\n"
+    			+ "  7  8  1  0  0  0  0\n"
+    			+ "  2  9  1  0  0  0  0\n"
+    			+ "  4 11  1  6  0  0  0\n";
+    	
+    	String read2 = "M  END";
+    			
+    	String[] bondLines = new String[] {
+    			"  2  3  1  0  0  0  0  \n",
+    			"  5 12  1  0  0  0  0  \n",
+    			"  5  6  1  0  0  0  0  \n",
+    			"  3 10  1  0  0  0  0  \n",
+    	};
+    	int[][] order= new int[][] {
+    		
+    			new int[] {0,1,2,3},
+    			new int[] {0,3,1,2},
+    			new int[] {0,2,3,1},
+    			
+    			new int[] {0,2,1,3},
+    			new int[] {0,3,2,1},
+    			new int[] {0,1,3,2},
+    			
+    			new int[] {1,0,2,3},
+    			new int[] {1,3,0,2},
+    			new int[] {1,2,3,0},
+    			
+    			new int[] {1,2,0,3},
+    			new int[] {1,3,2,0},
+    			new int[] {1,0,3,2},
+    			
+    			new int[] {2,0,1,3},
+    			new int[] {2,3,0,1},
+    			new int[] {2,1,3,0},
+    			
+    			new int[] {2,1,0,3},
+    			new int[] {2,3,1,0},
+    			new int[] {2,0,3,1},
+
+    			new int[] {3,0,1,2},
+    			new int[] {3,2,0,1},
+    			new int[] {3,1,2,0},
+    			
+    			new int[] {3,1,0,2},
+    			new int[] {3,2,1,0},
+    			new int[] {3,0,2,1},
+    			
+    	};
+    	
+    	for(int[] ord:order) {
+    		StringBuilder full = new StringBuilder(read1);
+    		for(int k:ord) {
+    			full.append(bondLines[k]);    			
+    		}
+    		full.append(read2); 
+    		IAtomContainer mol;
+        	try(IteratingSDFReader reader = new IteratingSDFReader(new BufferedReader(new StringReader(full.toString())),SilentChemObjectBuilder.getInstance())){
+    			mol = reader.next();			
+    		}
+
+            CIPTool.label(mol);
+            
+            for (IAtom atom : mol.atoms()) {
+            	Object p = atom.getProperty(CDKConstants.CIP_DESCRIPTOR);
+            	if(p!=null) {
+            		Assertions.assertEquals(CIP_CHIRALITY.S.toString(),p);
+            	}
+            }
+    	}
     }
 }
