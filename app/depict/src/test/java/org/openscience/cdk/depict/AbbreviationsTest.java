@@ -829,6 +829,19 @@ class AbbreviationsTest {
         assertThat(sgroups.size(), is(0));
     }
 
+    @Test
+    void testAttachments() throws Exception {
+        IAtomContainer mol = smi("*C(=O)OCCC");
+        Abbreviations factory = new Abbreviations();
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_LINKERS);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("CO"));
+        assertThat(sgroups.get(0).getBonds().size(), is(2));
+    }
+
 
     @Test
     void multipleDisconnectedAbbreviations() throws Exception {
