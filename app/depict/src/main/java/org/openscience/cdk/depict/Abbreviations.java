@@ -678,7 +678,9 @@ public class Abbreviations implements Iterable<String> {
 
             boolean okay = false;
             if (attach.getAtomicNumber() != IAtom.C &&
-                    options.contains(Option.AUTO_CONTRACT_HETERO))
+                attach.getAtomicNumber() != IAtom.H &&
+                attach.getAtomicNumber() != 0 &&
+                options.contains(Option.AUTO_CONTRACT_HETERO))
                 okay = true;
             else if (effectiveDegree(attach, allCrossingBonds) <= 1 &&
                     options.contains(Option.AUTO_CONTRACT_TERMINAL))
@@ -713,12 +715,11 @@ public class Abbreviations implements Iterable<String> {
                     IAtom nbr = bond.getOther(attach);
 
                     // can only contract terminal bonds
-                    if (!usedAtoms.contains(nbr) &&
-                            mol.getConnectedBondsCount(nbr) == 1) {
-
-                        if (nbr.getMassNumber() != null ||
-                                (nbr.getFormalCharge() != null && nbr.getFormalCharge() != 0) ||
-                                isNonMethylTerminalCarbon(nbr)) {
+                    if (!usedAtoms.contains(nbr) && mol.getConnectedBondsCount(nbr) == 1) {
+                        if (nbr.getAtomicNumber() == 0 ||
+                            nbr.getMassNumber() != null ||
+                            (nbr.getFormalCharge() != null && nbr.getFormalCharge() != 0) ||
+                            isNonMethylTerminalCarbon(nbr)) {
                             newbonds.add(bond);
                         } else if (nbr.getAtomicNumber() == 1) {
                             hcount++;
