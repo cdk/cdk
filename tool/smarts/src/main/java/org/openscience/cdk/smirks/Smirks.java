@@ -256,7 +256,8 @@ public class Smirks {
         List<TransformOp> ops = new ArrayList<>();
         determineHydrogenMovement(ops, state);
         determineAtomChanges(ops, state);
-        determineBondChanges(ops, state);
+        if (!determineBondChanges(ops, state))
+            return false;
         determineStereoChanges(ops, state);
 
         checkValence(state, ops);
@@ -752,13 +753,16 @@ public class Smirks {
                         BinaryExprValue begArom = isAromatic(pair[1].getBegin());
                         BinaryExprValue endArom = isAromatic(pair[1].getEnd());
                         if (begArom.equals(BinaryExprValue.FALSE) || endArom.equals(BinaryExprValue.FALSE)) {
-                            state.warning("Cannot determine bond order for newly created bond (presumed aliphatic single)", pair[1]);
+                            state.warning("Cannot determine bond order for newly created bond (presumed aliphatic single due to attached atoms)", pair[1]);
                             ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, 1, 0));
                         } else if (begArom.equals(BinaryExprValue.TRUE) && endArom.equals(BinaryExprValue.TRUE)) {
-                            state.warning("Cannot determine bond order for newly created bond (presumed aromatic single)", pair[1]);
+                            state.warning("Cannot determine bond order for newly created bond (presumed aromatic single due to attached atoms)", pair[1]);
                             ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, 1, 1));
                         } else {
-                            return state.error("Cannot determine bond order for newly created bond");
+                            if (state.opts.contains(SmirksOption.PEDANTIC))
+                                return state.error("Cannot determine bond order for newly created bond");
+                            state.warning("Cannot determine bond order for newly created bond (presumed aliphatic single)", pair[1]);
+                            ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, 1, 0));
                         }
                     } else {
                         ops.add(new TransformOp(TransformOp.Type.NewBond, begIdx, endIdx, rgt.val, 0));
