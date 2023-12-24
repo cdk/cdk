@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -200,6 +201,18 @@ class AbbreviationLabelTest {
         assertThat(texts.get(0).style, is(AbbreviationLabel.STYLE_ITALIC));
         assertThat(texts.get(1).text, is("Bu"));
         assertThat(texts.get(1).style, is(AbbreviationLabel.STYLE_NORMAL));
+    }
+
+    @Test
+    void formatTertBuNormButyl() {
+        List<String> tokens = new ArrayList<>();
+        AbbreviationLabel.parse("nButBu", tokens);
+        MatcherAssert.assertThat(tokens.size(), is(2));
+        assertThat(tokens, is(Arrays.asList("nBu", "tBu")));
+        tokens.clear();
+        AbbreviationLabel.parse("nButOH", tokens);
+        MatcherAssert.assertThat(tokens.size(), is(3));
+        assertThat(tokens, is(Arrays.asList("nBut", "O", "H")));
     }
 
     @Test

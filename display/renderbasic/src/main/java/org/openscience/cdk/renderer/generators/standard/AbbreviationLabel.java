@@ -214,6 +214,16 @@ final class AbbreviationLabel {
 
             // a valid symbol token
             if ((last = findPrefix(SYMBOL_TRIE, label, i, -1)) > 0) {
+
+                // ambiguity handling, nButBu => nBut Bu vs nBu tBu
+                if (last + 1 < label.length() &&
+                    label.charAt(last-1) == 't' &&
+                    label.charAt(last) == 'B' &&
+                    label.charAt(last+1) == 'u') {
+                    // But => Bu
+                    last--;
+                }
+
                 i += (last - i);
                 // an optional number suffix e.g. O2 F3 Ph3 etc.
                 while (i < len && isDigit(label.charAt(i))) {
