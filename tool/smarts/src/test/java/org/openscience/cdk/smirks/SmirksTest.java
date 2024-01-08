@@ -62,15 +62,15 @@ class SmirksTest {
     private static final SmilesParser SMIPAR = new SmilesParser(BUILDER);
     private static final SmilesGenerator SMIGEN = new SmilesGenerator(SmiFlavor.Default | SmiFlavor.UseAromaticSymbols);
 
-    static void assertTransform(String smiles, String smirks, String expected, SmirksOption ... options) throws Exception {
+    static void assertTransform(String smiles, String smirks, String expected, SmirksOption... options) throws Exception {
         assertTransform(smiles, smirks, new String[]{expected}, Transform.Mode.Exclusive, options);
     }
 
-    static void assertTransform(String smiles, String smirks, Transform transform, String expected, SmirksOption ... options) throws Exception {
+    static void assertTransform(String smiles, String smirks, Transform transform, String expected, SmirksOption... options) throws Exception {
         assertTransform(smiles, smirks, transform, new String[]{expected}, Transform.Mode.Exclusive, options);
     }
 
-    static void assertTransform(String smiles, String smirks, String[] expected, Transform.Mode mode, SmirksOption ... options) throws Exception {
+    static void assertTransform(String smiles, String smirks, String[] expected, Transform.Mode mode, SmirksOption... options) throws Exception {
         assertTransform(smiles, smirks, new Transform(), expected, mode, options);
     }
 
@@ -79,7 +79,7 @@ class SmirksTest {
                                 Transform transform,
                                 String[] expected,
                                 Transform.Mode mode,
-                                SmirksOption ... options) throws Exception {
+                                SmirksOption... options) throws Exception {
         IAtomContainer mol = SMIPAR.parseSmiles(smiles);
         assertTrue(Smirks.parse(transform, smirks, options), transform.message());
         if (transform.message() != null) {
@@ -116,8 +116,8 @@ class SmirksTest {
         StackTraceElement entry = null;
         for (StackTraceElement e : elems) {
             if (e.getMethodName().equals("getStackTrace") ||
-                e.getMethodName().equals("assertTransform") ||
-                e.getMethodName().equals("findEntryPoint"))
+                    e.getMethodName().equals("assertTransform") ||
+                    e.getMethodName().equals("findEntryPoint"))
                 continue;
             entry = e;
             break;
@@ -223,13 +223,13 @@ class SmirksTest {
         assertTrue(Smirks.parse(transform, ">>c1ccccc~1"));
         assertThat(transform.message(),
                    containsString("Cannot determine bond order for newly created bond (presumed aromatic single)\n" +
-                                  ">>c1ccccc~1\n" +
-                                  "         ^\n"));
+                                          ">>c1ccccc~1\n" +
+                                          "         ^\n"));
         assertTrue(Smirks.parse(transform, ">>c~1ccccc1"));
         assertThat(transform.message(),
                    containsString("Cannot determine bond order for newly created bond (presumed aromatic single)\n" +
-                                  ">>c~1ccccc1\n" +
-                                  "   ^\n"));
+                                          ">>c~1ccccc1\n" +
+                                          "   ^\n"));
     }
 
     @Test
@@ -1520,6 +1520,18 @@ class SmirksTest {
                         SmirksOption.RECOMPUTE_HYDROGENS);
     }
 
+    @Test
+    void testPedanticUndefinedBondErrors() throws Exception {
+        Transform transform = new Transform();
+        Assertions.assertFalse(Smirks.parse(transform,
+                                            "[*D1:1].[*D1:2]>>[*:1][*:2]",
+                                            SmirksOption.PEDANTIC));
+        Assertions.assertEquals("Cannot determine bond order for newly created bond",
+                                transform.message());
+        Assertions.assertTrue(Smirks.parse(transform,
+                                           "[*D1:1].[*D1:2]>>[*:1]-[*:2]",
+                                           SmirksOption.PEDANTIC));
+    }
 
     @Disabled
     @Test
