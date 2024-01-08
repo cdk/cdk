@@ -366,17 +366,14 @@ public class CxSmilesGenerator {
                 }
             }
 
-            datasgroups.sort(new Comparator<CxDataSgroup>() {
-                @Override
-                public int compare(CxDataSgroup a, CxDataSgroup b) {
-                    int cmp;
-                    cmp = a.field.compareTo(b.field);
-                    if (cmp != 0) return cmp;
-                    cmp = a.value.compareTo(b.value);
-                    if (cmp != 0) return cmp;
-                    cmp = CxSmilesGenerator.compare(comp, a.atoms, b.atoms);
-                    return cmp;
-                }
+            datasgroups.sort((a, b) -> {
+                int cmp;
+                cmp = a.field.compareTo(b.field);
+                if (cmp != 0) return cmp;
+                cmp = a.value.compareTo(b.value);
+                if (cmp != 0) return cmp;
+                cmp = compare(comp, a.atoms, b.atoms);
+                return cmp;
             });
 
             for (CxDataSgroup cxDataSgroup : datasgroups) {
@@ -390,12 +387,15 @@ public class CxSmilesGenerator {
                 sb.append(':');
                 if (cxDataSgroup.value != null)
                     sb.append(cxDataSgroup.value);
-                sb.append(':');
-                if (cxDataSgroup.operator != null)
-                    sb.append(cxDataSgroup.operator);
-                sb.append(':');
-                if (cxDataSgroup.unit != null)
-                    sb.append(cxDataSgroup.unit);
+                if (cxDataSgroup.operator != null || cxDataSgroup.unit != null) {
+                    sb.append(':');
+                    if (cxDataSgroup.operator != null)
+                        sb.append(cxDataSgroup.operator);
+                    if (cxDataSgroup.unit != null) {
+                        sb.append(':');
+                        sb.append(cxDataSgroup.unit);
+                    }
+                }
                 // fmt (t/f/n) + coords?
             }
         }
