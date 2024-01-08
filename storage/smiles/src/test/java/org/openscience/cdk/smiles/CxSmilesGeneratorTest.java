@@ -25,16 +25,22 @@ package org.openscience.cdk.smiles;
 
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -203,5 +209,19 @@ class CxSmilesGeneratorTest {
         IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](O)C1CCCCC1 |r|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
         assertThat(smigen.create(mol), is("C[C@H](O)[C@H](O)C1CCCCC1"));
+    }
+
+    @Test
+    void testReactionSgroups() throws Exception {
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles + SmiFlavor.CxDataSgroups);
+        IReaction reaction = SilentChemObjectBuilder.getInstance().newReaction();
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabData);
+        sgroup.putValue(SgroupKey.DataFieldName, "cdk.Arrow");
+        sgroup.putValue(SgroupKey.Data, "NGO");
+        reaction.setProperty(CDKConstants.CTAB_SGROUPS,
+                             Collections.singletonList(sgroup));
+        assertThat(smigen.create(reaction),
+                   is(">> |SgD::cdk.Arrow:NGO|"));
     }
 }

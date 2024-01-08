@@ -548,7 +548,11 @@ public final class SmilesGenerator {
         IAtomContainer    agentPart    = reaction.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer    productPart  = reaction.getBuilder().newInstance(IAtomContainer.class);
 
-        List<Sgroup> sgroups = new ArrayList<>();
+        List<Sgroup> sgroups = reaction.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null)
+            sgroups = new ArrayList<>();
+        else
+            sgroups = new ArrayList<>(sgroups); // ensure not immutable
 
         for (IAtomContainer reactant : reactants.atomContainers()) {
             reactantPart.add(reactant);
