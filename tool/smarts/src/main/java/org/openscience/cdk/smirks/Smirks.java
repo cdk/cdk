@@ -257,7 +257,7 @@ public class Smirks {
         determineHydrogenMovement(ops, state);
         determineAtomChanges(ops, state);
         if (!determineBondChanges(ops, state))
-            return false;
+            return transform.setError(state.getMessage());
         determineStereoChanges(ops, state);
 
         checkValence(state, ops);
@@ -718,6 +718,7 @@ public class Smirks {
 
     private static boolean determineBondChanges(List<TransformOp> ops,
                                                 SmirksState state) {
+
         for (IBond[] pair : state.bondPairs) {
             int begIdx = pair[0] == null ? state.atomidx.get(pair[1].getBegin()) : state.atomidx.get(pair[0].getBegin());
             int endIdx = pair[0] == null ? state.atomidx.get(pair[1].getEnd()) : state.atomidx.get(pair[0].getEnd());
