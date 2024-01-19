@@ -76,6 +76,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static java.util.Comparator.comparingInt;
 
@@ -191,6 +193,164 @@ public class StructureDiagramGenerator {
     public final void generateCoordinates(IAtomContainer mol) throws CDKException {
         setMolecule(mol, false);
         generateCoordinates();
+    }
+
+    /**
+     * We will be caching coordinates on a substructure {@link Pattern} which
+     * is passed int. To ensure consistent behaviour in a multithreading
+     * environment we use a static global lock.
+     */
+    private static final ReadWriteLock RWLOCK = new ReentrantReadWriteLock();
+
+    private static Map<IAtom, IAtom> getFirstMapping(IAtomContainer mol, Pattern pattern) {
+        if (mol == null) return null;
+        Iterator<Map<IAtom, IAtom>> iterator = pattern.matchAll(mol).toAtomMap().iterator();
+        return iterator.hasNext() ? iterator.next() : null;
+    }
+
+    // determine out actual template part, if an atom is in a chain
+    // in the pattern but a ring in the full molecule we should not
+    // use the coordinates
+    private static IAtomContainer findPartToAlign(IAtomContainer mol, IAtomContainer cpy) {
+        Cycles.markRingAtomsAndBonds(mol);
+        for (IAtom atom : cpy.atoms())
+            atom.setFlag(CDKConstants.VISITED, atom.isInRing());
+        Cycles.markRingAtomsAndBonds(cpy);
+        Set<IAtom> remove = new HashSet<>();
+        for (IAtom atom : cpy.atoms()) {
+            if (!atom.isInRing() && atom.getFlag(CDKConstants.VISITED) && atom.getBondCount() > 1)
+                remove.add(atom);
+        }
+        for (IAtom atom : remove)
+            cpy.removeAtom(atom);
+
+        // largest connect component only
+        if (!ConnectivityChecker.isConnected(cpy)) {
+            IAtomContainer best = null;
+            for (IAtomContainer part : ConnectivityChecker.partitionIntoMolecules(cpy)) {
+                if (best == null || part.getBondCount() > best.getBondCount())
+                    best = part;
+            }
+            cpy = best;
+            assert cpy != null;
+        }
+        return cpy;
+    }
+
+    /**
+     * Generate coordinates aligned to a reference based on the provided
+     * pattern. The pattern is matched against both the input and reference
+     * molecules. The reference coordinates are generated and scaled
+     * accordingly if needed. The part of the pattern which can be aligned
+     * (consistent ring flags) is then copied and fixed in place before laying
+     * out the rest of the molecule.
+     * <br/>
+     * Note: An internal read/write lock is used to ensure consistency in
+     * threaded environments.
+     *
+     * @param mol     molecule
+     * @param ref     reference molecule (may be null)
+     * @param pattern the substructure pattern to match
+     * @throws CDKException there was a problem generating the layout
+     */
+    public final void generateAlignedCoordinates(IAtomContainer mol, IAtomContainer ref, Pattern pattern) throws CDKException {
+        Set<IAtom> afix = new HashSet<>();
+
+        Map<IAtom, IAtom> molMapping = getFirstMapping(mol, pattern);
+        Map<IAtom, IAtom> refMapping = getFirstMapping(ref, pattern);
+
+        if (refMapping != null) {
+            if (!GeometryUtil.has2DCoordinates(ref)) {
+                try {
+                    RWLOCK.writeLock().lock();
+                    generateCoordinates(ref);
+                } finally {
+                    RWLOCK.writeLock().unlock();
+                }
+            }
+            // rescale if needed
+            if (Math.abs(GeometryUtil.getBondLengthMedian(ref) - bondLength) > 0.1) {
+                try {
+                    RWLOCK.writeLock().lock();
+                    GeometryUtil.scaleMolecule(ref,
+                                               bondLength / GeometryUtil.getBondLengthMedian(ref));
+                } finally {
+                    RWLOCK.writeLock().unlock();
+                }
+            }
+        }
+
+        if (molMapping != null) {
+            IAtomContainer cpy = mol.getBuilder().newAtomContainer();
+            AtomContainerManipulator.copy(cpy, mol, molMapping.values());
+            cpy = findPartToAlign(mol, cpy);
+
+            for (IAtom atom : cpy.atoms())
+                afix.add(atom);
+
+            // initialize any coordinates that are store in the pattern if
+            // there was no reference molecule provided (i.e. they have been
+            // cached for substructure layout)
+            if (refMapping == null) {
+                try {
+                    RWLOCK.readLock().lock();
+                    for (Map.Entry<IAtom, IAtom> e : molMapping.entrySet()) {
+                        if (e.getKey().getPoint2d() != null)
+                            e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
+                        else
+                            e.getValue().setPoint2d(null);
+                    }
+                } finally {
+                    RWLOCK.readLock().unlock();
+                }
+            } else {
+                for (Map.Entry<IAtom, IAtom> e : molMapping.entrySet()) {
+                    IAtom refAtom = refMapping.get(e.getKey());
+                    IAtom molAtom = e.getValue();
+                    // maybe need the compatibility check here
+                    if (refAtom.getPoint2d() != null && afix.contains(molAtom))
+                        molAtom.setPoint2d(new Point2d(refAtom.getPoint2d()));
+                    else
+                        molAtom.setPoint2d(null);
+                }
+            }
+
+            if (!GeometryUtil.has2DCoordinates(cpy)) {
+                setMolecule(cpy, false);
+                generateCoordinates();
+            }
+
+            // backup coordinates for future calls
+            if (refMapping == null) {
+                try {
+                    RWLOCK.writeLock().lock();
+                    for (Map.Entry<IAtom, IAtom> e : molMapping.entrySet())
+                        e.getKey().setPoint2d(new Point2d(e.getValue().getPoint2d()));
+                } finally {
+                    RWLOCK.writeLock().unlock();
+                }
+            }
+        }
+
+        // reset the ring flags and generate the rest
+        Cycles.markRingAtomsAndBonds(mol);
+        setMolecule(mol, false, afix, Collections.emptySet());
+        generateCoordinates();
+    }
+
+
+    /**
+     * Generate coordinates aligned, the atoms in substructure pattern is used to
+     * cache/provide the coordinates. If no coordinates are present the
+     * substructure from the molecule is generated first and it's coordinates
+     * cached. If an atom in the
+     *
+     * @param mol     molecule
+     * @param pattern the substructure pattern to match (will be modified)
+     * @throws CDKException there was a problem generating the layout
+     */
+    public final void generateAlignedCoordinates(IAtomContainer mol, Pattern pattern) throws CDKException {
+        generateAlignedCoordinates(mol, null, pattern);
     }
 
     /**
