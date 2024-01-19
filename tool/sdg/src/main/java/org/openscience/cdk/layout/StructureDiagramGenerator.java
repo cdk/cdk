@@ -342,7 +342,7 @@ public class StructureDiagramGenerator {
     /**
      * Generate coordinates aligned, the atoms in substructure pattern is used to
      * cache/provide the coordinates. If no coordinates are present the
-     * substructure from the molecule is generated first and it's coordinates
+     * substructure from the molecule is generated first and its coordinates
      * cached. If an atom in the
      *
      * @param mol     molecule
