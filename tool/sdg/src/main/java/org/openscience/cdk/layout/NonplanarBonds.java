@@ -28,14 +28,20 @@ import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.Atropisomeric;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
@@ -55,6 +61,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
@@ -1328,12 +1335,19 @@ final class NonplanarBonds {
         return btypes;
     }
 
+    private enum Symmetry {
+        Unknown,
+        Asymmetric,
+        Symmetric
+    }
+
     /**
      * Locates double bonds to mark as unspecified stereochemistry.
      *
      * @return set of double bonds
      */
     private List<IBond> findUnspecifiedDoubleBonds(int[][] adjList) {
+        long[] symmetry = null;
         List<IBond> unspecifiedDoubleBonds = new ArrayList<>();
         for (IBond bond : container.bonds()) {
             // non-double bond, ignore it
@@ -1365,31 +1379,115 @@ final class NonplanarBonds {
             if (!hasOnlyPlainBonds(beg, bond) || !hasOnlyPlainBonds(end, bond))
                 continue;
 
-            if (hasLinearEqualPaths(adjList, beg, end) || hasLinearEqualPaths(adjList, end, beg))
+            Symmetry symBeg = isSymmetric(adjList, beg, end, bond);
+            Symmetry symEnd = isSymmetric(adjList, end, beg, bond);
+            if (symBeg == Symmetry.Symmetric || symEnd == Symmetry.Symmetric)
                 continue;
-
-            unspecifiedDoubleBonds.add(bond);
+            // expensive automorphism test needed to verify double bond stereo
+            if (symBeg == Symmetry.Asymmetric &&
+                    symEnd == Symmetry.Asymmetric) {
+                unspecifiedDoubleBonds.add(bond);
+            } else {
+                if (symmetry == null)
+                    symmetry = Canon.symmetry(container, graph);
+                if (canHaveStereo(bond, symmetry))
+                    unspecifiedDoubleBonds.add(bond);
+            }
         }
         return unspecifiedDoubleBonds;
     }
 
-    private boolean hasLinearEqualPaths(int[][] adjList, int start, int prev) {
-        int a = -1;
-        int b = -1;
+    /**
+     * Determines if a double bond can support stereo (the hard way). After
+     * the preliminary fail-fast checks we need to verify if a bond is actually
+     * unspecified or not.
+     * <br/>
+     * 1. To do this we first check the canonical symmetry partition, note this does
+     * not account for stereochemistry. If both neighbors don't have any
+     * identical atoms (all atoms in their own partition cell/symmetry class)
+     * then the bond can be stereogenic and should be marked as such.
+     * <br/>
+     * 2. If that check fails, then we do the ultimate test which is we assign
+     * the stereochemistry and see if it matches it's self inverted. In other
+     * words, we cannot match on to our mirror image.
+     *
+     * @param bond the bond
+     * @param symmetry the symmetry
+     * @return the bond can have stereochemistry
+     */
+    private boolean canHaveStereo(IBond bond, long[] symmetry) {
+        IAtom beg = bond.getBegin();
+        IAtom end = bond.getEnd();
+        Set<Long> begSymCls = container.getConnectedBondsList(beg)
+                                     .stream()
+                                     .filter(b -> b != bond)
+                                     .map(b -> symmetry[container.indexOf(b.getOther(beg))])
+                                     .collect(Collectors.toSet());
+        Set<Long> endSymCls = container.getConnectedBondsList(end)
+                                     .stream()
+                                     .filter(b -> b != bond)
+                                     .map(b -> symmetry[container.indexOf(b.getOther(end))])
+                                     .collect(Collectors.toSet());
+
+        // if the number of symmetry classes + 1 is the neighbour count they are all distinct
+        // +1 because we skipped the double bond connecting these two atoms
+        if (begSymCls.size() + 1 == container.getConnectedBondsCount(beg) &&
+            endSymCls.size() + 1 == container.getConnectedBondsCount(end))
+            return true;
+
+        // OK now we need to pull out the bit guns
+
+        if (bond.getContainer() == null)
+            return true; // not an AtomContainer2 impl, so presume true
+
+        List<IStereoElement> backup = new ArrayList<>();
+        for (IStereoElement se : container.stereoElements())
+            backup.add(se);
+        if (backup.isEmpty())
+            return false;
+        IBond[] refBonds = new IBond[]{
+                container.getConnectedBondsList(beg).stream().filter(b -> b != bond)
+                         .findFirst().get(),
+                container.getConnectedBondsList(end).stream().filter(b -> b != bond)
+                         .findFirst().get()
+        };
+        container.addStereoElement(new DoubleBondStereochemistry(bond, refBonds, IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        IQueryAtomContainer query = QueryAtomContainer.create(container,
+                                                              Expr.Type.ELEMENT,
+                                                              Expr.Type.IS_IN_RING,
+                                                              Expr.Type.IS_AROMATIC,
+                                                              Expr.Type.ISOTOPE,
+                                                              Expr.Type.FORMAL_CHARGE,
+                                                              Expr.Type.ALIPHATIC_ORDER,
+                                                              Expr.Type.TOTAL_DEGREE,
+                                                              Expr.Type.TOTAL_H_COUNT,
+                                                              Expr.Type.STEREOCHEMISTRY);
+        container.addStereoElement(new DoubleBondStereochemistry(bond, refBonds, IDoubleBondStereochemistry.Conformation.TOGETHER));
+        boolean matched = Pattern.findSubstructure(query).matches(container);
+        container.setStereoElements(backup);
+        return !matched;
+    }
+
+    private Symmetry isSymmetric(int[][] adjList, int start, int prev, IBond bond) {
+        int nbor1 = -1;
+        int nbor2 = -1;
         for (int w : adjList[start]) {
-            if (w == prev)    continue;
-            else if (a == -1) a = w;
-            else if (b == -1) b = w;
-            else return false; // ???
+            if (w == prev) continue;
+            else if (nbor1 == -1) nbor1 = w;
+            else if (nbor2 == -1) nbor2 = w;
+            else return Symmetry.Asymmetric; // extra bond???
         }
-        if (b < 0)
-            return false;
+        // only one explicit neighbour, it is asymmetric!
+        if (nbor2 < 0)
+            return Symmetry.Asymmetric;
         Set<IAtom> visit = new HashSet<>();
-        IAtom aAtom = container.getAtom(a);
-        IAtom bAtom = container.getAtom(b);
+        IAtom aAtom = container.getAtom(nbor1);
+        IAtom bAtom = container.getAtom(nbor2);
         visit.add(container.getAtom(start));
-        if (aAtom.isInRing() || bAtom.isInRing())
-            return false;
+        if (aAtom.isInRing() || bAtom.isInRing()) {
+            // more work needed
+            return Symmetry.Unknown;
+        }
         IAtom aNext = aAtom;
         IAtom bNext = bAtom;
         while (aNext != null && bNext != null) {
@@ -1402,33 +1500,37 @@ final class NonplanarBonds {
 
             // different atoms
             if (notEqual(aAtom.getAtomicNumber(), bAtom.getAtomicNumber()))
-                return false;
+                return Symmetry.Asymmetric;
             if (notEqual(aAtom.getFormalCharge(), bAtom.getFormalCharge()))
-                return false;
+                return Symmetry.Asymmetric;
             if (notEqual(aAtom.getMassNumber(), bAtom.getMassNumber()))
-                return false;
+                return Symmetry.Asymmetric;
 
             int hCntA = aAtom.getImplicitHydrogenCount();
             int hCntB = bAtom.getImplicitHydrogenCount();
             int cntA = 0, cntB = 0;
-            for (int w : adjList[atomToIndex.get(aAtom)]) {
-                IAtom atom = container.getAtom(w);
+            for (IBond b : container.getConnectedBondsList(aAtom)) {
+                if (b.getOrder() != SINGLE)
+                    return Symmetry.Unknown;
+                IAtom atom = b.getOther(aAtom);
                 if (visit.contains(atom))
                     continue;
                 // hydrogen
-                if (atom.getAtomicNumber() == 1 && adjList[w].length == 1) {
+                if (atom.getAtomicNumber() == 1 && container.getConnectedBondsCount(atom) == 1) {
                     hCntA++;
                     continue;
                 }
                 aNext = cntA == 0 ? atom : null;
                 cntA++;
             }
-            for (int w : adjList[atomToIndex.get(bAtom)]) {
-                IAtom atom = container.getAtom(w);
+            for (IBond b : container.getConnectedBondsList(bAtom)) {
+                if (b.getOrder() != SINGLE)
+                    return Symmetry.Unknown;
+                IAtom atom = b.getOther(bAtom);
                 if (visit.contains(atom))
                     continue;
                 // hydrogen
-                if (atom.getAtomicNumber() == 1 && adjList[w].length == 1) {
+                if (atom.getAtomicNumber() == 1 && container.getConnectedBondsCount(atom) == 1) {
                     hCntB++;
                     continue;
                 }
@@ -1438,18 +1540,18 @@ final class NonplanarBonds {
 
             // hydrogen counts are different
             if (hCntA != hCntB)
-                return false;
+                return Symmetry.Asymmetric;
 
-            // differing in co
+            // differing in counts
             if (cntA != cntB || (cntA > 1 && cntB > 1))
-                return false;
+                return Symmetry.Unknown;
         }
 
         if (aNext != null || bNext != null)
-            return false;
+            return Symmetry.Asymmetric;
 
         // traversed the path till the end
-        return true;
+        return Symmetry.Symmetric;
     }
 
     private boolean notEqual(Integer a, Integer b) {
