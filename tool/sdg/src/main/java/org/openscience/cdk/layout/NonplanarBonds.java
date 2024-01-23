@@ -1388,8 +1388,13 @@ final class NonplanarBonds {
                     symEnd == Symmetry.Asymmetric) {
                 unspecifiedDoubleBonds.add(bond);
             } else {
-                if (symmetry == null)
-                    symmetry = Canon.symmetry(container, graph);
+                if (symmetry == null) {
+                    try {
+                        symmetry = Canon.symmetry(container, graph);
+                    } catch (Exception ex) {
+                        // something funky, e.g. pseudo atoms
+                    }
+                }
                 if (canHaveStereo(bond, symmetry))
                     unspecifiedDoubleBonds.add(bond);
             }
@@ -1418,22 +1423,24 @@ final class NonplanarBonds {
     private boolean canHaveStereo(IBond bond, long[] symmetry) {
         IAtom beg = bond.getBegin();
         IAtom end = bond.getEnd();
-        Set<Long> begSymCls = container.getConnectedBondsList(beg)
-                                     .stream()
-                                     .filter(b -> b != bond)
-                                     .map(b -> symmetry[container.indexOf(b.getOther(beg))])
-                                     .collect(Collectors.toSet());
-        Set<Long> endSymCls = container.getConnectedBondsList(end)
-                                     .stream()
-                                     .filter(b -> b != bond)
-                                     .map(b -> symmetry[container.indexOf(b.getOther(end))])
-                                     .collect(Collectors.toSet());
+        if (symmetry != null) {
+            Set<Long> begSymCls = container.getConnectedBondsList(beg)
+                                           .stream()
+                                           .filter(b -> b != bond)
+                                           .map(b -> symmetry[container.indexOf(b.getOther(beg))])
+                                           .collect(Collectors.toSet());
+            Set<Long> endSymCls = container.getConnectedBondsList(end)
+                                           .stream()
+                                           .filter(b -> b != bond)
+                                           .map(b -> symmetry[container.indexOf(b.getOther(end))])
+                                           .collect(Collectors.toSet());
 
-        // if the number of symmetry classes + 1 is the neighbour count they are all distinct
-        // +1 because we skipped the double bond connecting these two atoms
-        if (begSymCls.size() + 1 == container.getConnectedBondsCount(beg) &&
-            endSymCls.size() + 1 == container.getConnectedBondsCount(end))
-            return true;
+            // if the number of symmetry classes + 1 is the neighbour count they are all distinct
+            // +1 because we skipped the double bond connecting these two atoms
+            if (begSymCls.size() + 1 == container.getConnectedBondsCount(beg) &&
+                    endSymCls.size() + 1 == container.getConnectedBondsCount(end))
+                return true;
+        }
 
         // OK now we need to pull out the bit guns
 
