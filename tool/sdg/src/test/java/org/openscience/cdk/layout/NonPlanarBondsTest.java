@@ -792,4 +792,80 @@ class NonPlanarBondsTest {
                                 StereoElementFactory.using2DCoordinates(mol).withStrictMode().createAll().size());
     }
 
+    @Test
+    void wavyBondNeeded() throws CDKException {
+        final String smi = "C1CC(=C(O)(C))COC1";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int count = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP_OR_DOWN:
+                case UP_OR_DOWN_INVERTED:
+                    ++count;
+                    break;
+            }
+        }
+        assertThat(count, is(1));
+    }
+
+    @Test
+    void wavyBondNotNeeded() throws CDKException {
+        final String smi = "C1CC(=C(O)(C))CCC1";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int count = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP_OR_DOWN:
+                case UP_OR_DOWN_INVERTED:
+                    ++count;
+                    break;
+            }
+        }
+        assertThat(count, is(0));
+    }
+
+    @Test
+    void wavyBondNeeded2() throws CDKException {
+        final String smi = "CC=C(C/C=C/C)C/C=C\\C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int count = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP_OR_DOWN:
+                case UP_OR_DOWN_INVERTED:
+                    ++count;
+                    break;
+            }
+        }
+        assertThat(count, is(1));
+    }
+
+    @Test
+    void wavyBondNotNeeded2() throws CDKException {
+        final String smi = "CC=C(C/C=C/C)C/C=C/C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int count = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP_OR_DOWN:
+                case UP_OR_DOWN_INVERTED:
+                    ++count;
+                    break;
+            }
+        }
+        assertThat(count, is(0));
+    }
+
 }
