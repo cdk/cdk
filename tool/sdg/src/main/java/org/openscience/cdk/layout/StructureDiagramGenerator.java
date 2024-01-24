@@ -324,8 +324,10 @@ public class StructureDiagramGenerator {
             if (refMapping == null) {
                 try {
                     RWLOCK.writeLock().lock();
-                    for (Map.Entry<IAtom, IAtom> e : molMapping.entrySet())
-                        e.getKey().setPoint2d(new Point2d(e.getValue().getPoint2d()));
+                    for (Map.Entry<IAtom, IAtom> e : molMapping.entrySet()) {
+                        if (e.getValue().getPoint2d() != null)
+                            e.getKey().setPoint2d(new Point2d(e.getValue().getPoint2d()));
+                    }
                 } finally {
                     RWLOCK.writeLock().unlock();
                 }
