@@ -91,10 +91,10 @@ final class AbbreviationLabel {
     //    OTHER DEALINGS IN THE SOFTWARE.
     //
     //    For more information, please refer to <http://unlicense.org/>
-    private final static String[] SYMBOL_LIST = new String[]{"acac", "Ace", "Acetyl", "Acyl", "Ad", "All", "Alloc", "Allyl", "Amyl", "AOC",
-                                                             "BDMS", "Benzoyl", "Benzyl", "Bn", "BOC", "Boc", "BOM", "bpy", "Bromo", "Bs", "Bu", "But", "Butyl", "Bz", "Bzl",
+    private final static String[] SYMBOL_LIST = new String[]{"acac", "amphos", "Ace", "Acetyl", "Acyl", "Ad", "All", "Alloc", "Allyl", "Amyl", "AOC",
+                                                             "BDMS", "Benzoyl", "Benzyl", "Bn", "BOC", "Boc", "BOM", "bpy", "Bromo", "Bs", "BPin", "Bpin", "Bu", "But", "Butyl", "Bz", "Bzl",
                                                              "Car", "Cbz", "Chloro", "CoA", "Cy",
-                                                             "dppf", "dppp", "dba", "D", "Dan", "Dansyl", "DEIPS", "DEM", "Dip", "Dmb", "DPA", "DTBMS",
+                                                             "dppf", "dppp", "dba", "dtbpf", "D", "Dan", "Dansyl", "DEIPS", "DEM", "Dip", "Dmb", "DPA", "DTBMS",
                                                              "EE", "EOM", "Et", "Ethyl",
                                                              "Fluoro", "FMOC", "Fmoc", "Formyl",
                                                              "Heptyl", "Hexyl",
