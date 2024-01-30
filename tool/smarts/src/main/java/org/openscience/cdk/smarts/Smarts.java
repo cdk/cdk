@@ -43,6 +43,8 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2026,11 +2028,12 @@ public final class Smarts {
 
                     case ' ':
                     case '\t':
+                        int mark = pos;
                         while (true) {
                             if (isTerminalChar(next()))
                                 break;
                         }
-                        mol.setTitle(str.substring(pos - 1));
+                        mol.setTitle(str.substring(mark, pos-1));
                         break;
                     case '\r':
                     case '\n':
@@ -2220,6 +2223,7 @@ public final class Smarts {
         if (!state.parse()) {
             return new SmartsResult(smarts, state.pos, state.error);
         }
+        processCxSmarts(mol);
         return new SmartsResult(smarts);
     }
 
@@ -2238,6 +2242,33 @@ public final class Smarts {
     public static SmartsResult parseToResult(IAtomContainer mol,
                                              String smarts) {
         return parseToResult(mol, smarts, FLAVOR_LOOSE);
+    }
+
+    private static void processCxSmarts(IAtomContainer mol) {
+
+        String title = mol.getTitle();
+
+        if (title == null ||
+                title.isEmpty() ||
+                title.charAt(0) != '|')
+            return;
+
+        CxSmartsState cxstate = new CxSmartsState();
+        if (CxSmartsParser.processCx(title, cxstate) < 0)
+            return;
+
+        // set 2D/3D atom-coordinates
+        if (cxstate.atomCoords != null) {
+            final int numAtoms = mol.getAtomCount();
+            final int numCoords = cxstate.atomCoords.size();
+            for (int i = 0; i < Math.min(numAtoms, numCoords); i++) {
+                double[] xyz = cxstate.atomCoords.get(i);
+                if (cxstate.coordFlag)
+                    mol.getAtom(i).setPoint3d(new Point3d(xyz));
+                else
+                    mol.getAtom(i).setPoint2d(new Point2d(xyz));
+            }
+        }
     }
 
     /**
