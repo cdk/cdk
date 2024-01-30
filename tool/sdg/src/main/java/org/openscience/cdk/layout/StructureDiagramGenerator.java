@@ -268,6 +268,7 @@ public class StructureDiagramGenerator {
                     RWLOCK.writeLock().unlock();
                 }
             }
+
             // rescale if needed
             if (Math.abs(GeometryUtil.getBondLengthMedian(ref) - bondLength) > 0.1) {
                 try {
@@ -318,6 +319,17 @@ public class StructureDiagramGenerator {
             if (!GeometryUtil.has2DCoordinates(cpy)) {
                 setMolecule(cpy, false);
                 generateCoordinates();
+            } else {
+                // if there is already coordinates, make sure the scaled is correct 
+                if (Math.abs(GeometryUtil.getBondLengthMedian(cpy) - bondLength) > 0.1) {
+                    try {
+                        RWLOCK.writeLock().lock();
+                        GeometryUtil.scaleMolecule(cpy,
+                                                   bondLength / GeometryUtil.getBondLengthMedian(cpy));
+                    } finally {
+                        RWLOCK.writeLock().unlock();
+                    }
+                }
             }
 
             // backup coordinates for future calls
