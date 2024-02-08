@@ -1,24 +1,28 @@
 /*
- * ErtlFunctionalGroupsFinder for CDK
- * Copyright (c) 2024 Sebastian Fritsch, Stefan Neumann, Jonas Schaub, Christoph Steinbeck, and Achim Zielesny
- * 
- * Source code is available at <https://github.com/JonasSchaub/ErtlFunctionalGroupsFinder>
- * 
- * This program is free software; you can redistribute it and/or
+ * Copyright (c) 2024 Sebastian Fritsch <>
+ *                    Stefan Neumann <>
+ *                    Jonas Schaub <jonas.schaub@uni-jena.de>
+ *                    Christoph Steinbeck <christoph.steinbeck@uni-jena.de>
+ *                    Achim Zielesny <achim.zielesny@w-hs.de>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * 
+ * as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.tools;
+package org.openscience.cdk.fragment;
 
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -33,6 +37,8 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayDeque;
@@ -61,7 +67,7 @@ import java.util.Set;
  * environments can be important, e.g. to differentiate an alcohol from a phenol, but are less important in other cases.
  * To account for this, Ertl also devised a "generalization" scheme that generalizes the functional group environments
  * in a way that accounts for their varying significance in different cases. Most environmental atoms are exchanged with
- * pseudo ("R") atoms there. All these functionalities are available in ErtlFunctionalgroupsFinder. Additionally, only
+ * pseudo ("R") atoms there. All these functionalities are available in FunctionalgroupsFinder. Additionally, only
  * the marked atoms completely without their environments can be extracted.
  * <br>
  * <br>To apply functional group detection to an input molecule, its atom types need to be set and aromaticity needs
@@ -74,10 +80,10 @@ import java.util.Set;
  * Aromaticity tmpAromaticity = new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet());
  * tmpAromaticity.apply(tmpInputMol);
  * //Identify functional groups
- * ErtlFunctionalGroupsFinder tmpEFGF = new ErtlFunctionalGroupsFinder(); //default: generalization turned on
- * List{@literal <}IAtomContainer{@literal >} tmpFunctionalGroupsList = tmpEFGF.find(tmpInputMol);
+ * FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(); //default: generalization turned on
+ * List{@literal <}IAtomContainer{@literal >} tmpFunctionalGroupsList = tmpFGF.find(tmpInputMol);
  * </pre></blockquote>
- * In order to only identify functional groups in standardised, organic structures, ErtlFunctionalGroupsFinder can
+ * In order to only identify functional groups in standardised, organic structures, FunctionalGroupsFinder can
  * be configured to only accept molecules that do *not* contain any metal, metalloid, or pseudo (R) atoms or formal charges.
  * Also structures consisting of more than one unconnected component (e.g. ion and counter-ion) are not accepted if(!) the
  * strict input restrictions are turned on (they are turned off by default).
@@ -209,7 +215,7 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * CDK logging tool instance for this class. Use ErtlFunctionalGroupsFinder.LOGGING_TOOL.setLevel(ILoggingTool.DEBUG);
+     * CDK logging tool instance for this class. Use FunctionalGroupsFinder.LOGGING_TOOL.setLevel(ILoggingTool.DEBUG);
      * to activate debug messages.
      */
     public static final ILoggingTool LOGGING_TOOL = LoggingToolFactory.createLoggingTool(FunctionalGroupsFinder.class);
@@ -217,7 +223,7 @@ public class FunctionalGroupsFinder {
     /**
      * Property name for marking carbonyl carbon atoms via IAtom properties.
      */
-    public static final String CARBONYL_C_MARKER = "EFGF-Carbonyl-C";
+    public static final String CARBONYL_C_MARKER = "FGF-Carbonyl-C";
     //
     /**
      * Set of atomic numbers of nonmetal elements, namely hydrogen, carbon, nitrogen, oxygen, phosphorus, sulfur, selenium,
@@ -225,7 +231,7 @@ public class FunctionalGroupsFinder {
      * Atoms of these elements are exclusively accepted in the input molecule if(!) the strict input restrictions are
      * activated (turned off by default).
      */
-    public static final Set<Integer> NONMETAL_ATOMIC_NUMBERS = Set.of(1, 2, 6, 7, 8, 9, 10, 15, 16, 17, 18, 34, 35, 36, 53, 54, 86);
+    public static final Set<Integer> NONMETAL_ATOMIC_NUMBERS = new HashSet<>(Arrays.asList(1, 2, 6, 7, 8, 9, 10, 15, 16, 17, 18, 34, 35, 36, 53, 54, 86));
     //
     /**
      * Environment mode setting, defining whether environments should be generalized (default) or kept as whole.
@@ -261,14 +267,14 @@ public class FunctionalGroupsFinder {
     private HashMap<IAtom, List<EnvironmentalC>> markedAtomToConnectedEnvCMapCache;
     //
     /**
-     * Default constructor for ErtlFunctionalGroupsFinder with functional group generalization turned ON.
+     * Default constructor for FunctionalGroupsFinder with functional group generalization turned ON.
      */
     public FunctionalGroupsFinder() {
         this(Mode.DEFAULT);
     }
     //
     /**
-     * Constructor for ErtlFunctionalGroupsFinder that allows setting the treatment of environments in the identified
+     * Constructor for FunctionalGroupsFinder that allows setting the treatment of environments in the identified
      * functional groups. Default: environments will be generalized; no generalization: environments will be kept as whole;
      * only marked atoms: no environmental atoms whatsoever will be attached to the extracted functional groups.
      *
@@ -280,35 +286,35 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Constructs a new ErtlFunctionalGroupsFinder instance with generalization of returned functional groups turned ON.
+     * Constructs a new FunctionalGroupsFinder instance with generalization of returned functional groups turned ON.
      *
-     * @return new ErtlFunctionalGroupsFinder instance that generalizes returned functional groups
+     * @return new FunctionalGroupsFinder instance that generalizes returned functional groups
      */
-    public static FunctionalGroupsFinder newErtlFunctionalGroupsFinderGeneralizingMode() {
-        FunctionalGroupsFinder tmpEFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.DEFAULT);
-        return tmpEFGF;
+    public static FunctionalGroupsFinder newFunctionalGroupsFinderGeneralizingMode() {
+        FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.DEFAULT);
+        return tmpFGF;
     }
     //
     /**
-     * Constructs a new ErtlFunctionalGroupsFinder instance with generalization of returned functional groups turned OFF.
+     * Constructs a new FunctionalGroupsFinder instance with generalization of returned functional groups turned OFF.
      * The FG will have their full environments.
      *
-     * @return new ErtlFunctionalGroupsFinder instance that does NOT generalize returned functional groups
+     * @return new FunctionalGroupsFinder instance that does NOT generalize returned functional groups
      */
-    public static FunctionalGroupsFinder newErtlFunctionalGroupsFinderFullEnvironmentMode() {
-        FunctionalGroupsFinder tmpEFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
-        return tmpEFGF;
+    public static FunctionalGroupsFinder newFunctionalGroupsFinderFullEnvironmentMode() {
+        FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        return tmpFGF;
     }
     //
     /**
-     * Constructs a new ErtlFunctionalGroupsFinder instance that extracts only the marked atoms of the functional groups,
+     * Constructs a new FunctionalGroupsFinder instance that extracts only the marked atoms of the functional groups,
      * no attached environmental atoms.
      *
-     * @return new ErtlFunctionalGroupsFinder instance that extracts only marked atoms
+     * @return new FunctionalGroupsFinder instance that extracts only marked atoms
      */
-    public static FunctionalGroupsFinder newErtlFunctionalGroupsFinderOnlyMarkedAtomsMode() {
-        FunctionalGroupsFinder tmpEFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
-        return tmpEFGF;
+    public static FunctionalGroupsFinder newFunctionalGroupsFinderOnlyMarkedAtomsMode() {
+        FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
+        return tmpFGF;
     }
     //
     /**
@@ -433,7 +439,7 @@ public class FunctionalGroupsFinder {
      * @param aMolecule the molecule to process
      * @param anAromaticityModel the aromaticity model to apply to the molecule in preprocessing; Note: The chosen
      *                           ElectronDonation model can massively influence the extracted functional groups of a molecule
-     *                           when using ErtlFunctionGroupsFinder!
+     *                           when using FunctionGroupsFinder!
      * @throws NullPointerException if any parameter is null
      * @throws IllegalArgumentException if the input molecule causes any other type of exception while processing
      */
@@ -450,14 +456,14 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Returns the unmodifiable set containing the atomic numbers that can be passed on to ErtlFunctionalGroupsFinder.find()
+     * Returns the unmodifiable set containing the atomic numbers that can be passed on to FunctionalGroupsFinder.find()
      * if(!) input restrictions are enabled (turned off by default). These nonmetal elements include
      * hydrogen, carbon, nitrogen, oxygen, phosphorus, sulfur, selenium, halogens (fluorine, chlorine, bromine, iodine),
      * and noble gases (helium, neon, argon, krypton, xenon, radon).
      * All other atomic numbers represent metal, metalloid, or pseudo ('R') atoms.
-     * <br>Convenience method analogous to using <code>ErtlFunctionalGroupsFinder.NONMETAL_ATOMIC_NUMBERS</code> directly.
+     * <br>Convenience method analogous to using <code>FunctionalGroupsFinder.NONMETAL_ATOMIC_NUMBERS</code> directly.
      *
-     * @return all valid atomic numbers for ErtlFunctionalGroupsFinder.find() if input restrictions are activated
+     * @return all valid atomic numbers for FunctionalGroupsFinder.find() if input restrictions are activated
      */
     public static Set<Integer> getNonmetalAtomicNumbers() {
         return FunctionalGroupsFinder.NONMETAL_ATOMIC_NUMBERS;
@@ -465,7 +471,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether a given atom is a metal, metalloid, or pseudo atom judging by its atomic number. These atoms
-     * cannot be passed on to ErtlFunctionalGroupsFinder.find() if(!) input restrictions are enabled (turned off by default).
+     * cannot be passed on to FunctionalGroupsFinder.find() if(!) input restrictions are enabled (turned off by default).
      *
      * @param anAtom the atom to check
      * @return true, if the atomic number is not in the nonmetal atomic numbers set or 'null'
@@ -481,7 +487,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Iterates through all atoms in the given molecule and checks them for metal, metalloid, and pseudo ("R") atoms. If this
-     * method returns 'true', the molecule cannot be passed on to ErtlFunctionalGroupsFinder.find()
+     * method returns 'true', the molecule cannot be passed on to FunctionalGroupsFinder.find()
      * if(!) input restrictions are enabled (turned off by default). If you are using the strict input restrictions to
      * only identify functional groups in standardised, organic structures, you should filter the molecules where this
      * method returns true from your input set.
@@ -506,7 +512,7 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Checks whether a given atom is charged. These atoms cannot be passed on to ErtlFunctionalGroupsFinder.find()
+     * Checks whether a given atom is charged. These atoms cannot be passed on to FunctionalGroupsFinder.find()
      * if(!) input restrictions are enabled (turned off by default).
      *
      * @param anAtom the atom to check
@@ -524,7 +530,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Iterates through all atoms in the given molecule and checks whether they are charged. If this
-     * method returns 'true', the molecule cannot be passed on to ErtlFunctionalGroupsFinder.find()
+     * method returns 'true', the molecule cannot be passed on to FunctionalGroupsFinder.find()
      * if(!) input restrictions are enabled (turned off by default). If you are using the strict input restrictions to
      * only identify functional groups in standardised, organic structures, you can try to neutralise the charges in the
      * molecules where this method returns true by standardisation routines.
@@ -550,10 +556,10 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether the given molecule consists of two or more unconnected structures, e.g. ion and counter-ion. This
-     * would make it unfit to be passed to ErtlFunctionalGroupsFinder.find() if(!) the input restrictions are turned on (turned off by default).
+     * would make it unfit to be passed to FunctionalGroupsFinder.find() if(!) the input restrictions are turned on (turned off by default).
      * If you are using the strict input restrictions to only identify functional groups in standardised, organic structures,
      * you can try to select the biggest connected component in the input atom containers where this method returns true
-     * and only pass that to ErtlFunctionalGroupsFinder.
+     * and only pass that to FunctionalGroupsFinder.
      * Note: this is a convenience method basically applying <code>ConnectivityChecker.isConnected(aMolecule);</code>.
      *
      * @param aMolecule the molecule to check
@@ -570,13 +576,13 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether the given molecule represented by an atom container can be passed on to the
-     * ErtlFunctionalGroupsFinder.find() method without problems even if(!) the input restrictions are turned on (turned off by default).
+     * FunctionalGroupsFinder.find() method without problems even if(!) the input restrictions are turned on (turned off by default).
      * <br>This method will return false if the molecule contains any metal, metalloid, pseudo, or charged atoms or consists of
      * multiple unconnected parts. Some of these issues (charges and multiple unconnected components) can be solved by
      * respective standardisation routines.
      *
      * @param aMolecule the molecule to check
-     * @return true if the given molecule is a valid parameter for ErtlFunctionalGroupsFinder.find() method if(!) the input restrictions are turned on (turned off by default)
+     * @return true if the given molecule is a valid parameter for FunctionalGroupsFinder.find() method if(!) the input restrictions are turned on (turned off by default)
      * @throws NullPointerException if parameter is 'null'
      * @throws IllegalArgumentException if the input molecule causes any other type of exception while processing
      */
@@ -1322,7 +1328,7 @@ public class FunctionalGroupsFinder {
     /**
      * Returns whether the CDK logging tool of this class (logger) is currently configured to log debug messages.
      * <p>
-     *     Use <code>ErtlFunctionalGroupsFinder.LOGGING_TOOL.setLevel(ILoggingTool.DEBUG);</code>  to activate debug messages.
+     *     Use <code>FunctionalGroupsFinder.LOGGING_TOOL.setLevel(ILoggingTool.DEBUG);</code>  to activate debug messages.
      * </p>
      *
      * @return true if debug messages are enabled
