@@ -1,44 +1,27 @@
 /*
- * MIT License
+ * Copyright (c) 2024 Jonas Schaub <jonas.schaub@uni-jena.de>
+ *                    Achim Zielesny <achim.zielesny@w-hs.de>
+ *                    Christoph Steinbeck <christoph.steinbeck@uni-jena.de>
+ *                    Maria Sorokina <>
  *
- * Copyright (c) 2023 Jonas Schaub, Achim Zielesny, Christoph Steinbeck, Maria Sorokina
+ * Contact: cdk-devel@lists.sourceforge.net
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package de.unijena.cheminf.deglycosylation;
-
-/**
- * Future perspectives / ideas:
- * - investigate use of Ertl algorithm for detection of initial candidates, maybe all C-O FG with a ratio of C to O?
- * - investigate use of SMARTS pattern for detection of initial candidates (maybe with explicit Hs to avoid matching cross-linked structures)
- * - Is it possible with DfPattern to get the first match of the biggest pattern and then exclude the matched atoms
- *   for the next matching and so on?
- * - maintain connection info for reconstruction?
- * - replace isomorphism testing with hash codes or the ids for substructures (for better performance)?
- * - Circular and linear sugar candidates can no longer overlap in any case, right? Therefore, a
- *   'getCircularAndLinearSugarCandidates()' method could be implemented and used safely and
- *   'removeAndReturnCircularAndLinearSugars()' could be revised
- * - include all connected oxygen atoms in the circular sugars? Or at least all hydroxy groups?
- * - Known bug: Some linear sugars (in rings) are not detected anymore if the circular sugars are removed from the molecule (even
- *   with preservation mode 'all'); how to fix this? Add more small linear sugar patterns? Does it even need fixing?
- */
+package org.openscience.cdk.tools;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -57,7 +40,6 @@ import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
