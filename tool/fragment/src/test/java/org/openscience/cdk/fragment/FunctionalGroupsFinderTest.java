@@ -1,24 +1,28 @@
 /*
- * ErtlFunctionalGroupsFinder for CDK
- * Copyright (c) 2024 Sebastian Fritsch, Stefan Neumann, Jonas Schaub, Christoph Steinbeck, and Achim Zielesny
- * 
- * Source code is available at <https://github.com/JonasSchaub/ErtlFunctionalGroupsFinder>
- * 
- * This program is free software; you can redistribute it and/or
+ * Copyright (c) 2024 Sebastian Fritsch <>
+ *                    Stefan Neumann <>
+ *                    Jonas Schaub <jonas.schaub@uni-jena.de>
+ *                    Christoph Steinbeck <christoph.steinbeck@uni-jena.de>
+ *                    Achim Zielesny <achim.zielesny@w-hs.de>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * 
+ * as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.tools;
+package org.openscience.cdk.fragment;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -48,16 +52,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Test for ErtlFunctionalGroupsFinder.
+ * Test for FunctionalGroupsFinder.
  *
  * @author Sebastian Fritsch, Jonas Schaub
  * @version 1.3
  */
-public class ErtlFunctionalGroupsFinderTest {
+public class FunctionalGroupsFinderTest {
     /**
      * Constructor.
      */
-    public ErtlFunctionalGroupsFinderTest() {
+    public FunctionalGroupsFinderTest() {
         super();
     }
     //
@@ -76,17 +80,17 @@ public class ErtlFunctionalGroupsFinderTest {
         Aromaticity tmpAromaticity = new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet());
         tmpAromaticity.apply(tmpInputMol);
         //Identify functional groups
-        ErtlFunctionalGroupsFinder tmpEFGF = new ErtlFunctionalGroupsFinder(); //default: generalization turned on
-        List<IAtomContainer> tmpFunctionalGroupsList = tmpEFGF.find(tmpInputMol);
+        FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(); //default: generalization turned on
+        List<IAtomContainer> tmpFunctionalGroupsList = tmpFGF.find(tmpInputMol);
         SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
         for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
             String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
-            System.out.println(tmpSmilesString);
+            //System.out.println(tmpSmilesString);
         }
         //non-generalized functional groups
-        System.out.println("----------------");
-        tmpEFGF = new ErtlFunctionalGroupsFinder(ErtlFunctionalGroupsFinder.Mode.NO_GENERALIZATION);
-        tmpFunctionalGroupsList = tmpEFGF.find(tmpInputMol);
+        //System.out.println("----------------");
+        tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        tmpFunctionalGroupsList = tmpFGF.find(tmpInputMol);
         for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
             String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
             System.out.println(tmpSmilesString);
@@ -364,7 +368,7 @@ public class ErtlFunctionalGroupsFinderTest {
     public void testOnlyMarkedAtoms1() throws Exception {
         String tmpMoleculeSmiles = "CCO[Si](OCC)(OCC)OCC"; //Tetraethyl Orthosilicate
         String[] tmpExpectedFGs = new String[]{"[O][Si]([O])([O])[O]"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), ErtlFunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
     }
     //
     /**
@@ -378,7 +382,7 @@ public class ErtlFunctionalGroupsFinderTest {
     public void testOnlyMarkedAtoms2() throws Exception {
         String tmpMoleculeSmiles = "Cc1cc(C)nc(NS(=O)(=O)c2ccc(N)cc2)n1"; //same mol as testFind1() from the Ertl figure
         String[] tmpExpectedFGs = new String[] {"O=[S](=O)[NH]", "[NH2]", "Nar" , "Nar"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), ErtlFunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
     }
     //
     /**
@@ -392,7 +396,7 @@ public class ErtlFunctionalGroupsFinderTest {
     public void testOnlyMarkedAtoms3() throws Exception {
         String tmpMoleculeSmiles = "CO/N=C(\\C(=O)N[C@@H]1C(=O)N2C(C(=O)[O-])=C(C[N+]3(C)CCCC3)CS[C@H]12)c1csc(N)n1.Cl"; //CHEMBL1201736
         String[] tmpExpectedFGs = new String[] {"[O]N=[C]C(=O)[NH]", "[C]=C(C(=O)[O-])N([C]=O)[CH][S]", "[N+]", "[NH2]", "Cl", "Sar", "Nar"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), ErtlFunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
     }
     //
     /**
@@ -449,17 +453,17 @@ public class ErtlFunctionalGroupsFinderTest {
         String tmpMoleculeSmiles = "c1ccccc1[CH+]C(Br)C"; //Carbenium ion in beta position to Br
         // carbenium ion is ignored since a charge is not a reason to mark carbon atom
         String[] tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), ErtlFunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
 
         tmpMoleculeSmiles = "c1ccccc1[CH+]C(Br)C"; //Carbenium ion in beta position to Br
         // carbenium ion is ignored since a charge is not a reason to mark carbon atom
         tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), ErtlFunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
 
         tmpMoleculeSmiles = "c1ccccc1[C+](Br)C"; //Carbenium ion in alpha position to Br
-        // carbenium ion is extracted as environmental carbon and replaced by a new atom instance as all env carbon atoms in EFGF; so it lost its charge!
+        // carbenium ion is extracted as environmental carbon and replaced by a new atom instance as all env carbon atoms in FGF; so it lost its charge!
         tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), ErtlFunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
     }
     //
     /**
@@ -493,7 +497,7 @@ public class ErtlFunctionalGroupsFinderTest {
     /**
      * Tests correct functional group identification on an example molecule with metal/metalloid atoms.
      *
-     * Note: all atoms are marked as hetero atoms by EFGF that are not H or C. So, metals and metalloids get treated like
+     * Note: all atoms are marked as hetero atoms by FGF that are not H or C. So, metals and metalloids get treated like
      * any other hetero atom.
      *
      * @throws Exception if anything goes wrong
@@ -509,7 +513,7 @@ public class ErtlFunctionalGroupsFinderTest {
     /**
      * Tests correct functional group identification on an example molecule with metal/metalloid atoms.
      *
-     * Note: all atoms are marked as hetero atoms by EFGF that are not H or C. So, metals and metalloids get treated like
+     * Note: all atoms are marked as hetero atoms by FGF that are not H or C. So, metals and metalloids get treated like
      * any other hetero atom.
      *
      * @throws Exception if anything goes wrong
@@ -525,7 +529,7 @@ public class ErtlFunctionalGroupsFinderTest {
     /**
      * Tests correct functional group identification on an example molecule with pseudo (R) atoms.
      *
-     * Note: these pseudo (R) atoms are simply ignored by EFGF.
+     * Note: these pseudo (R) atoms are simply ignored by FGF.
      *
      * @throws Exception if anything goes wrong
      * @author Jonas Schaub
@@ -555,7 +559,7 @@ public class ErtlFunctionalGroupsFinderTest {
     }
     //
     /**
-     * Applies EFGF to detect functional groups in the given molecule and compares the identified FG to the given
+     * Applies FGF to detect functional groups in the given molecule and compares the identified FG to the given
      * expected FG, using i.a. an identity search. Note that the order of the given FG must match the order of the detected
      * FG. The expected FG can contain pseudo-SMILES code for some specific cases, where aromatic atoms are marked using
      * "-ar" and pseudo-atoms (R) can be included. Uses the electron donation model daylight and the cycle finder "all"
@@ -568,11 +572,11 @@ public class ErtlFunctionalGroupsFinderTest {
      */
     private void testFind(String aMoleculeSmiles, String[] anExpectedFGPseudoSmilesArray) throws Exception {
         this.testFind(aMoleculeSmiles, anExpectedFGPseudoSmilesArray, new Aromaticity(ElectronDonation.daylight(), Cycles.all()),
-                ErtlFunctionalGroupsFinder.Mode.DEFAULT);
+                FunctionalGroupsFinder.Mode.DEFAULT);
     }
     //
     /**
-     * Applies EFGF to detect functional groups in the given molecule and compares the identified FG to the given
+     * Applies FGF to detect functional groups in the given molecule and compares the identified FG to the given
      * expected FG, using i.a. an identity search. Note that the order of the given FG must match the order of the detected
      * FG. The expected FG can contain pseudo-SMILES code for some specific cases, where aromatic atoms are marked using
      * "-ar" and pseudo-atoms (R) can be included. The given aromaticity model is used for preprocessing the input molecule.
@@ -580,12 +584,12 @@ public class ErtlFunctionalGroupsFinderTest {
      * @param aMoleculeSmiles input molecule to detect FG in
      * @param anExpectedFGPseudoSmilesArray expected FG
      * @param anAromaticityModel for aromaticity detection in preprocessing of the input molecule
-     * @param aFunctionalGroupEnvironmentMode to configure the EFGF used here
+     * @param aFunctionalGroupEnvironmentMode to configure the FGF used here
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
      */
     private void testFind(String aMoleculeSmiles, String[] anExpectedFGPseudoSmilesArray, Aromaticity anAromaticityModel,
-                          ErtlFunctionalGroupsFinder.Mode aFunctionalGroupEnvironmentMode)
+                          FunctionalGroupsFinder.Mode aFunctionalGroupEnvironmentMode)
             throws Exception {
         // prepare input
         SmilesParser tmpSmilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -593,7 +597,7 @@ public class ErtlFunctionalGroupsFinderTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(tmpMolecule);
         anAromaticityModel.apply(tmpMolecule);
         // find functional groups
-        ErtlFunctionalGroupsFinder tmpFGFinder = new ErtlFunctionalGroupsFinder(aFunctionalGroupEnvironmentMode);
+        FunctionalGroupsFinder tmpFGFinder = new FunctionalGroupsFinder(aFunctionalGroupEnvironmentMode);
         List<IAtomContainer> tmpFunctionalgroupsList = tmpFGFinder.find(tmpMolecule);
         // get expected groups
         List<IAtomContainer> tmpExpectedFGs = new LinkedList<>();
