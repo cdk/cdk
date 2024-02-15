@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.fragment;
 
-import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.GraphUtil;
@@ -38,7 +37,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -80,13 +78,13 @@ import java.util.Set;
  * tmpAromaticity.apply(tmpInputMol);
  * //Identify functional groups
  * FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(); //default: generalization turned on
- * List{@literal <}IAtomContainer{@literal >} tmpFunctionalGroupsList = tmpFGF.find(tmpInputMol);
+ * List{@literal <}IAtomContainer{@literal >} tmpFunctionalGroupsList = tmpFGF.extractFunctionalGroups(tmpInputMol);
  * </pre></blockquote>
  * In order to only identify functional groups in standardised, organic structures, FunctionalGroupsFinder can
  * be configured to only accept molecules that do *not* contain any metal, metalloid, or pseudo (R) atoms or formal charges.
  * Also structures consisting of more than one unconnected component (e.g. ion and counter-ion) are not accepted if(!) the
  * strict input restrictions are turned on (they are turned off by default).
- * This can be done via a boolean parameter in a variant of the central find() method.
+ * This can be done via a boolean parameter in a variant of the central extractFunctionalGroups() method.
  * To identify molecules that need to be filtered from the input set or preprocessed in this use case, convenience methods are
  * available in this class. Please note that structural properties like formal charges and the others mentioned above
  * are not expected to cause issues (exceptions) when processed by this class, but they are not explicitly regarded by
@@ -370,8 +368,8 @@ public class FunctionalGroupsFinder {
      *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> find(IAtomContainer aMolecule) throws CloneNotSupportedException, IllegalArgumentException {
-        return this.find(aMolecule, true, false);
+    public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule) throws CloneNotSupportedException, IllegalArgumentException {
+        return this.extractFunctionalGroups(aMolecule, true, false);
     }
     //
     /**
@@ -393,8 +391,8 @@ public class FunctionalGroupsFinder {
      *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> find(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException, IllegalArgumentException {
-        return this.find(aMolecule, aShouldInputBeCloned, false);
+    public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException, IllegalArgumentException {
+        return this.extractFunctionalGroups(aMolecule, aShouldInputBeCloned, false);
     }
     //
     /**
@@ -415,7 +413,7 @@ public class FunctionalGroupsFinder {
      *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> find(IAtomContainer aMolecule, boolean aShouldInputBeCloned, boolean anAreInputRestrictionsApplied)
+    public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule, boolean aShouldInputBeCloned, boolean anAreInputRestrictionsApplied)
             throws CloneNotSupportedException, IllegalArgumentException {
         this.clearCache();
         IAtomContainer tmpMolecule;
@@ -454,14 +452,14 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Returns the unmodifiable set containing the atomic numbers that can be passed on to FunctionalGroupsFinder.find()
+     * Returns the unmodifiable set containing the atomic numbers that can be passed on to FunctionalGroupsFinder.extractFunctionalGroups()
      * if(!) input restrictions are enabled (turned off by default). These nonmetal elements include
      * hydrogen, carbon, nitrogen, oxygen, phosphorus, sulfur, selenium, halogens (fluorine, chlorine, bromine, iodine),
      * and noble gases (helium, neon, argon, krypton, xenon, radon).
      * All other atomic numbers represent metal, metalloid, or pseudo ('R') atoms.
      * <br>Convenience method analogous to using <code>FunctionalGroupsFinder.NONMETAL_ATOMIC_NUMBERS</code> directly.
      *
-     * @return all valid atomic numbers for FunctionalGroupsFinder.find() if input restrictions are activated
+     * @return all valid atomic numbers for FunctionalGroupsFinder.extractFunctionalGroups() if input restrictions are activated
      */
     public static Set<Integer> getNonmetalAtomicNumbers() {
         return FunctionalGroupsFinder.NONMETAL_ATOMIC_NUMBERS;
@@ -469,7 +467,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether a given atom is a metal, metalloid, or pseudo atom judging by its atomic number. These atoms
-     * cannot be passed on to FunctionalGroupsFinder.find() if(!) input restrictions are enabled (turned off by default).
+     * cannot be passed on to FunctionalGroupsFinder.extractFunctionalGroups() if(!) input restrictions are enabled (turned off by default).
      *
      * @param anAtom the atom to check
      * @return true, if the atomic number is not in the nonmetal atomic numbers set or 'null'
@@ -485,7 +483,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Iterates through all atoms in the given molecule and checks them for metal, metalloid, and pseudo ("R") atoms. If this
-     * method returns 'true', the molecule cannot be passed on to FunctionalGroupsFinder.find()
+     * method returns 'true', the molecule cannot be passed on to FunctionalGroupsFinder.extractFunctionalGroups()
      * if(!) input restrictions are enabled (turned off by default). If you are using the strict input restrictions to
      * only identify functional groups in standardised, organic structures, you should filter the molecules where this
      * method returns true from your input set.
@@ -510,7 +508,7 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Checks whether a given atom is charged. These atoms cannot be passed on to FunctionalGroupsFinder.find()
+     * Checks whether a given atom is charged. These atoms cannot be passed on to FunctionalGroupsFinder.extractFunctionalGroups()
      * if(!) input restrictions are enabled (turned off by default).
      *
      * @param anAtom the atom to check
@@ -528,7 +526,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Iterates through all atoms in the given molecule and checks whether they are charged. If this
-     * method returns 'true', the molecule cannot be passed on to FunctionalGroupsFinder.find()
+     * method returns 'true', the molecule cannot be passed on to FunctionalGroupsFinder.extractFunctionalGroups()
      * if(!) input restrictions are enabled (turned off by default). If you are using the strict input restrictions to
      * only identify functional groups in standardised, organic structures, you can try to neutralise the charges in the
      * molecules where this method returns true by standardisation routines.
@@ -554,7 +552,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether the given molecule consists of two or more unconnected structures, e.g. ion and counter-ion. This
-     * would make it unfit to be passed to FunctionalGroupsFinder.find() if(!) the input restrictions are turned on (turned off by default).
+     * would make it unfit to be passed to FunctionalGroupsFinder.extractFunctionalGroups() if(!) the input restrictions are turned on (turned off by default).
      * If you are using the strict input restrictions to only identify functional groups in standardised, organic structures,
      * you can try to select the biggest connected component in the input atom containers where this method returns true
      * and only pass that to FunctionalGroupsFinder.
@@ -566,7 +564,7 @@ public class FunctionalGroupsFinder {
      */
     public static boolean isStructureUnconnected(IAtomContainer aMolecule) throws NullPointerException {
         //Developer's note: the private checkConstraints() method is not used here because it is intertwined with the
-        // find() method for speed-up; but it basically does the same.
+        // extractFunctionalGroups() method for speed-up; but it basically does the same.
         Objects.requireNonNull(aMolecule, "Given molecule is 'null'");
         boolean tmpIsConnected = ConnectivityChecker.isConnected(aMolecule);
         return (!tmpIsConnected);
@@ -574,13 +572,13 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether the given molecule represented by an atom container can be passed on to the
-     * FunctionalGroupsFinder.find() method without problems even if(!) the input restrictions are turned on (turned off by default).
+     * FunctionalGroupsFinder.extractFunctionalGroups() method without problems even if(!) the input restrictions are turned on (turned off by default).
      * <br>This method will return false if the molecule contains any metal, metalloid, pseudo, or charged atoms or consists of
      * multiple unconnected parts. Some of these issues (charges and multiple unconnected components) can be solved by
      * respective standardisation routines.
      *
      * @param aMolecule the molecule to check
-     * @return true if the given molecule is a valid parameter for FunctionalGroupsFinder.find() method if(!) the input restrictions are turned on (turned off by default)
+     * @return true if the given molecule is a valid parameter for FunctionalGroupsFinder.extractFunctionalGroups() method if(!) the input restrictions are turned on (turned off by default)
      * @throws NullPointerException if parameter is 'null'
      * @throws IllegalArgumentException if the input molecule causes any other type of exception while processing
      */
@@ -600,7 +598,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Clear caches related to the input molecule. Note, these are not proper caches, there are no results cached. Here,
-     * only data taken from the input molecule is saved for only one execution of the find() method, to facilitate
+     * only data taken from the input molecule is saved for only one execution of the extractFunctionalGroups() method, to facilitate
      * communication between the private methods involved.
      */
     private void clearCache() {
@@ -1318,7 +1316,7 @@ public class FunctionalGroupsFinder {
         }
         Objects.requireNonNull(this.adjListCache, "Adjacency list cache must already be set-up for this check!");
         //Developer's note: this method does not use the public isStructureUnconnected() method because it is intertwined with the
-        // find() method for speed-up; but it basically does the same.
+        // extractFunctionalGroups() method for speed-up; but it basically does the same.
         ConnectedComponents tmpConnectedComponents = new ConnectedComponents(this.adjListCache);
         if (tmpConnectedComponents.nComponents() > 1) {
             throw new IllegalArgumentException("Input molecule must consist of only a single connected structure.");

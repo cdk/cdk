@@ -81,7 +81,7 @@ public class FunctionalGroupsFinderTest {
         tmpAromaticity.apply(tmpInputMol);
         //Identify functional groups
         FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(); //default: generalization turned on
-        List<IAtomContainer> tmpFunctionalGroupsList = tmpFGF.find(tmpInputMol);
+        List<IAtomContainer> tmpFunctionalGroupsList = tmpFGF.extractFunctionalGroups(tmpInputMol);
         SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
         for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
             String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
@@ -90,7 +90,7 @@ public class FunctionalGroupsFinderTest {
         //non-generalized functional groups
         //System.out.println("----------------");
         tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
-        tmpFunctionalGroupsList = tmpFGF.find(tmpInputMol);
+        tmpFunctionalGroupsList = tmpFGF.extractFunctionalGroups(tmpInputMol);
         for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
             String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
             //System.out.println(tmpSmilesString);
@@ -598,7 +598,7 @@ public class FunctionalGroupsFinderTest {
         anAromaticityModel.apply(tmpMolecule);
         // find functional groups
         FunctionalGroupsFinder tmpFGFinder = new FunctionalGroupsFinder(aFunctionalGroupEnvironmentMode);
-        List<IAtomContainer> tmpFunctionalgroupsList = tmpFGFinder.find(tmpMolecule);
+        List<IAtomContainer> tmpFunctionalgroupsList = tmpFGFinder.extractFunctionalGroups(tmpMolecule);
         // get expected groups
         List<IAtomContainer> tmpExpectedFGs = new LinkedList<>();
         for (String tmpFGString : anExpectedFGPseudoSmilesArray) {
