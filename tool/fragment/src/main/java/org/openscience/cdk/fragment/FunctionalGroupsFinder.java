@@ -66,7 +66,7 @@ import java.util.Set;
  * environments can be important, e.g. to differentiate an alcohol from a phenol, but are less important in other cases.
  * To account for this, Ertl also devised a "generalization" scheme that generalizes the functional group environments
  * in a way that accounts for their varying significance in different cases. Most environmental atoms are exchanged with
- * pseudo ("R") atoms there. All these functionalities are available in FunctionalgroupsFinder. Additionally, only
+ * pseudo ("R") atoms there. All these functionalities are available in FunctionalGroupsFinder. Additionally, only
  * the marked atoms completely without their environments can be extracted.
  * <br>
  * <br>To apply functional group detection to an input molecule, its atom types need to be set and aromaticity needs
@@ -365,9 +365,12 @@ public class FunctionalGroupsFinder {
      *
      * @param aMolecule the molecule to identify functional groups in
      * @throws CloneNotSupportedException if cloning is not possible
+     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
+     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
+     *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> find(IAtomContainer aMolecule) throws CloneNotSupportedException {
+    public List<IAtomContainer> find(IAtomContainer aMolecule) throws CloneNotSupportedException, IllegalArgumentException {
         return this.find(aMolecule, true, false);
     }
     //
@@ -385,9 +388,12 @@ public class FunctionalGroupsFinder {
      *                             amounts of data but corrupts the original input container; use 'true' to work with a clone and
      *                             leave the input container intact
      * @throws CloneNotSupportedException if cloning is not possible
+     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
+     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
+     *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> find(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException {
+    public List<IAtomContainer> find(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException, IllegalArgumentException {
         return this.find(aMolecule, aShouldInputBeCloned, false);
     }
     //
@@ -404,7 +410,9 @@ public class FunctionalGroupsFinder {
      *                                      be thrown otherwise; see convenience methods in this class for detecting
      *                                      illegal input structures for this case
      * @throws CloneNotSupportedException if cloning is not possible
-     * @throws IllegalArgumentException if input restrictions are applied and the given molecule does not fulfill them
+     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
+     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
+     *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
     public List<IAtomContainer> find(IAtomContainer aMolecule, boolean aShouldInputBeCloned, boolean anAreInputRestrictionsApplied)
@@ -791,7 +799,7 @@ public class FunctionalGroupsFinder {
                     continue;
                 }
                 if (Objects.isNull(tmpConnectedAtom.getImplicitHydrogenCount())) {
-                    tmpConnectedAtom.setImplicitHydrogenCount(1);
+                    throw new IllegalArgumentException("Atom with index " + tmpConnectedAtom.getIndex() + " had an unset (\"null\") implicit hydrogen count.");
                 } else {
                     tmpConnectedAtom.setImplicitHydrogenCount(tmpConnectedAtom.getImplicitHydrogenCount() + 1);
                 }
