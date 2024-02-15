@@ -93,7 +93,7 @@ public class FunctionalGroupsFinderTest {
         tmpFunctionalGroupsList = tmpFGF.find(tmpInputMol);
         for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
             String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
-            System.out.println(tmpSmilesString);
+            //System.out.println(tmpSmilesString);
         }
     }
     //

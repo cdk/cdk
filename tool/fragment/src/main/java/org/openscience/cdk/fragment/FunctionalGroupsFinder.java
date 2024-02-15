@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.fragment;
 
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -54,9 +53,9 @@ import java.util.Set;
 
 
 /**
- * Finds and extracts a molecule's functional groups in a purely rule-based manner.
- * This class implements Peter Ertl's algorithm for the automated detection and extraction
- * of functional groups in organic molecules
+ * Finds and extracts a molecule's functional groups in a purely rule-based manner (it is not a classical functional
+ * group identification functionality based on substructure matching!). This class implements Peter Ertl's algorithm for
+ * the automated detection and extraction of functional groups in organic molecules
  * (<a href="https://doi.org/10.1186/s13321-017-0225-z">[Ertl P. An algorithm to identify functional groups in organic molecules. J Cheminform. 2017; 9:36.]</a>)
  * and has been described in a scientific publication
  * (<a href="https://doi.org/10.1186/s13321-019-0361-8">[Fritsch, S., Neumann, S., Schaub, J. et al. ErtlFunctionalGroupsFinder: automated rule-based functional group detection with the Chemistry Development Kit (CDK). J Cheminform. 2019; 11:37.]</a>).
@@ -1191,7 +1190,8 @@ public class FunctionalGroupsFinder {
      */
     private boolean isHeteroatom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
-        return tmpAtomicNr != 1 && tmpAtomicNr != 6 && tmpAtomicNr != 0 && tmpAtomicNr != null && !(anAtom instanceof PseudoAtom);
+        String tmpSymbol = anAtom.getSymbol();
+        return tmpAtomicNr != 1 && tmpAtomicNr != 6 && tmpAtomicNr != 0 && tmpAtomicNr != null && !tmpSymbol.equals("R") && !tmpSymbol.equals("*");
     }
     //
     /**
