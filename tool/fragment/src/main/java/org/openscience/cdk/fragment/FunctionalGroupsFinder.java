@@ -1190,7 +1190,8 @@ public class FunctionalGroupsFinder {
     private boolean isHeteroatom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
         String tmpSymbol = anAtom.getSymbol();
-        return tmpAtomicNr != IAtom.H && tmpAtomicNr != IAtom.C && tmpAtomicNr != IAtom.Wildcard && tmpAtomicNr != null && !tmpSymbol.equals("R") && !tmpSymbol.equals("*");
+        return tmpAtomicNr != IAtom.H && tmpAtomicNr != IAtom.C
+                && tmpAtomicNr != IAtom.Wildcard && tmpAtomicNr != null && !tmpSymbol.equals("R") && !tmpSymbol.equals("*") && !(anAtom instanceof IPseudoAtom);
     }
     //
     /**
