@@ -438,7 +438,7 @@ public class FunctionalGroupsFinder {
             this.expandFullEnvironments(tmpFunctionalGroupsList);
         } else if (this.envMode == Mode.ONLY_MARKED_ATOMS) {
             //do nothing
-        }else {
+        } else {
             throw new IllegalArgumentException("Unknown mode.");
         }
         this.clearCache();
@@ -657,7 +657,7 @@ public class FunctionalGroupsFinder {
             }
             int tmpAtomicNr = tmpAtom.getAtomicNumber();
             // if C...
-            if (tmpAtomicNr == 6) {
+            if (tmpAtomicNr == IAtom.C) {
                 // to detect if for loop ran with or without marking the C atom
                 boolean tmpIsMarked = false;
                 // count for the number of connected O, N & S atoms to detect acetal carbons
@@ -667,7 +667,7 @@ public class FunctionalGroupsFinder {
                     IBond tmpConnectedBond = this.bondMapCache.get(idx, tmpConnectedIdx);
 
                     // if connected to heteroatom or C in aliphatic double or triple bond... [CONDITIONS 2.1 & 2.2]
-                    if (tmpConnectedAtom.getAtomicNumber() != 1
+                    if (tmpConnectedAtom.getAtomicNumber() != IAtom.H
                             && ((tmpConnectedBond.getOrder() == Order.DOUBLE || tmpConnectedBond.getOrder() == Order.TRIPLE)
                             && !tmpConnectedBond.isAromatic())) {
 
@@ -678,7 +678,7 @@ public class FunctionalGroupsFinder {
                                         "Marking Atom #%d (%s) - Met condition %s",
                                         tmpConnectedIdx,
                                         tmpConnectedAtom.getSymbol(),
-                                        tmpConnectedAtom.getAtomicNumber() == 6 ? "2.1/2.2" : "1"));
+                                        tmpConnectedAtom.getAtomicNumber() == IAtom.C ? "2.1/2.2" : "1"));
                             }
                         }
                         // set the *current* atom as marked and break out of connected atoms
@@ -690,7 +690,7 @@ public class FunctionalGroupsFinder {
                                     tmpAtom.getSymbol()));
                         }
                         // but check for carbonyl-C before break
-                        if (tmpConnectedAtom.getAtomicNumber() == 8
+                        if (tmpConnectedAtom.getAtomicNumber() == IAtom.O
                                 && tmpConnectedBond.getOrder() == Order.DOUBLE
                                 && this.adjListCache[idx].length == 3) {
                             tmpAtom.setProperty(CARBONYL_C_MARKER, true);
@@ -700,9 +700,9 @@ public class FunctionalGroupsFinder {
                         }
                         // break out of connected atoms
                         break;
-                    } else if ((tmpConnectedAtom.getAtomicNumber() == 7
-                            || tmpConnectedAtom.getAtomicNumber() == 8
-                            || tmpConnectedAtom.getAtomicNumber() == 16)
+                    } else if ((tmpConnectedAtom.getAtomicNumber() == IAtom.N
+                            || tmpConnectedAtom.getAtomicNumber() == IAtom.O
+                            || tmpConnectedAtom.getAtomicNumber() == IAtom.S)
                             && tmpConnectedBond.getOrder() == Order.SINGLE) {
                         // if connected to O/N/S in single bond...
                         // if connected O/N/S is not aromatic...
@@ -742,7 +742,7 @@ public class FunctionalGroupsFinder {
                         // if part of oxirane, aziridine, or thiirane ring... [CONDITION 2.4]
                         for (int tmpConnectedInSphere2Idx : this.adjListCache[tmpConnectedIdx]) {
                             IAtom tmpConnectedInSphere2Atom = aMolecule.getAtom(tmpConnectedInSphere2Idx);
-                            if (tmpConnectedInSphere2Atom.getAtomicNumber() == 6) {
+                            if (tmpConnectedInSphere2Atom.getAtomicNumber() == IAtom.C) {
                                 for (int tmpConnectedInSphere3Idx : this.adjListCache[tmpConnectedInSphere2Idx]) {
                                     IAtom tmpConnectedInSphere3Atom = aMolecule.getAtom(tmpConnectedInSphere3Idx);
                                     if (tmpConnectedInSphere3Atom.equals(tmpAtom)) {
@@ -779,7 +779,7 @@ public class FunctionalGroupsFinder {
                     continue;
                 }
                 // if none of the conditions 2.X apply, we have an unmarked C (not relevant here)
-            } else if (tmpAtomicNr == 1) {
+            } else if (tmpAtomicNr == IAtom.H) {
                 // if H...
                 // convert to implicit H
                 IAtom tmpConnectedAtom;
@@ -891,7 +891,7 @@ public class FunctionalGroupsFinder {
                     // add unmarked connected atoms to current marked atom's environment
                     IBond tmpConnectedBond = this.bondMapCache.get(tmpCurrentQueueIdx, tmpConnectedIdx);
                     EnvironmentalCType tmpEnvironmentalCType;
-                    if (tmpConnectedAtom.getAtomicNumber() == 6) {
+                    if (tmpConnectedAtom.getAtomicNumber() == IAtom.C) {
                         if (tmpConnectedAtom.isAromatic()) {
                             tmpEnvironmentalCType = EnvironmentalCType.C_AROMATIC;
                         } else {
@@ -972,8 +972,8 @@ public class FunctionalGroupsFinder {
                 if (!Objects.isNull(tmpEnvironment)) {
                     int tmpEnvCCount = tmpEnvironment.size();
                     // for H2N-C_env & HO-C_env -> do not replace H & C_env by R to differentiate primary/secondary/tertiary amine and alcohol vs. phenol
-                    if ((tmpAtom.getAtomicNumber() == 8 && tmpEnvCCount == 1)
-                            || (tmpAtom.getAtomicNumber() == 7 && tmpEnvCCount == 1)) {
+                    if ((tmpAtom.getAtomicNumber() == IAtom.O && tmpEnvCCount == 1)
+                            || (tmpAtom.getAtomicNumber() == IAtom.N && tmpEnvCCount == 1)) {
                         if (FunctionalGroupsFinder.isDbg()) {
                             FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
                                     "\t- found single atomic %s FG with one env. C. Expanding environment...",
@@ -992,8 +992,8 @@ public class FunctionalGroupsFinder {
                         continue;
                     }
                     // for HN-(C_env)-C_env & HS-C_env -> do not replace H by R! (only C_env!)
-                    if ((tmpAtom.getAtomicNumber() == 7 && tmpEnvCCount == 2)
-                            || (tmpAtom.getAtomicNumber() == 16 && tmpEnvCCount == 1)) {
+                    if ((tmpAtom.getAtomicNumber() == IAtom.N && tmpEnvCCount == 2)
+                            || (tmpAtom.getAtomicNumber() == IAtom.S && tmpEnvCCount == 1)) {
                         if (FunctionalGroupsFinder.isDbg()) {
                             FunctionalGroupsFinder.LOGGING_TOOL.debug("\t- found sec. amine or simple thiol");
                         }
@@ -1051,7 +1051,7 @@ public class FunctionalGroupsFinder {
                     this.addRAtoms(tmpFunctionalGroupAtom, tmpRAtomCount, tmpFunctionalGroup);
                 }
                 // processing carbons...
-                if (tmpFunctionalGroupAtom.getAtomicNumber() == 6) {
+                if (tmpFunctionalGroupAtom.getAtomicNumber() == IAtom.C) {
                     if (Objects.isNull(tmpFunctionalGroupAtom.getProperty(FunctionalGroupsFinder.CARBONYL_C_MARKER))) {
                         if (tmpFunctionalGroupAtom.getImplicitHydrogenCount() != 0) {
                             tmpFunctionalGroupAtom.setImplicitHydrogenCount(0);
@@ -1178,7 +1178,7 @@ public class FunctionalGroupsFinder {
         }
         int tmpRAtomCount = tmpEnvironment.size();
         int tmpRAtomsForCCount = tmpRAtomCount;
-        if (aFunctionalGroupAtom.getAtomicNumber() == 8 && aFunctionalGroupAtom.getImplicitHydrogenCount() == 1) {
+        if (aFunctionalGroupAtom.getAtomicNumber() == IAtom.O && aFunctionalGroupAtom.getImplicitHydrogenCount() == 1) {
             this.addHydrogens(aFunctionalGroupAtom, 1, aFunctionalGroup);
             aFunctionalGroupAtom.setImplicitHydrogenCount(0);
             if (FunctionalGroupsFinder.isDbg()) {
@@ -1208,7 +1208,7 @@ public class FunctionalGroupsFinder {
     private boolean isHeteroatom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
         String tmpSymbol = anAtom.getSymbol();
-        return tmpAtomicNr != 1 && tmpAtomicNr != 6 && tmpAtomicNr != 0 && tmpAtomicNr != null && !tmpSymbol.equals("R") && !tmpSymbol.equals("*");
+        return tmpAtomicNr != IAtom.H && tmpAtomicNr != IAtom.C && tmpAtomicNr != IAtom.Wildcard && tmpAtomicNr != null && !tmpSymbol.equals("R") && !tmpSymbol.equals("*");
     }
     //
     /**
