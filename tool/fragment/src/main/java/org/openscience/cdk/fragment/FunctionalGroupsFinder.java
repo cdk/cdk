@@ -230,7 +230,24 @@ public class FunctionalGroupsFinder {
      * Atoms of these elements are exclusively accepted in the input molecule if(!) the strict input restrictions are
      * activated (turned off by default).
      */
-    public static final Set<Integer> NONMETAL_ATOMIC_NUMBERS = new HashSet<>(Arrays.asList(1, 2, 6, 7, 8, 9, 10, 15, 16, 17, 18, 34, 35, 36, 53, 54, 86));
+    public static final Set<Integer> NONMETAL_ATOMIC_NUMBERS = new HashSet<>(Arrays.asList(
+            IAtom.H,
+            IAtom.He,
+            IAtom.C,
+            IAtom.N,
+            IAtom.O,
+            IAtom.F,
+            IAtom.Ne,
+            IAtom.P,
+            IAtom.S,
+            IAtom.Cl,
+            IAtom.Ar,
+            IAtom.Se,
+            IAtom.Br,
+            IAtom.Kr,
+            IAtom.I,
+            IAtom.Xe,
+            IAtom.Rn));
     //
     /**
      * Environment mode setting, defining whether environments should be generalized (default) or kept as whole.
