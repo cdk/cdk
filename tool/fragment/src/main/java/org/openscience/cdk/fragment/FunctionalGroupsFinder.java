@@ -454,32 +454,6 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Applies the always necessary preprocessing for functional group detection. Atom types are set and aromaticity detected
-     * in the input molecule.
-     * <br>NOTE: This changes properties and flags in the given atom container instance. If you
-     * want to retain your object unchanged for future calculations, use the IAtomContainer's
-     * clone() method.
-     *
-     * @param aMolecule the molecule to process
-     * @param anAromaticityModel the aromaticity model to apply to the molecule in preprocessing; Note: The chosen
-     *                           ElectronDonation model can massively influence the extracted functional groups of a molecule
-     *                           when using FunctionGroupsFinder!
-     * @throws NullPointerException if any parameter is null
-     * @throws IllegalArgumentException if the input molecule causes any other type of exception while processing
-     */
-    public static void applyPreprocessing(IAtomContainer aMolecule, Aromaticity anAromaticityModel) throws NullPointerException, IllegalArgumentException {
-        Objects.requireNonNull(aMolecule, "Given atom container is 'null'.");
-        Objects.requireNonNull(anAromaticityModel, "Given aromaticity model is 'null'.");
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aMolecule);
-            anAromaticityModel.apply(aMolecule);
-        } catch (Exception anException) {
-            FunctionalGroupsFinder.LOGGING_TOOL.warn(anException);
-            throw new IllegalArgumentException(anException);
-        }
-    }
-    //
-    /**
      * Returns the unmodifiable set containing the atomic numbers that can be passed on to FunctionalGroupsFinder.find()
      * if(!) input restrictions are enabled (turned off by default). These nonmetal elements include
      * hydrogen, carbon, nitrogen, oxygen, phosphorus, sulfur, selenium, halogens (fluorine, chlorine, bromine, iodine),
