@@ -551,30 +551,11 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Checks whether the given molecule consists of two or more unconnected structures, e.g. ion and counter-ion. This
-     * would make it unfit to be passed to FunctionalGroupsFinder.extractFunctionalGroups() if(!) the input restrictions are turned on (turned off by default).
-     * If you are using the strict input restrictions to only identify functional groups in standardised, organic structures,
-     * you can try to select the biggest connected component in the input atom containers where this method returns true
-     * and only pass that to FunctionalGroupsFinder.
-     * Note: this is a convenience method basically applying <code>ConnectivityChecker.isConnected(aMolecule);</code>.
-     *
-     * @param aMolecule the molecule to check
-     * @return true, if the molecule consists of two or more unconnected structures
-     * @throws NullPointerException if the given molecule is 'null'
-     */
-    public static boolean isStructureUnconnected(IAtomContainer aMolecule) throws NullPointerException {
-        //Developer's note: the private checkConstraints() method is not used here because it is intertwined with the
-        // extractFunctionalGroups() method for speed-up; but it basically does the same.
-        Objects.requireNonNull(aMolecule, "Given molecule is 'null'");
-        boolean tmpIsConnected = ConnectivityChecker.isConnected(aMolecule);
-        return (!tmpIsConnected);
-    }
-    //
-    /**
      * Checks whether the given molecule represented by an atom container can be passed on to the
      * FunctionalGroupsFinder.extractFunctionalGroups() method without problems even if(!) the input restrictions are turned on (turned off by default).
      * <br>This method will return false if the molecule contains any metal, metalloid, pseudo, or charged atoms or consists of
-     * multiple unconnected parts. Some of these issues (charges and multiple unconnected components) can be solved by
+     * multiple unconnected parts ('ConnectivityChecker.isConnected(aMolecule)' must be 'true').
+     * Some of these issues (charges and multiple unconnected components) can be solved by
      * respective standardisation routines.
      *
      * @param aMolecule the molecule to check
@@ -588,7 +569,8 @@ public class FunctionalGroupsFinder {
         try {
             tmpIsValid = !(FunctionalGroupsFinder.containsMetalMetalloidOrPseudoAtom(aMolecule)
                     || FunctionalGroupsFinder.containsChargedAtom(aMolecule)
-                    || FunctionalGroupsFinder.isStructureUnconnected(aMolecule));
+                    || !ConnectivityChecker.isConnected(aMolecule)
+                    || aMolecule.isEmpty());
         } catch (Exception anException) {
             FunctionalGroupsFinder.LOGGING_TOOL.warn(anException);
             throw new IllegalArgumentException(anException);
