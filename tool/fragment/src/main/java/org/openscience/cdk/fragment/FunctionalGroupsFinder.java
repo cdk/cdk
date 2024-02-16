@@ -80,16 +80,18 @@ import java.util.Set;
  * FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(); //default: generalization turned on
  * List{@literal <}IAtomContainer{@literal >} tmpFunctionalGroupsList = tmpFGF.extractFunctionalGroups(tmpInputMol);
  * </pre></blockquote>
- * In order to only identify functional groups in standardised, organic structures, FunctionalGroupsFinder can
+ * If you want to only identify functional groups in standardised, organic structures, FunctionalGroupsFinder can
  * be configured to only accept molecules that do *not* contain any metal, metalloid, or pseudo (R) atoms or formal charges.
  * Also structures consisting of more than one unconnected component (e.g. ion and counter-ion) are not accepted if(!) the
  * strict input restrictions are turned on (they are turned off by default).
  * This can be done via a boolean parameter in a variant of the central extractFunctionalGroups() method.
- * To identify molecules that need to be filtered from the input set or preprocessed in this use case, convenience methods are
- * available in this class. Please note that structural properties like formal charges and the others mentioned above
+ * Please note that structural properties like formal charges and the others mentioned above
  * are not expected to cause issues (exceptions) when processed by this class, but they are not explicitly regarded by
  * the Ertl algorithm and hence this implementation, too. They might therefore cause unexpected behaviour in functional
- * group identification. For example, a charge is not listed as a reason to mark a carbon atom.
+ * group identification. For example, a formal charge is not listed as a reason to mark a carbon atom.
+ * <br>To identify molecules that do not fulfill these constraints, you can use CDK utilities like ConnectivityChecker,
+ * utility methods in the Elements class, and query IAtom instances for their formal charge. Pseudo atoms can
+ * be detected in multiple ways, e.g. by checking for atomic number == 0 or checking "instanceof IPseudoAtom".
  * <br>
  * <br>Note: this implementation is not thread-safe. Each parallel thread should have its own instance of this class.
  *
@@ -222,6 +224,7 @@ public class FunctionalGroupsFinder {
      */
     public static final String CARBONYL_C_MARKER = "FGF-Carbonyl-C";
     //
+    //Todo remove here and rely on utilities in Elements
     /**
      * Set of atomic numbers of nonmetal elements, namely hydrogen, carbon, nitrogen, oxygen, phosphorus, sulfur, selenium,
      * halogens (fluorine, chlorine, bromine, iodine), and noble gases (helium, neon, argon, krypton, xenon, radon).
@@ -354,12 +357,9 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Find all functional groups in a molecule. The input atom container instance is cloned before processing to leave
-     * the input container intact.
-     * <p>
-     *     Note: The strict input restrictions from previous versions (no charged atoms, metals, metalloids or
-     *     unconnected components) do not apply anymore by default. They can be turned on again in another variant of
-     *     this method below.
-     * </p>
+     * the input container intact. The strict input restrictions (no charged atoms, metals, metalloids or
+     * unconnected components) do not apply by default. They can be turned on again in another variant of
+     * this method below.
      *
      * @param aMolecule the molecule to identify functional groups in
      * @throws CloneNotSupportedException if cloning is not possible
@@ -374,11 +374,8 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Find all functional groups in a molecule.
-     * <p>
-     *     Note: The strict input restrictions from previous versions (no charged atoms, metals, metalloids or
-     *     unconnected components) do not apply anymore by default. They can be turned on again in another variant of
-     *     this method below.
-     * </p>
+     * The strict input restrictions (no charged atoms, metals, metalloids or unconnected components) do not apply by
+     * default. They can be turned on again in another variant of this method below.
      *
      * @param aMolecule the molecule to identify functional groups in
      * @param aShouldInputBeCloned use 'false' to reuse the input container's bonds and atoms in the extraction of the functional
@@ -403,10 +400,9 @@ public class FunctionalGroupsFinder {
      *                             groups; this may speed up the extraction and lower the memory consumption for processing large
      *                             amounts of data but corrupts the original input container; use 'true' to work with a clone and
      *                             leave the input container intact
-     * @param anAreInputRestrictionsApplied if true, the input must consist of one connected structure and may not
+     * @param anAreInputRestrictionsApplied if true, the input must consist of one connected structure and must not
      *                                      contain charged atoms, metals or metalloids; an IllegalArgumentException will
-     *                                      be thrown otherwise; see convenience methods in this class for detecting
-     *                                      illegal input structures for this case
+     *                                      be thrown otherwise
      * @throws CloneNotSupportedException if cloning is not possible
      * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
      *                                  counts are unset; or thrown if the strict input restrictions are turned on and
@@ -432,7 +428,7 @@ public class FunctionalGroupsFinder {
         if (anAreInputRestrictionsApplied) {
             // throws IllegalArgumentException if constraints are not met
             // only done now because adjacency list cache is needed in the method
-            this.checkConstraints(tmpMolecule);
+            this.checkConstraints(tmpMolecule, this.adjListCache);
         }
         this.markAtoms(tmpMolecule);
         // extract raw groups
@@ -452,130 +448,30 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Returns the unmodifiable set containing the atomic numbers that can be passed on to FunctionalGroupsFinder.extractFunctionalGroups()
-     * if(!) input restrictions are enabled (turned off by default). These nonmetal elements include
-     * hydrogen, carbon, nitrogen, oxygen, phosphorus, sulfur, selenium, halogens (fluorine, chlorine, bromine, iodine),
-     * and noble gases (helium, neon, argon, krypton, xenon, radon).
-     * All other atomic numbers represent metal, metalloid, or pseudo ('R') atoms.
-     * <br>Convenience method analogous to using <code>FunctionalGroupsFinder.NONMETAL_ATOMIC_NUMBERS</code> directly.
-     *
-     * @return all valid atomic numbers for FunctionalGroupsFinder.extractFunctionalGroups() if input restrictions are activated
-     */
-    public static Set<Integer> getNonmetalAtomicNumbers() {
-        return FunctionalGroupsFinder.NONMETAL_ATOMIC_NUMBERS;
-    }
-    //
-    /**
-     * Checks whether a given atom is a metal, metalloid, or pseudo atom judging by its atomic number. These atoms
-     * cannot be passed on to FunctionalGroupsFinder.extractFunctionalGroups() if(!) input restrictions are enabled (turned off by default).
-     *
-     * @param anAtom the atom to check
-     * @return true, if the atomic number is not in the nonmetal atomic numbers set or 'null'
-     * @throws NullPointerException if the given atom is 'null'
-     */
-    public static boolean isMetalMetalloidOrPseudoAtom(IAtom anAtom) throws NullPointerException {
-        Objects.requireNonNull(anAtom, "Given atom is 'null'.");
-        if (Objects.isNull(anAtom.getAtomicNumber())) {
-            return true;
-        }
-        return !FunctionalGroupsFinder.isNonmetal(anAtom);
-    }
-    //
-    /**
-     * Iterates through all atoms in the given molecule and checks them for metal, metalloid, and pseudo ("R") atoms. If this
-     * method returns 'true', the molecule cannot be passed on to FunctionalGroupsFinder.extractFunctionalGroups()
-     * if(!) input restrictions are enabled (turned off by default). If you are using the strict input restrictions to
-     * only identify functional groups in standardised, organic structures, you should filter the molecules where this
-     * method returns true from your input set.
-     * <br>This method scales linearly with O(n) with n: number of atoms in the given
-     * molecule.
+     * Checks whether the given molecule represented by an atom container can be passed on to the
+     * FunctionalGroupsFinder.extractFunctionalGroups() method without problems even if(!) the input
+     * restrictions are turned on (turned off by default).
+     * <br>This method will return false if the molecule contains any metal, metalloid, pseudo, or
+     * charged atoms or consists of multiple unconnected parts ('ConnectivityChecker.isConnected(aMolecule)'
+     * must be 'true'). Some of these issues can be solved by respective standardisation routines.
      *
      * @param aMolecule the molecule to check
-     * @return true, if the molecule contains one or more metal, metalloid, or pseudo ("R") atoms
-     * @throws NullPointerException if the given molecule (or one of its atoms) is 'null'
+     * @return true if the given molecule is a valid parameter for FunctionalGroupsFinder.extractFunctionalGroups()
+     *         method if(!) the input restrictions are turned on (turned off by default)
+     * @throws NullPointerException if parameter is 'null'
      */
-    public static boolean containsMetalMetalloidOrPseudoAtom(IAtomContainer aMolecule) throws NullPointerException {
-        Objects.requireNonNull(aMolecule, "Given molecule is 'null'.");
-        boolean tmpIsAtomicNumberInvalid;
-        for (IAtom tmpAtom : aMolecule.atoms()) {
-            // throws NullPointerException if tmpAtom is 'null'
-            tmpIsAtomicNumberInvalid = FunctionalGroupsFinder.isMetalMetalloidOrPseudoAtom(tmpAtom);
-            if (tmpIsAtomicNumberInvalid) {
-                return true;
-            }
-        }
-        return false;
-    }
-    //
-    /**
-     * Checks whether a given atom is charged. These atoms cannot be passed on to FunctionalGroupsFinder.extractFunctionalGroups()
-     * if(!) input restrictions are enabled (turned off by default).
-     *
-     * @param anAtom the atom to check
-     * @return true, if the atom is charged
-     * @throws NullPointerException if the given atom is 'null'
-     */
-    public static boolean isCharged(IAtom anAtom) throws NullPointerException {
-        Objects.requireNonNull(anAtom, "Given atom is 'null'.");
-        Integer tmpFormalCharge = anAtom.getFormalCharge();
-        if (Objects.isNull(tmpFormalCharge)) {
+    public static boolean isValidInputMoleculeWithRestrictionsTurnedOn(IAtomContainer aMolecule) throws NullPointerException {
+        Objects.requireNonNull(aMolecule, "given molecule is null");
+        try {
+            EdgeToBondMap tmpBondMap = EdgeToBondMap.withSpaceFor(aMolecule);
+            //throws IllegalArgumentException if a bond was found which contained atoms not in the molecule
+            int[][] tmpAdjList = GraphUtil.toAdjList(aMolecule, tmpBondMap);
+            //throws IllegalArgumentException if one of the constraints is not met
+            FunctionalGroupsFinder.checkConstraints(aMolecule, tmpAdjList);
+            return true;
+        } catch (IllegalArgumentException anException) {
             return false;
         }
-        return (tmpFormalCharge.intValue() != 0);
-    }
-    //
-    /**
-     * Iterates through all atoms in the given molecule and checks whether they are charged. If this
-     * method returns 'true', the molecule cannot be passed on to FunctionalGroupsFinder.extractFunctionalGroups()
-     * if(!) input restrictions are enabled (turned off by default). If you are using the strict input restrictions to
-     * only identify functional groups in standardised, organic structures, you can try to neutralise the charges in the
-     * molecules where this method returns true by standardisation routines.
-     * <br>This method scales linearly with O(n) with n: number of atoms in the given
-     * molecule.
-     *
-     * @param aMolecule the molecule to check
-     * @return true, if the molecule contains one or more charged atoms
-     * @throws NullPointerException if the given molecule is 'null'
-     */
-    public static boolean containsChargedAtom(IAtomContainer aMolecule) throws NullPointerException {
-        Objects.requireNonNull(aMolecule, "Given molecule is 'null'.");
-        boolean tmpIsAtomCharged;
-        for (IAtom tmpAtom : aMolecule.atoms()) {
-            //Throws NullPointerException if tmpAtom is 'null'
-            tmpIsAtomCharged = FunctionalGroupsFinder.isCharged(tmpAtom);
-            if (tmpIsAtomCharged) {
-                return true;
-            }
-        }
-        return false;
-    }
-    //
-    /**
-     * Checks whether the given molecule represented by an atom container can be passed on to the
-     * FunctionalGroupsFinder.extractFunctionalGroups() method without problems even if(!) the input restrictions are turned on (turned off by default).
-     * <br>This method will return false if the molecule contains any metal, metalloid, pseudo, or charged atoms or consists of
-     * multiple unconnected parts ('ConnectivityChecker.isConnected(aMolecule)' must be 'true').
-     * Some of these issues (charges and multiple unconnected components) can be solved by
-     * respective standardisation routines.
-     *
-     * @param aMolecule the molecule to check
-     * @return true if the given molecule is a valid parameter for FunctionalGroupsFinder.extractFunctionalGroups() method if(!) the input restrictions are turned on (turned off by default)
-     * @throws NullPointerException if parameter is 'null'
-     * @throws IllegalArgumentException if the input molecule causes any other type of exception while processing
-     */
-    public static boolean isValidInputMoleculeWithRestrictionsTurnedOn(IAtomContainer aMolecule) throws NullPointerException, IllegalArgumentException {
-        Objects.requireNonNull(aMolecule, "Given molecule is null.");
-        boolean tmpIsValid;
-        try {
-            tmpIsValid = !(FunctionalGroupsFinder.containsMetalMetalloidOrPseudoAtom(aMolecule)
-                    || FunctionalGroupsFinder.containsChargedAtom(aMolecule)
-                    || !ConnectivityChecker.isConnected(aMolecule)
-                    || aMolecule.isEmpty());
-        } catch (Exception anException) {
-            FunctionalGroupsFinder.LOGGING_TOOL.warn(anException);
-            throw new IllegalArgumentException(anException);
-        }
-        return tmpIsValid;
     }
     //
     /**
@@ -1162,22 +1058,40 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Checks whether the given atom is a hetero-atom (i.e. non-carbon and non-hydrogen). Pseudo (R) atoms will also return false!
+     * Checks whether the given atom is a pseudo atom. Very strict, any atom whose atomic number is
+     * null or 0 or whose symbol equals "R" or "*" or that is an instance of an IPseudoAtom implementing
+     * class will be classified as pseudo atom.
+     *
+     * @param anAtom the atom to test
+     * @return true if the given atom is identified as a pseudo (R) atom
+     */
+    private static boolean isPseudoAtom(IAtom anAtom) {
+        Integer tmpAtomicNr = anAtom.getAtomicNumber();
+        String tmpSymbol = anAtom.getSymbol();
+        return tmpAtomicNr == IAtom.Wildcard
+                || tmpAtomicNr == null
+                || tmpSymbol.equals("R")
+                || tmpSymbol.equals("*")
+                || (anAtom instanceof IPseudoAtom);
+    }
+    //
+    /**
+     * Checks whether the given atom is a hetero-atom (i.e. non-carbon and non-hydrogen).
+     * Pseudo (R) atoms will also return false!
      *
      * @param anAtom the atom to test
      * @return true if the given atom is neither a carbon nor a hydrogen or pseudo atom
      */
-    private boolean isHeteroatom(IAtom anAtom) {
+    private static boolean isHeteroatom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
-        String tmpSymbol = anAtom.getSymbol();
         return tmpAtomicNr != IAtom.H && tmpAtomicNr != IAtom.C
-                && tmpAtomicNr != IAtom.Wildcard && tmpAtomicNr != null && !tmpSymbol.equals("R") && !tmpSymbol.equals("*") && !(anAtom instanceof IPseudoAtom);
+                && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
     }
     //
+    //todo replace with Elements utility method, testing for metal, metalloid, and pseudo atoms
     /**
      * Checks whether the given atom is from an element in the organic subset, i.e. not a metal or metalloid atom.
      * See the public constant set of non-metal atomic numbers declared in this class. Pseudo (R) atoms will also return false.
-     * Given as static method here because it is used by static public utility methods (developer's note).
      *
      * @param anAtom atom to check
      * @return true if the given atom is organic and not a metal or metalloid atom
@@ -1280,26 +1194,28 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Checks input molecule for charged atoms, metal or metalloid atoms, and whether it consists of more than one unconnected structures.
-     * If one of the cases applies, an IllegalArgumentException is thrown with a specific error message. NOTE: adjacency
-     * list cache must already be set-up!
+     * Checks input molecule for charged atoms, metal or metalloid atoms, and whether it consists of more than one
+     * unconnected structures. The molecule may be empty but not null.
+     * If one of the cases applies, an IllegalArgumentException is thrown with a specific error message.
+     * Given as static method here because it is used by static public utility methods (developer's note).
      *
      * @param aMolecule the molecule to check
      * @throws IllegalArgumentException if one of the constraints is not met
+     * @throws NullPointerException if a parameter is 'null'
      */
-    private void checkConstraints(IAtomContainer aMolecule) throws IllegalArgumentException {
+    private static void checkConstraints(IAtomContainer aMolecule, int[][] anAdjacencyList) throws IllegalArgumentException, NullPointerException {
+        Objects.requireNonNull(aMolecule, "given molecule is null");
+        Objects.requireNonNull(anAdjacencyList, "Adjacency list is null");
         for (IAtom tmpAtom : aMolecule.atoms()) {
-            if (FunctionalGroupsFinder.isCharged(tmpAtom)) {
-                throw new IllegalArgumentException("Input molecule must not contain any charges.");
+            if (tmpAtom.getFormalCharge() != null && tmpAtom.getFormalCharge().intValue() != 0) {
+                throw new IllegalArgumentException("Input molecule must not contain any formal charges.");
             }
+            //todo replace with Elements utility methods
             if (!FunctionalGroupsFinder.isNonmetal(tmpAtom)) {
                 throw new IllegalArgumentException("Input molecule must not contain metal, metalloid, or pseudo atoms.");
             }
         }
-        Objects.requireNonNull(this.adjListCache, "Adjacency list cache must already be set-up for this check!");
-        //Developer's note: this method does not use the public isStructureUnconnected() method because it is intertwined with the
-        // extractFunctionalGroups() method for speed-up; but it basically does the same.
-        ConnectedComponents tmpConnectedComponents = new ConnectedComponents(this.adjListCache);
+        ConnectedComponents tmpConnectedComponents = new ConnectedComponents(anAdjacencyList);
         if (tmpConnectedComponents.nComponents() > 1) {
             throw new IllegalArgumentException("Input molecule must consist of only a single connected structure.");
         }
