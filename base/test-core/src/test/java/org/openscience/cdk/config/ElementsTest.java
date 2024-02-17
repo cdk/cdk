@@ -51,7 +51,6 @@ class ElementsTest {
 
     @Test
     public void testElectronegativity() {
-    	// negative atomic numbers are by implementation 'metal'
     	Assertions.assertTrue(Math.abs(2.55 - Elements.Carbon.electronegativity().doubleValue()) < 0.01);
     }
 
