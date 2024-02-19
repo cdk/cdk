@@ -25,6 +25,7 @@ package org.openscience.cdk.config;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module test-core
@@ -54,4 +55,33 @@ class ElementsTest {
     	Assertions.assertTrue(Math.abs(2.55 - Elements.Carbon.electronegativity().doubleValue()) < 0.01);
     }
 
+    @Test
+    public void testIsMetalloid_int() {
+        Assertions.assertTrue(Elements.isMetalloid((int)Elements.BORON.getAtomicNumber()));
+        Assertions.assertTrue(Elements.isMetalloid((int)Elements.SILICON.getAtomicNumber()));
+        Assertions.assertTrue(Elements.isMetalloid((int)Elements.GERMANIUM.getAtomicNumber()));
+        Assertions.assertTrue(Elements.isMetalloid((int)Elements.ARSENIC.getAtomicNumber()));
+        Assertions.assertTrue(Elements.isMetalloid((int)Elements.ANTIMONY.getAtomicNumber()));
+        Assertions.assertTrue(Elements.isMetalloid((int)Elements.TELLURIUM.getAtomicNumber()));
+        Assertions.assertTrue(Elements.isMetalloid((int)Elements.ASTATINE.getAtomicNumber()));
+        Assertions.assertFalse(Elements.isMetalloid((int)Elements.Unknown.toIElement().getAtomicNumber()));
+        Assertions.assertFalse(Elements.isMetalloid(IAtom.Wildcard));
+        Assertions.assertFalse(Elements.isMetalloid((int)Elements.CARBON.getAtomicNumber()));
+        Assertions.assertFalse(Elements.isMetalloid((int)Elements.HYDROGEN.getAtomicNumber()));
+        Assertions.assertFalse(Elements.isMetalloid((int)Elements.NEON.getAtomicNumber()));
+        Assertions.assertFalse(Elements.isMetalloid((int)Elements.PHOSPHORUS.getAtomicNumber()));
+        Assertions.assertFalse(Elements.isMetalloid((int)Elements.SODIUM.getAtomicNumber()));
+        Assertions.assertFalse(Elements.isMetalloid((int)Elements.GOLD.getAtomicNumber()));
+        Assertions.assertFalse(Elements.isMetalloid(-12));
+    }
+
+    @Test
+    public void testIsMetalloid_IAtom() {
+        Assertions.assertTrue(Elements.isMetalloid(new Atom(Elements.BORON)));
+        Assertions.assertTrue(Elements.isMetalloid(new Atom(Elements.SILICON)));
+        Assertions.assertFalse(Elements.isMetalloid(new Atom(Elements.Unknown.toIElement())));
+        Assertions.assertFalse(Elements.isMetalloid(new Atom(IAtom.Wildcard)));
+        Assertions.assertFalse(Elements.isMetalloid(new Atom(Elements.SODIUM)));
+        Assertions.assertFalse(Elements.isMetalloid(new Atom(Elements.GOLD)));
+    }
 }
