@@ -558,7 +558,8 @@ public enum Elements {
     }
 
     /**
-     * Utility method to determine if an atomic number is a metalloid (B, Si, Ge, As, Sb, Te, or At).
+     * Utility method to determine if an atomic number represents a metalloid element (B, Si, Ge, As, Sb, Te, or At).
+     * All other atomic numbers (integers), including those <= 0, will return false.
      *
      * @param atno atomic number
      * @return the atomic number is a metalloid (or not)
@@ -579,6 +580,7 @@ public enum Elements {
 
     /**
      * Utility method to determine if an atom is a metalloid (B, Si, Ge, As, Sb, Te, or At).
+     * Also returns false should the atomic number of the given atom be null, zero, or negative.
      *
      * @param atom atom
      * @return the atom is a metalloid (or not)
