@@ -556,4 +556,37 @@ public enum Elements {
         return atom.getAtomicNumber() != null &&
                isMetal(atom.getAtomicNumber());
     }
+
+    /**
+     * Utility method to determine if an atomic number represents a metalloid element (B, Si, Ge, As, Sb, Te, or At).
+     * All other atomic numbers (integers), including those <= 0, will return false.
+     *
+     * @param atno atomic number
+     * @return the atomic number is a metalloid (or not)
+     */
+    public static boolean isMetalloid(int atno) {
+        switch (atno) {
+            case 5:   // B
+            case 14:  // Si
+            case 32:  // Ge
+            case 33:  // As
+            case 51:  // Sb
+            case 52:  // Te
+            case 85:  // At
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Utility method to determine if an atom is a metalloid (B, Si, Ge, As, Sb, Te, or At).
+     * Also returns false should the atomic number of the given atom be null, zero, or negative.
+     *
+     * @param atom atom
+     * @return the atom is a metalloid (or not)
+     */
+    public static boolean isMetalloid(IAtom atom) {
+        return atom.getAtomicNumber() != null &&
+                isMetalloid(atom.getAtomicNumber());
+    }
 }
