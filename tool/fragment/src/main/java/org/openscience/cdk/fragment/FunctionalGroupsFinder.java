@@ -24,8 +24,8 @@
 
 package org.openscience.cdk.fragment;
 
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.ConnectedComponents;
-import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,8 +47,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
-import java.util.Set;
-
 
 /**
  * Finds and extracts a molecule's functional groups in a purely rule-based manner (it is not a classical functional
@@ -60,12 +58,12 @@ import java.util.Set;
  * <br>
  * <br>In brief, the algorithm iterates through all atoms in the input molecule and marks hetero atoms and specific carbon atoms
  * (i.a. those in non-aromatic double or triple bonds etc.) as being part of a functional group. Connected groups of marked
- * atoms are extracted as separate functional groups, together with their unmarked, "environmental" carbon atoms. These
+ * atoms are extracted as individual functional groups, together with their unmarked, "environmental" carbon atoms. These
  * environments can be important, e.g. to differentiate an alcohol from a phenol, but are less important in other cases.
  * To account for this, Ertl also devised a "generalization" scheme that generalizes the functional group environments
  * in a way that accounts for their varying significance in different cases. Most environmental atoms are exchanged with
  * pseudo ("R") atoms there. All these functionalities are available in FunctionalGroupsFinder. Additionally, only
- * the marked atoms completely without their environments can be extracted.
+ * the marked atoms, completely without their environments, can be extracted.
  * <br>
  * <br>To apply functional group detection to an input molecule, its atom types need to be set and aromaticity needs
  * to be detected beforehand:
@@ -88,10 +86,11 @@ import java.util.Set;
  * Please note that structural properties like formal charges and the others mentioned above
  * are not expected to cause issues (exceptions) when processed by this class, but they are not explicitly regarded by
  * the Ertl algorithm and hence this implementation, too. They might therefore cause unexpected behaviour in functional
- * group identification. For example, a formal charge is not listed as a reason to mark a carbon atom.
- * <br>To identify molecules that do not fulfill these constraints, you can use CDK utilities like ConnectivityChecker,
+ * group identification. For example, a formal charge is not listed as a reason to mark a carbon atom and pseudo atoms are simply ignored.
+ * <br>To identify molecules that do not fulfill these constraints and should be filtered or preprocessed/standardised,
+ * you can use CDK utilities like the ConnectivityChecker class,
  * utility methods in the Elements class, and query IAtom instances for their formal charge. Pseudo atoms can
- * be detected in multiple ways, e.g. by checking for atomic number == 0 or checking "instanceof IPseudoAtom".
+ * be detected in multiple ways, e.g. by checking for atomic numbers equal to 0 or checking "instanceof IPseudoAtom".
  * <br>
  * <br>Note: this implementation is not thread-safe. Each parallel thread should have its own instance of this class.
  *
@@ -224,32 +223,6 @@ public class FunctionalGroupsFinder {
      */
     public static final String CARBONYL_C_MARKER = "FGF-Carbonyl-C";
     //
-    //Todo remove here and rely on utilities in Elements
-    /**
-     * Set of atomic numbers of nonmetal elements, namely hydrogen, carbon, nitrogen, oxygen, phosphorus, sulfur, selenium,
-     * halogens (fluorine, chlorine, bromine, iodine), and noble gases (helium, neon, argon, krypton, xenon, radon).
-     * Atoms of these elements are exclusively accepted in the input molecule if(!) the strict input restrictions are
-     * activated (turned off by default).
-     */
-    public static final Set<Integer> NONMETAL_ATOMIC_NUMBERS = new HashSet<>(Arrays.asList(
-            IAtom.H,
-            IAtom.He,
-            IAtom.C,
-            IAtom.N,
-            IAtom.O,
-            IAtom.F,
-            IAtom.Ne,
-            IAtom.P,
-            IAtom.S,
-            IAtom.Cl,
-            IAtom.Ar,
-            IAtom.Se,
-            IAtom.Br,
-            IAtom.Kr,
-            IAtom.I,
-            IAtom.Xe,
-            IAtom.Rn));
-    //
     /**
      * Environment mode setting, defining whether environments should be generalized (default) or kept as whole.
      */
@@ -357,15 +330,14 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Find all functional groups in a molecule. The input atom container instance is cloned before processing to leave
-     * the input container intact. The strict input restrictions (no charged atoms, metals, metalloids or
+     * the input container intact. The strict input restrictions (no charged atoms, pseudo atoms, metals, metalloids or
      * unconnected components) do not apply by default. They can be turned on again in another variant of
      * this method below.
      *
      * @param aMolecule the molecule to identify functional groups in
      * @throws CloneNotSupportedException if cloning is not possible
      * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
-     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
-     *                                  the given molecule does not fulfill them
+     *                                  counts are unset
      * @return a list with all functional groups found in the molecule
      */
     public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule) throws CloneNotSupportedException, IllegalArgumentException {
@@ -374,7 +346,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Find all functional groups in a molecule.
-     * The strict input restrictions (no charged atoms, metals, metalloids or unconnected components) do not apply by
+     * The strict input restrictions (no charged atoms, pseudo atoms, metals, metalloids or unconnected components) do not apply by
      * default. They can be turned on again in another variant of this method below.
      *
      * @param aMolecule the molecule to identify functional groups in
@@ -384,8 +356,7 @@ public class FunctionalGroupsFinder {
      *                             leave the input container intact
      * @throws CloneNotSupportedException if cloning is not possible
      * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
-     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
-     *                                  the given molecule does not fulfill them
+     *                                  counts are unset
      * @return a list with all functional groups found in the molecule
      */
     public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException, IllegalArgumentException {
@@ -401,7 +372,7 @@ public class FunctionalGroupsFinder {
      *                             amounts of data but corrupts the original input container; use 'true' to work with a clone and
      *                             leave the input container intact
      * @param anAreInputRestrictionsApplied if true, the input must consist of one connected structure and must not
-     *                                      contain charged atoms, metals or metalloids; an IllegalArgumentException will
+     *                                      contain charged atoms, pseudo atoms, metals or metalloids; a specific IllegalArgumentException will
      *                                      be thrown otherwise
      * @throws CloneNotSupportedException if cloning is not possible
      * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
@@ -449,7 +420,7 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether the given molecule represented by an atom container can be passed on to the
-     * FunctionalGroupsFinder.extractFunctionalGroups() method without problems even if(!) the input
+     * FunctionalGroupsFinder.extractFunctionalGroups() method without problems even if(!) the strict input
      * restrictions are turned on (turned off by default).
      * <br>This method will return false if the molecule contains any metal, metalloid, pseudo, or
      * charged atoms or consists of multiple unconnected parts ('ConnectivityChecker.isConnected(aMolecule)'
@@ -460,13 +431,13 @@ public class FunctionalGroupsFinder {
      *         method if(!) the input restrictions are turned on (turned off by default)
      * @throws NullPointerException if parameter is 'null'
      */
-    public static boolean isValidInputMoleculeWithRestrictionsTurnedOn(IAtomContainer aMolecule) throws NullPointerException {
+    public static boolean isValidInputMoleculeIfRestrictionsAreTurnedOn(IAtomContainer aMolecule) throws NullPointerException {
         Objects.requireNonNull(aMolecule, "given molecule is null");
         try {
             EdgeToBondMap tmpBondMap = EdgeToBondMap.withSpaceFor(aMolecule);
             //throws IllegalArgumentException if a bond was found which contained atoms not in the molecule
             int[][] tmpAdjList = GraphUtil.toAdjList(aMolecule, tmpBondMap);
-            //throws IllegalArgumentException if one of the constraints is not met
+            //throws specific IllegalArgumentException if one of the constraints is not met
             FunctionalGroupsFinder.checkConstraints(aMolecule, tmpAdjList);
             return true;
         } catch (IllegalArgumentException anException) {
@@ -508,7 +479,7 @@ public class FunctionalGroupsFinder {
             IAtom tmpAtom = aMolecule.getAtom(idx);
             // skip aromatic atoms but add aromatic HETERO-atoms to map for later processing
             if (tmpAtom.isAromatic()) {
-                if (this.isHeteroatom(tmpAtom)) {
+                if (FunctionalGroupsFinder.isHeteroatom(tmpAtom)) {
                     this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.put(idx, false);
                 }
                 continue;
@@ -654,7 +625,7 @@ public class FunctionalGroupsFinder {
                     tmpConnectedAtom.setImplicitHydrogenCount(tmpConnectedAtom.getImplicitHydrogenCount() + 1);
                 }
                 continue;
-            } else if (this.isHeteroatom(tmpAtom)) {
+            } else if (FunctionalGroupsFinder.isHeteroatom(tmpAtom)) {
                 // if heteroatom... (CONDITION 1)
                 this.markedAtomsCache.add(idx);
                 if (FunctionalGroupsFinder.isDbg()) {
@@ -737,7 +708,7 @@ public class FunctionalGroupsFinder {
                     }
                     // add unmarked connected aromatic heteroatoms
                     IAtom tmpConnectedAtom = aMolecule.getAtom(tmpConnectedIdx);
-                    if (this.isHeteroatom(tmpConnectedAtom) && tmpConnectedAtom.isAromatic()) {
+                    if (FunctionalGroupsFinder.isHeteroatom(tmpConnectedAtom) && tmpConnectedAtom.isAromatic()) {
                         tmpAtomIdxToFGArray[tmpConnectedIdx] = tmpFunctionalGroupIdx;
                         // note that this aromatic heteroatom has been added to a group
                         this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.put(tmpConnectedIdx, true);
@@ -870,7 +841,7 @@ public class FunctionalGroupsFinder {
                         this.expandEnvironmentGeneralized(tmpAtom, tmpFunctionalGroup);
                         continue;
                     }
-                } else if (this.isHeteroatom(tmpAtom)) {
+                } else if (FunctionalGroupsFinder.isHeteroatom(tmpAtom)) {
                     // env is null and marked atoms is a hetero atom -> single aromatic heteroatom
                     int tmpRAtomCount = tmpAtom.getValency();
                     Integer tmpAtomImplicitHydrogenCount = tmpAtom.getImplicitHydrogenCount();
@@ -1042,7 +1013,7 @@ public class FunctionalGroupsFinder {
             if (FunctionalGroupsFinder.isDbg()) {
                 FunctionalGroupsFinder.LOGGING_TOOL.debug("\t\texpanded hydrogen on connected OH-Group");
             }
-        } else if (this.isHeteroatom(aFunctionalGroupAtom)) {
+        } else if (FunctionalGroupsFinder.isHeteroatom(aFunctionalGroupAtom)) {
             tmpRAtomCount += aFunctionalGroupAtom.getImplicitHydrogenCount();
         }
         this.addRAtoms(aFunctionalGroupAtom, tmpRAtomCount, aFunctionalGroup);
@@ -1059,13 +1030,13 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether the given atom is a pseudo atom. Very strict, any atom whose atomic number is
-     * null or 0 or whose symbol equals "R" or "*" or that is an instance of an IPseudoAtom implementing
-     * class will be classified as pseudo atom.
+     * null or 0, whose symbol equals "R" or "*", or that is an instance of an IPseudoAtom implementing
+     * class will be classified as a pseudo atom.
      *
      * @param anAtom the atom to test
      * @return true if the given atom is identified as a pseudo (R) atom
      */
-    private static boolean isPseudoAtom(IAtom anAtom) {
+    static boolean isPseudoAtom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
         String tmpSymbol = anAtom.getSymbol();
         return tmpAtomicNr == IAtom.Wildcard
@@ -1077,32 +1048,35 @@ public class FunctionalGroupsFinder {
     //
     /**
      * Checks whether the given atom is a hetero-atom (i.e. non-carbon and non-hydrogen).
-     * Pseudo (R) atoms will also return false!
+     * Pseudo (R) atoms will also return false.
      *
      * @param anAtom the atom to test
      * @return true if the given atom is neither a carbon nor a hydrogen or pseudo atom
      */
-    private static boolean isHeteroatom(IAtom anAtom) {
+    static boolean isHeteroatom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
-        return tmpAtomicNr != IAtom.H && tmpAtomicNr != IAtom.C
+        if (Objects.isNull(tmpAtomicNr)) {
+            return false;
+        }
+        int tmpAtomicNumberInt = tmpAtomicNr.intValue();
+        return tmpAtomicNumberInt != IAtom.H && tmpAtomicNumberInt != IAtom.C
                 && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
     }
     //
-    //todo replace with Elements utility method, testing for metal, metalloid, and pseudo atoms
     /**
      * Checks whether the given atom is from an element in the organic subset, i.e. not a metal or metalloid atom.
-     * See the public constant set of non-metal atomic numbers declared in this class. Pseudo (R) atoms will also return false.
+     * Pseudo (R) atoms will also return false.
      *
      * @param anAtom atom to check
      * @return true if the given atom is organic and not a metal or metalloid atom
      */
-    private static boolean isNonmetal(IAtom anAtom) {
+    static boolean isNonmetal(IAtom anAtom) {
         Integer tmpAtomicNumber = anAtom.getAtomicNumber();
         if (Objects.isNull(tmpAtomicNumber)) {
             return false;
         }
         int tmpAtomicNumberInt = tmpAtomicNumber.intValue();
-        return FunctionalGroupsFinder.NONMETAL_ATOMIC_NUMBERS.contains(tmpAtomicNumberInt);
+        return !Elements.isMetal(tmpAtomicNumberInt) && !Elements.isMetalloid(tmpAtomicNumberInt) && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
     }
     //
     /**
@@ -1210,7 +1184,6 @@ public class FunctionalGroupsFinder {
             if (tmpAtom.getFormalCharge() != null && tmpAtom.getFormalCharge().intValue() != 0) {
                 throw new IllegalArgumentException("Input molecule must not contain any formal charges.");
             }
-            //todo replace with Elements utility methods
             if (!FunctionalGroupsFinder.isNonmetal(tmpAtom)) {
                 throw new IllegalArgumentException("Input molecule must not contain metal, metalloid, or pseudo atoms.");
             }
