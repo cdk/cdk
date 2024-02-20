@@ -446,19 +446,6 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Clear caches related to the input molecule. Note, these are not proper caches, there are no results cached. Here,
-     * only data taken from the input molecule is saved for only one execution of the extractFunctionalGroups() method, to facilitate
-     * communication between the private methods involved.
-     */
-    private void clearCache() {
-        this.bondMapCache = null;
-        this.adjListCache = null;
-        this.markedAtomsCache = null;
-        this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache = null;
-        this.markedAtomToConnectedEnvCMapCache = null;
-    }
-    //
-    /**
      * Mark all atoms and store them in a set for further processing.
      *
      * @param aMolecule molecule with atoms to mark
@@ -1029,57 +1016,6 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
-     * Checks whether the given atom is a pseudo atom. Very strict, any atom whose atomic number is
-     * null or 0, whose symbol equals "R" or "*", or that is an instance of an IPseudoAtom implementing
-     * class will be classified as a pseudo atom.
-     *
-     * @param anAtom the atom to test
-     * @return true if the given atom is identified as a pseudo (R) atom
-     */
-    static boolean isPseudoAtom(IAtom anAtom) {
-        Integer tmpAtomicNr = anAtom.getAtomicNumber();
-        String tmpSymbol = anAtom.getSymbol();
-        return tmpAtomicNr == IAtom.Wildcard
-                || tmpAtomicNr == null
-                || tmpSymbol.equals("R")
-                || tmpSymbol.equals("*")
-                || (anAtom instanceof IPseudoAtom);
-    }
-    //
-    /**
-     * Checks whether the given atom is a hetero-atom (i.e. non-carbon and non-hydrogen).
-     * Pseudo (R) atoms will also return false.
-     *
-     * @param anAtom the atom to test
-     * @return true if the given atom is neither a carbon nor a hydrogen or pseudo atom
-     */
-    static boolean isHeteroatom(IAtom anAtom) {
-        Integer tmpAtomicNr = anAtom.getAtomicNumber();
-        if (Objects.isNull(tmpAtomicNr)) {
-            return false;
-        }
-        int tmpAtomicNumberInt = tmpAtomicNr.intValue();
-        return tmpAtomicNumberInt != IAtom.H && tmpAtomicNumberInt != IAtom.C
-                && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
-    }
-    //
-    /**
-     * Checks whether the given atom is from an element in the organic subset, i.e. not a metal or metalloid atom.
-     * Pseudo (R) atoms will also return false.
-     *
-     * @param anAtom atom to check
-     * @return true if the given atom is organic and not a metal or metalloid atom
-     */
-    static boolean isNonmetal(IAtom anAtom) {
-        Integer tmpAtomicNumber = anAtom.getAtomicNumber();
-        if (Objects.isNull(tmpAtomicNumber)) {
-            return false;
-        }
-        int tmpAtomicNumberInt = tmpAtomicNumber.intValue();
-        return !Elements.isMetal(tmpAtomicNumberInt) && !Elements.isMetalloid(tmpAtomicNumberInt) && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
-    }
-    //
-    /**
      * Add explicit hydrogen atoms to an atom in a molecule.
      *
      * @param anAtom the atom to add the explicit hydrogen atoms to
@@ -1168,6 +1104,19 @@ public class FunctionalGroupsFinder {
     }
     //
     /**
+     * Clear caches related to the input molecule. Note, these are not proper caches, there are no results cached. Here,
+     * only data taken from the input molecule is saved for only one execution of the extractFunctionalGroups() method, to facilitate
+     * communication between the private methods involved.
+     */
+    private void clearCache() {
+        this.bondMapCache = null;
+        this.adjListCache = null;
+        this.markedAtomsCache = null;
+        this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache = null;
+        this.markedAtomToConnectedEnvCMapCache = null;
+    }
+    //
+    /**
      * Checks input molecule for charged atoms, metal or metalloid atoms, and whether it consists of more than one
      * unconnected structures. The molecule may be empty but not null.
      * If one of the cases applies, an IllegalArgumentException is thrown with a specific error message.
@@ -1192,6 +1141,57 @@ public class FunctionalGroupsFinder {
         if (tmpConnectedComponents.nComponents() > 1) {
             throw new IllegalArgumentException("Input molecule must consist of only a single connected structure.");
         }
+    }
+    //
+    /**
+     * Checks whether the given atom is a pseudo atom. Very strict, any atom whose atomic number is
+     * null or 0, whose symbol equals "R" or "*", or that is an instance of an IPseudoAtom implementing
+     * class will be classified as a pseudo atom.
+     *
+     * @param anAtom the atom to test
+     * @return true if the given atom is identified as a pseudo (R) atom
+     */
+    static boolean isPseudoAtom(IAtom anAtom) {
+        Integer tmpAtomicNr = anAtom.getAtomicNumber();
+        String tmpSymbol = anAtom.getSymbol();
+        return tmpAtomicNr == IAtom.Wildcard
+                || tmpAtomicNr == null
+                || tmpSymbol.equals("R")
+                || tmpSymbol.equals("*")
+                || (anAtom instanceof IPseudoAtom);
+    }
+    //
+    /**
+     * Checks whether the given atom is a hetero-atom (i.e. non-carbon and non-hydrogen).
+     * Pseudo (R) atoms will also return false.
+     *
+     * @param anAtom the atom to test
+     * @return true if the given atom is neither a carbon nor a hydrogen or pseudo atom
+     */
+    static boolean isHeteroatom(IAtom anAtom) {
+        Integer tmpAtomicNr = anAtom.getAtomicNumber();
+        if (Objects.isNull(tmpAtomicNr)) {
+            return false;
+        }
+        int tmpAtomicNumberInt = tmpAtomicNr.intValue();
+        return tmpAtomicNumberInt != IAtom.H && tmpAtomicNumberInt != IAtom.C
+                && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
+    }
+    //
+    /**
+     * Checks whether the given atom is from an element in the organic subset, i.e. not a metal or metalloid atom.
+     * Pseudo (R) atoms will also return false.
+     *
+     * @param anAtom atom to check
+     * @return true if the given atom is organic and not a metal or metalloid atom
+     */
+    static boolean isNonmetal(IAtom anAtom) {
+        Integer tmpAtomicNumber = anAtom.getAtomicNumber();
+        if (Objects.isNull(tmpAtomicNumber)) {
+            return false;
+        }
+        int tmpAtomicNumberInt = tmpAtomicNumber.intValue();
+        return !Elements.isMetal(tmpAtomicNumberInt) && !Elements.isMetalloid(tmpAtomicNumberInt) && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
     }
     //
     /**
