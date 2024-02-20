@@ -399,7 +399,7 @@ public class FunctionalGroupsFinder {
         if (anAreInputRestrictionsApplied) {
             // throws IllegalArgumentException if constraints are not met
             // only done now because adjacency list cache is needed in the method
-            this.checkConstraints(tmpMolecule, this.adjListCache);
+            FunctionalGroupsFinder.checkConstraints(tmpMolecule, this.adjListCache);
         }
         this.markAtoms(tmpMolecule);
         // extract raw groups
@@ -1153,6 +1153,9 @@ public class FunctionalGroupsFinder {
      */
     static boolean isPseudoAtom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
+        if (Objects.isNull(tmpAtomicNr)) {
+            return true;
+        }
         String tmpSymbol = anAtom.getSymbol();
         return tmpAtomicNr == IAtom.Wildcard
                 || tmpAtomicNr == null

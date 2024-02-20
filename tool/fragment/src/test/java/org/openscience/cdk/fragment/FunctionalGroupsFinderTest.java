@@ -98,6 +98,51 @@ public class FunctionalGroupsFinderTest {
     }
     //
     /**
+     * Test correct workings of the factory methods.
+     *
+     * @throws Exception if anything goes wrong
+     */
+    @Test
+    public void testFactories() throws Exception {
+        Assertions.assertEquals(FunctionalGroupsFinder.newFunctionalGroupsFinderGeneralizingMode().getEnvMode(), FunctionalGroupsFinder.Mode.DEFAULT);
+        Assertions.assertEquals(FunctionalGroupsFinder.newFunctionalGroupsFinderFullEnvironmentMode().getEnvMode(), FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        Assertions.assertEquals(FunctionalGroupsFinder.newFunctionalGroupsFinderOnlyMarkedAtomsMode().getEnvMode(), FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
+    }
+    //
+    /**
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testInputRestrictions() throws Exception {
+        SmilesParser tmpSmiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        String tmpMoleculeSmiles = "CC(=O)OC1=CC=CC=C1C(=O)[O+]"; //charged ASA
+        IAtomContainer tmpChargedASA = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
+        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpChargedASA));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            FunctionalGroupsFinder.newFunctionalGroupsFinderGeneralizingMode().extractFunctionalGroups(tmpChargedASA, true, true);
+        });
+        tmpMoleculeSmiles = "CC(=O)OC1=CC=CC=C1C(=O)O"; //neutral ASA
+        IAtomContainer tmpASA = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
+        Assertions.assertTrue(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpASA));
+        Assertions.assertDoesNotThrow(() -> {
+            FunctionalGroupsFinder.newFunctionalGroupsFinderGeneralizingMode().extractFunctionalGroups(tmpASA, true, true);
+        });
+        tmpMoleculeSmiles = "C1=CC(=CC=C1[N+](=O)[O-])O"; //Nitrophenol
+        IAtomContainer tmpNitrophenol = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
+        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpNitrophenol));
+        tmpMoleculeSmiles = "CC(=O)O.CC(=O)O.C1=CC(=CC=C1NC(=NC(=NCCCCCCN=C(N)N=C(N)NC2=CC=C(C=C2)Cl)N)N)Cl"; //Chlorhexidine Diacetate
+        IAtomContainer tmpChlorhexidineDiacetate = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
+        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpChlorhexidineDiacetate));
+        tmpMoleculeSmiles = "CCO[Si](OCC)(OCC)OCC"; //Tetraethyl Orthosilicate
+        IAtomContainer tmpOrthosilicate = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
+        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpOrthosilicate));
+        tmpMoleculeSmiles = "OCC(CO[*])OC([*])=O"; //CHEBI:598
+        IAtomContainer tmpCHEBI598 = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
+        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpCHEBI598));
+    }
+    //
+    /**
      * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
