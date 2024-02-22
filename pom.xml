@@ -721,7 +721,14 @@
                 <version>5.1.8</version>
                 <configuration>
                     <instructions>
-                        <Export-Package>org.openscience.*</Export-Package>
+                        <Import-Package>
+                            *;resolution:=optional,
+                            org.slf4j;resolution:=dynamic,
+                            org.apache.logging.log4j;resolution:=dynamic
+                        </Import-Package>
+                        <Export-Package>
+                            *;version="${version}";-noimport:=true,
+                        </Export-Package>
                     </instructions>
                     <noWarningProjectTypes>pom</noWarningProjectTypes>
                 </configuration>
