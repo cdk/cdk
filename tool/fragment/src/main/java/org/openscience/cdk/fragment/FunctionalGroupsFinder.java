@@ -101,7 +101,7 @@ public class FunctionalGroupsFinder {
     /**
      * Defines the mode for generalizing functional group environments (default), keeping them whole, or only extracting marked atoms.
      */
-    public static enum Mode {
+    public enum Mode {
         /**
          * Default mode including the generalization step.
          */
@@ -136,7 +136,7 @@ public class FunctionalGroupsFinder {
      * Describes one carbon atom in the environment of a marked atom. It can either be aromatic
      * or aliphatic and also contains a clone of its connecting bond.
      */
-    private class EnvironmentalC {
+    private static class EnvironmentalC {
         /**
          * Indicates whether carbon atom is aromatic or aliphatic.
          */
@@ -170,7 +170,7 @@ public class FunctionalGroupsFinder {
          * @param aConnectingBond bond instance connecting to the marked atom
          * @param anIndexInBond index of the atom in the connecting bond
          */
-        public EnvironmentalC(EnvironmentalCType aType, IBond aConnectingBond, int anIndexInBond) {
+        EnvironmentalC(EnvironmentalCType aType, IBond aConnectingBond, int anIndexInBond) {
             this.type = aType;
             this.bondIndex = anIndexInBond;
             this.bondOrder = aConnectingBond.getOrder();
@@ -183,7 +183,7 @@ public class FunctionalGroupsFinder {
          *
          * @return EnvironmentalCType enum constant
          */
-        public EnvironmentalCType getType() {
+        EnvironmentalCType getType() {
             return this.type;
         }
         //
@@ -197,7 +197,7 @@ public class FunctionalGroupsFinder {
          *                   be set via .setIsAromatic(boolean);
          * @return new bond connecting marked FG atom and environment atom in the correct order and with the cached properties
          */
-        public IBond createBond(IAtom aTargetAtom, IAtom anEnvCAtom) {
+        IBond createBond(IAtom aTargetAtom, IAtom anEnvCAtom) {
             IBond tmpBond = aTargetAtom.getBuilder().newInstance(IBond.class);
             if (this.bondIndex == 0) {
                 tmpBond.setAtoms(new IAtom[] {anEnvCAtom, aTargetAtom});
@@ -216,12 +216,12 @@ public class FunctionalGroupsFinder {
      * CDK logging tool instance for this class. Use FunctionalGroupsFinder.LOGGING_TOOL.setLevel(ILoggingTool.DEBUG);
      * to activate debug messages.
      */
-    public static final ILoggingTool LOGGING_TOOL = LoggingToolFactory.createLoggingTool(FunctionalGroupsFinder.class);
+    private static final ILoggingTool LOGGING_TOOL = LoggingToolFactory.createLoggingTool(FunctionalGroupsFinder.class);
     //
     /**
      * Property name for marking carbonyl carbon atoms via IAtom properties.
      */
-    public static final String CARBONYL_C_MARKER = "FGF-Carbonyl-C";
+    private static final String CARBONYL_C_MARKER = "FGF-Carbonyl-C";
     //
     /**
      * Environment mode setting, defining whether environments should be generalized (default) or kept as whole.
@@ -281,8 +281,7 @@ public class FunctionalGroupsFinder {
      * @return new FunctionalGroupsFinder instance that generalizes returned functional groups
      */
     public static FunctionalGroupsFinder newFunctionalGroupsFinderGeneralizingMode() {
-        FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.DEFAULT);
-        return tmpFGF;
+        return new FunctionalGroupsFinder(Mode.DEFAULT);
     }
     //
     /**
@@ -292,8 +291,7 @@ public class FunctionalGroupsFinder {
      * @return new FunctionalGroupsFinder instance that does NOT generalize returned functional groups
      */
     public static FunctionalGroupsFinder newFunctionalGroupsFinderFullEnvironmentMode() {
-        FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
-        return tmpFGF;
+        return new FunctionalGroupsFinder(Mode.NO_GENERALIZATION);
     }
     //
     /**
@@ -303,8 +301,7 @@ public class FunctionalGroupsFinder {
      * @return new FunctionalGroupsFinder instance that extracts only marked atoms
      */
     public static FunctionalGroupsFinder newFunctionalGroupsFinderOnlyMarkedAtomsMode() {
-        FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
-        return tmpFGF;
+        return new FunctionalGroupsFinder(Mode.ONLY_MARKED_ATOMS);
     }
     //
     /**
@@ -436,7 +433,7 @@ public class FunctionalGroupsFinder {
         try {
             EdgeToBondMap tmpBondMap = EdgeToBondMap.withSpaceFor(aMolecule);
             //throws IllegalArgumentException if a bond was found which contained atoms not in the molecule
-            int[][] tmpAdjList = GraphUtil.toAdjList(aMolecule, tmpBondMap);
+            int[][] tmpAdjList = GraphUtil.toAdjList(aMolecule);
             //throws specific IllegalArgumentException if one of the constraints is not met
             FunctionalGroupsFinder.checkConstraints(aMolecule, tmpAdjList);
             return true;
@@ -748,7 +745,7 @@ public class FunctionalGroupsFinder {
         } //markedAtoms is empty now
         // also create FG for lone aromatic heteroatoms, not connected to an FG yet.
         for (int tmpAtomIdx : this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.keySet()) {
-            if (!this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.get(tmpAtomIdx).booleanValue()) {
+            if (!this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.get(tmpAtomIdx)) {
                 tmpFunctionalGroupIdx++;
                 tmpAtomIdxToFGArray[tmpAtomIdx] = tmpFunctionalGroupIdx;
                 if (FunctionalGroupsFinder.isDbg()) {
@@ -1130,7 +1127,7 @@ public class FunctionalGroupsFinder {
         Objects.requireNonNull(aMolecule, "given molecule is null");
         Objects.requireNonNull(anAdjacencyList, "Adjacency list is null");
         for (IAtom tmpAtom : aMolecule.atoms()) {
-            if (tmpAtom.getFormalCharge() != null && tmpAtom.getFormalCharge().intValue() != 0) {
+            if (tmpAtom.getFormalCharge() != null && tmpAtom.getFormalCharge() != 0) {
                 throw new IllegalArgumentException("Input molecule must not contain any formal charges.");
             }
             if (!FunctionalGroupsFinder.isNonmetal(tmpAtom)) {
@@ -1151,17 +1148,16 @@ public class FunctionalGroupsFinder {
      * @param anAtom the atom to test
      * @return true if the given atom is identified as a pseudo (R) atom
      */
-    static boolean isPseudoAtom(IAtom anAtom) {
+    private static boolean isPseudoAtom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
         if (Objects.isNull(tmpAtomicNr)) {
             return true;
         }
         String tmpSymbol = anAtom.getSymbol();
-        return tmpAtomicNr == IAtom.Wildcard
-                || tmpAtomicNr == null
-                || tmpSymbol.equals("R")
-                || tmpSymbol.equals("*")
-                || (anAtom instanceof IPseudoAtom);
+        return tmpAtomicNr == IAtom.Wildcard ||
+                tmpSymbol.equals("R") ||
+                tmpSymbol.equals("*") ||
+                anAtom instanceof IPseudoAtom;
     }
     //
     /**
@@ -1171,12 +1167,12 @@ public class FunctionalGroupsFinder {
      * @param anAtom the atom to test
      * @return true if the given atom is neither a carbon nor a hydrogen or pseudo atom
      */
-    static boolean isHeteroatom(IAtom anAtom) {
+    private static boolean isHeteroatom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
         if (Objects.isNull(tmpAtomicNr)) {
             return false;
         }
-        int tmpAtomicNumberInt = tmpAtomicNr.intValue();
+        int tmpAtomicNumberInt = tmpAtomicNr;
         return tmpAtomicNumberInt != IAtom.H && tmpAtomicNumberInt != IAtom.C
                 && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
     }
@@ -1188,12 +1184,12 @@ public class FunctionalGroupsFinder {
      * @param anAtom atom to check
      * @return true if the given atom is organic and not a metal or metalloid atom
      */
-    static boolean isNonmetal(IAtom anAtom) {
+    private static boolean isNonmetal(IAtom anAtom) {
         Integer tmpAtomicNumber = anAtom.getAtomicNumber();
         if (Objects.isNull(tmpAtomicNumber)) {
             return false;
         }
-        int tmpAtomicNumberInt = tmpAtomicNumber.intValue();
+        int tmpAtomicNumberInt = tmpAtomicNumber;
         return !Elements.isMetal(tmpAtomicNumberInt) && !Elements.isMetalloid(tmpAtomicNumberInt) && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
     }
     //
