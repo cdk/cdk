@@ -49,25 +49,36 @@ import java.util.Objects;
 import java.util.Queue;
 
 /**
- * Finds and extracts a molecule's functional groups in a purely rule-based manner (it is not a classical functional
- * group identification functionality based on substructure matching!). This class implements Peter Ertl's algorithm for
- * the automated detection and extraction of functional groups in organic molecules
- * (<a href="https://doi.org/10.1186/s13321-017-0225-z">[Ertl P. An algorithm to identify functional groups in organic molecules. J Cheminform. 2017; 9:36.]</a>)
- * and has been described in a scientific publication
- * (<a href="https://doi.org/10.1186/s13321-019-0361-8">[Fritsch, S., Neumann, S., Schaub, J. et al. ErtlFunctionalGroupsFinder: automated rule-based functional group detection with the Chemistry Development Kit (CDK). J Cheminform. 2019; 11:37.]</a>).
- * <br>
- * <br>In brief, the algorithm iterates through all atoms in the input molecule and marks hetero atoms and specific carbon atoms
- * (i.a. those in non-aromatic double or triple bonds etc.) as being part of a functional group. Connected groups of marked
- * atoms are extracted as individual functional groups, together with their unmarked, "environmental" carbon atoms. These
- * environments can be important, e.g. to differentiate an alcohol from a phenol, but are less important in other cases.
- * To account for this, Ertl also devised a "generalization" scheme that generalizes the functional group environments
- * in a way that accounts for their varying significance in different cases. Most environmental atoms are exchanged with
- * pseudo ("R") atoms there. All these functionalities are available in FunctionalGroupsFinder. Additionally, only
- * the marked atoms, completely without their environments, can be extracted.
- * <br>
- * <br>To apply functional group detection to an input molecule, its atom types need to be set and aromaticity needs
- * to be detected beforehand:
- * <blockquote><pre>
+ * Finds and extracts a molecule's functional groups in a purely rule-based
+ * manner (it is not a classical functional group identification functionality
+ * based on substructure matching!). This class implements Peter Ertl's
+ * algorithm for the automated detection and extraction of functional groups in
+ * organic molecules (<a href="https://doi.org/10.1186/s13321-017-0225-z">
+ * [Ertl P. An algorithm to identify functional groups in organic molecules.
+ * J Cheminform. 2017; 9:36.]</a>) and has been described in a scientific
+ * publication (<a href="https://doi.org/10.1186/s13321-019-0361-8">[Fritsch,
+ * S., Neumann, S., Schaub, J. et al. ErtlFunctionalGroupsFinder: automated
+ * rule-based functional group detection with the Chemistry Development Kit
+ * (CDK). J Cheminform. 2019; 11:37.]</a>).
+ * <br/>
+ * In brief, the algorithm iterates through all atoms in the input molecule and
+ * marks hetero atoms and specific carbon atoms (i.a. those in non-aromatic
+ * double or triple bonds etc.) as being part of a functional group. Connected
+ * groups of marked atoms are extracted as individual functional groups,
+ * together with their unmarked, "environmental" carbon atoms. These
+ * environments can be important, e.g. to differentiate an alcohol from a
+ * phenol, but are less important in other cases.
+ * <br/>
+ * To account for this, Ertl also devised a "generalization" scheme that
+ * generalizes the functional group environments in a way that accounts for
+ * their varying significance in different cases. Most environmental atoms are
+ * exchanged with pseudo ("R") atoms there. All these functionalities are
+ * available in FunctionalGroupsFinder. Additionally, only the marked atoms,
+ * completely without their environments, can be extracted.
+ * <br/>
+ * To apply functional group detection to an input molecule, its atom types
+ * need to be set and aromaticity needs to be detected beforehand:
+ * <pre>{@code
  * //Prepare input
  * SmilesParser tmpSmiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
  * IAtomContainer tmpInputMol = tmpSmiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
@@ -77,29 +88,44 @@ import java.util.Queue;
  * //Identify functional groups
  * FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(); //default: generalization turned on
  * List{@literal <}IAtomContainer{@literal >} tmpFunctionalGroupsList = tmpFGF.extractFunctionalGroups(tmpInputMol);
- * </pre></blockquote>
- * If you want to only identify functional groups in standardised, organic structures, FunctionalGroupsFinder can
- * be configured to only accept molecules that do *not* contain any metal, metalloid, or pseudo (R) atoms or formal charges.
- * Also structures consisting of more than one unconnected component (e.g. ion and counter-ion) are not accepted if(!) the
- * strict input restrictions are turned on (they are turned off by default).
- * This can be done via a boolean parameter in a variant of the central extractFunctionalGroups() method.
- * Please note that structural properties like formal charges and the others mentioned above
- * are not expected to cause issues (exceptions) when processed by this class, but they are not explicitly regarded by
- * the Ertl algorithm and hence this implementation, too. They might therefore cause unexpected behaviour in functional
- * group identification. For example, a formal charge is not listed as a reason to mark a carbon atom and pseudo atoms are simply ignored.
- * <br>To identify molecules that do not fulfill these constraints and should be filtered or preprocessed/standardised,
- * you can use CDK utilities like the ConnectivityChecker class,
- * utility methods in the Elements class, and query IAtom instances for their formal charge. Pseudo atoms can
- * be detected in multiple ways, e.g. by checking for atomic numbers equal to 0 or checking "instanceof IPseudoAtom".
- * <br>
- * <br>Note: this implementation is not thread-safe. Each parallel thread should have its own instance of this class.
+ * }</pre>
+ * If you want to only identify functional groups in standardised, organic
+ * structures, FunctionalGroupsFinder can be configured to only accept molecules
+ * that do *not* contain any metal, metalloid, or pseudo (R) atoms or formal
+ * charges.
+ * <br/>
+ * Also structures consisting of more than one unconnected component (e.g. ion
+ * and counter-ion) are not accepted if(!) the  strict input restrictions are
+ * turned on (they are turned off by default).
+ * This can be done via a boolean parameter in a variant of the central
+ * {@link #extractFunctionalGroups} method.
+ * Please note that structural properties like formal charges and the others 
+ * mentioned above  are not expected to cause issues (exceptions) when processed
+ * by this class, but they are not explicitly regarded by the Ertl algorithm and
+ * hence this implementation, too. They might therefore cause unexpected 
+ * behaviour in functional group identification. For example, a formal charge 
+ * is not listed as a reason to mark a carbon atom and pseudo atoms are simply
+ * ignored.
+ * <br/>
+ * To identify molecules that do not fulfill these constraints and should be 
+ * filtered or preprocessed/standardised, you can use CDK utilities like the 
+ * ConnectivityChecker class, utility methods in the Elements class, and query 
+ * IAtom instances for their formal charge. Pseudo atoms can be detected in 
+ * multiple ways, e.g. by checking for atomic numbers equal to 0 or checking 
+ * "instanceof IPseudoAtom".
+ * <br/>
+ * Note: this implementation is not thread-safe. Each parallel thread 
+ * should have its own instance of this class.
  *
- * @author Sebastian Fritsch, Jonas Schaub
+ * @author Sebastian Fritsch
+ * @author Jonas Schaub
  * @version 1.3
  */
 public class FunctionalGroupsFinder {
+
     /**
-     * Defines the mode for generalizing functional group environments (default), keeping them whole, or only extracting marked atoms.
+     * Defines the mode for generalizing functional group environments 
+     * (default), keeping them whole, or only extracting marked atoms.
      */
     public enum Mode {
         /**
@@ -107,19 +133,21 @@ public class FunctionalGroupsFinder {
          */
         DEFAULT,
         /**
-         * Skips the generalization step. Functional groups will keep their full environment.
+         * Skips the generalization step. Functional groups will keep their
+         * full environment.
          */
         NO_GENERALIZATION,
         /**
-         * Functional groups will only consist of atoms marked according to the conditions defined by Ertl, environments
-         * will be completely ignored.
+         * Functional groups will only consist of atoms marked according to the
+         * conditions defined by Ertl, environments will be completely ignored.
          */
         ONLY_MARKED_ATOMS;
     }
-    //
+    
     /**
-     * Defines whether an environmental carbon atom is aromatic or aliphatic. Only for internal use for caching this
-     * info in the EnvironmentalC instances (see private class below).
+     * Defines whether an environmental carbon atom is aromatic or aliphatic.
+     * Only for internal use for caching this info in the EnvironmentalC
+     * instances (see private class below).
      */
     private static enum EnvironmentalCType {
         /**
@@ -131,40 +159,38 @@ public class FunctionalGroupsFinder {
          */
         C_ALIPHATIC;
     }
-    //
+    
     /**
-     * Describes one carbon atom in the environment of a marked atom. It can either be aromatic
-     * or aliphatic and also contains a clone of its connecting bond.
+     * Describes one carbon atom in the environment of a marked atom. It can
+     * either be aromatic or aliphatic and also contains a clone of its
+     * connecting bond.
      */
     private static class EnvironmentalC {
         /**
          * Indicates whether carbon atom is aromatic or aliphatic.
          */
         private final EnvironmentalCType type;
-        //
-        /**
-         * Bond index of the original C atom.
-         */
+
         private final int bondIndex;
-        //
-        /**
-         * Order of the bond connecting this environmental C atom to the marked functional group atom.
-         */
+
         private final IBond.Order bondOrder;
-        //
+        
         /**
-         * Stereo information of the bond connecting this environmental C atom to the marked functional group atom.
+         * Stereo information of the bond connecting this environmental C
+         * atom to the marked functional group atom.
          */
         private final IBond.Stereo bondStereo;
-        //
+        
         /**
-         * Flags of the bond connecting this environmental C atom to the marked functional group atom. IChemObjecflags
-         * are properties defined by an integer value (array position) and a boolean value.
+         * Flags of the bond connecting this environmental C atom to the marked
+         * functional group atom. IChemObjecflags are properties defined by an
+         * integer value (array position) and a boolean value.
          */
         private final boolean[] bondFlags;
-        //
+        
         /**
-         * Default constructor defining all fields. Order, stereo, and flags are taken from the IBond object directly.
+         * Default constructor defining all fields. Order, stereo, and flags
+         * are taken from the IBond object directly.
          *
          * @param aType aromatic or aliphatic
          * @param aConnectingBond bond instance connecting to the marked atom
@@ -177,25 +203,30 @@ public class FunctionalGroupsFinder {
             this.bondStereo = aConnectingBond.getStereo();
             this.bondFlags = aConnectingBond.getFlags();
         }
-        //
+        
         /**
-         * Returns the type, i.e. whether this carbon atom is aromatic or aliphatic.
+         * Returns the type, i.e. whether this carbon atom is aromatic or
+         * aliphatic.
          *
          * @return EnvironmentalCType enum constant
          */
         EnvironmentalCType getType() {
             return this.type;
         }
-        //
+        
         /**
-         * Method for translating this instance back into a "real" IAtom instance when expanding the functional group
-         * environment, transferring all the cached properties, except the type(!).
+         * Method for translating this instance back into a "real" IAtom
+         * instance when expanding the functional group environment,
+         * transferring all the cached properties, except the type(!).
          *
          * @param aTargetAtom marked functional group atom
-         * @param anEnvCAtom new carbon atom instance that should receive all the cached properties except the type(!);
-         *                   element, atom type "C" and implicit hydrogen count = 0 should be set already; type can later
+         * @param anEnvCAtom new carbon atom instance that should receive all
+         *                   the cached properties except the type(!);
+         *                   element, atom type "C" and implicit hydrogen
+         *                   count = 0 should be set already; type can later
          *                   be set via .setIsAromatic(boolean);
-         * @return new bond connecting marked FG atom and environment atom in the correct order and with the cached properties
+         * @return new bond connecting marked FG atom and environment atom in
+         *         the correct order and with the cached properties
          */
         IBond createBond(IAtom aTargetAtom, IAtom anEnvCAtom) {
             IBond tmpBond = aTargetAtom.getBuilder().newInstance(IBond.class);
@@ -211,155 +242,167 @@ public class FunctionalGroupsFinder {
             return tmpBond;
         }
     }
-    //
-    /**
-     * CDK logging tool instance for this class. Use FunctionalGroupsFinder.LOGGING_TOOL.setLevel(ILoggingTool.DEBUG);
-     * to activate debug messages.
-     */
-    private static final ILoggingTool LOGGING_TOOL = LoggingToolFactory.createLoggingTool(FunctionalGroupsFinder.class);
-    //
+
+    private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(FunctionalGroupsFinder.class);
+
     /**
      * Property name for marking carbonyl carbon atoms via IAtom properties.
      */
     private static final String CARBONYL_C_MARKER = "FGF-Carbonyl-C";
-    //
+
     /**
-     * Environment mode setting, defining whether environments should be generalized (default) or kept as whole.
+     * Environment mode setting, defining whether environments should be
+     * generalized (default) or kept as whole.
      */
     private Mode envMode;
-    //
+
     /**
      * Map of bonds in the input molecule, cache(!).
      */
     private EdgeToBondMap bondMapCache;
-    //
+
     /**
      * Adjacency list representation of input molecule, cache(!).
      */
     private int[][] adjListCache;
-    //
+
     /**
-     * Set for atoms marked as being part of a functional group, represented by an internal index based on the atom
-     * count in the input molecule, cache(!).
+     * Set for atoms marked as being part of a functional group, represented
+     * by an internal index based on the atom count in the input molecule, cache(!).
      */
     private HashSet<Integer> markedAtomsCache;
-    //
+
     /**
-     * HashMap for storing aromatic hetero-atom indices and whether they have already been assigned to a larger functional
-     * group. If false, they form single-atom FG by themselves, cache(!).
+     * HashMap for storing aromatic hetero-atom indices and whether they have
+     * already been assigned to a larger functional group. If false, they form
+     * single-atom FG by themselves, cache(!).
      * key: atom idx, value: isInGroup
      */
     private HashMap<Integer, Boolean> aromaticHeteroAtomIndicesToIsInGroupBoolMapCache;
-    //
+
     /**
-     * HashMap for storing marked atom to connected environmental carbon atom relations, cache(!).
+     * HashMap for storing marked atom to connected environmental carbon atom
+     * relations, cache(!).
      */
     private HashMap<IAtom, List<EnvironmentalC>> markedAtomToConnectedEnvCMapCache;
-    //
+
     /**
-     * Default constructor for FunctionalGroupsFinder with functional group generalization turned ON.
+     * Default constructor for FunctionalGroupsFinder with functional group
+     * generalization turned ON.
      */
     public FunctionalGroupsFinder() {
         this(Mode.DEFAULT);
     }
-    //
+
     /**
-     * Constructor for FunctionalGroupsFinder that allows setting the treatment of environments in the identified
-     * functional groups. Default: environments will be generalized; no generalization: environments will be kept as whole;
-     * only marked atoms: no environmental atoms whatsoever will be attached to the extracted functional groups.
+     * Constructor for FunctionalGroupsFinder that allows setting the treatment
+     * of environments in the identified functional groups.
      *
-     * @param anEnvMode mode for treating functional group environments (see {@link FunctionalGroupsFinder.Mode}).
+     * @param anEnvMode mode for treating functional group environments
      */
     public FunctionalGroupsFinder(Mode anEnvMode) {
         Objects.requireNonNull(anEnvMode, "Given environment mode cannot be null.");
         this.envMode = anEnvMode;
     }
-    //
+
     /**
-     * Constructs a new FunctionalGroupsFinder instance with generalization of returned functional groups turned ON.
+     * Constructs a new FunctionalGroupsFinder instance with generalization
+     * of returned functional groups turned ON.
      *
-     * @return new FunctionalGroupsFinder instance that generalizes returned functional groups
+     * @return new FunctionalGroupsFinder instance that generalizes returned
+     *         functional groups
      */
     public static FunctionalGroupsFinder newFunctionalGroupsFinderGeneralizingMode() {
         return new FunctionalGroupsFinder(Mode.DEFAULT);
     }
-    //
+
     /**
-     * Constructs a new FunctionalGroupsFinder instance with generalization of returned functional groups turned OFF.
+     * Constructs a new FunctionalGroupsFinder instance with generalization of
+     * returned functional groups turned OFF.
      * The FG will have their full environments.
      *
-     * @return new FunctionalGroupsFinder instance that does NOT generalize returned functional groups
+     * @return new FunctionalGroupsFinder instance that does NOT generalize
+     *         returned functional groups
      */
     public static FunctionalGroupsFinder newFunctionalGroupsFinderFullEnvironmentMode() {
         return new FunctionalGroupsFinder(Mode.NO_GENERALIZATION);
     }
-    //
+
     /**
-     * Constructs a new FunctionalGroupsFinder instance that extracts only the marked atoms of the functional groups,
-     * no attached environmental atoms.
+     * Constructs a new FunctionalGroupsFinder instance that extracts only the
+     * marked atoms of the functional groups, no attached environmental atoms.
      *
-     * @return new FunctionalGroupsFinder instance that extracts only marked atoms
+     * @return new FunctionalGroupsFinder instance that extracts only marked
+     *         atoms
      */
     public static FunctionalGroupsFinder newFunctionalGroupsFinderOnlyMarkedAtomsMode() {
         return new FunctionalGroupsFinder(Mode.ONLY_MARKED_ATOMS);
     }
-    //
+
     /**
-     * Allows setting the treatment of functional group environments after extraction. Default: environments will be
-     * generalized; no generalization: environments will be kept as whole; only marked atoms: no environmental atoms
-     * whatsoever will be attached to the extracted functional groups.
+     * Allows setting the treatment of functional group environments after
+     * extraction.
      *
-     * @param anEnvMode mode for treating functional group environments (see {@link FunctionalGroupsFinder.Mode}).
+     * @param anEnvMode mode for treating functional group environments
      */
     public void setEnvMode(Mode anEnvMode) {
         Objects.requireNonNull(anEnvMode, "Given environment mode cannot be null.");
         this.envMode = anEnvMode;
     }
-    //
+
     /**
-     * Returns the current setting for the treatment of functional group environments after extraction.
+     * Returns the current setting for the treatment of functional group
+     * environments after extraction.
      *
      * @return currently set environment mode
      */
     public Mode getEnvMode() {
         return this.envMode;
     }
-    //
+
     /**
-     * Find all functional groups in a molecule. The input atom container instance is cloned before processing to leave
-     * the input container intact. The strict input restrictions (no charged atoms, pseudo atoms, metals, metalloids or
-     * unconnected components) do not apply by default. They can be turned on again in another variant of
-     * this method below.
+     * Find all functional groups in a molecule. The input atom container
+     * instance is cloned before processing to leave the input container intact.
+     * The strict input restrictions (no charged atoms, pseudo atoms, metals,
+     * metalloids or unconnected components) do not apply by default. They can
+     * be turned on again in another variant of this method below.
      *
      * @param aMolecule the molecule to identify functional groups in
      * @throws CloneNotSupportedException if cloning is not possible
-     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
-     *                                  counts are unset
+     * @throws IllegalArgumentException if the input molecule was not
+     *                                  preprocessed correctly, i.e. implicit
+     *                                  hydrogen counts are unset
      * @return a list with all functional groups found in the molecule
      */
     public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule) throws CloneNotSupportedException, IllegalArgumentException {
         return this.extractFunctionalGroups(aMolecule, true, false);
     }
-    //
+
     /**
      * Find all functional groups in a molecule.
-     * The strict input restrictions (no charged atoms, pseudo atoms, metals, metalloids or unconnected components) do not apply by
-     * default. They can be turned on again in another variant of this method below.
+     * The strict input restrictions (no charged atoms, pseudo atoms, metals,
+     * metalloids or unconnected components) do not apply by default. They can
+     * be turned on again in another variant of this method below.
      *
      * @param aMolecule the molecule to identify functional groups in
-     * @param aShouldInputBeCloned use 'false' to reuse the input container's bonds and atoms in the extraction of the functional
-     *                             groups; this may speed up the extraction and lower the memory consumption for processing large
-     *                             amounts of data but corrupts the original input container; use 'true' to work with a clone and
-     *                             leave the input container intact
+     * @param aShouldInputBeCloned use 'false' to reuse the input container's
+     *                             bonds and atoms in the extraction of the
+     *                             functional groups; this may speed up the
+     *                             extraction and lower the memory consumption
+     *                             for processing large amounts of data but
+     *                             corrupts the original input container; use
+     *                             'true' to work with a clone and leave the
+     *                             input container intact
      * @throws CloneNotSupportedException if cloning is not possible
-     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
-     *                                  counts are unset
+     * @throws IllegalArgumentException if the input molecule was not
+     *                                  preprocessed correctly,
+     *                                  i.e. implicit hydrogen counts are unset
      * @return a list with all functional groups found in the molecule
      */
     public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException, IllegalArgumentException {
         return this.extractFunctionalGroups(aMolecule, aShouldInputBeCloned, false);
     }
-    //
+
     /**
      * Find all functional groups in a molecule.
      *
@@ -414,18 +457,23 @@ public class FunctionalGroupsFinder {
         this.clearCache();
         return tmpFunctionalGroupsList;
     }
-    //
+
     /**
-     * Checks whether the given molecule represented by an atom container can be passed on to the
-     * FunctionalGroupsFinder.extractFunctionalGroups() method without problems even if(!) the strict input
-     * restrictions are turned on (turned off by default).
-     * <br>This method will return false if the molecule contains any metal, metalloid, pseudo, or
-     * charged atoms or consists of multiple unconnected parts ('ConnectivityChecker.isConnected(aMolecule)'
-     * must be 'true'). Some of these issues can be solved by respective standardisation routines.
+     * Checks whether the given molecule represented by an atom container can be
+     * passed on to the FunctionalGroupsFinder.extractFunctionalGroups() method
+     * without problems even if(!) the strict input restrictions are turned on
+     * (turned off by default).
+     * <br>This method will return false if the molecule contains any metal,
+     * metalloid, pseudo, or charged atoms or consists of multiple unconnected
+     * parts ('ConnectivityChecker.isConnected(aMolecule)' must be 'true').
+     * Some of these issues can be solved by respective standardisation
+     * routines.
      *
      * @param aMolecule the molecule to check
-     * @return true if the given molecule is a valid parameter for FunctionalGroupsFinder.extractFunctionalGroups()
-     *         method if(!) the input restrictions are turned on (turned off by default)
+     * @return true if the given molecule is a valid parameter for
+     *         FunctionalGroupsFinder.extractFunctionalGroups()
+     *         method if(!) the input restrictions are turned on (turned off
+     *         by default)
      * @throws NullPointerException if parameter is 'null'
      */
     public static boolean isValidInputMoleculeIfRestrictionsAreTurnedOn(IAtomContainer aMolecule) throws NullPointerException {
@@ -441,7 +489,7 @@ public class FunctionalGroupsFinder {
             return false;
         }
     }
-    //
+
     /**
      * Mark all atoms and store them in a set for further processing.
      *
@@ -449,7 +497,7 @@ public class FunctionalGroupsFinder {
      */
     private void markAtoms(IAtomContainer aMolecule) {
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug("########## Starting search for atoms to mark ... ##########");
+            FunctionalGroupsFinder.LOGGER.debug("########## Starting search for atoms to mark ... ##########");
         }
         // store marked atoms
         this.markedAtomsCache = new HashSet<>((int) ((aMolecule.getAtomCount() / 0.75f) + 2), 0.75f);
@@ -487,7 +535,7 @@ public class FunctionalGroupsFinder {
                         // set the *connected* atom as marked (add() true if this set did not already contain the specified element)
                         if (this.markedAtomsCache.add(tmpConnectedIdx)) {
                             if (FunctionalGroupsFinder.isDbg()) {
-                                FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                                FunctionalGroupsFinder.LOGGER.debug(String.format(
                                         "Marking Atom #%d (%s) - Met condition %s",
                                         tmpConnectedIdx,
                                         tmpConnectedAtom.getSymbol(),
@@ -497,7 +545,7 @@ public class FunctionalGroupsFinder {
                         // set the *current* atom as marked and break out of connected atoms
                         tmpIsMarked = true;
                         if (FunctionalGroupsFinder.isDbg()) {
-                            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                            FunctionalGroupsFinder.LOGGER.debug(String.format(
                                     "Marking Atom #%d (%s) - Met condition 2.1/2.2",
                                     idx,
                                     tmpAtom.getSymbol()));
@@ -508,7 +556,7 @@ public class FunctionalGroupsFinder {
                                 && this.adjListCache[idx].length == 3) {
                             tmpAtom.setProperty(CARBONYL_C_MARKER, true);
                             if (FunctionalGroupsFinder.isDbg())  {
-                                FunctionalGroupsFinder.LOGGING_TOOL.debug("- was flagged as Carbonly-C");
+                                FunctionalGroupsFinder.LOGGER.debug("- was flagged as Carbonly-C");
                             }
                         }
                         // break out of connected atoms
@@ -523,7 +571,7 @@ public class FunctionalGroupsFinder {
                             // set the connected O/N/S atom as marked
                             this.markedAtomsCache.add(tmpConnectedIdx);
                             if (FunctionalGroupsFinder.isDbg()) {
-                                FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                                FunctionalGroupsFinder.LOGGER.debug(String.format(
                                         "Marking Atom #%d (%s) - Met condition 1",
                                         tmpConnectedIdx,
                                         tmpConnectedAtom.getSymbol()));
@@ -543,7 +591,7 @@ public class FunctionalGroupsFinder {
                                     // set as marked and break out of connected atoms
                                     tmpIsMarked = true;
                                     if (FunctionalGroupsFinder.isDbg()) {
-                                        FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                                        FunctionalGroupsFinder.LOGGER.debug(String.format(
                                                 "Marking Atom #%d (%s) - Met condition 2.3",
                                                 idx,
                                                 tmpAtom.getSymbol()));
@@ -563,11 +611,11 @@ public class FunctionalGroupsFinder {
                                         this.markedAtomsCache.add(tmpConnectedInSphere2Idx);
                                         this.markedAtomsCache.add(tmpConnectedInSphere3Idx);
                                         if (FunctionalGroupsFinder.isDbg()) {
-                                            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                                            FunctionalGroupsFinder.LOGGER.debug(String.format(
                                                     "Marking Atom #%d (%s) - Met condition 2.4",
                                                     tmpConnectedInSphere2Idx,
                                                     tmpConnectedInSphere2Atom.getSymbol()));
-                                            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                                            FunctionalGroupsFinder.LOGGER.debug(String.format(
                                                     "Marking Atom #%d (%s) - Met condition 2.4",
                                                     tmpConnectedInSphere3Idx,
                                                     tmpConnectedInSphere3Atom.getSymbol()));
@@ -575,7 +623,7 @@ public class FunctionalGroupsFinder {
                                         // set current atom as marked and break out of connected atoms
                                         tmpIsMarked = true;
                                         if (FunctionalGroupsFinder.isDbg()) {
-                                            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                                            FunctionalGroupsFinder.LOGGER.debug(String.format(
                                                     "Marking Atom #%d (%s) - Met condition 2.4",
                                                     idx,
                                                     tmpAtom.getSymbol()));
@@ -613,7 +661,7 @@ public class FunctionalGroupsFinder {
                 // if heteroatom... (CONDITION 1)
                 this.markedAtomsCache.add(idx);
                 if (FunctionalGroupsFinder.isDbg()) {
-                    FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                    FunctionalGroupsFinder.LOGGER.debug(String.format(
                             "Marking Atom #%d (%s) - Met condition 1",
                             idx,
                             tmpAtom.getSymbol()));
@@ -625,23 +673,25 @@ public class FunctionalGroupsFinder {
             }
         } //end of for loop that iterates over all atoms in the mol
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+            FunctionalGroupsFinder.LOGGER.debug(String.format(
                     "########## End of search. Marked %d/%d atoms. ##########",
                     this.markedAtomsCache.size(),
                     aMolecule.getAtomCount()));
         }
     }
-    //
+
     /**
-     * Searches the molecule for groups of connected marked atoms and extracts each as a new functional group.
-     * The extraction process includes marked atoms' "environments". Connected H's are captured implicitly.
+     * Searches the molecule for groups of connected marked atoms and extracts
+     * each as a new functional group. The extraction process includes marked
+     * atoms' "environments". Connected H's are captured implicitly.
      *
      * @param aMolecule the molecule which contains the functional groups
-     * @return a list of all functional groups (including "environments") extracted from the molecule
+     * @return a list of all functional groups (including "environments")
+     *         extracted from the molecule
      */
     private List<IAtomContainer> extractGroups(IAtomContainer aMolecule) {
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug("########## Starting identification & extraction of functional groups... ##########");
+            FunctionalGroupsFinder.LOGGER.debug("########## Starting identification & extraction of functional groups... ##########");
         }
         this.markedAtomToConnectedEnvCMapCache = new HashMap<>((int) ((aMolecule.getAtomCount() / 0.75f) + 2), 0.75f);
         int[] tmpAtomIdxToFGArray = new int[aMolecule.getAtomCount()];
@@ -653,7 +703,7 @@ public class FunctionalGroupsFinder {
             // get next markedAtom as the starting node for the search
             int tmpBeginIdx = this.markedAtomsCache.iterator().next();
             if (FunctionalGroupsFinder.isDbg()) {
-                FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                FunctionalGroupsFinder.LOGGER.debug(String.format(
                         "Searching new functional group from atom #%d (%s)...",
                         tmpBeginIdx,
                         aMolecule.getAtom(tmpBeginIdx).getSymbol()));
@@ -670,9 +720,9 @@ public class FunctionalGroupsFinder {
                 // if it isn't...
                 IAtom tmpCurrentAtom = aMolecule.getAtom(tmpCurrentQueueIdx);
                 if (FunctionalGroupsFinder.isDbg()) {
-                    FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format("\tvisiting marked atom: #%d (%s)",
-                            tmpCurrentQueueIdx,
-                            tmpCurrentAtom.getSymbol()));
+                    FunctionalGroupsFinder.LOGGER.debug(String.format("\tvisiting marked atom: #%d (%s)",
+                                                                      tmpCurrentQueueIdx,
+                                                                      tmpCurrentAtom.getSymbol()));
                 }
                 // add its index to the functional group
                 tmpAtomIdxToFGArray[tmpCurrentQueueIdx] = tmpFunctionalGroupIdx;
@@ -697,7 +747,7 @@ public class FunctionalGroupsFinder {
                         // note that this aromatic heteroatom has been added to a group
                         this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.put(tmpConnectedIdx, true);
                         if (FunctionalGroupsFinder.isDbg()) {
-                            FunctionalGroupsFinder.LOGGING_TOOL.debug("\t\tadded connected aromatic heteroatom "
+                            FunctionalGroupsFinder.LOGGER.debug("\t\tadded connected aromatic heteroatom "
                                     + tmpConnectedAtom.getSymbol());
                         }
                     }
@@ -732,7 +782,7 @@ public class FunctionalGroupsFinder {
                             tmpCAliphCount++;
                         }
                     }
-                    FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                    FunctionalGroupsFinder.LOGGER.debug(String.format(
                             "\t\tlogged marked atom's environment: C_ar:%d, C_al:%d (and %d implicit hydrogens)",
                             tmpCAromCount,
                             tmpCAliphCount,
@@ -740,7 +790,7 @@ public class FunctionalGroupsFinder {
                 }
             } // end of BFS
             if (FunctionalGroupsFinder.isDbg()) {
-                FunctionalGroupsFinder.LOGGING_TOOL.debug("\tsearch completed.");
+                FunctionalGroupsFinder.LOGGER.debug("\tsearch completed.");
             }
         } //markedAtoms is empty now
         // also create FG for lone aromatic heteroatoms, not connected to an FG yet.
@@ -749,33 +799,34 @@ public class FunctionalGroupsFinder {
                 tmpFunctionalGroupIdx++;
                 tmpAtomIdxToFGArray[tmpAtomIdx] = tmpFunctionalGroupIdx;
                 if (FunctionalGroupsFinder.isDbg()) {
-                    FunctionalGroupsFinder.LOGGING_TOOL.debug("Created FG for lone aromatic heteroatom: "
+                    FunctionalGroupsFinder.LOGGER.debug("Created FG for lone aromatic heteroatom: "
                             + aMolecule.getAtom(tmpAtomIdx).getSymbol());
                 }
             }
         }
         List<IAtomContainer> tmpFunctionalGroupsList = this.partitionIntoGroups(aMolecule, tmpAtomIdxToFGArray, tmpFunctionalGroupIdx + 1);
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format("########## Found & extracted %d functional groups. ##########",
-                    tmpFunctionalGroupIdx + 1));
+            FunctionalGroupsFinder.LOGGER.debug(String.format("########## Found & extracted %d functional groups. ##########",
+                                                              tmpFunctionalGroupIdx + 1));
         }
         return tmpFunctionalGroupsList;
     }
-    //
+
     /**
-     * Generalizes the full environments of functional groups, according to the Ertl generalization algorithm, providing
-     * a good balance between preserving meaningful detail and generalization.
+     * Generalizes the full environments of functional groups, according to the
+     * Ertl generalization algorithm, providing a good balance between
+     * preserving meaningful detail and generalization.
      *
      * @param aFunctionalGroupsList the list of functional groups including "environments"
      */
     private void expandGeneralizedEnvironments(List<IAtomContainer> aFunctionalGroupsList) {
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug("########## Starting generalization of functional groups... ##########");
+            FunctionalGroupsFinder.LOGGER.debug("########## Starting generalization of functional groups... ##########");
         }
         for (IAtomContainer tmpFunctionalGroup : aFunctionalGroupsList) {
             int tmpAtomCount = tmpFunctionalGroup.getAtomCount();
             if(FunctionalGroupsFinder.isDbg()) {
-                FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format("Generalizing functional group (%d atoms)...", tmpAtomCount));
+                FunctionalGroupsFinder.LOGGER.debug(String.format("Generalizing functional group (%d atoms)...", tmpAtomCount));
             }
             // pre-checking for special cases...
             if (tmpFunctionalGroup.getAtomCount() == 1) {
@@ -788,7 +839,7 @@ public class FunctionalGroupsFinder {
                     if ((tmpAtom.getAtomicNumber() == IAtom.O && tmpEnvCCount == 1)
                             || (tmpAtom.getAtomicNumber() == IAtom.N && tmpEnvCCount == 1)) {
                         if (FunctionalGroupsFinder.isDbg()) {
-                            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                            FunctionalGroupsFinder.LOGGER.debug(String.format(
                                     "\t- found single atomic %s FG with one env. C. Expanding environment...",
                                     tmpAtom.getSymbol()));
                         }
@@ -796,7 +847,7 @@ public class FunctionalGroupsFinder {
                         int tmpAtomImplicitHydrogenCount = tmpAtom.getImplicitHydrogenCount();
                         if (tmpAtomImplicitHydrogenCount != 0) {
                             if (FunctionalGroupsFinder.isDbg()) {
-                                FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                                FunctionalGroupsFinder.LOGGER.debug(String.format(
                                         "\t- adding %d hydrogens...", tmpAtomImplicitHydrogenCount));
                             }
                             this.addHydrogens(tmpAtom, tmpAtomImplicitHydrogenCount, tmpFunctionalGroup);
@@ -808,19 +859,19 @@ public class FunctionalGroupsFinder {
                     if ((tmpAtom.getAtomicNumber() == IAtom.N && tmpEnvCCount == 2)
                             || (tmpAtom.getAtomicNumber() == IAtom.S && tmpEnvCCount == 1)) {
                         if (FunctionalGroupsFinder.isDbg()) {
-                            FunctionalGroupsFinder.LOGGING_TOOL.debug("\t- found sec. amine or simple thiol");
+                            FunctionalGroupsFinder.LOGGER.debug("\t- found sec. amine or simple thiol");
                         }
                         int tmpAtomImplicitHydrogenCount = tmpAtom.getImplicitHydrogenCount();
                         if (tmpAtomImplicitHydrogenCount != 0) {
                             if (FunctionalGroupsFinder.isDbg()) {
-                                FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format("\t- adding %d hydrogens...",
-                                        tmpAtomImplicitHydrogenCount));
+                                FunctionalGroupsFinder.LOGGER.debug(String.format("\t- adding %d hydrogens...",
+                                                                                  tmpAtomImplicitHydrogenCount));
                             }
                             this.addHydrogens(tmpAtom, tmpAtomImplicitHydrogenCount, tmpFunctionalGroup);
                             tmpAtom.setImplicitHydrogenCount(0);
                         }
                         if (FunctionalGroupsFinder.isDbg()) {
-                            FunctionalGroupsFinder.LOGGING_TOOL.debug("\t- expanding environment...");
+                            FunctionalGroupsFinder.LOGGER.debug("\t- expanding environment...");
                         }
                         this.expandEnvironmentGeneralized(tmpAtom, tmpFunctionalGroup);
                         continue;
@@ -834,7 +885,7 @@ public class FunctionalGroupsFinder {
                     }
                     String tmpAtomTypeName = tmpAtom.getAtomTypeName();
                     if (FunctionalGroupsFinder.isDbg()) {
-                        FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                        FunctionalGroupsFinder.LOGGER.debug(String.format(
                                 "\t- found single aromatic heteroatom (%s, Atomtype %s). Adding %d R-Atoms...",
                                 tmpAtom.getSymbol(),
                                 tmpAtomTypeName,
@@ -856,7 +907,7 @@ public class FunctionalGroupsFinder {
                     }
                     int tmpRAtomCount = tmpFunctionalGroupAtom.getValency() - 1;
                     if (FunctionalGroupsFinder.isDbg()) {
-                        FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                        FunctionalGroupsFinder.LOGGER.debug(String.format(
                                 "\t- found connected aromatic heteroatom (%s). Adding %d R-Atoms...",
                                 tmpFunctionalGroupAtom.getSymbol(),
                                 tmpRAtomCount));
@@ -870,20 +921,20 @@ public class FunctionalGroupsFinder {
                             tmpFunctionalGroupAtom.setImplicitHydrogenCount(0);
                         }
                         if (FunctionalGroupsFinder.isDbg()) {
-                            FunctionalGroupsFinder.LOGGING_TOOL.debug("\t- ignoring environment for marked carbon atom");
+                            FunctionalGroupsFinder.LOGGER.debug("\t- ignoring environment for marked carbon atom");
                         }
                         continue;
                     } else {
                         if (FunctionalGroupsFinder.isDbg()) {
-                            FunctionalGroupsFinder.LOGGING_TOOL.debug("\t- found carbonyl-carbon. Expanding environment...");
+                            FunctionalGroupsFinder.LOGGER.debug("\t- found carbonyl-carbon. Expanding environment...");
                         }
                         this.expandEnvironmentGeneralized(tmpFunctionalGroupAtom, tmpFunctionalGroup);
                         continue;
                     }
                 } else { // processing heteroatoms...
                     if (FunctionalGroupsFinder.isDbg()) {
-                        FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format("\t- found heteroatom (%s). Expanding environment...",
-                                tmpFunctionalGroupAtom.getSymbol()));
+                        FunctionalGroupsFinder.LOGGER.debug(String.format("\t- found heteroatom (%s). Expanding environment...",
+                                                                          tmpFunctionalGroupAtom.getSymbol()));
                     }
                     this.expandEnvironmentGeneralized(tmpFunctionalGroupAtom, tmpFunctionalGroup);
                     continue;
@@ -891,36 +942,38 @@ public class FunctionalGroupsFinder {
             }
         } //end of loop over given functional groups list
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug("########## Generalization of functional groups completed. ##########");
+            FunctionalGroupsFinder.LOGGER.debug("########## Generalization of functional groups completed. ##########");
         }
     }
-    //
+
     /**
-     * Expands the full environments of functional groups, converted into atoms and bonds.
+     * Expands the full environments of functional groups, converted into atoms
+     * and bonds.
      *
-     * @param aFunctionalGroupsList the list of functional groups including their "environments"
+     * @param aFunctionalGroupsList the list of functional groups including
+     *                              their "environments"
      */
     private void expandFullEnvironments(List<IAtomContainer> aFunctionalGroupsList) {
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug("########## Starting expansion of full environments for functional groups... ##########");
+            FunctionalGroupsFinder.LOGGER.debug("########## Starting expansion of full environments for functional groups... ##########");
         }
         for (IAtomContainer tmpFunctionalGroup : aFunctionalGroupsList) {
             int tmpAtomCount = tmpFunctionalGroup.getAtomCount();
             if (FunctionalGroupsFinder.isDbg()) {
-                FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                FunctionalGroupsFinder.LOGGER.debug(String.format(
                         "Expanding environment on functional group (%d atoms)...", tmpAtomCount));
             }
             for (int i = 0; i < tmpAtomCount; i++) {
                 IAtom tmpFunctionalGroupAtom = tmpFunctionalGroup.getAtom(i);
                 if (FunctionalGroupsFinder.isDbg()) {
-                    FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                    FunctionalGroupsFinder.LOGGER.debug(String.format(
                             " - Atom #%d   - Expanding environment...", i));
                 }
                 this.expandEnvironment(tmpFunctionalGroupAtom, tmpFunctionalGroup);
                 int tmpImplicitHydrogenCount = tmpFunctionalGroupAtom.getImplicitHydrogenCount();
                 if (tmpImplicitHydrogenCount != 0) {
                     if (FunctionalGroupsFinder.isDbg()) {
-                        FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+                        FunctionalGroupsFinder.LOGGER.debug(String.format(
                                 "\t- adding %d hydrogens...", tmpImplicitHydrogenCount));
                     }
                     this.addHydrogens(tmpFunctionalGroupAtom, tmpImplicitHydrogenCount, tmpFunctionalGroup);
@@ -929,13 +982,14 @@ public class FunctionalGroupsFinder {
             }
         }
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug("########## Expansion of full environments for functional groups completed. ##########");
+            FunctionalGroupsFinder.LOGGER.debug("########## Expansion of full environments for functional groups completed. ##########");
         }
     }
-    //
+
     /**
-     * Expand the environment of one atom in a functional group. Takes all environmental C atoms cached earlier and
-     * re-adds them to the atom as environment.
+     * Expand the environment of one atom in a functional group. Takes all
+     * environmental C atoms cached earlier and re-adds them to the atom as
+     * environment.
      *
      * @param aFunctionalGroupAtom the atom whose environment to expand
      * @param aFunctionalGroup the functional group container that the atom is part of
@@ -945,7 +999,7 @@ public class FunctionalGroupsFinder {
 
         if (Objects.isNull(tmpEnvCAtomsList) || tmpEnvCAtomsList.isEmpty()) {
             if (FunctionalGroupsFinder.isDbg()) {
-                FunctionalGroupsFinder.LOGGING_TOOL.debug("\t\tfound no environment to expand.");
+                FunctionalGroupsFinder.LOGGER.debug("\t\tfound no environment to expand.");
             }
             return;
         }
@@ -966,17 +1020,18 @@ public class FunctionalGroupsFinder {
             aFunctionalGroup.addBond(tmpBond);
         }
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+            FunctionalGroupsFinder.LOGGER.debug(String.format(
                     "\t\texpanded environment: %dx C_ar and %dx C_al",
                     tmpAromaticCAtomCount,
                     tmpAliphaticCAtomCount));
         }
     }
-    //
+
     /**
-     * Expand the generalized environment of marked heteroatoms and carbonyl-Cs in a functional group.
-     * Takes all environmental C atoms cached earlier and re-adds them to the atom as environment.
-     * Note: only call this on marked heteroatoms / carbonyl-C's!
+     * Expand the generalized environment of marked heteroatoms and carbonyl-Cs
+     * in a functional group. Takes all environmental C atoms cached earlier
+     * and re-adds them to the atom as environment. Note: only call this on
+     * marked heteroatoms / carbonyl-C's!
      *
      * @param aFunctionalGroupAtom the atom whose environment to expand
      * @param aFunctionalGroup the functional group container that the atom is part of
@@ -985,7 +1040,7 @@ public class FunctionalGroupsFinder {
         List<EnvironmentalC> tmpEnvironment = this.markedAtomToConnectedEnvCMapCache.get(aFunctionalGroupAtom);
         if (Objects.isNull(tmpEnvironment)) {
             if (FunctionalGroupsFinder.isDbg()) {
-                FunctionalGroupsFinder.LOGGING_TOOL.debug("\t\tfound no environment to expand.");
+                FunctionalGroupsFinder.LOGGER.debug("\t\tfound no environment to expand.");
             }
             return;
         }
@@ -995,7 +1050,7 @@ public class FunctionalGroupsFinder {
             this.addHydrogens(aFunctionalGroupAtom, 1, aFunctionalGroup);
             aFunctionalGroupAtom.setImplicitHydrogenCount(0);
             if (FunctionalGroupsFinder.isDbg()) {
-                FunctionalGroupsFinder.LOGGING_TOOL.debug("\t\texpanded hydrogen on connected OH-Group");
+                FunctionalGroupsFinder.LOGGER.debug("\t\texpanded hydrogen on connected OH-Group");
             }
         } else if (FunctionalGroupsFinder.isHeteroatom(aFunctionalGroupAtom)) {
             tmpRAtomCount += aFunctionalGroupAtom.getImplicitHydrogenCount();
@@ -1005,13 +1060,13 @@ public class FunctionalGroupsFinder {
             aFunctionalGroupAtom.setImplicitHydrogenCount(0);
         }
         if (FunctionalGroupsFinder.isDbg()) {
-            FunctionalGroupsFinder.LOGGING_TOOL.debug(String.format(
+            FunctionalGroupsFinder.LOGGER.debug(String.format(
                     "\t\texpanded environment: %dx R-atom (incl. %d for H replacement)",
                     tmpRAtomCount,
                     tmpRAtomCount - tmpRAtomsForCCount));
         }
     }
-    //
+
     /**
      * Add explicit hydrogen atoms to an atom in a molecule.
      *
@@ -1028,7 +1083,7 @@ public class FunctionalGroupsFinder {
             aMolecule.addBond(anAtom.getBuilder().newInstance(IBond.class, anAtom, tmpHydrogenAtom, Order.SINGLE));
         }
     }
-    //
+
     /**
      * Add pseudo ("R") atoms to an atom in a molecule.
      *
@@ -1045,15 +1100,22 @@ public class FunctionalGroupsFinder {
             aMolecule.addBond(anAtom.getBuilder().newInstance(IBond.class, anAtom, tmpRAtom, Order.SINGLE));
         }
     }
-    //
+
     /**
-     * Partitions the marked atoms and their processed environments into separate functional groups and builds atom containers
-     * for them as final step before returning them. Transfers the respective atoms, bonds, single electrons, and lone
-     * pairs from the source atom container to the new functional group atom containers.
+     * Partitions the marked atoms and their processed environments into
+     * separate functional groups and builds atom containers for them as final
+     * step before returning them. Transfers the respective atoms, bonds, single
+     * electrons, and lone pairs from the source atom container to the new
+     * functional group atom containers.
      *
-     * @param aSourceContainer molecule atom container to take atoms, bonds, and electron objects from
-     * @param anAtomIdxToFGIdxMap array that maps atom indices (array positions) to functional group indices that the atoms belong to
-     * @param aFunctionalGroupCount maximum functional group index (+1) to know how many functional group atom containers to build
+     * @param aSourceContainer molecule atom container to take atoms, bonds,
+     *                         and electron objects from
+     * @param anAtomIdxToFGIdxMap array that maps atom indices (array positions)
+     *                            to functional group indices that the atoms
+     *                            belong to
+     * @param aFunctionalGroupCount maximum functional group index (+1) to know
+     *                              how many functional group atom containers
+     *                              to build
      * @return list of partitioned functional group atom containers
      */
     private List<IAtomContainer> partitionIntoGroups(IAtomContainer aSourceContainer, int[] anAtomIdxToFGIdxMap, int aFunctionalGroupCount) {
@@ -1099,7 +1161,7 @@ public class FunctionalGroupsFinder {
         }
         return tmpFunctionalGroups;
     }
-    //
+
     /**
      * Clear caches related to the input molecule. Note, these are not proper caches, there are no results cached. Here,
      * only data taken from the input molecule is saved for only one execution of the extractFunctionalGroups() method, to facilitate
@@ -1112,12 +1174,14 @@ public class FunctionalGroupsFinder {
         this.aromaticHeteroAtomIndicesToIsInGroupBoolMapCache = null;
         this.markedAtomToConnectedEnvCMapCache = null;
     }
-    //
+
     /**
-     * Checks input molecule for charged atoms, metal or metalloid atoms, and whether it consists of more than one
-     * unconnected structures. The molecule may be empty but not null.
-     * If one of the cases applies, an IllegalArgumentException is thrown with a specific error message.
-     * Given as static method here because it is used by static public utility methods (developer's note).
+     * Checks input molecule for charged atoms, metal or metalloid atoms, and
+     * whether it consists of more than one unconnected structures. The molecule
+     * may be empty but not null. If one of the cases applies, an
+     * IllegalArgumentException is thrown with a specific error message.
+     * Given as static method here because it is used by static public utility
+     * methods (developer's note).
      *
      * @param aMolecule the molecule to check
      * @throws IllegalArgumentException if one of the constraints is not met
@@ -1139,11 +1203,12 @@ public class FunctionalGroupsFinder {
             throw new IllegalArgumentException("Input molecule must consist of only a single connected structure.");
         }
     }
-    //
+
     /**
-     * Checks whether the given atom is a pseudo atom. Very strict, any atom whose atomic number is
-     * null or 0, whose symbol equals "R" or "*", or that is an instance of an IPseudoAtom implementing
-     * class will be classified as a pseudo atom.
+     * Checks whether the given atom is a pseudo atom. Very strict, any atom
+     * whose atomic number is null or 0, whose symbol equals "R" or "*", or that
+     * is an instance of an IPseudoAtom implementing class will be classified as
+     * a pseudo atom.
      *
      * @param anAtom the atom to test
      * @return true if the given atom is identified as a pseudo (R) atom
@@ -1159,13 +1224,14 @@ public class FunctionalGroupsFinder {
                 tmpSymbol.equals("*") ||
                 anAtom instanceof IPseudoAtom;
     }
-    //
+
     /**
-     * Checks whether the given atom is a hetero-atom (i.e. non-carbon and non-hydrogen).
-     * Pseudo (R) atoms will also return false.
+     * Checks whether the given atom is a hetero-atom (i.e. non-carbon and
+     * non-hydrogen). Pseudo (R) atoms will also return false.
      *
      * @param anAtom the atom to test
-     * @return true if the given atom is neither a carbon nor a hydrogen or pseudo atom
+     * @return true if the given atom is neither a carbon nor a hydrogen or
+     *         pseudo atom
      */
     private static boolean isHeteroatom(IAtom anAtom) {
         Integer tmpAtomicNr = anAtom.getAtomicNumber();
@@ -1176,13 +1242,15 @@ public class FunctionalGroupsFinder {
         return tmpAtomicNumberInt != IAtom.H && tmpAtomicNumberInt != IAtom.C
                 && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
     }
-    //
+
     /**
-     * Checks whether the given atom is from an element in the organic subset, i.e. not a metal or metalloid atom.
+     * Checks whether the given atom is from an element in the organic subset,
+     * i.e. not a metal or metalloid atom.
      * Pseudo (R) atoms will also return false.
      *
      * @param anAtom atom to check
-     * @return true if the given atom is organic and not a metal or metalloid atom
+     * @return true if the given atom is organic and not a metal or metalloid
+     *         atom
      */
     private static boolean isNonmetal(IAtom anAtom) {
         Integer tmpAtomicNumber = anAtom.getAtomicNumber();
@@ -1192,9 +1260,10 @@ public class FunctionalGroupsFinder {
         int tmpAtomicNumberInt = tmpAtomicNumber;
         return !Elements.isMetal(tmpAtomicNumberInt) && !Elements.isMetalloid(tmpAtomicNumberInt) && !FunctionalGroupsFinder.isPseudoAtom(anAtom);
     }
-    //
+
     /**
-     * Returns whether the CDK logging tool of this class (logger) is currently configured to log debug messages.
+     * Returns whether the CDK logging tool of this class (logger) is currently
+     * configured to log debug messages.
      * <p>
      *     Use <code>FunctionalGroupsFinder.LOGGING_TOOL.setLevel(ILoggingTool.DEBUG);</code>  to activate debug messages.
      * </p>
@@ -1202,6 +1271,6 @@ public class FunctionalGroupsFinder {
      * @return true if debug messages are enabled
      */
     private static boolean isDbg() {
-        return FunctionalGroupsFinder.LOGGING_TOOL.isDebugEnabled();
+        return FunctionalGroupsFinder.LOGGER.isDebugEnabled();
     }
 }
