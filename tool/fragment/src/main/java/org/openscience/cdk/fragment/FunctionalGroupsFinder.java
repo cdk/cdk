@@ -98,7 +98,7 @@ import java.util.Queue;
  * and counter-ion) are not accepted if(!) the  strict input restrictions are
  * turned on (they are turned off by default).
  * This can be done via a boolean parameter in a variant of the central
- * {@link #extractFunctionalGroups} method.
+ * {@link #extract} method.
  * Please note that structural properties like formal charges and the others 
  * mentioned above  are not expected to cause issues (exceptions) when processed
  * by this class, but they are not explicitly regarded by the Ertl algorithm and
@@ -124,24 +124,23 @@ import java.util.Queue;
 public class FunctionalGroupsFinder {
 
     /**
-     * Defines the mode for generalizing functional group environments 
-     * (default), keeping them whole, or only extracting marked atoms.
+     * Defines the level of detail environment
      */
-    public enum Mode {
-        /**
-         * Default mode including the generalization step.
-         */
-        DEFAULT,
-        /**
-         * Skips the generalization step. Functional groups will keep their
-         * full environment.
-         */
-        NO_GENERALIZATION,
+    enum Environment {
         /**
          * Functional groups will only consist of atoms marked according to the
          * conditions defined by Ertl, environments will be completely ignored.
          */
-        ONLY_MARKED_ATOMS;
+        NONE,
+        /**
+         * Default mode including the generalization step.
+         */
+        GENERAL,
+        /**
+         * Skips the generalization step. Functional groups will keep their
+         * full environment.
+         */
+        FULL;
     }
     
     /**
@@ -149,7 +148,7 @@ public class FunctionalGroupsFinder {
      * Only for internal use for caching this info in the EnvironmentalC
      * instances (see private class below).
      */
-    private static enum EnvironmentalCType {
+    private enum EnvironmentalCType {
         /**
          * Aromatic environmental carbon.
          */
@@ -254,7 +253,7 @@ public class FunctionalGroupsFinder {
      * Environment mode setting, defining whether environments should be
      * generalized (default) or kept as whole.
      */
-    private Mode envMode;
+    private Environment envEnvironment;
 
     /**
      * Map of bonds in the input molecule, cache(!).
@@ -287,22 +286,14 @@ public class FunctionalGroupsFinder {
     private HashMap<IAtom, List<EnvironmentalC>> markedAtomToConnectedEnvCMapCache;
 
     /**
-     * Default constructor for FunctionalGroupsFinder with functional group
-     * generalization turned ON.
-     */
-    public FunctionalGroupsFinder() {
-        this(Mode.DEFAULT);
-    }
-
-    /**
      * Constructor for FunctionalGroupsFinder that allows setting the treatment
      * of environments in the identified functional groups.
      *
-     * @param anEnvMode mode for treating functional group environments
+     * @param anEnvEnvironment mode for treating functional group environments
      */
-    public FunctionalGroupsFinder(Mode anEnvMode) {
-        Objects.requireNonNull(anEnvMode, "Given environment mode cannot be null.");
-        this.envMode = anEnvMode;
+    FunctionalGroupsFinder(Environment anEnvEnvironment) {
+        Objects.requireNonNull(anEnvEnvironment, "Given environment mode cannot be null.");
+        this.envEnvironment = anEnvEnvironment;
     }
 
     /**
@@ -312,8 +303,8 @@ public class FunctionalGroupsFinder {
      * @return new FunctionalGroupsFinder instance that generalizes returned
      *         functional groups
      */
-    public static FunctionalGroupsFinder newFunctionalGroupsFinderGeneralizingMode() {
-        return new FunctionalGroupsFinder(Mode.DEFAULT);
+    public static FunctionalGroupsFinder withGeneralEnvironment() {
+        return new FunctionalGroupsFinder(Environment.GENERAL);
     }
 
     /**
@@ -324,8 +315,8 @@ public class FunctionalGroupsFinder {
      * @return new FunctionalGroupsFinder instance that does NOT generalize
      *         returned functional groups
      */
-    public static FunctionalGroupsFinder newFunctionalGroupsFinderFullEnvironmentMode() {
-        return new FunctionalGroupsFinder(Mode.NO_GENERALIZATION);
+    public static FunctionalGroupsFinder withFullEnvironment() {
+        return new FunctionalGroupsFinder(Environment.FULL);
     }
 
     /**
@@ -335,29 +326,8 @@ public class FunctionalGroupsFinder {
      * @return new FunctionalGroupsFinder instance that extracts only marked
      *         atoms
      */
-    public static FunctionalGroupsFinder newFunctionalGroupsFinderOnlyMarkedAtomsMode() {
-        return new FunctionalGroupsFinder(Mode.ONLY_MARKED_ATOMS);
-    }
-
-    /**
-     * Allows setting the treatment of functional group environments after
-     * extraction.
-     *
-     * @param anEnvMode mode for treating functional group environments
-     */
-    public void setEnvMode(Mode anEnvMode) {
-        Objects.requireNonNull(anEnvMode, "Given environment mode cannot be null.");
-        this.envMode = anEnvMode;
-    }
-
-    /**
-     * Returns the current setting for the treatment of functional group
-     * environments after extraction.
-     *
-     * @return currently set environment mode
-     */
-    public Mode getEnvMode() {
-        return this.envMode;
+    public static FunctionalGroupsFinder withNoEnvironment() {
+        return new FunctionalGroupsFinder(Environment.NONE);
     }
 
     /**
@@ -374,8 +344,8 @@ public class FunctionalGroupsFinder {
      *                                  hydrogen counts are unset
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule) throws CloneNotSupportedException, IllegalArgumentException {
-        return this.extractFunctionalGroups(aMolecule, true, false);
+    public List<IAtomContainer> extract(IAtomContainer aMolecule) throws CloneNotSupportedException, IllegalArgumentException {
+        return this.extract(aMolecule, true, false);
     }
 
     /**
@@ -399,8 +369,8 @@ public class FunctionalGroupsFinder {
      *                                  i.e. implicit hydrogen counts are unset
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException, IllegalArgumentException {
-        return this.extractFunctionalGroups(aMolecule, aShouldInputBeCloned, false);
+    public List<IAtomContainer> extract(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException, IllegalArgumentException {
+        return this.extract(aMolecule, aShouldInputBeCloned, false);
     }
 
     /**
@@ -420,7 +390,7 @@ public class FunctionalGroupsFinder {
      *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> extractFunctionalGroups(IAtomContainer aMolecule, boolean aShouldInputBeCloned, boolean anAreInputRestrictionsApplied)
+    public List<IAtomContainer> extract(IAtomContainer aMolecule, boolean aShouldInputBeCloned, boolean anAreInputRestrictionsApplied)
             throws CloneNotSupportedException, IllegalArgumentException {
         this.clearCache();
         IAtomContainer tmpMolecule;
@@ -445,11 +415,11 @@ public class FunctionalGroupsFinder {
         // extract raw groups
         List<IAtomContainer> tmpFunctionalGroupsList = this.extractGroups(tmpMolecule);
         // handle environment
-        if (this.envMode == Mode.DEFAULT) {
+        if (this.envEnvironment == Environment.GENERAL) {
             this.expandGeneralizedEnvironments(tmpFunctionalGroupsList);
-        } else if (this.envMode == Mode.NO_GENERALIZATION) {
+        } else if (this.envEnvironment == Environment.FULL) {
             this.expandFullEnvironments(tmpFunctionalGroupsList);
-        } else if (this.envMode == Mode.ONLY_MARKED_ATOMS) {
+        } else if (this.envEnvironment == Environment.NONE) {
             //do nothing
         } else {
             throw new IllegalArgumentException("Unknown mode.");

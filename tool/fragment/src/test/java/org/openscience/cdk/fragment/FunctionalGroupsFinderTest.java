@@ -80,8 +80,8 @@ public class FunctionalGroupsFinderTest {
         Aromaticity tmpAromaticity = new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet());
         tmpAromaticity.apply(tmpInputMol);
         //Identify functional groups
-        FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(); //default: generalization turned on
-        List<IAtomContainer> tmpFunctionalGroupsList = tmpFGF.extractFunctionalGroups(tmpInputMol);
+        FunctionalGroupsFinder tmpFGF = FunctionalGroupsFinder.withGeneralEnvironment(); //default: generalization turned on
+        List<IAtomContainer> tmpFunctionalGroupsList = tmpFGF.extract(tmpInputMol);
         SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
         for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
             String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
@@ -89,26 +89,14 @@ public class FunctionalGroupsFinderTest {
         }
         //non-generalized functional groups
         //System.out.println("----------------");
-        tmpFGF = new FunctionalGroupsFinder(FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
-        tmpFunctionalGroupsList = tmpFGF.extractFunctionalGroups(tmpInputMol);
+        tmpFGF = FunctionalGroupsFinder.withFullEnvironment();
+        tmpFunctionalGroupsList = tmpFGF.extract(tmpInputMol);
         for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
             String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
             //System.out.println(tmpSmilesString);
         }
     }
-    //
-    /**
-     * Test correct workings of the factory methods.
-     *
-     * @throws Exception if anything goes wrong
-     */
-    @Test
-    public void testFactories() throws Exception {
-        Assertions.assertEquals(FunctionalGroupsFinder.newFunctionalGroupsFinderGeneralizingMode().getEnvMode(), FunctionalGroupsFinder.Mode.DEFAULT);
-        Assertions.assertEquals(FunctionalGroupsFinder.newFunctionalGroupsFinderFullEnvironmentMode().getEnvMode(), FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
-        Assertions.assertEquals(FunctionalGroupsFinder.newFunctionalGroupsFinderOnlyMarkedAtomsMode().getEnvMode(), FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
-    }
-    //
+
     /**
      *
      * @throws Exception
@@ -120,13 +108,13 @@ public class FunctionalGroupsFinderTest {
         IAtomContainer tmpChargedASA = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
         Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpChargedASA));
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            FunctionalGroupsFinder.newFunctionalGroupsFinderGeneralizingMode().extractFunctionalGroups(tmpChargedASA, true, true);
+            FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpChargedASA, true, true);
         });
         tmpMoleculeSmiles = "CC(=O)OC1=CC=CC=C1C(=O)O"; //neutral ASA
         IAtomContainer tmpASA = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
         Assertions.assertTrue(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpASA));
         Assertions.assertDoesNotThrow(() -> {
-            FunctionalGroupsFinder.newFunctionalGroupsFinderGeneralizingMode().extractFunctionalGroups(tmpASA, true, true);
+            FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpASA, true, true);
         });
         tmpMoleculeSmiles = "C1=CC(=CC=C1[N+](=O)[O-])O"; //Nitrophenol
         IAtomContainer tmpNitrophenol = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
@@ -413,7 +401,7 @@ public class FunctionalGroupsFinderTest {
     public void testOnlyMarkedAtoms1() throws Exception {
         String tmpMoleculeSmiles = "CCO[Si](OCC)(OCC)OCC"; //Tetraethyl Orthosilicate
         String[] tmpExpectedFGs = new String[]{"[O][Si]([O])([O])[O]"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
     }
     //
     /**
@@ -427,7 +415,7 @@ public class FunctionalGroupsFinderTest {
     public void testOnlyMarkedAtoms2() throws Exception {
         String tmpMoleculeSmiles = "Cc1cc(C)nc(NS(=O)(=O)c2ccc(N)cc2)n1"; //same mol as testFind1() from the Ertl figure
         String[] tmpExpectedFGs = new String[] {"O=[S](=O)[NH]", "[NH2]", "Nar" , "Nar"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
     }
     //
     /**
@@ -441,7 +429,7 @@ public class FunctionalGroupsFinderTest {
     public void testOnlyMarkedAtoms3() throws Exception {
         String tmpMoleculeSmiles = "CO/N=C(\\C(=O)N[C@@H]1C(=O)N2C(C(=O)[O-])=C(C[N+]3(C)CCCC3)CS[C@H]12)c1csc(N)n1.Cl"; //CHEMBL1201736
         String[] tmpExpectedFGs = new String[] {"[O]N=[C]C(=O)[NH]", "[C]=C(C(=O)[O-])N([C]=O)[CH][S]", "[N+]", "[NH2]", "Cl", "Sar", "Nar"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.ONLY_MARKED_ATOMS);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
     }
     //
     /**
@@ -498,17 +486,17 @@ public class FunctionalGroupsFinderTest {
         String tmpMoleculeSmiles = "c1ccccc1[CH+]C(Br)C"; //Carbenium ion in beta position to Br
         // carbenium ion is ignored since a charge is not a reason to mark carbon atom
         String[] tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
 
         tmpMoleculeSmiles = "c1ccccc1[CH+]C(Br)C"; //Carbenium ion in beta position to Br
         // carbenium ion is ignored since a charge is not a reason to mark carbon atom
         tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
 
         tmpMoleculeSmiles = "c1ccccc1[C+](Br)C"; //Carbenium ion in alpha position to Br
         // carbenium ion is extracted as environmental carbon and replaced by a new atom instance as all env carbon atoms in FGF; so it lost its charge!
         tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Mode.NO_GENERALIZATION);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
     }
     //
     /**
@@ -617,7 +605,7 @@ public class FunctionalGroupsFinderTest {
      */
     private void testFind(String aMoleculeSmiles, String[] anExpectedFGPseudoSmilesArray) throws Exception {
         this.testFind(aMoleculeSmiles, anExpectedFGPseudoSmilesArray, new Aromaticity(ElectronDonation.daylight(), Cycles.all()),
-                FunctionalGroupsFinder.Mode.DEFAULT);
+                      FunctionalGroupsFinder.Environment.GENERAL);
     }
     //
     /**
@@ -629,12 +617,12 @@ public class FunctionalGroupsFinderTest {
      * @param aMoleculeSmiles input molecule to detect FG in
      * @param anExpectedFGPseudoSmilesArray expected FG
      * @param anAromaticityModel for aromaticity detection in preprocessing of the input molecule
-     * @param aFunctionalGroupEnvironmentMode to configure the FGF used here
+     * @param aFunctionalGroupEnvironmentEnvironment to configure the FGF used here
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
      */
     private void testFind(String aMoleculeSmiles, String[] anExpectedFGPseudoSmilesArray, Aromaticity anAromaticityModel,
-                          FunctionalGroupsFinder.Mode aFunctionalGroupEnvironmentMode)
+                          FunctionalGroupsFinder.Environment aFunctionalGroupEnvironmentEnvironment)
             throws Exception {
         // prepare input
         SmilesParser tmpSmilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -642,8 +630,8 @@ public class FunctionalGroupsFinderTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(tmpMolecule);
         anAromaticityModel.apply(tmpMolecule);
         // find functional groups
-        FunctionalGroupsFinder tmpFGFinder = new FunctionalGroupsFinder(aFunctionalGroupEnvironmentMode);
-        List<IAtomContainer> tmpFunctionalgroupsList = tmpFGFinder.extractFunctionalGroups(tmpMolecule);
+        FunctionalGroupsFinder tmpFGFinder = new FunctionalGroupsFinder(aFunctionalGroupEnvironmentEnvironment);
+        List<IAtomContainer> tmpFunctionalgroupsList = tmpFGFinder.extract(tmpMolecule);
         // get expected groups
         List<IAtomContainer> tmpExpectedFGs = new LinkedList<>();
         for (String tmpFGString : anExpectedFGPseudoSmilesArray) {
