@@ -35,8 +35,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -742,7 +740,7 @@ public class FunctionalGroupsFinder {
                 int acount = part.getAtomCount();
                 for (int i = 0; i < acount; i++) {
                     IAtom cpyAtom = part.getAtom(i);
-                    IAtom orgAtom = (IAtom)invMap.get(cpyAtom);
+                    IAtom orgAtom = invMap.get(cpyAtom);
 
                     expandEnvironment(orgAtom, part);
                     int tmpImplicitHydrogenCount = cpyAtom.getImplicitHydrogenCount();
