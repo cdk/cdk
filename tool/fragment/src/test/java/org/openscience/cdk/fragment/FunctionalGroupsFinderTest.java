@@ -389,6 +389,13 @@ public class FunctionalGroupsFinderTest {
         String[] tmpExpectedFGs = new String[] {"[C]N([H])[H]", "[R]N([R])[R]", "[R]Cl" , "[c]=O", "[R]Cl", "[R]C(=O)OH", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
     }
+
+    @Test
+    public void testOxirane() throws Exception {
+        String tmpMoleculeSmiles = "CCCCCC1OC1";
+        String[] tmpExpectedFGs = new String[] {"C1OC1"};
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
+    }
     //
     /**
      * Tests correct functional group identification on an example molecule. Specifically, the extraction of only the marked atoms
