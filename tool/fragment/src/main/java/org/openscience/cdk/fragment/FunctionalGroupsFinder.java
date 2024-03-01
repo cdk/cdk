@@ -1025,7 +1025,7 @@ public class FunctionalGroupsFinder {
      *                                  hydrogen counts are unset
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> extract(IAtomContainer aMolecule) throws IllegalArgumentException {
+    public List<IAtomContainer> extract(IAtomContainer aMolecule) {
         return this.extract(aMolecule, false);
     }
 
@@ -1059,7 +1059,7 @@ public class FunctionalGroupsFinder {
      *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> extract(IAtomContainer mol, boolean anAreInputRestrictionsApplied) throws IllegalArgumentException {
+    public List<IAtomContainer> extract(IAtomContainer mol, boolean anAreInputRestrictionsApplied) {
         if (anAreInputRestrictionsApplied) {
             // throws IllegalArgumentException if constraints are not met
             // only done now because adjacency list cache is needed in the method
