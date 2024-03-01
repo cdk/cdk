@@ -30,6 +30,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,11 +58,11 @@ import java.util.Map;
  * @author Sebastian Fritsch, Jonas Schaub
  * @version 1.3
  */
-public class FunctionalGroupsFinderTest {
+class FunctionalGroupsFinderTest {
     /**
      * Constructor.
      */
-    public FunctionalGroupsFinderTest() {
+    FunctionalGroupsFinderTest() {
         super();
     }
     //
@@ -72,7 +73,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void gitHubWikiTest() throws Exception {
+    void gitHubWikiTest() throws Exception {
         //Prepare input
         SmilesParser tmpSmiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer tmpInputMol = tmpSmiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
@@ -102,19 +103,19 @@ public class FunctionalGroupsFinderTest {
      * @throws Exception
      */
     @Test
-    public void testInputRestrictions() throws Exception {
+    void testInputRestrictions() throws Exception {
         SmilesParser tmpSmiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         String tmpMoleculeSmiles = "CC(=O)OC1=CC=CC=C1C(=O)[O+]"; //charged ASA
         IAtomContainer tmpChargedASA = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
         Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpChargedASA));
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpChargedASA, true, true);
+            FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpChargedASA, true);
         });
         tmpMoleculeSmiles = "CC(=O)OC1=CC=CC=C1C(=O)O"; //neutral ASA
         IAtomContainer tmpASA = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
         Assertions.assertTrue(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpASA));
         Assertions.assertDoesNotThrow(() -> {
-            FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpASA, true, true);
+            FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpASA, true);
         });
         tmpMoleculeSmiles = "C1=CC(=CC=C1[N+](=O)[O-])O"; //Nitrophenol
         IAtomContainer tmpNitrophenol = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
@@ -137,7 +138,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind1() throws Exception {
+    void testFind1() throws Exception {
         String tmpMoleculeSmiles = "Cc1cc(C)nc(NS(=O)(=O)c2ccc(N)cc2)n1";
         String[] tmpExpectedFGs = new String[] {"[R]N([R])S(=O)(=O)[R]", "[c]N(H)H", "NarR3", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -150,7 +151,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind2() throws Exception {
+    void testFind2() throws Exception {
         String tmpMoleculeSmiles = "NC(=N)c1ccc(\\\\C=C\\\\c2ccc(cc2O)C(=N)N)cc1";
         String[] tmpExpectedFGs = new String[] {"[R]N=C-N([R])[R]", "[C]=[C]", "[c]OH", "[R]N=C-N([R])[R]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -163,7 +164,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind3() throws Exception {
+    void testFind3() throws Exception {
         String tmpMoleculeSmiles = "CC(=O)Nc1nnc(s1)S(=O)(=O)N";
         String[] tmpExpectedFGs = new String[] {"[R]N([R])C(=O)[R]", "[R]S(=O)(=O)N([R])[R]", "NarR3", "NarR3", "SarR2"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -176,7 +177,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind4() throws Exception {
+    void testFind4() throws Exception {
         String tmpMoleculeSmiles = "NS(=O)(=O)c1cc2c(NCNS2(=O)=O)cc1Cl";
         String[] tmpExpectedFGs = new String[] {"[R]S(=O)(=O)N([R])[R]", "[R]S(=O)(=O)N([R])[C]N([R])[R]", "[R]Cl"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -189,7 +190,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind5() throws Exception {
+    void testFind5() throws Exception {
         String tmpMoleculeSmiles = "CNC1=Nc2ccc(Cl)cc2C(=N(=O)C1)c3ccccc3";
         String[] tmpExpectedFGs = new String[] {"[R]N([R])[C]=N[R]", "[R]Cl", "[R]N(=O)=[C]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -202,7 +203,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind6() throws Exception {
+    void testFind6() throws Exception {
         String tmpMoleculeSmiles = "Cc1onc(c2ccccc2)c1C(=O)N[C@H]3[C@H]4SC(C)(C)[C@@H](N4C3=O)C(=O)O";
         String[] tmpExpectedFGs = new String[] {"O=C([R])N([R])[R]",  "O=C([R])N([R])[C]S[R]", "O=C([R])OH", "OarR2", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -215,7 +216,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind7() throws Exception {
+    void testFind7() throws Exception {
         String tmpMoleculeSmiles = "Clc1ccccc1C2=NCC(=O)Nc3ccc(cc23)N(=O)=O";
         String[] tmpExpectedFGs = new String[] {"[R]Cl", "[R]N=[C]", "[R]C(=O)N([R])[R]", "O=N([R])=O"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -228,7 +229,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind8() throws Exception {
+    void testFind8() throws Exception {
         String tmpMoleculeSmiles = "COc1cc(cc(C(=O)NCC2CCCN2CC=C)c1OC)S(=O)(=O)N";
         String[] tmpExpectedFGs = new String[] {"[R]O[R]", "[R]N([R])C(=O)[R]", "N([R])([R])[R]", "[C]=[C]", "[R]O[R]", "[R]S(=O)(=O)N([R])[R]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -241,7 +242,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind9() throws Exception {
+    void testFind9() throws Exception {
         String tmpMoleculeSmiles = "Cc1ccc(Cl)c(Nc2ccccc2C(=O)O)c1Cl";
         String[] tmpExpectedFGs = new String[] {"[R]Cl", "[R]N(H)[R]", "O=C(OH)[R]", "[R]Cl"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -254,7 +255,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind10() throws Exception {
+    void testFind10() throws Exception {
         String tmpMoleculeSmiles = "Clc1ccc2Oc3ccccc3N=C(N4CCNCC4)c2c1";
         String[] tmpExpectedFGs = new String[] {"[R]Cl", "[R]O[R]", "[R]N([R])[C]=N[R]", "[R]N([H])[R]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -267,7 +268,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind11() throws Exception {
+    void testFind11() throws Exception {
         String tmpMoleculeSmiles = "FC(F)(F)CN1C(=O)CN=C(c2ccccc2)c3cc(Cl)ccc13";
         String[] tmpExpectedFGs = new String[] {"[R]F", "[R]F", "[R]F", "O=C([R])N([R])[R]", "[R]N=[C]", "[R]Cl"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -280,7 +281,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind12() throws Exception {
+    void testFind12() throws Exception {
         String tmpMoleculeSmiles = "OC[C@H]1O[C@H](C[C@@H]1O)n2cnc3[C@H](O)CNC=Nc23";
         String[] tmpExpectedFGs = new String[] {"[C]O[H]", "[R]O[R]", "[C]OH", "[C]OH", "[R]N=CN([R])[R]", "NarR3", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -293,7 +294,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind13() throws Exception {
+    void testFind13() throws Exception {
         String tmpMoleculeSmiles = "CCN[C@H]1C[C@H](C)S(=O)(=O)c2sc(cc12)S(=O)(=O)N";
         String[] tmpExpectedFGs = new String[] {"[R]N([R])H", "O=S(=O)([R])[R]", "[R]S(=O)(=O)N([R])[R]", "SarR2"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -306,7 +307,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind14() throws Exception {
+    void testFind14() throws Exception {
         String tmpMoleculeSmiles = "C[C@@H](O)[C@@H]1[C@H]2[C@@H](C)C(=C(N2C1=O)C(=O)O)S[C@@H]3CN[C@@H](C3)C(=O)N(C)C";
         String[] tmpExpectedFGs = new String[] {"[C]O[H]", "O=C([R])N([R])C(C(=O)(OH))=[C]S[R]", "[R]N(H)[R]", "[R]N([R])C([R])=O"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -319,7 +320,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind15() throws Exception {
+    void testFind15() throws Exception {
         String tmpMoleculeSmiles = "C[C@@H]1CN(C[C@H](C)N1)c2c(F)c(N)c3C(=O)C(=CN(C4CC4)c3c2F)C(=O)O";
         String[] tmpExpectedFGs = new String[] {"[R]N([R])[R]", "[R]N([H])[R]", "[R]F", "[c]N(H)H", "[c]=O", "[R]F", "[R]C(=O)OH", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -332,7 +333,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind16() throws Exception {
+    void testFind16() throws Exception {
         String tmpMoleculeSmiles = "CC(=CCC1C(=O)N(N(C1=O)c2ccccc2)c3ccccc3)C";
         String[] tmpExpectedFGs = new String[] {"[C]=[C]", "[R]C(=O)N([R])N([R])C(=O)[R]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -345,7 +346,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind17() throws Exception {
+    void testFind17() throws Exception {
         String tmpMoleculeSmiles = "Clc1ccc2N=C3NC(=O)CN3Cc2c1Cl";
         String[] tmpExpectedFGs = new String[] {"Cl[R]", "[R]N=C(N([R])[R])N([R])C(=O)[R]", "Cl[R]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -358,7 +359,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind18() throws Exception {
+    void testFind18() throws Exception {
         String tmpMoleculeSmiles = "CC(=O)N[C@@H]1[C@@H](NC(=N)N)C=C(O[C@H]1[C@H](O)[C@H](O)CO)C(=O)O";
         String[] tmpExpectedFGs = new String[] {"[R]N([R])C(=O)[R]", "[R]N([R])C(=N[R])N([R])[R]", "O=C(OH)C(=[C])O[R]" , "[C]OH", "[C]OH", "[C]OH"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -371,7 +372,7 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind19() throws Exception {
+    void testFind19() throws Exception {
         String tmpMoleculeSmiles = "C[C@H](O)[C@H](O)[C@H]1CNc2nc(N)nc(O)c2N1";
         String[] tmpExpectedFGs = new String[] {"[C]OH", "[C]OH", "[R]N(H)[R]" , "[c]N(H)H",  "[c]OH", "[R]N(H)[R]", "NarR3", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -384,14 +385,14 @@ public class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     @Test
-    public void testFind20() throws Exception {
+    void testFind20() throws Exception {
         String tmpMoleculeSmiles = "N[C@@H]1CCCCN(C1)c2c(Cl)cc3C(=O)C(=CN(C4CC4)c3c2Cl)C(=O)O";
         String[] tmpExpectedFGs = new String[] {"[C]N([H])[H]", "[R]N([R])[R]", "[R]Cl" , "[c]=O", "[R]Cl", "[R]C(=O)OH", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
     }
 
     @Test
-    public void testOxirane() throws Exception {
+    void testOxirane() throws Exception {
         String tmpMoleculeSmiles = "CCCCCC1OC1";
         String[] tmpExpectedFGs = new String[] {"C1OC1"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -405,7 +406,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testOnlyMarkedAtoms1() throws Exception {
+    void testOnlyMarkedAtoms1() throws Exception {
         String tmpMoleculeSmiles = "CCO[Si](OCC)(OCC)OCC"; //Tetraethyl Orthosilicate
         String[] tmpExpectedFGs = new String[]{"[O][Si]([O])([O])[O]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
@@ -419,7 +420,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testOnlyMarkedAtoms2() throws Exception {
+    void testOnlyMarkedAtoms2() throws Exception {
         String tmpMoleculeSmiles = "Cc1cc(C)nc(NS(=O)(=O)c2ccc(N)cc2)n1"; //same mol as testFind1() from the Ertl figure
         String[] tmpExpectedFGs = new String[] {"O=[S](=O)[NH]", "[NH2]", "Nar" , "Nar"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
@@ -433,7 +434,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testOnlyMarkedAtoms3() throws Exception {
+    void testOnlyMarkedAtoms3() throws Exception {
         String tmpMoleculeSmiles = "CO/N=C(\\C(=O)N[C@@H]1C(=O)N2C(C(=O)[O-])=C(C[N+]3(C)CCCC3)CS[C@H]12)c1csc(N)n1.Cl"; //CHEMBL1201736
         String[] tmpExpectedFGs = new String[] {"[O]N=[C]C(=O)[NH]", "[C]=C(C(=O)[O-])N([C]=O)[CH][S]", "[N+]", "[NH2]", "Cl", "Sar", "Nar"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
@@ -447,7 +448,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testChargedMolecules1() throws Exception {
+    void testChargedMolecules1() throws Exception {
         String tmpMoleculeSmiles = "CC(=O)OC1=CC=CC=C1C(=O)[O+]"; //charged ASA
         String[] tmpExpectedFGs = new String[] {"*OC(*)=O", "*C(=O)[O+]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -461,7 +462,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testChargedMolecules2() throws Exception {
+    void testChargedMolecules2() throws Exception {
         String tmpMoleculeSmiles = "C1=CC(=CC=C1[N+](=O)[O-])O"; //Nitrophenol
         String[] tmpExpectedFGs = new String[] {"*[N+](=O)[O-]", "[H]O[c]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -475,7 +476,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testChargedMolecules3() throws Exception {
+    void testChargedMolecules3() throws Exception {
         String tmpMoleculeSmiles = "C[N+](C)(C)C"; //Tetramethylammonium
         String[] tmpExpectedFGs = new String[] {"*[N+](*)(*)*"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -489,7 +490,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testChargedMolecules4() throws Exception {
+    void testChargedMolecules4() throws Exception {
         String tmpMoleculeSmiles = "c1ccccc1[CH+]C(Br)C"; //Carbenium ion in beta position to Br
         // carbenium ion is ignored since a charge is not a reason to mark carbon atom
         String[] tmpExpectedFGs = new String[] {"[C]Br"};
@@ -514,7 +515,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testDisconnectedMolecules1() throws Exception {
+    void testDisconnectedMolecules1() throws Exception {
         String tmpMoleculeSmiles = "CC(=O)O.CC(=O)O.C1=CC(=CC=C1NC(=NC(=NCCCCCCN=C(N)N=C(N)NC2=CC=C(C=C2)Cl)N)N)Cl"; //Chlorhexidine Diacetate
         String[] tmpExpectedFGs = new String[] {"*C(=O)O[H]", "*C(=O)O[H]", "*N=C(N=C(N(*)*)N(*)*)N(*)*", "*N=C(N=C(N(*)*)N(*)*)N(*)*", "*Cl", "*Cl"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -528,7 +529,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testDisconnectedMolecules2() throws Exception {
+    void testDisconnectedMolecules2() throws Exception {
         String tmpMoleculeSmiles = "C(CN(CC(=O)[O-])CC(=O)[O-])N(CC(=O)[O-])CC(=O)[O-].[Na+].[Na+].[Na+].[Na+]"; //Sodium edetate
         String[] tmpExpectedFGs = new String[] {"*N(*)*", "*C(=O)[O-]", "*C(=O)[O-]", "*N(*)*", "*C(=O)[O-]", "*C(=O)[O-]", "[Na+]", "[Na+]", "[Na+]", "[Na+]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -544,7 +545,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testMetalsMetalloids1() throws Exception {
+    void testMetalsMetalloids1() throws Exception {
         String tmpMoleculeSmiles = "CCO[Si](OCC)(OCC)OCC"; //Tetraethyl Orthosilicate
         String[] tmpExpectedFGs = new String[]{"*O[Si](O*)(O*)O*"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -560,7 +561,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testMetalsMetalloids2() throws Exception {
+    void testMetalsMetalloids2() throws Exception {
         String tmpMoleculeSmiles = "O.O.O=[Al]O[Si](=O)O[Si](=O)O[Al]=O"; //Kaolin
         String[] tmpExpectedFGs = new String[]{"*O*", "*O*", "O=[Al]O[Si](=O)O[Si](=O)O[Al]=O"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -575,7 +576,7 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testRAtoms1() throws Exception {
+    void testRAtoms1() throws Exception {
         String tmpMoleculeSmiles = "OCC(CO[*])OC([*])=O"; //CHEBI:598
         String[] tmpExpectedFGs = new String[]{"[H]O[C]", "[C][O]", "*O[C]=O"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
@@ -588,13 +589,20 @@ public class FunctionalGroupsFinderTest {
      * @author Jonas Schaub
      */
     @Test
-    public void testHydrogenBug() throws Exception {
+    void testHydrogenBug() throws Exception {
         String tmpMoleculeSmiles = "[H+].[H+].[O-]C(=O)\\C=C/C([O-])=O.[H][C@@]12Cc3c[nH]c4cccc(C1=C[C@@H](COC(=O)C1CCCCC1)CN2C)c34"; //CHEBI:365445
         String[] tmpExpectedFGs = new String[]{"O=C([O-])[C]=[C]C(=O)[O-]", "[C]=[C]", "*OC(*)=O", "[R]N([R])[R]", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
 
         tmpMoleculeSmiles = "[HH].O=C1N([C@H](C)C(C1=C(O)[C@]2([C@]3([C@H](C=C([C@H]2[C@@H](C(=O)O)CC)C)C[C@H](C)CC3)C)C)=O)C"; //CHEBI:223373
         tmpExpectedFGs = new String[]{"*C(=O)C(=[C]O[H])C(=O)N(*)*", "[C]=[C]", "*C(=O)O[H]"};
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
+    }
+
+    @Test
+    void testB2H6() throws Exception {
+        String tmpMoleculeSmiles = "[H]B1([H])[H]B([H])([H])[H]1";
+        String[] tmpExpectedFGs = new String[]{"[R]B([R])([R])[R]", "[R]B([R])([R])[R]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
     }
     //
