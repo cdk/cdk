@@ -632,13 +632,11 @@ public class FunctionalGroupsFinder {
          * @return a list of all functional groups (including "environments")
          * extracted from the molecule
          */
-        private List<IAtomContainer> extractGroups(IAtomContainer mol) {
+        private int markGroups(int[] tmpAtomIdxToFGArray, IAtomContainer mol) {
             if (FunctionalGroupsFinder.isDbg()) {
                 FunctionalGroupsFinder.LOGGER.debug("########## Starting identification & extraction of functional groups... ##########");
             }
             markedAtomToConnectedEnvCMapCache = new HashMap<>((int) ((mol.getAtomCount() / 0.75f) + 2), 0.75f);
-            int[] tmpAtomIdxToFGArray = new int[mol.getAtomCount()];
-            Arrays.fill(tmpAtomIdxToFGArray, -1);
             int tmpFunctionalGroupIdx = -1;
             while (!markedAtomsCache.isEmpty()) {
                 // search for another functional group
@@ -748,12 +746,7 @@ public class FunctionalGroupsFinder {
                     }
                 }
             }
-            List<IAtomContainer> tmpFunctionalGroupsList = partitionIntoGroups(mol, tmpAtomIdxToFGArray, tmpFunctionalGroupIdx + 1);
-            if (FunctionalGroupsFinder.isDbg()) {
-                FunctionalGroupsFinder.LOGGER.debug(String.format("########## Found & extracted %d functional groups. ##########",
-                                                                  tmpFunctionalGroupIdx + 1));
-            }
-            return tmpFunctionalGroupsList;
+            return tmpFunctionalGroupIdx+1;
         }
 
         /**
@@ -1103,6 +1096,24 @@ public class FunctionalGroupsFinder {
     /**
      * Find all functional groups in a molecule.
      *
+     * @param mol the molecule to identify functional groups in
+     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
+     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
+     *                                  the given molecule does not fulfill them
+     * @return the number of functional groups
+     */
+    public int find(int[] funGroups, IAtomContainer mol) {
+        if (funGroups.length < mol.getAtomCount())
+            throw new IllegalArgumentException("Not enough space allocated in: funGroups!");
+        State state = new State();
+        state.markAtoms(mol);
+        Arrays.fill(funGroups, -1);
+        return state.markGroups(funGroups, mol);
+    }
+
+    /**
+     * Find all functional groups in a molecule.
+     *
      * @param aMolecule the molecule to identify functional groups in
      * @param aShouldInputBeCloned use 'false' to reuse the input container's bonds and atoms in the extraction of the functional
      *                             groups; this may speed up the extraction and lower the memory consumption for processing large
@@ -1138,15 +1149,17 @@ public class FunctionalGroupsFinder {
         }
         State state = new State();
         state.markAtoms(tmpMolecule);
-        // extract raw groups
-        List<IAtomContainer> tmpFunctionalGroupsList = state.extractGroups(tmpMolecule);
+        int[] funGroups = new int[tmpMolecule.getAtomCount()];
+        Arrays.fill(funGroups, -1);
+        int nFunGroups = state.markGroups(funGroups, tmpMolecule);
+        List<IAtomContainer> parts = state.partitionIntoGroups(tmpMolecule, funGroups, nFunGroups);
         // handle environment
         if (this.envEnvironment == Environment.GENERAL) {
-            state.expandGeneralizedEnvironments(tmpFunctionalGroupsList);
+            state.expandGeneralizedEnvironments(parts);
         } else if (this.envEnvironment == Environment.FULL) {
-            state.expandFullEnvironments(tmpFunctionalGroupsList);
+            state.expandFullEnvironments(parts);
         }
-        return tmpFunctionalGroupsList;
+        return parts;
     }
 
     /**
