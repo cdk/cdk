@@ -25,6 +25,7 @@
 package org.openscience.cdk.fragment;
 
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
@@ -253,7 +254,7 @@ public class FunctionalGroupsFinder {
      * Environment mode setting, defining whether environments should be
      * generalized (default) or kept as whole.
      */
-    private Environment envEnvironment;
+    private final Environment envEnvironment;
 
     /**
      * Set for atoms marked as being part of a functional group, represented
