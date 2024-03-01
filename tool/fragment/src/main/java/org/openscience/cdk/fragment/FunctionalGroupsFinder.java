@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -262,6 +261,9 @@ public class FunctionalGroupsFinder {
     private static final class State {
 
         private final Map<IAtom,IAtom> amap = new HashMap<>();
+
+        private int[] hCounts;
+
         /**
          * Set for atoms marked as being part of a functional group, represented
          * by an internal index based on the atom count in the input molecule, cache(!).
@@ -393,6 +395,15 @@ public class FunctionalGroupsFinder {
          * @param mol molecule with atoms to mark
          */
         private void markAtoms(IAtomContainer mol) {
+
+            hCounts = new int[mol.getAtomCount()];
+            for (IAtom atom : mol.atoms()) {
+                if (atom.getImplicitHydrogenCount() == null)
+                    hCounts[atom.getIndex()] = 0;
+                else
+                    hCounts[atom.getIndex()] = atom.getImplicitHydrogenCount();
+            }
+
             if (FunctionalGroupsFinder.isDbg()) {
                 FunctionalGroupsFinder.LOGGER.debug("########## Starting search for atoms to mark ... ##########");
             }
@@ -475,7 +486,7 @@ public class FunctionalGroupsFinder {
                                 // if "acetal C" (2+ O/N/S in single bonds connected to sp3-C)... [CONDITION 2.3]
                                 if (isSaturated(nbor)) {
                                     tmpConnectedONSatomsCounter++;
-                                    if (tmpConnectedONSatomsCounter > 1 && atom.getBondCount() + atom.getImplicitHydrogenCount() == 4) {
+                                    if (tmpConnectedONSatomsCounter > 1 && atom.getBondCount() + hCounts[atom.getIndex()] == 4) {
                                         // set as marked and break out of connected atoms
                                         tmpIsMarked = true;
                                         if (FunctionalGroupsFinder.isDbg()) {
@@ -522,26 +533,14 @@ public class FunctionalGroupsFinder {
                     } //end of for loop that iterates over all connected atoms of the carbon atom
                     if (tmpIsMarked) {
                         markedAtomsCache.add(idx);
-                        continue;
                     }
                     // if none of the conditions 2.X apply, we have an unmarked C (not relevant here)
                 } else if (tmpAtomicNr == IAtom.H) {
                     // if H...
-                    // convert to implicit H
-                    IAtom tmpConnectedAtom;
-                    if (atom.getBondCount() > 0) {
-                        tmpConnectedAtom = atom.bonds().iterator().next().getOther(atom);
-                    } else {
-                        //unconnected, explicit hydrogen atoms (like e.g. in CHEBI:365445) have an array of bond partners of size 0
-                        // nothing to do about them, but they also do not concern us
-                        continue;
+                    for (IBond bond : atom.bonds()) {
+                        IAtom nbor = bond.getOther(atom);
+                        hCounts[nbor.getIndex()]++;
                     }
-                    if (Objects.isNull(tmpConnectedAtom.getImplicitHydrogenCount())) {
-                        throw new IllegalArgumentException("Atom with index " + tmpConnectedAtom.getIndex() + " had an unset (\"null\") implicit hydrogen count.");
-                    } else {
-                        tmpConnectedAtom.setImplicitHydrogenCount(tmpConnectedAtom.getImplicitHydrogenCount() + 1);
-                    }
-                    continue;
                 } else if (isHeteroatom(atom)) {
                     // if heteroatom... (CONDITION 1)
                     markedAtomsCache.add(idx);
@@ -551,10 +550,8 @@ public class FunctionalGroupsFinder {
                                 idx,
                                 atom.getSymbol()));
                     }
-                    continue;
                 } else {
                     //pseudo (R) atom, ignored
-                    continue;
                 }
             } //end of for loop that iterates over all atoms in the mol
             if (FunctionalGroupsFinder.isDbg()) {
@@ -593,7 +590,8 @@ public class FunctionalGroupsFinder {
                 if (fGroupIdx == -1)
                     continue;
                 IAtomContainer part = parts.get(fGroupIdx);
-                IAtom cpyAtom = part.newAtom(atom.getAtomicNumber(), atom.getImplicitHydrogenCount());
+                IAtom cpyAtom = part.newAtom(atom.getAtomicNumber(),
+                                             hCounts[atom.getIndex()]);
                 cpyAtom.setIsAromatic(atom.isAromatic());
                 cpyAtom.setValency(atom.getValency());
                 cpyAtom.setAtomTypeName(atom.getAtomTypeName());
@@ -729,7 +727,7 @@ public class FunctionalGroupsFinder {
                                 "\t\tlogged marked atom's environment: C_ar:%d, C_al:%d (and %d implicit hydrogens)",
                                 tmpCAromCount,
                                 tmpCAliphCount,
-                                atom.getImplicitHydrogenCount()));
+                                hCounts[atom.getIndex()]));
                     }
                 } // end of BFS
                 if (FunctionalGroupsFinder.isDbg()) {
@@ -846,7 +844,7 @@ public class FunctionalGroupsFinder {
                     IAtom orgAtom = (IAtom)invMap.get(cpyAtom);
                     List<EnvironmentalC> tmpFGenvCs = markedAtomToConnectedEnvCMapCache.get(orgAtom);
                     if (tmpFGenvCs == null) {
-                        if (orgAtom.getImplicitHydrogenCount() != 0) {
+                        if (hCounts[orgAtom.getIndex()] != 0) {
                             cpyAtom.setImplicitHydrogenCount(0);
                         }
                         int tmpRAtomCount = orgAtom.getValency() - 1;
@@ -861,7 +859,7 @@ public class FunctionalGroupsFinder {
                     // processing carbons...
                     if (orgAtom.getAtomicNumber() == IAtom.C) {
                         if (Objects.isNull(orgAtom.getProperty(FunctionalGroupsFinder.CARBONYL_C_MARKER))) {
-                            if (orgAtom.getImplicitHydrogenCount() != 0) {
+                            if (hCounts[orgAtom.getIndex()] != 0) {
                                 cpyAtom.setImplicitHydrogenCount(0);
                             }
                             if (FunctionalGroupsFinder.isDbg()) {
@@ -1073,39 +1071,13 @@ public class FunctionalGroupsFinder {
      * be turned on again in another variant of this method below.
      *
      * @param aMolecule the molecule to identify functional groups in
-     * @throws CloneNotSupportedException if cloning is not possible
      * @throws IllegalArgumentException if the input molecule was not
      *                                  preprocessed correctly, i.e. implicit
      *                                  hydrogen counts are unset
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> extract(IAtomContainer aMolecule) throws CloneNotSupportedException, IllegalArgumentException {
-        return this.extract(aMolecule, true, false);
-    }
-
-    /**
-     * Find all functional groups in a molecule.
-     * The strict input restrictions (no charged atoms, pseudo atoms, metals,
-     * metalloids or unconnected components) do not apply by default. They can
-     * be turned on again in another variant of this method below.
-     *
-     * @param aMolecule the molecule to identify functional groups in
-     * @param aShouldInputBeCloned use 'false' to reuse the input container's
-     *                             bonds and atoms in the extraction of the
-     *                             functional groups; this may speed up the
-     *                             extraction and lower the memory consumption
-     *                             for processing large amounts of data but
-     *                             corrupts the original input container; use
-     *                             'true' to work with a clone and leave the
-     *                             input container intact
-     * @throws CloneNotSupportedException if cloning is not possible
-     * @throws IllegalArgumentException if the input molecule was not
-     *                                  preprocessed correctly,
-     *                                  i.e. implicit hydrogen counts are unset
-     * @return a list with all functional groups found in the molecule
-     */
-    public List<IAtomContainer> extract(IAtomContainer aMolecule, boolean aShouldInputBeCloned) throws CloneNotSupportedException, IllegalArgumentException {
-        return this.extract(aMolecule, aShouldInputBeCloned, false);
+    public List<IAtomContainer> extract(IAtomContainer aMolecule) throws IllegalArgumentException {
+        return this.extract(aMolecule, false);
     }
 
     /**
@@ -1129,45 +1101,27 @@ public class FunctionalGroupsFinder {
     /**
      * Find all functional groups in a molecule.
      *
-     * @param aMolecule the molecule to identify functional groups in
-     * @param aShouldInputBeCloned use 'false' to reuse the input container's bonds and atoms in the extraction of the functional
-     *                             groups; this may speed up the extraction and lower the memory consumption for processing large
-     *                             amounts of data but corrupts the original input container; use 'true' to work with a clone and
-     *                             leave the input container intact
+     * @param mol the molecule to identify functional groups in
      * @param anAreInputRestrictionsApplied if true, the input must consist of one connected structure and must not
      *                                      contain charged atoms, pseudo atoms, metals or metalloids; a specific IllegalArgumentException will
      *                                      be thrown otherwise
-     * @throws CloneNotSupportedException if cloning is not possible
      * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
      *                                  counts are unset; or thrown if the strict input restrictions are turned on and
      *                                  the given molecule does not fulfill them
      * @return a list with all functional groups found in the molecule
      */
-    public List<IAtomContainer> extract(IAtomContainer aMolecule, boolean aShouldInputBeCloned, boolean anAreInputRestrictionsApplied)
-            throws CloneNotSupportedException, IllegalArgumentException {
-        IAtomContainer tmpMolecule;
-        if (aShouldInputBeCloned) {
-            tmpMolecule = aMolecule.clone();
-        } else {
-            tmpMolecule = aMolecule;
-        }
-        for (IAtom tmpAtom : tmpMolecule.atoms()) {
-            if(Objects.isNull(tmpAtom.getImplicitHydrogenCount())) {
-                tmpAtom.setImplicitHydrogenCount(0);
-            }
-        }
-
+    public List<IAtomContainer> extract(IAtomContainer mol, boolean anAreInputRestrictionsApplied) throws IllegalArgumentException {
         if (anAreInputRestrictionsApplied) {
             // throws IllegalArgumentException if constraints are not met
             // only done now because adjacency list cache is needed in the method
-            FunctionalGroupsFinder.checkConstraints(tmpMolecule);
+            FunctionalGroupsFinder.checkConstraints(mol);
         }
         State state = new State();
-        state.markAtoms(tmpMolecule);
-        int[] funGroups = new int[tmpMolecule.getAtomCount()];
+        state.markAtoms(mol);
+        int[] funGroups = new int[mol.getAtomCount()];
         Arrays.fill(funGroups, -1);
-        int nFunGroups = state.markGroups(funGroups, tmpMolecule);
-        List<IAtomContainer> parts = state.partitionIntoGroups(tmpMolecule, funGroups, nFunGroups);
+        int nFunGroups = state.markGroups(funGroups, mol);
+        List<IAtomContainer> parts = state.partitionIntoGroups(mol, funGroups, nFunGroups);
         // handle environment
         if (this.envEnvironment == Environment.GENERAL) {
             state.expandGeneralizedEnvironments(parts);

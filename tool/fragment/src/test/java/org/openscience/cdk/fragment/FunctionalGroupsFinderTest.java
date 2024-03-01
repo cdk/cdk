@@ -614,6 +614,13 @@ public class FunctionalGroupsFinderTest {
         this.testFind(aMoleculeSmiles, anExpectedFGPseudoSmilesArray, new Aromaticity(ElectronDonation.daylight(), Cycles.all()),
                       FunctionalGroupsFinder.Environment.GENERAL);
     }
+    private static int[] getHydrogenCounts(IAtomContainer mol) {
+        int[] hcounts = new int[mol.getAtomCount()];
+        for (IAtom atom : mol.atoms())
+            hcounts[atom.getIndex()] = atom.getImplicitHydrogenCount();
+        return hcounts;
+    }
+
     //
     /**
      * Applies FGF to detect functional groups in the given molecule and compares the identified FG to the given
@@ -633,12 +640,14 @@ public class FunctionalGroupsFinderTest {
             throws Exception {
         // prepare input
         SmilesParser tmpSmilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer tmpMolecule = tmpSmilesParser.parseSmiles(aMoleculeSmiles);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(tmpMolecule);
-        anAromaticityModel.apply(tmpMolecule);
+        IAtomContainer mol = tmpSmilesParser.parseSmiles(aMoleculeSmiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        anAromaticityModel.apply(mol);
         // find functional groups
         FunctionalGroupsFinder tmpFGFinder = new FunctionalGroupsFinder(aFunctionalGroupEnvironmentEnvironment);
-        List<IAtomContainer> tmpFunctionalgroupsList = tmpFGFinder.extract(tmpMolecule);
+        int[] hBefore = getHydrogenCounts(mol);
+        List<IAtomContainer> tmpFunctionalgroupsList = tmpFGFinder.extract(mol);
+        int[] hAfter = getHydrogenCounts(mol);
         // get expected groups
         List<IAtomContainer> tmpExpectedFGs = new LinkedList<>();
         for (String tmpFGString : anExpectedFGPseudoSmilesArray) {
@@ -646,6 +655,7 @@ public class FunctionalGroupsFinderTest {
         }
         // compare
         this.assertIsomorphism(tmpExpectedFGs, tmpFunctionalgroupsList);
+        Assertions.assertArrayEquals(hBefore, hAfter, "Hydrogen count was modified!");
     }
     //
     /**
