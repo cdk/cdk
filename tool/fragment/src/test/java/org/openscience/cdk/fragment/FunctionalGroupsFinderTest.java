@@ -30,7 +30,6 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -107,28 +106,26 @@ class FunctionalGroupsFinderTest {
         SmilesParser tmpSmiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         String tmpMoleculeSmiles = "CC(=O)OC1=CC=CC=C1C(=O)[O+]"; //charged ASA
         IAtomContainer tmpChargedASA = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
-        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpChargedASA));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpChargedASA, true);
-        });
+        Assertions.assertFalse(FunctionalGroupsFinder.checkConstraints(tmpChargedASA));
+        Assertions.assertEquals(0, FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpChargedASA, true).size());
         tmpMoleculeSmiles = "CC(=O)OC1=CC=CC=C1C(=O)O"; //neutral ASA
         IAtomContainer tmpASA = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
-        Assertions.assertTrue(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpASA));
+        Assertions.assertTrue(FunctionalGroupsFinder.checkConstraints(tmpASA));
         Assertions.assertDoesNotThrow(() -> {
             FunctionalGroupsFinder.withGeneralEnvironment().extract(tmpASA, true);
         });
         tmpMoleculeSmiles = "C1=CC(=CC=C1[N+](=O)[O-])O"; //Nitrophenol
         IAtomContainer tmpNitrophenol = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
-        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpNitrophenol));
+        Assertions.assertFalse(FunctionalGroupsFinder.checkConstraints(tmpNitrophenol));
         tmpMoleculeSmiles = "CC(=O)O.CC(=O)O.C1=CC(=CC=C1NC(=NC(=NCCCCCCN=C(N)N=C(N)NC2=CC=C(C=C2)Cl)N)N)Cl"; //Chlorhexidine Diacetate
         IAtomContainer tmpChlorhexidineDiacetate = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
-        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpChlorhexidineDiacetate));
+        Assertions.assertFalse(FunctionalGroupsFinder.checkConstraints(tmpChlorhexidineDiacetate));
         tmpMoleculeSmiles = "CCO[Si](OCC)(OCC)OCC"; //Tetraethyl Orthosilicate
         IAtomContainer tmpOrthosilicate = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
-        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpOrthosilicate));
+        Assertions.assertFalse(FunctionalGroupsFinder.checkConstraints(tmpOrthosilicate));
         tmpMoleculeSmiles = "OCC(CO[*])OC([*])=O"; //CHEBI:598
         IAtomContainer tmpCHEBI598 = tmpSmiPar.parseSmiles(tmpMoleculeSmiles);
-        Assertions.assertFalse(FunctionalGroupsFinder.isValidInputMoleculeIfRestrictionsAreTurnedOn(tmpCHEBI598));
+        Assertions.assertFalse(FunctionalGroupsFinder.checkConstraints(tmpCHEBI598));
     }
     //
     /**
