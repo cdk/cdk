@@ -37,6 +37,8 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -906,8 +908,8 @@ public class FunctionalGroupsFinder {
 
         if (mol == null)
             throw new NullPointerException("No molecule provided");
-        if (strict)
-            FunctionalGroupsFinder.checkConstraints(mol);
+        if (strict && !FunctionalGroupsFinder.checkConstraints(mol))
+            return Collections.emptyList();
 
         State state = new State();
         state.markAtoms(mol);
