@@ -110,8 +110,6 @@ import java.util.Queue;
  * multiple ways, e.g. by checking for atomic numbers equal to 0 or checking
  * "instanceof IPseudoAtom".
  * <br/>
- * Note: this implementation is not thread-safe. Each parallel thread
- * should have its own instance of this class.
  *
  * @author Sebastian Fritsch
  * @author Jonas Schaub
