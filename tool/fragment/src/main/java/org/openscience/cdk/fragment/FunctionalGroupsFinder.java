@@ -936,7 +936,7 @@ public class FunctionalGroupsFinder {
      *
      * @param mol the molecule to check
      */
-    private static boolean checkConstraints(IAtomContainer mol) {
+    public static boolean checkConstraints(IAtomContainer mol) {
         for (IAtom atom : mol.atoms()) {
             if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0)
                 return false;
