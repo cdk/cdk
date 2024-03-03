@@ -20,6 +20,7 @@ package org.openscience.cdk.interfaces;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.util.Iterator;
 
 /**
  * Represents the idea of an chemical atom.
@@ -63,6 +64,29 @@ public interface IAtom extends IAtomType {
      * @see #setImplicitHydrogenCount
      */
     Integer getImplicitHydrogenCount();
+
+    /**
+     * Calculates the total number of hydrogens connected to this atom. The
+     * value is determined on demand from the implicit hydrogen count and the
+     * number of connected hydrogen atoms.
+     * <br/>
+     * Note: some hydrogens may be bridged (e.g. B2H6) so although the total
+     * number of hydrogens in the molecule is 6, each atom has a total hydrogen
+     * count of 4.
+     *
+     * @return the total hydrogen count or null if the implicit count is not set
+     */
+    default Integer getTotalHydrogenCount() {
+        Integer count = getImplicitHydrogenCount();
+        if (count == null)
+            return null;
+        for (final IAtom nbor : neighbors()) {
+            Integer elem = nbor.getAtomicNumber();
+            if (elem != null && elem == IAtom.H)
+                count++;
+        }
+        return count;
+    }
 
     /**
      * Sets a point specifying the location of this
@@ -203,6 +227,41 @@ public interface IAtom extends IAtomType {
      * @throws UnsupportedOperationException thrown if the bonds are not known
      */
     Iterable<IBond> bonds();
+
+    /**
+     * Iterable over the atoms connected to this atom (the neighbors). This is
+     * a convenience function which calls {@link IBond#getOther(IAtom)}. If you
+     * need both the bond and the atom the idiom is:
+     * <pre>{@code
+     * for (IBond bond : atom.bonds()) {
+     *     IAtom nbor = bond.getOther(atom);
+     * }
+     * }</pre>
+     * This will work but is less efficient:
+     * <pre>{@code
+     * for (IAtom nbor : atom.neighbors()) {
+     *     IAtom bond = atom.getBond(nbor); // slow!
+     * }
+     * }</pre>
+     *
+     * @return the neighbors
+     */
+    default Iterable<IAtom> neighbors() {
+        final IAtom atom = this;
+        return () -> new Iterator<IAtom>() {
+            private final Iterator<IBond> bondIter = atom.bonds().iterator();
+
+            @Override
+            public boolean hasNext() {
+                return bondIter.hasNext();
+            }
+
+            @Override
+            public IAtom next() {
+                return bondIter.next().getOther(atom);
+            }
+        };
+    }
 
     /**
      * Get the number of explicit bonds connected to this atom.
