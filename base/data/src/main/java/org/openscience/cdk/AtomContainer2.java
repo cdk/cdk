@@ -164,7 +164,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
     }
 
     private BaseAtomRef getAtomRefUnsafe(IAtom atom) {
-        if (atom.getContainer() == this &&
+        if (atom == null ||
+            atom.getContainer() == this &&
             atoms[atom.getIndex()] == atom)
             return (BaseAtomRef) atom;
         atom = unbox(atom);
