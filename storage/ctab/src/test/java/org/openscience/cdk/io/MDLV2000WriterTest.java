@@ -87,7 +87,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         MDLV2000Writer reader = new MDLV2000Writer();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(ChemModel.class));
-        Assertions.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(IAtomContainer.class));
     }
 
     /**

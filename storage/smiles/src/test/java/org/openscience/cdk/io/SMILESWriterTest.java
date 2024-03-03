@@ -61,7 +61,7 @@ class SMILESWriterTest extends ChemObjectIOTest {
     @Test
     void testAccepts() throws Exception {
         SMILESWriter reader = new SMILESWriter();
-        Assertions.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(IAtomContainer.class));
         Assertions.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 

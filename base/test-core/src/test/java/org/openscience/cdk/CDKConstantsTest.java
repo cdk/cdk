@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -43,7 +44,7 @@ class CDKConstantsTest extends CDKTestCase {
 
     @Test
     void testSingleOrDoubleFlag() throws Exception {
-        AtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom atom1 = new Atom(Elements.CARBON);
         atom1.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
