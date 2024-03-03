@@ -50,8 +50,11 @@ class DebugAtomContainerTest extends AbstractAtomContainerTest {
         Assertions.assertEquals(0, ac.getElectronContainerCount());
 
         // test whether the ElectronContainer is correctly initialized
-        ac.addBond(ac.getBuilder().newInstance(IBond.class, ac.getBuilder().newInstance(IAtom.class, "C"),
-                ac.getBuilder().newInstance(IAtom.class, "C"), IBond.Order.DOUBLE));
+        IAtom a1 = ac.newAtom();
+        IAtom a2 = ac.newAtom();
+        ac.addBond(ac.getBuilder().newInstance(IBond.class,
+                                               a1,
+                                               a2, IBond.Order.DOUBLE));
         ac.addLonePair(ac.getBuilder().newInstance(ILonePair.class, ac.getBuilder().newInstance(IAtom.class, "N")));
     }
 
@@ -64,9 +67,11 @@ class DebugAtomContainerTest extends AbstractAtomContainerTest {
         Assertions.assertEquals(0, container.getBondCount());
 
         // test whether the ElectronContainer is correctly initialized
+        IAtom a1 = container.newAtom();
+        IAtom a2 = container.newAtom();
         container.addBond(container.getBuilder().newInstance(IBond.class,
-                container.getBuilder().newInstance(IAtom.class, "C"),
-                container.getBuilder().newInstance(IAtom.class, "C"), IBond.Order.DOUBLE));
+                                               a1,
+                                               a2, IBond.Order.DOUBLE));
         container.addLonePair(container.getBuilder().newInstance(ILonePair.class,
                 container.getBuilder().newInstance(IAtom.class, "N")));
     }

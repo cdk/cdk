@@ -131,6 +131,8 @@ public class HanserRingFinder implements RingFinder {
             for (IAtom atom : ringAtoms) {
                 atom.setFlag(CDKConstants.ISINRING, true);
                 ring.addAtom(atom);
+            }
+            for (IAtom atom : ringAtoms) {
                 for (IAtom atomNext : ringAtoms) {
                     if (!atom.equals(atomNext)) {
                         IBond bond = molecule.getBond(atom, atomNext);

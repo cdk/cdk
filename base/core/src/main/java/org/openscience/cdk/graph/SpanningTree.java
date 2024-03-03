@@ -358,17 +358,16 @@ public class SpanningTree {
         IRing ring = molecule.getBuilder().newInstance(IRing.class);
         IRing ring1 = (IRing) ringset.getAtomContainer(i);
         IRing ring2 = (IRing) ringset.getAtomContainer(j);
+        for (int a = 0; a < ring1.getAtomCount(); a++)
+            ring.addAtom(ring1.getAtom(a));
+        for (int a = 0; a < ring2.getAtomCount(); a++)
+            ring.addAtom(ring2.getAtom(a));
         for (int b = 0; b < cb[i].length; b++) {
             c = cb[i][b] + cb[j][b];
             if ((c == 1) && (cb[i][b] == 1))
                 ring.addBond(molecule.getBond(b));
             else if ((c == 1) && (cb[j][b] == 1)) ring.addBond(molecule.getBond(b));
         }
-        for (int a = 0; a < ring1.getAtomCount(); a++)
-            ring.addAtom(ring1.getAtom(a));
-        for (int a = 0; a < ring2.getAtomCount(); a++)
-            ring.addAtom(ring2.getAtom(a));
-
         return ring;
     }
 
