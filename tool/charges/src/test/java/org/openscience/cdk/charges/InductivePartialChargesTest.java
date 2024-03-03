@@ -91,7 +91,7 @@ class InductivePartialChargesTest extends CDKTestCase {
         Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
         Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-        IAtomContainer mol = new AtomContainer(); // molecule is CF
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // molecule is CF
 
         Atom c = new Atom("C");
         mol.addAtom(c);
@@ -138,7 +138,7 @@ class InductivePartialChargesTest extends CDKTestCase {
         Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
         Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-        IAtomContainer mol = new AtomContainer(); // molecule is CF
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // molecule is CF
 
         Atom c = new Atom("C");
         mol.addAtom(c);

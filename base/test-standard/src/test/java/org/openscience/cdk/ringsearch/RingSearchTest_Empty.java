@@ -25,6 +25,7 @@ package org.openscience.cdk.ringsearch;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -38,7 +39,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 final class RingSearchTest_Empty {
 
-    private final IAtomContainer empty = new AtomContainer(0, 0, 0, 0);
+    private final IAtomContainer empty = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
     @Test
     void testCyclic() {

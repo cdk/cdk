@@ -86,7 +86,7 @@ class SDFWriterTest extends ChemObjectWriterTest {
     void testWrite_IAtomContainerSet_Properties_Off() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("foo", "bar");
         molSet.addAtomContainer(molecule);
@@ -123,7 +123,7 @@ class SDFWriterTest extends ChemObjectWriterTest {
     void testWrite_IAtomContainerSet_Properties() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("foo", "bar");
         molSet.addAtomContainer(molecule);
@@ -139,7 +139,7 @@ class SDFWriterTest extends ChemObjectWriterTest {
     void testWrite_IAtomContainerSet_CDKProperties() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty(InvPair.CANONICAL_LABEL, "bar");
         molSet.addAtomContainer(molecule);
@@ -154,7 +154,7 @@ class SDFWriterTest extends ChemObjectWriterTest {
     void testWrite_IAtomContainerSet_SingleMolecule() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molSet.addAtomContainer(molecule);
 
@@ -168,10 +168,10 @@ class SDFWriterTest extends ChemObjectWriterTest {
     void testWrite_IAtomContainerSet_MultIAtomContainer() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molSet.addAtomContainer(molecule);
-        molecule = new AtomContainer();
+        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molSet.addAtomContainer(molecule);
 
@@ -186,12 +186,12 @@ class SDFWriterTest extends ChemObjectWriterTest {
         StringWriter writer = new StringWriter();
         SDFWriter sdfWriter = new SDFWriter(writer);
 
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("foo", "bar");
         sdfWriter.write(molecule);
 
-        molecule = new AtomContainer();
+        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("toys", "r-us");
         sdfWriter.write(molecule);
@@ -209,7 +209,7 @@ class SDFWriterTest extends ChemObjectWriterTest {
         StringWriter writer = new StringWriter();
         SDFWriter sdfWriter = new SDFWriter(writer);
 
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("http://not-valid.com", "URL");
         sdfWriter.write(molecule);
@@ -223,16 +223,16 @@ class SDFWriterTest extends ChemObjectWriterTest {
         StringWriter writer = new StringWriter();
         SDFWriter sdfWriter = new SDFWriter(writer);
 
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("CH4"));
         sdfWriter.write(molecule);
 
-        molecule = new AtomContainer();
+        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         for (int i = 0; i < 1000; i++)
             molecule.addAtom(new Atom("CH4"));
         sdfWriter.write(molecule);
 
-        molecule = new AtomContainer();
+        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("CH4"));
         sdfWriter.write(molecule);
 
@@ -248,16 +248,16 @@ class SDFWriterTest extends ChemObjectWriterTest {
         SDFWriter sdfWriter = new SDFWriter(writer);
         sdfWriter.setAlwaysV3000(true);
 
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("CH4"));
         sdfWriter.write(molecule);
 
-        molecule = new AtomContainer();
+        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         for (int i = 0; i < 1000; i++)
             molecule.addAtom(new Atom("CH4"));
         sdfWriter.write(molecule);
 
-        molecule = new AtomContainer();
+        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("CH4"));
         sdfWriter.write(molecule);
 

@@ -185,7 +185,7 @@ class InChITautomerGeneratorTest extends CDKTestCase {
                 + "  7  9  2  0  0  0  0\n" + "  2  9  1  0  0  0  0\n" + "M  END\n";
 
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdlInput));
-        IAtomContainer molecule = reader.read(new AtomContainer());
+        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
         hAdder.addImplicitHydrogens(molecule);

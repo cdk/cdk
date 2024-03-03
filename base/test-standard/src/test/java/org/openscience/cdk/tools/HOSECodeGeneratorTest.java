@@ -126,7 +126,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
                 "C-3;*C*C(//)", "C-3;*C*CO(//)", "O-2;CC(//)", "C-3;*C*CO(//)", "C-3;*C*CO(//)", "O-2;CC(//)",
                 "C-4;O(//)", "C-3;*C*C(//)", "C-3;*C*CC(//)", "C-3;*C*C*C(//)", "C-3;*C*C*C(//)"};
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "O");
         a1.setPoint2d(new Point2d(502.88457268119913, 730.4999999999999));
         mol.addAtom(a1);
@@ -317,7 +317,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
                 "C-3;*C*C*C(*C*C,*CC,*CC/*CO,*CC,*&,=OC,*&,=&/*&O,C,*&,*&*C,,=&)",
                 "C-3;*C*C*C(*C*C,*CO,*CC/*CC,*CC,*&O,C,*&,*&*C/*&,=OC,*&,=&,C,*&*C,*C)"};
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "O");
         a1.setPoint2d(new Point2d(502.88457268119913, 730.4999999999999));
         mol.addAtom(a1);

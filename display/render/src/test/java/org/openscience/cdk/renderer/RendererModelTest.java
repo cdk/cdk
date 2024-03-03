@@ -33,6 +33,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -266,7 +267,7 @@ class RendererModelTest {
         RendererModel model = new RendererModel();
         // test default
         Assertions.assertNull(model.getClipboardContent());
-        IAtomContainer content = new AtomContainer();
+        IAtomContainer content = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         model.setClipboardContent(content);
         Assertions.assertEquals(content, model.getClipboardContent());
         model.setClipboardContent(null);
@@ -278,7 +279,7 @@ class RendererModelTest {
         RendererModel model = new RendererModel();
         // test default
         Assertions.assertNull(model.getExternalSelectedPart());
-        IAtomContainer content = new AtomContainer();
+        IAtomContainer content = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         model.setExternalSelectedPart(content);
         Assertions.assertEquals(content, model.getExternalSelectedPart());
         model.setExternalSelectedPart(null);

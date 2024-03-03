@@ -181,8 +181,8 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
     void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception {
         String molfile = "decalin.mol";
         String queryfile = "decalin.mol";
-        IAtomContainer mol = new AtomContainer();
-        IAtomContainer temp = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer temp = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         QueryAtomContainer query1;
         QueryAtomContainer query2;
 
@@ -213,8 +213,8 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
     void testGetOverlaps_IAtomContainer_IAtomContainer() throws Exception {
         String file1 = "5SD.mol";
         String file2 = "ADN.mol";
-        IAtomContainer mol1 = new AtomContainer();
-        IAtomContainer mol2 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer mol2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         InputStream ins1 = this.getClass().getResourceAsStream(file1);
         new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
@@ -371,15 +371,15 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
     void testSFBug999330() throws Exception {
         String file1 = "5SD.mol";
         String file2 = "ADN.mol";
-        IAtomContainer mol1 = new AtomContainer();
-        IAtomContainer mol2 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer mol2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         InputStream ins1 = this.getClass().getResourceAsStream(file1);
         new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
         InputStream ins2 = this.getClass().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
-        mol2 = new AtomContainer(permutor.next());
+        mol2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, permutor.next());
 
         List<IAtomContainer> list1 = uiTester.getOverlaps(mol1, mol2);
         List<IAtomContainer> list2 = uiTester.getOverlaps(mol2, mol1);
@@ -407,9 +407,9 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
 
     @Test
     void testIsIsomorph_IAtomContainer_IAtomContainer() throws Exception {
-        AtomContainer ac1 = new AtomContainer();
+        IAtomContainer ac1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac1.addAtom(new Atom("C"));
-        AtomContainer ac2 = new AtomContainer();
+        IAtomContainer ac2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac2.addAtom(new Atom("C"));
         Assertions.assertTrue(uiTester.isIsomorph(ac1, ac2));
         Assertions.assertTrue(uiTester.isSubgraph(ac1, ac2));
@@ -589,7 +589,7 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
             Assertions.fail(result.getMessage());
 
         //Creating 'SCCS' target molecule
-        AtomContainer target = new AtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         //atoms
         IAtom ta0 = new Atom("S");
         target.addAtom(ta0);

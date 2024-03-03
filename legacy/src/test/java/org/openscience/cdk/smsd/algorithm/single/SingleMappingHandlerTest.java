@@ -29,6 +29,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,9 +63,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     void testSet_IAtomContainer_IAtomContainer() throws Exception {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
-        IAtomContainer source = new AtomContainer();
+        IAtomContainer source = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         source.addAtom(atomSource);
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
@@ -83,8 +84,8 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     void testSet_String_String() throws CDKException, IOException {
         String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
-        IAtomContainer query = new AtomContainer();
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer query = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -107,9 +108,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     void testSet_MolHandler_MolHandler() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
-        IAtomContainer source = new AtomContainer();
+        IAtomContainer source = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         source.addAtom(atomSource);
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         target.addAtom(atomTarget);
         MolHandler source1 = new MolHandler(source, true, true);
         MolHandler target1 = new MolHandler(target, true, true);
@@ -129,9 +130,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     public void testSearchMCS() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
-        IAtomContainer source = new AtomContainer();
+        IAtomContainer source = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         source.addAtom(atomSource);
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
@@ -150,9 +151,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     void testGetAllMapping() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
-        IAtomContainer source = new AtomContainer();
+        IAtomContainer source = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         source.addAtom(atomSource);
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
@@ -170,9 +171,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     void testGetFirstMapping() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
-        IAtomContainer source = new AtomContainer();
+        IAtomContainer source = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         source.addAtom(atomSource);
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
@@ -190,9 +191,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     void testGetAllAtomMapping() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
-        IAtomContainer source = new AtomContainer();
+        IAtomContainer source = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         source.addAtom(atomSource);
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
@@ -210,9 +211,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     void testGetFirstAtomMapping() {
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
-        IAtomContainer source = new AtomContainer();
+        IAtomContainer source = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         source.addAtom(atomSource);
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);

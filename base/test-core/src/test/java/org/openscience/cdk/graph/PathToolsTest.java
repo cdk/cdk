@@ -70,7 +70,7 @@ class PathToolsTest extends CDKTestCase {
 
     @Test
     void testResetFlags_IAtomContainer() throws Exception {
-        IAtomContainer atomContainer = new AtomContainer();
+        IAtomContainer atomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom1 = new Atom("C");
         atom1.setFlag(CDKConstants.VISITED, true);
         IAtom atom2 = new Atom("C");
@@ -122,7 +122,7 @@ class PathToolsTest extends CDKTestCase {
         String filename = "shortest_path_test.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer testMolecule = new AtomContainer();
+        IAtomContainer testMolecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reader.read(testMolecule);
 
         List<IAtom> path = PathTools.getShortestPath(testMolecule, testMolecule.getAtom(0), testMolecule.getAtom(9));

@@ -90,7 +90,7 @@ class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     @Test
     void testN3() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom = new Atom("N");
         atom.setImplicitHydrogenCount(3);
         mol.addAtom(atom);

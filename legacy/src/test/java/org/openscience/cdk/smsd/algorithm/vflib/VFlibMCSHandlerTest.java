@@ -124,8 +124,8 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
     void testSet_String_String() throws CDKException {
         String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
-        IAtomContainer query = new AtomContainer();
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer query = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

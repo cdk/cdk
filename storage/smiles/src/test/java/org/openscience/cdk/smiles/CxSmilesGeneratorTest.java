@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -115,7 +116,7 @@ class CxSmilesGeneratorTest {
     @Test
     void chembl367774() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("CHEMBL367774.mol"))) {
-            IAtomContainer container = mdlr.read(new AtomContainer());
+            IAtomContainer container = mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
             assertThat(smigen.create(container), is("OC(=O)C1=CC(F)=CC=2NC(=NC12)C3=CC=C(C=C3F)C4=CC=CC=C4"));
         }

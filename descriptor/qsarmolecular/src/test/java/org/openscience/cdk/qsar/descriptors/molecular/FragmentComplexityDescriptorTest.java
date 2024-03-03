@@ -36,7 +36,7 @@ class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
         MurckoFragmenter gf = new MurckoFragmenter();
         double Complexity = 0;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         gf.generateFragments(mol);
         IAtomContainer[] setOfFragments = gf.getFrameworksAsContainers();
         for (IAtomContainer setOfFragment : setOfFragments) {

@@ -59,7 +59,7 @@ class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     void uninitalisedError() {
         Assertions.assertThrows(IllegalStateException.class, () -> {
-            new BasicGroupCountDescriptor().calculate(new AtomContainer());
+            new BasicGroupCountDescriptor().calculate(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         });
     }
 

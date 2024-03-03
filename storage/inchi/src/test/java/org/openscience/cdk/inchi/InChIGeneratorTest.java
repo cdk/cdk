@@ -86,7 +86,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetInchiFromChlorineAtom() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("ClH"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
         Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
@@ -95,7 +95,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void testGetLog() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("Cl"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
         Assertions.assertNotNull(gen.getLog());
@@ -103,7 +103,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void testGetAuxInfo() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(3);
@@ -118,7 +118,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void testGetMessage() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("Cl"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
         Assertions.assertEquals("", gen.getMessage(), "Because this generation should work, I expected an empty message String.");
@@ -126,7 +126,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void testGetWarningMessage() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("Cl"));
         ac.addAtom(new Atom("H"));
         ac.addBond(0, 1, Order.TRIPLE);
@@ -142,7 +142,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetInchiFromLithiumIon() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("Li");
         a.setFormalCharge(+1);
         ac.addAtom(a);
@@ -158,7 +158,7 @@ class InChIGeneratorTest extends CDKTestCase {
     */
     @Test
     void testGetInchiFromChlorine37Atom() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("ClH");
         a.setMassNumber(37);
         ac.addAtom(a);
@@ -174,7 +174,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetInchiFromHydrogenChlorideImplicitH() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
@@ -190,7 +190,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetInchiFromMethylRadical() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(3);
         ac.addAtom(a);
@@ -207,7 +207,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetInchiFromEthane() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(3);
@@ -230,7 +230,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void nonStandardInChIWithEnumOptions() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(3);
@@ -258,7 +258,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetInchiFromEthene() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(2);
@@ -278,7 +278,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetInchiFromEthyne() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(1);
@@ -300,7 +300,7 @@ class InChIGeneratorTest extends CDKTestCase {
     void testGetInchiEandZ12Dichloroethene2D() throws Exception {
 
         // (E)-1,2-dichloroethene
-        IAtomContainer acE = new AtomContainer();
+        IAtomContainer acE = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1E = new Atom("C", new Point2d(2.866, -0.250));
         IAtom a2E = new Atom("C", new Point2d(3.732, 0.250));
         IAtom a3E = new Atom("Cl", new Point2d(2.000, 2.500));
@@ -321,7 +321,7 @@ class InChIGeneratorTest extends CDKTestCase {
         Assertions.assertEquals("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.getInchi());
 
         // (Z)-1,2-dichloroethene
-        IAtomContainer acZ = new AtomContainer();
+        IAtomContainer acZ = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1Z = new Atom("C", new Point2d(2.866, -0.440));
         IAtom a2Z = new Atom("C", new Point2d(3.732, 0.060));
         IAtom a3Z = new Atom("Cl", new Point2d(2.000, 0.060));
@@ -351,7 +351,7 @@ class InChIGeneratorTest extends CDKTestCase {
     void testGetInchiFromLandDAlanine3D() throws Exception {
 
         // L-Alanine
-        IAtomContainer acL = new AtomContainer();
+        IAtomContainer acL = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1L = new Atom("C", new Point3d(-0.358, 0.819, 20.655));
         IAtom a2L = new Atom("C", new Point3d(-1.598, -0.032, 20.905));
         IAtom a3L = new Atom("N", new Point3d(-0.275, 2.014, 21.574));
@@ -380,7 +380,7 @@ class InChIGeneratorTest extends CDKTestCase {
         Assertions.assertEquals("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1/f/h5H", genL.getInchi());
 
         // D-Alanine
-        IAtomContainer acD = new AtomContainer();
+        IAtomContainer acD = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1D = new Atom("C", new Point3d(0.358, 0.819, 20.655));
         IAtom a2D = new Atom("C", new Point3d(1.598, -0.032, 20.905));
         IAtom a3D = new Atom("N", new Point3d(0.275, 2.014, 21.574));
@@ -412,7 +412,7 @@ class InChIGeneratorTest extends CDKTestCase {
     // ensure only
     @Test
     void zeroHydrogenCount() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("O"));
         ac.getAtom(0).setImplicitHydrogenCount(0);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
@@ -427,7 +427,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetStandardInchiFromChlorineAtom() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("ClH"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
         Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
@@ -441,7 +441,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetStandardInchiFromLithiumIon() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("Li");
         a.setFormalCharge(+1);
         ac.addAtom(a);
@@ -457,7 +457,7 @@ class InChIGeneratorTest extends CDKTestCase {
     */
     @Test
     void testGetStandardInchiFromChlorine37Atom() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("ClH");
         a.setMassNumber(37);
         ac.addAtom(a);
@@ -473,7 +473,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetStandardInchiFromHydrogenChlorideImplicitH() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
@@ -489,7 +489,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetStandardInchiFromMethylRadical() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(3);
         ac.addAtom(a);
@@ -506,7 +506,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetStandardInchiFromEthane() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(3);
@@ -527,7 +527,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetStandardInchiFromEthene() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(2);
@@ -547,7 +547,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testGetStandardInchiFromEthyne() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(1);
@@ -569,7 +569,7 @@ class InChIGeneratorTest extends CDKTestCase {
     void testGetStandardInchiEandZ12Dichloroethene2D() throws Exception {
 
         // (E)-1,2-dichloroethene
-        IAtomContainer acE = new AtomContainer();
+        IAtomContainer acE = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1E = new Atom("C", new Point2d(2.866, -0.250));
         IAtom a2E = new Atom("C", new Point2d(3.732, 0.250));
         IAtom a3E = new Atom("Cl", new Point2d(2.000, 2.500));
@@ -590,7 +590,7 @@ class InChIGeneratorTest extends CDKTestCase {
         Assertions.assertEquals("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.getInchi());
 
         // (Z)-1,2-dichloroethene
-        IAtomContainer acZ = new AtomContainer();
+        IAtomContainer acZ = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1Z = new Atom("C", new Point2d(2.866, -0.440));
         IAtom a2Z = new Atom("C", new Point2d(3.732, 0.060));
         IAtom a3Z = new Atom("Cl", new Point2d(2.000, 0.060));
@@ -620,7 +620,7 @@ class InChIGeneratorTest extends CDKTestCase {
     void testGetStandardInchiFromLandDAlanine3D() throws Exception {
 
         // L-Alanine
-        IAtomContainer acL = new AtomContainer();
+        IAtomContainer acL = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1L = new Atom("C", new Point3d(-0.358, 0.819, 20.655));
         IAtom a2L = new Atom("C", new Point3d(-1.598, -0.032, 20.905));
         IAtom a3L = new Atom("N", new Point3d(-0.275, 2.014, 21.574));
@@ -649,7 +649,7 @@ class InChIGeneratorTest extends CDKTestCase {
         Assertions.assertEquals("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", genL.getInchi());
 
         // D-Alanine
-        IAtomContainer acD = new AtomContainer();
+        IAtomContainer acD = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1D = new Atom("C", new Point3d(0.358, 0.819, 20.655));
         IAtom a2D = new Atom("C", new Point3d(1.598, -0.032, 20.905));
         IAtom a3D = new Atom("N", new Point3d(0.275, 2.014, 21.574));
@@ -681,7 +681,7 @@ class InChIGeneratorTest extends CDKTestCase {
     @Test
     void testTetrahedralStereo() throws Exception {
         // L-Alanine
-        IAtomContainer acL = new AtomContainer();
+        IAtomContainer acL = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom[] ligandAtoms = new IAtom[4];
         IAtom a1 = new Atom("C");
         IAtom a1H = new Atom("H");
@@ -724,7 +724,7 @@ class InChIGeneratorTest extends CDKTestCase {
     @Test
     void testDoubleBondStereochemistry() throws Exception {
         // (E)-1,2-dichloroethene
-        IAtomContainer acE = new AtomContainer();
+        IAtomContainer acE = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1E = new Atom("C");
         IAtom a2E = new Atom("C");
         IAtom a3E = new Atom("Cl");
@@ -759,7 +759,7 @@ class InChIGeneratorTest extends CDKTestCase {
     void bug1295() throws Exception {
         MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("bug1295.mol"));
         try {
-            IAtomContainer container = reader.read(new AtomContainer());
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             InChIGenerator generator = getFactory().getInChIGenerator(container);
             Assertions.assertEquals("InChI=1S/C7H15NO/c1-4-7(3)6-8-9-5-2/h6-7H,4-5H2,1-3H3", generator.getInchi());
         } finally {
@@ -769,7 +769,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void r_penta_2_3_diene_impl_h() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("CH3"));
         m.addAtom(new Atom("CH"));
         m.addAtom(new Atom("C"));
@@ -798,7 +798,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void s_penta_2_3_diene_impl_h() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("CH3"));
         m.addAtom(new Atom("CH"));
         m.addAtom(new Atom("C"));
@@ -828,7 +828,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void r_penta_2_3_diene_expl_h() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("CH3"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -862,7 +862,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void s_penta_2_3_diene_expl_h() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("CH3"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -987,7 +987,7 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void testFiveSecondTimeoutFlag() throws Exception {
-    	IAtomContainer ac = new AtomContainer();
+    	IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("C"));
     	InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
     	InChIGenerator generator = factory.getInChIGenerator(ac);
@@ -996,7 +996,7 @@ class InChIGeneratorTest extends CDKTestCase {
 
     @Test
     void testTc99() throws CDKException {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("99Tc"));
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
         InChIGenerator generator = factory.getInChIGenerator(ac);

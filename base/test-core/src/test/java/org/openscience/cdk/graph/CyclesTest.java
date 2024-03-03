@@ -3,6 +3,7 @@ package org.openscience.cdk.graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -260,7 +261,7 @@ class CyclesTest {
         String path = "boronBuckyBall.mol";
         MDLV2000Reader mdl = new MDLV2000Reader(getClass().getResourceAsStream(path));
         try {
-            return mdl.read(new AtomContainer());
+            return mdl.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         } finally {
             mdl.close();
         }

@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -48,7 +49,7 @@ class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
         String filename = "chlorobenzene.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer container = reader.read(new AtomContainer());
+        IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         DescriptorValue count = new AutocorrelationDescriptorMass().calculate(container);
         Assertions.assertEquals(5, count.getValue().length());
         Assertions.assertTrue(count.getValue() instanceof DoubleArrayResult);

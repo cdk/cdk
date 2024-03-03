@@ -99,7 +99,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         atomContainerSource.addBond(4, 6, Order.SINGLE);
         assertThat(atomContainerSource.getAtomCount(), is(7));
         assertThat(atomContainerSource.getBondCount(), is(6));
-        IAtomContainer atomContainerDestination = new AtomContainer();
+        IAtomContainer atomContainerDestination = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         // act
         AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, x -> true, x -> true);
@@ -168,7 +168,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     void testCopy_completeCopy_sourceAtomContainer_destinationAtomContainer2() {
         // arrange
-        IAtomContainer atomContainerSource = new AtomContainer();
+        IAtomContainer atomContainerSource = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         // CC(=O)CC(=O)O
         atomContainerSource.addAtom(new Atom("C"));
         atomContainerSource.addAtom(new Atom("C"));
@@ -211,7 +211,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     void testCopy_completeCopy_sourceAtomContainer_destinationAtomContainer() {
         // arrange
-        IAtomContainer atomContainerSource = new AtomContainer();
+        IAtomContainer atomContainerSource = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         // CC(=O)CC(=O)O
         atomContainerSource.addAtom(new Atom("C"));
         atomContainerSource.addAtom(new Atom("C"));
@@ -228,7 +228,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         atomContainerSource.addBond(4, 6, Order.SINGLE);
         assertThat(atomContainerSource.getAtomCount(), is(7));
         assertThat(atomContainerSource.getBondCount(), is(6));
-        IAtomContainer atomContainerDestination = new AtomContainer();
+        IAtomContainer atomContainerDestination = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         // act
         AtomContainerManipulator.copy(atomContainerDestination, atomContainerSource, x -> true, x -> true);
@@ -466,7 +466,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
      */
     @Test
     void testGetTotalHydrogenCount_IAtomContainer() throws IOException, ClassNotFoundException, CDKException {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
@@ -486,7 +486,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testConvertImplicitToExplicitHydrogens_IAtomContainer() throws Exception {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(2);
         mol.addAtom(new Atom("C"));
@@ -502,7 +502,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testConvertImplicitToExplicitHydrogens_IAtomContainer2() throws Exception {
-        IAtomContainer mol = new AtomContainer(); // ethane
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethane
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(3);
@@ -519,7 +519,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     void testGetTotalHydrogenCount_IAtomContainer_zeroImplicit() throws IOException, ClassNotFoundException,
             CDKException {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.addAtom(new Atom("C"));
@@ -544,7 +544,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     void testGetTotalHydrogenCount_IAtomContainer_nullImplicit() throws IOException, ClassNotFoundException,
             CDKException {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(null);
         mol.addAtom(new Atom("C"));
@@ -568,7 +568,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testGetTotalHydrogenCount_ImplicitHydrogens() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom carbon = new Atom("C");
         carbon.setImplicitHydrogenCount(4);
         mol.addAtom(carbon);
@@ -577,7 +577,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testRemoveHydrogens_IAtomContainer() throws IOException, ClassNotFoundException, CDKException {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
@@ -601,7 +601,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void dontSuppressHydrogensOnPseudoAtoms() throws Exception {
-        IAtomContainer mol = new AtomContainer(); // *[H]
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // *[H]
         mol.addAtom(new PseudoAtom("*"));
         mol.addAtom(new Atom("H"));
         mol.getAtom(0).setImplicitHydrogenCount(0);
@@ -614,7 +614,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void suppressHydrogensKeepsRadicals() throws Exception {
-        IAtomContainer mol = new AtomContainer(); // *[H]
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // *[H]
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
@@ -635,7 +635,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     private IAtomContainer getChiralMolTemplate() {
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("Cl"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("Br"));
@@ -716,7 +716,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testRemoveHydrogensZeroHydrogenCounts() throws IOException, ClassNotFoundException, CDKException {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("Br"));
@@ -751,7 +751,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testGetAllIDs_IAtomContainer() {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setID("a1");
         mol.addAtom(new Atom("C"));
@@ -777,7 +777,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testGetAtomArray_IAtomContainer() {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
@@ -797,7 +797,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testGetAtomArray_List() {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
@@ -820,7 +820,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testGetBondArray_List() {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
@@ -843,7 +843,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testGetBondArray_IAtomContainer() {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
@@ -868,7 +868,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testGetAtomById_IAtomContainer_String() throws Exception {
-        IAtomContainer mol = new AtomContainer(); // ethene
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setID("a1");
         mol.addAtom(new Atom("C"));
@@ -903,7 +903,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
      */
     @Test
     void testRemoveHydrogensBorane() throws Exception {
-        IAtomContainer borane = new AtomContainer();
+        IAtomContainer borane = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "H"));
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "H"));
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "B"));
@@ -965,7 +965,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     void getNaturalExactMassNeedsHydrogens() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             IAtom atom = new Atom("C");
             atom.setImplicitHydrogenCount(null);
             mol.addAtom(atom);
@@ -976,7 +976,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     void getNaturalExactMassNeedsAtomicNumber() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             mol.addAtom(new Atom("C"));
             mol.getAtom(0).setAtomicNumber(null);
             AtomContainerManipulator.getNaturalExactMass(mol);
@@ -1057,13 +1057,13 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         IBond b2 = builder.newInstance(IBond.class, o, c2);
         IBond b3 = builder.newInstance(IBond.class, c2, c3);
 
-        IAtomContainer container1 = new org.openscience.cdk.AtomContainer();
+        IAtomContainer container1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container1.addAtom(c1);
         container1.addAtom(o);
         container1.addAtom(c2);
         container1.addBond(b1);
         container1.addBond(b2);
-        IAtomContainer container2 = new org.openscience.cdk.AtomContainer();
+        IAtomContainer container2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container2.addAtom(o);
         container2.addAtom(c3);
         container2.addAtom(c2);
@@ -1080,7 +1080,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testPerceiveAtomTypesAndConfigureAtoms() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("R"));
 
         // the next should not throw an exception
@@ -1093,7 +1093,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     void testPerceiveAtomTypesAndConfigureUnsetProperties() throws Exception {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C");
         atom.setExactMass(13.0);
         container.addAtom(atom);
@@ -1365,7 +1365,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
      */
     @Test
     void testRemoveHydrogensPreserveMultiplyBonded() throws Exception {
-        IAtomContainer borane = new AtomContainer();
+        IAtomContainer borane = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "H"));
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "H"));
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "B"));
@@ -1530,7 +1530,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
      */
     @Test
     void testRemoveHydrogensFromMolecularHydrogen() {
-        IAtomContainer mol = new AtomContainer(); // molecular hydrogen
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // molecular hydrogen
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addBond(0, 1, IBond.Order.SINGLE);

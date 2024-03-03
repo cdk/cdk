@@ -62,7 +62,7 @@ class InChIGeneratorFactoryTest {
      */
     @Test
     void testGetInChIGenerator_IAtomContainer() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
@@ -76,7 +76,7 @@ class InChIGeneratorFactoryTest {
      */
     @Test
     void testGetInChIGenerator_IAtomContainer_String() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
@@ -90,7 +90,7 @@ class InChIGeneratorFactoryTest {
      */
     @Test
     void testGetInChIGenerator_IAtomContainer_NullString() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
@@ -133,7 +133,7 @@ class InChIGeneratorFactoryTest {
      */
     @Test
     void testGetInChIGenerator_IAtomContainer_List() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
@@ -150,7 +150,7 @@ class InChIGeneratorFactoryTest {
     @Test
     void testGetInChIGenerator_IAtomContainer_NullList() throws Exception {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            IAtomContainer ac = new AtomContainer();
+            IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             IAtom a = new Atom("Cl");
             a.setImplicitHydrogenCount(1);
             ac.addAtom(a);

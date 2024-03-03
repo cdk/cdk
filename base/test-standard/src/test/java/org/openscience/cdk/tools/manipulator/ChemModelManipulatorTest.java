@@ -74,7 +74,7 @@ class ChemModelManipulatorTest extends CDKTestCase {
 
     @BeforeEach
     void setUp() {
-        molecule1 = new AtomContainer();
+        molecule1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomInMol1 = new Atom("Cl");
         atomInMol1.setCharge(-1.0);
         atomInMol1.setFormalCharge(-1);
@@ -83,7 +83,7 @@ class ChemModelManipulatorTest extends CDKTestCase {
         molecule1.addAtom(new Atom("Cl"));
         bondInMol1 = new Bond(atomInMol1, molecule1.getAtom(1));
         molecule1.addBond(bondInMol1);
-        molecule2 = new AtomContainer();
+        molecule2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomInMol2 = new Atom("O");
         atomInMol2.setImplicitHydrogenCount(2);
         molecule2.addAtom(atomInMol2);
@@ -129,7 +129,7 @@ class ChemModelManipulatorTest extends CDKTestCase {
 
     @Test
     void testNewChemModel_IAtomContainer() {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("C"));
         IChemModel model = ChemModelManipulator.newChemModel(ac);
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
@@ -151,12 +151,12 @@ class ChemModelManipulatorTest extends CDKTestCase {
 
     @Test
     void testRemoveElectronContainer_IChemModel_IElectronContainer() {
-        IAtomContainer mol1 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol1.addAtom(new Atom("Cl"));
         mol1.addAtom(new Atom("Cl"));
         IBond bond1 = new Bond(mol1.getAtom(0), mol1.getAtom(1));
         mol1.addBond(bond1);
-        IAtomContainer mol2 = new AtomContainer();
+        IAtomContainer mol2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol2.addAtom(new Atom("I"));
         mol2.addAtom(new Atom("I"));
         IBond bond2 = new Bond(mol2.getAtom(0), mol2.getAtom(1));
@@ -182,13 +182,13 @@ class ChemModelManipulatorTest extends CDKTestCase {
 
     @Test
     void testRemoveAtomAndConnectedElectronContainers_IChemModel_IAtom() {
-        IAtomContainer mol1 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom1 = new Atom("Cl");
         mol1.addAtom(atom1);
         mol1.addAtom(new Atom("Cl"));
         IBond bond1 = new Bond(mol1.getAtom(0), mol1.getAtom(1));
         mol1.addBond(bond1);
-        IAtomContainer mol2 = new AtomContainer();
+        IAtomContainer mol2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom2 = new Atom("I");
         mol2.addAtom(atom2);
         mol2.addAtom(new Atom("I"));
