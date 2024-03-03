@@ -24,7 +24,6 @@
 package org.openscience.cdk.io;
 
 import org.junit.jupiter.api.Assertions;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;

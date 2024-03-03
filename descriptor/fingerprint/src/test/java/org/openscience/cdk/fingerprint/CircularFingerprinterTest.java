@@ -45,7 +45,6 @@ import java.util.zip.ZipInputStream;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDK;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;

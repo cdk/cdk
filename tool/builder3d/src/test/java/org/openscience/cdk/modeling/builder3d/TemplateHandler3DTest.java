@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.matchers.QueryChemObject;
 import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
