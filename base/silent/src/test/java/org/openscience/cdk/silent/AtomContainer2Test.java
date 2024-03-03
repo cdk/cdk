@@ -47,7 +47,7 @@ class AtomContainer2Test extends AbstractAtomContainerTest {
 
     @BeforeAll
     static void setUp() {
-        setTestObjectBuilder(AtomContainer2::new);
+        setTestObjectBuilder(AtomContainer::new);
     }
 
 
@@ -55,7 +55,7 @@ class AtomContainer2Test extends AbstractAtomContainerTest {
     void testAtomContainer_int_int_int_int() {
         // create an empty container with predefined
         // array lengths
-        IAtomContainer container = new AtomContainer2(5, 6, 1, 2);
+        IAtomContainer container = new AtomContainer(5, 6, 1, 2);
 
         Assertions.assertEquals(0, container.getAtomCount());
         Assertions.assertEquals(0, container.getElectronContainerCount());
@@ -74,7 +74,7 @@ class AtomContainer2Test extends AbstractAtomContainerTest {
     @Test
     void testAtomContainer() {
         // create an empty container with in the constructor defined array lengths
-        IAtomContainer container = new AtomContainer2();
+        IAtomContainer container = new AtomContainer();
 
         Assertions.assertEquals(0, container.getAtomCount());
         Assertions.assertEquals(0, container.getBondCount());
@@ -108,7 +108,7 @@ class AtomContainer2Test extends AbstractAtomContainerTest {
         acetone.addBond(b2);
         acetone.addBond(b3);
 
-        IAtomContainer container = new AtomContainer2(acetone);
+        IAtomContainer container = new AtomContainer(acetone);
         Assertions.assertEquals(4, container.getAtomCount());
         Assertions.assertEquals(3, container.getBondCount());
     }
