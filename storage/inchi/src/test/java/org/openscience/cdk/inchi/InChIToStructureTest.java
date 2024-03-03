@@ -20,7 +20,6 @@ package org.openscience.cdk.inchi;
 
 import net.sf.jniinchi.INCHI_RET;
 
-import org.apache.logging.log4j.core.util.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;

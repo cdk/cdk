@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.io.inchi;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;

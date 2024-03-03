@@ -48,7 +48,6 @@ import org.openscience.cdk.renderer.generators.standard.StandardGenerator.Deloca
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceDelocalisedBondDisplay;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 
 import javax.vecmath.Point2d;
 import java.awt.Color;

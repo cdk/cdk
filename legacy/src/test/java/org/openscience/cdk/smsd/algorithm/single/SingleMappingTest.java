@@ -24,7 +24,6 @@ package org.openscience.cdk.smsd.algorithm.single;
 
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;

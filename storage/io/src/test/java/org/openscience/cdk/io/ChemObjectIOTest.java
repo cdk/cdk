@@ -44,7 +44,6 @@ import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
 import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
-import org.openscience.cdk.silent.AtomContainer;
 
 /**
  * TestCase for CDK IO classes.
