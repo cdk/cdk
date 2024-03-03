@@ -67,11 +67,11 @@ class AtomContainerComparatorTest extends CDKTestCase {
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
-        IAtomContainer atomContainer1 = new AtomContainer();
+        IAtomContainer atomContainer1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         atomContainer1.addAtom(new Atom("C"));
 
-        IAtomContainer atomContainer2 = new AtomContainer();
+        IAtomContainer atomContainer2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         atomContainer2.addAtom(new PseudoAtom("*"));
 

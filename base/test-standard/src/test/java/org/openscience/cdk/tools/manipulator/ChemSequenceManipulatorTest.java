@@ -68,13 +68,13 @@ class ChemSequenceManipulatorTest extends CDKTestCase {
 
     @BeforeEach
     void setUp() {
-        molecule1 = new AtomContainer();
+        molecule1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomInMol1 = new Atom("Cl");
         molecule1.addAtom(atomInMol1);
         molecule1.addAtom(new Atom("Cl"));
         bondInMol1 = new Bond(atomInMol1, molecule1.getAtom(1));
         molecule1.addBond(bondInMol1);
-        molecule2 = new AtomContainer();
+        molecule2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomInMol2 = new Atom("O");
         atomInMol2.setImplicitHydrogenCount(2);
         molecule2.addAtom(atomInMol2);

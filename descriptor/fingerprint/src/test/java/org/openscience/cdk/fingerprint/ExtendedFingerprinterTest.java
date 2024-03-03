@@ -36,6 +36,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -134,7 +135,7 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     @Test
     void testDifferentRingFinders() throws Exception {
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
-        IAtomContainer ac1 = new AtomContainer();
+        IAtomContainer ac1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
         Atom atom3 = new Atom("C");
@@ -159,7 +160,7 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         ac1.addBond(bond4);
         ac1.addBond(bond5);
         ac1.addBond(bond6);
-        IAtomContainer ac2 = new AtomContainer();
+        IAtomContainer ac2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac2.addAtom(atom1);
         ac2.addAtom(atom2);
         ac2.addAtom(atom3);
@@ -187,7 +188,7 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
      */
     @Test
     void testCondensedSingle() throws Exception {
-        IAtomContainer molcondensed = new AtomContainer();
+        IAtomContainer molcondensed = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = molcondensed.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(421.99999999999994, 860.0));
         molcondensed.addAtom(a1);
@@ -273,7 +274,7 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         IBond b18 = molcondensed.getBuilder().newInstance(IBond.class, a13, a16, IBond.Order.SINGLE);
         molcondensed.addBond(b18);
 
-        IAtomContainer molsingle = new AtomContainer();
+        IAtomContainer molsingle = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1s = molsingle.getBuilder().newInstance(IAtom.class, "C");
         a1s.setPoint2d(new Point2d(421.99999999999994, 860.0));
         molsingle.addAtom(a1s);
@@ -399,12 +400,12 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         String filename = "chebisearch.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        searchmol = reader.read(new AtomContainer());
+        searchmol = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         filename = "chebifind.mol";
         ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins);
-        findmol = reader.read(new AtomContainer());
+        findmol = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(findmol).asBitSet();

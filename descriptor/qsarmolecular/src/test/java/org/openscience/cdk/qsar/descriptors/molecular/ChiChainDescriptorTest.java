@@ -30,7 +30,7 @@ class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     void testDan64() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.7500000000000004, 2.799038105676658));
         mol.addAtom(a1);
@@ -66,7 +66,7 @@ class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     void testDan80() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);
@@ -108,7 +108,7 @@ class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     void testDan81() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);
@@ -150,7 +150,7 @@ class ChiChainDescriptorTest extends MolecularDescriptorTest {
     @Test
     void testDan82() throws Exception {
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);
@@ -192,7 +192,7 @@ class ChiChainDescriptorTest extends MolecularDescriptorTest {
     @Test
     void testDan154() throws Exception {
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);

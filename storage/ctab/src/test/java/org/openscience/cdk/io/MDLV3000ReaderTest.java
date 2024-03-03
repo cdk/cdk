@@ -127,7 +127,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void pseudoAtomReplacement() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("pseudoAtomReplacement.mol"))) {
-            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             for (IAtom atom : container.getBond(9).atoms()) {
                 Assertions.assertTrue(container.contains(atom));
             }
@@ -137,7 +137,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void positionalVariation() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
-            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(container.getBondCount(), is(8));
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
             Assertions.assertNotNull(sgroups);
@@ -149,7 +149,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void radicalsInCH3() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("CH3.mol"))) {
-            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(container.getSingleElectronCount(), is(1));
             assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(3));
         }

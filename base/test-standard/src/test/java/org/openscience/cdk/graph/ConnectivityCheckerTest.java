@@ -68,7 +68,7 @@ class ConnectivityCheckerTest extends CDKTestCase {
     @Test
     void testPartitionIntoMolecules_IAtomContainer() {
         //logger.debug(atomCon);
-        AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
+        IAtomContainer atomCon = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomCon.add(TestMoleculeFactory.make4x3CondensedRings());
         atomCon.add(TestMoleculeFactory.makeAlphaPinene());
         atomCon.add(TestMoleculeFactory.makeSpiroRings());
@@ -82,7 +82,7 @@ class ConnectivityCheckerTest extends CDKTestCase {
      */
     @Test
     void testPartitionIntoMoleculesKeepsAtomIDs() {
-        AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
+        IAtomContainer atomCon = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom1 = new Atom("C");
         atom1.setID("atom1");
         Atom atom2 = new Atom("C");
@@ -106,7 +106,7 @@ class ConnectivityCheckerTest extends CDKTestCase {
     @Test
     void testPartitionIntoMolecules_IsConnected_Consistency() {
         //logger.debug(atomCon);
-        AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
+        IAtomContainer atomCon = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomCon.add(TestMoleculeFactory.make4x3CondensedRings());
         atomCon.add(TestMoleculeFactory.makeAlphaPinene());
         atomCon.add(TestMoleculeFactory.makeSpiroRings());
@@ -125,15 +125,15 @@ class ConnectivityCheckerTest extends CDKTestCase {
      */
     @Test
     void testDontDeleteSingleElectrons() {
-        AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
+        IAtomContainer atomCon = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         // make two molecules; one with an LonePair, the other with a SingleElectron
-        IAtomContainer mol1 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom1 = new Atom("C");
         mol1.addAtom(atom1);
         LonePair lp1 = new LonePair(atom1);
         mol1.addLonePair(lp1);
         // mol2
-        IAtomContainer mol2 = new AtomContainer();
+        IAtomContainer mol2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom2 = new Atom("C");
         mol2.addAtom(atom2);
         SingleElectron se2 = new SingleElectron(atom2);
@@ -226,7 +226,7 @@ class ConnectivityCheckerTest extends CDKTestCase {
      */
     @Test
     void testNoAtomsIsConnected() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(ConnectivityChecker.isConnected(container), "Molecule appears not to be connected");
     }
 

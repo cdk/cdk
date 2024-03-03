@@ -277,7 +277,7 @@ class CIPToolTest extends CDKTestCase {
     //(timeout=5000)
     void testTermination() {
         int ringSize = 7;
-        IAtomContainer ring = new AtomContainer();
+        IAtomContainer ring = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         for (int i = 0; i < ringSize; i++) {
             ring.addAtom(new Atom("C"));
         }

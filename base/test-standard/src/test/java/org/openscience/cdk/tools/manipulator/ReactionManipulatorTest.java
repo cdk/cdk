@@ -67,10 +67,10 @@ class ReactionManipulatorTest extends CDKTestCase {
     void testReverse_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setDirection(IReaction.Direction.BACKWARD);
-        IAtomContainer water = new AtomContainer();
+        IAtomContainer water = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reaction.addReactant(water, 3.0);
-        reaction.addReactant(new AtomContainer());
-        reaction.addProduct(new AtomContainer());
+        reaction.addReactant(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+        reaction.addProduct(DefaultChemObjectBuilder.getInstance().newAtomContainer());
 
         Reaction reversedReaction = (Reaction) ReactionManipulator.reverse(reaction);
         Assertions.assertEquals(IReaction.Direction.FORWARD, reversedReaction.getDirection());
@@ -83,7 +83,7 @@ class ReactionManipulatorTest extends CDKTestCase {
     void testGetAllIDs_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setID("r1");
-        IAtomContainer water = new AtomContainer();
+        IAtomContainer water = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         water.setID("m1");
         Atom oxygen = new Atom("O");
         oxygen.setID("a1");
@@ -310,9 +310,9 @@ class ReactionManipulatorTest extends CDKTestCase {
     @Test
     void perceiveAtomTypesAndConfigureAtomsUnknownAtomTypeTest() throws CDKException {
         // arrange
-        IAtomContainer reactant = new AtomContainer();
+        IAtomContainer reactant = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reactant.addAtom(new Atom("R"));
-        IAtomContainer product = new AtomContainer();
+        IAtomContainer product = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reactant.addAtom(new Atom("C"));
         IReaction reaction = new Reaction();
         reaction.addReactant(reactant);
@@ -334,7 +334,7 @@ class ReactionManipulatorTest extends CDKTestCase {
         IAtom reactantOneAtomThree = new Atom("C");
         IBond reactantOneBondOne = new Bond(reactantOneAtomOne, reactantOneAtomTwo, Order.SINGLE);
         IBond reactantOneBondTwo = new Bond(reactantOneAtomTwo, reactantOneAtomThree, Order.DOUBLE);
-        IAtomContainer reactantOne = new AtomContainer();
+        IAtomContainer reactantOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reactantOne.addAtom(reactantOneAtomOne);
         reactantOne.addAtom(reactantOneAtomTwo);
         reactantOne.addAtom(reactantOneAtomThree);
@@ -343,12 +343,12 @@ class ReactionManipulatorTest extends CDKTestCase {
 
         // reactant two: Br
         IAtom reactantTwoAtom1 = new Atom("Br");
-        IAtomContainer reactantTwo = new AtomContainer();
+        IAtomContainer reactantTwo = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reactantTwo.addAtom(reactantTwoAtom1);
 
         // agent one: O
         IAtom agentOneAtomOne = new Atom("O");
-        IAtomContainer agentOne = new AtomContainer();
+        IAtomContainer agentOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         agentOne.addAtom(agentOneAtomOne);
 
         // product one: CC(Br)C
@@ -359,7 +359,7 @@ class ReactionManipulatorTest extends CDKTestCase {
         IBond productOneBondOne = new Bond(productOneAtomOne, productOneAtomTwo, Order.SINGLE);
         IBond productOneBondTwo = new Bond(productOneAtomTwo, productOneAtomThree, Order.SINGLE);
         IBond productOneBondThree = new Bond(productOneAtomTwo, productOneAtomFour, Order.SINGLE);
-        IAtomContainer productOne = new AtomContainer();
+        IAtomContainer productOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         productOne.addAtom(productOneAtomOne);
         productOne.addAtom(productOneAtomTwo);
         productOne.addAtom(productOneAtomThree);
@@ -431,7 +431,7 @@ class ReactionManipulatorTest extends CDKTestCase {
         reactantOneAtomThree.setFormalNeighbourCount(2);
         IBond reactantOneBondOne = new Bond(reactantOneAtomOne, reactantOneAtomTwo, Order.SINGLE);
         IBond reactantOneBondTwo = new Bond(reactantOneAtomTwo, reactantOneAtomThree, Order.DOUBLE);
-        IAtomContainer reactantOne = new AtomContainer();
+        IAtomContainer reactantOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reactantOne.addAtom(reactantOneAtomOne);
         reactantOne.addAtom(reactantOneAtomTwo);
         reactantOne.addAtom(reactantOneAtomThree);
@@ -440,12 +440,12 @@ class ReactionManipulatorTest extends CDKTestCase {
 
         // reactant two: Br
         IAtom reactantTwoAtom1 = new Atom("Br");
-        IAtomContainer reactantTwo = new AtomContainer();
+        IAtomContainer reactantTwo = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reactantTwo.addAtom(reactantTwoAtom1);
 
         // agent one: O
         IAtom agentOneAtomOne = new Atom("O");
-        IAtomContainer agentOne = new AtomContainer();
+        IAtomContainer agentOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         agentOne.addAtom(agentOneAtomOne);
 
         // product one: CC(Br)C
@@ -458,7 +458,7 @@ class ReactionManipulatorTest extends CDKTestCase {
         IBond productOneBondOne = new Bond(productOneAtomOne, productOneAtomTwo, Order.SINGLE);
         IBond productOneBondTwo = new Bond(productOneAtomTwo, productOneAtomThree, Order.SINGLE);
         IBond productOneBondThree = new Bond(productOneAtomTwo, productOneAtomFour, Order.SINGLE);
-        IAtomContainer productOne = new AtomContainer();
+        IAtomContainer productOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         productOne.addAtom(productOneAtomOne);
         productOne.addAtom(productOneAtomTwo);
         productOne.addAtom(productOneAtomThree);
@@ -547,7 +547,7 @@ class ReactionManipulatorTest extends CDKTestCase {
         IAtom reactantOneAtomThree = new Atom("C");
         IBond reactantOneBondOne = new Bond(reactantOneAtomOne, reactantOneAtomTwo, Order.SINGLE);
         IBond reactantOneBondTwo = new Bond(reactantOneAtomTwo, reactantOneAtomThree, Order.DOUBLE);
-        IAtomContainer reactantOne = new AtomContainer();
+        IAtomContainer reactantOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reactantOne.addAtom(reactantOneAtomOne);
         reactantOne.addAtom(reactantOneAtomTwo);
         reactantOne.addAtom(reactantOneAtomThree);
@@ -556,12 +556,12 @@ class ReactionManipulatorTest extends CDKTestCase {
 
         // reactant two: Br
         IAtom reactantTwoAtom1 = new Atom("Br");
-        IAtomContainer reactantTwo = new AtomContainer();
+        IAtomContainer reactantTwo = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reactantTwo.addAtom(reactantTwoAtom1);
 
         // agent one: O
         IAtom agentOneAtomOne = new Atom("O");
-        IAtomContainer agentOne = new AtomContainer();
+        IAtomContainer agentOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         agentOne.addAtom(agentOneAtomOne);
 
         // product one: CC(Br)C
@@ -572,7 +572,7 @@ class ReactionManipulatorTest extends CDKTestCase {
         IBond productOneBondOne = new Bond(productOneAtomOne, productOneAtomTwo, Order.SINGLE);
         IBond productOneBondTwo = new Bond(productOneAtomTwo, productOneAtomThree, Order.SINGLE);
         IBond productOneBondThree = new Bond(productOneAtomTwo, productOneAtomFour, Order.SINGLE);
-        IAtomContainer productOne = new AtomContainer();
+        IAtomContainer productOne = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         productOne.addAtom(productOneAtomOne);
         productOne.addAtom(productOneAtomTwo);
         productOne.addAtom(productOneAtomThree);

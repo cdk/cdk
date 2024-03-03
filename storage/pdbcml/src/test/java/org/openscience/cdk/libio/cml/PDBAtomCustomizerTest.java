@@ -3,6 +3,7 @@ package org.openscience.cdk.libio.cml;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.io.CMLWriter;
@@ -23,7 +24,7 @@ class PDBAtomCustomizerTest {
     @Test
     void testPDBAtomCustomization() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IPDBAtom atom = new PDBAtom("C");
         atom.setName("CA");
         atom.setResName("PHE");

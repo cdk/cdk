@@ -40,7 +40,9 @@ import java.util.zip.ZipInputStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -112,7 +114,7 @@ class SmallRingDescriptorTest extends MolecularDescriptorTest {
             byte[] molBytes = content.get(basefn + ".mol");
             if (molBytes == null) break;
 
-            AtomContainer mol = new AtomContainer();
+            IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             MDLV2000Reader mdl = new MDLV2000Reader(new ByteArrayInputStream(molBytes));
             mdl.read(mol);
             mdl.close();

@@ -207,7 +207,7 @@ class ReactionSetManipulatorTest extends CDKTestCase {
         IReaction reaction1 = builder.newInstance(IReaction.class);
         set.addReaction(reaction1);
         reaction1.setID("r1");
-        IAtomContainer water = new AtomContainer();
+        IAtomContainer water = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         water.setID("m1");
         Atom oxygen = new Atom("O");
         oxygen.setID("a1");

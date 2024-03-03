@@ -9,6 +9,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -62,7 +63,7 @@ class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
 
     @Test
     void testReturnsNaNForNonHydrogen() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("O");
         mol.addAtom(atom);
         DescriptorValue dv = descriptor.calculate(atom, mol);

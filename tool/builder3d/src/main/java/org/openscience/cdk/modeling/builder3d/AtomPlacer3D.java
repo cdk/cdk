@@ -28,6 +28,7 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -585,7 +586,7 @@ public class AtomPlacer3D {
      * @return    The allPlacedAtoms value
      */
     private IAtomContainer getAllPlacedAtoms(IAtomContainer molecule) {
-        IAtomContainer placedAtoms = new AtomContainer();
+        IAtomContainer placedAtoms = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             if (molecule.getAtom(i).getFlag(CDKConstants.ISPLACED)) {
                 placedAtoms.addAtom(molecule.getAtom(i));

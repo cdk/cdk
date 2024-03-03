@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
@@ -75,7 +76,7 @@ public class MolHandler {
 
             readMolecule = new FileInputStream(molFile);
             molRead = new MDLReader(new InputStreamReader(readMolecule));
-            this.atomContainer = molRead.read(new AtomContainer());
+            this.atomContainer = molRead.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             molRead.close();
             readMolecule.close();
             /* Remove Hydrogen by Asad */

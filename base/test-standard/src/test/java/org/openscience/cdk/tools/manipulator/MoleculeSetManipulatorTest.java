@@ -27,6 +27,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,7 +56,7 @@ class MoleculeSetManipulatorTest extends CDKTestCase {
 
     @BeforeEach
     void setUp() {
-        mol1 = new AtomContainer();
+        mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomInMol1 = new Atom("Cl");
         atomInMol1.setCharge(-1.0);
         atomInMol1.setFormalCharge(-1);
@@ -64,7 +65,7 @@ class MoleculeSetManipulatorTest extends CDKTestCase {
         mol1.addAtom(new Atom("Cl"));
         bondInMol1 = new Bond(atomInMol1, mol1.getAtom(1));
         mol1.addBond(bondInMol1);
-        mol2 = new AtomContainer();
+        mol2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomInMol2 = new Atom("O");
         atomInMol2.setImplicitHydrogenCount(2);
         mol2.addAtom(atomInMol2);
@@ -87,7 +88,7 @@ class MoleculeSetManipulatorTest extends CDKTestCase {
     @Test
     void testRemoveElectronContainer_IAtomContainerSet_IElectronContainer() {
         IAtomContainerSet ms = new AtomContainerSet();
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("O"));
         mol.addBond(0, 1, IBond.Order.DOUBLE);
@@ -103,7 +104,7 @@ class MoleculeSetManipulatorTest extends CDKTestCase {
     @Test
     void testRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom() {
         IAtomContainerSet ms = new AtomContainerSet();
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("O"));
         mol.addBond(0, 1, IBond.Order.DOUBLE);

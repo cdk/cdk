@@ -56,7 +56,7 @@ class SaturationCheckerTest extends CDKTestCase {
     @Test
     void testAllSaturated() throws Exception {
         // test methane with explicit hydrogen
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom c = new Atom("C");
         Atom h1 = new Atom("H");
         Atom h2 = new Atom("H");
@@ -74,7 +74,7 @@ class SaturationCheckerTest extends CDKTestCase {
         Assertions.assertTrue(satcheck.allSaturated(m));
 
         // test methane with implicit hydrogen
-        m = new AtomContainer();
+        m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         c = new Atom("C");
         c.setImplicitHydrogenCount(4);
         m.addAtom(c);
@@ -87,7 +87,7 @@ class SaturationCheckerTest extends CDKTestCase {
     @Test
     void testIsSaturated() throws Exception {
         // test methane with explicit hydrogen
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom c = new Atom("C");
         Atom h1 = new Atom("H");
         Atom h2 = new Atom("H");
@@ -116,7 +116,7 @@ class SaturationCheckerTest extends CDKTestCase {
     @Test
     void testIsSaturated_NegativelyChargedOxygen() throws Exception {
         // test methane with explicit hydrogen
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom c = new Atom("C");
         Atom h1 = new Atom("H");
         Atom h2 = new Atom("H");
@@ -146,7 +146,7 @@ class SaturationCheckerTest extends CDKTestCase {
     @Test
     void testIsSaturated_PositivelyChargedNitrogen() throws Exception {
         // test methane with explicit hydrogen
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom n = new Atom("N");
         Atom h1 = new Atom("H");
         Atom h2 = new Atom("H");
@@ -181,7 +181,7 @@ class SaturationCheckerTest extends CDKTestCase {
         c2.setImplicitHydrogenCount(2);
         Bond b = new Bond(c1, c2, IBond.Order.SINGLE);
         // force single bond, saturate() must fix that
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(c1);
         m.addAtom(c2);
         m.addBond(b);
@@ -207,7 +207,7 @@ class SaturationCheckerTest extends CDKTestCase {
         Bond b2 = new Bond(c3, c2, IBond.Order.SINGLE);
         Bond b3 = new Bond(c3, c4, IBond.Order.SINGLE);
         // force single bond, saturate() must fix that
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(c1);
         m.addAtom(c2);
         m.addAtom(c3);
@@ -223,7 +223,7 @@ class SaturationCheckerTest extends CDKTestCase {
 
     @Test
     void testSaturate_ParaDiOxygenBenzene() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom a1 = new Atom("C");
         mol.addAtom(a1);
         Atom a2 = new Atom("O");
@@ -289,7 +289,7 @@ class SaturationCheckerTest extends CDKTestCase {
     @Test
     void testBug772316() throws Exception {
         // test methane with explicit hydrogen
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom sulphur = new Atom("S");
         Atom o1 = new Atom("O");
         Atom o2 = new Atom("O");
@@ -321,7 +321,7 @@ class SaturationCheckerTest extends CDKTestCase {
 
     @Test
     void testBug777529() throws Exception {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));

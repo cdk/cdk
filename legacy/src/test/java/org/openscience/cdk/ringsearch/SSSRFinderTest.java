@@ -135,7 +135,7 @@ class SSSRFinderTest extends CDKTestCase {
         String filename = "figueras-test-sep3D.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        molecule = (IAtomContainer) reader.read((IChemObject) DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         logger.debug("Testing " + filename);
 
@@ -153,7 +153,7 @@ class SSSRFinderTest extends CDKTestCase {
         String filename = "ring_03419.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        IAtomContainer molecule = (IAtomContainer) reader.read((IChemObject) DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         logger.debug("Testing " + filename);
 
@@ -173,7 +173,7 @@ class SSSRFinderTest extends CDKTestCase {
         String filename = "figueras-test-buried.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        molecule = (IAtomContainer) reader.read((IChemObject) DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         logger.debug("Testing " + filename);
 
@@ -193,7 +193,7 @@ class SSSRFinderTest extends CDKTestCase {
         String filename = "figueras-test-inring.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        molecule = (IAtomContainer) reader.read((IChemObject) DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         logger.debug("Testing " + filename);
 
@@ -215,7 +215,7 @@ class SSSRFinderTest extends CDKTestCase {
         String filename = "too.many.rings.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        molecule = (IAtomContainer) reader.read((IChemObject) DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         logger.debug("Testing " + filename);
 
@@ -293,7 +293,7 @@ class SSSRFinderTest extends CDKTestCase {
         String filename = "buckyball.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = reader.read(new AtomContainer());
+        molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         Assertions.assertTrue(molecule.getAtomCount() == 60, "Atom count is 60 ");
         Assertions.assertTrue(molecule.getBondCount() == 90, "Bond count is 90 ");

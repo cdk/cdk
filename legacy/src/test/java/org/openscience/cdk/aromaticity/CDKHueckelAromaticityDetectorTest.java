@@ -112,7 +112,7 @@ class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test
     void testPyridine() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("N"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -143,7 +143,7 @@ class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test
     void testCyclopentadienyl() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setFormalCharge(-1);
         for (int i = 1; i < 5; i++) {
@@ -562,7 +562,7 @@ class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     void test3Amino2MethylPyridine() throws Exception {
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "N");
         a1.setPoint2d(new Point2d(3.7321, 1.345));
         mol.addAtom(a1);

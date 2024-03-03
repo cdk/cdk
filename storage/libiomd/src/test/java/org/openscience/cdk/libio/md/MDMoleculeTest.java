@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
@@ -104,7 +105,7 @@ class MDMoleculeTest extends CDKTestCase {
         mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 
         //Create 2 residues
-        AtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(mol.getAtom(0));
         ac.addAtom(mol.getAtom(1));
         ac.addAtom(mol.getAtom(2));
@@ -112,7 +113,7 @@ class MDMoleculeTest extends CDKTestCase {
         res1.setName("myResidue1");
         mol.addResidue(res1);
 
-        AtomContainer ac2 = new AtomContainer();
+        IAtomContainer ac2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac2.addAtom(mol.getAtom(3));
         ac2.addAtom(mol.getAtom(4));
         ac2.addAtom(mol.getAtom(5));
@@ -133,13 +134,13 @@ class MDMoleculeTest extends CDKTestCase {
         Assertions.assertEquals(mol.getResidues().get(1), res2);
 
         //Create 2 chargegroups
-        AtomContainer ac3 = new AtomContainer();
+        IAtomContainer ac3 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac3.addAtom(mol.getAtom(0));
         ac3.addAtom(mol.getAtom(1));
         ChargeGroup chg1 = new ChargeGroup(ac3, 0, mol);
         mol.addChargeGroup(chg1);
 
-        AtomContainer ac4 = new AtomContainer();
+        IAtomContainer ac4 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac4.addAtom(mol.getAtom(2));
         ac4.addAtom(mol.getAtom(3));
         ac4.addAtom(mol.getAtom(4));
@@ -285,7 +286,7 @@ class MDMoleculeTest extends CDKTestCase {
         mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 
         //Create 2 residues
-        AtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(mol.getAtom(0));
         ac.addAtom(mol.getAtom(1));
         ac.addAtom(mol.getAtom(2));
@@ -293,7 +294,7 @@ class MDMoleculeTest extends CDKTestCase {
         res1.setName("myResidue1");
         mol.addResidue(res1);
 
-        AtomContainer ac2 = new AtomContainer();
+        IAtomContainer ac2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac2.addAtom(mol.getAtom(3));
         ac2.addAtom(mol.getAtom(4));
         ac2.addAtom(mol.getAtom(5));
@@ -302,14 +303,14 @@ class MDMoleculeTest extends CDKTestCase {
         mol.addResidue(res2);
 
         //Create 2 chargegroups
-        AtomContainer ac3 = new AtomContainer();
+        IAtomContainer ac3 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac3.addAtom(mol.getAtom(0));
         ac3.addAtom(mol.getAtom(1));
         ChargeGroup chg1 = new ChargeGroup(ac3, 2, mol);
         chg1.setSwitchingAtom(mol.getAtom(1));
         mol.addChargeGroup(chg1);
 
-        AtomContainer ac4 = new AtomContainer();
+        IAtomContainer ac4 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac4.addAtom(mol.getAtom(2));
         ac4.addAtom(mol.getAtom(3));
         ac4.addAtom(mol.getAtom(4));
