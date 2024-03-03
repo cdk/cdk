@@ -142,9 +142,9 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
             // atom containers
             if (CDK_LEGACY_AC) {
                 System.err.println("[WARN] Using the old AtomContainer implementation.");
-                factory.register(IAtomContainer.class, AtomContainer.class);
+                factory.register(IAtomContainer.class, AtomContainerLegacy.class);
             } else {
-                factory.register(IAtomContainer.class, AtomContainer2.class);
+                factory.register(IAtomContainer.class, AtomContainer.class);
             }
 
             factory.register(IRing.class, Ring.class);
@@ -229,9 +229,9 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
         @Override
         public IAtomContainer newAtomContainer() {
             if (CDK_LEGACY_AC)
-                return new AtomContainer(0, 0, 0, 0);
+                return new AtomContainerLegacy(0, 0, 0, 0);
             else
-                return new AtomContainer2(0, 0, 0, 0);
+                return new AtomContainer(0, 0, 0, 0);
 
         }
 

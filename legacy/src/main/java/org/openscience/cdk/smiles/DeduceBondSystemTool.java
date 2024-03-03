@@ -828,9 +828,11 @@ public class DeduceBondSystemTool {
             IRing ring = mol.getBuilder().newInstance(IRing.class, bondNumbers.length);
             for (int bondNumber : bondNumbers) {
                 IBond bond = mol.getBond(bondNumber);
-                ring.addBond(bond);
                 if (!ring.contains(bond.getBegin())) ring.addAtom(bond.getBegin());
                 if (!ring.contains(bond.getEnd())) ring.addAtom(bond.getEnd());
+            }
+            for (int bondNumber : bondNumbers) {
+                ring.addBond(mol.getBond(bondNumber));
             }
             ringSet.addAtomContainer(ring);
         }
