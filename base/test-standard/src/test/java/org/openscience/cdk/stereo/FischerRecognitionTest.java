@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import javax.vecmath.Point2d;
 
@@ -56,7 +57,7 @@ class FischerRecognitionTest {
      */
     @Test
     void recogniseRightHandedGlyceraldehyde() throws Exception {
-        IAtomContainer m = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, 0.80d, 1.24d));
         m.addAtom(atom("C", 0, 0.80d, 0.42d));
         m.addAtom(atom("O", 1, 0.09d, 1.66d));
@@ -92,7 +93,7 @@ class FischerRecognitionTest {
      */
     @Test
     void recogniseLeftHandedGlyceraldehyde() throws Exception {
-        IAtomContainer m = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, 0.80d, 1.24d));
         m.addAtom(atom("C", 0, 0.80d, 0.42d));
         m.addAtom(atom("O", 1, 0.09d, 1.66d));
@@ -128,7 +129,7 @@ class FischerRecognitionTest {
      */
     @Test
     void recogniseRightHandedGlyceraldehydeWithImplicitHydrogen() throws Exception {
-        IAtomContainer m = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, 0.80d, 1.24d));
         m.addAtom(atom("C", 1, 0.80d, 0.42d));
         m.addAtom(atom("O", 1, 0.09d, 1.66d));
@@ -162,7 +163,7 @@ class FischerRecognitionTest {
      */
     @Test
     void mannitol() throws CDKException {
-        IAtomContainer m = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 2, -0.53d, 6.25d));
         m.addAtom(atom("C", 1, -0.53d, 5.42d));
         m.addAtom(atom("O", 1, 0.18d, 6.66d));
@@ -526,7 +527,7 @@ class FischerRecognitionTest {
      */
     @Test
     void ignoreCyclicStereocenters() {
-        IAtomContainer m = new AtomContainer(22, 25, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, 6.87d, -5.59d));
         m.addAtom(atom("C", 0, 6.87d, -6.61d));
         m.addAtom(atom("C", 0, 7.82d, -5.62d));
@@ -590,7 +591,7 @@ class FischerRecognitionTest {
      */
     @Test
     void horizontalBondsMustBeTerminal() {
-        IAtomContainer m = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, 12.71d, -16.51d));
         m.addAtom(atom("C", 1, 12.30d, -17.22d));
         m.addAtom(atom("C", 1, 11.47d, -17.22d));

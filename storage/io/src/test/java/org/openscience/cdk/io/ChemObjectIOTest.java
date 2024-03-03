@@ -24,6 +24,7 @@ package org.openscience.cdk.io;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -69,7 +70,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         Assertions.assertNotNull(format, "The IChemObjectIO.getFormat method returned null.");
     }
 
-    private static final IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
+    private static final IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), SilentChemObjectBuilder.getInstance().newAtomContainer(),
             new Reaction()                               };
 
     @Test
@@ -99,11 +100,11 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     /** static objects, shared between tests - difficult to locate bugs. */
     @Deprecated
-    protected static final IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
+    protected static final IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), SilentChemObjectBuilder.getInstance().newAtomContainer(),
             new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
 
     static IChemObject[] acceptableChemObjects() {
-        return new IChemObject[]{new ChemFile(), new ChemModel(), new AtomContainer(), new Reaction(),
+        return new IChemObject[]{new ChemFile(), new ChemModel(), SilentChemObjectBuilder.getInstance().newAtomContainer(), new Reaction(),
                 new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
     }
 

@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -51,7 +52,7 @@ class AllPairsShortestPathsTest {
     @Test
     void testConstruction_Empty() {
 
-        AllPairsShortestPaths asp = new AllPairsShortestPaths(new AtomContainer());
+        AllPairsShortestPaths asp = new AllPairsShortestPaths(SilentChemObjectBuilder.getInstance().newAtomContainer());
 
         // all vs all fro -10 -> 10
         for (int i = -10; i < 10; i++) {

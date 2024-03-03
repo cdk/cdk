@@ -35,6 +35,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -86,7 +87,7 @@ class AtomPlacer3DTest extends CDKTestCase {
      * @return the created test molecule
      */
     private IAtomContainer makeAlphaPinene() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -118,7 +119,7 @@ class AtomPlacer3DTest extends CDKTestCase {
     }
 
     private IAtomContainer makeMethaneWithExplicitHydrogens() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
@@ -152,7 +153,7 @@ class AtomPlacer3DTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, containersList.get(0));
         addExplicitHydrogens(ac);
         IAtomContainer chain = ac.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 16; i < 25; i++) {

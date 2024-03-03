@@ -38,6 +38,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -71,7 +72,7 @@ class SmartsExprReadTest {
     }
 
     static Expr getAtomExpr(String sma, int flav) {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, sma, flav));
         return getAtomExpr(mol.getAtom(0));
     }
@@ -81,7 +82,7 @@ class SmartsExprReadTest {
     }
 
     static Expr getBondExpr(String sma, int flav) {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, sma, flav));
         return getBondExpr(mol.getBond(0));
     }
@@ -92,7 +93,7 @@ class SmartsExprReadTest {
 
     @Test
     void trailingOperator() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "[a#6,]"));
         Assertions.assertFalse(Smarts.parse(mol, "[a#6;]"));
         Assertions.assertFalse(Smarts.parse(mol, "[a#6&]"));
@@ -101,7 +102,7 @@ class SmartsExprReadTest {
 
     @Test
     void leadingOperator() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "[,a#6]"));
         Assertions.assertFalse(Smarts.parse(mol, "[;a#6]"));
         Assertions.assertFalse(Smarts.parse(mol, "[&a#6]"));
@@ -110,7 +111,7 @@ class SmartsExprReadTest {
 
     @Test
     void trailingBondOperator() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "*-,*"));
         Assertions.assertFalse(Smarts.parse(mol, "*-;*"));
         Assertions.assertFalse(Smarts.parse(mol, "*-&*"));
@@ -119,7 +120,7 @@ class SmartsExprReadTest {
 
     @Test
     void leadingBondOperator() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "*,-*"));
         Assertions.assertFalse(Smarts.parse(mol, "*;-*"));
         Assertions.assertFalse(Smarts.parse(mol, "*&-*"));
@@ -128,7 +129,7 @@ class SmartsExprReadTest {
 
     @Test
     void opPrecedence1() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[a#6,a#7]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = or(and(expr(IS_AROMATIC), expr(ELEMENT, 6)),
@@ -138,7 +139,7 @@ class SmartsExprReadTest {
 
     @Test
     void opPrecedence2() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[a;#6,#7]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = and(expr(IS_AROMATIC),
@@ -148,7 +149,7 @@ class SmartsExprReadTest {
 
     @Test
     void opPrecedence3() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[#6,#7;a]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = and(expr(IS_AROMATIC),
@@ -158,7 +159,7 @@ class SmartsExprReadTest {
 
     @Test
     void opPrecedence4() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[#6,#7a]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = or(expr(ELEMENT, 6),
@@ -168,7 +169,7 @@ class SmartsExprReadTest {
 
     @Test
     void opPrecedence5() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[#6&a,#7]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = or(expr(ELEMENT, 7),
@@ -178,7 +179,7 @@ class SmartsExprReadTest {
 
     @Test
     void orList() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[F,Cl,Br,I]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = or(expr(ELEMENT, 9),
@@ -190,7 +191,7 @@ class SmartsExprReadTest {
 
     @Test
     void explicitHydrogen() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2H+]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = and(expr(ISOTOPE, 2),
@@ -200,7 +201,7 @@ class SmartsExprReadTest {
 
     @Test
     void explicitHydrogenNeg() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[H-]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = and(expr(ELEMENT, 1),
@@ -210,7 +211,7 @@ class SmartsExprReadTest {
 
     @Test
     void explicitHydrogenWithAtomMap() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2H+:2]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = and(expr(ISOTOPE, 2),
@@ -224,13 +225,13 @@ class SmartsExprReadTest {
 
     @Test
     void explicitHydrogenWithBadAtomMap() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "[2H+:]"));
     }
 
     @Test
     void nonExplicitHydrogen() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2&H+]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = and(expr(ISOTOPE, 2),
@@ -241,7 +242,7 @@ class SmartsExprReadTest {
 
     @Test
     void nonExplicitHydrogen2() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2,H+]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = or(expr(ISOTOPE, 2),
@@ -252,7 +253,7 @@ class SmartsExprReadTest {
 
     @Test
     void nonExplicitHydrogen3() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[2H1+]"));
         Expr actual = getAtomExpr(mol.getAtom(0));
         Expr expected = and(expr(ISOTOPE, 2),
@@ -403,7 +404,7 @@ class SmartsExprReadTest {
 
     @Test
     void ringSmallestInvalid() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[r0]")); // not in ring
         Assertions.assertFalse(Smarts.parse(mol, "[r1]"));
         Assertions.assertFalse(Smarts.parse(mol, "[r2]"));
@@ -427,7 +428,7 @@ class SmartsExprReadTest {
 
     @Test
     void ringSize() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z8]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(RING_SIZE, 8);
@@ -436,7 +437,7 @@ class SmartsExprReadTest {
 
     @Test
     void ringSize0() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z0]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(IS_IN_CHAIN);
@@ -445,7 +446,7 @@ class SmartsExprReadTest {
 
     @Test
     void ringSizeDefault() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(IS_IN_RING);
@@ -454,7 +455,7 @@ class SmartsExprReadTest {
 
     @Test
     void adjacentHeteroCount() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z2]", Smarts.FLAVOR_CACTVS));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(ALIPHATIC_HETERO_SUBSTITUENT_COUNT, 2);
@@ -463,7 +464,7 @@ class SmartsExprReadTest {
 
     @Test
     void adjacentHetero() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z]", Smarts.FLAVOR_CACTVS));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(HAS_ALIPHATIC_HETERO_SUBSTITUENT);
@@ -472,7 +473,7 @@ class SmartsExprReadTest {
 
     @Test
     void adjacentHetero0() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(mol, "[Z0]", Smarts.FLAVOR_CACTVS));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(HAS_ALIPHATIC_HETERO_SUBSTITUENT).negate();
@@ -702,7 +703,7 @@ class SmartsExprReadTest {
 
     @Test
     void badExprs() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertFalse(Smarts.parse(mol, "*-,*"));
         Assertions.assertFalse(Smarts.parse(mol, "*-;*"));
         Assertions.assertFalse(Smarts.parse(mol, "*-!*"));

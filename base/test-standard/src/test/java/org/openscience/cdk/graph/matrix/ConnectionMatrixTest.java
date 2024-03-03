@@ -50,7 +50,7 @@ class ConnectionMatrixTest extends CDKTestCase {
 
     @Test
     void testLonePairs() throws Exception {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "I"));
         container.addLonePair(container.getBuilder().newInstance(ILonePair.class, container.getAtom(0)));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "H"));

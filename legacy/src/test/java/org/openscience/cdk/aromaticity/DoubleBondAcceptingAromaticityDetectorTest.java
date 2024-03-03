@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -111,7 +112,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
     @Test
     void testPyridine() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("N"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -142,7 +143,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
     @Test
     void testCyclopentadienyl() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setFormalCharge(-1);
         for (int i = 1; i < 5; i++) {
@@ -505,7 +506,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     void test3Amino2MethylPyridine() throws Exception {
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "N");
         a1.setPoint2d(new Point2d(3.7321, 1.345));
         mol.addAtom(a1);

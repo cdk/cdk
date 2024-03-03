@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * @author John May
@@ -76,7 +77,7 @@ class ComponentGroupingTest {
 
     /** @cdk.inchi InChI=1/O2/c1-2 */
     static IAtomContainer oxidanone() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("O"));
         m.addAtom(new Atom("O"));
         m.addBond(0, 1, IBond.Order.DOUBLE);
@@ -85,7 +86,7 @@ class ComponentGroupingTest {
 
     /** @cdk.inchi InChI=1/C2H6O2/c3-1-2-4/h3-4H,1-2H2 */
     static IAtomContainer ethyleneGlycol() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("O"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -98,7 +99,7 @@ class ComponentGroupingTest {
 
     /** InChI=1/C2H6O.H2O/c1-2-3;/h3H,2H2,1H3;1H2 */
     static IAtomContainer ethylAlcoholHydrate() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("O"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));

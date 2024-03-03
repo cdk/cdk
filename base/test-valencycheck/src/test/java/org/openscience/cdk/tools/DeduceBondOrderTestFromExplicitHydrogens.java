@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
@@ -56,7 +57,7 @@ class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      */
     @Test
     void testAcetylene() throws Exception {
-        IAtomContainer keto = new AtomContainer();
+        IAtomContainer keto = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -83,7 +84,7 @@ class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      */
     @Test
     void testKeto() throws Exception {
-        IAtomContainer keto = new AtomContainer();
+        IAtomContainer keto = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -115,7 +116,7 @@ class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      */
     @Test
     void testEnol() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -148,7 +149,7 @@ class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      */
     @Test
     void xtestButadiene() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -187,7 +188,7 @@ class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      */
     @Test
     void testQuinone() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -249,7 +250,7 @@ class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      */
     @Test
     void testBenzene() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -309,7 +310,7 @@ class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      */
     @Test
     void testPyrrole() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -357,7 +358,7 @@ class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
      */
     @Disabled("previously disabled 'xtest'")
     void xtestPyridine() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);

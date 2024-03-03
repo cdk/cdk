@@ -25,6 +25,7 @@
 
 package org.openscience.cdk.io;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.CDKConstants;
@@ -104,51 +105,51 @@ class MDLV2000PropertiesBlockTest {
     void anion() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  CHG  1   1  -1", mock);
-        verify(mock.getAtom(0)).setFormalCharge(-1);
+        Assertions.assertEquals(mock.getAtom(0).getFormalCharge(), -1);
     }
 
     @Test
     void cation() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  CHG  1   1   1", mock);
-        verify(mock.getAtom(0)).setFormalCharge(+1);
+        Assertions.assertEquals(mock.getAtom(0).getFormalCharge(), +1);
     }
 
     @Test
     void multipleCharges() throws Exception {
         IAtomContainer mock = mock(6);
         read("M  CHG  2   2   1   5  -2", mock);
-        verify(mock.getAtom(1)).setFormalCharge(+1);
-        verify(mock.getAtom(4)).setFormalCharge(-2);
+        Assertions.assertEquals(mock.getAtom(1).getFormalCharge(), +1);
+        Assertions.assertEquals(mock.getAtom(4).getFormalCharge(), -2);
     }
 
     @Test
     void multipleChargesTruncated() throws Exception {
         IAtomContainer mock = mock(6);
         read("M  CHG  2   2  -3", mock);
-        verify(mock.getAtom(1)).setFormalCharge(-3);
+        Assertions.assertEquals(mock.getAtom(1).getFormalCharge(), -3);
     }
 
     @Test
     void c13() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  ISO  1   1  13", mock);
-        verify(mock.getAtom(0)).setMassNumber(13);
+        Assertions.assertEquals(mock.getAtom(0).getMassNumber(), 13);
     }
 
     @Test
     void c13n14() throws Exception {
         IAtomContainer mock = mock(4);
         read("M  ISO  2   1  13   3  14", mock);
-        verify(mock.getAtom(0)).setMassNumber(13);
-        verify(mock.getAtom(2)).setMassNumber(14);
+        Assertions.assertEquals(mock.getAtom(0).getMassNumber(), 13);
+        Assertions.assertEquals(mock.getAtom(2).getMassNumber(), 14);
     }
 
     @Test
     void atomValue() throws Exception {
         IAtomContainer mock = mock(3);
         read("V    1 A Comment", mock);
-        verify(mock.getAtom(0)).setProperty(CDKConstants.COMMENT, "A Comment");
+        Assertions.assertEquals(mock.getAtom(0).getProperty(CDKConstants.COMMENT), "A Comment");
     }
 
     @Test
@@ -163,13 +164,13 @@ class MDLV2000PropertiesBlockTest {
     void acdAtomLabel() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  ZZC   1 6", mock);
-        verify(mock.getAtom(0)).setProperty(CDKConstants.ACDLABS_LABEL, "6");
+        Assertions.assertEquals(mock.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), "6");
     }
     
     static IAtomContainer mock(int n) {
-        IAtomContainer mock = new AtomContainer(n, 0, 0, 0);
+        IAtomContainer mock = SilentChemObjectBuilder.getInstance().newAtomContainer();
         for (int i = 0; i < n; i++)
-            mock.addAtom(Mockito.mock(IAtom.class));
+            mock.newAtom();
         return mock;
     }
 
