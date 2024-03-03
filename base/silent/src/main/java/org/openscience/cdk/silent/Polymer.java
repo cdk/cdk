@@ -170,10 +170,8 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         // we need this mapping to correctly clone bonds, single/paired electrons
         // and stereo elements
         // - the expected size stop the map be resized - method from Google Guava
-        Map<IAtom, IAtom> atomMap = new HashMap<>(atomCount >= 3 ? atomCount + atomCount / 3
-                : atomCount + 1);
-        Map<IBond, IBond> bondMap = new HashMap<>(bondCount >= 3 ? bondCount + bondCount / 3
-                : bondCount + 1);
+        Map<IAtom, IAtom> atomMap = new HashMap<>(2*getAtomCount());
+        Map<IBond, IBond> bondMap = new HashMap<>(2*getBondCount());
 
         // now consider atoms that are not associated with any monomer
         for (IAtom atom : atoms()) {
@@ -222,7 +220,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         }
 
         // map each stereo element to a new instance in the clone
-        for (IStereoElement element : stereoElements) {
+        for (IStereoElement element : stereoElements()) {
             clone.addStereoElement(element.map(atomMap, bondMap));
         }
 
