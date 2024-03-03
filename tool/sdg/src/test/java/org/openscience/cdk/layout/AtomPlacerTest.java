@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -76,7 +77,7 @@ class AtomPlacerTest extends CDKTestCase {
 
     @Test
     void cumulated_x2() {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3));
         m.addAtom(atom("C", 1));
         m.addAtom(atom("C", 0));
@@ -110,7 +111,7 @@ class AtomPlacerTest extends CDKTestCase {
 
     @Test
     void cumulated_x3() {
-        IAtomContainer m = new AtomContainer(6, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3));
         m.addAtom(atom("C", 1));
         m.addAtom(atom("C", 0));

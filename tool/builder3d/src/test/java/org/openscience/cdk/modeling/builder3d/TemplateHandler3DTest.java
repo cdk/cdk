@@ -29,6 +29,7 @@ import java.util.StringTokenizer;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
@@ -53,7 +54,7 @@ class TemplateHandler3DTest extends CDKTestCase {
     void testGetInstance() throws Exception {
         TemplateHandler3D th3d = TemplateHandler3D.getInstance();
         // need to trigger a load of the templates
-        th3d.mapTemplates(new AtomContainer(), 0);
+        th3d.mapTemplates(SilentChemObjectBuilder.getInstance().newAtomContainer(), 0);
         Assertions.assertEquals(10751, th3d.getTemplateCount());
     }
 

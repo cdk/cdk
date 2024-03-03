@@ -84,7 +84,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         try (InputStream ins = this.getClass().getResourceAsStream(filename);
              MDLV3000Reader reader = new MDLV3000Reader(ins)) {
-            IAtomContainer m = reader.read(new AtomContainer());
+            IAtomContainer m = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             reader.close();
             Assertions.assertNotNull(m);
             Assertions.assertEquals(31, m.getAtomCount());
@@ -102,7 +102,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     void testEmptyString() throws Exception {
         String emptyString = "";
         try (MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString))) {
-            reader.read(new AtomContainer());
+            reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             reader.close();
             Assertions.fail("Should have received a CDK Exception");
         } catch (CDKException cdkEx) {

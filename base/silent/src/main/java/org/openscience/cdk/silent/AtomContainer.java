@@ -131,7 +131,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     /**
      * Constructs an empty AtomContainer.
      */
-    public AtomContainer() {
+    AtomContainer() {
         this(0, 0, 0, 0);
     }
 
@@ -142,7 +142,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      * @param container An AtomContainer to copy the atoms and electronContainers from
      */
-    public AtomContainer(IAtomContainer container) {
+    AtomContainer(IAtomContainer container) {
         this.atomCount = container.getAtomCount();
         this.bondCount = container.getBondCount();
         this.lonePairCount = container.getLonePairCount();
@@ -182,8 +182,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @param lpCount   Number of lone pairs to be in this container
      * @param seCount   Number of single electrons to be in this container
      */
-    public AtomContainer(int atomCount, int bondCount, int lpCount,
-                         int seCount) {
+    AtomContainer(int atomCount, int bondCount, int lpCount, int seCount) {
         this.atomCount = 0;
         this.bondCount = 0;
         this.lonePairCount = 0;

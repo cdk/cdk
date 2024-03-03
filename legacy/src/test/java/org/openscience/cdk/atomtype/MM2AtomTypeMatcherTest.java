@@ -69,7 +69,7 @@ class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
             InputStream ins = MM2AtomTypeMatcher.class.getResourceAsStream(
                     "mmff94AtomTypeTest_molecule.mol");
             ISimpleChemObjectReader mdl = new MDLV2000Reader(ins);
-            testMolecule = mdl.read(new AtomContainer());
+            testMolecule = mdl.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             logger.debug("Molecule load:" + testMolecule.getAtomCount());
             att.assignAtomTypePropertiesToAtom(testMolecule);
             for (int i = 0; i < testMolecule.getAtomCount(); i++) {
@@ -90,7 +90,7 @@ class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     @Test
     void testFindMatchingAtomType_IAtomContainer() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C");
         final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
         atom.setHybridization(thisHybridization);

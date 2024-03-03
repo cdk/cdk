@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -115,7 +116,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         String mdl = "deuterium.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1\n"
                 + "    0.0000    0.0000    0.0000 H  +1  0  0  0  0\n";
         try (MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT)) {
-            IAtomContainer mol = reader.read(new AtomContainer());
+            IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             IAtom atom = mol.getAtom(0);
             Assertions.assertEquals(1, atom.getAtomicNumber().intValue());
             Assertions.assertEquals(2, atom.getMassNumber().intValue());
@@ -145,7 +146,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         String mdl = "proton.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1\n"
                 + "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
         MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         Assertions.assertNotNull(mol);
         Assertions.assertEquals(1, mol.getAtomCount());
@@ -197,7 +198,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
     void testEmptyString() throws Exception {
         String emptyString = "";
         MDLReader reader = new MDLReader(new StringReader(emptyString), Mode.STRICT);
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         assertNull(mol);
     }
@@ -208,7 +209,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(1).getStereo());
         Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(6).getStereo());
@@ -223,7 +224,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
 
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         Assertions.assertNotNull(mol);
         Assertions.assertEquals(1, ((Integer) mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
@@ -237,7 +238,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne;
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
-        molOne = reader.read(new AtomContainer());
+        molOne = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         // 0,0 or null no Coords, MDLV2000 will get this OK if there is 2D/3D
         // in the headerO

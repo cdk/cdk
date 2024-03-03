@@ -68,7 +68,7 @@ class ATASaturationCheckerTest extends CDKTestCase {
     @Test
     void testASimpleCarbonRing() throws Exception {
         // First we create a simple carbon ring to play with...
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtomType carbon = new AtomType(Elements.CARBON);
 
         IAtom a0 = new Atom("C");
@@ -596,7 +596,7 @@ class ATASaturationCheckerTest extends CDKTestCase {
 
     @Test
     void testButadiene() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtomType carbon = new AtomType(Elements.CARBON);
 
         IAtom a0 = new Atom("C");

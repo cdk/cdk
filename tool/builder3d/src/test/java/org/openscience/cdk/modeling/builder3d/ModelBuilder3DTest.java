@@ -215,7 +215,7 @@ class ModelBuilder3DTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, containersList.get(0));
         addExplicitHydrogens(ac);
         ac = mb3d.generate3DCoordinates(ac, false);
         Assertions.assertNotNull(ac.getAtom(0).getPoint3d());
@@ -242,7 +242,7 @@ class ModelBuilder3DTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, containersList.get(0));
         addExplicitHydrogens(ac);
         ac = mb3d.generate3DCoordinates(ac, false);
         for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -259,7 +259,7 @@ class ModelBuilder3DTest extends CDKTestCase {
     void testModelBuilder3D_keepChemObjectIDs() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 
-        IAtomContainer methanol = new AtomContainer();
+        IAtomContainer methanol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IChemObjectBuilder builder = methanol.getBuilder();
 
         IAtom carbon1 = builder.newInstance(IAtom.class, "C");
@@ -367,7 +367,7 @@ class ModelBuilder3DTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, containersList.get(0));
         ac = mb3d.generate3DCoordinates(ac, false);
         checkAverageBondLength(ac);
     }
@@ -382,7 +382,7 @@ class ModelBuilder3DTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, containersList.get(0));
         ac = mb3d.generate3DCoordinates(ac, false);
         for (int i = 0; i < ac.getAtomCount(); i++) {
             Assertions.assertNotNull(ac.getAtom(i).getPoint3d());
