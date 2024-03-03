@@ -31,6 +31,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -225,5 +229,79 @@ class AtomContainer2Test extends AbstractAtomContainerTest {
         assertThat(mol.getBond(1),
                    is(mol.getAtom(1).getBond(mol.getAtom(2))));
         Assertions.assertNull(mol.getAtom(0).getBond(mol.getAtom(2)));
+    }
+
+
+    @Test
+    void testAtom_getTotalHydrogenCount() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom h1 = mol.newAtom(IAtom.H, 0); // H
+        IAtom c1 = mol.newAtom(IAtom.C, 2); // CH2
+        IAtom h2 = mol.newAtom(IAtom.H, 0); // H
+        mol.newBond(h1, c1);
+        mol.newBond(c1, h2);
+        Assertions.assertEquals(0, h1.getImplicitHydrogenCount());
+        Assertions.assertEquals(2, c1.getImplicitHydrogenCount());
+        Assertions.assertEquals(0, h2.getImplicitHydrogenCount());
+        Assertions.assertEquals(0, h1.getTotalHydrogenCount());
+        Assertions.assertEquals(4, c1.getTotalHydrogenCount());
+        Assertions.assertEquals(0, h2.getTotalHydrogenCount());
+    }
+
+    @Test
+    void testAtom_getTotalHydrogenCount_B2H6() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom b1 = mol.newAtom(IAtom.B, 2); // BH2
+        IAtom b2 = mol.newAtom(IAtom.B, 2); // BH2
+        IAtom h1 = mol.newAtom(IAtom.H, 0); // H
+        IAtom h2 = mol.newAtom(IAtom.H, 0); // H
+        mol.newBond(b1, h1);
+        mol.newBond(b1, h2);
+        mol.newBond(b2, h1);
+        mol.newBond(b2, h2);
+        Assertions.assertEquals(2, b1.getImplicitHydrogenCount());
+        Assertions.assertEquals(2, b2.getImplicitHydrogenCount());
+        Assertions.assertEquals(0, h1.getImplicitHydrogenCount());
+        Assertions.assertEquals(0, h2.getImplicitHydrogenCount());
+        Assertions.assertEquals(4, b1.getTotalHydrogenCount());
+        Assertions.assertEquals(4, b2.getTotalHydrogenCount());
+        Assertions.assertEquals(0, h1.getTotalHydrogenCount());
+        Assertions.assertEquals(0, h2.getTotalHydrogenCount());
+    }
+
+    @Test
+    void testAtom_getTotalHydrogenCountNull() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom a1 = mol.newAtom(IAtom.H, 0); // H
+        IAtom a2 = mol.newAtom(IAtom.C, 2); // CH2
+        IAtom a3 = mol.newAtom(IAtom.H, 0); // H
+        mol.newBond(a1, a2);
+        mol.newBond(a2, a3);
+        a2.setImplicitHydrogenCount(null);
+        Assertions.assertEquals(0, mol.getAtom(0).getImplicitHydrogenCount());
+        Assertions.assertNull(mol.getAtom(1).getImplicitHydrogenCount());
+        Assertions.assertEquals(0, mol.getAtom(2).getImplicitHydrogenCount());
+        Assertions.assertEquals(0, mol.getAtom(0).getTotalHydrogenCount());
+        Assertions.assertNull(mol.getAtom(1).getTotalHydrogenCount());
+        Assertions.assertEquals(0, mol.getAtom(2).getTotalHydrogenCount());
+    }
+
+    @Test
+    void testAtom_neighbors() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom h1 = mol.newAtom(IAtom.H, 0); // H
+        IAtom c1 = mol.newAtom(IAtom.C, 2); // CH2
+        IAtom h2 = mol.newAtom(IAtom.H, 0); // H
+        mol.newBond(h1, c1);
+        mol.newBond(c1, h2);
+        Iterable<IAtom> nbors = c1.neighbors();
+        List<IAtom> result = new ArrayList<>();
+        for (IAtom nbor : nbors)
+            result.add(nbor);
+        Assertions.assertEquals(Arrays.asList(h1, h2), result);
+        // ensure iterator resets
+        for (IAtom nbor : nbors)
+            result.add(nbor);
+        Assertions.assertEquals(Arrays.asList(h1,h2,h1,h2), result);
     }
 }
