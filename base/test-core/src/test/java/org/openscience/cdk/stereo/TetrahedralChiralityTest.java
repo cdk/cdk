@@ -54,7 +54,7 @@ class TetrahedralChiralityTest extends CDKTestCase {
 
     @BeforeAll
     static void setup() throws Exception {
-        molecule = new AtomContainer();
+        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("Cl"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("Br"));

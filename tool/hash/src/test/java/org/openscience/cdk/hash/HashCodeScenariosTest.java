@@ -808,7 +808,7 @@ class HashCodeScenariosTest {
     void butan2ol_UsingStereoElement() {
 
         // C[CH](O)CC
-        IAtomContainer butan2ol = new AtomContainer();
+        IAtomContainer butan2ol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         butan2ol.addAtom(new Atom("C"));
         butan2ol.addAtom(new Atom("C"));
         butan2ol.addAtom(new Atom("O"));
@@ -876,7 +876,7 @@ class HashCodeScenariosTest {
     void dichloroethenes_stereoElements() {
 
         // CLC=CCL
-        IAtomContainer dichloroethene = new AtomContainer();
+        IAtomContainer dichloroethene = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         dichloroethene.addAtom(new Atom("Cl"));
         dichloroethene.addAtom(new Atom("C"));
         dichloroethene.addAtom(new Atom("C"));
@@ -917,7 +917,7 @@ class HashCodeScenariosTest {
     void dichloroethenes_stereoElements_explicitH() {
 
         // CLC=CCL
-        IAtomContainer dichloroethene = new AtomContainer();
+        IAtomContainer dichloroethene = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         dichloroethene.addAtom(new Atom("Cl")); // Cl1
         dichloroethene.addAtom(new Atom("C")); // C2
         dichloroethene.addAtom(new Atom("C")); // C3
@@ -1015,7 +1015,7 @@ class HashCodeScenariosTest {
     void dichloroethenes_stereoElements_explicitH_suppressed() {
 
         // CLC=CCL
-        IAtomContainer dichloroethene = new AtomContainer();
+        IAtomContainer dichloroethene = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         dichloroethene.addAtom(new Atom("Cl")); // Cl1
         dichloroethene.addAtom(new Atom("C")); // C2
         dichloroethene.addAtom(new Atom("C")); // C3

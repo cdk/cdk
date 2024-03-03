@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,7 +51,7 @@ class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
 
     @Test
     void testCompare_Null_2DCoordinates() {
-        IAtomContainer atomContainer = new AtomContainer();
+        IAtomContainer atomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atomContainer.addAtom(new Atom("N"));
         Comparator<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter();
         Assertions.assertEquals(0, comparator.compare(atomContainer, atomContainer), "null 2d Coords<-> null 2d coords");
@@ -58,7 +59,7 @@ class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
 
     @Test
     void testCompare_self_valid_2DCoordinates() {
-        IAtomContainer atomContainer = new AtomContainer();
+        IAtomContainer atomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("N");
         atom.setPoint2d(new Point2d(10, 10));
         atomContainer.addAtom(atom);
@@ -69,12 +70,12 @@ class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
 
     @Test
     void testCompare_minusOne() {
-        IAtomContainer atomContainer = new AtomContainer();
+        IAtomContainer atomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("N");
         atom.setPoint2d(new Point2d(10, 10));
         atomContainer.addAtom(atom);
 
-        IAtomContainer atomContainer2 = new AtomContainer();
+        IAtomContainer atomContainer2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom2 = new Atom("P");
         atom2.setPoint2d(new Point2d(20, 10));
         atomContainer2.addAtom(atom2);
@@ -85,12 +86,12 @@ class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
 
     @Test
     void testCompare_plusOne() {
-        IAtomContainer atomContainer = new AtomContainer();
+        IAtomContainer atomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("N");
         atom.setPoint2d(new Point2d(20, 10));
         atomContainer.addAtom(atom);
 
-        IAtomContainer atomContainer2 = new AtomContainer();
+        IAtomContainer atomContainer2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom2 = new Atom("P");
         atom2.setPoint2d(new Point2d(20, 5));
         atomContainer2.addAtom(atom2);

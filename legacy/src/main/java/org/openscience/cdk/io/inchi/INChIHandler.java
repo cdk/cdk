@@ -23,6 +23,7 @@ import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -102,8 +103,8 @@ public class INChIHandler extends DefaultHandler {
         } else if ("formula".equals(local)) {
             if (tautomer != null) {
                 logger.info("Parsing <formula> chars: ", currentChars);
-                tautomer = new AtomContainer(inchiTool.processFormula(
-                        setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars));
+                tautomer = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, (inchiTool.processFormula(
+                        setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars)));
             } else {
                 logger.warn("Cannot set atom info for empty tautomer");
             }
@@ -141,7 +142,7 @@ public class INChIHandler extends DefaultHandler {
                 if (atts.getQName(i).equals("version")) logger.info("INChI version: ", atts.getValue(i));
             }
         } else if ("structure".equals(local)) {
-            tautomer = new AtomContainer();
+            tautomer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         } else {
             // skip all other elements
         }

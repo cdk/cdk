@@ -148,7 +148,7 @@ class PDBWriterTest extends ChemObjectIOTest {
     }
 
     private IAtomContainer singleAtomMolecule(String id, Integer formalCharge) {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C", new Point3d(0.0, 0.0, 0.0));
         mol.addAtom(atom);
         mol.setID(id);
@@ -159,7 +159,7 @@ class PDBWriterTest extends ChemObjectIOTest {
     }
 
     private IAtomContainer singleBondMolecule() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));
         mol.addAtom(new Atom("O", new Point3d(1.0, 1.0, 1.0)));
         mol.addBond(0, 1, IBond.Order.SINGLE);

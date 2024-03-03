@@ -42,7 +42,7 @@ class InChINumbersToolsTest extends CDKTestCase {
 
     @Test
     void testSimpleNumbering() throws CDKException {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
         container.addBond(0, 1, IBond.Order.SINGLE);
@@ -54,7 +54,7 @@ class InChINumbersToolsTest extends CDKTestCase {
 
     @Test
     void testHydrogens() throws CDKException {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("H"));
         container.addAtom(new Atom("C"));
         container.addBond(0, 1, IBond.Order.SINGLE);

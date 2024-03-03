@@ -130,7 +130,7 @@ class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     void testAlanin() throws Exception {
-        IAtomContainer mol1 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
         mol1.addAtom(new Atom("N", new Point2d(1, 0)));
         // 1
@@ -283,7 +283,7 @@ class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     void testCisTransDecalin() throws Exception {
-        IAtomContainer mol1 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
 
         mol1.addAtom(new Atom("H", new Point2d(0, 3))); // 0
@@ -369,7 +369,7 @@ class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     void testDoubleBondConfiguration() throws Exception {
-        IAtomContainer mol1 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
         mol1.addAtom(new Atom("S", new Point2d(0, 0)));
         // 1
@@ -446,7 +446,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void testPartitioning() throws Exception {
         String smiles;
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         Atom sodium = new Atom("Na");
         sodium.setFormalCharge(+1);
@@ -466,7 +466,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void testBug791091() throws Exception {
         String smiles;
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
@@ -489,7 +489,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void testBug590236() throws Exception {
         String smiles;
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
         molecule.addAtom(new Atom("C"));
         Atom carbon2 = new Atom("C");
@@ -509,7 +509,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void testSFBug956923_aromatic() throws Exception {
         String smiles;
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         SmilesGenerator sg = new SmilesGenerator().aromatic();
         Atom sp2CarbonWithOneHydrogen = new Atom("C");
         sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
@@ -535,7 +535,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void testSFBug956923_nonAromatic() throws Exception {
         String smiles;
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         Atom sp2CarbonWithOneHydrogen = new Atom("C");
         sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
@@ -561,7 +561,7 @@ class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     void testAtomPermutation() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("S"));
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("O"));
@@ -579,7 +579,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         String smiles;
         String oldSmiles = sg.create(mol);
         while (acap.hasNext()) {
-            smiles = sg.create(new AtomContainer(acap.next()));
+            smiles = sg.create(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, acap.next()));
             //logger.debug(smiles);
             Assertions.assertEquals(oldSmiles, smiles);
         }
@@ -591,7 +591,7 @@ class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     void testBondPermutation() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("S"));
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("O"));
@@ -609,7 +609,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         String smiles;
         String oldSmiles = sg.create(mol);
         while (acbp.hasNext()) {
-            smiles = sg.create(new AtomContainer(acbp.next()));
+            smiles = sg.create(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, acbp.next()));
             //logger.debug(smiles);
             Assertions.assertEquals(oldSmiles, smiles);
         }
@@ -644,7 +644,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         IAtom atom = new PseudoAtom("Star");
         SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
         String smiles;
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(atom);
         addImplicitHydrogens(molecule);
         smiles = sg.create(molecule);
@@ -658,13 +658,13 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void testReactionSMILES() throws Exception {
         Reaction reaction = new Reaction();
-        AtomContainer methane = new AtomContainer();
+        IAtomContainer methane = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         methane.addAtom(new Atom("C"));
         reaction.addReactant(methane);
-        IAtomContainer magic = new AtomContainer();
+        IAtomContainer magic = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         magic.addAtom(new PseudoAtom("magic"));
         reaction.addAgent(magic);
-        IAtomContainer gold = new AtomContainer();
+        IAtomContainer gold = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         gold.addAtom(new Atom("Au"));
         reaction.addProduct(gold);
 
@@ -708,11 +708,11 @@ class SmilesGeneratorTest extends CDKTestCase {
         String filename = "D-mannose.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer mol1 = reader.read(new AtomContainer());
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         filename = "D+-glucose.mol";
         ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer mol2 = reader.read(new AtomContainer());
+        IAtomContainer mol2 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         SmilesGenerator sg = SmilesGenerator.isomeric();
 
         define(mol1, anticlockwise(mol1, 0, 0, 1, 5, 9), anticlockwise(mol1, 1, 1, 0, 2, 8),
@@ -733,7 +733,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         String filename = "cyclooctan.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer mol1 = reader.read(new AtomContainer());
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
         String moleculeSmile = sg.create(mol1);
         Assertions.assertEquals("C\\1=C\\CCCCCC1", moleculeSmile);
@@ -747,7 +747,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         String filename = "cycloocten.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer mol1 = reader.read(new AtomContainer());
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
         String moleculeSmile = sg.create(mol1);
         Assertions.assertEquals("C1/C=C\\CCCCC1", moleculeSmile);
@@ -775,7 +775,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         String filename = "bug1089770-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer mol1 = reader.read(new AtomContainer());
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
         String moleculeSmile = sg.create(mol1);
         //logger.debug(filename + " -> " + moleculeSmile);
@@ -791,7 +791,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         String filename = "bug1089770-2.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer mol1 = reader.read(new AtomContainer());
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
         String moleculeSmile = sg.create(mol1);
         //logger.debug(filename + " -> " + moleculeSmile);
@@ -808,7 +808,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         String filename = "bug1014344-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
-        IAtomContainer mol1 = reader.read(new AtomContainer());
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         addImplicitHydrogens(mol1);
         SmilesGenerator sg = new SmilesGenerator();
         String molSmiles = sg.create(mol1);
@@ -819,7 +819,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol2 = ((IChemFile) cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0)
                 .getMoleculeSet().getAtomContainer(0);
         addImplicitHydrogens(mol2);
-        String cmlSmiles = sg.create(new AtomContainer(mol2));
+        String cmlSmiles = sg.create(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, mol2));
         Assertions.assertEquals(molSmiles, cmlSmiles);
     }
 
@@ -833,10 +833,10 @@ class SmilesGeneratorTest extends CDKTestCase {
         InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
         InputStream ins2 = this.getClass().getResourceAsStream(filename_mol);
         MDLV2000Reader reader1 = new MDLV2000Reader(ins1, Mode.STRICT);
-        IAtomContainer mol1 = reader1.read(new AtomContainer());
+        IAtomContainer mol1 = reader1.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
 
         MDLV2000Reader reader2 = new MDLV2000Reader(ins2, Mode.STRICT);
-        IAtomContainer mol2 = reader2.read(new AtomContainer());
+        IAtomContainer mol2 = reader2.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
 
         SmilesGenerator sg = SmilesGenerator.isomeric();
 
@@ -893,7 +893,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol1 = model.getMoleculeSet().getAtomContainer(0);
 
         MDLReader reader2 = new MDLReader(ins2);
-        IAtomContainer mol2 = reader2.read(new AtomContainer());
+        IAtomContainer mol2 = reader2.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
 
         addImplicitHydrogens(mol1);
         addImplicitHydrogens(mol2);
@@ -912,14 +912,14 @@ class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     void testPreservingFormalCharge() throws Exception {
-        AtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom(Elements.OXYGEN));
         mol.getAtom(0).setFormalCharge(-1);
         mol.addAtom(new Atom(Elements.CARBON));
         mol.addBond(0, 1, IBond.Order.SINGLE);
         addImplicitHydrogens(mol);
         SmilesGenerator generator = new SmilesGenerator();
-        generator.create(new AtomContainer(mol));
+        generator.create(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, mol));
         Assertions.assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
         // mmm, that does not reproduce the bug findings yet :(
     }

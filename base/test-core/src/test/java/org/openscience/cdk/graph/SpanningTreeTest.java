@@ -76,7 +76,7 @@ class SpanningTreeTest extends CDKTestCase {
 
     @Test
     void testSpanningTree_IAtomContainer() {
-        SpanningTree sTree = new SpanningTree(new AtomContainer());
+        SpanningTree sTree = new SpanningTree(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         Assertions.assertNotNull(sTree);
     }
 

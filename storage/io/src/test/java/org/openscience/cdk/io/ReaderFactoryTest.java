@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.formats.CMLFormat;
@@ -179,7 +180,7 @@ class ReaderFactoryTest extends AbstractReaderFactoryTest {
         Assertions.assertEquals(((IChemFormat) PubChemCompoundXMLFormat.getInstance()).getReaderClassName(), reader
                 .getClass().getName());
         // now try reading something from it
-        IAtomContainer molecule = reader.read(new AtomContainer());
+        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         Assertions.assertNotNull(molecule);
         Assertions.assertNotSame(0, molecule.getAtomCount());
         Assertions.assertNotSame(0, molecule.getBondCount());
@@ -196,7 +197,7 @@ class ReaderFactoryTest extends AbstractReaderFactoryTest {
         Assertions.assertEquals(((IChemFormat) XYZFormat.getInstance()).getReaderClassName(), reader.getClass().getName());
         // now try reading something from it
         IChemFile chemFile = reader.read(new ChemFile());
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(chemFile)) {
             molecule.add(container);
         }
@@ -214,7 +215,7 @@ class ReaderFactoryTest extends AbstractReaderFactoryTest {
         Assertions.assertEquals(((IChemFormat) XYZFormat.getInstance()).getReaderClassName(), reader.getClass().getName());
         // now try reading something from it
         IChemFile chemFile = reader.read(new ChemFile());
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(chemFile)) {
             molecule.add(container);
         }

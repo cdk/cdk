@@ -25,6 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -50,7 +51,7 @@ class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
         Object[] params = {2};
         descriptor.setParameters(params);
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom a0 = new Atom("C");
         mol.addAtom(a0);
         a0.setPoint3d(new Point3d(1.2492, -0.2810, 0.0000));

@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -37,7 +38,7 @@ class StructGenAtomTypeGuesserTest extends CDKTestCase {
 
     @Test
     void testPossibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom = new Atom("C");
         atom.setImplicitHydrogenCount(3);
         Atom atom2 = new Atom("N");

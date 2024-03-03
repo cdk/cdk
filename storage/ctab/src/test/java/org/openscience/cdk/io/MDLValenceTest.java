@@ -27,6 +27,7 @@ package org.openscience.cdk.io;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -42,7 +43,7 @@ class MDLValenceTest {
 
     @Test
     void sodium_metal() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("Na");
         atom.setValency(0);
         container.addAtom(atom);
@@ -53,7 +54,7 @@ class MDLValenceTest {
 
     @Test
     void sodium_hydride() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("Na");
         atom.setValency(1);
         container.addAtom(atom);
@@ -64,7 +65,7 @@ class MDLValenceTest {
 
     @Test
     void sodium_implicit() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("Na");
         container.addAtom(atom);
         MDLValence.apply(container);
@@ -74,7 +75,7 @@ class MDLValenceTest {
 
     @Test
     void bismuth() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom bi1 = new Atom("Bi");
         IAtom h2 = new Atom("H");
         bi1.setFormalCharge(+2);
@@ -90,7 +91,7 @@ class MDLValenceTest {
 
     @Test
     void tin_ii() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("Sn");
         atom.setValency(2);
         container.addAtom(atom);
@@ -101,7 +102,7 @@ class MDLValenceTest {
 
     @Test
     void tin_iv() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("Sn");
         atom.setValency(4);
         IAtom hydrogen = new Atom("H");
@@ -115,7 +116,7 @@ class MDLValenceTest {
 
     @Test
     void carbon_neutral() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C");
         container.addAtom(atom);
         MDLValence.apply(container);
@@ -125,7 +126,7 @@ class MDLValenceTest {
 
     @Test
     void carbon_cation() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C");
         atom.setFormalCharge(-1);
         container.addAtom(atom);
@@ -136,7 +137,7 @@ class MDLValenceTest {
 
     @Test
     void carbon_cation_doubleBonded() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom c1 = new Atom("C");
         IAtom c2 = new Atom("C");
         c1.setFormalCharge(-1);
@@ -152,7 +153,7 @@ class MDLValenceTest {
 
     @Test
     void carbon_anion() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C");
         atom.setFormalCharge(+1);
         container.addAtom(atom);
@@ -163,7 +164,7 @@ class MDLValenceTest {
 
     @Test
     void bismuth_isImplicit() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom bi1 = new Atom("Bi");
         IAtom h2 = new Atom("H");
         bi1.setFormalCharge(+2);

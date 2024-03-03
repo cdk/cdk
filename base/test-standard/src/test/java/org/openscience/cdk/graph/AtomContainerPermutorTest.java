@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -32,8 +34,8 @@ class AtomContainerPermutorTest extends CDKTestCase {
 
     @Test
     void testAtomPermutation() {
-        AtomContainer ac = new org.openscience.cdk.AtomContainer();
-        AtomContainer result;
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer result;
         String atoms;
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("N"));
@@ -51,7 +53,7 @@ class AtomContainerPermutorTest extends CDKTestCase {
         while (acap.hasNext()) {
             counter++;
             atoms = "";
-            result = (AtomContainer) acap.next();
+            result = acap.next();
             for (int f = 0; f < result.getAtomCount(); f++) {
                 atoms += result.getAtom(f).getSymbol();
             }
@@ -61,8 +63,8 @@ class AtomContainerPermutorTest extends CDKTestCase {
 
     @Test
     void testBondPermutation() {
-        AtomContainer ac = new org.openscience.cdk.AtomContainer();
-        AtomContainer result;
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer result;
         String bonds;
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("N"));
@@ -80,7 +82,7 @@ class AtomContainerPermutorTest extends CDKTestCase {
         while (acap.hasNext()) {
             counter++;
             bonds = "";
-            result = (AtomContainer) acap.next();
+            result = acap.next();
             for (int f = 0; f < result.getBondCount(); f++) {
                 bonds += result.getBond(f).getOrder();
             }

@@ -449,7 +449,7 @@ public class MoleculeBuilder {
     }
 
     private static IAtomContainer makeBenzene() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
         mol.addAtom(new Atom("C")); // 2
@@ -477,7 +477,7 @@ public class MoleculeBuilder {
      * @cdk.created 2003-08-15
      */
     private static IAtomContainer makeAlkane(int chainLength) {
-        IAtomContainer currentChain = new AtomContainer();
+        IAtomContainer currentChain = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         //Add the initial atom
         currentChain.addAtom(new Atom("C"));

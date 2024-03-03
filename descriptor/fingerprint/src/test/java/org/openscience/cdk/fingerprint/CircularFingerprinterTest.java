@@ -47,6 +47,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDK;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -213,7 +214,7 @@ class CircularFingerprinterTest extends CDKTestCase {
             byte[] molBytes = content.get(basefn + ".mol");
             if (molBytes == null) break;
 
-            AtomContainer mol = new AtomContainer();
+            IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             MDLV2000Reader mdl = new MDLV2000Reader(new ByteArrayInputStream(molBytes));
             mdl.read(mol);
             mdl.close();
@@ -250,7 +251,7 @@ class CircularFingerprinterTest extends CDKTestCase {
         return list.toArray(new CircularFingerprinter.FP[list.size()]);
     }
 
-    private void validateFingerprints(String label, AtomContainer mol, int classType,
+    private void validateFingerprints(String label, IAtomContainer mol, int classType,
             CircularFingerprinter.FP[] validate) throws Exception {
         CircularFingerprinter circ = new CircularFingerprinter(classType);
         try {
@@ -320,7 +321,7 @@ class CircularFingerprinterTest extends CDKTestCase {
 
     @Test
     void protonsDontCauseNPE() throws Exception {
-        IAtomContainer proton = new AtomContainer(1, 0, 0, 0);
+        IAtomContainer proton = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         proton.addAtom(atom("H", +1, 0));
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
         assertThat(circ.getBitFingerprint(proton).cardinality(), is(0));
@@ -328,7 +329,7 @@ class CircularFingerprinterTest extends CDKTestCase {
 
     @Test
     void iminesDetectionDoesntCauseNPE() throws Exception {
-        IAtomContainer pyrazole = new AtomContainer(6, 6, 0, 0);
+        IAtomContainer pyrazole = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         pyrazole.addAtom(atom("H", 0, 0));
         pyrazole.addAtom(atom("N", 0, 0));
         pyrazole.addAtom(atom("C", 0, 1));
@@ -350,7 +351,7 @@ class CircularFingerprinterTest extends CDKTestCase {
      */
     @Test
     void partialCoordinatesDontCauseNPE() throws Exception {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, 0.000, 0.000));
         m.addAtom(atom("C", 0, 1.299, -0.750));
         m.addAtom(atom("H", 0, 0));
@@ -368,7 +369,7 @@ class CircularFingerprinterTest extends CDKTestCase {
 
 	@Test
     void testNonZZeroPlaner() throws Exception {
-	    IAtomContainer mol = new AtomContainer();
+	    IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 	    Atom[] atoms = new Atom[] {
 	        new Atom("C"),
 	        new Atom("F"),

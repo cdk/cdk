@@ -30,6 +30,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.test.io.ChemObjectWriterTest;
@@ -56,7 +57,7 @@ class Mopac7WriterTest extends ChemObjectWriterTest {
         StringWriter strWriter = new StringWriter();
         Mopac7Writer writer = new Mopac7Writer(strWriter);
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("Cr"));
         writer.write(mol);
         writer.close();
@@ -68,7 +69,7 @@ class Mopac7WriterTest extends ChemObjectWriterTest {
 
     @Test
     void testWriteWithOptimizationTrue() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("Cr"));
 
         StringWriter strWriter = new StringWriter();
@@ -83,7 +84,7 @@ class Mopac7WriterTest extends ChemObjectWriterTest {
 
     @Test
     void testWriteWithOptimizationFalse() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("Cr"));
 
         StringWriter strWriter = new StringWriter();
@@ -98,7 +99,7 @@ class Mopac7WriterTest extends ChemObjectWriterTest {
 
     @Test
     void testWriteWithCustomCommands() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("Cr"));
 
         StringWriter strWriter = new StringWriter();
@@ -113,7 +114,7 @@ class Mopac7WriterTest extends ChemObjectWriterTest {
 
     @Test
     void testChargedCompounds() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom aluminum = new Atom("Al");
         aluminum.setFormalCharge(+3);
         mol.addAtom(aluminum);
