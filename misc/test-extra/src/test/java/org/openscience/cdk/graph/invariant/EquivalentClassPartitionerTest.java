@@ -47,10 +47,6 @@ import java.io.InputStream;
  */
 class EquivalentClassPartitionerTest extends CDKTestCase {
 
-    AtomContainer C40C3V = null;
-    AtomContainer C24D6D = null;
-    AtomContainer C28TD  = null;
-
     @Test
     void testEquivalent() throws Exception {
         IAtomContainer C40C3V = DefaultChemObjectBuilder.getInstance().newAtomContainer();

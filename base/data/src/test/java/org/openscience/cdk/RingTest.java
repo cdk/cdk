@@ -65,7 +65,7 @@ class RingTest extends AbstractRingTest {
 
     @Test
     void testRing_IAtomContainer() {
-        IAtomContainer container = new org.openscience.cdk.AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
 

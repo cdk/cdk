@@ -54,7 +54,7 @@ class ChemModelTest extends AbstractChemModelTest {
         Assertions.assertTrue(chemModel.isEmpty());
 
         IAtom atom = new Atom("N");
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtomContainerSet mset = new AtomContainerSet();
         mol.addAtom(atom);
         mset.addAtomContainer(mol);
