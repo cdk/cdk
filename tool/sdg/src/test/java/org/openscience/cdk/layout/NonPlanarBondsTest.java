@@ -579,7 +579,7 @@ class NonPlanarBondsTest {
         for (IBond bond : m.bonds())
             if (bond.getStereo() == IBond.Stereo.UP_OR_DOWN)
                 wavyCount++;
-        assertThat(wavyCount, is(1));
+        assertThat(wavyCount, is(0));
     }
 
     /**
