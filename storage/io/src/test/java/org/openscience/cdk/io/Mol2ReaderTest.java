@@ -114,7 +114,7 @@ class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         String filename = "fromWebsite.mol2";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = reader.read(new AtomContainer());
+        IAtomContainer molecule = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         Assertions.assertNotNull(molecule);
         IAtomContainer reference = molecule.clone();
@@ -183,7 +183,7 @@ class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         String filename = "fromWebsite.mol2";
         InputStream in = Mol2ReaderTest.class.getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(in);
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         Assertions.assertNotNull(mol);
         Assertions.assertEquals(12, mol.getAtomCount());
@@ -400,7 +400,7 @@ class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Mol2Reader mol2Reader = null;
         try {
             mol2Reader = new Mol2Reader(getClass().getResourceAsStream("CLMW1.mol2"));
-            IAtomContainer container = mol2Reader.read(new AtomContainer());
+            IAtomContainer container = mol2Reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             for (IAtom atom : container.atoms())
                 Assertions.assertNotNull(atom.getAtomicNumber());
         } finally {

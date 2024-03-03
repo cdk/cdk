@@ -167,7 +167,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
      */
     @Test
     void xtestPyrrole() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -218,7 +218,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
 
     @Test
     void xtestPyridine() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -290,7 +290,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
      */
     @Test
     void xtestBenzene() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);

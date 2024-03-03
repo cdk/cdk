@@ -73,7 +73,7 @@ class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
             InputStream ins = MMFF94AtomTypeMatcherTest.class.getResourceAsStream(
                     "mmff94AtomTypeTest_molecule.mol");
             MDLV2000Reader mdl = new MDLV2000Reader(new InputStreamReader(ins));
-            testMolecule = mdl.read(new AtomContainer());
+            testMolecule = mdl.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
 
             att.assignAtomTypePropertiesToAtom(testMolecule);
             for (int i = 0; i < testMolecule.getAtomCount(); i++) {
@@ -96,7 +96,7 @@ class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test
     @Disabled("Old atom typing method - see new Mmff class")
     void testFindMatchingAtomType_IAtomContainer() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C");
         final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
         atom.setHybridization(thisHybridization);

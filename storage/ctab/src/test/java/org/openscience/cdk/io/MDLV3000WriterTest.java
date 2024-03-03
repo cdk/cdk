@@ -61,7 +61,7 @@ class MDLV3000WriterTest {
 
     @Test
     void outputValencyWhenNeeded() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("Na"));
         mol.addAtom(new Atom("Na"));
         mol.getAtom(0).setImplicitHydrogenCount(0); // Na metal
@@ -73,7 +73,7 @@ class MDLV3000WriterTest {
 
     @Test
     void outputFormalCharge() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -87,7 +87,7 @@ class MDLV3000WriterTest {
 
     @Test
     void outputMassNumber() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -102,7 +102,7 @@ class MDLV3000WriterTest {
 
     @Test
     void outputRadical() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.addSingleElectron(0);
@@ -112,7 +112,7 @@ class MDLV3000WriterTest {
 
     @Test
     void nullBondOrder() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
         mol.addBond(new Bond(mol.getAtom(0), mol.getAtom(1), null));
@@ -127,7 +127,7 @@ class MDLV3000WriterTest {
 
     @Test
     void unsetBondOrder() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, IBond.Order.UNSET);
@@ -142,7 +142,7 @@ class MDLV3000WriterTest {
 
     @Test
     void solidWedgeBonds() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
         mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
@@ -154,7 +154,7 @@ class MDLV3000WriterTest {
 
     @Test
     void hashedWedgeBonds() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
         mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.DOWN);
@@ -166,7 +166,7 @@ class MDLV3000WriterTest {
 
     @Test
     void solidWedgeInvBonds() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
         mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP_INVERTED);
@@ -178,7 +178,7 @@ class MDLV3000WriterTest {
 
     @Test
     void hashedWedgeInvBonds() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
         mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.DOWN_INVERTED);
@@ -190,7 +190,7 @@ class MDLV3000WriterTest {
 
     @Test
     void writeLeadingZero() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Atom           atom   = new Atom("C");
         atom.setPoint2d(new Point2d(0.5, 1.2));
         mol.addAtom(atom);
@@ -199,7 +199,7 @@ class MDLV3000WriterTest {
 
     @Test
     void writeParity() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -229,7 +229,7 @@ class MDLV3000WriterTest {
 
     @Test
     void writeParityHNotLast() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -261,7 +261,7 @@ class MDLV3000WriterTest {
 
     @Test
     void writeParityImplH() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -288,7 +288,7 @@ class MDLV3000WriterTest {
 
     @Test
     void writeParityImplHInverted() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("O"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -315,7 +315,7 @@ class MDLV3000WriterTest {
 
     @Test
     void writeSRUs() throws IOException, CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
@@ -345,7 +345,7 @@ class MDLV3000WriterTest {
     @Test
     void writeMultipleGroup() throws IOException, CDKException {
         final int repeatAtoms = 50;
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         for (int i = 0; i < repeatAtoms; i++)
             mol.addAtom(new Atom("C"));
@@ -378,7 +378,7 @@ class MDLV3000WriterTest {
     @Test
     void roundTripSRU() throws IOException, CDKException {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bracketstyles.mol"))) {
-            IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             String res = writeToStr(mol);
             assertThat(res, CoreMatchers.containsString("M  V30 1 SRU 0 ATOMS=(1 2) XBONDS=(2 1 2) LABEL=n CONNECT=HT BRKXYZ=(9 -2.5742-\n"
                                                         + "M  V30  4.207 0 -3.0692 3.3497 0 0 0 0) BRKXYZ=(9 -3.1626 3.3497 0 -3.6576 4.2-\n"
@@ -392,7 +392,7 @@ class MDLV3000WriterTest {
     @Test
     void roundTripExpandedAbbrv() throws IOException, CDKException {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("triphenyl-phosphate-expanded.mol"))) {
-            IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             String res = writeToStr(mol);
             assertThat(res, CoreMatchers.containsString("M  V30 1 SUP 0 ATOMS=(6 6 19 20 21 22 23) XBONDS=(1 5) ESTATE=E LABEL=Ph\n"
                                                         + "M  V30 2 SUP 0 ATOMS=(6 8 14 15 16 17 18) XBONDS=(1 7) ESTATE=E LABEL=Ph\n"
@@ -403,7 +403,7 @@ class MDLV3000WriterTest {
     @Test
     void roundTripOrderMixtures() throws IOException, CDKException {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-ord-mixture.mol"))) {
-            IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             String res = writeToStr(mol);
             assertThat(res, CoreMatchers.containsString("M  V30 1 FOR 0 ATOMS=(24 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21-\n"
                                                         + "M  V30  22 23 24) BRKXYZ=(9 -6.9786 -1.9329 0 -6.9786 4.5847 0 0 0 0) BRKXYZ=(-\n"
@@ -420,7 +420,7 @@ class MDLV3000WriterTest {
     @Test
     void positionalVariationRoundTrip() throws Exception {
         try (MDLV3000Reader mdlr = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
-            IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             String res = writeToStr(mol);
             assertThat(res, CoreMatchers.containsString("M  V30 8 1 8 9 ATTACH=ANY ENDPTS=(5 2 3 4 5 6)\n"));
         }

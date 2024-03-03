@@ -48,7 +48,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripMolecule() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
@@ -57,7 +57,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripAtom() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         Model model = Convertor.molecule2Model(mol);
         IAtomContainer rtMol = Convertor.model2Molecule(model, builder);
@@ -86,7 +86,7 @@ class ConvertorTest extends CDKTestCase {
     }
 
     private void roundtripBond_Order(IBond.Order order) {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, order);
@@ -98,7 +98,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripElectronContainer_ElectronCount() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -111,7 +111,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripChemObject() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom object = new Atom("C");
         object.setID("atom1");
         mol.addAtom(object);
@@ -123,7 +123,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripElement() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom object = new Atom("C");
         object.setAtomicNumber(6);
         mol.addAtom(object);
@@ -135,7 +135,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripPseudoAtom() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IPseudoAtom object = new PseudoAtom("FunnyAtom");
         mol.addAtom(object);
         Model model = Convertor.molecule2Model(mol);
@@ -146,7 +146,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripAtomType() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom object = new Atom("C");
         object.setAtomTypeName("C.sp3");
         object.setFormalCharge(+1);
@@ -159,7 +159,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripIsotope_ExactMass() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom object = new Atom("C");
         object.setExactMass(0.3);
         mol.addAtom(object);
@@ -171,7 +171,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripIsotope_MassNumber() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom object = new Atom("C");
         object.setMassNumber(13);
         mol.addAtom(object);
@@ -183,7 +183,7 @@ class ConvertorTest extends CDKTestCase {
 
     @Test
     void roundtripIsotope_NaturalAbundance() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom object = new Atom("C");
         object.setNaturalAbundance(0.95);
         mol.addAtom(object);
@@ -244,7 +244,7 @@ class ConvertorTest extends CDKTestCase {
     }
 
     private void roundtripAtomType_Hybridization(Hybridization hybrid) {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom object = new Atom("C");
         object.setHybridization(hybrid);
         mol.addAtom(object);
@@ -275,7 +275,7 @@ class ConvertorTest extends CDKTestCase {
     }
 
     private void roundtripAtomType_MaxBondOrder(Order order) {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom object = new Atom("C");
         object.setMaxBondOrder(order);
         mol.addAtom(object);

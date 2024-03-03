@@ -226,7 +226,7 @@ class CxSmilesTest {
 
     @Test
     void generateLabelledSmiles() throws CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.addAtom(new Atom("C"));
@@ -242,7 +242,7 @@ class CxSmilesTest {
 
     @Test
     void generateCanonLabelledSmiles() throws CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.addAtom(new Atom("C"));
