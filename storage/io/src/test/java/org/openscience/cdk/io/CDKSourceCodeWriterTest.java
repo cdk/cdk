@@ -52,7 +52,7 @@ class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
     @Test
     void testAccepts() throws Exception {
-        Assertions.assertTrue(chemObjectIO.accepts(AtomContainer.class));
+        Assertions.assertTrue(chemObjectIO.accepts(IAtomContainer.class));
     }
 
     @Test

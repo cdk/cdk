@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -74,7 +73,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         reader.setReaderMode(Mode.STRICT);
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(ChemModel.class));
-        Assertions.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(IAtomContainer.class));
     }
 
     @Test

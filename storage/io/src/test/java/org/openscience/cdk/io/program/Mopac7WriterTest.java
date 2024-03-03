@@ -49,7 +49,7 @@ class Mopac7WriterTest extends ChemObjectWriterTest {
     @Test
     void testAccepts() throws Exception {
         Mopac7Writer reader = new Mopac7Writer();
-        Assertions.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(IAtomContainer.class));
     }
 
     @Test
