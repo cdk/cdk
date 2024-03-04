@@ -159,14 +159,57 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testGetFlagValueZeroDefault() {
         IChemObject chemObject = newChemObject();
-        Assertions.assertEquals((int) 0, chemObject.getFlagValue());
+        Assertions.assertEquals(0, chemObject.getFlagValue());
     }
 
     @Test
     public void testGetFlagValue() {
         IChemObject chemObject = newChemObject();
         chemObject.setFlag(IChemObject.ALIPHATIC, true);
-        Assertions.assertNotSame((int) 0, chemObject.getFlagValue());
+        Assertions.assertNotSame(0, chemObject.getFlagValue());
+    }
+
+    @Test
+    public void testSet() {
+        IChemObject chemObject = newChemObject();
+        Assertions.assertFalse(chemObject.is(IChemObject.VISITED));
+        chemObject.set(IChemObject.VISITED);
+        Assertions.assertTrue(chemObject.is(IChemObject.VISITED));
+    }
+
+    @Test
+    public void testIsChecksAllFlags() {
+        IChemObject chemObject = newChemObject();
+        Assertions.assertFalse(chemObject.is(IChemObject.AROMATIC+IChemObject.IN_RING));
+        chemObject.set(IChemObject.AROMATIC);
+        Assertions.assertFalse(chemObject.is(IChemObject.AROMATIC+IChemObject.IN_RING));
+        Assertions.assertTrue(chemObject.is(IChemObject.AROMATIC));
+        chemObject.set(IChemObject.IN_RING);
+        Assertions.assertTrue(chemObject.is(IChemObject.AROMATIC+IChemObject.IN_RING));
+    }
+
+    @Test
+    public void testClearFlags() {
+        IChemObject chemObject = newChemObject();
+        chemObject.set(IChemObject.AROMATIC+IChemObject.IN_RING);
+        Assertions.assertTrue(chemObject.is(IChemObject.AROMATIC+IChemObject.IN_RING));
+        chemObject.clear(IChemObject.AROMATIC);
+        Assertions.assertFalse(chemObject.is(IChemObject.AROMATIC+IChemObject.IN_RING));
+        Assertions.assertTrue(chemObject.is(IChemObject.IN_RING));
+        chemObject.set(IChemObject.AROMATIC);
+        Assertions.assertTrue(chemObject.is(IChemObject.AROMATIC+IChemObject.IN_RING));
+        chemObject.clear(IChemObject.AROMATIC+IChemObject.IN_RING);
+        Assertions.assertFalse(chemObject.is(IChemObject.AROMATIC+IChemObject.IN_RING));
+        Assertions.assertFalse(chemObject.is(IChemObject.AROMATIC));
+        Assertions.assertFalse(chemObject.is(IChemObject.IN_RING));
+    }
+
+    @Test
+    public void testRawFlags() {
+        IChemObject chemObject = newChemObject();
+        chemObject.set(IChemObject.AROMATIC+IChemObject.IN_RING);
+        Assertions.assertEquals(IChemObject.AROMATIC+IChemObject.IN_RING,
+                                chemObject.flags());
     }
 
     /**
