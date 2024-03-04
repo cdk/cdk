@@ -22,10 +22,10 @@
  */
 package org.openscience.cdk.signature;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import signature.AbstractGraphBuilder;
@@ -71,7 +71,7 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
         } else if (edgeLabel.equals("p")) {
             IBond bond = builder.newInstance(IBond.class, container.getAtom(vertexIndex1),
                     container.getAtom(vertexIndex2), IBond.Order.SINGLE);
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
             container.addBond(bond);
         }
     }

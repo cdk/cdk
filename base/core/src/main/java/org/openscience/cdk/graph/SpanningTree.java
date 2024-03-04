@@ -22,11 +22,11 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
@@ -259,7 +259,7 @@ public class SpanningTree {
                         for (int atomCount = 0; atomCount < ringBond.getAtomCount(); atomCount++) {
                             IAtom atom = ringBond.getAtom(atomCount);
                             if (!fragContainer.contains(atom)) {
-                                atom.setFlag(CDKConstants.ISINRING, true);
+                                atom.setFlag(IChemObject.IN_RING, true);
                                 fragContainer.addAtom(atom);
                             }
                         }

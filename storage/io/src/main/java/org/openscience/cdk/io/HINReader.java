@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -283,7 +282,7 @@ public class HINReader extends DefaultChemObjectReader {
                     for (int i = 2; i < toks.length; i += 2) {
                         int molnum = Integer.parseInt(toks[i]); // starts from 1
                         int atnum = Integer.parseInt(toks[i + 1]); // starts from 1
-                        mols.get(molnum - 1).getAtom(atnum - 1).setFlag(CDKConstants.ISAROMATIC, true);
+                        mols.get(molnum - 1).getAtom(atnum - 1).setFlag(IChemObject.AROMATIC, true);
                         n++;
                     }
                     assert n == natom;

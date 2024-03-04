@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.forcefield.mmff;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -115,7 +114,7 @@ public class Mmff {
         // note: for MMFF we need to remove current aromatic flags for type
         // assignment (they are restored after)
         for (IChemObject chemObj : oldArom)
-            chemObj.setFlag(CDKConstants.ISAROMATIC, false);
+            chemObj.setFlag(IChemObject.AROMATIC, false);
         String[] atomTypes = mmffAtomTyper.symbolicTypes(mol, adjList, edgeMap, aromBonds);
 
         boolean hasUnkType = false;
@@ -131,7 +130,7 @@ public class Mmff {
 
         // restore aromatic flags and mark the MMFF aromatic bonds
         for (IChemObject chemObj : oldArom)
-            chemObj.setFlag(CDKConstants.ISAROMATIC, true);
+            chemObj.setFlag(IChemObject.AROMATIC, true);
         for (IBond bond : aromBonds)
             bond.setProperty(MMFF_AROM, true);
 
@@ -402,10 +401,10 @@ public class Mmff {
     private Set<IChemObject> getAromatics(IAtomContainer mol) {
         Set<IChemObject> oldArom = new HashSet<>();
         for (IAtom atom : mol.atoms())
-            if (atom.getFlag(CDKConstants.ISAROMATIC))
+            if (atom.getFlag(IChemObject.AROMATIC))
                 oldArom.add(atom);
         for (IBond bond : mol.bonds())
-            if (bond.getFlag(CDKConstants.ISAROMATIC))
+            if (bond.getFlag(IChemObject.AROMATIC))
                 oldArom.add(bond);
         return oldArom;
     }

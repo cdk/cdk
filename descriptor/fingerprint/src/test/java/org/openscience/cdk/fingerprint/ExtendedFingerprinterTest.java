@@ -34,13 +34,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -427,7 +427,7 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
         // should pass since we have not explicitly detected aromaticity
         for (IAtom atom : mol.atoms()) {
-            Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(atom.getFlag(IChemObject.AROMATIC));
         }
 
         String diff1 = AtomContainerDiff.diff(mol, clone);

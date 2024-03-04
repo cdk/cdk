@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -693,7 +694,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      */
     @Override
     public boolean isAromatic() {
-        return getFlag(CDKConstants.ISAROMATIC);
+        return getFlag(IChemObject.AROMATIC);
     }
 
     /**
@@ -701,7 +702,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      */
     @Override
     public void setIsAromatic(boolean arom) {
-        setFlag(CDKConstants.ISAROMATIC, arom);
+        setFlag(IChemObject.AROMATIC, arom);
     }
 
     /**
@@ -709,7 +710,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      */
     @Override
     public boolean isInRing() {
-        return getFlag(CDKConstants.ISINRING);
+        return getFlag(IChemObject.IN_RING);
     }
 
     /**
@@ -717,7 +718,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      */
     @Override
     public void setIsInRing(boolean ring) {
-        setFlag(CDKConstants.ISINRING, ring);
+        setFlag(IChemObject.IN_RING, ring);
     }
 
     /**

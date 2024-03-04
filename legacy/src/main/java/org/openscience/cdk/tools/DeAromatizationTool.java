@@ -26,9 +26,9 @@ package org.openscience.cdk.tools;
 import java.util.List;
 import java.util.Objects;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -68,11 +68,11 @@ public class DeAromatizationTool {
     public static boolean deAromatize(IRing ring) {
         boolean allaromatic = true;
         for (int i = 0; i < ring.getBondCount(); i++) {
-            if (!ring.getBond(i).getFlag(CDKConstants.ISAROMATIC)) allaromatic = false;
+            if (!ring.getBond(i).getFlag(IChemObject.AROMATIC)) allaromatic = false;
         }
         if (!allaromatic) return false;
         for (int i = 0; i < ring.getBondCount(); i++) {
-            if (ring.getBond(i).getFlag(CDKConstants.ISAROMATIC)) ring.getBond(i).setOrder(IBond.Order.SINGLE);
+            if (ring.getBond(i).getFlag(IChemObject.AROMATIC)) ring.getBond(i).setOrder(IBond.Order.SINGLE);
         }
         boolean result = false;
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(ring);
@@ -467,7 +467,7 @@ public class DeAromatizationTool {
     {
         for (IAtom atom : ring.atoms())
         {
-            if (!atom.getFlag(CDKConstants.ISAROMATIC))
+            if (!atom.getFlag(IChemObject.AROMATIC))
             {
                 return false;
             }
@@ -491,11 +491,11 @@ public class DeAromatizationTool {
     {
         for (IAtom atom : ring.atoms())
         {
-            atom.setFlag(CDKConstants.ISAROMATIC, false);
+            atom.setFlag(IChemObject.AROMATIC, false);
         }
         for (IBond bond : ring.bonds())
         {
-            bond.setFlag(CDKConstants.ISAROMATIC, false);
+            bond.setFlag(IChemObject.AROMATIC, false);
         }
     }
     

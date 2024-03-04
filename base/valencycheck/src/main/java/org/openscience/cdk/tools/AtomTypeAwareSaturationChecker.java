@@ -30,6 +30,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
@@ -137,7 +138,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
      */
     private void decideBondOrder(IAtomContainer atomContainer, int start) throws CDKException {
         for (int i = 0; i < atomContainer.getBondCount(); i++)
-            if (atomContainer.getBond(i).getFlag(CDKConstants.SINGLE_OR_DOUBLE))
+            if (atomContainer.getBond(i).getFlag(IChemObject.SINGLE_OR_DOUBLE))
                 atomContainer.getBond(i).setOrder(IBond.Order.SINGLE);
 
         for (int i = start; i < atomContainer.getBondCount(); i++) {
@@ -164,7 +165,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
     private void checkBond(IAtomContainer atomContainer, int index) throws CDKException {
         IBond bond = atomContainer.getBond(index);
 
-        if (bond != null && bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
+        if (bond != null && bond.getFlag(IChemObject.SINGLE_OR_DOUBLE)) {
             try {
                 oldBondOrder = bond.getOrder();
                 bond.setOrder(IBond.Order.SINGLE);

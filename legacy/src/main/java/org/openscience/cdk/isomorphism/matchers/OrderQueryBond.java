@@ -18,9 +18,9 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -45,7 +45,7 @@ public class OrderQueryBond extends QueryBond implements IQueryBond {
         if (this.getOrder() == bond.getOrder()) {
             // bond orders match
             return true;
-        } else if (this.getFlag(CDKConstants.ISAROMATIC) && bond.getFlag(CDKConstants.ISAROMATIC)) {
+        } else if (this.getFlag(IChemObject.AROMATIC) && bond.getFlag(IChemObject.AROMATIC)) {
             return true;
         } // else
         return false;

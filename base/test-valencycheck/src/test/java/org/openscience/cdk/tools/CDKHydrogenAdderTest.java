@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.PseudoAtom;
@@ -547,9 +547,9 @@ class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addBond(6, 7, IBond.Order.TRIPLE); // 8
 
         for (int f = 0; f < 6; f++) {
-            mol.getAtom(f).setFlag(CDKConstants.ISAROMATIC, true);
+            mol.getAtom(f).setFlag(IChemObject.AROMATIC, true);
             mol.getAtom(f).setHybridization(IAtomType.Hybridization.SP2);
-            mol.getBond(f).setFlag(CDKConstants.ISAROMATIC, true);
+            mol.getBond(f).setFlag(IChemObject.AROMATIC, true);
         }
         findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);

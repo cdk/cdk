@@ -23,10 +23,10 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 
@@ -75,7 +75,7 @@ public class AromaticityCalculator {
                 }
 
                 // Count the Electron if bond order = 1.5
-                else if (conectedBond.getFlag(CDKConstants.ISAROMATIC) && ring.contains(conectedBond)) {
+                else if (conectedBond.getFlag(IChemObject.AROMATIC) && ring.contains(conectedBond)) {
                     numDoubleBond = 1;
                 }
 
@@ -89,7 +89,7 @@ public class AromaticityCalculator {
             } else if (atom.getAtomicNumber() != IElement.C) {
                 //Heteroatom probably in sp3 hybrid therefore 2 electrons contributed.
                 eCount = eCount + 2;
-            } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+            } else if (atom.getFlag(IChemObject.AROMATIC)) {
                 eCount++;
             } else if (allConnectedBondsSingle && atom.getAtomicNumber() == IElement.C && atom.getFormalCharge() == 1.0) {
                 // This is for tropylium and kinds.

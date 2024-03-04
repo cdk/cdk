@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.DfPattern;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
@@ -169,7 +170,7 @@ public final class Expr {
 
     private static boolean isInRingSize(IAtom atom, IBond prev, IAtom beg,
                                         int size, int req) {
-        atom.setFlag(CDKConstants.VISITED, true);
+        atom.setFlag(IChemObject.VISITED, true);
         for (IBond bond : atom.bonds()) {
             if (bond == prev)
                 continue;
@@ -177,17 +178,17 @@ public final class Expr {
             if (nbr.equals(beg))
                 return size == req;
             else if (size < req &&
-                     !nbr.getFlag(CDKConstants.VISITED) &&
+                     !nbr.getFlag(IChemObject.VISITED) &&
                      isInRingSize(nbr, bond, beg, size + 1, req))
                 return true;
         }
-        atom.setFlag(CDKConstants.VISITED, false);
+        atom.setFlag(IChemObject.VISITED, false);
         return false;
     }
 
     private static boolean isInRingSize(IAtom atom, int size) {
         for (IAtom a : atom.getContainer().atoms())
-            a.setFlag(CDKConstants.VISITED, false);
+            a.setFlag(IChemObject.VISITED, false);
         return isInRingSize(atom, null, atom, 1, size);
     }
 

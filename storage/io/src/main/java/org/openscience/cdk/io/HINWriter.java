@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -195,7 +194,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                                 bondType = "d";
                             else if (bondOrder == IBond.Order.TRIPLE)
                                 bondType = "t";
-                            else if (bond.getFlag(CDKConstants.ISAROMATIC)) bondType = "a";
+                            else if (bond.getFlag(IChemObject.AROMATIC)) bondType = "a";
                             buf = buf + (serial + 1) + " " + bondType + " ";
                             ncon++;
                         }

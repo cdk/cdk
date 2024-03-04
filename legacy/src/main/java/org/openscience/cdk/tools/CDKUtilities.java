@@ -18,11 +18,11 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -219,12 +219,12 @@ public class CDKUtilities {
 
         for (int i = 0; i <= m.getAtomCount() - 1; i++) {
 
-            m.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
+            m.getAtom(i).setFlag(IChemObject.AROMATIC, false);
 
             jloop: for (int j = 0; j <= rs.getAtomContainerCount() - 1; j++) {
                 //logger.debug(i+"\t"+j);
                 IRing r = (IRing) rs.getAtomContainer(j);
-                if (!r.getFlag(CDKConstants.ISAROMATIC)) {
+                if (!r.getFlag(IChemObject.AROMATIC)) {
                     continue jloop;
                 }
 
@@ -233,7 +233,7 @@ public class CDKUtilities {
                 //logger.debug("haveatom="+haveatom);
 
                 if (haveatom && r.getAtomCount() == 6) {
-                    m.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+                    m.getAtom(i).setFlag(IChemObject.AROMATIC, true);
                 }
 
             }

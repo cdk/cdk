@@ -18,11 +18,11 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -166,7 +166,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
             }
         }
         for (IBond bond : ac.bonds()) {
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+            if (bond.getFlag(IChemObject.AROMATIC)) {
                 aromaticBondsCount += 1;
             }
         }

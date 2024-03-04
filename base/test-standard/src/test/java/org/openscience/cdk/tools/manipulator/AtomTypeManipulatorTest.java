@@ -20,10 +20,10 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomType;
@@ -44,9 +44,9 @@ class AtomTypeManipulatorTest extends CDKTestCase {
     void testConfigure_IAtom_IAtomType() {
         IAtom atom = new Atom(Elements.CARBON);
         IAtomType atomType = new AtomType(Elements.CARBON);
-        atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
+        atomType.setFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR, true);
         AtomTypeManipulator.configure(atom, atomType);
-        Assertions.assertEquals(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR), atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        Assertions.assertEquals(atomType.getFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR), atom.getFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR));
     }
 
     @Test
@@ -93,12 +93,12 @@ class AtomTypeManipulatorTest extends CDKTestCase {
     @Test
     void aromaticityIsNotOverwritten() {
         IAtom atom = new Atom(Elements.CARBON);
-        atom.setFlag(CDKConstants.ISAROMATIC, true);
+        atom.setFlag(IChemObject.AROMATIC, true);
         IAtomType atomType = new AtomType(Elements.Unknown.toIElement());
-        atomType.setFlag(CDKConstants.ISAROMATIC, false);
+        atomType.setFlag(IChemObject.AROMATIC, false);
         atomType.setAtomTypeName("C.sp3");
         AtomTypeManipulator.configure(atom, atomType);
-        assertThat(atom.getFlag(CDKConstants.ISAROMATIC), is(true));
+        assertThat(atom.getFlag(IChemObject.AROMATIC), is(true));
     }
 
     /**
@@ -107,11 +107,11 @@ class AtomTypeManipulatorTest extends CDKTestCase {
     @Test
     void aromaticitySetIfForType() {
         IAtom atom = new Atom(Elements.CARBON);
-        atom.setFlag(CDKConstants.ISAROMATIC, false);
+        atom.setFlag(IChemObject.AROMATIC, false);
         IAtomType atomType = new AtomType(Elements.Unknown.toIElement());
-        atomType.setFlag(CDKConstants.ISAROMATIC, true);
+        atomType.setFlag(IChemObject.AROMATIC, true);
         atomType.setAtomTypeName("C.am");
         AtomTypeManipulator.configure(atom, atomType);
-        assertThat(atom.getFlag(CDKConstants.ISAROMATIC), is(true));
+        assertThat(atom.getFlag(IChemObject.AROMATIC), is(true));
     }
 }

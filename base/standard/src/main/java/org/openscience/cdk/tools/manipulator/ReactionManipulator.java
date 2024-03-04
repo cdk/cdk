@@ -586,8 +586,8 @@ public class ReactionManipulator {
      * <br>
      * Note that this method is not a complete reversal of {@link #perceiveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IReaction)}
      * since the atomic symbol of the atoms remain unchanged. Also, all flags that were set
-     * by the configuration method (such as {@link CDKConstants#IS_HYDROGENBOND_ACCEPTOR} or
-     * {@link CDKConstants#ISAROMATIC}) will be set to False.
+     * by the configuration method (such as {@link org.openscience.cdk.interfaces.IChemObject#HYDROGEN_BOND_ACCEPTOR} or
+     * {@link org.openscience.cdk.interfaces.IChemObject#AROMATIC}) will be set to False.
      *
      * @param reaction the reaction whose atoms confiuration properties are to be cleared
      * @see #perceiveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IReaction)

@@ -22,12 +22,12 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -241,7 +241,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
         private boolean isAromaticRing(IAtomContainer ring) {
             for (IBond bond : ring.bonds())
-                if (!bond.getFlag(CDKConstants.ISAROMATIC)) return false;
+                if (!bond.getFlag(IChemObject.AROMATIC)) return false;
             return true;
         }
 

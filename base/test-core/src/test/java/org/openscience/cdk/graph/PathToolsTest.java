@@ -28,7 +28,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -71,9 +71,9 @@ class PathToolsTest extends CDKTestCase {
     void testResetFlags_IAtomContainer() throws Exception {
         IAtomContainer atomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom1 = new Atom("C");
-        atom1.setFlag(CDKConstants.VISITED, true);
+        atom1.setFlag(IChemObject.VISITED, true);
         IAtom atom2 = new Atom("C");
-        atom2.setFlag(CDKConstants.VISITED, true);
+        atom2.setFlag(IChemObject.VISITED, true);
         IBond bond1 = new Bond(atom1, atom2, Order.SINGLE);
         atomContainer.addAtom(atom1);
         atomContainer.addAtom(atom2);
@@ -83,10 +83,10 @@ class PathToolsTest extends CDKTestCase {
 
         // now assume that no VISITED is set
         for (IAtom iAtom : atomContainer.atoms()) {
-            Assertions.assertNull(iAtom.getProperty(CDKConstants.VISITED));
+            Assertions.assertNull(iAtom.getProperty(IChemObject.VISITED));
         }
         for (IBond iBond : atomContainer.bonds()) {
-            Assertions.assertNull(iBond.getProperty(CDKConstants.VISITED));
+            Assertions.assertNull(iBond.getProperty(IChemObject.VISITED));
         }
     }
 
@@ -277,7 +277,7 @@ class PathToolsTest extends CDKTestCase {
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            atom.setFlag(CDKConstants.VISITED, false);
+            atom.setFlag(IChemObject.VISITED, false);
         }
 
         IAtomContainer paths = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);

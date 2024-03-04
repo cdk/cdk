@@ -32,13 +32,24 @@ import java.util.Map;
 public interface IChemObject extends ICDKObject {
 
     /**
-     * Flag that is set if the ChemObject is placed during layout
+     * Flag that is set if the ChemObject is placed when calculating 2D/3D
+     * layouts.
      */
     int PLACED = 0x0001;
     /**
      * Flag that is set when the ChemObject is part of a ring.
      */
     int IN_RING = 0x0002;
+    /**
+     * Flag that is set when the ChemObject is part of a ring.
+     * Note !isInRing() is preferred.
+     */
+    int NOT_IN_RING = 0x0004;
+    /**
+     * Flag that is set if a ChemObject is part of an aliphatic chain.
+     * Since normally ALIPHATIC = !AROMATIC and AROMATIC = !ALIPHATIC.
+     */
+    int ALIPHATIC = 0x0008;
     /**
      * Flag is set if ChemObject has been visited.
      */
@@ -52,8 +63,9 @@ public interface IChemObject extends ICDKObject {
      */
     int CONJUGATED = 0x0040;
     /**
-     * Flag is set if a ChemObject is mapped to another chemobject.
+     * Flag is set if a ChemObject is mapped to another ChemObject.
      * It is used for example in subgraph isomorphism search.
+     * Note this flag is not currently used.
      */
     int MAPPED = 0x0080;
     /**
@@ -65,7 +77,7 @@ public interface IChemObject extends ICDKObject {
      */
     int HYDROGEN_BOND_ACCEPTOR = 0x0200;
     /**
-     * Flag is set if a chemobject has reactive center.
+     * Flag is set if a ChemObject has reactive center.
      * It is used for example in reaction.
      */
     int REACTIVE_CENTER = 0x0400;
@@ -73,6 +85,19 @@ public interface IChemObject extends ICDKObject {
      * Flag is set if an atom could be typed.
      */
     int TYPEABLE = 0x0800;
+    /**
+     * Flag used for marking uncertainty of the bond order.
+     * If used on an
+     * <ul>
+     *  <li>{@link IAtomContainer} it means that one or several of the bonds have
+     * 		this flag raised (which may indicate aromaticity).</li>
+     *  <li>{@link IBond} it means that it's unclear whether the bond is a single or
+     * 		double bond.</li>
+     *  <li>{@link IAtom} it is a way for the Smiles parser to indicate that this atom was
+     * 		written with a lower case letter, e.g. 'c' rather than 'C'</li>
+     * </ul>
+     */
+    int SINGLE_OR_DOUBLE = 0x1000;
 
     /**
      * Use this to add yourself to this IChemObject as a listener. In order to do
@@ -247,8 +272,8 @@ public interface IChemObject extends ICDKObject {
 
     /**
      * Sets the value of some flag. The flag is a mask from a given
-     * CDKConstant (e.g. {@link org.openscience.cdk.CDKConstants#ISAROMATIC}
-     * or {@link org.openscience.cdk.CDKConstants#VISITED}). The flags are
+     * CDKConstant (e.g. {@link #AROMATIC}
+     * or {@link #VISITED}). The flags are
      * intrinsic internal properties and should not be used to store custom
      * values, please use {@link #setProperty(Object, Object)}.
      *
@@ -263,13 +288,12 @@ public interface IChemObject extends ICDKObject {
      * @param  mask   flag to set the value for
      * @param  value  value to assign to flag
      * @see           #getFlag
-     * @see           org.openscience.cdk.CDKConstants
      */
     void setFlag(int mask, boolean value);
 
     /**
      * Returns the value of a given flag. The flag is a mask from a given
-     * CDKConstant (e.g. {@link org.openscience.cdk.CDKConstants#ISAROMATIC}).
+     * CDKConstant (e.g. {@link #AROMATIC}).
      *
      * <pre>{@code
      * if(chemObject.getFlag(CDKConstants.ISAROMATIC)){
@@ -280,7 +304,6 @@ public interface IChemObject extends ICDKObject {
      * @param  mask  flag to retrieve the value of
      * @return       true if the flag <code>flag_type</code> is set
      * @see          #setFlag
-     * @see          org.openscience.cdk.CDKConstants
      */
     boolean getFlag(int mask);
 

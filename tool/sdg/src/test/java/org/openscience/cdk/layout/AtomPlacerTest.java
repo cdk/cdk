@@ -31,7 +31,7 @@ import javax.vecmath.Vector2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
@@ -87,7 +87,7 @@ class AtomPlacerTest extends CDKTestCase {
         m.addBond(2, 3, IBond.Order.DOUBLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.getAtom(0).setPoint2d(new Point2d(0, 0));
-        m.getAtom(0).setFlag(CDKConstants.ISPLACED, true);
+        m.getAtom(0).setFlag(IChemObject.PLACED, true);
 
         AtomPlacer atomPlacer = new AtomPlacer();
         atomPlacer.setMolecule(m);
@@ -123,7 +123,7 @@ class AtomPlacerTest extends CDKTestCase {
         m.addBond(3, 4, IBond.Order.DOUBLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
         m.getAtom(0).setPoint2d(new Point2d(0, 0));
-        m.getAtom(0).setFlag(CDKConstants.ISPLACED, true);
+        m.getAtom(0).setFlag(IChemObject.PLACED, true);
 
         AtomPlacer atomPlacer = new AtomPlacer();
         atomPlacer.setMolecule(m);

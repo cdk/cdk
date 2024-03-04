@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -1437,7 +1438,7 @@ public class CMLCoreModule implements ICMLModule {
             }
 
             if (hasAtomAromaticities) {
-                if (atomAromaticities.get(i) != null) currentAtom.setFlag(CDKConstants.ISAROMATIC, true);
+                if (atomAromaticities.get(i) != null) currentAtom.setFlag(IChemObject.AROMATIC, true);
             }
 
             if (hasPartialCharge) {
@@ -1597,7 +1598,7 @@ public class CMLCoreModule implements ICMLModule {
                     } else if ("A".equals(bondOrder)) {
                         //                        cdo.setObjectProperty("Bond", "order", "1.5");
                         currentBond.setOrder(Order.SINGLE);
-                        currentBond.setFlag(CDKConstants.ISAROMATIC, true);
+                        currentBond.setFlag(IChemObject.AROMATIC, true);
                     } else {
                         //                        cdo.setObjectProperty("Bond", "order", bondOrder);
                         currentBond.setOrder(BondManipulator.createBondOrder(Double.parseDouble(bondOrder)));
@@ -1620,7 +1621,7 @@ public class CMLCoreModule implements ICMLModule {
                 if (aroms.hasNext()) {
                     Object nextArom = aroms.next();
                     if (nextArom != null && ((boolean) nextArom)) {
-                        currentBond.setFlag(CDKConstants.ISAROMATIC, true);
+                        currentBond.setFlag(IChemObject.AROMATIC, true);
                     }
                 }
 

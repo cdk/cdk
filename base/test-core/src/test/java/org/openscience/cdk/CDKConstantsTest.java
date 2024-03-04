@@ -25,6 +25,7 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -39,7 +40,7 @@ class CDKConstantsTest extends CDKTestCase {
 
     @Test
     void testCDKConstants() {
-        Assertions.assertFalse(CDKConstants.ISAROMATIC == -1);
+        Assertions.assertFalse(IChemObject.AROMATIC == -1);
     }
 
     @Test
@@ -47,14 +48,14 @@ class CDKConstantsTest extends CDKTestCase {
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom atom1 = new Atom(Elements.CARBON);
-        atom1.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        atom1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         IAtom atom2 = new Atom(Elements.CARBON);
         IAtom atom3 = new Atom(Elements.CARBON);
         IAtom atom4 = new Atom(Elements.CARBON);
         IAtom atom5 = new Atom(Elements.CARBON);
 
         IBond bond1 = new Bond(atom1, atom2);
-        bond1.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        bond1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         IBond bond2 = new Bond(atom2, atom3);
         IBond bond3 = new Bond(atom3, atom4);
         IBond bond4 = new Bond(atom4, atom5);
@@ -73,16 +74,16 @@ class CDKConstantsTest extends CDKTestCase {
         mol.addBond(bond5);
 
         for (int i = 0; i < 5; i++) {
-            if (mol.getAtom(i).getFlag(CDKConstants.SINGLE_OR_DOUBLE))
-                mol.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+            if (mol.getAtom(i).getFlag(IChemObject.SINGLE_OR_DOUBLE))
+                mol.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         }
 
         // Now we have created a molecule, so let's test it...
-        Assertions.assertTrue(atom1.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(bond1.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(atom1.getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(bond1.getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(0).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(0).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getFlag(IChemObject.SINGLE_OR_DOUBLE));
 
     }
 

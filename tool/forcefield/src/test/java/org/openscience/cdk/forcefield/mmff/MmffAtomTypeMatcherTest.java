@@ -27,10 +27,10 @@ package org.openscience.cdk.forcefield.mmff;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.io.ByteArrayInputStream;
@@ -80,7 +80,7 @@ class MmffAtomTypeMatcherTest {
         IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("C"));
         container.getAtom(0).setImplicitHydrogenCount(4);
-        container.getAtom(0).setFlag(CDKConstants.ISAROMATIC, true);
+        container.getAtom(0).setFlag(IChemObject.AROMATIC, true);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             INSTANCE.symbolicTypes(container);
         });

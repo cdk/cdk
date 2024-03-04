@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -645,7 +645,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     haveCsX = true;
                 }
 
-                if (ca.get(j).getFlag(CDKConstants.ISAROMATIC)) {
+                if (ca.get(j).getFlag(IChemObject.AROMATIC)) {
                     haveCsAr = true;
                 }
 
@@ -1278,7 +1278,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         IAtom ca1 = (IAtom) ca.get(1);
 
         if (fragment[i].equals("SssO")) {
-            if (ca0.getFlag(CDKConstants.ISAROMATIC) || ca1.getFlag(CDKConstants.ISAROMATIC)) {
+            if (ca0.getFlag(IChemObject.AROMATIC) || ca1.getFlag(IChemObject.AROMATIC)) {
                 frags[60]++;
                 alogpfrag[i] = 60;
 
@@ -1334,7 +1334,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         for (int j = 0; j <= nbors.size() - 1; j++) {
             if (nbors.get(j).getAtomicNumber() == IElement.H) continue;
-            if (nbors.get(j).getFlag(CDKConstants.ISAROMATIC))
+            if (nbors.get(j).getFlag(IChemObject.AROMATIC))
                 nAr++;
             else
                 nAl++;
@@ -1352,9 +1352,9 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     IAtom ca2k = (IAtom) ca2.get(k);
                     if (atomContainer.indexOf(ca2k) != i) {
                         if (ca2k.getAtomicNumber() != IElement.C) {
-                            if (!ca2k.getFlag(CDKConstants.ISAROMATIC)
-                                && !nbors.get(j).getFlag(CDKConstants.ISAROMATIC)
-                                && !ai.getFlag(CDKConstants.ISAROMATIC)) {
+                            if (!ca2k.getFlag(IChemObject.AROMATIC)
+                                && !nbors.get(j).getFlag(IChemObject.AROMATIC)
+                                && !ai.getFlag(IChemObject.AROMATIC)) {
                                 if (atomContainer.getBond(nbors.get(j), ca2k).getOrder() == IBond.Order.DOUBLE) {
                                     frags[72]++;
                                     alogpfrag[i] = 72;
@@ -1378,7 +1378,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
             if (ca0 == null)
                 throw new IllegalStateException("SsNH2 should have a non-hydrogen neighbour");
-            if (ca0.getFlag(CDKConstants.ISAROMATIC) || ca0.getAtomicNumber() != IElement.C) {
+            if (ca0.getFlag(IChemObject.AROMATIC) || ca0.getAtomicNumber() != IElement.C) {
                 frags[69]++;
                 alogpfrag[i] = 69;
             } else {
@@ -1430,7 +1430,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 } else if (fragment[atomContainer.indexOf(nbors.get(j))].equals("SdO")) {
                     haveSdO++;
                 } else {
-                    if (nbors.get(j).getFlag(CDKConstants.ISAROMATIC)) {
+                    if (nbors.get(j).getFlag(IChemObject.AROMATIC)) {
                         ar = true;
                     }
                 }
@@ -1481,7 +1481,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     }
                 } else {
                     if (nbors.get(j).getAtomicNumber() != IElement.C
-                            || nbors.get(j).getFlag(CDKConstants.ISAROMATIC)) {
+                            || nbors.get(j).getFlag(IChemObject.AROMATIC)) {
                         flag2 = true;
                     }
                 }
@@ -2034,7 +2034,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
             IRing r = (IRing) rs.getAtomContainer(i);
 
-            if (!r.getFlag(CDKConstants.ISAROMATIC)) continue;
+            if (!r.getFlag(IChemObject.AROMATIC)) continue;
 
             // ArrayList al=new ArrayList();
 
@@ -2086,7 +2086,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     break;
                 }
             }
-            ring.setFlag(CDKConstants.ISAROMATIC, arom);
+            ring.setFlag(IChemObject.AROMATIC, arom);
         }
 
         for (int i = 0; i < container.getAtomCount(); i++) {

@@ -20,11 +20,11 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.List;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -153,12 +153,12 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
         IAtom neighbour0 = neighboor.get(0);
         if (atom.getAtomicNumber() == IElement.H) {
             //logger.debug("aromatic proton");
-            if (neighbour0.getFlag(CDKConstants.ISAROMATIC)) {
+            if (neighbour0.getFlag(IChemObject.AROMATIC)) {
                 isProtonInAromaticSystem = 1;
             } else {
                 List<IAtom> betaAtoms = clonedAtomContainer.getConnectedAtomsList(neighbour0);
                 for (IAtom betaAtom : betaAtoms) {
-                    if (betaAtom.getFlag(CDKConstants.ISAROMATIC)) {
+                    if (betaAtom.getFlag(IChemObject.AROMATIC)) {
                         isProtonInAromaticSystem = 2;
                     } else {
                         isProtonInAromaticSystem = 0;

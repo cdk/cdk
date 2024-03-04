@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
@@ -27,6 +26,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -264,7 +264,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
             for (IBond bond : local.bonds()) {
                 int i = local.indexOf(bond.getBegin());
                 int j = local.indexOf(bond.getEnd());
-                if (bond.getFlag(CDKConstants.ISAROMATIC))
+                if (bond.getFlag(IChemObject.AROMATIC))
                     matrix[i][j] = 0.15;
                 else if (bond.getOrder() == Order.SINGLE)
                     matrix[i][j] = 0.1;

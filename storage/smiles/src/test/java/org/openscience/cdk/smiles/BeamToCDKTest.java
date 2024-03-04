@@ -26,10 +26,10 @@ package org.openscience.cdk.smiles;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -144,7 +144,7 @@ class BeamToCDKTest {
     @Test
     void aromatic() {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aromatic(Element.Carbon).build(), 0);
-        Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(a.getFlag(IChemObject.AROMATIC));
     }
 
     @Test
@@ -154,12 +154,12 @@ class BeamToCDKTest {
         assertThat(ac.getBondCount(), is(6));
         for (IAtom a : ac.atoms()) {
             assertThat(a.getSymbol(), is("C"));
-            Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(a.getFlag(IChemObject.AROMATIC));
             assertThat(a.getImplicitHydrogenCount(), is(1));
         }
         for (IBond b : ac.bonds()) {
             assertThat(b.getOrder(), is(IBond.Order.UNSET));
-            Assertions.assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(b.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -180,12 +180,12 @@ class BeamToCDKTest {
         assertThat(ac.getBond(ac.getAtom(4), ac.getAtom(5)).getOrder(), is(IBond.Order.SINGLE));
         assertThat(ac.getBond(ac.getAtom(5), ac.getAtom(0)).getOrder(), is(IBond.Order.DOUBLE));
 
-        Assertions.assertFalse(ac.getBond(0).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertFalse(ac.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertFalse(ac.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertFalse(ac.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertFalse(ac.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertFalse(ac.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(ac.getBond(0).getFlag(IChemObject.AROMATIC));
+        Assertions.assertFalse(ac.getBond(1).getFlag(IChemObject.AROMATIC));
+        Assertions.assertFalse(ac.getBond(2).getFlag(IChemObject.AROMATIC));
+        Assertions.assertFalse(ac.getBond(3).getFlag(IChemObject.AROMATIC));
+        Assertions.assertFalse(ac.getBond(4).getFlag(IChemObject.AROMATIC));
+        Assertions.assertFalse(ac.getBond(5).getFlag(IChemObject.AROMATIC));
     }
 
     @Test
@@ -196,7 +196,7 @@ class BeamToCDKTest {
         assertThat(ac.getBondCount(), is(5));
 
         for (IAtom a : ac.atoms())
-            Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(a.getFlag(IChemObject.AROMATIC));
 
         assertThat(ac.getAtom(0).getSymbol(), is("C"));
         assertThat(ac.getAtom(1).getSymbol(), is("N"));
@@ -211,12 +211,12 @@ class BeamToCDKTest {
         assertThat(ac.getAtom(4).getImplicitHydrogenCount(), is(1));
 
         for (IAtom a : ac.atoms()) {
-            Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(a.getFlag(IChemObject.AROMATIC));
         }
 
         for (IBond b : ac.bonds()) {
             assertThat(b.getOrder(), is(IBond.Order.UNSET));
-            Assertions.assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(b.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -228,7 +228,7 @@ class BeamToCDKTest {
         assertThat(ac.getBondCount(), is(5));
 
         for (IAtom a : ac.atoms())
-            Assertions.assertFalse(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(a.getFlag(IChemObject.AROMATIC));
 
         assertThat(ac.getAtom(0).getSymbol(), is("N"));
         assertThat(ac.getAtom(1).getSymbol(), is("C"));
@@ -243,7 +243,7 @@ class BeamToCDKTest {
         assertThat(ac.getAtom(4).getImplicitHydrogenCount(), is(1));
 
         for (IAtom a : ac.atoms()) {
-            Assertions.assertFalse(a.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(a.getFlag(IChemObject.AROMATIC));
         }
 
         assertThat(ac.getBond(ac.getAtom(0), ac.getAtom(1)).getOrder(), is(IBond.Order.SINGLE));
@@ -253,7 +253,7 @@ class BeamToCDKTest {
         assertThat(ac.getBond(ac.getAtom(4), ac.getAtom(0)).getOrder(), is(IBond.Order.SINGLE));
 
         for (IBond b : ac.bonds()) {
-            Assertions.assertFalse(b.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(b.getFlag(IChemObject.AROMATIC));
         }
     }
 

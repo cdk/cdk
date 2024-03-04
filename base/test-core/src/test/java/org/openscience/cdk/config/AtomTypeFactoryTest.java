@@ -26,6 +26,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
@@ -259,7 +260,7 @@ class AtomTypeFactoryTest extends CDKTestCase {
         Assertions.assertEquals("Sthi", atomType.getAtomTypeName());
         Assertions.assertEquals("S-[2];[H]{0,3}+=C.*+", atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
         Assertions.assertEquals(Hybridization.SP2, atomType.getHybridization());
-        Assertions.assertTrue(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        Assertions.assertTrue(atomType.getFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR));
         Assertions.assertEquals((Integer)5, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
     }
 

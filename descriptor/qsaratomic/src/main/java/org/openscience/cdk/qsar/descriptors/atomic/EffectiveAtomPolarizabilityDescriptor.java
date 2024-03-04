@@ -18,13 +18,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -119,7 +119,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
             Integer originalHCount = atom.getImplicitHydrogenCount();
             Integer originalValency = atom.getValency();
             IAtomType.Hybridization originalHybridization = atom.getHybridization();
-            boolean originalFlag = atom.getFlag(CDKConstants.VISITED);
+            boolean originalFlag = atom.getFlag(IChemObject.VISITED);
             Double originalBondOrderSum = atom.getBondOrderSum();
             Order originalMaxBondOrder = atom.getMaxBondOrder();
             polarizability = pol.calculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
@@ -128,7 +128,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
             atom.setFormalNeighbourCount(originalNeighborCount);
             atom.setValency(originalValency);
             atom.setImplicitHydrogenCount(originalHCount);
-            atom.setFlag(CDKConstants.VISITED, originalFlag);
+            atom.setFlag(IChemObject.VISITED, originalFlag);
             atom.setHybridization(originalHybridization);
             atom.setMaxBondOrder(originalMaxBondOrder);
             atom.setBondOrderSum(originalBondOrderSum);
