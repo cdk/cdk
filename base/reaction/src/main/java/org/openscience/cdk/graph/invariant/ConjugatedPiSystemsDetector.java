@@ -18,11 +18,11 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 
 import java.util.List;
 import java.util.Stack;
@@ -71,13 +71,13 @@ public class ConjugatedPiSystemsDetector {
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
             IAtom atom = ac.getAtom(i);
-            atom.setFlag(CDKConstants.VISITED, false);
+            atom.setFlag(IChemObject.VISITED, false);
         }
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
             IAtom firstAtom = ac.getAtom(i);
             // if this atom was already visited in a previous DFS, continue
-            if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
+            if (firstAtom.getFlag(IChemObject.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;
             }
             IAtomContainer piSystem = ac.getBuilder().newInstance(IAtomContainer.class);
@@ -85,7 +85,7 @@ public class ConjugatedPiSystemsDetector {
 
             piSystem.addAtom(firstAtom);
             stack.push(firstAtom);
-            firstAtom.setFlag(CDKConstants.VISITED, true);
+            firstAtom.setFlag(IChemObject.VISITED, true);
             // Start DFS from firstAtom
             while (!stack.empty()) {
                 //boolean addAtom = false;
@@ -96,7 +96,7 @@ public class ConjugatedPiSystemsDetector {
                 for (int j = 0; j < atoms.size(); j++) {
                     IAtom atom = atoms.get(j);
                     IBond bond = bonds.get(j);
-                    if (!atom.getFlag(CDKConstants.VISITED)) {
+                    if (!atom.getFlag(IChemObject.VISITED)) {
                         int check = checkAtom(ac, atom);
                         if (check == 1) {
                             piSystem.addAtom(atom);
@@ -108,7 +108,7 @@ public class ConjugatedPiSystemsDetector {
                             piSystem.addBond(bond);
                             stack.push(atom);
                         }
-                        atom.setFlag(CDKConstants.VISITED, true);
+                        atom.setFlag(IChemObject.VISITED, true);
                     }
                     // close rings with one bond
                     else if (!piSystem.contains(bond) && piSystem.contains(atom)) {
@@ -136,7 +136,7 @@ public class ConjugatedPiSystemsDetector {
         int check = -1;
         List<IAtom> atoms = ac.getConnectedAtomsList(currentAtom);
         List<IBond> bonds = ac.getConnectedBondsList(currentAtom);
-        if (currentAtom.getFlag(CDKConstants.ISAROMATIC)) {
+        if (currentAtom.getFlag(IChemObject.AROMATIC)) {
             check = 0;
         } else if (currentAtom.getFormalCharge() == 1 /*
                                                        * &&

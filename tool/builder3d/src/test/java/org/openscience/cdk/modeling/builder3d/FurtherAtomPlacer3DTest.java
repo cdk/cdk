@@ -26,12 +26,12 @@ import javax.vecmath.Point3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
@@ -52,7 +52,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         for (IAtom atom : benzene.atoms()) {
-            atom.setFlag(CDKConstants.ISPLACED, true);
+            atom.setFlag(IChemObject.PLACED, true);
         }
         Assertions.assertTrue(atmplacer.allHeavyAtomsPlaced(benzene));
     }
@@ -62,7 +62,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     void testNumberOfUnplacedHeavyAtoms_IAtomContainer() {
         IAtomContainer molecule = TestMoleculeFactory.makeAlkane(5);
         for (int i = 0; i < 3; i++) {
-            (molecule.getAtom(i)).setFlag(CDKConstants.ISPLACED, true);
+            (molecule.getAtom(i)).setFlag(IChemObject.PLACED, true);
         }
         int placedAtoms = new AtomPlacer3D().numberOfUnplacedHeavyAtoms(molecule);
         Assertions.assertEquals(2, placedAtoms);
@@ -74,7 +74,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         for (int j = 0; j < 3; j++) {
-            (molecule.getAtom(j)).setFlag(CDKConstants.ISPLACED, true);
+            (molecule.getAtom(j)).setFlag(IChemObject.PLACED, true);
         }
         IAtomContainer placedAndConnectedTo1 = atmplacer.getPlacedHeavyAtoms(molecule, molecule.getAtom(1));
         IAtomContainer placedAndConnectedTo2 = atmplacer.getPlacedHeavyAtoms(molecule, molecule.getAtom(2));
@@ -92,7 +92,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
         IAtomContainer molecule = TestMoleculeFactory.makeAlkane(7);
         for (int j = 0; j < 5; j++) {
-            molecule.getAtom(j).setFlag(CDKConstants.ISPLACED, true);
+            molecule.getAtom(j).setFlag(IChemObject.PLACED, true);
         }
         IAtom atom2 = atmplacer.getPlacedHeavyAtom(molecule, molecule.getAtom(1), molecule.getAtom(0));
         IAtom atom3 = atmplacer.getPlacedHeavyAtom(molecule, molecule.getAtom(2), molecule.getAtom(1));
@@ -110,7 +110,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         IAtomContainer molecule = TestMoleculeFactory.makeCyclohexane();
         //		for(IAtom a : m.atoms()) a.setFlag(CDKConstants.ISPLACED, true);
         for (int i = 0; i < 3; i++) {
-            molecule.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
+            molecule.getAtom(i).setFlag(IChemObject.PLACED, true);
         }
 
         IAtom atom1 = atmplacer.getPlacedHeavyAtom(molecule, molecule.getAtom(0));
@@ -128,7 +128,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
         IAtomContainer molecule = TestMoleculeFactory.makeAlkane(2);
         for (IAtom atom : molecule.atoms()) {
-            atom.setFlag(CDKConstants.ISPLACED, true);
+            atom.setFlag(IChemObject.PLACED, true);
         }
         molecule.getAtom(0).setPoint3d(new Point3d(-1.0, 0.0, 0.0));
         molecule.getAtom(1).setPoint3d(new Point3d(1.0, 0.0, 0.0));
@@ -146,9 +146,9 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         IAtomContainer molecule = TestMoleculeFactory.makeCyclopentane();
 
         for (IAtom atom : molecule.atoms())
-            atom.setFlag(CDKConstants.ISINRING, true);
+            atom.setFlag(IChemObject.IN_RING, true);
         for (int j = 0; j < 2; j++) {
-            molecule.getAtom(j).setFlag(CDKConstants.ISPLACED, true);
+            molecule.getAtom(j).setFlag(IChemObject.PLACED, true);
         }
         IAtom atom0 = molecule.getAtom(0);
         IAtom atom1 = molecule.getAtom(1);
@@ -160,11 +160,11 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 
         Assertions.assertEquals(atom0pair, molecule.getAtom(4));
         Assertions.assertEquals(atom1pair, molecule.getAtom(2));
-        Assertions.assertEquals(atom0.getFlag(CDKConstants.ISPLACED), true);
+        Assertions.assertEquals(atom0.getFlag(IChemObject.PLACED), true);
 
         for (IBond bond : molecule.bonds()) {
             if (bond.getOther(molecule.getAtom(4)) != null
-                    && !bond.getOther(molecule.getAtom(4)).getFlag(CDKConstants.ISPLACED)) {
+                    && !bond.getOther(molecule.getAtom(4)).getFlag(IChemObject.PLACED)) {
                 natompair = bond.getOther(molecule.getAtom(4));
             }
         }
@@ -196,19 +196,19 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         IAtomContainer cycloPentane = TestMoleculeFactory.makeCyclopentane();
 
         //TestMoleculeFactory does not set ISINRING flags for cyclic molecules
-        Assertions.assertEquals(false, cycloPentane.getAtom(0).getFlag(CDKConstants.ISINRING));
+        Assertions.assertEquals(false, cycloPentane.getAtom(0).getFlag(IChemObject.IN_RING));
         for (IAtom atom : cycloPentane.atoms()) {
-            atom.setFlag(CDKConstants.ISINRING, true);
+            atom.setFlag(IChemObject.IN_RING, true);
         }
 
         //acyclic molecule so null is expected
         for (IAtom atom : acyclicAlkane.atoms()) {
-            atom.setFlag(CDKConstants.ISPLACED, true);
+            atom.setFlag(IChemObject.PLACED, true);
         }
         Assertions.assertNull(atmplacer.getNextPlacedHeavyAtomWithUnplacedRingNeighbour(acyclicAlkane));
 
         for (int j = 0; j < 3; j++) {
-            cycloPentane.getAtom(j).setFlag(CDKConstants.ISPLACED, true);
+            cycloPentane.getAtom(j).setFlag(IChemObject.PLACED, true);
         }
         Assertions.assertEquals(cycloPentane.getAtom(2), atmplacer.getNextPlacedHeavyAtomWithUnplacedRingNeighbour(cycloPentane));
 
@@ -221,25 +221,25 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         IAtomContainer acyclicAlkane = TestMoleculeFactory.makeAlkane(5);
 
         for (IAtom atom : benzene.atoms())
-            atom.setFlag(CDKConstants.ISINRING, true);
+            atom.setFlag(IChemObject.IN_RING, true);
         for (IAtom atom : acyclicAlkane.atoms())
-            atom.setFlag(CDKConstants.ISALIPHATIC, true);
+            atom.setFlag(IChemObject.ALIPHATIC, true);
 
         for (int j = 0; j < 3; j++)
-            benzene.getAtom(j).setFlag(CDKConstants.ISPLACED, true);
+            benzene.getAtom(j).setFlag(IChemObject.PLACED, true);
         IAtom searchedatom1 = atmplacer.getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(benzene);
         Assertions.assertNull(searchedatom1);
 
         for (IAtom atom : benzene.atoms()) {
-            if (!atom.getFlag(CDKConstants.ISPLACED)) {
-                atom.setFlag(CDKConstants.ISPLACED, true);
+            if (!atom.getFlag(IChemObject.PLACED)) {
+                atom.setFlag(IChemObject.PLACED, true);
             }
         }
         IAtom searchedatom2 = atmplacer.getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(benzene);
         Assertions.assertNull(searchedatom2);
 
         for (int k = 0; k < 3; k++) {
-            acyclicAlkane.getAtom(k).setFlag(CDKConstants.ISPLACED, true);
+            acyclicAlkane.getAtom(k).setFlag(IChemObject.PLACED, true);
         }
         IAtom nextAtom = atmplacer.getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(acyclicAlkane);
         Assertions.assertEquals(acyclicAlkane.getAtom(2), nextAtom);
@@ -253,33 +253,33 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         IAtomContainer acyclicAlkane = TestMoleculeFactory.makeAlkane(6);
 
         for (IAtom atom : cyclobutane.atoms()) {
-            atom.setFlag(CDKConstants.ISINRING, true);
+            atom.setFlag(IChemObject.IN_RING, true);
         }
         for (IAtom atom : acyclicAlkane.atoms()) {
-            atom.setFlag(CDKConstants.ISALIPHATIC, true);
+            atom.setFlag(IChemObject.ALIPHATIC, true);
         }
         for (int j = 0; j < 3; j++) {
-            cyclobutane.getAtom(j).setFlag(CDKConstants.ISPLACED, true);
+            cyclobutane.getAtom(j).setFlag(IChemObject.PLACED, true);
         }
         IAtom nextHeavyAtom = atmplacer.getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(cyclobutane);
         Assertions.assertNull(nextHeavyAtom);
 
         for (IAtom atom : cyclobutane.atoms()) {
-            if (!atom.getFlag(CDKConstants.ISPLACED)) {
-                atom.setFlag(CDKConstants.ISPLACED, true);
+            if (!atom.getFlag(IChemObject.PLACED)) {
+                atom.setFlag(IChemObject.PLACED, true);
             }
         }
         IAtom nextHeavyAtom2 = atmplacer.getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(cyclobutane);
         Assertions.assertNull(nextHeavyAtom2);
 
         for (int k = 0; k < 3; k++) {
-            acyclicAlkane.getAtom(k).setFlag(CDKConstants.ISPLACED, true);
+            acyclicAlkane.getAtom(k).setFlag(IChemObject.PLACED, true);
         }
         IAtom nextSuchUnPlacedHeavyAtom = atmplacer.getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(acyclicAlkane);
         Assertions.assertEquals(acyclicAlkane.getAtom(3), nextSuchUnPlacedHeavyAtom);
 
         for (IAtom atom : acyclicAlkane.atoms()) {
-            atom.setFlag(CDKConstants.ISPLACED, true);
+            atom.setFlag(IChemObject.PLACED, true);
         }
         nextSuchUnPlacedHeavyAtom = atmplacer.getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(acyclicAlkane);
         Assertions.assertNull(nextSuchUnPlacedHeavyAtom);
@@ -363,7 +363,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         IAtomContainer molecule = TestMoleculeFactory.makeAlkane(5);
         IAtomContainer placedMolecule = atmplacer.markPlaced(molecule);
         for (IAtom atom : placedMolecule.atoms()) {
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISPLACED));
+            Assertions.assertTrue(atom.getFlag(IChemObject.PLACED));
         }
     }
 

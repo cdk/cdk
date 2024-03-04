@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.SingleElectron;
@@ -409,11 +409,11 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         molecule.getAtom(7).setFormalCharge(+1);
         addExplicitHydrogens(molecule);
 
-        molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(1).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(2).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(2).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(3).setFlag(IChemObject.REACTIVE_CENTER, true);
 
         List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
@@ -1070,12 +1070,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         boolean isAromatic = Aromaticity.cdkLegacy().apply(molecule);
         Assertions.assertTrue(isAromatic, "Molecule is expected to be marked aromatic!");
 
-        Assertions.assertTrue(molecule.getBond(1).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(molecule.getBond(2).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(molecule.getBond(3).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(molecule.getBond(4).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(molecule.getBond(5).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(molecule.getBond(6).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(1).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(2).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(3).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(4).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(5).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(molecule.getBond(6).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(false);
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
@@ -1083,26 +1083,26 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         Assertions.assertEquals(5, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer prod1 = setOfMolecules.getAtomContainer(1);
-        Assertions.assertTrue(prod1.getBond(1).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod1.getBond(2).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod1.getBond(3).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod1.getBond(4).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod1.getBond(5).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod1.getBond(6).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(1).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(2).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(3).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(4).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(5).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod1.getBond(6).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
         IAtomContainer prod2 = setOfMolecules.getAtomContainer(2);
-        Assertions.assertTrue(prod2.getBond(1).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod2.getBond(2).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod2.getBond(3).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod2.getBond(4).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod2.getBond(5).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod2.getBond(6).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(1).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(2).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(3).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(4).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(5).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod2.getBond(6).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
         IAtomContainer prod3 = setOfMolecules.getAtomContainer(3);
-        Assertions.assertTrue(prod3.getBond(1).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod3.getBond(2).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod3.getBond(3).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod3.getBond(4).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod3.getBond(5).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
-        Assertions.assertTrue(prod3.getBond(6).getFlag(CDKConstants.ISAROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(1).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(2).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(3).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(4).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(5).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
+        Assertions.assertTrue(prod3.getBond(6).getFlag(IChemObject.AROMATIC), "Bond is expected to be marked aromatic!");
 
     }
 

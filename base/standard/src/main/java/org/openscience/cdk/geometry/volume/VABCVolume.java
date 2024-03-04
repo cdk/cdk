@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -30,6 +29,7 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 
 /**
@@ -127,7 +127,7 @@ public class VABCVolume {
 
     private static boolean ringIsAromatic(IAtomContainer ring) {
         for (IAtom atom : ring.atoms()) {
-            if (!atom.getFlag(CDKConstants.ISAROMATIC)) return false;
+            if (!atom.getFlag(IChemObject.AROMATIC)) return false;
         }
         return true;
     }

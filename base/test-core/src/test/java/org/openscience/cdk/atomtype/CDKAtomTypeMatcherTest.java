@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Ring;
@@ -42,6 +41,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.AtomType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -2174,7 +2174,7 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.add(new Ring(6, "C"));
         for (IBond bond : molecule.bonds()) {
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
         }
         for (IAtom atom : molecule.atoms()) {
             atom.setImplicitHydrogenCount(1);
@@ -2189,7 +2189,7 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         molecule.add(new Ring(6, "C"));
         for (IBond bond : molecule.bonds()) {
             bond.setOrder(IBond.Order.UNSET);
-            bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+            bond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         }
         for (IAtom atom : molecule.atoms()) {
             atom.setImplicitHydrogenCount(1);
@@ -2210,7 +2210,7 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtomContainer molecule = TestMoleculeFactory.makePyrrole();
         for (IBond bond : molecule.bonds()) {
             bond.setOrder(IBond.Order.UNSET);
-            bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+            bond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         }
         for (IAtom atom : molecule.atoms()) {
             atom.setImplicitHydrogenCount(1);
@@ -2310,7 +2310,7 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtomContainer molecule = TestMoleculeFactory.makePyridine();
         for (IBond bond : molecule.bonds()) {
             bond.setOrder(IBond.Order.UNSET);
-            bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+            bond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         }
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
@@ -6516,15 +6516,15 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom c5 = builder.newInstance(IAtom.class, "C");
 
         IBond b1 = builder.newInstance(IBond.class, n1, c2, IBond.Order.SINGLE);
-        b1.setFlag(CDKConstants.ISAROMATIC, true);
+        b1.setFlag(IChemObject.AROMATIC, true);
         IBond b2 = builder.newInstance(IBond.class, c2, c3, IBond.Order.SINGLE);
-        b2.setFlag(CDKConstants.ISAROMATIC, true);
+        b2.setFlag(IChemObject.AROMATIC, true);
         IBond b3 = builder.newInstance(IBond.class, c3, c4, IBond.Order.SINGLE);
-        b3.setFlag(CDKConstants.ISAROMATIC, true);
+        b3.setFlag(IChemObject.AROMATIC, true);
         IBond b4 = builder.newInstance(IBond.class, c4, c5, IBond.Order.SINGLE);
-        b4.setFlag(CDKConstants.ISAROMATIC, true);
+        b4.setFlag(IChemObject.AROMATIC, true);
         IBond b5 = builder.newInstance(IBond.class, c5, n1, IBond.Order.SINGLE);
-        b5.setFlag(CDKConstants.ISAROMATIC, true);
+        b5.setFlag(IChemObject.AROMATIC, true);
 
         pyrrole.addAtom(n1);
         pyrrole.addAtom(c2);
@@ -6561,15 +6561,15 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom c5 = builder.newInstance(IAtom.class, "C");
 
         IBond b1 = builder.newInstance(IBond.class, n1, c2, IBond.Order.SINGLE);
-        b1.setFlag(CDKConstants.ISAROMATIC, true);
+        b1.setFlag(IChemObject.AROMATIC, true);
         IBond b2 = builder.newInstance(IBond.class, c2, c3, IBond.Order.SINGLE);
-        b2.setFlag(CDKConstants.ISAROMATIC, true);
+        b2.setFlag(IChemObject.AROMATIC, true);
         IBond b3 = builder.newInstance(IBond.class, c3, c4, IBond.Order.SINGLE);
-        b3.setFlag(CDKConstants.ISAROMATIC, true);
+        b3.setFlag(IChemObject.AROMATIC, true);
         IBond b4 = builder.newInstance(IBond.class, c4, c5, IBond.Order.SINGLE);
-        b4.setFlag(CDKConstants.ISAROMATIC, true);
+        b4.setFlag(IChemObject.AROMATIC, true);
         IBond b5 = builder.newInstance(IBond.class, c5, n1, IBond.Order.SINGLE);
-        b5.setFlag(CDKConstants.ISAROMATIC, true);
+        b5.setFlag(IChemObject.AROMATIC, true);
 
         pyrrole.addAtom(n1);
         pyrrole.addAtom(c2);

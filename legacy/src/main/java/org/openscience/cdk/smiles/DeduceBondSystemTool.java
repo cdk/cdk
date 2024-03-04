@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -644,11 +645,11 @@ public class DeduceBondSystemTool {
 
             // clear aromaticity flags
             for (int i = 0; i <= atomContainer.getAtomCount() - 1; i++) {
-                atomContainer.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
+                atomContainer.getAtom(i).setFlag(IChemObject.AROMATIC, false);
             }
             for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
                 IRing r = (IRing) ringSet.getAtomContainer(i);
-                r.setFlag(CDKConstants.ISAROMATIC, false);
+                r.setFlag(IChemObject.AROMATIC, false);
             }
             // now, detect aromaticity from cratch, and mark rings as aromatic too (if ...)
             Aromaticity.cdkLegacy().apply(atomContainer);
@@ -677,7 +678,7 @@ public class DeduceBondSystemTool {
                         }
                     }
 
-                    if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
+                    if (!ring.getFlag(IChemObject.AROMATIC)) {
                         //						logger.debug(counter+"\t"+"ring not aromatic"+"\t"+r.getAtomCount());
                         return false;
                     }

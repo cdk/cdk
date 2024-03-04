@@ -55,11 +55,12 @@ import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.openscience.cdk.CDKConstants;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -575,7 +576,7 @@ public class CDKMCS {
                 table.put(atom, atom2);
             }
             IBond newBond = graph.getBuilder().newInstance(IBond.class, atom1, atom2, bond.getOrder());
-            newBond.setFlag(CDKConstants.ISAROMATIC, bond.getFlag(CDKConstants.ISAROMATIC));
+            newBond.setFlag(IChemObject.AROMATIC, bond.getFlag(IChemObject.AROMATIC));
             atomContainer.addBond(newBond);
         }
         return atomContainer;
@@ -1056,7 +1057,7 @@ public class CDKMCS {
         IAtom atom;
         for (int i = 0; i < ac1.getBondCount(); i++) {
             bond = ac1.getBond(i);
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+            if (bond.getFlag(IChemObject.AROMATIC)) {
                 ac1AromaticBondCount++;
             } else if (bond.getOrder() == IBond.Order.SINGLE) {
                 ac1SingleBondCount++;
@@ -1071,7 +1072,7 @@ public class CDKMCS {
             if (bond instanceof IQueryBond) {
                 continue;
             }
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+            if (bond.getFlag(IChemObject.AROMATIC)) {
                 ac2AromaticBondCount++;
             } else if (bond.getOrder() == IBond.Order.SINGLE) {
                 ac2SingleBondCount++;

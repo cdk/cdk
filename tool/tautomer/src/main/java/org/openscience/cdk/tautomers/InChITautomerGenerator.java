@@ -26,7 +26,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.InChINumbersTools;
 import org.openscience.cdk.inchi.InChIGenerator;
@@ -35,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.AtomMatcher;
 import org.openscience.cdk.isomorphism.BondMatcher;
 import org.openscience.cdk.smiles.SmiFlavor;
@@ -559,11 +559,11 @@ public final class InChITautomerGenerator {
                     }
                 }
                 for (IAtom atom : tautomer.atoms()) {
-                    atom.setFlag(CDKConstants.ISAROMATIC, false);
+                    atom.setFlag(IChemObject.AROMATIC, false);
                     atom.setValency(null);
                 }
                 for (IBond bond : tautomer.bonds())
-                    bond.setFlag(CDKConstants.ISAROMATIC, false);
+                    bond.setFlag(IChemObject.AROMATIC, false);
                 tautomers.add(tautomer);
             }
         }

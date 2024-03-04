@@ -24,12 +24,12 @@
 
 package org.openscience.cdk.forcefield.mmff;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.smarts.SmartsPattern;
@@ -173,7 +173,7 @@ final class MmffAtomTypeMatcher {
         for (IAtom atom : container.atoms()) {
             if (atom.getImplicitHydrogenCount() == null || atom.getImplicitHydrogenCount() != 0)
                 throw new IllegalArgumentException("Hydrogens should be unsuppressed (explicit)");
-            if (atom.getFlag(CDKConstants.ISAROMATIC))
+            if (atom.getFlag(IChemObject.AROMATIC))
                 throw new IllegalArgumentException("No aromatic flags should be set");
         }
     }

@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -163,12 +164,12 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
         for (int i = 0; i <= mol.getAtomCount() - 1; i++) {
 
-            mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
+            mol.getAtom(i).setFlag(IChemObject.AROMATIC, false);
 
             jloop: for (int j = 0; j <= ringSet.getAtomContainerCount() - 1; j++) {
                 //logger.debug(i+"\t"+j);
                 IRing ring = (IRing) ringSet.getAtomContainer(j);
-                if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
+                if (!ring.getFlag(IChemObject.AROMATIC)) {
                     continue jloop;
                 }
 
@@ -177,7 +178,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 //logger.debug("haveatom="+haveatom);
 
                 if (haveatom && ring.getAtomCount() == 6) {
-                    mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+                    mol.getAtom(i).setFlag(IChemObject.AROMATIC, true);
                 }
             }
         }

@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.test.CDKTestCase;
@@ -92,32 +92,32 @@ class SmilesParserTest extends CDKTestCase {
         AtomContainerManipulator.setSingleOrDoubleFlags(mol);
 
         // Let's check the atoms first...
-        Assertions.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(2).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(3).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(4).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(0).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(1).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(2).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(3).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(4).getFlag(IChemObject.SINGLE_OR_DOUBLE));
 
-        Assertions.assertTrue(mol.getAtom(5).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(6).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(7).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(8).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(5).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(6).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(7).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(8).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(9).getFlag(IChemObject.SINGLE_OR_DOUBLE));
         // ...and then the bonds...
         // ...in the first ring...
-        Assertions.assertTrue(mol.getBond(mol.getAtom(0), mol.getAtom(1)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(mol.getAtom(1), mol.getAtom(2)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(mol.getAtom(2), mol.getAtom(3)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(mol.getAtom(3), mol.getAtom(4)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(mol.getAtom(4), mol.getAtom(0)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(0), mol.getAtom(1)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(1), mol.getAtom(2)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(2), mol.getAtom(3)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(3), mol.getAtom(4)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(4), mol.getAtom(0)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
         // ...then the bond in between the rings...
-        Assertions.assertFalse(mol.getBond(mol.getAtom(4), mol.getAtom(5)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(mol.getBond(mol.getAtom(4), mol.getAtom(5)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
         // ...and at last the bonds in the other ring.
-        Assertions.assertTrue(mol.getBond(mol.getAtom(5), mol.getAtom(6)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(mol.getAtom(6), mol.getAtom(7)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(mol.getAtom(7), mol.getAtom(8)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(mol.getAtom(8), mol.getAtom(9)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(mol.getAtom(9), mol.getAtom(5)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(5), mol.getAtom(6)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(6), mol.getAtom(7)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(7), mol.getAtom(8)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(8), mol.getAtom(9)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(mol.getAtom(9), mol.getAtom(5)).getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
 
     /**
@@ -163,7 +163,7 @@ class SmilesParserTest extends CDKTestCase {
         Assertions.assertEquals(18, mol.getAtomCount());
         Assertions.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         Assertions.assertEquals("N", mol.getAtom(8).getSymbol());
-        Assertions.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(8).getFlag(IChemObject.AROMATIC));
     }
 
     /** @cdk.bug 1579235 */
@@ -464,7 +464,7 @@ class SmilesParserTest extends CDKTestCase {
         String smiles = "n12:n:n:n:c:2:c:c:c:c:1";
         IAtomContainer molecule = loadExact(smiles);
         assertAtomTypesPerceived(molecule);
-        for (IBond iBond : molecule.bonds()) Assertions.assertTrue(iBond.getFlag(CDKConstants.ISAROMATIC));
+        for (IBond iBond : molecule.bonds()) Assertions.assertTrue(iBond.getFlag(IChemObject.AROMATIC));
     }
 
     /**
@@ -478,8 +478,8 @@ class SmilesParserTest extends CDKTestCase {
         String smiles = "c1cc[c-]c1";
         IAtomContainer molecule = sp.parseSmiles(smiles);
         assertAtomTypesPerceived(molecule);
-        Assertions.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(molecule.getAtom(0).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(molecule.getBond(0).getFlag(IChemObject.AROMATIC));
     }
 
     /**
@@ -490,7 +490,7 @@ class SmilesParserTest extends CDKTestCase {
         String smiles = "c1ccccc1";
         IAtomContainer molecule = sp.parseSmiles(smiles);
         for (IBond bond : molecule.bonds())
-            Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
     }
 
     /**
@@ -1249,7 +1249,7 @@ class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = loadExact("c2ccc1[nH]ccc1c2");
         Assertions.assertNotNull(mol);
         Assertions.assertEquals(9, mol.getAtomCount());
-        Assertions.assertTrue(mol.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getBond(0).getFlag(IChemObject.AROMATIC));
     }
 
     /**
@@ -1265,9 +1265,9 @@ class SmilesParserTest extends CDKTestCase {
             IBond bond = mol.getBond(i);
             if (bond.getBegin().getAtomicNumber() == IElement.H || bond.getBegin().getAtomicNumber() == IElement.Br
                 || bond.getEnd().getAtomicNumber() == IElement.H || bond.getEnd().getAtomicNumber() == IElement.Br) {
-                Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
             } else {
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
             }
         }
     }
@@ -1315,9 +1315,9 @@ class SmilesParserTest extends CDKTestCase {
         for (int i = 0; i < 7; i++) {
             IBond bond = mol.getBond(i);
             if (bond.getBegin().getAtomicNumber() == IElement.O || bond.getEnd().getAtomicNumber() == IElement.O) {
-                Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
             } else {
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
             }
         }
     }
@@ -1343,8 +1343,8 @@ class SmilesParserTest extends CDKTestCase {
         atomtype(mol2);
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
-        Assertions.assertTrue(mol1.getBond(7).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol2.getBond(7).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol1.getBond(7).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol2.getBond(7).getFlag(IChemObject.AROMATIC));
     }
 
     /**
@@ -1445,18 +1445,18 @@ class SmilesParserTest extends CDKTestCase {
         // easy case
         String smiles = "c1ccccc1C1=CC=CC=C1";
         IAtomContainer mol = loadExact(smiles);
-        Assertions.assertTrue(mol.getBond(0).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getBond(0).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getBond(1).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getBond(2).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getBond(3).getFlag(IChemObject.AROMATIC));
 
         // harder case
         String smiles2 = "C%21=%01C=CC=C%02C=%01N(C)CCC%02.C%21c%02ccccc%02";
         IAtomContainer mol2 = loadExact(smiles2);
-        Assertions.assertTrue(mol2.getBond(16).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol2.getBond(17).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol2.getBond(18).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol2.getBond(19).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol2.getBond(16).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol2.getBond(17).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol2.getBond(18).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol2.getBond(19).getFlag(IChemObject.AROMATIC));
     }
 
     /**
@@ -1525,7 +1525,7 @@ class SmilesParserTest extends CDKTestCase {
         assertAtomTypesPerceived(mol);
         for (IAtom atom : mol.atoms()) {
             Assertions.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -1769,7 +1769,7 @@ class SmilesParserTest extends CDKTestCase {
         Assertions.assertEquals(9, mol.getAtomCount());
 
         for (IAtom atom : mol.atoms()) {
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -1786,7 +1786,7 @@ class SmilesParserTest extends CDKTestCase {
         assertAtomTypesPerceived(mol);
         Assertions.assertEquals(9, mol.getAtomCount());
         for (IAtom atom : mol.atoms()) {
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -1917,7 +1917,7 @@ class SmilesParserTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(mol);
 
         for (IAtom atom : mol.atoms()) {
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -1932,7 +1932,7 @@ class SmilesParserTest extends CDKTestCase {
         p.kekulise(false);
         IAtomContainer mol = p.parseSmiles("c1cc2cccnc2[se]1");
         for (IAtom atom : mol.atoms()) {
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -2084,7 +2084,7 @@ class SmilesParserTest extends CDKTestCase {
     void testAromaticity() throws InvalidSmilesException {
         IAtomContainer mol = loadExact("c1cnc2s[cH][cH]n12");
         for (IAtom atom : mol.atoms()) {
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -2423,7 +2423,7 @@ class SmilesParserTest extends CDKTestCase {
         Assertions.assertEquals(6, countAromaticBonds(molecule));
         for (IBond bond : molecule.bonds()) {
             assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-            Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -2761,7 +2761,7 @@ class SmilesParserTest extends CDKTestCase {
     private int countAromaticAtoms(IAtomContainer mol) {
         int aromCount = 0;
         for (IAtom atom : mol.atoms()) {
-            if (atom.getFlag(CDKConstants.ISAROMATIC)) aromCount++;
+            if (atom.getFlag(IChemObject.AROMATIC)) aromCount++;
         }
         return aromCount;
     }
@@ -2773,7 +2773,7 @@ class SmilesParserTest extends CDKTestCase {
     private int countAromaticBonds(IAtomContainer mol) {
         int aromCount = 0;
         for (IBond bond : mol.bonds()) {
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) aromCount++;
+            if (bond.getFlag(IChemObject.AROMATIC)) aromCount++;
         }
         return aromCount;
     }
@@ -2781,12 +2781,12 @@ class SmilesParserTest extends CDKTestCase {
     static void atomtype(IAtomContainer container) throws Exception {
         Set<IAtom> aromatic = new HashSet<>();
         for (IAtom atom : container.atoms()) {
-            if (atom.getFlag(CDKConstants.ISAROMATIC)) aromatic.add(atom);
+            if (atom.getFlag(IChemObject.AROMATIC)) aromatic.add(atom);
         }
         // helpfully clears aromatic flags...
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         for (IAtom atom : aromatic)
-            atom.setFlag(CDKConstants.ISAROMATIC, true);
+            atom.setFlag(IChemObject.AROMATIC, true);
     }
 
     static IAtomContainer load(String smi) throws InvalidSmilesException {

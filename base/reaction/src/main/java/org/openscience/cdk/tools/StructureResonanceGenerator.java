@@ -21,13 +21,13 @@ package org.openscience.cdk.tools;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -407,9 +407,9 @@ public class StructureResonanceGenerator {
             acClone = atomContainer.clone();
             if (!lookingSymmetry) { /* remove all aromatic flags */
                 for (IAtom atom : acClone.atoms())
-                    atom.setFlag(CDKConstants.ISAROMATIC, false);
+                    atom.setFlag(IChemObject.AROMATIC, false);
                 for (IBond bond : acClone.bonds())
-                    bond.setFlag(CDKConstants.ISAROMATIC, false);
+                    bond.setFlag(IChemObject.AROMATIC, false);
             }
         } catch (CloneNotSupportedException e1) {
             LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
@@ -430,9 +430,9 @@ public class StructureResonanceGenerator {
         } else {
             if (!lookingSymmetry) { /* remove all aromatic flags */
                 for (IAtom atom : acClone.atoms())
-                    atom.setFlag(CDKConstants.ISAROMATIC, false);
+                    atom.setFlag(IChemObject.AROMATIC, false);
                 for (IBond bond : acClone.bonds())
-                    bond.setFlag(CDKConstants.ISAROMATIC, false);
+                    bond.setFlag(IChemObject.AROMATIC, false);
             }
         }
         for (int i = 0; i < set.getAtomContainerCount(); i++) {

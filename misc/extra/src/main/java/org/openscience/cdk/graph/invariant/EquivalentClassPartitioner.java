@@ -21,13 +21,13 @@ package org.openscience.cdk.graph.invariant;
 
 import java.util.List;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -80,7 +80,7 @@ public class EquivalentClassPartitioner {
                 // correct adjacency matrix to consider aromatic bonds as such
                 if (adjaMatrix[i][j] > 0) {
                     IBond bond = atomContainer.getBond(atomContainer.getAtom(i), atomContainer.getAtom(j));
-                    boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
+                    boolean isArom = bond.getFlag(IChemObject.AROMATIC);
                     adjaMatrix[i][j] = (isArom) ? 1.5 : adjaMatrix[i][j];
                     adjaMatrix[j][i] = adjaMatrix[i][j];
                 }
@@ -180,7 +180,7 @@ public class EquivalentClassPartitioner {
                         nodeSequence[i] = 9;// -C#
                     // case 3 would not allow to reach this statement as there
                     // is no aromatic bond order
-                    if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
+                    if (bond0.getFlag(IChemObject.AROMATIC) && bond1.getFlag(IChemObject.AROMATIC))
                         nodeSequence[i] = 11;// ArCH
                 } else if (symbol.equals("N")) {
                     if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE)
@@ -198,21 +198,21 @@ public class EquivalentClassPartitioner {
                         nodeSequence[i] = 29;// -N# with charge=+1
                     // case 3 would not allow to reach this statement as there
                     // is no aromatic bond order
-                    if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
+                    if (bond0.getFlag(IChemObject.AROMATIC) && bond1.getFlag(IChemObject.AROMATIC))
                         nodeSequence[i] = 30;// ArN
                     // there is no way to distinguish between ArNH and ArN as
                     // bonds to protons are not considered
                 } else if (symbol.equals("O")) {
                     if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE)
                         nodeSequence[i] = 15;// -O-
-                    else if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
+                    else if (bond0.getFlag(IChemObject.AROMATIC) && bond1.getFlag(IChemObject.AROMATIC))
                         nodeSequence[i] = 17;// ArO
                 } else if (symbol.equals("S")) {
                     if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE)
                         nodeSequence[i] = 32;// -S-
                     else if (order0 == IBond.Order.DOUBLE && order1 == IBond.Order.DOUBLE)
                         nodeSequence[i] = 35;// =S=
-                    else if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
+                    else if (bond0.getFlag(IChemObject.AROMATIC) && bond1.getFlag(IChemObject.AROMATIC))
                         nodeSequence[i] = 37;// ArS
                 } else if (symbol.equals("P")) {
                     if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE) nodeSequence[i] = 39;// -PH-
@@ -235,13 +235,13 @@ public class EquivalentClassPartitioner {
                     // case 2 would not allow to reach this statement because
                     // there is always a double bond (pi system) around an
                     // aromatic atom
-                    if ((bond0.getFlag(CDKConstants.ISAROMATIC) || bond1.getFlag(CDKConstants.ISAROMATIC) || bond2
-                            .getFlag(CDKConstants.ISAROMATIC))
+                    if ((bond0.getFlag(IChemObject.AROMATIC) || bond1.getFlag(IChemObject.AROMATIC) || bond2
+                            .getFlag(IChemObject.AROMATIC))
                             && (order0 == IBond.Order.SINGLE || order1 == IBond.Order.SINGLE || bond2.getOrder() == IBond.Order.SINGLE))
                         nodeSequence[i] = 12;// ArC-
                     // case 3 would not allow to reach this statement
-                    if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC)
-                            && bond2.getFlag(CDKConstants.ISAROMATIC)) nodeSequence[i] = 13;// ArC
+                    if (bond0.getFlag(IChemObject.AROMATIC) && bond1.getFlag(IChemObject.AROMATIC)
+                            && bond2.getFlag(IChemObject.AROMATIC)) nodeSequence[i] = 13;// ArC
                 } else if (symbol.equals("N")) {
                     if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE && order2 == IBond.Order.SINGLE)
                         nodeSequence[i] = 21;// >N-

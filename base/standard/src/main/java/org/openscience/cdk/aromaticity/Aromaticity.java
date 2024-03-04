@@ -38,7 +38,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 /**
@@ -238,7 +238,7 @@ public final class Aromaticity {
         Set<IBond> bonds = findBonds(molecule);
 
         // clear existing flags
-        molecule.setFlag(ISAROMATIC, false);
+        molecule.setFlag(AROMATIC, false);
         for (IBond bond : molecule.bonds())
             bond.setIsAromatic(false);
         for (IAtom atom : molecule.atoms())
@@ -251,7 +251,7 @@ public final class Aromaticity {
             bond.getEnd().setIsAromatic(true);
         }
 
-        molecule.setFlag(ISAROMATIC, !bonds.isEmpty());
+        molecule.setFlag(AROMATIC, !bonds.isEmpty());
 
         return !bonds.isEmpty();
     }

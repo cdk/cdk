@@ -18,12 +18,12 @@
  */
 package org.openscience.cdk.reaction.type;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -130,10 +130,10 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
         if (AtomContainerManipulator.getTotalCharge(reactant) != 0) return setOfReactions;
 
         for (IBond bondi : reactant.bonds()) {
-            if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
+            if (bondi.getFlag(IChemObject.REACTIVE_CENTER)
                     && ((bondi.getOrder() == IBond.Order.DOUBLE) || (bondi.getOrder() == IBond.Order.TRIPLE))
-                    && bondi.getBegin().getFlag(CDKConstants.REACTIVE_CENTER)
-                    && bondi.getEnd().getFlag(CDKConstants.REACTIVE_CENTER)) {
+                    && bondi.getBegin().getFlag(IChemObject.REACTIVE_CENTER)
+                    && bondi.getEnd().getFlag(IChemObject.REACTIVE_CENTER)) {
                 int chargeAtom0 = bondi.getBegin().getFormalCharge() == null ? 0 : bondi.getBegin().getFormalCharge();
                 int chargeAtom1 = bondi.getEnd().getFormalCharge() == null ? 0 : bondi.getEnd().getFormalCharge();
                 if (chargeAtom0 >= 0 && chargeAtom1 >= 0
@@ -201,9 +201,9 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
                         && reactant.getConnectedSingleElectronsCount(bondi.getEnd()) == 0
                         && reactant.getConnectedLonePairsCount(bondi.getBegin()) == 0
                         && reactant.getConnectedLonePairsCount(bondi.getEnd()) == 0) {
-                    bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                    bondi.getBegin().setFlag(CDKConstants.REACTIVE_CENTER, true);
-                    bondi.getEnd().setFlag(CDKConstants.REACTIVE_CENTER, true);
+                    bondi.setFlag(IChemObject.REACTIVE_CENTER, true);
+                    bondi.getBegin().setFlag(IChemObject.REACTIVE_CENTER, true);
+                    bondi.getEnd().setFlag(IChemObject.REACTIVE_CENTER, true);
                 }
             }
         }

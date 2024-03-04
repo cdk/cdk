@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -273,14 +274,14 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                 bonds[i] = atomContainer.getBond(i);
             boolean succeeded = newSaturate(bonds, atomContainer);
             for (IBond iBond : bonds) {
-                if (iBond.getOrder() == Order.DOUBLE && iBond.getFlag(CDKConstants.ISAROMATIC)
+                if (iBond.getOrder() == Order.DOUBLE && iBond.getFlag(IChemObject.AROMATIC)
                         && (iBond.getBegin().getAtomicNumber() == IElement.N && iBond.getEnd()
                                                                                      .getAtomicNumber() == IElement.N)) {
                     int atomtohandle = 0;
                     if (iBond.getBegin().getAtomicNumber() == IElement.N) atomtohandle = 1;
                     List<IBond> bondstohandle = atomContainer.getConnectedBondsList(iBond.getAtom(atomtohandle));
                     for (IBond bond : bondstohandle) {
-                        if (bond.getOrder() == Order.SINGLE && bond.getFlag(CDKConstants.ISAROMATIC)) {
+                        if (bond.getOrder() == Order.SINGLE && bond.getFlag(IChemObject.AROMATIC)) {
                             bond.setOrder(Order.DOUBLE);
                             iBond.setOrder(Order.SINGLE);
                             break;
@@ -452,7 +453,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                     if (atomContainer.getConnectedBondsCount(atom) == i) {
                         Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom
                                 .getImplicitHydrogenCount();
-                        if (atom.getFlag(CDKConstants.ISAROMATIC)
+                        if (atom.getFlag(IChemObject.AROMATIC)
                                 && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getBondOrderSum() - hcount) {
                             partners = atomContainer.getConnectedAtomsList(atom);
                             for (int g = 0; g < partners.size(); g++) {
@@ -463,7 +464,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
                                 hcount = partner.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : partner
                                         .getImplicitHydrogenCount();
-                                if (atomContainer.getBond(partner, atom).getFlag(CDKConstants.ISAROMATIC)
+                                if (atomContainer.getBond(partner, atom).getFlag(IChemObject.AROMATIC)
                                         && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getBondOrderSum()
                                                 - hcount) {
                                     logger.debug("Partner has " + atomContainer.getBondOrderSum(partner)
@@ -632,11 +633,11 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
                 missingHydrogen = (int) (tmpBondOrderSum - bondOrderSum - singleElectronSum + formalCharge);
 
-                if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+                if (atom.getFlag(IChemObject.AROMATIC)) {
                     boolean subtractOne = true;
                     for (IBond connectedBond : connectedBonds) {
                         IBond conBond = connectedBond;
-                        if (conBond.getOrder() == Order.DOUBLE || conBond.getFlag(CDKConstants.ISAROMATIC))
+                        if (conBond.getOrder() == Order.DOUBLE || conBond.getFlag(IChemObject.AROMATIC))
                             subtractOne = false;
                     }
                     if (subtractOne) missingHydrogen--;

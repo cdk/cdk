@@ -62,7 +62,7 @@ class ChemObjectTestHelper {
 
         listener.reset();
         Assertions.assertFalse(listener.getChanged());
-        chemObject.setFlag(CDKConstants.ISALIPHATIC, true);
+        chemObject.setFlag(IChemObject.ALIPHATIC, true);
         Assertions.assertFalse(listener.getChanged());
     }
 

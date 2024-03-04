@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -309,7 +309,7 @@ class MoleculeSignatureTest extends CDKTestCase {
             IAtom b = benzeneRing.getAtom((i + 1) % 6);
             IBond bond = builder.newInstance(IBond.class, a, b);
             benzeneRing.addBond(bond);
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
         }
 
         MoleculeSignature molSignature = new MoleculeSignature(benzeneRing);

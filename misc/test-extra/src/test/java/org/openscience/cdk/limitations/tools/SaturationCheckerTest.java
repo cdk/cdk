@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -309,7 +309,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         IRingSet rs = Cycles.sssr(pyrrole).toRingSet();
         IRing ring = (IRing) rs.getAtomContainer(0);
         for (int j = 0; j < ring.getBondCount(); j++) {
-            ring.getBond(j).setFlag(CDKConstants.ISAROMATIC, true);
+            ring.getBond(j).setFlag(IChemObject.AROMATIC, true);
         }
         Assertions.assertEquals(5, ring.getBondCount());
         Assertions.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));

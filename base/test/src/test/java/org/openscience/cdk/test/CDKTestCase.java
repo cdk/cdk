@@ -7,12 +7,12 @@ package org.openscience.cdk.test;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -187,9 +187,9 @@ public class CDKTestCase {
 
         for (IAtom atom : container.atoms()) {
             if (atom.getAtomicNumber() == IElement.H)
-                Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC), atom.getSymbol() + container.indexOf(atom) + " was aromatic");
+                Assertions.assertFalse(atom.getFlag(IChemObject.AROMATIC), atom.getSymbol() + container.indexOf(atom) + " was aromatic");
             else
-                Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), atom.getSymbol() + container.indexOf(atom) + " was not aromatic");
+                Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC), atom.getSymbol() + container.indexOf(atom) + " was not aromatic");
         }
     }
 

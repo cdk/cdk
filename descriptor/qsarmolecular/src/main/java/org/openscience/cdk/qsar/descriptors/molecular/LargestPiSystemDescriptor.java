@@ -18,9 +18,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -155,7 +155,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
     public DescriptorValue calculate(IAtomContainer container) {
         boolean[] originalFlag4 = new boolean[container.getAtomCount()];
         for (int i = 0; i < originalFlag4.length; i++) {
-            originalFlag4[i] = container.getAtom(i).getFlag(CDKConstants.VISITED);
+            originalFlag4[i] = container.getAtom(i).getFlag(IChemObject.VISITED);
         }
         if (checkAromaticity) {
             try {
@@ -170,7 +170,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
         List<IAtom> path;
         //Set all VisitedFlags to False
         for (int i = 0; i < container.getAtomCount(); i++) {
-            container.getAtom(i).setFlag(CDKConstants.VISITED, false);
+            container.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
         //logger.debug("Set all atoms to Visited False");
         for (int i = 0; i < container.getAtomCount(); i++) {
@@ -178,9 +178,9 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
             //logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
             if ((container.getMaximumBondOrder(container.getAtom(i)) != IBond.Order.SINGLE
                     || Math.abs(container.getAtom(i).getFormalCharge()) >= 1
-                    || container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)
+                    || container.getAtom(i).getFlag(IChemObject.AROMATIC)
                     || container.getAtom(i).getAtomicNumber() == IElement.N || container.getAtom(i).getAtomicNumber() == IElement.O)
-                    && !container.getAtom(i).getFlag(CDKConstants.VISITED)) {
+                    && !container.getAtom(i).getFlag(IChemObject.VISITED)) {
                 //logger.debug("...... -> Accepted");
                 startSphere = new ArrayList<>();
                 path = new ArrayList<>();
@@ -198,7 +198,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
         }
         // restore original flag values
         for (int i = 0; i < originalFlag4.length; i++) {
-            container.getAtom(i).setFlag(CDKConstants.VISITED, originalFlag4[i]);
+            container.getAtom(i).setFlag(IChemObject.VISITED, originalFlag4[i]);
         }
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
@@ -245,18 +245,18 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
             for (Object bond : bonds) {
                 nextAtom = ((IBond) bond).getOther(atom);
                 if ((container.getMaximumBondOrder(nextAtom) != IBond.Order.SINGLE
-                        || Math.abs(nextAtom.getFormalCharge()) >= 1 || nextAtom.getFlag(CDKConstants.ISAROMATIC)
+                        || Math.abs(nextAtom.getFormalCharge()) >= 1 || nextAtom.getFlag(IChemObject.AROMATIC)
                         || nextAtom.getAtomicNumber() == IElement.N || nextAtom.getAtomicNumber() == IElement.O)
-                        & !nextAtom.getFlag(CDKConstants.VISITED)) {
+                        & !nextAtom.getFlag(IChemObject.VISITED)) {
                     //logger.debug("BDS> AtomNr:"+container.indexOf(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
                     path.add(nextAtom);
                     //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-                    nextAtom.setFlag(CDKConstants.VISITED, true);
+                    nextAtom.setFlag(IChemObject.VISITED, true);
                     if (container.getConnectedBondsCount(nextAtom) > 1) {
                         newSphere.add(nextAtom);
                     }
                 } else {
-                    nextAtom.setFlag(CDKConstants.VISITED, true);
+                    nextAtom.setFlag(IChemObject.VISITED, true);
                 }
             }
         }

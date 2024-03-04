@@ -14,6 +14,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.IAtomTypeMatcher;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -105,7 +106,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
                     if (BondManipulator.isHigherOrder(order, expectedMax)) {
                         Assertions.fail("At least one bond order exceeds the maximum for the atom type");
                     }
-                } else if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
+                } else if (bond.getFlag(IChemObject.SINGLE_OR_DOUBLE)) {
                     if (expectedMax != IBond.Order.SINGLE && expectedMax != IBond.Order.DOUBLE) {
                         Assertions.fail("A single or double flagged bond does not match the bond order of the atom type");
                     }

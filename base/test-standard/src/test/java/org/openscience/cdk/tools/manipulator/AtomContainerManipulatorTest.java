@@ -590,12 +590,12 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1, 5, IBond.Order.SINGLE);
         for (IAtom atom : mol.atoms())
             atom.setImplicitHydrogenCount(0);
-        mol.setFlag(CDKConstants.ISAROMATIC, true);
+        mol.setFlag(IChemObject.AROMATIC, true);
 
         Assertions.assertEquals(6, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assertions.assertEquals(2, ac.getAtomCount());
-        Assertions.assertTrue(ac.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(ac.getFlag(IChemObject.AROMATIC));
     }
 
     @Test
@@ -808,7 +808,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(CDKConstants.ISAROMATIC, true);
+        mol.setFlag(IChemObject.AROMATIC, true);
 
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(mol.getConnectedAtomsList(mol.getAtom(0)));
         Assertions.assertEquals(3, atoms.length);
@@ -831,7 +831,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(CDKConstants.ISAROMATIC, true);
+        mol.setFlag(IChemObject.AROMATIC, true);
 
         IBond[] bonds = AtomContainerManipulator.getBondArray(mol.getConnectedBondsList(mol.getAtom(0)));
         Assertions.assertEquals(3, bonds.length);
@@ -854,7 +854,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(CDKConstants.ISAROMATIC, true);
+        mol.setFlag(IChemObject.AROMATIC, true);
 
         IBond[] bonds = AtomContainerManipulator.getBondArray(mol);
         Assertions.assertEquals(5, bonds.length);
@@ -885,7 +885,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(CDKConstants.ISAROMATIC, true);
+        mol.setFlag(IChemObject.AROMATIC, true);
 
         Assertions.assertEquals(mol.getAtom(0), getAtomById(mol, "a1"));
         Assertions.assertEquals(mol.getAtom(1), getAtomById(mol, "a2"));
@@ -1429,10 +1429,10 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         cyclohexane.getAtom(0).setSymbol("O");
         cyclohexane.getAtom(2).setSymbol("O");
         cyclohexane.getAtom(1).setAtomTypeName("remove me");
-        cyclohexane.getAtom(3).setFlag(CDKConstants.ISAROMATIC, true);
+        cyclohexane.getAtom(3).setFlag(IChemObject.AROMATIC, true);
         cyclohexane.getAtom(4).setImplicitHydrogenCount(2);
-        cyclohexane.getBond(0).setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-        cyclohexane.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
+        cyclohexane.getBond(0).setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+        cyclohexane.getBond(1).setFlag(IChemObject.AROMATIC, true);
 
         IAtomContainer anonymous = AtomContainerManipulator.anonymise(cyclohexane);
 
@@ -1442,10 +1442,10 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         assertThat(anonymous.getAtom(2).getSymbol(), is("C"));
         Assertions.assertNull(anonymous.getAtom(1).getAtomTypeName());
         assertThat(anonymous.getAtom(4).getImplicitHydrogenCount(), is(0));
-        Assertions.assertFalse(anonymous.getAtom(3).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertFalse(anonymous.getAtom(3).getFlag(IChemObject.AROMATIC));
 
-        Assertions.assertFalse(anonymous.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertFalse(anonymous.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(anonymous.getBond(1).getFlag(IChemObject.AROMATIC));
+        Assertions.assertFalse(anonymous.getBond(1).getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
 
     @Test
@@ -1502,16 +1502,16 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     void setSingleOrDoubleFlags() {
         IAtomContainer biphenyl = TestMoleculeFactory.makeBiphenyl();
         for (IBond bond : biphenyl.bonds()) {
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
         }
         AtomContainerManipulator.setSingleOrDoubleFlags(biphenyl);
-        Assertions.assertTrue(biphenyl.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(biphenyl.getFlag(IChemObject.SINGLE_OR_DOUBLE));
         for (IAtom atom : biphenyl.atoms()) {
-            Assertions.assertTrue(biphenyl.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+            Assertions.assertTrue(biphenyl.getFlag(IChemObject.SINGLE_OR_DOUBLE));
         }
         int n = 0;
         for (IBond bond : biphenyl.bonds()) {
-            n += bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE) ? 1 : 0;
+            n += bond.getFlag(IChemObject.SINGLE_OR_DOUBLE) ? 1 : 0;
         }
         // 13 bonds - the one which joins the two rings is now marked as single
         // or double

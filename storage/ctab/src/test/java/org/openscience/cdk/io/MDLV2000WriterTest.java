@@ -64,7 +64,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -418,10 +418,10 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
 
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         for (IAtom atom : benzene.atoms()) {
-            atom.setFlag(ISAROMATIC, true);
+            atom.setFlag(AROMATIC, true);
         }
         for (IBond bond : benzene.bonds()) {
-            bond.setFlag(ISAROMATIC, true);
+            bond.setFlag(AROMATIC, true);
         }
 
         StringWriter   writer    = new StringWriter();

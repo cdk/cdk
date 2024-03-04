@@ -848,10 +848,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 break;
             case 4: // aromatic
                 bond.setOrder(IBond.Order.UNSET);
-                bond.setFlag(CDKConstants.ISAROMATIC, true);
-                bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-                atoms[u].setFlag(CDKConstants.ISAROMATIC, true);
-                atoms[v].setFlag(CDKConstants.ISAROMATIC, true);
+                bond.setFlag(IChemObject.AROMATIC, true);
+                bond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+                atoms[u].setFlag(IChemObject.AROMATIC, true);
+                atoms[v].setFlag(IChemObject.AROMATIC, true);
                 break;
             case 5: // single or double
                 bond = new QueryBond(bond.getBegin(), bond.getEnd(), Expr.Type.SINGLE_OR_DOUBLE);
@@ -2052,10 +2052,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 newBond = builder.newInstance(IBond.class, a1, a2, IBond.Order.UNSET);
             }
             // mark both atoms and the bond as aromatic and raise the SINGLE_OR_DOUBLE-flag
-            newBond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-            newBond.setFlag(CDKConstants.ISAROMATIC, true);
-            a1.setFlag(CDKConstants.ISAROMATIC, true);
-            a2.setFlag(CDKConstants.ISAROMATIC, true);
+            newBond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+            newBond.setFlag(IChemObject.AROMATIC, true);
+            a1.setFlag(IChemObject.AROMATIC, true);
+            a2.setFlag(IChemObject.AROMATIC, true);
             explicitValence[atom1 - 1] = explicitValence[atom2 - 1] = Integer.MIN_VALUE;
         } else {
             newBond = new QueryBond(builder);

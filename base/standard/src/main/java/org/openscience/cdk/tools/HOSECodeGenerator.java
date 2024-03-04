@@ -33,6 +33,7 @@ import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.InvPair;
@@ -215,9 +216,9 @@ public class HOSECodeGenerator implements java.io.Serializable {
         spheres = new List[noOfSpheres + 1];
         spheresWithAtoms = new List[noOfSpheres + 1];
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            ac.getAtom(i).setFlag(CDKConstants.VISITED, false);
+            ac.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
-        root.setFlag(CDKConstants.VISITED, true);
+        root.setFlag(IChemObject.VISITED, true);
         rootNode = new TreeNode(root.getSymbol(), null, root, 0, atomContainer.getConnectedBondsCount(root), 0);
         /*
          * All we need to observe is how the ranking of substituents in the
@@ -282,9 +283,9 @@ public class HOSECodeGenerator implements java.io.Serializable {
         maxSphere = noOfSpheres;
         spheres = new List[noOfSpheres + 1];
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            ac.getAtom(i).setFlag(CDKConstants.VISITED, false);
+            ac.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
-        root.setFlag(CDKConstants.VISITED, true);
+        root.setFlag(IChemObject.VISITED, true);
         rootNode = new TreeNode(root.getSymbol(), null, root, 0, atomContainer.getConnectedBondsCount(root), 0);
         /*
          * All we need to observe is how the ranking of substituents in the
@@ -377,7 +378,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
                  * In the first sphere the atoms are labeled with their own atom
                  * atom as source
                  */
-                if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+                if (bond.getFlag(IChemObject.AROMATIC)) {
                     tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, 0, 0,
                                                                            0), atom, 4, atomContainer.getConnectedBondsCount(atom), 0);
                 } else {
@@ -390,7 +391,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 if (!addTreeNode) sphereNodesWithAtoms.add(atom);
 
                 //		        rootNode.childs.addElement(tempNode);
-                atom.setFlag(CDKConstants.VISITED, true);
+                atom.setFlag(IChemObject.VISITED, true);
             } catch (Exception exc) {
                 throw new CDKException("Error in HOSECodeGenerator->breadthFirstSearch.", exc);
             }
@@ -434,7 +435,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
                         toNode = conAtom;
                         if (!toNode.equals(treeNode.source.atom)) {
                             bond = atomContainer.getBond(node, toNode);
-                            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+                            if (bond.getFlag(IChemObject.AROMATIC)) {
                                 nextSphereNodes.add(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer
                                         .getConnectedBondsCount(toNode), treeNode.score));
                             } else {
@@ -469,7 +470,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
      */
     private void createCode() throws CDKException {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
-            atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
+            atomContainer.getAtom(f).setFlag(IChemObject.VISITED, false);
         }
         for (int f = 0; f < maxSphere; f++) {
             for (TreeNode tn : spheres[maxSphere - f]) {
@@ -546,16 +547,16 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 } else {
                     throw new CDKException("Unknown bond type");
                 }
-                if (treeNode.atom != null && !treeNode.atom.getFlag(CDKConstants.VISITED)) {
+                if (treeNode.atom != null && !treeNode.atom.getFlag(IChemObject.VISITED)) {
                     tempCode.append(getElementSymbol(treeNode.symbol));
-                } else if (treeNode.atom != null && treeNode.atom.getFlag(CDKConstants.VISITED)) {
+                } else if (treeNode.atom != null && treeNode.atom.getFlag(IChemObject.VISITED)) {
                     tempCode.append('&');
                     treeNode.stopper = true;
                 }
                 code.append(tempCode).append(createChargeCode(treeNode.atom));
                 treeNode.hSymbol = tempCode.toString();
             }
-            if (treeNode.atom != null) treeNode.atom.setFlag(CDKConstants.VISITED, true);
+            if (treeNode.atom != null) treeNode.atom.setFlag(IChemObject.VISITED, true);
             if (treeNode.source.stopper) treeNode.stopper = true;
         }
         code.append(sphereDelimiters[sphere - 1]);

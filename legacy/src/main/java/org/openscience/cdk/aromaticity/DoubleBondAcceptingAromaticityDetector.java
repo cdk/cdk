@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -73,8 +74,8 @@ public class DoubleBondAcceptingAromaticityDetector {
             if (!atomIsPotentiallyAromatic(atom)) ringSystems.removeAtom(atom);
 
         // FIXME: should not really mark them here
-        for (IAtom iAtom : ringSystems.atoms()) iAtom.setFlag(CDKConstants.ISINRING, true);
-        for (IBond iBond : ringSystems.bonds()) iBond.setFlag(CDKConstants.ISINRING, true);
+        for (IAtom iAtom : ringSystems.atoms()) iAtom.setFlag(IChemObject.IN_RING, true);
+        for (IBond iBond : ringSystems.bonds()) iBond.setFlag(IChemObject.IN_RING, true);
 
         boolean foundSomeAromaticity = false;
         for (IAtomContainer isolatedSystem : ConnectivityChecker.partitionIntoMolecules(ringSystems)
@@ -179,8 +180,8 @@ public class DoubleBondAcceptingAromaticityDetector {
 
     private static void markRingAtomsAndBondsAromatic(IAtomContainer container) {
         for (IAtom atom : container.atoms())
-            atom.setFlag(CDKConstants.ISAROMATIC, true);
+            atom.setFlag(IChemObject.AROMATIC, true);
         for (IBond bond : container.bonds())
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
     }
 }

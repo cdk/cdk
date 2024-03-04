@@ -19,7 +19,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -41,7 +41,7 @@ public class AliphaticAtom extends SMARTSAtom {
      */
     public AliphaticAtom(IChemObjectBuilder builder) {
         super(builder);
-        setFlag(CDKConstants.ISALIPHATIC, true);
+        setFlag(IChemObject.ALIPHATIC, true);
     }
 
     /*

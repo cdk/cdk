@@ -19,7 +19,7 @@
  */
 package org.openscience.cdk.renderer.generators;
 
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -166,7 +166,7 @@ public class RingGenerator extends BasicBondGenerator {
     private boolean ringIsAromatic(IRing ring) {
         boolean isAromatic = true;
         for (IAtom atom : ring.atoms()) {
-            if (!atom.getFlag(ISAROMATIC)) {
+            if (!atom.getFlag(AROMATIC)) {
                 isAromatic = false;
                 break;
             }
@@ -174,7 +174,7 @@ public class RingGenerator extends BasicBondGenerator {
         if (!isAromatic) {
             isAromatic = true;
             for (IBond b : ring.bonds()) {
-                if (!b.getFlag(ISAROMATIC)) {
+                if (!b.getFlag(AROMATIC)) {
                     return false;
                 }
             }

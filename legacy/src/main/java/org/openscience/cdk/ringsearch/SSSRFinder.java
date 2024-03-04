@@ -23,10 +23,10 @@
 package org.openscience.cdk.ringsearch;
 
 import org._3pq.jgrapht.UndirectedGraph;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
@@ -185,7 +185,7 @@ public class SSSRFinder {
             IAtom[] atoms = new IAtom[vertices.size()];
             for (int i = 0; i < vertices.size(); i++) {
                 atoms[i] = (IAtom) vertices.get(i);
-                atoms[i].setFlag(CDKConstants.ISINRING, true);
+                atoms[i].setFlag(IChemObject.IN_RING, true);
             }
             ring.setAtoms(atoms);
             for (int i = 1; i < vertices.size(); i++)

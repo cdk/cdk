@@ -28,13 +28,13 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -179,24 +179,24 @@ class HINReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertEquals(1, cList.size());
 
         IAtomContainer mol = cList.get(0);
-        Assertions.assertTrue(mol.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(2).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(3).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(5).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(4).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(1).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(0).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(2).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(3).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(5).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(4).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(1).getFlag(IChemObject.AROMATIC));
 
-        Assertions.assertTrue(mol.getAtom(7).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(12).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(11).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(10).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(9).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(mol.getAtom(7).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(12).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(11).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(10).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(9).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(mol.getAtom(8).getFlag(IChemObject.AROMATIC));
 
         // make sure that only the phenyl C's were marked as aromatic
         for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.C)
-                Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), atom.getSymbol() + " (index " + mol.indexOf(atom)
+                Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC), atom.getSymbol() + " (index " + mol.indexOf(atom)
                         + ") was wrongly marked as aromatic");
         }
 

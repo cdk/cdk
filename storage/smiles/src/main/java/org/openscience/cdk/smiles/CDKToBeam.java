@@ -25,13 +25,13 @@
 package org.openscience.cdk.smiles;
 
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -205,7 +205,7 @@ final class CDKToBeam {
      */
     static Atom toBeamAtom(final IAtom a, final int flavour) {
 
-        final boolean aromatic = SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && a.getFlag(CDKConstants.ISAROMATIC);
+        final boolean aromatic = SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && a.getFlag(IChemObject.AROMATIC);
         final Integer charge = a.getFormalCharge();
         final String symbol = Objects.requireNonNull(a.getSymbol(), "An atom had an undefined symbol");
 
@@ -310,7 +310,7 @@ final class CDKToBeam {
         IBond[] bs = dbs.getBonds();
 
         // don't try to set a configuration on aromatic bonds
-        if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && db.getFlag(CDKConstants.ISAROMATIC)) return;
+        if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && db.getFlag(IChemObject.AROMATIC)) return;
 
         int u = indices.get(db.getBegin());
         int v = indices.get(db.getEnd());

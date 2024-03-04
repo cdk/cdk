@@ -24,6 +24,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -125,8 +126,8 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
         for (IBond bondi : reactant.bonds()) {
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
-            if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && atom1.getFlag(CDKConstants.REACTIVE_CENTER)
-                    && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
+            if (bondi.getFlag(IChemObject.REACTIVE_CENTER) && atom1.getFlag(IChemObject.REACTIVE_CENTER)
+                    && atom2.getFlag(IChemObject.REACTIVE_CENTER)
                     && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
                     && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
                     && reactant.getConnectedSingleElectronsCount(atom1) == 0
@@ -173,9 +174,9 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
                     && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
                     && reactant.getConnectedSingleElectronsCount(atom1) == 0
                     && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
-                bond.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                atom2.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                bond.setFlag(IChemObject.REACTIVE_CENTER, true);
+                atom1.setFlag(IChemObject.REACTIVE_CENTER, true);
+                atom2.setFlag(IChemObject.REACTIVE_CENTER, true);
             }
         }
     }

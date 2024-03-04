@@ -213,42 +213,82 @@ public class CDKConstants {
      * purposes ***************************************
      */
 
-    /** Flag that is set if the chemobject is placed (somewhere).
+    /**
+     * Flag that is set if the chemobject is placed (somewhere).
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#PLACED}
      */
-    public final static int         ISPLACED                     = 0x0001;                           // 1 << 0
-    /** Flag that is set when the chemobject is part of a ring.
+    @Deprecated
+    public final static int         ISPLACED                     = 0x0001;
+    /**
+     * Flag that is set when the chemobject is part of a ring.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#IN_RING}
      */
-    public final static int         ISINRING                     = 0x0002;                           // 1 << 1
-    /** Flag that is set when the chemobject is part of a ring.
+    @Deprecated
+    public final static int         ISINRING                     = 0x0002;
+    /**
+     * Flag that is set when the chemobject is part of a ring.
+     * @deprecated Now negated from {@link org.openscience.cdk.interfaces.IChemObject#IN_RING}
      */
-    public final static int         ISNOTINRING                  = 0x0004;                           // 1 << 2
-    /** Flag that is set if a chemobject is part of an aliphatic chain.
+    @Deprecated
+    public final static int         ISNOTINRING                  = 0x0004;
+    /**
+     * Flag that is set if a chemobject is part of an aliphatic chain.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#ALIPHATIC} but should really use not(AROMATIC)
      */
-    public final static int         ISALIPHATIC                  = 0x0008;                           // 1 << 3 etc.
-    /** Flag is set if chemobject has been visited.
+    @Deprecated
+    public final static int         ISALIPHATIC                  = 0x0008;
+    /**
+     * Flag is set if chemobject has been visited.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#VISITED}
      */
-    public final static int         VISITED                      = 0x0010;                           // Use in tree searches // 1 << 4
-    /** Flag is set if chemobject is part of an aromatic system. */
-    public final static int         ISAROMATIC                   = 0x0020;                           // 1 << 5
-    /** Flag is set if chemobject is part of a conjugated system. */
-    public final static int         ISCONJUGATED                 = 0x0040;                           // 1 << 6
-    /** Flag is set if a chemobject is mapped to another chemobject.
-     *  It is used for example in subgraph isomorphism search.
+    @Deprecated
+    public final static int         VISITED                      = 0x0010;
+    /**
+     * Flag is set if chemobject is part of an aromatic system
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#AROMATIC}
      */
-    public final static int         MAPPED                       = 0x0080;                           // 1 << 7
+    @Deprecated
+    public final static int         ISAROMATIC                   = 0x0020;
+    /**
+     * Flag is set if chemobject is part of a conjugated system.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#CONJUGATED}
+     */
+    @Deprecated
+    public final static int         ISCONJUGATED                 = 0x0040;
+    /**
+     * Flag is set if a chemobject is mapped to another chemobject.
+     * It is used for example in subgraph isomorphism search.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#MAPPED}
+     */
+    @Deprecated
+    public final static int         MAPPED                       = 0x0080;
 
-    /** Sets to true if the atom is an hydrogen bond donor. */
-    public final static int         IS_HYDROGENBOND_DONOR        = 0x0100;                           // 1 << 8
-    /** Sets to true if the atom is an hydrogen bond acceptor. */
-    public final static int         IS_HYDROGENBOND_ACCEPTOR     = 0x0200;                           // 1 << 9
+    /**
+     * Sets to true if the atom is an hydrogen bond donor.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#HYDROGEN_BOND_DONOR}
+     */
+    @Deprecated
+    public final static int         IS_HYDROGENBOND_DONOR        = 0x0100;
+    /**
+     * Sets to true if the atom is an hydrogen bond acceptor.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#HYDROGEN_BOND_ACCEPTOR}
+     */
+    @Deprecated
+    public final static int         IS_HYDROGENBOND_ACCEPTOR     = 0x0200;
 
-    /** Flag is set if a chemobject has reactive center.
-     *  It is used for example in reaction.
+    /**
+     * Flag is set if a chemobject has reactive center.
+     * It is used for example in reaction.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#REACTIVE_CENTER}
      */
-    public static final int         REACTIVE_CENTER              = 0x0400;                           // 1 << 10
-    /** Flag is set if an atom could be typed.
+    @Deprecated
+    public static final int         REACTIVE_CENTER              = 0x0400;
+    /**
+     * Flag is set if an atom could be typed.
+     * @deprecated Now {@link org.openscience.cdk.interfaces.IChemObject#TYPEABLE}
      */
-    public static final int         IS_TYPEABLE                  = 0x0800;                           // 1 << 11
+    @Deprecated
+    public static final int         IS_TYPEABLE                  = 0x0800;
 
     /**
      * Flag used for marking uncertainty of the bond order.

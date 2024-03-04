@@ -26,11 +26,11 @@ package org.openscience.cdk.aromaticity;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
@@ -101,9 +101,9 @@ class AromaticityTest {
         IAtomContainer cyclobutadiene = smiles("c1ccc1");
         daylight.apply(cyclobutadiene);
         for (IBond bond : cyclobutadiene.bonds())
-            Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         for (IAtom atom : cyclobutadiene.atoms())
-            Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(atom.getFlag(IChemObject.AROMATIC));
     }
 
     @Test
@@ -111,9 +111,9 @@ class AromaticityTest {
         IAtomContainer quinone = smiles("O=c1ccc(=O)cc1");
         daylight.apply(quinone);
         for (IBond bond : quinone.bonds())
-            Assertions.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         for (IAtom atom : quinone.atoms())
-            Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(atom.getFlag(IChemObject.AROMATIC));
     }
 
     @Test
