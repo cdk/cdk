@@ -288,8 +288,49 @@ public interface IChemObject extends ICDKObject {
      * on a single numeric value and are set/cleared.
      *
      * @return numeric representation of the flags
+     * @deprecated used {@link #flags()}
      */
+    @Deprecated
     Number getFlagValue();
+
+    /**
+     * Set the provided flags. Any on-bits in the input parameter are set on
+     * in the ChemObject.
+     *
+     * @param flags the flags
+     */
+    void set(int flags);
+
+    /**
+     * Clear the provided flags. Any on-bits in the input parameter are set on
+     * in the ChemObject.
+     *
+     * @param flags the flags
+     */
+    void clear(int flags);
+
+    /**
+     * Test if a flag(s) are set on this ChemObject. If multiple flags are
+     * provided they must all be set to return true.
+     *
+     * <pre>{@code
+     * atom.set(IS_IN_RING);
+     * atom.is(IS_IN_RING); // false!
+     * atom.is(IS_IN_RING+IS_AROMATIC); // false!
+     * atom.set(IS_AROMATIC);
+     * atom.is(IS_IN_RING+IS_AROMATIC); // true!
+     * }</pre>
+     *
+     * @param flags the flags
+     */
+    boolean is(int flags);
+
+    /**
+     * Access the current value of the flags for this ChemObject.
+     *
+     * @return the flag value (32-bit integer)
+     */
+    int flags();
 
     /**
      * Returns a one line description of this IChemObject.
