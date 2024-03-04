@@ -216,6 +216,26 @@ class ChemObjectRef implements IChemObject {
         return chemobj.getFlagValue();
     }
 
+    @Override
+    public void set(int flags) {
+        chemobj.set(flags);
+    }
+
+    @Override
+    public void clear(int flags) {
+        chemobj.clear(flags);
+    }
+
+    @Override
+    public boolean is(int flags) {
+        return chemobj.is(flags);
+    }
+
+    @Override
+    public int flags() {
+        return chemobj.flags();
+    }
+
     /**
      * {@inheritDoc}
      */
