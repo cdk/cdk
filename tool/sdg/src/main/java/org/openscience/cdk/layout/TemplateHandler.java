@@ -26,7 +26,6 @@
  */
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -197,7 +196,7 @@ public final class TemplateHandler {
             for (Map<IAtom, IAtom> atoms : mappings.toAtomMap()) {
                 for (Map.Entry<IAtom, IAtom> e : atoms.entrySet()) {
                     e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
-                    e.getValue().setFlag(CDKConstants.ISPLACED, true);
+                    e.getValue().setFlag(IChemObject.PLACED, true);
                 }
                 if (!atoms.isEmpty())
                     return true;
@@ -220,7 +219,7 @@ public final class TemplateHandler {
             for (Map<IAtom, IAtom> atoms : anonPattern.matchAll(molecule).toAtomMap()) {
                 for (Map.Entry<IAtom, IAtom> e : atoms.entrySet()) {
                     e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
-                    e.getValue().setFlag(CDKConstants.ISPLACED, true);
+                    e.getValue().setFlag(IChemObject.PLACED, true);
                 }
                 if (!atoms.isEmpty())
                     return true;
@@ -231,7 +230,7 @@ public final class TemplateHandler {
             for (Map<IAtom, IAtom> atoms : anonPattern.matchAll(molecule).toAtomMap()) {
                 for (Map.Entry<IAtom, IAtom> e : atoms.entrySet()) {
                     e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
-                    e.getValue().setFlag(CDKConstants.ISPLACED, true);
+                    e.getValue().setFlag(IChemObject.PLACED, true);
                 }
                 if (!atoms.isEmpty())
                     return true;

@@ -32,6 +32,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.Bond;
@@ -138,7 +139,7 @@ class CDKToBeamTest {
     void aromaticAtom() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
-        a.setFlag(CDKConstants.ISAROMATIC, true);
+        a.setFlag(IChemObject.AROMATIC, true);
         Assertions.assertTrue(new CDKToBeam().toBeamAtom(a).aromatic());
     }
 
@@ -243,7 +244,7 @@ class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v);
-        b.setFlag(CDKConstants.ISAROMATIC, true);
+        b.setFlag(IChemObject.AROMATIC, true);
         Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
@@ -513,7 +514,7 @@ class CDKToBeamTest {
         ac.getAtom(1).setIsAromatic(true);
         ac.getAtom(2).setIsAromatic(true);
 
-        ac.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
+        ac.getBond(1).setFlag(IChemObject.AROMATIC, true);
 
         ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
                 TOGETHER));

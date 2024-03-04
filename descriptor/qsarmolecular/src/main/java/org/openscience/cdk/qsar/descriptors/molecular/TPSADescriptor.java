@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -259,7 +260,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
                 // counting the number of single/double/triple/aromatic bonds
                 List<IBond> connectedBonds = ac.getConnectedBondsList(atom);
                 for (IBond connectedBond : connectedBonds) {
-                    if (connectedBond.getFlag(CDKConstants.ISAROMATIC))
+                    if (connectedBond.getFlag(IChemObject.AROMATIC))
                         aromaticBondCount++;
                     else if (connectedBond.getOrder() == Order.SINGLE)
                         singleBondCount++;

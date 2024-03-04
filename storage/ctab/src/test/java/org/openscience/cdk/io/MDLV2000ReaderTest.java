@@ -28,7 +28,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
@@ -42,6 +41,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -1082,9 +1082,9 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         Assertions.assertEquals(9, molecule.getAtomCount());
         Assertions.assertEquals(Order.UNSET, molecule.getBond(0).getOrder());
-        Assertions.assertTrue(molecule.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(molecule.getBond(0).getFlag(IChemObject.SINGLE_OR_DOUBLE));
         Assertions.assertEquals(Order.SINGLE, molecule.getBond(1).getOrder());
-        Assertions.assertFalse(molecule.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertFalse(molecule.getBond(1).getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
 
     @Test

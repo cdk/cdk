@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 
 /**
  * TestCase for the writer MDL SD file writer.
@@ -273,10 +273,10 @@ class SDFWriterTest extends ChemObjectWriterTest {
     void testIOPropPropagation() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
         for (IAtom atom : mol.atoms()) {
-            atom.setFlag(ISAROMATIC, true);
+            atom.setFlag(AROMATIC, true);
         }
         for (IBond bond : mol.bonds()) {
-            bond.setFlag(ISAROMATIC, true);
+            bond.setFlag(AROMATIC, true);
         }
 
         StringWriter strWriter = new StringWriter();

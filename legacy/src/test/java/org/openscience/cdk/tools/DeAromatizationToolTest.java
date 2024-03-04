@@ -25,9 +25,9 @@ package org.openscience.cdk.tools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -45,7 +45,7 @@ class DeAromatizationToolTest extends CDKTestCase {
     @Test
     void testBezene() {
         Ring benzene = new Ring(6, "C");
-        for (IBond iBond : benzene.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, true);
+        for (IBond iBond : benzene.bonds()) iBond.setFlag(IChemObject.AROMATIC, true);
         boolean success = DeAromatizationTool.deAromatize(benzene);
         Assertions.assertTrue(success);
         double bondOrderSum = AtomContainerManipulator.getSingleBondEquivalentSum(benzene);
@@ -56,7 +56,7 @@ class DeAromatizationToolTest extends CDKTestCase {
     void testPyridine() {
         Ring pyridine = new Ring(6, "C");
         pyridine.getAtom(0).setSymbol("N");
-        for (IBond iBond : pyridine.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, true);
+        for (IBond iBond : pyridine.bonds()) iBond.setFlag(IChemObject.AROMATIC, true);
         boolean success = DeAromatizationTool.deAromatize(pyridine);
         Assertions.assertTrue(success);
         double bondOrderSum = AtomContainerManipulator.getSingleBondEquivalentSum(pyridine);

@@ -25,6 +25,7 @@ import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -256,7 +257,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
 
                     if (atomRingSet.getAtomContainer(j).contains(atomi)) {
                         if (((IRing) atomRingSet.getAtomContainer(j)).getRingSize() >= 6
-                                && atomi.getFlag(CDKConstants.ISAROMATIC)) {
+                                && atomi.getFlag(IChemObject.AROMATIC)) {
                             atomi.setProperty("IS_IN_AROMATIC_RING", true);
                         }
                         if (((IRing) atomRingSet.getAtomContainer(j)).getRingSize() < (Integer) atomi
@@ -595,7 +596,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                             // N sp3
                             if (hsCount == 0) {
                                 //if (rs.contains(atomi)&&ringSize>3) {
-                                if (atomi.getFlag(CDKConstants.ISAROMATIC)
+                                if (atomi.getFlag(IChemObject.AROMATIC)
                                         || (rs.contains(atomi)
                                                 && (Integer) atomi.getProperty(CDKConstants.PART_OF_RING_OF_SIZE) > 3 && getPiSystemsCount(
                                                 ac, atomi) >= 1)) {
@@ -624,7 +625,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                             } else if (hsCount == 1) {
                                 if (getAtomTypeXCount(ac, atomi) == 0) {
                                     //									like pyrrole
-                                    if (atomi.getFlag(CDKConstants.ISAROMATIC)
+                                    if (atomi.getFlag(IChemObject.AROMATIC)
                                             || (rs.contains(atomi)
                                                     && (Integer) atomi.getProperty(CDKConstants.PART_OF_RING_OF_SIZE) > 3 && getPiSystemsCount(
                                                     ac, atomi) >= 2)) {
@@ -1021,7 +1022,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int carocounter = 0;
         for (IAtom neighbour : neighbours) {
-            if (neighbour.getAtomicNumber() == IElement.C && neighbour.getFlag(CDKConstants.ISAROMATIC)) {
+            if (neighbour.getAtomicNumber() == IElement.C && neighbour.getFlag(IChemObject.AROMATIC)) {
                 carocounter += 1;
             }
         }
@@ -1040,7 +1041,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         int ccounter = 0;
         for (IAtom neighbour : neighbours) {
             if (neighbour.getAtomicNumber() == IElement.C) {
-                if (!neighbour.getFlag(CDKConstants.ISAROMATIC)) {
+                if (!neighbour.getFlag(IChemObject.AROMATIC)) {
                     ccounter += 1;
                 }
             }
@@ -1060,7 +1061,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         int ocounter = 0;
         for (IAtom neighbour : neighbours) {
             if (neighbour.getAtomicNumber() == IElement.O) {
-                if (!neighbour.getFlag(CDKConstants.ISAROMATIC)) {
+                if (!neighbour.getFlag(IChemObject.AROMATIC)) {
                     ocounter += 1;
                 }
             }
@@ -1111,7 +1112,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                 if (chargeFlag && neighbour.getFormalCharge() == -1 && bond.getOrder() == IBond.Order.SINGLE) {
                     odbcounter += 1;
                 }
-                if (!neighbour.getFlag(CDKConstants.ISAROMATIC)) {
+                if (!neighbour.getFlag(IChemObject.AROMATIC)) {
                     if (bond.getOrder() == IBond.Order.DOUBLE) {
                         odbcounter += 1;
                     }
@@ -1138,7 +1139,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                     sdbcounter += 1;
                 }
                 bond = ac.getBond(neighbour, atom);
-                if (!neighbour.getFlag(CDKConstants.ISAROMATIC)) {
+                if (!neighbour.getFlag(IChemObject.AROMATIC)) {
                     if (bond.getOrder() == IBond.Order.DOUBLE) {
                         sdbcounter += 1;
                     }
@@ -1162,7 +1163,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         for (IAtom neighbour : neighbours) {
             if (neighbour.getAtomicNumber() == IElement.N) {
                 bond = ac.getBond(neighbour, atom);
-                if (!neighbour.getFlag(CDKConstants.ISAROMATIC)) {
+                if (!neighbour.getFlag(IChemObject.AROMATIC)) {
                     if (bond.getOrder() == IBond.Order.DOUBLE) {
                         ndbcounter += 1;
                     }

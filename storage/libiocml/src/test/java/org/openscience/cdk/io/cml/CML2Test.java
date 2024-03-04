@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -67,10 +68,10 @@ class CML2Test extends CDKTestCase {
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         for (int i = 0; i <= 3; i++) {
-            Assertions.assertFalse(mol.getBond(i).getFlag(CDKConstants.ISAROMATIC), "Bond " + (i + 1) + " is not aromatic in the file");
+            Assertions.assertFalse(mol.getBond(i).getFlag(IChemObject.AROMATIC), "Bond " + (i + 1) + " is not aromatic in the file");
         }
         for (int i = 4; i <= 9; i++) {
-            Assertions.assertTrue(mol.getBond(i).getFlag(CDKConstants.ISAROMATIC), "Bond " + (i + 1) + " is aromatic in the file");
+            Assertions.assertTrue(mol.getBond(i).getFlag(IChemObject.AROMATIC), "Bond " + (i + 1) + " is aromatic in the file");
         }
     }
 

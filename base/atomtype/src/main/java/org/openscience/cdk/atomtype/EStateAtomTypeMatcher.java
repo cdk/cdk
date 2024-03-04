@@ -20,12 +20,12 @@ package org.openscience.cdk.atomtype;
 
 import java.util.List;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -82,7 +82,7 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
                 IBond b = atomContainer.getBond(atom, attached);
                 if (attached.getAtomicNumber() == IElement.H) NumHAtoms++;
 
-                if (atom.getFlag(CDKConstants.ISAROMATIC) && attached.getFlag(CDKConstants.ISAROMATIC)) {
+                if (atom.getFlag(IChemObject.AROMATIC) && attached.getFlag(IChemObject.AROMATIC)) {
 
                     boolean SameRing = inSameAromaticRing(atomContainer, atom, attached, ringSet);
 
@@ -141,7 +141,7 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
 
             atomType = atom.getBuilder().newInstance(IAtomType.class, fragment, atom.getSymbol());
             atomType.setFormalCharge(atom.getFormalCharge());
-            if (atom.getFlag(CDKConstants.ISAROMATIC)) atomType.setFlag(CDKConstants.ISAROMATIC, true);
+            if (atom.getFlag(IChemObject.AROMATIC)) atomType.setFlag(IChemObject.AROMATIC, true);
 
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(EStateAtomTypeMatcher.class)
@@ -164,7 +164,7 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
 
     static boolean isAromaticRing(IRing ring) {
         for (int i = 0; i < ring.getAtomCount(); i++)
-            if (!ring.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) return (false);
+            if (!ring.getAtom(i).getFlag(IChemObject.AROMATIC)) return (false);
 
         return (true);
     }

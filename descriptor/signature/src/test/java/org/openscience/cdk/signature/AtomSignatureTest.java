@@ -28,10 +28,10 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
@@ -81,7 +81,7 @@ class AtomSignatureTest extends AbstractSignatureTest {
             IAtom b = benzeneRing.getAtom((i + 1) % 6);
             IBond bond = builder.newInstance(IBond.class, a, b);
             benzeneRing.addBond(bond);
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
         }
 
         AtomSignature signature = new AtomSignature(0, benzeneRing);

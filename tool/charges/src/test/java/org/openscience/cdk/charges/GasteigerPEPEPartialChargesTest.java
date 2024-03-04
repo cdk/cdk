@@ -21,7 +21,7 @@ package org.openscience.cdk.charges;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -96,13 +96,13 @@ class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
         List<Boolean> oldBondOrders = new ArrayList<>();
         for (int i = 0; i < mol1.getBondCount(); i++)
-            oldBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
+            oldBondOrders.add(mol1.getBond(i).getFlag(IChemObject.AROMATIC));
 
         peoe.calculateCharges(mol1);
 
         List<Boolean> newBondOrders = new ArrayList<>();
         for (int i = 0; i < mol1.getBondCount(); i++)
-            newBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
+            newBondOrders.add(mol1.getBond(i).getFlag(IChemObject.AROMATIC));
 
         for (int i = 0; i < oldBondOrders.size(); i++) {
             Assertions.assertEquals(oldBondOrders.get(i), newBondOrders.get(i), "bond " + i + " does not match");

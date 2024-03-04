@@ -26,7 +26,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
@@ -90,7 +89,7 @@ class SSSRFinderTest extends CDKTestCase {
 
         int count = 0;
         for (IAtom atom : molecule.atoms()) {
-            if (atom.getFlag(CDKConstants.ISINRING)) count++;
+            if (atom.getFlag(IChemObject.IN_RING)) count++;
         }
         Assertions.assertEquals(6, count, "All atoms in benzene were not marked as being in a ring");
     }
@@ -103,7 +102,7 @@ class SSSRFinderTest extends CDKTestCase {
 
         int count = 0;
         for (IAtom atom : molecule.atoms()) {
-            if (atom.getFlag(CDKConstants.ISINRING)) count++;
+            if (atom.getFlag(IChemObject.IN_RING)) count++;
         }
         Assertions.assertEquals(5, count, "All ring atoms in 2-ethyl cyclopentane were not marked as being in a ring");
     }

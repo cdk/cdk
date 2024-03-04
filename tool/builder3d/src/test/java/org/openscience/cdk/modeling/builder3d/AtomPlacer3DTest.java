@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -138,7 +138,7 @@ class AtomPlacer3DTest extends CDKTestCase {
         IAtomContainer ac = makeAlphaPinene();
         Assertions.assertFalse(new AtomPlacer3D().allHeavyAtomsPlaced(ac));
         for (IAtom atom : ac.atoms()) {
-            atom.setFlag(CDKConstants.ISPLACED, true);
+            atom.setFlag(IChemObject.PLACED, true);
         }
         Assertions.assertTrue(new AtomPlacer3D().allHeavyAtomsPlaced(ac));
     }
@@ -189,7 +189,7 @@ class AtomPlacer3DTest extends CDKTestCase {
         IAtomContainer ac = makeAlphaPinene();
         IAtomContainer acplaced = new AtomPlacer3D().getPlacedHeavyAtoms(ac, ac.getAtom(0));
         Assertions.assertEquals(0, acplaced.getAtomCount());
-        ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
+        ac.getAtom(1).setFlag(IChemObject.PLACED, true);
         acplaced = new AtomPlacer3D().getPlacedHeavyAtoms(ac, ac.getAtom(0));
         Assertions.assertEquals(1, acplaced.getAtomCount());
     }
@@ -199,7 +199,7 @@ class AtomPlacer3DTest extends CDKTestCase {
         IAtomContainer ac = makeAlphaPinene();
         IAtom acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0), ac.getAtom(1));
         Assertions.assertNull(acplaced);
-        ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
+        ac.getAtom(1).setFlag(IChemObject.PLACED, true);
         acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0), ac.getAtom(2));
         Assertions.assertEquals(ac.getAtom(1), acplaced);
         acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0), ac.getAtom(1));
@@ -211,7 +211,7 @@ class AtomPlacer3DTest extends CDKTestCase {
         IAtomContainer ac = makeAlphaPinene();
         IAtom acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0));
         Assertions.assertNull(acplaced);
-        ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
+        ac.getAtom(1).setFlag(IChemObject.PLACED, true);
         acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0));
         Assertions.assertEquals(ac.getAtom(1), acplaced);
     }
@@ -220,7 +220,7 @@ class AtomPlacer3DTest extends CDKTestCase {
     void testGeometricCenterAllPlacedAtoms_IAtomContainer() throws Exception {
         IAtomContainer ac = makeAlphaPinene();
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
+            ac.getAtom(i).setFlag(IChemObject.PLACED, true);
         }
         ac.getAtom(0).setPoint3d(new Point3d(1.39, 2.04, 0));
         ac.getAtom(0).setPoint3d(new Point3d(2.02, 2.28, -1.12));
@@ -252,10 +252,10 @@ class AtomPlacer3DTest extends CDKTestCase {
         result = placer.isUnplacedHeavyAtom(hydrogen);
         Assertions.assertFalse(result);
 
-        carbon.setFlag(CDKConstants.ISPLACED, true);
+        carbon.setFlag(IChemObject.PLACED, true);
         result = placer.isUnplacedHeavyAtom(carbon);
         Assertions.assertFalse(result);
-        hydrogen.setFlag(CDKConstants.ISPLACED, true);
+        hydrogen.setFlag(IChemObject.PLACED, true);
         result = placer.isUnplacedHeavyAtom(hydrogen);
         Assertions.assertFalse(result);
     }
@@ -274,10 +274,10 @@ class AtomPlacer3DTest extends CDKTestCase {
         result = placer.isPlacedHeavyAtom(hydrogen);
         Assertions.assertFalse(result);
 
-        carbon.setFlag(CDKConstants.ISPLACED, true);
+        carbon.setFlag(IChemObject.PLACED, true);
         result = placer.isPlacedHeavyAtom(carbon);
         Assertions.assertTrue(result);
-        hydrogen.setFlag(CDKConstants.ISPLACED, true);
+        hydrogen.setFlag(IChemObject.PLACED, true);
         result = placer.isPlacedHeavyAtom(hydrogen);
         Assertions.assertFalse(result);
     }
@@ -296,10 +296,10 @@ class AtomPlacer3DTest extends CDKTestCase {
         result = placer.isAliphaticHeavyAtom(hydrogen);
         Assertions.assertFalse(result);
 
-        carbon.setFlag(CDKConstants.ISALIPHATIC, true);
+        carbon.setFlag(IChemObject.ALIPHATIC, true);
         result = placer.isAliphaticHeavyAtom(carbon);
         Assertions.assertTrue(result);
-        hydrogen.setFlag(CDKConstants.ISALIPHATIC, true);
+        hydrogen.setFlag(IChemObject.ALIPHATIC, true);
         result = placer.isAliphaticHeavyAtom(hydrogen);
         Assertions.assertFalse(result);
     }
@@ -318,10 +318,10 @@ class AtomPlacer3DTest extends CDKTestCase {
         result = placer.isRingHeavyAtom(hydrogen);
         Assertions.assertFalse(result);
 
-        carbon.setFlag(CDKConstants.ISINRING, true);
+        carbon.setFlag(IChemObject.IN_RING, true);
         result = placer.isRingHeavyAtom(carbon);
         Assertions.assertTrue(result);
-        hydrogen.setFlag(CDKConstants.ISINRING, true);
+        hydrogen.setFlag(IChemObject.IN_RING, true);
         result = placer.isRingHeavyAtom(hydrogen);
         Assertions.assertFalse(result);
     }

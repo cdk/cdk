@@ -925,32 +925,32 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
 
         // mark visited
         for (IAtom atom : that.atoms())
-            atom.setFlag(CDKConstants.VISITED, false);
+            atom.setFlag(IChemObject.VISITED, false);
         for (IBond bond : that.bonds())
-            bond.setFlag(CDKConstants.VISITED, false);
+            bond.setFlag(IChemObject.VISITED, false);
         for (IAtom atom : this.atoms())
-            atom.setFlag(CDKConstants.VISITED, true);
+            atom.setFlag(IChemObject.VISITED, true);
         for (IBond bond : this.bonds())
-            bond.setFlag(CDKConstants.VISITED, true);
+            bond.setFlag(IChemObject.VISITED, true);
 
         // Determine which stereo elements are new (unvisited)
         List<IStereoElement<?,?>> newStereo = new ArrayList<>();
         for (IStereoElement<?,?> se : that.stereoElements()) {
-            if (!se.getFocus().getFlag(CDKConstants.VISITED))
+            if (!se.getFocus().getFlag(IChemObject.VISITED))
                 newStereo.add(se);
         }
 
         // append atoms/bonds not visited
         for (IAtom atom : that.atoms()) {
-            if (!atom.getFlag(CDKConstants.VISITED)) {
-                atom.setFlag(CDKConstants.VISITED, true);
+            if (!atom.getFlag(IChemObject.VISITED)) {
+                atom.setFlag(IChemObject.VISITED, true);
                 addAtom(atom);
             }
         }
         /* FIXME!!! */
         for (IBond bond : that.bonds()) {
-            if (!bond.getFlag(CDKConstants.VISITED)) {
-                bond.setFlag(CDKConstants.VISITED, true);
+            if (!bond.getFlag(IChemObject.VISITED)) {
+                bond.setFlag(IChemObject.VISITED, true);
                 addBond(bond);
             }
         }

@@ -54,7 +54,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 /**
  * Convert the Beam toolkit object model to the CDK. Currently the aromatic
  * bonds from SMILES are loaded as singly bonded {@link IBond}s with the {@link
- * org.openscience.cdk.CDKConstants#ISAROMATIC} flag set.
+ * org.openscience.cdk.interfaces.IChemObject#AROMATIC} flag set.
  *
  * <blockquote><pre>
  * IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();

@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -214,11 +215,11 @@ public class StructureDiagramGenerator {
     private static IAtomContainer findPartToAlign(IAtomContainer mol, IAtomContainer cpy) {
         Cycles.markRingAtomsAndBonds(mol);
         for (IAtom atom : cpy.atoms())
-            atom.setFlag(CDKConstants.VISITED, atom.isInRing());
+            atom.setFlag(IChemObject.VISITED, atom.isInRing());
         Cycles.markRingAtomsAndBonds(cpy);
         Set<IAtom> remove = new HashSet<>();
         for (IAtom atom : cpy.atoms()) {
-            if (!atom.isInRing() && atom.getFlag(CDKConstants.VISITED) && atom.getBondCount() > 1)
+            if (!atom.isInRing() && atom.getFlag(IChemObject.VISITED) && atom.getBondCount() > 1)
                 remove.add(atom);
         }
         for (IAtom atom : remove)
@@ -617,14 +618,14 @@ public class StructureDiagramGenerator {
             }
 
             if (afixed) {
-                atom.setFlag(CDKConstants.ISPLACED, true);
-                atom.setFlag(CDKConstants.VISITED, true);
+                atom.setFlag(IChemObject.PLACED, true);
+                atom.setFlag(IChemObject.VISITED, true);
             } else {
                 atom.setPoint2d(null);
-                atom.setFlag(CDKConstants.ISPLACED, false);
-                atom.setFlag(CDKConstants.VISITED, false);
-                atom.setFlag(CDKConstants.ISINRING, false);
-                atom.setFlag(CDKConstants.ISALIPHATIC, false);
+                atom.setFlag(IChemObject.PLACED, false);
+                atom.setFlag(IChemObject.VISITED, false);
+                atom.setFlag(IChemObject.IN_RING, false);
+                atom.setFlag(IChemObject.ALIPHATIC, false);
             }
         }
         atomPlacer.setMolecule(this.molecule);
@@ -902,14 +903,14 @@ public class StructureDiagramGenerator {
             // no seeding needed as the molecule has atoms with coordinates, just calc rings if needed
             if (prepareRingSystems() > 0) {
                 for (IRingSet rset : ringSystems) {
-                    if (rset.getFlag(CDKConstants.ISPLACED)) {
+                    if (rset.getFlag(IChemObject.PLACED)) {
                         ringPlacer.placeRingSubstituents(rset, bondLength);
                     } else {
                         List<IRing> placed = new ArrayList<>();
                         List<IRing> unplaced = new ArrayList<>();
 
                         for (IAtomContainer ring : rset.atomContainers()) {
-                            if (ring.getFlag(CDKConstants.ISPLACED))
+                            if (ring.getFlag(IChemObject.PLACED))
                                 placed.add((IRing) ring);
                             else
                                 unplaced.add((IRing) ring);
@@ -935,7 +936,7 @@ public class StructureDiagramGenerator {
                             placed.clear();
                             while (unplacedIter.hasNext()) {
                                 IRing ring = unplacedIter.next();
-                                if (ring.getFlag(CDKConstants.ISPLACED)) {
+                                if (ring.getFlag(IChemObject.PLACED)) {
                                     unplacedIter.remove();
                                     placed.add(ring);
                                 }
@@ -943,7 +944,7 @@ public class StructureDiagramGenerator {
                         }
 
                         if (allPlaced(rset)) {
-                            rset.setFlag(CDKConstants.ISPLACED, true);
+                            rset.setFlag(IChemObject.PLACED, true);
                             ringPlacer.placeRingSubstituents(rset, bondLength);
                         }
                     }
@@ -992,7 +993,7 @@ public class StructureDiagramGenerator {
             logger.debug("Found linear chain of length " + longestChain.getAtomCount());
             logger.debug("Setting coordinated of first atom to 0,0");
             longestChain.getAtom(0).setPoint2d(new Point2d(0, 0));
-            longestChain.getAtom(0).setFlag(CDKConstants.ISPLACED, true);
+            longestChain.getAtom(0).setFlag(IChemObject.PLACED, true);
 
             // place the first bond such that the whole chain will be horizontally alligned on the x axis
             logger.debug("Attempting to place the first bond such that the whole chain will be horizontally alligned on the x axis");
@@ -1874,7 +1875,7 @@ public class StructureDiagramGenerator {
                 for (int i = 0; i < ringSystem.getAtomCount(); i++) {
                     IAtom atom = ringSystem.getAtom(i);
                     atom.setPoint2d(container.getAtom(i).getPoint2d());
-                    atom.setFlag(CDKConstants.ISPLACED, true);
+                    atom.setFlag(IChemObject.PLACED, true);
                 }
                 return true;
             }
@@ -1935,8 +1936,8 @@ public class StructureDiagramGenerator {
         if (!macroDbStereo) {
             if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
                 for (IAtomContainer container : rs.atomContainers())
-                    container.setFlag(CDKConstants.ISPLACED, true);
-                rs.setFlag(CDKConstants.ISPLACED, true);
+                    container.setFlag(IChemObject.PLACED, true);
+                rs.setFlag(IChemObject.PLACED, true);
                 return macro ? 2 : 1;
             } else {
                 // attempt ring peeling and retemplate
@@ -1945,13 +1946,13 @@ public class StructureDiagramGenerator {
                     core.getAtomContainerCount() < rs.getAtomContainerCount() &&
                     lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
                     for (IAtomContainer container : core.atomContainers())
-                        container.setFlag(CDKConstants.ISPLACED, true);
+                        container.setFlag(IChemObject.PLACED, true);
                 }
             }
         }
 
         // Place the most complex ring at the origin of the coordinate system
-        if (!first.getFlag(CDKConstants.ISPLACED)) {
+        if (!first.getFlag(IChemObject.PLACED)) {
             IAtomContainer sharedAtoms = placeFirstBond(first.getBond(0), firstBondVector);
             if (!macro || !macroPlacer.layout(first, rs)) {
                 // de novo layout of ring as a regular polygon
@@ -1960,7 +1961,7 @@ public class StructureDiagramGenerator {
             } else {
                 result = 2;
             }
-            first.setFlag(CDKConstants.ISPLACED, true);
+            first.setFlag(IChemObject.PLACED, true);
         }
 
         // hint to RingPlacer
@@ -1973,7 +1974,7 @@ public class StructureDiagramGenerator {
         int thisRing = 0;
         IRing ring = first;
         do {
-            if (ring.getFlag(CDKConstants.ISPLACED)) {
+            if (ring.getFlag(IChemObject.PLACED)) {
                 ringPlacer.placeConnectedRings(rs, ring, RingPlacer.FUSED, bondLength);
                 ringPlacer.placeConnectedRings(rs, ring, RingPlacer.BRIDGED, bondLength);
                 ringPlacer.placeConnectedRings(rs, ring, RingPlacer.SPIRO, bondLength);
@@ -2119,7 +2120,7 @@ public class StructureDiagramGenerator {
                     }
 
                     for (int f = 1; f < longestUnplacedChain.getAtomCount(); f++) {
-                        longestUnplacedChain.getAtom(f).setFlag(CDKConstants.ISPLACED, false);
+                        longestUnplacedChain.getAtom(f).setFlag(IChemObject.PLACED, false);
                     }
                     atomPlacer.placeLinearChain(longestUnplacedChain, direction, bondLength);
 
@@ -2260,7 +2261,7 @@ public class StructureDiagramGenerator {
         IAtom connectedAtom;
         for (Object bond : bonds) {
             connectedAtom = ((IBond) bond).getOther(atom);
-            if (!connectedAtom.getFlag(CDKConstants.ISPLACED)) {
+            if (!connectedAtom.getFlag(IChemObject.PLACED)) {
                 unplacedAtoms.addAtom(connectedAtom);
             }
         }
@@ -2281,7 +2282,7 @@ public class StructureDiagramGenerator {
         IAtom connectedAtom;
         for (Object bond : bonds) {
             connectedAtom = ((IBond) bond).getOther(atom);
-            if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
+            if (connectedAtom.getFlag(IChemObject.PLACED)) {
                 placedAtoms.addAtom(connectedAtom);
             }
         }
@@ -2298,11 +2299,11 @@ public class StructureDiagramGenerator {
         for (int f = 0; f < molecule.getBondCount(); f++) {
             bond = molecule.getBond(f);
 
-            if (bond.getEnd().getFlag(CDKConstants.ISPLACED) && !bond.getBegin().getFlag(CDKConstants.ISPLACED)) {
+            if (bond.getEnd().getFlag(IChemObject.PLACED) && !bond.getBegin().getFlag(IChemObject.PLACED)) {
                 return bond.getEnd();
             }
 
-            if (bond.getBegin().getFlag(CDKConstants.ISPLACED) && !bond.getEnd().getFlag(CDKConstants.ISPLACED)) {
+            if (bond.getBegin().getFlag(IChemObject.PLACED) && !bond.getEnd().getFlag(IChemObject.PLACED)) {
                 return bond.getBegin();
             }
         }
@@ -2319,10 +2320,10 @@ public class StructureDiagramGenerator {
             IAtom beg = bond.getBegin();
             IAtom end = bond.getEnd();
             if (beg.getPoint2d() != null && end.getPoint2d() != null) {
-                if (end.getFlag(CDKConstants.ISPLACED) && !beg.getFlag(CDKConstants.ISPLACED) && beg.isInRing()) {
+                if (end.getFlag(IChemObject.PLACED) && !beg.getFlag(IChemObject.PLACED) && beg.isInRing()) {
                     return bond;
                 }
-                if (beg.getFlag(CDKConstants.ISPLACED) && !end.getFlag(CDKConstants.ISPLACED) && end.isInRing()) {
+                if (beg.getFlag(IChemObject.PLACED) && !end.getFlag(IChemObject.PLACED) && end.isInRing()) {
                     return bond;
                 }
             }
@@ -2351,13 +2352,13 @@ public class StructureDiagramGenerator {
         atom = bond.getBegin();
         logger.debug("Atom 1 of first Bond: " + (molecule.indexOf(atom) + 1));
         atom.setPoint2d(point);
-        atom.setFlag(CDKConstants.ISPLACED, true);
+        atom.setFlag(IChemObject.PLACED, true);
         point = new Point2d(0, 0);
         atom = bond.getEnd();
         logger.debug("Atom 2 of first Bond: " + (molecule.indexOf(atom) + 1));
         point.add(bondVector);
         atom.setPoint2d(point);
-        atom.setFlag(CDKConstants.ISPLACED, true);
+        atom.setFlag(IChemObject.PLACED, true);
         /*
          * The new ring is layed out relativ to some shared atoms that have
          * already been placed. Usually this is another ring, that has
@@ -2380,7 +2381,7 @@ public class StructureDiagramGenerator {
      */
     private boolean allPlaced(IRingSet rings) {
         for (int f = 0; f < rings.getAtomContainerCount(); f++) {
-            if (!rings.getAtomContainer(f).getFlag(CDKConstants.ISPLACED)) {
+            if (!rings.getAtomContainer(f).getFlag(IChemObject.PLACED)) {
                 logger.debug("allPlaced->Ring " + f + " not placed");
                 return false;
             }
@@ -2395,10 +2396,10 @@ public class StructureDiagramGenerator {
      * @return the unplaced ring atom in this bond
      */
     private IAtom getRingAtom(IBond bond) {
-        if (bond.getBegin().getFlag(CDKConstants.ISINRING) && !bond.getBegin().getFlag(CDKConstants.ISPLACED)) {
+        if (bond.getBegin().getFlag(IChemObject.IN_RING) && !bond.getBegin().getFlag(IChemObject.PLACED)) {
             return bond.getBegin();
         }
-        if (bond.getEnd().getFlag(CDKConstants.ISINRING) && !bond.getEnd().getFlag(CDKConstants.ISPLACED)) {
+        if (bond.getEnd().getFlag(IChemObject.IN_RING) && !bond.getEnd().getFlag(IChemObject.PLACED)) {
             return bond.getEnd();
         }
         return null;
@@ -2433,11 +2434,11 @@ public class StructureDiagramGenerator {
         int unplacedCounter = 0;
         for (int f = 0; f < sssr.getAtomContainerCount(); f++) {
             ring = (IRing) sssr.getAtomContainer(f);
-            if (!ring.getFlag(CDKConstants.ISPLACED)) {
+            if (!ring.getFlag(IChemObject.PLACED)) {
                 logger.debug("Ring with " + ring.getAtomCount() + " atoms is not placed.");
                 unplacedCounter++;
                 for (int g = 0; g < ring.getAtomCount(); g++) {
-                    ring.getAtom(g).setFlag(CDKConstants.ISPLACED, false);
+                    ring.getAtom(g).setFlag(IChemObject.PLACED, false);
                 }
             }
         }

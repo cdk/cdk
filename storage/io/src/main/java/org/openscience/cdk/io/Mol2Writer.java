@@ -25,7 +25,6 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.SybylAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -230,7 +229,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
                 else if (bond.getOrder().equals(IBond.Order.DOUBLE))
                     sybylBondOrder = "2";
                 else if (bond.getOrder().equals(IBond.Order.TRIPLE)) sybylBondOrder = "3";
-                if (bond.getFlag(CDKConstants.ISAROMATIC)) sybylBondOrder = "ar";
+                if (bond.getFlag(IChemObject.AROMATIC)) sybylBondOrder = "ar";
 
                 // we need to check the atom types to see if we have an amide bond
                 // and we're assuming a 2-centered bond

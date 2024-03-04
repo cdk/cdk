@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -1804,7 +1804,7 @@ class SMARTSSearchTest extends CDKTestCase {
         // bond. as the molecule as assigned bond orders we can easily
         // remove the flags and reassign them correctly
         for (IBond bond : m.bonds())
-            bond.setFlag(CDKConstants.ISAROMATIC, false);
+            bond.setFlag(IChemObject.AROMATIC, false);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         Aromaticity.cdkLegacy().apply(m);
 

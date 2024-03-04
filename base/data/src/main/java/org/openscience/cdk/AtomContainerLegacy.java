@@ -859,23 +859,23 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         bonds = Arrays.copyOf(bonds, bondCount + that.getBondCount());
 
         for (IAtom atom : that.atoms())
-            atom.setFlag(CDKConstants.VISITED, false);
+            atom.setFlag(IChemObject.VISITED, false);
         for (IBond bond : that.bonds())
-            bond.setFlag(CDKConstants.VISITED, false);
+            bond.setFlag(IChemObject.VISITED, false);
         for (IAtom atom : this.atoms())
-            atom.setFlag(CDKConstants.VISITED, true);
+            atom.setFlag(IChemObject.VISITED, true);
         for (IBond bond : this.bonds())
-            bond.setFlag(CDKConstants.VISITED, true);
+            bond.setFlag(IChemObject.VISITED, true);
 
         for (IAtom atom : that.atoms()) {
-            if (!atom.getFlag(CDKConstants.VISITED)) {
-                atom.setFlag(CDKConstants.VISITED, true);
+            if (!atom.getFlag(IChemObject.VISITED)) {
+                atom.setFlag(IChemObject.VISITED, true);
                 atoms[atomCount++] = atom;
             }
         }
         for (IBond bond : that.bonds()) {
-            if (!bond.getFlag(CDKConstants.VISITED)) {
-                bond.setFlag(CDKConstants.VISITED, true);
+            if (!bond.getFlag(IChemObject.VISITED)) {
+                bond.setFlag(IChemObject.VISITED, true);
                 bonds[bondCount++] = bond;
             }
         }

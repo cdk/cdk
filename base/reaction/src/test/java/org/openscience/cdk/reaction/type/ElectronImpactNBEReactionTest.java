@@ -20,7 +20,6 @@ package org.openscience.cdk.reaction.type;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -28,6 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -105,7 +105,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         for (IAtom atom : reactant.atoms()) {
             if (reactant.getConnectedLonePairsCount(atom) > 0) {
-                atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                atom.setFlag(IChemObject.REACTIVE_CENTER, true);
             }
         }
 
@@ -210,7 +210,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
-        molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
 
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
@@ -279,7 +279,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
-        molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
 
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
@@ -346,7 +346,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
-        molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
 
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
@@ -403,7 +403,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
         /* manually put the reactive center */
-        molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
 
         List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
@@ -418,8 +418,8 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         Assertions.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
-        Assertions.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(1).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(1).getFlag(IChemObject.REACTIVE_CENTER));
     }
 
     /**

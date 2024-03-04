@@ -25,6 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -132,7 +133,7 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
             IRing ring = (IRing) ringSet.getAtomContainer(ir);
             for (int jr = 0; jr < ring.getAtomCount(); jr++) {
                 IAtom aring = ring.getAtom(jr);
-                aring.setFlag(CDKConstants.ISINRING, true);
+                aring.setFlag(IChemObject.IN_RING, true);
             }
         }
         /*
@@ -144,22 +145,22 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
 
         HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         for (IAtom atomi : reactant.atoms()) {
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1) {
+            if (atomi.getFlag(IChemObject.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
                 hcg.getSpheres(reactant, atomi, 4, true);
                 List<IAtom> atom1s = hcg.getNodesInSphere(4);
 
                 hcg.getSpheres(reactant, atomi, 5, true);
                 for (IAtom atoml : hcg.getNodesInSphere(5)) {
-                    if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
-                            && !atoml.getFlag(CDKConstants.ISINRING)
+                    if (atoml != null && atoml.getFlag(IChemObject.REACTIVE_CENTER)
+                            && !atoml.getFlag(IChemObject.IN_RING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
                             && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         for (IAtom atomR : reactant.getConnectedAtomsList(atoml)) {
                             if (atom1s.contains(atomR)) continue;
-                            if (reactant.getBond(atomR, atoml).getFlag(CDKConstants.REACTIVE_CENTER)
-                                    && atomR.getFlag(CDKConstants.REACTIVE_CENTER)
+                            if (reactant.getBond(atomR, atoml).getFlag(IChemObject.REACTIVE_CENTER)
+                                    && atomR.getFlag(IChemObject.REACTIVE_CENTER)
                                     && (atomR.getFormalCharge() == CDKConstants.UNSET ? 0 : atomR.getFormalCharge()) == 0) {
 
                                 ArrayList<IAtom> atomList = new ArrayList<>();
@@ -210,7 +211,7 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
 
                 hcg.getSpheres(reactant, atomi, 5, true);
                 for (IAtom atoml : hcg.getNodesInSphere(5)) {
-                    if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
+                    if (atoml != null && !atoml.getFlag(IChemObject.IN_RING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
                             && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
@@ -218,10 +219,10 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
                             if (atom1s.contains(atomR)) continue;
                             if ((atomR.getFormalCharge() == CDKConstants.UNSET ? 0 : atomR.getFormalCharge()) == 0) {
 
-                                atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                atoml.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                atomR.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                reactant.getBond(atomR, atoml).setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                atomi.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                atoml.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                atomR.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                reactant.getBond(atomR, atoml).setFlag(IChemObject.REACTIVE_CENTER, true);
                             }
                         }
                     }

@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.openscience.cdk.CDKConstants.ISPLACED;
+import static org.openscience.cdk.interfaces.IChemObject.PLACED;
 
 /**
  * A class for helping layout macrocycles.
@@ -96,10 +96,10 @@ final class MacroCycleLayout {
 
         for (int i = 0; i < macrocycle.getAtomCount(); i++) {
             macrocycle.getAtom(i).setPoint2d(best[(bestOffset + i) % macrocycle.getAtomCount()]);
-            macrocycle.getAtom(i).setFlag(ISPLACED, true);
+            macrocycle.getAtom(i).setFlag(PLACED, true);
             macrocycle.getAtom(i).setProperty(MACROCYCLE_ATOM_HINT, true);
         }
-        macrocycle.setFlag(ISPLACED, true);
+        macrocycle.setFlag(PLACED, true);
 
         return true;
     }

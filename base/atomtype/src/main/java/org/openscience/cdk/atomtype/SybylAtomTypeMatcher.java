@@ -22,7 +22,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.mapper.AtomTypeMapper;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -31,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 
@@ -189,11 +189,11 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         String typeName = atom.getAtomTypeName();
         if (typeName == null) return null;
         String mappedType = mapper.mapAtomType(typeName);
-        if ("C.2".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
+        if ("C.2".equals(mappedType) && atom.getFlag(IChemObject.AROMATIC)) {
             mappedType = "C.ar";
-        } else if ("N.2".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
+        } else if ("N.2".equals(mappedType) && atom.getFlag(IChemObject.AROMATIC)) {
             mappedType = "N.ar";
-        } else if ("N.pl3".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
+        } else if ("N.pl3".equals(mappedType) && atom.getFlag(IChemObject.AROMATIC)) {
             mappedType = "N.ar";
         }
         return mappedType;

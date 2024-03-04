@@ -23,6 +23,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -127,7 +128,7 @@ public class AdductionProtonLPReaction extends ReactionEngine implements IReacti
 
         // Atom pos 1
         for (IAtom atomi : reactant.atoms()) {
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
+            if (atomi.getFlag(IChemObject.REACTIVE_CENTER)
                     && (atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0
                     && reactant.getConnectedLonePairsCount(atomi) > 0
                     && reactant.getConnectedSingleElectronsCount(atomi) == 0) {
@@ -174,7 +175,7 @@ public class AdductionProtonLPReaction extends ReactionEngine implements IReacti
             if ((atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0
                     && reactant.getConnectedLonePairsCount(atomi) > 0
                     && reactant.getConnectedSingleElectronsCount(atomi) == 0) {
-                atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                atomi.setFlag(IChemObject.REACTIVE_CENTER, true);
 
             }
         }

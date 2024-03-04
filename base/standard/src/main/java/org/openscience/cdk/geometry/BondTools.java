@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 
 import javax.vecmath.Point2d;
@@ -73,7 +74,7 @@ public class BondTools {
         }
         if (isStartOfDoubleBond(container, bond.getBegin(), from, array)
                 && isEndOfDoubleBond(container, bond.getEnd(), bond.getBegin(), array)
-                && !bond.getFlag(CDKConstants.ISAROMATIC)) {
+                && !bond.getFlag(IChemObject.AROMATIC)) {
             return (true);
         } else {
             return (false);

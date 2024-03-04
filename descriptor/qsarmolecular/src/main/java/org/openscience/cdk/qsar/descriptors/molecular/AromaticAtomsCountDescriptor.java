@@ -18,10 +18,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -166,7 +166,7 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
             }
         }
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            if (ac.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
+            if (ac.getAtom(i).getFlag(IChemObject.AROMATIC)) {
                 aromaticAtomsCount += 1;
             }
         }

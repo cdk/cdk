@@ -25,13 +25,13 @@
 package org.openscience.cdk.layout;
 
 import org.openscience.cdk.BondRef;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -271,7 +271,7 @@ final class NonplanarBonds {
 
         // if the bond is already visited it is in a ring with another atom, if it's
         // spiro with the central atom (beg) we may be able to flip into position
-        if (bond.getFlag(CDKConstants.VISITED)) {
+        if (bond.getFlag(IChemObject.VISITED)) {
 
             curr.normalize();
             dest.normalize();
@@ -327,19 +327,19 @@ final class NonplanarBonds {
             return okay;
         }
 
-        beg.setFlag(CDKConstants.VISITED, true);
-        bond.setFlag(CDKConstants.VISITED, true);
+        beg.setFlag(IChemObject.VISITED, true);
+        bond.setFlag(IChemObject.VISITED, true);
         Deque<IAtom> queue = new ArrayDeque<>();
         queue.add(end);
         while (!queue.isEmpty()) {
             IAtom atom = queue.poll();
-            if (!atom.getFlag(CDKConstants.VISITED)) {
+            if (!atom.getFlag(IChemObject.VISITED)) {
                 rotate(atom.getPoint2d(), bP, cos, sin);
-                atom.setFlag(CDKConstants.VISITED, true);
+                atom.setFlag(IChemObject.VISITED, true);
                 for (IBond b : container.getConnectedBondsList(atom))
-                    if (!b.getFlag(CDKConstants.VISITED)) {
+                    if (!b.getFlag(IChemObject.VISITED)) {
                         queue.add(b.getOther(atom));
-                        b.setFlag(CDKConstants.VISITED, true);
+                        b.setFlag(IChemObject.VISITED, true);
                     }
             }
         }
@@ -387,9 +387,9 @@ final class NonplanarBonds {
             return;
 
         for (IAtom atom : container.atoms())
-            atom.setFlag(CDKConstants.VISITED, false);
+            atom.setFlag(IChemObject.VISITED, false);
         for (IBond bond : container.bonds())
-            bond.setFlag(CDKConstants.VISITED, false);
+            bond.setFlag(IChemObject.VISITED, false);
 
         snapBondsToPosition(focus, bonds, -60, 60, 120, -120);
         setBondDisplay(bonds.get(0), focus, DOWN);
@@ -438,9 +438,9 @@ final class NonplanarBonds {
             return;
 
         for (IAtom atom : container.atoms())
-            atom.setFlag(CDKConstants.VISITED, false);
+            atom.setFlag(IChemObject.VISITED, false);
         for (IBond bond : container.bonds())
-            bond.setFlag(CDKConstants.VISITED, false);
+            bond.setFlag(IChemObject.VISITED, false);
 
         // Optional but have a look at the equatorial ligands
         // and maybe invert the image based on the permutation
@@ -488,9 +488,9 @@ final class NonplanarBonds {
             return;
 
         for (IAtom atom : container.atoms())
-            atom.setFlag(CDKConstants.VISITED, false);
+            atom.setFlag(IChemObject.VISITED, false);
         for (IBond bond : container.bonds())
-            bond.setFlag(CDKConstants.VISITED, false);
+            bond.setFlag(IChemObject.VISITED, false);
 
         if (res == SPIRO_MIRROR) {
             snapBondsToPosition(focus, bonds, 0, -60, 60, 120, -120, 180);

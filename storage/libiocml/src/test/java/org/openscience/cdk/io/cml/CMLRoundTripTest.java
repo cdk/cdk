@@ -37,6 +37,7 @@ import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -418,7 +419,7 @@ class CMLRoundTripTest extends CDKTestCase {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
-        bond.setFlag(CDKConstants.ISAROMATIC, true);
+        bond.setFlag(IChemObject.AROMATIC, true);
         mol.addBond(bond);
 
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
@@ -426,7 +427,7 @@ class CMLRoundTripTest extends CDKTestCase {
         Assertions.assertEquals(2, roundTrippedMol.getAtomCount());
         Assertions.assertEquals(1, roundTrippedMol.getBondCount());
         IBond roundTrippedBond = roundTrippedMol.getBond(0);
-        Assertions.assertEquals(bond.getFlag(CDKConstants.ISAROMATIC), roundTrippedBond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertEquals(bond.getFlag(IChemObject.AROMATIC), roundTrippedBond.getFlag(IChemObject.AROMATIC));
         Assertions.assertEquals(bond.getOrder(), roundTrippedBond.getOrder());
     }
 
@@ -442,7 +443,7 @@ class CMLRoundTripTest extends CDKTestCase {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         Bond bond = new Bond(atom, atom2, IBond.Order.DOUBLE);
-        bond.setFlag(CDKConstants.ISAROMATIC, true);
+        bond.setFlag(IChemObject.AROMATIC, true);
         mol.addBond(bond);
 
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
@@ -450,7 +451,7 @@ class CMLRoundTripTest extends CDKTestCase {
         Assertions.assertEquals(2, roundTrippedMol.getAtomCount());
         Assertions.assertEquals(1, roundTrippedMol.getBondCount());
         IBond roundTrippedBond = roundTrippedMol.getBond(0);
-        Assertions.assertEquals(bond.getFlag(CDKConstants.ISAROMATIC), roundTrippedBond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertEquals(bond.getFlag(IChemObject.AROMATIC), roundTrippedBond.getFlag(IChemObject.AROMATIC));
         Assertions.assertEquals(bond.getOrder(), roundTrippedBond.getOrder());
     }
 
@@ -572,14 +573,14 @@ class CMLRoundTripTest extends CDKTestCase {
     void testAromaticity() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         for (IBond bond : molecule.bonds()) {
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
         }
 
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, molecule);
         Iterator<IBond> bonds = roundTrippedMol.bonds().iterator();
         double orderSum = BondManipulator.getSingleBondEquivalentSum(bonds);
         while (bonds.hasNext()) {
-            Assertions.assertTrue(bonds.next().getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(bonds.next().getFlag(IChemObject.AROMATIC));
         }
         Assertions.assertEquals(9.0, orderSum, 0.001);
     }
@@ -588,12 +589,12 @@ class CMLRoundTripTest extends CDKTestCase {
     void testAtomAromaticity() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         for (IAtom atom : molecule.atoms()) {
-            atom.setFlag(CDKConstants.ISAROMATIC, true);
+            atom.setFlag(IChemObject.AROMATIC, true);
         }
 
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, molecule);
         for (IAtom atom : roundTrippedMol.atoms()) {
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
         }
     }
 

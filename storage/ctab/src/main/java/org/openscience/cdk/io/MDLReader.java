@@ -580,9 +580,9 @@ public class MDLReader extends DefaultChemObjectReader {
                         newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
                     }
                     // mark both atoms and the bond as aromatic
-                    newBond.setFlag(CDKConstants.ISAROMATIC, true);
-                    a1.setFlag(CDKConstants.ISAROMATIC, true);
-                    a2.setFlag(CDKConstants.ISAROMATIC, true);
+                    newBond.setFlag(IChemObject.AROMATIC, true);
+                    a1.setFlag(IChemObject.AROMATIC, true);
+                    a2.setFlag(IChemObject.AROMATIC, true);
                 }
                 molecule.addBond(newBond);
             }

@@ -32,11 +32,11 @@ import javax.vecmath.Matrix3d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
@@ -111,7 +111,7 @@ public class AtomTetrahedralLigandPlacer3D {
                     IAtom ligand = noCoords.getAtom(j);
                     Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
                     ligand.setPoint3d(newPoint);
-                    ligand.setFlag(CDKConstants.ISPLACED, true);
+                    ligand.setFlag(IChemObject.PLACED, true);
                 }
 
                 noCoords.removeAllElements();
@@ -820,7 +820,7 @@ public class AtomTetrahedralLigandPlacer3D {
         IAtom connectedAtom;
         for (Object bond : bonds) {
             connectedAtom = ((IBond) bond).getOther(atom);
-            if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
+            if (connectedAtom.getFlag(IChemObject.PLACED)) {
                 connectedAtoms.addAtom(connectedAtom);
             }
         }
@@ -840,7 +840,7 @@ public class AtomTetrahedralLigandPlacer3D {
         IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
         for (Object o : atoms) {
             IAtom curAtom = (IAtom) o;
-            if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
+            if (!curAtom.getFlag(IChemObject.PLACED)) {//&& atoms[i].getPoint3d() == null) {
                 connectedAtoms.addAtom(curAtom);
             }
         }
@@ -851,7 +851,7 @@ public class AtomTetrahedralLigandPlacer3D {
         List atoms = ac.getConnectedAtomsList(atom);
         for (Object o : atoms) {
             IAtom curAtom = (IAtom) o;
-            if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
+            if (!curAtom.getFlag(IChemObject.PLACED)) {//&& atoms[i].getPoint3d() == null) {
                 return true;
             }
         }
@@ -872,7 +872,7 @@ public class AtomTetrahedralLigandPlacer3D {
         IAtom atom = null;
         for (Object o : atoms) {
             IAtom curAtom = (IAtom) o;
-            if (curAtom.getFlag(CDKConstants.ISPLACED) && curAtom.getAtomicNumber() != IElement.H && !Objects.equals(curAtom, atomB)) {
+            if (curAtom.getFlag(IChemObject.PLACED) && curAtom.getAtomicNumber() != IElement.H && !Objects.equals(curAtom, atomB)) {
                 return curAtom;
             }
         }

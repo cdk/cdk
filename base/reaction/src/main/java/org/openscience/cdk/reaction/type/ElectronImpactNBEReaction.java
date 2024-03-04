@@ -18,11 +18,11 @@
  */
 package org.openscience.cdk.reaction.type;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -126,7 +126,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
         for (IAtom atom : reactant.atoms()) {
-            if (atom.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedLonePairsCount(atom) > 0
+            if (atom.getFlag(IChemObject.REACTIVE_CENTER) && reactant.getConnectedLonePairsCount(atom) > 0
                     && reactant.getConnectedSingleElectronsCount(atom) == 0) {
 
                 ArrayList<IAtom> atomList = new ArrayList<>();
@@ -155,7 +155,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
         for (IAtom atom : reactant.atoms()) {
             if (reactant.getConnectedLonePairsCount(atom) > 0 && reactant.getConnectedSingleElectronsCount(atom) == 0)
-                atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                atom.setFlag(IChemObject.REACTIVE_CENTER, true);
 
         }
     }

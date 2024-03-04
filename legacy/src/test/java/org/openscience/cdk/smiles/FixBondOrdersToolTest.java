@@ -23,7 +23,7 @@ package org.openscience.cdk.smiles;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
@@ -86,7 +86,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
             int doubleBondCount = 0;
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
             Assertions.assertEquals(6, doubleBondCount);
@@ -109,7 +109,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
             int doubleBondCount = 0;
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
             Assertions.assertEquals(6, doubleBondCount);

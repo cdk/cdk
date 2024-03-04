@@ -24,6 +24,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -128,30 +129,30 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
 
         // Atom pos 1
         for (IAtom atomi : reactant.atoms()) {
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
+            if (atomi.getFlag(IChemObject.REACTIVE_CENTER)
                     && (atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) == 0
                     && reactant.getConnectedSingleElectronsCount(atomi) == 0) {
                 for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
-                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.DOUBLE) {
+                    if (bondi.getFlag(IChemObject.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.DOUBLE) {
                         IAtom atomj = bondi.getOther(atomi); // Atom pos 2
-                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)
+                        if (atomj.getFlag(IChemObject.REACTIVE_CENTER)
                                 && (atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
                             for (IBond bondj : reactant.getConnectedBondsList(atomj)) {
                                 if (bondj.equals(bondi)) continue;
-                                if (bondj.getFlag(CDKConstants.REACTIVE_CENTER)
+                                if (bondj.getFlag(IChemObject.REACTIVE_CENTER)
                                         && bondj.getOrder() == IBond.Order.SINGLE) {
                                     IAtom atomk = bondj.getOther(atomj); // Atom pos 3
-                                    if (atomk.getFlag(CDKConstants.REACTIVE_CENTER)
+                                    if (atomk.getFlag(IChemObject.REACTIVE_CENTER)
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
                                             .getFormalCharge()) == 0
                                             && reactant.getConnectedSingleElectronsCount(atomk) == 0) {
                                         for (IBond bondk : reactant.getConnectedBondsList(atomk)) {
                                             if (bondk.equals(bondj)) continue;
-                                            if (bondk.getFlag(CDKConstants.REACTIVE_CENTER)
+                                            if (bondk.getFlag(IChemObject.REACTIVE_CENTER)
                                                     && bondk.getOrder() == IBond.Order.SINGLE) {
                                                 IAtom atoml = bondk.getOther(atomk); // Atom pos 4
-                                                if (atoml.getFlag(CDKConstants.REACTIVE_CENTER)
+                                                if (atoml.getFlag(IChemObject.REACTIVE_CENTER)
                                                         && atoml.getAtomicNumber() == IElement.H) {
 
                                                     ArrayList<IAtom> atomList = new ArrayList<>();
@@ -230,13 +231,13 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
                                             if (bondk.getOrder() == IBond.Order.SINGLE) {
                                                 IAtom atoml = bondk.getOther(atomk); // Atom pos 4
                                                 if (atoml.getAtomicNumber() == IElement.H) {
-                                                    atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                                    atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                                    atomk.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                                    atoml.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                                    bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                                    bondj.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                                    bondk.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                                    atomi.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                                    atomj.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                                    atomk.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                                    atoml.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                                    bondi.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                                    bondj.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                                    bondk.setFlag(IChemObject.REACTIVE_CENTER, true);
                                                 }
                                             }
                                         }

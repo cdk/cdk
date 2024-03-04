@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -33,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -103,22 +103,22 @@ class ATASaturationCheckerTest extends CDKTestCase {
         mol.addAtom(a5);
 
         IBond b0 = new Bond(a0, a1);
-        b0.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b0.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b0);
         IBond b1 = new Bond(a1, a2);
-        b1.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b1);
         IBond b2 = new Bond(a2, a3);
-        b2.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b2.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b2);
         IBond b3 = new Bond(a3, a4);
-        b3.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b3.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b3);
         IBond b4 = new Bond(a4, a5);
-        b4.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b4.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b4);
         IBond b5 = new Bond(a5, a0);
-        b5.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b5.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b5);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -582,7 +582,7 @@ class ATASaturationCheckerTest extends CDKTestCase {
          * molecule don't have any rings
          */
         for (IBond bond : mol.bonds())
-            bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+            bond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
 
         atasc.decideBondOrder(mol, false);
 
@@ -621,13 +621,13 @@ class ATASaturationCheckerTest extends CDKTestCase {
         mol.addAtom(a3);
 
         IBond b0 = new Bond(a0, a1);
-        b0.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b0.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b0);
         IBond b1 = new Bond(a1, a2);
-        b1.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b1);
         IBond b2 = new Bond(a2, a3);
-        b2.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        b2.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b2);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);

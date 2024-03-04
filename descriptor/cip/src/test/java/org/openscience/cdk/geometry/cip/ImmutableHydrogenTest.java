@@ -29,7 +29,7 @@ import javax.vecmath.Point3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -108,7 +108,7 @@ class ImmutableHydrogenTest extends CDKTestCase {
         Assertions.assertNull(hydrogen.getNaturalAbundance());
         Assertions.assertNull(hydrogen.getFlags());
         Assertions.assertNull(hydrogen.getFlagValue());
-        Assertions.assertFalse(hydrogen.getFlag(CDKConstants.ISPLACED));
+        Assertions.assertFalse(hydrogen.getFlag(IChemObject.PLACED));
         Assertions.assertNull(hydrogen.getID());
         Assertions.assertNull(hydrogen.getProperties());
         Assertions.assertNull(hydrogen.getProperty(""));
@@ -138,7 +138,7 @@ class ImmutableHydrogenTest extends CDKTestCase {
         hydrogen.setExactMass(12.0);
         hydrogen.setNaturalAbundance(100.0);
         hydrogen.setFlags(null);
-        hydrogen.setFlag(CDKConstants.ISINRING, true);
+        hydrogen.setFlag(IChemObject.IN_RING, true);
         hydrogen.setID("Me");
         hydrogen.addProperties(new Properties());
         hydrogen.setProperties(new Properties());

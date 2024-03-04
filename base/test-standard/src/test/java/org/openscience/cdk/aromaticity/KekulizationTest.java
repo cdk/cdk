@@ -28,12 +28,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -511,14 +511,14 @@ class KekulizationTest {
     static IAtom atom(String symbol, int h, boolean arom) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(h);
-        a.setFlag(CDKConstants.ISAROMATIC, arom);
+        a.setFlag(IChemObject.AROMATIC, arom);
         return a;
     }
 
     static IBond bond(IAtomContainer m, int v, int w, IBond.Order ord, boolean arom) {
         IBond b = new Bond(m.getAtom(v), m.getAtom(w));
         b.setOrder(ord);
-        b.setFlag(CDKConstants.ISAROMATIC, arom);
+        b.setFlag(IChemObject.AROMATIC, arom);
         return b;
     }
 }

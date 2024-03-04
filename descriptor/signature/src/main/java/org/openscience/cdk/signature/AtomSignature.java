@@ -24,11 +24,11 @@ package org.openscience.cdk.signature;
 
 import java.util.List;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
+import org.openscience.cdk.interfaces.IChemObject;
 import signature.AbstractVertexSignature;
 
 /**
@@ -184,7 +184,7 @@ public class AtomSignature extends AbstractVertexSignature {
         IAtom atomB = this.molecule.getAtom(otherVertexIndex);
         IBond bond = this.molecule.getBond(atomA, atomB);
         if (bond != null) {
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+            if (bond.getFlag(IChemObject.AROMATIC)) {
                 return "p";
             }
             switch (bond.getOrder()) {

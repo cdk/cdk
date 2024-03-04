@@ -22,12 +22,12 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 
@@ -154,13 +154,13 @@ public class PathTools {
     public static boolean depthFirstTargetSearch(IAtomContainer molecule, IAtom root, IAtom target, IAtomContainer path) {
         List<IBond> bonds = molecule.getConnectedBondsList(root);
         IAtom nextAtom;
-        root.setFlag(CDKConstants.VISITED, true);
+        root.setFlag(IChemObject.VISITED, true);
         boolean first = path.isEmpty();
         if (first)
             path.addAtom(root);
         for (IBond bond : bonds) {
             nextAtom = bond.getOther(root);
-            if (!nextAtom.getFlag(CDKConstants.VISITED)) {
+            if (!nextAtom.getFlag(IChemObject.VISITED)) {
                 path.addAtom(nextAtom);
                 path.addBond(bond);
                 if (nextAtom.equals(target)) {
@@ -273,15 +273,15 @@ public class PathTools {
             List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
             for (IBond bond : bonds) {
                 nextAtom = bond.getOther(atom);
-                if (!bond.getFlag(CDKConstants.VISITED)) {
+                if (!bond.getFlag(IChemObject.VISITED)) {
                     molecule.addAtom(nextAtom);
                     molecule.addBond(bond);
-                    bond.setFlag(CDKConstants.VISITED, true);
+                    bond.setFlag(IChemObject.VISITED, true);
                 }
-                if (!nextAtom.getFlag(CDKConstants.VISITED)) {
+                if (!nextAtom.getFlag(IChemObject.VISITED)) {
                     //					logger.debug("wie oft???");
                     newSphere.add(nextAtom);
-                    nextAtom.setFlag(CDKConstants.VISITED, true);
+                    nextAtom.setFlag(IChemObject.VISITED, true);
                 }
             }
             if (max > -1 && molecule.getAtomCount() > max) return;
@@ -320,16 +320,16 @@ public class PathTools {
         for (IAtom atom : sphere) {
             List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
             for (IBond bond : bonds) {
-                if (!bond.getFlag(CDKConstants.VISITED)) {
-                    bond.setFlag(CDKConstants.VISITED, true);
+                if (!bond.getFlag(IChemObject.VISITED)) {
+                    bond.setFlag(IChemObject.VISITED, true);
                 }
                 nextAtom = bond.getOther(atom);
-                if (!nextAtom.getFlag(CDKConstants.VISITED)) {
+                if (!nextAtom.getFlag(IChemObject.VISITED)) {
                     if (nextAtom.equals(target)) {
                         return pathLength;
                     }
                     newSphere.add(nextAtom);
-                    nextAtom.setFlag(CDKConstants.VISITED, true);
+                    nextAtom.setFlag(IChemObject.VISITED, true);
                 }
             }
         }
@@ -341,10 +341,10 @@ public class PathTools {
 
     protected static void resetFlags(IAtomContainer atomContainer) {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
-            atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
+            atomContainer.getAtom(f).setFlag(IChemObject.VISITED, false);
         }
         for (int f = 0; f < atomContainer.getBondCount(); f++) {
-            atomContainer.getBond(f).setFlag(CDKConstants.VISITED, false);
+            atomContainer.getBond(f).setFlag(IChemObject.VISITED, false);
         }
 
     }
