@@ -25,11 +25,54 @@ import java.util.Map;
  * adding listeners and for their notification of events, as well a a hash
  * table for administration of physical or chemical properties
  *
- *@author        egonw
+ * @author        egonw
  * @cdk.githash
- *@cdk.module    interfaces
+ * @cdk.module    interfaces
  */
 public interface IChemObject extends ICDKObject {
+
+    /**
+     * Flag that is set if the ChemObject is placed during layout
+     */
+    int PLACED = 0x0001;
+    /**
+     * Flag that is set when the ChemObject is part of a ring.
+     */
+    int IN_RING = 0x0002;
+    /**
+     * Flag is set if ChemObject has been visited.
+     */
+    int VISITED = 0x0010;
+    /**
+     * Flag is set if ChemObject is part of an aromatic system.
+     */
+    int AROMATIC = 0x0020;
+    /**
+     * Flag is set if ChemObject is part of a conjugated system.
+     */
+    int CONJUGATED = 0x0040;
+    /**
+     * Flag is set if a ChemObject is mapped to another chemobject.
+     * It is used for example in subgraph isomorphism search.
+     */
+    int MAPPED = 0x0080;
+    /**
+     * Sets to true if the atom is a hydrogen bond donor.
+     */
+    int HYDROGEN_BOND_DONOR = 0x0100;
+    /**
+     * Sets to true if the atom is a hydrogen bond acceptor.
+     */
+    int HYDROGEN_BOND_ACCEPTOR = 0x0200;
+    /**
+     * Flag is set if a chemobject has reactive center.
+     * It is used for example in reaction.
+     */
+    int REACTIVE_CENTER = 0x0400;
+    /**
+     * Flag is set if an atom could be typed.
+     */
+    int TYPEABLE = 0x0800;
 
     /**
      * Use this to add yourself to this IChemObject as a listener. In order to do
