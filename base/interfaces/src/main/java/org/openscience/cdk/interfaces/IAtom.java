@@ -287,7 +287,9 @@ public interface IAtom extends IAtomType {
      * @see #getFlag(int)
      * @see org.openscience.cdk.aromaticity.Aromaticity
      */
-    boolean isAromatic();
+    default boolean isAromatic() {
+        return is(AROMATIC);
+    }
 
     /**
      * Mark this atom as being aromatic.
@@ -295,7 +297,9 @@ public interface IAtom extends IAtomType {
      * @param arom aromatic status
      * @see #setFlag(int, boolean)
      */
-    void setIsAromatic(boolean arom);
+    default void setIsAromatic(boolean arom) {
+        setFlag(AROMATIC, arom);
+    }
 
     /**
      * Access whether this atom has been flagged as in a ring. The default
@@ -305,7 +309,9 @@ public interface IAtom extends IAtomType {
      * @see #getFlag(int)
      * @see org.openscience.cdk.ringsearch.RingSearch
      */
-    boolean isInRing();
+    default boolean isInRing() {
+        return is(IN_RING);
+    }
 
     /**
      * Mark this atom as being in a ring.
@@ -313,7 +319,9 @@ public interface IAtom extends IAtomType {
      * @param ring ring status
      * @see #setFlag(int, boolean)
      */
-    void setIsInRing(boolean ring);
+    default void setIsInRing(boolean ring) {
+        setFlag(IN_RING, ring);
+    }
 
     /**
      * Access the map index for this atom.
