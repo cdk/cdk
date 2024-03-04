@@ -446,6 +446,26 @@ class ImmutableHydrogen implements IAtom {
         return null;
     }
 
+    @Override
+    public void set(int flags) {
+        
+    }
+
+    @Override
+    public void clear(int flags) {
+
+    }
+
+    @Override
+    public boolean is(int flags) {
+        return false;
+    }
+
+    @Override
+    public int flags() {
+        return 0;
+    }
+
     /** {@inheritDoc} */
     /**
      * This field is not used by this immutable hydrogen.

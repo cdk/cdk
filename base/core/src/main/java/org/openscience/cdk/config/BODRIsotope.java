@@ -141,6 +141,26 @@ final class BODRIsotope implements IIsotope {
     }
 
     @Override
+    public void set(int flags) {
+        
+    }
+
+    @Override
+    public void clear(int flags) {
+
+    }
+
+    @Override
+    public boolean is(int flags) {
+        return false;
+    }
+
+    @Override
+    public int flags() {
+        return 0;
+    }
+
+    @Override
     public IChemObjectBuilder getBuilder() {
         return null;
     }

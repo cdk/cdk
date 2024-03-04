@@ -725,6 +725,26 @@ public final class AllPairsShortestPaths {
                                                                  public void setTitle(String title) {
 
                                                                  }
+
+                                                                 @Override
+                                                                 public void set(int flags) {
+
+                                                                 }
+
+                                                                 @Override
+                                                                 public void clear(int flags) {
+
+                                                                 }
+
+                                                                 @Override
+                                                                 public boolean is(int flags) {
+                                                                     return false;
+                                                                 }
+
+                                                                 @Override
+                                                                 public int flags() {
+                                                                     return 0;
+                                                                 }
     };
 
     /**

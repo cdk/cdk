@@ -75,7 +75,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
      *  per object should be more than enough.
      */
-    private short                     flags;                                  // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
+    private int                       flags;
 
     /**
      *  The ID is null by default.
@@ -99,7 +99,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      */
     public ChemObject(IChemObject chemObject) {
         // copy the flags
-        flags = chemObject.getFlagValue().shortValue();
+        flags = chemObject.flags();
         // copy the identifier
         identifier = chemObject.getID();
     }
@@ -390,8 +390,29 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *{@inheritDoc}
      */
     @Override
-    public Short getFlagValue() {
+    public Integer getFlagValue() {
         return flags;
+    }
+
+
+    @Override
+    public void set(int flags) {
+        this.flags |= flags;
+    }
+
+    @Override
+    public boolean is(int flags) {
+        return (this.flags&flags) == flags;
+    }
+
+    @Override
+    public void clear(int flags) {
+        this.flags &= ~flags;
+    }
+
+    @Override
+    public int flags() {
+        return this.flags;
     }
 
     /**{@inheritDoc} */

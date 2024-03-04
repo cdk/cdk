@@ -54,7 +54,7 @@ final class ImmutableAtomType implements IAtomType {
     private final IBond.Order maxBondOrder;
     private final Double  bondOrderSum;
     private final Double  covalentRadius;
-    private final short   flags;
+    private final int     flags;
     private final Map<Object,Object> properties;
 
     ImmutableAtomType(IAtomType type) {
@@ -70,7 +70,7 @@ final class ImmutableAtomType implements IAtomType {
         this.maxBondOrder = type.getMaxBondOrder();
         this.bondOrderSum = type.getBondOrderSum();
         this.covalentRadius = type.getCovalentRadius();
-        this.flags = (short)type.getFlagValue();
+        this.flags = type.flags();
         this.properties = Collections.unmodifiableMap(type.getProperties());
         if (type.getValency() != null) {
             this.electronValency = type.getValency();
@@ -203,7 +203,26 @@ final class ImmutableAtomType implements IAtomType {
             flagArray[i] = getFlag(mask);
         }
         return flagArray;
+    }
 
+    @Override
+    public void set(int flags) {
+        throw new UnsupportedOperationException("Immutable atom type cannot be modified");
+    }
+
+    @Override
+    public void clear(int flags) {
+        throw new UnsupportedOperationException("Immutable atom type cannot be modified");
+    }
+
+    @Override
+    public boolean is(int flags) {
+        return (this.flags&flags) == flags;
+    }
+
+    @Override
+    public int flags() {
+        return this.flags;
     }
 
     @Override
