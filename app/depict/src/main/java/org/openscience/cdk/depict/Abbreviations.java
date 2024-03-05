@@ -445,7 +445,7 @@ public class Abbreviations implements Iterable<String> {
         final EdgeToBondMap bmap = EdgeToBondMap.withSpaceFor(mol);
         final int[][] adjlist = GraphUtil.toAdjList(mol, bmap);
 
-        Cycles.markRingAtomsAndBonds(mol, adjlist, bmap);
+        Cycles.markRingAtomsAndBonds(mol);
 
         Set<IBond> cuts = findCutBonds(mol, bmap, adjlist);
 
