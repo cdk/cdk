@@ -7,6 +7,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -30,10 +31,27 @@ import static org.openscience.cdk.templates.TestMoleculeFactory.makeNaphthalene;
  * Note - these methods are tested in isolation in their respective classes and
  * these are mainly to keep the coverage checker happy.
  *
- * @author John May
+ * @author John Mayfield (né May)
  * @cdk.module test-core
  */
 class CyclesTest {
+
+    private static void assertRingAtomMembership(String smi, int rcount, int ratoms, int rbonds) throws InvalidSmilesException {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(builder);
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        Assertions.assertEquals(rcount, Cycles.markRingAtomsAndBonds(mol), "Unexpected ring count");
+        int actualRingAtoms = 0;
+        int actualRingBonds = 0;
+        for (IAtom atom : mol.atoms())
+            if (atom.isInRing())
+                actualRingAtoms++;
+        for (IBond bond : mol.bonds())
+            if (bond.isInRing())
+                actualRingBonds++;
+        Assertions.assertEquals(ratoms, actualRingAtoms, "Unexpected ring atom count");
+        Assertions.assertEquals(rbonds, actualRingBonds, "Unexpected ring bong count");
+    }
 
     @Test
     void all() throws Exception {
@@ -240,6 +258,21 @@ class CyclesTest {
         }
         assertThat(cyclicAtoms, is(biphenyl.getAtomCount()));
         assertThat(cyclicBonds, is(biphenyl.getBondCount()-1));
+    }
+
+    @Test
+    void markAtomsAndBonds_membership() throws Exception {
+        assertRingAtomMembership("C", 0, 0, 0);
+        assertRingAtomMembership("C.C.C", 0, 0, 0);
+        assertRingAtomMembership("CC", 0, 0, 0);
+        assertRingAtomMembership("C1CC1", 1, 3, 3);
+        assertRingAtomMembership("c1ccccc1", 1, 6, 6);
+        assertRingAtomMembership("c1ccccc1c1ccccc1", 2, 12, 12);
+        assertRingAtomMembership("c1ccccc1-n1ccc2c1cccc2", 3, 15, 16);
+        assertRingAtomMembership("c1ccccc1-n1ccc2c1cccc2", 3, 15, 16);
+        assertRingAtomMembership("c1ccccc1.[nH]1ccc2c1cccc2", 3, 15, 16);
+        assertRingAtomMembership("c12c3c4c5c1c1c6c7c2c2c8c3c3c9c4c4c%10c5c5c1c1c6c6c%11c7c2c2c7c8c3c3c8c9c4c4c9c%10c5c5c1c1c6c6c%11c2c2c7c3c3c8c4c4c9c5c1c1c6c2c3c41",
+                                 31, 60, 90);
     }
 
     @Test
