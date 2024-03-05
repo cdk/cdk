@@ -583,24 +583,10 @@ public final class Cycles {
      * @see IAtom#isInRing()
      * @return Number of rings found (circuit rank)
      * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
+     * @deprecated Use {@link #markRingAtomsAndBonds(org.openscience.cdk.interfaces.IAtomContainer)}
      */
     public static int markRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap) {
-        RingSearch ringSearch = new RingSearch(mol, adjList);
-        for (int v = 0; v < mol.getAtomCount(); v++) {
-            mol.getAtom(v).setIsInRing(false);
-            for (int w : adjList[v]) {
-                // note we only mark the bond on second visit (first v < w) and
-                // clear flag on first visit (or if non-cyclic)
-                if (v > w && ringSearch.cyclic(v, w)) {
-                    bondMap.get(v, w).setIsInRing(true);
-                    mol.getAtom(v).setIsInRing(true);
-                    mol.getAtom(w).setIsInRing(true);
-                } else {
-                    bondMap.get(v, w).setIsInRing(false);
-                }
-            }
-        }
-        return ringSearch.numRings();
+        return markRingAtomsAndBonds(mol);
     }
 
     /**
