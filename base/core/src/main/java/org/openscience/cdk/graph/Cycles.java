@@ -585,6 +585,7 @@ public final class Cycles {
      * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
      * @deprecated Use {@link #markRingAtomsAndBonds(org.openscience.cdk.interfaces.IAtomContainer)}
      */
+    @Deprecated
     public static int markRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap) {
         return markRingAtomsAndBonds(mol);
     }
