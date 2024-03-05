@@ -570,8 +570,7 @@ public final class Cycles {
      * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
      */
     public static int markRingAtomsAndBonds(IAtomContainer mol) {
-        EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(mol);
-        return markRingAtomsAndBonds(mol, GraphUtil.toAdjList(mol, bonds), bonds);
+        return BiconnectedComponents.mark(mol);
     }
 
     /**
