@@ -1533,12 +1533,11 @@ class SmirksTest {
                                            SmirksOption.PEDANTIC));
     }
 
-    @Disabled
+    // Note: not perfect - should use the replace atom op-code
     @Test
     void testAddOMe() throws Exception {
-        Assertions.fail("ToDo: Should use ReplaceAtom op-code");
         assertTransform("ClC(=O)C1=CC=CC=C1",
                         "[#6:1]Cl>>[#6:1]OC",
-                        "C(=O)(C1=CC=CC=C1)O");
+                        "C(=O)(C1=CC=CC=C1)OC");
     }
 }
