@@ -172,14 +172,14 @@ class SmirksTest {
     void testDuplicateMapIdx_Product() {
         Transform transform = new Transform();
         assertFalse(Smirks.parse(transform, "[C:3]>>[C:3][O:3]"));
-        assertEquals(transform.message(), "Duplicate atom map [C:3] and [O:3]");
+        assertEquals("Duplicate atom map [C:3] and [O:3]", transform.message());
     }
 
     @Test
     void testDuplicateMapIdx_Reactant() {
         Transform transform = new Transform();
         assertFalse(Smirks.parse(transform, "[C:4][O:4]>>[C:4]"));
-        assertEquals(transform.message(), "Duplicate atom map [C:4] and [O:4]");
+        assertEquals("Duplicate atom map [C:4] and [O:4]", transform.message());
     }
 
     @Test

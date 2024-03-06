@@ -23,6 +23,7 @@ package org.openscience.cdk.isomorphism;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -76,8 +77,7 @@ import java.util.NoSuchElementException;
  */
 public class Transform {
 
-    private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(Transform.class);
-    public static final String NO_TRANSFORM_DEFINED = "No transform defined";
+    private static final String NO_TRANSFORM_DEFINED = "No transform defined";
 
     public enum Mode {
         /**
@@ -329,7 +329,7 @@ public class Transform {
         for (int i = 0; i < match.length; i++)
             amap[i + 1] = mol.getAtom(match[i]);
         for (int i = 1; i <= match.length; i++)
-            amap[i].setFlag(CDKConstants.MAPPED, true);
+            amap[i].setFlag(IChemObject.MAPPED, true);
     }
 
     private static IAtomContainer copyOf(IAtomContainer mol) {
