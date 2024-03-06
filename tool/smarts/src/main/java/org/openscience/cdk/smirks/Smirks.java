@@ -303,10 +303,8 @@ public class Smirks {
             if (group == null || group == 0) {
                 groupId++;
                 queue.add(atom);
-                int count = 0;
                 while (!queue.isEmpty()) {
                     IAtom a = queue.poll();
-                    ++count;
                     a.setProperty(CDKConstants.REACTION_GROUP, groupId);
                     List<IAtom> connectedAtomsList = query.getConnectedAtomsList(a);
                     for (IAtom nbor : connectedAtomsList) {
@@ -334,11 +332,9 @@ public class Smirks {
     }
 
     private static Set<SmirksOption> wrap(SmirksOption[] options) {
-        Set<SmirksOption> optset = options.length > 1
-                ? EnumSet.of(options[0], options)
-                : options.length > 0 ? EnumSet.of(options[0])
-                : EnumSet.noneOf(SmirksOption.class);
-        return optset;
+        if (options.length > 1) return EnumSet.of(options[0], options);
+        if (options.length > 0) return EnumSet.of(options[0]);
+        return EnumSet.noneOf(SmirksOption.class);
     }
 
     /**
@@ -676,7 +672,7 @@ public class Smirks {
 
     private static String generateAtom(IAtom atom) {
         return "[" + Smarts.generateAtom(((QueryAtom) atom).getExpression())
-                           .replaceAll("(?:^\\[)|(?:]$)", "") + ":" + getMapIdx(atom) + "]";
+                           .replaceAll("^\\[|]$", "") + ":" + getMapIdx(atom) + "]";
     }
 
     private static void checkAtomMap(SmirksState state, IAtom atom) {
@@ -722,14 +718,6 @@ public class Smirks {
         for (IBond[] pair : state.bondPairs) {
             int begIdx = pair[0] == null ? state.atomidx.get(pair[1].getBegin()) : state.atomidx.get(pair[0].getBegin());
             int endIdx = pair[0] == null ? state.atomidx.get(pair[1].getEnd()) : state.atomidx.get(pair[0].getEnd());
-
-//            if (pair[0] != null && pair[1] != null) {
-//                System.err.println(begIdx + "-" + endIdx + " changed?");
-//            } else if (pair[0] != null && pair[1] == null) {
-//                System.err.println(begIdx + "-" + endIdx + " deleted");
-//            } else if (pair[1] != null && pair[0] == null) {
-//                System.err.println(begIdx + "-" + endIdx + " new bond");
-//            }
 
             // warn if someone puts something like >>C:C, better written as
             // >>c:c or even >>cc
@@ -796,9 +784,10 @@ public class Smirks {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     private static void determineStereoChanges(List<TransformOp> ops, SmirksState state) {
-        List<IStereoElement> stereoElements = new ArrayList<>();
-        for (IStereoElement se : state.query.stereoElements()) {
+        List<IStereoElement<?,?>> stereoElements = new ArrayList<>();
+        for (IStereoElement<?,?> se : state.query.stereoElements()) {
             switch (se.getConfigClass()) {
                 case IStereoElement.Tetrahedral:
                     if (isProduct((IAtom) se.getFocus())) {
@@ -870,7 +859,7 @@ public class Smirks {
         }
 
         // only reactant/query stereo will be kept
-        state.query.setStereoElements(stereoElements);
+        state.query.setStereoElements((List)stereoElements);
     }
 
     private static void prepareQuery(SmirksState state) {
@@ -1037,15 +1026,6 @@ public class Smirks {
         if (a == null)
             return false;
         return getAtomicNumber(a).val == 1;
-    }
-
-    private static boolean isWildCard(IAtomContainer mol, IAtom a) {
-        if (a == null)
-            return false;
-        if (!isExplHWithOptRole(((QueryAtom) a).getExpression()))
-            return false;
-        List<IBond> bonds = mol.getConnectedBondsList(a);
-        return bonds.size() == 1; // + single acyclic?
     }
 
     private static boolean changed(BinaryExprValue lft, BinaryExprValue rgt) {

@@ -20,7 +20,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -59,15 +58,11 @@ final class TransformPlan {
     private static final String SMIRKS_NEWSTEREO = "smirks.newstereo";
 
     private final List<TransformOp> ops;
-    private final int maxNewAtomIdx;
-    private final int fstNewAtomIdx;
     private final int numNewAtoms;
 
     TransformPlan(List<TransformOp> ops) {
         // determine strategy/plan params
         this.numNewAtoms = numNewAtoms(ops);
-        this.fstNewAtomIdx = firstNewAtom(ops);
-        this.maxNewAtomIdx = maxAtomIdx(ops);
         this.ops = new ArrayList<>(ops);
 
         // ensure op-codes are run in a specific order, bonds must be deleted
@@ -131,21 +126,15 @@ final class TransformPlan {
 
     /* Internal Methods */
 
-    private static void resetFlags(IAtom atom) {
-        atom.setFlag(CDKConstants.MAPPED,
-                     false);
-        atom.setFlag(CDKConstants.ISPLACED,
-                     false);
-        atom.setFlag(CDKConstants.REACTIVE_CENTER,
-                     false);
-    }
 
     private void prepare(IAtomContainer mol, IAtom[] amap, Map<IAtom,IBond[]> bonding) {
         for (IAtom atom : mol.atoms())
-            resetFlags(atom);
+            atom.clear(IChemObject.MAPPED +
+                       IChemObject.PLACED +
+                       IChemObject.REACTIVE_CENTER);
         for (int i = 1; i < amap.length; i++) {
             if (amap[i] != null)
-                amap[i].setFlag(CDKConstants.MAPPED, true);
+                amap[i].set(IChemObject.MAPPED);
         }
         if (mol.stereoElements().iterator().hasNext()) {
             for (IStereoElement<?, ?> se : mol.stereoElements()) {
@@ -273,21 +262,6 @@ final class TransformPlan {
         return count;
     }
 
-    private int maxAtomIdx(List<TransformOp> ops) {
-        int max = 0;
-        for (TransformOp op : ops)
-            max = Math.max(op.getMaxAtomIdx(), max);
-        return max;
-    }
-
-    private int firstNewAtom(List<TransformOp> ops) {
-        int min = Integer.MAX_VALUE;
-        for (TransformOp op : ops)
-            if (op.type == TransformOp.Type.NewAtom)
-                min = Math.min(op.a, min);
-        return min;
-    }
-
     private static final IBond.Order[] BOND_ORDERS = new IBond.Order[]{
             IBond.Order.UNSET,
             IBond.Order.SINGLE,
@@ -371,24 +345,24 @@ final class TransformPlan {
             case TotalH:
                 if (!setTotalH(amap[op.a], op.b))
                     return false;
-                amap[op.a].setFlag(CDKConstants.ISPLACED, true);
+                amap[op.a].set(IChemObject.PLACED);
                 markBondingChanged(amap[op.a]);
                 break;
             case AdjustH:
                 if (!adjustHydrogenCount(mol, amap[op.a], op.b))
                     return false;
-                amap[op.a].setFlag(CDKConstants.ISPLACED, true);
+                amap[op.a].set(IChemObject.PLACED);
                 markBondingChanged(amap[op.a]);
                 break;
             case MoveH:
                 if (!moveHydrogen(mol, amap[op.a], amap[op.b]))
                     return false;
-                amap[op.a].setFlag(CDKConstants.ISPLACED, true);
-                amap[op.b].setFlag(CDKConstants.ISPLACED, true);
+                amap[op.a].set(IChemObject.PLACED);
+                amap[op.b].set(IChemObject.PLACED);
                 markBondingChanged(amap[op.a], amap[op.b]);
                 break;
             case PromoteH:
-                amap[op.a].setFlag(CDKConstants.ISPLACED, true);
+                amap[op.a].set(IChemObject.PLACED);
                 if (!promoteHydrogen(mol, amap, amap[op.a], op.b))
                     return false;
                 break;
@@ -418,26 +392,26 @@ final class TransformPlan {
     private static void removedUnmappedFragments(IAtomContainer mol) {
         Deque<IAtom> queue = new ArrayDeque<>();
         for (IAtom atom : mol.atoms()) {
-            if (atom.getFlag(CDKConstants.MAPPED)) {
+            if (atom.is(IChemObject.MAPPED)) {
                 for (IBond bond : atom.bonds()) {
                     IAtom nbor = bond.getOther(atom);
-                    if (!nbor.getFlag(CDKConstants.MAPPED))
+                    if (!nbor.is(IChemObject.MAPPED))
                         queue.add(nbor);
                 }
             }
         }
         while (!queue.isEmpty()) {
             IAtom atom = queue.poll();
-            atom.setFlag(CDKConstants.MAPPED, true);
+            atom.set(IChemObject.MAPPED);
             for (IBond bond : atom.bonds()) {
                 IAtom nbor = bond.getOther(atom);
-                if (!nbor.getFlag(CDKConstants.MAPPED))
+                if (!nbor.is(IChemObject.MAPPED))
                     queue.add(nbor);
             }
         }
         List<IAtom> unmapped = new ArrayList<>();
         for (IAtom atom : mol.atoms()) {
-            if (!atom.getFlag(CDKConstants.MAPPED))
+            if (!atom.is(IChemObject.MAPPED))
                 unmapped.add(atom);
         }
         for (IAtom atom : unmapped)
@@ -447,8 +421,8 @@ final class TransformPlan {
     private static void recomputeHydrogens(IAtomContainer mol) {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         for (IAtom atom : mol.atoms()) {
-            if (!atom.getFlag(CDKConstants.MAPPED) ||
-                atom.getFlag(CDKConstants.ISPLACED))
+            if (!atom.is(IChemObject.MAPPED) ||
+                atom.is(IChemObject.PLACED))
                 continue;
             try {
                 atom.setImplicitHydrogenCount(null); // clean slate
@@ -768,7 +742,7 @@ final class TransformPlan {
         atom.setAtomicNumber(elem);
         atom.setImplicitHydrogenCount(hnct);
         atom.setIsAromatic(arom != 0);
-        atom.setFlag(CDKConstants.MAPPED, true);
+        atom.set(IChemObject.MAPPED);
         mol.addAtom(atom);
         return mol.getAtom(mol.getAtomCount() - 1);
     }
@@ -869,20 +843,20 @@ final class TransformPlan {
     }
 
     private static boolean isUnmapped(IAtom atom) {
-        return !atom.getFlag(CDKConstants.MAPPED);
+        return !atom.is(IChemObject.MAPPED);
     }
 
     private static void markBondingChanged(IAtom atom) {
-        atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
+        atom.set(IChemObject.REACTIVE_CENTER);
     }
 
     private static void markBondingChanged(IAtom beg, IAtom end) {
-        beg.setFlag(CDKConstants.REACTIVE_CENTER, true);
-        end.setFlag(CDKConstants.REACTIVE_CENTER, true);
+        beg.set(IChemObject.REACTIVE_CENTER);
+        end.set(IChemObject.REACTIVE_CENTER);
     }
 
     private static boolean bondingChanged(IChemObject chemobj) {
-        return chemobj.getFlag(CDKConstants.REACTIVE_CENTER);
+        return chemobj.is(IChemObject.REACTIVE_CENTER);
     }
 
     private void undo(IAtomContainer mol, IAtom[] amap, TransformOp op) {
