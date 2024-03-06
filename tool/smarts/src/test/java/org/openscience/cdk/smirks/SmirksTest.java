@@ -222,12 +222,12 @@ class SmirksTest {
         Transform transform = new Transform();
         assertTrue(Smirks.parse(transform, ">>c1ccccc~1"));
         assertThat(transform.message(),
-                   containsString("Cannot determine bond order for newly created bond (presumed aromatic single)\n" +
+                   containsString("Cannot determine bond order for newly created bond (presumed aromatic single due to attached atoms)\n" +
                                           ">>c1ccccc~1\n" +
                                           "         ^\n"));
         assertTrue(Smirks.parse(transform, ">>c~1ccccc1"));
         assertThat(transform.message(),
-                   containsString("Cannot determine bond order for newly created bond (presumed aromatic single)\n" +
+                   containsString("Cannot determine bond order for newly created bond (presumed aromatic single due to attached atoms)\n" +
                                           ">>c~1ccccc1\n" +
                                           "   ^\n"));
     }
