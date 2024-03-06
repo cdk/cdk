@@ -20,7 +20,6 @@
 package org.openscience.cdk.smirks;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.openscience.cdk.interfaces.IAtomContainer;
