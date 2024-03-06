@@ -216,7 +216,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
     private BondRef getBondRef(IBond bond) {
         BondRef ref = getBondRefUnsafe(bond);
         if (ref == null)
-            throw new NoSuchBondException("Atom is not a member of this AtomContainer");
+            throw new NoSuchBondException("Bond is not a member of this AtomContainer");
         return ref;
     }
 
