@@ -26,6 +26,7 @@ package org.openscience.cdk.aromaticity;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.Intractable;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -176,7 +177,7 @@ class AromaticityTest {
         Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(), Cycles.or(Cycles.all(), Cycles.essential()));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
         Intractable error = Assertions.assertThrows(Intractable.class,
-            () -> {
+                                                    () -> {
             	aromaticity.apply(atomContainer);
         });
         Assertions.assertNotNull(error);
