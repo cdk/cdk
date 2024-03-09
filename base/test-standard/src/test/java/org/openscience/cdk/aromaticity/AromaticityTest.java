@@ -175,7 +175,12 @@ class AromaticityTest {
                 "C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C2C=C1)C345");
         Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(), Cycles.or(Cycles.all(), Cycles.essential()));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
-        aromaticity.apply(atomContainer);
+        Intractable error = Assertions.assertThrows(Intractable.class,
+            () -> {
+            	aromaticity.apply(atomContainer);
+        });
+        Assertions.assertNotNull(error);
+        Assertions.assertTrue(error.getMessage().contains("Too many relevant cycles cycles"));
     }
 
     static IAtomContainer smiles(String smi) throws Exception {
