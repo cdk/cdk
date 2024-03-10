@@ -1,0 +1,68 @@
+cff-version: 1.2.0
+message: Please cite the following article when using this software.
+type: software
+version: 2.9
+date-released: 2023-08-21
+title: 'cdk/cdk: CDK 2.9'
+url: https://zenodo.org/record/8270947
+doi: 10.5281/ZENODO.8270947
+identifiers:
+  - type: doi
+    value: 10.5281/ZENODO.8270947
+  - type: url
+    value: https://zenodo.org/record/8270947
+preferred-citation:
+  - authors:
+      - family-names: Willighagen
+        given-names: Egon L.
+      - family-names: Mayfield
+        given-names: John W.
+      - family-names: Alvarsson
+        given-names: Jonathan
+      - family-names: Berg
+        given-names: Arvid
+      - family-names: Carlsson
+        given-names: Lars
+      - family-names: Jeliazkova
+        given-names: Nina
+      - family-names: Kuhn
+        given-names: Stefan
+      - family-names: Pluskal
+        given-names: Tomáš
+      - family-names: Rojas-Chertó
+        given-names: Miquel
+      - family-names: Spjuth
+        given-names: Ola
+      - family-names: Torrance
+        given-names: Gilleain
+      - family-names: Evelo
+        given-names: Chris T.
+      - family-names: Guha
+        given-names: Rajarshi
+      - family-names: Steinbeck
+        given-names: Christoph
+    doi: 10.1186/s13321-017-0220-4
+    identifiers:
+      - type: doi
+        value: 10.1186/s13321-017-0220-4
+      - type: url
+        value: http://dx.doi.org/10.1186/S13321-017-0220-4
+      - type: other
+        value: urn:issn:1758-2946
+    title: >-
+      The Chemistry Development Kit (CDK) v2.0: atom typing, depiction,
+      molecular formulas, and substructure searching
+    url: http://dx.doi.org/10.1186/S13321-017-0220-4
+    database: Crossref
+    date-published: 2017-06-06
+    year: 2017
+    month: 6
+    issn: 1758-2946
+    issue: '1'
+    journal: Journal of Cheminformatics
+    languages:
+      - en
+    publisher:
+      name: Springer Science and Business Media LLC
+    type: article
+    volume: '9'
