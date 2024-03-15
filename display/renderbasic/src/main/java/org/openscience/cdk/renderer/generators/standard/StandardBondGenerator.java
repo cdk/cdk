@@ -697,6 +697,10 @@ final class StandardBondGenerator {
                 return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, arom);
             else if (atom2Bonds.size() == 1)
                 return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, arom);
+            else if (selectUnsetAromBond(atom1Bonds) != null)
+                return generateOffsetDoubleBond(bond, atom1, atom2, selectUnsetAromBond(atom1Bonds), atom2Bonds, arom);
+            else if (selectUnsetAromBond(atom2Bonds) != null)
+                return generateOffsetDoubleBond(bond, atom2, atom1, selectUnsetAromBond(atom2Bonds), atom1Bonds, arom);
             else
                 return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
         } else {
@@ -737,6 +741,13 @@ final class StandardBondGenerator {
             if (isPlainBond(bond)) return bond;
         }
         return bonds.get(0);
+    }
+
+    private IBond selectUnsetAromBond(List<IBond> bonds) {
+        for (IBond bond : bonds) {
+            if (bond.isAromatic() && bond.getOrder() == UNSET) return bond;
+        }
+        return null;
     }
 
     /**
