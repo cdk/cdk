@@ -114,7 +114,7 @@ public abstract class ElectronDonation {
      * <li>C.minus.planar: 2 electrons </li> <li>O.planar3: 2 electrons </li>
      * <li>N.sp2.3: 1 electron </li> <li>C.sp2: 1 electron </li> </ul>
      * 
-     * Exocyclic pi bonds are not allowed to contribute.
+     * Exocyclic pi bonds are allowed to contribute.
      *
      * @return electron donation model to use for aromaticity perception
      * @see org.openscience.cdk.interfaces.IAtom#getAtomTypeName()
