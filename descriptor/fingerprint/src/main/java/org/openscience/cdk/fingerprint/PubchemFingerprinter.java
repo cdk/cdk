@@ -34,8 +34,11 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
+import java.util.AbstractMap;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -121,6 +124,12 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
     public PubchemFingerprinter(IChemObjectBuilder builder) {
         this(builder, true);
+    }
+
+    @Override
+    protected List<Map.Entry<String, String>> getParameters() {
+        return Collections.singletonList(new AbstractMap.SimpleImmutableEntry<>("ESSSR",
+                                                                                Boolean.toString(esssr)));
     }
 
     /**
