@@ -140,7 +140,7 @@ public class Abbreviations implements Iterable<String> {
         AUTO_CONTRACT_LINKERS,
     }
 
-    private static final int MAX_FRAG = 50;
+    private static final int MAX_FRAG = 256;
 
     /**
      * Symbol for joining disconnected fragments.
