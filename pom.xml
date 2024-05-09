@@ -727,7 +727,7 @@
                             org.apache.logging.log4j;resolution:=dynamic
                         </Import-Package>
                         <Export-Package>
-                            *;version="${version}";-noimport:=true,
+                            *;version="${project.version}";-noimport:=true,
                         </Export-Package>
                     </instructions>
                     <noWarningProjectTypes>pom</noWarningProjectTypes>
