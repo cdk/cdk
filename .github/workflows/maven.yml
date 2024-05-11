@@ -27,14 +27,10 @@ jobs:
         java-version: ${{ matrix.java }}
         cache: maven
     - name: Build with Maven
-      run: mvn clean install -q -Pjacoco
-    - name: push JaCoCo stats to codecov.io
-      uses: codecov/codecov-action@v3
-      env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: mvn clean install -q
 
   build-sonarcloud:
-    name: Build sonarcloud
+    name: Build sonarcloud and codecov.io
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -58,3 +54,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           MAVEN_OPTS: -Xss16m  -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cdk -Pjacoco
+      - name: push JaCoCo stats to codecov.io
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
