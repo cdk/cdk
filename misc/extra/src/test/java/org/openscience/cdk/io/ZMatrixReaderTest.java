@@ -36,7 +36,7 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
 class ZMatrixReaderTest extends ChemObjectIOTest {
 
     @BeforeAll
-    static void setup() throws Exception {
+    static void setup() {
         setChemObjectIO(new ZMatrixReader());
     }
 

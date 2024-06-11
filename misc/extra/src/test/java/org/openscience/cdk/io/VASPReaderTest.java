@@ -40,7 +40,7 @@ class VASPReaderTest extends SimpleChemObjectReaderTest {
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(VASPReaderTest.class);
 
     @BeforeAll
-    static void setup() throws Exception {
+    static void setup() {
         setSimpleChemObjectReader(new VASPReader(), "LiMoS2_optimisation_ISIF3.vasp");
     }
 

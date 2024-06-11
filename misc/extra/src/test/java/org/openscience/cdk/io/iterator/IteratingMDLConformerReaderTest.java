@@ -22,7 +22,7 @@ class IteratingMDLConformerReaderTest extends CDKTestCase {
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingMDLConformerReaderTest.class);
 
     @Test
-    void testSDF() throws Exception {
+    void testSDF() {
         String filename = "iterconftest.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
