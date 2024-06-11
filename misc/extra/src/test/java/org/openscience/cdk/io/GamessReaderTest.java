@@ -69,7 +69,7 @@ class GamessReaderTest extends SimpleChemObjectReaderTest {
     @AfterEach
     void tearDown() throws Exception {
         this.inputReader.close();
-        this.gamessReaderUnderTest.close(); // TODO Answer the question : Is it necessary ?
+        this.gamessReaderUnderTest.close();
     }
 
     /**
@@ -101,7 +101,6 @@ class GamessReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertNotNull(this.inputReader, "TEST: The inputReader is not null.");
         Assertions.assertTrue(this.inputReader instanceof Reader, "TEST: The inputReader is a Reader object.");
         Assertions.assertNotNull(this.gamessReaderUnderTest, "TEST: The GamessReader object is constructed.");
-        //		Assert.assertEquals("TEST: ", this.gr.input, this.inputReader);
     }
 
     /**
