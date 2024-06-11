@@ -615,6 +615,19 @@ public class Abbreviations implements Iterable<String> {
 
         for (IAtomContainer frag : fragments) {
             try {
+
+                // for now - we can't handle isotopes as our canonical key
+                // (unique smiles) ignores them
+                boolean okay = true;
+                for (IAtom atom : frag.atoms()) {
+                    if (atom.getMassNumber() != null && atom.getMassNumber() != 0) {
+                        okay = false;
+                        break;
+                    }
+                }
+                if (!okay)
+                    continue;
+
                 final String smi = usmigen.create(AtomContainerManipulator.copyAndSuppressedHydrogens(frag));
                 final String label = connectedAbbreviations.get(smi);
 
