@@ -25,7 +25,6 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
  *
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  */
-//TODO Update TestCase comments with appropriate information.
 class GamessReaderTest extends SimpleChemObjectReaderTest {
 
     /**
@@ -33,13 +32,11 @@ class GamessReaderTest extends SimpleChemObjectReaderTest {
      *
      * @see	GamessReaderTest#gamessReaderUnderTest
      */
-    //TODO Update field comment with appropriate information.
     private BufferedReader inputReader;
 
     /**
      * The "GamessReader" object used to test the "GamessReader" class.
      */
-    //TODO Update field comment with appropriate information.
     private GamessReader   gamessReaderUnderTest;
 
     /**
@@ -99,7 +96,6 @@ class GamessReaderTest extends SimpleChemObjectReaderTest {
      *
      * @see org.openscience.cdk.io.GamessReader#GamessReader(Reader)
      */
-    //TODO Update method comments with appropriate information.
     @Test
     void testGamessReader() {
         Assertions.assertNotNull(this.inputReader, "TEST: The inputReader is not null.");
@@ -125,7 +121,6 @@ class GamessReaderTest extends SimpleChemObjectReaderTest {
      * 	<li>The "GamessReader" only accepts "ChemFile" objects as input parameter.</li>
      * </ul>
      */
-    //TODO Update method comments with appropriate information.
     @Test
     void testAccepts() {
         Assertions.assertNotNull(this.gamessReaderUnderTest, "The GamessReader object is not constructed");
@@ -153,7 +148,6 @@ class GamessReaderTest extends SimpleChemObjectReaderTest {
      *
      * @see org.openscience.cdk.ChemObject
      */
-    //TODO Update method comments with appropriate information.
     @Test
     void testRead() throws Exception {
         Assertions.assertNotNull(this.gamessReaderUnderTest, "TEST: The GamessReader object is constructed.");
