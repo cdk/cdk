@@ -291,6 +291,14 @@ public class StructureDiagramGenerator {
             for (IAtom atom : cpy.atoms())
                 afix.add(atom);
 
+            // Nothing to align to
+            if (afix.size() <= 1) {
+                Cycles.markRingAtomsAndBonds(mol);
+                setMolecule(mol, false);
+                generateCoordinates();
+                return;
+            }
+
             // initialize any coordinates that are store in the pattern if
             // there was no reference molecule provided (i.e. they have been
             // cached for substructure layout)
