@@ -203,9 +203,9 @@ public class StructureDiagramGenerator {
      */
     private static final ReadWriteLock RWLOCK = new ReentrantReadWriteLock();
 
-    private static Map<IAtom, IAtom> getFirstMapping(IAtomContainer mol, Pattern pattern) {
+    private static Map<IChemObject, IChemObject> getFirstMapping(IAtomContainer mol, Pattern pattern) {
         if (mol == null) return null;
-        Iterator<Map<IAtom, IAtom>> iterator = pattern.matchAll(mol).toAtomMap().iterator();
+        Iterator<Map<IChemObject, IChemObject>> iterator = pattern.matchAll(mol).toAtomBondMap().iterator();
         return iterator.hasNext() ? iterator.next() : null;
     }
 
@@ -257,8 +257,8 @@ public class StructureDiagramGenerator {
     public final void generateAlignedCoordinates(IAtomContainer mol, IAtomContainer ref, Pattern pattern) throws CDKException {
         Set<IAtom> afix = new HashSet<>();
 
-        Map<IAtom, IAtom> molMapping = getFirstMapping(mol, pattern);
-        Map<IAtom, IAtom> refMapping = getFirstMapping(ref, pattern);
+        Map<IChemObject, IChemObject> molMapping = getFirstMapping(mol, pattern);
+        Map<IChemObject, IChemObject> refMapping = getFirstMapping(ref, pattern);
 
         if (refMapping != null) {
             if (!GeometryUtil.has2DCoordinates(ref)) {
@@ -284,7 +284,8 @@ public class StructureDiagramGenerator {
 
         if (molMapping != null) {
             IAtomContainer cpy = mol.getBuilder().newAtomContainer();
-            AtomContainerManipulator.copy(cpy, mol, molMapping.values());
+            Set<IChemObject> include = new HashSet<>(molMapping.values());
+            AtomContainerManipulator.copy(cpy, mol, include::contains, include::contains);
             cpy = findPartToAlign(mol, cpy);
 
             for (IAtom atom : cpy.atoms())
@@ -296,19 +297,25 @@ public class StructureDiagramGenerator {
             if (refMapping == null) {
                 try {
                     RWLOCK.readLock().lock();
-                    for (Map.Entry<IAtom, IAtom> e : molMapping.entrySet()) {
-                        if (e.getKey().getPoint2d() != null)
-                            e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
+                    for (Map.Entry<IChemObject, IChemObject> e : molMapping.entrySet()) {
+                        if (!(e.getKey() instanceof IAtom))
+                            continue;
+                        IAtom key = ((IAtom) e.getKey());
+                        IAtom val = ((IAtom) e.getValue());
+                        if (key.getPoint2d() != null)
+                            val.setPoint2d(new Point2d(key.getPoint2d()));
                         else
-                            e.getValue().setPoint2d(null);
+                            val.setPoint2d(null);
                     }
                 } finally {
                     RWLOCK.readLock().unlock();
                 }
             } else {
-                for (Map.Entry<IAtom, IAtom> e : molMapping.entrySet()) {
-                    IAtom refAtom = refMapping.get(e.getKey());
-                    IAtom molAtom = e.getValue();
+                for (Map.Entry<IChemObject, IChemObject> e : molMapping.entrySet()) {
+                    if (!(e.getKey() instanceof IAtom))
+                        continue;
+                    IAtom refAtom = (IAtom)refMapping.get(e.getKey());
+                    IAtom molAtom = (IAtom)e.getValue();
                     // maybe need the compatibility check here
                     if (refAtom.getPoint2d() != null && afix.contains(molAtom))
                         molAtom.setPoint2d(new Point2d(refAtom.getPoint2d()));
@@ -337,9 +344,14 @@ public class StructureDiagramGenerator {
             if (refMapping == null) {
                 try {
                     RWLOCK.writeLock().lock();
-                    for (Map.Entry<IAtom, IAtom> e : molMapping.entrySet()) {
-                        if (e.getValue().getPoint2d() != null)
-                            e.getKey().setPoint2d(new Point2d(e.getValue().getPoint2d()));
+                    for (Map.Entry<IChemObject, IChemObject> e : molMapping.entrySet()) {
+                        if (!(e.getKey() instanceof IAtom))
+                            continue;
+                        IAtom key = (IAtom) e.getKey();
+                        IAtom val = (IAtom) e.getValue();
+                        if (val.getPoint2d() != null) {
+                            key.setPoint2d(new Point2d(val.getPoint2d()));
+                        }
                     }
                 } finally {
                     RWLOCK.writeLock().unlock();
@@ -1149,7 +1161,7 @@ public class StructureDiagramGenerator {
      * a limit of 60 will fill the histogram 0..59 and Bond's orientated at 0,
      * 60, 120 degrees will all be counted in the 0 bucket.
      *
-     * @param mol molecule
+     * @param bonds molecule
      * @param counts the histogram is stored here, will be cleared
      * @param lim wrap angles to the (180 max)
      * @return number of aligned bonds
