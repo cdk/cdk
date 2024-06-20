@@ -67,6 +67,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -2180,5 +2181,13 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         // tear down
         mdlv2000Reader.close();
+    }
+
+    @Test
+    void testNoSuchAtom() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("chebi_48572.sdf"))) {
+            mdlr.read(bldr.newAtomContainer());
+        }
     }
 }
