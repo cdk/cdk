@@ -436,8 +436,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             if (!isQuery)
                 outputContainer = molecule;
-            else
+            else {
                 outputContainer = new QueryAtomContainer(molecule.getBuilder());
+                molecule = null; // make sure we cause any subsequent uses to fail
+            }
 
             if (title != null)
                 outputContainer.setTitle(title);
@@ -462,7 +464,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     IStereoElement<IAtom,IAtom> stereoElement
                             = createStereo0d(outputContainer, e.getKey(), e.getValue());
                     if (stereoElement != null)
-                        molecule.addStereoElement(stereoElement);
+                        outputContainer.addStereoElement(stereoElement);
                 }
             }
 
