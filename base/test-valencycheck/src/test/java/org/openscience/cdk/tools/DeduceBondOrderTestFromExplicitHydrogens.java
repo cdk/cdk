@@ -28,8 +28,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.Bond;
 
 /**
  * Test suite for testing deduce-bond-order implementations.
@@ -58,13 +56,13 @@ class DeduceBondOrderTestFromExplicitHydrogens {
         IAtomContainer keto = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
-        IAtom atom1 = new Atom(Elements.CARBON);
+        IAtom atom1 = keto.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(keto, atom1, 1);
-        IAtom atom2 = new Atom(Elements.CARBON);
+        IAtom atom2 = keto.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(keto, atom2, 1);
 
         // bond block
-        IBond bond1 = new Bond(atom1, atom2);
+        IBond bond1 = keto.getBuilder().newInstance(IBond.class, atom1, atom2);
 
         keto.addAtom(atom1);
         keto.addAtom(atom2);
@@ -85,15 +83,15 @@ class DeduceBondOrderTestFromExplicitHydrogens {
         IAtomContainer keto = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
-        IAtom atom1 = new Atom(Elements.CARBON);
+        IAtom atom1 = keto.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(keto, atom1, 3);
-        IAtom atom2 = new Atom(Elements.CARBON);
+        IAtom atom2 = keto.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(keto, atom2, 1);
-        IAtom atom3 = new Atom(Elements.OXYGEN);
+        IAtom atom3 = keto.getBuilder().newInstance(IAtom.class, Elements.OXYGEN);
 
         // bond block
-        IBond bond1 = new Bond(atom1, atom2);
-        IBond bond2 = new Bond(atom2, atom3);
+        IBond bond1 = keto.getBuilder().newInstance(IBond.class, atom1, atom2);
+        IBond bond2 = keto.getBuilder().newInstance(IBond.class, atom2, atom3);
 
         keto.addAtom(atom1);
         keto.addAtom(atom2);
@@ -117,16 +115,16 @@ class DeduceBondOrderTestFromExplicitHydrogens {
         IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
-        IAtom atom1 = new Atom(Elements.CARBON);
+        IAtom atom1 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom1, 2);
-        IAtom atom2 = new Atom(Elements.CARBON);
+        IAtom atom2 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom2, 1);
-        IAtom atom3 = new Atom(Elements.OXYGEN);
+        IAtom atom3 = enol.getBuilder().newInstance(IAtom.class, Elements.OXYGEN);
         addHydrogens(enol, atom3, 1);
 
         // bond block
-        IBond bond1 = new Bond(atom1, atom2);
-        IBond bond2 = new Bond(atom2, atom3);
+        IBond bond1 = enol.getBuilder().newInstance(IBond.class, atom1, atom2);
+        IBond bond2 = enol.getBuilder().newInstance(IBond.class, atom2, atom3);
 
         enol.addAtom(atom1);
         enol.addAtom(atom2);
@@ -150,19 +148,19 @@ class DeduceBondOrderTestFromExplicitHydrogens {
         IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
-        IAtom atom1 = new Atom(Elements.CARBON);
+        IAtom atom1 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom1, 2);
-        IAtom atom2 = new Atom(Elements.CARBON);
+        IAtom atom2 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom2, 1);
-        IAtom atom3 = new Atom(Elements.CARBON);
+        IAtom atom3 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom3, 1);
-        IAtom atom4 = new Atom(Elements.CARBON);
+        IAtom atom4 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom4, 2);
 
         // bond block
-        IBond bond1 = new Bond(atom1, atom2);
-        IBond bond2 = new Bond(atom2, atom3);
-        IBond bond3 = new Bond(atom3, atom4);
+        IBond bond1 = enol.getBuilder().newInstance(IBond.class, atom1, atom2);
+        IBond bond2 = enol.getBuilder().newInstance(IBond.class, atom2, atom3);
+        IBond bond3 = enol.getBuilder().newInstance(IBond.class, atom3, atom4);
 
         enol.addAtom(atom1);
         enol.addAtom(atom2);
@@ -189,28 +187,28 @@ class DeduceBondOrderTestFromExplicitHydrogens {
         IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
-        IAtom atom1 = new Atom(Elements.CARBON);
-        IAtom atom2 = new Atom(Elements.CARBON);
+        IAtom atom1 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
+        IAtom atom2 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom2, 1);
-        IAtom atom3 = new Atom(Elements.CARBON);
+        IAtom atom3 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom3, 1);
-        IAtom atom4 = new Atom(Elements.CARBON);
-        IAtom atom5 = new Atom(Elements.CARBON);
+        IAtom atom4 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
+        IAtom atom5 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom5, 1);
-        IAtom atom6 = new Atom(Elements.CARBON);
+        IAtom atom6 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom6, 1);
-        IAtom atom7 = new Atom(Elements.OXYGEN);
-        IAtom atom8 = new Atom(Elements.OXYGEN);
+        IAtom atom7 = enol.getBuilder().newInstance(IAtom.class, Elements.OXYGEN);
+        IAtom atom8 = enol.getBuilder().newInstance(IAtom.class, Elements.OXYGEN);
 
         // bond block
-        IBond bond1 = new Bond(atom1, atom2);
-        IBond bond2 = new Bond(atom2, atom3);
-        IBond bond3 = new Bond(atom3, atom4);
-        IBond bond4 = new Bond(atom4, atom5);
-        IBond bond5 = new Bond(atom5, atom6);
-        IBond bond6 = new Bond(atom6, atom1);
-        IBond bond7 = new Bond(atom7, atom1);
-        IBond bond8 = new Bond(atom8, atom4);
+        IBond bond1 = enol.getBuilder().newInstance(IBond.class, atom1, atom2);
+        IBond bond2 = enol.getBuilder().newInstance(IBond.class, atom2, atom3);
+        IBond bond3 = enol.getBuilder().newInstance(IBond.class, atom3, atom4);
+        IBond bond4 = enol.getBuilder().newInstance(IBond.class, atom4, atom5);
+        IBond bond5 = enol.getBuilder().newInstance(IBond.class, atom5, atom6);
+        IBond bond6 = enol.getBuilder().newInstance(IBond.class, atom6, atom1);
+        IBond bond7 = enol.getBuilder().newInstance(IBond.class, atom7, atom1);
+        IBond bond8 = enol.getBuilder().newInstance(IBond.class, atom8, atom4);
 
         enol.addAtom(atom1);
         enol.addAtom(atom2);
@@ -251,26 +249,26 @@ class DeduceBondOrderTestFromExplicitHydrogens {
         IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
-        IAtom atom1 = new Atom(Elements.CARBON);
+        IAtom atom1 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom1, 1);
-        IAtom atom2 = new Atom(Elements.CARBON);
+        IAtom atom2 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom2, 1);
-        IAtom atom3 = new Atom(Elements.CARBON);
+        IAtom atom3 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom3, 1);
-        IAtom atom4 = new Atom(Elements.CARBON);
+        IAtom atom4 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom4, 1);
-        IAtom atom5 = new Atom(Elements.CARBON);
+        IAtom atom5 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom5, 1);
-        IAtom atom6 = new Atom(Elements.CARBON);
+        IAtom atom6 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom6, 1);
 
         // bond block
-        IBond bond1 = new Bond(atom1, atom2);
-        IBond bond2 = new Bond(atom2, atom3);
-        IBond bond3 = new Bond(atom3, atom4);
-        IBond bond4 = new Bond(atom4, atom5);
-        IBond bond5 = new Bond(atom5, atom6);
-        IBond bond6 = new Bond(atom6, atom1);
+        IBond bond1 = enol.getBuilder().newInstance(IBond.class, atom1, atom2);
+        IBond bond2 = enol.getBuilder().newInstance(IBond.class, atom2, atom3);
+        IBond bond3 = enol.getBuilder().newInstance(IBond.class, atom3, atom4);
+        IBond bond4 = enol.getBuilder().newInstance(IBond.class, atom4, atom5);
+        IBond bond5 = enol.getBuilder().newInstance(IBond.class, atom5, atom6);
+        IBond bond6 = enol.getBuilder().newInstance(IBond.class, atom6, atom1);
 
         enol.addAtom(atom1);
         enol.addAtom(atom2);
@@ -311,23 +309,23 @@ class DeduceBondOrderTestFromExplicitHydrogens {
         IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
-        IAtom atom1 = new Atom(Elements.CARBON);
+        IAtom atom1 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom1, 1);
-        IAtom atom2 = new Atom(Elements.CARBON);
+        IAtom atom2 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom2, 1);
-        IAtom atom3 = new Atom(Elements.CARBON);
+        IAtom atom3 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom3, 1);
-        IAtom atom4 = new Atom(Elements.CARBON);
+        IAtom atom4 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom4, 1);
-        IAtom atom5 = new Atom(Elements.NITROGEN);
+        IAtom atom5 = enol.getBuilder().newInstance(IAtom.class, Elements.NITROGEN);
         addHydrogens(enol, atom5, 1);
 
         // bond block
-        IBond bond1 = new Bond(atom1, atom2);
-        IBond bond2 = new Bond(atom2, atom3);
-        IBond bond3 = new Bond(atom3, atom4);
-        IBond bond4 = new Bond(atom4, atom5);
-        IBond bond5 = new Bond(atom5, atom1);
+        IBond bond1 = enol.getBuilder().newInstance(IBond.class, atom1, atom2);
+        IBond bond2 = enol.getBuilder().newInstance(IBond.class, atom2, atom3);
+        IBond bond3 = enol.getBuilder().newInstance(IBond.class, atom3, atom4);
+        IBond bond4 = enol.getBuilder().newInstance(IBond.class, atom4, atom5);
+        IBond bond5 = enol.getBuilder().newInstance(IBond.class, atom5, atom1);
 
         enol.addAtom(atom1);
         enol.addAtom(atom2);
@@ -359,25 +357,25 @@ class DeduceBondOrderTestFromExplicitHydrogens {
         IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
-        IAtom atom1 = new Atom(Elements.CARBON);
+        IAtom atom1 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom1, 1);
-        IAtom atom2 = new Atom(Elements.CARBON);
+        IAtom atom2 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom2, 1);
-        IAtom atom3 = new Atom(Elements.CARBON);
+        IAtom atom3 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom3, 1);
-        IAtom atom4 = new Atom(Elements.CARBON);
+        IAtom atom4 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom4, 1);
-        IAtom atom5 = new Atom(Elements.NITROGEN);
-        IAtom atom6 = new Atom(Elements.CARBON);
+        IAtom atom5 = enol.getBuilder().newInstance(IAtom.class, Elements.NITROGEN);
+        IAtom atom6 = enol.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         addHydrogens(enol, atom6, 1);
 
         // bond block
-        IBond bond1 = new Bond(atom1, atom2);
-        IBond bond2 = new Bond(atom2, atom3);
-        IBond bond3 = new Bond(atom3, atom4);
-        IBond bond4 = new Bond(atom4, atom5);
-        IBond bond5 = new Bond(atom5, atom6);
-        IBond bond6 = new Bond(atom6, atom1);
+        IBond bond1 = enol.getBuilder().newInstance(IBond.class, atom1, atom2);
+        IBond bond2 = enol.getBuilder().newInstance(IBond.class, atom2, atom3);
+        IBond bond3 = enol.getBuilder().newInstance(IBond.class, atom3, atom4);
+        IBond bond4 = enol.getBuilder().newInstance(IBond.class, atom4, atom5);
+        IBond bond5 = enol.getBuilder().newInstance(IBond.class, atom5, atom6);
+        IBond bond6 = enol.getBuilder().newInstance(IBond.class, atom6, atom1);
 
         enol.addAtom(atom1);
         enol.addAtom(atom2);

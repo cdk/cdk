@@ -21,9 +21,6 @@ package org.openscience.cdk.tools;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -67,29 +64,29 @@ class ATASaturationCheckerTest {
     void testASimpleCarbonRing() throws Exception {
         // First we create a simple carbon ring to play with...
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
-        IAtomType carbon = new AtomType(Elements.CARBON);
+        IAtomType carbon = mol.getBuilder().newInstance(IAtomType.class, Elements.CARBON);
 
-        IAtom a0 = new Atom("C");
+        IAtom a0 = mol.getBuilder().newInstance(IAtom.class, "C");
         a0.setHybridization(IAtomType.Hybridization.SP2);
         a0.setImplicitHydrogenCount(1);
         AtomTypeManipulator.configureUnsetProperties(a0, carbon);
-        IAtom a1 = new Atom("C");
+        IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setHybridization(IAtomType.Hybridization.SP2);
         a1.setImplicitHydrogenCount(1);
         AtomTypeManipulator.configureUnsetProperties(a1, carbon);
-        IAtom a2 = new Atom("C");
+        IAtom a2 = mol.getBuilder().newInstance(IAtom.class, "C");
         a2.setHybridization(IAtomType.Hybridization.SP2);
         a2.setImplicitHydrogenCount(1);
         AtomTypeManipulator.configureUnsetProperties(a2, carbon);
-        IAtom a3 = new Atom("C");
+        IAtom a3 =mol.getBuilder().newInstance(IAtom.class, "C");
         a3.setHybridization(IAtomType.Hybridization.SP2);
         a3.setImplicitHydrogenCount(1);
         AtomTypeManipulator.configureUnsetProperties(a3, carbon);
-        IAtom a4 = new Atom("C");
+        IAtom a4 = mol.getBuilder().newInstance(IAtom.class, "C");
         a4.setHybridization(IAtomType.Hybridization.SP2);
         a4.setImplicitHydrogenCount(1);
         AtomTypeManipulator.configureUnsetProperties(a4, carbon);
-        IAtom a5 = new Atom("C");
+        IAtom a5 = mol.getBuilder().newInstance(IAtom.class, "C");
         a5.setHybridization(IAtomType.Hybridization.SP2);
         a5.setImplicitHydrogenCount(1);
         AtomTypeManipulator.configureUnsetProperties(a5, carbon);
@@ -101,22 +98,22 @@ class ATASaturationCheckerTest {
         mol.addAtom(a4);
         mol.addAtom(a5);
 
-        IBond b0 = new Bond(a0, a1);
+        IBond b0 = mol.getBuilder().newInstance(IBond.class, a0, a1);
         b0.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b0);
-        IBond b1 = new Bond(a1, a2);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class, a1, a2);
         b1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b1);
-        IBond b2 = new Bond(a2, a3);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class, a2, a3);
         b2.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b2);
-        IBond b3 = new Bond(a3, a4);
+        IBond b3 = mol.getBuilder().newInstance(IBond.class, a3, a4);
         b3.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b3);
-        IBond b4 = new Bond(a4, a5);
+        IBond b4 = mol.getBuilder().newInstance(IBond.class, a4, a5);
         b4.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b4);
-        IBond b5 = new Bond(a5, a0);
+        IBond b5 = mol.getBuilder().newInstance(IBond.class, a5, a0);
         b5.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b5);
 
@@ -595,21 +592,21 @@ class ATASaturationCheckerTest {
     @Test
     void testButadiene() throws Exception {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
-        IAtomType carbon = new AtomType(Elements.CARBON);
+        IAtomType carbon = mol.getBuilder().newInstance(IAtomType.class, Elements.CARBON);
 
-        IAtom a0 = new Atom("C");
+        IAtom a0 = mol.getBuilder().newInstance(IAtom.class, "C");
         a0.setHybridization(IAtomType.Hybridization.SP2);
         a0.setImplicitHydrogenCount(2);
         AtomTypeManipulator.configureUnsetProperties(a0, carbon);
-        IAtom a1 = new Atom("C");
+        IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setHybridization(IAtomType.Hybridization.SP2);
         a1.setImplicitHydrogenCount(1);
         AtomTypeManipulator.configureUnsetProperties(a1, carbon);
-        IAtom a2 = new Atom("C");
+        IAtom a2 = mol.getBuilder().newInstance(IAtom.class, "C");
         a2.setHybridization(IAtomType.Hybridization.SP2);
         a2.setImplicitHydrogenCount(1);
         AtomTypeManipulator.configureUnsetProperties(a2, carbon);
-        IAtom a3 = new Atom("C");
+        IAtom a3 = mol.getBuilder().newInstance(IAtom.class, "C");
         a3.setHybridization(IAtomType.Hybridization.SP2);
         a3.setImplicitHydrogenCount(2);
         AtomTypeManipulator.configureUnsetProperties(a3, carbon);
@@ -619,13 +616,13 @@ class ATASaturationCheckerTest {
         mol.addAtom(a2);
         mol.addAtom(a3);
 
-        IBond b0 = new Bond(a0, a1);
+        IBond b0 = mol.getBuilder().newInstance(IBond.class, a0, a1);
         b0.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b0);
-        IBond b1 = new Bond(a1, a2);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class, a1, a2);
         b1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b1);
-        IBond b2 = new Bond(a2, a3);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class, a2, a3);
         b2.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         mol.addBond(b2);
 
