@@ -137,7 +137,7 @@ class BasicAtomEncoderTest {
         AtomEncoder encoder = BasicAtomEncoder.BOND_ORDER_SUM;
 
         when(container.getBondOrderSum(atom)).thenReturn(3D);
-        assertThat(encoder.encode(atom, container), is(new Double(3D).hashCode()));
+        assertThat(encoder.encode(atom, container), is(Double.valueOf(3D).hashCode()));
         verify(container, times(1)).getBondOrderSum(atom);
         verifyNoMoreInteractions(atom, container);
     }

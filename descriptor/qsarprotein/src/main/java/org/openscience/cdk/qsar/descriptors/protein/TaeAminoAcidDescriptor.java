@@ -158,7 +158,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
 
                 Double[] data = new Double[ndesc];
                 for (int j = 1; j < components.length; j++)
-                    data[j - 1] = new Double(components[j]);
+                    data[j - 1] = Double.valueOf(components[j]);
 
                 taeParams.put(key, data);
             }

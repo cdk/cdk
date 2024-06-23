@@ -108,7 +108,7 @@ class PDBReaderTest extends SimpleChemObjectReaderTest {
         String data = "HETATM 3486 MG    MG A 302      24.885  14.008  59.194  1.00 29.42          MG+2\n" + "END";
         IChemFile chemFile = getChemFileFromString(data);
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
-        Assertions.assertEquals(new Double(2.0), atomContainer.getAtom(0).getCharge());
+        Assertions.assertEquals(Double.valueOf(2.0), atomContainer.getAtom(0).getCharge());
     }
 
     @Test
