@@ -20,10 +20,10 @@ package org.openscience.cdk.charges;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
@@ -34,7 +34,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *@cdk.created       2004-11-04
  */
 
-class MMFF94PartialChargesTest extends CDKTestCase {
+class MMFF94PartialChargesTest extends ValencyCheckTestCase {
 
     /**
 

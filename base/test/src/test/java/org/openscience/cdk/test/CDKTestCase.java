@@ -14,8 +14,6 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -131,44 +129,6 @@ public class CDKTestCase {
         for (IAtom atom : container.atoms()) {
             IAtomType type = matcher.findMatchingAtomType(container, atom);
             Assertions.assertNotNull(type, "Could not perceive atom type for: " + atom);
-        }
-    }
-
-    /**
-     * Convenience method that perceives atom types (CDK scheme) and
-     * adds explicit hydrogens accordingly. It does not create 2D or 3D
-     * coordinates for the new hydrogens.
-     *
-     * @param container to which explicit hydrogens are added.
-     */
-    protected void addExplicitHydrogens(IAtomContainer container) throws Exception {
-        addImplicitHydrogens(container);
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
-    }
-
-    /**
-     * Convenience method that perceives atom types (CDK scheme) and
-     * adds implicit hydrogens accordingly. It does not create 2D or 3D
-     * coordinates for the new hydrogens.
-     *
-     * @param container to which implicit hydrogens are added.
-     */
-    protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        int atomCount = container.getAtomCount();
-        String[] originalAtomTypeNames = new String[atomCount];
-        for (int i = 0; i < atomCount; i++) {
-            IAtom atom = container.getAtom(i);
-            IAtomType type = matcher.findMatchingAtomType(container, atom);
-            originalAtomTypeNames[i] = atom.getAtomTypeName();
-            atom.setAtomTypeName(type.getAtomTypeName());
-        }
-        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-        hAdder.addImplicitHydrogens(container);
-        // reset to the original atom types
-        for (int i = 0; i < atomCount; i++) {
-            IAtom atom = container.getAtom(i);
-            atom.setAtomTypeName(originalAtomTypeNames[i]);
         }
     }
 

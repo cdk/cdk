@@ -26,9 +26,8 @@ import java.util.Iterator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -43,6 +42,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 @Tag("SlowTest")
 // CanonicalLabeler is deprecated (slow)
-class CanonicalLabelerTest extends CDKTestCase {
+class CanonicalLabelerTest extends ValencyCheckTestCase {
 
     private SmilesParser     parser;
     private CanonicalLabeler labeler;

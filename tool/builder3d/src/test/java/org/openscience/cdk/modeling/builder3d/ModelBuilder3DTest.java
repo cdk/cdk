@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -31,9 +33,8 @@ import javax.vecmath.Point3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -47,6 +48,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -58,7 +60,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-class ModelBuilder3DTest extends CDKTestCase {
+class ModelBuilder3DTest extends ValencyCheckTestCase {
 
     private boolean standAlone = false;
 

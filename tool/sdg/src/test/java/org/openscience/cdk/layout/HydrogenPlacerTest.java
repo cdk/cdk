@@ -18,27 +18,30 @@
  */
 package org.openscience.cdk.layout;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.InputStream;
+
+import javax.vecmath.Point2d;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-
 /** @cdk.module test-sdg */
-class HydrogenPlacerTest extends CDKTestCase {
+class HydrogenPlacerTest extends ValencyCheckTestCase {
 
     public boolean       standAlone = false;
     private final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(HydrogenPlacerTest.class);

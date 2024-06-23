@@ -28,18 +28,18 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 
 /**
  * @cdk.module test-structgen
  */
-class VicinitySamplerTest extends CDKTestCase {
+class VicinitySamplerTest extends ValencyCheckTestCase {
 
     private static SmilesParser parser;
 

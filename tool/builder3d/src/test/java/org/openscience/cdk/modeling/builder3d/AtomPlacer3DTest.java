@@ -31,22 +31,21 @@ import javax.vecmath.Point3d;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Tests for AtomPlacer3D
@@ -54,7 +53,7 @@ import org.junit.jupiter.api.BeforeAll;
  * @cdk.module test-builder3d
  * @cdk.githash
  */
-class AtomPlacer3DTest extends CDKTestCase {
+class AtomPlacer3DTest extends ValencyCheckTestCase {
 
     private boolean standAlone = false;
 

@@ -23,14 +23,18 @@ import javax.vecmath.Point3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.test.qsar.DescriptorTest;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.diff.BondDiff;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Tests for bond descriptors.
@@ -139,6 +143,44 @@ abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor> {
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 2, IBond.Order.SINGLE);
         return mol;
+    }
+
+    /**
+     * Convenience method that perceives atom types (CDK scheme) and
+     * adds explicit hydrogens accordingly. It does not create 2D or 3D
+     * coordinates for the new hydrogens.
+     *
+     * @param container to which explicit hydrogens are added.
+     */
+    protected void addExplicitHydrogens(IAtomContainer container) throws Exception {
+        addImplicitHydrogens(container);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+    }
+
+    /**
+     * Convenience method that perceives atom types (CDK scheme) and
+     * adds implicit hydrogens accordingly. It does not create 2D or 3D
+     * coordinates for the new hydrogens.
+     *
+     * @param container to which implicit hydrogens are added.
+     */
+    protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        int atomCount = container.getAtomCount();
+        String[] originalAtomTypeNames = new String[atomCount];
+        for (int i = 0; i < atomCount; i++) {
+            IAtom atom = container.getAtom(i);
+            IAtomType type = matcher.findMatchingAtomType(container, atom);
+            originalAtomTypeNames[i] = atom.getAtomTypeName();
+            atom.setAtomTypeName(type.getAtomTypeName());
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        hAdder.addImplicitHydrogens(container);
+        // reset to the original atom types
+        for (int i = 0; i < atomCount; i++) {
+            IAtom atom = container.getAtom(i);
+            atom.setAtomTypeName(originalAtomTypeNames[i]);
+        }
     }
 
 }

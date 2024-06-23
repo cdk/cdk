@@ -20,9 +20,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -32,6 +31,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarionpot
  */
-class IPMolecularLearningDescriptorTest extends CDKTestCase {
+class IPMolecularLearningDescriptorTest extends ValencyCheckTestCase {
 
     private IPMolecularLearningDescriptor descriptor;
     private final SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());

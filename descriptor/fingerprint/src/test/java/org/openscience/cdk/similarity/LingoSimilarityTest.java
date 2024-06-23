@@ -29,16 +29,16 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-fingerprint
  */
-class LingoSimilarityTest extends CDKTestCase {
+class LingoSimilarityTest extends ValencyCheckTestCase {
 
     @Test
     void testLingoSim() throws Exception {

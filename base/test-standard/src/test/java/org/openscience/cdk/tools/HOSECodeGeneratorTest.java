@@ -30,7 +30,6 @@ import javax.vecmath.Point2d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
@@ -39,6 +38,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      steinbeck
  * @cdk.created 2002-11-16
  */
-class HOSECodeGeneratorTest extends CDKTestCase {
+class HOSECodeGeneratorTest extends ValencyCheckTestCase {
 
     private static boolean standAlone = false;
 

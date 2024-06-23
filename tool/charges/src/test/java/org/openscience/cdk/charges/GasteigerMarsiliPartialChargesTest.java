@@ -18,29 +18,29 @@
  */
 package org.openscience.cdk.charges;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+
+import java.io.InputStream;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.util.List;
-import java.io.InputStream;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 
 /**
  *  Description of the Class
@@ -50,7 +50,7 @@ import static org.hamcrest.CoreMatchers.not;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
+class GasteigerMarsiliPartialChargesTest extends ValencyCheckTestCase {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();

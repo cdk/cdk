@@ -24,7 +24,6 @@ import java.io.InputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -41,6 +40,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-reaction
  */
-class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
+class ConjugatedPiSystemsDetectorTest extends ValencyCheckTestCase {
 
     private static IChemObjectBuilder      builder;
     private static LonePairElectronChecker lpcheck;
