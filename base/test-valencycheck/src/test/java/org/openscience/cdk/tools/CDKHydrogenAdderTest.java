@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.tools;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +31,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -39,18 +41,17 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of
@@ -61,7 +62,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2007-07-28
  */
-class CDKHydrogenAdderTest {
+class CDKHydrogenAdderTest extends ValencyCheckTestCase {
 
     private final static CDKHydrogenAdder   adder   = CDKHydrogenAdder.getInstance(SilentChemObjectBuilder
                                                             .getInstance());
@@ -839,44 +840,6 @@ class CDKHydrogenAdderTest {
             IAtomType type = matcher.findMatchingAtomType(container, atom);
             Assertions.assertNotNull(type);
             AtomTypeManipulator.configure(atom, type);
-        }
-    }
-
-    /**
-     * Convenience method that perceives atom types (CDK scheme) and
-     * adds explicit hydrogens accordingly. It does not create 2D or 3D
-     * coordinates for the new hydrogens.
-     *
-     * @param container to which explicit hydrogens are added.
-     */
-    protected void addExplicitHydrogens(IAtomContainer container) throws Exception {
-        addImplicitHydrogens(container);
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
-    }
-
-    /**
-     * Convenience method that perceives atom types (CDK scheme) and
-     * adds implicit hydrogens accordingly. It does not create 2D or 3D
-     * coordinates for the new hydrogens.
-     *
-     * @param container to which implicit hydrogens are added.
-     */
-    protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        int atomCount = container.getAtomCount();
-        String[] originalAtomTypeNames = new String[atomCount];
-        for (int i = 0; i < atomCount; i++) {
-            IAtom atom = container.getAtom(i);
-            IAtomType type = matcher.findMatchingAtomType(container, atom);
-            originalAtomTypeNames[i] = atom.getAtomTypeName();
-            atom.setAtomTypeName(type.getAtomTypeName());
-        }
-        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-        hAdder.addImplicitHydrogens(container);
-        // reset to the original atom types
-        for (int i = 0; i < atomCount; i++) {
-            IAtom atom = container.getAtom(i);
-            atom.setAtomTypeName(originalAtomTypeNames[i]);
         }
     }
 
