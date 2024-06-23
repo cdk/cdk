@@ -277,7 +277,7 @@ public class ForceFieldConfigurator {
                 atom.setFlag(IChemObject.IN_RING, false);
                 isInHeteroRing = false;
             }
-            atom.setProperty("MAX_BOND_ORDER", new Double(molecule.getMaximumBondOrder(atom).numeric()));
+            atom.setProperty("MAX_BOND_ORDER", Double.valueOf(molecule.getMaximumBondOrder(atom).numeric()));
 
             try {
                 hoseCode = hcg.getHOSECode(molecule, atom, 3);

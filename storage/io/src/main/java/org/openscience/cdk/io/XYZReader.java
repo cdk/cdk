@@ -180,11 +180,11 @@ public class XYZReader extends DefaultChemObjectReader {
                             // this is an error but cannot throw exception
                         } else {
                             String atomtype = tokenizer.nextToken();
-                            x = new Double(tokenizer.nextToken());
-                            y = new Double(tokenizer.nextToken());
-                            z = new Double(tokenizer.nextToken());
+                            x = Double.valueOf(tokenizer.nextToken());
+                            y = Double.valueOf(tokenizer.nextToken());
+                            z = Double.valueOf(tokenizer.nextToken());
 
-                            if (fields == 8) charge = new Double(tokenizer.nextToken());
+                            if (fields == 8) charge = Double.valueOf(tokenizer.nextToken());
 
                             IAtom atom = file.getBuilder().newInstance(IAtom.class, atomtype, new Point3d(x, y, z));
                             atom.setCharge(charge);
