@@ -26,7 +26,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Included so that CoreCoverageTest won't complain. The class does not have
@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-class CDKConstantsTest extends CDKTestCase {
+class CDKConstantsTest {
 
     @Test
     void testCDKConstants() {
@@ -45,21 +45,21 @@ class CDKConstantsTest extends CDKTestCase {
 
     @Test
     void testSingleOrDoubleFlag() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
-        IAtom atom1 = new Atom(Elements.CARBON);
+        IAtom atom1 = mol.newAtom(Elements.CARBON.getAtomicNumber());
         atom1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
-        IAtom atom2 = new Atom(Elements.CARBON);
-        IAtom atom3 = new Atom(Elements.CARBON);
-        IAtom atom4 = new Atom(Elements.CARBON);
-        IAtom atom5 = new Atom(Elements.CARBON);
+        IAtom atom2 = mol.newAtom(Elements.CARBON.getAtomicNumber());
+        IAtom atom3 = mol.newAtom(Elements.CARBON.getAtomicNumber());
+        IAtom atom4 = mol.newAtom(Elements.CARBON.getAtomicNumber());
+        IAtom atom5 = mol.newAtom(Elements.CARBON.getAtomicNumber());
 
-        IBond bond1 = new Bond(atom1, atom2);
+        IBond bond1 = mol.newBond(atom1, atom2);
         bond1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
-        IBond bond2 = new Bond(atom2, atom3);
-        IBond bond3 = new Bond(atom3, atom4);
-        IBond bond4 = new Bond(atom4, atom5);
-        IBond bond5 = new Bond(atom5, atom1);
+        IBond bond2 = mol.newBond(atom2, atom3);
+        IBond bond3 = mol.newBond(atom3, atom4);
+        IBond bond4 = mol.newBond(atom4, atom5);
+        IBond bond5 = mol.newBond(atom5, atom1);
 
         mol.addAtom(atom1);
         mol.addAtom(atom2);
