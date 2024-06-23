@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -47,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.created 2012-04-18
  * @cdk.module  test-valencycheck
  */
-class ATASaturationCheckerTest extends CDKTestCase {
+class ATASaturationCheckerTest {
 
     private SaturationChecker                      satcheck   = null;
     boolean                                standAlone = false;

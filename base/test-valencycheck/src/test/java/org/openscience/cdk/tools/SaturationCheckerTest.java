@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -38,7 +37,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  * @author     steinbeck
  * @cdk.created    2003-02-20
  */
-class SaturationCheckerTest extends CDKTestCase {
+class SaturationCheckerTest {
 
     private SaturationChecker satcheck   = null;
     boolean           standAlone = false;

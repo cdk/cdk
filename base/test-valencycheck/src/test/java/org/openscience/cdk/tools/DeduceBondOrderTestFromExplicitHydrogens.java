@@ -23,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,7 +41,7 @@ import org.openscience.cdk.silent.Bond;
  * @cdk.module  test-valencycheck
  * @cdk.created 2006-08-16
  */
-class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
+class DeduceBondOrderTestFromExplicitHydrogens {
 
     private IDeduceBondOrderTool dboTool;
 
