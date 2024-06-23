@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.layout;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.InputStream;
 
 import javax.vecmath.Point2d;

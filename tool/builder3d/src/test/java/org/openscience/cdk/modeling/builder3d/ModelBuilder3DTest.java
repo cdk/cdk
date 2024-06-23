@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
