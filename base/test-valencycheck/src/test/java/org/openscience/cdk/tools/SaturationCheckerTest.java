@@ -44,7 +44,6 @@ class SaturationCheckerTest extends CDKTestCase {
     boolean           standAlone = false;
 
     @BeforeEach
-    @Test
     void setUp() throws Exception {
         satcheck = new SaturationChecker();
     }
