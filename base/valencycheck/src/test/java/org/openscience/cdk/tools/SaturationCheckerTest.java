@@ -41,7 +41,7 @@ class SaturationCheckerTest {
     boolean           standAlone = false;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         satcheck = new SaturationChecker();
     }
 
