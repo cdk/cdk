@@ -16,13 +16,13 @@
         <module>atomtype</module>
         <module>core</module>
         <module>standard</module>
-        <module>valencycheck</module>
         <module>test-atomtype</module>
         <module>test-core</module>
         <module>test-standard</module>
         <module>test-valencycheck</module>
         <module>data</module>
         <module>silent</module>
+        <module>valencycheck</module>
         <module>datadebug</module>
         <module>isomorphism</module>
         <module>dict</module>
