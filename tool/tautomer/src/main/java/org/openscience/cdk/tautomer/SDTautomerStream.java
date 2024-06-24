@@ -1,7 +1,6 @@
 /*
- * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
- *   
+ * Copyright (c) 2024 John Mayfield
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *   
  * This program is free software; you can redistribute it and/or modify it
@@ -24,7 +23,6 @@
 
 package org.openscience.cdk.tautomer;
 
-import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import static org.openscience.cdk.tautomer.Role.Acceptor;
@@ -33,13 +31,13 @@ import static org.openscience.cdk.tautomer.Role.Donor;
 /**
  * Lazily generates a stream of tautomers using the Sayle-Delany algorithm. 
  * 
- * @author John May
+ * @author John Mayfield
  */
 public final class SDTautomerStream {
 
     private final SDTautomerState state;
-    private final IntStack      stack;
-    
+    private final IntStack        stack;
+
     SDTautomerStream(SDTautomerState state) {
         this.state = state;
         this.stack = new IntStack(state.candidates.length + 1);
@@ -76,11 +74,9 @@ public final class SDTautomerStream {
         }
     }
     
-    public static SDTautomerStream create(IAtomContainer container) {
-        GraphUtil.EdgeToBondMap bonds = GraphUtil.EdgeToBondMap.withSpaceFor(container);
-        int[][]                 graph = GraphUtil.toAdjList(container, bonds);
-        Role[]                  roles = BasicRoleTyper.assignRoles(container, graph, bonds, false);
-        return new SDTautomerStream(new SDTautomerState(container, graph, bonds, roles, Integer.MAX_VALUE));
+    public static SDTautomerStream create(IAtomContainer mol) {
+        Role[]                  roles = BasicRoleTyper.assignRoles(mol, false);
+        return new SDTautomerStream(new SDTautomerState(mol, roles, Integer.MAX_VALUE));
     }
 
     private static final class IntStack {
