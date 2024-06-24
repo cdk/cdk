@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
+ * Copyright (c) 2024 John Mayfield
  *   
  * Contact: cdk-devel@lists.sourceforge.net
  *   
@@ -35,12 +34,12 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 /**
  * Assign roles to atoms based on electron counting. 
  * 
- * @author John May
+ * @author John Mayfield
  */
 final class BasicRoleTyper {
 
-    private static enum AtomType {
-        TentativeCarbonAcceptor(Role.Conjugate),
+    private enum AtomType {
+        TentativeCarbonAcceptor(Role.Conjugated),
         TentativeCarbonDonor(Role.None),
         CarbonGroupAcceptor(Role.Acceptor),
         CarbonGroupDonor(Role.Donor),
@@ -48,7 +47,7 @@ final class BasicRoleTyper {
         NitrogenGroupDonor(Role.Donor),
         OxygenGroupAcceptor(Role.Acceptor),
         OxygenGroupDonor(Role.Donor),
-        Sp2(Role.Conjugate),
+        Sp2(Role.Conjugated),
         Other(Role.None);
 
         private final Role role;
@@ -62,18 +61,18 @@ final class BasicRoleTyper {
         
     }
 
-    static Role[] assignRoles(IAtomContainer container, int[][] graph, EdgeToBondMap bonds, boolean carbons) {
+    static Role[] assignRoles(IAtomContainer mol,
+                              boolean carbons) {
         
         // assign the initial types
-        AtomType[] types = new AtomType[graph.length];
-        for (int v = 0; v < graph.length; v++) {
-            types[v] = type(v, container, graph, bonds);
+        AtomType[] types = new AtomType[mol.getAtomCount()];
+        for (int v = 0; v < mol.getAtomCount(); v++) {
+            types[v] = type(mol.getAtom(v));
         }
 
         // augment roles (i.e. carbon donors, distance etc)
         if (carbons) {
-            for (int v = 0; v < graph.length; v++) {
-                
+            for (int v = 0; v < mol.getAtomCount(); v++) {
                 
                 if (types[v] == AtomType.TentativeCarbonAcceptor) {
                     types[v] = AtomType.CarbonGroupAcceptor;
@@ -82,8 +81,10 @@ final class BasicRoleTyper {
                 // only Sp3 carbons adjacent to a donor, acceptor or conjugate
                 // are included
                 if (types[v] == AtomType.TentativeCarbonDonor) {
-                    for (int w : graph[v]) {
-                        if (types[w].role != Role.None) {
+                    IAtom atom = mol.getAtom(v);
+                    for (IBond bond : atom.bonds()) {
+                        IAtom nbor = bond.getOther(atom);
+                        if (types[nbor.getIndex()].role != Role.None) {
                             types[v] = AtomType.CarbonGroupDonor;
                             break;
                         }
@@ -93,17 +94,20 @@ final class BasicRoleTyper {
         }
         
         // propagate the roles of each atom type
-        Role[] roles = new Role[graph.length];
-        for (int v = 0; v < graph.length; v++) {
+        Role[] roles = new Role[types.length];
+        for (int v = 0; v < types.length; v++) {
             roles[v] = types[v].role;
         }
 
         // correct roles for double bonds that can't be moved, a double bond can
         // not be moved if one of the connected atoms has no role assigned
-        for (int v = 0; v < graph.length; v++) {
-            for (int w : graph[v]) {
+        for (int v = 0; v < mol.getAtomCount(); v++) {
+            IAtom atom = mol.getAtom(v);
+            for (IBond bond : atom.bonds()) {
+                IAtom nbor = bond.getOther(atom);
+                int w = nbor.getIndex();
                 if (w < v) {
-                    if ((roles[v] == Role.None || roles[w] == Role.None) && bonds.get(v, w).getOrder() == IBond.Order.DOUBLE) {
+                    if ((roles[v] == Role.None || roles[w] == Role.None) && bond.getOrder() == IBond.Order.DOUBLE) {
                         roles[v] = Role.None;
                         roles[w] = Role.None;
                         break;
@@ -115,9 +119,8 @@ final class BasicRoleTyper {
         return roles;
     }
 
-    private static AtomType type(int i, IAtomContainer container, int[][] graph, EdgeToBondMap bonds) {
+    private static AtomType type(IAtom atom) {
 
-        IAtom atom      = container.getAtom(i);
         int   charge    = atom.getFormalCharge();
         int   hydrogens = atom.getImplicitHydrogenCount();
 
@@ -127,8 +130,8 @@ final class BasicRoleTyper {
         // count adjacent single (sigma) and double (pi) bonds, any other bond
         // triggers exit - we are not interested in these
         int sigma = hydrogens, pi = 0;
-        for (int w : graph[i]) {
-            switch (bonds.get(i, w).getOrder()) {
+        for (IBond bond : atom.bonds()) {
+            switch (bond.getOrder()) {
                 case SINGLE:
                     sigma++;
                     break;
@@ -170,7 +173,7 @@ final class BasicRoleTyper {
                         return AtomType.NitrogenGroupAcceptor;
                     else if (sigma == 3 && pi == 0 && hydrogens > 0)
                         return AtomType.NitrogenGroupDonor;
-                    else if (sigma == 1 && pi == 2 && elem == Elements.Nitrogen)
+                    else if (sigma == 1 && pi == 2)
                         return AtomType.Other; // could allow in future
                 }
                 else if (charge == 1 && sigma == 2 && pi == 1) {

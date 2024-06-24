@@ -1,7 +1,6 @@
 /*
- * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
- *   
+ * Copyright (c) 2024 John Mayfield
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *   
  * This program is free software; you can redistribute it and/or modify it
@@ -24,7 +23,6 @@
 
 package org.openscience.cdk.tautomer;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.Matching;
@@ -36,17 +34,16 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 
 import java.util.Arrays;
 import java.util.BitSet;
-import java.util.Comparator;
 
 import static org.openscience.cdk.tautomer.Role.Acceptor;
-import static org.openscience.cdk.tautomer.Role.Conjugate;
+import static org.openscience.cdk.tautomer.Role.Conjugated;
 import static org.openscience.cdk.tautomer.Role.Donor;
 import static org.openscience.cdk.tautomer.Role.None;
 
 /**
  * A state of the Sayle-Delany (SD) tautomer generation algorithm. 
  *
- * @author John May
+ * @author John Mayfield
  */
 final class SDTautomerState {
 
@@ -75,39 +72,35 @@ final class SDTautomerState {
     private final Matching matching;
 
     /** The container we are augmenting. */
-    private final IAtomContainer container;
+    private final IAtomContainer mol;
 
-    /** Adjacency list representation of the container. */
     private final int[][] graph;
 
-    /** Bond lookup from atom indices. */
-    private final GraphUtil.EdgeToBondMap bonds;
-
-    SDTautomerState(IAtomContainer container, int[][] graph, GraphUtil.EdgeToBondMap bonds, Role[] roles) {
-        this(container, graph, bonds, roles, container.getAtomCount());
+    SDTautomerState(IAtomContainer mol, Role[] roles) {
+        this(mol, roles, mol.getAtomCount());
     }
 
-    SDTautomerState(IAtomContainer container, int[][] graph, GraphUtil.EdgeToBondMap bonds, Role[] roles, int limit) {
+    SDTautomerState(IAtomContainer mol, Role[] roles, int limit) {
 
-        this.container = container;
-        this.graph     = graph;
-        this.bonds     = bonds;
+        this.mol = mol;
         this.roles     = roles;
 
-        this.matching = Matching.withCapacity(graph.length);
-        this.visited  = new int[container.getAtomCount()];
+        this.graph = GraphUtil.toAdjList(mol);
+        this.matching = Matching.withCapacity(mol.getAtomCount());
+        this.visited  = new int[mol.getAtomCount()];
         Arrays.fill(visited, Nil);
 
-        clearTypeInfo(container);
+        clearTypeInfo(mol);
 
         // identify and label conjugated systems where protons can move freely
-        this.components = new int[graph.length];
+        this.components = new int[mol.getAtomCount()];
         int nComponents = labelComponents(components);
 
         // count the total number of proton donors/acceptors in each system
         this.nDonors = new int[nComponents];
         this.nAcceptors = new int[nComponents];
-        for (int v = 0; v < graph.length; v++) {
+
+        for (int v = 0; v < mol.getAtomCount(); v++) {
             if (roles[v] == Donor)
                 nDonors[components[v]]++;
             if (roles[v] == Acceptor)
@@ -119,16 +112,16 @@ final class SDTautomerState {
         for (int component = 1; component < nComponents; component++) {
             if (nDonors[component] == 0 || nAcceptors[component] == 0
                     || nDonors[component] + nAcceptors[component] > limit)
-                for (int v = 0; v < graph.length; v++) {
+                for (int v = 0; v < mol.getAtomCount(); v++) {
                     if (components[v] == component)
                         components[v] = 0;
                 }
         }
 
         // enqueue all donor/acceptor atoms, labelled as candidates 
-        Integer[] queue = new Integer[graph.length];
+        Integer[] queue = new Integer[mol.getAtomCount()];
         int n = 0;
-        for (int v = 0; v < graph.length; v++) {
+        for (int v = 0; v < mol.getAtomCount(); v++) {
             if (components[v] < 1)
                 continue;
             if (roles[v] == Acceptor || roles[v] == Donor)
@@ -139,20 +132,15 @@ final class SDTautomerState {
         // no donors or acceptors
         if (n == 0) return;
 
-        final long[] labels = Canon.label(container, graph, initialInvariants());
+        final long[] labels = Canon.label(mol,
+                                          graph,
+                                          initialInvariants());
 
-        Arrays.sort(this.candidates, new Comparator<Integer>() {
-            @Override public int compare(Integer u, Integer v) {
-                if (components[u] < components[v])
-                    return +1;
-                if (components[u] > components[v])
-                    return -1;
-                if (labels[u] < labels[v])
-                    return +1;
-                if (labels[u] > labels[v])
-                    return -1;
-                return 0;
-            }
+        Arrays.sort(this.candidates, (u, v) -> {
+            int cmp = Integer.compare(components[u], components[v]);
+            if (cmp != 0)
+                return cmp;
+            return Long.compare(labels[v], labels[u]);
         });
     }
 
@@ -255,7 +243,7 @@ final class SDTautomerState {
         // when a hydrogen donor or acceptor is set it may decide the
         // role of another vertex in the component. The donor and acceptor
         // counts may have changed and are retested  
-        if (!assignDependantRoles(v, new BitSet(graph.length)) || nDonors[component] < 0 || nAcceptors[component] < 0)
+        if (!assignDependantRoles(v, new BitSet(mol.getAtomCount())) || nDonors[component] < 0 || nAcceptors[component] < 0)
             return false;
 
         // all hydrogen donors or acceptors of this component have been placed,
@@ -266,7 +254,7 @@ final class SDTautomerState {
             final Role other = nDonors[component] == 0 ? Acceptor : Donor;
 
             for (int w = 0; w < visited.length; w++)
-                if (components[w] == component && visited[w] == Nil && roles[w] != Role.Conjugate)
+                if (components[w] == component && visited[w] == Nil && roles[w] != Role.Conjugated)
                     setRole(w, other);
 
             if (!kekulise(component))
@@ -317,13 +305,13 @@ final class SDTautomerState {
         }
 
         // unmatched, no unknown neighbors, and not conjugated, then it must be a donor
-        if (visited[v] == Nil && roles[v] != Role.Conjugate && !matched && n == 0) {
+        if (visited[v] == Nil && roles[v] != Role.Conjugated && !matched && n == 0) {
             setRole(v, Donor);
             assignDependantRoles(v, checked);
         }
 
         // a conjugated atom or assigned acceptor without an assigned pi bond
-        if (!matched && (roles[v] == Role.Conjugate || (visited[v] > Nil && roles[v] == Acceptor))) {
+        if (!matched && (roles[v] == Role.Conjugated || (visited[v] > Nil && roles[v] == Acceptor))) {
 
             // v needs a pi bond but there are no unset bonds, infeasible
             if (n == 0) return false;
@@ -335,7 +323,7 @@ final class SDTautomerState {
                 int w = unknown[0];
 
                 // the other vertex must be an acceptor, set it
-                if (roles[w] != Role.Conjugate && visited[w] == Nil)
+                if (roles[w] != Role.Conjugated && visited[w] == Nil)
                     setRole(w, Acceptor);
 
                 // required for remove() to clear the matching
@@ -372,7 +360,7 @@ final class SDTautomerState {
      * Vertex v is an acceptor or conjugated and must be adjacent to a pi bond.
      */
     private boolean needsPiBond(final int v) {
-        return roles[v] == Acceptor || roles[v] == Role.Conjugate;
+        return roles[v] == Acceptor || roles[v] == Role.Conjugated;
     }
 
     /**
@@ -404,7 +392,7 @@ final class SDTautomerState {
      */
     private void accept(final int v) {
         assert roles[v] == Acceptor;
-        final IAtom atom = container.getAtom(v);
+        final IAtom atom = mol.getAtom(v);
         assert atom.getImplicitHydrogenCount() != null;
         atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() + 1);
         roles[v] = Donor;
@@ -417,7 +405,7 @@ final class SDTautomerState {
      */
     private void donate(final int v) {
         assert roles[v] == Donor;
-        final IAtom atom = container.getAtom(v);
+        final IAtom atom = mol.getAtom(v);
         assert atom.getImplicitHydrogenCount() != null;
         atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() - 1);
         roles[v] = Acceptor;
@@ -425,23 +413,28 @@ final class SDTautomerState {
 
     IAtomContainer container() {
 
-        for (int v = 0; v < container.getAtomCount(); v++) {
+        for (int v = 0; v < mol.getAtomCount(); v++) {
             if (components[v] > 0 && roles[v] != Role.None) {
-                for (int w : graph[v]) {
-                    if (roles[w] != Role.None)
-                        bonds.get(v, w).setOrder(IBond.Order.SINGLE);
+                IAtom atom = mol.getAtom(v);
+                for (IBond bond : atom.bonds()) {
+                    IAtom nbor = bond.getOther(atom);
+                    if (roles[nbor.getIndex()] != Role.None)
+                        bond.setOrder(IBond.Order.SINGLE);
+
                 }
             }
         }
 
-        for (int v = 0; v < container.getAtomCount(); v++) {
+        for (int v = 0; v < mol.getAtomCount(); v++) {
             if (matching.matched(v)) {
                 int w = matching.other(v);
-                if (w > v) bonds.get(v, w).setOrder(IBond.Order.DOUBLE);
+                if (w <= v) continue;
+                IBond bond = mol.getAtom(v).getBond(mol.getAtom(w));
+                bond.setOrder(IBond.Order.DOUBLE);
             }
         }
 
-        return container;
+        return mol;
     }
 
     // refactor out
@@ -465,17 +458,18 @@ final class SDTautomerState {
     }
 
     // clear the existing atom type and aromaticity information, we are 
-    // going to be moving hydrogens around that will change the atom type.
+    // going to be moving hydrogens around that will change the atom type
+    // and break aromaticity
     private static void clearTypeInfo(IAtomContainer container) {
         // note - bond order sum / valence will be unchanged
         for (IAtom a : container.atoms()) {
             a.setAtomTypeName(null);
             a.setHybridization(null);
             a.setFormalNeighbourCount(null);
-            a.setFlag(CDKConstants.ISAROMATIC, false);
+            a.setIsAromatic(false);
         }
         for (IBond b : container.bonds()) {
-            b.setFlag(CDKConstants.ISAROMATIC, false);
+            b.setIsAromatic(false);
         }
     }
 
@@ -483,7 +477,7 @@ final class SDTautomerState {
         long[] labels = new long[graph.length];
 
         for (int v = 0; v < graph.length; v++) {
-            IAtom atom = container.getAtom(v);
+            IAtom atom = mol.getAtom(v);
 
             int deg  = graph[v].length;
             int impH = implH(atom);
@@ -500,7 +494,7 @@ final class SDTautomerState {
 
             // count non-suppressed (explicit) hydrogens
             for (int w : graph[v])
-                if (atomicNumber(container.getAtom(w)) == 1)
+                if (atomicNumber(mol.getAtom(w)) == 1)
                     expH++;
 
             long label = 0;
@@ -525,7 +519,7 @@ final class SDTautomerState {
     }
 
     private int eneg(int v, Elements elements) {
-        if (roles[v] == None || roles[v] == Conjugate)
+        if (roles[v] == None || roles[v] == Conjugated)
             return 15;
         switch (elements) {
             case Nitrogen:

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
+ * Copyright (c) 2024 John Mayfield
  *   
  * Contact: cdk-devel@lists.sourceforge.net
  *   
@@ -27,7 +26,7 @@ package org.openscience.cdk.tautomer;
 /**
  * Tautomer atom role. 
  *
- * @author John May
+ * @author John Mayfield
  */
 enum Role {
 
@@ -38,7 +37,7 @@ enum Role {
     Acceptor,
 
     /** A conjugated atom, Sp2 hybridised atom adjacent to a pi bond. */
-    Conjugate,
+    Conjugated,
 
     /** The atom has no role. */
     None
