@@ -1,4 +1,5 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2024  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -18,12 +19,24 @@
  */
 package org.openscience.cdk.smiles;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
@@ -46,6 +59,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -59,30 +73,18 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author         steinbeck
  * @cdk.created    2004-02-09
  * @cdk.module     test-smiles
  */
-class SmilesGeneratorTest extends CDKTestCase {
+class SmilesGeneratorTest extends ValencyCheckTestCase {
 
     /**
      *  A unit test for JUnit

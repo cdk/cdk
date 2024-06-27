@@ -18,9 +18,16 @@
  */
 package org.openscience.cdk.reaction;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
@@ -38,22 +45,15 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Tests for IReactionProcess implementations.
  *
  * @cdk.module test-reaction
  */
-public abstract class ReactionProcessTest extends CDKTestCase {
+public abstract class ReactionProcessTest extends ValencyCheckTestCase {
 
     private IReactionProcess   reaction;
     private Dictionary         dictionary;

@@ -24,9 +24,16 @@
 
 package org.openscience.cdk.similarity;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
@@ -38,20 +45,13 @@ import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @cdk.module test-fingerprint
  */
-class TanimotoTest extends CDKTestCase {
+class TanimotoTest extends ValencyCheckTestCase {
 
     private final boolean standAlone = false;
 

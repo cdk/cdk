@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.tools;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -28,8 +31,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -40,18 +41,17 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of
@@ -62,7 +62,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2007-07-28
  */
-class CDKHydrogenAdderTest extends CDKTestCase {
+class CDKHydrogenAdderTest extends ValencyCheckTestCase {
 
     private final static CDKHydrogenAdder   adder   = CDKHydrogenAdder.getInstance(SilentChemObjectBuilder
                                                             .getInstance());

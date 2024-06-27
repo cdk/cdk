@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
@@ -38,6 +37,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
-class SMARTSQueryToolTest extends CDKTestCase {
+class SMARTSQueryToolTest extends ValencyCheckTestCase {
 
     /**
      * @throws CDKException
