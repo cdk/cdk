@@ -93,27 +93,32 @@ import java.util.Set;
  */
 public class Fingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
-    /** Throw an exception if too many paths (per atom) are generated. */
-    private final static int                 DEFAULT_PATH_LIMIT   = 42000;
+    /**
+     * Throw an exception if too many paths (per atom) are generated.
+     */
+    private final static int DEFAULT_PATH_LIMIT = 42000;
 
-    /** The default length of created fingerprints. */
-    public final static int                  DEFAULT_SIZE         = 1024;
-    /** The default search depth used to create the fingerprints. */
-    public final static int                  DEFAULT_SEARCH_DEPTH = 7;
+    /**
+     * The default length of created fingerprints.
+     */
+    public final static int DEFAULT_SIZE = 1024;
+    /**
+     * The default search depth used to create the fingerprints.
+     */
+    public final static int DEFAULT_SEARCH_DEPTH = 7;
 
-    private final int                              size;
-    private final int                              searchDepth;
-    private int                              pathLimit = DEFAULT_PATH_LIMIT;
+    private final int size;
+    private final int searchDepth;
+    private int pathLimit = DEFAULT_PATH_LIMIT;
 
-    private boolean                          hashPseudoAtoms = false;
+    private boolean hashPseudoAtoms = false;
+    /** Encode paths with pass through a hydrogen atom. Hydrogens may be
+     *  implicit or explicit which will result in different FPs - default:
+     *  false*/
+    private boolean hashExplHydrogens = false;
 
-    static int                               debugCounter         = 0;
-
-
-    private static final ILoggingTool              logger               = LoggingToolFactory
-                                                                          .createLoggingTool(Fingerprinter.class);
-
-
+    private static final ILoggingTool logger = LoggingToolFactory
+            .createLoggingTool(Fingerprinter.class);
 
     /**
      * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
@@ -146,7 +151,8 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return Arrays.asList(
             new SimpleImmutableEntry<>("searchDepth", Integer.toString(searchDepth)),
             new SimpleImmutableEntry<>("pathLimit", Integer.toString(pathLimit)),
-            new SimpleImmutableEntry<>("hashPseudoAtoms", Boolean.toString(hashPseudoAtoms))
+            new SimpleImmutableEntry<>("hashPseudoAtoms", Boolean.toString(hashPseudoAtoms)),
+            new SimpleImmutableEntry<>("hashExplicitHydrogens", Boolean.toString(hashExplHydrogens))
         );
     }
 
@@ -407,7 +413,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     }
 
     private void traversePaths(State state, IAtom beg, IBond prev) throws CDKException {
-        if (!hashPseudoAtoms && isPseudo(beg))
+        if (skipAtom(beg))
             return;
         state.push(beg, prev);
         state.storePath();
@@ -425,6 +431,12 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             }
         }
         state.pop();
+    }
+
+    private boolean skipAtom(IAtom beg) {
+        int elem = getElem(beg);
+        return !hashPseudoAtoms && elem == IAtom.Wildcard ||
+                !hashExplHydrogens && elem == IAtom.H;
     }
 
     /**
@@ -447,7 +459,8 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
-                if (hashPseudoAtoms || !hasPseudoAtom(path))
+                if ((hashPseudoAtoms || !hasPseudoAtom(path)) &&
+                    (hashExplHydrogens || !hasExplHydrogen(path)))
                     hashes.add(encodeUniquePath(container, path, buffer));
             }
         }
@@ -470,13 +483,17 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         }
     }
 
-    private static boolean isPseudo(IAtom a) {
-        return getElem(a) == 0;
-    }
 
     private static boolean hasPseudoAtom(Iterable<IAtom> path) {
         for (IAtom atom : path)
-            if (isPseudo(atom))
+            if (getElem(atom) == IAtom.Wildcard)
+                return true;
+        return false;
+    }
+
+    private static boolean hasExplHydrogen(Iterable<IAtom> path) {
+        for (IAtom atom : path)
+            if (getElem(atom) == IAtom.H)
                 return true;
         return false;
     }
@@ -625,6 +642,10 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
     public void setHashPseudoAtoms(boolean value) {
         this.hashPseudoAtoms = value;
+    }
+
+    public void setHashExplicitHydrogens(boolean value) {
+        this.hashExplHydrogens = value;
     }
 
     public int getSearchDepth() {
