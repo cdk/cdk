@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -48,6 +49,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-fingerprint
@@ -527,4 +529,23 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         ICountFingerprint actual = fpr.getCountFingerprint(mol);
         Assertions.assertEquals(65, actual.numOfPopulatedbins());
     }
+
+    @Test
+    void testHydrogenRepresentations() throws CDKException, CloneNotSupportedException {
+        String smiles = "C=1C=C(C(=C(C1)Cl)Cl)N2CCN(CC2)CCCCOC=3C=CC4=C(C3)NC(=O)CC4";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IAtomContainer abilify = new SmilesParser(bldr).parseSmiles(smiles);
+        IAtomContainer abilifyExplH = abilify.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(abilifyExplH);
+        Assertions.assertNotEquals(abilify.getAtomCount(), abilifyExplH.getAtomCount());
+        Assertions.assertNotEquals(abilify.getBondCount(), abilifyExplH.getBondCount());
+
+        ExtendedFingerprinter fp = new ExtendedFingerprinter();
+        Assertions.assertEquals(fp.getBitFingerprint(abilify),
+                                fp.getBitFingerprint(abilifyExplH));
+
+        Assertions.assertNotEquals(abilify.getAtomCount(), abilifyExplH.getAtomCount());
+        Assertions.assertNotEquals(abilify.getBondCount(), abilifyExplH.getBondCount());
+    }
+
 }
