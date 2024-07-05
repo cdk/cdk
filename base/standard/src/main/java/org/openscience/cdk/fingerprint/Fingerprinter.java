@@ -62,10 +62,10 @@ import java.util.Set;
  *   fingerprint.length(); // returns the highest set bit
  * </pre> <p>
  *
- *  The FingerPrinter assumes that hydrogens are explicitly given! Furthermore,
- *  if pseudo atoms or atoms with malformed symbols are present, their atomic
- *  number is taken as one more than the last element currently supported in
- *  {@link org.openscience.cdk.tools.periodictable.PeriodicTable}.
+ * <p>The FingerPrinter has the option to ignore explicit hydrogen's
+ * ({@link #setHashExplicitHydrogens(boolean)}) and pseudo atoms
+ * ({@link #setHashPseudoAtoms(boolean)}). This ensures the
+ * fingerprint can be used for substructure screening by default.</p>
  *
  *  <span style="color: #FF0000;">Warning: The aromaticity detection for this
  *  FingerPrinter relies on AllRingsFinder, which is known to take very long
@@ -640,10 +640,25 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         this.pathLimit = limit;
     }
 
+    /**
+     * Include pseudo/query atoms in the fingerprint with atomic number 0.
+     * Generally for substructure screening, which path based fingerprints are
+     * most useful, this is not wanted.
+     *
+     * @param value the setting (false by default)
+     */
     public void setHashPseudoAtoms(boolean value) {
         this.hashPseudoAtoms = value;
     }
 
+    /**
+     * Include explicit hydrogen atoms in the fingerprint. This means you
+     * get a different fingerprint if hydrogens are implicit/explicit.
+     * Generally for substructure screening, which path based fingerprints are
+     * most useful, this is not wanted.
+     *
+     * @param value the setting (false by default)
+     */
     public void setHashExplicitHydrogens(boolean value) {
         this.hashExplHydrogens = value;
     }
