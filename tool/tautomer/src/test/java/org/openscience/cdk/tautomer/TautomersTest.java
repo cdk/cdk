@@ -117,9 +117,11 @@ final class TautomersTest {
     }
 
     @Test
-    void CO2H() throws Exception {
-        IAtomContainer mol = fromSmi("OC(=O)C1C(C(=O)O)CC(C(=O)O)CC1");
-        assertTautomers(Tautomers.generate(mol)); // 0 tautomers
+    void noTautomers() throws Exception {
+        assertTautomers(Tautomers.generate(fromSmi("OC(=O)C1C(C(=O)O)CC(C(=O)O)CC1")),
+                        "OC(=O)C1C(C(=O)O)CC(C(=O)O)CC1"); // 0 tautomers but returns self
+        assertTautomers(Tautomers.generate(fromSmi("C1CCCCC1")),
+                        "C1CCCCC1"); // 0 tautomers but returns self
     }
 
     @Test
