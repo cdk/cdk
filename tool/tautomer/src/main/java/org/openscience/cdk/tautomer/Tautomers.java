@@ -113,6 +113,7 @@ public final class Tautomers {
 
     private final SayleDelanyState state;
     private final IntStack stack;
+    private boolean first = true;
 
     Tautomers(SayleDelanyState state) {
         this.state = state;
@@ -122,7 +123,9 @@ public final class Tautomers {
 
     public IAtomContainer next() {
         while (moveToNextState()) ;
-        return state.complete() ? state.container() : null;
+        IAtomContainer result = state.complete() || first ? state.container() : null;
+        first = false;
+        return result;
     }
 
     private boolean moveToNextState() {
