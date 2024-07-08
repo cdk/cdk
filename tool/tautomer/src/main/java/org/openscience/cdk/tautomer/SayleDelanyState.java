@@ -356,7 +356,7 @@ final class SayleDelanyState {
      * @return status
      */
     boolean complete() {
-        return candidates.length > 0 && select() < 0;
+        return select() == -1 && candidates.length != 0;
     }
 
     /**
