@@ -261,7 +261,7 @@ public final class SmartsPattern extends Pattern {
     @Override
     public Mappings matchAll(final IAtomContainer target) {
 
-        prepare(target);
+        prepare(target, requires);
 
         // Note: Mappings is lazy, we can't reset aromaticity etc as the
         // substructure match may not have finished
