@@ -80,12 +80,6 @@ public final class SmartsPattern extends Pattern {
      */
     private boolean doPrep = true;
 
-    /** Aromaticity model. */
-    private static final Aromaticity    arom = new Aromaticity(ElectronDonation.daylight(),
-                                                               Cycles.or(Cycles.all(), Cycles.relevant()));
-
-
-
     /**
      * Internal constructor.
      *
