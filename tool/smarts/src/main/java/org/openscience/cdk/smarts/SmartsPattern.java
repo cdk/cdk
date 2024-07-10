@@ -23,15 +23,23 @@
  */
 package org.openscience.cdk.smarts;
 
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.ElectronDonation;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
@@ -78,7 +86,10 @@ public final class SmartsPattern extends Pattern {
      * Prepare the target molecule (i.e. detect rings, aromaticity) before
      * matching the SMARTS.
      */
-    private boolean doPrep = true;
+    private int requires = 0;
+
+    static final int RING_REQUIRED = 0x1;
+    static final int AROM_REQUIRED = 0x3;
 
     /**
      * Internal constructor.
@@ -95,14 +106,23 @@ public final class SmartsPattern extends Pattern {
                                                result.getMessage() + "\n" +
                                                result.displayErrorLocation());
         this.pattern = Pattern.findSubstructure(query);
+        this.requires = getRequiredPrep(query);
+    }
+
+    public static void prepare(IAtomContainer target, int flags) {
+        // mark rings if needed
+        if ((flags& RING_REQUIRED) != 0)
+            Cycles.markRingAtomsAndBonds(target);
+        // apply the aromaticity model
+        if ((flags& AROM_REQUIRED) != 0) {
+            if (!Aromaticity.apply(Aromaticity.Model.Daylight, target))
+                LoggingToolFactory.createLoggingTool(SmartsPattern.class)
+                                  .error("Molecule had complex rings and aromaticity may not be completely defined");
+        }
     }
 
     public static void prepare(IAtomContainer target) {
-        // mark rings and apply the daylight aromaticity model
-        Cycles.markRingAtomsAndBonds(target);
-        if (!Aromaticity.apply(Aromaticity.Model.Daylight, target))
-            LoggingToolFactory.createLoggingTool(SmartsPattern.class)
-                              .error("Molecule had complex rings and aromaticity may not be completely defined");
+        prepare(target, AROM_REQUIRED);
     }
 
     /**
@@ -115,8 +135,97 @@ public final class SmartsPattern extends Pattern {
      * @return self for inline calling
      */
     public SmartsPattern setPrepare(boolean doPrep) {
-        this.doPrep = doPrep;
+        this.requires = doPrep ? getRequiredPrep(query) : 0;
         return this;
+    }
+
+    private static int getRequiredPrep(Expr expr) {
+        switch (expr.type()) {
+            case RING_COUNT:
+            case RING_BOND_COUNT:
+            case RING_SMALLEST:
+            case RING_SIZE:
+            case IS_IN_RING:
+            case IS_IN_CHAIN:
+                return RING_REQUIRED;
+            case ALIPHATIC_ELEMENT:
+                // Chlorine is always aliphatic... and the parser knows this
+                // but an expression may have been manually constructed
+                switch (expr.value()) {
+                    case IElement.Wildcard: // ??
+                    case IElement.B: // not Daylight but prep still
+                    case IElement.C:
+                    case IElement.N:
+                    case IElement.O:
+                    case IElement.P:
+                    case IElement.S:
+                    case IElement.Si:
+                    case IElement.Se:
+                    case IElement.As:
+                    case IElement.Te: // not Daylight but prep still
+                        return AROM_REQUIRED;
+                    default:
+                        return 0;
+                }
+            case IS_ALIPHATIC:
+            case IS_AROMATIC:
+            case AROMATIC_ELEMENT:
+            case ALIPHATIC_ORDER:
+            case SINGLE_OR_AROMATIC:
+            case DOUBLE_OR_AROMATIC:
+            case SINGLE_OR_DOUBLE:
+            case HAS_ALIPHATIC_HETERO_SUBSTITUENT:
+            case HAS_HETERO_SUBSTITUENT:
+            case IS_ALIPHATIC_HETERO:
+            case ALIPHATIC_HETERO_SUBSTITUENT_COUNT:
+                return AROM_REQUIRED;
+            case RECURSIVE:
+                return getRequiredPrep(expr.subquery());
+            case AND:
+            case OR:
+                return getRequiredPrep(expr.left()) |
+                        getRequiredPrep(expr.right());
+            case NOT:
+                return getRequiredPrep(expr.left());
+            case TRUE:
+            case FALSE:
+            case IS_HETERO:
+            case HAS_IMPLICIT_HYDROGEN:
+            case HAS_ISOTOPE:
+            case HAS_UNSPEC_ISOTOPE:
+            case UNSATURATED:
+            case ELEMENT:
+            case IMPL_H_COUNT:
+            case TOTAL_H_COUNT:
+            case DEGREE:
+            case TOTAL_DEGREE:
+            case HEAVY_DEGREE:
+            case VALENCE:
+            case ISOTOPE:
+            case FORMAL_CHARGE:
+            case HYBRIDISATION_NUMBER:
+            case HETERO_SUBSTITUENT_COUNT:
+            case PERIODIC_GROUP:
+            case INSATURATION:
+            case REACTION_ROLE:
+            case STEREOCHEMISTRY:
+            case ORDER:
+                return 0;
+            default:
+                throw new IllegalStateException("SmartPattern needs updating to know if: " + expr + " needs ring/arom flags?");
+        }
+    }
+
+    static int getRequiredPrep(IAtomContainer query) {
+        int flags = 0;
+        for (IAtom atom : query.atoms())
+            if (atom instanceof IQueryAtom)
+                flags |= getRequiredPrep(((QueryAtom) AtomRef.deref(atom)).getExpression());
+        for (IBond bond : query.bonds()) {
+            if (bond instanceof IQueryBond)
+                flags |= getRequiredPrep(((QueryBond) BondRef.deref(bond)).getExpression());
+        }
+        return flags;
     }
 
     /**
@@ -152,8 +261,7 @@ public final class SmartsPattern extends Pattern {
     @Override
     public Mappings matchAll(final IAtomContainer target) {
 
-        if (doPrep)
-            prepare(target);
+        prepare(target);
 
         // Note: Mappings is lazy, we can't reset aromaticity etc as the
         // substructure match may not have finished
