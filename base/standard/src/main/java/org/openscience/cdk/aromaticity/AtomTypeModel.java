@@ -95,7 +95,7 @@ final class AtomTypeModel extends ElectronDonation {
 
     /**{@inheritDoc} */
     @Override
-    int[] contribution(IAtomContainer container, RingSearch ringSearch) {
+    int[] contribution(IAtomContainer container) {
 
         final int nAtoms = container.getAtomCount();
         final int[] electrons = new int[nAtoms];
@@ -110,7 +110,7 @@ final class AtomTypeModel extends ElectronDonation {
             indexMap.put(atom, i);
 
             // acyclic atom skipped
-            if (!ringSearch.cyclic(i)) continue;
+            if (!atom.isInRing()) continue;
 
             Hybridization hyb = atom.getHybridization();
 
@@ -149,7 +149,7 @@ final class AtomTypeModel extends ElectronDonation {
                 int u = indexMap.get(a1);
                 int v = indexMap.get(a2);
 
-                if (!ringSearch.cyclic(u, v)) {
+                if (!bond.isInRing()) {
 
                     // XXX: single exception - we could make this more general but
                     // for now this mirrors the existing behavior
