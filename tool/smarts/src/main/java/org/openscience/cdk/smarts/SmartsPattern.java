@@ -104,13 +104,11 @@ public final class SmartsPattern extends Pattern {
     }
 
     public static void prepare(IAtomContainer target) {
-        // apply the daylight aromaticity model
-        try {
-            Cycles.markRingAtomsAndBonds(target);
-            arom.apply(target);
-        } catch (CDKException e) {
-            LoggingToolFactory.createLoggingTool(SmartsPattern.class).error(e);
-        }
+        // mark rings and apply the daylight aromaticity model
+        Cycles.markRingAtomsAndBonds(target);
+        if (!Aromaticity.apply(Aromaticity.Model.Daylight, target))
+            LoggingToolFactory.createLoggingTool(SmartsPattern.class)
+                              .error("Molecule had complex rings and aromaticity may not be completely defined");
     }
 
     /**
