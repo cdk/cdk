@@ -21,6 +21,7 @@ package org.openscience.cdk.aromaticity;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Determine the {@link org.openscience.cdk.aromaticity.AromaticType} of an
@@ -36,6 +37,8 @@ final class AromaticTypeMatcher {
     private static int charge(IAtom atom) {
         return atom.getFormalCharge() != null ? atom.getFormalCharge() : 0;
     }
+
+    private AromaticTypeMatcher() {}
 
     /**
      * Safely access the hydrogen count, defaulting null to 0.
@@ -127,14 +130,14 @@ final class AromaticTypeMatcher {
         if (!atom.isInRing())
             return AromaticType.UNKNOWN;
         // P4 in the CDK_1x model is a special case
-        if (atom.getBondCount() > 3 && atom.getAtomicNumber() != IAtom.P)
+        if (atom.getBondCount() > 3 && atom.getAtomicNumber() != IElement.P)
             return AromaticType.UNKNOWN;
-        if (hcount(atom) > 1 && atom.getAtomicNumber() != IAtom.P)
+        if (hcount(atom) > 1 && atom.getAtomicNumber() != IElement.P)
             return AromaticType.UNKNOWN;
 
         int q;
         switch (atom.getAtomicNumber()) {
-            case IAtom.B:
+            case IElement.B:
                 if (charge(atom) == 0) {
                     switch (binfo(atom)) {
                         case 0x0011: return AromaticType.B2;
@@ -143,7 +146,7 @@ final class AromaticTypeMatcher {
                 }
                 break;
 
-            case IAtom.C:
+            case IElement.C:
                 switch (charge(atom)) {
                     case -1:
                         switch (binfo(atom)) {
@@ -168,7 +171,7 @@ final class AromaticTypeMatcher {
                         break;
                 }
                 break;
-            case IAtom.Si:
+            case IElement.Si:
                 switch (charge(atom)) {
                     case -1:
                         switch (binfo(atom)) {
@@ -191,7 +194,7 @@ final class AromaticTypeMatcher {
                 }
                 break;
 
-            case IAtom.N:
+            case IElement.N:
                 q = charge(atom);
                 if (q == -1 && binfo(atom) == 0x0002)
                     return AromaticType.N2_MINUS;
@@ -212,7 +215,7 @@ final class AromaticTypeMatcher {
                         return AromaticType.N3_PLUS;
                 }
                 break;
-            case IAtom.P:
+            case IElement.P:
                 q = charge(atom);
                 if (q == -1 && binfo(atom) == 0x0002)
                     return AromaticType.P2_MINUS;
@@ -233,7 +236,7 @@ final class AromaticTypeMatcher {
                         return AromaticType.P3_PLUS;
                 }
                 break;
-            case IAtom.As:
+            case IElement.As:
                 q = charge(atom);
                 if (q == -1 && binfo(atom) == 0x0002)
                     return AromaticType.As2_MINUS;
@@ -251,14 +254,14 @@ final class AromaticTypeMatcher {
                 }
                 break;
 
-            case IAtom.O:
+            case IElement.O:
                 q = charge(atom);
                 if (q == 0 && binfo(atom) == 0x0002)
                     return AromaticType.O2;
                 if (q == 1 && binfo(atom) == 0x0011)
                     return AromaticType.O2_PLUS;
                 break;
-            case IAtom.S:
+            case IElement.S:
                 q = charge(atom);
                 if (q == 0) {
                     switch (binfo(atom)) {
@@ -280,7 +283,7 @@ final class AromaticTypeMatcher {
                     }
                 }
                 break;
-            case IAtom.Se:
+            case IElement.Se:
                 q = charge(atom);
                 if (q == 0) {
                     switch (binfo(atom)) {
@@ -304,12 +307,11 @@ final class AromaticTypeMatcher {
                     }
                 }
                 break;
-            case IAtom.Te:
+            case IElement.Te:
                 q = charge(atom);
                 if (q == 0) {
-                    switch (binfo(atom)) {
-                        case 0x0002:
-                            return AromaticType.Te2;
+                    if (binfo(atom) == 0x0002) {
+                        return AromaticType.Te2;
                     }
                 }
                 if (q == 1) {
