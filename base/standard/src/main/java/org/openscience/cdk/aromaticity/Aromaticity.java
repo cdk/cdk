@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -498,6 +499,7 @@ public final class Aromaticity {
     public static boolean apply(final ElectronDonation model,
                                 final IAtomContainer molecule,
                                 final int maxRingSize) {
+        clear(molecule);
 
         if (maxRingSize < 3)
             throw new IllegalArgumentException("maxRingSize="
@@ -637,7 +639,6 @@ public final class Aromaticity {
      * @return the model found the molecule was aromatic
      */
     public boolean apply(IAtomContainer molecule) throws CDKException {
-        clear(molecule);
         if (backtracking) {
             Cycles.markRingAtomsAndBonds(molecule);
             if (!apply(model, molecule, maxRingSize == 0 ? Math.max(molecule.getAtomCount(),3) : maxRingSize)) {
@@ -646,6 +647,7 @@ public final class Aromaticity {
             }
             updateMolFlag(molecule);
         } else {
+            clear(molecule);
             Set<IBond> bonds = findBonds(molecule);
             for (final IBond bond : bonds)
                 makeAromatic(bond);

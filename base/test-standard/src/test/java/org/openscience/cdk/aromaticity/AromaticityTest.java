@@ -141,6 +141,14 @@ class AromaticityTest {
         Assertions.assertEquals(85, aromBondCount(mol));
     }
 
+    @Test
+    void testPubChem6811flagsCleared() throws Exception {
+        IAtomContainer mol = smiles("c1cccc2c1c(=O)oc(=O)2");
+        Aromaticity.apply(Aromaticity.Model.Daylight, mol);
+        Assertions.assertEquals(6, aromAtomCount(mol));
+        Assertions.assertEquals(6, aromBondCount(mol));
+    }
+
     static int aromAtomCount(IAtomContainer mol) {
         int count = 0;
         for (IAtom atom : mol.atoms())
