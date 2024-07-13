@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * @cdk.module  test-valencycheck
  * @cdk.created 2006-08-16
  */
-class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
+class DeduceBondOrderTestFromExplicitHydrogensTest extends CDKTestCase {
 
     private IDeduceBondOrderTool dboTool;
 
