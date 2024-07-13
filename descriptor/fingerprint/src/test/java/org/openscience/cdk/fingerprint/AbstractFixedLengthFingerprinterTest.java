@@ -27,9 +27,11 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.Kekulization;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -556,4 +558,31 @@ abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinte
             bs.set(x);
         return bs;
     }
+
+    /**
+     * Convenience method that perceives atom types (CDK scheme) and
+     * adds implicit hydrogens accordingly. It does not create 2D or 3D
+     * coordinates for the new hydrogens.
+     *
+     * @param container to which implicit hydrogens are added.
+     */
+    protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        int atomCount = container.getAtomCount();
+        String[] originalAtomTypeNames = new String[atomCount];
+        for (int i = 0; i < atomCount; i++) {
+            IAtom atom = container.getAtom(i);
+            IAtomType type = matcher.findMatchingAtomType(container, atom);
+            originalAtomTypeNames[i] = atom.getAtomTypeName();
+            atom.setAtomTypeName(type.getAtomTypeName());
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        hAdder.addImplicitHydrogens(container);
+        // reset to the original atom types
+        for (int i = 0; i < atomCount; i++) {
+            IAtom atom = container.getAtom(i);
+            atom.setAtomTypeName(originalAtomTypeNames[i]);
+        }
+    }
+
 }

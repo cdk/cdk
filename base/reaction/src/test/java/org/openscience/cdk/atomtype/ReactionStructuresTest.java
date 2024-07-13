@@ -20,29 +20,29 @@ package org.openscience.cdk.atomtype;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.type.AdductionSodiumLPReactionTest;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
 import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReactionTest;
 import org.openscience.cdk.reaction.type.HomolyticCleavageReactionTest;
 import org.openscience.cdk.reaction.type.RadicalSiteInitiationHReactionTest;
 import org.openscience.cdk.reaction.type.SharingChargeDBReactionTest;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-reaction
  */
-class ReactionStructuresTest extends CDKTestCase {
+class ReactionStructuresTest extends ValencyCheckTestCase {
 
     private final static IChemObjectBuilder builder;
     private final static CDKAtomTypeMatcher matcher;

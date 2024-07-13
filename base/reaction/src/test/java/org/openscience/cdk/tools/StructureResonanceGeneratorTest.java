@@ -18,12 +18,13 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -31,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -48,17 +50,15 @@ import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
 * TestSuite that runs all tests.
 *
 * @cdk.module test-reaction
 */
-public class StructureResonanceGeneratorTest extends CDKTestCase {
+public class StructureResonanceGeneratorTest extends ValencyCheckTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();

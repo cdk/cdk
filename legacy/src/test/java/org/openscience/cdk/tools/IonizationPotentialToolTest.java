@@ -18,26 +18,26 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.valency.ValencyCheckTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * TestSuite that runs all tests.
  *
  * @cdk.module test-ionpot
  */
-class IonizationPotentialToolTest extends CDKTestCase {
+class IonizationPotentialToolTest extends ValencyCheckTestCase {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 

@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
@@ -45,6 +46,7 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -409,4 +411,29 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         return mol;
     }
 
+    /**
+     * Convenience method that perceives atom types (CDK scheme) and
+     * adds implicit hydrogens accordingly. It does not create 2D or 3D
+     * coordinates for the new hydrogens.
+     *
+     * @param container to which implicit hydrogens are added.
+     */
+    protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        int atomCount = container.getAtomCount();
+        String[] originalAtomTypeNames = new String[atomCount];
+        for (int i = 0; i < atomCount; i++) {
+            IAtom atom = container.getAtom(i);
+            IAtomType type = matcher.findMatchingAtomType(container, atom);
+            originalAtomTypeNames[i] = atom.getAtomTypeName();
+            atom.setAtomTypeName(type.getAtomTypeName());
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        hAdder.addImplicitHydrogens(container);
+        // reset to the original atom types
+        for (int i = 0; i < atomCount; i++) {
+            IAtom atom = container.getAtom(i);
+            atom.setAtomTypeName(originalAtomTypeNames[i]);
+        }
+    }
 }
