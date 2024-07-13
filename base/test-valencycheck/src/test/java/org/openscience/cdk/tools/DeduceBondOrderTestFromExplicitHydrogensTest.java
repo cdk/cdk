@@ -410,9 +410,10 @@ class DeduceBondOrderTestFromExplicitHydrogensTest extends CDKTestCase {
     }
 
     private void addHydrogens(IAtomContainer container, IAtom atom, int numberOfHydrogens) {
-        for (int i = 0; i < numberOfHydrogens; i++)
-            container.addBond(atom.getBuilder().newInstance(IBond.class, atom,
-                    atom.getBuilder().newInstance(IAtom.class, "H")));
+        for (int i = 0; i < numberOfHydrogens; i++) {
+            IAtom hydrogen = container.newAtom(1);
+            container.newBond(atom, hydrogen);
+        }
     }
 
 }
