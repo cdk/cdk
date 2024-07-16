@@ -44,8 +44,7 @@ class SaturationCheckerTest extends CDKTestCase {
     boolean           standAlone = false;
 
     @BeforeEach
-    @Test
-    void setUp() throws Exception {
+    void setUp() {
         satcheck = new SaturationChecker();
     }
 
@@ -409,7 +408,7 @@ class SaturationCheckerTest extends CDKTestCase {
         m.getBond(12).setFlag(IChemObject.AROMATIC, true);
         m.getBond(13).setFlag(IChemObject.AROMATIC, true);
         satcheck.saturate(m);
-        Assertions.assertTrue(m.getBond(4).getOrder() == IBond.Order.SINGLE);
+        Assertions.assertSame(IBond.Order.SINGLE, m.getBond(4).getOrder());
         Assertions.assertTrue(m.getBond(9).getOrder() == IBond.Order.DOUBLE ^ m.getBond(5).getOrder() == IBond.Order.DOUBLE);
         Assertions.assertTrue(m.getBond(13).getOrder() == IBond.Order.DOUBLE
                 ^ m.getBond(3).getOrder() == IBond.Order.DOUBLE);
