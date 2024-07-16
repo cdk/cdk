@@ -125,6 +125,14 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
             Assertions.assertTrue(description.charAt(i) != '\n');
             Assertions.assertTrue(description.charAt(i) != '\r');
         }
+
+        iso.setMassNumber(13);
+        iso.setNaturalAbundance(2.0);
+        iso.setExactMass(2.0);
+        description = iso.toString();
+        Assertions.assertTrue(description.contains("MN:"));
+        Assertions.assertTrue(description.contains("AB:"));
+        Assertions.assertTrue(description.contains("EM:"));
     }
 
 }
