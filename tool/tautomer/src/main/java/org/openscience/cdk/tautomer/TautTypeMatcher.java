@@ -37,29 +37,29 @@ import java.util.Set;
  * 
  * @author John Mayfield
  */
-final class AtomTypeMatcher {
+final class TautTypeMatcher {
 
-    private enum AtomType {
-        PossibleCarbonAcceptor(Tautomers.Role.Conjugated),
-        PossibleCarbonDonor(Tautomers.Role.None),
-        CarbonGroupAcceptor(Tautomers.Role.Acceptor),
-        CarbonGroupDonor(Tautomers.Role.Donor),
-        NitrogenGroupAcceptor(Tautomers.Role.Acceptor),
-        NitrogenGroupDonor(Tautomers.Role.Donor),
-        NitroOxide(Tautomers.Role.Conjugated),
-        OxygenGroupAcceptor(Tautomers.Role.Acceptor),
-        OxygenGroupDonor(Tautomers.Role.Donor),
-        Sp2(Tautomers.Role.Conjugated),
-        Other(Tautomers.Role.None);
+    private enum TautType {
+        PossibleCarbonAcceptor(Tautomers.Role.C),
+        PossibleCarbonDonor(Tautomers.Role.X),
+        CarbonGroupAcceptor(Tautomers.Role.A),
+        CarbonGroupDonor(Tautomers.Role.D),
+        NitrogenGroupAcceptor(Tautomers.Role.A),
+        NitrogenGroupDonor(Tautomers.Role.D),
+        NitroOxide(Tautomers.Role.C),
+        OxygenGroupAcceptor(Tautomers.Role.A),
+        OxygenGroupDonor(Tautomers.Role.D),
+        Sp2(Tautomers.Role.C),
+        Other(Tautomers.Role.X);
 
         private final Tautomers.Role role;
 
-        AtomType(Tautomers.Role role) {
+        TautType(Tautomers.Role role) {
             this.role = role;
         }
     }
     
-    private AtomTypeMatcher() {
+    private TautTypeMatcher() {
         
     }
 
@@ -70,7 +70,7 @@ final class AtomTypeMatcher {
     static Tautomers.Role[] assignRoles(IAtomContainer mol, Set<Tautomers.Type> opts) {
         
         // assign the initial types
-        AtomType[] types = new AtomType[mol.getAtomCount()];
+        TautType[] types = new TautType[mol.getAtomCount()];
         for (int v = 0; v < mol.getAtomCount(); v++) {
             types[v] = type(mol.getAtom(v));
         }
@@ -81,7 +81,7 @@ final class AtomTypeMatcher {
             boolean[] near = new boolean[mol.getAtomCount()];
             for (int v=0; v<mol.getAtomCount(); v++) {
                 Tautomers.Role role = types[v].role;
-                if (role == Tautomers.Role.Donor || role == Tautomers.Role.Acceptor) {
+                if (role == Tautomers.Role.D || role == Tautomers.Role.A) {
                     IAtom hetero = mol.getAtom(v);
                     for (IBond bond : hetero.bonds()) {
                         IAtom nbor = bond.getOther(hetero);
@@ -96,11 +96,11 @@ final class AtomTypeMatcher {
                 IAtom atom = mol.getAtom(v);
                 // only Sp3 carbons adjacent to a donor, acceptor or conjugated
                 // atom are included
-                if (types[v] == AtomType.PossibleCarbonDonor) {
-                    types[v] = near[v] ? AtomType.CarbonGroupDonor : AtomType.Other;
-                } else if (types[v] == AtomType.PossibleCarbonAcceptor) {
+                if (types[v] == TautType.PossibleCarbonDonor) {
+                    types[v] = near[v] ? TautType.CarbonGroupDonor : TautType.Other;
+                } else if (types[v] == TautType.PossibleCarbonAcceptor) {
                     if (near[v])
-                        types[v] = AtomType.CarbonGroupAcceptor;
+                        types[v] = TautType.CarbonGroupAcceptor;
                 }
             }
         }
@@ -119,32 +119,32 @@ final class AtomTypeMatcher {
                 continue;
             int begIdx = bond.getBegin().getIndex();
             int endIdx = bond.getEnd().getIndex();
-            if (roles[begIdx] == Tautomers.Role.None)
-                roles[endIdx] = Tautomers.Role.None;
-            else if (roles[endIdx] == Tautomers.Role.None)
-                roles[begIdx] = Tautomers.Role.None;
-            else if (types[begIdx] == AtomType.NitroOxide &&
-                    types[endIdx] == AtomType.OxygenGroupAcceptor)
-                roles[endIdx] = Tautomers.Role.None;
-            else if (types[endIdx] == AtomType.NitroOxide &&
-                    types[begIdx] == AtomType.OxygenGroupAcceptor)
-                roles[begIdx] = Tautomers.Role.None;
+            if (roles[begIdx] == Tautomers.Role.X)
+                roles[endIdx] = Tautomers.Role.X;
+            else if (roles[endIdx] == Tautomers.Role.X)
+                roles[begIdx] = Tautomers.Role.X;
+            else if (types[begIdx] == TautType.NitroOxide &&
+                    types[endIdx] == TautType.OxygenGroupAcceptor)
+                roles[endIdx] = Tautomers.Role.X;
+            else if (types[endIdx] == TautType.NitroOxide &&
+                    types[begIdx] == TautType.OxygenGroupAcceptor)
+                roles[begIdx] = Tautomers.Role.X;
         }
 
         return roles;
     }
 
-    private static AtomType type(IAtom atom) {
+    private static TautType type(IAtom atom) {
         return type(atom, EnumSet.noneOf(Tautomers.Type.class));
     }
 
-    private static AtomType type(IAtom atom, Set<Tautomers.Type> opts) {
+    private static TautType type(IAtom atom, Set<Tautomers.Type> opts) {
 
-        int   charge    = atom.getFormalCharge();
-        int   implh = atom.getImplicitHydrogenCount();
+        int   charge = atom.getFormalCharge();
+        int   implh  = atom.getImplicitHydrogenCount();
 
         if (charge > 1 || charge < -1)
-            return AtomType.Other;
+            return TautType.Other;
 
         // count adjacent single (sigma) and double (pi) bonds, any other bond
         // triggers exit - we are not interested in these
@@ -154,7 +154,8 @@ final class AtomTypeMatcher {
                 case SINGLE: binfo += 0x000001; break;
                 case DOUBLE: binfo += 0x000100; break;
                 case TRIPLE: binfo += 0x010000; break;
-                default: return AtomType.Other;
+                default:
+                    return TautType.Other;
             }
         }
 
@@ -168,16 +169,16 @@ final class AtomTypeMatcher {
                 if (charge == 0) {
                     // carbon is a potential H donor/acceptors
                     if (binfo == 0x0102)
-                        return AtomType.PossibleCarbonAcceptor;
+                        return TautType.PossibleCarbonAcceptor;
                     if (binfo == 0x000200 || binfo == 0x010001)
-                        return AtomType.Other; // Sp1
+                        return TautType.Other; // Sp1
                     if (binfo == 0x04 && implh > 0)
-                        return AtomType.PossibleCarbonDonor;
+                        return TautType.PossibleCarbonDonor;
                 }
                 else {
                     //  charge is -1 or +1
                     if (binfo == 0x0101)
-                        return AtomType.PossibleCarbonAcceptor;
+                        return TautType.PossibleCarbonAcceptor;
                 }
 
                 break;
@@ -187,13 +188,13 @@ final class AtomTypeMatcher {
                 
                 if (charge == 0) {
                     if (binfo == 0x0101)
-                        return AtomType.NitrogenGroupAcceptor;
+                        return TautType.NitrogenGroupAcceptor;
                     else if (binfo == 0x0003 && implh > 0)
-                        return AtomType.NitrogenGroupDonor;
+                        return TautType.NitrogenGroupDonor;
                     else if (binfo == 0x0201)
-                        return AtomType.NitroOxide; // N (V)
+                        return TautType.NitroOxide; // N (V)
                 } else if (charge == 1 && binfo == 0x0102) {
-                    return AtomType.Sp2;
+                    return TautType.Sp2;
                 }
 
                 break;
@@ -203,7 +204,7 @@ final class AtomTypeMatcher {
             case Antimony:
                 if (charge == 0 && binfo == 0x0101 ||
                     charge == 1 && binfo == 0x0102)
-                    return AtomType.Sp2;
+                    return TautType.Sp2;
                 break;
 
             case Oxygen:
@@ -213,14 +214,14 @@ final class AtomTypeMatcher {
                 if (charge != 0)
                     break;
                 if (binfo == 0x0100)
-                    return AtomType.OxygenGroupAcceptor;
+                    return TautType.OxygenGroupAcceptor;
                 if (binfo == 0x0002 && implh > 0)
-                    return AtomType.OxygenGroupDonor;
+                    return TautType.OxygenGroupDonor;
 
                 break;
         }
 
-        return AtomType.Other;
+        return TautType.Other;
     }
 }
 

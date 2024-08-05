@@ -27,6 +27,7 @@ package org.openscience.cdk.tautomer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.Cycles;
@@ -52,7 +53,7 @@ final class TautomersTest {
     @Test
     void cytosine() throws Exception {
         IAtomContainer cytosine = fromSmi("NC1=NC(=O)NC=C1");
-        assertTautomers(Tautomers.generate(cytosine),
+        assertTautomers(Tautomers.hetero(cytosine),
                         "N=C1NC(O)=NC=C1",
                         "N=C1N=C(O)NC=C1",
                         "NC1=NC(O)=NC=C1",
@@ -63,10 +64,10 @@ final class TautomersTest {
 
     @Test
     void nitro() throws Exception {
-        assertTautomers(Tautomers.generate(fromSmi("[O-][N+]1=NC=CC(O)=C1")),
+        assertTautomers(Tautomers.hetero(fromSmi("[O-][N+]1=NC=CC(O)=C1")),
                         "[O-][N+]1=NC=CC(O)=C1",
                         "[O-][N+]=1NC=CC(=O)C1");
-        assertTautomers(Tautomers.generate(fromSmi("O=N1=NC=CC(O)=C1")),
+        assertTautomers(Tautomers.hetero(fromSmi("O=N1=NC=CC(O)=C1")),
                         "O=N=1NC=CC(=O)C1",
                         "O=N1=NC=CC(O)=C1");
     }
@@ -74,7 +75,7 @@ final class TautomersTest {
     @Test
     void adenine() throws Exception {
         IAtomContainer adenine = fromSmi("NC1=C2N=CNC2=NC=N1");
-        assertTautomers(Tautomers.generate(adenine),
+        assertTautomers(Tautomers.hetero(adenine),
                         "N=C1C=2NC=NC2NC=N1",
                         "N=C1C=2NC=NC2N=CN1",
                         "NC1=C2NC=NC2=NC=N1",
@@ -88,7 +89,7 @@ final class TautomersTest {
     @Test
     void guanine() throws Exception {
         IAtomContainer guanine = fromSmi("OC1=C2N=CNC2=NC(=N)N1");
-        assertTautomers(Tautomers.generate(guanine),
+        assertTautomers(Tautomers.hetero(guanine),
                         "OC1=C2N=CN=C2NC(=N)N1",
                         "OC1=C2NC=NC2=NC(=N)N1",
                         "OC1=C2N=CNC2=NC(=N)N1",
@@ -107,6 +108,12 @@ final class TautomersTest {
     }
 
     @Test
+    void exoBond() throws Exception {
+        assertTautomers(Tautomers.hetero(fromSmi("Oc1ccc(-c2n[nH]c3cc(O)ccc23)cc1")));
+    }
+
+
+    @Test
     void guanineCanon() throws Exception {
         assertCanonicalTautomers("OC1=C2N=CNC2=NC(=N)N1");
     }
@@ -118,21 +125,23 @@ final class TautomersTest {
 
     @Test
     void noTautomers() throws Exception {
-        assertTautomers(Tautomers.generate(fromSmi("OC(=O)C1C(C(=O)O)CC(C(=O)O)CC1")),
+        assertTautomers(Tautomers.hetero(fromSmi("OC(=O)C1C(C(=O)O)CC(C(=O)O)CC1")),
                         "OC(=O)C1C(C(=O)O)CC(C(=O)O)CC1"); // 0 tautomers but returns self
-        assertTautomers(Tautomers.generate(fromSmi("C1CCCCC1")),
+        assertTautomers(Tautomers.hetero(fromSmi("C1CCCCC1")),
                         "C1CCCCC1"); // 0 tautomers but returns self
+        // 0 tautomers no returns self
+        assertTautomers(Tautomers.generateNoIdentity(fromSmi("C1CCCCC1")));
     }
 
     @Test
     void guanineKetoEnol() throws Exception {
         // 43 Keto-Enol Tautomers of guanine
         IAtomContainer guanine = fromSmi("OC1=C2N=CNC2=NC(=N)N1");
-        Iterable<IAtomContainer> generater = Tautomers.generate(guanine,
-                                                                EnumSet.of(Tautomers.Type.CARBON_SHIFTS),
-                                                                Tautomers.Order.SEQUENTIAL);
+        Iterable<IAtomContainer> generator = Tautomers.hetero(guanine,
+                                                              EnumSet.of(Tautomers.Type.CARBON_SHIFTS),
+                                                              Tautomers.Order.SEQUENTIAL);
         // dumpTautomers(generater);
-        Assertions.assertEquals(StreamSupport.stream(generater.spliterator(), false)
+        Assertions.assertEquals(StreamSupport.stream(generator.spliterator(), false)
                                              .count(),
                                 43);
     }
@@ -168,9 +177,9 @@ final class TautomersTest {
 
     void assertCanonicalTautomers(String input) throws CDKException, CloneNotSupportedException {
         String expected = null;
-        for (IAtomContainer tautomer : Tautomers.generate(fromSmi(input),
-                                                          Tautomers.Order.SEQUENTIAL)) {
-            String smiles = toSmi(Tautomers.generate(tautomer.clone(), Tautomers.Order.CANONICAL).iterator().next());
+        for (IAtomContainer tautomer : Tautomers.hetero(fromSmi(input),
+                                                        Tautomers.Order.SEQUENTIAL)) {
+            String smiles = toSmi(Tautomers.hetero(tautomer.clone(), Tautomers.Order.CANONICAL).iterator().next());
             if (expected == null)
                 expected = smiles;
             else
@@ -191,18 +200,18 @@ final class TautomersTest {
         Set<Tautomers.Type> options = EnumSet.noneOf(Tautomers.Type.class);
         Collections.addAll(options, types);
         List<String> firstGen = new ArrayList<>();
-        for (IAtomContainer tautomer : Tautomers.generate(fromSmi(input),
-                                                          options,
-                                                          Tautomers.Order.SEQUENTIAL)) {
+        for (IAtomContainer tautomer : Tautomers.hetero(fromSmi(input),
+                                                        options,
+                                                        Tautomers.Order.SEQUENTIAL)) {
             firstGen.add(toSmi(tautomer));
         }
         Assertions.assertFalse(firstGen.isEmpty(), "No tautomers");
         Collections.sort(firstGen);
         for (String smiles : firstGen) {
             List<String> otherGen = new ArrayList<>();
-            for (IAtomContainer tautomer : Tautomers.generate(fromSmi(smiles),
-                                                              options,
-                                                              Tautomers.Order.SEQUENTIAL)) {
+            for (IAtomContainer tautomer : Tautomers.hetero(fromSmi(smiles),
+                                                            options,
+                                                            Tautomers.Order.SEQUENTIAL)) {
                 otherGen.add(toSmi(tautomer));
             }
             Collections.sort(otherGen);
@@ -239,6 +248,7 @@ final class TautomersTest {
         for (IBond bond : container.bonds())
             if (bond.getOrder() == null)
                 bond.setOrder(IBond.Order.QUADRUPLE);
+        Aromaticity.apply(Aromaticity.Model.Daylight, container);
         String res = new SmilesGenerator(SmiFlavor.Generic + SmiFlavor.AtomAtomMap).create(container);
         for (IBond bond : container.bonds())
             if (bond.getOrder() == IBond.Order.QUADRUPLE)

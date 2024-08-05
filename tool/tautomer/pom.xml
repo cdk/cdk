@@ -38,10 +38,18 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-core</artifactId>
             <version>${project.parent.version}</version>
+        </dependency><dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-formula</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-standard</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>   <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-smarts</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

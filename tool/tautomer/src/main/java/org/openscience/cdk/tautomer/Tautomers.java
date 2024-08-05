@@ -25,13 +25,16 @@ package org.openscience.cdk.tautomer;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.interfaces.IBond;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
-import static org.openscience.cdk.tautomer.Tautomers.Role.Acceptor;
-import static org.openscience.cdk.tautomer.Tautomers.Role.Donor;
+import static org.openscience.cdk.tautomer.Tautomers.Role.A;
+import static org.openscience.cdk.tautomer.Tautomers.Role.D;
 
 /**
  * Efficient generate tautomers using the Sayle-Delany algorithm <a href="https://www.daylight.com/meetings/emug99/Delany/taut_html/index.htm">Sayle 96,
@@ -63,7 +66,7 @@ import static org.openscience.cdk.tautomer.Tautomers.Role.Donor;
  *
  * @author John Mayfield
  */
-public final class Tautomers {
+public final class Tautomers implements Iterator<IAtomContainer> {
 
     public enum Type {
         /**
@@ -84,14 +87,14 @@ public final class Tautomers {
      */
     enum Role {
         /** The atom has no role. */
-        None,
+        X,
         /** A conjugated Sp2 hybridised atom, should be adjacent to a pi bond. */
-        Conjugated,
+        C,
         /** A donor atom that can donate a proton. */
-        Donor,
+        D,
         /** An acceptor atom that can accept a proton, it will be adjacent to
          *  a pi bond. */
-        Acceptor
+        A
     }
 
     /**
@@ -101,9 +104,9 @@ public final class Tautomers {
         /* Generated tautomers sequentially based on input order and
            electronegativity. */
         SEQUENTIAL,
-        /* Generated tautomers based on canonical order and electronegativity.
-         * Note the atom order does not change only that the first tautomer
-         * generated will always be the same. */
+        /* Generated canonical tautomers, this orders atom by a tautomer
+         * invariant canonical order and electronegativity. Atoms in the
+         * molecule are not reordered. */
         CANONICAL,
         /* Tautomers will be generated randomly. This is mainly useful for
          * method testings.
@@ -111,17 +114,18 @@ public final class Tautomers {
         RANDOM
     }
 
-    private final SayleDelanyState state;
+    private final TautState state;
     private final IntStack stack;
     private boolean first = true;
 
-    Tautomers(SayleDelanyState state) {
+    Tautomers(TautState state, boolean returnSelf) {
         this.state = state;
+        this.first = returnSelf;
         this.stack = new IntStack(state.candidates.length + 1);
-        SayleDelanyState.clearTypeInfo(state.container());
+        TautState.clearTypeInfo(state.container());
     }
 
-    public IAtomContainer next() {
+    public IAtomContainer nextInternal() {
         while (moveToNextState()) ;
         IAtomContainer result = state.complete() || first ? state.container() : null;
         first = false;
@@ -130,14 +134,13 @@ public final class Tautomers {
 
     private boolean moveToNextState() {
         int v = state.select();
-
-        if (state.add(v, Donor) || state.add(v, Acceptor)) {
+        if (state.add(v, D) || state.add(v, A)) {
             stack.push(v);
             return !state.complete();
         } else {
             while (true) {
 
-                while (!stack.empty() && state.roleOf(stack.peek()) == Acceptor) {
+                while (!stack.empty() && state.roleOf(stack.peek()) == A) {
                     state.remove(stack.pop());
                 }
 
@@ -145,7 +148,7 @@ public final class Tautomers {
                     return false;
 
                 state.remove(v = stack.pop());
-                if (state.add(v, Acceptor)) {
+                if (state.add(v, A)) {
                     stack.push(v);
                     return !state.complete();
                 }
@@ -153,46 +156,110 @@ public final class Tautomers {
         }
     }
 
+    private IAtomContainer next;
+
+    IAtomContainer doNext() {
+        if (next != null)
+            return next;
+        next = nextInternal();
+        return next;
+    }
+
+    @Override
+    public boolean hasNext() {
+        if (doNext() != null)
+            return true;
+        state.inputState.apply(state.container());
+        return false;
+    }
+
+    @Override
+    public IAtomContainer next() {
+        IAtomContainer container = doNext();
+        next = null;
+        return container;
+    }
+
+    public static Iterable<IAtomContainer> hetero(IAtomContainer mol,
+                                                  Set<Type> types,
+                                                  Order mode) {
+        return hetero(mol, TautTypeMatcher.assignRoles(mol, types), mode);
+    }
 
 
-    public static Iterable<IAtomContainer> generate(IAtomContainer mol,
-                                                    Set<Type> types,
-                                                    Order mode) {
-        // this is a little complex since we modify the input container,
-        // calling this function multiple times is undefined but should work
-        return () -> new Iterator<IAtomContainer>() {
-            final Role[] roles = AtomTypeMatcher.assignRoles(mol, types);
-            final SayleDelanyState state = new SayleDelanyState(mol,
-                                                                roles,
-                                                                mol.getAtomCount(),
-                                                                mode);
-            final Tautomers tautomers = new Tautomers(state);
-            IAtomContainer next;
+    public static Iterable<IAtomContainer> hetero(IAtomContainer mol,
+                                                  Role[] roles,
+                                                  Order mode) {
 
-            IAtomContainer doNext() {
-                return next != null ? next : (next = tautomers.next());
-            }
-
-            @Override
-            public boolean hasNext() {
-                return doNext() != null;
-            }
-
-            @Override
-            public IAtomContainer next() {
-                IAtomContainer container = doNext();
-                next = null;
-                return container;
-            }
+        return () -> {
+            TautState state = new TautState(mol, roles,
+                                            mol.getAtomCount(),
+                                            mode);
+            return new Tautomers(state, true);
         };
     }
 
-    public static Iterable<IAtomContainer> generate(IAtomContainer mol, Order mode) {
-        return generate(mol, EnumSet.noneOf(Type.class), mode);
+    public static Iterable<IAtomContainer> generateNoIdentity(IAtomContainer mol,
+                                                              Role[] roles,
+                                                              Order mode,
+                                                              Map<Integer, IBond.Order> fixed) {
+
+        return () -> {
+            TautState state = new TautState(mol, roles,
+                                            mol.getAtomCount(),
+                                            mode);
+            if (state.select() < 0) {
+                return Collections.emptyIterator();
+            }
+
+            for (Map.Entry<Integer,IBond.Order> e : fixed.entrySet()) {
+                int bidx = e.getKey();
+                IBond bond = mol.getBond(bidx);
+
+                // bond is already visited? check the bond order is acceptable
+                if (state.bvisit[bidx] != 0) {
+                    if (bond.getOrder() != e.getValue()) {
+                        state.inputState.apply(mol);
+                        return Collections.emptyIterator();
+                    }
+                    continue;
+                }
+
+                if (!state.add(bond, e.getValue())) {
+                    state.inputState.apply(mol);
+                    return Collections.emptyIterator();
+                }
+            }
+
+            if (state.select() == -1) {
+                return Collections.singletonList(mol).iterator();
+            }
+
+            return new Tautomers(state, false);
+        };
     }
 
-    public static Iterable<IAtomContainer> generate(IAtomContainer mol) {
-        return generate(mol, Order.SEQUENTIAL);
+    public static Iterable<IAtomContainer> generateNoIdentity(IAtomContainer mol,
+                                                              Role[] roles,
+                                                              Order mode) {
+
+        return generateNoIdentity(mol, roles, mode, Collections.emptyMap());
+    }
+
+    public static Iterable<IAtomContainer> generateNoIdentity(IAtomContainer mol) {
+        return generateNoIdentity(mol, TautTypeMatcher.assignRoles(mol), Order.SEQUENTIAL);
+    }
+
+    public static Iterable<IAtomContainer> generate(IAtomContainer mol, Role[] roles) {
+        return hetero(mol, roles, Order.SEQUENTIAL);
+    }
+
+    public static Iterable<IAtomContainer> hetero(IAtomContainer mol, Order mode) {
+        return hetero(mol, EnumSet.noneOf(Type.class), mode);
+    }
+
+    public static Iterable<IAtomContainer> hetero(IAtomContainer mol) {
+        return hetero(mol, Order.SEQUENTIAL);
     }
 
     private static final class IntStack {

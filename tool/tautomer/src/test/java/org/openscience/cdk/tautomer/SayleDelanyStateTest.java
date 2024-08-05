@@ -30,8 +30,6 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class SayleDelanyStateTest {
 
     IAtomContainer fromSmi(String smi) throws InvalidSmilesException {
@@ -43,7 +41,7 @@ class SayleDelanyStateTest {
     @Test
     void testBondOrderSetting() throws CDKException {
         IAtomContainer mol = fromSmi("O=C1C=CNC=C1CCCN1CC=CC1");
-        SayleDelanyState state = new SayleDelanyState(mol);
+        TautState state = new TautState(mol);
         System.err.println(toSmi(state.container()));
         state.add(mol.getBond(0), IBond.Order.DOUBLE);
         System.err.println(toSmi(state.container()));

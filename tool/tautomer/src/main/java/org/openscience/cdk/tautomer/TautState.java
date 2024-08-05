@@ -23,67 +23,67 @@
 
 package org.openscience.cdk.tautomer;
 
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.Matching;
 import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
-import static org.openscience.cdk.tautomer.Tautomers.Role.Acceptor;
-import static org.openscience.cdk.tautomer.Tautomers.Role.Conjugated;
-import static org.openscience.cdk.tautomer.Tautomers.Role.Donor;
-import static org.openscience.cdk.tautomer.Tautomers.Role.None;
+import static org.openscience.cdk.tautomer.Tautomers.Role.A;
+import static org.openscience.cdk.tautomer.Tautomers.Role.C;
+import static org.openscience.cdk.tautomer.Tautomers.Role.D;
+import static org.openscience.cdk.tautomer.Tautomers.Role.X;
 
 /**
- * A state of the Sayle-Delany (SD) tautomer generation algorithm. 
+ * Internal - The state of the Sayle-Delany (SD) tautomer generation algorithm.
  *
  * @author John Mayfield
  */
-final class SayleDelanyState {
+final class TautState {
 
     /** Proton donor and acceptor candidates. */
     final Integer[] candidates;
 
     /** When each atom was visited. */
-    private final int[] avisit;
+    final int[] avisit;
     /** When each bond was visited. */
-    private final int[] bvisit;
-
-    /** Component label of each vertex. */
-    private final int[] components;
-
-    /** Number of donors and acceptors in each component. */
-    private final int[] nDonors, nAcceptors;
-
-    /** Type of each atom. */
-    private final Tautomers.Role[] roles;
-
-    /** Size of the state. */
+    final int[] bvisit;
+    /** Zones for each atom. */
+    final int[] zones;
+    /** Number of donors in each zone. */
+    final int[] nDonors;
+    /** Number of acceptors in each zone. */
+    final int[] nAcceptors;
+    /** Current role of each atom. */
+    final Tautomers.Role[] roles;
+    /** Current size of the state. */
     private int size = 2;
-
     /** Pi (double) bond assignments - stored as a matching. */
     private Matching matching;
-
     /** The container we are augmenting. */
     private final IAtomContainer mol;
 
-    SayleDelanyState(IAtomContainer mol, Tautomers.Role[] roles) {
+    TautStore inputState;
+
+    TautState(IAtomContainer mol, Tautomers.Role[] roles) {
         this(mol, roles, mol.getAtomCount(), Tautomers.Order.SEQUENTIAL);
     }
 
-    SayleDelanyState(IAtomContainer mol) {
-        this(mol, AtomTypeMatcher.assignRoles(mol), mol.getAtomCount(), Tautomers.Order.SEQUENTIAL);
+    TautState(IAtomContainer mol) {
+        this(mol, TautTypeMatcher.assignRoles(mol), mol.getAtomCount(), Tautomers.Order.SEQUENTIAL);
     }
 
-    SayleDelanyState(IAtomContainer mol, Tautomers.Role[] roles, int limit, Tautomers.Order order) {
+    TautState(IAtomContainer mol, Tautomers.Role[] roles, int limit, Tautomers.Order order) {
 
-        this.mol = mol;
-        this.roles = roles;
+        this.mol   = mol;
+        this.roles = roles.clone();
 
         this.matching = Matching.withCapacity(mol.getAtomCount());
         this.avisit = new int[mol.getAtomCount()];
@@ -91,31 +91,34 @@ final class SayleDelanyState {
         Arrays.fill(avisit, 0);
         Arrays.fill(bvisit, 0);
 
-        // identify and label conjugated systems where protons can move freely
-        this.components = new int[mol.getAtomCount()];
-        int nComponents = labelComponents(components);
+        // identify and label conjugated systems (zones) where protons can move
+        // freely
+        this.zones = new int[mol.getAtomCount()];
+        int numZones = labelZones(zones);
 
         // count the total number of proton donors/acceptors in each system
-        this.nDonors = new int[nComponents];
-        this.nAcceptors = new int[nComponents];
-        int[] nDonorLast = new int[nComponents];
-        int[] nAcceptorLast = new int[nComponents];
+        this.nDonors = new int[numZones];
+        this.nAcceptors = new int[numZones];
+        int[] nDonorLast = new int[numZones];
+        int[] nAcceptorLast = new int[numZones];
 
         for (int v = 0; v < mol.getAtomCount(); v++) {
-            if (roles[v] == Donor) {
-                nDonors[components[v]]++;
-                nDonorLast[components[v]] = v;
+            if (roles[v] == D) {
+                nDonors[zones[v]]++;
+                nDonorLast[zones[v]] = v;
             }
-            if (roles[v] == Acceptor) {
-                nAcceptors[components[v]]++;
-                nAcceptorLast[components[v]] = v;
+            if (roles[v] == A) {
+                nAcceptors[zones[v]]++;
+                nAcceptorLast[zones[v]] = v;
             }
         }
+
+
         // remove any components that have no donors or acceptor or that
         // have more movable hydrogens than the specified limit
-        boolean[] skip = new boolean[nComponents + 1];
+        boolean[] skip = new boolean[numZones + 1];
         skip[0] = true;
-        for (int component = 1; component < nComponents; component++) {
+        for (int component = 1; component < numZones; component++) {
             skip[component] = nDonors[component] == 0
                     || nAcceptors[component] == 0
                     || nDonors[component] + nAcceptors[component] > limit;
@@ -126,7 +129,7 @@ final class SayleDelanyState {
             }
         }
         for (int aidx = 0; aidx < mol.getAtomCount(); aidx++) {
-            if (skip[components[aidx]])
+            if (skip[zones[aidx]])
                 avisit[aidx] = 1;
         }
 
@@ -136,26 +139,31 @@ final class SayleDelanyState {
         for (int v = 0; v < mol.getAtomCount(); v++) {
             if (avisit[v] != 0)
                 continue;
-            if (roles[v] == Acceptor || roles[v] == Donor)
+            if (roles[v] == A || roles[v] == D)
                 queue[n++] = v;
         }
         this.candidates = Arrays.copyOf(queue, n);
+        this.inputState = new TautStore(mol);
 
         // no donors or acceptors
-        if (n == 0) return;
+        if (n == 0)
+            return;
 
         for (int bidx = 0; bidx < mol.getBondCount(); bidx++) {
             IBond bond = mol.getBond(bidx);
             IAtom beg = bond.getBegin();
             IAtom end = bond.getEnd();
-            if (roles[beg.getIndex()] != None && roles[end.getIndex()] != None &&
-                    avisit[beg.getIndex()] == 0 && avisit[end.getIndex()] == 0) {
+            int bIdx = beg.getIndex();
+            int eIdx = end.getIndex();
+            if (roles[bIdx] != X && roles[eIdx] != X &&
+                    avisit[bIdx] == 0 && avisit[eIdx] == 0) {
                 bond.setOrder(null);
             } else {
                 bvisit[bidx] = 1;
             }
         }
-        
+
+
         if (order == Tautomers.Order.CANONICAL) {
             long[] labels = Canon.label(mol,
                                         GraphUtil.toAdjList(mol),
@@ -170,8 +178,9 @@ final class SayleDelanyState {
             // place all of one component/zone before starting the next
             shuffle(candidates, n, new Random());
         } else {
-            Arrays.sort(this.candidates, Comparator.<Integer>comparingInt(a -> components[a])
-                                                   .thenComparingInt(a -> eneg(a, mol.getAtom(a))));
+            // SEQUENTIAL/SEQUENTIAL_NO_IDENTITY
+            Arrays.sort(this.candidates, Comparator.<Integer>comparingInt(a -> zones[a])
+                                                   .thenComparingInt(a -> enegPriority(a, mol.getAtom(a))));
         }
     }
 
@@ -187,7 +196,7 @@ final class SayleDelanyState {
             int impH = atom.getImplicitHydrogenCount();
             int elem = atom.getAtomicNumber();
             int chg  = charge(atom);
-            if (roles[v] == Acceptor) impH++;
+            if (roles[v] == A) impH++;
             long label = 0;
             label |= deg;
             label <<= 4;
@@ -261,13 +270,14 @@ final class SayleDelanyState {
 
         if (v < 0) return false;
 
-        assert roles[v] == Acceptor || roles[v] == Donor;
-        assert type == Acceptor || type == Donor;
+        assert roles[v] == A || roles[v] == D;
+        assert type == A || type == D;
 
-        if (feasible(v, type))
+        if (feasible(v, type)) {
             size++;
-        else
+        } else {
             remove(v);
+        }
 
         return avisit[v] != 0 && size > avisit[v];
     }
@@ -284,7 +294,7 @@ final class SayleDelanyState {
         else
             remove(bond);
 
-        return avisit[bond.getIndex()] != 0 && size > bvisit[bond.getIndex()];
+        return bvisit[bond.getIndex()] != 0 && size > bvisit[bond.getIndex()];
     }
 
     /**
@@ -295,7 +305,7 @@ final class SayleDelanyState {
      */
     void remove(final int v) {
         assert avisit[v] != 0;
-        assert roles[v] == Acceptor || roles[v] == Donor;
+        assert roles[v] == A || roles[v] == D;
         reset(avisit[v]);
     }
 
@@ -322,7 +332,6 @@ final class SayleDelanyState {
                 matching.unmatch(end);
             }
             bond.setOrder(null);
-
         }
     }
 
@@ -331,11 +340,10 @@ final class SayleDelanyState {
             if (avisit[aidx] < size)
                 continue;
             avisit[aidx] = 0;
-            if (roles[aidx] == Donor)
-                nDonors[components[aidx]]++;
-            else if (roles[aidx] == Acceptor)
-                nAcceptors[components[aidx]]++;
-            matching.unmatch(aidx);
+            if (roles[aidx] == D)
+                nDonors[zones[aidx]]++;
+            else if (roles[aidx] == A)
+                nAcceptors[zones[aidx]]++;
         }
     }
 
@@ -368,33 +376,36 @@ final class SayleDelanyState {
      */
     private boolean feasible(final int v, final Tautomers.Role type) {
 
-        setRole(v, type);
+        if (!setRole(v, type))
+            return false;
 
-        final int component = components[v];
-        assert component != 0;
+        final int zone = zones[v];
+        assert zone != 0;
 
         // more hydrogen donors or acceptors assigned than were available
-        if (nDonors[component] < 0 || nAcceptors[component] < 0)
+        if (nDonors[zone] < 0 || nAcceptors[zone] < 0)
             return false;
 
         // when a hydrogen donor or acceptor is set it may decide the
-        // role of another vertex in the component. The donor and acceptor
+        // role of another vertex in the zone. The donor and acceptor
         // counts may have changed and are retested  
-        if (!assignDependantRoles(v) || nDonors[component] < 0 || nAcceptors[component] < 0)
+        if (!assignDependantRoles(v) || nDonors[zone] < 0 || nAcceptors[zone] < 0)
             return false;
 
-        // all hydrogen donors or acceptors of this component have been placed,
+        // all hydrogen donors or acceptors of this zone have been placed,
         // all unvisited candidates must be acceptors or donors and we must be
         // able to assign a Kekulé structure 
-        if (nDonors[component] == 0 || nAcceptors[component] == 0) {
-            final Tautomers.Role other = nDonors[component] == 0 ? Acceptor : Donor;
-            for (int w = 0; w < avisit.length; w++)
-                if (components[w] == component && avisit[w] == 0 && roles[w] != Conjugated) {
-                    setRole(w, other);
-                    if (!assignDependantRoles(w) || nDonors[component] < 0 || nAcceptors[component] < 0)
+        if (nDonors[zone] == 0 || nAcceptors[zone] == 0) {
+            final Tautomers.Role other = nDonors[zone] == 0 ? A : D;
+            for (int aidx = 0; aidx < avisit.length; aidx++) {
+                if (zones[aidx] == zone && avisit[aidx] == 0 && roles[aidx] != C) {
+                    if (!setRole(aidx, other))
+                        return false;
+                    if (!assignDependantRoles(aidx))
                         return false;
                 }
-            return kekulizeComponent(component);
+            }
+            return kekulizeZone(zone);
         }
 
         return true;
@@ -420,15 +431,18 @@ final class SayleDelanyState {
      * @return assignment was feasible
      */
     private boolean assignDependantRoles(final int v) {
-        IAtom atom = mol.getAtom(v);
-        final boolean matched = matching.matched(v);
+        final IAtom   atom = mol.getAtom(v);
+        final boolean hasDoubleBond = matching.matched(v);
 
-        // a donor or matched acceptor/conjugated atom, then all unvisited bonds
-        // must be single
-        if (matched || is(v, Donor)) {
+        // a donor or hasDoubleBond acceptor/conjugated atom, then all unvisited
+        // bonds must be single
+        if (hasDoubleBond || is(v, D)) {
             // System.err.println(v + " must have all single bonds");
-            if (avisit[v] == 0)
+            if (avisit[v] == 0) {
+                if (roles[v] != C && !setRole(v, A))
+                    return false;
                 avisit[v] = size;
+            }
             for (IBond bond : atom.bonds()) {
                 if (visited(bond))
                     continue;
@@ -440,47 +454,45 @@ final class SayleDelanyState {
             return true;
         }
 
-        final IBond[] unset = new IBond[atom.getBondCount()];
+        final IBond[] unsetBonds = new IBond[atom.getBondCount()];
         int n = 0;
 
         // identify neighbors in this component where bond order of v-w is not known
         for (IBond bond : atom.bonds()) {
             if (bvisit[bond.getIndex()] == 0)
-                unset[n++] = bond;
+                unsetBonds[n++] = bond;
         }
 
-        // must be a donor: unmatched, no unknown neighbors, and not conjugated
-        if (avisit[v] == 0 && roles[v] != Conjugated && n == 0) {
-            setRole(v, Donor);
-            if (!assignDependantRoles(v))
-                return false;
+        // must be a donor: no double bonds, no unknown neighbors, and not conjugated
+        if (avisit[v] == 0 && roles[v] != C && n == 0) {
+            return setRole(v, D); // assignDependantRoles(v);
         }
 
         // must need double bond, a conjugated atom or assigned acceptor without an assigned pi bond
-        if (roles[v] == Conjugated || is(v, Acceptor)) {
+        if (roles[v] == C || is(v, A)) {
 
-            // v needs a pi bond but there are no unset bonds, infeasible
+            // v needs a pi bond but there are no unsetBonds bonds, infeasible
             if (n == 0 ) {
                 // System.err.println(v + " wanted a pi bond but had none!");
                 return false;
             }
 
-            // v needs a pi bond and there is exactly one unset neighbor
+            // v needs a pi bond and there is exactly one unsetBonds neighbor
             // we can assign that a double bond
             if (n == 1) {
                 // assert matching.unmatched(unknown[0]);
-                IBond bond = unset[0];
+                IBond bond = unsetBonds[0];
                 int w = bond.getOther(atom).getIndex();
 
                 // must be an acceptor
-                if (roles[w] != Conjugated && avisit[w] == 0) {
+                if (roles[w] != C && avisit[w] == 0) {
                     // System.err.println(v + " must be an acceptor");
-                    setRole(w, Acceptor);
+                    if (!setRole(w, A))
+                        return false;
                 }
 
                 // required for remove() to clear the matching
-                if (avisit[v] == 0) avisit[v] = size;
-                if (avisit[w] == 0) avisit[w] = size;
+                // if (avisit[w] == 0) avisit[w] = size;
 
                 bvisit[bond.getIndex()] = size;
                 matching.match(v, w);
@@ -498,12 +510,13 @@ final class SayleDelanyState {
         // already has a pi-bond (matched)?
         if (matching.matched(idx))
             return false;
-        if (roles[idx] == Conjugated)
+        if (roles[idx] == C)
             return true;
-        return is(idx, Acceptor) || nAcceptors[components[idx]] > 0;
+        return is(idx, A) || nAcceptors[zones[idx]] > 0;
     }
 
     private boolean feasible(final IBond bond, final IBond.Order order) {
+
         IAtom beg = bond.getBegin();
         IAtom end = bond.getEnd();
         if (order == IBond.Order.DOUBLE) {
@@ -514,13 +527,43 @@ final class SayleDelanyState {
         }
         bvisit[bond.getIndex()] = size;
         bond.setOrder(order);
-        return assignDependantRoles(beg.getIndex()) &&
-                assignDependantRoles(end.getIndex());
+
+        if (!assignDependantRoles(beg.getIndex()))
+            return false;
+        if (!assignDependantRoles(end.getIndex()))
+            return false;
+
+        int component = zones[beg.getIndex()];
+        if (component != zones[end.getIndex()]) {
+            throw new IllegalStateException();
+        }
+
+        // all hydrogen donors or acceptors of this component have been placed,
+        // all unvisited candidates must be acceptors or donors and we must be
+        // able to assign a Kekulé structure
+        if (component > 0 && (nDonors[component] == 0 || nAcceptors[component] == 0)) {
+            final Tautomers.Role other = nDonors[component] == 0 ? A : D;
+            for (int aidx = 0; aidx < avisit.length; aidx++) {
+                if (zones[aidx] != component)
+                    continue;
+                if (roles[aidx] == C)
+                    continue;
+                if (avisit[aidx] == 0 && roles[aidx] != C) {
+                    if (!setRole(aidx, other))
+                        return false;
+                    if (!assignDependantRoles(aidx))
+                        return false;
+                }
+            }
+            return kekulizeZone(component);
+        }
+
+        return true;
     }
 
     private boolean assignBondOrders(IAtom atom) {
         final int aidx = atom.getIndex();
-        assert roles[aidx] == Conjugated || roles[aidx] == Acceptor;
+        assert roles[aidx] == C || roles[aidx] == A;
         for (IBond bond : atom.bonds()) {
             if (visited(bond))
                 continue;
@@ -544,15 +587,15 @@ final class SayleDelanyState {
         return matching.matched(aidx);
     }
 
-    private boolean kekulizeComponent(final int component) {
+    private boolean kekulizeZone(final int component) {
         if (nDonors[component] != 0)
-            throw new IllegalArgumentException("Component has unplaced donors");
+            throw new IllegalArgumentException("Component has unplaced donors: " + mol.getTitle());
         if (nAcceptors[component] != 0)
-            throw new IllegalArgumentException("Component has unplaced acceptors");
+            throw new IllegalArgumentException("Component has unplaced acceptors: " + mol.getTitle());
         for (int aidx = 0; aidx < avisit.length; aidx++) {
-            if (components[aidx] != component)
+            if (zones[aidx] != component)
                 continue;
-            if (avisit[aidx] != 0 && roles[aidx] != Acceptor)
+            if (avisit[aidx] != 0 && roles[aidx] != A)
                 continue;
             if (!assignBondOrders(mol.getAtom(aidx)))
                 return false;
@@ -570,19 +613,19 @@ final class SayleDelanyState {
      * @param v    vertex, the atom index
      * @param type set to a proton donor or acceptor
      */
-    private void setRole(final int v, final Tautomers.Role type) {
-        assert type == Acceptor || type == Donor;
+    private boolean setRole(final int v, final Tautomers.Role type) {
+        assert type == A || type == D;
         assert avisit[v] == 0;
         avisit[v] = size;
-        if (type == Donor) {
-            if (roles[v] == Acceptor)
+        if (type == D) {
+            if (roles[v] == A)
                 accept(v);
-            nDonors[components[v]]--;
+            return --nDonors[zones[v]] >= 0;
         }
         else { // Acceptor
-            if (roles[v] == Donor)
+            if (roles[v] == D)
                 donate(v);
-            nAcceptors[components[v]]--;
+            return --nAcceptors[zones[v]] >= 0;
         }
     }
 
@@ -592,11 +635,11 @@ final class SayleDelanyState {
      * @param v vertex, the atom index
      */
     private void accept(final int v) {
-        assert roles[v] == Acceptor;
+        assert roles[v] == A;
         final IAtom atom = mol.getAtom(v);
         assert atom.getImplicitHydrogenCount() != null;
         atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() + 1);
-        roles[v] = Donor;
+        roles[v] = D;
     }
 
     /**
@@ -605,11 +648,11 @@ final class SayleDelanyState {
      * @param v vertex, the atom index
      */
     private void donate(final int v) {
-        assert roles[v] == Donor;
+        assert roles[v] == D;
         final IAtom atom = mol.getAtom(v);
         assert atom.getImplicitHydrogenCount() != null;
         atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() - 1);
-        roles[v] = Acceptor;
+        roles[v] = A;
     }
 
     IAtomContainer container() {
@@ -618,10 +661,10 @@ final class SayleDelanyState {
 
     // refactor out
 
-    private int labelComponents(int[] labels) {
+    private int labelZones(int[] labels) {
         int label = 1;
         for (int v = 0; v < mol.getAtomCount(); v++) {
-            if (labels[v] == 0 && roles[v] == Donor)
+            if (labels[v] == 0 && roles[v] == D)
                 labelComponent(mol.getAtom(v), null, label++, labels, roles);
         }
         return label;
@@ -635,33 +678,41 @@ final class SayleDelanyState {
                 continue;
             IAtom nbor = bond.getOther(atom);
             int nidx = nbor.getIndex();
-            if (labels[nidx] != 0 || types[nidx] == Tautomers.Role.None)
+            if (labels[nidx] != 0 || types[nidx] == Tautomers.Role.X)
                 continue;
             labelComponent(nbor, bond, label, labels, types);
         }
     }
 
+    static void check(IAtomContainer mol)
+    {
+        for (IAtom a : mol.atoms())
+            if (a.getImplicitHydrogenCount() == null)
+                throw new NullPointerException("Atom idx=" + a.getIndex() + " had unset implicit hydrogen count");
+        for (IBond b : mol.bonds())
+            if (b.getOrder() == null)
+                throw new NullPointerException("Bond idx=" + b.getIndex() + " had unset bond order");
+    }
+
     // clear the existing atom type and aromaticity information, we are 
     // going to be moving hydrogens around that will change the atom type
     // and break aromaticity
-    static void clearTypeInfo(IAtomContainer container) {
-        // note - bond order sum / valence will be unchanged
-        for (IAtom a : container.atoms()) {
+    static void clearTypeInfo(IAtomContainer mol) {
+
+        // tautomers can break aromaticity, so clear it
+        Aromaticity.clear(mol);
+
+        for (IAtom a : mol.atoms()) {
+            // valence, hybridisation does not change
             a.setAtomTypeName(null);
-            // a.setHybridization(null);
             a.setFormalNeighbourCount(null);
-            a.setIsAromatic(false);
-            if (a.getImplicitHydrogenCount() == null)
-                throw new IllegalArgumentException("Molecule must have implicit hydrogens");
-        }
-        for (IBond b : container.bonds()) {
-            b.setIsAromatic(false);
         }
     }
 
-    private int eneg(int v, IAtom atom) {
-        if (roles[v] == None || roles[v] == Conjugated)
+    private int enegPriority(int v, IAtom atom) {
+        if (roles[v] == X || roles[v] == C)
             return 15;
+        // N < Te < Se < S < C (maybe aromatic) < O < C
         switch (atom.getAtomicNumber()) {
             case IAtom.N:
                 return 1;
@@ -685,7 +736,7 @@ final class SayleDelanyState {
         //    sb.append('.');
         for (int i = 0; i < candidates.length; i++) {
             if (avisit[candidates[i]] != -1)
-                sb.append(roles[candidates[i]] == Donor ? "d" : "a");
+                sb.append(roles[candidates[i]] == D ? "d" : "a");
             else
                 sb.append("-");
         }
@@ -696,5 +747,64 @@ final class SayleDelanyState {
             sb.append(nDonors[i]).append("/").append(nAcceptors[i]);
         }
         return sb.toString();
+    }
+
+    static class TautStore {
+        private final int AROM_MASK = 0xf0;
+        private final int[] atype;
+        private final int[] btype;
+
+        TautStore(IAtomContainer mol) {
+            this.atype = new int[mol.getAtomCount()];
+            this.btype = new int[mol.getBondCount()];
+            for (int i = 0; i < atype.length; i++) {
+                atype[i] = mol.getAtom(i).getImplicitHydrogenCount();
+                atype[i] |= mol.getAtom(i).isAromatic() ? AROM_MASK : 0;
+            }
+            for (int i = 0; i < btype.length; i++) {
+                IBond bond = mol.getBond(i);
+                btype[i] = (byte) (bond.getOrder().numeric() & 0xf);
+                if (bond.isAromatic())
+                    btype[i] |= AROM_MASK;
+            }
+        }
+
+        void apply(IAtomContainer mol) {
+            for (int i = 0; i < atype.length; i++) {
+                IAtom atom = mol.getAtom(i);
+                atom.setImplicitHydrogenCount(atype[i] & 0x0f);
+                if ((atype[i] & AROM_MASK) != 0)
+                    atom.set(IChemObject.AROMATIC);
+                else
+                    atom.clear(IChemObject.AROMATIC);
+            }
+            for (int i = 0; i < btype.length; i++) {
+                IBond bond = mol.getBond(i);
+                switch (btype[i]) {
+                    case 0x01:
+                        bond.setOrder(IBond.Order.SINGLE);
+                        bond.clear(IChemObject.AROMATIC);
+                        break;
+                    case 0x02:
+                        bond.setOrder(IBond.Order.DOUBLE);
+                        bond.clear(IChemObject.AROMATIC);
+                        break;
+                    case 0x03:
+                        bond.setOrder(IBond.Order.TRIPLE);
+                        break;
+                    case 0x04:
+                        bond.setOrder(IBond.Order.QUADRUPLE);
+                        break;
+                    case 0xf1:
+                        bond.setOrder(IBond.Order.SINGLE);
+                        bond.set(IChemObject.AROMATIC);
+                        break;
+                    case 0xf2:
+                        bond.setOrder(IBond.Order.DOUBLE);
+                        bond.set(IChemObject.AROMATIC);
+                        break;
+                }
+            }
+        }
     }
 }
