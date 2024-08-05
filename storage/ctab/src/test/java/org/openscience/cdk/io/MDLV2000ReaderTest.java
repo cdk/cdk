@@ -2183,6 +2183,57 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         mdlv2000Reader.close();
     }
 
+    /**
+     * WebMolKit and Collaborative Drug Discovery (CDD) have incorrect MOLfiles,
+     * that need some "fixing" to work correctly.
+     * @throws Exception
+     */
+    @Test
+    void testBadSgroup() throws Exception {
+        final String molfile = "\n" +
+                "\n" +
+                "\n" +
+                "  9  9  0  0  0  0  0  0  0  0999 V2000\n" +
+                "    6.2366   -3.9875    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    4.6978   -4.4875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    5.6488   -4.7965    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    4.6978   -3.4875    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    5.6488   -3.1785    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    7.2366   -3.9875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    7.7366   -3.1215    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    7.7366   -4.8535    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    8.2366   -3.9875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  5  1  0     0  0\n" +
+                "  5  4  2  0     0  0\n" +
+                "  4  2  1  0     0  0\n" +
+                "  2  3  2  0     0  0\n" +
+                "  3  1  1  0     0  0\n" +
+                "  1  6  1  0     0  0\n" +
+                "  6  7  1  0     0  0\n" +
+                "  6  8  1  0     0  0\n" +
+                "  6  9  1  0     0  0\n" +
+                "M  STY  1   1 SUP\n" +
+                "M  SAL   1  1   7\n" +
+                "M  SMT   1 Me\n" +
+                "M  STY  1   2 SUP\n" +
+                "M  SAL   2  1   8\n" +
+                "M  SMT   2 Me\n" +
+                "M  STY  1   3 SUP\n" +
+                "M  SAL   3  1   9\n" +
+                "M  SMT   3 Me\n" +
+                "M  END\n";
+
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new StringReader(molfile))) {
+            IAtomContainer mol = mdlv2000Reader.read(builder.newAtomContainer());
+            List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            Assertions.assertEquals(3, sgroups.size());
+            for (Sgroup sgroup : sgroups) {
+                Assertions.assertEquals(1, sgroup.getBonds().size());
+            }
+        }
+    }
+
     @Test
     void testNoSuchAtom() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();

@@ -1437,10 +1437,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
 
         if (!sgroups.isEmpty()) {
-            // load Sgroups into molecule, first we downcast
+            // load Sgroups into molecule, first we down-cast
             List<Sgroup> sgroupOrgList = new ArrayList<>(sgroups.values());
             List<Sgroup> sgroupCpyList = new ArrayList<>(sgroupOrgList.size());
             for (Sgroup sgroup : sgroupOrgList) {
+                if (fixCrossingBonds(sgroup))
+                    handleError("Fixed incorrect SBL list on SGroup " + sgroup.getSubscript());
                 Sgroup cpy = sgroup.downcast();
                 sgroupCpyList.add(cpy);
             }
@@ -1457,6 +1459,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
     }
 
+    /**
+     * Some abbreviation MDL files with abbreviations omit the SBL
+     * (crossing-bonds).
+     */
+    static boolean fixCrossingBonds(Sgroup sgroup) {
+        if (sgroup.getType() == SgroupType.CtabAbbreviation &&
+                sgroup.getBonds().isEmpty()) {
+            int numBonds = 0; // sgroup.getBonds().size();
+            final Set<IAtom> atoms = sgroup.getAtoms();
+            for (IAtom atom : atoms)
+                for (IBond bond : atom.bonds())
+                    if (!atoms.contains(bond.getOther(atom)))
+                        sgroup.addBond(bond);
+            return numBonds != sgroup.getBonds().size();
+        }
+        return false;
+    }
 
     private Sgroup ensureSgroup(Map<Integer, Sgroup> map, int idx) throws CDKException {
         Sgroup sgroup = map.get(idx);
