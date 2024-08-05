@@ -793,6 +793,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     List<Sgroup> sgroups = readData.getProperty(CDKConstants.CTAB_SGROUPS);
                     if (sgroups == null)
                         readData.setProperty(CDKConstants.CTAB_SGROUPS, sgroups = new ArrayList<>(4));
+                    if (MDLV2000Reader.fixCrossingBonds(sgroup))
+                        handleError("Fixed incorrect SBL list on SGroup " + sgroup.getSubscript());
                     sgroups.add(sgroup);
                 }
 
