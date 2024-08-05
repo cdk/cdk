@@ -401,9 +401,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         if (str.startsWith("ATOMS=(", i))
             i += "ATOMS=(".length();
         else {
-            String error = "Error while parsing stereo group: Expected an atom collection.";
-            logger.error(error);
-            throw new CDKException(error);
+            if (Mode.STRICT == this.mode) {
+                String error = "Error while parsing stereo group: Expected an atom collection.";
+                logger.error(error);
+                throw new CDKException(error);
+            } else {
+                logger.warn("Ignoring stereo group: Expected an atom collection.");
+                return;
+            }
         }
 
         // skip the count since we're storing in map

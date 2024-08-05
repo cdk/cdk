@@ -528,8 +528,20 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("invalid_stereochemistry_collection.mol");
              MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            mdlr.setReaderMode(IChemObjectReader.Mode.STRICT);
             Exception exception = assertThrows(CDKException.class, () -> mdlr.read(bldr.newAtomContainer()));
             Assertions.assertEquals("Error while parsing stereo group: Expected an atom collection.", exception.getMessage());
+        }
+    }
+
+    @Test
+//    @Disabled("CAUTION: Running this test on the defective code will cause an infinite loop")
+    void testShouldIgnoreInvalidStereochemistryCollection() throws IOException, CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("invalid_stereochemistry_collection.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertNotNull(mol);
         }
     }
 }
