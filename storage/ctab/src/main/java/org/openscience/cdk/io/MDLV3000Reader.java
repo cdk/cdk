@@ -382,7 +382,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return ch >= '0' && ch <= '9';
     }
 
-    private void parseStereoGroup(Map<Integer,Integer> flags, String str, int type) {
+    private void parseStereoGroup(Map<Integer,Integer> flags, String str, int type) throws CDKException {
         int i   = "MDLV30/STE???".length();
         int len = str.length();
         int num = 0;
@@ -400,6 +400,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         // start of atom list
         if (str.startsWith("ATOMS=(", i))
             i += "ATOMS=(".length();
+        else {
+            handleError("Error while parsing stereo group: Expected an atom collection.");
+            return;
+        }
 
         // skip the count since we're storing in map
         while (i < len && isDigit(str.charAt(i)))

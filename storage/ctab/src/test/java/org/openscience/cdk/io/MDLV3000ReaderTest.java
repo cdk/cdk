@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -44,6 +45,7 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
@@ -51,6 +53,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * TestCase for the reading MDL V3000 mol files using one test file.
@@ -516,6 +519,29 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
                                     mol.getProperty("PUBCHEM_IUPAC_OPENEYE_NAME"));
             Assertions.assertEquals("0.5",
                                     mol.getProperty("PUBCHEM_XLOGP3"));
+        }
+    }
+
+    @Test
+//    @Disabled("CAUTION: Running this test on the defective code will cause an infinite loop")
+    void testInvalidStereochemistryCollectionShouldThrow() throws IOException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("invalid_stereochemistry_collection.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            mdlr.setReaderMode(IChemObjectReader.Mode.STRICT);
+            Exception exception = assertThrows(CDKException.class, () -> mdlr.read(bldr.newAtomContainer()));
+            Assertions.assertEquals("Error while parsing stereo group: Expected an atom collection.", exception.getMessage());
+        }
+    }
+
+    @Test
+//    @Disabled("CAUTION: Running this test on the defective code will cause an infinite loop")
+    void testShouldIgnoreInvalidStereochemistryCollection() throws IOException, CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("invalid_stereochemistry_collection.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertNotNull(mol);
         }
     }
 }
