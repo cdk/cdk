@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * TestCase for the reading MDL RXN files using one test file.
+ * TestCase for reading MDL RXN files.
  *
  * @cdk.module test-io
  *
@@ -93,8 +93,8 @@ class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void readAgents() throws IOException, CDKException {
-        String rxnfile = "$RXN V3000\n" +
+    void readAgentsTest() throws IOException, CDKException {
+        final String rxnFile = "$RXN V3000\n" +
                 "\n" +
                 "  Mrv1810      020601212219\n" +
                 "\n" +
@@ -209,12 +209,45 @@ class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
                 "M  V30 END CTAB\n" +
                 "M  V30 END AGENT\n" +
                 "M  END\n";
-        try (MDLRXNV3000Reader mdlr = new MDLRXNV3000Reader(new StringReader(rxnfile))) {
+        try (final MDLRXNV3000Reader mdlr = new MDLRXNV3000Reader(new StringReader(rxnFile))) {
             IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
-            IReaction reaction = mdlr.read(bldr.newInstance(IReaction.class));
+            IReaction reaction = mdlr.read(bldr.newReaction());
             Assertions.assertEquals(2, reaction.getReactantCount());
             Assertions.assertEquals(1, reaction.getProductCount());
             Assertions.assertEquals(2, reaction.getAgents().getAtomContainerCount());
+        }
+    }
+
+    @Test
+    void reactionWithZeroReactantsTest() throws IOException, CDKException {
+        final String rxnFile = "$RXN V3000\n" +
+                "\n" +
+                "      Mrv2403  080620241251\n" +
+                "\n" +
+                "M  V30 COUNTS 0 1\n" +
+                "M  V30 BEGIN REACTANT\n" +
+                "M  V30 END REACTANT\n" +
+                "M  V30 BEGIN PRODUCT\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 3 2 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C 0.7389 14.1944 0 0\n" +
+                "M  V30 2 C 2.0726 14.9644 0 0\n" +
+                "M  V30 3 Cl 3.5601 14.5659 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 1 2 3\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  V30 END PRODUCT\n" +
+                "M  END\n";
+        try (final MDLRXNV3000Reader mdlrxnv3000Reader = new MDLRXNV3000Reader(new StringReader(rxnFile))) {
+            IChemObjectBuilder chemObjectBuilder = SilentChemObjectBuilder.getInstance();
+            IReaction reaction = mdlrxnv3000Reader.read(chemObjectBuilder.newReaction());
+            Assertions.assertEquals(0, reaction.getReactantCount());
+            Assertions.assertEquals(1, reaction.getProductCount());
+            Assertions.assertEquals(0, reaction.getAgents().getAtomContainerCount());
         }
     }
 }

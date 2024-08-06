@@ -24,8 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Locale;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.exception.CDKException;
@@ -58,7 +57,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
-    BufferedReader              input;
+    private final Deque<String> commandStack = new ArrayDeque<>(); // provide a look ahead with depth 1 for commands
+    private BufferedReader input;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
 
     public MDLRXNV3000Reader(Reader in) {
@@ -137,13 +137,24 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
 
     /**
-     * Reads the command on this line. If the line is continued on the next, that
-     * part is added.
+     * Reads the command on this line.
+     * If the command is continued on the next line, that part is added.
+     * Lines with commands start with '{@code M  V30 }'.
+     * <p>
+     * Due to the look ahead available at {@link #peekCommand()} the final line starting
+     * with '{@code M  END}' might be read with this method. If this line is encountered
+     * the method returns an empty string.
+     * </p>
      *
      * @return Returns the command on this line.
      */
     private String readCommand() throws CDKException {
-        String line = readLine();
+        // only read the next command from file if there isn't a command on stack
+        if(!commandStack.isEmpty()) {
+            return commandStack.pop();
+        }
+
+        final String line = readLine();
         if (line.startsWith("M  V30 ")) {
             String command = line.substring(7);
             if (command.endsWith("-")) {
@@ -151,9 +162,28 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 command += readCommand();
             }
             return command;
+        } else if (line.startsWith("M  END")) {
+            return "";
         } else {
             throw new CDKException("Could not read MDL file: unexpected line: " + line);
         }
+    }
+
+    /**
+     * Reads the next command either from the command stack or by calling {@link #readCommand()}.
+     * This allows for a look-ahead of commands with a depth of one.
+     *
+     * @return the next command
+     * @throws CDKException if there is an error reading the command
+     */
+    private String peekCommand() throws CDKException {
+        // only read the next command from file if there isn't a command on stack
+        if(commandStack.isEmpty()) {
+            commandStack.push(readCommand());
+            return commandStack.peek();
+        }
+
+        return commandStack.peek();
     }
 
     private String readLine() throws CDKException {
@@ -193,7 +223,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                     logger.info("Expecting " + productCount + " products in file");
                     if (tokenizer.hasMoreTokens()) {
                         agentCount = Integer.parseInt(tokenizer.nextToken());
-                        logger.info("Expecting " + agentCount + " products in file");
+                        logger.info("Expecting " + agentCount + " agents in file");
                         if (mode == Mode.STRICT && agentCount > 0)
                             throw new CDKException("RXN files uses agent count extension");
                     }
@@ -215,8 +245,18 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
 
     private void readMols(IChemObjectBuilder builder, IReaction reaction, ReactionRole role, int count) throws CDKException {
-        if (count == 0)
+        // allow for empty BEGIN <ReactionRole> END <ReactionRole> blocks if count equals 0
+        if (count == 0) {
+            String command = peekCommand();
+            if (!command.equals("BEGIN " + role.name().toUpperCase(Locale.ROOT)))
+                return;
+            readCommand();
+            command = readCommand();
+            if (!command.equals("END " + role.name().toUpperCase(Locale.ROOT)))
+                throw new CDKException("Expected end of " + role + "s  but got: " + command);
             return;
+        }
+
         String command = readCommand();
         if (!command.equals("BEGIN " + role.name().toUpperCase(Locale.ROOT)))
             throw new CDKException("Expected start of " + role + "s  but got: " + command);
