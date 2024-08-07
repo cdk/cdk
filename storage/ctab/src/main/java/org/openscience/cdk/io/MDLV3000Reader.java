@@ -75,18 +75,18 @@ import java.util.regex.Pattern;
  */
 public class MDLV3000Reader extends DefaultChemObjectReader {
 
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
+    // e.g. CHG=-1
+    private static final Pattern keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)");
+    // e.g. ATOMS=(1 31)
+    private static final Pattern keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)");
     public static final String M_END = "M  END";
+
     private BooleanIOSetting optForce3d;
     private BooleanIOSetting optHydIso;
     private BooleanIOSetting optStereoPerc;
     private BooleanIOSetting optStereo0d;
-
     BufferedReader input;
-    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
-
-    private final Pattern keyValueTuple;
-    private final Pattern keyValueTuple2;
-
     private int lineNumber;
 
     public MDLV3000Reader(Reader in) {
@@ -97,9 +97,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         input = new BufferedReader(in);
         initIOSettings();
         super.mode = mode;
-        /* compile patterns */
-        keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)"); // e.g. CHG=-1
-        keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)"); // e.g. ATOMS=(1 31)
         lineNumber = 0;
     }
 
@@ -155,6 +152,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         throw new CDKException("Only supports AtomContainer objects.");
     }
 
+    /**
+     * Represents the state of reading a molecule in the MDLV3000Reader class.
+     * <p>
+     * This class stores the molecule, its dimensions (0D, 2D, or 3D), whether it is chiral,
+     * stereo flags, and maps for atom and bond IDs. It also provides methods to add atoms
+     * and bonds to the respective ID maps, and to retrieve atoms and bonds by their IDs.
+     * </p>
+     */
     private static final class ReadState {
         IAtomContainer mol;
         int dimensions = 0; // 0D (undef/no coordinates), 2D, 3D
@@ -195,14 +200,28 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
     }
 
+    /**
+     * Reads a molecule and returns the corresponding AtomContainer.
+     *
+     * @param builder the builder object used to create the AtomContainer
+     * @return the AtomContainer representing the CTAB block
+     * @throws CDKException if there is an error while reading the CTAB block
+     */
     public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {
         return readConnectionTable(builder);
     }
 
+    /**
+     * Reads a Connection Table (CTAB) block and returns the corresponding AtomContainer.
+     *
+     * @param builder the builder object used to create the AtomContainer
+     * @return the AtomContainer representing the CTAB block
+     * @throws CDKException if there is an error while reading the CTAB block
+     */
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
 
         logger.info("Reading CTAB block");
-        ReadState state = new ReadState();
+        final ReadState state = new ReadState();
         IAtomContainer readData = builder.newAtomContainer();
         state.mol = readData;
         state.chiral = false;
