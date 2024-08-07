@@ -86,7 +86,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private BooleanIOSetting optHydIso;
     private BooleanIOSetting optStereoPerc;
     private BooleanIOSetting optStereo0d;
-    BufferedReader input;
+    private BufferedReader input;
     private int lineNumber;
 
     public MDLV3000Reader(Reader in) {
@@ -510,7 +510,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * @return last line read
      * @throws CDKException when no file content is detected
      */
-    public String readHeader(ReadState state) throws CDKException {
+    private String readHeader(ReadState state) throws CDKException {
         // read four lines
         final String line1 = readLine();
         if (line1 == null) {
@@ -540,7 +540,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      *
      * <p>IMPORTANT: it does not support the atom list and its negation!
      */
-    public void readAtomBlock(ReadState state) throws CDKException {
+    private void readAtomBlock(ReadState state) throws CDKException {
         final IAtomContainer readData = state.mol;
         logger.info("Reading ATOM block");
 
@@ -707,7 +707,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     /**
      * Reads the bond atoms, order and stereo configuration.
      */
-    public void readBondBlock(ReadState state) throws CDKException {
+    private void readBondBlock(ReadState state) throws CDKException {
         IAtomContainer readData = state.mol;
         logger.info("Reading BOND block");
         boolean foundEND = false;
@@ -844,7 +844,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     /**
      * Reads labels.
      */
-    public void readSGroup(ReadState state) throws CDKException {
+    private void readSGroup(ReadState state) throws CDKException {
         IAtomContainer readData = state.mol;
         boolean foundEND = false;
         while (isReady() && !foundEND) {
