@@ -25,7 +25,6 @@ package org.openscience.cdk.io;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -56,7 +55,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * TestCase for the reading MDL V3000 mol files using one test file.
+ * TestCase for the reading MDL V3000 mol files.
  *
  * @cdk.module test-io
  *
@@ -120,7 +119,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
             molecule = reader.read(molecule);
             reader.close();
-            Assertions.assertTrue(molecule.getAtom(9) instanceof IPseudoAtom);
+            Assertions.assertInstanceOf(IPseudoAtom.class, molecule.getAtom(9));
             Assertions.assertEquals("R", molecule.getAtom(9).getSymbol());
             IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(9);
             Assertions.assertEquals("Leu", pa.getLabel());
@@ -523,7 +522,6 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-//    @Disabled("CAUTION: Running this test on the defective code will cause an infinite loop")
     void testInvalidStereochemistryCollectionShouldThrow() throws IOException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("invalid_stereochemistry_collection.mol");
@@ -535,7 +533,6 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-//    @Disabled("CAUTION: Running this test on the defective code will cause an infinite loop")
     void testShouldIgnoreInvalidStereochemistryCollection() throws IOException, CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (InputStream in = getClass().getResourceAsStream("invalid_stereochemistry_collection.mol");
