@@ -78,8 +78,6 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
     /**
      * Test that the format factory guesses the correct IChemFormat
      * based on the file content.
-     *
-     * @throws Exception
      */
     @Test
     void testRGFileFormat() throws Exception {
@@ -183,7 +181,7 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         for (IAtom at : rGroupQuery.getAllRgroupQueryAtoms()) {
             if (at instanceof PseudoAtom) {
                 Assertions.assertTrue(RGroupQuery.isValidRgroupQueryLabel(((PseudoAtom) at).getLabel()));
-                int rgroupNum = new Integer((((PseudoAtom) at).getLabel()).substring(1));
+                int rgroupNum = Integer.parseInt((((PseudoAtom) at).getLabel()).substring(1));
                 Assertions.assertTrue(rgroupNum == 1 || rgroupNum == 2 || rgroupNum == 11);
                 switch (rgroupNum) {
                     case 1: {
@@ -218,7 +216,7 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
                         List<IRGroup> rGroups = rList.getRGroups();
                         Assertions.assertEquals(rGroups.get(0).getFirstAttachmentPoint().getSymbol(), "Pt");
-                        Assertions.assertEquals(rGroups.get(0).getSecondAttachmentPoint(), null);
+                        Assertions.assertNull(rGroups.get(0).getSecondAttachmentPoint());
                     }
                         break;
                 }
@@ -316,10 +314,10 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
         // This query has a detached R-group, test for empty attachment points
         List<IRGroup> rGroups = rList.getRGroups();
-        Assertions.assertEquals(rGroups.get(0).getFirstAttachmentPoint(), null);
-        Assertions.assertEquals(rGroups.get(0).getSecondAttachmentPoint(), null);
-        Assertions.assertEquals(rGroups.get(1).getFirstAttachmentPoint(), null);
-        Assertions.assertEquals(rGroups.get(1).getSecondAttachmentPoint(), null);
+        Assertions.assertNull(rGroups.get(0).getFirstAttachmentPoint());
+        Assertions.assertNull(rGroups.get(0).getSecondAttachmentPoint());
+        Assertions.assertNull(rGroups.get(1).getFirstAttachmentPoint());
+        Assertions.assertNull(rGroups.get(1).getSecondAttachmentPoint());
     }
 
     /**
@@ -365,10 +363,8 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertFalse(rGroupQuery.areSubstituentsDefined());
 
         //Getting for all configurations won't happen, because not all groups were set
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    rGroupQuery.getAllConfigurations(); // Will raise exception
-                                });
+        // Will raise exception
+        Assertions.assertThrows(CDKException.class, rGroupQuery::getAllConfigurations);
 
     }
 
