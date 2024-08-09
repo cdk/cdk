@@ -34,8 +34,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.*;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.StereoElementFactory;
@@ -51,13 +50,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -161,9 +154,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * </p>
      */
     private static final class ReadState {
-        IAtomContainer mol;
-        int dimensions = 0; // 0D (undef/no coordinates), 2D, 3D
-        boolean chiral;
+        IAtomContainer atomContainer;
+        // 0D (undef/no coordinates), 2D, 3D
+        int dimensions = 0;
+        boolean chiral = false;
+        // true if the molecule has query features, false otherwise
+        boolean isQuery = false;
         Map<Integer,Integer> stereoflags = null;
         final Map<IAtom,Integer> stereo0d = new HashMap<>();
 
@@ -223,8 +219,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         logger.info("Reading CTAB block");
         final ReadState state = new ReadState();
         IAtomContainer readData = builder.newAtomContainer();
-        state.mol = readData;
-        state.chiral = false;
+        state.atomContainer = readData;
 
         boolean foundEND = false;
         String lastLine = readHeader(state);
@@ -256,31 +251,45 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         // read in any SDF fields
         if (lastLine != null && lastLine.startsWith(M_END)) {
             try {
-                MDLV2000Reader.readNonStructuralData(input, state.mol);
+                MDLV2000Reader.readNonStructuralData(input, state.atomContainer);
             } catch (IOException ex) {
                 throw new CDKException("IO Error", ex);
             }
         }
 
-        finalizeMol(state);
+        // carry out final processing steps
+        readData = finalizeMol(state);
 
         return readData;
     }
 
     /**
-     * Finalizes the molecule. This includes finalizing dimensions, valence, and stereochemistry.
+     * Finalizes the molecule. This includes finalizing dimensions, query features, valence, and stereochemistry.
      *
      * @param state the ReadState object containing the molecule and other relevant information
+     * @return the processed Molecule
      */
-    private void finalizeMol(ReadState state) {
+    private IAtomContainer finalizeMol(ReadState state) {
         finalizeDimensions(state);
 
-        final IAtomContainer readData = state.mol;
-        boolean isQuery = readData instanceof IQueryAtomContainer;
+        // finalize query features
+        IAtomContainer readAtomContainer = state.atomContainer;
+        // migrate atom container to IQueryAtomContainer implementation if there are any objects with query features
+        if (state.isQuery) {
+            // shallow copy of the original atom container, i.e. same atoms and electron containers as original
+            final IQueryAtomContainer queryAtomContainer = new QueryAtomContainer(readAtomContainer, readAtomContainer.getBuilder());
+            readAtomContainer.stereoElements().forEach(queryAtomContainer::addStereoElement);
+            queryAtomContainer.setTitle(readAtomContainer.getTitle());
+            queryAtomContainer.setProperties(readAtomContainer.getProperties());
+            readAtomContainer = queryAtomContainer;
+        }
 
-        for (IAtom atom : readData.atoms()) {
+        // initialize with value from ReadState that only considers if atom container has any query features
+        boolean isQueryOrAromaticBond = state.isQuery;
+
+        for (IAtom atom : readAtomContainer.atoms()) {
             int valence = 0;
-            for (IBond bond : readData.getConnectedBondsList(atom)) {
+            for (IBond bond : readAtomContainer.getConnectedBondsList(atom)) {
                 if (bond instanceof IQueryBond || bond.getOrder() == IBond.Order.UNSET) {
                     valence = -1;
                     break;
@@ -289,16 +298,21 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 }
             }
             if (valence < 0) {
-                isQuery = true;
-                logger.warn("Cannot set valence for atom with query bonds"); // also counts aromatic bond as query
+                // update variable so that it now considers both (1) presence of a query feature in atom container
+                // and (2) presence of an aromatic bond
+                isQueryOrAromaticBond = true;
+                logger.warn("Cannot set valence for atom with query bonds (this includes aromatic bonds)");
             } else {
-                final int unpaired = readData.getConnectedSingleElectronsCount(atom);
+                final int unpaired = readAtomContainer.getConnectedSingleElectronsCount(atom);
                 applyMDLValenceModel(atom, valence + unpaired, unpaired);
             }
         }
 
-        if (!isQuery)
-            finalizeStereochemistry(state, readData);
+        // skip infering and setting stereo chemistry if atom container has query features or aromatic bond
+        if (!isQueryOrAromaticBond)
+            finalizeStereochemistry(state, readAtomContainer);
+
+        return readAtomContainer;
     }
 
     /**
@@ -322,9 +336,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // just use the coordinates or wedge bonds
                 for (Map.Entry<IAtom, Integer> e : state.stereo0d.entrySet()) {
                     final IStereoElement<IAtom,IAtom> stereoElement
-                            = MDLV2000Reader.createStereo0d(state.mol, e.getKey(), e.getValue());
+                            = MDLV2000Reader.createStereo0d(state.atomContainer, e.getKey(), e.getValue());
                     if (stereoElement != null)
-                        state.mol.addStereoElement(stereoElement);
+                        state.atomContainer.addStereoElement(stereoElement);
                 }
             }
 
@@ -383,7 +397,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         if (state.dimensions == 3 || optForce3d.isSet())
             return;
         int dimensions = 0;
-        for (IAtom atom : state.mol.atoms()) {
+        for (IAtom atom : state.atomContainer.atoms()) {
             Point3d p3d = atom.getPoint3d();
             if (p3d.z != 0d) {
                 dimensions = 3; // 3D
@@ -399,11 +413,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
         if (dimensions == 0) {
             // remove all coords we set
-            for (IAtom atom : state.mol.atoms())
+            for (IAtom atom : state.atomContainer.atoms())
                 atom.setPoint3d(null);
         } else if (dimensions == 2) {
             // convert 3d to 2d
-            for (IAtom atom : state.mol.atoms()) {
+            for (IAtom atom : state.atomContainer.atoms()) {
                 Point3d p3d = atom.getPoint3d();
                 atom.setPoint2d(new Point2d(p3d.x, p3d.y));
                 atom.setPoint3d(null);
@@ -521,13 +535,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // no header
                 return line1;
             }
-            state.mol.setTitle(line1);
+            state.atomContainer.setTitle(line1);
         }
         final String infoLine = readLine();
         state.dimensions = parseDimensions(infoLine);
         final String line3 = readLine();
         if (!line3.isEmpty())
-            state.mol.setProperty(CDKConstants.COMMENT, line3);
+            state.atomContainer.setProperty(CDKConstants.COMMENT, line3);
         final String line4 = readLine();
         if (!line4.contains("3000")) {
             throw new CDKException("This file is not a MDL V3000 molfile.");
@@ -541,7 +555,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * <p>IMPORTANT: it does not support the atom list and its negation!
      */
     private void readAtomBlock(ReadState state) throws CDKException {
-        final IAtomContainer readData = state.mol;
+        final IAtomContainer readData = state.atomContainer;
         logger.info("Reading ATOM block");
 
         int RGroupCounter = 1;
@@ -708,39 +722,72 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * Reads the bond atoms, order and stereo configuration.
      */
     private void readBondBlock(ReadState state) throws CDKException {
-        IAtomContainer readData = state.mol;
+        IAtomContainer readData = state.atomContainer;
         logger.info("Reading BOND block");
         boolean foundEND = false;
         while (isReady() && !foundEND) {
-            final String command = readCommand(readLine());
+            final String line = readLine();
+            final String command = readCommand(line);
             if ("END BOND".equals(command)) {
                 foundEND = true;
             } else {
                 logger.debug("Parsing bond from: " + command);
                 final StringTokenizer tokenizer = new StringTokenizer(command);
-                final IBond bond = readData.getBuilder().newBond();
+                IBond bond = readData.getBuilder().newBond();
                 // parse the index
                 try {
                     final String indexString = tokenizer.nextToken();
                     bond.setID(indexString);
                 } catch (Exception exception) {
-                    final String errorMessage = "Error while parsing bond index";
+                    final String errorMessage = "Error while parsing bond index: "
+                            + exception.getMessage() + ", line='" + line + "'";
                     logger.error(errorMessage);
                     logger.debug(exception);
                     throw new CDKException(errorMessage, exception);
                 }
                 // parse the order
                 try {
-                    final String orderString = tokenizer.nextToken();
-                    final int order = Integer.parseInt(orderString);
-                    if (order >= 4) {
-                        bond.setOrder(IBond.Order.UNSET);
-                        logger.warn("Query order types are not supported (yet). File a bug if you need it");
-                    } else {
-                        bond.setOrder(BondManipulator.createBondOrder(order));
+                    final String bondTypeString = tokenizer.nextToken();
+                    final int bondType = Integer.parseInt(bondTypeString);
+                    Expr.Type queryBondExpressionType = null;
+                    switch (bondType) {
+                        case 1: // single
+                        case 2: // double
+                        case 3: // triple
+                            bond.setOrder(BondManipulator.createBondOrder(bondType));
+                            break;
+                        case 4: // aromatic
+                            bond.setOrder(IBond.Order.UNSET);
+                            bond.setFlag(IChemObject.AROMATIC, true);
+                            bond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+                            break;
+                        case 5: // single or double
+                            queryBondExpressionType = Expr.Type.SINGLE_OR_DOUBLE;
+                            break;
+                        case 6: // single or aromatic
+                            queryBondExpressionType = Expr.Type.SINGLE_OR_AROMATIC;
+                            break;
+                        case 7: // double or aromatic
+                            queryBondExpressionType = Expr.Type.DOUBLE_OR_AROMATIC;
+                            break;
+                        case 8: // any
+                            queryBondExpressionType = Expr.Type.TRUE;
+                            break;
+                        case 9:
+                        case 10:
+                            throw new CDKException("Unsupported bond type: " + bondType);
+                        default:
+                            throw new CDKException("Invalid bond type: " + bondType);
+                    }
+                    // set up the QueryBond object if this is required given the bond type
+                    if (queryBondExpressionType != null) {
+                        final IQueryBond queryBond = new QueryBond(queryBondExpressionType, readData.getBuilder());
+                        queryBond.setID(bond.getID());
+                        bond = queryBond;
                     }
                 } catch (Exception exception) {
-                    final String errorMessage = "Error while parsing bond index";
+                    final String errorMessage = "Error while parsing bond type: "
+                            + exception.getMessage() + ", line='" + line + "'";
                     logger.error(errorMessage);
                     logger.debug(exception);
                     throw new CDKException(errorMessage, exception);
@@ -752,7 +799,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     final IAtom atom1 = state.getAtom(indexAtom1);
                     bond.setAtom(atom1, 0);
                 } catch (Exception exception) {
-                    final String errorMessage = "Error while parsing index atom 1 in bond";
+                    final String errorMessage = "Error while parsing index atom 1 in bond"
+                            + exception.getMessage() + ", line='" + line + "'";
                     logger.error(errorMessage);
                     logger.debug(exception);
                     throw new CDKException(errorMessage, exception);
@@ -764,7 +812,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     final IAtom atom2 = state.getAtom(indexAtom2);
                     bond.setAtom(atom2, 1);
                 } catch (Exception exception) {
-                    final String errorMessage = "Error while parsing index atom 2 in bond";
+                    final String errorMessage = "Error while parsing index atom 2 in bond"
+                            + exception.getMessage() + ", line='" + line + "'";
                     logger.error(errorMessage);
                     logger.debug(exception);
                     throw new CDKException(errorMessage, exception);
@@ -772,7 +821,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
                 final List<IAtom> endpts = new ArrayList<>();
                 String attach = null;
-
                 // the rest are key=value fields
                 if (command.indexOf('=') != -1) {
                     final Map<String, String> options = parseOptions(exhaustStringTokenizer(tokenizer));
@@ -808,12 +856,28 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             }
                         } catch (Exception exception) {
                             final String errorMessage = "Error while parsing key/value " + key + "=" + value + ": "
-                                    + exception.getMessage();
+                                    + exception.getMessage() + ", line='" + line + "'";
                             logger.error(errorMessage);
                             logger.debug(exception);
                             throw new CDKException(errorMessage, exception);
                         }
                     }
+                }
+
+                // update whether this is a molecule with query features
+                state.isQuery = state.isQuery || bond instanceof IQueryBond;
+
+                // alter this bond to a QueryBond
+                if (state.isQuery && bond.getClass() != QueryBond.class) {
+                    Expr expr;
+                    if (bond.isAromatic()) {
+                        expr = new Expr(Expr.Type.IS_AROMATIC);
+                    } else {
+                        expr = new Expr(Expr.Type.ORDER, bond.getOrder().numeric());
+                    }
+                    final IQueryBond queryBond = new QueryBond(bond.getBegin(), bond.getEnd(), expr);
+                    queryBond.setID(bond.getID());
+                    bond = queryBond;
                 }
 
                 // storing bond
@@ -836,7 +900,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     sgroups.add(sgroup);
                 }
 
-                logger.debug("Added bond: " + bond);
+                // set flags of atoms participating in bond to aromatic if bond has flag set to aromatic
+                if (bond.getFlag(IChemObject.AROMATIC)) {
+                    bond.getBegin().setFlag(IChemObject.AROMATIC, true);
+                    bond.getEnd().setFlag(IChemObject.AROMATIC, true);
+                }
+
+                if (logger.isDebugEnabled())
+                    logger.debug("Added " + (bond.getClass().getSimpleName().toLowerCase(Locale.ROOT).contains("query") ? "query" : "") + " bond: " + bond);
             }
         }
     }
@@ -845,7 +916,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * Reads labels.
      */
     private void readSGroup(ReadState state) throws CDKException {
-        IAtomContainer readData = state.mol;
+        IAtomContainer readData = state.atomContainer;
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             final String command = readCommand(readLine());
@@ -1045,10 +1116,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 atom.setImplicitHydrogenCount(0);
         } else {
             Integer element = atom.getAtomicNumber();
-            if (element == null) element = 0;
+            if (element == null)
+                element = 0;
 
             Integer charge = atom.getFormalCharge();
-            if (charge == null) charge = 0;
+            if (charge == null)
+                charge = 0;
 
             int implicitValence = MDLValence.implicitValence(element, charge, explicitValence);
             if (implicitValence < explicitValence) {
