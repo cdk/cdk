@@ -156,11 +156,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         stereoElements = new ArrayList<>(atomCount / 2);
 
         for (int f = 0; f < container.getAtomCount(); f++) {
-            atoms[f] = container.getAtom(f);
+            atoms[f] = AtomRef.deref(container.getAtom(f));
             container.getAtom(f).addListener(this);
         }
         for (int f = 0; f < this.bondCount; f++) {
-            bonds[f] = container.getBond(f);
+            bonds[f] = BondRef.deref(container.getBond(f));
             container.getBond(f).addListener(this);
         }
         for (int f = 0; f < this.lonePairCount; f++) {
@@ -224,8 +224,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public void setAtoms(IAtom[] atoms) {
         this.atoms = atoms;
-        for (IAtom atom : atoms) {
-            atom.addListener(this);
+        for (int i = 0; i < atoms.length; i++) {
+            atoms[i] = AtomRef.deref(atoms[i]);
+            atoms[i].addListener(this);
         }
         this.atomCount = atoms.length;
         notifyChanged();
@@ -241,8 +242,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public void setBonds(IBond[] bonds) {
         this.bonds = bonds;
-        for (IBond bond : bonds) {
-            bond.addListener(this);
+        for (int i = 0; i < bonds.length; i++) {
+            bonds[i] = BondRef.deref(bonds[i]);
+            bonds[i].addListener(this);
         }
         this.bondCount = bonds.length;
     }
@@ -254,6 +256,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     public void setAtom(int idx, IAtom atom) {
         if (idx >= atomCount)
             throw new IndexOutOfBoundsException("No atom at index: " + idx);
+        atom = AtomRef.deref(atom);
         int aidx = indexOf(atom);
         if (aidx >= 0)
             throw new IllegalArgumentException("Atom already in container at index: " + idx);
@@ -988,6 +991,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public void addAtom(IAtom atom) {
+        atom = AtomRef.deref(atom);
         if (contains(atom)) {
             return;
         }
@@ -1008,6 +1012,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public void addBond(IBond bond) {
+        bond = BondRef.deref(bond);
         if (bondCount >= bonds.length) growBondArray();
         bonds[bondCount] = bond;
         ++bondCount;
