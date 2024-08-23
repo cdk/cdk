@@ -68,7 +68,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     private Expr expr = new Expr(Expr.Type.TRUE);
 
     /**
-     * Constructs an query bond from an expression.
+     * Constructs a query bond from an expression.
      *
      * <pre>{@code
      * // pi-bond in a ring
@@ -86,7 +86,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Constructs an query bond from an expression type.
+     * Constructs a query bond from an expression type.
      *
      * <pre>{@code
      * new QueryBond(beg, end, IS_IN_RING);
@@ -101,7 +101,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Constructs an query bond from an expression type and value.
+     * Constructs a query bond from an expression type and value.
      *
      * <pre>{@code
      * new QueryBond(beg, end, ALIPHATIC_ORDER, 8);
@@ -121,6 +121,15 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
      */
     public QueryBond(IChemObjectBuilder builder) {
         this(null, null, null, IQueryBond.Stereo.NONE, builder);
+        atomCount = 0;
+    }
+
+    /**
+     * Constructs an empty query bond.
+     */
+    public QueryBond(Expr.Type type, IChemObjectBuilder builder) {
+        this(null, null, null, IQueryBond.Stereo.NONE, builder);
+        this.expr.setPrimitive(type);
         atomCount = 0;
     }
 
