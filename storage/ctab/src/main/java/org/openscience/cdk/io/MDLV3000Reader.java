@@ -57,6 +57,24 @@ import java.util.regex.Pattern;
 /**
  * Class that implements the MDL mol V3000 format. This reader reads the
  * element symbol and 2D or 3D coordinates from the ATOM block.
+ * <br><br>
+ * This reader is capable of reading <b>query bonds</b>, i.e., bond types
+ * <ul>
+ * <li>4 aromatic</li>
+ * <li>5 single or double</li>
+ * <li>6 single or aromatic</li>
+ * <li>7 double or aromatic</li>
+ * <li>8 any</li>
+ * </ul>
+ * <b>Limitations:<b/>
+ * <br>
+ * Atoms: The only properties read in the atom block are atom index, atom type,
+ * atom coordinates, atom-atom mapping, atom charge ({@code CHG}), atom radical
+ * ({@code RAD}}, stereo configuration ({@code CFG}), atomic weight ({@code MASS}),
+ * and valence ({@code VAL}).
+ * <br>
+ * Bonds: The reader throws a <code>CDKException</code> if bond types
+ * 9 (coordination) or 10 (hydrogen) are encountered.
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.module io
@@ -154,7 +172,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * </p>
      */
     private static final class ReadState {
-        IAtomContainer atomContainer;
+        IAtomContainer mol;
         // 0D (undef/no coordinates), 2D, 3D
         int dimensions = 0;
         boolean chiral = false;
@@ -219,7 +237,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         logger.info("Reading CTAB block");
         final ReadState state = new ReadState();
         IAtomContainer readData = builder.newAtomContainer();
-        state.atomContainer = readData;
+        state.mol = readData;
 
         boolean foundEND = false;
         String lastLine = readHeader(state);
@@ -251,7 +269,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         // read in any SDF fields
         if (lastLine != null && lastLine.startsWith(M_END)) {
             try {
-                MDLV2000Reader.readNonStructuralData(input, state.atomContainer);
+                MDLV2000Reader.readNonStructuralData(input, state.mol);
             } catch (IOException ex) {
                 throw new CDKException("IO Error", ex);
             }
@@ -273,7 +291,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         finalizeDimensions(state);
 
         // finalize query features
-        IAtomContainer readAtomContainer = state.atomContainer;
+        IAtomContainer readAtomContainer = state.mol;
         // migrate atom container to IQueryAtomContainer implementation if there are any objects with query features
         if (state.isQuery) {
             // shallow copy of the original atom container, i.e. same atoms and electron containers as original
@@ -336,9 +354,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // just use the coordinates or wedge bonds
                 for (Map.Entry<IAtom, Integer> e : state.stereo0d.entrySet()) {
                     final IStereoElement<IAtom,IAtom> stereoElement
-                            = MDLV2000Reader.createStereo0d(state.atomContainer, e.getKey(), e.getValue());
+                            = MDLV2000Reader.createStereo0d(state.mol, e.getKey(), e.getValue());
                     if (stereoElement != null)
-                        state.atomContainer.addStereoElement(stereoElement);
+                        state.mol.addStereoElement(stereoElement);
                 }
             }
 
@@ -397,7 +415,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         if (state.dimensions == 3 || optForce3d.isSet())
             return;
         int dimensions = 0;
-        for (IAtom atom : state.atomContainer.atoms()) {
+        for (IAtom atom : state.mol.atoms()) {
             Point3d p3d = atom.getPoint3d();
             if (p3d.z != 0d) {
                 dimensions = 3; // 3D
@@ -413,16 +431,26 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
         if (dimensions == 0) {
             // remove all coords we set
-            for (IAtom atom : state.atomContainer.atoms())
+            for (IAtom atom : state.mol.atoms())
                 atom.setPoint3d(null);
         } else if (dimensions == 2) {
             // convert 3d to 2d
-            for (IAtom atom : state.atomContainer.atoms()) {
+            for (IAtom atom : state.mol.atoms()) {
                 Point3d p3d = atom.getPoint3d();
                 atom.setPoint2d(new Point2d(p3d.x, p3d.y));
                 atom.setPoint3d(null);
             }
         }
+    }
+
+    /**
+     * Checks if a given character is a digit.
+     *
+     * @param ch the character to check
+     * @return true if the character is a digit, false otherwise
+     */
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
     }
 
     /**
@@ -439,7 +467,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         int num = 0;
         char ch;
 
-        while (i < len && Character.isDigit(ch = str.charAt(i))) {
+        while (i < len && isDigit(ch = str.charAt(i))) {
             num = 10 * num + (ch - '0');
             i++;
         }
@@ -457,7 +485,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
 
         // skip the count since we're storing in map
-        while (i < len && Character.isDigit(str.charAt(i)))
+        while (i < len && isDigit(str.charAt(i)))
             i++;
         while (i < len && str.charAt(i) == ' ')
             i++;
@@ -465,7 +493,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         // parse the atoms
         while (i < len) {
             int val = 0;
-            while (i < len && Character.isDigit(ch = str.charAt(i))) {
+            while (i < len && isDigit(ch = str.charAt(i))) {
                 val = 10 * val + (ch - '0');
                 i++;
             }
@@ -535,13 +563,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // no header
                 return line1;
             }
-            state.atomContainer.setTitle(line1);
+            state.mol.setTitle(line1);
         }
         final String infoLine = readLine();
         state.dimensions = parseDimensions(infoLine);
         final String line3 = readLine();
         if (!line3.isEmpty())
-            state.atomContainer.setProperty(CDKConstants.COMMENT, line3);
+            state.mol.setProperty(CDKConstants.COMMENT, line3);
         final String line4 = readLine();
         if (!line4.contains("3000")) {
             throw new CDKException("This file is not a MDL V3000 molfile.");
@@ -555,7 +583,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * <p>IMPORTANT: it does not support the atom list and its negation!
      */
     private void readAtomBlock(ReadState state) throws CDKException {
-        final IAtomContainer readData = state.atomContainer;
+        final IAtomContainer readData = state.mol;
         logger.info("Reading ATOM block");
 
         int RGroupCounter = 1;
@@ -722,7 +750,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * Reads the bond atoms, order and stereo configuration.
      */
     private void readBondBlock(ReadState state) throws CDKException {
-        IAtomContainer readData = state.atomContainer;
+        IAtomContainer readData = state.mol;
         logger.info("Reading BOND block");
         boolean foundEND = false;
         while (isReady() && !foundEND) {
@@ -901,7 +929,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 }
 
                 // set flags of atoms participating in bond to aromatic if bond has flag set to aromatic
-                if (bond.getFlag(IChemObject.AROMATIC)) {
+                if (bond.isAromatic()) {
                     bond.getBegin().setFlag(IChemObject.AROMATIC, true);
                     bond.getEnd().setFlag(IChemObject.AROMATIC, true);
                 }
@@ -916,7 +944,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * Reads labels.
      */
     private void readSGroup(ReadState state) throws CDKException {
-        IAtomContainer readData = state.atomContainer;
+        IAtomContainer readData = state.mol;
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             final String command = readCommand(readLine());
@@ -1046,7 +1074,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return keyValueTuples;
     }
 
-    public String exhaustStringTokenizer(StringTokenizer tokenizer) {
+    private String exhaustStringTokenizer(StringTokenizer tokenizer) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(' ');
         while (tokenizer.hasMoreTokens()) {
@@ -1056,7 +1084,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return stringBuilder.toString();
     }
 
-    public String readLine() throws CDKException {
+    private String readLine() throws CDKException {
         try {
             final String line = input.readLine();
             lineNumber++;
