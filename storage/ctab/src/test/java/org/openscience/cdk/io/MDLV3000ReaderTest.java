@@ -25,11 +25,13 @@ package org.openscience.cdk.io;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
@@ -58,10 +60,26 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
+    // used in several test methods to match query bonds against them
+    private IBond singleBond, doubleBond, tripleBond, aromaticBond;
 
     @BeforeAll
     static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLV3000Reader(), "org/openscience/cdk/io/iterator/molV3000.mol");
+    }
+
+    @BeforeEach
+    void setupBondsToMatch() {
+        singleBond = SilentChemObjectBuilder.getInstance().newBond();
+        singleBond.setOrder(IBond.Order.SINGLE);
+        doubleBond = SilentChemObjectBuilder.getInstance().newBond();
+        doubleBond.setOrder(IBond.Order.DOUBLE);
+        tripleBond = SilentChemObjectBuilder.getInstance().newBond();
+        tripleBond.setOrder(IBond.Order.TRIPLE);
+        aromaticBond = SilentChemObjectBuilder.getInstance().newBond();
+        aromaticBond.setOrder(IBond.Order.UNSET);
+        aromaticBond.setFlag(IChemObject.AROMATIC, true);
+        aromaticBond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
     }
 
     @Test
@@ -264,10 +282,12 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             }
             // bond assertions
             assertThat(atomContainer.getBondCount(), is(2));
-            // actual implementing class is AtomContainer.BaseBondRef
-            assertThat(atomContainer.getBond(0).getClass().getName().contains("Query"), is(false));
-            // actual implementing class is AtomContainer.QueryBondRef
-            assertThat(atomContainer.getBond(1).getClass().getName().contains("Query"), is(true));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(1));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(singleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(doubleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(tripleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(aromaticBond));
         }
     }
 
@@ -284,10 +304,12 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             }
             // bond assertions
             assertThat(atomContainer.getBondCount(), is(2));
-            // actual implementing class is AtomContainer.BaseBondRef
-            assertThat(atomContainer.getBond(0).getClass().getName().contains("Query"), is(false));
-            // actual implementing class is AtomContainer.QueryBondRef
-            assertThat(atomContainer.getBond(1).getClass().getName().contains("Query"), is(true));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(1));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(singleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(doubleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(tripleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(aromaticBond));
         }
     }
 
@@ -304,10 +326,12 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             }
             // bond assertions
             assertThat(atomContainer.getBondCount(), is(2));
-            // actual implementing class is AtomContainer.BaseBondRef
-            assertThat(atomContainer.getBond(0).getClass().getName().contains("Query"), is(false));
-            // actual implementing class is AtomContainer.QueryBondRef
-            assertThat(atomContainer.getBond(1).getClass().getName().contains("Query"), is(true));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(1));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(singleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(doubleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(tripleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(aromaticBond));
         }
     }
 
@@ -325,10 +349,12 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             }
             // bond assertions
             assertThat(atomContainer.getBondCount(), is(2));
-            // actual implementing class is AtomContainer.BaseBondRef
-            assertThat(atomContainer.getBond(0).getClass().getName().contains("Query"), is(false));
-            // actual implementing class is AtomContainer.QueryBondRef
-            assertThat(atomContainer.getBond(1).getClass().getName().contains("Query"), is(true));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(1));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(singleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(doubleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(tripleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(aromaticBond));
         }
     }
 
