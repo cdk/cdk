@@ -59,7 +59,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -90,15 +89,11 @@ import static org.openscience.cdk.io.MDLV2000Writer.OptWriteData;
  * The 3D block and enhanced stereochemistry is not currently supported.
  */
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
-
-    private static final Pattern         R_GRP_NUM = Pattern.compile("R(\\d+)");
-    private              V30LineWriter   writer;
-    private              StringIOSetting programNameOpt;
-
+    private static final Pattern R_GRP_NUM = Pattern.compile("R(\\d+)");
+    private V30LineWriter writer;
+    private StringIOSetting programNameOpt;
     private BooleanIOSetting writeDataOpt;
-
     private BooleanIOSetting truncateDataOpt;
-
     private Set<String> acceptedSdTags;
 
     /**
@@ -133,7 +128,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     }
 
     /**
-     * Safely access nullable int fields by defaulting to zero.
+     * Safely access nullable Integer fields by defaulting to zero.
      *
      * @param x value
      * @return value, or zero if null
@@ -151,12 +146,21 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @return index or -1 if not found
      */
     private static <T> Integer findIdx(Map<T, Integer> idxs, T obj) {
-        Integer idx = idxs.get(obj);
+        final Integer idx = idxs.get(obj);
         if (idx == null)
             return -1;
         return idx;
     }
 
+    /**
+     * Retrieves the program name string with an exact length of 8 characters.
+     * <p>
+     * If the program name is not set, it returns a string with 8 spaces.
+     * If the program name is set and longer than 8 characters, it returns the first 8 characters of the name.
+     * If the program name is shorter than 8 characters, it returns the name padded with spaces to a length of 8 characters.
+     * </p>
+     * @return the program name for the writer
+     */
     private String getProgName() {
         String progname = programNameOpt.getSetting();
         if (progname == null)
@@ -200,7 +204,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         }
         writer.writeDirect('\n');
 
-        String comment = mol.getProperty(CDKConstants.REMARK);
+        final String comment = mol.getProperty(CDKConstants.REMARK);
         if (comment != null)
             writer.writeDirect(comment.substring(0, Math.min(80, comment.length())));
         writer.writeDirect('\n');
@@ -217,9 +221,13 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @return winding to write to molfile
      */
     private static Stereo getLocalParity(Map<IChemObject, Integer> idxs, ITetrahedralChirality stereo) {
-        IAtom[] neighbours   = stereo.getLigands();
-        int[]   neighbourIdx = new int[neighbours.length];
-        assert neighbours.length == 4;
+        final IAtom[] neighbours = stereo.getLigands();
+        final int[] neighbourIdx = new int[neighbours.length];
+
+        if (neighbours.length != 4) {
+            throw new AssertionError("The number of neighbours must be 4 but is " + neighbours.length + ".");
+        }
+
         for (int i = 0; i < 4; i++) {
             // impl H is last
             if (stereo.getChiralAtom().equals(neighbours[i])) {
@@ -260,6 +268,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                 Map<IAtom, ITetrahedralChirality> atomToStereo) throws IOException, CDKException {
         if (mol.getAtomCount() == 0)
             return;
+
         final int dim = getNumberOfDimensions(mol);
         writer.write("BEGIN ATOM\n");
         int atomIdx = 0;
@@ -291,7 +300,6 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             }
 
             String symbol = getSymbol(atom, elem);
-
             int rnum = -1;
             if (symbol.charAt(0) == 'R') {
                 Matcher matcher = R_GRP_NUM.matcher(symbol);
@@ -300,8 +308,6 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     rnum   = Integer.parseInt(matcher.group(1));
                 }
             }
-
-
 
             writer.write(++atomIdx)
                   .write(' ')
@@ -373,7 +379,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     }
 
     /**
-     * Access the atom symbol to write.
+     * Return atom symbol to write.
      *
      * @param atom atom
      * @param elem atomic number
@@ -406,8 +412,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             return;
 
         // collect multicenter Sgroups before output
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        Map<IBond,Sgroup> multicenterSgroups = new HashMap<>();
+        final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        final Map<IBond,Sgroup> multicenterSgroups = new HashMap<>();
         if (sgroups != null) {
             for (Sgroup sgroup : sgroups) {
                 if (sgroup.getType() != SgroupType.ExtMulticenter)
@@ -420,17 +426,16 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         writer.write("BEGIN BOND\n");
         int bondIdx = 0;
         for (IBond bond : mol.bonds()) {
-            IAtom beg = bond.getBegin();
-            IAtom end = bond.getEnd();
+            final IAtom beg = bond.getBegin();
+            final IAtom end = bond.getEnd();
             if (beg == null || end == null)
                 throw new IllegalStateException("Bond " + bondIdx + " had one or more atoms.");
             int begIdx = findIdx(idxs, beg);
             int endIdx = findIdx(idxs, end);
             if (begIdx < 0 || endIdx < 0)
-                throw new IllegalStateException("Bond " + bondIdx + " had atoms not present in the molecule.");
+                throw new IllegalStateException("Bond " + bondIdx + " has atoms not present in the molecule.");
 
-            IBond.Stereo stereo = bond.getStereo();
-
+            final IBond.Stereo stereo = bond.getStereo();
             // swap beg/end if needed
             if (stereo == IBond.Stereo.UP_INVERTED ||
                 stereo == IBond.Stereo.DOWN_INVERTED ||
@@ -442,6 +447,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
             final int order = bond.getOrder() == null ? 0 : bond.getOrder().numeric();
 
+            // TODO add query bonds
             if (order < 1 || order > 3)
                 throw new CDKException("Bond order " + bond.getOrder() + " cannot be written to V3000");
 
@@ -474,9 +480,9 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     break;
             }
 
-            Sgroup sgroup = multicenterSgroups.get(bond);
+            final Sgroup sgroup = multicenterSgroups.get(bond);
             if (sgroup != null) {
-                List<IAtom> atoms = new ArrayList<>(sgroup.getAtoms());
+                final List<IAtom> atoms = new ArrayList<>(sgroup.getAtoms());
                 atoms.remove(bond.getBegin());
                 atoms.remove(bond.getEnd());
                 writer.write(" ATTACH=ANY ENDPTS=(").write(atoms, idxs).write(')');
@@ -503,8 +509,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @return the output order of atoms
      */
     private IAtom[] pushHydrogensToBack(IAtomContainer mol, Map<IChemObject, Integer> atomToIdx) {
-        assert atomToIdx.isEmpty();
-        IAtom[] atoms = new IAtom[mol.getAtomCount()];
+        if (!atomToIdx.isEmpty())
+            throw new AssertionError("Map atomToIdx must be empty.");
+
+        final IAtom[] atoms = new IAtom[mol.getAtomCount()];
         for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == 1)
                 continue;
@@ -522,7 +530,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
     /**
      * Safely access the Sgroups of a molecule retuning an empty list
-     * if none are defined..
+     * if none are defined.
      *
      * @param mol molecule
      * @return the sgroups
@@ -534,6 +542,12 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         return sgroups;
     }
 
+    /**
+     * Returns the number of dimensions (2D or 3D) of a given molecule.
+     *
+     * @param mol the molecule to determine the number of dimensions for
+     * @return the number of dimensions of the molecule (0 for no dimensions, 2 for 2D, 3 for 3D)
+     */
     private int getNumberOfDimensions(IAtomContainer mol) {
         for (IAtom atom : mol.atoms()) {
             if (atom.getPoint3d() != null)
@@ -552,15 +566,14 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @throws IOException low-level IO error
      * @throws CDKException unsupported format feature or invalid state
      */
-    private void writeSgroupBlock(List<Sgroup> sgroups, Map<IChemObject, Integer> idxs) throws IOException, CDKException {
-
+    private void writeSgroupBlock(final List<Sgroup> sgroups, Map<IChemObject, Integer> idxs) throws IOException, CDKException {
         // going to reorder but keep the originals untouched
-        sgroups = new ArrayList<>(sgroups);
+        List<Sgroup> copyOfSgroups = new ArrayList<>(sgroups);
 
         // remove non-ctab Sgroups
-        sgroups.removeIf(sgroup -> !sgroup.getType().isCtabStandard());
+        copyOfSgroups.removeIf(sgroup -> !sgroup.getType().isCtabStandard());
 
-        if (sgroups.isEmpty())
+        if (copyOfSgroups.isEmpty())
             return;
 
         writer.write("BEGIN SGROUP\n");
@@ -569,24 +582,21 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         // first, this sort is good for three levels of nesting. Not perfect
         // but really tools should be able to handle output of order parents
         // when reading (we do).
-        sgroups.sort(new Comparator<Sgroup>() {
-            @Override
-            public int compare(Sgroup o1, Sgroup o2) {
-                // empty parents come first
-                int cmp = -Boolean.compare(o1.getParents().isEmpty(), o2.getParents().isEmpty());
-                if (cmp != 0 || o1.getParents().isEmpty()) return cmp;
-                // non-empty parents, if one contains the other we have an ordering
-                if (o1.getParents().contains(o2))
-                    return +1;
-                else if (o2.getParents().contains(o1))
-                    return -1;
-                else
-                    return 0;
-            }
+        copyOfSgroups.sort((o1, o2) -> {
+            // empty parents come first
+            int cmp = -Boolean.compare(o1.getParents().isEmpty(), o2.getParents().isEmpty());
+            if (cmp != 0 || o1.getParents().isEmpty()) return cmp;
+            // non-empty parents, if one contains the other we have an ordering
+            if (o1.getParents().contains(o2))
+                return +1;
+            else if (o2.getParents().contains(o1))
+                return -1;
+            else
+                return 0;
         });
 
         int sgroupIdx = 0;
-        for (Sgroup sgroup : sgroups) {
+        for (Sgroup sgroup : copyOfSgroups) {
             final SgroupType type = sgroup.getType();
             writer.write(++sgroupIdx).write(' ').write(type.getKey()).write(" 0");
 
@@ -610,7 +620,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 Set<Sgroup> parents = sgroup.getParents();
                 if (parents.size() > 1)
                     throw new CDKException("Cannot write Sgroup with multiple parents");
-                writer.write(" PARENT=").write(1+sgroups.indexOf(parents.iterator().next()));
+                writer.write(" PARENT=").write(1+copyOfSgroups.indexOf(parents.iterator().next()));
             }
 
             for (SgroupKey key : sgroup.getAttributeKeys()) {
@@ -679,14 +689,14 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     private void writeMol(IAtomContainer mol) throws IOException, CDKException {
         writeHeader(mol);
 
-        List<Sgroup> sgroups = getSgroups(mol);
+        final List<Sgroup> sgroups = getSgroups(mol);
 
         int numSgroups = 0;
         for (Sgroup sgroup : sgroups)
             if (sgroup.getType().isCtabStandard())
                 numSgroups++;
 
-        int chiralFlag = getChiralFlag(mol.stereoElements());
+        final int chiralFlag = getChiralFlag(mol.stereoElements());
 
         writer.write("BEGIN CTAB\n");
         writer.write("COUNTS ")
@@ -700,12 +710,12 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
               .write("\n");
 
         // fast lookup atom indexes, MDL indexing starts at 1
-        Map<IChemObject, Integer> idxs = new HashMap<>();
-        Map<IAtom, ITetrahedralChirality> atomToStereo = new HashMap<>();
+        final Map<IChemObject, Integer> idxs = new HashMap<>();
+        final Map<IAtom, ITetrahedralChirality> atomToStereo = new HashMap<>();
 
         // work around specification ambiguities but reordering atom output
         // order, we also insert the index into a map for lookup
-        IAtom[] atoms = pushHydrogensToBack(mol, idxs);
+        final IAtom[] atoms = pushHydrogensToBack(mol, idxs);
 
         // bonds are in molecule order
         for (IBond bond : mol.bonds())
@@ -738,7 +748,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
     private void writeEnhancedStereo(IAtomContainer mol, Map<IChemObject, Integer> idxs) throws IOException {
         // group together
-        Map<Integer,List<IAtom>> groups = new TreeMap<>();
+        final Map<Integer,List<IAtom>> groups = new TreeMap<>();
         for (IStereoElement<?,?> se : mol.stereoElements()) {
             if (se.getConfigClass() == IStereoElement.TH) {
                groups.computeIfAbsent(se.getGroupInfo(), e -> new ArrayList<>())
@@ -749,8 +759,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         int numRel = 0;
         int numRac = 0;
         for (Map.Entry<Integer,List<IAtom>> e : groups.entrySet()) {
-            int grpInfo = e.getKey();
-            List<IAtom> atoms = e.getValue();
+            final int grpInfo = e.getKey();
+            final List<IAtom> atoms = e.getValue();
             writer.write("MDLV30/STE");
             switch (grpInfo & IStereoElement.GRP_TYPE_MASK) {
                 case IStereoElement.GRP_ABS:
@@ -787,7 +797,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     @Override
     public void write(IChemObject object) throws CDKException {
         try {
-            if (IAtomContainer.class.isInstance(object))
+            if (object instanceof IAtomContainer)
                 writeMol((IAtomContainer) object);
             else
                 throw new CDKException("Unsupported ChemObject " + object.getClass());
@@ -838,7 +848,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     }
 
     /**
-     * A convenience function for writing V3000 lines that auto
+     * A convenience class for writing V3000 lines that auto
      * wrap when >80 characters. We actually wrap at 78 since
      * the '-\n' takes the final two. We normally only need to wrap
      * for Sgroups but all lines are handled.
@@ -846,8 +856,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     private static final class V30LineWriter implements Closeable {
         // note: non-static
         private final DecimalFormat decimalFmt = new DecimalFormat("#.#####", DecimalFormatSymbols.getInstance(Locale.ROOT));
-        public static final String  PREFIX     = "M  V30 ";
-        public static final int     LIMIT      = 78; // -\n takes two chars (80 total)
+        private static final String PREFIX = "M  V30 ";
+        private static final int LIMIT = 78; // '-\n' takes last two chars (80 total)
 
         // the base writer instance
         private final BufferedWriter writer;
@@ -855,7 +865,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         // tracks the current line length
         private int currLength = 0;
 
-        public V30LineWriter(Writer writer) {
+        V30LineWriter(Writer writer) {
             if (writer instanceof BufferedWriter) {
                 this.writer = (BufferedWriter)writer;
             } else {
@@ -1008,9 +1018,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     }
 
     /**
-     * Initializes IO settings.<br>
-     * Please note with regards to "writeAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
-     * so a 'query file' is created if the container has aromatic bonds and this settings is true.
+     * Initializes IO settings.
      */
     private void initIOSettings() {
         programNameOpt = addSetting(new StringIOSetting(OptProgramName,
@@ -1038,8 +1046,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @return the chiral status, 0=not chiral, 1=chiral (all abs), 2=enhanced
      */
     static int getChiralFlag(Iterable<? extends IStereoElement> stereo) {
-        boolean init     = false;
-        int     grp      = 0;
+        boolean init = false;
+        int grp = 0;
         for (IStereoElement<?,?> se : stereo) {
             if (se.getConfigClass() == IStereoElement.TH) {
                 if (!init) {
