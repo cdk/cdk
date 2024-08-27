@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 /**
  * Iterating reader for RDFiles.
  * <p>
- *     This class facilitates reading RDFiles the specificiation of which was initially published
+ *     This class facilitates reading RDFiles the specification of which was initially published
  *     in {@cdk.cite DAL92} and is now maintained by Daussault Systems {@cdk.cite Dassault20}.
  * </p>
  * An RDFile is composed of
