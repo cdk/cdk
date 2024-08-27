@@ -28,12 +28,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -110,7 +109,7 @@ class MDLV3000WriterTest {
     }
 
     @Test
-    void nullBondOrder() throws IOException, CDKException {
+    void nullBondOrder() {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
@@ -118,14 +117,11 @@ class MDLV3000WriterTest {
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(0).setMassNumber(2);
         mol.getAtom(1).setImplicitHydrogenCount(3);
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    writeToStr(mol);
-                                });
+        Assertions.assertThrows(CDKException.class, () -> writeToStr(mol));
     }
 
     @Test
-    void unsetBondOrder() throws IOException, CDKException {
+    void unsetBondOrder() {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
@@ -133,10 +129,7 @@ class MDLV3000WriterTest {
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(0).setMassNumber(2);
         mol.getAtom(1).setImplicitHydrogenCount(3);
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    writeToStr(mol);
-                                });
+        Assertions.assertThrows(CDKException.class, () -> writeToStr(mol));
     }
 
     @Test
@@ -702,4 +695,63 @@ class MDLV3000WriterTest {
                 "M  V30 MDLV30/STERAC1 ATOMS=(2)\n" +
                 "M  V30 END COLLECTION"));
     }
+
+    @Test
+    void writeBondTypeFourTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addBond(0, 1, IBond.Order.UNSET);
+        mol.addBond(1, 2, IBond.Order.UNSET);
+        mol.addBond(2, 3, IBond.Order.UNSET);
+        mol.addBond(3, 4, IBond.Order.UNSET);
+        mol.addBond(4, 5, IBond.Order.UNSET);
+        mol.addBond(5, 0, IBond.Order.UNSET);
+        mol.bonds().forEach(bond -> bond.setFlag(IChemObject.AROMATIC, true));
+        mol.atoms().forEach(atom -> atom.setImplicitHydrogenCount(1));
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        assertThat(actual, containsString("M  V30 BEGIN BOND\n" +
+                "M  V30 1 4 1 2\n" +
+                "M  V30 2 4 2 3\n" +
+                "M  V30 3 4 3 4\n" +
+                "M  V30 4 4 4 5\n" +
+                "M  V30 5 4 5 6\n" +
+                "M  V30 6 4 6 1\n" +
+                "M  V30 END BOND"));
+    }
+
+    @Test
+    void writeBondTypeFiveTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("O"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        final IQueryBond queryBond = new QueryBond(mol.getAtom(1), mol.getAtom(2), Expr.Type.SINGLE_OR_DOUBLE);
+        mol.addBond(queryBond);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        System.out.println(actual);
+        assertThat(actual, containsString("M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 5 2 3\n" +
+                "M  V30 3 2 3 4\n" +
+                "M  V30 END BOND"));
+    }
+
 }

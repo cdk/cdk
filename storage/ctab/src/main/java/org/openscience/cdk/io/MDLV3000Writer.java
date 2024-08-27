@@ -39,6 +39,9 @@ import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
+import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -445,15 +448,54 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 endIdx = tmp;
             }
 
-            final int order = bond.getOrder() == null ? 0 : bond.getOrder().numeric();
-
-            // TODO add query bonds
-            if (order < 1 || order > 3)
+            int order = bond.getOrder() == null ? 0 : bond.getOrder().numeric();
+            int bondType = -1; // initialize to satisfy compiler, this value is not expected to actually being written
+            // If bond is an object of type QueryBond its bond order is set to null, so the variable 'order' ends up being 0.
+            // Aromatic bonds have a (1) bond order of IBond.Order.UNSET (which also yields a value of 0 for 'order') and
+            // (2) the flag IChemObject.AROMATIC set to true.
+            if (order == 0) {
+                if (bond.getOrder() == IBond.Order.UNSET && bond.getFlag(IChemObject.AROMATIC)) {
+                    bondType = 4;
+                } else if (bond instanceof IQueryBond) {
+                    // Only query bonds of the class QueryBond are supported as the actual query expression needs to be
+                    // extracted from the bond.
+                    if (!(bond instanceof QueryBond)) {
+                        throw new CDKException("Query bond of type " + bond.getClass() + " cannot be written to V3000");
+                    }
+                    final Expr expression = ((QueryBond) bond).getExpression();
+                    // Expression are predicate trees and can be arbitrarily complex.
+                    // Only simple expressions consisting of a single node with a select few types indicating
+                    // a bond order are considered here.
+                    if (expression.left() != null || expression.right() != null) {
+                        throw new CDKException("Query bonds whose features are described by more than a single Expressions " +
+                                bond.getOrder() + " cannot be written to V3000");
+                    }
+                    switch (expression.type()) {
+                        case SINGLE_OR_DOUBLE:
+                            bondType = 5;
+                            break;
+                        case SINGLE_OR_AROMATIC:
+                            bondType = 6;
+                            break;
+                        case DOUBLE_OR_AROMATIC:
+                            bondType = 7;
+                            break;
+                        case TRUE:
+                            bondType = 8;
+                            break;
+                        default:
+                            throw new CDKException("Query bond expression " + expression.type() + " cannot be written to V3000");
+                    }
+                }
+            } else if (order > 0 && order <= 3) {
+                bondType = order;
+            } else {
                 throw new CDKException("Bond order " + bond.getOrder() + " cannot be written to V3000");
+            }
 
             writer.write(++bondIdx)
                   .write(' ')
-                  .write(order)
+                  .write(bondType)
                   .write(' ')
                   .write(begIdx)
                   .write(' ')
