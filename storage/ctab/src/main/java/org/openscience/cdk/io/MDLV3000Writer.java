@@ -513,18 +513,22 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             throw new AssertionError("Map atomToIdx must be empty.");
 
         final IAtom[] atoms = new IAtom[mol.getAtomCount()];
+        final List<IAtom> hydrogenAtoms = new ArrayList<>();
+
         for (IAtom atom : mol.atoms()) {
-            if (atom.getAtomicNumber() == 1)
+            if (atom.getAtomicNumber() == 1) {
+                hydrogenAtoms.add(atom);
                 continue;
+            }
             atoms[atomToIdx.size()] = atom;
             atomToIdx.put(atom, atomToIdx.size() + 1);
         }
-        for (IAtom atom : mol.atoms()) {
-            if (atom.getAtomicNumber() != 1)
-                continue;
-            atoms[atomToIdx.size()] = atom;
-            atomToIdx.put(atom, atomToIdx.size() + 1);
+
+        for (IAtom hydrogenAtom : hydrogenAtoms) {
+            atoms[atomToIdx.size()] = hydrogenAtom;
+            atomToIdx.put(hydrogenAtom, atomToIdx.size() + 1);
         }
+
         return atoms;
     }
 
