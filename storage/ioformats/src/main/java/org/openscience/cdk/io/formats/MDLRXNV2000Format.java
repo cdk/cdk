@@ -75,6 +75,18 @@ public class MDLRXNV2000Format extends AbstractResourceFormat implements IChemFo
         return null;
     }
 
+    /**
+     * Checks if a given character is an ASCII digit. Do NOT replace
+     * with Character.isDigit() which check the entire Unicode table/code
+     * spaces.
+     *
+     * @param ch the character to check
+     * @return true if the character is a digit, false otherwise
+     */
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
     /** {@inheritDoc} */
     @Override
     public MatchResult matches(List<String> lines) {
@@ -86,16 +98,16 @@ public class MDLRXNV2000Format extends AbstractResourceFormat implements IChemFo
         String header = lines.size() > 4 ? lines.get(4) : "";
 
         // atom count
-        if (header.length() < 3 || !Character.isDigit(header.charAt(2))) return NO_MATCH;
+        if (header.length() < 3 || !isDigit(header.charAt(2))) return NO_MATCH;
         // bond count
-        if (header.length() < 6 || !Character.isDigit(header.charAt(5))) return NO_MATCH;
+        if (header.length() < 6 || !isDigit(header.charAt(5))) return NO_MATCH;
 
         // check the rest of the header is only spaces and digits
         if (header.length() > 6) {
             String remainder = header.substring(6).trim();
             for (int i = 0; i < remainder.length(); ++i) {
                 char c = remainder.charAt(i);
-                if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
+                if (!(isDigit(c) || c == ' ')) {
                     return NO_MATCH;
                 }
             }

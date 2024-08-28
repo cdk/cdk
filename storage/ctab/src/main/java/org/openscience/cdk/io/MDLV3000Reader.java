@@ -444,7 +444,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     /**
-     * Checks if a given character is a digit.
+     * Checks if a given character is an ASCII digit. Do NOT replace
+     * with Character.isDigit() which check the entire Unicode table/code
+     * spaces.
      *
      * @param ch the character to check
      * @return true if the character is a digit, false otherwise
