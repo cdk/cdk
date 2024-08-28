@@ -431,10 +431,22 @@ public class CIFReader extends DefaultChemObjectReader {
         return returnVal;
     }
 
+    /**
+     * Checks if a given character is an ASCII digit. Do NOT replace
+     * with Character.isDigit() which check the entire Unicode table/code
+     * spaces.
+     *
+     * @param ch the character to check
+     * @return true if the character is a digit, false otherwise
+     */
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
     private String extractFirstLetters(String value) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < value.length(); i++) {
-            if (Character.isDigit(value.charAt(i))) {
+            if (isDigit(value.charAt(i))) {
                 break;
             } else {
                 result.append(value.charAt(i));

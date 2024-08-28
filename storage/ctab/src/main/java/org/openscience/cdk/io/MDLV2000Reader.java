@@ -650,11 +650,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
     }
 
+    /**
+     * Checks if a given character is an ASCII digit. Do NOT replace
+     * with Character.isDigit() which check the entire Unicode table/code
+     * spaces.
+     *
+     * @param ch the character to check
+     * @return true if the character is a digit, false otherwise
+     */
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
     private String removeNonDigits(String input) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             char inputChar = input.charAt(i);
-            if (Character.isDigit(inputChar)) sb.append(inputChar);
+            if (isDigit(inputChar)) sb.append(inputChar);
         }
         return sb.toString();
     }
@@ -1923,7 +1935,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
 
         // set the stereo partiy
-        Integer parity = line.length() > 41 ? Character.digit(line.charAt(41), 10) : 0;
+        Integer parity = line.length() > 41 ? (line.charAt(41) - '0') : 0;
         atom.setStereoParity(parity);
 
         if (line.length() >= 51) {
