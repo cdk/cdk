@@ -50,6 +50,12 @@ import java.util.regex.Pattern;
  *     </ol>
  *     </li>
  * </ol>
+ * <p>
+ * By default, any remaining records are skipped if an error is encountered in a record. This can be changed
+ * by using one of the constructors that allows to provide a boolean value for the argument
+ * {@code continueOnError} (one takes an {@code #RdfileReader(InputStream,IChemObject,boolean) InputStream},
+ * the other one a {@code #RdfileReader(Reader,IChemObject,boolean) Reader}).
+ * </p>
  *
  * @see RdfileRecord
  * @author Uli Fechner
@@ -81,23 +87,57 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
     private int lineCounter;
     private RdfileRecord nextRecord;
     private boolean endOfFile;
-    private final boolean skipRecordsOnError;
+    private final boolean continueOnError;
     private final BufferedReader bufferedReader;
     private final IChemObjectBuilder chemObjectBuilder;
 
+    /**
+     * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
+     *
+     * @param in the InputStream serving the RDfile data
+     * @param chemObjectBuilder the IChemObjectBuilder for creating CDK objects
+     */
     public RdfileReader(InputStream in, IChemObjectBuilder chemObjectBuilder) {
         this(in, chemObjectBuilder, true);
     }
 
-    public RdfileReader(InputStream in, IChemObjectBuilder chemObjectBuilder, boolean skipRecordsOnError) {
-        this(new InputStreamReader(in, StandardCharsets.UTF_8), chemObjectBuilder, skipRecordsOnError);
+    /**
+     * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
+     * <p>
+     * If {@code continueOnError} is {@code true} remaining records are processed when an error
+     * is encountered; if {@code false} all remaining records in the file are skipped.
+     * </p>
+     *
+     * @param in the InputStream serving the RDfile data
+     * @param chemObjectBuilder the IChemObjectBuilder for creating CDK objects
+     * @param continueOnError determines whether to continue processing records in case an error is encountered
+     */
+    public RdfileReader(InputStream in, IChemObjectBuilder chemObjectBuilder, boolean continueOnError) {
+        this(new InputStreamReader(in, StandardCharsets.UTF_8), chemObjectBuilder, continueOnError);
     }
 
+    /**
+     * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
+     *
+     * @param reader the Reader providing the RDfile data
+     * @param chemObjectBuilder the IChemObjectBuilder for creating CDK objects
+     */
     public RdfileReader(Reader reader, IChemObjectBuilder chemObjectBuilder) {
         this(reader, chemObjectBuilder, true);
     }
 
-    public RdfileReader(Reader reader, IChemObjectBuilder chemObjectBuilder, boolean skipRecordsOnError) {
+    /**
+     * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
+     * <p>
+     * If {@code continueOnError} is {@code true} remaining records are processed when an error
+     * is encountered; if {@code false} all remaining records in the file are skipped.
+     * </p>
+     *
+     * @param reader the Reader providing the RDfile data
+     * @param chemObjectBuilder the IChemObjectBuilder for creating CDK objects
+     * @param continueOnError determines whether to continue processing records in case an error is encountered
+     */
+    public RdfileReader(Reader reader, IChemObjectBuilder chemObjectBuilder, boolean continueOnError) {
         if (reader instanceof BufferedReader) {
             this.bufferedReader = (BufferedReader) reader;
         } else {
@@ -105,7 +145,7 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
         }
 
         this.chemObjectBuilder = chemObjectBuilder;
-        this.skipRecordsOnError = skipRecordsOnError;
+        this.continueOnError = continueOnError;
     }
 
     /**
@@ -151,8 +191,9 @@ public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
         } catch (CDKException exception) {
             LOGGER.error("Parsing error when reading RDfile: " + exception.getMessage());
 
-            // if records with errors should not be skipped we indicate EOF after encountering an error
-            if (!skipRecordsOnError) {
+            // if the reader should NOT continue processing the remaining records if a record with an error is
+            // encountered we signal EOF to callers upstream
+            if (!continueOnError) {
                 endOfFile = true;
                 return null;
             }
