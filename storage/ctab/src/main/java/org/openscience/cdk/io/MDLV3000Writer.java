@@ -46,6 +46,8 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -92,6 +94,62 @@ import static org.openscience.cdk.io.MDLV2000Writer.OptWriteData;
  * The 3D block and enhanced stereochemistry is not currently supported.
  */
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
+
+    /**
+     * Enum representing the different types of bonds in MDL format.
+     */
+    enum MDLBondType {
+        SINGLE(1),
+        DOUBLE(2),
+        TRIPLE(3),
+        AROMATIC(4),
+        SINGLE_OR_DOUBLE(5),
+        SINGLE_OR_AROMATIC(6),
+        DOUBLE_OR_AROMATIC(7),
+        ANY(8),
+        COORDINATION(9), // not supported at this time
+        HYDROGEN(10);    // not supported at this time
+
+        final int value;
+
+        MDLBondType(int value) {
+            this.value = value;
+        }
+
+        int getValue() {
+            return this.value;
+        }
+    }
+
+    /**
+     * Enum representing MDL query property values.
+     */
+    enum MDLQueryProperty {
+        NOT_SPECIFIED(0), // default value, not written if matched
+        RING(1),
+        CHAIN(2);
+
+        final int value;
+
+        MDLQueryProperty(int value) {
+            this.value = value;
+        }
+
+        /**
+         * Returns the default value for MDLQueryProperty.
+         *
+         * @return the default value for MDLQueryProperty
+         */
+        static MDLQueryProperty getDefaultValue() {
+            return NOT_SPECIFIED;
+        }
+
+        int getValue() {
+            return this.value;
+        }
+    }
+
     private static final Pattern R_GRP_NUM = Pattern.compile("R(\\d+)");
     private V30LineWriter writer;
     private StringIOSetting programNameOpt;
@@ -450,42 +508,29 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
             int order = bond.getOrder() == null ? 0 : bond.getOrder().numeric();
             int bondType = -1; // initialize to satisfy compiler, this value is not expected to actually being written
+            MDLQueryProperty queryProperty = MDLQueryProperty.getDefaultValue();
+
             // If bond is an object of type QueryBond its bond order is set to null, so the variable 'order' ends up being 0.
             // Aromatic bonds have a (1) bond order of IBond.Order.UNSET (which also yields a value of 0 for 'order') and
             // (2) the flag IChemObject.AROMATIC set to true.
             if (order == 0) {
-                if (bond.getOrder() == IBond.Order.UNSET && bond.getFlag(IChemObject.AROMATIC)) {
-                    bondType = 4;
+                if (bond.getOrder() == IBond.Order.UNSET) {
+                    if (bond.getFlag(IChemObject.AROMATIC)) {
+                        bondType = 4;
+                    } else {
+                        throw new CDKException("Bond with bond order " + bond.getOrder() + " that isn't flagged as aromatic cannot be written to V3000");
+                    }
                 } else if (bond instanceof IQueryBond) {
                     // Only query bonds of the class QueryBond are supported as the actual query expression needs to be
                     // extracted from the bond.
                     if (!(bond instanceof QueryBond)) {
                         throw new CDKException("Query bond of type " + bond.getClass() + " cannot be written to V3000");
                     }
+
                     final Expr expression = ((QueryBond) bond).getExpression();
-                    // Expression are predicate trees and can be arbitrarily complex.
-                    // Only simple expressions consisting of a single node with a select few types indicating
-                    // a bond order are considered here.
-                    if (expression.left() != null || expression.right() != null) {
-                        throw new CDKException("Query bonds whose features are described by more than a single Expressions " +
-                                bond.getOrder() + " cannot be written to V3000");
-                    }
-                    switch (expression.type()) {
-                        case SINGLE_OR_DOUBLE:
-                            bondType = 5;
-                            break;
-                        case SINGLE_OR_AROMATIC:
-                            bondType = 6;
-                            break;
-                        case DOUBLE_OR_AROMATIC:
-                            bondType = 7;
-                            break;
-                        case TRUE:
-                            bondType = 8;
-                            break;
-                        default:
-                            throw new CDKException("Query bond expression " + expression.type() + " cannot be written to V3000");
-                    }
+                    final ExpressionConverter converter = new ExpressionConverter(expression);
+                    // Might throw a CDKException if expression cannot be meaningfully converted to MDL bond tpye.
+                    bondType = converter.toMDLBondType().getValue();
                 }
             } else if (order > 0 && order <= 3) {
                 bondType = order;
@@ -521,6 +566,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     // warn?
                     break;
             }
+
+            // TODO add outputting query property
 
             final Sgroup sgroup = multicenterSgroups.get(bond);
             if (sgroup != null) {
@@ -1109,5 +1156,191 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         if (grp == IStereoElement.GRP_ABS)
             return 1;
         return 2;
+    }
+
+    /**
+     * Responsible for converting bond {@link Expr expressions} to {@link MDLBondType MDL bond types}
+     * and {@link MDLQueryProperty MDL query properties}.
+     */
+    static final class ExpressionConverter {
+        
+        private static final int UNSPEC_SING  = 0x0001; // 1 << 0  ≅ 0b000000000000001
+        private static final int UNSPEC_DOUB  = 0x0002; // 1 << 1  ≅ 0b000000000000010
+        private static final int UNSPEC_TRIP  = 0x0004; // 1 << 2  ≅ 0b000000000000100
+        private static final int UNSPEC_QUAD  = 0x0008; // 1 << 3  ≅ 0b000000000001000
+        private static final int UNSPEC_AROM  = 0x0010; // 1 << 4  ≅ 0b000000000010000
+        private static final int CHAIN_SING   = 0x0020; // 1 << 5  ≅ 0b000000000100000
+        private static final int CHAIN_DOUB   = 0x0040; // 1 << 6  ≅ 0b000000001000000
+        private static final int CHAIN_TRIP   = 0x0080; // 1 << 7  ≅ 0b000000010000000
+        private static final int CHAIN_QUAD   = 0x0100; // 1 << 8  ≅ 0b000000100000000
+        private static final int CHAIN_AROM   = 0x0200; // 1 << 9  ≅ 0b000001000000000
+        private static final int RING_SING    = 0x0400; // 1 << 10 ≅ 0b000010000000000
+        private static final int RING_DOUB    = 0x0800; // 1 << 11 ≅ 0b000100000000000
+        private static final int RING_TRIP    = 0x1000; // 1 << 12 ≅ 0b001000000000000
+        private static final int RING_QUAD    = 0x2000; // 1 << 13 ≅ 0b010000000000000
+        private static final int RING_AROM    = 0x4000; // 1 << 14 ≅ 0b100000000000000
+
+        private static final int SINGLE_MASK        = 0x0421; // 0b000010000100001
+        private static final int DOUBLE_MASK        = 0x0842; // 0b000100001000010
+        private static final int TRIPLE_MASK        = 0x1084; // 0b001000010000100
+        private static final int QUADRUPLE_MASK     = 0x2108; // 0b010000100001000
+        private static final int UNSPECIFIED_MASK   = 0x001f; // 0b000000000011111
+        private static final int CHAIN_MASK         = 0x03e0; // 0b000001111100000
+        private static final int RING_MASK          = 0x7c00; // 0b111110000000000
+        private static final int AROMATIC_MASK      = 0x4210; // 0b100001000010000
+        private static final int ALIPHATIC_MASK     = 0x3def; // 0b011110111101111
+        private static final int ALL_MASK           = 0x7fff; // 0b111111111111111
+
+        private final Expr expression;
+        private final int bondCode;
+
+        /**
+         * Initializes an instance of the ExpressionConverter class.
+         *
+         * @param expression the expression to be converted
+         */
+        ExpressionConverter(final Expr expression) {
+            this.expression = expression;
+            this.bondCode = getBondCode(expression);
+        }
+
+        /**
+         * Converts the bond code to an {@link MDLBondType} enum.
+         *
+         * @return the MDLBondType enum representing the bond code
+         * @throws CDKException if the expression of the query bond cannot be written to V3000
+         */
+        MDLBondType toMDLBondType() throws CDKException {
+            if ((this.bondCode & ALL_MASK) == ALL_MASK)
+                return MDLBondType.ANY;
+            if ((this.bondCode & SINGLE_MASK) > 0) {
+                if ((this.bondCode & DOUBLE_MASK) > 0) {
+                    return MDLBondType.SINGLE_OR_DOUBLE;
+                }
+                if ((this.bondCode & AROMATIC_MASK) > 0) {
+                    return MDLBondType.SINGLE_OR_AROMATIC;
+                }
+                if ((this.bondCode & TRIPLE_MASK) == 0 && (this.bondCode & QUADRUPLE_MASK) == 0) {
+                    return MDLBondType.SINGLE;
+                }
+            }
+            if ((this.bondCode & DOUBLE_MASK) > 0) {
+                if ((this.bondCode & AROMATIC_MASK) > 0) {
+                    return MDLBondType.DOUBLE_OR_AROMATIC;
+                }
+                if (
+                        (this.bondCode & SINGLE_MASK) == 0 &&
+                        (this.bondCode & TRIPLE_MASK) == 0 &&
+                        (this.bondCode & QUADRUPLE_MASK) == 0
+                ) {
+                    return MDLBondType.DOUBLE;
+                }
+            }
+            if (
+                    (this.bondCode & TRIPLE_MASK) > 0 &&
+                    (this.bondCode & SINGLE_MASK) == 0 &&
+                    (this.bondCode & DOUBLE_MASK) == 0 &&
+                    (this.bondCode & QUADRUPLE_MASK) == 0
+            ) {
+                return MDLBondType.TRIPLE;
+            }
+            if (
+                    (this.bondCode & AROMATIC_MASK) > 0 &&
+                    (this.bondCode & SINGLE_MASK) == 0 &&
+                    (this.bondCode & DOUBLE_MASK) == 0 &&
+                    (this.bondCode & TRIPLE_MASK) == 0 &&
+                    (this.bondCode & QUADRUPLE_MASK) == 0
+            ) {
+                return MDLBondType.AROMATIC;
+            }
+
+            throw new CDKException("Query bond with expression " + this.expression + " cannot be written to V3000");
+        }
+
+        /**
+         * Converts this bondCode to an {@link MDLQueryProperty} enum.
+         *
+         * @return MDLQueryProperty enum representing the bondCode
+         */
+        MDLQueryProperty toMDLQueryProperty() {
+            if ((this.bondCode & UNSPECIFIED_MASK) > 0)
+                return MDLQueryProperty.NOT_SPECIFIED;
+            if ((this.bondCode & CHAIN_MASK) > 0)
+                return MDLQueryProperty.CHAIN;
+            if ((this.bondCode & RING_MASK) > 0)
+                return MDLQueryProperty.RING;
+
+            // This statement can be reached with e.g. and(IS_IN_RING, IS_IN_CHAIN).
+            return MDLQueryProperty.NOT_SPECIFIED;
+        }
+
+        /**
+         * Calculates a bond code based on the given expression.
+         * <br>
+         * This method is package-private instead of private on purpose to allow for testing.
+         *
+         * @param expression the expression to get a bond code for
+         * @return the calculated bond code
+         */
+        static int getBondCode(final Expr expression) {
+            switch (expression.type()) {
+                case NOT:
+                    return ~getBondCode(expression.left());
+                case OR:
+                    return getBondCode(expression.left()) | getBondCode(expression.right());
+                case AND:
+                    return getBondCode(expression.left()) & getBondCode(expression.right());
+                case TRUE:
+                case STEREOCHEMISTRY:
+                    return ALL_MASK;
+                case SINGLE_OR_AROMATIC:
+                    return SINGLE_MASK | AROMATIC_MASK;
+                case DOUBLE_OR_AROMATIC:
+                    return DOUBLE_MASK | AROMATIC_MASK;
+                case SINGLE_OR_DOUBLE:
+                    return SINGLE_MASK | DOUBLE_MASK;
+                case IS_AROMATIC:
+                    return AROMATIC_MASK;
+                case IS_ALIPHATIC:
+                    return ALIPHATIC_MASK;
+                case IS_IN_RING:
+                    return RING_MASK;
+                case IS_IN_CHAIN:
+                    return CHAIN_MASK;
+                case ORDER:
+                    switch (expression.value()) {
+                        case 1:
+                            return SINGLE_MASK;
+                        case 2:
+                            return DOUBLE_MASK;
+                        case 3:
+                            return TRIPLE_MASK;
+                        case 4:
+                            return QUADRUPLE_MASK;
+                        default:
+                            logger.warn("Unexpected bond order expression value: " + expression.value());
+                            return 0; // error
+                    }
+                case ALIPHATIC_ORDER:
+                    switch (expression.value()) {
+                        case 1:
+                            return SINGLE_MASK & ALIPHATIC_MASK;
+                        case 2:
+                            return DOUBLE_MASK & ALIPHATIC_MASK;
+                        case 3:
+                            return TRIPLE_MASK & ALIPHATIC_MASK;
+                        case 4:
+                            return QUADRUPLE_MASK & ALIPHATIC_MASK;
+                        default:
+                            logger.warn("Unexpected aliphatic bond order expression value: " + expression.value());
+                            return 0; // error
+                    }
+                case FALSE:
+                    return 0;
+                default:
+                    logger.warn("Unexpected expression: " + expression);
+                    return 0; // error
+            }
+        }
     }
 }

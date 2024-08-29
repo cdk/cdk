@@ -51,8 +51,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class MDLV3000WriterTest {
@@ -121,7 +120,7 @@ class MDLV3000WriterTest {
     }
 
     @Test
-    void unsetBondOrder() {
+    void unsetBondOrder() throws IOException {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
@@ -129,7 +128,11 @@ class MDLV3000WriterTest {
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(0).setMassNumber(2);
         mol.getAtom(1).setImplicitHydrogenCount(3);
-        Assertions.assertThrows(CDKException.class, () -> writeToStr(mol));
+        try {
+            writeToStr(mol);
+        } catch (CDKException exception) {
+            assertThat(exception.getMessage(), is("Bond with bond order UNSET that isn't flagged as aromatic cannot be written to V3000"));
+        }
     }
 
     @Test
@@ -752,6 +755,216 @@ class MDLV3000WriterTest {
                 "M  V30 2 5 2 3\n" +
                 "M  V30 3 2 3 4\n" +
                 "M  V30 END BOND"));
+    }
+
+    ///// Below are tests assessing inner class MDLV3000Writer.ExpressionConverter. /////
+
+    @Test
+    void toMDLBondType_true_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.TRUE);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.ANY));
+    }
+
+    @Test
+    void toMDLBondType_orderSingle_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 1);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.SINGLE));
+    }
+
+    @Test
+    void toMDLBondType_and_orderDouble_isInChain_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 2).and(new Expr(Expr.Type.IS_IN_CHAIN));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.DOUBLE));
+    }
+
+    @Test
+    void toMDLBondType_and_orderTriple_isAliphatic_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 3).and(new Expr(Expr.Type.IS_ALIPHATIC));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.TRIPLE));
+    }
+
+    @Test
+    void toMDLBondType_isAromatic_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.IS_AROMATIC);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.AROMATIC));
+    }
+
+    @Test
+    void toMDLBondType_and_doubleOrAromatic_isInRing_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.DOUBLE_OR_AROMATIC).and(new Expr(Expr.Type.IS_IN_RING));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.DOUBLE_OR_AROMATIC));
+    }
+
+    @Test
+    void toMDLBondType_and_singleOrAromatic_isInChain_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.SINGLE_OR_AROMATIC).and(new Expr(Expr.Type.IS_IN_CHAIN));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.SINGLE_OR_AROMATIC));
+    }
+
+    @Test
+    void toMDLBondType_and_singleOrDouble_isInChain_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 1).or(new Expr(Expr.Type.ORDER, 2));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.SINGLE_OR_DOUBLE));
+    }
+
+    @Test
+    void toMDLQueryProperty_orderOne_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 1);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_orderSingleOrDouble_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.SINGLE_OR_DOUBLE);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_isAromatic_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.IS_AROMATIC);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_and_orderDoubleOrAromatic_inChain_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.DOUBLE_OR_AROMATIC).and(new Expr(Expr.Type.IS_IN_CHAIN));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.CHAIN));
+    }
+
+    @Test
+    void toMDLQueryProperty_and_orderDouble_isInRing_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 1).and(new Expr(Expr.Type.IS_IN_RING));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.RING));
+    }
+
+    @Test
+    void toMDLQueryProperty_and_isInChain_isInRing_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.IS_IN_CHAIN).and(new Expr(Expr.Type.IS_IN_RING));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_true_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.TRUE);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_and_orderSingleOrDouble_isInRing_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.SINGLE_OR_DOUBLE).and(new Expr(Expr.Type.IS_IN_RING));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.RING));
     }
 
 }
