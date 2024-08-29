@@ -61,17 +61,11 @@ import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.io.MDLV2000Writer.OptProgramName;
@@ -585,7 +579,6 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         writer.write("END BOND\n");
     }
 
-
     /**
      * CTfile specification is ambiguous as to how parity values should be written
      * for implicit hydrogens. Old applications (Symyx Draw) seem to push any
@@ -594,7 +587,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * 
      * To avoid the ambiguity for those who read 0D stereo (bad anyways) we
      * actually do push all hydrogens atoms to the back of the atom list giving
-     * them highest value (4) when writing parity values.
+     * them the highest value (4) when writing parity values.
      *
      * @param mol       molecule
      * @param atomToIdx mapping that will be filled with the output index
@@ -605,21 +598,22 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             throw new AssertionError("Map atomToIdx must be empty.");
 
         final IAtom[] atoms = new IAtom[mol.getAtomCount()];
-        final List<IAtom> hydrogenAtoms = new ArrayList<>();
+        final int numberOfHydrogenAtoms = (int) StreamSupport.stream(mol.atoms().spliterator(), true)
+                .filter(atom -> atom.getAtomicNumber() == 1)
+                .count();
+        int nonHydrogenIndex = 0;
+        int hydrogenIndex = mol.getAtomCount() - numberOfHydrogenAtoms;
 
-        for (IAtom atom : mol.atoms()) {
+        for (final IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == 1) {
-                hydrogenAtoms.add(atom);
-                continue;
+                atoms[hydrogenIndex++] = atom;
+            } else {
+                atoms[nonHydrogenIndex++] = atom;
             }
-            atoms[atomToIdx.size()] = atom;
-            atomToIdx.put(atom, atomToIdx.size() + 1);
         }
 
-        for (IAtom hydrogenAtom : hydrogenAtoms) {
-            atoms[atomToIdx.size()] = hydrogenAtom;
-            atomToIdx.put(hydrogenAtom, atomToIdx.size() + 1);
-        }
+        // Put all atoms together with their MDL indices (1-based) into map.
+        IntStream.range(0, atoms.length).forEachOrdered(index -> atomToIdx.put(atoms[index], index + 1));
 
         return atoms;
     }
