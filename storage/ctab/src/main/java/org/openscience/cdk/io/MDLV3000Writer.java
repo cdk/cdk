@@ -111,7 +111,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         COORDINATION(9), // not supported at this time
         HYDROGEN(10);    // not supported at this time
 
-        final int value;
+        private final int value;
 
         MDLBondType(int value) {
             this.value = value;
@@ -130,7 +130,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         RING(1),
         CHAIN(2);
 
-        final int value;
+        private final int value;
 
         MDLQueryProperty(int value) {
             this.value = value;
@@ -529,8 +529,9 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
                     final Expr expression = ((QueryBond) bond).getExpression();
                     final ExpressionConverter converter = new ExpressionConverter(expression);
-                    // Might throw a CDKException if expression cannot be meaningfully converted to MDL bond tpye.
+                    // Might throw a CDKException if expression cannot be meaningfully converted to MDL bond type.
                     bondType = converter.toMDLBondType().getValue();
+                    queryProperty = converter.toMDLQueryProperty();
                 }
             } else if (order > 0 && order <= 3) {
                 bondType = order;
@@ -567,7 +568,9 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     break;
             }
 
-            // TODO add outputting query property
+            if (queryProperty != MDLQueryProperty.getDefaultValue()) {
+                writer.write(" TOPO=").write(queryProperty.getValue());
+            }
 
             final Sgroup sgroup = multicenterSgroups.get(bond);
             if (sgroup != null) {
