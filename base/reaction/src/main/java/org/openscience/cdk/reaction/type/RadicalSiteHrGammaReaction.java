@@ -25,6 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -131,7 +132,7 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
             IRing ring = (IRing) ringSet.getAtomContainer(ir);
             for (int jr = 0; jr < ring.getAtomCount(); jr++) {
                 IAtom aring = ring.getAtom(jr);
-                aring.setFlag(CDKConstants.ISINRING, true);
+                aring.setFlag(IChemObject.IN_RING, true);
             }
         }
         /*
@@ -143,19 +144,19 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 
         HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
         for (IAtom atomi : reactant.atoms()) {
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getAtomicNumber() == IElement.C
+            if (atomi.getFlag(IChemObject.REACTIVE_CENTER) && atomi.getAtomicNumber() == IElement.C
                     && reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
                 hcg.getSpheres(reactant, atomi, 4, true);
                 for (IAtom atoml : hcg.getNodesInSphere(4)) {
-                    if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
-                            && !atoml.getFlag(CDKConstants.ISINRING)
+                    if (atoml != null && atoml.getFlag(IChemObject.REACTIVE_CENTER)
+                            && !atoml.getFlag(IChemObject.IN_RING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
                             && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         for (IAtom atomh : reactant.getConnectedAtomsList(atoml)) {
-                            if (reactant.getBond(atomh, atoml).getFlag(CDKConstants.REACTIVE_CENTER)
-                                    && atomh.getFlag(CDKConstants.REACTIVE_CENTER) && atomh.getAtomicNumber() == IElement.H) {
+                            if (reactant.getBond(atomh, atoml).getFlag(IChemObject.REACTIVE_CENTER)
+                                    && atomh.getFlag(IChemObject.REACTIVE_CENTER) && atomh.getAtomicNumber() == IElement.H) {
 
                                 ArrayList<IAtom> atomList = new ArrayList<>();
                                 atomList.add(atomh);
@@ -202,16 +203,16 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 
                 hcg.getSpheres(reactant, atomi, 4, true);
                 for (IAtom atoml : hcg.getNodesInSphere(4)) {
-                    if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
+                    if (atoml != null && !atoml.getFlag(IChemObject.IN_RING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
                             && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         for (IAtom atomh : reactant.getConnectedAtomsList(atoml)) {
                             if (atomh.getAtomicNumber() == IElement.H) {
-                                atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                atoml.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                atomh.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                reactant.getBond(atomh, atoml).setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                atomi.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                atoml.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                atomh.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                reactant.getBond(atomh, atoml).setFlag(IChemObject.REACTIVE_CENTER, true);
                             }
                         }
                     }

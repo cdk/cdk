@@ -18,12 +18,12 @@
  */
 package org.openscience.cdk.reaction.type;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -123,21 +123,21 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
         for (IAtom atomi : reactant.atoms()) {
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getAtomicNumber() == IElement.O
+            if (atomi.getFlag(IChemObject.REACTIVE_CENTER) && atomi.getAtomicNumber() == IElement.O
                     && atomi.getFormalCharge() == 1) {
 
                 for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
-                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.TRIPLE) {
+                    if (bondi.getFlag(IChemObject.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.TRIPLE) {
                         IAtom atomj = bondi.getOther(atomi);
-                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)) {
+                        if (atomj.getFlag(IChemObject.REACTIVE_CENTER)) {
                             for (IBond bondj : reactant.getConnectedBondsList(atomj)) {
                                 if (bondj.equals(bondi)) continue;
 
-                                if (bondj.getFlag(CDKConstants.REACTIVE_CENTER)
+                                if (bondj.getFlag(IChemObject.REACTIVE_CENTER)
                                         && bondj.getOrder() == IBond.Order.SINGLE) {
 
                                     IAtom atomk = bondj.getOther(atomj);
-                                    if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getFormalCharge() == 0) {
+                                    if (atomk.getFlag(IChemObject.REACTIVE_CENTER) && atomk.getFormalCharge() == 0) {
 
                                         ArrayList<IAtom> atomList = new ArrayList<>();
                                         atomList.add(atomk);
@@ -194,11 +194,11 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
 
                                 IAtom atomk = bondj.getOther(atomj);
                                 if (atomk.getFormalCharge() == 0) {
-                                    atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                    bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                    atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                    bondj.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                                    atomk.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                    atomi.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                    bondi.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                    atomj.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                    bondj.setFlag(IChemObject.REACTIVE_CENTER, true);
+                                    atomk.setFlag(IChemObject.REACTIVE_CENTER, true);
                                 }
                             }
                         }

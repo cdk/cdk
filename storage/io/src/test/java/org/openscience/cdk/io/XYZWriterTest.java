@@ -36,6 +36,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 /**
@@ -61,7 +62,7 @@ class XYZWriterTest extends ChemObjectIOTest {
     @Test
     void testWriting() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom1 = new Atom("C");
         atom1.setPoint3d(new Point3d(1.0, 2.0, 3.0));
         IAtom atom2 = new Atom("C");
@@ -90,7 +91,7 @@ class XYZWriterTest extends ChemObjectIOTest {
     @Test
     void testWriting_Point2d() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1.0, 2.0));
         molecule.addAtom(atom1);
@@ -110,7 +111,7 @@ class XYZWriterTest extends ChemObjectIOTest {
     @Test
     void testSixDecimalOuput() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom1 = new Atom("C");
         atom1.setPoint3d(new Point3d(1.0, 2.0, 3.0));
         molecule.addAtom(atom1);

@@ -23,7 +23,6 @@ import java.io.InputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -76,7 +75,7 @@ class SpanningTreeTest extends CDKTestCase {
 
     @Test
     void testSpanningTree_IAtomContainer() {
-        SpanningTree sTree = new SpanningTree(new AtomContainer());
+        SpanningTree sTree = new SpanningTree(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         Assertions.assertNotNull(sTree);
     }
 

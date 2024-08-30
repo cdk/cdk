@@ -28,7 +28,7 @@ import java.io.StringWriter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 
@@ -53,7 +53,7 @@ class MDLCMLRoundtripTest {
         String filename = "bug-1649526.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         //Write it as cml
         StringWriter writer = new StringWriter();

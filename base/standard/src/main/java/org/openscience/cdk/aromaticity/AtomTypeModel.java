@@ -59,9 +59,14 @@ final class AtomTypeModel extends ElectronDonation {
     private static Map<String, Integer> typeToElectronContribMap() {
         Map<String,Integer> map = new HashMap<>();
         map.put("N.planar3", 2);
+        map.put("N.thioamide", 2);
         map.put("N.minus.planar3", 2);
         map.put("N.amide", 2);
+        map.put("N.sp3", 2);
         map.put("S.2", 2);
+        map.put("S.3", 2);
+        map.put("P.ine", 2);
+        map.put("O.sp3", 2);
         map.put("S.planar3", 2);
         map.put("C.minus.planar", 2);
         map.put("O.planar3", 2);
@@ -90,7 +95,7 @@ final class AtomTypeModel extends ElectronDonation {
 
     /**{@inheritDoc} */
     @Override
-    int[] contribution(IAtomContainer container, RingSearch ringSearch) {
+    int[] contribution(IAtomContainer container) {
 
         final int nAtoms = container.getAtomCount();
         final int[] electrons = new int[nAtoms];
@@ -105,7 +110,7 @@ final class AtomTypeModel extends ElectronDonation {
             indexMap.put(atom, i);
 
             // acyclic atom skipped
-            if (!ringSearch.cyclic(i)) continue;
+            if (!atom.isInRing()) continue;
 
             Hybridization hyb = atom.getHybridization();
 
@@ -121,7 +126,9 @@ final class AtomTypeModel extends ElectronDonation {
                     electrons[i] = electronsForAtomType(atom);
                     break;
                 case SP3:
-                    electrons[i] = lonePairCount(atom) > 0 ? 2 : -1;
+                    electrons[i] = electronsForAtomType(atom);
+                    if (electrons[i] == 0)
+                        electrons[i] = -1;
                     break;
             }
         }
@@ -142,7 +149,7 @@ final class AtomTypeModel extends ElectronDonation {
                 int u = indexMap.get(a1);
                 int v = indexMap.get(a2);
 
-                if (!ringSearch.cyclic(u, v)) {
+                if (!bond.isInRing()) {
 
                     // XXX: single exception - we could make this more general but
                     // for now this mirrors the existing behavior

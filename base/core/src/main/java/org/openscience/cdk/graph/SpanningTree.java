@@ -22,11 +22,11 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
@@ -259,7 +259,7 @@ public class SpanningTree {
                         for (int atomCount = 0; atomCount < ringBond.getAtomCount(); atomCount++) {
                             IAtom atom = ringBond.getAtom(atomCount);
                             if (!fragContainer.contains(atom)) {
-                                atom.setFlag(CDKConstants.ISINRING, true);
+                                atom.setFlag(IChemObject.IN_RING, true);
                                 fragContainer.addAtom(atom);
                             }
                         }
@@ -358,17 +358,16 @@ public class SpanningTree {
         IRing ring = molecule.getBuilder().newInstance(IRing.class);
         IRing ring1 = (IRing) ringset.getAtomContainer(i);
         IRing ring2 = (IRing) ringset.getAtomContainer(j);
+        for (int a = 0; a < ring1.getAtomCount(); a++)
+            ring.addAtom(ring1.getAtom(a));
+        for (int a = 0; a < ring2.getAtomCount(); a++)
+            ring.addAtom(ring2.getAtom(a));
         for (int b = 0; b < cb[i].length; b++) {
             c = cb[i][b] + cb[j][b];
             if ((c == 1) && (cb[i][b] == 1))
                 ring.addBond(molecule.getBond(b));
             else if ((c == 1) && (cb[j][b] == 1)) ring.addBond(molecule.getBond(b));
         }
-        for (int a = 0; a < ring1.getAtomCount(); a++)
-            ring.addAtom(ring1.getAtom(a));
-        for (int a = 0; a < ring2.getAtomCount(); a++)
-            ring.addAtom(ring2.getAtom(a));
-
         return ring;
     }
 

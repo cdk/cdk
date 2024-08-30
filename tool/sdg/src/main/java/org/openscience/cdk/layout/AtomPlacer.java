@@ -34,6 +34,7 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -381,7 +382,7 @@ public class AtomPlacer {
             bondVector.scale(bondLength);
             atomPoint.add(bondVector);
             nextAtom.setPoint2d(atomPoint);
-            nextAtom.setFlag(CDKConstants.ISPLACED, true);
+            nextAtom.setFlag(IChemObject.PLACED, true);
             boolean trans = false;
 
             if (prevBond != null &&
@@ -534,7 +535,7 @@ public class AtomPlacer {
             double newX = x + center.x;
             double newY = y + center.y;
             atom.setPoint2d(new Point2d(newX, newY));
-            atom.setFlag(CDKConstants.ISPLACED, true);
+            atom.setFlag(IChemObject.PLACED, true);
             logger.debug("populatePolygonCorners - angle=", Math.toDegrees(theta), ", newX=", newX, ", newY=", newY);
         }
     }
@@ -552,7 +553,7 @@ public class AtomPlacer {
         List atoms = molecule.getConnectedAtomsList(atom);
         for (Object o : atoms) {
             IAtom curatom = (IAtom) o;
-            if (curatom.getFlag(CDKConstants.ISPLACED)) {
+            if (curatom.getFlag(IChemObject.PLACED)) {
                 placedPartners.addAtom(curatom);
             } else {
                 unplacedPartners.addAtom(curatom);
@@ -633,7 +634,7 @@ public class AtomPlacer {
         int degreeSum;
         IAtomContainer[] pathes = new IAtomContainer[molecule.getAtomCount()];
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            molecule.getAtom(f).setFlag(CDKConstants.VISITED, false);
+            molecule.getAtom(f).setFlag(IChemObject.VISITED, false);
             pathes[f] = molecule.getBuilder().newInstance(IAtomContainer.class);
             pathes[f].addAtom(startAtom);
 
@@ -685,7 +686,7 @@ public class AtomPlacer {
 
         for (IAtom value : sphere) {
             atom = value;
-            if (!atom.getFlag(CDKConstants.ISINRING)) {
+            if (!atom.getFlag(IChemObject.IN_RING)) {
                 atomNr = ac.indexOf(atom);
                 logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
 
@@ -693,7 +694,7 @@ public class AtomPlacer {
                 for (Object bond : bonds) {
                     IBond curBond = (IBond) bond;
                     nextAtom = curBond.getOther(atom);
-                    if (!nextAtom.getFlag(CDKConstants.VISITED) && !nextAtom.getFlag(CDKConstants.ISPLACED)) {
+                    if (!nextAtom.getFlag(IChemObject.VISITED) && !nextAtom.getFlag(IChemObject.PLACED)) {
                         nextAtomNr = ac.indexOf(nextAtom);
                         logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                         pathes[nextAtomNr] = ac.getBuilder().newInstance(IAtomContainer.class, pathes[atomNr]);
@@ -710,7 +711,7 @@ public class AtomPlacer {
         }
         if (newSphere.size() > 0) {
             for (IAtom iAtom : newSphere) {
-                iAtom.setFlag(CDKConstants.VISITED, true);
+                iAtom.setFlag(IChemObject.VISITED, true);
             }
             breadthFirstSearch(ac, newSphere, pathes);
         }
@@ -726,7 +727,7 @@ public class AtomPlacer {
     public String listPlaced(IAtomContainer ac) {
         String s = "Placed: ";
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED)) {
+            if (ac.getAtom(f).getFlag(IChemObject.PLACED)) {
                 s += (f + 1) + "+ ";
             } else {
                 s += (f + 1) + "- ";
@@ -784,7 +785,7 @@ public class AtomPlacer {
      */
     static public boolean allPlaced(IAtomContainer ac) {
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            if (!ac.getAtom(f).getFlag(CDKConstants.ISPLACED)) {
+            if (!ac.getAtom(f).getFlag(IChemObject.PLACED)) {
                 return false;
             }
         }
@@ -798,7 +799,7 @@ public class AtomPlacer {
      */
     static public void markNotPlaced(IAtomContainer ac) {
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            ac.getAtom(f).setFlag(CDKConstants.ISPLACED, false);
+            ac.getAtom(f).setFlag(IChemObject.PLACED, false);
         }
 
     }
@@ -811,7 +812,7 @@ public class AtomPlacer {
 
     static public void markPlaced(IAtomContainer ac) {
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            ac.getAtom(f).setFlag(CDKConstants.ISPLACED, true);
+            ac.getAtom(f).setFlag(IChemObject.PLACED, true);
         }
     }
 
@@ -824,7 +825,7 @@ public class AtomPlacer {
     static public IAtomContainer getPlacedAtoms(IAtomContainer ac) {
         IAtomContainer ret = ac.getBuilder().newInstance(IAtomContainer.class);
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED)) {
+            if (ac.getAtom(f).getFlag(IChemObject.PLACED)) {
                 ret.addAtom(ac.getAtom(f));
             }
         }
@@ -841,13 +842,13 @@ public class AtomPlacer {
         for (IBond bond : src.bonds()) {
             IAtom beg = bond.getBegin();
             IAtom end = bond.getEnd();
-            if (beg.getFlag(CDKConstants.ISPLACED)) {
+            if (beg.getFlag(IChemObject.PLACED)) {
                 dest.addAtom(beg);
-                if (end.getFlag(CDKConstants.ISPLACED)) {
+                if (end.getFlag(IChemObject.PLACED)) {
                     dest.addAtom(end);
                     dest.addBond(bond);
                 }
-            } else if (end.getFlag(CDKConstants.ISPLACED)) {
+            } else if (end.getFlag(IChemObject.PLACED)) {
                 dest.addAtom(end);
             }
         }

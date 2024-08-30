@@ -23,7 +23,6 @@ import java.util.Comparator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
@@ -67,11 +66,11 @@ class AtomContainerComparatorTest extends CDKTestCase {
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
-        IAtomContainer atomContainer1 = new AtomContainer();
+        IAtomContainer atomContainer1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         atomContainer1.addAtom(new Atom("C"));
 
-        IAtomContainer atomContainer2 = new AtomContainer();
+        IAtomContainer atomContainer2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         atomContainer2.addAtom(new PseudoAtom("*"));
 

@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import javax.vecmath.Point2d;
 
@@ -130,7 +130,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void betaDGlucose_Haworth() throws Exception {
-        IAtomContainer m = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, 4.16d, 1.66d));
         m.addAtom(atom("C", 1, 3.75d, 0.94d));
         m.addAtom(atom("C", 1, 4.16d, 0.23d));
@@ -191,7 +191,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void betaDGlucose_Chair() throws Exception {
-        IAtomContainer m = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, -0.77d, 10.34d));
         m.addAtom(atom("C", 1, 0.03d, 10.13d));
         m.addAtom(atom("O", 0, 0.83d, 10.34d));
@@ -254,7 +254,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void betaDGlucoseWithExplicitHydrogens_Haworth() throws Exception {
-        IAtomContainer m = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, 4.16d, 1.66d));
         m.addAtom(atom("C", 0, 3.75d, 0.94d));
         m.addAtom(atom("C", 0, 4.16d, 0.23d));
@@ -328,7 +328,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void oxpene() throws Exception {
-        IAtomContainer m = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, 1.39d, 3.65d));
         m.addAtom(atom("C", 2, 2.22d, 3.65d));
         m.addAtom(atom("C", 1, 2.93d, 4.07d));
@@ -401,7 +401,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void atp_Haworth() throws Exception {
-        IAtomContainer m = new AtomContainer(31, 33, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("O", 0, 2.56d, -6.46d));
         m.addAtom(atom("C", 1, 1.90d, -6.83d));
         m.addAtom(atom("C", 1, 2.15d, -7.46d));
@@ -500,7 +500,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void hexopyranose() {
-        IAtomContainer m = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("O", 1, 0.00d, 2.48d));
         m.addAtom(atom("C", 2, 0.71d, 2.06d));
         m.addAtom(atom("C", 1, 0.71d, 1.24d));
@@ -545,7 +545,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void betaDGlucose_Chair_Rotated() throws Exception {
-        IAtomContainer m = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, -0.77d, 10.34d));
         m.addAtom(atom("C", 1, 0.03d, 10.13d));
         m.addAtom(atom("O", 0, 0.83d, 10.34d));
@@ -617,7 +617,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void haworthFalsePositive() {
-        IAtomContainer m = new AtomContainer(10, 10, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 2, -0.71d, 0.41d));
         m.addAtom(atom("C", 2, 0.71d, -0.41d));
         m.addAtom(atom("C", 2, 0.71d, 0.41d));
@@ -657,7 +657,7 @@ class CyclicCarbohydrateRecognitionTest {
      */
     @Test
     void requireAtLeastTwoProjectedSubstituents() {
-        IAtomContainer m = new AtomContainer(8, 8, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("O", 0, -0.71d, 1.24d));
         m.addAtom(atom("C", 0, 0.00d, 0.83d));
         m.addAtom(atom("O", 0, 0.71d, 1.24d));

@@ -386,9 +386,9 @@ public class MDLReader extends DefaultChemObjectReader {
                             trailingSpaceMatcher.end());
                     line = trailingSpaceMatcher.replaceAll("");
                 }
-                x = new Double(line.substring(0, 10).trim());
-                y = new Double(line.substring(10, 20).trim());
-                z = new Double(line.substring(20, 30).trim());
+                x = Double.valueOf(line.substring(0, 10).trim());
+                y = Double.valueOf(line.substring(10, 20).trim());
+                z = Double.valueOf(line.substring(20, 30).trim());
                 // *all* values should be zero, not just the sum
                 totalX += Math.abs(x);
                 totalY += Math.abs(y);
@@ -580,9 +580,9 @@ public class MDLReader extends DefaultChemObjectReader {
                         newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
                     }
                     // mark both atoms and the bond as aromatic
-                    newBond.setFlag(CDKConstants.ISAROMATIC, true);
-                    a1.setFlag(CDKConstants.ISAROMATIC, true);
-                    a2.setFlag(CDKConstants.ISAROMATIC, true);
+                    newBond.setFlag(IChemObject.AROMATIC, true);
+                    a1.setFlag(IChemObject.AROMATIC, true);
+                    a2.setFlag(IChemObject.AROMATIC, true);
                 }
                 molecule.addBond(newBond);
             }

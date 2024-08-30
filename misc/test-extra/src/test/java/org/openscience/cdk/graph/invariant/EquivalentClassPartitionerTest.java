@@ -47,13 +47,9 @@ import java.io.InputStream;
  */
 class EquivalentClassPartitionerTest extends CDKTestCase {
 
-    AtomContainer C40C3V = null;
-    AtomContainer C24D6D = null;
-    AtomContainer C28TD  = null;
-
     @Test
     void testEquivalent() throws Exception {
-        AtomContainer C40C3V = new org.openscience.cdk.AtomContainer();
+        IAtomContainer C40C3V = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         C40C3V.addAtom(new Atom("C")); // 1
         C40C3V.addAtom(new Atom("C")); // 2
         C40C3V.addAtom(new Atom("C")); // 3
@@ -169,7 +165,7 @@ class EquivalentClassPartitionerTest extends CDKTestCase {
 
     @Test
     void testFullereneC24D6D() throws Exception {
-        AtomContainer C24D6D = new org.openscience.cdk.AtomContainer();
+        IAtomContainer C24D6D = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         C24D6D.addAtom(new Atom("C")); // 1
         C24D6D.addAtom(new Atom("C")); // 2
         C24D6D.addAtom(new Atom("C")); // 3

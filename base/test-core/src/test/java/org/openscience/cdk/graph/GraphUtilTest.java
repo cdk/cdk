@@ -29,8 +29,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -158,7 +158,7 @@ class GraphUtilTest {
     @Test
     void testToAdjList_resize() throws Exception {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom a = new Atom("C");
         container.addAtom(a);
@@ -201,7 +201,7 @@ class GraphUtilTest {
 
     @Test
     void testToAdjList_Empty() throws Exception {
-        int[][] adjacent = GraphUtil.toAdjList(new AtomContainer());
+        int[][] adjacent = GraphUtil.toAdjList(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         assertThat(adjacent.length, is(0));
     }
 
@@ -219,7 +219,7 @@ class GraphUtilTest {
      */
     private static IAtomContainer simple() {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom a = new Atom("C");
         IAtom b = new Atom("C");

@@ -34,6 +34,8 @@ public class SmartsResult {
     private final String str;
     private final int pos;
     private final String mesg;
+    private final int[] aoffsets;
+    private final int[] boffsets;
     private final boolean status;
 
     SmartsResult(String str, int pos, String mesg) {
@@ -41,13 +43,17 @@ public class SmartsResult {
         this.pos = pos;
         this.mesg = mesg;
         this.status = false;
+        this.aoffsets = null;
+        this.boffsets = null;
     }
 
-    SmartsResult(String str) {
+    SmartsResult(String str, int[] aoffsets, int[] boffsets) {
         this.str = str;
         this.pos = str.length();
         this.mesg = "OK";
         this.status = true;
+        this.aoffsets = aoffsets;
+        this.boffsets = boffsets;
     }
 
     /**
@@ -59,20 +65,47 @@ public class SmartsResult {
         return this.mesg;
     }
 
+    public int getAtomLocation(int idx) {
+        if (idx < 0)
+            return 0;
+        if (idx >= aoffsets.length)
+            return str.length();
+        return aoffsets[idx];
+    }
+
+    public int getBondLocation(int idx) {
+        if (idx < 0)
+            return 0;
+        if (idx >= boffsets.length)
+            return str.length();
+        return boffsets[idx];
+    }
+
+    public String displayErrorLocation() {
+        return displayErrorLocation(pos-1);
+    }
+
     /**
      * Displays where the error occurred on the input string.
      *
      * @return the error location
      */
-    public String displayErrorLocation() {
+    public String displayErrorLocation(int pos) {
         StringBuilder sb = new StringBuilder();
         sb.append(str);
         sb.append('\n');
-        char[] cs = new char[pos - 1];
-        Arrays.fill(cs, ' ');
-        sb.append(cs);
-        sb.append('^');
-        sb.append('\n');
+        if (pos <= str.length()) {
+            char[] cs = new char[pos];
+            Arrays.fill(cs, ' ');
+            sb.append(cs);
+            sb.append('^');
+            if (str.charAt(pos) == '[') {
+                int end = str.indexOf(']', pos);
+                while (pos++ < end)
+                    sb.append('^');
+            }
+            sb.append('\n');
+        }
         return sb.toString();
     }
 

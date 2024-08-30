@@ -31,12 +31,12 @@ import javax.vecmath.Vector2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.silent.AtomContainer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
@@ -76,7 +76,7 @@ class AtomPlacerTest extends CDKTestCase {
 
     @Test
     void cumulated_x2() {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3));
         m.addAtom(atom("C", 1));
         m.addAtom(atom("C", 0));
@@ -87,7 +87,7 @@ class AtomPlacerTest extends CDKTestCase {
         m.addBond(2, 3, IBond.Order.DOUBLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.getAtom(0).setPoint2d(new Point2d(0, 0));
-        m.getAtom(0).setFlag(CDKConstants.ISPLACED, true);
+        m.getAtom(0).setFlag(IChemObject.PLACED, true);
 
         AtomPlacer atomPlacer = new AtomPlacer();
         atomPlacer.setMolecule(m);
@@ -110,7 +110,7 @@ class AtomPlacerTest extends CDKTestCase {
 
     @Test
     void cumulated_x3() {
-        IAtomContainer m = new AtomContainer(6, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3));
         m.addAtom(atom("C", 1));
         m.addAtom(atom("C", 0));
@@ -123,7 +123,7 @@ class AtomPlacerTest extends CDKTestCase {
         m.addBond(3, 4, IBond.Order.DOUBLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
         m.getAtom(0).setPoint2d(new Point2d(0, 0));
-        m.getAtom(0).setFlag(CDKConstants.ISPLACED, true);
+        m.getAtom(0).setFlag(IChemObject.PLACED, true);
 
         AtomPlacer atomPlacer = new AtomPlacer();
         atomPlacer.setMolecule(m);

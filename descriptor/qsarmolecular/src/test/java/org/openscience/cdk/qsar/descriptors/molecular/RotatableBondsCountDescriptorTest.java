@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -61,7 +61,7 @@ class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     private IAtomContainer makeEthane() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, Elements.CARBON));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, Elements.CARBON));
         container.addBond(0, 1, IBond.Order.SINGLE);

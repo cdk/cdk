@@ -20,13 +20,13 @@ package org.openscience.cdk.reaction.type;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -138,13 +138,13 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* manually putting the active center */
-        molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(4).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(2).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(4).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(0).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(1).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(3).setFlag(IChemObject.REACTIVE_CENTER, true);
 
         /* initiate */
         List<IParameterReact> paramList = new ArrayList<>();
@@ -166,13 +166,13 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 
         // reverse process
         /* manually putting the active center */
-        molecule2.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule2.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule2.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule2.getAtom(6).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule2.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule2.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule2.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule2.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule2.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule2.getAtom(2).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule2.getAtom(6).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule2.getBond(0).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule2.getBond(1).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule2.getBond(5).setFlag(IChemObject.REACTIVE_CENTER, true);
         IAtomContainerSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants2.addAtomContainer(molecule2);
 
@@ -202,13 +202,13 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* manually putting the active center */
-        molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(4).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(2).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(4).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(0).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(1).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(3).setFlag(IChemObject.REACTIVE_CENTER, true);
 
         List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
@@ -220,20 +220,20 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
-        Assertions.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getAtom(2).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getAtom(4).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getAtom(4).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getBond(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getBond(3).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getBond(3).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(0).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(0).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(1).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(1).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(2).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(2).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(4).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(4).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(0).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(0).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(1).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(1).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(3).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(3).getFlag(IChemObject.REACTIVE_CENTER));
     }
 
     /**

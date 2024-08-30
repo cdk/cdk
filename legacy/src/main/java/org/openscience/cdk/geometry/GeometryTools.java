@@ -38,12 +38,12 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -1364,7 +1364,7 @@ public class GeometryTools {
 
     private static IAtomContainer setVisitedFlagsToFalse(IAtomContainer atomContainer) {
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            atomContainer.getAtom(i).setFlag(CDKConstants.VISITED, false);
+            atomContainer.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
         return atomContainer;
     }
@@ -1394,14 +1394,14 @@ public class GeometryTools {
         setVisitedFlagsToFalse(secondAtomContainer);
         while (firstAtoms.hasNext()) {
             centerAtomFirstMolecule = firstAtomContainer.getAtom(firstAtoms.next());
-            centerAtomFirstMolecule.setFlag(CDKConstants.VISITED, true);
+            centerAtomFirstMolecule.setFlag(IChemObject.VISITED, true);
             centerAtomSecondMolecule = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
                     .indexOf(centerAtomFirstMolecule)));
             connectedAtoms = firstAtomContainer.getConnectedAtomsList(centerAtomFirstMolecule);
             for (IAtom connectedAtom : connectedAtoms) {
                 IAtom conAtom = connectedAtom;
                 //this step is built to know if the program has already calculate a bond length (so as not to have duplicate values)
-                if (!conAtom.getFlag(CDKConstants.VISITED)) {
+                if (!conAtom.getFlag(IChemObject.VISITED)) {
                     if (Coords3d) {
                         distance1 = centerAtomFirstMolecule.getPoint3d().distance(conAtom.getPoint3d());
                         distance2 = centerAtomSecondMolecule.getPoint3d().distance(secondAtomContainer

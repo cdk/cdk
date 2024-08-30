@@ -18,10 +18,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -154,7 +154,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
         }
         for (IBond bond : ac.bonds()) {
             if (ringSet.getRings(bond).getAtomContainerCount() > 0) {
-                bond.setFlag(CDKConstants.ISINRING, true);
+                bond.setFlag(IChemObject.IN_RING, true);
             }
         }
         for (IBond bond : ac.bonds()) {
@@ -164,7 +164,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
             if (bond.getOrder() == Order.SINGLE) {
                 if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE))
                         && (BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
-                    if (!bond.getFlag(CDKConstants.ISINRING)) {
+                    if (!bond.getFlag(IChemObject.IN_RING)) {
 
                         if (excludeAmides && (isAmide(atom0, atom1, ac) || isAmide(atom1, atom0, ac))) {
                             continue;

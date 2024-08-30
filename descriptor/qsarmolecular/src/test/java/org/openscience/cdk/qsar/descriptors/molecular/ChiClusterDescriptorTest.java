@@ -5,7 +5,6 @@ import javax.vecmath.Point2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -30,7 +29,7 @@ class ChiClusterDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     void testDan64() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.7500000000000004, 2.799038105676658));
         mol.addAtom(a1);
@@ -67,7 +66,7 @@ class ChiClusterDescriptorTest extends MolecularDescriptorTest {
     @Test
     void testDan154() throws Exception {
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);
@@ -124,7 +123,7 @@ class ChiClusterDescriptorTest extends MolecularDescriptorTest {
     @Test
     void testDan248() throws Exception {
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);

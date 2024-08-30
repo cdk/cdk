@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 
 import javax.vecmath.Point2d;
@@ -47,7 +47,7 @@ class CorrectGeometricConfigurationTest {
     // C/C=C/CCC
     @Test
     void cis() {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, -0.74d, 5.00d));
         m.addAtom(atom("C", 1, -1.49d, 3.70d));
         m.addAtom(atom("C", 1, -0.74d, 2.40d));
@@ -70,7 +70,7 @@ class CorrectGeometricConfigurationTest {
     // C/C=C\CCC
     @Test
     void trans() {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, -0.74d, 5.00d));
         m.addAtom(atom("C", 1, -1.49d, 3.70d));
         m.addAtom(atom("C", 1, -0.74d, 2.40d));

@@ -26,13 +26,13 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllCycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
@@ -257,7 +257,7 @@ public final class AllRingsFinder {
         for (int i = 0; i < len; i++) {
             atoms[i] = container.getAtom(cycle[i]);
             bonds[i] = edges.get(cycle[i], cycle[i + 1]);
-            atoms[i].setFlag(CDKConstants.ISINRING, true);
+            atoms[i].setFlag(IChemObject.IN_RING, true);
         }
 
         ring.setAtoms(atoms);
@@ -287,7 +287,7 @@ public final class AllRingsFinder {
         for (int i = 0; i < len; i++) {
             atoms[i] = container.getAtom(mapping[cycle[i]]);
             bonds[i] = edges.get(mapping[cycle[i]], mapping[cycle[i + 1]]);
-            atoms[i].setFlag(CDKConstants.ISINRING, true);
+            atoms[i].setFlag(IChemObject.IN_RING, true);
         }
 
         ring.setAtoms(atoms);

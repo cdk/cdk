@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -48,7 +48,7 @@ class LigancyFourChiralityTest extends CDKTestCase {
 
     @BeforeAll
     static void setup() throws Exception {
-        molecule = new AtomContainer();
+        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("Cl"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("Br"));

@@ -26,12 +26,12 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
-import org.openscience.cdk.AtomContainer;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 
 /**
  * @cdk.module test-smsd
@@ -56,6 +56,6 @@ class GenerateCompatibilityGraphTest {
     @Test
     void testSomeMethod() throws IOException {
         // TODO review the generated test code and remove the default call to fail.
-        Assertions.assertNotNull(new GenerateCompatibilityGraph(new AtomContainer(), new AtomContainer(), true));
+        Assertions.assertNotNull(new GenerateCompatibilityGraph(DefaultChemObjectBuilder.getInstance().newAtomContainer(), DefaultChemObjectBuilder.getInstance().newAtomContainer(), true));
     }
 }

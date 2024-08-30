@@ -22,10 +22,10 @@
  */
 package org.openscience.cdk.signature;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
@@ -333,7 +333,7 @@ class AbstractSignatureTest {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 10);
         for (IAtom atom : mol.atoms()) {
-            atom.setFlag(CDKConstants.ISAROMATIC, true);
+            atom.setFlag(IChemObject.AROMATIC, true);
         }
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
@@ -347,7 +347,7 @@ class AbstractSignatureTest {
         mol.addBond(8, 9, IBond.Order.SINGLE);
         mol.addBond(9, 0, IBond.Order.SINGLE);
         for (IBond bond : mol.bonds()) {
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
         }
         return mol;
     }
@@ -387,7 +387,7 @@ class AbstractSignatureTest {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 6);
         for (IAtom atom : mol.atoms()) {
-            atom.setFlag(CDKConstants.ISAROMATIC, true);
+            atom.setFlag(IChemObject.AROMATIC, true);
         }
 
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -397,7 +397,7 @@ class AbstractSignatureTest {
         mol.addBond(4, 5, IBond.Order.SINGLE);
         mol.addBond(5, 0, IBond.Order.SINGLE);
         for (IBond bond : mol.bonds()) {
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
         }
         return mol;
     }

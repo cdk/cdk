@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -57,7 +58,7 @@ class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CDKOWLReader reader = new CDKOWLReader(new InputStreamReader(ins));
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
 
         Assertions.assertNotNull(mol);

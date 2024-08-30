@@ -49,22 +49,14 @@ public class DebugRing extends Ring implements IRing {
 
     private static final long serialVersionUID = -6420813246421544803L;
 
-    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugRing.class);
+    static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugRing.class);
 
     public DebugRing() {
         super();
     }
 
     public DebugRing(int ringSize, String elementSymbol) {
-        this(ringSize);
-        super.atomCount = ringSize;
-        super.bondCount = ringSize;
-        atoms[0] = new DebugAtom(elementSymbol);
-        for (int i = 1; i < ringSize; i++) {
-            atoms[i] = new DebugAtom(elementSymbol);
-            super.bonds[i - 1] = new Bond(atoms[i - 1], atoms[i], IBond.Order.SINGLE);
-        }
-        super.bonds[ringSize - 1] = new Bond(atoms[ringSize - 1], atoms[0], IBond.Order.SINGLE);
+        super(ringSize, elementSymbol);
     }
 
     public DebugRing(int ringSize) {

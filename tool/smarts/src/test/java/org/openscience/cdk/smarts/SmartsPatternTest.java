@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -253,6 +254,33 @@ class SmartsPatternTest {
         assertMatch("[$([C@](C)(CC)(N)O)]", "C[C@@](N)(CC)O", 1, 1);
         assertMatch("[$([C@](C)(CC)(N)O)]", "C[C@](N)(CC)O", 0, 0);
         assertMatch("[$([C@](C)(CC)(N)O)]", "CC(N)(CC)O", 0, 0);
+    }
+
+    @Test
+    void testPrep() throws Exception {
+        IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        Assertions.assertTrue(Smarts.parse(query, "*"));
+        Assertions.assertEquals(SmartsPattern.getRequiredPrep(query), 0);
+
+        query.removeAllElements();
+        Assertions.assertTrue(Smarts.parse(query, "a"));
+        Assertions.assertEquals(SmartsPattern.getRequiredPrep(query),
+                                SmartsPattern.AROM_REQUIRED);
+
+        query.removeAllElements();
+        Assertions.assertTrue(Smarts.parse(query, "*@*"));
+        Assertions.assertEquals(SmartsPattern.getRequiredPrep(query),
+                                SmartsPattern.RING_REQUIRED);
+
+        query.removeAllElements();
+        Assertions.assertTrue(Smarts.parse(query, "*!@*"));
+        Assertions.assertEquals(SmartsPattern.getRequiredPrep(query),
+                                SmartsPattern.RING_REQUIRED);
+
+        query.removeAllElements();
+        Assertions.assertTrue(Smarts.parse(query, "Cl"));
+        Assertions.assertEquals(SmartsPattern.getRequiredPrep(query),
+                                0);
     }
 
     IAtomContainer smi(String smi) throws Exception {

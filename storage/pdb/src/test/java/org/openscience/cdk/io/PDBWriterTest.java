@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -148,7 +147,7 @@ class PDBWriterTest extends ChemObjectIOTest {
     }
 
     private IAtomContainer singleAtomMolecule(String id, Integer formalCharge) {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C", new Point3d(0.0, 0.0, 0.0));
         mol.addAtom(atom);
         mol.setID(id);
@@ -159,7 +158,7 @@ class PDBWriterTest extends ChemObjectIOTest {
     }
 
     private IAtomContainer singleBondMolecule() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));
         mol.addAtom(new Atom("O", new Point3d(1.0, 1.0, 1.0)));
         mol.addBond(0, 1, IBond.Order.SINGLE);

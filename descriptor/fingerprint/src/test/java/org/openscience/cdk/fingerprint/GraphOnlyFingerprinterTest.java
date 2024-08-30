@@ -108,7 +108,7 @@ class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         if (molecule != null) {
             ISimpleChemObjectReader reader = new MDLV2000Reader(new StringReader(molecule));
             Assertions.assertNotNull(reader, "Could not create reader");
-            if (reader.accepts(AtomContainer.class)) {
+            if (reader.accepts(IAtomContainer.class)) {
                 structure = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
             }
         }

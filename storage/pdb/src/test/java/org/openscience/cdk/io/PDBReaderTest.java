@@ -33,6 +33,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtom;
@@ -107,7 +108,7 @@ class PDBReaderTest extends SimpleChemObjectReaderTest {
         String data = "HETATM 3486 MG    MG A 302      24.885  14.008  59.194  1.00 29.42          MG+2\n" + "END";
         IChemFile chemFile = getChemFileFromString(data);
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
-        Assertions.assertEquals(new Double(2.0), atomContainer.getAtom(0).getCharge());
+        Assertions.assertEquals(Double.valueOf(2.0), atomContainer.getAtom(0).getCharge());
     }
 
     @Test
@@ -245,7 +246,7 @@ class PDBReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertNotNull(mol.getMonomer("ILEA7", "A"));
         Assertions.assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
 
-        IAtom nAtom = mol.getAtom(94);
+        IAtom nAtom = AtomRef.deref(mol.getAtom(94));
         Assertions.assertNotNull(nAtom);
         Assertions.assertTrue(nAtom instanceof PDBAtom);
         PDBAtom atom = (PDBAtom) nAtom;

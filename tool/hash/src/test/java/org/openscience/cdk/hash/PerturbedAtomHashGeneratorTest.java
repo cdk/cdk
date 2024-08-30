@@ -27,8 +27,8 @@ package org.openscience.cdk.hash;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -94,7 +94,7 @@ class PerturbedAtomHashGeneratorTest {
                 new Bond(atoms[5], atoms[9], SINGLE), new Bond(atoms[6], atoms[7], SINGLE),
                 new Bond(atoms[7], atoms[8], SINGLE), new Bond(atoms[8], atoms[9], SINGLE),
                 new Bond(atoms[8], atoms[0], SINGLE),};
-        IAtomContainer mol = new AtomContainer(0, 0, 0, 0);
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.setAtoms(atoms);
         mol.setBonds(bonds);
         return mol;
@@ -112,7 +112,7 @@ class PerturbedAtomHashGeneratorTest {
                 new Bond(atoms[5], atoms[4], SINGLE), new Bond(atoms[4], atoms[7], SINGLE),
                 new Bond(atoms[6], atoms[9], SINGLE), new Bond(atoms[7], atoms[8], SINGLE),
                 new Bond(atoms[8], atoms[9], SINGLE),};
-        IAtomContainer mol = new AtomContainer(0, 0, 0, 0);
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.setAtoms(atoms);
         mol.setBonds(bonds);
         return mol;

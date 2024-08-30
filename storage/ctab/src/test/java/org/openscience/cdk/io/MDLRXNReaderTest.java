@@ -32,6 +32,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -39,7 +40,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -71,7 +71,7 @@ class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertTrue(reader.accepts(Reaction.class));
         Assertions.assertTrue(reader.accepts(ReactionSet.class));
         Assertions.assertFalse(reader.accepts(AtomContainerSet.class));
-        Assertions.assertFalse(reader.accepts(AtomContainer.class));
+        Assertions.assertFalse(reader.accepts(IAtomContainer.class));
     }
 
     @Test

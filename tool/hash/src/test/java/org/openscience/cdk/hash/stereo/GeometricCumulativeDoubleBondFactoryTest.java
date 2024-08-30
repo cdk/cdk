@@ -35,8 +35,8 @@ import javax.vecmath.Point2d;
 
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -61,7 +61,7 @@ class GeometricCumulativeDoubleBondFactoryTest {
 
     @Test
     void testCreate() throws Exception {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(carbonAt(-0.2994, 3.2084));
         m.addAtom(carbonAt(-1.1244, 3.2084));
         m.addAtom(carbonAt(-1.9494, 3.2084));

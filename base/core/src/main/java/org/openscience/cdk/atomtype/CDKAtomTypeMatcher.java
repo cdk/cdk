@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -510,7 +511,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 }
             }
             return null;
-        } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+        } else if (atom.getFlag(IChemObject.AROMATIC)) {
             IAtomType type = getAtomType("C.sp2");
             if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
         } else if (hasOneOrMoreSingleOrDoubleBonds(connectedBonds)) {
@@ -560,7 +561,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
 	private boolean hasOneOrMoreSingleOrDoubleBonds(List<IBond> bonds) {
         for (IBond bond : bonds) {
-            if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) return true;
+            if (bond.getFlag(IChemObject.SINGLE_OR_DOUBLE)) return true;
         }
         return false;
     }
@@ -972,7 +973,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
                 if (heavy.size() == 2) {
 
-                    if (heavy.get(0).getFlag(CDKConstants.ISAROMATIC) && heavy.get(1).getFlag(CDKConstants.ISAROMATIC)) {
+                    if (heavy.get(0).getFlag(IChemObject.AROMATIC) && heavy.get(1).getFlag(IChemObject.AROMATIC)) {
 
                         int hCount = atom.getImplicitHydrogenCount() != null ? atom.getImplicitHydrogenCount()
                                 + expHCount : expHCount;
@@ -2566,7 +2567,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IBond.Order order = bond.getOrder();
                 if (order != CDKConstants.UNSET && order != IBond.Order.UNSET) {
                     if (BondManipulator.isHigherOrder(order, typeOrder)) return false;
-                } else if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
+                } else if (bond.getFlag(IChemObject.SINGLE_OR_DOUBLE)) {
                     if (typeOrder != IBond.Order.SINGLE && typeOrder != IBond.Order.DOUBLE) return false;
                 } else {
                     return false;

@@ -23,7 +23,6 @@ import java.util.Vector;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -155,7 +154,7 @@ class OverlapResolverTest extends CDKTestCase {
         IAtomContainer atomContainer = new SmilesParser(DefaultChemObjectBuilder.getInstance())
                 .parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        sdg.setMolecule(new AtomContainer(atomContainer));
+        sdg.setMolecule(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, atomContainer));
         sdg.generateCoordinates();
         atomContainer = sdg.getMolecule();
         OverlapResolver or = new OverlapResolver();

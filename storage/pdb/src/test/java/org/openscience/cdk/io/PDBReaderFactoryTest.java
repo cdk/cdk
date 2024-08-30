@@ -24,9 +24,9 @@ package org.openscience.cdk.io;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -57,7 +57,7 @@ class PDBReaderFactoryTest {
         Assertions.assertNotNull(reader);
         Assertions.assertEquals(((IChemFormat) expectedFormat).getReaderClassName(), reader.getClass().getName());
         // now try reading something from it
-        IChemObject[] objects = {new ChemFile(), new ChemModel(), new AtomContainer(), new Reaction()};
+        IChemObject[] objects = {new ChemFile(), new ChemModel(), DefaultChemObjectBuilder.getInstance().newAtomContainer(), new Reaction()};
         boolean read = false;
         for (int i = 0; (i < objects.length && !read); i++) {
             if (reader.accepts(objects[i].getClass())) {

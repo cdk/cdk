@@ -164,7 +164,7 @@ class SMSDBondInsensitiveTest {
 
         //        Cyclopropane is not a subgraph of Isobutane
         Assertions.assertFalse(comparison.isSubgraph());
-        Assertions.assertEquals(new Double(0.625), new Double(comparison.getTanimotoSimilarity()));
+        Assertions.assertEquals(Double.valueOf(0.625), Double.valueOf(comparison.getTanimotoSimilarity()));
     }
 
     @Test

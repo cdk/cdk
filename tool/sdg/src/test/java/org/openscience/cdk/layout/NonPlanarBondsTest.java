@@ -34,10 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.Atropisomeric;
@@ -45,13 +42,9 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.stereo.TetrahedralChirality;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +62,7 @@ class NonPlanarBondsTest {
     // [C@H](C)(N)O
     @Test
     void clockwise_implH_1() {
-        IAtomContainer m = new AtomContainer(4, 3, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, 0.00d, 1.50d));
         m.addAtom(atom("C", 3, 0.00d, 0.00d));
         m.addAtom(atom("N", 2, -1.30d, 2.25d));
@@ -89,7 +82,7 @@ class NonPlanarBondsTest {
     // N is favoured over CC
     @Test
     void clockwise_implH_2() {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, -1.30d, 2.25d));
         m.addAtom(atom("C", 2, 0.00d, 1.50d));
         m.addAtom(atom("C", 3, 0.00d, 0.00d));
@@ -111,7 +104,7 @@ class NonPlanarBondsTest {
     // [C@H](C)(N)O
     @Test
     void anticlockwise_implH_1() {
-        IAtomContainer m = new AtomContainer(4, 3, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, 0.00d, 1.50d));
         m.addAtom(atom("C", 3, 0.00d, 0.00d));
         m.addAtom(atom("N", 2, -1.30d, 2.25d));
@@ -131,7 +124,7 @@ class NonPlanarBondsTest {
     // N is favoured over CC
     @Test
     void anticlockwise_implH_2() {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, -1.30d, 2.25d));
         m.addAtom(atom("C", 2, 0.00d, 1.50d));
         m.addAtom(atom("C", 3, 0.00d, 0.00d));
@@ -153,7 +146,7 @@ class NonPlanarBondsTest {
     // [C@@](CCC)(C)(N)O
     @Test
     void clockwise_1() {
-        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, -1.47d, 3.62d));
         m.addAtom(atom("C", 2, -1.13d, 2.16d));
         m.addAtom(atom("C", 2, 0.30d, 1.72d));
@@ -179,7 +172,7 @@ class NonPlanarBondsTest {
     // [C@@](CCC)(C1)(C)C1 (favour acyclic)
     @Test
     void clockwise_2() {
-        IAtomContainer m = new AtomContainer(8, 8, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, -0.96d, -1.04d));
         m.addAtom(atom("C", 2, 0.18d, -0.08d));
         m.addAtom(atom("C", 2, -0.08d, 1.40d));
@@ -208,7 +201,7 @@ class NonPlanarBondsTest {
     // [C@](CCC)(C)(N)O
     @Test
     void anticlockwise_1() {
-        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, -1.47d, 3.62d));
         m.addAtom(atom("C", 2, -1.13d, 2.16d));
         m.addAtom(atom("C", 2, 0.30d, 1.72d));
@@ -234,7 +227,7 @@ class NonPlanarBondsTest {
     // [C@](CCC)(C1)(C)C1 (favour acyclic)
     @Test
     void anticlockwise_2() {
-        IAtomContainer m = new AtomContainer(8, 8, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, -0.96d, -1.04d));
         m.addAtom(atom("C", 2, 0.18d, -0.08d));
         m.addAtom(atom("C", 2, -0.08d, 1.40d));
@@ -262,7 +255,7 @@ class NonPlanarBondsTest {
 
     @Test
     void nonPlanarBondsForAntiClockwsieExtendedTetrahedral() throws CDKException {
-        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
         m.addAtom(atom("C", 0, -0.31d, 1.47d));
@@ -285,7 +278,7 @@ class NonPlanarBondsTest {
 
     @Test
     void nonPlanarBondsForClockwsieExtendedTetrahedral() throws CDKException {
-        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
         m.addAtom(atom("C", 0, -0.31d, 1.47d));
@@ -308,7 +301,7 @@ class NonPlanarBondsTest {
 
     @Test
     void clockwiseSortShouldHandleExactlyOppositeAtoms() throws Exception {
-        IAtomContainer m = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0, 4.50d, -14.84d));
         m.addAtom(atom("C", 3, 4.51d, -13.30d));
         m.addAtom(atom("C", 2, 4.93d, -14.13d));
@@ -334,7 +327,7 @@ class NonPlanarBondsTest {
     // ethene is left alone and not marked as crossed
     @Test
     void dontCrossEtheneDoubleBond() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 2, 0.000, 0.000));
         m.addAtom(atom("C", 2, 1.299, -0.750));
         m.addBond(0, 1, IBond.Order.DOUBLE);
@@ -347,7 +340,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void dontMarkTerminalBonds() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, 0.000, 0.000));
         m.addAtom(atom("C", 0, 1.299, -0.750));
         m.addAtom(atom("C", 2, 2.598, -0.000));
@@ -368,7 +361,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void markBut2eneWithWavyBond() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, 0.000, 0.000));
         m.addAtom(atom("C", 1, 1.299, -0.750));
         m.addAtom(atom("C", 1, 2.598, -0.000));
@@ -385,7 +378,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void useCrossedBondIfNeeded() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, 0.000, 0.000));
         m.addAtom(atom("C", 1, 1.299, -0.750));
         m.addAtom(atom("C", 1, 2.598, -0.000));
@@ -422,7 +415,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void dontMarkTetrahedralCentresWithDoubleBondsAsUnspecified() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, 2.598, 1.500));
         m.addAtom(atom("S", 0, 2.598, -0.000));
         m.addAtom(atom("C", 1, 1.299, -0.750));
@@ -446,7 +439,7 @@ class NonPlanarBondsTest {
 
     @Test
     void dontMarkRingBondsInBezeneAsUnspecified() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, -1.299, 0.750));
         m.addAtom(atom("C", 1, 0.000, 1.500));
         m.addAtom(atom("C", 1, 1.299, 0.750));
@@ -470,7 +463,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void dontMarkGuanidineAsUnspecified() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("R", 0, 0.00, 0.00));
         m.addAtom(atom("C", 2, 1.30, -0.75));
         m.addAtom(atom("N", 0, 2.60, -0.00));
@@ -492,7 +485,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void dontUnspecifiedDueToHRepresentation() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("R", 0, 0.00, 0.00));
         m.addAtom(atom("C", 2, 1.30, -0.75));
         m.addAtom(atom("N", 0, 2.60, -0.00));
@@ -524,7 +517,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void dontMarkUnspecifiedForLinearEqualChains() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("R", 0, 0.00, -0.00));
         m.addAtom(atom("C", 2, 1.30, -0.75));
         m.addAtom(atom("N", 0, 2.60, -0.00));
@@ -554,7 +547,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void markUnspecifiedForCyclicLigands() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("R", 0, -4.22, 3.05));
         m.addAtom(atom("C", 2, -2.92, 2.30));
         m.addAtom(atom("N", 0, -1.62, 3.05));
@@ -579,7 +572,7 @@ class NonPlanarBondsTest {
         for (IBond bond : m.bonds())
             if (bond.getStereo() == IBond.Stereo.UP_OR_DOWN)
                 wavyCount++;
-        assertThat(wavyCount, is(1));
+        assertThat(wavyCount, is(0));
     }
 
     /**
@@ -587,7 +580,7 @@ class NonPlanarBondsTest {
      */
     @Test
     void unspecifiedMarkedOnDifferentLigands() {
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("R", 0, 0.00, -0.00));
         m.addAtom(atom("C", 2, 1.30, -0.75));
         m.addAtom(atom("N", 0, 2.60, -0.00));

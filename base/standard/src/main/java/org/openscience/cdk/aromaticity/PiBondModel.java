@@ -43,7 +43,7 @@ final class PiBondModel extends ElectronDonation {
 
     /**{@inheritDoc} */
     @Override
-    int[] contribution(IAtomContainer container, RingSearch ringSearch) {
+    int[] contribution(IAtomContainer container) {
 
         int n = container.getAtomCount();
         int[] electrons = new int[n];
@@ -54,7 +54,7 @@ final class PiBondModel extends ElectronDonation {
             int u = container.indexOf(bond.getBegin());
             int v = container.indexOf(bond.getEnd());
 
-            if (bond.getOrder() == DOUBLE && ringSearch.cyclic(u, v)) {
+            if (bond.getOrder() == DOUBLE && bond.isInRing()) {
                 piBonds[u]++;
                 piBonds[v]++;
             }

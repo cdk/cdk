@@ -43,7 +43,7 @@ class SingleStructureRandomGeneratorTest {
         System.out.println("Instantiating SingleStructureRandomGenerator");
         ssrg = new SingleStructureRandomGenerator();
         System.out.println("Assining unbonded set of atoms");
-        AtomContainer ac = getBunchOfUnbondedAtoms();
+        IAtomContainer ac = getBunchOfUnbondedAtoms();
         mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(ac));
         System.out.println("Molecular Formula is: " + mf);
         ssrg.setAtomContainer(ac);
@@ -56,11 +56,11 @@ class SingleStructureRandomGeneratorTest {
         return true;
     }
 
-    private AtomContainer getBunchOfUnbondedAtoms() {
+    private IAtomContainer getBunchOfUnbondedAtoms() {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         fixCarbonHCount(molecule);
         molecule.removeAllElectronContainers();
-        return (AtomContainer) molecule;
+        return molecule;
     }
 
     private void fixCarbonHCount(IAtomContainer mol) {

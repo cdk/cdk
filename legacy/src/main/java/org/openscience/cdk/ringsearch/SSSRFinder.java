@@ -23,10 +23,10 @@
 package org.openscience.cdk.ringsearch;
 
 import org._3pq.jgrapht.UndirectedGraph;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
@@ -183,18 +183,14 @@ public class SSSRFinder {
             List vertices = cycle.vertexList();
 
             IAtom[] atoms = new IAtom[vertices.size()];
-            atoms[0] = (IAtom) vertices.get(0);
-            for (int i = 1; i < vertices.size(); i++) {
+            for (int i = 0; i < vertices.size(); i++) {
                 atoms[i] = (IAtom) vertices.get(i);
-                ring.addElectronContainer(container.getBond(atoms[i - 1], atoms[i]));
+                atoms[i].setFlag(IChemObject.IN_RING, true);
             }
-
-            for (IAtom atom : atoms)
-                atom.setFlag(CDKConstants.ISINRING, true);
-
-            ring.addElectronContainer(container.getBond(atoms[vertices.size() - 1], atoms[0]));
             ring.setAtoms(atoms);
-
+            for (int i = 1; i < vertices.size(); i++)
+                ring.addElectronContainer(container.getBond(atoms[i - 1], atoms[i]));
+            ring.addElectronContainer(container.getBond(atoms[vertices.size() - 1], atoms[0]));
             ringSet.addAtomContainer(ring);
         }
 

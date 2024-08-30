@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 
 import java.io.StringReader;
@@ -153,8 +154,8 @@ class AtomTypeReaderTest extends CDKTestCase {
         IAtomType atomType = (IAtomType) object;
 
         Assertions.assertEquals("[CSP]-[0-4][-]?+;", atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
-        Assertions.assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
-        Assertions.assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
+        Assertions.assertFalse(atomType.getFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR));
+        Assertions.assertFalse(atomType.getFlag(IChemObject.HYDROGEN_BOND_DONOR));
 
         Assertions.assertEquals((Integer)3, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
         Assertions.assertEquals((Integer)3, atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));

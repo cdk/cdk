@@ -46,15 +46,18 @@ import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -217,6 +220,28 @@ class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
             IBitFingerprint bs2 = fp.getBitFingerprint(container);
             Assertions.assertTrue(bs1.equals(bs2));
         }
+    }
+
+    @Test
+    void testHydrogenRepresentations() throws CDKException, CloneNotSupportedException {
+        String smiles = "C=1C=C(C(=C(C1)Cl)Cl)N2CCN(CC2)CCCCOC=3C=CC4=C(C3)NC(=O)CC4";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IAtomContainer abilify = new SmilesParser(bldr).parseSmiles(smiles);
+        IAtomContainer abilifyExplH = abilify.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(abilifyExplH);
+        Assertions.assertNotEquals(abilify.getAtomCount(), abilifyExplH.getAtomCount());
+        Assertions.assertNotEquals(abilify.getBondCount(), abilifyExplH.getBondCount());
+
+        Fingerprinter fp = new Fingerprinter();
+        Assertions.assertEquals(fp.getBitFingerprint(abilify),
+                                fp.getBitFingerprint(abilifyExplH));
+
+        Assertions.assertNotEquals(abilify.getAtomCount(), abilifyExplH.getAtomCount());
+        Assertions.assertNotEquals(abilify.getBondCount(), abilifyExplH.getBondCount());
+
+        fp.setHashExplicitHydrogens(true);
+        Assertions.assertNotEquals(fp.getBitFingerprint(abilify),
+                                   fp.getBitFingerprint(abilifyExplH));
     }
 
     @Test
@@ -399,7 +424,7 @@ class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Fingerprinter fpr = new Fingerprinter(1024, 7);
         fpr.setPathLimit(2000);
         fpr.setHashPseudoAtoms(true);
-        String expected = "CDK-Fingerprinter/" + CDK.getVersion() + " searchDepth=7 pathLimit=2000 hashPseudoAtoms=true";
+        String expected = "CDK-Fingerprinter/" + CDK.getVersion() + " searchDepth=7 pathLimit=2000 hashPseudoAtoms=true hashExplicitHydrogens=false";
         assertThat(fpr.getVersionDescription(),
                    CoreMatchers.is(expected));
     }

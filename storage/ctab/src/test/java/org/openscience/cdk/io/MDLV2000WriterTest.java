@@ -64,7 +64,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -87,7 +87,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         MDLV2000Writer reader = new MDLV2000Writer();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
         Assertions.assertTrue(reader.accepts(ChemModel.class));
-        Assertions.assertTrue(reader.accepts(AtomContainer.class));
+        Assertions.assertTrue(reader.accepts(IAtomContainer.class));
     }
 
     /**
@@ -97,7 +97,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     void testBug890456() throws Exception {
         StringWriter   writer   = new StringWriter();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new PseudoAtom("*"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
@@ -114,7 +114,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     void testBug1212219() throws Exception {
         StringWriter   writer   = new StringWriter();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom           atom     = new Atom("C");
         atom.setMassNumber(14);
         molecule.addAtom(atom);
@@ -146,7 +146,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test
     void nonDefaultValence_fe_iii() throws Exception {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom          fe1       = new Atom("Fe");
         fe1.setImplicitHydrogenCount(3);
         container.addAtom(fe1);
@@ -317,7 +317,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test
     void testUnsupportedBondOrder() throws Exception {
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(new Bond(molecule.getAtom(0), molecule.getAtom(1), Order.QUADRUPLE));
@@ -392,7 +392,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         oxygen.setProperty(CDKConstants.COMMENT, "Oxygen comment");
         IBond bond = builder.newInstance(IBond.class, carbon, oxygen, Order.DOUBLE);
 
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(oxygen);
         molecule.addAtom(carbon);
         molecule.addBond(bond);
@@ -418,10 +418,10 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
 
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         for (IAtom atom : benzene.atoms()) {
-            atom.setFlag(ISAROMATIC, true);
+            atom.setFlag(AROMATIC, true);
         }
         for (IBond bond : benzene.bonds()) {
-            bond.setFlag(ISAROMATIC, true);
+            bond.setFlag(AROMATIC, true);
         }
 
         StringWriter   writer    = new StringWriter();
@@ -690,7 +690,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  STY  1   1 SRU"));
             assertThat(output, containsString("M  SMT   1 n"));
@@ -703,7 +703,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bracketstyles.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  STY  2   1 SRU   2 SRU"));
             assertThat(output, containsString("M  SBT  1   1   1"));
@@ -715,7 +715,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-unord-mixture.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  STY  3   1 COM   2 COM   3 MIX"));
             assertThat(output, containsString("M  SPL  2   1   3   2   3"));
@@ -727,7 +727,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-ran-copolymer.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  SST  1   1 RAN"));
             assertThat(output, containsString("M  STY  3   1 COP   2 SRU   3 SRU"));
@@ -739,7 +739,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("triphenyl-phosphate-expanded.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  STY  3   1 SUP   2 SUP   3 SUP\n"));
             assertThat(output, containsString("M  SDS EXP  1   1"));
@@ -751,7 +751,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("ChEBI_81539.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  STY  5   1 MUL   2 SRU"));
             assertThat(output, containsString("M  SPA   1 12"));
@@ -763,7 +763,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-ord-mixture.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  STY  3   1 COM   2 COM   3 FOR"));
             assertThat(output, containsString("M  SNC  1   1   1"));
@@ -776,7 +776,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("tetrahedral-parity-withExpH.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"));
         }
@@ -787,7 +787,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("tetrahedral-parity-withImplH.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"));
         }
@@ -798,7 +798,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         StringWriter sw = new StringWriter();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("tetrahedral-parity-withImplH.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            AtomContainer         mol = mdlr.read(new AtomContainer());
+            IAtomContainer mol = mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             ITetrahedralChirality tc  = (ITetrahedralChirality) mol.stereoElements().iterator().next();
             tc.setStereo(tc.getStereo().invert());
             mdlw.write(mol);
@@ -956,7 +956,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
                 .setSetting("false");
-            mdlw.write(mdlr.read(new AtomContainer()));
+            mdlw.write(mdlr.read(DefaultChemObjectBuilder.getInstance().newAtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("\n"
                                               + "  5  4  0  0  0  0  0  0  0  0999 V2000\n"

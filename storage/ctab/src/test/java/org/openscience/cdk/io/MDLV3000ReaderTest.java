@@ -25,17 +25,13 @@ package org.openscience.cdk.io;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
@@ -44,16 +40,17 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * TestCase for the reading MDL V3000 mol files using one test file.
+ * TestCase for the reading MDL V3000 mol files.
  *
  * @cdk.module test-io
  *
@@ -63,10 +60,26 @@ import static org.hamcrest.MatcherAssert.assertThat;
 class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
+    // used in several test methods to match query bonds against them
+    private IBond singleBond, doubleBond, tripleBond, aromaticBond;
 
     @BeforeAll
     static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLV3000Reader(), "org/openscience/cdk/io/iterator/molV3000.mol");
+    }
+
+    @BeforeEach
+    void setupBondsToMatch() {
+        singleBond = SilentChemObjectBuilder.getInstance().newBond();
+        singleBond.setOrder(IBond.Order.SINGLE);
+        doubleBond = SilentChemObjectBuilder.getInstance().newBond();
+        doubleBond.setOrder(IBond.Order.DOUBLE);
+        tripleBond = SilentChemObjectBuilder.getInstance().newBond();
+        tripleBond.setOrder(IBond.Order.TRIPLE);
+        aromaticBond = SilentChemObjectBuilder.getInstance().newBond();
+        aromaticBond.setOrder(IBond.Order.UNSET);
+        aromaticBond.setFlag(IChemObject.AROMATIC, true);
+        aromaticBond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
     }
 
     @Test
@@ -84,7 +97,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         try (InputStream ins = this.getClass().getResourceAsStream(filename);
              MDLV3000Reader reader = new MDLV3000Reader(ins)) {
-            IAtomContainer m = reader.read(new AtomContainer());
+            IAtomContainer m = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             reader.close();
             Assertions.assertNotNull(m);
             Assertions.assertEquals(31, m.getAtomCount());
@@ -102,7 +115,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     void testEmptyString() throws Exception {
         String emptyString = "";
         try (MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString))) {
-            reader.read(new AtomContainer());
+            reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             reader.close();
             Assertions.fail("Should have received a CDK Exception");
         } catch (CDKException cdkEx) {
@@ -117,17 +130,17 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
             molecule = reader.read(molecule);
             reader.close();
-            Assertions.assertTrue(molecule.getAtom(9) instanceof IPseudoAtom);
+            Assertions.assertInstanceOf(IPseudoAtom.class, molecule.getAtom(9));
             Assertions.assertEquals("R", molecule.getAtom(9).getSymbol());
             IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(9);
             Assertions.assertEquals("Leu", pa.getLabel());
         }
     }
-    
+
     @Test
     void pseudoAtomReplacement() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("pseudoAtomReplacement.mol"))) {
-            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             for (IAtom atom : container.getBond(9).atoms()) {
                 Assertions.assertTrue(container.contains(atom));
             }
@@ -137,7 +150,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void positionalVariation() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
-            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(container.getBondCount(), is(8));
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
             Assertions.assertNotNull(sgroups);
@@ -149,7 +162,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void radicalsInCH3() throws Exception {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("CH3.mol"))) {
-            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(container.getSingleElectronCount(), is(1));
             assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(3));
         }
@@ -231,20 +244,144 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    @Test
+    void fluoroethane_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("fluoroethane_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.readMolecule(SilentChemObjectBuilder.getInstance());
+            assertThat(atomContainer.getAtomCount(), is(3));
+            assertThat(atomContainer.getBondCount(), is(2));
+        }
+    }
+
     /**
      * @cdk.bug https://github.com/cdk/cdk/issues/664
-     *
-     * MDLV3000Reader does not yet support queries. Parsed query bonds (order >= 4) should be set to IBond.Order.UNSET
-     * to avoid NPE in valence calculation.
      */
     @Test
-    void reading_query_bond_should_not_npe() throws Exception {
-        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("v3000Query.mol"))) {
-            IAtomContainer container = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+    void bondType4_aromaticBond_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType4_aromaticBond_v3000.mol"))) {
+            final IAtomContainer container = reader.readMolecule(SilentChemObjectBuilder.getInstance());
             for (IBond bond: container.bonds()) {
-                Assertions.assertNotNull(bond.getOrder());
+                assertThat(bond.getOrder(), notNullValue());
+                assertThat(bond.getOrder(), is(IBond.Order.UNSET));
+                assertThat(bond.getFlag(IChemObject.AROMATIC), is(true));
+                assertThat(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE), is(true));
             }
-            assertThat(container.getBond(4).getOrder(), is(IBond.Order.UNSET));
+        }
+    }
+
+    @Test
+    void bondType5_singleOrDouble_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(3));
+            for (IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(1));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(singleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(doubleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(tripleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(aromaticBond));
+        }
+    }
+
+    @Test
+    void bondType6_singleOrAromatic_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType6_singleOrAromatic_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(3));
+            for (IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(1));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(singleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(doubleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(tripleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(aromaticBond));
+        }
+    }
+
+    @Test
+    void bondType7_doubleOrAromatic_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType7_doubleOrAromatic_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(3));
+            for (IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(1));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(singleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(doubleBond));
+            Assertions.assertFalse(((IQueryBond) atomContainer.getBond(1)).matches(tripleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(aromaticBond));
+        }
+    }
+
+
+    @Test
+    void bondType8_anyBond_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType8_anyBond_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(3));
+            for (IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(1));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(singleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(doubleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(tripleBond));
+            Assertions.assertTrue(((IQueryBond) atomContainer.getBond(1)).matches(aromaticBond));
+        }
+    }
+
+    @Test
+    void bondType9_coordinationBond_cdkExceptionExpected_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType9_coordinationBond_v3000.mol"))) {
+            final CDKException exception =
+                    assertThrows(CDKException.class, () -> reader.readMolecule(SilentChemObjectBuilder.getInstance()));
+            assertThat(exception.getMessage(), is("Error while parsing bond type: Unsupported bond type: 9, line='M  V30 2 9 2 3'"));
+        }
+    }
+
+    @Test
+    void bondType10_hydrogenBond_cdkExceptionExpected_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType10_hydrogenBond_v3000.mol"))) {
+            final CDKException exception =
+                    assertThrows(CDKException.class, () -> reader.readMolecule(SilentChemObjectBuilder.getInstance()));
+            assertThat(exception.getMessage(), is("Error while parsing bond type: Unsupported bond type: 10, line='M  V30 2 10 2 3'"));
+        }
+    }
+
+    @Test
+    void bondType11_invalidType_cdkExceptionExpected_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType11_invalidType_v3000.mol"))) {
+            final CDKException exception =
+                    assertThrows(CDKException.class, () -> reader.readMolecule(SilentChemObjectBuilder.getInstance()));
+            assertThat(exception.getMessage(), is("Error while parsing bond type: Invalid bond type: 11, line='M  V30 2 11 2 3'"));
         }
     }
 
@@ -471,6 +608,72 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             for (IAtom atom : mol.atoms()) {
                 assertThat(atom.getMapIdx(), is(not(0)));
             }
+        }
+    }
+
+    @Test
+    void testSdProperties() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("pubchem_paracetamol.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertEquals("AAADccByMAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAHgAQCAAACAyBkAAyxoLAAgCIACVSUACCAAAhIgAIiAAGbIgIJiLCkZOEcAhk1BHI2AewQAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAA==",
+                                    mol.getProperty("PUBCHEM_CACTVS_SUBSKEYS"));
+            Assertions.assertEquals("N-(4-hydroxyphenyl)acetamide",
+                                    mol.getProperty("PUBCHEM_IUPAC_OPENEYE_NAME"));
+            Assertions.assertEquals("0.5",
+                                    mol.getProperty("PUBCHEM_XLOGP3"));
+        }
+    }
+
+    @Test
+    void testSdPropertiesNoDelim() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("pubchem_paracetamol_nodelim.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertEquals("AAADccByMAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAHgAQCAAACAyBkAAyxoLAAgCIACVSUACCAAAhIgAIiAAGbIgIJiLCkZOEcAhk1BHI2AewQAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAA==",
+                                    mol.getProperty("PUBCHEM_CACTVS_SUBSKEYS"));
+            Assertions.assertEquals("N-(4-hydroxyphenyl)acetamide",
+                                    mol.getProperty("PUBCHEM_IUPAC_OPENEYE_NAME"));
+            Assertions.assertEquals("0.5",
+                                    mol.getProperty("PUBCHEM_XLOGP3"));
+        }
+    }
+
+    @Test
+    void testSdPropertiesDelimTrailingSpace() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("pubchem_paracetamol_delimnoise.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertEquals("AAADccByMAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAHgAQCAAACAyBkAAyxoLAAgCIACVSUACCAAAhIgAIiAAGbIgIJiLCkZOEcAhk1BHI2AewQAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAA==",
+                                    mol.getProperty("PUBCHEM_CACTVS_SUBSKEYS"));
+            Assertions.assertEquals("N-(4-hydroxyphenyl)acetamide",
+                                    mol.getProperty("PUBCHEM_IUPAC_OPENEYE_NAME"));
+            Assertions.assertEquals("0.5",
+                                    mol.getProperty("PUBCHEM_XLOGP3"));
+        }
+    }
+
+    @Test
+    void testInvalidStereochemistryCollectionShouldThrow() throws IOException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("invalid_stereochemistry_collection.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            mdlr.setReaderMode(IChemObjectReader.Mode.STRICT);
+            Exception exception = assertThrows(CDKException.class, () -> mdlr.read(bldr.newAtomContainer()));
+            Assertions.assertEquals("Error while parsing stereo group: Expected an atom collection.", exception.getMessage());
+        }
+    }
+
+    @Test
+    void testShouldIgnoreInvalidStereochemistryCollection() throws IOException, CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("invalid_stereochemistry_collection.mol");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertNotNull(mol);
         }
     }
 }

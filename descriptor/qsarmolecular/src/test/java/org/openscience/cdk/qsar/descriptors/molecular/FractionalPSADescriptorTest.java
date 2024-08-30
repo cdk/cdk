@@ -28,8 +28,9 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -60,7 +61,7 @@ class FractionalPSADescriptorTest extends MolecularDescriptorTest {
     void testDescriptors() throws Exception {
         String fnmol = "data/cdd/pyridineacid.mol";
         MDLV2000Reader mdl = new MDLV2000Reader(this.getClass().getClassLoader().getResourceAsStream(fnmol));
-        AtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mdl.read(mol);
         mdl.close();
 

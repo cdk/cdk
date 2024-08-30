@@ -104,8 +104,8 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                     String sColorB = tokenizer.nextToken();
 
                     try {
-                        mass = new Double(sam);
-                        covalent = new Double(scovalent);
+                        mass = Double.parseDouble(sam);
+                        covalent = Double.parseDouble(scovalent);
                         atomicNumber = Integer.parseInt(san);
                         colorR = Integer.parseInt(sColorR);
                         colorG = Integer.parseInt(sColorG);

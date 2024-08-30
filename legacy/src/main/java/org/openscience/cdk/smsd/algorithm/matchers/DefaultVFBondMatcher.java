@@ -46,10 +46,10 @@
  */
 package org.openscience.cdk.smsd.algorithm.matchers;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 
@@ -137,10 +137,10 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
     private boolean isBondTypeMatch(IBond targetBond) {
         int reactantBondType = queryBond.getOrder().numeric();
         int productBondType = targetBond.getOrder().numeric();
-        if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
+        if ((queryBond.getFlag(IChemObject.AROMATIC) == targetBond.getFlag(IChemObject.AROMATIC))
                 && (reactantBondType == productBondType)) {
             return true;
-        } else if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
+        } else if (queryBond.getFlag(IChemObject.AROMATIC) && targetBond.getFlag(IChemObject.AROMATIC)) {
             return true;
         }
         return false;

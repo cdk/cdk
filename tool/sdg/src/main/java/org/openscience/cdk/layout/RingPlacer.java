@@ -25,11 +25,11 @@
  */
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -285,7 +285,7 @@ public class RingPlacer {
     private int getPlacedCount(IAtomContainer ring, IAtom atom) {
         int count = 0;
         for (IAtom nbor : ring.getConnectedAtomsList(atom))
-            if (nbor.getFlag(CDKConstants.ISPLACED))
+            if (nbor.getFlag(IChemObject.PLACED))
                 count++;
         return count;
     }
@@ -337,7 +337,7 @@ public class RingPlacer {
     private List<IAtom> getRingAttach(IRing ring) {
         List<IAtom> pivots = new ArrayList<>(2);
         for (IAtom atom : ring.atoms()) {
-            if (!atom.getFlag(CDKConstants.ISPLACED))
+            if (!atom.getFlag(IChemObject.PLACED))
                 continue;
             int count = getPlacedCount(ring, atom);
             if (count == 1)
@@ -475,7 +475,7 @@ public class RingPlacer {
             int numPlaced = 0;
             for (IBond bond : mBonds) {
                 IAtom nbr = bond.getOther(sharedAtoms.getAtom(0));
-                if (!nbr.getFlag(CDKConstants.ISPLACED))
+                if (!nbr.getFlag(IChemObject.PLACED))
                     continue;
                 numPlaced++;
             }
@@ -661,12 +661,12 @@ public class RingPlacer {
      * @param bondLength the bond length
      */
     boolean completePartiallyPlacedRing(IRingSet rset, IRing ring, double bondLength) {
-        if (ring.getFlag(CDKConstants.ISPLACED))
+        if (ring.getFlag(IChemObject.PLACED))
             return true;
         IRing partiallyPlacedRing = molecule.getBuilder().newInstance(IRing.class);
         for (IAtom atom : ring.atoms())
             if (atom.getPoint2d() != null)
-                atom.setFlag(CDKConstants.ISPLACED, true);
+                atom.setFlag(IChemObject.PLACED, true);
         AtomPlacer.copyPlaced(partiallyPlacedRing, ring);
 
         if (partiallyPlacedRing.getAtomCount() > 1 &&
@@ -674,7 +674,7 @@ public class RingPlacer {
             placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.FUSED, bondLength);
             placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.BRIDGED, bondLength);
             placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.SPIRO, bondLength);
-            ring.setFlag(CDKConstants.ISPLACED, true);
+            ring.setFlag(IChemObject.PLACED, true);
             return true;
         } else {
             return false;
@@ -722,7 +722,7 @@ public class RingPlacer {
 
     public boolean allPlaced(IRingSet rs) {
         for (int i = 0; i < rs.getAtomContainerCount(); i++) {
-            if (!rs.getAtomContainer(i).getFlag(CDKConstants.ISPLACED)) {
+            if (!rs.getAtomContainer(i).getFlag(IChemObject.PLACED)) {
                 return false;
             }
         }
@@ -743,15 +743,15 @@ public class RingPlacer {
             ring = (IRing) rs.getAtomContainer(i);
             allPlaced = true;
             for (int j = 0; j < ring.getAtomCount(); j++) {
-                if (!ring.getAtom(j).getFlag(CDKConstants.ISPLACED)) {
+                if (!ring.getAtom(j).getFlag(IChemObject.PLACED)) {
                     allPlaced = false;
                     ringsetPlaced = false;
                     break;
                 }
             }
-            ring.setFlag(CDKConstants.ISPLACED, allPlaced);
+            ring.setFlag(IChemObject.PLACED, allPlaced);
         }
-        rs.setFlag(CDKConstants.ISPLACED, ringsetPlaced);
+        rs.setFlag(IChemObject.PLACED, ringsetPlaced);
     }
 
     /**
@@ -850,7 +850,7 @@ public class RingPlacer {
         //		logger.debug(rs.reportRingList(molecule));
         for (IAtomContainer container : connectedRings.atomContainers()) {
             final IRing connectedRing = (IRing) container;
-            if (!connectedRing.getFlag(CDKConstants.ISPLACED)) {
+            if (!connectedRing.getFlag(IChemObject.PLACED)) {
                 //				logger.debug(ring.toString(molecule));
                 //				logger.debug(connectedRing.toString(molecule));
                 final IAtomContainer sharedAtoms = AtomContainerManipulator.getIntersection(ring, connectedRing);
@@ -919,7 +919,7 @@ public class RingPlacer {
                     final Point2d tempPoint = new Point2d(sharedAtomsCenter);
                     tempPoint.add(newRingCenterVector);
                     placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
-                    connectedRing.setFlag(CDKConstants.ISPLACED, true);
+                    connectedRing.setFlag(IChemObject.PLACED, true);
                     placeConnectedRings(rs, connectedRing, handleType, bondLength);
                 }
             }

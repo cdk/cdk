@@ -24,10 +24,10 @@ package org.openscience.cdk.signature;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import signature.AbstractVertexSignature;
@@ -194,7 +194,7 @@ class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         Assertions.assertEquals(1, product.getBondCount());
         IBond bond = product.getBond(0);
         Assertions.assertEquals(IBond.Order.SINGLE, bond.getOrder());
-        Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
     }
 
     @Test

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -53,7 +53,7 @@ class InductiveAtomicSoftnessDescriptorTest extends AtomicDescriptorTest {
         Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
         Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-        IAtomContainer mol = new AtomContainer(); // molecule is CF
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer(); // molecule is CF
 
         Atom c = new Atom("C");
         mol.addAtom(c);

@@ -25,7 +25,8 @@
 package org.openscience.cdk.aromaticity;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.ringsearch.RingSearch;
+
+import static org.openscience.cdk.aromaticity.Aromaticity.*;
 
 /**
  * Defines an electron donation model for perceiving aromatic systems. The model
@@ -68,10 +69,9 @@ public abstract class ElectronDonation {
      * indicates the atom should not contribute at all.
      *
      * @param container  molecule
-     * @param ringSearch ring information
      * @return electron contribution of each atom (-1=none)
      */
-    abstract int[] contribution(IAtomContainer container, RingSearch ringSearch);
+    abstract int[] contribution(IAtomContainer container);
 
     /**
      * Use the preset CDK atom types to determine the electron contribution of
@@ -93,7 +93,9 @@ public abstract class ElectronDonation {
      *
      * @return electron donation model to use for aromaticity perception
      * @see org.openscience.cdk.interfaces.IAtom#getAtomTypeName()
+     * @deprecated Use the newer {@link Model#CDK_1x} or {@link Model#CDK_2x}
      */
+    @Deprecated
     public static ElectronDonation cdk() {
         return new AtomTypeModel(false);
     }
@@ -114,11 +116,13 @@ public abstract class ElectronDonation {
      * <li>C.minus.planar: 2 electrons </li> <li>O.planar3: 2 electrons </li>
      * <li>N.sp2.3: 1 electron </li> <li>C.sp2: 1 electron </li> </ul>
      * 
-     * Exocyclic pi bonds are not allowed to contribute.
+     * Exocyclic pi bonds are allowed to contribute.
      *
      * @return electron donation model to use for aromaticity perception
      * @see org.openscience.cdk.interfaces.IAtom#getAtomTypeName()
+     * @deprecated Use the newer {@link Model#CDK_1x} or {@link Model#CDK_2x}
      */
+    @Deprecated
     public static ElectronDonation cdkAllowingExocyclic() {
         return new AtomTypeModel(true);
     }
@@ -131,7 +135,9 @@ public abstract class ElectronDonation {
      * a lone pair can not be properly represented.
      *
      * @return electron donation model to use for aromaticity perception
+     * @deprecated Use the newer {@link Model#PiBonds}
      */
+    @Deprecated
     public static ElectronDonation piBonds() {
         return new PiBondModel();
     }
@@ -162,7 +168,9 @@ public abstract class ElectronDonation {
      * but if the exocyclic atom is more electronegative it consumes an
      * electron. As an example ketone groups contribute '0'
      * electrons.</li></ul>
+     * @deprecated Use {@link Model#Daylight}
      */
+    @Deprecated
     public static ElectronDonation daylight() {
         return new DaylightModel();
     }

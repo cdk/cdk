@@ -21,7 +21,6 @@ package org.openscience.cdk.tools;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.charges.Electronegativity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
@@ -34,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -268,7 +268,7 @@ public class IonizationPotentialTool {
             RingSetManipulator.markAromaticRings(ringSet);
             int aromRingCount = 0;
             for (IAtomContainer ring : ringSet.atomContainers()) {
-                if (ring.getFlag(CDKConstants.ISAROMATIC)) aromRingCount++;
+                if (ring.getFlag(IChemObject.AROMATIC)) aromRingCount++;
             }
             results[7] = aromRingCount;
         } else {
@@ -467,7 +467,7 @@ public class IonizationPotentialTool {
         IAtomContainerSet setOfReactants = container.getBuilder().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(container);
 
-        atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
+        atom.setFlag(IChemObject.REACTIVE_CENTER, true);
         List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
@@ -476,7 +476,7 @@ public class IonizationPotentialTool {
 
         /* initiate */
         IReactionSet setOfReactions = reactionNBE.initiate(setOfReactants, null);
-        atom.setFlag(CDKConstants.REACTIVE_CENTER, false);
+        atom.setFlag(IChemObject.REACTIVE_CENTER, false);
         if (setOfReactions != null && setOfReactions.getReactionCount() == 1
                 && setOfReactions.getReaction(0).getProducts().getAtomContainerCount() == 1)
             return setOfReactions.getReaction(0).getProducts().getAtomContainer(0);

@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.fragment;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -33,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingSearch;
@@ -248,7 +248,7 @@ public class MurckoFragmenter implements IFragmenter {
         IRingSet r = arf.findAllRings(atomContainer);
         for (IAtomContainer ar : r.atomContainers()) {
             for (IBond bond : ar.bonds())
-                bond.setFlag(CDKConstants.ISINRING, true);
+                bond.setFlag(IChemObject.IN_RING, true);
         }
 
         for (IAtom atom : atomContainer.atoms()) {
@@ -369,12 +369,12 @@ public class MurckoFragmenter implements IFragmenter {
         // sicne the central atom is a single atom between rings, but also has a non
         // ring attachment
         for (IAtom atom : atomContainer.atoms()) {
-            if (atom.getFlag(CDKConstants.ISINRING)) continue; // only need to look at non-ring atoms
+            if (atom.getFlag(IChemObject.IN_RING)) continue; // only need to look at non-ring atoms
             List<IAtom> conatoms = atomContainer.getConnectedAtomsList(atom);
             if (conatoms.size() == 1) continue; // this is actually a terminal atom and so is a side chain
             int nRingAtom = 0;
             for (IAtom conatom : conatoms) {
-                if (conatom.getFlag(CDKConstants.ISINRING)) {
+                if (conatom.getFlag(IChemObject.IN_RING)) {
                     nRingAtom++;
                 }
             }
@@ -384,9 +384,9 @@ public class MurckoFragmenter implements IFragmenter {
 
         // now lets look at linker paths
         for (IAtom atom1 : atomContainer.atoms()) {
-            if (atom1.getFlag(CDKConstants.ISINRING) || !(Boolean) atom1.getProperty(IS_CONNECTED_TO_RING)) continue;
+            if (atom1.getFlag(IChemObject.IN_RING) || !(Boolean) atom1.getProperty(IS_CONNECTED_TO_RING)) continue;
             for (IAtom atom2 : atomContainer.atoms()) {
-                if (atom2.getFlag(CDKConstants.ISINRING) || !(Boolean) atom2.getProperty(IS_CONNECTED_TO_RING))
+                if (atom2.getFlag(IChemObject.IN_RING) || !(Boolean) atom2.getProperty(IS_CONNECTED_TO_RING))
                     continue;
 
                 if (atom1.equals(atom2)) continue;
@@ -399,7 +399,7 @@ public class MurckoFragmenter implements IFragmenter {
                 for (List<IAtom> path : paths) {
                     boolean allNonRing = true;
                     for (IAtom atom : path) {
-                        if (atom.getFlag(CDKConstants.ISINRING)) {
+                        if (atom.getFlag(IChemObject.IN_RING)) {
                             allNonRing = false;
                             break;
                         }
@@ -507,7 +507,7 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     private boolean isring(IAtom atom) {
-        return atom.getFlag(CDKConstants.ISINRING);
+        return atom.getFlag(IChemObject.IN_RING);
     }
 
     private boolean islinker(IAtom atom) {
@@ -525,7 +525,7 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     private boolean isZeroAtomLinker(IBond bond) {
-        boolean isRingBond = bond.getFlag(CDKConstants.ISINRING);
+        boolean isRingBond = bond.getFlag(IChemObject.IN_RING);
         return isring(bond.getBegin()) && isring(bond.getEnd()) && !isRingBond;
     }
 

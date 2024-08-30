@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -75,7 +75,7 @@ final class ExtendedTetrahedralTest {
     void nonCumulatedAtomThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
-                                    IAtomContainer ac = new AtomContainer();
+                                    IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
                                     ac.addAtom(new Atom("C"));
                                     ac.addAtom(new Atom("C"));
                                     ac.addAtom(new Atom("C"));
@@ -87,7 +87,7 @@ final class ExtendedTetrahedralTest {
 
     @Test
     void terminalAtomsAreFoundUnordered() {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
@@ -101,7 +101,7 @@ final class ExtendedTetrahedralTest {
 
     @Test
     void terminalAtomsAreFoundOrdered() {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));

@@ -3,7 +3,7 @@ package org.openscience.cdk.forcefield.mmff;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
@@ -22,7 +22,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAGLYSL01() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("H", 0));
@@ -54,7 +54,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAMHTAR01() {
-        IAtomContainer container = new AtomContainer(15, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -97,7 +97,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAMPTRB10() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -162,7 +162,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testARGIND11() {
-        IAtomContainer container = new AtomContainer(26, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -227,7 +227,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBAOXLM01() {
-        IAtomContainer container = new AtomContainer(6, 5, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("C", 0));
@@ -251,7 +251,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBBSPRT10() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -314,7 +314,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBEVJER10() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -376,7 +376,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBEWCUB() {
-        IAtomContainer container = new AtomContainer(59, 61, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -512,7 +512,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBEWKUJ04() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -583,7 +583,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBIHKEI01() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -640,7 +640,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBIPDEJ02() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -701,7 +701,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBIPJUF10() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -753,7 +753,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBIPYCL01() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -812,7 +812,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBITNAT10() {
-        IAtomContainer container = new AtomContainer(27, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -882,7 +882,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBIYBIU10() {
-        IAtomContainer container = new AtomContainer(23, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -944,7 +944,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBODKOU() {
-        IAtomContainer container = new AtomContainer(37, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -1033,7 +1033,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBSALAP01() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -1098,7 +1098,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBUPSLB10() {
-        IAtomContainer container = new AtomContainer(38, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -1188,7 +1188,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBUPSLD10() {
-        IAtomContainer container = new AtomContainer(39, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("S", 0));
@@ -1280,7 +1280,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBUYTIY10() {
-        IAtomContainer container = new AtomContainer(31, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -1359,7 +1359,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBUYTOE10() {
-        IAtomContainer container = new AtomContainer(31, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -1438,7 +1438,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBUYXEY10() {
-        IAtomContainer container = new AtomContainer(38, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -1528,7 +1528,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBYITOT02() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -1599,7 +1599,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCABWEH10() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -1660,7 +1660,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCAFORM07() {
-        IAtomContainer container = new AtomContainer(4, 3, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -1680,7 +1680,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCAGREH10() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -1737,7 +1737,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCALXES20() {
-        IAtomContainer container = new AtomContainer(27, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -1804,7 +1804,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCAMALD03() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -1834,7 +1834,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCEFMEN() {
-        IAtomContainer container = new AtomContainer(50, 53, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -1953,7 +1953,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCETROI01() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2032,7 +2032,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCEWCUC10() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -2119,7 +2119,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCEWVIJ10() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -2195,7 +2195,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCEWYIM30() {
-        IAtomContainer container = new AtomContainer(22, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -2255,7 +2255,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIHWUL10() {
-        IAtomContainer container = new AtomContainer(17, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -2305,7 +2305,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIJXOI10() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2370,7 +2370,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIKSEU10() {
-        IAtomContainer container = new AtomContainer(20, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -2426,7 +2426,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCILBII() {
-        IAtomContainer container = new AtomContainer(35, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2511,7 +2511,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCILDOQ() {
-        IAtomContainer container = new AtomContainer(23, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -2570,7 +2570,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCILWUP11() {
-        IAtomContainer container = new AtomContainer(9, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -2601,7 +2601,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIMRUL10() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -2674,7 +2674,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCINVIE() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -2754,7 +2754,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIPVOM() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -2821,7 +2821,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIPYAB10() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2871,7 +2871,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCISMOG() {
-        IAtomContainer container = new AtomContainer(14, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -2915,7 +2915,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCISPOJ() {
-        IAtomContainer container = new AtomContainer(24, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -2979,7 +2979,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCITDIS() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -3029,7 +3029,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCITNOI10() {
-        IAtomContainer container = new AtomContainer(28, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -3099,7 +3099,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCITPEA10() {
-        IAtomContainer container = new AtomContainer(31, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -3175,7 +3175,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCITSED10() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -3205,7 +3205,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIVCEP02() {
-        IAtomContainer container = new AtomContainer(36, 39, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -3295,7 +3295,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIVLAU02() {
-        IAtomContainer container = new AtomContainer(31, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -3374,7 +3374,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIXWAH() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -3431,7 +3431,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIYNUT() {
-        IAtomContainer container = new AtomContainer(14, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -3475,7 +3475,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIZFIA() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -3544,7 +3544,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIZJAW() {
-        IAtomContainer container = new AtomContainer(48, 48, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Si", 0));
@@ -3655,7 +3655,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIZWUD() {
-        IAtomContainer container = new AtomContainer(15, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -3699,7 +3699,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIZYEP() {
-        IAtomContainer container = new AtomContainer(29, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -3771,7 +3771,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCIZZUG() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -3826,7 +3826,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOBKIN01() {
-        IAtomContainer container = new AtomContainer(25, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -3890,7 +3890,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOCXUN() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -3949,7 +3949,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOGDEH() {
-        IAtomContainer container = new AtomContainer(23, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -4012,7 +4012,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOGYAY() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -4063,7 +4063,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOHKOZ() {
-        IAtomContainer container = new AtomContainer(15, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -4107,7 +4107,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOJFIQ() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -4168,7 +4168,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOKDEL() {
-        IAtomContainer container = new AtomContainer(25, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -4231,7 +4231,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOKROJ() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -4300,7 +4300,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOLZUY() {
-        IAtomContainer container = new AtomContainer(44, 46, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -4405,7 +4405,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOMDIR() {
-        IAtomContainer container = new AtomContainer(23, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", 0));
@@ -4467,7 +4467,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOMKAQ() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -4516,7 +4516,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOMWOQ() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -4567,7 +4567,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOMWUW() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -4636,7 +4636,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCONBAI() {
-        IAtomContainer container = new AtomContainer(36, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -4725,7 +4725,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCONFAM() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -4757,7 +4757,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCONLIA() {
-        IAtomContainer container = new AtomContainer(27, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -4825,7 +4825,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCORDOC() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -4885,7 +4885,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCORWUB10() {
-        IAtomContainer container = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("C", 0));
@@ -4913,7 +4913,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOSFAR() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -4964,7 +4964,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOSSEI() {
-        IAtomContainer container = new AtomContainer(16, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("C", 0));
@@ -5009,7 +5009,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOSWIQ() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -5071,7 +5071,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOTMON() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -5125,7 +5125,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOTPEG() {
-        IAtomContainer container = new AtomContainer(15, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -5168,7 +5168,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOTRIM() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
@@ -5233,7 +5233,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOVHUQ() {
-        IAtomContainer container = new AtomContainer(17, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -5280,7 +5280,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOVMAB() {
-        IAtomContainer container = new AtomContainer(32, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -5358,7 +5358,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOVXIU() {
-        IAtomContainer container = new AtomContainer(33, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -5440,7 +5440,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOWTIR() {
-        IAtomContainer container = new AtomContainer(32, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -5519,7 +5519,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOXBAS() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -5579,7 +5579,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOXZEU() {
-        IAtomContainer container = new AtomContainer(15, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -5622,7 +5622,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOYMOS() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -5689,7 +5689,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOYNAF() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -5740,7 +5740,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCOYVIV() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -5809,7 +5809,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUBTUO() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -5882,7 +5882,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUCDAF() {
-        IAtomContainer container = new AtomContainer(27, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -5952,7 +5952,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUCHOX() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -6025,7 +6025,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUCHUD() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -6090,7 +6090,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUDJAM() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -6150,7 +6150,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUDNEU() {
-        IAtomContainer container = new AtomContainer(35, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -6235,7 +6235,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUDPAS() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -6283,7 +6283,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUDPOG() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -6348,7 +6348,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUDREY() {
-        IAtomContainer container = new AtomContainer(11, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -6383,7 +6383,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUFFAK() {
-        IAtomContainer container = new AtomContainer(37, 41, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -6476,7 +6476,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUGBEL() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -6552,7 +6552,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUGGOA() {
-        IAtomContainer container = new AtomContainer(23, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -6611,7 +6611,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUGLOF() {
-        IAtomContainer container = new AtomContainer(28, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -6685,7 +6685,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUJYUB10() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -6745,7 +6745,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCULGEV10() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -6804,7 +6804,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCULHIA10() {
-        IAtomContainer container = new AtomContainer(39, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -6898,7 +6898,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCULVEK() {
-        IAtomContainer container = new AtomContainer(29, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -6970,7 +6970,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUNVAI() {
-        IAtomContainer container = new AtomContainer(29, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -7042,7 +7042,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUNVEM() {
-        IAtomContainer container = new AtomContainer(29, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -7114,7 +7114,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCURZIY() {
-        IAtomContainer container = new AtomContainer(24, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -7178,7 +7178,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUVFOO() {
-        IAtomContainer container = new AtomContainer(24, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("C", 0));
@@ -7239,7 +7239,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUVGAB() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -7301,7 +7301,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUVJOS() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -7333,7 +7333,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCUYRAP() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -7404,7 +7404,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCYANAM01() {
-        IAtomContainer container = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -7426,7 +7426,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCYGUAN01() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -7506,7 +7506,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDABHAP() {
-        IAtomContainer container = new AtomContainer(34, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -7590,7 +7590,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDABLIB() {
-        IAtomContainer container = new AtomContainer(20, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -7646,7 +7646,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDACSAB() {
-        IAtomContainer container = new AtomContainer(31, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -7723,7 +7723,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDACYIP() {
-        IAtomContainer container = new AtomContainer(35, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 0));
@@ -7808,7 +7808,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDADDAN() {
-        IAtomContainer container = new AtomContainer(32, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -7889,7 +7889,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDADLAV() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -7941,7 +7941,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDADLEZ() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -7993,7 +7993,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAFKIE() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -8051,7 +8051,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAFPUV() {
-        IAtomContainer container = new AtomContainer(11, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -8086,7 +8086,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAGTUA() {
-        IAtomContainer container = new AtomContainer(26, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -8151,7 +8151,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAHBAP() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -8211,7 +8211,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAHNAB() {
-        IAtomContainer container = new AtomContainer(26, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -8276,7 +8276,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAJXER() {
-        IAtomContainer container = new AtomContainer(31, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -8356,7 +8356,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAKBAS() {
-        IAtomContainer container = new AtomContainer(34, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -8440,7 +8440,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAKCEX() {
-        IAtomContainer container = new AtomContainer(20, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -8496,7 +8496,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAKDOI() {
-        IAtomContainer container = new AtomContainer(36, 39, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -8586,7 +8586,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDANCUQ() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -8635,7 +8635,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAPSUO03() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -8708,7 +8708,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDARDEF() {
-        IAtomContainer container = new AtomContainer(30, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -8784,7 +8784,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDARPOB10() {
-        IAtomContainer container = new AtomContainer(39, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("N", 0));
@@ -8876,7 +8876,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDARXID() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -8943,7 +8943,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDARZEB() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -9006,7 +9006,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAVWEC() {
-        IAtomContainer container = new AtomContainer(30, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("C", 0));
@@ -9080,7 +9080,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAVXED() {
-        IAtomContainer container = new AtomContainer(35, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -9165,7 +9165,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAWXII() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -9221,7 +9221,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAWYUV() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -9270,7 +9270,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAYWEF() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -9339,7 +9339,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDAZVEF() {
-        IAtomContainer container = new AtomContainer(27, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -9410,7 +9410,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEBMOM01() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -9444,7 +9444,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDECJAW() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -9501,7 +9501,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDECKUR() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -9577,7 +9577,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDECRIM() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -9644,7 +9644,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEDCIY() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -9699,7 +9699,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEDSIO() {
-        IAtomContainer container = new AtomContainer(30, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -9774,7 +9774,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEFGIE() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -9836,7 +9836,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEFLEF() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -9912,7 +9912,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEFPUZ() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -9962,7 +9962,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEFTUD() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -10031,7 +10031,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEFVAL() {
-        IAtomContainer container = new AtomContainer(31, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -10109,7 +10109,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEFYUI() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -10159,7 +10159,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEGLUW() {
-        IAtomContainer container = new AtomContainer(14, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -10200,7 +10200,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEGRIQ() {
-        IAtomContainer container = new AtomContainer(37, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -10292,7 +10292,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEKRUG() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -10343,7 +10343,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEMBIG() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -10404,7 +10404,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEPKEO() {
-        IAtomContainer container = new AtomContainer(19, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -10458,7 +10458,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDERZUV() {
-        IAtomContainer container = new AtomContainer(31, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -10535,7 +10535,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDESWUT() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -10587,7 +10587,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDESYOP() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -10617,7 +10617,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEWHOC() {
-        IAtomContainer container = new AtomContainer(29, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -10691,7 +10691,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEWJEU() {
-        IAtomContainer container = new AtomContainer(36, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -10778,7 +10778,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEXCIS() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -10847,7 +10847,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEXGIW() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -10910,7 +10910,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEZDUH() {
-        IAtomContainer container = new AtomContainer(20, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("F", 0));
@@ -10966,7 +10966,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEZNIF() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -11037,7 +11037,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDEZXEL() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -11088,7 +11088,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDHOADS01() {
-        IAtomContainer container = new AtomContainer(28, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -11160,7 +11160,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDICKIJ() {
-        IAtomContainer container = new AtomContainer(32, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -11242,7 +11242,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDICPUA() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -11293,7 +11293,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDICRAI() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -11344,7 +11344,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDICYIX() {
-        IAtomContainer container = new AtomContainer(22, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -11401,7 +11401,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDICYOD() {
-        IAtomContainer container = new AtomContainer(26, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -11466,7 +11466,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIDYOE() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -11528,7 +11528,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIFSIU() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -11599,7 +11599,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIGCOL() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("N", 0));
@@ -11631,7 +11631,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIGCUR() {
-        IAtomContainer container = new AtomContainer(22, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -11688,7 +11688,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIGLEK() {
-        IAtomContainer container = new AtomContainer(40, 42, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -11785,7 +11785,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIHTET() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -11842,7 +11842,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIKGAF() {
-        IAtomContainer container = new AtomContainer(25, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -11906,7 +11906,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIKGEJ() {
-        IAtomContainer container = new AtomContainer(25, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -11970,7 +11970,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIKWID() {
-        IAtomContainer container = new AtomContainer(38, 41, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -12064,7 +12064,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIKYUR() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -12115,7 +12115,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDILCOQ() {
-        IAtomContainer container = new AtomContainer(32, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -12194,7 +12194,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIMYIH10() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -12261,7 +12261,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIPDAH10() {
-        IAtomContainer container = new AtomContainer(29, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -12335,7 +12335,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIPDIP10() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -12391,7 +12391,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIRMIA() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -12425,7 +12425,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDISHES() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -12494,7 +12494,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDISJOE() {
-        IAtomContainer container = new AtomContainer(15, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -12537,7 +12537,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDITRAZ() {
-        IAtomContainer container = new AtomContainer(14, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -12578,7 +12578,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDITYAG10() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -12647,7 +12647,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIVJUN() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -12701,7 +12701,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIVTUX() {
-        IAtomContainer container = new AtomContainer(25, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -12767,7 +12767,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIVVEJ() {
-        IAtomContainer container = new AtomContainer(14, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -12808,7 +12808,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIVWEK() {
-        IAtomContainer container = new AtomContainer(34, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -12893,7 +12893,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIWCOB() {
-        IAtomContainer container = new AtomContainer(16, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -12938,7 +12938,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIXJEZ() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -12997,7 +12997,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIYDIY() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -13053,7 +13053,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIYPOQ() {
-        IAtomContainer container = new AtomContainer(34, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -13137,7 +13137,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIYPUW() {
-        IAtomContainer container = new AtomContainer(16, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -13184,7 +13184,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDIZPUX() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -13255,7 +13255,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDMEOXA01() {
-        IAtomContainer container = new AtomContainer(14, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -13296,7 +13296,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOCCIH() {
-        IAtomContainer container = new AtomContainer(16, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("C", 0));
@@ -13342,7 +13342,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOCFIK() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -13399,7 +13399,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOCWUN() {
-        IAtomContainer container = new AtomContainer(26, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -13465,7 +13465,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDODNOZ() {
-        IAtomContainer container = new AtomContainer(31, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -13541,7 +13541,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDODNUF() {
-        IAtomContainer container = new AtomContainer(22, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -13598,7 +13598,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOJPAT() {
-        IAtomContainer container = new AtomContainer(21, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -13656,7 +13656,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDONFOB() {
-        IAtomContainer container = new AtomContainer(28, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -13725,7 +13725,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOSNOO() {
-        IAtomContainer container = new AtomContainer(15, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -13769,7 +13769,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOTNIJ() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -13819,7 +13819,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOTVEN() {
-        IAtomContainer container = new AtomContainer(15, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -13863,7 +13863,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOTWOY() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -13936,7 +13936,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOWDEY() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -13984,7 +13984,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOXXAP() {
-        IAtomContainer container = new AtomContainer(17, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -14031,7 +14031,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOXZOF() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -14080,7 +14080,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOZFON() {
-        IAtomContainer container = new AtomContainer(20, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("O", 0));
@@ -14133,7 +14133,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDOZNIP() {
-        IAtomContainer container = new AtomContainer(15, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -14177,7 +14177,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUBNET() {
-        IAtomContainer container = new AtomContainer(22, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -14237,7 +14237,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUDMUK() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -14291,7 +14291,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUGMUN() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -14339,7 +14339,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUGWIL01() {
-        IAtomContainer container = new AtomContainer(19, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -14390,7 +14390,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUJHEV() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -14440,7 +14440,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUJMEA() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -14527,7 +14527,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUKVAG() {
-        IAtomContainer container = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -14565,7 +14565,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUKWUB() {
-        IAtomContainer container = new AtomContainer(28, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -14635,7 +14635,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDULTIN() {
-        IAtomContainer container = new AtomContainer(24, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -14699,7 +14699,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUMHIC() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -14766,7 +14766,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUMPAC() {
-        IAtomContainer container = new AtomContainer(30, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -14840,7 +14840,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUPHEB() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -14902,7 +14902,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUPTAJ() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -14963,7 +14963,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDURDID() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -15017,7 +15017,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUTHIJ() {
-        IAtomContainer container = new AtomContainer(32, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -15098,7 +15098,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUVHUX10() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -15159,7 +15159,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUVXIB() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -15208,7 +15208,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUWGAD() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
@@ -15266,7 +15266,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUWKUB() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -15322,7 +15322,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUWRIW() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
@@ -15380,7 +15380,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUXTIZ() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -15416,7 +15416,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUXWUO() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -15489,7 +15489,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUXXAV() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -15565,7 +15565,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUYNOA() {
-        IAtomContainer container = new AtomContainer(38, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -15658,7 +15658,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUYPES() {
-        IAtomContainer container = new AtomContainer(47, 48, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -15769,7 +15769,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testDUYRAQ() {
-        IAtomContainer container = new AtomContainer(35, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 0));
@@ -15854,7 +15854,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFACMIF() {
-        IAtomContainer container = new AtomContainer(27, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -15924,7 +15924,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFACREG() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
@@ -15980,7 +15980,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFACYAJ() {
-        IAtomContainer container = new AtomContainer(19, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -16034,7 +16034,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFADMIG() {
-        IAtomContainer container = new AtomContainer(16, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -16081,7 +16081,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFADVEL() {
-        IAtomContainer container = new AtomContainer(23, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -16140,7 +16140,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFADVUB() {
-        IAtomContainer container = new AtomContainer(23, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -16199,7 +16199,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAGBUK() {
-        IAtomContainer container = new AtomContainer(41, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
@@ -16295,7 +16295,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAGCOF() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -16362,7 +16362,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAGLII() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -16404,7 +16404,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAGVEO() {
-        IAtomContainer container = new AtomContainer(8, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -16433,7 +16433,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAGZOC() {
-        IAtomContainer container = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -16470,7 +16470,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAHPUZ() {
-        IAtomContainer container = new AtomContainer(29, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -16545,7 +16545,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAHSUC() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -16612,7 +16612,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAHYUI() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
@@ -16672,7 +16672,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAHZET() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -16737,7 +16737,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAJWIW() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -16787,7 +16787,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAMHAC() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -16858,7 +16858,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAMYUN() {
-        IAtomContainer container = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -16895,7 +16895,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAPLUD() {
-        IAtomContainer container = new AtomContainer(13, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -16935,7 +16935,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFARMAM() {
-        IAtomContainer container = new AtomContainer(24, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17000,7 +17000,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFARSOG() {
-        IAtomContainer container = new AtomContainer(22, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -17060,7 +17060,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFARWEA() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("N", 0));
@@ -17096,7 +17096,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFASGUB() {
-        IAtomContainer container = new AtomContainer(15, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -17139,7 +17139,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFASJIS() {
-        IAtomContainer container = new AtomContainer(39, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("S", -1));
@@ -17233,7 +17233,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFATLIV() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -17320,7 +17320,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAXFUF10() {
-        IAtomContainer container = new AtomContainer(15, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -17365,7 +17365,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAXVAB() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -17424,7 +17424,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAXVEF() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17486,7 +17486,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAXVIJ() {
-        IAtomContainer container = new AtomContainer(26, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17554,7 +17554,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAZBAJ() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("C", 0));
@@ -17590,7 +17590,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFAZKUM() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -17626,7 +17626,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFBATNB() {
-        IAtomContainer container = new AtomContainer(32, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17705,7 +17705,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFECXEQ() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17767,7 +17767,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEGSEP() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -17817,7 +17817,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEHDAX() {
-        IAtomContainer container = new AtomContainer(14, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17859,7 +17859,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEJJEJ() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -17924,7 +17924,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEJKIO() {
-        IAtomContainer container = new AtomContainer(38, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -18017,7 +18017,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFELYIE() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -18071,7 +18071,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFELYUQ() {
-        IAtomContainer container = new AtomContainer(25, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -18135,7 +18135,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEMGEJ() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("C", 0));
@@ -18200,7 +18200,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFENCOQ() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -18250,7 +18250,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFENHAH() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -18298,7 +18298,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFENJIR() {
-        IAtomContainer container = new AtomContainer(31, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -18375,7 +18375,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFENJOX() {
-        IAtomContainer container = new AtomContainer(34, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -18458,7 +18458,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFENJUD() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
@@ -18529,7 +18529,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFENNUH() {
-        IAtomContainer container = new AtomContainer(21, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -18584,7 +18584,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFENYIG() {
-        IAtomContainer container = new AtomContainer(36, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -18672,7 +18672,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEPWAY() {
-        IAtomContainer container = new AtomContainer(13, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("N", 0));
@@ -18711,7 +18711,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEPWOM() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("F", 0));
@@ -18747,7 +18747,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFESCAH() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -18779,7 +18779,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFESMIZ() {
-        IAtomContainer container = new AtomContainer(25, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -18843,7 +18843,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFETRUR() {
-        IAtomContainer container = new AtomContainer(23, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -18905,7 +18905,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFETWOQ() {
-        IAtomContainer container = new AtomContainer(30, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -18982,7 +18982,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEVNUP() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -19034,7 +19034,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEYLUQ() {
-        IAtomContainer container = new AtomContainer(19, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -19087,7 +19087,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEZPOP() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 0));
@@ -19119,7 +19119,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFEZRUX() {
-        IAtomContainer container = new AtomContainer(29, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -19194,7 +19194,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIBLIL() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -19267,7 +19267,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFICDOK() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19317,7 +19317,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIFGUW() {
-        IAtomContainer container = new AtomContainer(34, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -19401,7 +19401,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIGYID() {
-        IAtomContainer container = new AtomContainer(11, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19436,7 +19436,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIHXID() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -19516,7 +19516,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIKJAK() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19576,7 +19576,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIKZOO10() {
-        IAtomContainer container = new AtomContainer(19, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19629,7 +19629,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFILGEM() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19694,7 +19694,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFILNOD() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -19757,7 +19757,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFINBIN() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -19818,7 +19818,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFINPEX() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -19876,7 +19876,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFITGIY() {
-        IAtomContainer container = new AtomContainer(28, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -19946,7 +19946,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFITSEG() {
-        IAtomContainer container = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -19983,7 +19983,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFITTIL() {
-        IAtomContainer container = new AtomContainer(19, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -20036,7 +20036,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIVNUT() {
-        IAtomContainer container = new AtomContainer(32, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -20115,7 +20115,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIVRAD() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -20195,7 +20195,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIXPIL() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -20262,7 +20262,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIYBIY() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -20329,7 +20329,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIZGEA() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -20398,7 +20398,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIZGOK() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -20454,7 +20454,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFIZJED() {
-        IAtomContainer container = new AtomContainer(16, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -20500,7 +20500,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOBJUB01() {
-        IAtomContainer container = new AtomContainer(14, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
@@ -20542,7 +20542,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFODTUN() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -20611,7 +20611,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOGBIM() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -20680,7 +20680,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOGVIG01() {
-        IAtomContainer container = new AtomContainer(35, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -20765,7 +20765,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOHXEF() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -20832,7 +20832,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOHYAC() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -20882,7 +20882,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOJBEL() {
-        IAtomContainer container = new AtomContainer(27, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -20950,7 +20950,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOJPAV() {
-        IAtomContainer container = new AtomContainer(26, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -21018,7 +21018,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFONCOA() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -21094,7 +21094,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFORGOI() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -21144,7 +21144,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFORHEZ() {
-        IAtomContainer container = new AtomContainer(16, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -21189,7 +21189,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFORJIF() {
-        IAtomContainer container = new AtomContainer(22, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -21251,7 +21251,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFORJUR() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -21326,7 +21326,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFORTAH() {
-        IAtomContainer container = new AtomContainer(23, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("C", 0));
@@ -21385,7 +21385,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOSDIA() {
-        IAtomContainer container = new AtomContainer(29, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -21459,7 +21459,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOVHUT() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -21509,7 +21509,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOVJIJ() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -21574,7 +21574,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOVRAJ() {
-        IAtomContainer container = new AtomContainer(34, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -21659,7 +21659,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOVRUD() {
-        IAtomContainer container = new AtomContainer(34, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -21744,7 +21744,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOWBEY() {
-        IAtomContainer container = new AtomContainer(23, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -21806,7 +21806,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOWPOW() {
-        IAtomContainer container = new AtomContainer(28, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -21878,7 +21878,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOWVES() {
-        IAtomContainer container = new AtomContainer(16, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -21926,7 +21926,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOWZAS() {
-        IAtomContainer container = new AtomContainer(29, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -22001,7 +22001,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOYMAH() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -22051,7 +22051,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFOYNUC() {
-        IAtomContainer container = new AtomContainer(27, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -22121,7 +22121,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUCMIZ() {
-        IAtomContainer container = new AtomContainer(13, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Si", 0));
@@ -22159,7 +22159,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUCMUL() {
-        IAtomContainer container = new AtomContainer(10, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -22193,7 +22193,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUCTIG01() {
-        IAtomContainer container = new AtomContainer(4, 3, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", -1));
@@ -22213,7 +22213,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUCWIJ() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -22300,7 +22300,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUCWOP() {
-        IAtomContainer container = new AtomContainer(25, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -22366,7 +22366,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUDPOJ() {
-        IAtomContainer container = new AtomContainer(8, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -22395,7 +22395,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUDXUX() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -22431,7 +22431,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUFDIT() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -22485,7 +22485,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUGWIN() {
-        IAtomContainer container = new AtomContainer(32, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -22566,7 +22566,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUHFAP() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -22602,7 +22602,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUHSEG() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -22654,7 +22654,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFULRAF() {
-        IAtomContainer container = new AtomContainer(33, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -22736,7 +22736,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUNSIQ() {
-        IAtomContainer container = new AtomContainer(19, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -22787,7 +22787,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUNXOB() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -22852,7 +22852,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUPJUV() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 0));
@@ -22928,7 +22928,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUPKIK() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -22985,7 +22985,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUPKOQ() {
-        IAtomContainer container = new AtomContainer(32, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -23066,7 +23066,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUPTOZ() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -23118,7 +23118,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUPZEV() {
-        IAtomContainer container = new AtomContainer(33, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -23200,7 +23200,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUSPEO() {
-        IAtomContainer container = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -23228,7 +23228,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUTCEC() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -23293,7 +23293,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUTZEZ() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -23323,7 +23323,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUVDOP() {
-        IAtomContainer container = new AtomContainer(36, 39, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -23413,7 +23413,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUVMUE() {
-        IAtomContainer container = new AtomContainer(33, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -23493,7 +23493,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUVNEP() {
-        IAtomContainer container = new AtomContainer(40, 41, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -23589,7 +23589,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUVXOJ() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -23645,7 +23645,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUWMOZ() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -23712,7 +23712,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUWTUM() {
-        IAtomContainer container = new AtomContainer(20, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -23768,7 +23768,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUXXAX() {
-        IAtomContainer container = new AtomContainer(27, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -23835,7 +23835,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFUXZED() {
-        IAtomContainer container = new AtomContainer(23, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -23894,7 +23894,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGADHEY() {
-        IAtomContainer container = new AtomContainer(35, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -23980,7 +23980,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAFNUW() {
-        IAtomContainer container = new AtomContainer(31, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -24059,7 +24059,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAHPIO() {
-        IAtomContainer container = new AtomContainer(22, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -24116,7 +24116,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAJTEQ() {
-        IAtomContainer container = new AtomContainer(15, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -24160,7 +24160,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAKGOO() {
-        IAtomContainer container = new AtomContainer(28, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -24232,7 +24232,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAKNEL() {
-        IAtomContainer container = new AtomContainer(15, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -24277,7 +24277,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAKNIP() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -24331,7 +24331,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAKPEN() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -24386,7 +24386,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAKTAN() {
-        IAtomContainer container = new AtomContainer(15, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -24432,7 +24432,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGANHUY() {
-        IAtomContainer container = new AtomContainer(9, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -24463,7 +24463,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAPMEP() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -24512,7 +24512,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAVKOD() {
-        IAtomContainer container = new AtomContainer(13, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 0));
@@ -24551,7 +24551,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAVMEV() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -24610,7 +24610,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGAWWOQ() {
-        IAtomContainer container = new AtomContainer(31, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -24688,7 +24688,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEHBOK() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -24768,7 +24768,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEHPUE() {
-        IAtomContainer container = new AtomContainer(21, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -24823,7 +24823,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEHXEW() {
-        IAtomContainer container = new AtomContainer(38, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -24916,7 +24916,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEJYOJ() {
-        IAtomContainer container = new AtomContainer(16, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("F", 0));
@@ -24961,7 +24961,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEKXEZ() {
-        IAtomContainer container = new AtomContainer(18, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25010,7 +25010,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEMCEG() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25058,7 +25058,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEMCOQ() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25110,7 +25110,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEMDAD() {
-        IAtomContainer container = new AtomContainer(27, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25178,7 +25178,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGERCUB() {
-        IAtomContainer container = new AtomContainer(19, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25231,7 +25231,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGESCIQ() {
-        IAtomContainer container = new AtomContainer(35, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -25317,7 +25317,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGESNIB() {
-        IAtomContainer container = new AtomContainer(13, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25357,7 +25357,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGESSUS() {
-        IAtomContainer container = new AtomContainer(26, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -25423,7 +25423,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGETFIU() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25471,7 +25471,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGETFOA() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25519,7 +25519,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGETJOE() {
-        IAtomContainer container = new AtomContainer(30, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 1));
         container.addAtom(newAtm("S", -1));
@@ -25595,7 +25595,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEWTAD() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25652,7 +25652,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEXGIZ() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -25710,7 +25710,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGEYWOW() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -25790,7 +25790,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGICTIV01() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -25845,7 +25845,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIDJUY() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -25912,7 +25912,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIDMEL() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -25973,7 +25973,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIDTIW() {
-        IAtomContainer container = new AtomContainer(37, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -26063,7 +26063,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIFRAO() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -26143,7 +26143,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIGCEE() {
-        IAtomContainer container = new AtomContainer(26, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -26212,7 +26212,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIGMUE() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -26283,7 +26283,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIHZEC() {
-        IAtomContainer container = new AtomContainer(22, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -26343,7 +26343,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIJMOB01() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", -1));
@@ -26392,7 +26392,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIKJIT() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -26435,7 +26435,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIKNOD() {
-        IAtomContainer container = new AtomContainer(27, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -26503,7 +26503,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIKTUP() {
-        IAtomContainer container = new AtomContainer(19, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -26556,7 +26556,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIMJIV() {
-        IAtomContainer container = new AtomContainer(27, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -26627,7 +26627,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGINMUL() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -26688,7 +26688,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIPHES() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -26748,7 +26748,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGIRDOA01() {
-        IAtomContainer container = new AtomContainer(34, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -26833,7 +26833,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGOHVUU() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -26876,7 +26876,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGOJCIR() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("H", 0));
@@ -26932,7 +26932,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGOJKIZ() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -26987,7 +26987,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testGUANCH01() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -27036,7 +27036,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testHYTPRD01() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -27111,7 +27111,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testISTZCN10() {
-        IAtomContainer container = new AtomContainer(12, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -27149,7 +27149,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJABGAU() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -27220,7 +27220,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJADLIJ() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -27262,7 +27262,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJADXER() {
-        IAtomContainer container = new AtomContainer(39, 41, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -27357,7 +27357,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAHKOS() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -27424,7 +27424,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAHTOB() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -27493,7 +27493,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAHYEW() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -27556,7 +27556,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAKGUX() {
-        IAtomContainer container = new AtomContainer(24, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("C", 0));
@@ -27620,7 +27620,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAKJOU() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -27676,7 +27676,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJALSOE() {
-        IAtomContainer container = new AtomContainer(28, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -27748,7 +27748,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAMREU() {
-        IAtomContainer container = new AtomContainer(52, 53, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -27869,7 +27869,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJANDOR() {
-        IAtomContainer container = new AtomContainer(53, 56, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -27994,7 +27994,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJANMAM() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -28054,7 +28054,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAPFAH() {
-        IAtomContainer container = new AtomContainer(28, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -28126,7 +28126,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJATBIP() {
-        IAtomContainer container = new AtomContainer(24, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -28187,7 +28187,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJATCOW() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -28230,7 +28230,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJATLOF() {
-        IAtomContainer container = new AtomContainer(36, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -28317,7 +28317,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJATMEW() {
-        IAtomContainer container = new AtomContainer(38, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -28408,7 +28408,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAVGAO() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -28468,7 +28468,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAWJIA() {
-        IAtomContainer container = new AtomContainer(37, 39, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -28559,7 +28559,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAWMAV() {
-        IAtomContainer container = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -28596,7 +28596,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAWVEI() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -28667,7 +28667,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAWZEM() {
-        IAtomContainer container = new AtomContainer(19, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -28720,7 +28720,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAZGOG() {
-        IAtomContainer container = new AtomContainer(30, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -28797,7 +28797,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAZVIP10() {
-        IAtomContainer container = new AtomContainer(34, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -28881,7 +28881,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJAZZOZ10() {
-        IAtomContainer container = new AtomContainer(37, 39, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -28972,7 +28972,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEBFEB01() {
-        IAtomContainer container = new AtomContainer(27, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -29042,7 +29042,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJECVES() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -29118,7 +29118,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJECVUI() {
-        IAtomContainer container = new AtomContainer(24, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -29179,7 +29179,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJECYIZ() {
-        IAtomContainer container = new AtomContainer(40, 41, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -29275,7 +29275,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEFRAN() {
-        IAtomContainer container = new AtomContainer(36, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -29362,7 +29362,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEHCUU01() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -29421,7 +29421,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEHXOJ() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -29475,7 +29475,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJELKUG() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("P", 1));
@@ -29533,7 +29533,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJELREX() {
-        IAtomContainer container = new AtomContainer(24, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -29597,7 +29597,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJELRIB() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("C", 0));
@@ -29656,7 +29656,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEMHIS() {
-        IAtomContainer container = new AtomContainer(15, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -29699,7 +29699,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEMWUT() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -29761,7 +29761,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJESFES() {
-        IAtomContainer container = new AtomContainer(25, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("H", 0));
@@ -29824,7 +29824,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJETJUN() {
-        IAtomContainer container = new AtomContainer(18, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("C", 0));
@@ -29873,7 +29873,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEVXIR() {
-        IAtomContainer container = new AtomContainer(26, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -29939,7 +29939,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEWFAS() {
-        IAtomContainer container = new AtomContainer(38, 39, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -30031,7 +30031,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEWPIK() {
-        IAtomContainer container = new AtomContainer(19, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -30085,7 +30085,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEXREJ() {
-        IAtomContainer container = new AtomContainer(34, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -30168,7 +30168,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJEYBUK() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -30229,7 +30229,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIDHIN() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -30309,7 +30309,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIFYUS() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -30372,7 +30372,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIGCIL() {
-        IAtomContainer container = new AtomContainer(15, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -30417,7 +30417,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIGRAS() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -30475,7 +30475,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIHVEB() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", 0));
@@ -30509,7 +30509,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIKHUG() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -30580,7 +30580,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJILWUW() {
-        IAtomContainer container = new AtomContainer(18, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", -1));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -30631,7 +30631,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJINDAL() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -30687,7 +30687,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJINDOZ() {
-        IAtomContainer container = new AtomContainer(33, 35, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -30770,7 +30770,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIRJID() {
-        IAtomContainer container = new AtomContainer(13, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -30808,7 +30808,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJISZAM() {
-        IAtomContainer container = new AtomContainer(33, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -30890,7 +30890,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJITMII() {
-        IAtomContainer container = new AtomContainer(32, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -30970,7 +30970,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIWKOP() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("C", 0));
@@ -31037,7 +31037,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIXBAT() {
-        IAtomContainer container = new AtomContainer(27, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -31105,7 +31105,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIYJAC() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -31162,7 +31162,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIYREO() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -31212,7 +31212,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIYTOA() {
-        IAtomContainer container = new AtomContainer(11, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", -1));
@@ -31247,7 +31247,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJIZWUK() {
-        IAtomContainer container = new AtomContainer(37, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -31335,7 +31335,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testJOFDUD() {
-        IAtomContainer container = new AtomContainer(16, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -31380,7 +31380,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKAFXIY() {
-        IAtomContainer container = new AtomContainer(25, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -31446,7 +31446,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKAGBOJ() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -31533,7 +31533,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKAKGOS() {
-        IAtomContainer container = new AtomContainer(28, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -31605,7 +31605,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKAMCUW() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("C", 0));
@@ -31692,7 +31692,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKAMJAJ() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -31763,7 +31763,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKANWEB() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -31820,7 +31820,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKANZOO() {
-        IAtomContainer container = new AtomContainer(40, 43, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -31918,7 +31918,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKAPCUZ() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("N", 0));
@@ -31968,7 +31968,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKARYAD() {
-        IAtomContainer container = new AtomContainer(30, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -32044,7 +32044,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKASBAH() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -32098,7 +32098,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKASBOV() {
-        IAtomContainer container = new AtomContainer(25, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -32162,7 +32162,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKATNAU() {
-        IAtomContainer container = new AtomContainer(31, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -32241,7 +32241,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKAVFUI() {
-        IAtomContainer container = new AtomContainer(13, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("O", -1));
@@ -32280,7 +32280,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKAVTEG() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -32351,7 +32351,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKECSIU() {
-        IAtomContainer container = new AtomContainer(30, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("F", 0));
@@ -32425,7 +32425,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKECSUG() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -32473,7 +32473,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKEDYAT() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -32536,7 +32536,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKEFJEK() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -32601,7 +32601,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKEJFOU() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -32657,7 +32657,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKEMFAJ() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -32730,7 +32730,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKENHOA() {
-        IAtomContainer container = new AtomContainer(22, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
@@ -32790,7 +32790,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKEPKIZ() {
-        IAtomContainer container = new AtomContainer(15, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -32836,7 +32836,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKESNEB() {
-        IAtomContainer container = new AtomContainer(32, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -32915,7 +32915,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKEWJIF() {
-        IAtomContainer container = new AtomContainer(11, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -32950,7 +32950,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKHDFRM11() {
-        IAtomContainer container = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -32972,7 +32972,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKIBDII() {
-        IAtomContainer container = new AtomContainer(28, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -33042,7 +33042,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKIBFAC() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
@@ -33103,7 +33103,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKICCUU() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("F", 0));
@@ -33139,7 +33139,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKICGAE() {
-        IAtomContainer container = new AtomContainer(22, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -33200,7 +33200,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKICLAJ() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -33263,7 +33263,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKIGKIU() {
-        IAtomContainer container = new AtomContainer(15, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -33307,7 +33307,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKIKVUV() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -33370,7 +33370,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKIMLEX01() {
-        IAtomContainer container = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("F", 0));
@@ -33392,7 +33392,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKINKUN() {
-        IAtomContainer container = new AtomContainer(31, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -33468,7 +33468,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKINTUW() {
-        IAtomContainer container = new AtomContainer(34, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -33550,7 +33550,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKINWEJ() {
-        IAtomContainer container = new AtomContainer(39, 43, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -33647,7 +33647,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKINWIN() {
-        IAtomContainer container = new AtomContainer(19, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -33698,7 +33698,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKIRCAP() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -33785,7 +33785,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKIRCOD() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -33841,7 +33841,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKITREK() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -33917,7 +33917,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKIYGAA() {
-        IAtomContainer container = new AtomContainer(20, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("F", 0));
@@ -33970,7 +33970,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOBXOO() {
-        IAtomContainer container = new AtomContainer(14, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -34012,7 +34012,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOBYOP() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -34055,7 +34055,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOBZEG() {
-        IAtomContainer container = new AtomContainer(39, 42, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
@@ -34151,7 +34151,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOCWUU() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -34206,7 +34206,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKODFUE() {
-        IAtomContainer container = new AtomContainer(31, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -34282,7 +34282,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOFKIZ() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -34342,7 +34342,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOFMEX() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -34415,7 +34415,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOFNIC() {
-        IAtomContainer container = new AtomContainer(32, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -34496,7 +34496,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOHVEI() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -34558,7 +34558,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOHVIM() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -34606,7 +34606,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOJGOF() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -34682,7 +34682,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOJKID() {
-        IAtomContainer container = new AtomContainer(26, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -34748,7 +34748,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOJZOY() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -34804,7 +34804,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOKMIG() {
-        IAtomContainer container = new AtomContainer(30, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -34878,7 +34878,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKOLCUJ() {
-        IAtomContainer container = new AtomContainer(29, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -34950,7 +34950,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testMAPMIP03() {
-        IAtomContainer container = new AtomContainer(28, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -35019,7 +35019,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testMENBZS01() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -35071,7 +35071,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testMETBZC10() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -35131,7 +35131,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNAESCB01() {
-        IAtomContainer container = new AtomContainer(18, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("C", 0));
@@ -35180,7 +35180,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNHOXAL06() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -35206,7 +35206,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPHOSLA10() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -35263,7 +35263,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPHOSLB10() {
-        IAtomContainer container = new AtomContainer(34, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -35346,7 +35346,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPIMTAZ01() {
-        IAtomContainer container = new AtomContainer(26, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -35414,7 +35414,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testQUICNA01() {
-        IAtomContainer container = new AtomContainer(16, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -35460,7 +35460,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSABNOY() {
-        IAtomContainer container = new AtomContainer(30, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -35535,7 +35535,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSACXAV() {
-        IAtomContainer container = new AtomContainer(35, 36, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -35621,7 +35621,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSADXAW() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -35682,7 +35682,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAFFOU() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -35725,7 +35725,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAFFUA() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
@@ -35768,7 +35768,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAFKAL() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -35800,7 +35800,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAHSOJ() {
-        IAtomContainer container = new AtomContainer(36, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -35888,7 +35888,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAHSUP() {
-        IAtomContainer container = new AtomContainer(27, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -35956,7 +35956,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAKGUG() {
-        IAtomContainer container = new AtomContainer(35, 39, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -36045,7 +36045,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSALVEG() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -36118,7 +36118,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAMFUH() {
-        IAtomContainer container = new AtomContainer(18, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("S", 0));
@@ -36168,7 +36168,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAMXUZ() {
-        IAtomContainer container = new AtomContainer(33, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -36249,7 +36249,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSANKEX10() {
-        IAtomContainer container = new AtomContainer(31, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -36328,7 +36328,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAVDOI() {
-        IAtomContainer container = new AtomContainer(40, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -36423,7 +36423,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSAWKEG10() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -36480,7 +36480,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEBPEU01() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -36545,7 +36545,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSECDAF() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -36632,7 +36632,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEFRAW() {
-        IAtomContainer container = new AtomContainer(24, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -36696,7 +36696,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEFYIL() {
-        IAtomContainer container = new AtomContainer(32, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
@@ -36774,7 +36774,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEGFIT() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -36834,7 +36834,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEGJAP() {
-        IAtomContainer container = new AtomContainer(30, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -36910,7 +36910,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEGLAR() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -36962,7 +36962,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEGNEX() {
-        IAtomContainer container = new AtomContainer(16, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
@@ -37007,7 +37007,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEGWEG() {
-        IAtomContainer container = new AtomContainer(16, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -37054,7 +37054,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEHBEM() {
-        IAtomContainer container = new AtomContainer(31, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("N", 1));
@@ -37130,7 +37130,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEJDAM() {
-        IAtomContainer container = new AtomContainer(27, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -37201,7 +37201,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEKKIC() {
-        IAtomContainer container = new AtomContainer(30, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -37275,7 +37275,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEKPED() {
-        IAtomContainer container = new AtomContainer(16, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -37322,7 +37322,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEKPIH() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -37371,7 +37371,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSELFIY() {
-        IAtomContainer container = new AtomContainer(36, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -37460,7 +37460,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEMDIX() {
-        IAtomContainer container = new AtomContainer(28, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("O", 0));
@@ -37529,7 +37529,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEMXOX() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -37598,7 +37598,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSETHAA() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -37665,7 +37665,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSETLIM() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -37732,7 +37732,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEYVUN() {
-        IAtomContainer container = new AtomContainer(15, 16, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -37777,7 +37777,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEYWUO() {
-        IAtomContainer container = new AtomContainer(32, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", -1));
         container.addAtom(newAtm("N", 1));
@@ -37856,7 +37856,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSEZMEP() {
-        IAtomContainer container = new AtomContainer(19, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -37909,7 +37909,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSICNUN() {
-        IAtomContainer container = new AtomContainer(26, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -37975,7 +37975,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSICPEZ() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
@@ -38042,7 +38042,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSICSEC() {
-        IAtomContainer container = new AtomContainer(22, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -38102,7 +38102,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSIDFIU() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -38156,7 +38156,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSIDRUS() {
-        IAtomContainer container = new AtomContainer(38, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -38247,7 +38247,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSINMIL() {
-        IAtomContainer container = new AtomContainer(40, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 1));
@@ -38342,7 +38342,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSIYLOB() {
-        IAtomContainer container = new AtomContainer(38, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -38433,7 +38433,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSIZJIU() {
-        IAtomContainer container = new AtomContainer(38, 40, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -38526,7 +38526,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSIZWUT() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -38591,7 +38591,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSLFNMB04() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -38662,7 +38662,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSOGVOZ() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -38731,7 +38731,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSOHXOC() {
-        IAtomContainer container = new AtomContainer(32, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -38810,7 +38810,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSOJNEK() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -38868,7 +38868,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSOMKIO() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
@@ -38929,7 +38929,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSONZIE() {
-        IAtomContainer container = new AtomContainer(36, 38, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -39018,7 +39018,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSOPZEC() {
-        IAtomContainer container = new AtomContainer(17, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -39066,7 +39066,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSORBIK() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", -1));
@@ -39121,7 +39121,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSURDOX02() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -39153,7 +39153,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTACGIN() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -39214,7 +39214,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTACLEO() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39283,7 +39283,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAFKIU() {
-        IAtomContainer container = new AtomContainer(17, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39332,7 +39332,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAFXIH() {
-        IAtomContainer container = new AtomContainer(26, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39400,7 +39400,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAFZIJ() {
-        IAtomContainer container = new AtomContainer(15, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", -1));
@@ -39443,7 +39443,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAGVIG() {
-        IAtomContainer container = new AtomContainer(14, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -39485,7 +39485,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAHMOE() {
-        IAtomContainer container = new AtomContainer(18, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39534,7 +39534,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAJPUP() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -39601,7 +39601,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAJSUS() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39676,7 +39676,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAJVUV() {
-        IAtomContainer container = new AtomContainer(6, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("N", 0));
@@ -39701,7 +39701,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAJWAC() {
-        IAtomContainer container = new AtomContainer(19, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -39754,7 +39754,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAKHES() {
-        IAtomContainer container = new AtomContainer(14, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -39796,7 +39796,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAMMAV() {
-        IAtomContainer container = new AtomContainer(16, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -39843,7 +39843,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTANHAR() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39898,7 +39898,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAPJUP() {
-        IAtomContainer container = new AtomContainer(23, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -39960,7 +39960,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTAPSAE() {
-        IAtomContainer container = new AtomContainer(19, 19, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -40012,7 +40012,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTCYMPH02() {
-        IAtomContainer container = new AtomContainer(16, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40057,7 +40057,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testTMTCHD01() {
-        IAtomContainer container = new AtomContainer(24, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40121,7 +40121,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVABLIT() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40180,7 +40180,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVABROF() {
-        IAtomContainer container = new AtomContainer(28, 29, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40251,7 +40251,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVACRUM() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -40320,7 +40320,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVAJFAN() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40387,7 +40387,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVALTEH() {
-        IAtomContainer container = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("C", 0));
@@ -40415,7 +40415,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVALWOU() {
-        IAtomContainer container = new AtomContainer(31, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -40492,7 +40492,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVAPZOB10() {
-        IAtomContainer container = new AtomContainer(32, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -40573,7 +40573,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVASDOI() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40628,7 +40628,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVATKAC() {
-        IAtomContainer container = new AtomContainer(29, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -40703,7 +40703,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVAWDUS() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -40763,7 +40763,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVAWMOV() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -40839,7 +40839,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVAWWAR() {
-        IAtomContainer container = new AtomContainer(33, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", 0));
@@ -40919,7 +40919,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVAYKUB() {
-        IAtomContainer container = new AtomContainer(26, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -40985,7 +40985,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVAZHUZ() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41052,7 +41052,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVECSAX() {
-        IAtomContainer container = new AtomContainer(26, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -41118,7 +41118,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEDTED() {
-        IAtomContainer container = new AtomContainer(23, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -41179,7 +41179,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEHCOA() {
-        IAtomContainer container = new AtomContainer(23, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -41239,7 +41239,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEHZOX() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -41308,7 +41308,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEJWOW() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41370,7 +41370,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEKMON() {
-        IAtomContainer container = new AtomContainer(25, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41434,7 +41434,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVENYUI() {
-        IAtomContainer container = new AtomContainer(24, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41499,7 +41499,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVETWAS() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41562,7 +41562,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEVDIJ() {
-        IAtomContainer container = new AtomContainer(29, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
@@ -41636,7 +41636,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEWZOM() {
-        IAtomContainer container = new AtomContainer(31, 33, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -41715,7 +41715,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEXKOY() {
-        IAtomContainer container = new AtomContainer(21, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41773,7 +41773,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEXMOA() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -41838,7 +41838,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEYBIK() {
-        IAtomContainer container = new AtomContainer(24, 24, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("O", 0));
@@ -41900,7 +41900,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEYWAX() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -41932,7 +41932,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVEZBUX() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
@@ -41987,7 +41987,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVICGAP() {
-        IAtomContainer container = new AtomContainer(31, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -42065,7 +42065,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVICGET() {
-        IAtomContainer container = new AtomContainer(35, 37, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -42152,7 +42152,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVICKIB() {
-        IAtomContainer container = new AtomContainer(27, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -42221,7 +42221,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVICPOM() {
-        IAtomContainer container = new AtomContainer(26, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 1));
@@ -42289,7 +42289,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIDKUO() {
-        IAtomContainer container = new AtomContainer(21, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -42345,7 +42345,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIFFEV() {
-        IAtomContainer container = new AtomContainer(25, 28, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -42412,7 +42412,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIGPEG() {
-        IAtomContainer container = new AtomContainer(33, 34, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -42494,7 +42494,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIGTUA() {
-        IAtomContainer container = new AtomContainer(22, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -42556,7 +42556,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIHHID() {
-        IAtomContainer container = new AtomContainer(26, 27, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -42623,7 +42623,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIKVIU() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -42677,7 +42677,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIKYAP() {
-        IAtomContainer container = new AtomContainer(26, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -42747,7 +42747,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIMHII() {
-        IAtomContainer container = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("O", -1));
@@ -42769,7 +42769,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIPXAT() {
-        IAtomContainer container = new AtomContainer(24, 25, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -42832,7 +42832,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIRBON() {
-        IAtomContainer container = new AtomContainer(29, 30, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -42905,7 +42905,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIWCOT() {
-        IAtomContainer container = new AtomContainer(20, 21, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -42960,7 +42960,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIXRID() {
-        IAtomContainer container = new AtomContainer(16, 17, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -43007,7 +43007,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIXXOP() {
-        IAtomContainer container = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("F", 0));
@@ -43044,7 +43044,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVIYPAU() {
-        IAtomContainer container = new AtomContainer(30, 32, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -43121,7 +43121,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVOBLAZ() {
-        IAtomContainer container = new AtomContainer(29, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43195,7 +43195,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVOBWOY() {
-        IAtomContainer container = new AtomContainer(21, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -43252,7 +43252,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVOFBOH() {
-        IAtomContainer container = new AtomContainer(25, 26, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("O", 0));
@@ -43317,7 +43317,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVOFCAU() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Br", 0));
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -43376,7 +43376,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVOJGEG() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 1));
         container.addAtom(newAtm("C", 0));
@@ -43406,7 +43406,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVOJJIN() {
-        IAtomContainer container = new AtomContainer(20, 20, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("N", 1));
@@ -43460,7 +43460,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVUWXUG() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -43492,7 +43492,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVUXGOK() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
@@ -43551,7 +43551,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVUXPUZ() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -43610,7 +43610,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testVUXREL() {
-        IAtomContainer container = new AtomContainer(22, 23, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43669,7 +43669,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testZZZIZA01() {
-        IAtomContainer container = new AtomContainer(14, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -43710,7 +43710,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testZZZMVU10() {
-        IAtomContainer container = new AtomContainer(30, 31, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
@@ -43785,7 +43785,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testZZZVCQ01() {
-        IAtomContainer container = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("I", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -43822,7 +43822,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAR14A() {
-        IAtomContainer container = new AtomContainer(8, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -43851,7 +43851,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCA04A() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43877,7 +43877,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCE05A() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -43907,7 +43907,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCO01A() {
-        IAtomContainer container = new AtomContainer(4, 3, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -43927,7 +43927,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCO08A() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43961,7 +43961,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testHL08A() {
-        IAtomContainer container = new AtomContainer(12, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -43998,7 +43998,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testIM02A() {
-        IAtomContainer container = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -44026,7 +44026,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNC10A() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -44056,7 +44056,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNC13A() {
-        IAtomContainer container = new AtomContainer(6, 5, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("H", 0));
@@ -44080,7 +44080,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNH10A() {
-        IAtomContainer container = new AtomContainer(4, 3, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -44100,7 +44100,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNH20A() {
-        IAtomContainer container = new AtomContainer(14, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -44140,7 +44140,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNH22A() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("N", 1));
         container.addAtom(newAtm("C", 0));
@@ -44174,7 +44174,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNH23A() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -44208,7 +44208,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testOH10A() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -44234,7 +44234,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSR01A() {
-        IAtomContainer container = new AtomContainer(3, 2, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -44252,7 +44252,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSR05A() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("C", 0));
@@ -44278,7 +44278,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSR07A() {
-        IAtomContainer container = new AtomContainer(13, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44317,7 +44317,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAN05A() {
-        IAtomContainer container = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", -1));
         container.addAtom(newAtm("H", 0));
@@ -44339,7 +44339,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAN06A() {
-        IAtomContainer container = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("H", 0));
@@ -44361,7 +44361,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAN08A() {
-        IAtomContainer container = new AtomContainer(6, 5, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", -1));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44385,7 +44385,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAN11A() {
-        IAtomContainer container = new AtomContainer(6, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", -1));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -44410,7 +44410,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testAN12A() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", -1));
@@ -44436,7 +44436,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testHL11A() {
-        IAtomContainer container = new AtomContainer(9, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44467,7 +44467,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testHL13A() {
-        IAtomContainer container = new AtomContainer(6, 5, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("F", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44491,7 +44491,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNO03A() {
-        IAtomContainer container = new AtomContainer(6, 5, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("O", 0));
@@ -44515,7 +44515,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNX02A() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 1));
@@ -44549,7 +44549,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testOC02A() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 1));
@@ -44583,7 +44583,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPO02A() {
-        IAtomContainer container = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
@@ -44605,7 +44605,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPO05A() {
-        IAtomContainer container = new AtomContainer(13, 12, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("P", 0));
@@ -44643,7 +44643,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPR01A() {
-        IAtomContainer container = new AtomContainer(4, 3, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -44663,7 +44663,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPR02A() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("H", 0));
@@ -44689,7 +44689,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPR03A() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Cl", 0));
@@ -44715,7 +44715,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testPR04A() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("P", 0));
@@ -44749,7 +44749,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSI02A() {
-        IAtomContainer container = new AtomContainer(8, 7, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("H", 0));
@@ -44777,7 +44777,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSI03A() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("O", 0));
@@ -44807,7 +44807,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSO07A() {
-        IAtomContainer container = new AtomContainer(22, 22, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
@@ -44865,7 +44865,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSO12A() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("O", 0));
@@ -44891,7 +44891,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSO15A() {
-        IAtomContainer container = new AtomContainer(12, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("O", 0));
@@ -44927,7 +44927,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSO16A() {
-        IAtomContainer container = new AtomContainer(11, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
@@ -44961,7 +44961,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testSO18A() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("S", 0));
@@ -44987,7 +44987,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testBRMW1() {
-        IAtomContainer container = new AtomContainer(4, 2, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45006,7 +45006,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCA2PW3() {
-        IAtomContainer container = new AtomContainer(10, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45035,7 +45035,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCLMW1() {
-        IAtomContainer container = new AtomContainer(4, 2, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45054,7 +45054,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCU1PW1() {
-        IAtomContainer container = new AtomContainer(4, 2, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45073,7 +45073,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testCU2PW3() {
-        IAtomContainer container = new AtomContainer(10, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45102,7 +45102,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFE2PW3() {
-        IAtomContainer container = new AtomContainer(10, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45131,7 +45131,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFE3PW3() {
-        IAtomContainer container = new AtomContainer(10, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45160,7 +45160,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testFMW1() {
-        IAtomContainer container = new AtomContainer(4, 2, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45179,7 +45179,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testH3OPW1() {
-        IAtomContainer container = new AtomContainer(7, 5, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45204,7 +45204,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testKPW1() {
-        IAtomContainer container = new AtomContainer(4, 2, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45223,7 +45223,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testLIPW1() {
-        IAtomContainer container = new AtomContainer(4, 2, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45242,7 +45242,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testMG2PW3() {
-        IAtomContainer container = new AtomContainer(10, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45271,7 +45271,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testNAPW() {
-        IAtomContainer container = new AtomContainer(4, 2, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45290,7 +45290,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testOHMW1() {
-        IAtomContainer container = new AtomContainer(5, 3, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45311,7 +45311,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testZN2PW3() {
-        IAtomContainer container = new AtomContainer(10, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("O", 0));
         container.addAtom(newAtm("H", 0));
         container.addAtom(newAtm("H", 0));
@@ -45340,7 +45340,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testERULE01() {
-        IAtomContainer container = new AtomContainer(14, 14, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("S", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
@@ -45381,7 +45381,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testERULE02() {
-        IAtomContainer container = new AtomContainer(11, 11, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -45416,7 +45416,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testERULE03() {
-        IAtomContainer container = new AtomContainer(19, 18, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("Si", 0));
         container.addAtom(newAtm("C", 0));
@@ -45467,7 +45467,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testERULE04() {
-        IAtomContainer container = new AtomContainer(10, 10, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("Cl", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("N", 0));
@@ -45500,7 +45500,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testERULE05() {
-        IAtomContainer container = new AtomContainer(6, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
         container.addAtom(newAtm("P", 0));
@@ -45525,7 +45525,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testERULE06() {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("C", 0));
         container.addAtom(newAtm("F", 0));
@@ -45557,7 +45557,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testERULE07() {
-        IAtomContainer container = new AtomContainer(14, 15, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));
@@ -45599,7 +45599,7 @@ abstract class AbstractMmffAtomTypeValidationSuiteTest {
      */
     @Test
     void testERULE08() {
-        IAtomContainer container = new AtomContainer(13, 13, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("N", 0));
         container.addAtom(newAtm("C", 0));

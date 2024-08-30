@@ -140,7 +140,7 @@ public class Abbreviations implements Iterable<String> {
         AUTO_CONTRACT_LINKERS,
     }
 
-    private static final int MAX_FRAG = 50;
+    private static final int MAX_FRAG = 256;
 
     /**
      * Symbol for joining disconnected fragments.
@@ -445,7 +445,7 @@ public class Abbreviations implements Iterable<String> {
         final EdgeToBondMap bmap = EdgeToBondMap.withSpaceFor(mol);
         final int[][] adjlist = GraphUtil.toAdjList(mol, bmap);
 
-        Cycles.markRingAtomsAndBonds(mol, adjlist, bmap);
+        Cycles.markRingAtomsAndBonds(mol);
 
         Set<IBond> cuts = findCutBonds(mol, bmap, adjlist);
 
@@ -615,6 +615,19 @@ public class Abbreviations implements Iterable<String> {
 
         for (IAtomContainer frag : fragments) {
             try {
+
+                // for now - we can't handle isotopes as our canonical key
+                // (unique smiles) ignores them
+                boolean okay = true;
+                for (IAtom atom : frag.atoms()) {
+                    if (atom.getMassNumber() != null && atom.getMassNumber() != 0) {
+                        okay = false;
+                        break;
+                    }
+                }
+                if (!okay)
+                    continue;
+
                 final String smi = usmigen.create(AtomContainerManipulator.copyAndSuppressedHydrogens(frag));
                 final String label = connectedAbbreviations.get(smi);
 

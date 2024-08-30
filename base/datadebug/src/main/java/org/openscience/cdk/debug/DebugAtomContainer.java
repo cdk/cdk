@@ -47,7 +47,7 @@ public class DebugAtomContainer extends AtomContainer implements IAtomContainer 
 
     private static final long serialVersionUID = 7584711255625778345L;
 
-    final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     public DebugAtomContainer() {
         super();
@@ -868,8 +868,8 @@ public class DebugAtomContainer extends AtomContainer implements IAtomContainer 
      */
     @Override
     public boolean isEmpty() {
-        logger.debug("AtomContainer.isEmpty(): ", atomCount == 0);
-        return atomCount == 0;
+        logger.debug("AtomContainer.isEmpty(): ", super.isEmpty());
+        return super.isEmpty();
     }
 
 }

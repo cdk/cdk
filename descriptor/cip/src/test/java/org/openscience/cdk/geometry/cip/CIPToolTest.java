@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -277,7 +276,7 @@ class CIPToolTest extends CDKTestCase {
     //(timeout=5000)
     void testTermination() {
         int ringSize = 7;
-        IAtomContainer ring = new AtomContainer();
+        IAtomContainer ring = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         for (int i = 0; i < ringSize; i++) {
             ring.addAtom(new Atom("C"));
         }

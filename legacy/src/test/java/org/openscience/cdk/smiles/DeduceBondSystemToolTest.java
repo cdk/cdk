@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -87,7 +86,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
             int doubleBondCount = 0;
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
             Assertions.assertEquals(6, doubleBondCount);
@@ -111,7 +110,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
             int doubleBondCount = 0;
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
             Assertions.assertEquals(6, doubleBondCount);
@@ -185,7 +184,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
             int doubleBondCount = 0;
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
                 if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
             }
             Assertions.assertEquals(6, doubleBondCount);
@@ -197,7 +196,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
      */
     @Disabled("previouls disabled 'xtest'")
     void xtestQuinone() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -268,7 +267,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
      */
     @Test
     void xtestPyrrole() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -319,7 +318,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
 
     @Test
     void xtestPyridine() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);
@@ -391,7 +390,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
      */
     @Test
     void xtestBenzene() throws Exception {
-        IAtomContainer enol = new AtomContainer();
+        IAtomContainer enol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         // atom block
         IAtom atom1 = new Atom(Elements.CARBON);

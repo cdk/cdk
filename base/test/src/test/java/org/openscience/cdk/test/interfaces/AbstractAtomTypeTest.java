@@ -11,6 +11,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.diff.AtomTypeDiff;
 
 /**
@@ -144,8 +145,8 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     public void testSetAcceptor_boolean() {
         boolean acceptor = true;
         IAtomType a = (IAtomType) newChemObject();
-        a.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, acceptor);
-        Assertions.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        a.setFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR, acceptor);
+        Assertions.assertTrue(a.getFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR));
     }
 
     @Test
@@ -157,8 +158,8 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     public void testSetDonor_boolean() {
         boolean donor = true;
         IAtomType a = (IAtomType) newChemObject();
-        a.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, donor);
-        Assertions.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
+        a.setFlag(IChemObject.HYDROGEN_BOND_DONOR, donor);
+        Assertions.assertTrue(a.getFlag(IChemObject.HYDROGEN_BOND_DONOR));
     }
 
     @Test
@@ -195,8 +196,8 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     @Test
     public void testSetIsAromatic_boolean() {
         IAtomType a = (IAtomType) newChemObject();
-        a.setFlag(CDKConstants.ISAROMATIC, true);
-        Assertions.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+        a.setFlag(IChemObject.AROMATIC, true);
+        Assertions.assertTrue(a.getFlag(IChemObject.AROMATIC));
     }
 
     @Test

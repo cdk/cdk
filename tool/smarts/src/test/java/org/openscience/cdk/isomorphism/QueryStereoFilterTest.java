@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
@@ -350,7 +350,7 @@ class QueryStereoFilterTest {
     }
 
     static IAtomContainer dimethylpropane() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("C", 0));
         container.addAtom(atom("C", 3));
         container.addAtom(atom("C", 3));
@@ -364,7 +364,7 @@ class QueryStereoFilterTest {
     }
 
     static IAtomContainer but2ene() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("C", 1));
         container.addAtom(atom("C", 1));
         container.addAtom(atom("C", 3));

@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -120,7 +119,7 @@ class CanonicalLabelerTest extends CDKTestCase {
         String filename = "bug1014344-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
-        IAtomContainer mol1 = reader.read(new AtomContainer());
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         addImplicitHydrogens(mol1);
         StringWriter output = new StringWriter();
         CMLWriter cmlWriter = new CMLWriter(output);

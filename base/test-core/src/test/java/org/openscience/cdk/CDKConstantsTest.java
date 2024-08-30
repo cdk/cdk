@@ -23,8 +23,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Included so that CoreCoverageTest won't complain. The class does not have
@@ -34,30 +36,30 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-class CDKConstantsTest extends CDKTestCase {
+class CDKConstantsTest {
 
     @Test
     void testCDKConstants() {
-        Assertions.assertFalse(CDKConstants.ISAROMATIC == -1);
+        Assertions.assertFalse(IChemObject.AROMATIC == -1);
     }
 
     @Test
     void testSingleOrDoubleFlag() throws Exception {
-        AtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
-        IAtom atom1 = new Atom(Elements.CARBON);
-        atom1.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-        IAtom atom2 = new Atom(Elements.CARBON);
-        IAtom atom3 = new Atom(Elements.CARBON);
-        IAtom atom4 = new Atom(Elements.CARBON);
-        IAtom atom5 = new Atom(Elements.CARBON);
+        IAtom atom1 = mol.newAtom(Elements.CARBON.getAtomicNumber());
+        atom1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+        IAtom atom2 = mol.newAtom(Elements.CARBON.getAtomicNumber());
+        IAtom atom3 = mol.newAtom(Elements.CARBON.getAtomicNumber());
+        IAtom atom4 = mol.newAtom(Elements.CARBON.getAtomicNumber());
+        IAtom atom5 = mol.newAtom(Elements.CARBON.getAtomicNumber());
 
-        IBond bond1 = new Bond(atom1, atom2);
-        bond1.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-        IBond bond2 = new Bond(atom2, atom3);
-        IBond bond3 = new Bond(atom3, atom4);
-        IBond bond4 = new Bond(atom4, atom5);
-        IBond bond5 = new Bond(atom5, atom1);
+        IBond bond1 = mol.newBond(atom1, atom2);
+        bond1.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+        IBond bond2 = mol.newBond(atom2, atom3);
+        IBond bond3 = mol.newBond(atom3, atom4);
+        IBond bond4 = mol.newBond(atom4, atom5);
+        IBond bond5 = mol.newBond(atom5, atom1);
 
         mol.addAtom(atom1);
         mol.addAtom(atom2);
@@ -72,16 +74,16 @@ class CDKConstantsTest extends CDKTestCase {
         mol.addBond(bond5);
 
         for (int i = 0; i < 5; i++) {
-            if (mol.getAtom(i).getFlag(CDKConstants.SINGLE_OR_DOUBLE))
-                mol.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+            if (mol.getAtom(i).getFlag(IChemObject.SINGLE_OR_DOUBLE))
+                mol.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         }
 
         // Now we have created a molecule, so let's test it...
-        Assertions.assertTrue(atom1.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(bond1.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        Assertions.assertTrue(mol.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(atom1.getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(bond1.getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getAtom(0).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getBond(0).getFlag(IChemObject.SINGLE_OR_DOUBLE));
+        Assertions.assertTrue(mol.getFlag(IChemObject.SINGLE_OR_DOUBLE));
 
     }
 
