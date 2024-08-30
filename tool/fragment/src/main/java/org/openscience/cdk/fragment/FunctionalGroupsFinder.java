@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2024 Sebastian Fritsch <>
- *                    Stefan Neumann <>
+ *                    John Mayfield <>
  *                    Jonas Schaub <jonas.schaub@uni-jena.de>
+                      Stefan Neumann <>
  *                    Christoph Steinbeck <christoph.steinbeck@uni-jena.de>
  *                    Achim Zielesny <achim.zielesny@w-hs.de>
  *
@@ -114,6 +115,7 @@ import java.util.Queue;
  * <br/>
  *
  * @author Sebastian Fritsch
+ * @author John Mayfield
  * @author Jonas Schaub
  * @version 1.3
  */
