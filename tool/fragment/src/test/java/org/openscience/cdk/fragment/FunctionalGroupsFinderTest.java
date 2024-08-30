@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2024 Sebastian Fritsch <>
- *                    Stefan Neumann <>
+ *                    John Mayfield <>
  *                    Jonas Schaub <jonas.schaub@uni-jena.de>
+                      Stefan Neumann <>
  *                    Christoph Steinbeck <christoph.steinbeck@uni-jena.de>
  *                    Achim Zielesny <achim.zielesny@w-hs.de>
  *
@@ -54,8 +55,9 @@ import java.util.Map;
 /**
  * Test for FunctionalGroupsFinder.
  *
- * @author Sebastian Fritsch, Jonas Schaub
- * @version 1.3
+ * @author Sebastian Fritsch
+ * @author John Mayfield
+ * @author Jonas Schaub
  */
 class FunctionalGroupsFinderTest {
     /**
@@ -74,25 +76,27 @@ class FunctionalGroupsFinderTest {
     @Test
     void gitHubWikiTest() throws Exception {
         //Prepare input
-        SmilesParser tmpSmiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer tmpInputMol = tmpSmiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(tmpInputMol);
-        Aromaticity tmpAromaticity = new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet());
-        tmpAromaticity.apply(tmpInputMol);
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer inputMol = smiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)" +
+                "C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(inputMol);
+        Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
+                Cycles.cdkAromaticSet());
+        aromaticity.apply(inputMol);
         //Identify functional groups
-        FunctionalGroupsFinder tmpFGF = FunctionalGroupsFinder.withGeneralEnvironment(); //default: generalization turned on
-        List<IAtomContainer> tmpFunctionalGroupsList = tmpFGF.extract(tmpInputMol);
-        SmilesGenerator tmpSmiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
-        for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
-            String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
+        FunctionalGroupsFinder fgFinder = FunctionalGroupsFinder.withGeneralEnvironment();
+        List<IAtomContainer> functionalGroupsList = fgFinder.extract(inputMol);
+        SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
+        for (IAtomContainer tmpFunctionalGroup : functionalGroupsList) {
+            String tmpSmilesString = smiGen.create(tmpFunctionalGroup);
             //System.out.println(tmpSmilesString);
         }
         //non-generalized functional groups
         //System.out.println("----------------");
-        tmpFGF = FunctionalGroupsFinder.withFullEnvironment();
-        tmpFunctionalGroupsList = tmpFGF.extract(tmpInputMol);
-        for (IAtomContainer tmpFunctionalGroup : tmpFunctionalGroupsList) {
-            String tmpSmilesString = tmpSmiGen.create(tmpFunctionalGroup);
+        fgFinder = FunctionalGroupsFinder.withFullEnvironment();
+        functionalGroupsList = fgFinder.extract(inputMol);
+        for (IAtomContainer tmpFunctionalGroup : functionalGroupsList) {
+            String tmpSmilesString = smiGen.create(tmpFunctionalGroup);
             //System.out.println(tmpSmilesString);
         }
     }

@@ -78,14 +78,16 @@ import java.util.Queue;
  * need to be set and aromaticity needs to be detected beforehand:
  * <pre>{@code
  * //Prepare input
- * SmilesParser tmpSmiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
- * IAtomContainer tmpInputMol = tmpSmiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
- * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(tmpInputMol);
- * Aromaticity tmpAromaticity = new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet());
- * tmpAromaticity.apply(tmpInputMol);
+ * SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+ * IAtomContainer inputMol = smiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)" +
+ *         "C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
+ * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(inputMol);
+ * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
+ *         Cycles.cdkAromaticSet());
+ * aromaticity.apply(inputMol);
  * //Identify functional groups
- * FunctionalGroupsFinder tmpFGF = new FunctionalGroupsFinder(); //default: generalization turned on
- * List{@literal <}IAtomContainer{@literal >} tmpFunctionalGroupsList = tmpFGF.extractFunctionalGroups(tmpInputMol);
+ * FunctionalGroupsFinder fgFinder = FunctionalGroupsFinder.withGeneralEnvironment();
+ * List<IAtomContainer> functionalGroupsList = fgFinder.extract(inputMol);
  * }</pre>
  * If you want to only identify functional groups in standardised, organic
  * structures, FunctionalGroupsFinder can be configured to only accept molecules
@@ -96,12 +98,12 @@ import java.util.Queue;
  * and counter-ion) are not accepted if(!) the  strict input restrictions are
  * turned on (they are turned off by default).
  * This can be done via a boolean parameter in a variant of the central
- * {@link #extract} method.
+ * {@link #extract} method or pre-checked using {@link #checkConstraints}.
  * Please note that structural properties like formal charges and the others
- * mentioned above  are not expected to cause issues (exceptions) when processed
+ * mentioned above are not expected to cause issues (exceptions) when processed
  * by this class, but they are not explicitly regarded by the Ertl algorithm and
  * hence this implementation, too. They might therefore cause unexpected
- * behaviour in functional group identification. For example, a formal charge
+ * behavior in functional group identification. For example, a formal charge
  * is not listed as a reason to mark a carbon atom and pseudo atoms are simply
  * ignored.
  * <br/>
@@ -110,18 +112,17 @@ import java.util.Queue;
  * ConnectivityChecker class, utility methods in the Elements class, and query
  * IAtom instances for their formal charge. Pseudo atoms can be detected in
  * multiple ways, e.g. by checking for atomic numbers equal to 0 or checking
- * "instanceof IPseudoAtom".
+ * {@code instanceof IPseudoAtom}.
  * <br/>
  *
  * @author Sebastian Fritsch
  * @author John Mayfield
  * @author Jonas Schaub
- * @version 1.3
  */
 public class FunctionalGroupsFinder {
 
     /**
-     * Defines the level of detail environment
+     * Defines the level of detail environment.
      */
     enum Environment {
         /**
@@ -246,7 +247,7 @@ public class FunctionalGroupsFinder {
 
     /**
      * Environment mode setting, defining whether environments should be
-     * generalized (default) or kept as whole.
+     * disregarded, generalized (default), or kept as whole.
      */
     private final Environment mode;
 
@@ -282,11 +283,11 @@ public class FunctionalGroupsFinder {
 
         /**
          * A saturated atom has only single (sigma) bonds.
+         *
          * @param atom the atom to test
-         * @return the atom is saturated
+         * @return true if the atom is saturated
          */
-        private static boolean isSaturated(IAtom atom)
-        {
+        private static boolean isSaturated(IAtom atom) {
             for (IBond bond : atom.bonds())
                 if (bond.getOrder() != Order.SINGLE)
                     return false;
@@ -314,11 +315,11 @@ public class FunctionalGroupsFinder {
          * Add pseudo ("R") atoms to an atom in a molecule.
          *
          * @param atom the atom to add the pseudo atoms to
-         * @param hcount the number of pseudo atoms to add
+         * @param rcount the number of pseudo atoms to add
          * @param mol the molecule the atom belongs to
          */
-        private void addRAtoms(IAtom atom, int hcount, IAtomContainer mol) {
-            for (int i = 0; i < hcount; i++) {
+        private void addRAtoms(IAtom atom, int rcount, IAtomContainer mol) {
+            for (int i = 0; i < rcount; i++) {
                 IPseudoAtom tmpRAtom = atom.getBuilder().newInstance(IPseudoAtom.class, "R");
                 tmpRAtom.setAttachPointNum(1);
                 tmpRAtom.setImplicitHydrogenCount(0);
@@ -363,7 +364,7 @@ public class FunctionalGroupsFinder {
             }
             int tmpAtomicNumberInt = tmpAtomicNr;
             return tmpAtomicNumberInt != IAtom.H && tmpAtomicNumberInt != IAtom.C
-                    && !isPseudoAtom(atom);
+                    && !State.isPseudoAtom(atom);
         }
 
         /**
@@ -372,8 +373,8 @@ public class FunctionalGroupsFinder {
          * Pseudo (R) atoms will also return false.
          *
          * @param atom atom to check
-         * @return true if the given atom is organic and not a metal or metalloid
-         *         atom
+         * @return true if the given atom is organic and not a metal, metalloid,
+         *         or pseudo (R) atom
          */
         private static boolean isDissallowedElement(IAtom atom) {
             Integer tmpAtomicNumber = atom.getAtomicNumber();
@@ -381,7 +382,9 @@ public class FunctionalGroupsFinder {
                 return false;
             }
             int tmpAtomicNumberInt = tmpAtomicNumber;
-            return !Elements.isMetal(tmpAtomicNumberInt) && !Elements.isMetalloid(tmpAtomicNumberInt) && !isPseudoAtom(atom);
+            return !Elements.isMetal(tmpAtomicNumberInt)
+                    && !Elements.isMetalloid(tmpAtomicNumberInt)
+                    && !State.isPseudoAtom(atom);
         }
 
         /**
