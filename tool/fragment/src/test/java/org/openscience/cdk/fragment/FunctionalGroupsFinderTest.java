@@ -806,4 +806,9 @@ class FunctionalGroupsFinderTest {
             }
         }
     }
+
+    @Test
+    public void test() {
+        System.out.println(FunctionalGroupsFinder.withGeneralEnvironment().extract(new AtomContainer()));
+    }
 }

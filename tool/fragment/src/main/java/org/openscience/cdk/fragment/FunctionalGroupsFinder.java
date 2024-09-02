@@ -879,13 +879,29 @@ public class FunctionalGroupsFinder {
     }
 
     /**
-     * Find all functional groups in a molecule.
+     * Find all functional groups in a molecule and extract them as group
+     * indices placed in the provided atom index array. This allows you to, for
+     * example, generate SMILES strings with functional group annotations or
+     * depictions with functional group highlights, e.g.:
+     * <pre>{@code
+     * int[] groups = new int[mol.getAtomCount()];
+     * fgf.find(groups, mol);
+     * for (IAtom atom : mol.atoms())
+     *   atom.setMapIdx(groups[atom.getIndex()]+1);
+     * String smi = new SmilesGenerator(SmiFlavor.AtomAtomMap).create(mol);
+     * // example output: CC1=CC=CC([NH:1]C2=CC=CC=C2[C:2](=[O:2])[NH:2]C(CC[S+:3](C)[O-:3])[C:4](=[O:4])[NH:4]C(C)C3=CC=C([F:5])C=C3)=C1C
+     * }</pre>
+     * (Check out the "Color Map" option on the CDK depict web app).
      *
+     *
+     * @param funGroups int array that is at least as large as the number of
+     *                  atoms in the given molecule; elements at the individual
+     *                  atom indices will set to a functional group number
+     *                  (starting at 0) or -1 if the respective atom is not part
+     *                  of a functional group.
      * @param mol the molecule to identify functional groups in
-     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
-     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
-     *                                  the given molecule does not fulfill them
-     * @return the number of functional groups
+     * @throws IllegalArgumentException if the given int array is not big enough
+     * @return the number of functional groups found
      */
     public int find(int[] funGroups, IAtomContainer mol) {
         if (funGroups.length < mol.getAtomCount())
@@ -900,19 +916,18 @@ public class FunctionalGroupsFinder {
      * Find all functional groups in a molecule.
      *
      * @param mol the molecule to identify functional groups in
-     * @param strict if true, the input must consist of one connected structure and must not
-     *               contain charged atoms, pseudo atoms, metals or metalloids; a specific IllegalArgumentException will
-     *               be thrown otherwise
-     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
-     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
-     *                                  the given molecule does not fulfill them
+     * @param strict if true, the input must consist of one connected structure
+     *               and must not contain charged atoms, pseudo atoms, metals or
+     *               metalloids; if the input molecule is affected by one of these
+     *               constraints, an empty list is returned
      * @return a list with all functional groups found in the molecule
+     * @see #checkConstraints(IAtomContainer)
      */
     public List<IAtomContainer> extract(IAtomContainer mol, boolean strict) {
 
         if (mol == null)
             throw new NullPointerException("No molecule provided");
-        if (strict && !FunctionalGroupsFinder.checkConstraints(mol))
+        if ((strict && !FunctionalGroupsFinder.checkConstraints(mol)) || mol.isEmpty())
             return Collections.emptyList();
 
         State state = new State();
@@ -931,16 +946,20 @@ public class FunctionalGroupsFinder {
     }
 
     /**
-     * Checks input molecule for charged atoms, metal or metalloid atoms, and
-     * whether it consists of more than one unconnected structures. The molecule
-     * may be empty but not null. If one of the cases applies, an
-     * IllegalArgumentException is thrown with a specific error message.
-     * Given as static method here because it is used by static public utility
-     * methods (developer's note).
+     * Checks input molecule for formal charges, metal or metalloid atoms,
+     * pseudo (R) atoms, and multiple unconnected structures. The molecule
+     * may be empty (returns true) but not null.
      *
      * @param mol the molecule to check
+     * @return false if the molecule contains charged atoms, metal or metalloid
+     *         atoms, pseudo (R) atoms, or multiple unconnected structures;
+     *         true if all these constraints do not apply to it
      */
     public static boolean checkConstraints(IAtomContainer mol) {
+        if (mol == null)
+            throw new NullPointerException("No molecule provided");
+        if (mol.isEmpty())
+            return true;
         for (IAtom atom : mol.atoms()) {
             if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0)
                 return false;
