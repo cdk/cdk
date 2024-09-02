@@ -256,27 +256,34 @@ public class FunctionalGroupsFinder {
      */
     private static final class State {
 
+        /**
+         * HashMap of input molecule atoms mapped to their copies created for
+         * functional group construction.
+         */
         private final Map<IAtom,IAtom> amap = new HashMap<>();
 
+        /**
+         * Cache for implicit hydrogen counts of the input molecule atoms.
+         */
         private int[] hCounts;
 
         /**
          * Set for atoms marked as being part of a functional group, represented
-         * by an internal index based on the atom count in the input molecule, cache(!).
+         * by their indices.
          */
         private HashSet<Integer> markedAtomsCache;
 
         /**
          * HashMap for storing aromatic hetero-atom indices and whether they have
          * already been assigned to a larger functional group. If false, they form
-         * single-atom FG by themselves, cache(!).
+         * single-atom FG by themselves.
          * key: atom idx, value: isInGroup
          */
         private HashMap<Integer, Boolean> aromaticHeteroAtomIndicesToIsInGroupBoolMapCache;
 
         /**
          * HashMap for storing marked atom to connected environmental carbon atom
-         * relations, cache(!).
+         * relations.
          */
         private HashMap<IAtom, List<EnvironmentalC>> markedAtomToConnectedEnvCMapCache;
 
@@ -376,7 +383,7 @@ public class FunctionalGroupsFinder {
          * @return true if the given atom is organic and not a metal, metalloid,
          *         or pseudo (R) atom
          */
-        private static boolean isDissallowedElement(IAtom atom) {
+        private static boolean isAllowedElement(IAtom atom) {
             Integer tmpAtomicNumber = atom.getAtomicNumber();
             if (Objects.isNull(tmpAtomicNumber)) {
                 return false;
@@ -388,7 +395,8 @@ public class FunctionalGroupsFinder {
         }
 
         /**
-         * Mark all atoms and store them in a set for further processing.
+         * Mark all atoms according to the Ertl algorithm
+         * and store them in a set for further processing.
          *
          * @param mol molecule with atoms to mark
          */
@@ -862,17 +870,16 @@ public class FunctionalGroupsFinder {
     }
 
     /**
-     * Find all functional groups in a molecule. The input atom container
-     * instance is cloned before processing to leave the input container intact.
+     * Find all functional groups in a molecule.
      * The strict input restrictions (no charged atoms, pseudo atoms, metals,
      * metalloids or unconnected components) do not apply by default. They can
-     * be turned on again in another variant of this method below.
+     * be turned on again in another variant of this method below. The returned
+     * (marked) functional group atoms will be copies of the input molecule atoms
+     * and their environmental carbon atoms will be new atom instances.
      *
      * @param mol the molecule to identify functional groups in
-     * @throws IllegalArgumentException if the input molecule was not
-     *                                  preprocessed correctly, i.e. implicit
-     *                                  hydrogen counts are unset
      * @return a list with all functional groups found in the molecule
+     * @see #extract(IAtomContainer, boolean) 
      */
     public List<IAtomContainer> extract(IAtomContainer mol) {
         return this.extract(mol, false);
@@ -889,18 +896,23 @@ public class FunctionalGroupsFinder {
      * for (IAtom atom : mol.atoms())
      *   atom.setMapIdx(groups[atom.getIndex()]+1);
      * String smi = new SmilesGenerator(SmiFlavor.AtomAtomMap).create(mol);
-     * // example output: CC1=CC=CC([NH:1]C2=CC=CC=C2[C:2](=[O:2])[NH:2]C(CC[S+:3](C)[O-:3])[C:4](=[O:4])[NH:4]C(C)C3=CC=C([F:5])C=C3)=C1C
+     * //example output (for PubChem CID 118705975): 
+     * // CC1=C(C(=CC=C1)[NH:1]C2=CC=CC=C2[C:2](=[O:2])[NH:2]C(CC[S:3](=[O:3])C)[C:4](=[O:4])[NH:4]C(C)C3=CC=C(C=C3)[F:5])C
      * }</pre>
      * (Check out the "Color Map" option on the CDK depict web app).
-     *
+     * <br/>
+     * NOTE: this method extracts only the atoms of each functional group that 
+     * are marked according to the Ertl algorithm, environmental carbon atoms
+     * are disregarded here, independent of the environment setting.
      *
      * @param funGroups int array that is at least as large as the number of
      *                  atoms in the given molecule; elements at the individual
-     *                  atom indices will set to a functional group number
+     *                  atom indices will be set to a functional group number
      *                  (starting at 0) or -1 if the respective atom is not part
      *                  of a functional group.
      * @param mol the molecule to identify functional groups in
-     * @throws IllegalArgumentException if the given int array is not big enough
+     * @throws IllegalArgumentException if the given int array is smaller than
+     *                                  the number of atoms in the given molecule
      * @return the number of functional groups found
      */
     public int find(int[] funGroups, IAtomContainer mol) {
@@ -922,6 +934,7 @@ public class FunctionalGroupsFinder {
      *               constraints, an empty list is returned
      * @return a list with all functional groups found in the molecule
      * @see #checkConstraints(IAtomContainer)
+     * @see #extract(IAtomContainer)
      */
     public List<IAtomContainer> extract(IAtomContainer mol, boolean strict) {
 
@@ -963,7 +976,7 @@ public class FunctionalGroupsFinder {
         for (IAtom atom : mol.atoms()) {
             if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0)
                 return false;
-            if (!State.isDissallowedElement(atom))
+            if (!State.isAllowedElement(atom))
                 return false;
         }
         return ConnectivityChecker.isConnected(mol);

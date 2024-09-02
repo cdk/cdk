@@ -391,7 +391,11 @@ class FunctionalGroupsFinderTest {
         String[] tmpExpectedFGs = new String[] {"[C]N([H])[H]", "[R]N([R])[R]", "[R]Cl" , "[c]=O", "[R]Cl", "[R]C(=O)OH", "NarR3"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
     }
-
+    //
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     void testOxirane() throws Exception {
         String tmpMoleculeSmiles = "CCCCCC1OC1";
@@ -599,7 +603,11 @@ class FunctionalGroupsFinderTest {
         tmpExpectedFGs = new String[]{"*C(=O)C(=[C]O[H])C(=O)N(*)*", "[C]=[C]", "*C(=O)O[H]"};
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
     }
-
+    //
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     void testB2H6() throws Exception {
         String tmpMoleculeSmiles = "[H]B1([H])[H]B([H])([H])[H]1";
@@ -607,6 +615,28 @@ class FunctionalGroupsFinderTest {
         this.testFind(tmpMoleculeSmiles, tmpExpectedFGs);
     }
     //
+    /**
+     *
+     * @throws Exception
+     */
+    @Test
+    void testIndexBasedFind() throws Exception {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smiPar.parseSmiles("CC1=C(C(=CC=C1)NC2=CC=CC=C2C" +
+                "(=O)NC(CCS(=O)C)C(=O)NC(C)C3=CC=C(C=C3)F)C"); //PubChem CID 118705975
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
+                Cycles.cdkAromaticSet());
+        aromaticity.apply(mol);
+        //Identify functional groups
+        FunctionalGroupsFinder fgf = FunctionalGroupsFinder.withFullEnvironment();
+        int[] groups = new int[mol.getAtomCount()];
+        fgf.find(groups, mol);
+        for (IAtom atom : mol.atoms())
+            atom.setMapIdx(groups[atom.getIndex()]+1);
+        String smi = new SmilesGenerator(SmiFlavor.AtomAtomMap).create(mol);
+        System.out.println(smi);
+    }
     /**
      * Applies FGF to detect functional groups in the given molecule and compares the identified FG to the given
      * expected FG, using i.a. an identity search. Note that the order of the given FG must match the order of the detected
