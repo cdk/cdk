@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -68,19 +67,19 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Example code to be used in the GitHub wiki of the project.
+     * Example code for how to use FunctionalGroupsFinder.
      *
      * @throws Exception if anything goes wrong
      * @author Jonas Schaub
      */
     @Test
-    void gitHubWikiTest() throws Exception {
+    void exampleUsage() throws Exception {
         //Prepare input
         SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer inputMol = smiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)" +
                 "C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(inputMol);
-        Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
+        Aromaticity aromaticity = new Aromaticity(Aromaticity.Model.CDK_1x,
                 Cycles.cdkAromaticSet());
         aromaticity.apply(inputMol);
         //Identify functional groups
@@ -100,10 +99,13 @@ class FunctionalGroupsFinderTest {
             //System.out.println(tmpSmilesString);
         }
     }
-
+    //
     /**
+     * Test correct working of the optional input restrictions on some
+     * example molecules.
      *
-     * @throws Exception
+     * @throws Exception if anything goes wrong
+     * @author Jonas Schaub
      */
     @Test
     void testInputRestrictions() throws Exception {
@@ -133,7 +135,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -146,7 +149,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -159,7 +163,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -172,7 +177,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -185,7 +191,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -198,7 +205,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -211,7 +219,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -224,7 +233,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -237,7 +247,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -250,7 +261,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -263,7 +275,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -276,7 +289,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -289,7 +303,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -302,7 +317,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -315,7 +331,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -328,7 +345,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -341,7 +359,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -354,7 +373,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -367,7 +387,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -380,7 +401,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule taken from Figure 1 of the original Ertl algorithm article.
+     * Tests correct functional group identification on an example molecule
+     * taken from Figure 1 of the original Ertl algorithm article.
      *
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
@@ -393,8 +415,10 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
+     * Check for carbons in three membered rings.
      *
-     * @throws Exception
+     * @throws Exception if anything goes wrong
+     * @author John Mayfield
      */
     @Test
     void testOxirane() throws Exception {
@@ -404,7 +428,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule. Specifically, the extraction of only the marked atoms
+     * Tests correct functional group identification on an example molecule.
+     * Specifically, the extraction of only the marked atoms
      * in a functional group is tested. This feature was added in a later version.
      *
      * @throws Exception if anything goes wrong
@@ -414,11 +439,12 @@ class FunctionalGroupsFinderTest {
     void testOnlyMarkedAtoms1() throws Exception {
         String tmpMoleculeSmiles = "CCO[Si](OCC)(OCC)OCC"; //Tetraethyl Orthosilicate
         String[] tmpExpectedFGs = new String[]{"[O][Si]([O])([O])[O]"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule. Specifically, the extraction of only the marked atoms
+     * Tests correct functional group identification on an example molecule.
+     * Specifically, the extraction of only the marked atoms
      * in a functional group is tested. This feature was added in a later version.
      *
      * @throws Exception if anything goes wrong
@@ -428,11 +454,12 @@ class FunctionalGroupsFinderTest {
     void testOnlyMarkedAtoms2() throws Exception {
         String tmpMoleculeSmiles = "Cc1cc(C)nc(NS(=O)(=O)c2ccc(N)cc2)n1"; //same mol as testFind1() from the Ertl figure
         String[] tmpExpectedFGs = new String[] {"O=[S](=O)[NH]", "[NH2]", "Nar" , "Nar"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule. Specifically, the extraction of only the marked atoms
+     * Tests correct functional group identification on an example molecule.
+     * Specifically, the extraction of only the marked atoms
      * in a functional group is tested. This feature was added in a later version.
      *
      * @throws Exception if anything goes wrong
@@ -442,11 +469,12 @@ class FunctionalGroupsFinderTest {
     void testOnlyMarkedAtoms3() throws Exception {
         String tmpMoleculeSmiles = "CO/N=C(\\C(=O)N[C@@H]1C(=O)N2C(C(=O)[O-])=C(C[N+]3(C)CCCC3)CS[C@H]12)c1csc(N)n1.Cl"; //CHEMBL1201736
         String[] tmpExpectedFGs = new String[] {"[O]N=[C]C(=O)[NH]", "[C]=C(C(=O)[O-])N([C]=O)[CH][S]", "[N+]", "[NH2]", "Cl", "Sar", "Nar"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()), FunctionalGroupsFinder.Environment.NONE);
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with formal charges.
+     * Tests correct functional group identification on an example molecule with
+     * formal charges.
      * This was not allowed in a previous version.
      *
      * @throws Exception if anything goes wrong
@@ -460,7 +488,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with formal charges.
+     * Tests correct functional group identification on an example molecule with
+     * formal charges.
      * This was not allowed in a previous version.
      *
      * @throws Exception if anything goes wrong
@@ -474,7 +503,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with formal charges.
+     * Tests correct functional group identification on an example molecule with
+     * formal charges.
      * This was not allowed in a previous version.
      *
      * @throws Exception if anything goes wrong
@@ -488,7 +518,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with formal charges.
+     * Tests correct functional group identification on an example molecule with
+     * formal charges.
      * This was not allowed in a previous version.
      *
      * @throws Exception if anything goes wrong
@@ -499,21 +530,22 @@ class FunctionalGroupsFinderTest {
         String tmpMoleculeSmiles = "c1ccccc1[CH+]C(Br)C"; //Carbenium ion in beta position to Br
         // carbenium ion is ignored since a charge is not a reason to mark carbon atom
         String[] tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
 
         tmpMoleculeSmiles = "c1ccccc1[CH+]C(Br)C"; //Carbenium ion in beta position to Br
         // carbenium ion is ignored since a charge is not a reason to mark carbon atom
         tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
 
         tmpMoleculeSmiles = "c1ccccc1[C+](Br)C"; //Carbenium ion in alpha position to Br
         // carbenium ion is extracted as environmental carbon and replaced by a new atom instance as all env carbon atoms in FGF; so it lost its charge!
         tmpExpectedFGs = new String[] {"[C]Br"};
-        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(ElectronDonation.daylight(), Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
+        this.testFind(tmpMoleculeSmiles, tmpExpectedFGs, new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()), FunctionalGroupsFinder.Environment.FULL);
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with a disconnected structure.
+     * Tests correct functional group identification on an example molecule with
+     * a disconnected structure.
      * This was not allowed in a previous version.
      *
      * @throws Exception if anything goes wrong
@@ -527,7 +559,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with a disconnected structure.
+     * Tests correct functional group identification on an example molecule with
+     * a disconnected structure.
      * This was not allowed in a previous version.
      *
      * @throws Exception if anything goes wrong
@@ -541,9 +574,11 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with metal/metalloid atoms.
+     * Tests correct functional group identification on an example molecule with
+     * metal/metalloid atoms.
      *
-     * Note: all atoms are marked as hetero atoms by FGF that are not H or C. So, metals and metalloids get treated like
+     * Note: all atoms are marked as hetero atoms by FGF that are not H or C. So,
+     * metals and metalloids get treated like
      * any other hetero atom.
      *
      * @throws Exception if anything goes wrong
@@ -557,9 +592,11 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with metal/metalloid atoms.
+     * Tests correct functional group identification on an example molecule with
+     * metal/metalloid atoms.
      *
-     * Note: all atoms are marked as hetero atoms by FGF that are not H or C. So, metals and metalloids get treated like
+     * Note: all atoms are marked as hetero atoms by FGF that are not H or C. So,
+     * metals and metalloids get treated like
      * any other hetero atom.
      *
      * @throws Exception if anything goes wrong
@@ -573,7 +610,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests correct functional group identification on an example molecule with pseudo (R) atoms.
+     * Tests correct functional group identification on an example molecule with
+     * pseudo (R) atoms.
      *
      * Note: these pseudo (R) atoms are simply ignored by FGF.
      *
@@ -588,7 +626,8 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Tests that a former bug concerning unconnected, explicit hydrogen atoms does not occur anymore.
+     * Tests that a former bug concerning unconnected, explicit hydrogen atoms
+     * does not occur anymore.
      *
      * @throws Exception if anything goes wrong
      * @author Jonas Schaub
@@ -605,8 +644,11 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
+     * Testing functional group extraction on Diborane because bridged hydrogens
+     * were not handled correctly before.
      *
-     * @throws Exception
+     * @throws Exception if anything goes wrong
+     * @author John Mayfield
      */
     @Test
     void testB2H6() throws Exception {
@@ -616,8 +658,10 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
+     * Testing the functional groups extraction based on index array.
      *
-     * @throws Exception
+     * @throws Exception if anything goes wrong
+     * @author John Mayfield
      */
     @Test
     void testIndexBasedFind() throws Exception {
@@ -625,7 +669,7 @@ class FunctionalGroupsFinderTest {
         IAtomContainer mol = smiPar.parseSmiles("CC1=C(C(=CC=C1)NC2=CC=CC=C2C" +
                 "(=O)NC(CCS(=O)C)C(=O)NC(C)C3=CC=C(C=C3)F)C"); //PubChem CID 118705975
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
+        Aromaticity aromaticity = new Aromaticity(Aromaticity.Model.CDK_1x,
                 Cycles.cdkAromaticSet());
         aromaticity.apply(mol);
         //Identify functional groups
@@ -635,13 +679,20 @@ class FunctionalGroupsFinderTest {
         for (IAtom atom : mol.atoms())
             atom.setMapIdx(groups[atom.getIndex()]+1);
         String smi = new SmilesGenerator(SmiFlavor.AtomAtomMap).create(mol);
-        System.out.println(smi);
+        Assertions.assertEquals(
+                "CC1=C(C(=CC=C1)[NH:1]C2=CC=CC=C2[C:2](=[O:2])[NH:2]C(CC[S:3](=[O:3])C)[C:4](=[O:4])[NH:4]C(C)C3=CC=C(C=C3)[F:5])C",
+                smi);
     }
+    //
     /**
-     * Applies FGF to detect functional groups in the given molecule and compares the identified FG to the given
-     * expected FG, using i.a. an identity search. Note that the order of the given FG must match the order of the detected
-     * FG. The expected FG can contain pseudo-SMILES code for some specific cases, where aromatic atoms are marked using
-     * "-ar" and pseudo-atoms (R) can be included. Uses the electron donation model daylight and the cycle finder "all"
+     * Applies FGF to detect functional groups in the given molecule and compares
+     * the identified FG to the given
+     * expected FG, using i.a. an identity search. Note that the order of the given
+     * FG must match the order of the detected
+     * FG. The expected FG can contain pseudo-SMILES code for some specific cases,
+     * where aromatic atoms are marked using
+     * "-ar" and pseudo-atoms (R) can be included. Uses the electron donation model
+     * daylight and the cycle finder "all"
      * for aromaticity detection in the input molecule.
      *
      * @param aMoleculeSmiles input molecule to detect FG in
@@ -650,22 +701,26 @@ class FunctionalGroupsFinderTest {
      * @author Sebastian Fritsch
      */
     private void testFind(String aMoleculeSmiles, String[] anExpectedFGPseudoSmilesArray) throws Exception {
-        this.testFind(aMoleculeSmiles, anExpectedFGPseudoSmilesArray, new Aromaticity(ElectronDonation.daylight(), Cycles.all()),
+        this.testFind(aMoleculeSmiles, anExpectedFGPseudoSmilesArray, new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()),
                       FunctionalGroupsFinder.Environment.GENERAL);
     }
+    //
     private static int[] getHydrogenCounts(IAtomContainer mol) {
         int[] hcounts = new int[mol.getAtomCount()];
         for (IAtom atom : mol.atoms())
             hcounts[atom.getIndex()] = atom.getImplicitHydrogenCount();
         return hcounts;
     }
-
     //
     /**
-     * Applies FGF to detect functional groups in the given molecule and compares the identified FG to the given
-     * expected FG, using i.a. an identity search. Note that the order of the given FG must match the order of the detected
-     * FG. The expected FG can contain pseudo-SMILES code for some specific cases, where aromatic atoms are marked using
-     * "-ar" and pseudo-atoms (R) can be included. The given aromaticity model is used for preprocessing the input molecule.
+     * Applies FGF to detect functional groups in the given molecule and compares
+     * the identified FG to the given
+     * expected FG, using i.a. an identity search. Note that the order of the given
+     * FG must match the order of the detected
+     * FG. The expected FG can contain pseudo-SMILES code for some specific cases,
+     * where aromatic atoms are marked using
+     * "-ar" and pseudo-atoms (R) can be included. The given aromaticity model is
+     * used for preprocessing the input molecule.
      *
      * @param aMoleculeSmiles input molecule to detect FG in
      * @param anExpectedFGPseudoSmilesArray expected FG
@@ -698,8 +753,10 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Asserts the isomorphism between two lists of functional group atom containers. Compares their sizes, atom counts,
-     * bond counts, performs an identity match using the Vento-Foggia algorithm, and checks that aromaticity annotations
+     * Asserts the isomorphism between two lists of functional group atom
+     * containers. Compares their sizes, atom counts,
+     * bond counts, performs an identity match using the Vento-Foggia algorithm,
+     * and checks that aromaticity annotations
      * match for the atoms and bonds.
      * NOTE: actual and expected functional groups must be in the same order!
      *
@@ -742,10 +799,14 @@ class FunctionalGroupsFinderTest {
     }
     //
     /**
-     * Constructs a functional group atom container object from a given SMILES or pseudo-SMILES code.
-     * Pseudo-SMILES codes have aromatic atoms marked by "-ar", e.g. "Nar", and contain pseudo-atoms given as "R".
-     * But the only available cases here are "NarR3", "SarR2", and "OarR2". There is no general treatment of any pseudo-SMILES
-     * code! If the given string does not match any of the given three templates, it has to be a valid SMILES string!
+     * Constructs a functional group atom container object from a given SMILES
+     * or pseudo-SMILES code.
+     * Pseudo-SMILES codes have aromatic atoms marked by "-ar", e.g. "Nar", and
+     * contain pseudo-atoms given as "R".
+     * But the only available cases here are "NarR3", "SarR2", and "OarR2".
+     * There is no general treatment of any pseudo-SMILES
+     * code! If the given string does not match any of the given three templates,
+     * it has to be a valid SMILES string!
      *
      * @param aFunctionalGroupPseudoSmiles SMILES code or specific pseudo-SMILES code
      * @return functional group atom container built from the given code
@@ -835,10 +896,5 @@ class FunctionalGroupsFinderTest {
                         "and is not a valid SMILES string.");
             }
         }
-    }
-
-    @Test
-    public void test() {
-        System.out.println(FunctionalGroupsFinder.withGeneralEnvironment().extract(new AtomContainer()));
     }
 }

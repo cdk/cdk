@@ -82,7 +82,7 @@ import java.util.Queue;
  * IAtomContainer inputMol = smiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)" +
  *         "C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
  * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(inputMol);
- * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
+ * Aromaticity aromaticity = new Aromaticity(Aromaticity.Model.CDK_1x,
  *         Cycles.cdkAromaticSet());
  * aromaticity.apply(inputMol);
  * //Identify functional groups
@@ -422,7 +422,7 @@ public class FunctionalGroupsFinder {
                 }
                 // skip aromatic atoms but add aromatic HETERO-atoms to map for later processing
                 if (atom.isAromatic()) {
-                    if (isHeteroatom(atom)) {
+                    if (State.isHeteroatom(atom)) {
                         aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.put(idx, false);
                     }
                     continue;
@@ -466,7 +466,7 @@ public class FunctionalGroupsFinder {
                                 markedAtomsCache.add(nbor.getIndex());
 
                                 // if "acetal C" (2+ O/N/S in single bonds connected to sp3-C)... [CONDITION 2.3]
-                                if (isSaturated(nbor)) {
+                                if (State.isSaturated(nbor)) {
                                     tmpConnectedONSatomsCounter++;
                                     if (tmpConnectedONSatomsCounter > 1 && atom.getBondCount() + hCounts[atom.getIndex()] == 4) {
                                         // set as marked and break out of connected atoms
@@ -501,7 +501,7 @@ public class FunctionalGroupsFinder {
                         IAtom nbor = bond.getOther(atom);
                         hCounts[nbor.getIndex()]++;
                     }
-                } else if (isHeteroatom(atom)) {
+                } else if (State.isHeteroatom(atom)) {
                     // if heteroatom... (CONDITION 1)
                     markedAtomsCache.add(idx);
                 } else {
@@ -574,9 +574,16 @@ public class FunctionalGroupsFinder {
         /**
          * Searches the molecule for groups of connected marked atoms and extracts
          * each as a new functional group. The extraction process includes marked
-         * atoms' "environments". Connected H's are captured implicitly.
+         * atoms' "environmental carbon atoms" which are stored in the respective
+         * cache map. Connected H's are captured implicitly.
          *
-         * @param mol                    the molecule which contains the functional groups
+         * @param fgroups int array that should be as large as the number of
+         *                atoms in the given molecule; all elements should be
+         *                initialised with -1; elements at the individual
+         *                atom indices will be set to a functional group number
+         *                (starting at 0) or remain -1 if the respective atom is
+         *                not part of a functional group
+         * @param mol the molecule which contains the functional groups
          * @return number of functional groups
          */
         private int markGroups(int[] fgroups, IAtomContainer mol) {
@@ -610,7 +617,7 @@ public class FunctionalGroupsFinder {
                         }
 
                         // add unmarked connected aromatic heteroatoms
-                        if (isHeteroatom(nbor) && nbor.isAromatic()) {
+                        if (State.isHeteroatom(nbor) && nbor.isAromatic()) {
                             fgroups[nbor.getIndex()] = funcGrpIdx;
                             // note that this aromatic heteroatom has been added to a group
                             aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.put(nbor.getIndex(), true);
@@ -689,7 +696,7 @@ public class FunctionalGroupsFinder {
                             expandEnvironmentGeneralized(orgAtom, part);
                             continue;
                         }
-                    } else if (isHeteroatom(cpyAtom)) {
+                    } else if (State.isHeteroatom(cpyAtom)) {
                         // env is null and marked atoms is a hetero atom -> single aromatic heteroatom
                         int rcount = cpyAtom.getValency();
                         Integer hcount = cpyAtom.getImplicitHydrogenCount();
@@ -706,8 +713,8 @@ public class FunctionalGroupsFinder {
                 // process individual functional group atoms...
                 for (IAtom cpyAtom : atomToProcess) {
                     IAtom orgAtom = invMap.get(cpyAtom);
-                    List<EnvironmentalC> envCarbonds = markedAtomToConnectedEnvCMapCache.get(orgAtom);
-                    if (envCarbonds == null) {
+                    List<EnvironmentalC> envCarbons = markedAtomToConnectedEnvCMapCache.get(orgAtom);
+                    if (envCarbons == null) {
                         if (hCounts[orgAtom.getIndex()] != 0) {
                             cpyAtom.setImplicitHydrogenCount(0);
                         }
@@ -814,7 +821,7 @@ public class FunctionalGroupsFinder {
             if (cpyAtom.getAtomicNumber() == IAtom.O && cpyAtom.getImplicitHydrogenCount() == 1) {
                 addHydrogens(cpyAtom, 1, cpyPart);
                 cpyAtom.setImplicitHydrogenCount(0);
-            } else if (isHeteroatom(cpyAtom)) {
+            } else if (State.isHeteroatom(cpyAtom)) {
                 rcount += cpyAtom.getImplicitHydrogenCount();
             }
             addRAtoms(cpyAtom, rcount, cpyPart);
@@ -909,7 +916,7 @@ public class FunctionalGroupsFinder {
      *                  atoms in the given molecule; elements at the individual
      *                  atom indices will be set to a functional group number
      *                  (starting at 0) or -1 if the respective atom is not part
-     *                  of a functional group.
+     *                  of a functional group
      * @param mol the molecule to identify functional groups in
      * @throws IllegalArgumentException if the given int array is smaller than
      *                                  the number of atoms in the given molecule
