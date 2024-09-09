@@ -680,7 +680,8 @@ class FunctionalGroupsFinderTest {
             atom.setMapIdx(groups[atom.getIndex()]+1);
         String smi = new SmilesGenerator(SmiFlavor.AtomAtomMap).create(mol);
         Assertions.assertEquals(
-                "CC1=C(C(=CC=C1)[NH:1]C2=CC=CC=C2[C:2](=[O:2])[NH:2]C(CC[S:3](=[O:3])C)[C:4](=[O:4])[NH:4]C(C)C3=CC=C(C=C3)[F:5])C",
+                "CC1=C(C(=CC=C1)[NH:1]C2=CC=CC=C2[C:2](=[O:2])[NH:2]" +
+                        "C(CC[S:3](=[O:3])C)[C:4](=[O:4])[NH:4]C(C)C3=CC=C(C=C3)[F:5])C",
                 smi);
     }
     //
@@ -693,23 +694,19 @@ class FunctionalGroupsFinderTest {
      * where aromatic atoms are marked using
      * "-ar" and pseudo-atoms (R) can be included. Uses the electron donation model
      * daylight and the cycle finder "all"
-     * for aromaticity detection in the input molecule.
+     * for aromaticity detection in the input molecule. FG environments are
+     * generalized.
      *
      * @param aMoleculeSmiles input molecule to detect FG in
      * @param anExpectedFGPseudoSmilesArray expected FG
      * @throws Exception if anything goes wrong
      * @author Sebastian Fritsch
+     * @see #testFind(String, String[], Aromaticity, FunctionalGroupsFinder.Environment)
      */
     private void testFind(String aMoleculeSmiles, String[] anExpectedFGPseudoSmilesArray) throws Exception {
-        this.testFind(aMoleculeSmiles, anExpectedFGPseudoSmilesArray, new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()),
-                      FunctionalGroupsFinder.Environment.GENERAL);
-    }
-    //
-    private static int[] getHydrogenCounts(IAtomContainer mol) {
-        int[] hcounts = new int[mol.getAtomCount()];
-        for (IAtom atom : mol.atoms())
-            hcounts[atom.getIndex()] = atom.getImplicitHydrogenCount();
-        return hcounts;
+        this.testFind(aMoleculeSmiles, anExpectedFGPseudoSmilesArray,
+                new Aromaticity(Aromaticity.Model.Daylight, Cycles.all()),
+                FunctionalGroupsFinder.Environment.GENERAL);
     }
     //
     /**
@@ -739,9 +736,9 @@ class FunctionalGroupsFinderTest {
         anAromaticityModel.apply(mol);
         // find functional groups
         FunctionalGroupsFinder tmpFGFinder = new FunctionalGroupsFinder(aFunctionalGroupEnvironmentEnvironment);
-        int[] hBefore = getHydrogenCounts(mol);
+        int[] hBefore = FunctionalGroupsFinderTest.getHydrogenCounts(mol);
         List<IAtomContainer> tmpFunctionalgroupsList = tmpFGFinder.extract(mol);
-        int[] hAfter = getHydrogenCounts(mol);
+        int[] hAfter = FunctionalGroupsFinderTest.getHydrogenCounts(mol);
         // get expected groups
         List<IAtomContainer> tmpExpectedFGs = new LinkedList<>();
         for (String tmpFGString : anExpectedFGPseudoSmilesArray) {
@@ -750,6 +747,20 @@ class FunctionalGroupsFinderTest {
         // compare
         this.assertIsomorphism(tmpExpectedFGs, tmpFunctionalgroupsList);
         Assertions.assertArrayEquals(hBefore, hAfter, "Hydrogen count was modified!");
+    }
+    //
+    /**
+     * Saves implicit hydrogen count of every atom in an index-based array.
+     *
+     * @param mol to save the implicit hydrogen counts of
+     * @return atom index-based int array with the implicit hydrogen count of
+     *         every atom
+     */
+    private static int[] getHydrogenCounts(IAtomContainer mol) {
+        int[] hcounts = new int[mol.getAtomCount()];
+        for (IAtom atom : mol.atoms())
+            hcounts[atom.getIndex()] = atom.getImplicitHydrogenCount();
+        return hcounts;
     }
     //
     /**
@@ -885,15 +896,15 @@ class FunctionalGroupsFinderTest {
                     tmpSmilesParser.kekulise(false);
                     tmpFunctionalGroup = tmpSmilesParser.parseSmiles(aFunctionalGroupPseudoSmiles);
                 }
-                for(IAtom a : tmpFunctionalGroup.atoms()) {
+                for (IAtom a : tmpFunctionalGroup.atoms()) {
                     if (a instanceof PseudoAtom) {
                         a.setSymbol("R");
                     }
                 }
                 return tmpFunctionalGroup;
             } catch(InvalidSmilesException e) {
-                throw new IllegalArgumentException("Input string '" + aFunctionalGroupPseudoSmiles + " could not be found as a template " +
-                        "and is not a valid SMILES string.");
+                throw new IllegalArgumentException("Input string '" + aFunctionalGroupPseudoSmiles
+                        + " could not be found as a template and is not a valid SMILES string.");
             }
         }
     }
