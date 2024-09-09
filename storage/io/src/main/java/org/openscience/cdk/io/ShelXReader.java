@@ -163,6 +163,18 @@ public class ShelXReader extends DefaultChemObjectReader {
         return file;
     }
 
+    /**
+     * Checks if a given character is an ASCII digit. Do NOT replace
+     * with Character.isDigit() which check the entire Unicode table/code
+     * spaces.
+     *
+     * @param ch the character to check
+     * @return true if the character is a digit, false otherwise
+     */
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
     private ICrystal readCrystal(ICrystal crystal) throws IOException {
         String line = input.readLine();
         boolean end_found = false;
@@ -332,7 +344,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                 String sc = st.nextToken();
                 // skip the rest
 
-                if (Character.isDigit(atype.charAt(1))) {
+                if (isDigit(atype.charAt(1))) {
                     // atom type has a one letter code
                     atype = atype.substring(0, 1);
                 } else {
