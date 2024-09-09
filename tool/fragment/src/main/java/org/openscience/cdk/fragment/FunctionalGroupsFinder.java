@@ -120,7 +120,12 @@ import java.util.Queue;
  * @author Jonas Schaub
  */
 public class FunctionalGroupsFinder {
-
+    /*
+        Developer comment: for possible improvements see John Mayfield's comments
+        on the overhaul of the functionality prior to CDK integration:
+        https://github.com/JonasSchaub/cdk/pull/1#issue-2164816152
+     */
+    
     /**
      * Defines the level of detail environment.
      */
