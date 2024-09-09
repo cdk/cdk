@@ -35,8 +35,8 @@ import java.util.regex.Pattern;
 /**
  * Iterating reader for RDFiles.
  * <p>
- *     This class facilitates reading RDFiles the specification of which was initially published
- *     in {@cdk.cite DAL92} and is now maintained by Daussault Systems {@cdk.cite Dassault20}.
+ * This class facilitates reading RDFiles the specification of which was initially published
+ * in {@cdk.cite DAL92} and is now maintained by Daussault Systems {@cdk.cite Dassault20}.
  * </p>
  * An RDFile is composed of
  * <ol>
@@ -50,6 +50,21 @@ import java.util.regex.Pattern;
  *     </ol>
  *     </li>
  * </ol>
+ * Here is an example of how to read an RDF that is expected to only contain molecules:
+ * <pre>
+ * // read an RDF that is expected to only contain molecules
+ * {@code List<IAtomContainer> molecules = new ArrayList<>();}
+ * try (RdfileReader rdfileReader = new RdfileReader(new FileReader("molecules.rdf"), SilentChemObjectBuilder.getInstance())) {
+ *     while(rdfileReader.hasNext()) {
+ *       final RdfileRecord rdfileRecord = rdfileReader.next();
+ *       if (rdfileRecord.isMolfile()) {
+ *         molecules.add(rdfileRecord.getAtomContainer());
+ *      } else {
+ *       // create log entry or throw exception as only molecules are expected in this RDF
+ *     }
+ *   }
+ * }
+ * </pre>
  * <p>
  * By default, any remaining records are skipped if an error is encountered in a record. This can be changed
  * by using one of the constructors that allows to provide a boolean value for the argument
@@ -60,7 +75,7 @@ import java.util.regex.Pattern;
  * @see RdfileRecord
  * @author Uli Fechner
  */
-public class RdfileReader implements Closeable, Iterator<RdfileRecord> {
+public final class RdfileReader implements Closeable, Iterator<RdfileRecord> {
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(RdfileReader.class);
     static final String RDFILE_VERSION_1 = "$RDFILE 1";
     static final String DATM = "$DATM";
