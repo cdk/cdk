@@ -26,6 +26,19 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * The RdfileRecord class represents a single record of an RD file.
+ * <br><br>
+ * <ul>
+ * Publicly accessible are
+ * <li>the record's {@link #getInternalRegistryNumber() internal} or
+ * {@link #getExternalRegistryNumber() external} registry number,</li>
+ * <li>methods to asses whether the record is a {@link #isRxnFile() reaction}
+ * or a {@link #isMolfile() molecule}, and</li>
+ * <li>getters for the {@link #getAtomContainer() IAtomContainer} or
+ * {@link #getReaction() reaction} that represents the record.</li>
+ * </ul>
+ *
+ * @see RdfileReader
  * @author Uli Fechner
  */
 public final class RdfileRecord {
@@ -48,10 +61,20 @@ public final class RdfileRecord {
         this.isRxnFile = isRxnFile;
     }
 
+    /**
+     * Retrieves the internal registry number of the RdfileRecord.
+     *
+     * @return The internal registry number of the RdfileRecord.
+     */
     public String getInternalRegistryNumber() {
         return internalRegistryNumber;
     }
 
+    /**
+     * Retrieves the external registry number of the RdfileRecord.
+     *
+     * @return The external registry number of the RdfileRecord.
+     */
     public String getExternalRegistryNumber() {
         return externalRegistryNumber;
     }
@@ -64,10 +87,20 @@ public final class RdfileRecord {
         return Collections.unmodifiableMap(data);
     }
 
+    /**
+     * Checks if the RdfileRecord represents a reaction file.
+     *
+     * @return true if the RdfileRecord represents a reaction file, false otherwise
+     */
     public boolean isRxnFile() {
         return isRxnFile;
     }
 
+    /**
+     * Checks if the RdfileRecord represents a molfile.
+     *
+     * @return true if the RdfileRecord represents a molfile, false otherwise
+     */
     public boolean isMolfile() {
         return !isRxnFile;
     }
@@ -92,6 +125,11 @@ public final class RdfileRecord {
         this.chemObject = chemObject;
     }
 
+    /**
+     * Retrieves the AtomContainer from the RdfileRecord.
+     *
+     * @return the AtomContainer object if the record represents a molecule, {@code null} otherwise
+     */
     public IAtomContainer getAtomContainer() {
         if (chemObject instanceof IAtomContainer) {
             return (IAtomContainer) chemObject;
@@ -100,6 +138,11 @@ public final class RdfileRecord {
         return null;
     }
 
+    /**
+     * Retrieves the reaction object from the RdfileRecord.
+     *
+     * @return the reaction object if the RdfileRecord represents a reaction, {@code null} otherwise
+     */
     public IReaction getReaction() {
         if (chemObject instanceof IReaction) {
             return (IReaction) chemObject;
