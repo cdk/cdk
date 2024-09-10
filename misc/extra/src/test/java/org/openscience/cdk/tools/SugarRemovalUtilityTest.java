@@ -1304,7 +1304,7 @@ class SugarRemovalUtilityTest extends SugarRemovalUtility {
         SugarRemovalUtility sugarRemovalUtil = this.getSugarRemovalUtilityV1200DefaultSettings();
         sugarRemovalUtil.setDetectLinearSugarsInRingsSetting(true);
         sugarRemovalUtil.setRemoveOnlyTerminalSugarsSetting(false);
-        sugarRemovalUtil.setPreservationModeSetting(PreservationModeOption.ALL);
+        sugarRemovalUtil.setPreservationModeSetting(PreservationMode.ALL);
         float loadFactor = 0.75f;
         int testMoleculesCNPtoSMILESMapInitCapacity = (int)(4.0f * (1.0f / loadFactor) + 2.0f);
         HashMap<String, String> testMoleculesCNPtoSMILESMap = new HashMap<>(testMoleculesCNPtoSMILESMapInitCapacity, loadFactor);
@@ -1482,7 +1482,7 @@ class SugarRemovalUtilityTest extends SugarRemovalUtility {
         SugarRemovalUtility sugarRemovalUtil = new SugarRemovalUtility(SilentChemObjectBuilder.getInstance());
         sugarRemovalUtil.setDetectCircularSugarsOnlyWithOGlycosidicBondSetting(false);
         sugarRemovalUtil.setRemoveOnlyTerminalSugarsSetting(true);
-        sugarRemovalUtil.setPreservationModeSetting(PreservationModeOption.HEAVY_ATOM_COUNT);
+        sugarRemovalUtil.setPreservationModeSetting(PreservationMode.HEAVY_ATOM_COUNT);
         sugarRemovalUtil.setPreservationModeThresholdSetting(5);
         sugarRemovalUtil.setDetectCircularSugarsOnlyWithEnoughExocyclicOxygenAtomsSetting(true);
         sugarRemovalUtil.setExocyclicOxygenAtomsToAtomsInRingRatioThresholdSetting(0.5);
