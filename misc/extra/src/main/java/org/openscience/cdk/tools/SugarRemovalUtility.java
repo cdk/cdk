@@ -57,10 +57,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The Sugar Removal Utility (SRU) implements a generalized algorithm for automated detection of circular and linear
- * sugars in molecular structures and their removal, as described in
+ * The Sugar Removal Utility (SRU) implements a generalized algorithm for
+ * automated detection of circular and linear sugars in molecular structures
+ * and their removal, as described in
  * <a href="https://doi.org/10.1186/s13321-020-00467-y">"Schaub, J., Zielesny, A., Steinbeck, C., Sorokina, M. Too sweet: cheminformatics for deglycosylation in natural products. J Cheminform 12, 67 (2020). https://doi.org/10.1186/s13321-020-00467-y"</a>.
- * It offers various functions to detect and remove sugar moieties with different options.
+ * It offers various functions to detect and remove sugar moieties with different
+ * options.
+ *
  *
  * @author Jonas Schaub, Maria Sorokina
  * @version 1.3.2.1
@@ -81,7 +84,7 @@ public class SugarRemovalUtility {
      * <p>Important Note for further development: If an option is added here, it needs to have a treatment in the method
      * isTooSmallToPreserve(IAtomContainer). Otherwise, an UnsupportedOperationException will be thrown.
      */
-    public static enum PreservationModeOption {
+    public enum PreservationModeOption {
         /**
          * Specifies that all structures should be preserved. Note that if this option is combined with the removal of
          * only terminal moieties, even the smallest attached structure will prevent the removal of a sugar. The most
