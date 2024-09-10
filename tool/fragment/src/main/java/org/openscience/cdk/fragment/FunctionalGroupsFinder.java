@@ -82,7 +82,7 @@ import java.util.Queue;
  * IAtomContainer inputMol = smiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)" +
  *         "C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
  * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(inputMol);
- * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
+ * Aromaticity aromaticity = new Aromaticity(Aromaticity.Model.CDK_1x,
  *         Cycles.cdkAromaticSet());
  * aromaticity.apply(inputMol);
  * //Identify functional groups
@@ -120,7 +120,12 @@ import java.util.Queue;
  * @author Jonas Schaub
  */
 public class FunctionalGroupsFinder {
-
+    /*
+        Developer comment: for possible improvements see John Mayfield's comments
+        on the overhaul of the functionality prior to CDK integration:
+        https://github.com/JonasSchaub/cdk/pull/1#issue-2164816152
+     */
+    
     /**
      * Defines the level of detail environment.
      */
@@ -256,27 +261,34 @@ public class FunctionalGroupsFinder {
      */
     private static final class State {
 
+        /**
+         * HashMap of input molecule atoms mapped to their copies created for
+         * functional group construction.
+         */
         private final Map<IAtom,IAtom> amap = new HashMap<>();
 
+        /**
+         * Cache for implicit hydrogen counts of the input molecule atoms.
+         */
         private int[] hCounts;
 
         /**
          * Set for atoms marked as being part of a functional group, represented
-         * by an internal index based on the atom count in the input molecule, cache(!).
+         * by their indices.
          */
         private HashSet<Integer> markedAtomsCache;
 
         /**
          * HashMap for storing aromatic hetero-atom indices and whether they have
          * already been assigned to a larger functional group. If false, they form
-         * single-atom FG by themselves, cache(!).
+         * single-atom FG by themselves.
          * key: atom idx, value: isInGroup
          */
         private HashMap<Integer, Boolean> aromaticHeteroAtomIndicesToIsInGroupBoolMapCache;
 
         /**
          * HashMap for storing marked atom to connected environmental carbon atom
-         * relations, cache(!).
+         * relations.
          */
         private HashMap<IAtom, List<EnvironmentalC>> markedAtomToConnectedEnvCMapCache;
 
@@ -376,7 +388,7 @@ public class FunctionalGroupsFinder {
          * @return true if the given atom is organic and not a metal, metalloid,
          *         or pseudo (R) atom
          */
-        private static boolean isDissallowedElement(IAtom atom) {
+        private static boolean isAllowedElement(IAtom atom) {
             Integer tmpAtomicNumber = atom.getAtomicNumber();
             if (Objects.isNull(tmpAtomicNumber)) {
                 return false;
@@ -388,7 +400,8 @@ public class FunctionalGroupsFinder {
         }
 
         /**
-         * Mark all atoms and store them in a set for further processing.
+         * Mark all atoms according to the Ertl algorithm
+         * and store them in a set for further processing.
          *
          * @param mol molecule with atoms to mark
          */
@@ -414,7 +427,7 @@ public class FunctionalGroupsFinder {
                 }
                 // skip aromatic atoms but add aromatic HETERO-atoms to map for later processing
                 if (atom.isAromatic()) {
-                    if (isHeteroatom(atom)) {
+                    if (State.isHeteroatom(atom)) {
                         aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.put(idx, false);
                     }
                     continue;
@@ -458,7 +471,7 @@ public class FunctionalGroupsFinder {
                                 markedAtomsCache.add(nbor.getIndex());
 
                                 // if "acetal C" (2+ O/N/S in single bonds connected to sp3-C)... [CONDITION 2.3]
-                                if (isSaturated(nbor)) {
+                                if (State.isSaturated(nbor)) {
                                     tmpConnectedONSatomsCounter++;
                                     if (tmpConnectedONSatomsCounter > 1 && atom.getBondCount() + hCounts[atom.getIndex()] == 4) {
                                         // set as marked and break out of connected atoms
@@ -493,7 +506,7 @@ public class FunctionalGroupsFinder {
                         IAtom nbor = bond.getOther(atom);
                         hCounts[nbor.getIndex()]++;
                     }
-                } else if (isHeteroatom(atom)) {
+                } else if (State.isHeteroatom(atom)) {
                     // if heteroatom... (CONDITION 1)
                     markedAtomsCache.add(idx);
                 } else {
@@ -566,9 +579,16 @@ public class FunctionalGroupsFinder {
         /**
          * Searches the molecule for groups of connected marked atoms and extracts
          * each as a new functional group. The extraction process includes marked
-         * atoms' "environments". Connected H's are captured implicitly.
+         * atoms' "environmental carbon atoms" which are stored in the respective
+         * cache map. Connected H's are captured implicitly.
          *
-         * @param mol                    the molecule which contains the functional groups
+         * @param fgroups int array that should be as large as the number of
+         *                atoms in the given molecule; all elements should be
+         *                initialised with -1; elements at the individual
+         *                atom indices will be set to a functional group number
+         *                (starting at 0) or remain -1 if the respective atom is
+         *                not part of a functional group
+         * @param mol the molecule which contains the functional groups
          * @return number of functional groups
          */
         private int markGroups(int[] fgroups, IAtomContainer mol) {
@@ -602,7 +622,7 @@ public class FunctionalGroupsFinder {
                         }
 
                         // add unmarked connected aromatic heteroatoms
-                        if (isHeteroatom(nbor) && nbor.isAromatic()) {
+                        if (State.isHeteroatom(nbor) && nbor.isAromatic()) {
                             fgroups[nbor.getIndex()] = funcGrpIdx;
                             // note that this aromatic heteroatom has been added to a group
                             aromaticHeteroAtomIndicesToIsInGroupBoolMapCache.put(nbor.getIndex(), true);
@@ -681,7 +701,7 @@ public class FunctionalGroupsFinder {
                             expandEnvironmentGeneralized(orgAtom, part);
                             continue;
                         }
-                    } else if (isHeteroatom(cpyAtom)) {
+                    } else if (State.isHeteroatom(cpyAtom)) {
                         // env is null and marked atoms is a hetero atom -> single aromatic heteroatom
                         int rcount = cpyAtom.getValency();
                         Integer hcount = cpyAtom.getImplicitHydrogenCount();
@@ -698,8 +718,8 @@ public class FunctionalGroupsFinder {
                 // process individual functional group atoms...
                 for (IAtom cpyAtom : atomToProcess) {
                     IAtom orgAtom = invMap.get(cpyAtom);
-                    List<EnvironmentalC> envCarbonds = markedAtomToConnectedEnvCMapCache.get(orgAtom);
-                    if (envCarbonds == null) {
+                    List<EnvironmentalC> envCarbons = markedAtomToConnectedEnvCMapCache.get(orgAtom);
+                    if (envCarbons == null) {
                         if (hCounts[orgAtom.getIndex()] != 0) {
                             cpyAtom.setImplicitHydrogenCount(0);
                         }
@@ -806,7 +826,7 @@ public class FunctionalGroupsFinder {
             if (cpyAtom.getAtomicNumber() == IAtom.O && cpyAtom.getImplicitHydrogenCount() == 1) {
                 addHydrogens(cpyAtom, 1, cpyPart);
                 cpyAtom.setImplicitHydrogenCount(0);
-            } else if (isHeteroatom(cpyAtom)) {
+            } else if (State.isHeteroatom(cpyAtom)) {
                 rcount += cpyAtom.getImplicitHydrogenCount();
             }
             addRAtoms(cpyAtom, rcount, cpyPart);
@@ -862,30 +882,50 @@ public class FunctionalGroupsFinder {
     }
 
     /**
-     * Find all functional groups in a molecule. The input atom container
-     * instance is cloned before processing to leave the input container intact.
+     * Find all functional groups in a molecule.
      * The strict input restrictions (no charged atoms, pseudo atoms, metals,
      * metalloids or unconnected components) do not apply by default. They can
-     * be turned on again in another variant of this method below.
+     * be turned on again in another variant of this method below. The returned
+     * (marked) functional group atoms will be copies of the input molecule atoms
+     * and their environmental carbon atoms will be new atom instances.
      *
      * @param mol the molecule to identify functional groups in
-     * @throws IllegalArgumentException if the input molecule was not
-     *                                  preprocessed correctly, i.e. implicit
-     *                                  hydrogen counts are unset
      * @return a list with all functional groups found in the molecule
+     * @see #extract(IAtomContainer, boolean) 
      */
     public List<IAtomContainer> extract(IAtomContainer mol) {
         return this.extract(mol, false);
     }
 
     /**
-     * Find all functional groups in a molecule.
+     * Find all functional groups in a molecule and extract them as group
+     * indices placed in the provided atom index array. This allows you to, for
+     * example, generate SMILES strings with functional group annotations or
+     * depictions with functional group highlights, e.g.:
+     * <pre>{@code
+     * int[] groups = new int[mol.getAtomCount()];
+     * fgf.find(groups, mol);
+     * for (IAtom atom : mol.atoms())
+     *   atom.setMapIdx(groups[atom.getIndex()]+1);
+     * String smi = new SmilesGenerator(SmiFlavor.AtomAtomMap).create(mol);
+     * //example output (for PubChem CID 118705975): 
+     * // CC1=C(C(=CC=C1)[NH:1]C2=CC=CC=C2[C:2](=[O:2])[NH:2]C(CC[S:3](=[O:3])C)[C:4](=[O:4])[NH:4]C(C)C3=CC=C(C=C3)[F:5])C
+     * }</pre>
+     * (Check out the "Color Map" option on the CDK depict web app).
+     * <br/>
+     * NOTE: this method extracts only the atoms of each functional group that 
+     * are marked according to the Ertl algorithm, environmental carbon atoms
+     * are disregarded here, independent of the environment setting.
      *
+     * @param funGroups int array that is at least as large as the number of
+     *                  atoms in the given molecule; elements at the individual
+     *                  atom indices will be set to a functional group number
+     *                  (starting at 0) or -1 if the respective atom is not part
+     *                  of a functional group
      * @param mol the molecule to identify functional groups in
-     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
-     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
-     *                                  the given molecule does not fulfill them
-     * @return the number of functional groups
+     * @throws IllegalArgumentException if the given int array is smaller than
+     *                                  the number of atoms in the given molecule
+     * @return the number of functional groups found
      */
     public int find(int[] funGroups, IAtomContainer mol) {
         if (funGroups.length < mol.getAtomCount())
@@ -900,19 +940,19 @@ public class FunctionalGroupsFinder {
      * Find all functional groups in a molecule.
      *
      * @param mol the molecule to identify functional groups in
-     * @param strict if true, the input must consist of one connected structure and must not
-     *               contain charged atoms, pseudo atoms, metals or metalloids; a specific IllegalArgumentException will
-     *               be thrown otherwise
-     * @throws IllegalArgumentException if the input molecule was not preprocessed correctly, i.e. implicit hydrogen
-     *                                  counts are unset; or thrown if the strict input restrictions are turned on and
-     *                                  the given molecule does not fulfill them
+     * @param strict if true, the input must consist of one connected structure
+     *               and must not contain charged atoms, pseudo atoms, metals or
+     *               metalloids; if the input molecule is affected by one of these
+     *               constraints, an empty list is returned
      * @return a list with all functional groups found in the molecule
+     * @see #checkConstraints(IAtomContainer)
+     * @see #extract(IAtomContainer)
      */
     public List<IAtomContainer> extract(IAtomContainer mol, boolean strict) {
 
         if (mol == null)
             throw new NullPointerException("No molecule provided");
-        if (strict && !FunctionalGroupsFinder.checkConstraints(mol))
+        if ((strict && !FunctionalGroupsFinder.checkConstraints(mol)) || mol.isEmpty())
             return Collections.emptyList();
 
         State state = new State();
@@ -931,20 +971,24 @@ public class FunctionalGroupsFinder {
     }
 
     /**
-     * Checks input molecule for charged atoms, metal or metalloid atoms, and
-     * whether it consists of more than one unconnected structures. The molecule
-     * may be empty but not null. If one of the cases applies, an
-     * IllegalArgumentException is thrown with a specific error message.
-     * Given as static method here because it is used by static public utility
-     * methods (developer's note).
+     * Checks input molecule for formal charges, metal or metalloid atoms,
+     * pseudo (R) atoms, and multiple unconnected structures. The molecule
+     * may be empty (returns true) but not null.
      *
      * @param mol the molecule to check
+     * @return false if the molecule contains charged atoms, metal or metalloid
+     *         atoms, pseudo (R) atoms, or multiple unconnected structures;
+     *         true if all these constraints do not apply to it
      */
     public static boolean checkConstraints(IAtomContainer mol) {
+        if (mol == null)
+            throw new NullPointerException("No molecule provided");
+        if (mol.isEmpty())
+            return true;
         for (IAtom atom : mol.atoms()) {
             if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0)
                 return false;
-            if (!State.isDissallowedElement(atom))
+            if (!State.isAllowedElement(atom))
                 return false;
         }
         return ConnectivityChecker.isConnected(mol);
