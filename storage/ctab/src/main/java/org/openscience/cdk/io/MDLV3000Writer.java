@@ -78,11 +78,13 @@ import static org.openscience.cdk.io.MDLV2000Writer.OptWriteData;
  * supported) V3000 format. Unlikely the V2000 format that is limited to 999 atoms or bonds
  * V3000 can write arbitrarily large molecules. Beyond this the format removes some (but not all)
  * ambiguities and simplifies output values with tagging (e.g 'CHG=-1' instead of '5').
- * 
+ * <br><br>
  * Supported Features:
  * <ul>
  *     <li>Atom Block, non-query features</li>
- *     <li>Bond Block, non-query features</li>
+ *     <li>Bond Block, supported are query bond types 4 aromatic, 5 single or double, 6 single or aromatic,
+ *     7 double or aromatic, and 8 any as well as the query property that indicates whether a bond is
+ *     located in a ring or in a chain</li>
  *     <li>Sgroup Block, partial support for all chemical Sgroups, complete support for: Abbreviations,
  *     MultipleGroup, SRUs, (Un)ordered Mixtures</li>
  * </ul>
