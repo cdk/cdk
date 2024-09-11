@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -145,6 +146,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     }
 
     private static final Pattern R_GRP_NUM = Pattern.compile("R(\\d+)");
+    // The explicit valence of an atom is set to this value if connected to a query bond.
+    private static final int ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE = -38271;
     private V30LineWriter writer;
     private StringIOSetting programNameOpt;
     private BooleanIOSetting writeDataOpt;
@@ -349,7 +352,13 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
             int expVal = 0;
             for (IBond bond : mol.getConnectedBondsList(atom)) {
-                if (bond.getOrder() == null)
+                // If atom is part of a query bond we cannot calculate its explicit valence.
+                // The value ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE assigned to its explicit
+                // valence allows for easy identification of such atoms in the code below.
+                if (bond instanceof IQueryBond) {
+                    expVal = ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE;
+                    break;
+                } else if (bond.getOrder() == null)
                     throw new CDKException("Unsupported bond order: " + bond.getOrder());
                 expVal += bond.getOrder().numeric();
             }
@@ -406,8 +415,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 writer.write(" RGROUPS=(1 ").write(rnum).write(")");
 
 
-            // determine if we need to write the valence
-            if (MDLValence.implicitValence(elem, chg, expVal) - expVal != hcnt) {
+            // Determine if we need to write the valence.
+            // Valence is not written if atom is part of a query bond.
+            if (expVal != ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE &&
+                    MDLValence.implicitValence(elem, chg, expVal) - expVal != hcnt) {
                 int val = expVal + hcnt;
                 if (val <= 0 || val > 14)
                     val = -1; // -1 is 0
@@ -515,13 +526,15 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                         throw new CDKException("Bond with bond order " + bond.getOrder() + " that isn't flagged as aromatic cannot be written to V3000");
                     }
                 } else if (bond instanceof IQueryBond) {
+                    // Bond needs to be dereferenced to assess actual implementing class of bond.
+                    final IQueryBond dereferencedBond = (IQueryBond) BondRef.deref(bond);
                     // Only query bonds of the class QueryBond are supported as the actual query expression needs to be
                     // extracted from the bond.
-                    if (!(bond instanceof QueryBond)) {
-                        throw new CDKException("Query bond of type " + bond.getClass() + " cannot be written to V3000");
+                    if (!(dereferencedBond instanceof QueryBond)) {
+                        throw new CDKException("Query bond of type " + dereferencedBond.getClass() + " cannot be written to V3000");
                     }
 
-                    final Expr expression = ((QueryBond) bond).getExpression();
+                    final Expr expression = ((QueryBond) dereferencedBond).getExpression();
                     final ExpressionConverter converter = new ExpressionConverter(expression);
                     // Might throw a CDKException if expression cannot be meaningfully converted to MDL bond type.
                     bondType = converter.toMDLBondType().getValue();
