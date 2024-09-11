@@ -475,8 +475,8 @@ class MDLV3000WriterTest {
     }
 
     private String writeToStr(IAtomContainer mol) throws IOException, CDKException {
-        StringWriter sw = new StringWriter();
-        try (MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
+        final StringWriter sw = new StringWriter();
+        try (final MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
             mdlw.write(mol);
         }
         return sw.toString();
@@ -979,7 +979,175 @@ class MDLV3000WriterTest {
                         "M  V30 3 2 3 4\n" +
                         "M  V30 END BOND\n" +
                         "M  V30 END CTAB\n" +
-                        "M  END\n"));
+                        "M  END\n")
+        );
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType4_aromaticBond_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType4_aromaticBond_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 6 6 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -4.5415 1.04 0 0 VAL=-1\n" +
+                    "M  V30 2 C -5.8749 0.2701 0 0 VAL=-1\n" +
+                    "M  V30 3 C -5.8749 -1.27 0 0 VAL=-1\n" +
+                    "M  V30 4 C -4.5415 -2.04 0 0 VAL=-1\n" +
+                    "M  V30 5 C -3.2078 -1.27 0 0 VAL=-1\n" +
+                    "M  V30 6 C -3.2078 0.2701 0 0 VAL=-1\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 4 1 2\n" +
+                    "M  V30 2 4 2 3\n" +
+                    "M  V30 3 4 3 4\n" +
+                    "M  V30 4 4 4 5\n" +
+                    "M  V30 5 4 5 6\n" +
+                    "M  V30 6 4 6 1\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType5_singleOrDouble_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 3 2 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 1 1 2\n" +
+                    "M  V30 2 5 2 3\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType6_singleOrAromatic_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType6_singleOrAromatic_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 3 2 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 1 1 2\n" +
+                    "M  V30 2 6 2 3\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType7_doubleOrAromatic_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType7_doubleOrAromatic_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 3 2 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 1 1 2\n" +
+                    "M  V30 2 7 2 3\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType8_anyBond_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType8_anyBond_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 3 2 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 1 1 2\n" +
+                    "M  V30 2 8 2 3\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
     }
 
     ///// Below are tests assessing inner class MDLV3000Writer.ExpressionConverter. /////
