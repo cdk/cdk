@@ -878,6 +878,34 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                 case "ATTACH":
                                     attach = value;
                                     break;
+                                // query property, bond topology
+                                case "TOPO":
+                                    // key is only valid if bond is a query bond
+                                    if (bond instanceof IQueryBond) {
+                                        final int topology = Integer.parseInt(value);
+                                        final Expr bondTypeExpression = ((QueryBond) bond).getExpression();
+                                        switch (topology) {
+                                            // not specified, default value
+                                            case 0:
+                                                break;
+                                            // ring
+                                            case 1:
+                                                final Expr expressionBondTypeAndInRing = bondTypeExpression.and(new Expr(Expr.Type.IS_IN_RING));
+                                                ((QueryBond) bond).setExpression(expressionBondTypeAndInRing);
+                                                break;
+                                            // chain
+                                            case 2:
+                                                final Expr expressionBondTypeAndInChain = bondTypeExpression.and(new Expr(Expr.Type.IS_IN_CHAIN));
+                                                ((QueryBond) bond).setExpression(expressionBondTypeAndInChain);
+                                                break;
+                                            default:
+                                                logger.warn("Invalid value " + topology + " for key " + key);
+                                                break;
+                                        }
+                                    } else {
+                                        logger.warn("Key " + key + " is only defined for query bonds");
+                                    }
+                                    break;
                                 default:
                                     logger.warn("Not parsing key: " + key);
                                     break;

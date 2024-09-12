@@ -1150,6 +1150,84 @@ class MDLV3000WriterTest {
         }
     }
 
+    @Test
+    void roundTrip_V3000read_V3000write_bondType5_singleOrDouble_bondTopology_inRing_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_bondTopology_inRing_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                            "  CDK     [0-9]{10}2D\n" +
+                            "\n" +
+                            "  0  0  0     0  0            999 V3000\n" +
+                            "M  V30 BEGIN CTAB\n" +
+                            "M  V30 COUNTS 6 6 0 0 0\n" +
+                            "M  V30 BEGIN ATOM\n" +
+                            "M  V30 1 C 5.4833 -0.5211 0 0\n" +
+                            "M  V30 2 N 4.1497 -1.2911 0 0\n" +
+                            "M  V30 3 C 4.1497 -2.8311 0 0\n" +
+                            "M  V30 4 C 5.4833 -3.6011 0 0\n" +
+                            "M  V30 5 C 6.817 -2.8311 0 0\n" +
+                            "M  V30 6 C 6.817 -1.2911 0 0\n" +
+                            "M  V30 END ATOM\n" +
+                            "M  V30 BEGIN BOND\n" +
+                            "M  V30 1 1 2 3\n" +
+                            "M  V30 2 1 3 4\n" +
+                            "M  V30 3 1 4 5\n" +
+                            "M  V30 4 1 5 6\n" +
+                            "M  V30 5 1 1 6\n" +
+                            "M  V30 6 5 1 2 TOPO=1\n" +
+                            "M  V30 END BOND\n" +
+                            "M  V30 END CTAB\n" +
+                            "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType5_singleOrDouble_bondTopology_inChain_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_bondTopology_inChain_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                            "  CDK     [0-9]{10}2D\n" +
+                            "\n" +
+                            "  0  0  0     0  0            999 V3000\n" +
+                            "M  V30 BEGIN CTAB\n" +
+                            "M  V30 COUNTS 6 6 0 0 0\n" +
+                            "M  V30 BEGIN ATOM\n" +
+                            "M  V30 1 C 5.4833 -0.5211 0 0\n" +
+                            "M  V30 2 N 4.1497 -1.2911 0 0\n" +
+                            "M  V30 3 C 4.1497 -2.8311 0 0\n" +
+                            "M  V30 4 C 5.4833 -3.6011 0 0\n" +
+                            "M  V30 5 C 6.817 -2.8311 0 0\n" +
+                            "M  V30 6 C 6.817 -1.2911 0 0\n" +
+                            "M  V30 END ATOM\n" +
+                            "M  V30 BEGIN BOND\n" +
+                            "M  V30 1 1 2 3\n" +
+                            "M  V30 2 1 3 4\n" +
+                            "M  V30 3 1 4 5\n" +
+                            "M  V30 4 1 5 6\n" +
+                            "M  V30 5 1 1 6\n" +
+                            "M  V30 6 5 1 2 TOPO=2\n" +
+                            "M  V30 END BOND\n" +
+                            "M  V30 END CTAB\n" +
+                            "M  END\n")
+            );
+        }
+    }
+
     ///// Below are tests assessing inner class MDLV3000Writer.ExpressionConverter. /////
 
     @Test
