@@ -116,13 +116,13 @@ class SugarRemovalUtilityTest extends SugarRemovalUtility {
         sugarRemovalUtil.setDetectCircularSugarsOnlyWithOGlycosidicBondSetting(true);
         originalMolecule = smiPar.parseSmiles(
                 //CNP0220816
-                "[H]OC1([H])C([H])(OC2=C3C(OC(=O)C4=C3C([H])([H])C([H])([H])C4([H])[H])=C([H])C(=C2[H])C([H])([H])[H])OC([H])(C([H])(O[H])C1([H])O[H])C([H])([H])O[H]");
+                "CC1=CC(OC2OC(CO)C(O)C(O)C2O)=C2C3=C(CCC3)C(=O)OC2=C1");
         sugarRemovalUtil.removeCircularAndLinearSugars(originalMolecule);
         smilesCode = smiGen.create(originalMolecule);
         //A simple example, the sugar has a glycosidic bond and is not terminal and therefore removed; the resulting
         // disconnected CH3OH is too small to keep and gets cleared away
         Assertions.assertEquals(
-                "[H]C1=C(O)C2=C(OC(=O)C3=C2C([H])([H])C([H])([H])C3([H])[H])C([H])=C1C([H])([H])[H]",
+                "O=C1OC=2C=C(C=C(O)C2C3=C1CCC3)C",
                 smilesCode);
     }
 
@@ -1469,6 +1469,63 @@ class SugarRemovalUtilityTest extends SugarRemovalUtility {
         //note: This structure is not split because one of the carbon atoms surrounding the ether oxygen is aromatic
         expectedList.add("O=[C]C(O)C(O)C(O)C(O)COC1=CC=CC=2C(=O)C3=CC(=CC(O)=C3C(=O)C12)C");
         Assertions.assertEquals(expectedList, smilesAfterSplittingList);
+    }
+
+    /**
+     * Tests the correct handling of input molecules that consist of multiple
+     * disconnected parts.
+     *
+     * @throws Exception if anything goes wrong or an AssertionError occurs
+     */
+    @Test
+    void testDisconnectedStructures() throws Exception {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smiGen = new SmilesGenerator((SmiFlavor.Canonical));
+        IAtomContainer originalMolecule;
+        String smilesCode;
+        SugarRemovalUtility sugarRemovalUtil = this.getSugarRemovalUtilityV1200DefaultSettings();
+        sugarRemovalUtil.setDetectCircularSugarsOnlyWithOGlycosidicBondSetting(true);
+        originalMolecule = smiPar.parseSmiles(
+                //CNP0220816 and CNP0218440
+                "CC1=CC(OC2OC(CO)C(O)C(O)C2O)=C2C3=C(CCC3)C(=O)OC2=C1" +
+                        ".O=C(O)CC(OC1OC(CO)C(O)C(O)C1O)(C)CC(=O)OCC=CC2=CC(OC)=C(OC3OC(CO)C(O)C(O)C3O)C(OC)=C2");
+        sugarRemovalUtil.removeCircularAndLinearSugars(originalMolecule);
+        smilesCode = smiGen.create(originalMolecule);
+        //the sugar moieties are correctly removed from both parts
+        Assertions.assertEquals(
+                "O=C1OC=2C=C(C=C(O)C2C3=C1CCC3)C.O=C(O)CC(O)(C)CC(=O)OCC=CC1=CC(OC)=C(O)C(OC)=C1",
+                smilesCode);
+
+        originalMolecule = smiPar.parseSmiles(
+                //CNP0220816 plus an unconnected propane
+                "CC1=CC(OC2OC(CO)C(O)C(O)C2O)=C2C3=C(CCC3)C(=O)OC2=C1.CCC");
+        sugarRemovalUtil.removeCircularAndLinearSugars(originalMolecule);
+        smilesCode = smiGen.create(originalMolecule);
+        //the sugar is removed and the propane is also still there
+        Assertions.assertEquals(
+                "O=C1OC=2C=C(C=C(O)C2C3=C1CCC3)C.CCC",
+                smilesCode);
+
+        originalMolecule = smiPar.parseSmiles(
+                //CNP0119227, a molecule consisting entirely of one circular and one linear sugar,
+                // plus an unconnected propane
+                "OCC(O)C(O)C(O)C(O)C1OC(CO)C(O)C(O)C1O.CCC");
+        sugarRemovalUtil.removeCircularAndLinearSugars(originalMolecule);
+        smilesCode = smiGen.create(originalMolecule);
+        //the sugar is removed completely but the propane is still there
+        Assertions.assertEquals(
+                "CCC",
+                smilesCode);
+
+        originalMolecule = smiPar.parseSmiles(
+                //just the propane
+                "CCC");
+        sugarRemovalUtil.removeCircularAndLinearSugars(originalMolecule);
+        smilesCode = smiGen.create(originalMolecule);
+        //the propane is still there
+        Assertions.assertEquals(
+                "CCC",
+                smilesCode);
     }
 
     /**
