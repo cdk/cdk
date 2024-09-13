@@ -1548,7 +1548,6 @@ class SugarRemovalUtilityTest extends SugarRemovalUtility {
         sugarRemovalUtil.setLinearSugarCandidateMinSizeSetting(4);
         sugarRemovalUtil.setLinearSugarCandidateMaxSizeSetting(7);
         sugarRemovalUtil.setDetectLinearAcidicSugarsSetting(false);
-        sugarRemovalUtil.setAddPropertyToSugarContainingMoleculesSetting(true);
         sugarRemovalUtil.setDetectSpiroRingsAsCircularSugarsSetting(false);
         sugarRemovalUtil.setDetectCircularSugarsWithKetoGroupsSetting(false);
         return sugarRemovalUtil;

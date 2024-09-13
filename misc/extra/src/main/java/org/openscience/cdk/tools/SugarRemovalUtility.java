@@ -137,24 +137,6 @@ public class SugarRemovalUtility {
     }
 
     /**
-     * Property key to indicate that the structure contains (or contained before
-     * removal) circular sugar moieties.
-     */
-    public static final String CONTAINS_CIRCULAR_SUGAR_PROPERTY_KEY = "CONTAINS_CIRCULAR_SUGAR";
-
-    /**
-     * Property key to indicate that the structure contains (or contained before
-     * removal) linear sugar moieties.
-     */
-    public static final String CONTAINS_LINEAR_SUGAR_PROPERTY_KEY = "CONTAINS_LINEAR_SUGAR";
-
-    /**
-     * Property key to indicate that the structure contains (or contained before
-     * removal) sugar moieties (of any kind).
-     */
-    public static final String CONTAINS_SUGAR_PROPERTY_KEY = "CONTAINS_SUGAR";
-
-    /**
      * Property key for index that is added to any IAtom object in a given
      * IAtomContainer object for internal unique identification of the
      * respective IAtom object. For internal use only.
@@ -291,14 +273,6 @@ public class SugarRemovalUtility {
      * e.g. macrocycles that contain sugars or pseudosugars.
      */
     public static final boolean DETECT_LINEAR_SUGARS_IN_RINGS_DEFAULT = false;
-
-    /**
-     * Default setting for whether to add a property to given atom containers to
-     * indicate that the structure contains (or contained before removal) sugar
-     * moieties (default: true). See property keys in the public constants of
-     * this class.
-     */
-    public static final boolean ADD_PROPERTY_TO_SUGAR_CONTAINING_MOLECULES_DEFAULT = true;
 
     /**
      * Default setting for the minimum number of carbon atoms a linear sugar
@@ -446,11 +420,6 @@ public class SugarRemovalUtility {
      * Remove linear sugars in circular structures setting.
      */
     private boolean detectLinearSugarsInRingsSetting;
-
-    /**
-     * Add a property to given sugar-containing atom containers setting.
-     */
-    private boolean addPropertyToSugarContainingMoleculesSetting;
 
     /**
      * Linear sugar candidates minimum carbon atom count setting.
@@ -637,17 +606,6 @@ public class SugarRemovalUtility {
      */
     public boolean areLinearSugarsInRingsDetected() {
         return this.detectLinearSugarsInRingsSetting;
-    }
-
-    /**
-     * Specifies whether a property is added to given atom containers that
-     * contain (or contained before removal) sugar moieties. See property keys
-     * in the public constants of this class.
-     *
-     * @return true if properties are added to the given atom containers
-     */
-    public boolean arePropertiesAddedToSugarContainingMolecules() {
-        return this.addPropertyToSugarContainingMoleculesSetting;
     }
 
     /**
@@ -1285,19 +1243,6 @@ public class SugarRemovalUtility {
         this.detectLinearSugarsInRingsSetting = bool;
     }
 
-    //TODO: remove this property usage completely?
-    /**
-     * Sets the option to add a respective property to given atom containers
-     * that contain (or contained before removal) sugar moieties. See property
-     * keys in the public constants of this class.
-     *
-     * @param bool true, if properties should be added to the given atom
-     *             containers
-     */
-    public void setAddPropertyToSugarContainingMoleculesSetting(boolean bool) {
-        this.addPropertyToSugarContainingMoleculesSetting = bool;
-    }
-
     /**
      * Sets the minimum number of carbon atoms a linear sugar candidate must
      * have in order to be detected as a sugar moiety (and subsequently be
@@ -1451,8 +1396,6 @@ public class SugarRemovalUtility {
         this.setExocyclicOxygenAtomsToAtomsInRingRatioThresholdSetting(
                 SugarRemovalUtility.EXOCYCLIC_OXYGEN_ATOMS_TO_ATOMS_IN_RING_RATIO_THRESHOLD_DEFAULT);
         this.setDetectLinearSugarsInRingsSetting(SugarRemovalUtility.DETECT_LINEAR_SUGARS_IN_RINGS_DEFAULT);
-        this.setAddPropertyToSugarContainingMoleculesSetting(
-                SugarRemovalUtility.ADD_PROPERTY_TO_SUGAR_CONTAINING_MOLECULES_DEFAULT);
         this.setLinearSugarCandidateMinSizeSetting(SugarRemovalUtility.LINEAR_SUGAR_CANDIDATE_MIN_SIZE_DEFAULT);
         this.setLinearSugarCandidateMaxSizeSetting(SugarRemovalUtility.LINEAR_SUGAR_CANDIDATE_MAX_SIZE_DEFAULT);
         this.setDetectLinearAcidicSugarsSetting(SugarRemovalUtility.DETECT_LINEAR_ACIDIC_SUGARS_DEFAULT);
@@ -1460,17 +1403,12 @@ public class SugarRemovalUtility {
         this.setDetectCircularSugarsWithKetoGroupsSetting(SugarRemovalUtility.DETECT_CIRCULAR_SUGARS_WITH_KETO_GROUPS_DEFAULT);
     }
 
-    //TODO remove property addition? it anyway returns a bool!
     /**
      * Detects linear sugar moieties in the given molecule, according to the
      * current settings for linear sugar detection. It is not influenced by the
      * setting specifying whether only terminal sugar moieties should be removed
      * and not by the set preservation mode. Therefore, this method will return
      * true even if only non-terminal linear sugar moieties are detected.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container specifying whether
-     * it contains (linear) sugar moieties or not (in addition to the return
-     * value of this method).
      *
      * @param moleculeParam the atom container to scan for the presence of
      *                      linear sugar moieties
@@ -1485,15 +1423,9 @@ public class SugarRemovalUtility {
         }
         this.addUniqueIndicesToAtoms(moleculeParam);
         List<IAtomContainer> sugarCandidates = this.getLinearSugarCandidates(moleculeParam);
-        boolean containsSugar = !sugarCandidates.isEmpty();
-        if (this.addPropertyToSugarContainingMoleculesSetting) {
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_LINEAR_SUGAR_PROPERTY_KEY, containsSugar);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_SUGAR_PROPERTY_KEY, containsSugar);
-        }
-        return containsSugar;
+        return !sugarCandidates.isEmpty();
     }
 
-    //TODO remove property addition? it anyway returns a bool!
     /**
      * Detects circular sugar moieties in the given molecule, according to the
      * current settings for circular sugar detection. It is not influenced by
@@ -1501,10 +1433,6 @@ public class SugarRemovalUtility {
      * removed and not by the set preservation mode. Therefore, this method will
      * return true even if only non-terminal circular sugar moieties are
      * detected.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container specifying whether
-     * it contains (circular) sugar moieties or not (in addition to the return
-     * value of this method).
      *
      * @param moleculeParam the atom container to scan for the presence of
      *                      circular sugar moieties
@@ -1519,15 +1447,9 @@ public class SugarRemovalUtility {
         }
         this.addUniqueIndicesToAtoms(moleculeParam);
         List<IAtomContainer> sugarCandidates = this.getCircularSugarCandidates(moleculeParam);
-        boolean containsSugar = !sugarCandidates.isEmpty();
-        if (this.addPropertyToSugarContainingMoleculesSetting) {
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_CIRCULAR_SUGAR_PROPERTY_KEY, containsSugar);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_SUGAR_PROPERTY_KEY, containsSugar);
-        }
-        return containsSugar;
+        return !sugarCandidates.isEmpty();
     }
 
-    //TODO remove property addition? it anyway returns a bool!
     /**
      * Detects circular and linear sugar moieties in the given molecule,
      * according to the current settings for sugar detection. It is not
@@ -1535,10 +1457,6 @@ public class SugarRemovalUtility {
      * should be removed and not by the set preservation mode. Therefore, this
      * method will return true even if only non-terminal sugar moieties are
      * detected.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container specifying whether
-     * it contains (circular/linear/any kind of) sugar moieties or not (in
-     * addition to the return value of this method).
      *
      * @param moleculeParam the atom container to scan for the presence of sugar
      *                      moieties
@@ -1557,13 +1475,7 @@ public class SugarRemovalUtility {
         boolean containsCircularSugar = !circularSugarCandidates.isEmpty();
         List<IAtomContainer> linearSugarCandidates = this.getLinearSugarCandidates(moleculeParam);
         boolean containsLinearSugar = !linearSugarCandidates.isEmpty();
-        boolean containsSugar = (containsCircularSugar || containsLinearSugar);
-        if (this.addPropertyToSugarContainingMoleculesSetting) {
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_SUGAR_PROPERTY_KEY, containsSugar);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_CIRCULAR_SUGAR_PROPERTY_KEY, containsCircularSugar);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_LINEAR_SUGAR_PROPERTY_KEY, containsLinearSugar);
-        }
-        return containsSugar;
+        return (containsCircularSugar || containsLinearSugar);
     }
 
     /**
@@ -1717,10 +1629,6 @@ public class SugarRemovalUtility {
      * container is left after processing.
      * <br>Spiro atoms connecting a removed circular sugar moiety to another
      * cycle are preserved.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container specifying whether
-     * it contains (or contained before removal) circular sugar moieties or
-     * not. //todo
      *
      * @param moleculeParam the molecule to remove circular sugar moieties from
      * @return true if sugar moieties were detected and removed
@@ -1769,10 +1677,6 @@ public class SugarRemovalUtility {
      * on the aglycone at position 0 are saturated.
      * <br>Spiro atoms connecting a removed circular sugar moiety to another
      * cycle are preserved.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container at list index 0
-     * specifying whether it contains (or contained before removal) circular
-     * sugar moieties or not. //todo
      * <br>If no sugar moieties were removed, the returned list is of size 1
      * and its only element is the molecule given as parameter, unchanged.
      *
@@ -1809,10 +1713,6 @@ public class SugarRemovalUtility {
         and that they adhere to most of
         the given settings. The exception is that they might not be terminal*/
         boolean containsSugar = !sugarCandidates.isEmpty();
-        if (this.addPropertyToSugarContainingMoleculesSetting) {
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_CIRCULAR_SUGAR_PROPERTY_KEY, containsSugar);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_SUGAR_PROPERTY_KEY, containsSugar);
-        }
         List<IAtomContainer> resultList = new ArrayList<>(sugarCandidates.size() + 1);
         resultList.add(0, moleculeParam);
         if (containsSugar) {
@@ -1847,9 +1747,6 @@ public class SugarRemovalUtility {
      * always consists of one connected structure.
      * <br>If the given molecule consists only of linear sugars, an empty atom
      * container is left after processing.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container specifying whether
-     * it contains (or contained before removal) linear sugar moieties or not. //todo
      *
      * @param moleculeParam the molecule to remove linear sugar moieties from
      * @return true if sugar moieties were detected and removed
@@ -1896,10 +1793,6 @@ public class SugarRemovalUtility {
      * invalid valences at atoms formerly
      * bonded to the molecule core or to other sugar moieties while all valences
      * on the aglycone at position 0 are saturated.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container at list index 0
-     * specifying whether it contains (or contained before removal) linear sugar
-     * moieties or not. //todo
      * <br>If no sugar moieties were removed, the returned list is of size 1
      * and its only element is the molecule given as parameter, unchanged.
      *
@@ -1935,10 +1828,6 @@ public class SugarRemovalUtility {
         and that they adhere to most of
         the given settings. The exception is that they might not be terminal*/
         boolean containsSugar = !sugarCandidates.isEmpty();
-        if (this.addPropertyToSugarContainingMoleculesSetting) {
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_LINEAR_SUGAR_PROPERTY_KEY, containsSugar);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_SUGAR_PROPERTY_KEY, containsSugar);
-        }
         List<IAtomContainer> resultList = new ArrayList<>(sugarCandidates.size() + 1);
         resultList.add(0, moleculeParam);
         if (containsSugar) {
@@ -1982,10 +1871,6 @@ public class SugarRemovalUtility {
      * container is returned.
      * <br>Spiro atoms connecting a removed circular sugar moiety to another
      * cycle are preserved.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container specifying whether
-     * it contains (or contained before removal) circular/linear/any kind of
-     * sugar moieties or not. //todo
      *
      * @param moleculeParam the molecule to remove circular and linear sugar
      *                      moieties from
@@ -2049,10 +1934,6 @@ public class SugarRemovalUtility {
      * on the aglycone at position 0 are saturated.
      * <br>Spiro atoms connecting a removed circular sugar moiety to another
      * cycle are preserved.
-     * <br>If the respective option is set, a property will be added to the
-     * given atom container at list index 0
-     * specifying whether it contains (or contained before removal)
-     * circular/linear/any kind of sugar moieties or not. //todo
      * <br>If no sugar moieties were removed, the returned list is of size 1
      * and its only element is the molecule given as parameter, unchanged.
      *
@@ -2083,27 +1964,15 @@ public class SugarRemovalUtility {
         if (this.preservationModeSetting != PreservationMode.ALL && !ConnectivityChecker.isConnected(moleculeParam)) {
             this.flagTooSmallDisconnectedPartsToPreserve(moleculeParam);
         }
-        boolean containsCircularSugars = false;
-        boolean containsLinearSugars = false;
-        boolean containsAnyTypeOfSugars;
         //note: initial capacity arbitrarily chosen
         List<IAtomContainer> resultList = new ArrayList<>(moleculeParam.getAtomCount() / 6);
         resultList.add(0, moleculeParam);
         while (true) {
             List<IAtomContainer> circularSugarCandidates = this.getCircularSugarCandidates(moleculeParam);
-            if (this.addPropertyToSugarContainingMoleculesSetting) {
-                List<IAtomContainer> linearSugarCandidates = this.getLinearSugarCandidates(moleculeParam);
-                if (!linearSugarCandidates.isEmpty() && !containsLinearSugars) {
-                    containsLinearSugars = true;
-                }
-            }
             boolean isCandidateListNotEmpty = !circularSugarCandidates.isEmpty();
             List<IAtomContainer> removedCircularSugarMoieties = new ArrayList<>(0);
             if (isCandidateListNotEmpty) {
                 removedCircularSugarMoieties = this.removeSugarCandidates(moleculeParam, circularSugarCandidates);
-                if (!containsCircularSugars) {
-                    containsCircularSugars = true;
-                }
                 resultList.addAll(removedCircularSugarMoieties);
             }
             //exit here if molecule is empty after removal
@@ -2115,9 +1984,6 @@ public class SugarRemovalUtility {
             List<IAtomContainer> removedLinearSugarMoieties = new ArrayList<>(0);
             if (isCandidateListNotEmpty) {
                 removedLinearSugarMoieties = this.removeSugarCandidates(moleculeParam, linearSugarCandidates);
-                if (!containsLinearSugars) {
-                    containsLinearSugars = true;
-                }
                 resultList.addAll(removedLinearSugarMoieties);
             }
             //exit here if molecule is empty after removal
@@ -2138,12 +2004,6 @@ public class SugarRemovalUtility {
                 // one iteration is enough
                 break;
             }
-        }
-        if (this.addPropertyToSugarContainingMoleculesSetting) {
-            containsAnyTypeOfSugars = (containsCircularSugars || containsLinearSugars);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_SUGAR_PROPERTY_KEY, containsAnyTypeOfSugars);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_CIRCULAR_SUGAR_PROPERTY_KEY, containsCircularSugars);
-            moleculeParam.setProperty(SugarRemovalUtility.CONTAINS_LINEAR_SUGAR_PROPERTY_KEY, containsLinearSugars);
         }
         //The molecule at index 0 may be empty and may be unconnected, based on the settings
         return resultList;
