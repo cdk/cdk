@@ -57,8 +57,22 @@ import java.util.Set;
  * and their removal, as described in
  * <a href="https://doi.org/10.1186/s13321-020-00467-y">"Schaub, J., Zielesny, A., Steinbeck, C., Sorokina, M. Too sweet: cheminformatics for deglycosylation in natural products. J Cheminform 12, 67 (2020). https://doi.org/10.1186/s13321-020-00467-y"</a>.
  * It offers various functions to detect and remove sugar moieties with different
- * options.
- * //TODO: add usage example
+ * options. Example usage:
+ * <pre>{@code
+ * //prepare test molecule
+ * SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+ * //COCONUT DB CNP0220816
+ * IAtomContainer molecule = smiPar.parseSmiles("CC1=CC(OC2OC(CO)C(O)C(O)C2O)=C2C3=C(CCC3)C(=O)OC2=C1");
+ * //instantiate sugar removal utility
+ * SugarRemovalUtility sugarRemovalUtil = new SugarRemovalUtility(SilentChemObjectBuilder.getInstance());
+ * //remove sugar moieties, note that this changes the molecule instance!
+ * boolean sugarsWereRemoved = sugarRemovalUtil.removeCircularAndLinearSugars(molecule);
+ * if (sugarsWereRemoved) {
+ *     //saturate open valences where sugars were situated if needed
+ *     AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+ *     CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(molecule);
+ * }
+ * }</pre>
  *
  * @author Jonas Schaub
  * @author Maria Sorokina
@@ -714,8 +728,8 @@ public class SugarRemovalUtility {
         IAtomContainer isolatedRing = isolatedRingFragments.get(0);
         try {
             isolatedRingMatchesEntireInputStructure = univIsomorphTester.isIsomorph(circularSugar, isolatedRing);
-        } catch (CDKException aCDKException) {
-            SugarRemovalUtility.LOGGER.warn(aCDKException);
+        } catch (CDKException cdkException) {
+            SugarRemovalUtility.LOGGER.warn(cdkException);
         }
         if (!isolatedRingMatchesEntireInputStructure) {
             return false;
@@ -724,8 +738,8 @@ public class SugarRemovalUtility {
             boolean isIsomorphic;
             try {
                 isIsomorphic = univIsomorphTester.isIsomorph(sugar, circularSugar);
-            } catch (CDKException aCDKException) {
-                SugarRemovalUtility.LOGGER.warn(aCDKException);
+            } catch (CDKException cdkException) {
+                SugarRemovalUtility.LOGGER.warn(cdkException);
                 return false;
             }
             if (isIsomorphic) {
@@ -736,8 +750,8 @@ public class SugarRemovalUtility {
         boolean additionWasSuccessful;
         try {
             additionWasSuccessful = this.circularSugarStructuresList.add(circularSugar);
-        } catch (Exception anException) {
-            SugarRemovalUtility.LOGGER.warn(anException);
+        } catch (Exception exception) {
+            SugarRemovalUtility.LOGGER.warn(exception);
             additionWasSuccessful = false;
         }
         if (additionWasSuccessful) {
@@ -776,8 +790,8 @@ public class SugarRemovalUtility {
         IAtomContainer ringSugar;
         try {
             ringSugar = smiPar.parseSmiles(smilesCode);
-        } catch (InvalidSmilesException anException) {
-            SugarRemovalUtility.LOGGER.warn(anException);
+        } catch (InvalidSmilesException exception) {
+            SugarRemovalUtility.LOGGER.warn(exception);
             return false;
         }
         return this.addCircularSugarToPatternsList(ringSugar);
@@ -817,8 +831,8 @@ public class SugarRemovalUtility {
             boolean isIsomorphic;
             try {
                 isIsomorphic = univIsomorphTester.isIsomorph(sugar, linearSugar);
-            } catch (CDKException aCDKException) {
-                SugarRemovalUtility.LOGGER.warn(aCDKException);
+            } catch (CDKException cdkException) {
+                SugarRemovalUtility.LOGGER.warn(cdkException);
                 return false;
             }
             if (isIsomorphic) {
@@ -829,8 +843,8 @@ public class SugarRemovalUtility {
             boolean isIsomorphic;
             try {
                 isIsomorphic = univIsomorphTester.isIsomorph(sugar, linearSugar);
-            } catch (CDKException aCDKException) {
-                SugarRemovalUtility.LOGGER.warn(aCDKException);
+            } catch (CDKException cdkException) {
+                SugarRemovalUtility.LOGGER.warn(cdkException);
                 return false;
             }
             if (isIsomorphic) {
@@ -841,8 +855,8 @@ public class SugarRemovalUtility {
         boolean additionWasSuccessful;
         try {
             additionWasSuccessful = this.linearSugarStructuresList.add(linearSugar);
-        } catch (Exception anException) {
-            SugarRemovalUtility.LOGGER.warn(anException);
+        } catch (Exception exception) {
+            SugarRemovalUtility.LOGGER.warn(exception);
             additionWasSuccessful = false;
         }
         if (additionWasSuccessful) {
@@ -884,8 +898,8 @@ public class SugarRemovalUtility {
         IAtomContainer linearSugar;
         try {
             linearSugar = smiPar.parseSmiles(smilesCode);
-        } catch (InvalidSmilesException anException) {
-            SugarRemovalUtility.LOGGER.warn(anException);
+        } catch (InvalidSmilesException exception) {
+            SugarRemovalUtility.LOGGER.warn(exception);
             return false;
         }
         return this.addLinearSugarToPatternsList(linearSugar);
@@ -913,8 +927,8 @@ public class SugarRemovalUtility {
         IAtomContainer circularSugar;
         try {
             circularSugar = smiPar.parseSmiles(smilesCode);
-        } catch (InvalidSmilesException anException) {
-            SugarRemovalUtility.LOGGER.warn(anException);
+        } catch (InvalidSmilesException exception) {
+            SugarRemovalUtility.LOGGER.warn(exception);
             return false;
         }
         return this.removeCircularSugarFromPatternsList(circularSugar);
@@ -947,15 +961,15 @@ public class SugarRemovalUtility {
         for (IAtomContainer sugar : this.circularSugarStructuresList) {
             try {
                 isIsomorphic = univIsomorphTester.isIsomorph(sugar, circularSugar);
-            } catch (CDKException aCDKException) {
-                SugarRemovalUtility.LOGGER.warn(aCDKException);
+            } catch (CDKException cdkException) {
+                SugarRemovalUtility.LOGGER.warn(cdkException);
                 return false;
             }
             if (isIsomorphic) {
                 try {
                     wasRemovalSuccessful = this.circularSugarStructuresList.remove(sugar);
-                } catch (Exception anException) {
-                    SugarRemovalUtility.LOGGER.warn(anException);
+                } catch (Exception exception) {
+                    SugarRemovalUtility.LOGGER.warn(exception);
                     return false;
                 }
                 break;
@@ -1004,8 +1018,8 @@ public class SugarRemovalUtility {
         IAtomContainer linearSugar;
         try {
             linearSugar = smiPar.parseSmiles(smilesCode);
-        } catch (InvalidSmilesException anException) {
-            SugarRemovalUtility.LOGGER.warn(anException);
+        } catch (InvalidSmilesException exception) {
+            SugarRemovalUtility.LOGGER.warn(exception);
             return false;
         }
         return this.removeLinearSugarFromPatternsList(linearSugar);
@@ -1043,15 +1057,15 @@ public class SugarRemovalUtility {
         for (IAtomContainer sugar : this.linearSugarStructuresList) {
             try {
                 isIsomorphic = univIsomorphTester.isIsomorph(sugar, linearSugar);
-            } catch (CDKException aCDKException) {
-                SugarRemovalUtility.LOGGER.warn(aCDKException);
+            } catch (CDKException cdkException) {
+                SugarRemovalUtility.LOGGER.warn(cdkException);
                 return false;
             }
             if (isIsomorphic) {
                 try {
                     wasRemovalSuccessful = this.linearSugarStructuresList.remove(sugar);
-                } catch (Exception anException) {
-                    SugarRemovalUtility.LOGGER.warn(anException);
+                } catch (Exception exception) {
+                    SugarRemovalUtility.LOGGER.warn(exception);
                     return false;
                 }
                 break;
@@ -1074,8 +1088,8 @@ public class SugarRemovalUtility {
     public void clearCircularSugarPatternsList() {
         try {
             this.circularSugarStructuresList.clear();
-        } catch (UnsupportedOperationException anException) {
-            SugarRemovalUtility.LOGGER.warn(anException);
+        } catch (UnsupportedOperationException exception) {
+            SugarRemovalUtility.LOGGER.warn(exception);
             this.circularSugarStructuresList = new ArrayList<>(SugarRemovalUtility.CIRCULAR_SUGARS_SMILES.length);
         }
     }
@@ -1093,8 +1107,8 @@ public class SugarRemovalUtility {
             }
             this.linearSugarStructuresList.clear();
             this.linearSugarPatternsList.clear();
-        } catch (UnsupportedOperationException anException) {
-            SugarRemovalUtility.LOGGER.warn(anException);
+        } catch (UnsupportedOperationException exception) {
+            SugarRemovalUtility.LOGGER.warn(exception);
             this.detectLinearAcidicSugarsSetting = false;
             this.linearSugarStructuresList = new ArrayList<>(SugarRemovalUtility.LINEAR_SUGARS_SMILES.length);
             this.linearSugarPatternsList = new ArrayList<>(SugarRemovalUtility.LINEAR_SUGARS_SMILES.length);
@@ -1361,7 +1375,7 @@ public class SugarRemovalUtility {
         for (String smiles : SugarRemovalUtility.LINEAR_SUGARS_SMILES) {
             try {
                 this.linearSugarStructuresList.add(smilesParser.parseSmiles(smiles));
-            } catch (InvalidSmilesException e) {
+            } catch (InvalidSmilesException exception) {
                 SugarRemovalUtility.LOGGER.warn("Unable to parse linear sugar pattern SMILES code: " + smiles);
             }
         }
@@ -1371,7 +1385,7 @@ public class SugarRemovalUtility {
         for (String smiles : SugarRemovalUtility.LINEAR_ACIDIC_SUGARS_SMILES) {
             try {
                 this.linearAcidicSugarStructuresList.add(smilesParser.parseSmiles(smiles));
-            } catch (InvalidSmilesException anException) {
+            } catch (InvalidSmilesException exception) {
                 SugarRemovalUtility.LOGGER.warn("Unable to parse linear acidic sugar pattern SMILES code: " + smiles);
             }
         }
@@ -1381,7 +1395,7 @@ public class SugarRemovalUtility {
         for (String smiles : SugarRemovalUtility.CIRCULAR_SUGARS_SMILES) {
             try {
                 this.circularSugarStructuresList.add(smilesParser.parseSmiles(smiles));
-            } catch (InvalidSmilesException anException) {
+            } catch (InvalidSmilesException exception) {
                 SugarRemovalUtility.LOGGER.warn("Unable to parse circular sugar pattern SMILES code: " + smiles);
             }
         }
@@ -1600,8 +1614,6 @@ public class SugarRemovalUtility {
         return (circularSugarCandidates.size() + linearSugarCandidates.size());
     }
 
-    //TODO: move these up
-
     /**
      * Removes circular sugar moieties from the given atom container (this
      * operation modifies the given atom container, so clone the object
@@ -1609,6 +1621,9 @@ public class SugarRemovalUtility {
      * substructures are removed depends on the settings for circular sugar
      * detection, the setting specifying whether only terminal sugar moieties
      * should be removed and on the set preservation mode.
+     * <br>The aglycone will have open valences in places where removed sugar
+     * moieties were formerly situated. If you do not care for where the removed
+     * moieties were sitting, saturate with implicit hydrogen atoms.
      * <br>If only terminal sugar moieties are to be removed, the detected
      * circular sugars are one-by-one tested for
      * whether they are terminal or not and removed if they are. The iteration
@@ -1673,8 +1688,10 @@ public class SugarRemovalUtility {
      * container is returned at list index 0.
      * <br>The returned sugar moieties that were removed from the molecule have
      * invalid valences at atoms formerly
-     * bonded to the molecule core or to other sugar moieties while all valences
-     * on the aglycone at position 0 are saturated.
+     * bonded to the molecule core or to other sugar moieties and so does the
+     * aglycone in places where removed sugar moieties were formerly situated.
+     * If you do not care for where the removed moieties were sitting, saturate
+     * with implicit hydrogen atoms.
      * <br>Spiro atoms connecting a removed circular sugar moiety to another
      * cycle are preserved.
      * <br>If no sugar moieties were removed, the returned list is of size 1
@@ -1692,8 +1709,10 @@ public class SugarRemovalUtility {
      *         (i.e. the molecule basically was a sugar); the returned sugar
      *         moieties that were removed from the molecule have invalid valences
      *         at atoms formerly bonded to the molecule core or to other sugar
-     *         moieties while all valences on the aglycone at position 0 are
-     *         saturated
+     *         moieties and so does the
+     *         aglycone in places where removed sugar moieties were formerly situated.
+     *         If you do not care for where the removed moieties were sitting, saturate
+     *         with implicit hydrogen atoms.
      */
     public List<IAtomContainer> removeAndReturnCircularSugars(IAtomContainer moleculeParam) {
         if (moleculeParam == null) {
@@ -1729,6 +1748,9 @@ public class SugarRemovalUtility {
      * substructures are removed depends on the settings for linear sugar
      * detection, the setting specifying whether only terminal sugar moieties
      * should be removed and on the set preservation mode.
+     * <br>The aglycone will have open valences in places where removed sugar
+     * moieties were formerly situated. If you do not care for where the removed
+     * moieties were sitting, saturate with implicit hydrogen atoms.
      * <br>If only terminal sugar moieties are to be removed, the detected
      * linear sugars are one-by-one tested for
      * whether they are terminal or not and removed if they are. The iteration
@@ -1791,8 +1813,10 @@ public class SugarRemovalUtility {
      * container is returned at list index 0.
      * <br>The returned sugar moieties that were removed from the molecule have
      * invalid valences at atoms formerly
-     * bonded to the molecule core or to other sugar moieties while all valences
-     * on the aglycone at position 0 are saturated.
+     * bonded to the molecule core or to other sugar moieties and so does the
+     * aglycone in places where removed sugar moieties were formerly situated.
+     * If you do not care for where the removed moieties were sitting, saturate
+     * with implicit hydrogen atoms.
      * <br>If no sugar moieties were removed, the returned list is of size 1
      * and its only element is the molecule given as parameter, unchanged.
      *
@@ -1807,8 +1831,10 @@ public class SugarRemovalUtility {
      *         molecule basically was a sugar); the returned sugar moieties
      *         that were removed from the molecule have invalid valences at
      *         atoms formerly bonded to the molecule core or to other sugar
-     *         moieties while all valences on the aglycone at position 0 are
-     *         saturated
+     *         moieties and so does the
+     *         aglycone in places where removed sugar moieties were formerly situated.
+     *         If you do not care for where the removed moieties were sitting, saturate
+     *         with implicit hydrogen atoms.
      */
     public List<IAtomContainer> removeAndReturnLinearSugars(IAtomContainer moleculeParam) {
         if (moleculeParam == null) {
@@ -1874,12 +1900,7 @@ public class SugarRemovalUtility {
      *
      * @param moleculeParam the molecule to remove circular and linear sugar
      *                      moieties from
-     * @return the same given atom container after the sugar removal; the
-     *         returned molecule may be unconnected if also non-terminal sugars
-     *         are removed according to the settings, and it may be empty if the
-     *         resulting structure after sugar removal was too small to preserve
-     *         due to the set preservation mode and the associated threshold
-     *         (i.e. the molecule basically was a sugar)
+     * @return true if sugar moieties were detected and removed
      */
     public boolean removeCircularAndLinearSugars(IAtomContainer moleculeParam) {
         if (moleculeParam == null) {
@@ -1930,8 +1951,10 @@ public class SugarRemovalUtility {
      * container is returned at list index 0.
      * <br>The returned sugar moieties that were removed from the molecule have
      * invalid valences at atoms formerly
-     * bonded to the molecule core or to other sugar moieties while all valences
-     * on the aglycone at position 0 are saturated.
+     * bonded to the molecule core or to other sugar moieties and so does the
+     * aglycone in places where removed sugar moieties were formerly situated.
+     * If you do not care for where the removed moieties were sitting, saturate
+     * with implicit hydrogen atoms.
      * <br>Spiro atoms connecting a removed circular sugar moiety to another
      * cycle are preserved.
      * <br>If no sugar moieties were removed, the returned list is of size 1
@@ -1948,8 +1971,10 @@ public class SugarRemovalUtility {
      *         preservation mode and the associated threshold (i.e. the molecule
      *         basically was a sugar); the returned sugar moieties that were
      *         removed from the molecule have invalid valences at atoms formerly
-     *         bonded to the molecule core or to other sugar moieties while all
-     *         valences on the aglycone at position 0 are saturated
+     *         bonded to the molecule core or to other sugar moieties and so does the
+     *         aglycone in places where removed sugar moieties were formerly situated.
+     *         If you do not care for where the removed moieties were sitting, saturate
+     *         with implicit hydrogen atoms.
      */
     public List<IAtomContainer> removeAndReturnCircularAndLinearSugars(IAtomContainer moleculeParam) {
         if (moleculeParam == null) {
@@ -2384,8 +2409,7 @@ public class SugarRemovalUtility {
      * @return a list of atom container objects representing the removed sugar
      *         moieties; the returned sugar moieties that were removed from the
      *         molecule have invalid valences at atoms formerly bonded to the
-     *         molecule core or to other sugar moieties while all valences on
-     *         the aglycone (not in the list!) are saturated
+     *         molecule core or to other sugar moieties
      */
     protected List<IAtomContainer> removeSugarCandidates(IAtomContainer moleculeParam, List<IAtomContainer> candidateList) {
         if (candidateList.isEmpty() || moleculeParam.isEmpty()) {
@@ -2426,11 +2450,8 @@ public class SugarRemovalUtility {
                         sugarCandidates.remove(i);
                         //The removal shifts the remaining indices!
                         i = i - 1;
-                        if (!moleculeParam.isEmpty()) {
-                            //to clear away leftover unconnected fragments that
-                            // are not to be kept due to the settings and
-                            // to generate valid valences by adding implicit hydrogen atoms
-                            this.postProcessAfterRemoval(moleculeParam);
+                        if (!moleculeParam.isEmpty() && (this.preservationModeSetting != PreservationMode.ALL)) {
+                                this.removeTooSmallDisconnectedStructures(moleculeParam);
                         }
                         //atom container may be empty after that
                         if (moleculeParam.isEmpty()) {
@@ -2462,48 +2483,10 @@ public class SugarRemovalUtility {
                 removedSugarMoieties.add(sugarCandidate);
             }
         }
-        if (!moleculeParam.isEmpty()) {
-            //to clear away leftover unconnected fragments that are not to be kept due to the settings and
-            // to generate valid valences by adding implicit hydrogen atoms
-            this.postProcessAfterRemoval(moleculeParam);
+        if (!moleculeParam.isEmpty() && (this.preservationModeSetting != PreservationMode.ALL)) {
+                this.removeTooSmallDisconnectedStructures(moleculeParam);
         }
         return removedSugarMoieties;
-    }
-
-    /**
-     * Clears away too small structures (according to the set preservation mode)
-     * from the given molecule. It may result in an empty atom container. Also,
-     * valid valences on the remaining molecule are generated by the addition of
-     * implicit hydrogen atoms to open valences.
-     * <br>Note: This method does not check whether a removed disconnected
-     * structure is part of a sugar candidate
-     * because in the case where only terminal structures are removed, this is
-     * checked elsewhere and in the case where all sugar candidates are removed,
-     * this method is not called in-between the removal steps.
-     *
-     * @param moleculeParam the molecule to post-process; might be empty after
-     *                      this method call
-     */
-    protected void postProcessAfterRemoval(IAtomContainer moleculeParam) {
-        if (moleculeParam.isEmpty()) {
-            return;
-        }
-        //if too small, unconnected structures should be discarded, this is done now
-        //otherwise, the possibly unconnected atom container is returned
-        //Even if only terminal sugars are removed, the resulting, connected
-        // structure may still be too small to preserve!
-        if (this.preservationModeSetting != PreservationMode.ALL) {
-            this.removeTooSmallDisconnectedStructures(moleculeParam);
-        }
-        //todo let the user do this?
-        if (!moleculeParam.isEmpty()) {
-            try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeParam);
-                CDKHydrogenAdder.getInstance(this.builder).addImplicitHydrogens(moleculeParam);
-            } catch (CDKException aCDKException) {
-                SugarRemovalUtility.LOGGER.warn(aCDKException);
-            }
-        }
     }
 
     /**
@@ -2728,8 +2711,8 @@ public class SugarRemovalUtility {
                 UniversalIsomorphismTester univIsoTester = new UniversalIsomorphismTester();
                 try {
                     isIsomorphic = univIsoTester.isIsomorph(referenceRing, isolatedRing);
-                } catch (CDKException aCDKException) {
-                    SugarRemovalUtility.LOGGER.warn(aCDKException);
+                } catch (CDKException cdkException) {
+                    SugarRemovalUtility.LOGGER.warn(cdkException);
                     continue;
                 }
                 if (isIsomorphic) {
@@ -3050,8 +3033,8 @@ public class SugarRemovalUtility {
         for (IAtomContainer sugarAC : this.linearSugarStructuresList){
             try {
                 this.linearSugarPatternsList.add(DfPattern.findSubstructure(sugarAC));
-            } catch (Exception anException) {
-                SugarRemovalUtility.LOGGER.warn(anException);
+            } catch (Exception exception) {
+                SugarRemovalUtility.LOGGER.warn(exception);
             }
         }
     }
