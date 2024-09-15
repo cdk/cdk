@@ -899,11 +899,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                                 ((QueryBond) bond).setExpression(expressionBondTypeAndInChain);
                                                 break;
                                             default:
-                                                logger.warn("Invalid value " + topology + " for key " + key);
+                                                handleError("Invalid value " + topology + " for key " + key);
                                                 break;
                                         }
                                     } else {
-                                        logger.warn("Key " + key + " is only defined for query bonds");
+                                        handleError("Key " + key + " is only defined for query bonds");
                                     }
                                     break;
                                 default:
