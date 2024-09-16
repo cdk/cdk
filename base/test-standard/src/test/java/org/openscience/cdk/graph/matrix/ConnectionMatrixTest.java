@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -50,7 +49,7 @@ class ConnectionMatrixTest extends CDKTestCase {
 
     @Test
     void testLonePairs() throws Exception {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "I"));
         container.addLonePair(container.getBuilder().newInstance(ILonePair.class, container.getAtom(0)));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "H"));

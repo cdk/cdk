@@ -27,11 +27,11 @@ package org.openscience.cdk.forcefield.mmff;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -49,7 +49,7 @@ class MmffAtomTypeMatcherTest {
 
     @Test
     void hydrogenCountMustBeDefined() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("H"));
         container.addAtom(new Atom("H"));
@@ -67,7 +67,7 @@ class MmffAtomTypeMatcherTest {
 
     @Test
     void hydrogenCountMustBeExplicit() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("C"));
         container.getAtom(0).setImplicitHydrogenCount(4);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -77,10 +77,10 @@ class MmffAtomTypeMatcherTest {
 
     @Test
     void aromaticCompoundsAreRejected() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("C"));
         container.getAtom(0).setImplicitHydrogenCount(4);
-        container.getAtom(0).setFlag(CDKConstants.ISAROMATIC, true);
+        container.getAtom(0).setFlag(IChemObject.AROMATIC, true);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             INSTANCE.symbolicTypes(container);
         });
@@ -94,7 +94,7 @@ class MmffAtomTypeMatcherTest {
      */
     @Test
     void bug3523240IsResolved() throws Exception {
-        IAtomContainer container = new AtomContainer(50, 51, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("H", 0));
         container.addAtom(atom("O", 0));
         container.addAtom(atom("C", 0));
@@ -212,7 +212,7 @@ class MmffAtomTypeMatcherTest {
      */
     @Test
     void bug3524734IsResolved() throws Exception {
-        IAtomContainer container = new AtomContainer(10, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("H", 0));
         container.addAtom(atom("C", 0));
         container.addAtom(atom("H", 0));
@@ -245,7 +245,7 @@ class MmffAtomTypeMatcherTest {
      */
     @Test
     void hydroxyurea() {
-        IAtomContainer container = new AtomContainer(9, 8, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("H", 0));
         container.addAtom(atom("O", 0));
         container.addAtom(atom("N", 0));
@@ -275,7 +275,7 @@ class MmffAtomTypeMatcherTest {
      */
     @Test
     void molecularHydrogenDoesNotBreakAssignment() {
-        IAtomContainer container = new AtomContainer(2, 1, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("H", 0));
         container.addAtom(atom("H", 0));
         container.addBond(0, 1, SINGLE);
@@ -291,7 +291,7 @@ class MmffAtomTypeMatcherTest {
      */
     @Test
     void methylamine() {
-        IAtomContainer container = new AtomContainer(7, 6, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("H", 0));
         container.addAtom(atom("N", 0));
         container.addAtom(atom("H", 0));
@@ -316,7 +316,7 @@ class MmffAtomTypeMatcherTest {
      */
     @Test
     void thiophene() {
-        IAtomContainer container = new AtomContainer(9, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("H", 0));
         container.addAtom(atom("C", 0));
         container.addAtom(atom("C", 0));
@@ -346,7 +346,7 @@ class MmffAtomTypeMatcherTest {
      */
     @Test
     void furane() {
-        IAtomContainer container = new AtomContainer(9, 9, 0, 0);
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("H", 0));
         container.addAtom(atom("C", 0));
         container.addAtom(atom("C", 0));
@@ -372,7 +372,7 @@ class MmffAtomTypeMatcherTest {
 
     @Test
     void methane() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom("C", 0));
         container.addAtom(atom("H", 0));
         container.addAtom(atom("H", 0));

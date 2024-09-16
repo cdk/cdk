@@ -137,7 +137,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     private static final Pattern     TRAILING_SPACE   = Pattern.compile("\\s+$");
 
     /** Delimits Structure-Data (SD) Files. */
-    private static final String      RECORD_DELIMITER = "$$$$";
+    private static final String SDF_RECORD_DELIMITER = "$$$$";
 
     /** Valid pseudo labels. */
     private static final Set<String> PSEUDO_LABELS    = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("*","A","Q","L","LP","R","R#")));
@@ -327,9 +327,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 return null;
             }
 
-            if (line.startsWith("$$$$")) {
+            if (line.startsWith(SDF_RECORD_DELIMITER))
                 return molecule;
-            }
+
             if (line.length() > 0) {
                 title = line;
             }
@@ -436,8 +436,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             if (!isQuery)
                 outputContainer = molecule;
-            else
+            else {
                 outputContainer = new QueryAtomContainer(molecule.getBuilder());
+                molecule = null; // make sure we cause any subsequent uses to fail
+            }
 
             if (title != null)
                 outputContainer.setTitle(title);
@@ -462,7 +464,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     IStereoElement<IAtom,IAtom> stereoElement
                             = createStereo0d(outputContainer, e.getKey(), e.getValue());
                     if (stereoElement != null)
-                        molecule.addStereoElement(stereoElement);
+                        outputContainer.addStereoElement(stereoElement);
                 }
             }
 
@@ -648,11 +650,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
     }
 
+    /**
+     * Checks if a given character is an ASCII digit. Do NOT replace
+     * with Character.isDigit() which check the entire Unicode table/code
+     * spaces.
+     *
+     * @param ch the character to check
+     * @return true if the character is a digit, false otherwise
+     */
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
     private String removeNonDigits(String input) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             char inputChar = input.charAt(i);
-            if (Character.isDigit(inputChar)) sb.append(inputChar);
+            if (isDigit(inputChar)) sb.append(inputChar);
         }
         return sb.toString();
     }
@@ -848,10 +862,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 break;
             case 4: // aromatic
                 bond.setOrder(IBond.Order.UNSET);
-                bond.setFlag(CDKConstants.ISAROMATIC, true);
-                bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-                atoms[u].setFlag(CDKConstants.ISAROMATIC, true);
-                atoms[v].setFlag(CDKConstants.ISAROMATIC, true);
+                bond.setFlag(IChemObject.AROMATIC, true);
+                bond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+                atoms[u].setFlag(IChemObject.AROMATIC, true);
+                atoms[v].setFlag(IChemObject.AROMATIC, true);
                 break;
             case 5: // single or double
                 bond = new QueryBond(bond.getBegin(), bond.getEnd(), Expr.Type.SINGLE_OR_DOUBLE);
@@ -1435,10 +1449,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
 
         if (!sgroups.isEmpty()) {
-            // load Sgroups into molecule, first we downcast
+            // load Sgroups into molecule, first we down-cast
             List<Sgroup> sgroupOrgList = new ArrayList<>(sgroups.values());
             List<Sgroup> sgroupCpyList = new ArrayList<>(sgroupOrgList.size());
             for (Sgroup sgroup : sgroupOrgList) {
+                if (fixCrossingBonds(sgroup))
+                    handleError("Fixed incorrect SBL list on SGroup " + sgroup.getSubscript());
                 Sgroup cpy = sgroup.downcast();
                 sgroupCpyList.add(cpy);
             }
@@ -1455,6 +1471,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
     }
 
+    /**
+     * Some abbreviation MDL files with abbreviations omit the SBL
+     * (crossing-bonds).
+     */
+    static boolean fixCrossingBonds(Sgroup sgroup) {
+        if (sgroup.getType() == SgroupType.CtabAbbreviation &&
+                sgroup.getBonds().isEmpty()) {
+            int numBonds = 0; // sgroup.getBonds().size();
+            final Set<IAtom> atoms = sgroup.getAtoms();
+            for (IAtom atom : atoms)
+                for (IBond bond : atom.bonds())
+                    if (!atoms.contains(bond.getOther(atom)))
+                        sgroup.addBond(bond);
+            return numBonds != sgroup.getBonds().size();
+        }
+        return false;
+    }
 
     private Sgroup ensureSgroup(Map<Integer, Sgroup> map, int idx) throws CDKException {
         Sgroup sgroup = map.get(idx);
@@ -1902,7 +1935,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
 
         // set the stereo partiy
-        Integer parity = line.length() > 41 ? Character.digit(line.charAt(41), 10) : 0;
+        Integer parity = line.length() > 41 ? (line.charAt(41) - '0') : 0;
         atom.setStereoParity(parity);
 
         if (line.length() >= 51) {
@@ -2052,10 +2085,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 newBond = builder.newInstance(IBond.class, a1, a2, IBond.Order.UNSET);
             }
             // mark both atoms and the bond as aromatic and raise the SINGLE_OR_DOUBLE-flag
-            newBond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-            newBond.setFlag(CDKConstants.ISAROMATIC, true);
-            a1.setFlag(CDKConstants.ISAROMATIC, true);
-            a2.setFlag(CDKConstants.ISAROMATIC, true);
+            newBond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+            newBond.setFlag(IChemObject.AROMATIC, true);
+            a1.setFlag(IChemObject.AROMATIC, true);
+            a2.setFlag(IChemObject.AROMATIC, true);
             explicitValence[atom1 - 1] = explicitValence[atom2 - 1] = Integer.MIN_VALUE;
         } else {
             newBond = new QueryBond(builder);
@@ -2329,7 +2362,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return the line indicates the end of a record was reached
      */
     private static boolean endOfRecord(final String line) {
-        return line == null || line.equals(RECORD_DELIMITER);
+        return line == null || line.startsWith(SDF_RECORD_DELIMITER);
     }
 
     /**

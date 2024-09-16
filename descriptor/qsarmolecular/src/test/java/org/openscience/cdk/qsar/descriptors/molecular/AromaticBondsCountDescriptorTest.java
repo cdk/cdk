@@ -21,10 +21,10 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -56,7 +56,7 @@ class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     void testViaFlags() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         for (IBond iBond : molecule.bonds()) {
-            iBond.setFlag(CDKConstants.ISAROMATIC, true);
+            iBond.setFlag(IChemObject.AROMATIC, true);
         }
         Assertions.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }

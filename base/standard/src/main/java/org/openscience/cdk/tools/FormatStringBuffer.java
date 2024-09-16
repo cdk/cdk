@@ -204,7 +204,7 @@ public class FormatStringBuffer {
             }
 
             // Get field width.
-            if (Character.isDigit(ch)) {
+            if (isDigit(ch)) {
                 // Explicit number.
                 fmt.fieldWidth = skipDigits();
             }
@@ -278,6 +278,18 @@ public class FormatStringBuffer {
     }
 
     /**
+     * Checks if a given character is an ASCII digit. Do NOT replace
+     * with Character.isDigit() which check the entire Unicode table/code
+     * spaces.
+     *
+     * @param ch the character to check
+     * @return true if the character is a digit, false otherwise
+     */
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
+    /**
      * Skip digits and return the number they form.
      */
     private int skipDigits() {
@@ -285,9 +297,9 @@ public class FormatStringBuffer {
         int i = 0;
 
         while (index < format.length()) {
-            if (Character.isDigit(ch = format.charAt(index))) {
+            if (isDigit(ch = format.charAt(index))) {
                 index++;
-                i = i * 10 + Character.digit(ch, 10);
+                i = i * 10 + (ch - '0');
             } else {
                 break;
             }

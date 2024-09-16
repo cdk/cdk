@@ -74,7 +74,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
+import static org.openscience.cdk.interfaces.IChemObject.SINGLE_OR_DOUBLE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 
 /**
@@ -1661,10 +1661,10 @@ public class AtomContainerManipulator {
             atom.setFormalCharge((Integer) CDKConstants.UNSET);
             atom.setHybridization((IAtomType.Hybridization) CDKConstants.UNSET);
             atom.setFormalNeighbourCount((Integer) CDKConstants.UNSET);
-            atom.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, false);
-            atom.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, false);
+            atom.setFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR, false);
+            atom.setFlag(IChemObject.HYDROGEN_BOND_DONOR, false);
             atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, CDKConstants.UNSET);
-            atom.setFlag(CDKConstants.ISAROMATIC, false);
+            atom.setFlag(IChemObject.AROMATIC, false);
             atom.setProperty("org.openscience.cdk.renderer.color", CDKConstants.UNSET);
             atom.setExactMass((Double) CDKConstants.UNSET);
         }
@@ -1720,14 +1720,14 @@ public class AtomContainerManipulator {
         IAtomContainer query = atomContainer.clone();
         for (int i = 0; i < query.getBondCount(); i++) {
             query.getBond(i).setOrder(IBond.Order.SINGLE);
-            query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
-            query.getBond(i).setFlag(CDKConstants.SINGLE_OR_DOUBLE, false);
+            query.getBond(i).setFlag(IChemObject.AROMATIC, false);
+            query.getBond(i).setFlag(IChemObject.SINGLE_OR_DOUBLE, false);
             query.getBond(i).getBegin().setSymbol("C");
             query.getBond(i).getBegin().setHybridization(null);
             query.getBond(i).getEnd().setSymbol("C");
             query.getBond(i).getEnd().setHybridization(null);
-            query.getBond(i).getBegin().setFlag(CDKConstants.ISAROMATIC, false);
-            query.getBond(i).getEnd().setFlag(CDKConstants.ISAROMATIC, false);
+            query.getBond(i).getBegin().setFlag(IChemObject.AROMATIC, false);
+            query.getBond(i).getEnd().setFlag(IChemObject.AROMATIC, false);
         }
         return query;
     }
@@ -1824,7 +1824,7 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Assigns {@link CDKConstants#SINGLE_OR_DOUBLE} flags to the bonds of
+     * Assigns {@link org.openscience.cdk.interfaces.IChemObject#SINGLE_OR_DOUBLE} flags to the bonds of
      * a container. The single or double flag indicates uncertainty of bond
      * order and in this case is assigned to all aromatic bonds (and atoms)
      * which occur in rings. If any such bonds are found the flag is also set
@@ -1849,7 +1849,7 @@ public class AtomContainerManipulator {
         RingSearch rs = new RingSearch(ac);
         boolean singleOrDouble = false;
         for (IBond bond : rs.ringFragments().bonds()) {
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+            if (bond.getFlag(IChemObject.AROMATIC)) {
                 bond.setFlag(SINGLE_OR_DOUBLE, true);
                 bond.getBegin().setFlag(SINGLE_OR_DOUBLE, true);
                 bond.getEnd().setFlag(SINGLE_OR_DOUBLE, true);
@@ -1857,7 +1857,7 @@ public class AtomContainerManipulator {
             }
         }
         if (singleOrDouble) {
-            ac.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+            ac.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
         }
         return ac;
     }

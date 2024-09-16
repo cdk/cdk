@@ -20,7 +20,6 @@ package org.openscience.cdk.reaction.type;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -28,6 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -87,9 +87,9 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.SINGLE && atom1.getAtomicNumber() == IElement.C && atom2.getAtomicNumber() == IElement.C) {
-                bond.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                atom2.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                bond.setFlag(IChemObject.REACTIVE_CENTER, true);
+                atom1.setFlag(IChemObject.REACTIVE_CENTER, true);
+                atom2.setFlag(IChemObject.REACTIVE_CENTER, true);
             }
         }
 

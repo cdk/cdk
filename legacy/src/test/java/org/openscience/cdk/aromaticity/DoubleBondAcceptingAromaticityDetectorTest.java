@@ -28,8 +28,9 @@ import javax.vecmath.Point2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -45,7 +46,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -73,13 +73,13 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
         int numberOfAromaticAtoms = 0;
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            if (mol.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticAtoms++;
+            if (mol.getAtom(i).getFlag(IChemObject.AROMATIC)) numberOfAromaticAtoms++;
         }
         Assertions.assertEquals(6, numberOfAromaticAtoms);
 
         int numberOfAromaticBonds = 0;
         for (int i = 0; i < mol.getBondCount(); i++) {
-            if (mol.getBond(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticBonds++;
+            if (mol.getBond(i).getFlag(IChemObject.AROMATIC)) numberOfAromaticBonds++;
         }
         Assertions.assertEquals(6, numberOfAromaticBonds);
 
@@ -104,14 +104,14 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         int numberOfAromaticRings = 0;
         RingSetManipulator.markAromaticRings(ringset);
         for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticRings++;
+            if (ringset.getAtomContainer(i).getFlag(IChemObject.AROMATIC)) numberOfAromaticRings++;
         }
         Assertions.assertEquals(1, numberOfAromaticRings);
     }
 
     @Test
     void testPyridine() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("N"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -128,21 +128,21 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol), "Expected the molecule to be aromatic.");
 
         for (IAtom iAtom : mol.atoms()) {
-            Assertions.assertTrue(iAtom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(iAtom.getFlag(IChemObject.AROMATIC));
         }
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
         int numberOfAromaticRings = 0;
         RingSetManipulator.markAromaticRings(ringset);
         for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticRings++;
+            if (ringset.getAtomContainer(i).getFlag(IChemObject.AROMATIC)) numberOfAromaticRings++;
         }
         Assertions.assertEquals(1, numberOfAromaticRings);
     }
 
     @Test
     void testCyclopentadienyl() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setFormalCharge(-1);
         for (int i = 1; i < 5; i++) {
@@ -155,7 +155,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol), "Expected the molecule to be aromatic.");
 
         for (IAtom iAtom : mol.atoms()) {
-            Assertions.assertTrue(iAtom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(iAtom.getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -189,7 +189,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         int numberOfAromaticRings = 0;
         RingSetManipulator.markAromaticRings(ringset);
         for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticRings++;
+            if (ringset.getAtomContainer(i).getFlag(IChemObject.AROMATIC)) numberOfAromaticRings++;
         }
         Assertions.assertEquals(1, numberOfAromaticRings);
     }
@@ -205,7 +205,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule), "Expected the molecule to be aromatic.");
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC), "Atom " + f + " is not correctly marked");
+            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(IChemObject.AROMATIC), "Atom " + f + " is not correctly marked");
         }
     }
 
@@ -220,7 +220,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule), "Expected the molecule to be aromatic.");
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC), "Atom " + f + " is not correctly marked");
+            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(IChemObject.AROMATIC), "Atom " + f + " is not correctly marked");
         }
     }
 
@@ -234,7 +234,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule), "Expected the molecule to be aromatic.");
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC), "Atom " + f + " is not correctly marked");
+            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(IChemObject.AROMATIC), "Atom " + f + " is not correctly marked");
         }
     }
 
@@ -248,7 +248,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule), "Molecule is not detected as aromatic");
 
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC), "Atom " + f + " is not correctly marked");
+            Assertions.assertTrue(molecule.getAtom(f).getFlag(IChemObject.AROMATIC), "Atom " + f + " is not correctly marked");
         }
     }
 
@@ -270,7 +270,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         int aromacount = 0;
         for (IAtomContainer container : rs.atomContainers()) {
             r = (IRing) container;
-            isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
+            isAromatic = r.getFlag(IChemObject.AROMATIC);
 
             if (isAromatic) aromacount++;
         }
@@ -296,7 +296,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertEquals(7, mol.getAtomCount());
         for (int f = 0; f < mol.getAtomCount(); f++) {
             Assertions.assertNotNull(mol.getAtom(f));
-            Assertions.assertTrue(mol.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(mol.getAtom(f).getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -315,7 +315,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertFalse(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         Assertions.assertEquals(testResults.length, mol.getAtomCount());
         for (int f = 0; f < mol.getAtomCount(); f++) {
-            Assertions.assertEquals(testResults[f], mol.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertEquals(testResults[f], mol.getAtom(f).getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -347,7 +347,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         isAromatic = DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(IChemObject.AROMATIC));
         }
         Assertions.assertTrue(isAromatic);
     }
@@ -373,7 +373,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -388,7 +388,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertEquals(testResults[f], molecule.getAtom(f).getFlag(IChemObject.AROMATIC));
         }
 
     }
@@ -409,12 +409,12 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
 
         Assertions.assertEquals(15, molecule.getBondCount());
-        Assertions.assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(molecule.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(molecule.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(molecule.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(molecule.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assertions.assertTrue(molecule.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(molecule.getBond(0).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(molecule.getBond(1).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(molecule.getBond(2).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(molecule.getBond(3).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(molecule.getBond(4).getFlag(IChemObject.AROMATIC));
+        Assertions.assertTrue(molecule.getBond(6).getFlag(IChemObject.AROMATIC));
     }
 
     /**
@@ -426,7 +426,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(molecule.getAtom(f).getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -438,7 +438,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
         Assertions.assertFalse(DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule));
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assertions.assertFalse(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertFalse(molecule.getAtom(f).getFlag(IChemObject.AROMATIC));
         }
     }
 
@@ -505,7 +505,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     void test3Amino2MethylPyridine() throws Exception {
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "N");
         a1.setPoint2d(new Point2d(3.7321, 1.345));
         mol.addAtom(a1);
@@ -599,12 +599,12 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if (atom.getAtomicNumber() == IElement.C) {
-                if (atom.getFlag(CDKConstants.ISAROMATIC))
+                if (atom.getFlag(IChemObject.AROMATIC))
                     nCarom++;
                 else
                     nCalip++;
             } else if (atom.getAtomicNumber() == IElement.N) {
-                if (atom.getFlag(CDKConstants.ISAROMATIC))
+                if (atom.getFlag(IChemObject.AROMATIC))
                     nNarom++;
                 else
                     nNaliph++;
@@ -647,13 +647,13 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         for (IAtom atom : aromaticForm.atoms()) {
             if (atom.getAtomicNumber() == IElement.C) {
                 Assertions.assertEquals("C.sp2", atom.getAtomTypeName());
-                Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
             }
         }
         for (IAtom atom : kekuleForm.atoms()) {
             if (atom.getAtomicNumber() == IElement.C) {
                 Assertions.assertEquals("C.sp2", atom.getAtomTypeName());
-                Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
             }
         }
     }
@@ -671,7 +671,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
         // all atoms are supposed to be aromatic
         for (IAtom atom : aromaticForm.atoms()) {
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), atom.toString() + " should be aromatic");
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC), atom.toString() + " should be aromatic");
         }
     }
 
@@ -685,7 +685,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms())
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
     }
 
     /**
@@ -701,7 +701,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.O) continue;
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), atom.getSymbol() + " was not aromatic but should have been");
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC), atom.getSymbol() + " was not aromatic but should have been");
         }
     }
 
@@ -718,10 +718,10 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.O) {
-                Assertions.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC), "The oxygen should not be labeled as aromatic");
+                Assertions.assertFalse(atom.getFlag(IChemObject.AROMATIC), "The oxygen should not be labeled as aromatic");
                 continue;
             }
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), atom.getSymbol() + " was not aromatic but should have been");
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC), atom.getSymbol() + " was not aromatic but should have been");
         }
     }
 
@@ -732,7 +732,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms())
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), "Atom is expected to be aromatic: " + atom);
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC), "Atom is expected to be aromatic: " + atom);
     }
 
     @Test
@@ -743,7 +743,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (int i = 2; i <= 6; i++) {
             IAtom atom = mol.getAtom(i);
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), "Atom is expected to be aromatic: " + atom);
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC), "Atom is expected to be aromatic: " + atom);
         }
     }
 
@@ -755,7 +755,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (int i = 3; i <= 7; i++) {
             IAtom atom = mol.getAtom(i);
-            Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC), "Atom is expected to be aromatic: " + atom);
+            Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC), "Atom is expected to be aromatic: " + atom);
         }
     }
 
@@ -770,15 +770,15 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.N) {
-                Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
                 List<IBond> conbonds = mol.getConnectedBondsList(atom);
                 if (conbonds.size() == 2) {
-                    Assertions.assertTrue(conbonds.get(0).getFlag(CDKConstants.ISAROMATIC));
-                    Assertions.assertTrue(conbonds.get(1).getFlag(CDKConstants.ISAROMATIC));
+                    Assertions.assertTrue(conbonds.get(0).getFlag(IChemObject.AROMATIC));
+                    Assertions.assertTrue(conbonds.get(1).getFlag(IChemObject.AROMATIC));
                 } else if (conbonds.size() == 3) {
                     for (IBond bond : conbonds) {
                         if (bond.getOrder().equals(IBond.Order.SINGLE)) continue;
-                        Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                        Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
                     }
                 }
             }
@@ -787,7 +787,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         IRingSet ringSet = st.getAllRings();
         for (IAtomContainer ring : ringSet.atomContainers()) {
             for (IBond bond : ring.bonds()) {
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
             }
         }
     }
@@ -803,11 +803,11 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assertions.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
             if (atom.getAtomicNumber() == IElement.N) {
-                Assertions.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(atom.getFlag(IChemObject.AROMATIC));
                 List<IBond> conbonds = mol.getConnectedBondsList(atom);
                 for (IBond bond : conbonds) {
                     if (bond.getOrder().equals(IBond.Order.SINGLE)) continue;
-                    Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                    Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
                 }
             }
         }
@@ -815,7 +815,7 @@ class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         IRingSet ringSet = st.getAllRings();
         for (IAtomContainer ring : ringSet.atomContainers()) {
             for (IBond bond : ring.bonds()) {
-                Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
             }
         }
     }

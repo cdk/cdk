@@ -23,7 +23,6 @@ package org.openscience.cdk.layout;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -150,7 +149,7 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
     @Test
     void testBridgedHydrogen() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
             IAtom bridgingHydrogen = new Atom("H");
@@ -326,7 +325,7 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
     @Test
     void testBug780545() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(2500), () -> {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
             mol.addAtom(new Atom("C"));
             IAtomContainer ac = layout(mol);
             Assertions.assertTrue(GeometryUtil.has2DCoordinates(ac));
@@ -1090,7 +1089,7 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
 
     @Test
     void placeCrossingSgroupBrackets() throws Exception {
-        IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
@@ -1122,7 +1121,7 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
 
     @Test
     void placeNonCrossingSgroupBrackets() throws Exception {
-        IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
@@ -1152,7 +1151,7 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
 
     @Test
     void placeOverlappingCrossingSgroupBrackets() throws Exception {
-        IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
         mol.addAtom(new org.openscience.cdk.silent.Atom("C"));

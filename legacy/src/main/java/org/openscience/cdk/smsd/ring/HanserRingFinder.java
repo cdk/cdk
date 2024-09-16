@@ -52,11 +52,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
@@ -129,13 +129,15 @@ public class HanserRingFinder implements RingFinder {
         for (List<IAtom> ringAtoms : cycles) {
             IRing ring = molecule.getBuilder().newInstance(IRing.class);
             for (IAtom atom : ringAtoms) {
-                atom.setFlag(CDKConstants.ISINRING, true);
+                atom.setFlag(IChemObject.IN_RING, true);
                 ring.addAtom(atom);
+            }
+            for (IAtom atom : ringAtoms) {
                 for (IAtom atomNext : ringAtoms) {
                     if (!atom.equals(atomNext)) {
                         IBond bond = molecule.getBond(atom, atomNext);
                         if (bond != null) {
-                            bond.setFlag(CDKConstants.ISINRING, true);
+                            bond.setFlag(IChemObject.IN_RING, true);
                             ring.addElectronContainer(bond);
                         }
                     }

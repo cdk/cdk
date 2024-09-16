@@ -18,9 +18,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -186,7 +186,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
 
                 // if the nitrogen is aromatic and there are no pi bonds then it's
                 // lone pair cannot accept any hydrogen bonds
-                if (atom.getFlag(CDKConstants.ISAROMATIC) && nPiBonds == 0) continue;
+                if (atom.getFlag(IChemObject.AROMATIC) && nPiBonds == 0) continue;
 
                 hBondAcceptors++;
             }

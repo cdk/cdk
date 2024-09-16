@@ -28,7 +28,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
@@ -37,9 +36,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.atomtype.AbstractAtomTypeTest;
 import org.openscience.cdk.tools.AtomTypeTools;
@@ -73,7 +72,7 @@ class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
             InputStream ins = MMFF94AtomTypeMatcherTest.class.getResourceAsStream(
                     "mmff94AtomTypeTest_molecule.mol");
             MDLV2000Reader mdl = new MDLV2000Reader(new InputStreamReader(ins));
-            testMolecule = mdl.read(new AtomContainer());
+            testMolecule = mdl.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
 
             att.assignAtomTypePropertiesToAtom(testMolecule);
             for (int i = 0; i < testMolecule.getAtomCount(); i++) {
@@ -96,7 +95,7 @@ class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test
     @Disabled("Old atom typing method - see new Mmff class")
     void testFindMatchingAtomType_IAtomContainer() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom("C");
         final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
         atom.setHybridization(thisHybridization);
@@ -341,28 +340,28 @@ class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         for (int i = 0; i < 6; i++) {
             IAtom carbon = builder.newInstance(IAtom.class, Elements.CARBON);
-            carbon.setFlag(CDKConstants.ISAROMATIC, true);
+            carbon.setFlag(IChemObject.AROMATIC, true);
             // making sure the order matches the test results
             mol.addAtom(carbon);
         }
         IBond ringBond = builder
                 .newInstance(IBond.class, mol.getAtom(0), mol.getAtom(1), Order.DOUBLE);
-        ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+        ringBond.setFlag(IChemObject.AROMATIC, true);
         mol.addBond(ringBond);
         ringBond = builder.newInstance(IBond.class, mol.getAtom(1), mol.getAtom(2), Order.SINGLE);
-        ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+        ringBond.setFlag(IChemObject.AROMATIC, true);
         mol.addBond(ringBond);
         ringBond = builder.newInstance(IBond.class, mol.getAtom(2), mol.getAtom(3), Order.DOUBLE);
-        ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+        ringBond.setFlag(IChemObject.AROMATIC, true);
         mol.addBond(ringBond);
         ringBond = builder.newInstance(IBond.class, mol.getAtom(3), mol.getAtom(4), Order.SINGLE);
-        ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+        ringBond.setFlag(IChemObject.AROMATIC, true);
         mol.addBond(ringBond);
         ringBond = builder.newInstance(IBond.class, mol.getAtom(4), mol.getAtom(5), Order.DOUBLE);
-        ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+        ringBond.setFlag(IChemObject.AROMATIC, true);
         mol.addBond(ringBond);
         ringBond = builder.newInstance(IBond.class, mol.getAtom(5), mol.getAtom(0), Order.SINGLE);
-        ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+        ringBond.setFlag(IChemObject.AROMATIC, true);
         mol.addBond(ringBond);
 
         addExplicitHydrogens(mol);

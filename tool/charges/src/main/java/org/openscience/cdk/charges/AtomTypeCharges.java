@@ -120,7 +120,7 @@ public class AtomTypeCharges implements IChargeCalculator {
             } else if (mat_n.matches()) {
                 ac.getAtom(i).setCharge(-1.000);
             } else {
-                ac.getAtom(i).setCharge(new Double(ac.getAtom(i).getFormalCharge()));
+                ac.getAtom(i).setCharge(Double.valueOf(ac.getAtom(i).getFormalCharge()));
             }
         }
         return ac;

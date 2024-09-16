@@ -5,7 +5,6 @@ import java.io.InputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.fragment.MurckoFragmenter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,7 +35,7 @@ class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
         MurckoFragmenter gf = new MurckoFragmenter();
         double Complexity = 0;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer mol = reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         gf.generateFragments(mol);
         IAtomContainer[] setOfFragments = gf.getFrameworksAsContainers();
         for (IAtomContainer setOfFragment : setOfFragments) {

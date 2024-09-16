@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -153,7 +154,7 @@ class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
         reader.setReader(ins);
         IAtomContainer mol = null;
         if (reader.accepts(AtomContainer.class)) {
-            mol = reader.read(new AtomContainer());
+            mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         } else if (reader.accepts(ChemFile.class)) {
             IChemFile cf = reader.read(new ChemFile());
             mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);

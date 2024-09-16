@@ -32,7 +32,6 @@ import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnainchi.InchiStereoType;
 import io.github.dan2097.jnainchi.JnaInchi;
 import net.sf.jniinchi.INCHI_RET;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;

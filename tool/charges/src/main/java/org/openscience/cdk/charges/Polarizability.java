@@ -25,6 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -214,7 +215,7 @@ public class Polarizability {
                 polarizabilitiyFactor = 0.387;
                 break;
             case "C":
-                if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+                if (atom.getFlag(IChemObject.AROMATIC)) {
                     polarizabilitiyFactor = 1.230;
                 } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
                     polarizabilitiyFactor = 1.064;/* 1.064 */
@@ -258,7 +259,7 @@ public class Polarizability {
                 }
                 break;
             case "S":
-                if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+                if (atom.getFlag(IChemObject.AROMATIC)) {
                     polarizabilitiyFactor = 3.38;
                 } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
                     polarizabilitiyFactor = 3.20;/* 3.19 */

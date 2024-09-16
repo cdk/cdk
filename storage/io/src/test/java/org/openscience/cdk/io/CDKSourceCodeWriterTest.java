@@ -30,6 +30,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.test.io.ChemObjectIOTest;
 
@@ -51,13 +52,13 @@ class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
     @Test
     void testAccepts() throws Exception {
-        Assertions.assertTrue(chemObjectIO.accepts(AtomContainer.class));
+        Assertions.assertTrue(chemObjectIO.accepts(IAtomContainer.class));
     }
 
     @Test
     void testOutput() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom = new Atom("C");
         atom.setMassNumber(14);
         molecule.addAtom(atom);

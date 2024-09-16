@@ -612,7 +612,7 @@ public class Convertor {
         }
         writeProperties(cdkAtom, cmlAtom);
 
-        if (cdkAtom.getFlag(CDKConstants.ISAROMATIC)) {
+        if (cdkAtom.getFlag(IChemObject.AROMATIC)) {
             CMLScalar aromAtom = new CMLScalar();
             aromAtom.setDictRef("cdk:aromaticAtom");
             cmlAtom.appendChild(aromAtom);
@@ -670,7 +670,7 @@ public class Convertor {
             scalar.setValue(cdkBond.getOrder().numeric());
             cmlBond.appendChild(scalar);
         }
-        if (cdkBond.getFlag(CDKConstants.ISAROMATIC)) {
+        if (cdkBond.getFlag(IChemObject.AROMATIC)) {
             CMLBondType bType = new CMLBondType();
             bType.setDictRef("cdk:aromaticBond");
             cmlBond.appendChild(bType);

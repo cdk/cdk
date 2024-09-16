@@ -2,7 +2,7 @@ package org.openscience.cdk.renderer.generators.standard;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -22,7 +22,7 @@ class SelectionVisibilityTest {
 
     @Test
     void noHighlightOrGlow() {
-        IAtomContainer methyl = new AtomContainer();
+        IAtomContainer methyl = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
         methyl.addAtom(atomAt("H", new Point2d(0, 1)));
         methyl.addAtom(atomAt("H", new Point2d(0, -1)));
@@ -39,7 +39,7 @@ class SelectionVisibilityTest {
 
     @Test
     void withHighlight() {
-        IAtomContainer methyl = new AtomContainer();
+        IAtomContainer methyl = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
         methyl.addAtom(atomAt("H", new Point2d(0, 1)));
         methyl.addAtom(atomAt("H", new Point2d(0, -1)));
@@ -57,7 +57,7 @@ class SelectionVisibilityTest {
 
     @Test
     void isolated() {
-        IAtomContainer methyl = new AtomContainer();
+        IAtomContainer methyl = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
         methyl.addAtom(atomAt("H", new Point2d(0, 1)));
         methyl.addAtom(atomAt("H", new Point2d(0, -1)));
@@ -75,7 +75,7 @@ class SelectionVisibilityTest {
 
     @Test
     void unIsolated() {
-        IAtomContainer methyl = new AtomContainer();
+        IAtomContainer methyl = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
         methyl.addAtom(atomAt("H", new Point2d(0, 1)));
         methyl.addAtom(atomAt("H", new Point2d(0, -1)));

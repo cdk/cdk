@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.ReactionScheme;
@@ -51,7 +52,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Crystal;
@@ -96,7 +96,7 @@ class CML2WriterTest extends CDKTestCase {
     @Test
     void testHydrogenCount() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer(); // methane
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer(); // methane
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.CARBON));
         molecule.getAtom(0).setImplicitHydrogenCount(4);
         CMLWriter cmlWriter = new CMLWriter(writer);
@@ -112,7 +112,7 @@ class CML2WriterTest extends CDKTestCase {
     @Test
     void testNullFormalCharge() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer(); // methane
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer(); // methane
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.CARBON));
         molecule.getAtom(0).setFormalCharge(null);
         CMLWriter cmlWriter = new CMLWriter(writer);
@@ -132,7 +132,7 @@ class CML2WriterTest extends CDKTestCase {
     @Test
     void testMassNumber() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom = new Atom("C");
         atom.setMassNumber(12);
         mol.addAtom(atom);
@@ -154,7 +154,7 @@ class CML2WriterTest extends CDKTestCase {
     @Test
     void testHydrogenCount_2() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer(); // methane
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer(); // methane
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.CARBON));
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.HYDROGEN));
         molecule.getAtom(0).setImplicitHydrogenCount(3);

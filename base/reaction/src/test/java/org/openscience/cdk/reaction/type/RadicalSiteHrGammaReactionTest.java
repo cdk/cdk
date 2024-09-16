@@ -20,7 +20,6 @@ package org.openscience.cdk.reaction.type;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -29,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -200,10 +200,10 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* manually put the reactive center */
-        molecule.getAtom(4).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(6).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(4).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getAtom(6).setFlag(IChemObject.REACTIVE_CENTER, true);
+        molecule.getBond(5).setFlag(IChemObject.REACTIVE_CENTER, true);
 
         List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
@@ -215,14 +215,14 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
-        Assertions.assertTrue(molecule.getAtom(6).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getAtom(6).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getAtom(4).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getAtom(4).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(molecule.getBond(5).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assertions.assertTrue(reactant.getBond(5).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(6).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(6).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(0).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(0).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getAtom(4).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getAtom(4).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(molecule.getBond(5).getFlag(IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(reactant.getBond(5).getFlag(IChemObject.REACTIVE_CENTER));
     }
 
     /**

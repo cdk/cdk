@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
@@ -41,6 +40,7 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Writer;
@@ -430,10 +430,10 @@ public class TemplateExtractor {
 
     public IAtomContainer resetFlags(IAtomContainer ac) {
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            ac.getAtom(f).setFlag(CDKConstants.VISITED, false);
+            ac.getAtom(f).setFlag(IChemObject.VISITED, false);
         }
         for (int f = 0; f < ac.getElectronContainerCount(); f++) {
-            ac.getElectronContainer(f).setFlag(CDKConstants.VISITED, false);
+            ac.getElectronContainer(f).setFlag(IChemObject.VISITED, false);
         }
         return ac;
     }

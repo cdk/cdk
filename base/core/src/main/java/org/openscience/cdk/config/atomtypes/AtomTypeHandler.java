@@ -24,6 +24,7 @@ import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -148,9 +149,9 @@ public class AtomTypeHandler extends DefaultHandler {
                     }
                 } else if (scalarType == SCALAR_DA) {
                     if ("A".equals(currentChars)) {
-                        atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
+                        atomType.setFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR, true);
                     } else if ("D".equals(currentChars)) {
-                        atomType.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, true);
+                        atomType.setFlag(IChemObject.HYDROGEN_BOND_DONOR, true);
                     } else {
                         logger.warn("Unrecognized H-bond donor/acceptor pattern in config file: ", currentChars);
                     }
@@ -161,7 +162,7 @@ public class AtomTypeHandler extends DefaultHandler {
                 } else if (scalarType == SCALAR_CHEMICALGROUPCONSTANT) {
                     atomType.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, Integer.valueOf(currentChars));
                 } else if (scalarType == SCALAR_ISAROMATIC) {
-                    atomType.setFlag(CDKConstants.ISAROMATIC, true);
+                    atomType.setFlag(IChemObject.AROMATIC, true);
                 } else if (scalarType == SCALAR_PIBONDCOUNT) {
                     atomType.setProperty(CDKConstants.PI_BOND_COUNT, Integer.valueOf(currentChars));
                 } else if (scalarType == SCALAR_LONEPAIRCOUNT) {

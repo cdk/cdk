@@ -23,9 +23,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -62,7 +62,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      */
     @Test
     void testSaturate_WithNitrate() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom a1 = new Atom("O");
         mol.addAtom(a1);
         Atom a2 = new Atom("N");
@@ -137,7 +137,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      */
     @Test
     void testSaturation_S4AtomType() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom a1 = new Atom("N");
         mol.addAtom(a1);
         Atom a2 = new Atom("H");
@@ -244,7 +244,7 @@ public class SaturationCheckerTest extends CDKTestCase {
      */
     @Test
     void testSaturate_NumberingProblem() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom a1 = new Atom("C");
         mol.addAtom(a1);
         Atom a2 = new Atom("C");
@@ -295,7 +295,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     @Test
     void testIsSaturated_Proton() throws Exception {
         // test H+
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom h = new Atom("H");
         h.setFormalCharge(+1);
         m.addAtom(h);
@@ -309,7 +309,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         IRingSet rs = Cycles.sssr(pyrrole).toRingSet();
         IRing ring = (IRing) rs.getAtomContainer(0);
         for (int j = 0; j < ring.getBondCount(); j++) {
-            ring.getBond(j).setFlag(CDKConstants.ISAROMATIC, true);
+            ring.getBond(j).setFlag(IChemObject.AROMATIC, true);
         }
         Assertions.assertEquals(5, ring.getBondCount());
         Assertions.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));

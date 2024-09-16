@@ -27,7 +27,7 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -95,7 +95,7 @@ class BremserPredictorTest extends CDKTestCase {
         String filename = "BremserPredictionTest.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = reader.read(new AtomContainer());
+        molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         double prediction;
         BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
         HOSECodeGenerator hcg = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);

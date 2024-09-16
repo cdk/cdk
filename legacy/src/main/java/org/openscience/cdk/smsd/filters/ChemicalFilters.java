@@ -38,7 +38,6 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
@@ -48,6 +47,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -428,11 +428,11 @@ public class ChemicalFilters {
         IAtomContainer product = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, pMol);
 
         for (IAtom eAtom : educt.atoms()) {
-            eAtom.setFlag(CDKConstants.ISPLACED, false);
+            eAtom.setFlag(IChemObject.PLACED, false);
         }
 
         for (IAtom pAtom : product.atoms()) {
-            pAtom.setFlag(CDKConstants.ISPLACED, false);
+            pAtom.setFlag(IChemObject.PLACED, false);
         }
 
         if (mcsAtomSolution != null) {
@@ -443,8 +443,8 @@ public class ChemicalFilters {
                 IAtom eAtom = educt.getAtom(eNum);
                 IAtom pAtom = product.getAtom(pNum);
 
-                eAtom.setFlag(CDKConstants.ISPLACED, true);
-                pAtom.setFlag(CDKConstants.ISPLACED, true);
+                eAtom.setFlag(IChemObject.PLACED, true);
+                pAtom.setFlag(IChemObject.PLACED, true);
             }
         }
 
@@ -675,10 +675,10 @@ public class ChemicalFilters {
             int productBondType = convertBondOrder(targetBond);
             int rStereo = convertBondStereo(queryBond);
             int pStereo = convertBondStereo(targetBond);
-            if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
+            if ((queryBond.getFlag(IChemObject.AROMATIC) == targetBond.getFlag(IChemObject.AROMATIC))
                     && (reactantBondType == productBondType)) {
                 score += 8;
-            } else if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
+            } else if (queryBond.getFlag(IChemObject.AROMATIC) && targetBond.getFlag(IChemObject.AROMATIC)) {
                 score += 4;
             }
 
@@ -734,9 +734,9 @@ public class ChemicalFilters {
 
     private double getBondEnergy(IBond bond, BondEnergies bondEnergy) {
         double energy = 0.0;
-        if ((bond.getBegin().getFlag(CDKConstants.ISPLACED) == true && bond.getEnd().getFlag(CDKConstants.ISPLACED) == false)
-                || (bond.getBegin().getFlag(CDKConstants.ISPLACED) == false && bond.getEnd().getFlag(
-                        CDKConstants.ISPLACED) == true)) {
+        if ((bond.getBegin().getFlag(IChemObject.PLACED) == true && bond.getEnd().getFlag(IChemObject.PLACED) == false)
+                || (bond.getBegin().getFlag(IChemObject.PLACED) == false && bond.getEnd().getFlag(
+                IChemObject.PLACED) == true)) {
             Integer val = bondEnergy.getEnergies(bond.getBegin(), bond.getEnd(), bond.getOrder());
             if (val != null) {
                 energy = val;

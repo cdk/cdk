@@ -77,7 +77,7 @@ final class DaylightModel extends ElectronDonation {
 
     /**{@inheritDoc} */
     @Override
-    int[] contribution(IAtomContainer container, RingSearch ringSearch) {
+    int[] contribution(IAtomContainer container) {
 
         int n = container.getAtomCount();
 
@@ -119,7 +119,7 @@ final class DaylightModel extends ElectronDonation {
                 case UNSET:
                     throw new IllegalArgumentException("Aromaticity model requires that bond orders must be set");
                 case DOUBLE:
-                    if (ringSearch.cyclic(u, v)) {
+                    if (bond.isInRing()) {
                         nCyclicPiBonds[u]++;
                         nCyclicPiBonds[v]++;
                     } else {
@@ -138,8 +138,9 @@ final class DaylightModel extends ElectronDonation {
         // now make a decision on how many electrons each atom contributes
         for (int i = 0; i < n; i++) {
 
-            int element = element(container.getAtom(i));
-            int charge = charge(container.getAtom(i));
+            IAtom atom = container.getAtom(i);
+            int element = element(atom);
+            int charge = charge(atom);
 
             // abnormal valence, usually indicated a radical. these cause problems
             // with kekulisations
@@ -151,7 +152,7 @@ final class DaylightModel extends ElectronDonation {
             // non-aromatic element, acyclic atoms, atoms with more than three
             // neighbors and atoms with more than 1 cyclic pi bond are not
             // considered
-            else if (!aromaticElement(element) || !ringSearch.cyclic(i) || degree[i] > 3 || nCyclicPiBonds[i] > 1) {
+            else if (!aromaticElement(element) || !atom.isInRing() || degree[i] > 3 || nCyclicPiBonds[i] > 1) {
                 electrons[i] = -1;
             }
 

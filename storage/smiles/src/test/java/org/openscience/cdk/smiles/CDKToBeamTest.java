@@ -32,9 +32,9 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.PseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -139,7 +139,7 @@ class CDKToBeamTest {
     void aromaticAtom() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
-        a.setFlag(CDKConstants.ISAROMATIC, true);
+        a.setFlag(IChemObject.AROMATIC, true);
         Assertions.assertTrue(new CDKToBeam().toBeamAtom(a).aromatic());
     }
 
@@ -244,7 +244,7 @@ class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v);
-        b.setFlag(CDKConstants.ISAROMATIC, true);
+        b.setFlag(IChemObject.AROMATIC, true);
         Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
@@ -332,7 +332,7 @@ class CDKToBeamTest {
 
     @Test
     void C13_isomeric() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("C");
         a.setMassNumber(13);
         ac.addAtom(a);
@@ -343,7 +343,7 @@ class CDKToBeamTest {
 
     @Test
     void C13_nonIsomeric() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("C");
         a.setMassNumber(13);
         ac.addAtom(a);
@@ -354,7 +354,7 @@ class CDKToBeamTest {
 
     @Test
     void azanium() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("N");
         a.setFormalCharge(+1);
         ac.addAtom(a);
@@ -365,7 +365,7 @@ class CDKToBeamTest {
 
     @Test
     void oxidanide() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("O");
         a.setFormalCharge(-1);
         ac.addAtom(a);
@@ -376,7 +376,7 @@ class CDKToBeamTest {
 
     @Test
     void oxidandiide() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("O");
         a.setFormalCharge(-2);
         ac.addAtom(a);
@@ -393,7 +393,7 @@ class CDKToBeamTest {
     @Test
     void e_1_2_difluoroethene() throws Exception {
 
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("F"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
@@ -416,7 +416,7 @@ class CDKToBeamTest {
     @Test
     void z_1_2_difluoroethene() throws Exception {
 
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("F"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
@@ -439,7 +439,7 @@ class CDKToBeamTest {
     @Test
     void _2R_butan_2_ol() throws Exception {
 
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
@@ -470,7 +470,7 @@ class CDKToBeamTest {
     @Test
     void _2S_butan_2_ol() throws Exception {
 
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
@@ -503,7 +503,7 @@ class CDKToBeamTest {
     @Test
     void z_1_2_difluoroethene_aromatic() throws Exception {
 
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("F"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
@@ -514,7 +514,7 @@ class CDKToBeamTest {
         ac.getAtom(1).setIsAromatic(true);
         ac.getAtom(2).setIsAromatic(true);
 
-        ac.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
+        ac.getBond(1).setFlag(IChemObject.AROMATIC, true);
 
         ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
                 TOGETHER));
@@ -529,7 +529,7 @@ class CDKToBeamTest {
 
     @Test
     void writeAtomClass() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = SilentChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("O"));
@@ -543,7 +543,7 @@ class CDKToBeamTest {
 
     @Test
     void r_penta_2_3_diene_impl_h() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -563,7 +563,7 @@ class CDKToBeamTest {
 
     @Test
     void s_penta_2_3_diene_impl_h() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -583,7 +583,7 @@ class CDKToBeamTest {
 
     @Test
     void r_penta_2_3_diene_expl_h() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -616,7 +616,7 @@ class CDKToBeamTest {
 
     @Test
     void s_penta_2_3_diene_expl_h() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));

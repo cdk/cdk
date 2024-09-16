@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 
@@ -81,8 +82,8 @@ public class CDKHueckelAromaticityDetector {
         }
 
         // FIXME: should not really mark them here
-        for (IAtom iAtom : ringSystems.atoms()) iAtom.setFlag(CDKConstants.ISINRING, true);
-        for (IBond iBond : ringSystems.bonds()) iBond.setFlag(CDKConstants.ISINRING, true);
+        for (IAtom iAtom : ringSystems.atoms()) iAtom.setFlag(IChemObject.IN_RING, true);
+        for (IBond iBond : ringSystems.bonds()) iBond.setFlag(IChemObject.IN_RING, true);
 
         // disregard all atoms we know that cannot be aromatic anyway
         Set<IAtom> disregard = new HashSet<>();
@@ -200,7 +201,7 @@ public class CDKHueckelAromaticityDetector {
             IAtomContainer isolatedRingSystem) {
         for (IAtom atom : isolatedRingSystem.atoms()) {
             for (IBond neighborBond : fullContainer.getConnectedBondsList(atom)) {
-                if (!neighborBond.getFlag(CDKConstants.ISINRING)
+                if (!neighborBond.getFlag(IChemObject.IN_RING)
                         && neighborBond.getOrder() == Order.DOUBLE
                         || neighborBond.getOrder() == Order.TRIPLE) {
                     if (!("N.sp2.3".equals(atom.getAtomTypeName()) && "O.sp2".equals(neighborBond
@@ -222,8 +223,8 @@ public class CDKHueckelAromaticityDetector {
 
     private static void markRingAtomsAndBondsAromatic(IAtomContainer container) {
         for (IAtom atom : container.atoms())
-            atom.setFlag(CDKConstants.ISAROMATIC, true);
+            atom.setFlag(IChemObject.AROMATIC, true);
         for (IBond bond : container.bonds())
-            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            bond.setFlag(IChemObject.AROMATIC, true);
     }
 }

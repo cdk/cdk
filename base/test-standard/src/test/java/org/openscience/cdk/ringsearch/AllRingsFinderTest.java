@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Ring;
@@ -275,13 +275,13 @@ class AllRingsFinderTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         for (IAtom a : molecule.atoms())
-            a.setFlag(CDKConstants.ISINRING, false);
+            a.setFlag(IChemObject.IN_RING, false);
         AllRingsFinder arf = new AllRingsFinder();
         arf.findAllRings(molecule);
 
         int count = 0;
         for (IAtom atom : molecule.atoms()) {
-            if (atom.getFlag(CDKConstants.ISINRING)) count++;
+            if (atom.getFlag(IChemObject.IN_RING)) count++;
         }
         Assertions.assertEquals(6, count, "All atoms in benzene were not marked as being in a ring");
     }
@@ -291,14 +291,14 @@ class AllRingsFinderTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCCC1CC");
         for (IAtom a : molecule.atoms())
-            a.setFlag(CDKConstants.ISINRING, false);
+            a.setFlag(IChemObject.IN_RING, false);
 
         AllRingsFinder arf = new AllRingsFinder();
         arf.findAllRings(molecule);
 
         int count = 0;
         for (IAtom atom : molecule.atoms()) {
-            if (atom.getFlag(CDKConstants.ISINRING)) count++;
+            if (atom.getFlag(IChemObject.IN_RING)) count++;
         }
         Assertions.assertEquals(5, count, "All atoms in 1-ethyl-cyclopentane were not marked as being in a ring");
     }

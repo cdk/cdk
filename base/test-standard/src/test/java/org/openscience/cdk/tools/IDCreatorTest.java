@@ -23,9 +23,9 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -43,7 +43,7 @@ class IDCreatorTest extends CDKTestCase {
 
     @Test
     void testCreateIDs_IChemObject() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
         mol.addAtom(atom1);
@@ -60,7 +60,7 @@ class IDCreatorTest extends CDKTestCase {
 
     @Test
     void testKeepingIDs() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom = new Atom("C");
         atom.setID("atom1");
         mol.addAtom(atom);
@@ -75,7 +75,7 @@ class IDCreatorTest extends CDKTestCase {
 
     @Test
     void testNoDuplicateCreation() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
         atom1.setID("a1");
@@ -94,7 +94,7 @@ class IDCreatorTest extends CDKTestCase {
     @Test
     void testCallingTwice() {
         IAtomContainerSet molSet = new AtomContainerSet();
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom0 = new Atom("C");
         Atom atom2 = new Atom("C");
         atom0.setID("a1");
@@ -106,7 +106,7 @@ class IDCreatorTest extends CDKTestCase {
         List<String> ids = MoleculeSetManipulator.getAllIDs(molSet);
         Assertions.assertEquals(4, ids.size());
 
-        mol = new AtomContainer();
+        mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom1 = new Atom("C");
         atom2 = new Atom("C");
         atom1.setID("a2");
@@ -118,7 +118,7 @@ class IDCreatorTest extends CDKTestCase {
         ids = MoleculeSetManipulator.getAllIDs(molSet);
         Assertions.assertEquals(7, ids.size());
 
-        mol = new AtomContainer();
+        mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         atom1 = new Atom("C");
         atom2 = new Atom("C");
         mol.addAtom(atom2);

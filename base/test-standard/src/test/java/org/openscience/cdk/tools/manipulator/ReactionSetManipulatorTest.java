@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.ReactionSet;
@@ -207,7 +206,7 @@ class ReactionSetManipulatorTest extends CDKTestCase {
         IReaction reaction1 = builder.newInstance(IReaction.class);
         set.addReaction(reaction1);
         reaction1.setID("r1");
-        IAtomContainer water = new AtomContainer();
+        IAtomContainer water = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         water.setID("m1");
         Atom oxygen = new Atom("O");
         oxygen.setID("a1");

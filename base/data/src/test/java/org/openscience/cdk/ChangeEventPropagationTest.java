@@ -46,7 +46,7 @@ class ChangeEventPropagationTest extends CDKTestCase {
         ChemSequence cs = new ChemSequence();
         ChemModel cm = new ChemModel();
         IAtomContainerSet som = new AtomContainerSet();
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom a1 = new Atom("C");
         Atom a2 = new Atom("C");
         Bond b1 = new Bond(a1, a2);

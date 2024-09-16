@@ -72,6 +72,19 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-atomtype</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- benchmark only -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-inchi</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cdk-test</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>

@@ -24,13 +24,13 @@
  */
 package org.openscience.cdk.smsd.tools;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -122,14 +122,14 @@ public class MoleculeSanityCheck {
             // determine largest ring that each atom is a part of
 
             for (int i = 0; i < mol.getAtomCount(); i++) {
-                mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
+                mol.getAtom(i).setFlag(IChemObject.AROMATIC, false);
                 for (IAtomContainer ring : ringSet.atomContainers()) {
-                    if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
+                    if (!ring.getFlag(IChemObject.AROMATIC)) {
                         continue;
                     }
                     boolean haveatom = ring.contains(mol.getAtom(i));
                     if (haveatom && ring.getAtomCount() == 6) {
-                        mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+                        mol.getAtom(i).setFlag(IChemObject.AROMATIC, true);
                     }
                 }
             }

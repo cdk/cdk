@@ -26,12 +26,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -199,7 +199,7 @@ class ForceFieldConfiguratorTest {
         Assertions.assertEquals(0, moleculeRingSet.getAtomContainerCount());
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             IAtom mmff94atom = molecule.getAtom(i);
-            Assertions.assertTrue(mmff94atom.getFlag(CDKConstants.ISALIPHATIC));
+            Assertions.assertTrue(mmff94atom.getFlag(IChemObject.ALIPHATIC));
             ffAtomTypes[i] = mmff94atom.getAtomTypeName();
         }
         Assertions.assertEquals(expectedAtomTypes, ffAtomTypes);

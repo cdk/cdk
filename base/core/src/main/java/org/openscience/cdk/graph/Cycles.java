@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingSearch;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -89,6 +90,22 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @cdk.githash
  */
 public final class Cycles {
+
+    private static final String CDK_MAX_RELEVANT_CYCLES_KEY = "cdk.maxRelevantCycles";
+    private static final long MAX_RELEVANT_CYCLES = getSystemInteger(CDK_MAX_RELEVANT_CYCLES_KEY, 512000);
+
+    private static long getSystemInteger(String key, long val) {
+        String prop = System.getProperty(key);
+        if (prop == null)
+            return val;
+        try {
+            return Long.parseLong(prop);
+        } catch (NumberFormatException ex) {
+            LoggingToolFactory.createLoggingTool(Cycles.class)
+                              .error("Error - Invalid number for system property=" + key);
+        }
+        return val;
+    }
 
     /** Vertex paths for each cycle. */
     private final int[][]        paths;
@@ -570,8 +587,7 @@ public final class Cycles {
      * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
      */
     public static int markRingAtomsAndBonds(IAtomContainer mol) {
-        EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(mol);
-        return markRingAtomsAndBonds(mol, GraphUtil.toAdjList(mol, bonds), bonds);
+        return BiconnectedComponents.mark(mol);
     }
 
     /**
@@ -584,24 +600,11 @@ public final class Cycles {
      * @see IAtom#isInRing()
      * @return Number of rings found (circuit rank)
      * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
+     * @deprecated Use {@link #markRingAtomsAndBonds(org.openscience.cdk.interfaces.IAtomContainer)}
      */
+    @Deprecated
     public static int markRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap) {
-        RingSearch ringSearch = new RingSearch(mol, adjList);
-        for (int v = 0; v < mol.getAtomCount(); v++) {
-            mol.getAtom(v).setIsInRing(false);
-            for (int w : adjList[v]) {
-                // note we only mark the bond on second visit (first v < w) and
-                // clear flag on first visit (or if non-cyclic)
-                if (v > w && ringSearch.cyclic(v, w)) {
-                    bondMap.get(v, w).setIsInRing(true);
-                    mol.getAtom(v).setIsInRing(true);
-                    mol.getAtom(w).setIsInRing(true);
-                } else {
-                    bondMap.get(v, w).setIsInRing(false);
-                }
-            }
-        }
-        return ringSearch.numRings();
+        return markRingAtomsAndBonds(mol);
     }
 
     /**
@@ -875,19 +878,23 @@ public final class Cycles {
 
             /** {@inheritDoc} */
             @Override
-            int[][] apply(int[][] graph, int length) {
+            int[][] apply(int[][] graph, int length) throws Intractable {
                 InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
                 RelevantCycles rc = new RelevantCycles(ic);
-                return new EssentialCycles(rc, ic).paths();
+                numberOfCyclesCheck(rc);
+                EssentialCycles essentialCycles = new EssentialCycles(rc, ic);
+                return essentialCycles.paths();
             }
         },
         RELEVANT {
 
             /** {@inheritDoc} */
             @Override
-            int[][] apply(int[][] graph, int length) {
+            int[][] apply(int[][] graph, int length) throws Intractable {
                 InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
-                return new RelevantCycles(ic).paths();
+                RelevantCycles rc = new RelevantCycles(ic);
+                numberOfCyclesCheck(rc);
+                return rc.paths();
             }
         },
         ALL {
@@ -1036,6 +1043,12 @@ public final class Cycles {
 
             return new Cycles(walks.toArray(new int[walks.size()][0]), molecule, null);
         }
+    }
+
+    private static void numberOfCyclesCheck(RelevantCycles rc) throws Intractable {
+        if (rc.size() > MAX_RELEVANT_CYCLES)
+            throw new Intractable("Too many relevant cycles cycles! max=" + MAX_RELEVANT_CYCLES + " was=" + rc.size() + "." +
+                                  " Increase this limit with System property -D" + CDK_MAX_RELEVANT_CYCLES_KEY + "=<num>");
     }
 
     /**

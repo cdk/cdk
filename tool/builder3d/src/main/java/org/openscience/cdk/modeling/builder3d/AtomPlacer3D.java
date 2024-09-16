@@ -26,13 +26,13 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -107,7 +107,7 @@ public class AtomPlacer3D {
      */
     public IAtomContainer markPlaced(IAtomContainer ac) {
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
+            ac.getAtom(i).setFlag(IChemObject.PLACED, true);
         }
         return ac;
     }
@@ -135,11 +135,11 @@ public class AtomPlacer3D {
         dihedrals = new double[first[1]];
         thirdAtoms = new int[first[1]];
         firstAtoms[0] = first[0];
-        molecule.getAtom(firstAtoms[0]).setFlag(CDKConstants.VISITED, true);
+        molecule.getAtom(firstAtoms[0]).setFlag(IChemObject.VISITED, true);
         int hybridisation;
         for (int i = 0; i < chain.getAtomCount(); i++) {
             if (isHeavyAtom(chain.getAtom(i))) {
-                if (!chain.getAtom(i).getFlag(CDKConstants.VISITED)) {
+                if (!chain.getAtom(i).getFlag(IChemObject.VISITED)) {
                     //logger.debug("Counter:" + counter);
                     nextAtomNr = molecule.indexOf(chain.getAtom(i));
                     id2 = molecule.getAtom(firstAtoms[counter - 1]).getAtomTypeName();
@@ -257,10 +257,10 @@ public class AtomPlacer3D {
                 result.add(molecule.getAtom(firstAtoms[index - 1]).getPoint3d(), ban);
             }
             IAtom atom = molecule.getAtom(firstAtoms[index]);
-            if ((atom.getPoint3d() == null || !atom.getFlag(CDKConstants.ISPLACED))
-                    && !atom.getFlag(CDKConstants.ISINRING) && isHeavyAtom(atom)) {
+            if ((atom.getPoint3d() == null || !atom.getFlag(IChemObject.PLACED))
+                    && !atom.getFlag(IChemObject.IN_RING) && isHeavyAtom(atom)) {
                 atom.setPoint3d(result);
-                atom.setFlag(CDKConstants.ISPLACED, true);
+                atom.setFlag(IChemObject.PLACED, true);
             }
         }
     }
@@ -376,12 +376,12 @@ public class AtomPlacer3D {
      */
     public IAtom getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(IAtomContainer molecule) {
         for (IBond bond : molecule.bonds()) {
-            if (bond.getBegin().getFlag(CDKConstants.ISPLACED) && !(bond.getEnd().getFlag(CDKConstants.ISPLACED))) {
+            if (bond.getBegin().getFlag(IChemObject.PLACED) && !(bond.getEnd().getFlag(IChemObject.PLACED))) {
                 if (isAliphaticHeavyAtom(bond.getEnd())) {
                     return bond.getEnd();
                 }
             }
-            if (bond.getEnd().getFlag(CDKConstants.ISPLACED) && !(bond.getBegin().getFlag(CDKConstants.ISPLACED))) {
+            if (bond.getEnd().getFlag(IChemObject.PLACED) && !(bond.getBegin().getFlag(IChemObject.PLACED))) {
                 if (isAliphaticHeavyAtom(bond.getBegin())) {
                     return bond.getBegin();
                 }
@@ -415,12 +415,12 @@ public class AtomPlacer3D {
         for (IBond bond : molecule.bonds()) {
             IAtom atom0 = bond.getBegin();
             IAtom atom1 = bond.getEnd();
-            if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
+            if (atom0.getFlag(IChemObject.PLACED) && !(atom1.getFlag(IChemObject.PLACED))) {
                 if (isAliphaticHeavyAtom(atom1) && isHeavyAtom(atom0)) {
                     return atom0;
                 }
             }
-            if (atom1.getFlag(CDKConstants.ISPLACED) && !(atom0.getFlag(CDKConstants.ISPLACED))) {
+            if (atom1.getFlag(IChemObject.PLACED) && !(atom0.getFlag(IChemObject.PLACED))) {
                 if (isAliphaticHeavyAtom(atom0) && isHeavyAtom(atom1)) {
                     return atom1;
                 }
@@ -439,12 +439,12 @@ public class AtomPlacer3D {
         for (IBond bond : molecule.bonds()) {
             IAtom atom0 = bond.getBegin();
             IAtom atom1 = bond.getEnd();
-            if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
+            if (atom0.getFlag(IChemObject.PLACED) && !(atom1.getFlag(IChemObject.PLACED))) {
                 if (isRingHeavyAtom(atom1) && isHeavyAtom(atom0)) {
                     return atom0;
                 }
             }
-            if (atom1.getFlag(CDKConstants.ISPLACED) && !(atom0.getFlag(CDKConstants.ISPLACED))) {
+            if (atom1.getFlag(IChemObject.PLACED) && !(atom0.getFlag(IChemObject.PLACED))) {
                 if (isRingHeavyAtom(atom0) && isHeavyAtom(atom1)) {
                     return atom1;
                 }
@@ -486,7 +486,7 @@ public class AtomPlacer3D {
         IAtom connectedAtom = null;
         for (IBond bond : bonds) {
             connectedAtom = bond.getOther(atom);
-            if (isUnplacedHeavyAtom(connectedAtom) && connectedAtom.getFlag(CDKConstants.ISINRING)) {
+            if (isUnplacedHeavyAtom(connectedAtom) && connectedAtom.getFlag(IChemObject.IN_RING)) {
                 return connectedAtom;
             }
         }
@@ -585,9 +585,9 @@ public class AtomPlacer3D {
      * @return    The allPlacedAtoms value
      */
     private IAtomContainer getAllPlacedAtoms(IAtomContainer molecule) {
-        IAtomContainer placedAtoms = new AtomContainer();
+        IAtomContainer placedAtoms = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            if (molecule.getAtom(i).getFlag(CDKConstants.ISPLACED)) {
+            if (molecule.getAtom(i).getFlag(IChemObject.PLACED)) {
                 placedAtoms.addAtom(molecule.getAtom(i));
             }
         }
@@ -616,7 +616,7 @@ public class AtomPlacer3D {
      * @return      True if the atom is non-hydrogen and has not been placed
      */
     boolean isUnplacedHeavyAtom(IAtom atom) {
-        return (!atom.getFlag(CDKConstants.ISPLACED) && isHeavyAtom(atom));
+        return (!atom.getFlag(IChemObject.PLACED) && isHeavyAtom(atom));
     }
 
     /**
@@ -626,7 +626,7 @@ public class AtomPlacer3D {
      * @return      True if the atom is non-hydrogen and has been placed
      */
     boolean isPlacedHeavyAtom(IAtom atom) {
-        return atom.getFlag(CDKConstants.ISPLACED) && isHeavyAtom(atom);
+        return atom.getFlag(IChemObject.PLACED) && isHeavyAtom(atom);
     }
 
     /**
@@ -636,7 +636,7 @@ public class AtomPlacer3D {
      * @return      True if the atom is non-hydrogen and is aliphatic
      */
     boolean isAliphaticHeavyAtom(IAtom atom) {
-        return atom.getFlag(CDKConstants.ISALIPHATIC) && isHeavyAtom(atom);
+        return atom.getFlag(IChemObject.ALIPHATIC) && isHeavyAtom(atom);
     }
 
     /**
@@ -648,7 +648,7 @@ public class AtomPlacer3D {
      * @return      True if the atom is non-hydrogen and is in a ring
      */
     boolean isRingHeavyAtom(IAtom atom) {
-        return atom.getFlag(CDKConstants.ISINRING) && isHeavyAtom(atom);
+        return atom.getFlag(IChemObject.IN_RING) && isHeavyAtom(atom);
     }
 
     /**

@@ -230,6 +230,9 @@ public final class Smarts {
         private final Map<IAtom, LocalNbrs>   local   = new HashMap<>();
         private final Set<IAtom>              astereo = new HashSet<>();
         private final Set<IBond>              bstereo = new HashSet<>();
+        private int[]                         aoffset = new int[32];
+        private int[]                         boffset = new int[32];
+        private int bondPos;
         private int numRingOpens;
         private ReactionRole role = ReactionRole.None;
         private int numComponents;
@@ -303,8 +306,9 @@ public final class Smarts {
             if (peek() == ':') {
                 next();
                 int num = nextUnsignedInt();
-                if (num < 0) {
+                if (num <= 0) {
                     pos = mark;
+                    error = "map idx should >0";
                     return false;
                 }
                 atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, num);
@@ -1352,10 +1356,11 @@ public final class Smarts {
                         if (expr == null)
                             return false;
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num <= 0) {
+                            error = "map idx should >0";
                             return false;
-                        if (num != 0)
-                            atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, num);
+                        }
+                        atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, num);
                         // should be add end of expr
                         if (lastOp != 0)
                             return peek() == ']';
@@ -1505,16 +1510,20 @@ public final class Smarts {
         }
 
         private boolean parseAtomExpr() {
+            int mark = pos-1;
             QueryAtom atom = new QueryAtom(mol.getBuilder());
             atom.setProperty("cdk.smarts.iscomplex", true);
             Expr      expr = new Expr(Expr.Type.NONE);
             atom.setExpression(expr);
             if (!parseExplicitHydrogen(atom, expr) &&
                 !parseAtomExpr(atom, expr, '\0')) {
-                error = "Invalid atom expression";
+                if (error != null)
+                    error = "Invalid atom expression: " + error;
+                else
+                    error = "Invalid atom expression";
                 return false;
             }
-            append(atom);
+            append(atom, mark);
             return true;
         }
 
@@ -1573,7 +1582,13 @@ public final class Smarts {
             if (bond == null) {
                 bond = new QueryBond(null);
                 bond.setExpression(null);
+                bondPos = aoffset[mol.getAtomCount()-1];
             }
+
+            if (mol.getBondCount() == boffset.length)
+                boffset = Arrays.copyOf(boffset, boffset.length + (boffset.length>>>1));
+            boffset[mol.getBondCount()] = bondPos;
+
             bond.setAtom(prev, 0);
             rings[rnum] = addBond(prev, bond);
             numRingOpens++;
@@ -1595,6 +1610,10 @@ public final class Smarts {
                     return false;
                 }
                 this.bond = null;
+
+                if (mol.getBondCount() == boffset.length)
+                    boffset = Arrays.copyOf(boffset, boffset.length + (boffset.length>>>1));
+                boffset[mol.indexOf(bond)] = bondPos;
             } else if (openExpr == null) {
                 ((QueryBond) BondRef.deref(bond)).setExpression(new Expr(SINGLE_OR_AROMATIC));
             }
@@ -1819,26 +1838,33 @@ public final class Smarts {
                     Expr expr = ((QueryBond) BondRef.deref(bond)).getExpression();
                     expr = strip(expr, Expr.Type.STEREOCHEMISTRY);
                     if (expr == null)
-                        expr = new Expr(SINGLE_OR_AROMATIC);
+                        expr = new Expr(ORDER, 1);
                     else
-                        expr.and(new Expr(SINGLE_OR_AROMATIC));
+                        expr.and(new Expr(ORDER, 1));
                     ((QueryBond) bond).setExpression(expr);
                 }
             }
             return true;
         }
 
-        void append(IAtom atom) {
+        void append(IAtom atom, int inputPos) {
             if (curComponentId != 0)
                 atom.setProperty(CDKConstants.REACTION_GROUP, curComponentId);
+            if (mol.getAtomCount() == aoffset.length)
+                aoffset = Arrays.copyOf(aoffset, aoffset.length + (aoffset.length >>> 1));
+            aoffset[mol.getAtomCount()] = inputPos;
             mol.addAtom(atom);
             if (prev != null) {
                 if (bond == null) {
                     bond = new QueryBond(mol.getBuilder());
                     bond.setExpression(new Expr(SINGLE_OR_AROMATIC));
+                    bondPos = inputPos; // implicit bond is smae as the atom
                 }
                 bond.setAtom(prev, 0);
                 bond.setAtom(atom, 1);
+                if (mol.getBondCount() == boffset.length)
+                    boffset = Arrays.copyOf(boffset, boffset.length + (boffset.length>>>1));
+                boffset[mol.getBondCount()] = bondPos;
                 addBond(prev, bond);
                 addBond(atom, bond);
             } else
@@ -1847,10 +1873,14 @@ public final class Smarts {
             bond = null;
         }
 
-        void append(Expr expr) {
+        void append(Expr expr, int pos) {
             QueryAtom atom = new QueryAtom(mol.getBuilder());
             atom.setExpression(expr);
-            append(atom);
+            append(atom, pos);
+        }
+
+        void append(Expr expr) {
+            append(expr, pos-1);
         }
 
         private char peek() {
@@ -1868,7 +1898,7 @@ public final class Smarts {
             return c >= '0' && c <= '9';
         }
 
-        public boolean parse() {
+        boolean parse() {
             while (pos < str.length()) {
                 switch (str.charAt(pos++)) {
                     case '*':
@@ -1881,7 +1911,8 @@ public final class Smarts {
                         if (peek() == 'r') {
                             next();
                             append(new Expr(ELEMENT,
-                                            Elements.BROMINE.getAtomicNumber()));
+                                            Elements.BROMINE.getAtomicNumber()),
+                                   pos-2);
                         } else {
                             append(new Expr(ALIPHATIC_ELEMENT,
                                             Elements.BORON.getAtomicNumber()));
@@ -1891,7 +1922,8 @@ public final class Smarts {
                         if (peek() == 'l') {
                             next();
                             append(new Expr(ELEMENT,
-                                            Elements.CHLORINE.getAtomicNumber()));
+                                            Elements.CHLORINE.getAtomicNumber()),
+                                   pos-2);
                         } else {
                             append(new Expr(ALIPHATIC_ELEMENT,
                                             Elements.CARBON.getAtomicNumber()));
@@ -1970,6 +2002,7 @@ public final class Smarts {
                         if (prev == null)
                             return false;
                         unget();
+                        bondPos = pos;
                         if (!parseBondExpr())
                             return false;
                         break;
@@ -2224,7 +2257,7 @@ public final class Smarts {
             return new SmartsResult(smarts, state.pos, state.error);
         }
         processCxSmarts(mol);
-        return new SmartsResult(smarts);
+        return new SmartsResult(smarts, state.aoffset, state.boffset);
     }
 
     /**
@@ -2979,7 +3012,7 @@ public final class Smarts {
                         throw new IllegalArgumentException();
                     break;
                 default:
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Unsupported type" + expr.type());
             }
         }
 
@@ -3069,7 +3102,7 @@ public final class Smarts {
                         case BSTEREO_UPU: bdir = BSTEREO_DNU; break;
                     }
                 }
-                if (bexpr.isEmpty())
+                if (bexpr.isEmpty() || bexpr.equals("-"))
                     bexpr = bdir;
                 else
                     bexpr += ';' + bdir;
@@ -3114,6 +3147,8 @@ public final class Smarts {
                     return generateAtom(atom, expr.right());
                 if (expr.right().type() == Expr.Type.REACTION_ROLE)
                     return generateAtom(atom, expr.left());
+            } else if (expr.type() == REACTION_ROLE) {
+                return generateAtom(atom, new Expr(TRUE));
             }
 
             int mapidx = atom != null ? mapidx(atom) : 0;

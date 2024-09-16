@@ -27,13 +27,13 @@ package org.openscience.cdk.aromaticity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -49,7 +49,7 @@ class KekulizationTest {
 
     @Test
     void benzene() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -68,7 +68,7 @@ class KekulizationTest {
     // when a double bond is already set, it is not moved
     @Test
     void benzeneWithExistingDoubleBond() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -86,7 +86,7 @@ class KekulizationTest {
 
     @Test
     void pyrrole() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("N", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -102,7 +102,7 @@ class KekulizationTest {
 
     @Test
     void pyrroleWithExplicitHydrogen() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("N", 0, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -122,7 +122,7 @@ class KekulizationTest {
     @Test
     void pyrroleWithMissingHydrogen() throws Exception {
         Assertions.assertThrows(CDKException.class, () -> {
-            IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+            IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             m.addAtom(atom("N", 0, true));
             m.addAtom(atom("C", 1, true));
             m.addAtom(atom("C", 1, true));
@@ -140,7 +140,7 @@ class KekulizationTest {
     /** @cdk.inchi InChI=1S/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H */
     @Test
     void azulene() throws Exception {
-        IAtomContainer m = new AtomContainer(10, 11, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 0, true));
@@ -168,7 +168,7 @@ class KekulizationTest {
     /** @cdk.inchi InChI=1S/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H */
     @Test
     void pyridineOxide() throws Exception {
-        IAtomContainer m = new AtomContainer(7, 7, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("O", 0, false));
         m.addAtom(atom("N", 0, true));
         m.addAtom(atom("C", 1, true));
@@ -191,7 +191,7 @@ class KekulizationTest {
     /** @cdk.inchi InChI=1S/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H */
     @Test
     void pyridineOxideNonChargeSeparated() throws Exception {
-        IAtomContainer m = new AtomContainer(7, 7, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("O", 0, false));
         m.addAtom(atom("N", 0, true));
         m.addAtom(atom("C", 1, true));
@@ -211,7 +211,7 @@ class KekulizationTest {
 
     @Test
     void furane() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("O", 0, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -232,7 +232,7 @@ class KekulizationTest {
      */
     @Test
     void tellurophene() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("Te", 0, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -251,7 +251,7 @@ class KekulizationTest {
      */
     @Test
     void carbonAnion() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -271,7 +271,7 @@ class KekulizationTest {
      */
     @Test
     void tropylium() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -297,7 +297,7 @@ class KekulizationTest {
      */
     @Test
     void seleniumCation() throws Exception {
-        IAtomContainer m = new AtomContainer(6, 6, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -321,7 +321,7 @@ class KekulizationTest {
      */
     @Test
     void sixValentSulphur() throws Exception {
-        IAtomContainer m = new AtomContainer(18, 20, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, false));
         m.addAtom(atom("S", 0, true));
         m.addAtom(atom("O", 0, false));
@@ -369,7 +369,7 @@ class KekulizationTest {
      */
     @Test
     void biphenyl() throws Exception {
-        IAtomContainer m = new AtomContainer(12, 13, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -404,7 +404,7 @@ class KekulizationTest {
      */
     @Test
     void quinone() throws Exception {
-        IAtomContainer m = new AtomContainer(8, 8, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("O", 0, true));
         m.addAtom(atom("C", 0, true));
         m.addAtom(atom("C", 1, true));
@@ -429,7 +429,7 @@ class KekulizationTest {
      */
     @Test
     void fluorene() throws Exception {
-        IAtomContainer m = new AtomContainer(13, 15, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 2, false));
         m.addAtom(atom("C", 0, true));
         m.addAtom(atom("C", 1, true));
@@ -465,7 +465,7 @@ class KekulizationTest {
     /** @cdk.inchi InChI=1S/C5H5B/c1-2-4-6-5-3-1/h1-5H */
     @Test
     void borinine() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("B", 0, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -484,7 +484,7 @@ class KekulizationTest {
     // e.g. CHEMBL422679
     @Test
     void sulfurCation() throws Exception {
-        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("S", 1, true));
         m.addAtom(atom("C", 1, true));
         m.addAtom(atom("C", 1, true));
@@ -511,14 +511,14 @@ class KekulizationTest {
     static IAtom atom(String symbol, int h, boolean arom) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(h);
-        a.setFlag(CDKConstants.ISAROMATIC, arom);
+        a.setFlag(IChemObject.AROMATIC, arom);
         return a;
     }
 
     static IBond bond(IAtomContainer m, int v, int w, IBond.Order ord, boolean arom) {
         IBond b = new Bond(m.getAtom(v), m.getAtom(w));
         b.setOrder(ord);
-        b.setFlag(CDKConstants.ISAROMATIC, arom);
+        b.setFlag(IChemObject.AROMATIC, arom);
         return b;
     }
 }

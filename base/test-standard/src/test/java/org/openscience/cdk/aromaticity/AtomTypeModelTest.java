@@ -26,8 +26,8 @@ package org.openscience.cdk.aromaticity;
 
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -170,6 +170,11 @@ class AtomTypeModelTest {
         test(smiles("O=C1NC=CC=C1"), -1, -1, 2, 1, 1, 1, 1);
     }
 
+    @Test
+    void S3() throws Exception {
+        test(smiles("C1=CS[S+]([O-])S1"), 1, 1, 2, 0, -1, 2);
+    }
+
     static IAtomContainer smiles(String smi) throws Exception {
         return new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles(smi);
     }
@@ -177,6 +182,7 @@ class AtomTypeModelTest {
     /** Check the electron contribution is the same as expected. */
     static void test(IAtomContainer m, int... expected) throws CDKException {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
-        assertThat(model.contribution(m, new RingSearch(m)), is(expected));
+        Cycles.markRingAtomsAndBonds(m);
+        assertThat(model.contribution(m), is(expected));
     }
 }

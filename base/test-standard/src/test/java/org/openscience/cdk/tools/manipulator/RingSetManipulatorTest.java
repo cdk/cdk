@@ -28,7 +28,7 @@ import java.util.Vector;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -225,7 +225,7 @@ class RingSetManipulatorTest extends CDKTestCase {
         RingSetManipulator.markAromaticRings(ringSet);
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
             IRing ring = (IRing) ringSet.getAtomContainer(i);
-            Assertions.assertTrue(ring.getFlag(CDKConstants.ISAROMATIC));
+            Assertions.assertTrue(ring.getFlag(IChemObject.AROMATIC));
         }
     }
 

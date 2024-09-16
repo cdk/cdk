@@ -22,10 +22,11 @@ package org.openscience.cdk.config;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.test.CDKTestCase;
@@ -171,7 +172,7 @@ class XMLIsotopeFactoryTest extends CDKTestCase {
 
     @Test
     void testConfigureAtoms_IAtomContainer() throws Exception {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("H"));
         container.addAtom(new Atom("N"));

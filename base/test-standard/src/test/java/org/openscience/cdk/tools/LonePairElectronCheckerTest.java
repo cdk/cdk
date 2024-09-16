@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -60,7 +59,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
     @Test
     void testAllSaturated_Formaldehyde() throws Exception {
         // test Formaldehyde, CH2=O with explicit hydrogen
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom c = new Atom("C");
         Atom h1 = new Atom("H");
         Atom h2 = new Atom("H");
@@ -94,7 +93,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
 
         Bond b1 = new Bond(c, s, IBond.Order.SINGLE);
 
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(c);
         m.addAtom(s);
         m.addBond(b1);
@@ -118,7 +117,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
         Atom cl = new Atom("Cl");
         Bond b1 = new Bond(c1, cl, IBond.Order.SINGLE);
 
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(c1);
         m.addAtom(cl);
         m.addBond(b1);
@@ -141,7 +140,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
         o.setImplicitHydrogenCount(1);
         Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
 
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(c1);
         m.addAtom(o);
         m.addBond(b1);
@@ -158,7 +157,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
     @Test
     void testNewSaturate_Methyl_alcohol_AddH() throws Exception {
         // test Methyl alcohol, CH3OH
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("O"));
         for (int i = 0; i < 4; i++)
@@ -189,7 +188,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
         o.setImplicitHydrogenCount(2);
         Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
 
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(c1);
         m.addAtom(o);
         m.addBond(b1);
@@ -212,7 +211,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
         o.setFormalCharge(-1);
         Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
 
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(c1);
         m.addAtom(o);
         m.addBond(b1);
@@ -232,7 +231,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
         Atom n = new Atom("N");
         n.setImplicitHydrogenCount(3);
 
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(n);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
@@ -254,7 +253,7 @@ class LonePairElectronCheckerTest extends CDKTestCase {
         n.setFormalCharge(+1);
         Bond b1 = new Bond(c, n, IBond.Order.SINGLE);
 
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(c);
         m.addAtom(n);
         m.addBond(b1);

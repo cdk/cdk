@@ -26,6 +26,7 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -115,12 +116,12 @@ public class AtomTypeTools {
                 atom2.setProperty(
                         CDKConstants.CHEMICAL_GROUP_CONSTANT,
                         ringSystemClassifier(sring, getSubgraphSmiles(sring, molecule)));
-                atom2.setFlag(CDKConstants.ISINRING, true);
-                atom2.setFlag(CDKConstants.ISALIPHATIC, false);
+                atom2.setFlag(IChemObject.IN_RING, true);
+                atom2.setFlag(IChemObject.ALIPHATIC, false);
             } else {
-                atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, CDKConstants.ISNOTINRING);
-                atom2.setFlag(CDKConstants.ISINRING, false);
-                atom2.setFlag(CDKConstants.ISALIPHATIC, true);
+                atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, IChemObject.NOT_IN_RING);
+                atom2.setFlag(IChemObject.IN_RING, false);
+                atom2.setFlag(IChemObject.ALIPHATIC, true);
             }
             try {
                 hoseCode = hcg.getHOSECode(molecule, atom2, 3);

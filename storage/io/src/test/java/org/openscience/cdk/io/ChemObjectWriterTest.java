@@ -25,11 +25,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Reaction;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 import java.io.ByteArrayOutputStream;
@@ -50,7 +50,7 @@ abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.ChemObje
     }
 
     private static final IChemObject[] allChemObjectsTypes = {new ChemFile(), new ChemModel(), new Reaction(),
-            new AtomContainerSet(), new AtomContainer()};
+            new AtomContainerSet(), SilentChemObjectBuilder.getInstance().newAtomContainer()};
 
     /**
      * Unit tests that iterates over all common objects that can be

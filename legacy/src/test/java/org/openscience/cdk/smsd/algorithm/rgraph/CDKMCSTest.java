@@ -31,7 +31,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -197,8 +196,8 @@ class CDKMCSTest extends CDKTestCase {
     void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception {
         String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
-        IAtomContainer mol = new AtomContainer();
-        IAtomContainer temp = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer temp = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         QueryAtomContainer query1;
         QueryAtomContainer query2;
 
@@ -230,8 +229,8 @@ class CDKMCSTest extends CDKTestCase {
     void testGetOverlaps_IAtomContainer_IAtomContainer() throws Exception {
         String file1 = "org/openscience/cdk/smsd/algorithm/5SD.mol";
         String file2 = "org/openscience/cdk/smsd/algorithm/ADN.mol";
-        IAtomContainer mol1 = new AtomContainer();
-        IAtomContainer mol2 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer mol2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
         new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
@@ -265,15 +264,15 @@ class CDKMCSTest extends CDKTestCase {
     void testSFBug999330() throws Exception {
         String file1 = "org/openscience/cdk/smsd/algorithm/5SD.mol";
         String file2 = "org/openscience/cdk/smsd/algorithm/ADN.mol";
-        IAtomContainer mol1 = new AtomContainer();
-        IAtomContainer mol2 = new AtomContainer();
+        IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer mol2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
         new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
-        mol2 = new AtomContainer(permutor.next());
+        mol2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, permutor.next());
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
@@ -315,9 +314,9 @@ class CDKMCSTest extends CDKTestCase {
 
     @Test
     void testIsIsomorph_IAtomContainer_IAtomContainer() throws Exception {
-        AtomContainer ac1 = new AtomContainer();
+        IAtomContainer ac1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac1.addAtom(new Atom("C"));
-        AtomContainer ac2 = new AtomContainer();
+        IAtomContainer ac2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac2.addAtom(new Atom("C"));
         Assertions.assertTrue(CDKMCS.isIsomorph(ac1, ac2, true));
         Assertions.assertTrue(CDKMCS.isSubgraph(ac1, ac2, true));

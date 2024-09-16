@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
@@ -159,8 +158,8 @@ class SMSDTest {
     void testSet_String_String() throws CDKException, IOException {
         String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
-        IAtomContainer query = new AtomContainer();
-        IAtomContainer target = new AtomContainer();
+        IAtomContainer query = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer target = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import javax.vecmath.Point2d;
 import java.io.ByteArrayOutputStream;
@@ -80,7 +80,7 @@ class IdentityTemplateLibraryTest {
 
     @Test
     void assignEthanolNoEntry() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("C"));
@@ -95,7 +95,7 @@ class IdentityTemplateLibraryTest {
 
     @Test
     void assignEthanol() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("C"));

@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.BitSet;
 
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
@@ -143,7 +143,7 @@ public final class Kekulization {
             if (atom.getImplicitHydrogenCount() == null)
                 throw new IllegalArgumentException("atom " + (i + 1) + " had unset implicit hydrogen count");
 
-            if (!atom.getFlag(ISAROMATIC)) continue;
+            if (!atom.getFlag(AROMATIC)) continue;
 
             // count preexisting pi-bonds, a higher bond order causes a skip
             int nPiBonds = 0;

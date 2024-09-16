@@ -22,6 +22,7 @@ package org.openscience.cdk;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -526,25 +527,25 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /** {@inheritDoc} */
     @Override
     public boolean isAromatic() {
-        return getFlag(CDKConstants.ISAROMATIC);
+        return getFlag(IChemObject.AROMATIC);
     }
 
     /** {@inheritDoc} */
     @Override
     public void setIsAromatic(boolean arom) {
-        setFlag(CDKConstants.ISAROMATIC, arom);
+        setFlag(IChemObject.AROMATIC, arom);
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isInRing() {
-        return getFlag(CDKConstants.ISINRING);
+        return getFlag(IChemObject.IN_RING);
     }
 
     /** {@inheritDoc} */
     @Override
     public void setIsInRing(boolean ring) {
-        setFlag(CDKConstants.ISINRING, ring);
+        setFlag(IChemObject.IN_RING, ring);
     }
 
     /**

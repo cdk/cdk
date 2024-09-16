@@ -21,8 +21,8 @@ package org.openscience.cdk.layout;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -47,7 +47,7 @@ class HydrogenPlacerTest extends CDKTestCase {
     void testAtomWithoutCoordinates() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-            hydrogenPlacer.placeHydrogens2D(new AtomContainer(), new Atom(), 1.5);
+            hydrogenPlacer.placeHydrogens2D(DefaultChemObjectBuilder.getInstance().newAtomContainer(), new Atom(), 1.5);
         });
     }
 
@@ -62,7 +62,7 @@ class HydrogenPlacerTest extends CDKTestCase {
     @Test
     void testNoConnections() {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-        AtomContainer  container      = new AtomContainer();
+        IAtomContainer  container     = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom           atom         = new Atom("C", new Point2d(0, 0));
         container.addAtom(atom);
         hydrogenPlacer.placeHydrogens2D(container, atom, 1.5);
@@ -76,7 +76,7 @@ class HydrogenPlacerTest extends CDKTestCase {
         // h1 has no coordinates
         IAtom h1 = new Atom("H");
         IAtom h2 = new Atom("H", new Point2d(0, 0));
-        IAtomContainer m = new AtomContainer();
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(h1);
         m.addAtom(h2);
         m.addBond(new Bond(h1, h2));
@@ -92,7 +92,7 @@ class HydrogenPlacerTest extends CDKTestCase {
             // c2 is unplaced
             IAtom c1 = new Atom("C", new Point2d(0, 0));
             IAtom c2 = new Atom("C");
-            IAtomContainer m = new AtomContainer();
+            IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             m.addAtom(c1);
             m.addAtom(c2);
             m.addBond(new Bond(c1, c2));
@@ -103,7 +103,7 @@ class HydrogenPlacerTest extends CDKTestCase {
     /** @cdk.bug 933572 */
     @Test
     void testBug933572() throws Exception {
-        IAtomContainer ac = new AtomContainer();
+        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("H"));
         ac.getAtom(0).setPoint2d(new Point2d(0, 0));
         addExplicitHydrogens(ac);
@@ -117,7 +117,7 @@ class HydrogenPlacerTest extends CDKTestCase {
     @Test
     void testPlaceHydrogens2D() throws Exception {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-        IAtomContainer dichloromethane = new AtomContainer();
+        IAtomContainer dichloromethane = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom carbon = new Atom("C");
         Point2d carbonPos = new Point2d(0.0, 0.0);
         carbon.setPoint2d(carbonPos);

@@ -870,10 +870,21 @@ class AbbreviationsTest {
     }
 
     @Test
+    void keepIsotopes() throws Exception {
+        String smi = "c1ccccc1C#[15N]";
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C#N CN");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        IAtomContainer mol = smi(smi);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(0));
+    }
+
+    @Test
     void loadFromFile() throws Exception {
         Abbreviations factory = new Abbreviations();
         assertThat(factory.loadFromFile("obabel_superatoms.smi"), is(27));
         assertThat(factory.loadFromFile("/org/openscience/cdk/depict/obabel_superatoms.smi"), is(27));
     }
-
 }

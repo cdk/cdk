@@ -23,7 +23,6 @@ import javax.vecmath.Point2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -52,7 +51,7 @@ class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     void uninitalisedError() {
         Assertions.assertThrows(IllegalStateException.class,
-                                () -> {new BasicGroupCountDescriptor().calculate(new AtomContainer());});
+                                () -> {new BasicGroupCountDescriptor().calculate(DefaultChemObjectBuilder.getInstance().newAtomContainer());});
     }
 
     @Test

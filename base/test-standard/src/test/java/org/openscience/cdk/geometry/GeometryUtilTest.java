@@ -27,7 +27,6 @@ import org.hamcrest.number.IsCloseTo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -79,7 +78,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom1);
         container.addAtom(atom2);
         Assertions.assertTrue(GeometryUtil.has2DCoordinates(container));
@@ -88,7 +87,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint3d(new Point3d(1, 1, 1));
         atom2 = new Atom("C");
         atom2.setPoint3d(new Point3d(1, 0, 5));
-        container = new AtomContainer();
+        container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom1);
         container.addAtom(atom2);
         Assertions.assertFalse(GeometryUtil.has2DCoordinates(container));
@@ -96,14 +95,14 @@ class GeometryUtilTest extends CDKTestCase {
 
     @Test
     void testHas2DCoordinates_EmptyAtomContainer() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertFalse(GeometryUtil.has2DCoordinates(container));
         Assertions.assertFalse(GeometryUtil.has2DCoordinates((IAtomContainer) null));
     }
 
     @Test
     void testHas2DCoordinates_Partial() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
@@ -122,13 +121,13 @@ class GeometryUtilTest extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molOne = reader.read(new AtomContainer());
+        molOne = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
         Assertions.assertTrue(GeometryUtil.has2DCoordinates(molOne));
     }
 
     @Test
     void get2DCoordinateCoverage_EmptyAtomContainer() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertEquals(GeometryUtil.CoordinateCoverage.NONE, GeometryUtil.get2DCoordinateCoverage(container));
         Assertions.assertEquals(GeometryUtil.CoordinateCoverage.NONE, GeometryUtil.get2DCoordinateCoverage(null));
     }
@@ -136,7 +135,7 @@ class GeometryUtilTest extends CDKTestCase {
     @Test
     void get2DCoordinateCoverage_Partial() {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom atom1 = new Atom("C");
         IAtom atom2 = new Atom("C");
@@ -156,7 +155,7 @@ class GeometryUtilTest extends CDKTestCase {
     @Test
     void get2DCoordinateCoverage_Full() {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom atom1 = new Atom("C");
         IAtom atom2 = new Atom("C");
@@ -177,7 +176,7 @@ class GeometryUtilTest extends CDKTestCase {
     @Test
     void get2DCoordinateCoverage_None_3D() {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom atom1 = new Atom("C");
         IAtom atom2 = new Atom("C");
@@ -197,7 +196,7 @@ class GeometryUtilTest extends CDKTestCase {
 
     @Test
     void testTranslateAllPositive_IAtomContainer() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom = new Atom(Elements.CARBON);
         atom.setPoint2d(new Point2d(-3, -2));
         container.addAtom(atom);
@@ -224,11 +223,11 @@ class GeometryUtilTest extends CDKTestCase {
         IAtomContainer molTwo;
         Map<Integer, Integer> mappedAtoms = new HashMap<>();
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molOne = reader.read(new AtomContainer());
+        molOne = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
 
         ins = this.getClass().getResourceAsStream(filenameMolTwo);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molTwo = reader.read(new AtomContainer());
+        molTwo = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
 
         mappedAtoms = AtomMappingTools.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
         //logger.debug("mappedAtoms:"+mappedAtoms.toString());
@@ -352,7 +351,7 @@ class GeometryUtilTest extends CDKTestCase {
 
     @Test
     void testGet2DCenter_arrayIAtom() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
@@ -428,7 +427,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom1);
         container.addAtom(atom2);
         Assertions.assertEquals(2, GeometryUtil.has2DCoordinatesNew(container));
@@ -437,7 +436,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 1));
         atom2 = new Atom("C");
         atom2.setPoint3d(new Point3d(1, 0, 1));
-        container = new AtomContainer();
+        container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom1);
         container.addAtom(atom2);
         Assertions.assertEquals(1, GeometryUtil.has2DCoordinatesNew(container));
@@ -446,7 +445,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint3d(new Point3d(1, 1, 1));
         atom2 = new Atom("C");
         atom2.setPoint3d(new Point3d(1, 0, 5));
-        container = new AtomContainer();
+        container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom1);
         container.addAtom(atom2);
         Assertions.assertEquals(0, GeometryUtil.has2DCoordinatesNew(container));
@@ -458,7 +457,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom1);
         container.addAtom(atom2);
         Assertions.assertFalse(GeometryUtil.has3DCoordinates(container));
@@ -467,7 +466,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint3d(new Point3d(1, 1, 1));
         atom2 = new Atom("C");
         atom2.setPoint3d(new Point3d(1, 0, 5));
-        container = new AtomContainer();
+        container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atom1);
         container.addAtom(atom2);
         Assertions.assertTrue(GeometryUtil.has3DCoordinates(container));
@@ -475,14 +474,14 @@ class GeometryUtilTest extends CDKTestCase {
 
     @Test
     void testHas3DCoordinates_EmptyAtomContainer() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertFalse(GeometryUtil.has3DCoordinates(container));
         Assertions.assertFalse(GeometryUtil.has3DCoordinates((IAtomContainer) null));
     }
 
     @Test
     void get3DCoordinateCoverage_EmptyAtomContainer() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertEquals(GeometryUtil.CoordinateCoverage.NONE, GeometryUtil.get3DCoordinateCoverage(container));
         Assertions.assertEquals(GeometryUtil.CoordinateCoverage.NONE, GeometryUtil.get3DCoordinateCoverage(null));
     }
@@ -490,7 +489,7 @@ class GeometryUtilTest extends CDKTestCase {
     @Test
     void get3DCoordinateCoverage_Partial() {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom atom1 = new Atom("C");
         IAtom atom2 = new Atom("C");
@@ -510,7 +509,7 @@ class GeometryUtilTest extends CDKTestCase {
     @Test
     void get3DCoordinateCoverage_Full() {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom atom1 = new Atom("C");
         IAtom atom2 = new Atom("C");
@@ -531,7 +530,7 @@ class GeometryUtilTest extends CDKTestCase {
     @Test
     void get3DCoordinateCoverage_None_2D() {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom atom1 = new Atom("C");
         IAtom atom2 = new Atom("C");
@@ -586,7 +585,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom2.setPoint2d(new Point2d(1, 0));
         IAtom atom3 = new Atom("C");
         atom3.setPoint2d(new Point2d(5, 0));
-        IAtomContainer acont = new AtomContainer();
+        IAtomContainer acont = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         acont.addAtom(atom1);
         acont.addAtom(atom2);
         acont.addAtom(atom3);
@@ -601,7 +600,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 0));
         IAtom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(5, 0));
-        IAtomContainer acont = new AtomContainer();
+        IAtomContainer acont = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         acont.addAtom(atom1);
         acont.addAtom(atom2);
         Assertions.assertEquals(atom2, GeometryUtil.getClosestAtom(1.0, 0.0, acont, atom1));
@@ -617,7 +616,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(-1, -1));
         IAtom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer acont = new AtomContainer();
+        IAtomContainer acont = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         acont.addAtom(atom1);
         acont.addAtom(atom2);
         Assertions.assertEquals(atom2, GeometryUtil.getClosestAtom(acont, atom1));
@@ -630,7 +629,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(0, 1));
         IAtom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer react1 = new AtomContainer();
+        IAtomContainer react1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         react1.addAtom(atom1);
         react1.addAtom(atom2);
         IAtomContainer react2 = react1.clone();
@@ -661,7 +660,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(0, 0));
         IAtom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(0, 1));
-        IAtomContainer react1 = new AtomContainer();
+        IAtomContainer react1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         react1.addAtom(atom1);
         react1.addAtom(atom2);
         IAtomContainer react2 = react1.clone();
@@ -686,7 +685,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(0, 0));
         IAtom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer acont = new AtomContainer();
+        IAtomContainer acont = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IReaction reaction = new Reaction();
         reaction.addReactant(acont);
         acont.addAtom(atom1);
@@ -708,7 +707,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(0, 0));
         IAtom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer acont = new AtomContainer();
+        IAtomContainer acont = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reaction.addReactant(acont);
         acont.addAtom(atom1);
         acont.addAtom(atom2);
@@ -719,7 +718,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(0, 0));
         atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(3, 0));
-        acont = new AtomContainer();
+        acont = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         reaction.addProduct(acont);
         acont.addAtom(atom1);
         acont.addAtom(atom2);
@@ -734,7 +733,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(0, 1));
         IAtom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer react1 = new AtomContainer();
+        IAtomContainer react1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IReaction reaction = new Reaction();
         reaction.addReactant(react1);
         react1.addAtom(atom1);
@@ -770,7 +769,7 @@ class GeometryUtilTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(0, 0));
         IAtom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer react1 = new AtomContainer();
+        IAtomContainer react1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IReaction reaction = new Reaction();
         reaction.addReactant(react1);
         react1.addAtom(atom1);
@@ -818,7 +817,7 @@ class GeometryUtilTest extends CDKTestCase {
 
     @Test
     void medianBondLength() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 1.5)));
         container.addAtom(atomAt(new Point2d(0, -1.5)));
@@ -832,7 +831,7 @@ class GeometryUtilTest extends CDKTestCase {
     @Test
     void medianBondLengthNoBonds() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            IAtomContainer container = new AtomContainer();
+            IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             container.addAtom(atomAt(new Point2d(0, 0)));
             container.addAtom(atomAt(new Point2d(0, 1.5)));
             container.addAtom(atomAt(new Point2d(0, -1.5)));
@@ -844,7 +843,7 @@ class GeometryUtilTest extends CDKTestCase {
     @Test
     void medianBondLengthNoPoints() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            IAtomContainer container = new AtomContainer();
+            IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             container.addAtom(atomAt(new Point2d(0, 0)));
             container.addAtom(atomAt(new Point2d(0, 1.5)));
             container.addAtom(atomAt(null));
@@ -858,7 +857,7 @@ class GeometryUtilTest extends CDKTestCase {
 
     @Test
     void medianBondLengthOneBond() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 1.5)));
         container.addBond(0, 1, IBond.Order.SINGLE);
@@ -867,7 +866,7 @@ class GeometryUtilTest extends CDKTestCase {
 
     @Test
     void medianBondLengthWithZeroLengthBonds() {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 0)));
         container.addAtom(atomAt(new Point2d(0, 0)));
@@ -955,7 +954,7 @@ class GeometryUtilTest extends CDKTestCase {
     }
 
     private int alignmentTestHelper(IAtom zero, IAtom... pos) {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(zero);
         for (IAtom atom : pos) {
             mol.addAtom(atom);

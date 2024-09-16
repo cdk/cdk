@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,7 +50,7 @@ class IsomorphismTesterTest extends CDKTestCase {
 
     @BeforeEach
     void setUp() {
-        pinene_1 = new AtomContainer();
+        pinene_1 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         pinene_1.addAtom(new Atom("C")); // 1
         pinene_1.addAtom(new Atom("C")); // 2
         pinene_1.addAtom(new Atom("C")); // 3
@@ -74,7 +74,7 @@ class IsomorphismTesterTest extends CDKTestCase {
         pinene_1.addBond(7, 8, IBond.Order.SINGLE); // 10
         pinene_1.addBond(7, 9, IBond.Order.SINGLE); // 11
 
-        pinene_2 = new AtomContainer();
+        pinene_2 = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         pinene_2.addAtom(new Atom("C")); // 1
         pinene_2.addAtom(new Atom("C")); // 2
         pinene_2.addAtom(new Atom("C")); // 3
@@ -98,7 +98,7 @@ class IsomorphismTesterTest extends CDKTestCase {
         pinene_2.addBond(7, 9, IBond.Order.DOUBLE); // 10
         pinene_2.addBond(7, 6, IBond.Order.SINGLE); // 11
 
-        pinene_non = new AtomContainer();
+        pinene_non = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         pinene_non.addAtom(new Atom("C")); // 1
         pinene_non.addAtom(new Atom("C")); // 2
         pinene_non.addAtom(new Atom("C")); // 3

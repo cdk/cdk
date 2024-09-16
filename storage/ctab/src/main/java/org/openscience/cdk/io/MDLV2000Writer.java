@@ -53,6 +53,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -73,6 +74,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -124,8 +126,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public static final String OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
     public static final String OptWriteDefaultProperties    = "WriteDefaultProperties";
     public static final String OptProgramName               = "ProgramName";
+    public static final String OptWriteData = "writeProperties";
+    public static final String OptTruncateLongData  = "TruncateLongData";
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
+    private static final int MAX_SDTAG_LENGTH = 200;
 
     // regular expression to capture R groups with attached numbers
     private final Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
@@ -214,11 +219,32 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     @Deprecated
     private BooleanIOSetting writeQueryFormatValencies;
 
-    private BooleanIOSetting writeDefaultProps;
+    private BooleanIOSetting writeTrailingZeros;
+
+    private BooleanIOSetting writeDataOpt;
+
+    private BooleanIOSetting truncateDataOpt;
 
     private StringIOSetting programNameOpt;
 
+    private Set<String> acceptedSdTags = null;
+
     private BufferedWriter writer;
+
+    /**
+     * A list of properties used by CDK algorithms which should not be
+     * serialized into the SD file format (noise).
+     */
+    static final Set<String> SD_TAGS_TO_IGNORE = new HashSet<>();
+
+    static {
+        SD_TAGS_TO_IGNORE.add(InvPair.CANONICAL_LABEL);
+        SD_TAGS_TO_IGNORE.add(InvPair.INVARIANCE_PAIR);
+        SD_TAGS_TO_IGNORE.add(CDKConstants.CTAB_SGROUPS);
+        // TITLE/REMARK will be written in Molfile header
+        SD_TAGS_TO_IGNORE.add(CDKConstants.TITLE);
+        SD_TAGS_TO_IGNORE.add(CDKConstants.REMARK);
+    }
 
     /**
      * Constructs a new MDLWriter that can write an {@link IAtomContainer}
@@ -247,6 +273,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     public MDLV2000Writer() {
         this(new StringWriter());
+    }
+
+    void setAcceptedSdTags(Set<String> acceptedSdTags) {
+        this.acceptedSdTags = acceptedSdTags;
     }
 
     @Override
@@ -529,7 +559,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             line.append(formatMDLInt(atomprops[0], 2)); // dd (mass-number)
             line.append(formatMDLInt(atomprops[1], 3)); // ccc (charge)
             int last = atomprops.length-1;
-            if (!writeDefaultProps.isSet())
+            if (!writeTrailingZeros.isSet())
             {
                 while (last >= 0) {
                     if (atomprops[last] != 0)
@@ -656,7 +686,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     default:
                         line.append("0");
                 }
-                if (writeDefaultProps.isSet())
+                if (writeTrailingZeros.isSet())
                     line.append("  0  0  0");
                 line.append('\n');
                 writer.write(line.toString());
@@ -800,6 +830,16 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // close molecule
         writer.write("M  END");
         writer.write('\n');
+
+        // write non-structural data (mol properties in our case)
+        if (writeDataOpt.isSet()) {
+            MDLV2000Writer.writeNonStructuralData(writer,
+                                                  container,
+                                                  SD_TAGS_TO_IGNORE,
+                                                  acceptedSdTags,
+                                                  truncateDataOpt.isSet());
+        }
+
         writer.flush();
     }
 
@@ -1389,6 +1429,80 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         return s;
     }
 
+    private static String replaceInvalidHeaderChars(String headerKey) {
+        return headerKey.replaceAll("[-<>.=% ]", "_");
+    }
+
+    private static boolean isPrimitiveDataValue(Object obj) {
+        return obj == null ||
+                obj.getClass() == String.class ||
+                obj.getClass() == Integer.class ||
+                obj.getClass() == Double.class ||
+                obj.getClass() == Boolean.class ||
+                obj.getClass() == Float.class ||
+                obj.getClass() == Byte.class ||
+                obj.getClass() == Short.class ||
+                obj.getClass() == Character.class;
+    }
+
+    /**
+     * Write non-structural SDfile key/value pairs.
+     */
+    static void writeNonStructuralData(BufferedWriter wtr,
+                                       final IAtomContainer mol,
+                                       final Set<String> reject,
+                                       final Set<String> accept,
+                                       final boolean truncate) throws IOException {
+        Map<Object, Object> sdFields = mol.getProperties();
+        if (sdFields == null)
+            return;
+
+        for (Map.Entry<Object,Object> e : sdFields.entrySet()) {
+
+            final String key = e.getKey().toString();
+            if (reject != null && reject.contains(key))
+                continue;
+            if (accept != null && !accept.contains(key))
+                continue;
+
+            final String cleanHeaderKey = replaceInvalidHeaderChars(key);
+            if (!cleanHeaderKey.equals(key))
+                logger.info("Replaced characters in SDfile data header: ",
+                            key, " written as: ", cleanHeaderKey);
+
+            final Object val = e.getValue();
+            if (!isPrimitiveDataValue(val)) {
+                logger.info("Skipped property " + key,
+                            " because only primitive and string properties",
+                            " can be written by SDFWriter");
+                continue;
+            }
+
+            wtr.write("> <");
+            wtr.write(cleanHeaderKey);
+            wtr.write(">\n");
+
+            if (val == null)
+                continue;
+
+            String valStr = val.toString();
+            if (truncate && valStr.length() > MAX_SDTAG_LENGTH) {
+                StringBuilder sb = new StringBuilder();
+                for (String line : valStr.split("\n")) {
+                    if (line.length() > MAX_SDTAG_LENGTH)
+                        sb.append(line, 0, MAX_SDTAG_LENGTH);
+                    else
+                        sb.append(line);
+                    sb.append("\n");
+                }
+                valStr = sb.toString();
+            }
+            wtr.append(valStr);
+            wtr.append("\n\n");
+        }
+
+    }
+
     /**
      * Initializes IO settings.<br>
      * Please note with regards to "writeAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
@@ -1403,14 +1517,20 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                                                  "Should aromatic bonds be written as bond type 4?", "false"));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting(OptWriteQueryFormatValencies,
                                                                     IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
-        writeDefaultProps = addSetting(new BooleanIOSetting(OptWriteDefaultProperties,
-                                                            IOSetting.Importance.LOW,
-                                                            "Write trailing zero's on atom/bond property blocks even if they're not used.",
-                                                            "true"));
+        writeTrailingZeros = addSetting(new BooleanIOSetting(OptWriteDefaultProperties,
+                                                             IOSetting.Importance.LOW,
+                                                             "Write trailing zero's on atom/bond property blocks even if they're not used.",
+                                                             "true"));
         programNameOpt = addSetting(new StringIOSetting(OptProgramName,
                                                         IOSetting.Importance.LOW,
                                                         "Program name to write at the top of the molfile header, should be exactly 8 characters long",
                                                         "CDK"));
+        writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
+                                                       IOSetting.Importance.LOW,
+                                                       "Should molecule properties be written as non-structural data", "false"));
+        truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
+                                                          IOSetting.Importance.LOW,
+                                                          "Truncate long data files >200 characters", "false"));
     }
 
     /**

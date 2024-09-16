@@ -21,7 +21,6 @@ package org.openscience.cdk.tools.manipulator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -976,7 +975,7 @@ class MolecularFormulaManipulatorTest extends CDKTestCase {
      */
     @Test
     void testSingleAtomFromSmiles() throws CDKException {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
 
         // previously performed inside SmilesParser
@@ -1148,7 +1147,7 @@ class MolecularFormulaManipulatorTest extends CDKTestCase {
      */
     @Test
     void testHelium() {
-        IAtomContainer helium = new AtomContainer();
+        IAtomContainer helium = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         helium.addAtom(new Atom("He"));
 
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);
@@ -1161,7 +1160,7 @@ class MolecularFormulaManipulatorTest extends CDKTestCase {
      */
     @Test
     void testAmericum() {
-        IAtomContainer helium = new AtomContainer();
+        IAtomContainer helium = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         helium.addAtom(new Atom("Am"));
 
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);

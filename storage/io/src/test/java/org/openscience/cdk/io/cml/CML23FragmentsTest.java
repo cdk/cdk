@@ -25,6 +25,7 @@ package org.openscience.cdk.io.cml;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
@@ -243,7 +244,7 @@ class CML23FragmentsTest extends CDKTestCase {
         Assertions.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assertions.assertEquals(Order.SINGLE, bond.getOrder());
-        Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
     }
 
     @Test
@@ -256,7 +257,7 @@ class CML23FragmentsTest extends CDKTestCase {
         Assertions.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assertions.assertEquals(Order.DOUBLE, bond.getOrder());
-        Assertions.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
     }
 
     @Test

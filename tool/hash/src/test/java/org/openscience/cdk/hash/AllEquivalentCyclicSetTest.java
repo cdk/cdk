@@ -27,8 +27,8 @@ package org.openscience.cdk.hash;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -113,7 +113,7 @@ class AllEquivalentCyclicSetTest {
      * @cdk.inchi InChI=1S/C10H16S4/c1-7-5-8(2)13-10(4,14-8)6-9(3,11-7)12-7/h5-6H2,1-4H3
      */
     private IAtomContainer cid241107() {
-        IAtomContainer m = new AtomContainer(14, 16, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom[] as = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("S"),
                 new Atom("C"), new Atom("S"), new Atom("C"), new Atom("C"), new Atom("S"), new Atom("S"),
                 new Atom("C"), new Atom("C"), new Atom("C"),};
@@ -133,7 +133,7 @@ class AllEquivalentCyclicSetTest {
      * @cdk.inchi InChI=1S/C10H16S4/c1-7-5-8(2)13-9(3,11-7)6-10(4,12-7)14-8/h5-6H2,1-4H3
      */
     private IAtomContainer cid138898() {
-        IAtomContainer m = new AtomContainer(14, 16, 0, 0);
+        IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom[] as = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("S"),
                 new Atom("C"), new Atom("S"), new Atom("C"), new Atom("C"), new Atom("S"), new Atom("S"),
                 new Atom("C"), new Atom("C"), new Atom("C"),};

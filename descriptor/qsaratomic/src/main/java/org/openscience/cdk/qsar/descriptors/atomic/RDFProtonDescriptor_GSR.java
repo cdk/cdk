@@ -25,7 +25,6 @@ import java.util.List;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -34,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IElement;
@@ -211,7 +211,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         for (IBond bond : varAtomContainer.bonds()) {
             ringsWithThisBond = varRingSet.getRings(bond);
             if (ringsWithThisBond.getAtomContainerCount() > 0) {
-                bond.setFlag(CDKConstants.ISINRING, true);
+                bond.setFlag(IChemObject.IN_RING, true);
             }
         }
 
@@ -221,7 +221,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         for (int w = 0; w < varAtomContainer.getAtomCount(); w++) {
             ringsWithThisAtom = varRingSet.getRings(varAtomContainer.getAtom(w));
             if (ringsWithThisAtom.getAtomContainerCount() > 0) {
-                varAtomContainer.getAtom(w).setFlag(CDKConstants.ISINRING, true);
+                varAtomContainer.getAtom(w).setFlag(IChemObject.IN_RING, true);
             }
         }
 
@@ -284,7 +284,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
 
                             // if the bond is in a cyclohexane-like ring (a ring with 5 or more atoms, not aromatic)
                             // the boolean "theBondIsInA6MemberedRing" is set to true
-                            if (!thirdBond.getFlag(CDKConstants.ISAROMATIC)) {
+                            if (!thirdBond.getFlag(IChemObject.AROMATIC)) {
                                 if (!curAtomThird.equals(neighbour0)) {
                                     rsAtom = varRingSet.getRings(thirdBond);
                                     for (int f = 0; f < rsAtom.getAtomContainerCount(); f++) {
@@ -457,8 +457,8 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         if (detected != null) {
             if (detected.contains(bond)) counter += 1;
         }
-        if (atom0.getFlag(CDKConstants.ISINRING)) {
-            if (atom1.getFlag(CDKConstants.ISINRING)) {
+        if (atom0.getFlag(IChemObject.IN_RING)) {
+            if (atom1.getFlag(IChemObject.IN_RING)) {
                 counter += 1;
             } else {
                 if (atom1.getAtomicNumber() == IElement.H)

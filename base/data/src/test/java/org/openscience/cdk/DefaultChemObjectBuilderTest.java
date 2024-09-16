@@ -21,7 +21,11 @@ package org.openscience.cdk;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.test.AbstractChemObjectBuilderTest;
 
 /**
@@ -42,6 +46,42 @@ class DefaultChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
         Assertions.assertNotNull(builder);
         Assertions.assertTrue(builder instanceof IChemObjectBuilder);
         Assertions.assertTrue(builder.getClass().getName().contains("DefaultChemObjectBuilder"));
+    }
+
+    @Test
+    void testNewAtom_empty() {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtom atom = builder.newAtom();
+        Assertions.assertNotNull(atom);
+        Assertions.assertTrue(atom.getBuilder() instanceof IChemObjectBuilder);
+        Assertions.assertTrue(atom.getBuilder().getClass().getName().contains("DefaultChemObjectBuilder"));
+    }
+
+    @Test
+    void testNewBond_empty() {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IBond bond = builder.newBond();
+        Assertions.assertNotNull(bond);
+        Assertions.assertTrue(bond.getBuilder() instanceof IChemObjectBuilder);
+        Assertions.assertTrue(bond.getBuilder().getClass().getName().contains("DefaultChemObjectBuilder"));
+    }
+
+    @Test
+    void testNewAtomContainer_empty() {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer atomContainer = builder.newAtomContainer();
+        Assertions.assertNotNull(atomContainer);
+        Assertions.assertTrue(atomContainer.getBuilder() instanceof IChemObjectBuilder);
+        Assertions.assertTrue(atomContainer.getBuilder().getClass().getName().contains("DefaultChemObjectBuilder"));
+    }
+
+    @Test
+    void testNewReaction_empty() {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IReaction reaction = builder.newReaction();
+        Assertions.assertNotNull(reaction);
+        Assertions.assertTrue(reaction.getBuilder() instanceof IChemObjectBuilder);
+        Assertions.assertTrue(reaction.getBuilder().getClass().getName().contains("DefaultChemObjectBuilder"));
     }
 
 }

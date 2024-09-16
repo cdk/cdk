@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -1453,7 +1454,7 @@ public final class GeometryUtil {
 
     private static IAtomContainer setVisitedFlagsToFalse(IAtomContainer atomContainer) {
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            atomContainer.getAtom(i).setFlag(CDKConstants.VISITED, false);
+            atomContainer.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
         return atomContainer;
     }
@@ -1483,13 +1484,13 @@ public final class GeometryUtil {
         setVisitedFlagsToFalse(secondAtomContainer);
         while (firstAtoms.hasNext()) {
             centerAtomFirstMolecule = firstAtomContainer.getAtom(firstAtoms.next());
-            centerAtomFirstMolecule.setFlag(CDKConstants.VISITED, true);
+            centerAtomFirstMolecule.setFlag(IChemObject.VISITED, true);
             centerAtomSecondMolecule = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
                     .indexOf(centerAtomFirstMolecule)));
             connectedAtoms = firstAtomContainer.getConnectedAtomsList(centerAtomFirstMolecule);
             for (IAtom conAtom : connectedAtoms) {
                 //this step is built to know if the program has already calculate a bond length (so as not to have duplicate values)
-                if (!conAtom.getFlag(CDKConstants.VISITED)) {
+                if (!conAtom.getFlag(IChemObject.VISITED)) {
                     if (Coords3d) {
                         distance1 = centerAtomFirstMolecule.getPoint3d().distance(conAtom.getPoint3d());
                         distance2 = centerAtomSecondMolecule.getPoint3d().distance(

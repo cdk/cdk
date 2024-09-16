@@ -35,7 +35,6 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -389,9 +388,9 @@ public class Mol2Reader extends DefaultChemObjectReader {
                                     bond.setOrder(Order.TRIPLE);
                                 } else if ("am".equals(orderStr) || "ar".equals(orderStr)) {
                                     bond.setOrder(Order.SINGLE);
-                                    bond.setFlag(CDKConstants.ISAROMATIC, true);
-                                    bond.getBegin().setFlag(CDKConstants.ISAROMATIC, true);
-                                    bond.getEnd().setFlag(CDKConstants.ISAROMATIC, true);
+                                    bond.setFlag(IChemObject.AROMATIC, true);
+                                    bond.getBegin().setFlag(IChemObject.AROMATIC, true);
+                                    bond.getEnd().setFlag(IChemObject.AROMATIC, true);
                                 } else if ("du".equals(orderStr)) {
                                     bond.setOrder(Order.SINGLE);
                                 } else if ("un".equals(orderStr)) {

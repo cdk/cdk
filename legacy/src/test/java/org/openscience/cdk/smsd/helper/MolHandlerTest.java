@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
@@ -59,7 +59,7 @@ class MolHandlerTest {
      */
     @Test
     void testGetMolecule() {
-        MolHandler instance = new MolHandler(new AtomContainer(), true, true);
+        MolHandler instance = new MolHandler(DefaultChemObjectBuilder.getInstance().newAtomContainer(), true, true);
         IAtomContainer result = instance.getMolecule();
         Assertions.assertNotNull(result);
     }
@@ -69,7 +69,7 @@ class MolHandlerTest {
      */
     @Test
     void testGetRemoveHydrogenFlag() {
-        MolHandler instance = new MolHandler(new AtomContainer(), true, true);
+        MolHandler instance = new MolHandler(DefaultChemObjectBuilder.getInstance().newAtomContainer(), true, true);
         boolean expResult = true;
         boolean result = instance.getRemoveHydrogenFlag();
         Assertions.assertEquals(expResult, result);

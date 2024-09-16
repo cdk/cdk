@@ -23,7 +23,8 @@ import javax.vecmath.Point3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -63,7 +64,7 @@ class RDFCalculatorTest extends CDKTestCase {
     @Test
     void testCalculate() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
-        AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
+        IAtomContainer h2mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom h1 = new Atom("H");
         h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
         Atom h2 = new Atom("H");
@@ -95,7 +96,7 @@ class RDFCalculatorTest extends CDKTestCase {
                 return 1.0;
             }
         });
-        AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
+        IAtomContainer h2mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom h1 = new Atom("H");
         h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
         Atom h2 = new Atom("H");
@@ -127,7 +128,7 @@ class RDFCalculatorTest extends CDKTestCase {
                 return atom.getCharge() * atom2.getCharge();
             }
         });
-        AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
+        IAtomContainer h2mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom h1 = new Atom("H");
         h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
         h1.setCharge(+1.0);
@@ -161,7 +162,7 @@ class RDFCalculatorTest extends CDKTestCase {
                 return atom.getCharge() * atom2.getCharge();
             }
         });
-        AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
+        IAtomContainer h2mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom h1 = new Atom("H");
         h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
         h1.setCharge(+1.0);

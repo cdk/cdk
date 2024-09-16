@@ -29,6 +29,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -67,7 +68,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     private Expr expr = new Expr(Expr.Type.TRUE);
 
     /**
-     * Constructs an query bond from an expression.
+     * Constructs a query bond from an expression.
      *
      * <pre>{@code
      * // pi-bond in a ring
@@ -85,7 +86,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Constructs an query bond from an expression type.
+     * Constructs a query bond from an expression type.
      *
      * <pre>{@code
      * new QueryBond(beg, end, IS_IN_RING);
@@ -100,7 +101,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Constructs an query bond from an expression type and value.
+     * Constructs a query bond from an expression type and value.
      *
      * <pre>{@code
      * new QueryBond(beg, end, ALIPHATIC_ORDER, 8);
@@ -120,6 +121,15 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
      */
     public QueryBond(IChemObjectBuilder builder) {
         this(null, null, null, IQueryBond.Stereo.NONE, builder);
+        atomCount = 0;
+    }
+
+    /**
+     * Constructs an empty query bond.
+     */
+    public QueryBond(Expr.Type type, IChemObjectBuilder builder) {
+        this(null, null, null, IQueryBond.Stereo.NONE, builder);
+        this.expr.setPrimitive(type);
         atomCount = 0;
     }
 
@@ -563,25 +573,25 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     /** {@inheritDoc} */
     @Override
     public boolean isAromatic() {
-        return getFlag(CDKConstants.ISAROMATIC);
+        return getFlag(IChemObject.AROMATIC);
     }
 
     /** {@inheritDoc} */
     @Override
     public void setIsAromatic(boolean arom) {
-        setFlag(CDKConstants.ISAROMATIC, arom);
+        setFlag(IChemObject.AROMATIC, arom);
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isInRing() {
-        return getFlag(CDKConstants.ISINRING);
+        return getFlag(IChemObject.IN_RING);
     }
 
     /** {@inheritDoc} */
     @Override
     public void setIsInRing(boolean ring) {
-        setFlag(CDKConstants.ISINRING, ring);
+        setFlag(IChemObject.IN_RING, ring);
     }
 
     /**

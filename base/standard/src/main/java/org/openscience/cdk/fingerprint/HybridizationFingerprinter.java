@@ -45,11 +45,11 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  *   fingerprint.length(); // returns the highest set bit
  * </pre>
  *
- * <p>The FingerPrinter assumes that hydrogens are explicitly given!
- * Furthermore, if pseudo atoms or atoms with malformed symbols are present,
- * their atomic number is taken as one more than the last element currently
- * supported in {@link PeriodicTable}.
- *
+ * <p>The FingerPrinter has the option to ignore explicit hydrogen's
+ * ({@link #setHashExplicitHydrogens(boolean)}) and pseudo atoms
+ * ({@link #setHashPseudoAtoms(boolean)}). This ensures the
+ * fingerprint can be used for substructure screening by default.</p>
+ * 
  * <p>Unlike the {@link Fingerprinter}, this fingerprinter does not take into
  * account aromaticity. Instead, it takes into account SP2
  * {@link Hybridization}.

@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -42,7 +41,7 @@ class InChINumbersToolsTest extends CDKTestCase {
 
     @Test
     void testSimpleNumbering() throws CDKException {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
         container.addBond(0, 1, IBond.Order.SINGLE);
@@ -54,7 +53,7 @@ class InChINumbersToolsTest extends CDKTestCase {
 
     @Test
     void testHydrogens() throws CDKException {
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(new Atom("H"));
         container.addAtom(new Atom("C"));
         container.addBond(0, 1, IBond.Order.SINGLE);

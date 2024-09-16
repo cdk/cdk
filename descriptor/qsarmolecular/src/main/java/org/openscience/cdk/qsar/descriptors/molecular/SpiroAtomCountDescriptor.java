@@ -18,12 +18,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -91,14 +91,14 @@ public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implem
     }
 
     private static void traverseRings(IAtomContainer mol, IAtom atom, IBond prev) {
-        atom.setFlag(CDKConstants.VISITED, true);
-        prev.setFlag(CDKConstants.VISITED, true);
+        atom.setFlag(IChemObject.VISITED, true);
+        prev.setFlag(IChemObject.VISITED, true);
         for (IBond bond : mol.getConnectedBondsList(atom)) {
             IAtom nbr = bond.getOther(atom);
-            if (!nbr.getFlag(CDKConstants.VISITED))
+            if (!nbr.getFlag(IChemObject.VISITED))
                 traverseRings(mol, nbr, bond);
             else
-                bond.setFlag(CDKConstants.VISITED, true);
+                bond.setFlag(IChemObject.VISITED, true);
         }
     }
 
@@ -115,13 +115,13 @@ public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implem
         int degree = 0;
         // clear flags
         for (IBond b : mol.bonds())
-            b.setFlag(CDKConstants.VISITED, false);
+            b.setFlag(IChemObject.VISITED, false);
         for (IAtom a : mol.atoms())
-            a.setFlag(CDKConstants.VISITED, false);
+            a.setFlag(IChemObject.VISITED, false);
         // visit rings
-        atom.setFlag(CDKConstants.VISITED, true);
+        atom.setFlag(IChemObject.VISITED, true);
         for (IBond rbond : rbonds) {
-            if (!rbond.getFlag(CDKConstants.VISITED)) {
+            if (!rbond.getFlag(IChemObject.VISITED)) {
                 traverseRings(mol, rbond.getOther(atom), rbond);
                 degree++;
             }

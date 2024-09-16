@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -50,7 +49,7 @@ class ShortestPathsTest {
     @Test
     void testConstructor_Container_Empty() {
 
-        ShortestPaths sp = new ShortestPaths(new AtomContainer(), new Atom());
+        ShortestPaths sp = new ShortestPaths(SilentChemObjectBuilder.getInstance().newAtomContainer(), new Atom());
 
         Assertions.assertArrayEquals(new int[0], sp.pathTo(1));
         Assertions.assertArrayEquals(new int[0][0], sp.pathsTo(1));
@@ -1249,7 +1248,7 @@ class ShortestPathsTest {
      */
     private static IAtomContainer simple() {
 
-        IAtomContainer container = new AtomContainer();
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
         IAtom a = new Atom("C");
         IAtom b = new Atom("C");
@@ -1329,7 +1328,7 @@ class ShortestPathsTest {
      * @cdk.inchi InChI=1S/C81H132/c1-3-7-67(8-4-1)11-15-69(16-12-67)19-23-71(24-20-69)27-31-73(32-28-71)35-39-75(40-36-73)43-47-77(48-44-75)51-55-79(56-52-77)59-63-81(64-60-79)65-61-80(62-66-81)57-53-78(54-58-80)49-45-76(46-50-78)41-37-74(38-42-76)33-29-72(30-34-74)25-21-70(22-26-72)17-13-68(14-18-70)9-5-2-6-10-68/h1-66H2
      */
     IAtomContainer pentadecaspiro() {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         mol.addAtom(a1);
         IAtom a2 = new Atom("C");
@@ -1694,7 +1693,7 @@ class ShortestPathsTest {
      */
     private static IAtomContainer spiroundecane() {
 
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = new Atom("C");
         mol.addAtom(a1);
         IAtom a2 = new Atom("C");

@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,7 +55,7 @@ class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
         //O=CC
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom O1 = new Atom("O");
         Atom c2 = new Atom("C");
         c2.setImplicitHydrogenCount(1);
@@ -85,7 +84,7 @@ class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
         //[O+]#CC
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom O1 = new Atom("O");
         O1.setFormalCharge(1);
         Atom c2 = new Atom("C");
@@ -114,7 +113,7 @@ class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
         //[C+]CC
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom c1 = new Atom("C");
         c1.setFormalCharge(1);
         c1.setImplicitHydrogenCount(2);
@@ -145,7 +144,7 @@ class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
         //SO3
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom S1 = new Atom("S");
         Atom O2 = new Atom("O");
         Atom O3 = new Atom("O");
@@ -177,7 +176,7 @@ class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
         //XeF4
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom Xe1 = new Atom("Xe");
         Atom F2 = new Atom("F");
         Atom F3 = new Atom("F");
@@ -213,7 +212,7 @@ class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
         //IF2-
-        IAtomContainer molecule = new AtomContainer();
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         Atom I1 = new Atom("I");
         I1.setFormalCharge(-1);
         Atom F2 = new Atom("F");

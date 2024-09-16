@@ -73,6 +73,18 @@ public class MDLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
         return null;
     }
 
+    /**
+     * Checks if a given character is an ASCII digit. Do NOT replace
+     * with Character.isDigit() which check the entire Unicode table/code
+     * spaces.
+     *
+     * @param ch the character to check
+     * @return true if the character is a digit, false otherwise
+     */
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
@@ -90,7 +102,7 @@ public class MDLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
                 String remainder = line.substring(6).trim();
                 for (int i = 0; i < remainder.length(); ++i) {
                     char c = remainder.charAt(i);
-                    if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
+                    if (!(isDigit(c) || Character.isWhitespace(c))) {
                         return false;
                     }
                 }

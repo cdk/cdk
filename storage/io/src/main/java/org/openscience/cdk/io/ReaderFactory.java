@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * A typical example is:
  * <pre>{@code
  *   StringReader stringReader = "<molecule/>";
- *   ChemObjectReader reader = new ReaderFactory().createReader(stringReader);
+ *   ISimpleChemObjectReader reader = new ReaderFactory().createReader(stringReader);
  * }</pre>
  *
  * @cdk.module io

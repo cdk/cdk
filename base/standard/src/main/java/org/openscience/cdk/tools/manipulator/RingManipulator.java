@@ -22,9 +22,9 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
@@ -45,14 +45,14 @@ public class RingManipulator {
         // return as soon as the conditions are not met:
         // 1. all atoms are labeled aromatic
         for (IAtom atom : ring.atoms())
-            if (!atom.getFlag(CDKConstants.ISAROMATIC)) return;
+            if (!atom.getFlag(IChemObject.AROMATIC)) return;
 
         // 2. all bonds are labeled aromatic
         for (IBond bond : ring.bonds())
-            if (!bond.getFlag(CDKConstants.ISAROMATIC)) return;
+            if (!bond.getFlag(IChemObject.AROMATIC)) return;
 
         // OK, all conditions are met, so ring is aromatic
-        ring.setFlag(CDKConstants.ISAROMATIC, true);
+        ring.setFlag(IChemObject.AROMATIC, true);
     }
 
 }

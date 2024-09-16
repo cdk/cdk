@@ -38,8 +38,8 @@ You can also download a pre-built library JAR from [releases](https://github.com
 Include the main JAR on the Java classpath when compiling and running your code:
 
 ```bash
-$ javac -cp cdk-2.8.jar MyClass.java
-$ java -cp cdk-2.8.jar:. MyClass
+$ javac -cp cdk-2.9.jar MyClass.java
+$ java -cp cdk-2.9.jar:. MyClass
 ```
 
 If you are using Maven, you can use the **uber** ``cdk-bundle`` to grab 
@@ -49,11 +49,13 @@ everything, note it is much more efficient to use include the modules you need:
 <dependency>
   <artifactId>cdk-bundle</artifactId>
   <groupId>org.openscience.cdk</groupId>
-  <version>2.8</version>
+  <version>2.9</version>
 </dependency>
 ```
 
-If you are a Python user, the Cinfony project provides access via [Jython](http://www.redbrick.dcu.ie/~noel/CDKJython.html). Noel O'Boyle's [Cinfony](http://cinfony.github.io/) provides a wrapper around the CDK and over toolkits exposing core functionality as a consistent API. 
+If you are a Python user, the Cinfony project provides access via [Jython](http://www.redbrick.dcu.ie/~noel/CDKJython.html).
+Noel O'Boyle's [Cinfony](http://cinfony.github.io/) provides a wrapper around the CDK and over toolkits exposing core
+functionality as a consistent API. `ScyJava` can also be used, as explain in [ChemPyFormatics](https://egonw.github.io/chempyformatics/).
 
 Further details on building the project in integrated development environments (IDEs) are available on the wiki:
  * [Building the CDK](https://github.com/cdk/cdk/wiki/Building-CDK)
