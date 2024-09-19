@@ -31,7 +31,9 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
@@ -61,7 +63,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
     // used in several test methods to match query bonds against them
-    private IBond singleBond, doubleBond, tripleBond, aromaticBond;
+    private IBond singleBond, doubleBond, tripleBond, aromaticBond, singleBondInRing, doubleBondInRing, aromaticBondInRing;
 
     @BeforeAll
     static void setup() throws Exception {
@@ -80,6 +82,17 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         aromaticBond.setOrder(IBond.Order.UNSET);
         aromaticBond.setFlag(IChemObject.AROMATIC, true);
         aromaticBond.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+        singleBondInRing = SilentChemObjectBuilder.getInstance().newBond();
+        singleBondInRing.setOrder(IBond.Order.SINGLE);
+        singleBondInRing.setIsInRing(true);
+        doubleBondInRing = SilentChemObjectBuilder.getInstance().newBond();
+        doubleBondInRing.setOrder(IBond.Order.DOUBLE);
+        doubleBondInRing.setIsInRing(true);
+        aromaticBondInRing = SilentChemObjectBuilder.getInstance().newBond();
+        aromaticBondInRing.setOrder(IBond.Order.UNSET);
+        aromaticBondInRing.setFlag(IChemObject.AROMATIC, true);
+        aromaticBondInRing.setFlag(IChemObject.SINGLE_OR_DOUBLE, true);
+        aromaticBondInRing.setIsInRing(true);
     }
 
     @Test
@@ -382,6 +395,184 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             final CDKException exception =
                     assertThrows(CDKException.class, () -> reader.readMolecule(SilentChemObjectBuilder.getInstance()));
             assertThat(exception.getMessage(), is("Error while parsing bond type: Invalid bond type: 11, line='M  V30 2 11 2 3'"));
+        }
+    }
+
+    @Test
+    void bondType5_singleOrDouble_bondTopology_notSpecified_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_bondTopology_notSpecified_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(6));
+            for (final IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(6));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(1));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(3));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(4));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(5));
+
+            final IQueryBond queryBond = (IQueryBond) atomContainer.getBond(5);
+            final Expr expression = ((QueryBond) queryBond).getExpression();
+            assertThat(expression.type(), is(Expr.Type.SINGLE_OR_DOUBLE));
+            Assertions.assertTrue(queryBond.matches(singleBond));
+            Assertions.assertTrue(queryBond.matches(doubleBond));
+            Assertions.assertTrue(queryBond.matches(singleBondInRing));
+            Assertions.assertTrue(queryBond.matches(doubleBondInRing));
+        }
+    }
+
+
+    @Test
+    void bondType5_singleOrDouble_bondTopology_inRing_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_bondTopology_inRing_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(6));
+            for (final IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(6));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(1));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(3));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(4));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(5));
+
+            final IQueryBond queryBond = (IQueryBond) atomContainer.getBond(5);
+            final Expr expression = ((QueryBond) queryBond).getExpression();
+            assertThat(expression.type(), is(Expr.Type.AND));
+            assertThat(expression.left().type(), is(Expr.Type.SINGLE_OR_DOUBLE));
+            assertThat(expression.right().type(), is(Expr.Type.IS_IN_RING));
+            Assertions.assertFalse(queryBond.matches(singleBond));
+            Assertions.assertFalse(queryBond.matches(doubleBond));
+            Assertions.assertTrue(queryBond.matches(singleBondInRing));
+            Assertions.assertTrue(queryBond.matches(doubleBondInRing));
+        }
+    }
+
+    @Test
+    void bondType5_singleOrDouble_bondTopology_inChain_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_bondTopology_inChain_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(6));
+            for (final IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(6));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(1));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(3));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(4));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(5));
+
+            final IQueryBond queryBond = (IQueryBond) atomContainer.getBond(5);
+            final Expr expression = ((QueryBond) queryBond).getExpression();
+            assertThat(expression.type(), is(Expr.Type.AND));
+            assertThat(expression.left().type(), is(Expr.Type.SINGLE_OR_DOUBLE));
+            assertThat(expression.right().type(), is(Expr.Type.IS_IN_CHAIN));
+            Assertions.assertTrue(queryBond.matches(singleBond));
+            Assertions.assertTrue(queryBond.matches(doubleBond));
+            Assertions.assertFalse(queryBond.matches(singleBondInRing));
+            Assertions.assertFalse(queryBond.matches(doubleBondInRing));
+        }
+    }
+
+    @Test
+    void bondType5_singleOrDouble_bondTopology_invalidValue_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_bondTopology_invalidValue_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(6));
+            for (final IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(6));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(1));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(3));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(4));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(5));
+
+            final IQueryBond queryBond = (IQueryBond) atomContainer.getBond(5);
+            final Expr expression = ((QueryBond) queryBond).getExpression();
+            assertThat(expression.type(), is(Expr.Type.SINGLE_OR_DOUBLE));
+            Assertions.assertTrue(queryBond.matches(singleBond));
+            Assertions.assertTrue(queryBond.matches(doubleBond));
+            Assertions.assertTrue(queryBond.matches(singleBondInRing));
+            Assertions.assertTrue(queryBond.matches(doubleBondInRing));
+        }
+    }
+
+    @Test
+    void bondType8_any_bondTopology_inRing_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType8_any_bondTopology_inRing_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("QueryAtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(6));
+            for (final IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(6));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(0));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(1));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(2));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(3));
+            Assertions.assertInstanceOf(IBond.class, atomContainer.getBond(4));
+            Assertions.assertInstanceOf(IQueryBond.class, atomContainer.getBond(5));
+
+            final IQueryBond queryBond = (IQueryBond) atomContainer.getBond(5);
+            final Expr expression = ((QueryBond) queryBond).getExpression();
+            assertThat(expression.type(), is(Expr.Type.IS_IN_RING));
+            Assertions.assertFalse(queryBond.matches(singleBond));
+            Assertions.assertFalse(queryBond.matches(doubleBond));
+            Assertions.assertFalse(queryBond.matches(tripleBond));
+            Assertions.assertFalse(queryBond.matches(aromaticBond));
+            Assertions.assertTrue(queryBond.matches(singleBondInRing));
+            Assertions.assertTrue(queryBond.matches(doubleBondInRing));
+            Assertions.assertTrue(queryBond.matches(aromaticBondInRing));
+        }
+    }
+
+    @Test
+    void bondType1_nonQueryBondType_bondTopology_inRing_test() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType1_nonQueryBondType_bondTopology_inRing_v3000.mol"))) {
+            final IAtomContainer atomContainer = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            // atom container assertions
+            assertThat(atomContainer.getClass().getSimpleName(), is("AtomContainer"));
+            // atom assertions
+            assertThat(atomContainer.getAtomCount(), is(6));
+            for (final IAtom atom: atomContainer.atoms()) {
+                assertThat(atom, instanceOf(IAtom.class));
+            }
+            // bond assertions
+            assertThat(atomContainer.getBondCount(), is(6));
+            for (final IBond bond: atomContainer.bonds()) {
+                assertThat(bond, instanceOf(IBond.class));
+                assertThat(bond, not(instanceOf(IQueryBond.class)));
+            }
         }
     }
 

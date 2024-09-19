@@ -24,16 +24,16 @@
 package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -52,8 +52,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class MDLV3000WriterTest {
@@ -110,7 +109,7 @@ class MDLV3000WriterTest {
     }
 
     @Test
-    void nullBondOrder() throws IOException, CDKException {
+    void nullBondOrder() {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
@@ -118,14 +117,11 @@ class MDLV3000WriterTest {
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(0).setMassNumber(2);
         mol.getAtom(1).setImplicitHydrogenCount(3);
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    writeToStr(mol);
-                                });
+        Assertions.assertThrows(CDKException.class, () -> writeToStr(mol));
     }
 
     @Test
-    void unsetBondOrder() throws IOException, CDKException {
+    void unsetBondOrder() throws IOException {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("C"));
@@ -133,10 +129,11 @@ class MDLV3000WriterTest {
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(0).setMassNumber(2);
         mol.getAtom(1).setImplicitHydrogenCount(3);
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    writeToStr(mol);
-                                });
+        try {
+            writeToStr(mol);
+        } catch (CDKException exception) {
+            assertThat(exception.getMessage(), is("Bond with bond order UNSET that isn't flagged as aromatic cannot be written to V3000"));
+        }
     }
 
     @Test
@@ -478,8 +475,8 @@ class MDLV3000WriterTest {
     }
 
     private String writeToStr(IAtomContainer mol) throws IOException, CDKException {
-        StringWriter sw = new StringWriter();
-        try (MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
+        final StringWriter sw = new StringWriter();
+        try (final MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
             mdlw.write(mol);
         }
         return sw.toString();
@@ -702,4 +699,743 @@ class MDLV3000WriterTest {
                 "M  V30 MDLV30/STERAC1 ATOMS=(2)\n" +
                 "M  V30 END COLLECTION"));
     }
+
+    @Test
+    void writeBondTypeFourTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addBond(0, 1, IBond.Order.UNSET);
+        mol.addBond(1, 2, IBond.Order.UNSET);
+        mol.addBond(2, 3, IBond.Order.UNSET);
+        mol.addBond(3, 4, IBond.Order.UNSET);
+        mol.addBond(4, 5, IBond.Order.UNSET);
+        mol.addBond(5, 0, IBond.Order.UNSET);
+        mol.bonds().forEach(bond -> bond.setFlag(IChemObject.AROMATIC, true));
+        mol.atoms().forEach(atom -> atom.setImplicitHydrogenCount(1));
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        assertThat(actual, containsString("M  V30 BEGIN BOND\n" +
+                "M  V30 1 4 1 2\n" +
+                "M  V30 2 4 2 3\n" +
+                "M  V30 3 4 3 4\n" +
+                "M  V30 4 4 4 5\n" +
+                "M  V30 5 4 5 6\n" +
+                "M  V30 6 4 6 1\n" +
+                "M  V30 END BOND"));
+    }
+
+    @Test
+    void writeBondTypeFiveTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("O"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        final IQueryBond queryBond = new QueryBond(mol.getAtom(1), mol.getAtom(2), Expr.Type.SINGLE_OR_DOUBLE);
+        mol.addBond(queryBond);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        System.out.println(actual);
+        assertThat(actual, Matchers.matchesRegex(
+                "\n" +
+                "  CDK     [0-9]{10}\n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 4 3 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C 0 0 0 0\n" +
+                "M  V30 2 C 0 0 0 0\n" +
+                "M  V30 3 C 0 0 0 0\n" +
+                "M  V30 4 O 0 0 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 5 2 3\n" +
+                "M  V30 3 2 3 4\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  END\n"));
+    }
+
+    @Test
+    void writeBondTypeSixTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("O"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        final IQueryBond queryBond = new QueryBond(mol.getAtom(1), mol.getAtom(2), Expr.Type.SINGLE_OR_AROMATIC);
+        mol.addBond(queryBond);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        assertThat(actual, Matchers.matchesRegex(
+                "\n" +
+                        "  CDK     [0-9]{10}\n" +
+                        "\n" +
+                        "  0  0  0     0  0            999 V3000\n" +
+                        "M  V30 BEGIN CTAB\n" +
+                        "M  V30 COUNTS 4 3 0 0 0\n" +
+                        "M  V30 BEGIN ATOM\n" +
+                        "M  V30 1 C 0 0 0 0\n" +
+                        "M  V30 2 C 0 0 0 0\n" +
+                        "M  V30 3 C 0 0 0 0\n" +
+                        "M  V30 4 O 0 0 0 0\n" +
+                        "M  V30 END ATOM\n" +
+                        "M  V30 BEGIN BOND\n" +
+                        "M  V30 1 1 1 2\n" +
+                        "M  V30 2 6 2 3\n" +
+                        "M  V30 3 2 3 4\n" +
+                        "M  V30 END BOND\n" +
+                        "M  V30 END CTAB\n" +
+                        "M  END\n"));
+    }
+
+    @Test
+    void writeBondTypeSevenTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("O"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        final IQueryBond queryBond = new QueryBond(mol.getAtom(1), mol.getAtom(2), Expr.Type.DOUBLE_OR_AROMATIC);
+        mol.addBond(queryBond);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        assertThat(actual, Matchers.matchesRegex(
+                "\n" +
+                        "  CDK     [0-9]{10}\n" +
+                        "\n" +
+                        "  0  0  0     0  0            999 V3000\n" +
+                        "M  V30 BEGIN CTAB\n" +
+                        "M  V30 COUNTS 4 3 0 0 0\n" +
+                        "M  V30 BEGIN ATOM\n" +
+                        "M  V30 1 C 0 0 0 0\n" +
+                        "M  V30 2 C 0 0 0 0\n" +
+                        "M  V30 3 C 0 0 0 0\n" +
+                        "M  V30 4 O 0 0 0 0\n" +
+                        "M  V30 END ATOM\n" +
+                        "M  V30 BEGIN BOND\n" +
+                        "M  V30 1 1 1 2\n" +
+                        "M  V30 2 7 2 3\n" +
+                        "M  V30 3 2 3 4\n" +
+                        "M  V30 END BOND\n" +
+                        "M  V30 END CTAB\n" +
+                        "M  END\n"));
+    }
+
+    @Test
+    void writeBondTypeEightTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("O"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        final IQueryBond queryBond = new QueryBond(mol.getAtom(1), mol.getAtom(2), Expr.Type.TRUE);
+        mol.addBond(queryBond);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        assertThat(actual, Matchers.matchesRegex(
+                "\n" +
+                        "  CDK     [0-9]{10}\n" +
+                        "\n" +
+                        "  0  0  0     0  0            999 V3000\n" +
+                        "M  V30 BEGIN CTAB\n" +
+                        "M  V30 COUNTS 4 3 0 0 0\n" +
+                        "M  V30 BEGIN ATOM\n" +
+                        "M  V30 1 C 0 0 0 0\n" +
+                        "M  V30 2 C 0 0 0 0\n" +
+                        "M  V30 3 C 0 0 0 0\n" +
+                        "M  V30 4 O 0 0 0 0\n" +
+                        "M  V30 END ATOM\n" +
+                        "M  V30 BEGIN BOND\n" +
+                        "M  V30 1 1 1 2\n" +
+                        "M  V30 2 8 2 3\n" +
+                        "M  V30 3 2 3 4\n" +
+                        "M  V30 END BOND\n" +
+                        "M  V30 END CTAB\n" +
+                        "M  END\n"));
+    }
+
+    @Test
+    void writeBondTypeFiveInRingTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("O"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        final IQueryBond queryBond = new QueryBond(
+                mol.getAtom(1),
+                mol.getAtom(2),
+                new Expr(Expr.Type.SINGLE_OR_DOUBLE).and(new Expr(Expr.Type.IS_IN_RING))
+        );
+        mol.addBond(queryBond);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        assertThat(actual, Matchers.matchesRegex(
+                "\n" +
+                        "  CDK     [0-9]{10}\n" +
+                        "\n" +
+                        "  0  0  0     0  0            999 V3000\n" +
+                        "M  V30 BEGIN CTAB\n" +
+                        "M  V30 COUNTS 4 3 0 0 0\n" +
+                        "M  V30 BEGIN ATOM\n" +
+                        "M  V30 1 C 0 0 0 0\n" +
+                        "M  V30 2 C 0 0 0 0\n" +
+                        "M  V30 3 C 0 0 0 0\n" +
+                        "M  V30 4 O 0 0 0 0\n" +
+                        "M  V30 END ATOM\n" +
+                        "M  V30 BEGIN BOND\n" +
+                        "M  V30 1 1 1 2\n" +
+                        "M  V30 2 5 2 3 TOPO=1\n" +
+                        "M  V30 3 2 3 4\n" +
+                        "M  V30 END BOND\n" +
+                        "M  V30 END CTAB\n" +
+                        "M  END\n"));
+    }
+
+    @Test
+    void writeBondTypeSevenInChainTest() throws IOException, CDKException {
+        // arrange
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("O"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        final IQueryBond queryBond = new QueryBond(
+                mol.getAtom(1),
+                mol.getAtom(2),
+                new Expr(Expr.Type.DOUBLE_OR_AROMATIC).and(new Expr(Expr.Type.IS_IN_CHAIN))
+        );
+        mol.addBond(queryBond);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+
+        // act
+        String actual = writeToStr(mol);
+
+        // assert
+        assertThat(actual, Matchers.matchesRegex(
+                "\n" +
+                        "  CDK     [0-9]{10}\n" +
+                        "\n" +
+                        "  0  0  0     0  0            999 V3000\n" +
+                        "M  V30 BEGIN CTAB\n" +
+                        "M  V30 COUNTS 4 3 0 0 0\n" +
+                        "M  V30 BEGIN ATOM\n" +
+                        "M  V30 1 C 0 0 0 0\n" +
+                        "M  V30 2 C 0 0 0 0\n" +
+                        "M  V30 3 C 0 0 0 0\n" +
+                        "M  V30 4 O 0 0 0 0\n" +
+                        "M  V30 END ATOM\n" +
+                        "M  V30 BEGIN BOND\n" +
+                        "M  V30 1 1 1 2\n" +
+                        "M  V30 2 7 2 3 TOPO=2\n" +
+                        "M  V30 3 2 3 4\n" +
+                        "M  V30 END BOND\n" +
+                        "M  V30 END CTAB\n" +
+                        "M  END\n")
+        );
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType4_aromaticBond_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType4_aromaticBond_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 6 6 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -4.5415 1.04 0 0 VAL=-1\n" +
+                    "M  V30 2 C -5.8749 0.2701 0 0 VAL=-1\n" +
+                    "M  V30 3 C -5.8749 -1.27 0 0 VAL=-1\n" +
+                    "M  V30 4 C -4.5415 -2.04 0 0 VAL=-1\n" +
+                    "M  V30 5 C -3.2078 -1.27 0 0 VAL=-1\n" +
+                    "M  V30 6 C -3.2078 0.2701 0 0 VAL=-1\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 4 1 2\n" +
+                    "M  V30 2 4 2 3\n" +
+                    "M  V30 3 4 3 4\n" +
+                    "M  V30 4 4 4 5\n" +
+                    "M  V30 5 4 5 6\n" +
+                    "M  V30 6 4 6 1\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType5_singleOrDouble_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 3 2 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 1 1 2\n" +
+                    "M  V30 2 5 2 3\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType6_singleOrAromatic_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType6_singleOrAromatic_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 3 2 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 1 1 2\n" +
+                    "M  V30 2 6 2 3\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType7_doubleOrAromatic_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType7_doubleOrAromatic_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 3 2 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 1 1 2\n" +
+                    "M  V30 2 7 2 3\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType8_anyBond_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType8_anyBond_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                    "  CDK     [0-9]{10}2D\n" +
+                    "\n" +
+                    "  0  0  0     0  0            999 V3000\n" +
+                    "M  V30 BEGIN CTAB\n" +
+                    "M  V30 COUNTS 3 2 0 0 0\n" +
+                    "M  V30 BEGIN ATOM\n" +
+                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                    "M  V30 END ATOM\n" +
+                    "M  V30 BEGIN BOND\n" +
+                    "M  V30 1 1 1 2\n" +
+                    "M  V30 2 8 2 3\n" +
+                    "M  V30 END BOND\n" +
+                    "M  V30 END CTAB\n" +
+                    "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType5_singleOrDouble_bondTopology_inRing_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_bondTopology_inRing_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                            "  CDK     [0-9]{10}2D\n" +
+                            "\n" +
+                            "  0  0  0     0  0            999 V3000\n" +
+                            "M  V30 BEGIN CTAB\n" +
+                            "M  V30 COUNTS 6 6 0 0 0\n" +
+                            "M  V30 BEGIN ATOM\n" +
+                            "M  V30 1 C 5.4833 -0.5211 0 0\n" +
+                            "M  V30 2 N 4.1497 -1.2911 0 0\n" +
+                            "M  V30 3 C 4.1497 -2.8311 0 0\n" +
+                            "M  V30 4 C 5.4833 -3.6011 0 0\n" +
+                            "M  V30 5 C 6.817 -2.8311 0 0\n" +
+                            "M  V30 6 C 6.817 -1.2911 0 0\n" +
+                            "M  V30 END ATOM\n" +
+                            "M  V30 BEGIN BOND\n" +
+                            "M  V30 1 1 2 3\n" +
+                            "M  V30 2 1 3 4\n" +
+                            "M  V30 3 1 4 5\n" +
+                            "M  V30 4 1 5 6\n" +
+                            "M  V30 5 1 1 6\n" +
+                            "M  V30 6 5 1 2 TOPO=1\n" +
+                            "M  V30 END BOND\n" +
+                            "M  V30 END CTAB\n" +
+                            "M  END\n")
+            );
+        }
+    }
+
+    @Test
+    void roundTrip_V3000read_V3000write_bondType5_singleOrDouble_bondTopology_inChain_test() throws Exception {
+        // arrange
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("bondType5_singleOrDouble_bondTopology_inChain_v3000.mol"))) {
+            final IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            // act
+            final String actual = writeToStr(mol);
+
+            // assess
+            assertThat(actual, Matchers.matchesRegex(
+                    "\n" +
+                            "  CDK     [0-9]{10}2D\n" +
+                            "\n" +
+                            "  0  0  0     0  0            999 V3000\n" +
+                            "M  V30 BEGIN CTAB\n" +
+                            "M  V30 COUNTS 6 6 0 0 0\n" +
+                            "M  V30 BEGIN ATOM\n" +
+                            "M  V30 1 C 5.4833 -0.5211 0 0\n" +
+                            "M  V30 2 N 4.1497 -1.2911 0 0\n" +
+                            "M  V30 3 C 4.1497 -2.8311 0 0\n" +
+                            "M  V30 4 C 5.4833 -3.6011 0 0\n" +
+                            "M  V30 5 C 6.817 -2.8311 0 0\n" +
+                            "M  V30 6 C 6.817 -1.2911 0 0\n" +
+                            "M  V30 END ATOM\n" +
+                            "M  V30 BEGIN BOND\n" +
+                            "M  V30 1 1 2 3\n" +
+                            "M  V30 2 1 3 4\n" +
+                            "M  V30 3 1 4 5\n" +
+                            "M  V30 4 1 5 6\n" +
+                            "M  V30 5 1 1 6\n" +
+                            "M  V30 6 5 1 2 TOPO=2\n" +
+                            "M  V30 END BOND\n" +
+                            "M  V30 END CTAB\n" +
+                            "M  END\n")
+            );
+        }
+    }
+
+    ///// Below are tests assessing inner class MDLV3000Writer.ExpressionConverter. /////
+
+    @Test
+    void toMDLBondType_true_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.TRUE);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.ANY));
+    }
+
+    @Test
+    void toMDLBondType_orderSingle_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 1);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.SINGLE));
+    }
+
+    @Test
+    void toMDLBondType_and_orderDouble_isInChain_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 2).and(new Expr(Expr.Type.IS_IN_CHAIN));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.DOUBLE));
+    }
+
+    @Test
+    void toMDLBondType_and_orderTriple_isAliphatic_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 3).and(new Expr(Expr.Type.IS_ALIPHATIC));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.TRIPLE));
+    }
+
+    @Test
+    void toMDLBondType_isAromatic_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.IS_AROMATIC);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.AROMATIC));
+    }
+
+    @Test
+    void toMDLBondType_and_doubleOrAromatic_isInRing_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.DOUBLE_OR_AROMATIC).and(new Expr(Expr.Type.IS_IN_RING));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.DOUBLE_OR_AROMATIC));
+    }
+
+    @Test
+    void toMDLBondType_and_singleOrAromatic_isInChain_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.SINGLE_OR_AROMATIC).and(new Expr(Expr.Type.IS_IN_CHAIN));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.SINGLE_OR_AROMATIC));
+    }
+
+    @Test
+    void toMDLBondType_and_singleOrDouble_isInChain_test() throws CDKException {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 1).or(new Expr(Expr.Type.ORDER, 2));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLBondType actual = converter.toMDLBondType();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLBondType.SINGLE_OR_DOUBLE));
+    }
+
+    @Test
+    void toMDLQueryProperty_orderOne_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 1);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_orderSingleOrDouble_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.SINGLE_OR_DOUBLE);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_isAromatic_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.IS_AROMATIC);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_and_orderDoubleOrAromatic_inChain_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.DOUBLE_OR_AROMATIC).and(new Expr(Expr.Type.IS_IN_CHAIN));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.CHAIN));
+    }
+
+    @Test
+    void toMDLQueryProperty_and_orderDouble_isInRing_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.ORDER, 1).and(new Expr(Expr.Type.IS_IN_RING));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.RING));
+    }
+
+    @Test
+    void toMDLQueryProperty_and_isInChain_isInRing_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.IS_IN_CHAIN).and(new Expr(Expr.Type.IS_IN_RING));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_true_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.TRUE);
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.NOT_SPECIFIED));
+    }
+
+    @Test
+    void toMDLQueryProperty_and_orderSingleOrDouble_isInRing_test() {
+        // arrange
+        final Expr expression = new Expr(Expr.Type.SINGLE_OR_DOUBLE).and(new Expr(Expr.Type.IS_IN_RING));
+        final MDLV3000Writer.ExpressionConverter converter = new MDLV3000Writer.ExpressionConverter(expression);
+
+        // act
+        final MDLV3000Writer.MDLQueryProperty actual = converter.toMDLQueryProperty();
+
+        // assert
+        assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.RING));
+    }
+
 }

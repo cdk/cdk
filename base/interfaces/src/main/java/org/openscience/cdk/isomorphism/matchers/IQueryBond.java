@@ -21,7 +21,7 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Defines the abililty to be matched against IBond's.
+ * Defines the ability to be matched against IBond's.
  *
  * @cdk.module interfaces
  * @cdk.githash
