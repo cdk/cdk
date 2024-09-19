@@ -79,6 +79,21 @@ class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
     }
 
     @Test
+    void testGermaniumDativeBond() throws Exception {
+        String filename = "dativeBond.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IChemFile chemFile = reader.read(new ChemFile());
+
+        // test the resulting ChemFile content
+        Assertions.assertNotNull(chemFile);
+        IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+
+        String[] expectedTypes = {"X", "X"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
     void testOla28() throws Exception {
         String filename = "mol28.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);

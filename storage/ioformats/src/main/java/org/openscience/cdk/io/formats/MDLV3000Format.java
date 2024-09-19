@@ -68,16 +68,13 @@ public class MDLV3000Format extends SimpleChemFormatMatcher implements IChemForm
     /** {@inheritDoc} */
     @Override
     public String getWriterClassName() {
-        return null;
+        return "org.openscience.cdk.io.MDLV3000Writer";
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && (line.contains("v3000") || line.contains("V3000"))) {
-            return true;
-        }
-        return false;
+        return lineNumber == 4 && (line.contains("v3000") || line.contains("V3000"));
     }
 
     /** {@inheritDoc} */
