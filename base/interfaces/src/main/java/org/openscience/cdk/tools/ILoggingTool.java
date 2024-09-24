@@ -20,20 +20,14 @@
 package org.openscience.cdk.tools;
 
 /**
- * Useful for logging messages. Often used as a class static variable
- * instantiated like (see {@link LoggingToolFactory}):
+ * Useful for logging messages.
+ * Recommended to be used as a private static variable instantiated using
+ * {@link LoggingToolFactory#createLoggingTool(Class)}:
  * <pre>
  * public class SomeClass {
- *   private static ILoggingTool logger;
- *
- *   static {
- *     logger = LoggingToolFactory.createLoggingTool(SomeClass.class);
- *   }
+ *   private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SomeClass.class);
  * }
  * </pre>
- * There is no special reason not to make the logger private and static, as the
- * logging information is closely bound to one specific Class, not subclasses
- * and not instances.
  *
  * <p>The logger has five logging levels:
  * <dl>
@@ -41,25 +35,25 @@ package org.openscience.cdk.tools;
  *  <dd>Default mode. Used for information you might need to track down the
  *      cause of a bug in the source code, or to understand how an algorithm
  *      works.
+ *  <dt>INFO
+ *  <dd>For reporting informative information to the user that he might easily
+ *      disregard. Real important information should be given to the user using
+ *      a GUI element.
  *  <dt>WARNING
  *  <dd>This indicates a special situation which is unlike to happen, but for
  *      which no special actions need to be taken. E.g. missing information in
  *      files, or an unknown atom type. The action is normally something user
  *      friendly.
- *  <dt>INFO
- *  <dd>For reporting informative information to the user that he might easily
- *      disregard. Real important information should be given to the user using
- *      a GUI element.
+ *  <dt>ERROR
+ *  <dd>This level is used for situations that should not have happened *and*
+ *      thus indicate a bug.
  *  <dt>FATAL
  *  <dd>This level is used for situations that should not have happened *and*
  *      that lead to a situation where this program can no longer function
  *      (rare in Java).
- *  <dt>ERROR
- *  <dd>This level is used for situations that should not have happened *and*
- *      thus indicate a bug.
  * </dl>
  *
- * <p>Consider that the debugging will not always be turned on. Therefore, it is
+ * <p>Consider that debugging will not always be turned on. Therefore, it is
  * better not to concatenate string in the logger.debug() call, but have the
  * ILoggingTool do this when appropriate. In other words, use:
  * <pre>
@@ -81,9 +75,9 @@ package org.openscience.cdk.tools;
  * }
  * </pre>
  *
- * <p>In addition to the methods specific in the interfance, implementations
+ * <p>In addition to the methods specific in the interface, implementations
  * must also implement the static method {@code create(Class<?>)} which
- * can be used by the {@link LoggingToolFactory} to instantiate the
+ * is called by {@link LoggingToolFactory} to instantiate the
  * implementation.
  *
  * @cdk.module  interfaces
@@ -139,7 +133,7 @@ public interface ILoggingTool {
      * {@link Throwable} it will output the trace. Otherwise it will use the
      * toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     void debug(Object object);
 
@@ -147,15 +141,15 @@ public interface ILoggingTool {
      * Shows DEBUG output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object  Object to apply toString() too and output
-     * @param objects Object... to apply toString() too and output
+     * @param object  Object to apply toString() to and output
+     * @param objects Object... to apply toString() to and output
      */
     void debug(Object object, Object... objects);
 
     /**
      * Shows ERROR output for the Object. It uses the toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     void error(Object object);
 
@@ -163,22 +157,22 @@ public interface ILoggingTool {
      * Shows ERROR output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object  Object to apply toString() too and output
-     * @param objects Object... to apply toString() too and output
+     * @param object  Object to apply toString() to and output
+     * @param objects Object... to apply toString() to and output
      */
     void error(Object object, Object... objects);
 
     /**
      * Shows FATAL output for the Object. It uses the toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     void fatal(Object object);
 
     /**
      * Shows INFO output for the Object. It uses the toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     void info(Object object);
 
@@ -186,15 +180,15 @@ public interface ILoggingTool {
      * Shows INFO output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object  Object to apply toString() too and output
-     * @param objects Object... to apply toString() too and output
+     * @param object  Object to apply toString() to and output
+     * @param objects Object... to apply toString() to and output
      */
     void info(Object object, Object... objects);
 
     /**
      * Shows WARN output for the Object. It uses the toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     void warn(Object object);
 
@@ -202,8 +196,8 @@ public interface ILoggingTool {
      * Shows WARN output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object Object to apply toString() too and output
-     * @param objects Object... to apply toString() too and output
+     * @param object Object to apply toString() to and output
+     * @param objects Object... to apply toString() to and output
      */
     void warn(Object object, Object... objects);
 

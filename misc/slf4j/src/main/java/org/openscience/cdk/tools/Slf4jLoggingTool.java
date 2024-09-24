@@ -33,59 +33,7 @@ import java.io.StringReader;
  * <b>AND</b> some implementation e.g. <code>slf4j-simple</code>,
  * <code>log4j-over-slf4j</code>, etc. in you library.
  * <br/>
- * <p>
- * You should not use this class directly, it is created by the LoggingToolFactory
- * as follows:
- * <pre>
- * public class SomeClass {
- *     private static ILoggingTool logger =
- *         LoggingToolFactory.createLoggingTool(SomeClass.class);
- * }
- * </pre>
- * There is no special reason not to make the logger private and static, as the logging
- * information is closely bound to one specific Class, not subclasses and not instances.
- *
- * <p>The logger has five logging levels:
- * <dl>
- *  <dt>DEBUG
- *  <dd>Default mode. Used for information you might need to track down the cause of a
- *      bug in the source code, or to understand how an algorithm works.
- *  <dt>WARNING
- *  <dd>This indicates a special situation which is unlike to happen, but for which no
- *      special actions need to be taken. E.g. missing information in files, or an
- *      unknown atom type. The action is normally something user friendly.
- *  <dt>INFO
- *  <dd>For reporting informative information to the user that he might easily disregard.
- *      Real important information should be given to the user using a GUI element.
- *  <dt>FATAL
- *  <dd>This level is used for situations that should not have happened *and* that
- *      lead to a situation where this program can no longer function (rare in Java).
- *  <dt>ERROR
- *  <dd>This level is used for situations that should not have happened *and* thus
- *      indicate a bug.
- * </dl>
- *
- * <p>Consider that the debugging will not always be turned on. Therefore, it is better
- * not to concatenate string in the logger.debug() call, but have the LoggingTool do
- * this when appropriate. In other words, use:
- * <pre>
- * logger.debug("The String X has this value: ", someString);
- * logger.debug("The int Y has this value: ", y);
- * </pre>
- * instead of:
- * <pre>
- * logger.debug("The String X has this value: " + someString);
- * logger.debug("The int Y has this value: " + y);
- * </pre>
- *
- * <p>For logging calls that require even more computation you can use the
- * <code>isDebugEnabled()</code> method:
- * <pre>
- * if (logger.isDebugEnabled()) {
- *   logger.info("The 1056389822th prime that is used is: ",
- *     calculatePrime(1056389822));
- * }
- * </pre>
+ * See interface {@link ILoggingTool} for more details.
  *
  * @cdk.module cdk-slf4j
  * @cdk.githash

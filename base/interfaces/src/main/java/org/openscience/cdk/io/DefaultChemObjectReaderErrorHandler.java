@@ -42,17 +42,17 @@ public class DefaultChemObjectReaderErrorHandler implements IChemObjectReaderErr
 
     @Override
     public void handleError(String message, Exception exception) {
-        logger.error(message, exception);
+        logger.error(message, ", ", exception);
     }
 
     @Override
     public void handleError(String message, int row, int colStart, int colEnd) {
-        logger.error(message + ", row " + row + " column " + colStart + "-" + colEnd);
+        logger.error(message, ", row ", row, " column ", colStart, "-", colEnd);
     }
 
     @Override
     public void handleError(String message, int row, int colStart, int colEnd, Exception exception) {
-        logger.error(message + ", row " + row + " column " + colStart + "-" + colEnd + ", " + exception);
+        logger.error(message + ", row ", row, " column ", colStart, "-", colEnd, ", ", exception);
     }
 
     @Override

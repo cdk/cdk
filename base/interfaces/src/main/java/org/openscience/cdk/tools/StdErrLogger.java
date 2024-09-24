@@ -25,9 +25,11 @@ import java.io.StringWriter;
 import java.util.Locale;
 
 /**
- * You should not use this class directly.
  * Implementation of the {@link ILoggingTool} interface that sends output to
  * the {@link System#err} channel.
+ * <p>
+ * It is <b>strongly recommended to not use this class directly</b>.
+ * </p>
  *
  * @cdk.module core
  * @cdk.githash
