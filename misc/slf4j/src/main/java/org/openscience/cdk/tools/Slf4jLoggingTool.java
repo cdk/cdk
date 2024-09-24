@@ -92,7 +92,7 @@ final class Slf4jLoggingTool implements ILoggingTool {
     /**
      * Sets the number of StackTraceElements to be printed in DEBUG mode when
      * calling <code>debug(Throwable)</code>.
-     * The default value is DEFAULT_STACK_LENGTH.
+     * The default value is {@link #DEFAULT_STACK_LENGTH}.
      *
      * @param length the new stack length
      * @see #DEFAULT_STACK_LENGTH
@@ -191,7 +191,7 @@ final class Slf4jLoggingTool implements ILoggingTool {
     /**
      * Shows ERROR output for the Object. It uses the toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     @Override
     public void error(Object object) {
@@ -202,8 +202,8 @@ final class Slf4jLoggingTool implements ILoggingTool {
      * Shows ERROR output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object  Object to apply toString() too and output
-     * @param objects Object[] to apply toString() too and output
+     * @param object  Object to apply toString() to and output
+     * @param objects Object[] to apply toString() to and output
      */
     @Override
     public void error(Object object, Object... objects) {
@@ -224,7 +224,7 @@ final class Slf4jLoggingTool implements ILoggingTool {
     /**
      * Shows FATAL output for the Object. It uses the toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     @Override
     public void fatal(Object object)
@@ -235,7 +235,7 @@ final class Slf4jLoggingTool implements ILoggingTool {
     /**
      * Shows INFO output for the Object. It uses the toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     @Override
     public void info(Object object) {
@@ -246,8 +246,8 @@ final class Slf4jLoggingTool implements ILoggingTool {
      * Shows INFO output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object  Object to apply toString() too and output
-     * @param objects Object[] to apply toString() too and output
+     * @param object  Object to apply toString() to and output
+     * @param objects Object[] to apply toString() to and output
      */
     @Override
     public void info(Object object, Object... objects) {
@@ -268,7 +268,7 @@ final class Slf4jLoggingTool implements ILoggingTool {
     /**
      * Shows WARN output for the Object. It uses the toString() method.
      *
-     * @param object Object to apply toString() too and output
+     * @param object Object to apply toString() to and output
      */
     @Override
     public void warn(Object object) {
@@ -283,8 +283,8 @@ final class Slf4jLoggingTool implements ILoggingTool {
      * Shows WARN output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object  Object to apply toString() too and output
-     * @param objects Object[] to apply toString() too and output
+     * @param object  Object to apply toString() to and output
+     * @param objects Object[] to apply toString() to and output
      */
     @Override
     public void warn(Object object, Object... objects) {
@@ -330,7 +330,7 @@ final class Slf4jLoggingTool implements ILoggingTool {
      */
     @Override
     public void setLevel(int level) {
-        throw new IllegalArgumentException("slf4j does not let you set the level at runtime via the API");
+        throw new UnsupportedOperationException("slf4j does not let you set the level at runtime via the API");
     }
 
     /**

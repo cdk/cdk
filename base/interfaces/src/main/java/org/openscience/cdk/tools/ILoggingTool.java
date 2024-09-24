@@ -28,9 +28,11 @@ package org.openscience.cdk.tools;
  *   private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SomeClass.class);
  * }
  * </pre>
- *
- * <p>The logger has five logging levels:
+ * <p>
+ * The logger has six logging levels:
  * <dl>
+ *  <dt>TRACE
+ *  <dd>Emits the largest number of log entries.
  *  <dt>DEBUG
  *  <dd>Default mode. Used for information you might need to track down the
  *      cause of a bug in the source code, or to understand how an algorithm
@@ -52,8 +54,15 @@ package org.openscience.cdk.tools;
  *      that lead to a situation where this program can no longer function
  *      (rare in Java).
  * </dl>
- *
- * <p>Consider that debugging will not always be turned on. Therefore, it is
+ * </p>
+ * <p>
+ * Logging library might implement less logging levels than the six levels
+ * defined here. This may result in logging levels being merged.
+ * For example, slf4j has five logging levels. Logging level fatal is not supported
+ * so that calls to error and fatal are both logged with slf4j logging level error.
+ * </p>
+ * <p>
+ * Consider that debugging will not always be turned on. Therefore, it is
  * better not to concatenate string in the logger.debug() call, but have the
  * ILoggingTool do this when appropriate. In other words, use:
  * <pre>
@@ -65,8 +74,9 @@ package org.openscience.cdk.tools;
  * logger.debug("The String X has this value: " + someString);
  * logger.debug("The int Y has this value: " + y);
  * </pre>
- *
- * <p>For logging calls that require even more computation you can use the
+ * </p>
+ * <p>
+ * For logging calls that require even more computation you can use the
  * <code>isDebugEnabled()</code> method:
  * <pre>
  * if (logger.isDebugEnabled()) {
@@ -74,11 +84,13 @@ package org.openscience.cdk.tools;
  *     calculatePrime(1056389822));
  * }
  * </pre>
- *
- * <p>In addition to the methods specific in the interface, implementations
+ * </p>
+ * <p>
+ * In addition to the methods specific in the interface, implementations
  * must also implement the static method {@code create(Class<?>)} which
  * is called by {@link LoggingToolFactory} to instantiate the
  * implementation.
+ * </p>
  *
  * @cdk.module  interfaces
  * @cdk.githash

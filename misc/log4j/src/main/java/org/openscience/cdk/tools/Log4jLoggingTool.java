@@ -48,7 +48,7 @@ final class Log4jLoggingTool implements ILoggingTool {
 
     /**
      * Log4J2 has customer levels and no longer has "TRACE_INT" etc so we can't know the values at compile
-     * time and therefore it's not possible use a switch.
+     * time. It's therefore not possible to use a switch.
      */
     private static final Map<Level, Integer> LOG4J2_LEVEL_TO_CDK_LEVEL = new HashMap<>();
 
@@ -107,7 +107,7 @@ final class Log4jLoggingTool implements ILoggingTool {
     /**
      * Sets the number of StackTraceElements to be printed in DEBUG mode when
      * calling <code>debug(Throwable)</code>.
-     * The default value is DEFAULT_STACK_LENGTH.
+     * The default value is {@link #DEFAULT_STACK_LENGTH}.
      *
      * @param length the new stack length
      * @see #DEFAULT_STACK_LENGTH
@@ -344,7 +344,7 @@ final class Log4jLoggingTool implements ILoggingTool {
      */
     @Override
     public void setLevel(int level) {
-        throw new IllegalArgumentException("Log4J does not let you set the level at runtime via the API");
+        throw new UnsupportedOperationException("Log4J does not let you set the level at runtime via the API");
     }
 
     /**
@@ -357,7 +357,7 @@ final class Log4jLoggingTool implements ILoggingTool {
             level = LogManager.getRootLogger().getLevel();
         Integer res = LOG4J2_LEVEL_TO_CDK_LEVEL.get(level);
         if (res == null)
-            throw new IllegalArgumentException("Unsupported log4j level: " + level);
+            throw new IllegalStateException("Unsupported log4j level: " + level);
         return res;
     }
 }
