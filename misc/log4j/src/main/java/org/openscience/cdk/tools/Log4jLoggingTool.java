@@ -47,11 +47,6 @@ final class Log4jLoggingTool implements ILoggingTool {
     private int stackLength;
 
     /**
-     * Default number of StackTraceElements to be printed by debug(Exception).
-     */
-    public final int DEFAULT_STACK_LENGTH = 5;
-
-    /**
      * Log4J2 has customer levels and no longer has "TRACE_INT" etc so we can't know the values at compile
      * time and therefore it's not possible use a switch.
      */
@@ -248,7 +243,7 @@ final class Log4jLoggingTool implements ILoggingTool {
      */
     @Override
     public void fatal(Object object) {
-        log4jLogger.fatal("" + object.toString());
+        log4jLogger.fatal(object.toString());
     }
 
     /**
@@ -258,7 +253,7 @@ final class Log4jLoggingTool implements ILoggingTool {
      */
     @Override
     public void info(Object object) {
-        infoString("" + object);
+        infoString(object.toString());
     }
 
     /**

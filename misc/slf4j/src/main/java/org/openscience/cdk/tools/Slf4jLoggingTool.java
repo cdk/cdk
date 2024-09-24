@@ -44,12 +44,6 @@ final class Slf4jLoggingTool implements ILoggingTool {
 
     private int stackLength;
 
-    /**
-     * Default number of StackTraceElements to be printed by debug(Exception).
-     */
-    public final int DEFAULT_STACK_LENGTH = 5;
-
-
     private final Marker fatal = MarkerFactory.getMarker("FATAL");
 
     /**
@@ -235,7 +229,7 @@ final class Slf4jLoggingTool implements ILoggingTool {
     @Override
     public void fatal(Object object)
     {
-        slf4jlogger.error(fatal, "" + object.toString());
+        slf4jlogger.error(fatal, object.toString());
     }
 
     /**
@@ -245,7 +239,7 @@ final class Slf4jLoggingTool implements ILoggingTool {
      */
     @Override
     public void info(Object object) {
-        infoString("" + object);
+        infoString(object.toString());
     }
 
     /**
