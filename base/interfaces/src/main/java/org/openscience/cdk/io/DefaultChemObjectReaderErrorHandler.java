@@ -29,6 +29,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Emits log entries using the {@link LoggingToolFactory}.
  *
  * @cdk.module io
+ * @cdk.githash
  *
  * @author Uli Fechner
  */
