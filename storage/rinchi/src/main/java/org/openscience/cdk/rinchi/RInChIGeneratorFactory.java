@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.rinchi;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IReaction;
 
@@ -61,9 +63,10 @@ public final class RInChIGeneratorFactory {
 
         static {
             INSTANCE = new RInChIGeneratorFactory();
+            // TODO consider removing / Is this beneficial here? Is it reasonable to throw a RuntimeException?
             try {
-                RInChIGeneratorFactory.class.getClassLoader().loadClass("io.github.dan2097.jnarinchi.JnaInchi");
-            } catch (ClassNotFoundException exception) {
+                InChIGeneratorFactory.getInstance().getInChIGenerator(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+            } catch (CDKException exception) {
                 throw new RuntimeException(exception);
             }
         }
