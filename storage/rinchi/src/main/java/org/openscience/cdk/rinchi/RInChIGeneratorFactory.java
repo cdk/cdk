@@ -87,9 +87,8 @@ public class RInChIGeneratorFactory {
      *
      * @param reaction reaction to generate RInChI for
      * @return the RInChI generator object
-     * @throws CDKException if the generator cannot be instantiated
      */
-    public RInChIGenerator getRInChIGenerator(IReaction reaction) throws CDKException {
+    public RInChIGenerator getRInChIGenerator(IReaction reaction) {
         return (new RInChIGenerator(reaction));
     }
 
@@ -99,9 +98,8 @@ public class RInChIGeneratorFactory {
      * @param reaction reaction to generate RInChI for
      * @param options    one or more options
      * @return the RInChI generator object
-     * @throws CDKException if the generator cannot be instantiated
      */
-    public RInChIGenerator getRInChIGenerator(IReaction reaction, RInChIOption... options) throws CDKException {
+    public RInChIGenerator getRInChIGenerator(IReaction reaction, RInChIOption... options) {
         return (new RInChIGenerator(reaction, options));
     }
 
@@ -109,9 +107,8 @@ public class RInChIGeneratorFactory {
      * Returns an instance of {@link RInChIToReaction} that consumes a RInChI string and produces an {@link IReaction}.
      *
      * @param rinchi RInChI to generate the reaction from
-     * @throws CDKException if the generator cannot be instantiated
      */
-    public RInChIToReaction getRInChIToReaction(String rinchi) throws CDKException {
+    public RInChIToReaction getRInChIToReaction(String rinchi) {
         return (new RInChIToReaction(rinchi));
     }
 
@@ -121,9 +118,8 @@ public class RInChIGeneratorFactory {
      *
      * @param rinchi  RInChI to generate reaction from
      * @param auxInfo RInChI auxiliary information (<i>AuxInfo</i>)
-     * @throws CDKException if the generator cannot be instantiated
      */
-    public RInChIToReaction getRInChIToReaction(String rinchi, String auxInfo) throws CDKException {
+    public RInChIToReaction getRInChIToReaction(String rinchi, String auxInfo) {
         return (new RInChIToReaction(rinchi, auxInfo));
     }
 
@@ -131,9 +127,8 @@ public class RInChIGeneratorFactory {
      * Consumes a RInChI string and produces a {@link RInChIDecomposition}.
      *
      * @param rinchi RInChI that is decomposed
-     * @throws CDKException if the generator cannot be instantiated
      */
-    public RInChIDecomposition getRInChIDecomposition(String rinchi) throws CDKException {
+    public RInChIDecomposition getRInChIDecomposition(String rinchi) {
         return (new RInChIDecomposition(rinchi));
     }
 
@@ -142,9 +137,8 @@ public class RInChIGeneratorFactory {
      *
      * @param rinchi  RInChI that is decomposed
      * @param auxInfo RInChI auxiliary information (<i>AuxInfo</i>)
-     * @throws CDKException if the generator cannot be instantiated
      */
-    public RInChIDecomposition getRInChIDecomposition(String rinchi, String auxInfo) throws CDKException {
+    public RInChIDecomposition getRInChIDecomposition(String rinchi, String auxInfo) {
         return (new RInChIDecomposition(rinchi, auxInfo));
     }
 }

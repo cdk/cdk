@@ -97,9 +97,8 @@ public class RInChIDecomposition {
      * Decomposes a RInChI into a set of InChIs.
      *
      * @param rinchi RInChI string
-     * @throws CDKException thrown if an error occurs
      */
-    protected RInChIDecomposition(String rinchi) throws CDKException {
+    protected RInChIDecomposition(String rinchi) {
         this(rinchi, "");
     }
 
@@ -108,9 +107,8 @@ public class RInChIDecomposition {
      *
      * @param rinchi  RInChI string
      * @param auxInfo RInChI aux info string
-     * @throws CDKException thrown if an error occurs
      */
-    protected RInChIDecomposition(String rinchi, String auxInfo) throws CDKException {
+    protected RInChIDecomposition(String rinchi, String auxInfo) {
         // TODO consider generating an error msg instead of throwing a runtime exception
         if (rinchi == null)
             throw new IllegalArgumentException("Null RInChI string provided");
@@ -120,7 +118,7 @@ public class RInChIDecomposition {
         decompose(rinchi, auxInfo);
     }
 
-    private void decompose(String rinchi, String auxInfo) throws CDKException {
+    private void decompose(String rinchi, String auxInfo) {
         // TODO implement logic
     }
 
