@@ -61,7 +61,7 @@ public final class RInChIToReaction {
      *
      * @param rinchi RInChI string
      */
-    protected RInChIToReaction(String rinchi) {
+    RInChIToReaction(String rinchi) {
         this(rinchi, "");
     }
 
@@ -71,21 +71,26 @@ public final class RInChIToReaction {
      * @param rinchi                      RInChI string
      * @param auxInfo                     RInChI auxiliary information (AuxInfo) string
      */
-    protected RInChIToReaction(String rinchi, String auxInfo) {
-        // TODO consider removing exceptions and setting status/msg
-        if (rinchi == null)
-            throw new IllegalArgumentException("Null RInChI string provided");
-        if (auxInfo == null)
-            throw new IllegalArgumentException("Null RInChI aux info string provided");
-
-        generateReactionFromRinchi();
+    RInChIToReaction(String rinchi, String auxInfo) {
+        generateReactionFromRinchi(rinchi, auxInfo);
     }
 
     /**
      * Produces a reaction from given RInChI.
      * The RInChI library data structure (RinchiInput object) is converted to an {@link IReaction}.
      */
-    void generateReactionFromRinchi() {
+    private void generateReactionFromRinchi(final String rinchi, final String auxInfo) {
+        if (rinchi == null) {
+            this.status = Status.ERROR;
+            this.messages.add("RInChI string provided as input is 'null'.");
+            return;
+        }
+        if (auxInfo == null) {
+            this.status = Status.ERROR;
+            this.messages.add("RInChI auxiliary info string provided as input is 'null'.");
+            return;
+        }
+
         // TODO implement logic here
     }
 

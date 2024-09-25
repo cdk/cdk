@@ -21,6 +21,7 @@ package org.openscience.cdk.rinchi;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IReaction;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +57,20 @@ public final class RInChIDecomposition {
         /** Success; warning(s) issued. */
         WARNING,
         /** Error; no result was obtained. */
-        ERROR
+        ERROR;
+
+        public Status combine(Status other) {
+            switch (this) {
+                case SUCCESS:
+                    return other;
+                case WARNING:
+                    return other == ERROR ? ERROR : this;
+                case ERROR:
+                    return this;
+                default:
+                    throw new IllegalStateException("Unknown status: " + this);
+            }
+        }
     }
 
     public static class Component {
@@ -90,14 +104,14 @@ public final class RInChIDecomposition {
     private IReaction.Direction reactionDirection;
     private List<Component> components;
     private Status status;
-    private List<String> messages;
+    private final List<String> messages = new ArrayList<>();
 
     /**
      * Decomposes a RInChI into a set of InChIs.
      *
      * @param rinchi RInChI string
      */
-    protected RInChIDecomposition(String rinchi) {
+    RInChIDecomposition(String rinchi) {
         this(rinchi, "");
     }
 
@@ -107,17 +121,22 @@ public final class RInChIDecomposition {
      * @param rinchi  RInChI string
      * @param auxInfo RInChI aux info string
      */
-    protected RInChIDecomposition(String rinchi, String auxInfo) {
-        // TODO consider generating an error msg instead of throwing a runtime exception
-        if (rinchi == null)
-            throw new IllegalArgumentException("Null RInChI string provided");
-        if (auxInfo == null)
-            throw new IllegalArgumentException("Null RInChI aux info string provided");
-
+    RInChIDecomposition(String rinchi, String auxInfo) {
         decompose(rinchi, auxInfo);
     }
 
     private void decompose(String rinchi, String auxInfo) {
+        if (rinchi == null) {
+            this.status = Status.ERROR;
+            this.messages.add("RInChI string provided as input is 'null'.");
+            return;
+        }
+        if (auxInfo == null) {
+            this.status = Status.ERROR;
+            this.messages.add("RInChI auxiliary info string provided as input is 'null'.");
+            return;
+        }
+
         // TODO implement logic
     }
 

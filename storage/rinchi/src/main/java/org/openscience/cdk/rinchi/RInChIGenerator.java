@@ -22,10 +22,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class generates the IUPAC Reaction International Chemical Identifier (RInChI) for a CDK IReaction object.
@@ -68,7 +65,7 @@ public final class RInChIGenerator {
     private String longRinchiKeyOutput;
     private String webRinchiKeyOutput;
     private Status status;
-    private List<String> messages;
+    private final List<String> messages = new ArrayList<>();
 
     /**
      * Generates RInChI from a CDK Reaction.
@@ -76,12 +73,18 @@ public final class RInChIGenerator {
      * @param reaction reaction to generate RInChI for
      * @param options  zero or more optional RInChI generation options
      */
-    protected RInChIGenerator(IReaction reaction, RInChIOption... options) {
+    RInChIGenerator(IReaction reaction, RInChIOption... options) {
         this.rinchiOptions = ((options == null || options.length == 0) ? DEFAULT_OPTIONS : EnumSet.copyOf(Arrays.asList(options)));
-        generateRinchiFromReaction();
+        generateRinchiFromReaction(reaction);
     }
 
-    private void generateRinchiFromReaction() {
+    private void generateRinchiFromReaction(final IReaction reaction) {
+        if (reaction == null) {
+            this.status = Status.ERROR;
+            this.messages.add("IReaction object provided as input is 'null'.");
+            return;
+        }
+
         // TODO implement logic here
     }
 
