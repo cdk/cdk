@@ -21,7 +21,6 @@ package org.openscience.cdk.rinchi;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IReaction;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,29 +48,7 @@ import java.util.List;
  * @cdk.module rinchi
  * @cdk.githash
  */
-public final class RInChIDecomposition {
-
-    public enum Status {
-        /** Success; no errors or warnings. */
-        SUCCESS,
-        /** Success; warning(s) issued. */
-        WARNING,
-        /** Error; no result was obtained. */
-        ERROR;
-
-        public Status combine(Status other) {
-            switch (this) {
-                case SUCCESS:
-                    return other;
-                case WARNING:
-                    return other == ERROR ? ERROR : this;
-                case ERROR:
-                    return this;
-                default:
-                    throw new IllegalStateException("Unknown status: " + this);
-            }
-        }
-    }
+public final class RInChIDecomposition extends StatusMessagesOutput{
 
     public static class Component {
         private final String inchi;
@@ -103,8 +80,6 @@ public final class RInChIDecomposition {
 
     private IReaction.Direction reactionDirection;
     private List<Component> components;
-    private Status status;
-    private final List<String> messages = new ArrayList<>();
 
     /**
      * Decomposes a RInChI into a set of InChIs.
@@ -122,21 +97,19 @@ public final class RInChIDecomposition {
      * @param auxInfo RInChI aux info string
      */
     RInChIDecomposition(String rinchi, String auxInfo) {
+        if (rinchi == null) {
+            addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
+            return;
+        }
+        if (auxInfo == null) {
+            addMessage("RInChI auxiliary info string provided as input is 'null'.", Status.ERROR);
+            return;
+        }
+
         decompose(rinchi, auxInfo);
     }
 
     private void decompose(String rinchi, String auxInfo) {
-        if (rinchi == null) {
-            this.status = Status.ERROR;
-            this.messages.add("RInChI string provided as input is 'null'.");
-            return;
-        }
-        if (auxInfo == null) {
-            this.status = Status.ERROR;
-            this.messages.add("RInChI auxiliary info string provided as input is 'null'.");
-            return;
-        }
-
         // TODO implement logic
     }
 
@@ -158,23 +131,5 @@ public final class RInChIDecomposition {
      */
     public IReaction.Direction getReactionDirection() {
         return this.reactionDirection;
-    }
-
-    /**
-     * Access the status of the RInChI Decomposition process.
-     *
-     * @return the status
-     */
-    public Status getStatus() {
-        return this.status;
-    }
-
-    /**
-     * Retrieves messages generated during the RInChI decomposition process.
-     *
-     * @return an unmodifiable list of messages
-     */
-    public List<String> getMessages() {
-        return Collections.unmodifiableList(this.messages);
     }
 }

@@ -44,16 +44,7 @@ import java.util.*;
  * @cdk.githash
  */
 
-public final class RInChIGenerator {
-
-    public enum Status {
-        /** Success; no errors or warnings. */
-        SUCCESS,
-        /** Success; warning(s) issued. */
-        WARNING,
-        /** Error; no result was obtained. */
-        ERROR
-    }
+public final class RInChIGenerator extends StatusMessagesOutput {
 
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(RInChIGenerator.class);
     private static final EnumSet<RInChIOption> DEFAULT_OPTIONS = EnumSet.noneOf(RInChIOption.class);
@@ -64,8 +55,6 @@ public final class RInChIGenerator {
     private String shortRinchiKeyOutput;
     private String longRinchiKeyOutput;
     private String webRinchiKeyOutput;
-    private Status status;
-    private final List<String> messages = new ArrayList<>();
 
     /**
      * Generates RInChI from a CDK Reaction.
@@ -75,16 +64,16 @@ public final class RInChIGenerator {
      */
     RInChIGenerator(IReaction reaction, RInChIOption... options) {
         this.rinchiOptions = ((options == null || options.length == 0) ? DEFAULT_OPTIONS : EnumSet.copyOf(Arrays.asList(options)));
+
+        if (reaction == null) {
+            addMessage("IReaction object provided as input is 'null'.", Status.ERROR);
+            return;
+        }
+
         generateRinchiFromReaction(reaction);
     }
 
     private void generateRinchiFromReaction(final IReaction reaction) {
-        if (reaction == null) {
-            this.status = Status.ERROR;
-            this.messages.add("IReaction object provided as input is 'null'.");
-            return;
-        }
-
         // TODO implement logic here
     }
 
@@ -131,23 +120,5 @@ public final class RInChIGenerator {
      */
     public String getWebRInChIKey() {
         return this.webRinchiKeyOutput;
-    }
-
-    /**
-     * Returns the status of the RInChI output.
-     *
-     * @return the status
-     */
-    public Status getStatus() {
-        return this.status;
-    }
-
-    /**
-     * Retrieves an unmodifiable list of messages generated during the RInChI generation process.
-     *
-     * @return a list of messages
-     */
-    public List<String> getMessages() {
-        return Collections.unmodifiableList(messages);
     }
 }

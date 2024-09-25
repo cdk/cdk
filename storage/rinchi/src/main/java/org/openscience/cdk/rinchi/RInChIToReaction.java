@@ -20,10 +20,6 @@ package org.openscience.cdk.rinchi;
 
 import org.openscience.cdk.interfaces.IReaction;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * This class generates the IUPAC Reaction International Chemical Identifier (RInChI) for a CDK IReaction object.
  * <br>
@@ -41,20 +37,9 @@ import java.util.List;
  * @cdk.module rinchi
  * @cdk.githash
  */
-public final class RInChIToReaction {
-
-    public enum Status {
-        /** Success; no errors or warnings. */
-        SUCCESS,
-        /** Success; warning(s) issued. */
-        WARNING,
-        /** Error; no result was obtained. */
-        ERROR
-    }
+public final class RInChIToReaction extends StatusMessagesOutput {
 
     private IReaction reaction;
-    private Status status;
-    private final List<String> messages = new ArrayList<>();
 
     /**
      * Consumes a RInChI and produces a CDK Reaction.
@@ -72,6 +57,15 @@ public final class RInChIToReaction {
      * @param auxInfo                     RInChI auxiliary information (AuxInfo) string
      */
     RInChIToReaction(String rinchi, String auxInfo) {
+        if (rinchi == null) {
+            addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
+            return;
+        }
+        if (auxInfo == null) {
+            addMessage("RInChI auxiliary info string provided as input is 'null'.", Status.ERROR);
+            return;
+        }
+
         generateReactionFromRinchi(rinchi, auxInfo);
     }
 
@@ -80,17 +74,6 @@ public final class RInChIToReaction {
      * The RInChI library data structure (RinchiInput object) is converted to an {@link IReaction}.
      */
     private void generateReactionFromRinchi(final String rinchi, final String auxInfo) {
-        if (rinchi == null) {
-            this.status = Status.ERROR;
-            this.messages.add("RInChI string provided as input is 'null'.");
-            return;
-        }
-        if (auxInfo == null) {
-            this.status = Status.ERROR;
-            this.messages.add("RInChI auxiliary info string provided as input is 'null'.");
-            return;
-        }
-
         // TODO implement logic here
     }
 
@@ -101,23 +84,5 @@ public final class RInChIToReaction {
      */
     public IReaction getReaction() {
         return reaction;
-    }
-
-    /**
-     * Access the status of the RInChI output.
-     *
-     * @return the status
-     */
-    public Status getStatus() {
-        return this.status;
-    }
-
-    /**
-     * Returns an unmodifiable list of warning and error messages associated with generating the reaction.
-     *
-     * @return an unmodifiable list of messages
-     */
-    public List<String> getMessages() {
-        return Collections.unmodifiableList(this.messages);
     }
 }
