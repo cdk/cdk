@@ -19,11 +19,10 @@
 package org.openscience.cdk.rinchi;
 
 import org.openscience.cdk.ReactionRole;
-import org.openscience.cdk.exception.CDKException;
-
 import org.openscience.cdk.interfaces.IReaction;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This class decomposes a RInChI into the individual InChIs and auxiliary Information (if available)
@@ -49,7 +48,7 @@ import java.util.*;
  * @cdk.module rinchi
  * @cdk.githash
  */
-public class RInChIDecomposition {
+public final class RInChIDecomposition {
 
     public enum Status {
         /** Success; no errors or warnings. */

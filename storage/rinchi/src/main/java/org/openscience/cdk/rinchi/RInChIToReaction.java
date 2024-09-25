@@ -41,7 +41,7 @@ import java.util.List;
  * @cdk.module rinchi
  * @cdk.githash
  */
-public class RInChIToReaction {
+public final class RInChIToReaction {
 
     public enum Status {
         /** Success; no errors or warnings. */

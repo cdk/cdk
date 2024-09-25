@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IReaction;
  * @cdk.module rinchi
  * @cdk.githash
  */
-public class RInChIGeneratorFactory {
+public final class RInChIGeneratorFactory {
     // this singleton pattern with a static inner class lets the JVM take
     // care of (1) lazy instantiation and (2) concurrency
     // https://blog.paumard.org/2011/04/22/bilan-sur-le-pattern-singleton/

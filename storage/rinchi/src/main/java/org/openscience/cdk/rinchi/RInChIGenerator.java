@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.rinchi;
 
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -48,7 +47,7 @@ import java.util.List;
  * @cdk.githash
  */
 
-public class RInChIGenerator {
+public final class RInChIGenerator {
 
     public enum Status {
         /** Success; no errors or warnings. */
