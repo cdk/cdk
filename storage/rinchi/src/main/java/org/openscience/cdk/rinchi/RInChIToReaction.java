@@ -61,7 +61,7 @@ public final class RInChIToReaction extends StatusMessagesOutput {
             addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
             return;
         }
-        if (auxInfo == null) {
+        if (auxInfo == null || auxInfo.isEmpty()) {
             addMessage("RInChI auxiliary info string provided as input is 'null'.", Status.ERROR);
             return;
         }

@@ -132,9 +132,9 @@ public class RInChIGeneratorFactoryTest extends CDKTestCase {
 		molecule3.addBond(new Bond (productAtom1, productAtom2, IBond.Order.DOUBLE));
 		molecule3.addBond(new Bond (productAtom2, productAtom3, IBond.Order.SINGLE));
 		molecule3.addBond(new Bond (productAtom3, productAtom4, IBond.Order.SINGLE));
-		molecule3.addBond(new Bond (productAtom2, productAtom3, IBond.Order.SINGLE));
-		molecule3.addBond(new Bond (productAtom2, productAtom3, IBond.Order.SINGLE));
-		molecule3.addBond(new Bond (productAtom2, productAtom3, IBond.Order.SINGLE));
+		molecule3.addBond(new Bond (productAtom4, productAtom5, IBond.Order.SINGLE));
+		molecule3.addBond(new Bond (productAtom5, productAtom6, IBond.Order.SINGLE));
+		molecule3.addBond(new Bond (productAtom6, productAtom1, IBond.Order.SINGLE));
 		
 		//Create reaction and set reagents and products
 		IReaction reaction = SilentChemObjectBuilder.getInstance().newReaction();
@@ -242,6 +242,9 @@ public class RInChIGeneratorFactoryTest extends CDKTestCase {
 		RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
 		Assertions.assertEquals(RInChIGenerator.Status.SUCCESS, generator.getStatus(), "RInChI status: ");
 		Assertions.assertEquals("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-", generator.getRInChI());
+		Assertions.assertEquals("Long-RInChIKey=SA-BUHFF---UHOVQNZJYSORNB-UHFFFAOYSA-N", generator.getLongRInChIKey());
+		Assertions.assertEquals("Short-RInChIKey=SA-BUHFF-UHFFFADPSC-UHOVQNZJYS-UHFFFADPSC-NUHFF-NUHFF-NUHFF-ZZZ", generator.getShortRInChIKey());
+		Assertions.assertEquals("Web-RInChIKey=UHOVQNZJYSORNBOAP-NUHFFFADPSCTJSA", generator.getWebRInChIKey());
 	}
 
 	@Disabled("not implemented yet")
