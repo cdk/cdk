@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
  *     String webKey = generator.getWebRInChIKey();
  * </pre>
  *
- * @author Uli Fechner
+ * @author Uli Fechner, Felix Bänsch
  * @cdk.module rinchi
  * @cdk.githash
  */
@@ -96,19 +96,37 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         try {
             this.extractComponents(reaction);
         } catch (CDKException e) {
-            throw new RuntimeException(e);
+            addMessage(e.getMessage(), Status.ERROR);
         }
         this.generateRInChI();
         this.generateRAuxInfo();
         this.generateLongKey();
-        try {
-            this.generateShortKey();
-            this.generateWebKey();
-        } catch (NoSuchAlgorithmException | CDKException e) {
-            addMessage("Error in creating short key.", Status.WARNING);
-        }
+        this.generateShortKey();
+        this.generateWebKey();
     }
 
+    /**
+     * Extracts components from the given reaction and initializes the corresponding RInChI components.
+     *
+     * <p>This method creates and populates lists for reactants, products, and agents by generating
+     * {@link RInChIComponent} instances for each {@link IAtomContainer} in the reaction. It sorts these
+     * components based on their InChI representations and organizes them into appropriate layers.</p>
+     *
+     * <p>The method performs the following steps:
+     * <ul>
+     *   <li>Iterates through the reactants, products, and agents of the reaction, generating an
+     *       {@link RInChIComponent} for each and adding it to the respective list.</li>
+     *   <li>Sorts the lists of reactants, products, and agents based on their InChI values.</li>
+     *   <li>Determines whether products come before reactants based on their InChI comparison.</li>
+     *   <li>Sets the direction of the reaction (FORWARD or BACKWARD) and creates corresponding
+     *       {@link InChILayers} instances for each component type.</li>
+     *   <li>Handles cases where the reaction is bidirectional or requires equilibrium adjustment.</li>
+     * </ul>
+     * The extracted components are stored in instance variables for further processing.</p>
+     *
+     * @param reaction The reaction from which components will be extracted.
+     * @throws CDKException If there is an error in generating InChI components from atom containers.
+     */
     private void extractComponents(final IReaction reaction) throws CDKException {
         //create InChIComponent for each component
         for(IAtomContainer ac : reaction.getReactants()){
@@ -150,8 +168,22 @@ public final class RInChIGenerator extends StatusMessagesOutput {
             this.direction = IReaction.Direction.BIDIRECTIONAL;
     }
 
+    /**
+     * Generates the RInChI string representation for the reaction.
+     *
+     * <p>This method constructs the RInChI string by combining the InChI strings of all
+     * components (reactants and products) along with reaction direction and information
+     * regarding no-structure components.</p>
+     *
+     * <p>The RInChI string consists of the following parts:
+     * <ul>
+     *   <li>RInChI standard header</li>
+     *   <li>InChI strings of all non-null, structured components, separated by component delimiters</li>
+     *   <li>Reaction direction tag and its corresponding character representation</li>
+     *   <li>Information regarding no-structure components, if any, including their counts</li>
+     * </ul>
+     */
     private void generateRInChI() {
-        // TODO implement logic here
         //RInChI StringBuilder
         StringBuilder sb = new StringBuilder();
         sb.append(RInChIConsts.RINCHI_STD_HEADER);
@@ -179,6 +211,19 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         this.rinchi = sb.toString();
     }
 
+    /**
+     * Generates the RInChI auxiliary information (AuxInfo) string.
+     *
+     * <p>This method constructs the RInChI AuxInfo by combining the auxiliary information
+     * of all components (reactants and products) in the reaction.</p>
+     *
+     * <p>The AuxInfo string is composed of the following parts:
+     * <ul>
+     *   <li>RInChI AuxInfo header</li>
+     *   <li>AuxInfo for each component, excluding no-structure components</li>
+     *   <li>Component and group delimiters to separate the AuxInfo data of different components and groups</li>
+     * </ul>
+     */
     private void generateRAuxInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append(RInChIConsts.RINCHI_AUXINFO_HEADER);
@@ -195,12 +240,27 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         this.auxInfo = sb.toString();
     }
 
+    /**
+     * Generates the Long-RInChI-Key.
+     *
+     * <p>This method constructs the long RInChI key by combining the reaction direction,
+     * the InChI keys of the components (reactants and products), and indicators for no-structure entities.</p>
+     *
+     * <p>The key is composed of the following parts:
+     * <ul>
+     *   <li>RInChI header and version identifier</li>
+     *   <li>Reaction direction</li>
+     *   <li>Empty 12-character hash placeholder</li>
+     *   <li>InChI keys of all components, separated by component and group delimiters</li>
+     *   <li>If no-structure entities exist, they are indicated by a special character</li>
+     * </ul>
+     */
     private void generateLongKey() {
         StringBuilder sb = new StringBuilder();
         sb.append(RInChIConsts.RINCHI_LONG_KEY_HEADER);
         sb.append(RInChIConsts.RINCHI_KEY_VERSION_ID_HEADER);
         sb.append(RInChIConsts.KEY_DELIM_BLOCK);
-        sb.append(this.directionToKeyChar(this.direction));
+        sb.append(this.directionToRInChIKeyChar(this.direction));
         sb.append(RInChIConsts.HASH_12_EMPTY_STRING, 0, 4);
         sb.append(RInChIConsts.KEY_DELIM_BLOCK);
         String result = sb.toString();
@@ -224,21 +284,40 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         }
     }
 
-    private void generateShortKey() throws NoSuchAlgorithmException {
+    /**
+     * Generates the short form of the RInChI key.
+     *
+     * <p>This method constructs a compact RInChI key by including the reaction direction,
+     * major and minor hashes of all components, and a count of no-structure entities.</p>
+     *
+     * <p>The key format is composed of several parts:
+     * <ul>
+     *   <li>RInChI header and version identifier</li>
+     *   <li>Reaction direction</li>
+     *   <li>Empty minor hash placeholder (constant)</li>
+     *   <li>Major and minor hashes for each layer in {@code this.layers}</li>
+     *   <li>Character representation of the no-structure counts</li>
+     * </ul>
+     */
+    private void generateShortKey(){
         StringBuilder sb = new StringBuilder();
         sb.append(RInChIConsts.RINCHI_SHORT_KEY_HEADER);
         sb.append(RInChIConsts.RINCHI_KEY_VERSION_ID_HEADER);
         sb.append(RInChIConsts.KEY_DELIM_COMP);
-        sb.append(this.directionToKeyChar(this.direction));
+        sb.append(this.directionToRInChIKeyChar(this.direction));
         sb.append(RInChIConsts.HASH_04_EMPTY_STRING);
 
         StringBuilder allMajors = new StringBuilder();
         StringBuilder allMinors = new StringBuilder();
 
-        for (int i = 0; i < this.layers.length; i++) {
-            InChILayers layers = this.layers[i];
-            allMajors.append(RInChIConsts.KEY_DELIM_BLOCK).append(layers.majorHash());
-            allMinors.append(RInChIConsts.KEY_DELIM_BLOCK).append(layers.minorHash());
+        try {
+            for (int i = 0; i < this.layers.length; i++) {
+                InChILayers layers = this.layers[i];
+                allMajors.append(RInChIConsts.KEY_DELIM_BLOCK).append(layers.majorHash());
+                allMinors.append(RInChIConsts.KEY_DELIM_BLOCK).append(layers.minorHash());
+            }
+        } catch (NoSuchAlgorithmException e) {
+            addMessage(e.getMessage(), Status.ERROR);
         }
 
         sb.append(allMajors);
@@ -250,27 +329,52 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         this.shortRinchiKeyOutput = sb.toString();
     }
 
-    private void generateWebKey() throws CDKException, NoSuchAlgorithmException {
-        // Create a unique list of all component InChIs.
-        Set<String> uniqueInchis = new TreeSet<>();
-        for (List<RInChIComponent> rInChIComponents : this.components) {
-            for (RInChIComponent component : rInChIComponents) {
-                uniqueInchis.add(component.getInchi());
+    /**
+     * Generates a Web-RInChI-Key.
+     *
+     * <p>This method aggregates all unique InChI strings from the reaction components into a set.
+     * It then constructs an {@link InChILayers} object to process and append these unique InChI strings.
+     * The final web key is built by concatenating the RInChI header, major and minor hash extensions
+     * generated from the InChI layers, and the suffix "SA".</p>
+     */
+    private void generateWebKey()  {
+        try {
+            // Create a unique list of all component InChIs.
+            Set<String> uniqueInchis = new TreeSet<>();
+            for (List<RInChIComponent> rInChIComponents : this.components) {
+                for (RInChIComponent component : rInChIComponents) {
+                    uniqueInchis.add(component.getInchi());
+                }
             }
+            InChILayers allInChILayers = new InChILayers();
+            for (String inchi : uniqueInchis) {
+                allInChILayers.append(inchi);
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append(RInChIConsts.RINCHI_WEB_KEY_HEADER);
+            sb.append(allInChILayers.majorHashExt());
+            sb.append(RInChIConsts.KEY_DELIM_BLOCK);
+            sb.append(allInChILayers.minorHashExt());
+            sb.append("SA");
+            this.webRinchiKeyOutput = sb.toString();
+        } catch (CDKException | NoSuchAlgorithmException e) {
+            addMessage(e.getMessage(), Status.ERROR);
         }
-        InChILayers allInChILayers = new InChILayers();
-        for (String inchi : uniqueInchis) {
-            allInChILayers.append(inchi);
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append(RInChIConsts.RINCHI_WEB_KEY_HEADER);
-        sb.append(allInChILayers.majorHashExt());
-        sb.append(RInChIConsts.KEY_DELIM_BLOCK);
-        sb.append(allInChILayers.minorHashExt());
-        sb.append("SA");
-        this.webRinchiKeyOutput = sb.toString();
     }
 
+    /**
+     * Returns an {@link InChIGenerator} for the given atom container using the InChI library.
+     *
+     * <p>This method uses the {@link InChIGeneratorFactory} to create an {@link InChIGenerator} for the provided
+     * {@link IAtomContainer}. The default {@link InchiOptions} are used for generating the InChI. If the generation
+     * is successful, the generator is returned. Otherwise, a warning is logged, and the method returns {@code null}.</p>
+     *
+     * <p>If an exception occurs during the process (e.g., due to an issue with the chemistry library), the error is logged,
+     * and {@code null} is returned.</p>
+     *
+     * @param atomContainer the {@link IAtomContainer} to generate an InChI for
+     * @return the {@link InChIGenerator} if successful, otherwise {@code null}
+     */
     private InChIGenerator getInChIGen(IAtomContainer atomContainer) {
         try {
             InchiOptions options = new InchiOptions.InchiOptionsBuilder().build();
@@ -287,6 +391,21 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         }
     }
 
+    /**
+     * Converts a reaction direction into the corresponding RInChI character representation.
+     *
+     * <p>This method maps the {@link IReaction.Direction} enum values to predefined constants in
+     * {@link RInChIConsts}:
+     * <ul>
+     *   <li>{@code FORWARD} maps to {@code RInChIConsts.DIRECTION_FORWARD}.</li>
+     *   <li>{@code BACKWARD} maps to {@code RInChIConsts.DIRECTION_REVERSE}.</li>
+     *   <li>{@code BIDIRECTIONAL} maps to {@code RInChIConsts.DIRECTION_EQUILIBRIUM}.</li>
+     * </ul>
+     * If the direction is unsupported or unrecognized, it logs an error message and returns {@code 0}.</p>
+     *
+     * @param direction the reaction direction, represented by the {@link IReaction.Direction} enum
+     * @return the corresponding RInChI character for the direction, or {@code 0} if the direction is unsupported
+     */
     private char directionToRInChIChar(IReaction.Direction direction) {
         switch (direction) {
             case FORWARD:
@@ -301,7 +420,21 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         }
     }
 
-    private char directionToKeyChar(IReaction.Direction direction) {
+    /**
+     * Converts a reaction direction into a corresponding single character key.
+     *
+     * <p>This method maps the {@link IReaction.Direction} enum values to specific characters:
+     * <ul>
+     *   <li>{@code FORWARD} maps to 'F'.</li>
+     *   <li>{@code BACKWARD} maps to 'B'.</li>
+     *   <li>{@code BIDIRECTIONAL} maps to 'E'.</li>
+     * </ul>
+     * If the direction is unsupported or unrecognized, it logs an error message and returns {@code 0}.</p>
+     *
+     * @param direction the reaction direction, represented by the {@link IReaction.Direction} enum
+     * @return the corresponding character key ('F', 'B', or 'E'), or {@code 0} if the direction is unsupported
+     */
+    private char directionToRInChIKeyChar(IReaction.Direction direction) {
         switch (direction) {
             case FORWARD:
                 return 'F';
@@ -315,6 +448,17 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         }
     }
 
+    /**
+     * Determines if the first product's InChI string is lexicographically greater than the first reactant's InChI string.
+     *
+     * <p>This method compares the InChI strings of the first reactant and the first product to determine their ordering.
+     * If the product's InChI string is lexicographically greater than the reactant's, the method returns {@code true}, indicating that
+     * products should come first in the ordering. If the reactant comes first or if either list is empty or null, the method returns {@code false}.</p>
+     *
+     * <p>Comparisons are based on the Unicode value of the characters in the InChI strings.</p>
+     *
+     * @return {@code true} if the first product's InChI is lexicographically greater than the first reactant's InChI, {@code false} otherwise
+     */
     private boolean isProductsFirst(){
         String reactant1 = "";
         if (!this.reactants.isEmpty() && this.reactants.get(0) != null) {
@@ -327,6 +471,20 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         return reactant1.compareTo(product1) > 0;
     }
 
+    /**
+     * Converts the given count of "no structure" components to a corresponding character.
+     *
+     * <p>This method is used to represent the number of components that have no structure as a single character.
+     * The character is determined as follows:</p>
+     * <ul>
+     *     <li>If the count is 0, the character 'Z' is returned.</li>
+     *     <li>If the count is greater than 24, the character 'Y' is returned.</li>
+     *     <li>Otherwise, the character is determined by converting the count into an alphabetical character ('A' for 1, 'B' for 2, ..., 'X' for 24).</li>
+     * </ul>
+     *
+     * @param count the number of components with no structure
+     * @return the corresponding character representation of the count
+     */
     private char noStructCountToChar(int count) {
         if (count == 0)
             return 'Z';
