@@ -44,16 +44,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Nikolay Kochev
  * @author Uli Fechner
  */
-public class RInChIGeneratorFactoryTest extends CDKTestCase {
+class RInChIGeneratorFactoryTest extends CDKTestCase {
 
 	@Test
-	public void testGetInstance() {
+	void testGetInstance() {
 		RInChIGeneratorFactory factory = RInChIGeneratorFactory.getInstance();
 		assertNotNull(factory);
 	}
 
 	@Test
-	public void testGetInstance_multipleCalls_sameInstance() {
+	void testGetInstance_multipleCalls_sameInstance() {
 		RInChIGeneratorFactory factory1 = RInChIGeneratorFactory.getInstance();
 		assertNotNull(factory1);
 
@@ -68,7 +68,7 @@ public class RInChIGeneratorFactoryTest extends CDKTestCase {
 	}
 
 	@Test
-	public void testGetInstance_threadSafety() throws InterruptedException {
+	void testGetInstance_threadSafety() throws InterruptedException {
 		RInChIGeneratorFactory singletonInstance = RInChIGeneratorFactory.getInstance();
 
 		int numberOfMethodCalls = 10000;
@@ -93,7 +93,7 @@ public class RInChIGeneratorFactoryTest extends CDKTestCase {
 	
 	@Disabled("not implemented yet")
 	@Test
-	public void test01() {
+	void test01() {
 		//Create Diels–Alder Reaction using CDK
 		//Reactant 1
 		IAtomContainer molecule1 = new AtomContainer();
@@ -188,7 +188,7 @@ public class RInChIGeneratorFactoryTest extends CDKTestCase {
 
 	@Disabled("not implemented yet")
 	@Test
-	public void test02_benzene_kekulized() {
+	void test02_benzene_kekulized() {
 		//Create kekulized benzene
 		IAtomContainer molecule = new AtomContainer();
 		IAtom atom0 = new Atom("C");
@@ -249,7 +249,7 @@ public class RInChIGeneratorFactoryTest extends CDKTestCase {
 
 	@Disabled("not implemented yet")
 	@Test
-	public void test03_benzene_aromatic() {
+	void test03_benzene_aromatic() {
 		//Create aromatic benzene for testing conversion of CDK bonds of type UNSET flagged as aromatic
 		IAtomContainer molecule = new AtomContainer();
 		IAtom atom0 = new Atom("C");
@@ -307,7 +307,7 @@ public class RInChIGeneratorFactoryTest extends CDKTestCase {
 
 	@Disabled("not implemented yet")
 	@Test
-	public void test04_radical_doublet() {
+	void test04_radical_doublet() {
 		//Create propane doublet radical (monovalent)
 		IAtomContainer molecule = new AtomContainer();
 		IAtom atom0 = new Atom("C");
@@ -340,7 +340,7 @@ public class RInChIGeneratorFactoryTest extends CDKTestCase {
 
 	@Disabled("not implemented yet")
 	@Test
-	public void test05_radical_triplet() {
+	void test05_radical_triplet() {
 		//Create propane triple radical (divalent)
 		//!!! propane singlet radical produces the same RAuxInfo (bug or feature in RInChI - unknown ??)
 		IAtomContainer molecule = new AtomContainer();
