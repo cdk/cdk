@@ -114,7 +114,7 @@ final class MinimumEquivalentCyclicSetUnion extends EquivalentSetFinder {
 
         // find the smallest set of equivalent cyclic vertices
         int minSize = Integer.MAX_VALUE;
-        Set<Integer> min = Collections.emptySet();
+        Set<Integer> min = new HashSet<>();
         for (Map.Entry<Long, Set<Integer>> e : equivalent.entrySet()) {
             Set<Integer> vertices = e.getValue();
             if (vertices.size() < minSize && vertices.size() > 1) {
