@@ -38,7 +38,7 @@ public abstract class DefaultChemObjectReader extends ChemObjectIO implements IS
     private ReaderEvent                     frameReadEvent = null;
 
     protected IChemObjectReader.Mode        mode           = IChemObjectReader.Mode.RELAXED;
-    protected IChemObjectReaderErrorHandler errorHandler   = null;
+    protected IChemObjectReaderErrorHandler errorHandler   = new DefaultChemObjectReaderErrorHandler();
 
     /* Extra convenience methods */
 

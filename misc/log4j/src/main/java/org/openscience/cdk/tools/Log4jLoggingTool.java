@@ -35,59 +35,7 @@ import java.util.Map;
  * interface to Log4J. You can use it by including the <code>cdk-log4j</code>
  * <b>AND</b> <code>log4j-core</code> in you library.
  * <br/>
- * <p>
- * You should not use this class directly, it is created by the LoggingToolFactory
- * as follows:
- * <pre>
- * public class SomeClass {
- *     private static ILoggingTool logger =
- *         LoggingToolFactory.createLoggingTool(SomeClass.class);
- * }
- * </pre>
- * There is no special reason not to make the logger private and static, as the logging
- * information is closely bound to one specific Class, not subclasses and not instances.
- *
- * <p>The logger has five logging levels:
- * <dl>
- *  <dt>DEBUG
- *  <dd>Default mode. Used for information you might need to track down the cause of a
- *      bug in the source code, or to understand how an algorithm works.
- *  <dt>WARNING
- *  <dd>This indicates a special situation which is unlike to happen, but for which no
- *      special actions need to be taken. E.g. missing information in files, or an
- *      unknown atom type. The action is normally something user friendly.
- *  <dt>INFO
- *  <dd>For reporting informative information to the user that he might easily disregard.
- *      Real important information should be given to the user using a GUI element.
- *  <dt>FATAL
- *  <dd>This level is used for situations that should not have happened *and* that
- *      lead to a situation where this program can no longer function (rare in Java).
- *  <dt>ERROR
- *  <dd>This level is used for situations that should not have happened *and* thus
- *      indicate a bug.
- * </dl>
- *
- * <p>Consider that the debugging will not always be turned on. Therefore, it is better
- * not to concatenate string in the logger.debug() call, but have the LoggingTool do
- * this when appropriate. In other words, use:
- * <pre>
- * logger.debug("The String X has this value: ", someString);
- * logger.debug("The int Y has this value: ", y);
- * </pre>
- * instead of:
- * <pre>
- * logger.debug("The String X has this value: " + someString);
- * logger.debug("The int Y has this value: " + y);
- * </pre>
- *
- * <p>For logging calls that require even more computation you can use the
- * <code>isDebugEnabled()</code> method:
- * <pre>
- * if (logger.isDebugEnabled()) {
- *   logger.info("The 1056389822th prime that is used is: ",
- *     calculatePrime(1056389822));
- * }
- * </pre>
+ * See interface {@link ILoggingTool} for more details.
  *
  * @cdk.module cdk-log4j
  * @cdk.githash
@@ -99,13 +47,8 @@ final class Log4jLoggingTool implements ILoggingTool {
     private int stackLength;
 
     /**
-     * Default number of StackTraceElements to be printed by debug(Exception).
-     */
-    public final int DEFAULT_STACK_LENGTH = 5;
-
-    /**
      * Log4J2 has customer levels and no longer has "TRACE_INT" etc so we can't know the values at compile
-     * time and therefore it's not possible use a switch.
+     * time. It's therefore not possible to use a switch.
      */
     private static final Map<Level, Integer> LOG4J2_LEVEL_TO_CDK_LEVEL = new HashMap<>();
 
@@ -164,7 +107,7 @@ final class Log4jLoggingTool implements ILoggingTool {
     /**
      * Sets the number of StackTraceElements to be printed in DEBUG mode when
      * calling <code>debug(Throwable)</code>.
-     * The default value is DEFAULT_STACK_LENGTH.
+     * The default value is {@link #DEFAULT_STACK_LENGTH}.
      *
      * @param length the new stack length
      * @see #DEFAULT_STACK_LENGTH
@@ -300,7 +243,7 @@ final class Log4jLoggingTool implements ILoggingTool {
      */
     @Override
     public void fatal(Object object) {
-        log4jLogger.fatal("" + object.toString());
+        log4jLogger.fatal(object.toString());
     }
 
     /**
@@ -310,7 +253,7 @@ final class Log4jLoggingTool implements ILoggingTool {
      */
     @Override
     public void info(Object object) {
-        infoString("" + object);
+        infoString(object.toString());
     }
 
     /**
@@ -401,7 +344,7 @@ final class Log4jLoggingTool implements ILoggingTool {
      */
     @Override
     public void setLevel(int level) {
-        throw new IllegalArgumentException("Log4J does not let you set the level at runtime via the API");
+        throw new UnsupportedOperationException("Log4J does not let you set the level at runtime via the API");
     }
 
     /**
@@ -414,7 +357,7 @@ final class Log4jLoggingTool implements ILoggingTool {
             level = LogManager.getRootLogger().getLevel();
         Integer res = LOG4J2_LEVEL_TO_CDK_LEVEL.get(level);
         if (res == null)
-            throw new IllegalArgumentException("Unsupported log4j level: " + level);
+            throw new IllegalStateException("Unsupported log4j level: " + level);
         return res;
     }
 }

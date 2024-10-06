@@ -25,9 +25,11 @@ import java.io.StringWriter;
 import java.util.Locale;
 
 /**
- * You should not use this class directly.
  * Implementation of the {@link ILoggingTool} interface that sends output to
  * the {@link System#err} channel.
+ * <p>
+ * It is <b>strongly recommended to not use this class directly</b>.
+ * </p>
  *
  * @cdk.module core
  * @cdk.githash
@@ -35,7 +37,7 @@ import java.util.Locale;
 final class StdErrLogger implements ILoggingTool {
 
     /** The logging level, default anything above warnings. */
-    private int level = ILoggingTool.WARN;
+    private int level;
 
     /** Name of the class for which this {@link ILoggingTool} is reporting. */
     private final String              classname;
@@ -71,6 +73,9 @@ final class StdErrLogger implements ILoggingTool {
                 break;
             case "fatal":
                 level = ILoggingTool.FATAL;
+                break;
+            default:
+                level = ILoggingTool.WARN;
                 break;
         }
         if (System.getProperty("cdk.debugging", "false").equals("true")
@@ -272,7 +277,7 @@ final class StdErrLogger implements ILoggingTool {
      * @deprecated use {@link #setLevel(int)}
      */
     @Deprecated
-    protected void setDebugEnabled(boolean enabled) {
+    void setDebugEnabled(boolean enabled) {
         if (enabled)
             setLevel(DEBUG);
         else
