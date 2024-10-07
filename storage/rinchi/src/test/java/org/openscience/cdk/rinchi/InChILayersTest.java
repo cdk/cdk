@@ -96,7 +96,8 @@ class InChILayersTest {
                 Arguments.of("InChI=1S/C10H20O/c1-7(2)9-5-4-8(3)6-10(9)11/h7-11H,4-6H2,1-3H3/t8-,9-,10+/m1/s1",
                         "C10H20O/c1-7(2)9-5-4-8(3)6-10(9)11/h7-11H,4-6H2,1-3H3", "t8-,9-,10+/m1/s1", 0),
                 Arguments.of("InChI=1S/ClH/h1H/p-1", "ClH/h1H", "", -1),
-                Arguments.of("InChI=1S/C3H8/c1-3-2/h3H2,1-2H3/i1+1", "C3H8/c1-3-2/h3H2,1-2H3", "i1+1", 0)
+                Arguments.of("InChI=1S/C3H8/c1-3-2/h3H2,1-2H3/i1+1", "C3H8/c1-3-2/h3H2,1-2H3", "i1+1", 0),
+                Arguments.of("InChI=1S/", "/", "", 0)
         );
     }
 
