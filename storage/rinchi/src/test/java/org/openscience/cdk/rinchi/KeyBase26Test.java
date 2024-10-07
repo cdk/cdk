@@ -48,7 +48,7 @@ class KeyBase26Test {
     }
 
     @Test
-    void getBase26Triplet_2704_ZZZ() {
+    void getBase26Triplet_16383_ZZZ() {
         assertEquals("ZZZ", KeyBase26.getBase26Triplet(16383));
     }
 
