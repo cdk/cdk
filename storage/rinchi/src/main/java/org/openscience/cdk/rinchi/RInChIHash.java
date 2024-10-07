@@ -82,11 +82,11 @@ class RInChIHash {
      */
     protected static String hash04char(String input) throws NoSuchAlgorithmException {
         if (input.isEmpty())
-            return RInChIConsts.HASH_04_EMPTY_STRING;
+            return RInChIConstants.HASH_04_EMPTY_STRING;
         int[] chksum = generateSha2(input);
         StringBuilder sb = new StringBuilder();
-        sb.append(KeyBase26.base26_triplet_1(chksum));
-        sb.append(KeyBase26.base26_triplet_2(chksum));
+        sb.append(KeyBase26.base26Triplet1(chksum));
+        sb.append(KeyBase26.base26Triplet2(chksum));
         return sb.substring(0, 4);
     }
 
@@ -99,7 +99,7 @@ class RInChIHash {
      */
     protected static String hash10char(String input) throws NoSuchAlgorithmException {
         if (input.isEmpty())
-            return RInChIConsts.HASH_10_EMPTY_STRING;
+            return RInChIConstants.HASH_10_EMPTY_STRING;
         return hash12char(input).substring(0,10);
     }
 
@@ -112,13 +112,13 @@ class RInChIHash {
      */
     protected static String hash12char(String input) throws NoSuchAlgorithmException {
         if (input.isEmpty())
-            return RInChIConsts.HASH_12_EMPTY_STRING;
+            return RInChIConstants.HASH_12_EMPTY_STRING;
         int[] chksum = generateSha2(input);
         StringBuilder sb = new StringBuilder();
-        sb.append(KeyBase26.base26_triplet_1(chksum));
-        sb.append(KeyBase26.base26_triplet_2(chksum));
-        sb.append(KeyBase26.base26_triplet_3(chksum));
-        sb.append(KeyBase26.base26_triplet_4(chksum));
+        sb.append(KeyBase26.base26Triplet1(chksum));
+        sb.append(KeyBase26.base26Triplet2(chksum));
+        sb.append(KeyBase26.base26Triplet3(chksum));
+        sb.append(KeyBase26.base26Triplet4(chksum));
         return sb.toString();
     }
 
@@ -131,14 +131,14 @@ class RInChIHash {
      */
     protected static String hash14char(String input) throws NoSuchAlgorithmException {
         if (input.isEmpty())
-            return RInChIConsts.HASH_14_EMPTY_STRING;
+            return RInChIConstants.HASH_14_EMPTY_STRING;
         int[] chksum = generateSha2(input);
         StringBuilder sb = new StringBuilder();
-        sb.append(KeyBase26.base26_triplet_1(chksum));
-        sb.append(KeyBase26.base26_triplet_2(chksum));
-        sb.append(KeyBase26.base26_triplet_3(chksum));
-        sb.append(KeyBase26.base26_triplet_4(chksum));
-        sb.append(KeyBase26.base26_doublet_for_bits_56_to_64(chksum));
+        sb.append(KeyBase26.base26Triplet1(chksum));
+        sb.append(KeyBase26.base26Triplet2(chksum));
+        sb.append(KeyBase26.base26Triplet3(chksum));
+        sb.append(KeyBase26.base26Triplet4(chksum));
+        sb.append(KeyBase26.base26DoubletForBits56To64(chksum));
         return sb.toString();
     }
 
@@ -151,15 +151,15 @@ class RInChIHash {
      */
     protected static String hash17char(String input) throws NoSuchAlgorithmException {
         if (input.isEmpty())
-            return RInChIConsts.HASH_17_EMPTY_STRING;
+            return RInChIConstants.HASH_17_EMPTY_STRING;
         int[] chksum = generateSha2(input);
         StringBuilder sb = new StringBuilder();
-        sb.append(KeyBase26.base26_triplet_1(chksum));
-        sb.append(KeyBase26.base26_triplet_2(chksum));
-        sb.append(KeyBase26.base26_triplet_3(chksum));
-        sb.append(KeyBase26.base26_triplet_4(chksum));
-        sb.append(KeyBase26.base26_doublet_for_bits_56_to_64(chksum));
-        sb.append(KeyBase26.base26_triplet_1(Arrays.copyOfRange(chksum, 8, chksum.length)));
+        sb.append(KeyBase26.base26Triplet1(chksum));
+        sb.append(KeyBase26.base26Triplet2(chksum));
+        sb.append(KeyBase26.base26Triplet3(chksum));
+        sb.append(KeyBase26.base26Triplet4(chksum));
+        sb.append(KeyBase26.base26DoubletForBits56To64(chksum));
+        sb.append(KeyBase26.base26Triplet1(Arrays.copyOfRange(chksum, 8, chksum.length)));
         return sb.toString();
     }
 }

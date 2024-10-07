@@ -42,10 +42,10 @@ package org.openscience.cdk.rinchi;
  *
  * @author Felix Bänsch
  */
-class KeyBase26 {
+final class KeyBase26 {
 
     /**
-     * Char array containing all 26 letters of the English alphabet
+     * Char array containing all 26 letters of the English alphabet.
      */
     private static final char[] c26 = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
@@ -70,30 +70,30 @@ class KeyBase26 {
      * @param input int
      * @return base-26 triplet String
      */
-    protected static String getBase26Triplet(int input) {
-        char[] result = new char[3];
-
+    static String getBase26Triplet(int input) {
         int i = 0;
-        for(char c1 : c26){
+        for (char c1 : c26) {
             if (c1 == 'E')
                 continue;
-            for(char c2 : c26) {
-                for(char c3 : c26) {
-                    if (c1 == 'T')
-                        if(c2 < 'T')
+
+            for (char c2 : c26) {
+                for (char c3 : c26) {
+                    if (c1 == 'T') {
+                        if (c2 < 'T') {
                             continue;
-                        else
-                        if(c2 == 'T' && c3 < 'W')
+                        } else if (c2 == 'T' && c3 < 'W')
                             continue;
-                    result[0] =c1;
-                    result[1] =c2;
-                    result[2] =c3;
-                    if (i == input)
-                        return new String(result);
+                    }
+
+                    if (i == input) {
+                        return String.valueOf(new char[] { c1, c2, c3 });
+                    }
+
                     i++;
                 }
             }
         }
+
         return null;
     }
 
@@ -104,7 +104,7 @@ class KeyBase26 {
      * @param input int
      * @return base-26 doublet String
      */
-    protected static String getBase26Doublet(int input) {
+    static String getBase26Doublet(int input) {
         input = Math.abs(input);
         char firstLetter = (char) ('A' + (input / 26) % 26);
         char secondLetter = (char) ('A' + input % 26);
@@ -118,14 +118,16 @@ class KeyBase26 {
      * <p>This method takes the first element of the input integer array and the first 6 bits
      * of the second element, combines them, and converts the result into a base-26 encoded
      * string using {@link #getBase26Triplet(int)}.</p>
+     * <p>This corresponds to the function <b>base26_triplet_1</b> in ikey_base_26.c of the
+     * InChI C code.</p>
      *
      * @param bytes an integer array where the first two elements are used for encoding
      * @return a base-26 encoded string representing the first two elements of the array
      */
-    protected static String base26_triplet_1(int[] bytes) {
-        int b0 = bytes[0];
-        int b1 = bytes[1] & 0x3f;
-        int h = b0 | (b1 << 8);
+    static String base26Triplet1(int[] bytes) {
+        final int b0 = bytes[0];        /* 1111 1111 */
+        final int b1 = bytes[1] & 0x3f; /* 0011 1111 */
+        final int h = b0 | (b1 << 8);
         return getBase26Triplet(h);
     }
 
@@ -136,16 +138,18 @@ class KeyBase26 {
      * <p>This method takes bits from the second, third, and fourth elements of the input
      * integer array, combines them, and converts the result into a base-26 encoded string
      * using {@link #getBase26Triplet(int)}.</p>
+     * <p>This corresponds to the function <b>base26_triplet_2</b> in ikey_base_26.c of the
+     * InChI C code.</p>
      *
      * @param bytes an integer array where the second, third, and fourth elements are used
      *              for encoding
      * @return a base-26 encoded string representing the selected elements of the array
      */
-    protected static String base26_triplet_2(int[] bytes) {
-        int b0 = bytes[1] & 0xc0;
-        int b1 = bytes[2];
-        int b2 = bytes[3] & 0x0f;
-        int h = (b0 | b1 << 8 | b2 << 16) >> 6;
+    static String base26Triplet2(int[] bytes) {
+        final int b0 = bytes[1] & 0xc0;     /* 1100 0000 */
+        final int b1 = bytes[2];            /* 1111 1111 */
+        final int b2 = bytes[3] & 0x0f;     /* 0000 1111 */
+        final int h = (b0 | b1 << 8 | b2 << 16) >> 6;
         return getBase26Triplet(h);
     }
 
@@ -156,16 +160,18 @@ class KeyBase26 {
      * <p>This method extracts bits from the fourth, fifth, and sixth elements of the input
      * integer array, combines them, and converts the result into a base-26 encoded string
      * using {@link #getBase26Triplet(int)}.</p>
+     * <p>This corresponds to the function <b>base26_triplet_3</b> in ikey_base_26.c of the
+     * InChI C code.</p>
      *
      * @param bytes an integer array where the fourth, fifth, and sixth elements are used
      *              for encoding
      * @return a base-26 encoded string representing the selected elements of the array
      */
-    protected static String base26_triplet_3(int[] bytes) {
-        int b0 = bytes[3] & 0xf0;
-        int b1 = bytes[4];
-        int b2 = bytes[5] & 0x03;
-        int h = (b0 | b1 << 8 | b2 << 16) >> 4;
+    static String base26Triplet3(int[] bytes) {
+        final int b0 = bytes[3] & 0xf0;   /* 1111 0000 */
+        final int b1 = bytes[4];          /* 1111 1111 */
+        final int b2 = bytes[5] & 0x03;   /* 0000 0011 */
+        final int h = (b0 | b1 << 8 | b2 << 16) >> 4;
         return getBase26Triplet(h);
     }
 
@@ -176,14 +182,16 @@ class KeyBase26 {
      * <p>This method extracts bits from the sixth and seventh elements of the input
      * integer array, combines them, and converts the result into a base-26 encoded string
      * using {@link #getBase26Triplet(int)}.</p>
+     * <p>This corresponds to the function <b>base26_triplet_4</b> in ikey_base_26.c of the
+     * InChI C code.</p>
      *
      * @param bytes an integer array where the sixth and seventh elements are used for encoding
      * @return a base-26 encoded string representing the selected elements of the array
      */
-    protected static String base26_triplet_4(int[] bytes) {
-        int b0 = bytes[5] & 0xfc;
-        int b1 = bytes[6];
-        int h = (b0 | b1 << 8) >> 2;
+    static String base26Triplet4(int[] bytes) {
+        final int b0 = bytes[5] & 0xfc; /* 1111 1100 */
+        final int b1 = bytes[6];        /* 1111 1111 */
+        final int h = (b0 | b1 << 8) >> 2;
         return getBase26Triplet(h);
     }
 
@@ -194,14 +202,16 @@ class KeyBase26 {
      * <p>This method extracts bits from the fourth and fifth elements of the input integer
      * array (covering bits 28 to 36), combines them, and converts the result into a base-26
      * encoded doublet string using {@link #getBase26Doublet(int)}.</p>
+     * <p>This corresponds to the function <b>base26_dublet_for_bits_28_to_36</b> in
+     * ikey_base_26.c of the InChI C code.</p>
      *
      * @param bytes an integer array where the fourth and fifth elements are used for encoding
      * @return a base-26 encoded doublet string representing the selected elements of the array
      */
-    protected static String  base26_doublet_for_bits_28_to_36(int[] bytes) {
-        int b0 = bytes[3] & 0xf0;
-        int b1 = bytes[4] & 0x1f;
-        int h = (b0 | b1 << 8) >> 4;
+    static String base26DoubletForBits28To36(int[] bytes) {
+        final int b0 = bytes[3] & 0xf0;  /* 1111 0000 */
+        final int b1 = bytes[4] & 0x1f;  /* 0001 1111 */
+        final int h = (b0 | b1 << 8) >> 4;
         return getBase26Doublet(h);
     }
 
@@ -213,14 +223,16 @@ class KeyBase26 {
      * element of the input integer array (covering bits 56 to 64), combines them, and
      * converts the result into a base-26 encoded doublet string using
      * {@link #getBase26Doublet(int)}.</p>
+     * <p>This corresponds to the function <b>base26_dublet_for_bits_56_to_64</b> in
+     * ikey_base_26.c of the InChI C code.</p>
      *
      * @param bytes an integer array where the eighth and ninth elements are used for encoding
      * @return a base-26 encoded doublet string representing the selected elements of the array
      */
-    protected static String  base26_doublet_for_bits_56_to_64(int[] bytes) {
-        int b0 = bytes[7];
-        int b1 = bytes[8] & 0x01;
-        int h = (b0 | b1 << 8);
+    static String base26DoubletForBits56To64(int[] bytes) {
+        final int b0 = bytes[7];         /* 1111 1111 */
+        final int b1 = bytes[8] & 0x01;  /* 0000 0001 */
+        final int h = (b0 | b1 << 8);
         return getBase26Doublet(h);
     }
 
@@ -235,13 +247,12 @@ class KeyBase26 {
      * @param input the input string for which the checksum is calculated; hyphens are ignored
      * @return a character representing the base-26 checksum of the input string
      */
-    protected static char base26_checksum(String input) {
+    static char base26Checksum(String input) {
         int jj = 0;
         int checksum = 0;
+        final int length = input.length();
 
-        int len = input.length();
-
-        for (int j = 0; j < len; j++) {
+        for (int j = 0; j < length; j++) {
             char c = input.charAt(j);
             if (c == '-')
                 continue;
@@ -264,10 +275,10 @@ class KeyBase26 {
      * @param bytes an integer array from which the hexadecimal values are extracted
      * @return a hexadecimal string representing the specified elements of the array
      */
-    protected static String get_xtra_hash_major_hex(int[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        int startByte = 8;
-        int c = bytes[startByte] & 0xfe;
+    static String getExtraHashMajorHex(int[] bytes) {
+        final StringBuilder sb = new StringBuilder();
+        final int startByte = 8;
+        final int c = bytes[startByte] & 0xfe;
         sb.append(String.format("%02x", c));
         for (int i = 0; i < 32; i++)
             sb.append(String.format("%02x", bytes[i]));
@@ -285,10 +296,10 @@ class KeyBase26 {
      * @param bytes an integer array from which the hexadecimal values are extracted
      * @return a hexadecimal string representing the specified elements of the array
      */
-    protected static String get_xtra_hash_minor_hex(int[] bytes) {
-        int startByte = 4;
-        StringBuilder sb = new StringBuilder();
-        int c = bytes[startByte] & 0xe0;
+    static String getExtraHashMinorHex(int[] bytes) {
+        final StringBuilder sb = new StringBuilder();
+        final int startByte = 4;
+        final int c = bytes[startByte] & 0xe0;
         sb.append(String.format("%o2x", c));
         for (int i = 0; i < 32; i++)
             sb.append(String.format("%02x", bytes[i]));

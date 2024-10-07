@@ -47,7 +47,12 @@ public final class RInChIToReaction extends StatusMessagesOutput {
      * @param rinchi RInChI string
      */
     RInChIToReaction(String rinchi) {
-        this(rinchi, "");
+        if (rinchi == null) {
+            addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
+            return;
+        }
+
+        generateReactionFromRinchi(rinchi, "");
     }
 
     /**
@@ -61,9 +66,11 @@ public final class RInChIToReaction extends StatusMessagesOutput {
             addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
             return;
         }
-        if (auxInfo == null || auxInfo.isEmpty()) {
+        if (auxInfo == null) {
             addMessage("RInChI auxiliary info string provided as input is 'null'.", Status.ERROR);
             return;
+        } else if (auxInfo.isEmpty()) {
+            addMessage("RInChI auxiliary info string provided as input is empty.", Status.WARNING);
         }
 
         generateReactionFromRinchi(rinchi, auxInfo);
