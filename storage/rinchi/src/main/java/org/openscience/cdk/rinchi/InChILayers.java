@@ -195,7 +195,7 @@ final class InChILayers {
      * @return a string representing the 17-character hash of the major layers
      * @throws NoSuchAlgorithmException if there is an error generating the hash
      */
-    String majorHashExt() throws NoSuchAlgorithmException {
+    String majorHashExtended() throws NoSuchAlgorithmException {
         return RInChIHash.hash17char(majors.toString());
     }
 
@@ -215,7 +215,7 @@ final class InChILayers {
      * @return a string representing the extended hash of the minor layers, including the proton count
      * @throws NoSuchAlgorithmException if there is an error generating the hash
      */
-    String minorHashExt() throws NoSuchAlgorithmException {
+    String minorHashExtended() throws NoSuchAlgorithmException {
         return protonCount2Char(protonCount) + RInChIHash.hash12char(minors.toString());
     }
 

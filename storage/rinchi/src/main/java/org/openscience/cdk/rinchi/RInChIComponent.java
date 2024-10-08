@@ -31,7 +31,7 @@ import org.openscience.cdk.inchi.InChIGenerator;
  *
  * @author Felix Bänsch
  */
-final class RInChIComponent extends StatusMessagesOutput {
+final class RInChIComponent {
 
     private boolean isNoStructure;
     private String inchi;
@@ -46,8 +46,9 @@ final class RInChIComponent extends StatusMessagesOutput {
      * the component is marked as having no structure.</p>
      *
      * @param generator the {@link InChIGenerator} to generate InChI information from
+     * @throws CDKException if generation of the InChIKey encounters an error
      */
-    RInChIComponent(final InChIGenerator generator){
+    RInChIComponent(final InChIGenerator generator) throws CDKException {
         if (generator == null || generator.getStatus() == InchiStatus.ERROR || generator.getInchi() == null || generator.getInchi().isEmpty()) {
             this.isNoStructure = true;
             return;
@@ -55,11 +56,7 @@ final class RInChIComponent extends StatusMessagesOutput {
 
         this.inchi = generator.getInchi();
         this.auxInfo = generator.getAuxInfo();
-        try {
-            this.inchiKey = generator.getInchiKey();
-        } catch (CDKException exception) {
-            addMessage(exception.getMessage(), Status.ERROR);
-        }
+        this.inchiKey = generator.getInchiKey();
     }
 
     /**

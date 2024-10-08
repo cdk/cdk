@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.rinchi;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -44,7 +45,7 @@ final class RInChIHash {
      */
     static String generateSha2String(final String input) throws NoSuchAlgorithmException {
         final MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        final byte[] encodedHash = digest.digest(input.getBytes());
+        final byte[] encodedHash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
         final StringBuilder sb = new StringBuilder();
         for (byte b : encodedHash) {
             final String hex = Integer.toHexString(0xFF & b);
@@ -65,7 +66,7 @@ final class RInChIHash {
      */
     static int[] generateSha2(final String input) throws NoSuchAlgorithmException {
         final MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        final byte[] bytes = digest.digest(input.getBytes());
+        final byte[] bytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
         final int[] unsigned = new int[bytes.length];
         for (int i = 0; i < bytes.length; i++) {
             unsigned[i] = 0xff & bytes[i];
