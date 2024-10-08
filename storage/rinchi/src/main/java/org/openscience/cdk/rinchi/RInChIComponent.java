@@ -31,7 +31,7 @@ import org.openscience.cdk.inchi.InChIGenerator;
  *
  * @author Felix Bänsch
  */
-class RInChIComponent extends StatusMessagesOutput {
+final class RInChIComponent extends StatusMessagesOutput {
 
     private boolean isNoStructure;
     private String inchi;
@@ -45,19 +45,20 @@ class RInChIComponent extends StatusMessagesOutput {
      * If the generator is null, has an error status, or produces an empty InChI,
      * the component is marked as having no structure.</p>
      *
-     * @param gen the {@link InChIGenerator} to generate InChI information from
+     * @param generator the {@link InChIGenerator} to generate InChI information from
      */
-    protected RInChIComponent(InChIGenerator gen){
-        if (gen == null || gen.getStatus() == InchiStatus.ERROR || gen.getInchi() == null || gen.getInchi().isEmpty()) {
+    RInChIComponent(final InChIGenerator generator){
+        if (generator == null || generator.getStatus() == InchiStatus.ERROR || generator.getInchi() == null || generator.getInchi().isEmpty()) {
             this.isNoStructure = true;
             return;
         }
-        this.inchi = gen.getInchi();
-        this.auxInfo = gen.getAuxInfo();
+
+        this.inchi = generator.getInchi();
+        this.auxInfo = generator.getAuxInfo();
         try {
-            this.inchiKey = gen.getInchiKey();
-        } catch (CDKException e) {
-            addMessage(e.getMessage(), Status.ERROR);
+            this.inchiKey = generator.getInchiKey();
+        } catch (CDKException exception) {
+            addMessage(exception.getMessage(), Status.ERROR);
         }
     }
 
@@ -66,7 +67,7 @@ class RInChIComponent extends StatusMessagesOutput {
      *
      * @return {@code true} if this component represents no structure; {@code false} otherwise
      */
-    protected boolean isNoStructure() {
+    boolean isNoStructure() {
         return this.isNoStructure;
     }
 
@@ -75,7 +76,7 @@ class RInChIComponent extends StatusMessagesOutput {
      *
      * @return the InChI string, or {@code null} if there is no structure
      */
-    protected String getInchi() {
+    String getInchi() {
         return this.inchi;
     }
 
@@ -84,7 +85,7 @@ class RInChIComponent extends StatusMessagesOutput {
      *
      * @return the auxiliary information, or {@code null} if there is no structure
      */
-    protected String getAuxInfo() {
+    String getAuxInfo() {
         return this.auxInfo;
     }
 
@@ -93,7 +94,7 @@ class RInChIComponent extends StatusMessagesOutput {
      *
      * @return the InChI key, or {@code null} if there is no structure
      */
-    protected String getInchiKey() {
+    String getInchiKey() {
         return this.inchiKey;
     }
 }

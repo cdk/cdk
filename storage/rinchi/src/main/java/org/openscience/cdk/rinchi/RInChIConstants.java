@@ -27,14 +27,16 @@ package org.openscience.cdk.rinchi;
  * @cdk.githash
  */
 final class RInChIConstants {
-    static final String RINCHI_VERSION = "1.00";
-    static final String RINCHI_IDENTIFIER = "RInChI" + RINCHI_VERSION;
+    static final String RINCHI_VERSION_1_0_0 = "1.00";
+    static final String RINCHI_IDENTIFIER = "RInChI" + RINCHI_VERSION_1_0_0;
 
-    static final String INCHI_STD_HEADER = "InChI=1S/";
-    static final String RINCHI_STD_HEADER = "RInChI=" + RINCHI_VERSION + ".1S/";
+    static final String INCHI_VERSION_1 = "1";
+    static final String INCHI_IDENTIFIER = "InChI";
+    static final String INCHI_STD_HEADER = INCHI_IDENTIFIER + "=" + INCHI_VERSION_1 + "S/";
+    static final String RINCHI_STD_HEADER = "RInChI=" + RINCHI_VERSION_1_0_0 + "." + INCHI_VERSION_1 + "S/";
 
-    static final String INCHI_AUXINFO_HEADER = "AuxInfo=1/";
-    static final String RINCHI_AUXINFO_HEADER = "RAuxInfo=" + RINCHI_VERSION + ".1/";
+    static final String INCHI_AUXINFO_HEADER = "AuxInfo=" + INCHI_VERSION_1 + "/";
+    static final String RINCHI_AUXINFO_HEADER = "RAuxInfo=" + RINCHI_VERSION_1_0_0 + "." + INCHI_VERSION_1 + "/";
 
     // Delimiters in RInChI strings.
     static final String DELIMITER_LAYER = "/";

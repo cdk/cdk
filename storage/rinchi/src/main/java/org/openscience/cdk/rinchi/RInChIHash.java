@@ -33,7 +33,7 @@ import java.util.Arrays;
  *
  * @author Felix Bänsch
  */
-class RInChIHash {
+final class RInChIHash {
 
     /**
      * Generates an SHA-256 hash of the provided input string and returns it as a hexadecimal string.
@@ -42,12 +42,12 @@ class RInChIHash {
      * @return the hexadecimal representation of the SHA-256 hash
      * @throws NoSuchAlgorithmException if the SHA-256 algorithm is not available
      */
-    protected static String generateSha2String(String input) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] encodedHash = digest.digest(input.getBytes());
-        StringBuilder sb = new StringBuilder();
+    static String generateSha2String(final String input) throws NoSuchAlgorithmException {
+        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        final byte[] encodedHash = digest.digest(input.getBytes());
+        final StringBuilder sb = new StringBuilder();
         for (byte b : encodedHash) {
-            String hex = Integer.toHexString(0xFF & b);
+            final String hex = Integer.toHexString(0xFF & b);
             if (hex.length() == 1) {
                 sb.append('0');
             }
@@ -63,10 +63,10 @@ class RInChIHash {
      * @return an array of integers representing the SHA-256 hash
      * @throws NoSuchAlgorithmException if the SHA-256 algorithm is not available
      */
-    protected static int[] generateSha2(String input) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] bytes = digest.digest(input.getBytes());
-        int[] unsigned = new int[bytes.length];
+    static int[] generateSha2(final String input) throws NoSuchAlgorithmException {
+        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        final byte[] bytes = digest.digest(input.getBytes());
+        final int[] unsigned = new int[bytes.length];
         for (int i = 0; i < bytes.length; i++) {
             unsigned[i] = 0xff & bytes[i];
         }
@@ -80,13 +80,14 @@ class RInChIHash {
      * @return a 4-character hash representation
      * @throws NoSuchAlgorithmException if the SHA-256 algorithm is not available
      */
-    protected static String hash04char(String input) throws NoSuchAlgorithmException {
+    static String hash04char(final String input) throws NoSuchAlgorithmException {
         if (input.isEmpty())
             return RInChIConstants.HASH_04_EMPTY_STRING;
-        int[] chksum = generateSha2(input);
-        StringBuilder sb = new StringBuilder();
-        sb.append(KeyBase26.base26Triplet1(chksum));
-        sb.append(KeyBase26.base26Triplet2(chksum));
+
+        final int[] checksum = generateSha2(input);
+        final StringBuilder sb = new StringBuilder();
+        sb.append(KeyBase26.base26Triplet1(checksum));
+        sb.append(KeyBase26.base26Triplet2(checksum));
         return sb.substring(0, 4);
     }
 
@@ -97,10 +98,11 @@ class RInChIHash {
      * @return a 10-character hash representation
      * @throws NoSuchAlgorithmException if the SHA-256 algorithm is not available
      */
-    protected static String hash10char(String input) throws NoSuchAlgorithmException {
+    static String hash10char(final String input) throws NoSuchAlgorithmException {
         if (input.isEmpty())
             return RInChIConstants.HASH_10_EMPTY_STRING;
-        return hash12char(input).substring(0,10);
+
+        return hash12char(input).substring(0, 10);
     }
 
     /**
@@ -110,16 +112,25 @@ class RInChIHash {
      * @return a 12-character hash representation
      * @throws NoSuchAlgorithmException if the SHA-256 algorithm is not available
      */
-    protected static String hash12char(String input) throws NoSuchAlgorithmException {
+    static String hash12char(final String input) throws NoSuchAlgorithmException {
+        return hash12char(input, generateSha2(input));
+    }
+
+    /**
+     * Generates a 12-character hash from the provided input string.
+     *
+     * @param input    the input string to hash
+     * @param checksum the sha2 checksum
+     * @return a 12-character hash representation
+     */
+    static String hash12char(final String input, final int[] checksum) {
         if (input.isEmpty())
             return RInChIConstants.HASH_12_EMPTY_STRING;
-        int[] chksum = generateSha2(input);
-        StringBuilder sb = new StringBuilder();
-        sb.append(KeyBase26.base26Triplet1(chksum));
-        sb.append(KeyBase26.base26Triplet2(chksum));
-        sb.append(KeyBase26.base26Triplet3(chksum));
-        sb.append(KeyBase26.base26Triplet4(chksum));
-        return sb.toString();
+
+        return KeyBase26.base26Triplet1(checksum) +
+                KeyBase26.base26Triplet2(checksum) +
+                KeyBase26.base26Triplet3(checksum) +
+                KeyBase26.base26Triplet4(checksum);
     }
 
     /**
@@ -129,17 +140,22 @@ class RInChIHash {
      * @return a 14-character hash representation
      * @throws NoSuchAlgorithmException if the SHA-256 algorithm is not available
      */
-    protected static String hash14char(String input) throws NoSuchAlgorithmException {
+    static String hash14char(final String input) throws NoSuchAlgorithmException {
+        return hash14char(input, generateSha2(input));
+    }
+
+    /**
+     * Generates a 14-character hash from the provided input string.
+     *
+     * @param input    the input string to hash
+     * @param checksum the sha2 checksum
+     * @return a 14-character hash representation
+     */
+    static String hash14char(final String input, final int[] checksum) {
         if (input.isEmpty())
             return RInChIConstants.HASH_14_EMPTY_STRING;
-        int[] chksum = generateSha2(input);
-        StringBuilder sb = new StringBuilder();
-        sb.append(KeyBase26.base26Triplet1(chksum));
-        sb.append(KeyBase26.base26Triplet2(chksum));
-        sb.append(KeyBase26.base26Triplet3(chksum));
-        sb.append(KeyBase26.base26Triplet4(chksum));
-        sb.append(KeyBase26.base26DoubletForBits56To64(chksum));
-        return sb.toString();
+
+        return hash12char(input, checksum) + KeyBase26.base26DoubletForBits56To64(checksum);
     }
 
     /**
@@ -149,17 +165,11 @@ class RInChIHash {
      * @return a 17-character hash representation
      * @throws NoSuchAlgorithmException if the SHA-256 algorithm is not available
      */
-    protected static String hash17char(String input) throws NoSuchAlgorithmException {
+    static String hash17char(final String input) throws NoSuchAlgorithmException {
         if (input.isEmpty())
             return RInChIConstants.HASH_17_EMPTY_STRING;
-        int[] chksum = generateSha2(input);
-        StringBuilder sb = new StringBuilder();
-        sb.append(KeyBase26.base26Triplet1(chksum));
-        sb.append(KeyBase26.base26Triplet2(chksum));
-        sb.append(KeyBase26.base26Triplet3(chksum));
-        sb.append(KeyBase26.base26Triplet4(chksum));
-        sb.append(KeyBase26.base26DoubletForBits56To64(chksum));
-        sb.append(KeyBase26.base26Triplet1(Arrays.copyOfRange(chksum, 8, chksum.length)));
-        return sb.toString();
+
+        final int[] checksum = generateSha2(input);
+        return hash14char(input, checksum) + KeyBase26.base26Triplet1(Arrays.copyOfRange(checksum, 8, checksum.length));
     }
 }
