@@ -36,7 +36,7 @@ public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> ex
         IIteratingChemObjectReader<T> {
 
     protected Mode        mode         = Mode.RELAXED;
-    protected IChemObjectReaderErrorHandler errorHandler = new DefaultChemObjectReaderErrorHandler();
+    protected IChemObjectReaderErrorHandler errorHandler = new DefaultChemObjectReaderErrorHandler(getClass());
 
     @Override
     public boolean accepts(Class<? extends IChemObject> objectClass) {

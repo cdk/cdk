@@ -34,7 +34,33 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author Uli Fechner
  */
 public class DefaultChemObjectReaderErrorHandler implements IChemObjectReaderErrorHandler {
-    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DefaultChemObjectReaderErrorHandler.class);
+    private final ILoggingTool logger;
+
+    /**
+     * Constructs a new instance using the {@code DefaultChemObjectReaderErrorHandler} class as the
+     * source for logging purposes.
+     */
+    public DefaultChemObjectReaderErrorHandler() {
+        this(DefaultChemObjectReaderErrorHandler.class);
+    }
+
+    /**
+     * Constructs a new instance using a given class as the source for logging purposes.
+     *
+     * @param clazz the class for which the {@link ILoggingTool} should be constructed
+     */
+    public DefaultChemObjectReaderErrorHandler(final Class<?> clazz) {
+        this(LoggingToolFactory.createLoggingTool(clazz));
+    }
+
+    /**
+     * Constructs a new instance using the provided logging tool.
+     *
+     * @param logger the logger to be used for emitting log entries
+     */
+    public DefaultChemObjectReaderErrorHandler(final ILoggingTool logger) {
+        this.logger = logger;
+    }
 
     @Override
     public void handleError(String message) {
