@@ -80,7 +80,7 @@ class KeyBase26Test {
     @Test
     void base26DoubletTest() throws IOException {
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(
-                Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("org.openscience.cdk.rinchi/doublets26.txt"))))) {
+                Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("org.openscience.cdk.rinchi/keybase26_doublets26.txt"))))) {
             final String[] doublet26 = reader.lines().toArray(String[]::new);
 
             for (int index = 0; index < doublet26.length; index++) {
@@ -92,7 +92,7 @@ class KeyBase26Test {
     @Test
     void base26TripletTest() throws IOException {
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(
-                Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("org.openscience.cdk.rinchi/triplet26.txt"))))) {
+                Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("org.openscience.cdk.rinchi/keybase26_triplet26.txt"))))) {
             final String[] triplets26 = reader.lines().toArray(String[]::new);
 
             for (int index = 0; index < triplets26.length; index++) {
