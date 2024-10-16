@@ -21,6 +21,9 @@ package org.openscience.cdk.rinchi;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mockito;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
@@ -34,11 +37,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Nikolay Kochev
@@ -46,49 +47,182 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 class RInChIGeneratorTest extends CDKTestCase {
 
-    void rxnFileRinchiFullInformationFileTest(final String reactionFile, final String rinchiFile) throws Exception {
+    @Test
+    void noStructCountToRInChIKeyChar_countLtZero_test() {
+        final RInChIGenerator generator = new RInChIGenerator();
+        final Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> generator.noStructCountToRInChIKeyChar(-3));
+        Assertions.assertEquals("Negative count of -3 of no-structures.", exception.getMessage());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, Z",
+            "1, A",
+            "2, B",
+            "3, C",
+            "4, D",
+            "5, E",
+            "6, F",
+            "7, G",
+            "8, H",
+            "9, I",
+            "10, J",
+            "11, K",
+            "12, L",
+            "13, M",
+            "14, N",
+            "15, O",
+            "16, P",
+            "17, Q",
+            "18, R",
+            "19, S",
+            "20, T",
+            "21, U",
+            "22, V",
+            "23, W",
+            "24, X",
+            "25, Y",
+            "26, Y",
+            "34, Y"
+    })
+    void noStructCountToRInChIKeyChar_validValues_test(final int count, final char expected) {
+        final RInChIGenerator generator = new RInChIGenerator();
+        Assertions.assertEquals(expected, generator.noStructCountToRInChIKeyChar(count));
+    }
+
+    @Test
+    void isProductsFirst_reactantsFirst_test() {
         // arrange
-        final IReaction reaction = readReactionFromRxnFile(reactionFile);
-        final Map<String, String> rinchiFullInformation = readRinchiFullInformationFromResourceFile(rinchiFile);
+        final RInChIComponent rInChIComponentReactantOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantOne.getInchi()).thenReturn("InChI=1S/Br2/c1-2");
+        final RInChIComponent rInChIComponentReactantTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantTwo.getInchi()).thenReturn("InChI=1S/CH4/h1H4");
+        final List<RInChIComponent> reactants = new ArrayList<>();
+        reactants.add(rInChIComponentReactantOne);
+        reactants.add(rInChIComponentReactantTwo);
+        final RInChIComponent rInChIComponentProductOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductOne.getInchi()).thenReturn("InChI=1S/BrH/h1H");
+        final RInChIComponent rInChIComponentProductTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductTwo.getInchi()).thenReturn("InChI=1S/CH3Br/c1-2/h1H3");
+        final List<RInChIComponent> products = new ArrayList<>();
+        products.add(rInChIComponentProductOne);
+        products.add(rInChIComponentProductTwo);
+        final RInChIGenerator generator = new RInChIGenerator();
 
         // act
-        final RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
+        final boolean actual = generator.isProductsFirst(reactants, products);
 
         // assert
-        Assertions.assertNotNull(generator);
-        Assertions.assertEquals(StatusMessagesOutput.Status.SUCCESS, generator.getStatus(), "RInChI status:");
-        Assertions.assertEquals(rinchiFullInformation.get("RInChI"), generator.getRInChI(), "RinChI:");
-        Assertions.assertEquals(rinchiFullInformation.get("RAuxInfo"), generator.getAuxInfo(), "RAuxInfo:");
-        Assertions.assertEquals(rinchiFullInformation.get("Long-RInChIKey"), generator.getLongRInChIKey(), "Long-RInChIKey:");
-        Assertions.assertEquals(rinchiFullInformation.get("Short-RInChIKey"), generator.getShortRInChIKey(), "Short-RInChIKey:");
-        Assertions.assertEquals(rinchiFullInformation.get("Web-RInChIKey"), generator.getWebRInChIKey(), "Web-RInChIKey:");
+        String[] temp = {"InChI=1S/BrH/h1H", "InChI=1S/Br2/c1-2"};
+        Arrays.stream(temp).sorted().forEach(System.out::println);
+
+        assertFalse(actual);
     }
 
-    private IReaction readReactionFromRxnFile(String filename) throws Exception {
-        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filename)) {
-            final MDLRXNV2000Reader reader = new MDLRXNV2000Reader(inputStream, Mode.STRICT);
-            return reader.read(SilentChemObjectBuilder.getInstance().newReaction());
-        }
+    @Test
+    void isProductsFirst_productsFirst_test() {
+        // arrange
+        final RInChIComponent rInChIComponentReactantOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantOne.getInchi()).thenReturn("InChI=1S/XXXX");
+        final RInChIComponent rInChIComponentReactantTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantTwo.getInchi()).thenReturn("InChI=1S/YYYY");
+        final List<RInChIComponent> reactants = new ArrayList<>();
+        reactants.add(rInChIComponentReactantOne);
+        reactants.add(rInChIComponentReactantTwo);
+        final RInChIComponent rInChIComponentProductOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductOne.getInchi()).thenReturn("InChI=1S/BBBB");
+        final RInChIComponent rInChIComponentProductTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductTwo.getInchi()).thenReturn("InChI=1S/CCCC");
+        final List<RInChIComponent> products = new ArrayList<>();
+        products.add(rInChIComponentProductOne);
+        products.add(rInChIComponentProductTwo);
+        final RInChIGenerator generator = new RInChIGenerator();
+
+        // act
+        final boolean actual = generator.isProductsFirst(reactants, products);
+
+        // assert
+        assertTrue(actual);
     }
 
-    private Map<String, String> readRinchiFullInformationFromResourceFile(final String filename) throws IOException, URISyntaxException {
-        final String[] rinchiPrefixes = new String[]{"RInChI", "RAuxInfo", "Long-RInChIKey", "Short-RInChIKey", "Web-RInChIKey"};
-        final Map<String, String> rinchiFullInformation = new HashMap<>();
+    @Disabled("NPE in isProductsFirst")
+    @Test
+    void isProductsFirst_reactantOneNostruct_test() {
+        // arrange
+        final RInChIComponent rInChIComponentReactantOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantOne.getInchi()).thenReturn(null);
+        final RInChIComponent rInChIComponentReactantTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantTwo.getInchi()).thenReturn("InChI=1S/YYYY");
+        final List<RInChIComponent> reactants = new ArrayList<>();
+        reactants.add(rInChIComponentReactantOne);
+        reactants.add(rInChIComponentReactantTwo);
+        final RInChIComponent rInChIComponentProductOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductOne.getInchi()).thenReturn("InChI=1S/BBBB");
+        final RInChIComponent rInChIComponentProductTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductTwo.getInchi()).thenReturn("InChI=1S/CCCC");
+        final List<RInChIComponent> products = new ArrayList<>();
+        products.add(rInChIComponentProductOne);
+        products.add(rInChIComponentProductTwo);
+        final RInChIGenerator generator = new RInChIGenerator();
 
-        final URL resource = this.getClass().getClassLoader().getResource(filename);
-        assertNotNull(resource, String.format("File %s not found in classpath!", filename));
-        final Path path = Paths.get(resource.toURI());
-        final List<String> lines = Files.readAllLines(path);
+        // act
+        final boolean actual = generator.isProductsFirst(reactants, products);
 
-        for (final String line : lines) {
-            for (final String rinchiPrefix : rinchiPrefixes) {
-                if (line.startsWith(rinchiPrefix + "=")) {
-                    rinchiFullInformation.put(rinchiPrefix, line);
-                }
-            }
-        }
+        // assert
+        assertTrue(actual);
+    }
 
-        return rinchiFullInformation;
+    @Disabled("NPE in isProductsFirst")
+    @Test
+    void isProductsFirst_productOneNostruct_test() {
+        // arrange
+        final RInChIComponent rInChIComponentReactantOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantOne.getInchi()).thenReturn("InChI=1S/XXXX");
+        final RInChIComponent rInChIComponentReactantTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantTwo.getInchi()).thenReturn("InChI=1S/YYYY");
+        final List<RInChIComponent> reactants = new ArrayList<>();
+        reactants.add(rInChIComponentReactantOne);
+        reactants.add(rInChIComponentReactantTwo);
+        final RInChIComponent rInChIComponentProductOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductOne.getInchi()).thenReturn(null);
+        final RInChIComponent rInChIComponentProductTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductTwo.getInchi()).thenReturn("InChI=1S/CCCC");
+        final List<RInChIComponent> products = new ArrayList<>();
+        products.add(rInChIComponentProductOne);
+        products.add(rInChIComponentProductTwo);
+        final RInChIGenerator generator = new RInChIGenerator();
+
+        // act
+        final boolean actual = generator.isProductsFirst(reactants, products);
+
+        // assert
+        assertTrue(actual);
+    }
+
+    @Disabled("NPE in isProductsFirst")
+    @Test
+    void isProductsFirst_reactantOneNoStruct_productOneNostruct_test() {
+        // arrange
+        final RInChIComponent rInChIComponentReactantOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantOne.getInchi()).thenReturn(null);
+        final RInChIComponent rInChIComponentReactantTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentReactantTwo.getInchi()).thenReturn("InChI=1S/YYYY");
+        final List<RInChIComponent> reactants = new ArrayList<>();
+        reactants.add(rInChIComponentReactantOne);
+        reactants.add(rInChIComponentReactantTwo);
+        final RInChIComponent rInChIComponentProductOne = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductOne.getInchi()).thenReturn(null);
+        final RInChIComponent rInChIComponentProductTwo = Mockito.mock(RInChIComponent.class);
+        Mockito.when(rInChIComponentProductTwo.getInchi()).thenReturn("InChI=1S/CCCC");
+        final List<RInChIComponent> products = new ArrayList<>();
+        products.add(rInChIComponentProductOne);
+        products.add(rInChIComponentProductTwo);
+        final RInChIGenerator generator = new RInChIGenerator();
+
+        // act
+        final boolean actual = generator.isProductsFirst(reactants, products);
+
+        // assert
+        assertTrue(actual);
     }
 
     @Disabled("NPE in isProductsFirst")
@@ -261,6 +395,51 @@ class RInChIGeneratorTest extends CDKTestCase {
     void r25_rinchi_repo_2_reactant_asterisk_1_nostruct_product_test() throws Exception {
         // ok__star_star-nostruct.rdf
         rxnFileRinchiFullInformationFileTest("org.openscience.cdk.rinchi/r25_rinchi_repo_2_reactant_asterisk_1_nostruct_product.rxn", "org.openscience.cdk.rinchi/r25_rinchi_repo_2_reactant_asterisk_1_nostruct_product-rinchi.txt");
+    }
+
+    void rxnFileRinchiFullInformationFileTest(final String reactionFile, final String rinchiFile) throws Exception {
+        // arrange
+        final IReaction reaction = readReactionFromRxnFile(reactionFile);
+        final Map<String, String> rinchiFullInformation = readRinchiFullInformationFromResourceFile(rinchiFile);
+
+        // act
+        final RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
+
+        // assert
+        assertNotNull(generator);
+        Assertions.assertEquals(StatusMessagesOutput.Status.SUCCESS, generator.getStatus(), "RInChI status:");
+        Assertions.assertEquals(rinchiFullInformation.get("RInChI"), generator.getRInChI(), "RinChI:");
+        Assertions.assertEquals(rinchiFullInformation.get("RAuxInfo"), generator.getAuxInfo(), "RAuxInfo:");
+        Assertions.assertEquals(rinchiFullInformation.get("Long-RInChIKey"), generator.getLongRInChIKey(), "Long-RInChIKey:");
+        Assertions.assertEquals(rinchiFullInformation.get("Short-RInChIKey"), generator.getShortRInChIKey(), "Short-RInChIKey:");
+        Assertions.assertEquals(rinchiFullInformation.get("Web-RInChIKey"), generator.getWebRInChIKey(), "Web-RInChIKey:");
+    }
+
+    private IReaction readReactionFromRxnFile(String filename) throws Exception {
+        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filename)) {
+            final MDLRXNV2000Reader reader = new MDLRXNV2000Reader(inputStream, Mode.STRICT);
+            return reader.read(SilentChemObjectBuilder.getInstance().newReaction());
+        }
+    }
+
+    private Map<String, String> readRinchiFullInformationFromResourceFile(final String filename) throws IOException, URISyntaxException {
+        final String[] rinchiPrefixes = new String[]{"RInChI", "RAuxInfo", "Long-RInChIKey", "Short-RInChIKey", "Web-RInChIKey"};
+        final Map<String, String> rinchiFullInformation = new HashMap<>();
+
+        final URL resource = this.getClass().getClassLoader().getResource(filename);
+        assertNotNull(resource, String.format("File %s not found in classpath!", filename));
+        final Path path = Paths.get(resource.toURI());
+        final List<String> lines = Files.readAllLines(path);
+
+        for (final String line : lines) {
+            for (final String rinchiPrefix : rinchiPrefixes) {
+                if (line.startsWith(rinchiPrefix + "=")) {
+                    rinchiFullInformation.put(rinchiPrefix, line);
+                }
+            }
+        }
+
+        return rinchiFullInformation;
     }
 
 }

@@ -64,6 +64,11 @@ public abstract class StatusMessagesOutput {
     private Status status = Status.SUCCESS;
     private final List<String> messages = new ArrayList<>();
 
+    protected void clearStatusAndMessages() {
+        this.status = Status.SUCCESS;
+        this.messages.clear();
+    }
+
     /**
      * Adds a message with a given status, updating the current status to the higher severity.
      *

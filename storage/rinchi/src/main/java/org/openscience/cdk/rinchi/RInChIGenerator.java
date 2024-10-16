@@ -59,41 +59,43 @@ public final class RInChIGenerator extends StatusMessagesOutput {
     private static final EnumSet<RInChIOption> DEFAULT_OPTIONS = EnumSet.noneOf(RInChIOption.class);
 
     private final EnumSet<RInChIOption> rinchiOptions;
+    private final List<RInChIComponent> reactants;
+    private final List<RInChIComponent> products;
+    private final List<RInChIComponent> agents;
+    private List<List<RInChIComponent>> components;
+    private final List<Integer> noStructCounts;
+    private final List<InChILayers> layers;
+    private IReaction.Direction direction;
+
     private String rinchi;
     private String auxInfo;
     private String shortRinchiKeyOutput;
     private String longRinchiKeyOutput;
     private String webRinchiKeyOutput;
 
-    private List<RInChIComponent> reactants;
-    private List<RInChIComponent> products;
-    private List<RInChIComponent> agents;
-    private List<RInChIComponent>[] components;
-    private int[] noStructCounts;
-    private InChILayers[] layers;
-    private IReaction.Direction direction;
-
     /**
      * Generates RInChI from a CDK Reaction.
      *
-     * @param reaction reaction to generate RInChI for
-     * @param options  zero or more optional RInChI generation options
+     * @param options zero or more optional RInChI generation options
      */
-    @SuppressWarnings("unchecked")
-    RInChIGenerator(IReaction reaction, RInChIOption... options) {
+    RInChIGenerator(RInChIOption... options) {
         this.rinchiOptions = ((options == null || options.length == 0) ? DEFAULT_OPTIONS : EnumSet.copyOf(Arrays.asList(options)));
-
-        if (reaction == null) {
-            addMessage("IReaction object provided as input is 'null'.", Status.ERROR);
-            return;
-        }
 
         this.reactants = new ArrayList<>();
         this.products = new ArrayList<>();
         this.agents = new ArrayList<>();
-        this.components = (List<RInChIComponent>[]) new List[NUMBER_OF_COMPONENTS];
-        this.noStructCounts = new int[NUMBER_OF_COMPONENTS];
-        this.layers = new InChILayers[NUMBER_OF_COMPONENTS];
+        this.components = new ArrayList<>(NUMBER_OF_COMPONENTS);
+        this.noStructCounts = new ArrayList<>(NUMBER_OF_COMPONENTS);
+        this.layers = new ArrayList<>(NUMBER_OF_COMPONENTS);
+    }
+
+    RInChIGenerator generate(final IReaction reaction) {
+        clear();
+
+        if (reaction == null) {
+            addMessage("IReaction object provided as input is 'null'.", Status.ERROR);
+            return this;
+        }
 
         try {
             this.extractComponents(reaction);
@@ -106,6 +108,26 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         this.longRinchiKeyOutput = this.generateLongKey();
         this.shortRinchiKeyOutput = this.generateShortKey();
         this.webRinchiKeyOutput = this.generateWebKey();
+
+        return this;
+    }
+
+    void clear() {
+        clearStatusAndMessages();
+
+        this.reactants.clear();
+        this.products.clear();
+        this.agents.clear();
+        this.components.clear();
+        this.noStructCounts.clear();
+        this.layers.clear();
+        this.direction = null;
+
+        this.rinchi = null;
+        this.auxInfo = null;
+        this.shortRinchiKeyOutput = null;
+        this.longRinchiKeyOutput = null;
+        this.webRinchiKeyOutput = null;
     }
 
     /**
@@ -132,41 +154,47 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      */
     private void extractComponents(final IReaction reaction) throws CDKException {
         //create InChIComponent for each component
-        for (IAtomContainer ac : reaction.getReactants()) {
-            this.reactants.add(new RInChIComponent(getInChIGenerator(ac)));
+        try {
+            for (IAtomContainer ac : reaction.getReactants()) {
+                this.reactants.add(new RInChIComponent(getInChIGenerator(ac)));
+            }
+            for (IAtomContainer ac : reaction.getProducts()) {
+                this.products.add(new RInChIComponent(getInChIGenerator(ac)));
+            }
+            for (IAtomContainer ac : reaction.getAgents()) {
+                this.agents.add(new RInChIComponent(getInChIGenerator(ac)));
+            }
+        } catch (CDKException exception) {
+            addMessage(String.format("Cannot generate RInChI: %s", exception.getMessage()), Status.ERROR);
+            return;
         }
-        for (IAtomContainer ac : reaction.getProducts()) {
-            this.products.add(new RInChIComponent(getInChIGenerator(ac)));
-        }
-        for (IAtomContainer ac : reaction.getAgents()) {
-            this.agents.add(new RInChIComponent(getInChIGenerator(ac)));
-        }
+
         // sort components lexicographically by InChI
         this.reactants.sort(Comparator.comparing(RInChIComponent::getInchi));
         this.products.sort(Comparator.comparing(RInChIComponent::getInchi));
         this.agents.sort(Comparator.comparing(RInChIComponent::getInchi));
 
-        if (!this.isProductsFirst()) {
-            this.components[0] = this.reactants;
-            this.noStructCounts[0] = (int) this.reactants.stream().filter(RInChIComponent::isNoStructure).count();
-            this.components[1] = this.products;
-            this.noStructCounts[1] = (int) this.products.stream().filter(RInChIComponent::isNoStructure).count();
+        if (!this.isProductsFirst(this.reactants, this.products)) {
+            this.components.add(this.reactants);
+            this.noStructCounts.add((int) this.reactants.stream().filter(RInChIComponent::isNoStructure).count());
+            this.components.add(this.products);
+            this.noStructCounts.add((int) this.products.stream().filter(RInChIComponent::isNoStructure).count());
             this.direction = IReaction.Direction.FORWARD;
-            this.layers[0] = new InChILayers(this.reactants);
-            this.layers[1] = new InChILayers(this.products);
+            this.layers.add(new InChILayers(this.reactants));
+            this.layers.add(new InChILayers(this.products));
         } else {
-            this.components[0] = this.products;
-            this.noStructCounts[0] = (int) this.products.stream().filter(RInChIComponent::isNoStructure).count();
-            this.components[1] = this.reactants;
-            this.noStructCounts[1] = (int) this.reactants.stream().filter(RInChIComponent::isNoStructure).count();
+            this.components.add(this.products);
+            this.noStructCounts.add((int) this.products.stream().filter(RInChIComponent::isNoStructure).count());
+            this.components.add(this.reactants);
+            this.noStructCounts.add((int) this.reactants.stream().filter(RInChIComponent::isNoStructure).count());
             this.direction = IReaction.Direction.BACKWARD;
-            this.layers[0] = new InChILayers(this.products);
-            this.layers[1] = new InChILayers(this.reactants);
+            this.layers.add(new InChILayers(this.products));
+            this.layers.add(new InChILayers(this.reactants));
         }
 
-        this.components[2] = this.agents;
-        this.noStructCounts[2] = (int) this.agents.stream().filter(RInChIComponent::isNoStructure).count();
-        this.layers[2] = new InChILayers(this.agents);
+        this.components.add(this.agents);
+        this.noStructCounts.add((int) this.agents.stream().filter(RInChIComponent::isNoStructure).count());
+        this.layers.add(new InChILayers(this.agents));
 
         if (this.rinchiOptions.contains(RInChIOption.FORCE_EQUILIBRIUM) || reaction.getDirection() == IReaction.Direction.BIDIRECTIONAL)
             this.direction = IReaction.Direction.BIDIRECTIONAL;
@@ -190,33 +218,30 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @return RInChI string of the IReaction this object was instantiated with
      */
     private String generateRInChI() {
-        //RInChI StringBuilder
+        // RInChI StringBuilder
         final StringBuilder sb = new StringBuilder();
         sb.append(RInChIConstants.RINCHI_STD_HEADER);
 
-        //add components
-        for (int i = 0; i < this.components.length; i++) {
-            final String componentString = this.components[i].stream()
+        // add components
+        for (int i = 0; i < this.components.size(); i++) {
+            final String componentString = this.components.get(i).stream()
                     .filter(Objects::nonNull)
                     .filter(c -> !c.isNoStructure())
                     .map(c -> c.getInchi().substring(RInChIConstants.INCHI_STD_HEADER.length()))
                     .collect(Collectors.joining(RInChIConstants.DELIMITER_COMPONENT));
             sb.append(componentString);
-            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components[i + 1].isEmpty())
+            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components.get(i + 1).isEmpty())
                 sb.append(RInChIConstants.DELIMITER_GROUP);
         }
 
-        //add direction
+        // add direction
         sb.append(RInChIConstants.DIRECTION_TAG).append(this.directionToRInChIChar(this.direction));
 
-        //add no structs layer
-        if (Arrays.stream(this.noStructCounts).anyMatch(c -> c > 0)) {
-            sb.append(RInChIConstants.NOSTRUCT_TAG);
-            for (int i = 0; i < this.noStructCounts.length; i++) {
-                sb.append(this.noStructCounts[i]);
-                if (i < this.noStructCounts.length - 1)
-                    sb.append(RInChIConstants.NOSTRUCT_DELIMITER);
-            }
+        // add no structs layer
+        if (this.noStructCounts.stream().anyMatch(c -> c > 0)) {
+            sb.append(this.noStructCounts.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining(Character.toString(RInChIConstants.NOSTRUCT_DELIMITER), RInChIConstants.NOSTRUCT_TAG, "")));
         }
 
         return sb.toString();
@@ -242,14 +267,14 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         sb.append(RInChIConstants.RINCHI_AUXINFO_HEADER);
 
         //add components
-        for (int i = 0; i < this.components.length; i++) {
-            final String componentString = this.components[i].stream()
+        for (int i = 0; i < this.components.size(); i++) {
+            final String componentString = this.components.get(i).stream()
                     .filter(Objects::nonNull)
                     .filter(c -> !c.isNoStructure())
                     .map(c -> c.getAuxInfo().substring(RInChIConstants.INCHI_AUXINFO_HEADER.length()))
                     .collect(Collectors.joining(RInChIConstants.DELIMITER_COMPONENT));
             sb.append(componentString);
-            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components[i + 1].isEmpty())
+            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components.get(i + 1).isEmpty())
                 sb.append(RInChIConstants.DELIMITER_GROUP);
         }
 
@@ -270,6 +295,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      *   <li>InChI keys of all components, separated by component and group delimiters</li>
      *   <li>If no-structure entities exist, they are indicated by a special character</li>
      * </ul>
+     *
      * @return Long-RInChI-Key
      */
     private String generateLongKey() {
@@ -277,23 +303,28 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         sb.append(RInChIConstants.RINCHI_LONG_KEY_HEADER);
         sb.append(RInChIConstants.RINCHI_KEY_VERSION_ID_HEADER);
         sb.append(RInChIConstants.KEY_DELIMITER_BLOCK);
-        sb.append(this.directionToRInChIKeyChar(this.direction));
+        try {
+            sb.append(this.directionToRInChIKeyChar(this.direction));
+        } catch (IllegalStateException exception) {
+            addMessage(String.format("Cannot generate long RInChI key: Unsupported reaction direction %s.", direction), Status.ERROR);
+            return "";
+        }
         sb.append(RInChIConstants.HASH_12_EMPTY_STRING, 0, 4);
         sb.append(RInChIConstants.KEY_DELIMITER_BLOCK);
         final String result = sb.toString();
 
-        for (int i = 0; i < this.components.length; i++) {
-            final String componentString = this.components[i].stream()
+        for (int i = 0; i < this.components.size(); i++) {
+            final String componentString = this.components.get(i).stream()
                     .filter(Objects::nonNull)
                     .filter(c -> !c.isNoStructure())
                     .map(RInChIComponent::getInchiKey)
                     .collect(Collectors.joining(RInChIConstants.KEY_DELIMITER_COMPONENT));
             sb.append(componentString);
-            if (this.noStructCounts[i] != 0) {
+            if (this.noStructCounts.get(i) != 0) {
                 sb.append(RInChIConstants.KEY_DELIMITER_COMPONENT);
                 sb.append(RInChIConstants.NOSTRUCT_RINCHI_LONGKEY);
             }
-            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components[i + 1].isEmpty())
+            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components.get(i + 1).isEmpty())
                 sb.append(RInChIConstants.KEY_DELIMITER_GROUP);
         }
         if (result.contentEquals(sb)) {
@@ -317,14 +348,20 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      *   <li>Major and minor hashes for each layer in {@code this.layers}</li>
      *   <li>Character representation of the no-structure counts</li>
      * </ul>
+     *
      * @return Short-RInChI-Key or {@code null} if an error prevents generation of the key
      */
-    private String generateShortKey() {
+    String generateShortKey() {
         final StringBuilder sb = new StringBuilder();
         sb.append(RInChIConstants.RINCHI_SHORT_KEY_HEADER);
         sb.append(RInChIConstants.RINCHI_KEY_VERSION_ID_HEADER);
         sb.append(RInChIConstants.KEY_DELIMITER_COMPONENT);
-        sb.append(this.directionToRInChIKeyChar(this.direction));
+        try {
+            sb.append(this.directionToRInChIKeyChar(this.direction));
+        } catch (IllegalStateException exception) {
+            addMessage(String.format("Cannot generate short RInChI key: Unsupported reaction direction %s.", direction), Status.ERROR);
+            return "";
+        }
         sb.append(RInChIConstants.HASH_04_EMPTY_STRING);
 
         final StringBuilder allMajors = new StringBuilder();
@@ -336,15 +373,20 @@ public final class RInChIGenerator extends StatusMessagesOutput {
                 allMinors.append(RInChIConstants.KEY_DELIMITER_BLOCK).append(layers.minorHash());
             }
         } catch (NoSuchAlgorithmException exception) {
-            addMessage(exception.getMessage(), Status.ERROR);
-            return null;
+            addMessage(String.format("Cannot generate short RInChI key: %s.", exception.getMessage()), Status.ERROR);
+            return "";
         }
 
         sb.append(allMajors);
         sb.append(allMinors);
         sb.append(RInChIConstants.KEY_DELIMITER_BLOCK);
         for (int noStructCount : this.noStructCounts) {
-            sb.append(this.noStructCountToRInChIKeyChar(noStructCount));
+            try {
+                sb.append(this.noStructCountToRInChIKeyChar(noStructCount));
+            } catch (IllegalArgumentException exception) {
+                addMessage(String.format("Cannot generate short RInChI key: %s.", exception.getMessage()), Status.ERROR);
+                return "";
+            }
         }
         return sb.toString();
     }
@@ -359,15 +401,14 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      *
      * @return Web-RInChI-Key or {@code null} if an error prevents generation of the key
      */
-    private String generateWebKey() {
+    String generateWebKey() {
         try {
             // Create a unique list of all component InChIs.
-            final Set<String> uniqueInchis = new TreeSet<>();
-            for (List<RInChIComponent> rInChIComponents : this.components) {
-                for (RInChIComponent component : rInChIComponents) {
-                    uniqueInchis.add(component.getInchi());
-                }
-            }
+            final List<String> uniqueInchis = this.components.stream()
+                    .flatMap(List::stream)
+                    .map(RInChIComponent::getInchi)
+                    .distinct()
+                    .collect(Collectors.toList());
 
             final InChILayers allInChILayers = new InChILayers();
             for (String inchi : uniqueInchis) {
@@ -380,8 +421,8 @@ public final class RInChIGenerator extends StatusMessagesOutput {
                     allInChILayers.minorHashExtended() +
                     "SA";
         } catch (CDKException | NoSuchAlgorithmException exception) {
-            addMessage(exception.getMessage(), Status.ERROR);
-            return null;
+            addMessage(String.format("Cannot generate web RInChI key: %s", exception.getMessage()), Status.ERROR);
+            return "";
         }
     }
 
@@ -398,19 +439,15 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @param atomContainer the {@link IAtomContainer} to generate an InChI for
      * @return the {@link InChIGenerator} if successful, otherwise {@code null}
      */
-    private InChIGenerator getInChIGenerator(IAtomContainer atomContainer) {
-        try {
-            final InchiOptions options = new InchiOptions.InchiOptionsBuilder().build();
-            final InChIGenerator generator = InChIGeneratorFactory.getInstance().getInChIGenerator(atomContainer, options);
-            if (generator.getStatus() == InchiStatus.SUCCESS)
-                return generator;
-            else {
-                addMessage("InChIGenerator did not returned status success" +
-                        (generator.getMessage() != null && !generator.getMessage().isEmpty() ? (": " + generator.getMessage()) : "") + ".", Status.WARNING);
-                return null;
-            }
-        } catch (CDKException exception) {
-            addMessage(exception.toString(), Status.ERROR);
+    private InChIGenerator getInChIGenerator(IAtomContainer atomContainer) throws CDKException {
+        final InchiOptions options = new InchiOptions.InchiOptionsBuilder().build();
+        final InChIGenerator generator = InChIGeneratorFactory.getInstance().getInChIGenerator(atomContainer, options);
+        if (generator.getStatus() == InchiStatus.SUCCESS)
+            return generator;
+        else {
+            // TODO Is this supposed to happen for all nostruct components?
+            addMessage("InChIGenerator did not returned status success" +
+                    (generator.getMessage() != null && !generator.getMessage().isEmpty() ? (": " + generator.getMessage()) : "") + ".", Status.WARNING);
             return null;
         }
     }
@@ -430,7 +467,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @param direction the reaction direction, represented by the {@link IReaction.Direction} enum
      * @return the corresponding RInChI character for the direction, or {@code 0} if the direction is unsupported
      */
-    private char directionToRInChIChar(IReaction.Direction direction) {
+    char directionToRInChIChar(final IReaction.Direction direction) {
         switch (direction) {
             case FORWARD:
                 return RInChIConstants.DIRECTION_FORWARD;
@@ -439,8 +476,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
             case BIDIRECTIONAL:
                 return RInChIConstants.DIRECTION_EQUILIBRIUM;
             default:
-                addMessage(String.format("Unsupported reaction direction: %s", direction), Status.ERROR);
-                return 0;
+                throw new IllegalStateException(String.format("Unsupported reaction direction: %s.", direction));
         }
     }
 
@@ -458,7 +494,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @param direction the reaction direction, represented by the {@link IReaction.Direction} enum
      * @return the corresponding character key ('F', 'B', or 'E'), or {@code 0} if the direction is unsupported
      */
-    private char directionToRInChIKeyChar(IReaction.Direction direction) {
+    char directionToRInChIKeyChar(final IReaction.Direction direction) {
         switch (direction) {
             case FORWARD:
                 return 'F';
@@ -467,8 +503,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
             case BIDIRECTIONAL:
                 return 'E';
             default:
-                addMessage(String.format("Unsupported reaction direction: %s.", direction), Status.ERROR);
-                return 0;
+                throw new IllegalStateException(String.format("Unsupported reaction direction: %s.", direction));
         }
     }
 
@@ -483,14 +518,14 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      *
      * @return {@code true} if the first product's InChI is lexicographically greater than the first reactant's InChI, {@code false} otherwise
      */
-    private boolean isProductsFirst() {
+    boolean isProductsFirst(final List<RInChIComponent> reactants, final List<RInChIComponent> products) {
         String reactant1 = "";
-        if (!this.reactants.isEmpty() && this.reactants.get(0) != null) {
-            reactant1 = this.reactants.get(0).getInchi();
+        if (!reactants.isEmpty() && reactants.get(0) != null) {
+            reactant1 = reactants.get(0).getInchi();
         }
         String product1 = "";
-        if (!this.products.isEmpty() && this.products.get(0) != null) {
-            product1 = this.products.get(0).getInchi();
+        if (!products.isEmpty() && products.get(0) != null) {
+            product1 = products.get(0).getInchi();
         }
         return reactant1.compareTo(product1) > 0;
     }
@@ -509,7 +544,11 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @param count the number of components with no structure
      * @return the corresponding character representation of the count
      */
-    private char noStructCountToRInChIKeyChar(int count) {
+    char noStructCountToRInChIKeyChar(final int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException(String.format("Negative count of %d of no-structures.", count));
+        }
+
         if (count == 0)
             return 'Z';
         if (count > 24)

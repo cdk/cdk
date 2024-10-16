@@ -92,18 +92,18 @@ public final class RInChIGeneratorFactory {
      * @return the RInChI generator object
      */
     public RInChIGenerator getRInChIGenerator(IReaction reaction) {
-        return (new RInChIGenerator(reaction));
+        return (new RInChIGenerator().generate(reaction));
     }
 
     /**
-     * Gets a RInChI generator for a {@link IReaction} providing one ore more options to customise the generation.
+     * Gets a RInChI generator for a {@link IReaction} providing one or more options to customise the generation.
      *
      * @param reaction reaction to generate RInChI for
      * @param options    one or more options
      * @return the RInChI generator object
      */
     public RInChIGenerator getRInChIGenerator(IReaction reaction, RInChIOption... options) {
-        return (new RInChIGenerator(reaction, options));
+        return (new RInChIGenerator(options).generate(reaction));
     }
 
     /**

@@ -31,7 +31,7 @@ import org.openscience.cdk.inchi.InChIGenerator;
  *
  * @author Felix Bänsch
  */
-final class RInChIComponent {
+class RInChIComponent {
 
     private boolean isNoStructure;
     private String inchi;
