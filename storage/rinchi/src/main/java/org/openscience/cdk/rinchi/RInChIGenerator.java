@@ -62,7 +62,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
     private final List<RInChIComponent> reactants;
     private final List<RInChIComponent> products;
     private final List<RInChIComponent> agents;
-    private List<List<RInChIComponent>> components;
+    private final List<List<RInChIComponent>> components;
     private final List<Integer> noStructCounts;
     private final List<InChILayers> layers;
     private IReaction.Direction direction;
@@ -100,7 +100,8 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         try {
             this.extractComponents(reaction);
         } catch (CDKException exception) {
-            addMessage(exception.getMessage(), Status.ERROR);
+            addMessage(String.format("Unable to extract components from given reaction: %s", exception.getMessage()), Status.ERROR);
+            return this;
         }
 
         this.rinchi = this.generateRInChI();
