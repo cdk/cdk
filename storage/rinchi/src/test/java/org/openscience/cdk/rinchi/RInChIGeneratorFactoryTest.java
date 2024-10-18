@@ -19,6 +19,7 @@
 package org.openscience.cdk.rinchi;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -33,6 +34,7 @@ import org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 
+import java.util.Locale;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -186,7 +188,6 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		Assertions.assertEquals(6, reaction3.getProducts().getAtomContainer(0).getAtomCount(), "Product atom count: ");
 	}
 
-	@Disabled("not implemented yet")
 	@Test
 	void test02_benzene_kekulized() {
 		//Create kekulized benzene
@@ -247,7 +248,7 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		Assertions.assertEquals("Web-RInChIKey=UHOVQNZJYSORNBOAP-NUHFFFADPSCTJSA", generator.getWebRInChIKey());
 	}
 
-	@Disabled("not implemented yet")
+	@Disabled("IBond.Order.UNSET not supported by jna-inchi.")
 	@Test
 	void test03_benzene_aromatic() {
 		//Create aromatic benzene for testing conversion of CDK bonds of type UNSET flagged as aromatic
@@ -305,7 +306,6 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		Assertions.assertEquals("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-", generator.getRInChI(), "RInChI for benzene: ");
 	}
 
-	@Disabled("not implemented yet")
 	@Test
 	void test04_radical_doublet() {
 		//Create propane doublet radical (monovalent)
@@ -338,7 +338,6 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		Assertions.assertEquals("RAuxInfo=1.00.1/<>0/N:1,3,2/CRV:1d/rA:3nC.2CC/rB:s1;s2;/rC:;;;", generator.getAuxInfo(), "RAuxInfo for propane radical: ");
 	}
 
-	@Disabled("not implemented yet")
 	@Test
 	void test05_radical_triplet() {
 		//Create propane triple radical (divalent)

@@ -28,10 +28,12 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import io.github.dan2097.jnainchi.InchiOptions;
 import net.sf.jniinchi.INCHI_OPTION;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -489,10 +491,12 @@ class InChIGeneratorTest extends CDKTestCase {
     void testGetStandardInchiFromMethylRadical() throws Exception {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("C");
+        a.setPoint2d(new Point2d(1.0, -2));
         a.setImplicitHydrogenCount(3);
         ac.addAtom(a);
         ac.addSingleElectron(new SingleElectron(a));
-        InChIGenerator gen = getFactory().getInChIGenerator(ac);
+        System.out.println(Locale.getDefault());
+        InChIGenerator gen = getFactory().getInChIGenerator(ac, new InchiOptions.InchiOptionsBuilder().build());
         Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
         Assertions.assertEquals("InChI=1S/CH3/h1H3", gen.getInchi());
     }

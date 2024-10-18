@@ -29,8 +29,15 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static org.openscience.cdk.rinchi.RInChIConstants.*;
 
 /**
  * This class generates the IUPAC Reaction International Chemical Identifier (RInChI) for a CDK IReaction object.
@@ -109,7 +116,6 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         this.longRinchiKeyOutput = this.generateLongKey();
         this.shortRinchiKeyOutput = this.generateShortKey();
         this.webRinchiKeyOutput = this.generateWebKey();
-
         return this;
     }
 
@@ -221,7 +227,10 @@ public final class RInChIGenerator extends StatusMessagesOutput {
     private String generateRInChI() {
         // RInChI StringBuilder
         final StringBuilder sb = new StringBuilder();
-        sb.append(RInChIConstants.RINCHI_STD_HEADER);
+        sb.append(RINCHI_STD_HEADER);
+
+        if(this.components == null || this.components.isEmpty())
+            return sb.toString();
 
         // add components
         for (int i = 0; i < this.components.size(); i++) {
@@ -267,6 +276,9 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         final StringBuilder sb = new StringBuilder();
         sb.append(RInChIConstants.RINCHI_AUXINFO_HEADER);
 
+        if(this.components == null || this.components.isEmpty())
+            return sb.toString();
+
         //add components
         for (int i = 0; i < this.components.size(); i++) {
             final String componentString = this.components.get(i).stream()
@@ -304,6 +316,10 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         sb.append(RInChIConstants.RINCHI_LONG_KEY_HEADER);
         sb.append(RInChIConstants.RINCHI_KEY_VERSION_ID_HEADER);
         sb.append(RInChIConstants.KEY_DELIMITER_BLOCK);
+
+        if(this.components == null || this.components.isEmpty())
+            return sb.toString();
+
         try {
             sb.append(this.directionToRInChIKeyChar(this.direction));
         } catch (IllegalStateException exception) {
@@ -357,6 +373,10 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         sb.append(RInChIConstants.RINCHI_SHORT_KEY_HEADER);
         sb.append(RInChIConstants.RINCHI_KEY_VERSION_ID_HEADER);
         sb.append(RInChIConstants.KEY_DELIMITER_COMPONENT);
+
+        if(this.components == null || this.components.isEmpty())
+            return sb.toString();
+
         try {
             sb.append(this.directionToRInChIKeyChar(this.direction));
         } catch (IllegalStateException exception) {
@@ -403,6 +423,9 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @return Web-RInChI-Key or {@code null} if an error prevents generation of the key
      */
     String generateWebKey() {
+        if(this.components == null || this.components.isEmpty())
+            return RINCHI_WEB_KEY_HEADER;
+
         try {
             // Create a unique list of all component InChIs.
             final List<String> uniqueInchis = this.components.stream()
@@ -521,13 +544,12 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      */
     boolean isProductsFirst(final List<RInChIComponent> reactants, final List<RInChIComponent> products) {
         String reactant1 = "";
-        if (!reactants.isEmpty() && reactants.get(0) != null) {
-            reactant1 = reactants.get(0).getInchi();
-        }
+        if (!reactants.isEmpty())
+            reactant1 = reactants.stream().filter(x -> x.getInchi() != null).findFirst().map(RInChIComponent::getInchi).orElse("");
         String product1 = "";
-        if (!products.isEmpty() && products.get(0) != null) {
-            product1 = products.get(0).getInchi();
-        }
+        if (!products.isEmpty())
+            product1 = products.stream().filter(x -> x.getInchi() != null).findFirst().map(RInChIComponent::getInchi).orElse("");
+
         return reactant1.compareTo(product1) > 0;
     }
 
