@@ -578,9 +578,10 @@ public final class SmilesGenerator {
         }
 
         // we need to make sure we generate without the CXSMILES layers
-        String smi = create(reactantPart, flavour &~ SmiFlavor.CxSmilesWithCoords, reactantOrder) + ">" +
-                     create(agentPart, flavour &~ SmiFlavor.CxSmilesWithCoords, agentOrder) + ">" +
-                     create(productPart, flavour &~ SmiFlavor.CxSmilesWithCoords, productOrder);
+        int adjustedFlav = flavour & ~(SmiFlavor.CxSmilesWithCoords & ~SmiFlavor.StereoTetrahedral);
+        String smi = create(reactantPart, adjustedFlav, reactantOrder) + ">" +
+                     create(agentPart, adjustedFlav, agentOrder) + ">" +
+                     create(productPart, adjustedFlav, productOrder);
 
         // copy ordering back to unified array and adjust values
         int agentBeg = reactantOrder.length;
