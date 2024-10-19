@@ -1343,6 +1343,14 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
+    void testReactionStereo() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IReaction      rxn    = smipar.parseReactionSmiles("C[C@H](CO)N>>");
+        String         res    = null;
+        Assertions.assertEquals("C[C@H](CO)N>>", new SmilesGenerator(SmiFlavor.Default).create(rxn));
+    }
+
+    @Test
     void shouldNotWrite0() throws CDKException {
         SmilesParser   smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol    = smipar.parseSmiles("[0C]");
