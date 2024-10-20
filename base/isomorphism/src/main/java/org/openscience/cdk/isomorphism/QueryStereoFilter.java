@@ -287,8 +287,8 @@ final class QueryStereoFilter implements Predicate<int[]> {
                 currentOrdering.add(mapped.contains(atom) ? atom : targetAtom);
             }
             Octahedral oc = new Octahedral(targetAtom,
-                                            currentOrdering.<IAtom>toArray(new IAtom[0]),
-                                            targetElement.getConfigOrder());
+                                           currentOrdering.<IAtom>toArray(new IAtom[0]),
+                                           targetElement.getConfigOrder());
             TrigonalBipyramidal tbpy = oc.asTrigonalBipyramidal();
             if (tbpy == null)
                 return false;

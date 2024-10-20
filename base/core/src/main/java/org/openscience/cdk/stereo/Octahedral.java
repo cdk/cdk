@@ -26,7 +26,6 @@ package org.openscience.cdk.stereo;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -287,6 +286,44 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
     }
 
     /**
+     * Rotate the carriers if needed to ensure we have an explicit atom in
+     * position[0].
+     *
+     * <pre>{@code
+     * *[Co@OH1](N)(*)(N)(*)* => N[Co@OH1](*)(*)(*)(*)N
+     * }</pre>
+     *
+     * This is mainly useful when we "cast" to trigonal bipyramidal.
+     *
+     * @return the normalized configuration
+     */
+    private Octahedral normalizeImplicit() {
+        if (getConfigOrder() != 1)
+            throw new IllegalArgumentException();
+        final IAtom focus = getFocus();
+        final List<IAtom> carriers = getCarriers();
+        // first atom is so rotate the carries until this is not the case
+        if (carriers.get(0).equals(focus)) {
+            for (int i = 0; i < PERMUTATIONS[0].length; i += 6) {
+                if (!carriers.get(PERMUTATIONS[0][i]).equals(focus)) {
+                    return new Octahedral(focus,
+                                          new IAtom[]{
+                                                  carriers.get(PERMUTATIONS[0][i]),
+                                                  carriers.get(PERMUTATIONS[0][i+1]),
+                                                  carriers.get(PERMUTATIONS[0][i+2]),
+                                                  carriers.get(PERMUTATIONS[0][i+3]),
+                                                  carriers.get(PERMUTATIONS[0][i+4]),
+                                                  carriers.get(PERMUTATIONS[0][i+5]),
+                                          },
+                                          getConfigOrder());
+                }
+            }
+            return this;
+        }
+        return this;
+    }
+
+    /**
      * Normalize the configuration to the lowest order (1). For example
      * <pre>C[Co@OH8](F)(Br)(Cl)(I)S</pre>
      * is the same as
@@ -297,15 +334,16 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
      */
     public Octahedral normalize() {
         int cfg = getConfigOrder();
-        if (cfg == 1)
-          return this;
+        if (cfg == 1) {
+            return normalizeImplicit();
+        }
         if (cfg < 1 || cfg > 30)
             throw new IllegalArgumentException(
                 "Invalid config order: " + cfg + ", octahedral should be"
                 + "1 <= order <= 30!");
         IAtom[] carriers = invapply(getCarriers().toArray(new IAtom[6]),
                                     PERMUTATIONS[cfg-1]);
-        return new Octahedral(getFocus(), carriers, 1);
+        return new Octahedral(getFocus(), carriers, 1).normalizeImplicit();
     }
 
     /**
@@ -345,15 +383,11 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
     public boolean canBeTrigonalBipyramidal() {
         int numExplicit = 0;
         IAtom focus = (IAtom)this.getFocus();
-        Iterator var3 = this.getCarriers().iterator();
-
-        while(var3.hasNext()) {
-            IAtom atom = (IAtom)var3.next();
+        for (IAtom atom : this.getCarriers()) {
             if (!atom.equals(focus)) {
                 ++numExplicit;
             }
         }
-
         if (numExplicit > 3) {
             return false;
         } else {
