@@ -335,7 +335,7 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
     public Octahedral normalize() {
         int cfg = getConfigOrder();
         if (cfg == 1) {
-            return normalizeImplicit();
+            return this;
         }
         if (cfg < 1 || cfg > 30)
             throw new IllegalArgumentException(
@@ -343,7 +343,7 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
                 + "1 <= order <= 30!");
         IAtom[] carriers = invapply(getCarriers().toArray(new IAtom[6]),
                                     PERMUTATIONS[cfg-1]);
-        return new Octahedral(getFocus(), carriers, 1).normalizeImplicit();
+        return new Octahedral(getFocus(), carriers, 1);
     }
 
     /**
@@ -406,19 +406,20 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
     }
 
     public TrigonalBipyramidal asTrigonalBipyramidal() {
-        Octahedral normalized = this.normalize();
+        Octahedral normalized = this.normalize().normalizeImplicit();
         if (!normalized.canBeTrigonalBipyramidal()) {
             return null;
         } else {
             IAtom focus = (IAtom)normalized.getFocus();
             List<IAtom> carriers = normalized.getCarriers();
-            if (((IAtom)carriers.get(1)).equals(focus)) {
+            if (carriers.get(1).equals(focus)) {
                 carriers.remove(1);
-            } else if (((IAtom)carriers.get(2)).equals(focus)) {
+            } else if (carriers.get(2).equals(focus)) {
                 carriers.remove(2);
             }
-
-            return new TrigonalBipyramidal((IAtom)this.getFocus(), (IAtom[])carriers.toArray(new IAtom[5]), 1);
+            return new TrigonalBipyramidal(this.getFocus(),
+                                           carriers.toArray(new IAtom[5]),
+                                           1);
         }
     }
 }

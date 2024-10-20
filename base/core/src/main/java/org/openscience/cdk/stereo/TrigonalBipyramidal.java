@@ -159,11 +159,8 @@ public final class TrigonalBipyramidal extends AbstractStereo<IAtom,IAtom> {
 
     public boolean canBeOctahedral() {
         int numExplicit = 0;
-        IAtom focus = (IAtom)this.getFocus();
-        Iterator var3 = this.getCarriers().iterator();
-
-        while(var3.hasNext()) {
-            IAtom atom = (IAtom)var3.next();
+        IAtom focus = this.getFocus();
+        for (IAtom atom : getCarriers()) {
             if (!atom.equals(focus)) {
                 ++numExplicit;
             }
@@ -177,7 +174,7 @@ public final class TrigonalBipyramidal extends AbstractStereo<IAtom,IAtom> {
             int numEquatorial = 0;
 
             for(int i = 1; i < 4; ++i) {
-                if (!((IAtom)carriers.get(i)).equals(focus)) {
+                if (!carriers.get(i).equals(focus)) {
                     ++numEquatorial;
                 }
             }
@@ -191,10 +188,10 @@ public final class TrigonalBipyramidal extends AbstractStereo<IAtom,IAtom> {
         if (!normalized.canBeOctahedral()) {
             return null;
         } else {
-            IAtom focus = (IAtom)normalized.getFocus();
+            IAtom focus = normalized.getFocus();
             List<IAtom> carriers = normalized.getCarriers();
             carriers.add(1, focus);
-            return new Octahedral((IAtom)this.getFocus(), (IAtom[])carriers.toArray(new IAtom[6]), 1);
+            return new Octahedral(this.getFocus(), carriers.toArray(new IAtom[6]), 1);
         }
     }
 }
