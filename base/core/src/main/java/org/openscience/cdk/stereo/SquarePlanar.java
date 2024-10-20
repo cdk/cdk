@@ -118,16 +118,22 @@ public final class SquarePlanar extends AbstractStereo<IAtom,IAtom> {
 
     public Octahedral asOctahedral() {
         List<IAtom> carriers = this.getCarriers();
-        int cfg = 24832;
+        int cfg = IStereoElement.Octahedral;
         if (this.getConfigOrder() == 1) {
-            cfg |= 1;
+            cfg = 1;
         } else if (this.getConfigOrder() == 2) {
-            cfg |= 10;
+            cfg = 10;
         } else if (this.getConfigOrder() == 3) {
-            cfg |= 4;
+            cfg = 4;
         }
-
-        return new Octahedral((IAtom)this.getFocus(), new IAtom[]{(IAtom)this.getFocus(), (IAtom)carriers.get(0), (IAtom)carriers.get(1), (IAtom)carriers.get(2), (IAtom)carriers.get(3), (IAtom)this.getFocus()}, cfg);
+        return new Octahedral(this.getFocus(),
+                              new IAtom[]{this.getFocus(),
+                                          carriers.get(0),
+                                          carriers.get(1),
+                                          carriers.get(2),
+                                          carriers.get(3),
+                                          this.getFocus()},
+                              cfg);
     }
 
     /**
