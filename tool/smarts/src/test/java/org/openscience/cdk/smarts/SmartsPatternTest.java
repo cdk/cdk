@@ -345,6 +345,12 @@ class SmartsPatternTest {
                     "N[Co@OH1]N", 2, 1);
         assertMatch("N[Co@TB1]N",
                     "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 2, 1);
+        assertMatch("N[Co@TB1]N",
+                    "N[Co@SP3](Cl)(Cl)N", 2, 1);
+        assertMatch("N[Co@TB1](Cl)N",
+                    "N[Co@SP3](Cl)(Cl)N", 4, 2);
+        assertMatch("N[Co@TB1](Cl)N",
+                    "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 8, 4);
     }
 
     IAtomContainer smi(String smi) throws Exception {
