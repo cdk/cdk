@@ -2734,6 +2734,15 @@ class SmilesParserTest extends CDKTestCase {
     }
 
     @Test
+    void testDirectionalBondAromaticity() throws InvalidSmilesException {
+        IAtomContainer mol = load("C=c1ccccc/1=C/C");
+        int count = 0;
+        for (IBond bond : mol.bonds())
+            count += bond.isAromatic() ? 1 : 0;
+        Assertions.assertEquals(6, count);
+    }
+
+    @Test
     void testMultiStepSmiles() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);

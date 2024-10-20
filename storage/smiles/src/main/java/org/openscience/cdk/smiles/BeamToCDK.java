@@ -153,6 +153,14 @@ final class BeamToCDK {
                     checkBondStereo = true;
                     bond.setOrder(IBond.Order.SINGLE);
                     break;
+                case UP_AROMATIC:
+                case DOWN_AROMATIC:
+                    checkBondStereo = true;
+                    bond.setOrder(IBond.Order.SINGLE);
+                    bond.setIsAromatic(true);
+                    atoms[u].setIsAromatic(true);
+                    atoms[v].setIsAromatic(true);
+                    break;
                 case IMPLICIT:
                     bond.setOrder(IBond.Order.SINGLE);
                     if (!kekule && atoms[u].isAromatic() && atoms[v].isAromatic()) {
