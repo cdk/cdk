@@ -336,6 +336,17 @@ class SmartsPatternTest {
                     "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 8, 8);
     }
 
+    @Test
+    void testOcVsTbpy() throws Exception {
+        // trans-N-Co-N (match)
+        assertMatch("N[Co@OH1]N",
+                    "N[Co@TB1](Cl)(Cl)(Cl)N", 2, 1);
+        assertMatch("N[Co@TB1]N",
+                    "N[Co@OH1]N", 2, 1);
+        assertMatch("N[Co@TB1]N",
+                    "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 2, 1);
+    }
+
     IAtomContainer smi(String smi) throws Exception {
         return new SmilesParser(bldr).parseSmiles(smi);
     }

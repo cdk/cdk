@@ -39,6 +39,7 @@ import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.stereo.TrigonalBipyramidal;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -263,11 +264,11 @@ final class QueryStereoFilter implements Predicate<int[]> {
             return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, 0);
         TrigonalBipyramidal queryElement = (TrigonalBipyramidal) this.queryElements[u];
         IStereoElement<IAtom, IAtom> targetElement = this.targetElements[v];
-        Set<IAtom> used = new HashSet<>();
+        Set<IAtom> mapped = new HashSet<>();
         List<IAtom> requiredOrdering = new ArrayList<>();
         for (IAtom atom : queryElement.getCarriers()) {
             IAtom mappedAtom = this.target.getAtom(mapping[(Integer) this.queryMap.get(atom)]);
-            used.add(mappedAtom);
+            mapped.add(mappedAtom);
             requiredOrdering.add(mappedAtom);
         }
         List<IAtom> currentOrdering = new ArrayList<>();
@@ -278,16 +279,17 @@ final class QueryStereoFilter implements Predicate<int[]> {
             if (trigonalBipyramidal == null)
                 return false;
             for (IAtom atom : trigonalBipyramidal.getCarriers()) {
-                if (used.contains(atom)) {
-                    currentOrdering.add(atom);
-                    continue;
-                }
-                currentOrdering.add((IAtom) trigonalBipyramidal.getFocus());
+                currentOrdering.add(mapped.contains(atom) ? atom : targetAtom);
             }
         } else if (this.targetTypes[v] == Type.Octahedral) {
-            Octahedral octahedral = new Octahedral(targetAtom, currentOrdering.<IAtom>toArray(new IAtom[0]),
-                                                   targetElement.getConfigOrder());
-            TrigonalBipyramidal tbpy = octahedral.asTrigonalBipyramidal();
+            // build a copy with only mapped atoms
+            for (IAtom atom : targetElement.getCarriers()) {
+                currentOrdering.add(mapped.contains(atom) ? atom : targetAtom);
+            }
+            Octahedral oc = new Octahedral(targetAtom,
+                                            currentOrdering.<IAtom>toArray(new IAtom[0]),
+                                            targetElement.getConfigOrder());
+            TrigonalBipyramidal tbpy = oc.asTrigonalBipyramidal();
             if (tbpy == null)
                 return false;
             currentOrdering = tbpy.getCarriers();
@@ -309,12 +311,12 @@ final class QueryStereoFilter implements Predicate<int[]> {
             return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, 0);
         Octahedral queryElement = (Octahedral) this.queryElements[u];
         IStereoElement<IAtom,IAtom> targetElement = this.targetElements[v];
-        Set<IAtom> used = new HashSet<>();
+        Set<IAtom> mapped = new HashSet<>();
         List<IAtom> requiredOrdering = new ArrayList<>();
         List<IAtom> currentOrdering = new ArrayList<>();
         for (IAtom atom : queryElement.getCarriers()) {
             IAtom mappedAtom = this.target.getAtom(mapping[(Integer) this.queryMap.get(atom)]);
-            used.add(mappedAtom);
+            mapped.add(mappedAtom);
             requiredOrdering.add(mappedAtom);
         }
         if (this.targetTypes[v] == Type.Octahedral) {
@@ -323,14 +325,13 @@ final class QueryStereoFilter implements Predicate<int[]> {
                 octahedral = ((Octahedral) targetElement).normalize();
             if (octahedral == null)
                 return false;
-            for (IAtom atom : octahedral.getCarriers()) {
-                if (used.contains(atom)) {
-                    currentOrdering.add(atom);
-                    continue;
-                }
-                currentOrdering.add((IAtom) octahedral.getFocus());
-            }
+            for (IAtom atom : octahedral.getCarriers())
+                currentOrdering.add(mapped.contains(atom) ? atom : targetAtom);
         } else if (this.targetTypes[v] == Type.TrigonalBipyramidal) {
+            // build a copy which only has the mapped atoms
+            for (IAtom atom : targetElement.getCarriers()) {
+                currentOrdering.add(mapped.contains(atom) ? atom : targetAtom);
+            }
             TrigonalBipyramidal tbpy = new TrigonalBipyramidal(targetAtom,
                                                                currentOrdering.<IAtom>toArray(new IAtom[0]),
                                                                targetElement.getConfigOrder());
