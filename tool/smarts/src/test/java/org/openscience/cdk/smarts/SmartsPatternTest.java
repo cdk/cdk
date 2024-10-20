@@ -283,6 +283,59 @@ class SmartsPatternTest {
                                 0);
     }
 
+    @Test
+    void testOctahedralMatching() throws Exception {
+        // octahedral vs octahedral
+        // U
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 8, 1);
+        assertMatch("N[Co@OH2](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 8, 1);
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH2](Cl)(Cl)(Cl)(Cl)N", 8, 1);
+        // Z
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH4](Cl)(Cl)(Cl)(Cl)N", 8, 1);
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH14](Cl)(Cl)(Cl)(Cl)N", 8, 1);
+        // 4
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH4](Cl)(Cl)(Cl)(Cl)N", 8, 1);
+        assertMatch("N[Co@OH10](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH8](Cl)(Cl)(Cl)(Cl)N", 8, 1);
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH3](Cl)(Cl)(Cl)(Cl)N", 0, 0);
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH5](Cl)(Cl)(Cl)(Cl)N", 0, 0);
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH6](Cl)(Cl)(Cl)(Cl)N", 0, 0);
+        // ... and all the rest ...
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH29](Cl)(Cl)(Cl)(Cl)N", 0, 0);
+        assertMatch("N[Co@OH1](Cl)(Cl)(Cl)(Cl)N",
+                    "N[Co@OH30](Cl)(Cl)(Cl)(Cl)N", 0, 0);
+    }
+
+    @Test
+    void testDegenerateOctahedralMatching() throws Exception {
+        // trans-N-Co-N (match)
+        assertMatch("N[Co@OH1]N",
+                    "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 2, 1);
+        assertMatch("N[Co@OH1]N",
+                    "N[Co@OH1]N", 2, 1);
+        assertMatch("N[Co@OH1]N",
+                    "N[Co@OH3]N", 0, 0);
+        // trans-N-Co-Cl (no match)
+        assertMatch("N[Co@OH1]Cl",
+                    "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 0, 0);
+        // trans-Cl-Co-Cl
+        assertMatch("Cl[Co@OH1]Cl",
+                    "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 4, 2);
+        // cis-N-Co-Cl
+        assertMatch("N[Co@OH3]Cl",
+                    "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 8, 8);
+    }
+
     IAtomContainer smi(String smi) throws Exception {
         return new SmilesParser(bldr).parseSmiles(smi);
     }
