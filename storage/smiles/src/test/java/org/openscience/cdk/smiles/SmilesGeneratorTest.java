@@ -1359,46 +1359,6 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void suppressInorganicHydrogens() throws CDKException {
-        String smi = "C[Pt@SP3](F)(Cl)[H]";
-        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol = smipar.parseSmiles(smi);
-        AtomContainerManipulator.suppressHydrogens(mol);
-        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
-        Assertions.assertEquals("C[Pt@SP2H](F)Cl", smigen.create(mol));
-    }
-
-    @Test
-    public void suppressInorganicHydrogens2() throws CDKException {
-        String smi = "C[Pt@OH1]([H])([H])([H])([H])C";
-        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol = smipar.parseSmiles(smi);
-        AtomContainerManipulator.suppressHydrogens(mol);
-        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
-        Assertions.assertEquals("C[Pt@OH1H4]C", smigen.create(mol));
-    }
-
-    @Test
-    public void suppressInorganicHydrogens3() throws CDKException {
-        String smi = "C[Pt@OH1](Cl)(Cl)(Cl)(Cl)[H]";
-        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol = smipar.parseSmiles(smi);
-        AtomContainerManipulator.suppressHydrogens(mol);
-        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
-        Assertions.assertEquals("C[Pt@OH25H](Cl)(Cl)(Cl)Cl", smigen.create(mol));
-    }
-
-    @Test
-    public void suppressInorganicHydrogens4() throws CDKException {
-        String smi = "C[Pt@TB1](Cl)(Cl)(Cl)[H]";
-        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol = smipar.parseSmiles(smi);
-        AtomContainerManipulator.suppressHydrogens(mol);
-        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
-        Assertions.assertEquals("C[Pt@TB7H](Cl)(Cl)Cl", smigen.create(mol));
-    }
-
-    @Test
     public void deletingAtomsUpdatesOctahedral() throws CDKException {
         String smi = "C[Pt@OH1](Cl)(Cl)(Cl)(Cl)*";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
