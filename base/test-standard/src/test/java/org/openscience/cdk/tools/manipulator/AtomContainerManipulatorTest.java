@@ -27,6 +27,8 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -1833,5 +1835,47 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles("*c1cc(*)ccc1 |$_AP1;;;;R;$|");
         String mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(mol));
         assertThat(mf, CoreMatchers.is("C6H4R"));
+    }
+
+    @Test
+    public void suppressInorganicHydrogens() throws CDKException {
+        String smi = "C[Pt@SP3](F)(Cl)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SquarePlanar sp = null;
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se instanceof SquarePlanar)
+                sp = (SquarePlanar)se;
+        }
+        Assertions.assertNotNull(sp);
+        List<IAtom> carriers = sp.getCarriers();
+        Assertions.assertEquals(carriers.get(0), mol.getAtom(0));
+        Assertions.assertEquals(carriers.get(1), mol.getAtom(2));
+        Assertions.assertEquals(carriers.get(2), mol.getAtom(3));
+        Assertions.assertEquals(carriers.get(3), sp.getFocus()); // was H!
+        Assertions.assertEquals(1, sp.getFocus().getImplicitHydrogenCount());
+    }
+
+    @Test
+    public void suppressInorganicHydrogensMultipleH() throws CDKException {
+        String smi = "C[Co@OH1H](F)(Cl)([H])[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        Octahedral oc = null;
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se instanceof Octahedral)
+                oc = (Octahedral) se;
+        }
+        Assertions.assertNotNull(oc);
+        List<IAtom> carriers = oc.getCarriers();
+        Assertions.assertEquals(carriers.get(0), mol.getAtom(0));
+        Assertions.assertEquals(carriers.get(1), oc.getFocus());
+        Assertions.assertEquals(carriers.get(2), mol.getAtom(2));
+        Assertions.assertEquals(carriers.get(3), mol.getAtom(3));
+        Assertions.assertEquals(carriers.get(4), oc.getFocus()); // was H!
+        Assertions.assertEquals(carriers.get(5), oc.getFocus()); // was H!
+        Assertions.assertEquals(3, oc.getFocus().getImplicitHydrogenCount());
     }
 }
