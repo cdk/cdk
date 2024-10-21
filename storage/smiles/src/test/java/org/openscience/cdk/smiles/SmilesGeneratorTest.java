@@ -19,10 +19,12 @@
 package org.openscience.cdk.smiles;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -1356,6 +1358,58 @@ class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol    = smipar.parseSmiles("[0C]");
         String res = new SmilesGenerator(SmiFlavor.Default).create(mol);
         Assertions.assertEquals("[C]", res);
+    }
+
+    @Test
+    public void suppressInorganicHydrogens() throws CDKException {
+        String smi = "C[Pt@SP3](F)(Cl)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@SP2H](F)Cl", smigen.create(mol));
+    }
+
+    @Test
+    public void suppressInorganicHydrogens2() throws CDKException {
+        String smi = "C[Pt@OH1]([H])([H])([H])([H])C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@OH1H4]C", smigen.create(mol));
+    }
+
+    @Test
+    public void suppressInorganicHydrogens3() throws CDKException {
+        String smi = "C[Pt@OH1](Cl)(Cl)(Cl)(Cl)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@OH25H](Cl)(Cl)(Cl)Cl", smigen.create(mol));
+    }
+
+    @Test
+    public void suppressInorganicHydrogens4() throws CDKException {
+        String smi = "C[Pt@TB1](Cl)(Cl)(Cl)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@TB7H](Cl)(Cl)Cl", smigen.create(mol));
+    }
+
+    @Disabled("Currently deleting an atom invalidates all stereo!")
+    public void deleteAtoms() throws CDKException {
+        String smi = "C[Pt@OH1](Cl)(Cl)(Cl)(Cl)*";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        IAtom atom = mol.getAtom(mol.getAtomCount()-1);
+        Assertions.assertEquals(0, atom.getAtomicNumber());
+        mol.removeAtom(atom);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@OH25](Cl)(Cl)(Cl)Cl", smigen.create(mol));
     }
 
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
