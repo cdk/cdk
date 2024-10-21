@@ -1008,6 +1008,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         }
         bonds[bondCount - 1] = null;
         bondCount--;
+        IAtomContainer.updateStereochemistry(this, bond);
         notifyChanged();
         return bond;
     }

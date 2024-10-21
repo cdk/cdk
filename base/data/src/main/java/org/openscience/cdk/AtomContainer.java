@@ -263,61 +263,6 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         }
     }
 
-    private static IAtom getCommonAtom(IBond a, IBond b) {
-        if (b.contains(a.getBegin()))
-            return a.getBegin();
-        if (b.contains(a.getEnd()))
-            return a.getEnd();
-        return null;
-    }
-
-    private static void updateCarriers(List<?> se, IChemObject org, IChemObject rep) {
-        @SuppressWarnings("unchecked")
-        List<IChemObject> carriers = (List<IChemObject>)se;
-        for (int i = 0; i < carriers.size(); i++) {
-            if (org.equals(carriers.get(i))) {
-                carriers.set(i, rep);
-            }
-        }
-    }
-
-    private void updateStereochemistry(BondRef bondBeingRemoved) {
-        if (bondBeingRemoved.getAtomCount() != 2)
-            return; // too crazy, user is on their own
-        IAtom beg = bondBeingRemoved.getBegin();
-        IAtom end = bondBeingRemoved.getEnd();
-
-        Iterator<IStereoElement> iter = stereo.iterator();
-        while (iter.hasNext()) {
-            IStereoElement<?,?> se = iter.next();
-            IChemObject focus = se.getFocus();
-            if (focus.equals(beg)) {
-                updateCarriers(se.getCarriers(), end, beg);
-            } else if (focus.equals(end)) {
-                updateCarriers(se.getCarriers(), beg, end);
-            } else if (bondBeingRemoved.equals(focus)) {
-                iter.remove();
-            } else if (se instanceof IDoubleBondStereochemistry) {
-                IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
-                List<IBond> carriers = db.getCarriers();
-                IAtom common = getCommonAtom(db.getFocus(), bondBeingRemoved);
-                if (common != null && common.getBondCount() > 1) {
-                    IBond other = null;
-                    for (IBond bond : common.bonds()) {
-                        if (!bond.equals(focus)) {
-                            other = bond;
-                            break;
-                        }
-                    }
-                    if (other != null)
-                        updateCarriers(carriers, bondBeingRemoved, other);
-                } else {
-                    iter.remove();
-                }
-            }
-        }
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -1185,7 +1130,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                 bonds[i].setIndex(i);
             }
             delFromEndpoints(bond);
-            updateStereochemistry(bond);
+            IAtomContainer.updateStereochemistry(this, bond);
             bonds[numBonds] = null;
             bond.removeListener(this);
             notifyChanged();
@@ -1314,7 +1259,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                     } else {
                         bonds[i].removeListener(this);
                         delFromEndpoints(bonds[i]);
-                        updateStereochemistry(bonds[i]);
+                        IAtomContainer.updateStereochemistry(this, bonds[i]);
                     }
                 }
                 numBonds = newNumBonds;

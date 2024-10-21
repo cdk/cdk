@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.silent;
 
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -27,6 +28,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -980,6 +982,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         }
         bonds[bondCount - 1] = null;
         bondCount--;
+        IAtomContainer.updateStereochemistry(this, bond);
         return bond;
     }
 
