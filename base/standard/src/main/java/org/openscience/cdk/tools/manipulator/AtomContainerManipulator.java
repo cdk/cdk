@@ -1199,6 +1199,19 @@ public class AtomContainerManipulator {
             } else if (se instanceof Atropisomeric) {
                 // can not have any H's
                 elements.add(se);
+            } else {
+                // a bit naughty - we update the carriers in place but this is
+                // fine since the molecule is modified regardless
+                IAtom focus = (IAtom)se.getFocus();
+                @SuppressWarnings("unchecked")
+                List<IAtom> carriers = (List<IAtom>)se.getCarriers();
+                for (int i = 0; i < carriers.size(); i++) {
+                    IAtom atom = carriers.get(i);
+                    if (hydrogens.contains(atom)) {
+                        carriers.set(i, focus);
+                    }
+                }
+                elements.add(se);
             }
         }
 
