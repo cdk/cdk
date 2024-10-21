@@ -39,6 +39,9 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
 import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
+import org.openscience.cdk.stereo.TrigonalBipyramidal;
 import uk.ac.ebi.beam.Atom;
 import uk.ac.ebi.beam.AtomBuilder;
 import uk.ac.ebi.beam.Bond;
@@ -50,6 +53,7 @@ import uk.ac.ebi.beam.GraphBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -86,6 +90,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  */
 final class CDKToBeam {
 
+    public static final Configuration[] CONFIGS = Configuration.values();
     /**
      * Whether to convert the molecule with isotope and stereo information -
      * Isomeric SMILES.
@@ -148,7 +153,7 @@ final class CDKToBeam {
             for (IStereoElement se : ac.stereoElements()) {
                 if (SmiFlavor.isSet(flavour, SmiFlavor.StereoTetrahedral) &&
                     se instanceof ITetrahedralChirality) {
-                    addTetrahedralConfiguration((ITetrahedralChirality) se, gb, indices);
+                    addAtomStereo((ITetrahedralChirality) se, gb, indices);
                 } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoCisTrans) &&
                            se instanceof IDoubleBondStereochemistry) {
                     addGeometricConfiguration((IDoubleBondStereochemistry) se, flavour, gb, indices);
@@ -158,6 +163,15 @@ final class CDKToBeam {
                 } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoExCisTrans) &&
                            se instanceof ExtendedCisTrans) {
                     addExtendedCisTransConfig((ExtendedCisTrans) se, gb, indices, ac);
+                } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoSquarePlanar) &&
+                        se instanceof SquarePlanar) {
+                    addAtomStereo((SquarePlanar)se, gb, indices);
+                } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoTrigonalBipyramidal) &&
+                        se instanceof TrigonalBipyramidal) {
+                    addAtomStereo((TrigonalBipyramidal)se, gb, indices);
+                } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoOctahedral) &&
+                        se instanceof Octahedral) {
+                    addAtomStereo((Octahedral)se, gb, indices);
                 }
             }
         }
@@ -384,5 +398,43 @@ final class CDKToBeam {
                          indices.get(carriers[1].getOther(ends[1])),
                          config);
         }
+    }
+
+    private static Configuration getConfig(IStereoElement<IAtom,IAtom> se) {
+        final int base;
+        switch (se.getConfigClass()) {
+            case IStereoElement.Tetrahedral:
+                base = Configuration.TH1.ordinal();
+                break;
+            case IStereoElement.SquarePlanar:
+                base = Configuration.SP1.ordinal();
+                break;
+            case IStereoElement.TrigonalBipyramidal:
+                base = Configuration.TB1.ordinal();
+                break;
+            case IStereoElement.Octahedral:
+                base = Configuration.OH1.ordinal();
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected config: cls=" +
+                                                           Integer.toHexString(se.getConfigClass()) +
+                                                           " ord=" + Integer.toHexString(se.getConfigOrder()));
+        }
+        return CONFIGS[base+se.getConfigOrder()-1];
+    }
+
+    private static void addAtomStereo(IStereoElement<IAtom,IAtom> se,
+                                      GraphBuilder gb,
+                                      Map<IAtom, Integer> indices) {
+        IAtom focus = se.getFocus();
+        List<IAtom> carriers = se.getCarriers();
+        int[] neighbors = new int[carriers.size() - 1];
+        for (int i = 0; i < neighbors.length; i++) {
+            neighbors[i] = indices.get(carriers.get(i + 1));
+        }
+        GraphBuilder.AtomStereoBuilder builder;
+        builder = gb.atomStereo(indices.get(focus), getConfig(se));
+        builder.lookingFrom(indices.get(carriers.get(0))).neighbors(neighbors);
+        builder.build();
     }
 }
