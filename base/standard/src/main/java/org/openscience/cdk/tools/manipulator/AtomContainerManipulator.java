@@ -63,13 +63,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -752,16 +750,11 @@ public class AtomContainerManipulator {
                 IStereoElement<IAtom,IAtom> atomStereo = (IStereoElement<IAtom,IAtom>) stereo;
                 IAtom explH = hNeighbor.get(atomStereo.getFocus());
                 if (explH != null) {
-                    // update the carriers
-                    List<IAtom> carriers = atomStereo.getCarriers();
-                    for (int i = 0; i < carriers.size(); i++) {
-                        if (carriers.get(i).equals(atomStereo.getFocus())) {
-                            carriers.set(i, explH);
-                            break;
-                        }
-                    }
+                    stereos.add(atomStereo.updateCarriers(atomStereo.getFocus(),
+                                                          explH));
+                } else {
+                    stereos.add(atomStereo);
                 }
-                stereos.add(atomStereo);
             } else if (stereo instanceof SquarePlanar ||
                        stereo instanceof TrigonalBipyramidal ||
                        stereo instanceof Octahedral) {
@@ -775,9 +768,10 @@ public class AtomContainerManipulator {
                         if (atom.getIndex() >= oldAtomCount)
                             explHatoms.add(atom);
                     }
-                    atomStereo.updateCarriers(atomStereo.getFocus(), explHatoms);
+                    stereos.add(atomStereo.updateCarriers(atomStereo.getFocus(), explHatoms));
+                } else {
+                    stereos.add(atomStereo);
                 }
-                stereos.add(atomStereo);
             } else if (stereo instanceof ExtendedTetrahedral) {
                 ExtendedTetrahedral tc = (ExtendedTetrahedral) stereo;
 
@@ -1220,18 +1214,8 @@ public class AtomContainerManipulator {
                 // can not have any H's
                 elements.add(se);
             } else {
-                // a bit naughty - we update the carriers in place but this is
-                // fine since the molecule is modified regardless
                 IAtom focus = (IAtom)se.getFocus();
-                @SuppressWarnings("unchecked")
-                List<IAtom> carriers = (List<IAtom>)se.getCarriers();
-                for (int i = 0; i < carriers.size(); i++) {
-                    IAtom atom = carriers.get(i);
-                    if (hydrogens.contains(atom)) {
-                        carriers.set(i, focus);
-                    }
-                }
-                elements.add(se);
+                elements.add(se.updateCarriers(hydrogens, focus));
             }
         }
 

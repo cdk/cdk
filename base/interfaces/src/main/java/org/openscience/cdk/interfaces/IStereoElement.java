@@ -23,9 +23,10 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Representation of stereochemical configuration. The abstract configuration
@@ -362,17 +363,19 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     /*
      * Update the carriers replacing all occurrences of one item with another.
      *
-     * @param remove the atom/bond to remove
+     * @param remove the atom/bonds to remove
      * @param add the atom/bond to replace it with
      */
-    default void updateCarrier(IChemObject remove, IChemObject add) {
-        @SuppressWarnings("unchecked")
-        List<IChemObject> carriers = (List<IChemObject>)getCarriers();
-        for (int i = 0; i < carriers.size(); i++) {
-            if (remove.equals(carriers.get(i))) {
-                carriers.set(i, add);
-            }
-        }
+    IStereoElement<F, C> updateCarriers(Set<C> remove, C rep);
+
+    /*
+     * Update the carriers replacing all occurrences of one item with another.
+     *
+     * @param remove the atom/bonds to remove
+     * @param add the atom/bond to replace it with
+     */
+    default IStereoElement<F, C> updateCarriers(C remove, C rep) {
+        return updateCarriers(Collections.singleton(remove), rep);
     }
 
     /*
@@ -383,13 +386,5 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      * @param remove the atom/bond to remove
      * @param add the atom/bonds to replace it with
      */
-    default void updateCarriers(C remove, Iterable<C> adds) {
-        Iterator<C> repIter = adds.iterator();
-        List<C> carriers = getCarriers();
-        for (int i = 0; i < carriers.size(); i++) {
-            if (remove.equals(carriers.get(i)) && repIter.hasNext()) {
-                carriers.set(i, repIter.next());
-            }
-        }
-    }
+    IStereoElement<F,C> updateCarriers(C remove, Iterable<C> adds);
 }
