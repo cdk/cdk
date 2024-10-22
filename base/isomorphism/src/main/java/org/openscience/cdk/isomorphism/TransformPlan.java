@@ -518,7 +518,7 @@ final class TransformPlan {
                                             newNbors.iterator().next());
                                 List<IAtom> newLigands = new ArrayList<>();
                                 for (IAtom atom : atomStereo.getCarriers())
-                                    newLigands.add((IAtom)mapping.get(atom));
+                                    newLigands.add((IAtom) mapping.get(atom));
                                 updatedStereo.add(new TetrahedralChirality(focus,
                                                                            newLigands.toArray(new IAtom[0]),
                                                                            se.getConfig()));

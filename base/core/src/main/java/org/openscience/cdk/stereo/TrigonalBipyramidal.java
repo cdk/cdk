@@ -25,6 +25,7 @@ package org.openscience.cdk.stereo;
 
 import org.openscience.cdk.interfaces.IAtom;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -189,7 +190,7 @@ public final class TrigonalBipyramidal extends AbstractStereo<IAtom,IAtom> {
             return null;
         } else {
             IAtom focus = normalized.getFocus();
-            List<IAtom> carriers = normalized.getCarriers();
+            List<IAtom> carriers = new ArrayList<>(normalized.getCarriers());
             carriers.add(1, focus);
             return new Octahedral(this.getFocus(), carriers.toArray(new IAtom[6]), 1);
         }

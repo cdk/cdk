@@ -39,20 +39,20 @@ public final class SmiFlavor {
      * Output SMILES in a canonical order. The order is not guaranteed to be
      * equivalent between releases.
      */
-    public static final int Canonical          = 0x001;
+    public static final int Canonical          = 0x0000_0001;
 
     /**
      * Output SMILES in a canonical order using the InChI labelling algorithm.
      * @see #UniversalSmiles
      */
-    public static final int InChILabelling     = 0x003;
+    public static final int InChILabelling     = 0x0000_0003;
 
     /**
      * Output atom-atom mapping for reactions and atom classes for molecules. The
      * map index is set on an atom with property {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
      * using {@link org.openscience.cdk.interfaces.IAtom#setProperty(Object, Object)}.
      */
-    public static final int AtomAtomMap        = 0x004;
+    public static final int AtomAtomMap        = 0x0000_0004;
 
     /**
      * Output atomic mass on atoms. For historical reasons the atomic mass is
@@ -62,28 +62,28 @@ public final class SmiFlavor {
      * {@link #AtomicMassStrict} this will output all mass numbers and only be
      * omitted when the mass is unset (null).
      */
-    public static final int AtomicMass         = 0x008;
+    public static final int AtomicMass         = 0x0000_0008;
 
     /**
      * Writes aromatic atoms as lower case letters. For portability
      * this option is not recommended.
      */
-    public static final int UseAromaticSymbols = 0x010;
+    public static final int UseAromaticSymbols = 0x0000_0010;
 
-    // public static final int SuppressHydrogens  = 0x020;
+    // public static final int SuppressHydrogens  = 0x0000_0020;
 
     /**
      * Output tetrahedral stereochemistry on atoms as <code>@</code> and <code>@@</code>.
      * @see #Stereo
      */
-    public static final int StereoTetrahedral   = 0x100;
+    public static final int StereoTetrahedral   = 0x0000_0100;
 
     /**
      * Output cis-trans stereochemistry specified by directional <code>\</code>
      * of <code>/</code> bonds.
      * @see #Stereo
      */
-    public static final int StereoCisTrans      = 0x200;
+    public static final int StereoCisTrans      = 0x0000_0200;
 
     /**
      * Output extended tetrahedral stereochemistry on atoms as <code>@</code> and
@@ -91,9 +91,15 @@ public final class SmiFlavor {
      * carbon: <code>CC=[C@]=CC</code>.
      * @see #Stereo
      */
-    public static final int StereoExTetrahedral = 0x400;
+    public static final int StereoExTetrahedral = 0x0000_0400;
 
-    public static final int StereoExCisTrans    = 0x500;
+    public static final int StereoExCisTrans    = 0x0000_0500;
+
+    public static final int StereoSquarePlanar = 0x0100_0000;
+
+    public static final int StereoTrigonalBipyramidal = 0x0400_0000;
+
+    public static final int StereoOctahedral = 0x0800_0000;
 
     /**
      * Generate SMILES with the major isotopes, only omit mass numbers when it
@@ -102,8 +108,7 @@ public final class SmiFlavor {
      *             through mass numbers if non-null
      */
     @Deprecated
-    public static final int AtomicMassStrict   = 0x800;
-
+    public static final int AtomicMassStrict   = 0x0000_0800;
 
     /**
      * Output supported stereochemistry types.
@@ -114,17 +119,20 @@ public final class SmiFlavor {
     public static final int Stereo              = StereoTetrahedral |
                                                   StereoCisTrans |
                                                   StereoExTetrahedral |
-                                                  StereoExCisTrans;
+                                                  StereoExCisTrans |
+                                                  StereoSquarePlanar |
+                                                  StereoTrigonalBipyramidal |
+                                                  StereoOctahedral;
 
     /**
      * Output 2D coordinates.
      */
-    public static final int Cx2dCoordinates     = 0x001000;
+    public static final int Cx2dCoordinates     = 0x0000_1000;
 
     /**
      * Output 3D coordinates.
      */
-    public static final int Cx3dCoordinates     = 0x002000;
+    public static final int Cx3dCoordinates     = 0x0000_2000;
 
     /**
      * Output either 2D/3D coordinates.
@@ -134,55 +142,57 @@ public final class SmiFlavor {
     /**
      * Output atom labels, atom labels are specified by {@link IPseudoAtom#getLabel()}.
      */
-    public static final int CxAtomLabel         = 0x008000;
+    public static final int CxAtomLabel         = 0x0000_8000;
 
     /**
      * Output atom values, atom values are specified by the property 
      * {@link org.openscience.cdk.CDKConstants#COMMENT} using 
      * {@link org.openscience.cdk.interfaces.IAtom#setProperty(Object, Object)}
      */
-    public static final int CxAtomValue         = 0x010000;
+    public static final int CxAtomValue         = 0x0001_0000;
 
     /**
      * Output radicals, radicals are specified by {@link IAtomContainer#getConnectedSingleElectronsCount(IAtom)}
      */
-    public static final int CxRadical           = 0x020000;
+    public static final int CxRadical           = 0x0002_0000;
 
     /**
      * Output multicenter bonds, positional variation is specified with {@link org.openscience.cdk.sgroup.Sgroup}s
      * of the type {@link org.openscience.cdk.sgroup.SgroupType#ExtMulticenter}.
      */
-    public static final int CxMulticenter       = 0x040000;
+    public static final int CxMulticenter       = 0x0004_0000;
 
     /**
      * Output polymer repeat units is specified with {@link org.openscience.cdk.sgroup.Sgroup}s.
      */
-    public static final int CxPolymer           = 0x080000;
+    public static final int CxPolymer           = 0x0008_0000;
 
     /**
      * Output fragment grouping for reactions.
      */
-    public static final int CxFragmentGroup     = 0x100000;
+    public static final int CxFragmentGroup     = 0x0010_0000;
 
     /**
      * Output ligand order information.
      */
-    public static final int CxLigandOrder       = 0x200000;
+    public static final int CxLigandOrder       = 0x0020_0000;
 
     /**
      * Renumber AtomAtomMaps during canonical generation
      */
-    public static final int AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x2000000;
+    public static final int AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x0200_0000;
 
     /**
      * Output data Sgroups.
      */
-    public static final int CxDataSgroups       = 0x400000;
+    public static final int CxDataSgroups       = 0x0040_0000;
 
     /**
      * Output enhanced stereo.
      */
-    public static final int CxEnhancedStereo    = 0x800000 | StereoTetrahedral;
+    public static final int CxEnhancedStereo    = 0x0080_0000 | StereoTetrahedral;
+
+    /* Max: StereoOctahedral = 0x0800_0000 */
 
     /**
      * Output CXSMILES layers.

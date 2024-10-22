@@ -1331,7 +1331,8 @@ class StereoElementFactoryTest {
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
         assertThat(smigen.create(m), is("[C@]([H])([H])(C)CC"));
         AtomContainerManipulator.suppressHydrogens(m);
-        assertThat(smigen.create(m), is("[C@H2](C)CC"));
+        // assertThat(smigen.create(m), is("[C@H2](C)CC"));
+        assertThat(smigen.create(m), is("C(C)CC")); // Oct 2024: 2 impl H now ignore at SMILES gen stage!
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(m);
         assertThat(smigen.create(m), is("[C@](C([H])([H])[H])(C(C([H])([H])[H])([H])[H])([H])[H]"));
     }

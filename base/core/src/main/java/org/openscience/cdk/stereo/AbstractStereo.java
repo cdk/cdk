@@ -32,8 +32,10 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
     implements IStereoElement<F, C> {
@@ -60,8 +62,9 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
         }
         this.value    = value;
         this.focus    = focus;
-        this.carriers = new ArrayList<>();
-        Collections.addAll(this.carriers, carriers);
+        List<C> tmp = new ArrayList<>();
+        Collections.addAll(tmp, carriers);
+        this.carriers = Collections.unmodifiableList(tmp);
     }
 
     /**
@@ -182,6 +185,39 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
         IStereoElement<F, C> se = create(newfocus, newcarriers, value);
         se.setGroupInfo(getGroupInfo());
         return se;
+    }
+
+    private IStereoElement<F, C> updateCarriers(List<C> carriers) {
+        IStereoElement<F, C> se = create(focus, carriers, value);
+        se.setGroupInfo(getGroupInfo());
+        return se;
+    }
+
+    @Override
+    public IStereoElement<F, C> updateCarriers(C remove, Iterable<C> adds) {
+        Iterator<C> repIter = adds.iterator();
+        List<C> carriers = getCarriers();
+        List<C> newCarriers = new ArrayList<>();
+        for (C carrier : carriers) {
+            if (remove.equals(carrier) && repIter.hasNext())
+                newCarriers.add(repIter.next());
+            else
+                newCarriers.add(carrier);
+        }
+        return updateCarriers(newCarriers);
+    }
+
+    @Override
+    public IStereoElement<F, C> updateCarriers(Set<C> remove, C rep) {
+        List<C> carriers = getCarriers();
+        List<C> newCarriers = new ArrayList<>();
+        for (C carrier : carriers) {
+            if (remove.contains(carrier))
+                newCarriers.add(rep);
+            else
+                newCarriers.add(carrier);
+        }
+        return updateCarriers(newCarriers);
     }
 
     @Override

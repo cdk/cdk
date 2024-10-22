@@ -27,6 +27,8 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -1833,5 +1835,109 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles("*c1cc(*)ccc1 |$_AP1;;;;R;$|");
         String mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(mol));
         assertThat(mf, CoreMatchers.is("C6H4R"));
+    }
+
+    @Test
+    public void suppressInorganicHydrogens() throws CDKException {
+        String smi = "C[Pt@SP3](F)(Cl)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SquarePlanar sp = null;
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se instanceof SquarePlanar)
+                sp = (SquarePlanar)se;
+        }
+        Assertions.assertNotNull(sp);
+        List<IAtom> carriers = sp.getCarriers();
+        Assertions.assertEquals(carriers.get(0), mol.getAtom(0));
+        Assertions.assertEquals(carriers.get(1), mol.getAtom(2));
+        Assertions.assertEquals(carriers.get(2), mol.getAtom(3));
+        Assertions.assertEquals(carriers.get(3), sp.getFocus()); // was H!
+        Assertions.assertEquals(1, sp.getFocus().getImplicitHydrogenCount());
+    }
+
+    @Test
+    public void suppressInorganicHydrogensMultipleH() throws CDKException {
+        String smi = "C[Co@OH1H](F)(Cl)([H])[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        Octahedral oc = null;
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se instanceof Octahedral)
+                oc = (Octahedral) se;
+        }
+        Assertions.assertNotNull(oc);
+        List<IAtom> carriers = oc.getCarriers();
+        Assertions.assertEquals(carriers.get(0), mol.getAtom(0));
+        Assertions.assertEquals(carriers.get(1), oc.getFocus());
+        Assertions.assertEquals(carriers.get(2), mol.getAtom(2));
+        Assertions.assertEquals(carriers.get(3), mol.getAtom(3));
+        Assertions.assertEquals(carriers.get(4), oc.getFocus()); // was H!
+        Assertions.assertEquals(carriers.get(5), oc.getFocus()); // was H!
+        Assertions.assertEquals(3, oc.getFocus().getImplicitHydrogenCount());
+    }
+
+
+
+    @Test
+    public void suppressInorganicHydrogens2() throws CDKException {
+        String smi = "C[Pt@SP3](F)(Cl)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@SP2H](F)Cl", smigen.create(mol));
+    }
+
+    @Test
+    public void suppressInorganicHydrogens3() throws CDKException {
+        String smi = "C[Pt@OH1]([H])([H])([H])([H])C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@OH1H4]C", smigen.create(mol));
+    }
+
+    @Test
+    public void suppressInorganicHydrogens4() throws CDKException {
+        String smi = "C[Pt@OH1](Cl)(Cl)(Cl)(Cl)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@OH25H](Cl)(Cl)(Cl)Cl", smigen.create(mol));
+    }
+
+    @Test
+    public void suppressInorganicHydrogens5() throws CDKException {
+        String smi = "C[Pt@TB1](Cl)(Cl)(Cl)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C[Pt@TB7H](Cl)(Cl)Cl", smigen.create(mol));
+    }
+
+    @Test
+    public void convertImplicitToExplicit() throws CDKException {
+        String smi = "C[Pt@OH25H2](Cl)(Cl)Cl";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C([Pt@](Cl)(Cl)(Cl)([H])[H])([H])([H])[H]", smigen.create(mol));
+    }
+
+    @Test
+    public void convertImplicitToExplicit2() throws CDKException {
+        String smi = "C[Pt@OH25H2](Cl)Cl"; // also a lone pair!
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C([Pt@OH25](Cl)(Cl)([H])[H])([H])([H])[H]", smigen.create(mol));
     }
 }

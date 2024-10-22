@@ -1831,11 +1831,11 @@ public final class Smarts {
                         } else if (type == IStereoElement.SquarePlanar) {
                             int spOrder = expr.value() & 0xFF;
                             if (spOrder == 1) {
-                                elem.setConfigOrder(1);
+                                elem.setConfigOrder(1); // or 2
                             } else if (spOrder == 2) {
-                                elem.setConfigOrder(10);
+                                elem.setConfigOrder(8); // or 10
                             } else if (spOrder == 3) {
-                                elem.setConfigOrder(4);
+                                elem.setConfigOrder(4); // or 14
                             }
                             Octahedral tmp = ((Octahedral)elem).normalize();
                             int order = Octahedral.reorder(tmp.getCarriers(), elem
