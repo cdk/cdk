@@ -27,13 +27,14 @@ package org.openscience.cdk.rinchi;
  * @cdk.githash
  */
 final class RInChIConstants {
+    static final String RINCHI_EMPTY_HEADER = "RInChI=";
     static final String RINCHI_VERSION_1_0_0 = "1.00";
-    static final String RINCHI_IDENTIFIER = "RInChI" + RINCHI_VERSION_1_0_0;
+    static final String RINCHI_IDENTIFIER = RINCHI_EMPTY_HEADER + RINCHI_VERSION_1_0_0;
 
     static final String INCHI_VERSION_1 = "1";
     static final String INCHI_IDENTIFIER = "InChI";
     static final String INCHI_STD_HEADER = INCHI_IDENTIFIER + "=" + INCHI_VERSION_1 + "S/";
-    static final String RINCHI_STD_HEADER = "RInChI=" + RINCHI_VERSION_1_0_0 + "." + INCHI_VERSION_1 + "S/";
+    static final String RINCHI_STD_HEADER = RINCHI_EMPTY_HEADER + RINCHI_VERSION_1_0_0 + "." + INCHI_VERSION_1 + "S/";
 
     static final String INCHI_AUXINFO_HEADER = "AuxInfo=" + INCHI_VERSION_1 + "/";
     static final String RINCHI_AUXINFO_HEADER = "RAuxInfo=" + RINCHI_VERSION_1_0_0 + "." + INCHI_VERSION_1 + "/";

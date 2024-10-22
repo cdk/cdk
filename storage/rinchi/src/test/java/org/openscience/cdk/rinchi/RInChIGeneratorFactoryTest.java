@@ -19,7 +19,6 @@
 package org.openscience.cdk.rinchi;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -34,7 +33,6 @@ import org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 
-import java.util.Locale;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -302,6 +300,8 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 
 		//Generate RInChI
 		RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
+		Assertions.assertEquals("Cannot generate RInChI: Failed to generate InChI: Unsupported bond type", generator.getMessages().get(0), "RInChIGenerator messages:");
+		//Since jna-inchi does not support IBond.Order.UNSET this will always fail
 		Assertions.assertEquals(StatusMessagesOutput.Status.SUCCESS, generator.getStatus(), "RInChI status: ");
 		Assertions.assertEquals("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-", generator.getRInChI(), "RInChI for benzene: ");
 	}

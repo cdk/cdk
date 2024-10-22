@@ -769,6 +769,18 @@ class InChIGeneratorTest extends CDKTestCase {
         }
     }
 
+     @Test
+    void andEnantiomer_test() throws Exception {
+        MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("ANDEnantiomer.mol"));
+        try {
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+            InChIGenerator generator = getFactory().getInChIGenerator(container);
+            Assertions.assertEquals("InChI=1S/C4H8O/c1-3-4(2)5-3/h3-4H,1-2H3/t3-,4?/m0/s1", generator.getInchi());
+        } finally {
+            reader.close();
+        }
+    }
+
     @Test
     void r_penta_2_3_diene_impl_h() throws Exception {
         IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();

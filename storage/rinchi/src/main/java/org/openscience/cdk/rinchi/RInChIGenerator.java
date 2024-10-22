@@ -240,7 +240,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
                     .map(c -> c.getInchi().substring(RInChIConstants.INCHI_STD_HEADER.length()))
                     .collect(Collectors.joining(RInChIConstants.DELIMITER_COMPONENT));
             sb.append(componentString);
-            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components.get(i + 1).isEmpty())
+            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components.get(i + 1).isEmpty() && this.components.get(i+1).stream().anyMatch(c -> !c.isNoStructure()))
                 sb.append(RInChIConstants.DELIMITER_GROUP);
         }
 
@@ -338,8 +338,11 @@ public final class RInChIGenerator extends StatusMessagesOutput {
                     .collect(Collectors.joining(RInChIConstants.KEY_DELIMITER_COMPONENT));
             sb.append(componentString);
             if (this.noStructCounts.get(i) != 0) {
-                sb.append(RInChIConstants.KEY_DELIMITER_COMPONENT);
-                sb.append(RInChIConstants.NOSTRUCT_RINCHI_LONGKEY);
+                for (int j = 0; j < this.noStructCounts.get(i); j++){
+                    if(sb.lastIndexOf("-") != sb.length()-1)
+                        sb.append(RInChIConstants.KEY_DELIMITER_COMPONENT);
+                    sb.append(RInChIConstants.NOSTRUCT_RINCHI_LONGKEY);
+                }
             }
             if (i < NUMBER_OF_COMPONENTS - 1 && !this.components.get(i + 1).isEmpty())
                 sb.append(RInChIConstants.KEY_DELIMITER_GROUP);
@@ -432,6 +435,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
                     .flatMap(List::stream)
                     .map(RInChIComponent::getInchi)
                     .distinct()
+                    .sorted()
                     .collect(Collectors.toList());
 
             final InChILayers allInChILayers = new InChILayers();
@@ -466,10 +470,9 @@ public final class RInChIGenerator extends StatusMessagesOutput {
     private InChIGenerator getInChIGenerator(IAtomContainer atomContainer) throws CDKException {
         final InchiOptions options = new InchiOptions.InchiOptionsBuilder().build();
         final InChIGenerator generator = InChIGeneratorFactory.getInstance().getInChIGenerator(atomContainer, options);
-        if (generator.getStatus() == InchiStatus.SUCCESS)
+        if (generator.getStatus() != InchiStatus.ERROR)
             return generator;
         else {
-            // TODO Is this supposed to happen for all nostruct components?
             addMessage("InChIGenerator did not returned status success" +
                     (generator.getMessage() != null && !generator.getMessage().isEmpty() ? (": " + generator.getMessage()) : "") + ".", Status.WARNING);
             return null;
@@ -545,10 +548,10 @@ public final class RInChIGenerator extends StatusMessagesOutput {
     boolean isProductsFirst(final List<RInChIComponent> reactants, final List<RInChIComponent> products) {
         String reactant1 = "";
         if (!reactants.isEmpty())
-            reactant1 = reactants.stream().filter(x -> x.getInchi() != null).findFirst().map(RInChIComponent::getInchi).orElse("");
+            reactant1 = reactants.stream().filter(x -> !x.isNoStructure()).findFirst().map(RInChIComponent::getInchi).orElse("");
         String product1 = "";
         if (!products.isEmpty())
-            product1 = products.stream().filter(x -> x.getInchi() != null).findFirst().map(RInChIComponent::getInchi).orElse("");
+            product1 = products.stream().filter(x -> !x.isNoStructure()).findFirst().map(RInChIComponent::getInchi).orElse("");
 
         return reactant1.compareTo(product1) > 0;
     }

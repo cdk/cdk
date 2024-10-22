@@ -51,7 +51,7 @@ class RInChIComponent {
     RInChIComponent(final InChIGenerator generator) throws CDKException {
         if (generator == null || generator.getStatus() == InchiStatus.ERROR || generator.getInchi() == null || generator.getInchi().isEmpty()) {
             this.isNoStructure = true;
-            this.inchi = "";
+            this.inchi = "InChI=1S//";
             this.auxInfo = "";
             this.inchiKey = "";
             return;
