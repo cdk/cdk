@@ -20,6 +20,7 @@ package org.openscience.cdk.interfaces;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.util.Objects;
 
 /**
  * Implements the concept of a covalent bond between two or more atoms. A bond is
@@ -279,7 +280,28 @@ public interface IBond extends IElectronContainer {
      * @param atom The atom to be tested if it participates in this bond
      * @return true if the atom participates in this bond
      */
-    boolean contains(IAtom atom);
+    default boolean contains(IAtom atom) {
+        for (int i = 0; i < getAtomCount(); i++) {
+            if (Objects.equals(getAtom(i), atom)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get the connected atom between two bonds.
+     * @param other the other bond (not nullable)
+     * @return the common atom or null if none in common
+     */
+    default IAtom getConnectedAtom(IBond other) {
+        for (int i = 0; i < getAtomCount(); i++) {
+            final IAtom atom = getAtom(i);
+            if (other.contains(atom))
+                return atom;
+        }
+        return null;
+    }
 
     /**
      * Sets an Atom in this bond.
