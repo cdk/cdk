@@ -41,12 +41,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 /**
  * Base class for all chemical objects that maintain a list of Atoms and
@@ -127,7 +125,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
     /**
      * Internal list of atom parities.
      */
-    protected Set<IStereoElement> stereoElements;
+    protected List<IStereoElement> stereoElements;
 
     /**
      * Constructs an empty AtomContainer.
@@ -153,7 +151,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         this.lonePairs = new ILonePair[this.lonePairCount];
         this.singleElectrons = new ISingleElectron[this.singleElectronCount];
 
-        stereoElements = new HashSet<>(atomCount / 2);
+        stereoElements = new ArrayList<>();
 
         for (IStereoElement element : container.stereoElements()) {
             addStereoElement(element);
@@ -192,7 +190,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         bonds = new IBond[bondCount];
         lonePairs = new ILonePair[lpCount];
         singleElectrons = new ISingleElectron[seCount];
-        stereoElements = new HashSet<>(atomCount / 2);
+        stereoElements = new ArrayList<>();
     }
 
     /**
@@ -208,7 +206,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
      */
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
-        this.stereoElements = new HashSet<>();
+        this.stereoElements = new ArrayList<>();
         this.stereoElements.addAll(elements);
     }
 
@@ -217,7 +215,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
      */
     @Override
     public Iterable<IStereoElement> stereoElements() {
-        return Collections.unmodifiableSet(stereoElements);
+        return Collections.unmodifiableList(stereoElements);
     }
 
     private boolean isStale(IAtom atom) {
@@ -982,16 +980,16 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         IAtom beg = removedBond.getBegin();
         IAtom end = removedBond.getEnd();
 
-        Iterator<IStereoElement> iter = stereoElements.iterator();
-        while (iter.hasNext()) {
-            IStereoElement<?,?> se = iter.next();
+        List<IStereoElement<?,?>> invalidated = new ArrayList<>();
+        for (int i = 0; i < stereoElements.size(); i++) {
+            IStereoElement<?,?> se = stereoElements.get(i);
             IChemObject focus = se.getFocus();
             if (focus.equals(beg)) {
-                se.updateCarrier(end, beg);
+                stereoElements.set(i, ((IStereoElement<IAtom,IAtom>)se).updateCarriers(end, beg));
             } else if (focus.equals(end)) {
-                se.updateCarrier(beg, end);
+                stereoElements.set(i, ((IStereoElement<IAtom,IAtom>)se).updateCarriers(beg, end));
             } else if (removedBond.equals(focus)) {
-                iter.remove();
+                invalidated.add(se);
             } else if (se instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
                 List<IBond> carriers = db.getCarriers();
@@ -1005,12 +1003,13 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
                         }
                     }
                     if (otherBond != null)
-                        se.updateCarrier(removedBond, otherBond);
+                        stereoElements.set(i, ((IStereoElement<IBond,IBond>)se).updateCarriers(removedBond, otherBond));
                 } else {
-                    iter.remove();
+                    invalidated.add(se);
                 }
             }
         }
+        stereoElements.removeAll(invalidated);
     }
 
 

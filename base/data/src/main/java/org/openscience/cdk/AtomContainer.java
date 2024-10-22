@@ -1128,16 +1128,16 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         IAtom beg = removedBond.getBegin();
         IAtom end = removedBond.getEnd();
 
-        Iterator<IStereoElement> iter = stereo.iterator();
-        while (iter.hasNext()) {
-            IStereoElement<?,?> se = iter.next();
+        List<IStereoElement<?,?>> invalidated = new ArrayList<>();
+        for (int i = 0; i < stereo.size(); i++) {
+            IStereoElement<?,?> se = stereo.get(i);
             IChemObject focus = se.getFocus();
             if (focus.equals(beg)) {
-                se.updateCarrier(end, beg);
+                stereo.set(i, ((IStereoElement<IAtom,IAtom>)se).updateCarriers(end, beg));
             } else if (focus.equals(end)) {
-                se.updateCarrier(beg, end);
+                stereo.set(i, ((IStereoElement<IAtom,IAtom>)se).updateCarriers(beg, end));
             } else if (removedBond.equals(focus)) {
-                iter.remove();
+                invalidated.add(se);
             } else if (se instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
                 List<IBond> carriers = db.getCarriers();
@@ -1151,12 +1151,13 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                         }
                     }
                     if (otherBond != null)
-                        se.updateCarrier(removedBond, otherBond);
+                        stereo.set(i, ((IStereoElement<IBond,IBond>)se).updateCarriers(removedBond, otherBond));
                 } else {
-                    iter.remove();
+                    invalidated.add(se);
                 }
             }
         }
+        stereo.removeAll(invalidated);
     }
 
     /**

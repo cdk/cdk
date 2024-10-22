@@ -26,6 +26,7 @@ package org.openscience.cdk.stereo;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -411,7 +412,7 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
             return null;
         } else {
             IAtom focus = (IAtom)normalized.getFocus();
-            List<IAtom> carriers = normalized.getCarriers();
+            List<IAtom> carriers = new ArrayList<>(normalized.getCarriers());
             if (carriers.get(1).equals(focus)) {
                 carriers.remove(1);
             } else if (carriers.get(2).equals(focus)) {

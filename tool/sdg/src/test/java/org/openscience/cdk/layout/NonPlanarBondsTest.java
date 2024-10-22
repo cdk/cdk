@@ -674,7 +674,7 @@ class NonPlanarBondsTest {
             final String smi = "O[C@]([H])(C)CCC";
             SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
             IAtomContainer mol = smipar.parseSmiles(smi);
-            mol.removeBond(1);
+            // mol.removeBond(1); // updates stereo correctly!
             mol.removeAtomOnly(2); // unsafe-removes
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();
             sdg.generateCoordinates(mol);
