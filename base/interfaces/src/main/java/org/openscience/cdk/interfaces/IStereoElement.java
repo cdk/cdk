@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -358,4 +359,38 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      */
     IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 
+    /*
+     * Update the carriers replacing all occurrences of one item with another.
+     *
+     * @param remove the atom/bond to remove
+     * @param add the atom/bond to replace it with
+     */
+    default void updateCarriers(IChemObject remove, IChemObject add) {
+        @SuppressWarnings("unchecked")
+        List<IChemObject> carriers = (List<IChemObject>)getCarriers();
+        for (int i = 0; i < carriers.size(); i++) {
+            if (remove.equals(carriers.get(i))) {
+                carriers.set(i, add);
+            }
+        }
+    }
+
+    /*
+     * Update the carriers replacing all occurrences of one item with items
+     * on the provided iterable. Once the iterable is exhausted no more
+     * replacements are made.
+     *
+     * @param remove the atom/bond to remove
+     * @param add the atom/bonds to replace it with
+     */
+    default void updateCarriers(IChemObject remove, Iterable<IChemObject> adds) {
+        Iterator<IChemObject> repIter = adds.iterator();
+        @SuppressWarnings("unchecked")
+        List<IChemObject> carriers = (List<IChemObject>)getCarriers();
+        for (int i = 0; i < carriers.size(); i++) {
+            if (remove.equals(carriers.get(i)) && repIter.hasNext()) {
+                carriers.set(i, repIter.next());
+            }
+        }
+    }
 }
