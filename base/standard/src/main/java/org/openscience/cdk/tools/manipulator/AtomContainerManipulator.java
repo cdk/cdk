@@ -745,7 +745,7 @@ public class AtomContainerManipulator {
 
         // update stereo elements with an implicit part
         List<IStereoElement> stereos = new ArrayList<>();
-        Deque<IAtom> explHatoms = new ArrayDeque<>();
+        List<IAtom> explHatoms = new ArrayList<>();
         for (IStereoElement stereo : atomContainer.stereoElements()) {
             if (stereo instanceof ITetrahedralChirality) {
                 @SuppressWarnings("unchecked")
@@ -769,21 +769,13 @@ public class AtomContainerManipulator {
                 @SuppressWarnings("unchecked")
                 IStereoElement<IAtom,IAtom> atomStereo = (IStereoElement<IAtom,IAtom>) stereo;
                 if (hNeighbor.get(atomStereo.getFocus()) != null) {
-                    List<IAtom> carriers = atomStereo.getCarriers();
-
                     // update the carriers
                     explHatoms.clear();
                     for (IAtom atom : atomContainer.getConnectedAtomsList(atomStereo.getFocus())) {
                         if (atom.getIndex() >= oldAtomCount)
                             explHatoms.add(atom);
                     }
-
-                    for (int i = 0; i < carriers.size(); i++) {
-                        if (carriers.get(i).equals(atomStereo.getFocus()) &&
-                                !explHatoms.isEmpty()) {
-                            carriers.set(i, explHatoms.poll());
-                        }
-                    }
+                    atomStereo.updateCarriers(atomStereo.getFocus(), explHatoms);
                 }
                 stereos.add(atomStereo);
             } else if (stereo instanceof ExtendedTetrahedral) {
