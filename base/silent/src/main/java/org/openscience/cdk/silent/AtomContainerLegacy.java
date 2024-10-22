@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.silent;
 
-import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -988,9 +987,9 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
             IStereoElement<?,?> se = iter.next();
             IChemObject focus = se.getFocus();
             if (focus.equals(beg)) {
-                se.updateCarriers(end, beg);
+                se.updateCarrier(end, beg);
             } else if (focus.equals(end)) {
-                se.updateCarriers(beg, end);
+                se.updateCarrier(beg, end);
             } else if (removedBond.equals(focus)) {
                 iter.remove();
             } else if (se instanceof IDoubleBondStereochemistry) {
@@ -1006,7 +1005,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
                         }
                     }
                     if (otherBond != null)
-                        se.updateCarriers(removedBond, otherBond);
+                        se.updateCarrier(removedBond, otherBond);
                 } else {
                     iter.remove();
                 }

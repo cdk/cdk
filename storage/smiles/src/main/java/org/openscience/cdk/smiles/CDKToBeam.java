@@ -153,7 +153,7 @@ final class CDKToBeam {
             for (IStereoElement se : ac.stereoElements()) {
                 if (SmiFlavor.isSet(flavour, SmiFlavor.StereoTetrahedral) &&
                     se instanceof ITetrahedralChirality) {
-                    addAtomStereo((ITetrahedralChirality) se, gb, indices);
+                    addAtomStereo(se, gb, indices);
                 } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoCisTrans) &&
                            se instanceof IDoubleBondStereochemistry) {
                     addGeometricConfiguration((IDoubleBondStereochemistry) se, flavour, gb, indices);
@@ -426,14 +426,29 @@ final class CDKToBeam {
     private static void addAtomStereo(IStereoElement<IAtom,IAtom> se,
                                       GraphBuilder gb,
                                       Map<IAtom, Integer> indices) {
+        Configuration config = getConfig(se);
         IAtom focus = se.getFocus();
         List<IAtom> carriers = se.getCarriers();
+
+        // invalid tetrahedral
+        if (config.type() == Configuration.Type.Tetrahedral) {
+            int numImplicit = 0;
+            for (IAtom atom : carriers) {
+                if (atom.equals(focus)) {
+                    numImplicit++;
+                }
+            }
+            if (numImplicit > 1)
+                return;
+        }
+
+
         int[] neighbors = new int[carriers.size() - 1];
         for (int i = 0; i < neighbors.length; i++) {
             neighbors[i] = indices.get(carriers.get(i + 1));
         }
         GraphBuilder.AtomStereoBuilder builder;
-        builder = gb.atomStereo(indices.get(focus), getConfig(se));
+        builder = gb.atomStereo(indices.get(focus), config);
         builder.lookingFrom(indices.get(carriers.get(0))).neighbors(neighbors);
         builder.build();
     }
