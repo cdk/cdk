@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -42,10 +43,24 @@ import java.util.Map;
 
 /**
  * Generate fragments exhaustively.
- * 
+ * <p>
  * This fragmentation scheme simply breaks single non-ring bonds. By default
- * fragments smaller than 6 atoms in size are not considered, but this can be
- * changed by the user. Side chains are retained.
+ * fragments smaller than 6 atoms in size are not considered and the returned
+ * fragments are not saturated, but this can be changed by the user.
+ * Side chains are retained.
+ *
+ * <p>Example Usage</p>
+ *
+ * <pre>{@code
+ * ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter(); // per default this returns unsaturated fragments with a minimum size of 6
+ * SmilesParser smiParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+ * IAtomContainer mol = smiParser.parseSmiles(c1ccccc1CC(N)C(=O)O);
+ * fragmenter.generateFragments(mol);
+ * // if you want the SMILES representation of the fragments
+ * String[] smilesFragments = fragmenter.getFragments();
+ * // if you want the Atom containers
+ * IAtomContainer[] atomContainerFragments = fragmenter.getFragmentsAsContainers();
+ * }</pre>
  *
  * @author Rajarshi Guha
  * @cdk.module  fragment
@@ -54,12 +69,28 @@ import java.util.Map;
  */
 public class ExhaustiveFragmenter implements IFragmenter {
 
+    /**
+     * Defines the saturation of the returned fragments.
+     */
+    public enum Saturation {
+        /**
+         * Fragments will get returned saturated.
+         */
+        SATURATED_FRAGMENTS,
+
+        /**
+         * Fragments will get returned unsaturated.
+         */
+        UNSATURATED_FRAGMENTS
+    }
+
     private static final int    DEFAULT_MIN_FRAG_SIZE = 6;
+    private static final Saturation DEFAULT_SATURATION = Saturation.UNSATURATED_FRAGMENTS;
 
     final Map<String, IAtomContainer> fragMap;
     final SmilesGenerator             smilesGenerator;
-    String[]                    fragments             = null;
     int                         minFragSize;
+    Saturation saturationSetting;
     private static final ILoggingTool logger                = LoggingToolFactory
                                                               .createLoggingTool(ExhaustiveFragmenter.class);
 
@@ -67,18 +98,44 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * Instantiate fragmenter with default minimum fragment size.
      */
     public ExhaustiveFragmenter() {
-        this(DEFAULT_MIN_FRAG_SIZE);
+        this(DEFAULT_MIN_FRAG_SIZE, DEFAULT_SATURATION);
+    }
+
+    /**
+     * Instantiate fragmenter with user specified minimum fragment size and default saturation (saturated fragments).
+     *
+     * @param minFragSize the minimum fragment size desired.
+     */
+    public ExhaustiveFragmenter(int minFragSize) {
+        this.minFragSize = minFragSize;
+        this.saturationSetting = DEFAULT_SATURATION;
+        fragMap = new HashMap<>();
+        smilesGenerator = new SmilesGenerator(SmiFlavor.UseAromaticSymbols | SmiFlavor.Unique);
+    }
+
+    /**
+     * Instantiate fragmenter with default minimum fragment size and user specified saturation setting.
+     *
+     * @param saturationSetting setting to specify if the returned fragments should be saturated or not.
+     */
+    public ExhaustiveFragmenter(Saturation saturationSetting) {
+        this.minFragSize = DEFAULT_MIN_FRAG_SIZE;
+        this.saturationSetting = saturationSetting;
+        fragMap = new HashMap<>();
+        smilesGenerator = new SmilesGenerator(SmiFlavor.UseAromaticSymbols | SmiFlavor.Unique);
     }
 
     /**
      * Instantiate fragmenter with user specified minimum fragment size.
      *
-     * @param minFragSize the minimum fragment size desired
+     * @param minFragSize the minimum fragment size desired.
+     * @param saturationSetting setting to specify if the returned fragments should be saturated or not.
      */
-    public ExhaustiveFragmenter(int minFragSize) {
+    public ExhaustiveFragmenter(int minFragSize, Saturation saturationSetting) {
         this.minFragSize = minFragSize;
+        this.saturationSetting = saturationSetting;
         fragMap = new HashMap<>();
-        smilesGenerator = SmilesGenerator.unique().aromatic();
+        smilesGenerator = new SmilesGenerator(SmiFlavor.UseAromaticSymbols | SmiFlavor.Unique);
     }
 
     /**
@@ -91,6 +148,15 @@ public class ExhaustiveFragmenter implements IFragmenter {
     }
 
     /**
+     * Set the saturation setting of the returned fragments.
+     *
+     * @param saturationSetting setting to specify if the returned fragments should be saturated or not.
+     */
+    public void setSaturationSetting(Saturation saturationSetting) {
+        this.saturationSetting = saturationSetting;
+    }
+
+    /**
      * Generate fragments for the input molecule.
      *
      * @param atomContainer The input molecule.
@@ -98,21 +164,25 @@ public class ExhaustiveFragmenter implements IFragmenter {
     @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
         fragMap.clear();
-        run(atomContainer);
+        if (this.saturationSetting == Saturation.UNSATURATED_FRAGMENTS) {
+            runUnsaturated(atomContainer);
+        } else {
+            runSaturated(atomContainer);
+        }
     }
 
-    private List<IAtomContainer> run(IAtomContainer atomContainer) throws CDKException {
+    private void runSaturated(IAtomContainer atomContainer) throws CDKException {
 
-        ArrayList<IAtomContainer> fragments = new ArrayList<>();
-
-        if (atomContainer.getBondCount() < 3) return fragments;
+        if (atomContainer.getBondCount() < 3) return;
         List<IBond> splitableBonds = getSplitableBonds(atomContainer);
-        if (splitableBonds.size() == 0) return fragments;
+        if (splitableBonds.size() == 0) return;
         logger.debug("Got " + splitableBonds.size() + " splittable bonds");
 
         String tmpSmiles;
+//        int[] saturatedAtomIDs = new int[splitableBonds.size() * 2];
         for (IBond bond : splitableBonds) {
             List<IAtomContainer> parts = FragmentUtils.splitMolecule(atomContainer, bond);
+
             // make sure we don't add the same fragment twice
             for (IAtomContainer partContainer : parts) {
                 AtomContainerManipulator.clearAtomConfigurations(partContainer);
@@ -123,41 +193,40 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 Aromaticity.cdkLegacy().apply(partContainer);
                 tmpSmiles = smilesGenerator.create(partContainer);
                 if (partContainer.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
-                    fragments.add(partContainer);
                     fragMap.put(tmpSmiles, partContainer);
+                    if (partContainer.getAtomCount() > minFragSize) {
+                        runSaturated(partContainer);
+                    }
                 }
             }
         }
-
-        // try and partition the fragments
-        List<IAtomContainer> tmp = new ArrayList<>(fragments);
-        for (IAtomContainer fragment : fragments) {
-            if (fragment.getBondCount() < 3 || fragment.getAtomCount() < minFragSize) continue;
-            if (getSplitableBonds(fragment).size() == 0) continue;
-
-            List<IAtomContainer> frags = run(fragment);
-            if (frags.size() == 0) continue;
-
-            for (IAtomContainer frag : frags) {
-                if (frag.getBondCount() < 3) continue;
-                AtomContainerManipulator.clearAtomConfigurations(frag);
-                for (IAtom atom : frag.atoms())
-                    atom.setImplicitHydrogenCount(null);
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag);
-                CDKHydrogenAdder.getInstance(frag.getBuilder()).addImplicitHydrogens(frag);
-                Aromaticity.cdkLegacy().apply(frag);
-                tmpSmiles = smilesGenerator.create(frag);
-                if (frag.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
-                    tmp.add(frag);
-                    fragMap.put(tmpSmiles, frag);
-                }
-            }
-        }
-        fragments = new ArrayList<>(tmp);
-        return fragments;
     }
 
-    private List<IBond> getSplitableBonds(IAtomContainer atomContainer) throws CDKException {
+    private void runUnsaturated(IAtomContainer atomContainer) throws CDKException {
+
+        if (atomContainer.getBondCount() < 3) return;
+        List<IBond> splitableBonds = getSplitableBonds(atomContainer);
+        if (splitableBonds.size() == 0) return;
+        logger.debug("Got " + splitableBonds.size() + " splittable bonds");
+
+        String tmpSmiles;
+        for (IBond bond : splitableBonds) {
+            List<IAtomContainer> parts = FragmentUtils.splitMolecule(atomContainer, bond);
+
+            // make sure we don't add the same fragment twice
+            for (IAtomContainer partContainer : parts) {
+                tmpSmiles = smilesGenerator.create(partContainer);
+                if (partContainer.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
+                    fragMap.put(tmpSmiles, partContainer);
+                    if (partContainer.getAtomCount() > minFragSize) {
+                        runSaturated(partContainer);
+                    }
+                }
+            }
+        }
+    }
+
+    private List<IBond> getSplitableBonds(IAtomContainer atomContainer) {
         // do ring detection
         SpanningTree spanningTree = new SpanningTree(atomContainer);
         IRingSet allRings = spanningTree.getAllRings();
