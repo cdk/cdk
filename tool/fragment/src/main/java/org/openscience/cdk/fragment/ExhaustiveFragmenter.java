@@ -212,14 +212,14 @@ public class ExhaustiveFragmenter implements IFragmenter {
         String tmpSmiles;
         for (IBond bond : splitableBonds) {
             List<IAtomContainer> parts = FragmentUtils.splitMolecule(atomContainer, bond);
-
             // make sure we don't add the same fragment twice
             for (IAtomContainer partContainer : parts) {
                 tmpSmiles = smilesGenerator.create(partContainer);
-                if (partContainer.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
+                int fragmentSize = partContainer.getAtomCount();
+                if (fragmentSize >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
                     fragMap.put(tmpSmiles, partContainer);
-                    if (partContainer.getAtomCount() > minFragSize) {
-                        runSaturated(partContainer);
+                    if (fragmentSize > minFragSize) {
+                        runUnsaturated(partContainer);
                     }
                 }
             }
