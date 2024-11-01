@@ -202,6 +202,7 @@ public class CDKConstants {
      */
     public final static String NMRSPECTYPE_2D_HMBC = "2D NMR spectrum: HMBC";
 
+
     /**
      * Property key to store the CIP descriptor label for an atom / bond. The
      * label is a string.
@@ -406,6 +407,13 @@ public class CDKConstants {
      * Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
      */
     public static final String      REACTION_GROUP               = "cdk:ReactionGroup";
+
+    /**
+     * The Z-Order controls the relative ordering in 2D depictions when bonds
+     * overlap/intersect. Some sketch formats (e.g. CDX/CDXML) capture the
+     * Z-order as a property.
+     */
+    public static final Object      Z_ORDER                      = "cdk:ZOrder";
 
     /* **************************************
      * Some predefined property names for * Atoms *
