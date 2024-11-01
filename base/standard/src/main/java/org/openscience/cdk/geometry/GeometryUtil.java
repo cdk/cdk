@@ -39,6 +39,7 @@ import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -47,9 +48,11 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -1978,5 +1981,72 @@ public final class GeometryUtil {
      */
     public static Comparator<IAtom> polarAtomComparator(final IAtom central) {
         return polarAtomComparator(central.getPoint2d());
+    }
+
+
+    // Java AWT Line2D.relativeCCW() but avoid AWT dependency here
+    private static int relativeCCW(double x1, double y1,
+                                   double x2, double y2,
+                                   double px, double py)
+    {
+        x2 -= x1;
+        y2 -= y1;
+        px -= x1;
+        py -= y1;
+        double ccw = px * y2 - py * x2;
+        if (ccw == 0.0) {
+            ccw = px * x2 + py * y2;
+            if (ccw > 0.0) {
+                px -= x2;
+                py -= y2;
+                ccw = px * x2 + py * y2;
+                if (ccw < 0.0) {
+                    ccw = 0.0;
+                }
+            }
+        }
+        return Double.compare(ccw, 0.0);
+    }
+
+    // Java AWT Line2D.linesIntersect()  but avoid AWT dependency here
+    private static boolean intersect(Point2d beg1, Point2d end1,
+                                     Point2d beg2, Point2d end2) {
+        assert beg1 != null && end1 != null;
+        assert beg2 != null && end2 != null;
+        double x1 = beg1.x, y1 = beg1.y;
+        double x2 = end1.x, y2 = end1.y;
+        double x3 = beg2.x, y3 = beg2.y;
+        double x4 = end2.x, y4 = end2.y;
+        return ((relativeCCW(x1, y1, x2, y2, x3, y3) *
+                relativeCCW(x1, y1, x2, y2, x4, y4) <= 0)
+                && (relativeCCW(x3, y3, x4, y4, x1, y1) *
+                relativeCCW(x3, y3, x4, y4, x2, y2) <= 0));
+    }
+
+    public static boolean intersect(IBond b1, IBond b2) {
+        if (b1.isConnectedTo(b2))
+            return false;
+        return intersect(b1.getBegin().getPoint2d(),
+                         b1.getEnd().getPoint2d(),
+                         b2.getBegin().getPoint2d(),
+                         b2.getEnd().getPoint2d());
+    }
+
+    public static List<Map.Entry<IBond, IBond>> intersectingBonds(IAtomContainer mol)
+    {
+        if (!GeometryUtil.has2DCoordinates(mol))
+            return Collections.emptyList();
+        List<Map.Entry<IBond,IBond>> crossing = new ArrayList<>();
+
+        // Naïve O(N^2) algorithm
+        IBond[] bonds = AtomContainerManipulator.getBondArray(mol);
+        for (int i = 0; i < bonds.length; i++) {
+            for (int j = i + 1; j < bonds.length; j++) {
+                if (!intersect(bonds[i], bonds[j]))
+                    continue;
+                crossing.add(new AbstractMap.SimpleImmutableEntry<>(bonds[i], bonds[j]));
+            }
+        }
+        return crossing;
     }
 }
