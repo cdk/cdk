@@ -28,6 +28,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
@@ -961,5 +963,36 @@ class GeometryUtilTest extends CDKTestCase {
             mol.addBond(new Bond(zero, atom));
         }
         return GeometryUtil.getBestAlignmentForLabelXY(mol, zero);
+    }
+
+
+    @Test
+    public void findCrossingBonds_1() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[C@@H]12C[C@@H](CCC1)CC2 |(-7.14,4.4,;-7.68,3.86,;-6.9,4.12,;-6.14,3.78,;-5.91,4.58,;-6.32,4.08,;-7.07,4.93,;-7.32,5.2,)|");
+        List<Map.Entry<IBond,IBond>> crossing = GeometryUtil.intersectingBonds(mol);
+        Assertions.assertEquals(1, crossing.size());
+        Assertions.assertEquals(5, crossing.get(0).getKey().getIndex());
+        Assertions.assertEquals(6, crossing.get(0).getValue().getIndex());
+    }
+
+    @Test
+    public void findCrossingBonds_2() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C12C3C4C1C5C2C3C45 |(2.39,4.98,;3.03,4.82,;3.03,3.8,;2.38,3.96,;1.56,3.84,;1.57,4.86,;2.22,4.7,;2.21,3.68,)|");
+        List<Map.Entry<IBond,IBond>> crossing = GeometryUtil.intersectingBonds(mol);
+        Assertions.assertEquals(2, crossing.size());
+        Assertions.assertEquals(3, crossing.get(0).getKey().getIndex());
+        Assertions.assertEquals(8, crossing.get(0).getValue().getIndex());
+        Assertions.assertEquals(4, crossing.get(1).getKey().getIndex());
+        Assertions.assertEquals(9, crossing.get(1).getValue().getIndex());
+    }
+
+    @Test
+    public void findCrossingBonds_3() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("c12c3c4c5c1c6c7c8c2c9c%10c3c%11c%12c4c%13c%14c5c%15c6c%16c7c%17c%18c8c9c%19c%20c%10c%11c%21c%22c%12c%13c%23c%24c%14c%15c%25c%16c%26c%17c%27c%18c%19c%28c%20c%21c%29c%22c%23c%30c%24c%25c%26c%31c%27c%28c%29c%30%31 |(-1.18,4.19,;-1.25,3.95,;-2.89,2.89,;-3.4,2.51,;-2.35,3.5,;-1.85,2.36,;-0.24,2.34,;0.9,3.16,;0.62,4.13,;1.64,3.95,;1.44,3.76,;-0.18,3.78,;-0.22,2.55,;-1.68,1.63,;-3.12,1.86,;-3.79,0.18,;-4.25,-0.17,;-4.09,1.02,;-3.53,0.2,;-2.43,0.88,;-1.19,0.06,;0.04,0.83,;1.56,0.18,;2.62,0.94,;2.4,2.6,;2.78,2.95,;3.76,1.66,;3.54,1.5,;2.21,2.47,;1.25,1.8,;1.42,-0.1,;0.01,-0.96,;-1.58,-0.17,;-2.92,-1.05,;-2.52,-2.69,;-3,-2.99,;-3.85,-1.66,;-3.41,-1.49,;-2.24,-2.31,;-1.13,-1.6,;0.24,-2.29,;1.69,-1.43,;2.9,-1.69,;3.49,-0.25,;4.04,0.09,;4.04,-1.03,;3.71,-0.29,;2.72,-0.98,;2.01,-2.61,;0.36,-2.64,;-0.87,-3.45,;-0.47,-4.19,;-1.75,-3.85,;-1.41,-3.59,;0.2,-3.49,;1.42,-3.81,;2.81,-2.84,;3.34,-2.68,;2.44,-3.41,;1.21,-4.2,)| fullerene");
+        List<Map.Entry<IBond,IBond>> crossing = GeometryUtil.intersectingBonds(mol);
+        Assertions.assertEquals(22, crossing.size());
     }
 }
