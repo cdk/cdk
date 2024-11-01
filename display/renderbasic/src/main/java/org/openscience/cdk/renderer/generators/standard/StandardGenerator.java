@@ -64,6 +64,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
+import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Right;
 
 /**
  * The standard generator creates {@link IRenderingElement}s for the atoms and bonds of a structure
@@ -113,6 +114,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public final static String          ANNOTATION_LABEL      = "stdgen.annotation.label";
 
     /**
+     * Override the alignment of an atom symbol, the value should be
+     * {@link org.openscience.cdk.renderer.generators.standard.StandardGenerator.Alignment}
+     */
+    public final static String LABEL_ALIGN = "stdgen.label.alignment";
+
+    /**
      * A special markup for annotation labels that hints the generator to renderer
      * the annotation label in italic. The primary use case is for Cahn-Ingold-Prelog
      * descriptors.
@@ -134,6 +141,25 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
+
+    public enum Alignment {
+        /**
+         * Atom is left aligned.
+         * <pre>
+         *  |
+         *  OH
+         * </pre>
+         */
+        Left,
+        /**
+         * Atom is right aligned.
+         * <pre>
+         *   |
+         *  HO
+         * </pre>
+         */
+        Right;
+    }
 
     /**
      * Enumeration of highlight style.
@@ -520,7 +546,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             // only generate if the symbol is visible
             if (visibility.visible(atom, bonds, parameters) || remapped) {
 
-                final HydrogenPosition hPosition = HydrogenPosition.position(atom, visNeighbors);
+                final HydrogenPosition hPosition;
+                final Alignment align = atom.getProperty(StandardGenerator.LABEL_ALIGN);
+                if (align == Alignment.Left)
+                    hPosition = Right;
+                else if (align == Alignment.Right)
+                    hPosition = Left;
+                else
+                    hPosition = HydrogenPosition.position(atom, visNeighbors);
 
                 if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() > 0)
                     auxVectors.add(hPosition.vector());
