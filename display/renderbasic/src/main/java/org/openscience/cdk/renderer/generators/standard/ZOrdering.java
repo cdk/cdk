@@ -81,7 +81,7 @@ final class ZOrdering {
             if (sgroup.getType() != SgroupType.ExtMulticenter)
                 continue;
             for (IBond bond : sgroup.getBonds()) {
-                if (bond.getProperty(CDKConstants.Z_ORDER) != null)
+                if (bond.getProperty(CDKConstants.Z_ORDER) == null)
                     bond.setProperty(CDKConstants.Z_ORDER, 999999);
             }
         }
