@@ -25,7 +25,9 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -54,6 +56,7 @@ import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -184,6 +187,7 @@ final class StandardBondGenerator {
                                              Font font,
                                              ElementGroup annotations,
                                              StandardDonutGenerator donutGen) {
+
         StandardBondGenerator bondGenerator;
         bondGenerator = new StandardBondGenerator(container, symbols,
                                                   parameters, annotations,
@@ -195,6 +199,34 @@ final class StandardBondGenerator {
                 elements[i] = bondGenerator.generate(bond);
             }
         }
+
+        // Handle intersecting bonds and Z-ordering
+        List<Map.Entry<IBond,IBond>> crossing = GeometryUtil.intersectingBonds(container);
+        if (!crossing.isEmpty()) {
+            ZOrdering.assign(container);
+            for (Map.Entry<IBond,IBond> e : crossing) {
+                IBond b1 = e.getKey();
+                IBond b2 = e.getValue();
+                Area area1 = AwtArea.toArea(elements[b1.getIndex()]);
+                Area area2 = AwtArea.toArea(elements[b2.getIndex()]);
+                if (area1 == null || area2 == null)
+                    continue;
+                Integer z1 = b1.getProperty(CDKConstants.Z_ORDER);
+                Integer z2 = b2.getProperty(CDKConstants.Z_ORDER);
+                assert z1 != null;
+                assert z2 != null;
+                if (z1 <= z2) {
+                    area1.subtract(AwtArea.expand(area2, stroke));
+                    elements[b1.getIndex()] = GeneralPath.shapeOf(area1,
+                                                                  bondGenerator.foreground);
+                } else {
+                    area2.subtract(AwtArea.expand(area1, stroke));
+                    elements[b2.getIndex()] = GeneralPath.shapeOf(area2,
+                                                                  bondGenerator.foreground);
+                }
+            }
+        }
+
         return elements;
     }
 
@@ -459,7 +491,7 @@ final class StandardBondGenerator {
         final double start = hasDisplayedSymbol(from) ? fromPoint.distance(fromBackOffPoint) : Double.NEGATIVE_INFINITY;
         final double end = hasDisplayedSymbol(to) ? fromPoint.distance(toBackOffPoint) : Double.POSITIVE_INFINITY;
 
-        // don't adjust wedge if the angle is shallow than this amount
+        // don't adjust wedge if the angle is shallower than this amount
         final double threshold = Math.toRadians(35);
 
         Vector2d hatchAngle = perpendicular;
