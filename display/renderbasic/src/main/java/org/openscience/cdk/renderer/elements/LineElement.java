@@ -13,7 +13,11 @@
  */
 package org.openscience.cdk.renderer.elements;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 import java.awt.Color;
+import java.awt.geom.Area;
+import java.awt.geom.Path2D;
 
 
 /**
@@ -66,6 +70,61 @@ public class LineElement implements IRenderingElement {
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
+    }
+
+    /**
+     * Convert the Line to an awt.Area, by default the line will have an
+     * approximation of rounded end caps.
+     * @return the area
+     */
+    public Area toArea() {
+        return toArea(true);
+    }
+
+    /**
+     * Convert the Line to an awt.Area specifying whether to include the end
+     * caps or not.
+     *
+     * @param endCaps include the end caps
+     * @return the area
+     */
+    public Area toArea(boolean endCaps) {
+        Point2d b = new Point2d(firstPointX, firstPointY);
+        Point2d e = new Point2d(secondPointX, secondPointY);
+        // v = unit vector of the line, o = orthogonal vector
+        Vector2d v = new Vector2d(e.x - b.x, e.y - b.y);
+        Vector2d o = new Vector2d(-v.y, v.x);
+        v.normalize();
+        v.scale(width/2);
+        o.normalize();
+        o.scale(width/2);
+        Path2D path = new Path2D.Double(Path2D.WIND_EVEN_ODD);
+        path.moveTo(b.x+o.x, b.y+o.y);
+        path.lineTo(e.x+o.x, e.y+o.y);
+        if (endCaps) {
+            path.curveTo(e.x + o.x + v.x / 2, e.y + o.y + o.y / 2,
+                         e.x + v.x + o.x / 2, e.y + v.y + o.y / 2,
+                         e.x + v.x, e.y + v.y);
+            path.curveTo(e.x + v.x - o.x / 2, e.y + v.y - o.y / 2,
+                         e.x - o.x + v.x / 2, e.y - o.y + v.y / 2,
+                         e.x - o.x, e.y - o.y);
+        } else {
+            path.lineTo(e.x + v.x, e.y + v.y);
+            path.lineTo(e.x - o.x, e.y - o.y);
+        }
+        path.lineTo(b.x-o.x, b.y-o.y);
+        if (endCaps) {
+            path.curveTo(b.x - o.x - v.x / 2, b.y - o.y - v.y /2,
+                         b.x - v.x - o.x / 2, b.y - v.y - o.y /2,
+                         b.x - v.x, b.y - v.y);
+            path.curveTo(b.x - v.x + o.x / 2, b.y - v.y + o.y / 2,
+                         b.x + o.x - v.x / 2, b.y + o.y - v.y / 2,
+                         b.x + o.x, b.y + o.y);
+        } else {
+            path.lineTo(b.x - v.x, b.y - v.y);
+        }
+        path.closePath();
+        return new Area(path);
     }
 
     /**

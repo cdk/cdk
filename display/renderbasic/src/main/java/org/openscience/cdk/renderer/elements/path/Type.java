@@ -31,5 +31,7 @@ package org.openscience.cdk.renderer.elements.path;
  * @cdk.githash
  */
 public enum Type {
+    // note the ordinal matches the AWT integers =
+    // java.awt.PathIterator.SEG_MOVETO = 0, SEW_LINETO = 1, etc.
     MoveTo, LineTo, QuadTo, CubicTo, Close
 }
