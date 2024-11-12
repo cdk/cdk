@@ -380,6 +380,12 @@ class SmartsPatternTest {
                     "*[Pt@OH1](C)(F)([H])(Cl)*", 1, 1);
     }
 
+    @Test
+    void testInsatOnTripple() throws Exception {
+        assertMatch("[Ci]~[Ci]O", "C#CO", 1, 1);
+        assertMatch("[Ci2]~[Ci2]O", "C#CO", 1, 1);
+    }
+
     IAtomContainer smi(String smi) throws Exception {
         return new SmilesParser(bldr).parseSmiles(smi);
     }

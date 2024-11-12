@@ -254,7 +254,7 @@ public final class Expr {
                 return atom.getMassNumber() == null;
             case UNSATURATED:
                 for (IBond bond : atom.bonds())
-                    if (bond.getOrder() == IBond.Order.DOUBLE)
+                    if (bond.getOrder().numeric() > 2)
                         return true;
                 return false;
             // value primitives
@@ -314,11 +314,10 @@ public final class Expr {
                     q += matches(Type.IS_HETERO, bond.getOther(atom), stereo) ? 1 : 0;
                 return q == value;
             case INSATURATION:
-                int db = 0;
+                int sat = 0;
                 for (IBond bond : atom.bonds())
-                    if (bond.getOrder() == IBond.Order.DOUBLE)
-                        db++;
-                return db == value;
+                    sat += Math.max(bond.getOrder().numeric() - 1, 0);
+                return sat == value;
             case HYBRIDISATION_NUMBER:
                 IAtomType.Hybridization hyb = atom.getHybridization();
                 if (hyb == null)
