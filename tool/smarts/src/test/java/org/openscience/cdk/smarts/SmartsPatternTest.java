@@ -381,7 +381,7 @@ class SmartsPatternTest {
     }
 
     @Test
-    void testInsatOnTripple() throws Exception {
+    void testInsaturationOnTriple() throws Exception {
         assertMatch("[Ci]~[Ci]O", "C#CO", 1, 1);
         assertMatch("[Ci2]~[Ci2]O", "C#CO", 1, 1);
     }
