@@ -254,7 +254,7 @@ public final class Expr {
                 return atom.getMassNumber() == null;
             case UNSATURATED:
                 for (IBond bond : atom.bonds())
-                    if (bond.getOrder().numeric() > 2)
+                    if (bond.getOrder().numeric() >= 2)
                         return true;
                 return false;
             // value primitives
