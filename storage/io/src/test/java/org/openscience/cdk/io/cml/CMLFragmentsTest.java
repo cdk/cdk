@@ -168,6 +168,21 @@ class CMLFragmentsTest extends CDKTestCase {
     }
 
     @Test
+    void testBondOrders() throws Exception {
+        String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/><atom id='a3'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/><bond id='b2' atomRefs2='a1 a3' order='D'/></bondArray></molecule>";
+
+        IChemFile chemFile = parseCMLString(cmlString);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
+
+        Assertions.assertEquals(3, mol.getAtomCount());
+        Assertions.assertEquals(2, mol.getBondCount());
+        org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
+        Assertions.assertNull(bond.getOrder());
+        bond = mol.getBond(1);
+        Assertions.assertEquals(IBond.Order.DOUBLE, bond.getOrder());
+    }
+
+    @Test
     void testBond2() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray><bondArray><stringArray builtin='atomRefs'>a1</stringArray><stringArray builtin='atomRefs'>a2</stringArray></bondArray></molecule>";
 
