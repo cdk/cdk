@@ -701,6 +701,7 @@ public class CMLCoreModule implements ICMLModule {
 
         String cData = currentChars;
         if ("bond".equals(name)) {
+            if (bondCounter > order.size()) order.add(null);
             if (!stereoGiven) bondStereo.add("");
             if (bondCounter > bondDictRefs.size()) bondDictRefs.add(null);
             if (bondCounter > bondAromaticity.size()) bondAromaticity.add(null);
@@ -1599,9 +1600,11 @@ public class CMLCoreModule implements ICMLModule {
                         //                        cdo.setObjectProperty("Bond", "order", "1.5");
                         currentBond.setOrder(Order.SINGLE);
                         currentBond.setFlag(IChemObject.AROMATIC, true);
-                    } else {
+                    } else if (bondOrder!=null){
                         //                        cdo.setObjectProperty("Bond", "order", bondOrder);
                         currentBond.setOrder(BondManipulator.createBondOrder(Double.parseDouble(bondOrder)));
+                    } else {
+                    	currentBond.setOrder(null);
                     }
                 }
 
