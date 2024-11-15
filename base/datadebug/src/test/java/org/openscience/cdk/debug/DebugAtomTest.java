@@ -1,4 +1,5 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2024  2024  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,11 +25,14 @@ import javax.vecmath.Point3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.interfaces.AbstractAtomTest;
+import org.openscience.cdk.debug.logging.DebugLoggingSink;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.test.interfaces.AbstractAtomTest;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Checks the functionality of the {@link DebugAtom}.
@@ -40,6 +44,12 @@ class DebugAtomTest extends AbstractAtomTest {
     @BeforeAll
     static void setUp() {
         setTestObjectBuilder(DebugAtom::new);
+        LoggingToolFactory.setLoggingToolClass(DebugLoggingSink.class);
+    }
+
+    @BeforeEach
+    void resetLog() {
+        DebugLoggingSink.reset();
     }
 
     @Test
@@ -63,6 +73,8 @@ class DebugAtomTest extends AbstractAtomTest {
         Assertions.assertNull(a.getPoint2d());
         Assertions.assertNull(a.getPoint3d());
         Assertions.assertNull(a.getFractionalPoint3d());
+        Assertions.assertTrue(DebugLoggingSink.getLog().contains("org.openscience.cdk.debug.DebugAtom DEBUG"));
+        Assertions.assertTrue(DebugLoggingSink.getLog().contains("symbol= C"));
     }
 
     @Test
@@ -74,6 +86,9 @@ class DebugAtomTest extends AbstractAtomTest {
         Assertions.assertEquals(point3d, a.getPoint3d());
         Assertions.assertNull(a.getPoint2d());
         Assertions.assertNull(a.getFractionalPoint3d());
+        Assertions.assertTrue(DebugLoggingSink.getLog().contains("org.openscience.cdk.debug.DebugAtom DEBUG"));
+        Assertions.assertTrue(DebugLoggingSink.getLog().contains("point3d=(1.0, 2.0, 3.0)"));
+        System.out.println(DebugLoggingSink.getLog());
     }
 
     @Test
