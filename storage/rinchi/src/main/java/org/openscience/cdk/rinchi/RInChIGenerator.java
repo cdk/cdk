@@ -291,6 +291,12 @@ public final class RInChIGenerator extends StatusMessagesOutput {
                 sb.append(RInChIConstants.DELIMITER_GROUP);
         }
 
+        // If the components only consist of NoStructs one or more group delimiter will be added to the AuxInfo string that need to be removed.
+        // Example 1: RAuxInfo=1.00.1/<> --> RAuxInfo=1.00.1/
+        while (sb.lastIndexOf(RInChIConstants.DELIMITER_GROUP) == sb.length() - 2) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+
         return sb.toString();
     }
 

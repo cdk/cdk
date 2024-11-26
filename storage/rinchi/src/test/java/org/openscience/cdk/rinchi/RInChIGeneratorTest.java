@@ -466,8 +466,19 @@ class RInChIGeneratorTest extends CDKTestCase {
                 Arrays.asList(ELEMENT_R_NOT_RECOGNISED.toString(), ELEMENT_R_NOT_RECOGNISED.toString(), EMPTY_STRUCTURE.toString()));
     }
 
+
+    @Test
+    void r26_1_nostruct_reactant_1_nostruct_product_1_nostruct_agent_test() throws Exception {
+        // ok__star_star-nostruct.rdf
+        rxnFileRinchiFullInformationFileTest(
+                "org.openscience.cdk.rinchi/r26_1_nostruct_reactant_1_nostruct_product_1_nostruct_agent_test.rxn",
+                "org.openscience.cdk.rinchi/r26_1_nostruct_reactant_1_nostruct_product_1_nostruct_agent_test.txt",
+                WARNING,
+                Arrays.asList(ELEMENT_R_NOT_RECOGNISED.toString(), ELEMENT_R_NOT_RECOGNISED.toString(), ELEMENT_R_NOT_RECOGNISED.toString()));
+    }
+
     void rxnFileRinchiFullInformationFileTest(final String reactionFile, final String rinchiFile) throws Exception {
-        rxnFileRinchiFullInformationFileTest(reactionFile, rinchiFile, SUCCESS, Collections.EMPTY_LIST);
+        rxnFileRinchiFullInformationFileTest(reactionFile, rinchiFile, SUCCESS, new ArrayList<>());
     }
     
     void rxnFileRinchiFullInformationFileTest(final String reactionFile, final String rinchiFile, StatusMessagesOutput.Status status, List<String> messages) throws Exception {
@@ -494,7 +505,7 @@ class RInChIGeneratorTest extends CDKTestCase {
 
     private IReaction readReactionFromRxnFile(String filename) throws Exception {
         try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filename)) {
-            final MDLRXNV2000Reader reader = new MDLRXNV2000Reader(inputStream, Mode.STRICT);
+            final MDLRXNV2000Reader reader = new MDLRXNV2000Reader(inputStream, Mode.RELAXED);
             return reader.read(SilentChemObjectBuilder.getInstance().newReaction());
         }
     }
