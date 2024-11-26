@@ -144,9 +144,6 @@ class RInChIGeneratorTest extends CDKTestCase {
         final boolean actual = generator.isProductsFirst(reactants, products);
 
         // assert
-        String[] temp = {"InChI=1S/BrH/h1H", "InChI=1S/Br2/c1-2"};
-        Arrays.stream(temp).sorted().forEach(System.out::println);
-
         assertFalse(actual);
     }
 
